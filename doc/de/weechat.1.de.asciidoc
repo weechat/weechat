@@ -25,7 +25,7 @@ verschiedenen Sprachen unterstützt werden.
 
 == OPTIONEN
 
-include::cmdline_options.de.txt[]
+include::cmdline_options.de.asciidoc[]
 
 == OPTIONEN von ERWEITERUNGEN
 

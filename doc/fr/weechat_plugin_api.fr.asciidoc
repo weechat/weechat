@@ -6847,7 +6847,8 @@ Paramètres :
   WeeChat
 
 Les codes complétions par défaut sont :
-include::autogen/plugin_api/completions.txt[]
+
+include::autogen/plugin_api/completions.asciidoc[]
 
 Codes spéciaux :
 
@@ -7363,7 +7364,7 @@ sont disponibles :
 Pour la commande "url:...", les options suivantes sont disponibles (voir
 `man curl_easy_setopt` pour une description de chaque option) :
 
-include::autogen/plugin_api/url_options.txt[]
+include::autogen/plugin_api/url_options.asciidoc[]
 
 [NOTE]
 ^(1)^ Lorsque des constantes sont disponibles, elles doivent être utilisées
@@ -12731,7 +12732,7 @@ Valeur de retour :
 
 Infos :
 
-include::autogen/plugin_api/infos.txt[]
+include::autogen/plugin_api/infos.asciidoc[]
 
 Exemple en C :
 
@@ -12784,7 +12785,7 @@ Valeur de retour :
 
 Infos :
 
-include::autogen/plugin_api/infos_hashtable.txt[]
+include::autogen/plugin_api/infos_hashtable.asciidoc[]
 
 Exemple en C :
 
@@ -13166,7 +13167,7 @@ Valeur de retour :
 
 Infolists :
 
-include::autogen/plugin_api/infolists.txt[]
+include::autogen/plugin_api/infolists.asciidoc[]
 
 Exemple en C :
 
@@ -13901,7 +13902,7 @@ Valeur de retour :
 
 Liste des hdata :
 
-include::autogen/plugin_api/hdata.txt[]
+include::autogen/plugin_api/hdata.asciidoc[]
 
 Exemple en C :
 

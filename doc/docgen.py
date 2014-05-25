@@ -410,7 +410,7 @@ def docgen_cmd_cb(data, buf, args):
 
         # write commands
         for plugin in commands:
-            filename = directory + '/user/' + plugin + '_commands.txt'
+            filename = directory + '/user/' + plugin + '_commands.asciidoc'
             tmpfilename = filename + '.tmp'
             _file = open(tmpfilename, 'w')
             for command in sorted(commands[plugin]):
@@ -438,7 +438,7 @@ def docgen_cmd_cb(data, buf, args):
 
         # write config options
         for config in options:
-            filename = directory + '/user/' + config + '_options.txt'
+            filename = directory + '/user/' + config + '_options.asciidoc'
             tmpfilename = filename + '.tmp'
             _file = open(tmpfilename, 'w')
             for section in sorted(options[config]):
@@ -502,7 +502,7 @@ def docgen_cmd_cb(data, buf, args):
                         'options')
 
         # write infos hooked
-        filename = directory + '/plugin_api/infos.txt'
+        filename = directory + '/plugin_api/infos.asciidoc'
         tmpfilename = filename + '.tmp'
         _file = open(tmpfilename, 'w')
         _file.write('[width="100%",cols="^1,^2,6,6",options="header"]\n')
@@ -524,7 +524,7 @@ def docgen_cmd_cb(data, buf, args):
                     'infos')
 
         # write infos (hashtable) hooked
-        filename = directory + '/plugin_api/infos_hashtable.txt'
+        filename = directory + '/plugin_api/infos_hashtable.asciidoc'
         tmpfilename = filename + '.tmp'
         _file = open(tmpfilename, 'w')
         _file.write('[width="100%",cols="^1,^2,6,6,6",options="header"]\n')
@@ -548,7 +548,7 @@ def docgen_cmd_cb(data, buf, args):
                     'infos_hashtable')
 
         # write infolists hooked
-        filename = directory + '/plugin_api/infolists.txt'
+        filename = directory + '/plugin_api/infolists.asciidoc'
         tmpfilename = filename + '.tmp'
         _file = open(tmpfilename, 'w')
         _file.write('[width="100%",cols="^1,^2,5,5,5",options="header"]\n')
@@ -572,7 +572,7 @@ def docgen_cmd_cb(data, buf, args):
                     'infolists')
 
         # write hdata hooked
-        filename = directory + '/plugin_api/hdata.txt'
+        filename = directory + '/plugin_api/hdata.asciidoc'
         tmpfilename = filename + '.tmp'
         _file = open(tmpfilename, 'w')
         for plugin in sorted(hdata):
@@ -600,7 +600,7 @@ def docgen_cmd_cb(data, buf, args):
                     'hdata')
 
         # write completions hooked
-        filename = directory + '/plugin_api/completions.txt'
+        filename = directory + '/plugin_api/completions.asciidoc'
         tmpfilename = filename + '.tmp'
         _file = open(tmpfilename, 'w')
         _file.write('[width="65%",cols="^1,^2,8",options="header"]\n')
@@ -620,7 +620,7 @@ def docgen_cmd_cb(data, buf, args):
                     'completions')
 
         # write url options
-        filename = directory + '/plugin_api/url_options.txt'
+        filename = directory + '/plugin_api/url_options.asciidoc'
         tmpfilename = filename + '.tmp'
         _file = open(tmpfilename, 'w')
         _file.write('[width="100%",cols="2,^1,7",options="header"]\n')

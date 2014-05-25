@@ -24,7 +24,7 @@ Jabber), extensible avec du C et des scripts écrits en différents langages.
 
 == OPTIONS
 
-include::cmdline_options.fr.txt[]
+include::cmdline_options.fr.asciidoc[]
 
 == OPTIONS D'EXTENSION
 

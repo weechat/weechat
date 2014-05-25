@@ -23,7 +23,7 @@ rozszerzalny za pomocą C i skryptów pisanych w kilku językach.
 
 == OPCJE
 
-include::cmdline_options.pl.txt[]
+include::cmdline_options.pl.asciidoc[]
 
 == OPCJE WTYCZEK
 

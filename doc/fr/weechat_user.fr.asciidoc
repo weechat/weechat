@@ -442,7 +442,7 @@ Ensuite comme pour un crash, utilisez la commande `bt full` :
 
 Paramètres de ligne de commande :
 
-include::cmdline_options.fr.txt[]
+include::cmdline_options.fr.asciidoc[]
 
 Pour lancer WeeChat, tapez cette commande :
 
@@ -1699,7 +1699,7 @@ Sections :
 
 Options :
 
-include::autogen/user/sec_options.txt[]
+include::autogen/user/sec_options.asciidoc[]
 
 [[weechat_options]]
 ==== Options WeeChat (weechat.conf)
@@ -1734,12 +1734,12 @@ Sections :
 
 Options :
 
-include::autogen/user/weechat_options.txt[]
+include::autogen/user/weechat_options.asciidoc[]
 
 [[weechat_commands]]
 ==== Commandes WeeChat
 
-include::autogen/user/weechat_commands.txt[]
+include::autogen/user/weechat_commands.asciidoc[]
 
 [[plugins]]
 == Extensions
@@ -1807,7 +1807,7 @@ d'autres extensions).
 [[alias_commands]]
 ==== Commandes
 
-include::autogen/user/alias_commands.txt[]
+include::autogen/user/alias_commands.asciidoc[]
 
 [[aspell_plugin]]
 === Extension Aspell
@@ -1832,12 +1832,12 @@ Sections :
 
 Options :
 
-include::autogen/user/aspell_options.txt[]
+include::autogen/user/aspell_options.asciidoc[]
 
 [[aspell_commands]]
 ==== Commandes
 
-include::autogen/user/aspell_commands.txt[]
+include::autogen/user/aspell_commands.asciidoc[]
 
 [[aspell_speller_options]]
 ==== Options du vérificateur d'orthographe
@@ -1940,12 +1940,12 @@ Sections :
 
 Options :
 
-include::autogen/user/charset_options.txt[]
+include::autogen/user/charset_options.asciidoc[]
 
 [[charset_commands]]
 ==== Commandes
 
-include::autogen/user/charset_commands.txt[]
+include::autogen/user/charset_commands.asciidoc[]
 
 [[charset_set]]
 ==== Définir le jeu de caractère
@@ -2028,12 +2028,12 @@ Sections :
 
 Options :
 
-include::autogen/user/exec_options.txt[]
+include::autogen/user/exec_options.asciidoc[]
 
 [[exec_commands]]
 ==== Commandes
 
-include::autogen/user/exec_commands.txt[]
+include::autogen/user/exec_commands.asciidoc[]
 
 [[fifo_plugin]]
 === Extension Fifo
@@ -2148,12 +2148,12 @@ Sections :
 
 Options :
 
-include::autogen/user/irc_options.txt[]
+include::autogen/user/irc_options.asciidoc[]
 
 [[irc_commands]]
 ==== Commandes
 
-include::autogen/user/irc_commands.txt[]
+include::autogen/user/irc_commands.asciidoc[]
 
 [[irc_ssl_certificates]]
 ==== Certificats SSL
@@ -2577,12 +2577,12 @@ Sections :
 
 Options :
 
-include::autogen/user/logger_options.txt[]
+include::autogen/user/logger_options.asciidoc[]
 
 [[logger_commands]]
 ==== Commandes
 
-include::autogen/user/logger_commands.txt[]
+include::autogen/user/logger_commands.asciidoc[]
 
 [[logger_log_levels]]
 ==== Niveaux d'enregistrement
@@ -2735,12 +2735,12 @@ Sections :
 
 Options :
 
-include::autogen/user/relay_options.txt[]
+include::autogen/user/relay_options.asciidoc[]
 
 [[relay_commands]]
 ==== Commandes
 
-include::autogen/user/relay_commands.txt[]
+include::autogen/user/relay_commands.asciidoc[]
 
 [[relay_password]]
 ==== Mot de passe
@@ -2887,42 +2887,42 @@ Sections :
 
 Options :
 
-include::autogen/user/script_options.txt[]
+include::autogen/user/script_options.asciidoc[]
 
 [[script_commands]]
 ==== Commandes Script
 
-include::autogen/user/script_commands.txt[]
+include::autogen/user/script_commands.asciidoc[]
 
 [[python_commands]]
 ==== Commandes Python
 
-include::autogen/user/python_commands.txt[]
+include::autogen/user/python_commands.asciidoc[]
 
 [[perl_commands]]
 ==== Commandes Perl
 
-include::autogen/user/perl_commands.txt[]
+include::autogen/user/perl_commands.asciidoc[]
 
 [[ruby_commands]]
 ==== Commandes Ruby
 
-include::autogen/user/ruby_commands.txt[]
+include::autogen/user/ruby_commands.asciidoc[]
 
 [[lua_commands]]
 ==== Commandes Lua
 
-include::autogen/user/lua_commands.txt[]
+include::autogen/user/lua_commands.asciidoc[]
 
 [[tcl_commands]]
 ==== Commandes Tcl
 
-include::autogen/user/tcl_commands.txt[]
+include::autogen/user/tcl_commands.asciidoc[]
 
 [[guile_commands]]
 ==== Commandes Guile
 
-include::autogen/user/guile_commands.txt[]
+include::autogen/user/guile_commands.asciidoc[]
 
 [[trigger_plugin]]
 === Extension Trigger
@@ -2953,12 +2953,12 @@ Sections:
 
 Options:
 
-include::autogen/user/trigger_options.txt[]
+include::autogen/user/trigger_options.asciidoc[]
 
 [[trigger_commands]]
 ==== Commandes
 
-include::autogen/user/trigger_commands.txt[]
+include::autogen/user/trigger_commands.asciidoc[]
 
 [[trigger_anatomy]]
 ==== Anatomie d'un trigger
@@ -3480,12 +3480,12 @@ Sections :
 
 Options :
 
-include::autogen/user/xfer_options.txt[]
+include::autogen/user/xfer_options.asciidoc[]
 
 [[xfer_commands]]
 ==== Commandes
 
-include::autogen/user/xfer_commands.txt[]
+include::autogen/user/xfer_commands.asciidoc[]
 
 [[support]]
 == Support

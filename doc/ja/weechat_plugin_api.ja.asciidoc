@@ -6733,7 +6733,8 @@ struct t_hook *weechat_hook_command (const char *command,
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
 
 デフォルトの補完候補コードは:
-include::autogen/plugin_api/completions.txt[]
+
+include::autogen/plugin_api/completions.asciidoc[]
 
 特殊コード:
 
@@ -7232,7 +7233,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 "url:..." 型のコマンドでは、以下のコマンドを使うことができます
 (それぞれのオプションについては `man curl_easy_setopt` を参照):
 
-include::autogen/plugin_api/url_options.txt[]
+include::autogen/plugin_api/url_options.asciidoc[]
 
 [NOTE]
 ^(1)^ 定数が利用可能な場合、定数は必ずオプションの値に含めてください。"mask"
@@ -12481,7 +12482,7 @@ const char *weechat_info_get (const char *info_name, const char *arguments);
 
 情報:
 
-include::autogen/plugin_api/infos.txt[]
+include::autogen/plugin_api/infos.asciidoc[]
 
 C 言語での使用例:
 
@@ -12533,7 +12534,7 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 
 情報:
 
-include::autogen/plugin_api/infos_hashtable.txt[]
+include::autogen/plugin_api/infos_hashtable.asciidoc[]
 
 C 言語での使用例:
 
@@ -12911,7 +12912,7 @@ struct t_infolist *weechat_infolist_get (const char *infolist_name,
 
 インフォリスト:
 
-include::autogen/plugin_api/infolists.txt[]
+include::autogen/plugin_api/infolists.asciidoc[]
 
 C 言語での使用例:
 
@@ -13628,7 +13629,7 @@ struct t_hdata *weechat_hdata_get (const char *hdata_name);
 
 hdata のリスト:
 
-include::autogen/plugin_api/hdata.txt[]
+include::autogen/plugin_api/hdata.asciidoc[]
 
 C 言語での使用例:
 

@@ -289,25 +289,25 @@ Fichiers de documentation :
 
 [width="100%",cols="1v,5",options="header"]
 |===
-| Chemin/fichier                      | Description
-| doc/                                | Documentation
-|    asciidoc.conf                    | Fichier de configuration Asciidoc (quelques macros)
-|    asciidoc.css                     | Style Asciidoc
-|    docgen.py                        | Script Python pour construire les fichiers dans le répertoire 'autogen/' (voir ci-dessous)
-|    XX/                              | Documentation pour la langue XX (langues : en, fr, de, it, ...)
-|       weechat.1.XX.txt              | Page de manuel (`man weechat`)
-|       weechat_quickstart.XX.txt     | Guide de démarrage
-|       weechat_user.XX.txt           | Guide utilisateur
-|       weechat_faq.XX.txt            | FAQ (questions fréquemment posées)
-|       weechat_plugin_api.XX.txt     | Référence API extension
-|       weechat_scripting.XX.txt      | Guide pour scripts
-|       weechat_tester.XX.txt         | Guide du testeur
-|       weechat_dev.XX.txt            | Guide du développeur (ce document)
-|       weechat_relay_protocol.XX.txt | Protocole Relay (pour les interfaces distantes)
-|       cmdline_options.XX.txt        | Options de ligne de commande (fichier inclus dans la page de manuel et le guide utilisateur)
-|       autogen/                      | Fichiers automatiquement générés avec le script docgen.py
-|          user/                      | Fichiers automatiquement générés pour le guide utilisateur (ne *JAMAIS* les mettre à jour manuellement !)
-|          plugin_api/                | Fichiers automatiquement générés pour l'API extension (ne *JAMAIS* les mettre à jour manuellement !)
+| Chemin/fichier                           | Description
+| doc/                                     | Documentation
+|    asciidoc.conf                         | Fichier de configuration Asciidoc (quelques macros)
+|    asciidoc.css                          | Style Asciidoc
+|    docgen.py                             | Script Python pour construire les fichiers dans le répertoire 'autogen/' (voir ci-dessous)
+|    XX/                                   | Documentation pour la langue XX (langues : en, fr, de, it, ...)
+|       weechat.1.XX.asciidoc              | Page de manuel (`man weechat`)
+|       weechat_quickstart.XX.asciidoc     | Guide de démarrage
+|       weechat_user.XX.asciidoc           | Guide utilisateur
+|       weechat_faq.XX.asciidoc            | FAQ (questions fréquemment posées)
+|       weechat_plugin_api.XX.asciidoc     | Référence API extension
+|       weechat_scripting.XX.asciidoc      | Guide pour scripts
+|       weechat_tester.XX.asciidoc         | Guide du testeur
+|       weechat_dev.XX.asciidoc            | Guide du développeur (ce document)
+|       weechat_relay_protocol.XX.asciidoc | Protocole Relay (pour les interfaces distantes)
+|       cmdline_options.XX.asciidoc        | Options de ligne de commande (fichier inclus dans la page de manuel et le guide utilisateur)
+|       autogen/                           | Fichiers automatiquement générés avec le script docgen.py
+|          user/                           | Fichiers automatiquement générés pour le guide utilisateur (ne *JAMAIS* les mettre à jour manuellement !)
+|          plugin_api/                     | Fichiers automatiquement générés pour l'API extension (ne *JAMAIS* les mettre à jour manuellement !)
 |===
 
 Les traductions pour WeeChat et les extensions sont effectuées avec gettext, les

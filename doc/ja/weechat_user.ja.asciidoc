@@ -432,7 +432,7 @@ gdb /usr/bin/weechat 12345
 
 コマンドライン引数:
 
-include::cmdline_options.ja.txt[]
+include::cmdline_options.ja.asciidoc[]
 
 WeeChat を起動させるには、以下コマンドを実行:
 
@@ -1645,7 +1645,7 @@ IRC サーバのパスワードを設定する例:
 
 オプション:
 
-include::autogen/user/sec_options.txt[]
+include::autogen/user/sec_options.asciidoc[]
 
 [[weechat_options]]
 ==== WeeChat オプション (weechat.conf)
@@ -1680,12 +1680,12 @@ include::autogen/user/sec_options.txt[]
 
 オプション:
 
-include::autogen/user/weechat_options.txt[]
+include::autogen/user/weechat_options.asciidoc[]
 
 [[weechat_commands]]
 ==== WeeChat コマンド
 
-include::autogen/user/weechat_commands.txt[]
+include::autogen/user/weechat_commands.asciidoc[]
 
 [[plugins]]
 == プラグイン
@@ -1751,7 +1751,7 @@ Alias プラグインを使うことで、コマンドの別名を定義でき�
 [[alias_commands]]
 ==== コマンド
 
-include::autogen/user/alias_commands.txt[]
+include::autogen/user/alias_commands.asciidoc[]
 
 [[aspell_plugin]]
 === Aspell プラグイン
@@ -1776,12 +1776,12 @@ Aspell プラグインを使うことで、コマンドラインに入力した�
 
 オプション:
 
-include::autogen/user/aspell_options.txt[]
+include::autogen/user/aspell_options.asciidoc[]
 
 [[aspell_commands]]
 ==== コマンド
 
-include::autogen/user/aspell_commands.txt[]
+include::autogen/user/aspell_commands.asciidoc[]
 
 [[aspell_speller_options]]
 ==== Speller オプション
@@ -1880,12 +1880,12 @@ charset: terminal: ISO-8859-15, internal: UTF-8
 
 オプション:
 
-include::autogen/user/charset_options.txt[]
+include::autogen/user/charset_options.asciidoc[]
 
 [[charset_commands]]
 ==== コマンド
 
-include::autogen/user/charset_commands.txt[]
+include::autogen/user/charset_commands.asciidoc[]
 
 [[charset_set]]
 ==== 文字コードの設定
@@ -1962,12 +1962,12 @@ IRC サーバの全てのチャンネルおよびプライベートバッファ�
 
 オプション:
 
-include::autogen/user/exec_options.txt[]
+include::autogen/user/exec_options.asciidoc[]
 
 [[exec_commands]]
 ==== コマンド
 
-include::autogen/user/exec_commands.txt[]
+include::autogen/user/exec_commands.asciidoc[]
 
 [[fifo_plugin]]
 === Fifo プラグイン
@@ -2077,12 +2077,12 @@ $ weechat irc://nono@irc.freenode.net/#weechat,#toto
 
 オプション:
 
-include::autogen/user/irc_options.txt[]
+include::autogen/user/irc_options.asciidoc[]
 
 [[irc_commands]]
 ==== コマンド
 
-include::autogen/user/irc_commands.txt[]
+include::autogen/user/irc_commands.asciidoc[]
 
 [[irc_ssl_certificates]]
 ==== SSL 証明書
@@ -2495,12 +2495,12 @@ Logger プラグインを使うことで、バッファの内容をファイル�
 
 オプション:
 
-include::autogen/user/logger_options.txt[]
+include::autogen/user/logger_options.asciidoc[]
 
 [[logger_commands]]
 ==== コマンド
 
-include::autogen/user/logger_commands.txt[]
+include::autogen/user/logger_commands.asciidoc[]
 
 [[logger_log_levels]]
 ==== ログレベル
@@ -2650,12 +2650,12 @@ Relay プラグインはネットワークを介して異なるプロトコル�
 
 オプション:
 
-include::autogen/user/relay_options.txt[]
+include::autogen/user/relay_options.asciidoc[]
 
 [[relay_commands]]
 ==== コマンド
 
-include::autogen/user/relay_commands.txt[]
+include::autogen/user/relay_commands.asciidoc[]
 
 [[relay_password]]
 ==== パスワード
@@ -2792,42 +2792,42 @@ WeeChat は 6 種類のスクリプトプラグインを備えています: Pyth
 
 オプション:
 
-include::autogen/user/script_options.txt[]
+include::autogen/user/script_options.asciidoc[]
 
 [[script_commands]]
 ==== Script コマンド
 
-include::autogen/user/script_commands.txt[]
+include::autogen/user/script_commands.asciidoc[]
 
 [[python_commands]]
 ==== Python コマンド
 
-include::autogen/user/python_commands.txt[]
+include::autogen/user/python_commands.asciidoc[]
 
 [[perl_commands]]
 ==== Perl コマンド
 
-include::autogen/user/perl_commands.txt[]
+include::autogen/user/perl_commands.asciidoc[]
 
 [[ruby_commands]]
 ==== Ruby コマンド
 
-include::autogen/user/ruby_commands.txt[]
+include::autogen/user/ruby_commands.asciidoc[]
 
 [[lua_commands]]
 ==== Lua コマンド
 
-include::autogen/user/lua_commands.txt[]
+include::autogen/user/lua_commands.asciidoc[]
 
 [[tcl_commands]]
 ==== Tcl コマンド
 
-include::autogen/user/tcl_commands.txt[]
+include::autogen/user/tcl_commands.asciidoc[]
 
 [[guile_commands]]
 ==== Guile コマンド
 
-include::autogen/user/guile_commands.txt[]
+include::autogen/user/guile_commands.asciidoc[]
 
 [[trigger_plugin]]
 === トリガプラグイン
@@ -2858,12 +2858,12 @@ include::autogen/user/guile_commands.txt[]
 
 オプション:
 
-include::autogen/user/trigger_options.txt[]
+include::autogen/user/trigger_options.asciidoc[]
 
 [[trigger_commands]]
 ==== コマンド
 
-include::autogen/user/trigger_commands.txt[]
+include::autogen/user/trigger_commands.asciidoc[]
 
 [[trigger_anatomy]]
 ==== トリガの構造
@@ -3366,12 +3366,12 @@ Xfer プラグインの機能:
 
 オプション:
 
-include::autogen/user/xfer_options.txt[]
+include::autogen/user/xfer_options.asciidoc[]
 
 [[xfer_commands]]
 ==== コマンド
 
-include::autogen/user/xfer_commands.txt[]
+include::autogen/user/xfer_commands.asciidoc[]
 
 [[support]]
 == サポート

@@ -434,7 +434,7 @@ Sollte WeeChat abgestürzt sein, muss der Befehl `bt full` genutzt werden:
 
 Befehlszeile:
 
-include::cmdline_options.de.txt[]
+include::cmdline_options.de.asciidoc[]
 
 Um WeeChat zu starten muss folgender Befehl ausgeführt werden:
 
@@ -1680,7 +1680,7 @@ Sektionen:
 
 Optionen:
 
-include::autogen/user/sec_options.txt[]
+include::autogen/user/sec_options.asciidoc[]
 
 [[weechat_options]]
 ==== WeeChat Optionen (weechat.conf)
@@ -1715,12 +1715,12 @@ Sektionen:
 
 Optionen:
 
-include::autogen/user/weechat_options.txt[]
+include::autogen/user/weechat_options.asciidoc[]
 
 [[weechat_commands]]
 ==== WeeChat Befehle
 
-include::autogen/user/weechat_commands.txt[]
+include::autogen/user/weechat_commands.asciidoc[]
 
 [[plugins]]
 == Erweiterungen
@@ -1786,7 +1786,7 @@ Die Alias-Erweiterung erlaubt es, für Befehle, sogenannte Kurzbefehle (einen Al
 [[alias_commands]]
 ==== Befehle
 
-include::autogen/user/alias_commands.txt[]
+include::autogen/user/alias_commands.asciidoc[]
 
 [[aspell_plugin]]
 === Aspell Erweiterung
@@ -1811,12 +1811,12 @@ Sektionen:
 
 Optionen:
 
-include::autogen/user/aspell_options.txt[]
+include::autogen/user/aspell_options.asciidoc[]
 
 [[aspell_commands]]
 ==== Befehle
 
-include::autogen/user/aspell_commands.txt[]
+include::autogen/user/aspell_commands.asciidoc[]
 
 [[aspell_speller_options]]
 ==== Optionen für Rechtschreibprüfung
@@ -1919,12 +1919,12 @@ Sektionen:
 
 Optionen:
 
-include::autogen/user/charset_options.txt[]
+include::autogen/user/charset_options.asciidoc[]
 
 [[charset_commands]]
 ==== Befehle
 
-include::autogen/user/charset_commands.txt[]
+include::autogen/user/charset_commands.asciidoc[]
 
 [[charset_set]]
 ==== Zeichensatz auswählen
@@ -2005,12 +2005,12 @@ Sections:
 
 Options:
 
-include::autogen/user/exec_options.txt[]
+include::autogen/user/exec_options.asciidoc[]
 
 [[exec_commands]]
 ==== Commands
 
-include::autogen/user/exec_commands.txt[]
+include::autogen/user/exec_commands.asciidoc[]
 
 [[fifo_plugin]]
 === Fifo Erweiterung
@@ -2120,12 +2120,12 @@ Sektionen:
 
 Optionen:
 
-include::autogen/user/irc_options.txt[]
+include::autogen/user/irc_options.asciidoc[]
 
 [[irc_commands]]
 ==== Befehle
 
-include::autogen/user/irc_commands.txt[]
+include::autogen/user/irc_commands.asciidoc[]
 
 [[irc_ssl_certificates]]
 ==== SSL Zertifikate
@@ -2546,12 +2546,12 @@ Sektionen:
 
 Optionen:
 
-include::autogen/user/logger_options.txt[]
+include::autogen/user/logger_options.asciidoc[]
 
 [[logger_commands]]
 ==== Befehle
 
-include::autogen/user/logger_commands.txt[]
+include::autogen/user/logger_commands.asciidoc[]
 
 [[logger_log_levels]]
 ==== Log Levels
@@ -2707,12 +2707,12 @@ Sektionen:
 
 Optionen:
 
-include::autogen/user/relay_options.txt[]
+include::autogen/user/relay_options.asciidoc[]
 
 [[relay_commands]]
 ==== Befehle
 
-include::autogen/user/relay_commands.txt[]
+include::autogen/user/relay_commands.asciidoc[]
 
 [[relay_password]]
 ==== Passwort
@@ -2859,42 +2859,42 @@ Sektionen:
 
 Optionen:
 
-include::autogen/user/script_options.txt[]
+include::autogen/user/script_options.asciidoc[]
 
 [[script_commands]]
 ==== Skript Befehle
 
-include::autogen/user/script_commands.txt[]
+include::autogen/user/script_commands.asciidoc[]
 
 [[python_commands]]
 ==== Python Befehle
 
-include::autogen/user/python_commands.txt[]
+include::autogen/user/python_commands.asciidoc[]
 
 [[perl_commands]]
 ==== Perl Befehle
 
-include::autogen/user/perl_commands.txt[]
+include::autogen/user/perl_commands.asciidoc[]
 
 [[ruby_commands]]
 ==== Ruby Befehle
 
-include::autogen/user/ruby_commands.txt[]
+include::autogen/user/ruby_commands.asciidoc[]
 
 [[lua_commands]]
 ==== Lua Befehle
 
-include::autogen/user/lua_commands.txt[]
+include::autogen/user/lua_commands.asciidoc[]
 
 [[tcl_commands]]
 ==== Tcl Befehle
 
-include::autogen/user/tcl_commands.txt[]
+include::autogen/user/tcl_commands.asciidoc[]
 
 [[guile_commands]]
 ==== Guile Befehle
 
-include::autogen/user/guile_commands.txt[]
+include::autogen/user/guile_commands.asciidoc[]
 
 [[trigger_plugin]]
 === Trigger Erweiterung
@@ -2926,12 +2926,12 @@ Sektionen:
 
 Optionen:
 
-include::autogen/user/trigger_options.txt[]
+include::autogen/user/trigger_options.asciidoc[]
 
 [[trigger_commands]]
 ==== Befehle
 
-include::autogen/user/trigger_commands.txt[]
+include::autogen/user/trigger_commands.asciidoc[]
 
 [[trigger_anatomy]]
 ==== Aufbau eines Triggers
@@ -3444,12 +3444,12 @@ Sektionen:
 
 Optionen:
 
-include::autogen/user/xfer_options.txt[]
+include::autogen/user/xfer_options.asciidoc[]
 
 [[xfer_commands]]
 ==== Befehle
 
-include::autogen/user/xfer_commands.txt[]
+include::autogen/user/xfer_commands.asciidoc[]
 
 [[support]]
 == Unterstützung

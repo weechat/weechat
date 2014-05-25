@@ -24,7 +24,7 @@ extensible with C and scripts written in several languages.
 
 == OPTIONS
 
-include::cmdline_options.en.txt[]
+include::cmdline_options.en.asciidoc[]
 
 == PLUGIN OPTIONS
 

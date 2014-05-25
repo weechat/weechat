@@ -288,25 +288,25 @@ WeeChat "core" は以下のディレクトリに配置されています:
 
 [width="100%",cols="1v,5",options="header"]
 |===
-| パス/ファイル名                     | 説明
-| doc/                                | 文書
-|    asciidoc.conf                    | asciidoc 設定ファイル (マクロ)
-|    asciidoc.css                     | asciidoc スタイル
-|    docgen.py                        | 'autogen/' ディレクトリ内のファイルを作成する Python スクリプト (以下を参照)
-|    XX/                              | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
-|       weechat.1.XX.txt              | man ページ (`man weechat`)
-|       weechat_quickstart.XX.txt     | クイックスタートガイド
-|       weechat_user.XX.txt           | ユーザーガイド
-|       weechat_faq.XX.txt            | FAQ
-|       weechat_plugin_api.XX.txt     | プラグイン API リファレンス
-|       weechat_scripting.XX.txt      | スクリプト作成ガイド
-|       weechat_tester.XX.txt         | テスターガイド
-|       weechat_dev.XX.txt            | 開発者リファレンス (この文書)
-|       weechat_relay_protocol.XX.txt | リレープロトコル (リモートインターフェイス用)
-|       cmdline_options.XX.txt        | コマンドラインオプション (man ページとユーザガイドに含まれるファイル)
-|       autogen/                      | docgen.py スクリプトが自動生成するファイル
-|          user/                      | ユーザーガイド用の自動生成ファイル (手作業による編集は*禁止* !)
-|          plugin_api/                | プラグイン API 用の自動生成ファイル (手作業による編集は*禁止* !)
+| パス/ファイル名                          | 説明
+| doc/                                     | 文書
+|    asciidoc.conf                         | asciidoc 設定ファイル (マクロ)
+|    asciidoc.css                          | asciidoc スタイル
+|    docgen.py                             | 'autogen/' ディレクトリ内のファイルを作成する Python スクリプト (以下を参照)
+|    XX/                                   | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
+|       weechat.1.XX.asciidoc              | man ページ (`man weechat`)
+|       weechat_quickstart.XX.asciidoc     | クイックスタートガイド
+|       weechat_user.XX.asciidoc           | ユーザーガイド
+|       weechat_faq.XX.asciidoc            | FAQ
+|       weechat_plugin_api.XX.asciidoc     | プラグイン API リファレンス
+|       weechat_scripting.XX.asciidoc      | スクリプト作成ガイド
+|       weechat_tester.XX.asciidoc         | テスターガイド
+|       weechat_dev.XX.asciidoc            | 開発者リファレンス (この文書)
+|       weechat_relay_protocol.XX.asciidoc | リレープロトコル (リモートインターフェイス用)
+|       cmdline_options.XX.asciidoc        | コマンドラインオプション (man ページとユーザガイドに含まれるファイル)
+|       autogen/                           | docgen.py スクリプトが自動生成するファイル
+|          user/                           | ユーザーガイド用の自動生成ファイル (手作業による編集は*禁止* !)
+|          plugin_api/                     | プラグイン API 用の自動生成ファイル (手作業による編集は*禁止* !)
 |===
 
 WeeChat とプラグインの翻訳は gettext で行います、ファイルは 'po/' ディレクトリに含まれています:

@@ -23,7 +23,7 @@ C 言語と様々なプログラミング言語で書かれたスクリプトを
 
 == オプション
 
-include::cmdline_options.ja.txt[]
+include::cmdline_options.ja.asciidoc[]
 
 == プラグインオプション
 

@@ -22,9 +22,9 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # quickstart
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.asciidoc
     COMMENT "Building weechat_quickstart.es.html"
   )
   add_custom_target(doc-quickstart-es ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html)

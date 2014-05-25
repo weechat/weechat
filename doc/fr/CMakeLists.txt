@@ -21,12 +21,12 @@ if(ENABLE_MAN)
   # man page
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat.1
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.fr.txt ${CMAKE_CURRENT_BINARY_DIR}/
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.fr.txt ${CMAKE_CURRENT_BINARY_DIR}/
-    COMMAND ${A2X_EXECUTABLE} ARGS -a revision='WeeChat ${VERSION}' -d manpage -f manpage -L ${CMAKE_CURRENT_BINARY_DIR}/weechat.1.fr.txt
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.fr.asciidoc ${CMAKE_CURRENT_BINARY_DIR}/
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.fr.asciidoc ${CMAKE_CURRENT_BINARY_DIR}/
+    COMMAND ${A2X_EXECUTABLE} ARGS -a revision='WeeChat ${VERSION}' -d manpage -f manpage -L ${CMAKE_CURRENT_BINARY_DIR}/weechat.1.fr.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.fr.txt
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.fr.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.fr.asciidoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.fr.asciidoc
     COMMENT "Building weechat.1 (fr)"
   )
   add_custom_target(doc-man-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat.1)
@@ -38,11 +38,11 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # user's guide
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.fr.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.fr.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.fr.txt
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.fr.txt
-    ${CMAKE_CURRENT_SOURCE_DIR}/autogen/user/*.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.fr.asciidoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.fr.asciidoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/autogen/user/*.asciidoc
     COMMENT "Building weechat_user.fr.html"
   )
   add_custom_target(doc-user-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html)
@@ -51,10 +51,10 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # plugin API reference
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.fr.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.fr.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.fr.txt
-    ${CMAKE_CURRENT_SOURCE_DIR}/autogen/plugin_api/*.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.fr.asciidoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/autogen/plugin_api/*.asciidoc
     COMMENT "Building weechat_plugin_api.fr.html"
   )
   add_custom_target(doc-plugin-api-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html)
@@ -63,9 +63,9 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # scripting guide
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.fr.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.fr.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.fr.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.fr.asciidoc
     COMMENT "Building weechat_scripting.fr.html"
   )
   add_custom_target(doc-scripting-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html)
@@ -74,9 +74,9 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # FAQ
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.asciidoc
     COMMENT "Building weechat_faq.fr.html"
   )
   add_custom_target(doc-faq-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html)
@@ -85,9 +85,9 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # quickstart
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.fr.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.fr.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.fr.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.fr.asciidoc
     COMMENT "Building weechat_quickstart.fr.html"
   )
   add_custom_target(doc-quickstart-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html)
@@ -96,9 +96,9 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # tester's guide
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.fr.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.fr.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.fr.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.fr.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.fr.asciidoc
     COMMENT "Building weechat_tester.fr.html"
   )
   add_custom_target(doc-tester-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.fr.html)
@@ -107,9 +107,9 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # relay protocol
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.fr.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_relay_protocol.fr.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_relay_protocol.fr.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_relay_protocol.fr.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_relay_protocol.fr.asciidoc
     COMMENT "Building weechat_relay_protocol.fr.html"
   )
   add_custom_target(doc-relay-protocol-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.fr.html)
@@ -118,9 +118,9 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # developer's guide
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.fr.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.fr.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.fr.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.fr.asciidoc
     COMMENT "Building weechat_dev.fr.html"
   )
   add_custom_target(doc-dev-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html)
