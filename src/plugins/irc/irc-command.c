@@ -4044,6 +4044,72 @@ irc_command_rehash (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * Callback for command "/remove": remove a user from a channel.
+ */
+
+int
+irc_command_remove (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
+{
+    const char *ptr_channel_name;
+    char *msg_vars_replaced;
+    int index_nick;
+
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
+    IRC_COMMAND_CHECK_SERVER("remove", 1);
+
+    /* make C compiler happy */
+    (void) data;
+
+    if (argc < 2)
+        return WEECHAT_RC_ERROR;
+
+    ptr_channel_name = (ptr_channel) ? ptr_channel->name : NULL;
+    index_nick = 1;
+
+    if (irc_channel_is_channel (ptr_server, argv[1]))
+    {
+        if (argc < 3)
+            return WEECHAT_RC_ERROR;
+        ptr_channel_name = argv[1];
+        index_nick = 2;
+    }
+
+    if (!ptr_channel_name)
+    {
+        weechat_printf (ptr_server->buffer,
+                        _("%s%s: \"%s\" command can only be "
+                          "executed in a channel buffer"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                        "remove");
+        return WEECHAT_RC_OK;
+    }
+
+    if (argc > index_nick + 1)
+    {
+        msg_vars_replaced = irc_message_replace_vars (ptr_server,
+                                                      ptr_channel_name,
+                                                      argv_eol[index_nick + 1]);
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "REMOVE %s %s :%s",
+                          ptr_channel_name,
+                          argv[index_nick],
+                          (msg_vars_replaced) ? msg_vars_replaced : argv_eol[index_nick + 1]);
+        if (msg_vars_replaced)
+            free (msg_vars_replaced);
+    }
+    else
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "REMOVE %s %s",
+                          ptr_channel_name,
+                          argv[index_nick]);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for command "/restart": tells the server to restart itself.
  */
 
@@ -6239,6 +6305,15 @@ irc_command_init ()
         N_("[<option>]"),
         N_("option: extra option, for some servers"),
         NULL, &irc_command_rehash, NULL);
+    weechat_hook_command (
+        "remove",
+        N_("remove a user from the channel"),
+        N_("[<channel>] <nick> [<reason>]"),
+        N_("channel: channel name\n"
+           "   nick: nick\n"
+           " reason: reason (special variables $nick, $channel and $server are "
+           "replaced by their value)"),
+        "%(irc_channel)|%(nicks) %(nicks)", &irc_command_remove, NULL);
     weechat_hook_command (
         "restart",
         N_("tell the server to restart itself"),

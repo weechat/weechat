@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-05-24 18:00+0200\n"
+"POT-Creation-Date: 2014-05-26 07:50+0200\n"
 "PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5508,6 +5508,10 @@ msgstr "[parancs]"
 
 msgid "option: extra option, for some servers"
 msgstr ""
+
+#, fuzzy
+msgid "remove a user from the channel"
+msgstr "felhasználó erőszakos eltávolítása a szobából"
 
 msgid "tell the server to restart itself"
 msgstr "szerver újraindítása"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-05-24 18:00+0200\n"
+"POT-Creation-Date: 2014-05-26 07:50+0200\n"
 "PO-Revision-Date: 2014-05-15 12:40+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -6487,6 +6487,10 @@ msgstr "[<option>]"
 
 msgid "option: extra option, for some servers"
 msgstr "option: 追加オプション、いくつかのサーバ用"
+
+#, fuzzy
+msgid "remove a user from the channel"
+msgstr "チャンネルからユーザを強制的に削除"
 
 msgid "tell the server to restart itself"
 msgstr "サーバに再起動を指示"

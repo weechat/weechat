@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-05-24 18:00+0200\n"
+"POT-Creation-Date: 2014-05-26 07:50+0200\n"
 "PO-Revision-Date: 2014-04-19 13:08+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6544,6 +6544,10 @@ msgstr "[<opcja>]"
 
 msgid "option: extra option, for some servers"
 msgstr "opcje: dodatkowe opcje, dla niektórych serwerów"
+
+#, fuzzy
+msgid "remove a user from the channel"
+msgstr "siłowo usuwa użytkownika z kanału"
 
 msgid "tell the server to restart itself"
 msgstr "mówi serwerowi, aby się ponownie uruchomił"
