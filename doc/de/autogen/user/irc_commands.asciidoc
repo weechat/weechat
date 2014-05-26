@@ -597,6 +597,17 @@ data: unbearbeitete (RAW) Daten die gesendet werden sollen
 option: zusätzliche Option, die von manchen Servern berücksichtigt wird
 ----
 
+[[command_irc_remove]]
+[command]*`remove`* remove a user from the channel::
+
+----
+/remove  [<channel>] <nick> [<reason>]
+
+channel: Channelname
+   nick: Nick der rausgeworfen werden soll
+ reason: Begründung für den Rauswurf (Variablen die  genutzt werden können: $nick, $channel und $server)
+----
+
 [[command_irc_restart]]
 [command]*`restart`* Server dazu bringen sich selbst neu zu starten::
 

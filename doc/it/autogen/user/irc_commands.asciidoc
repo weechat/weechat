@@ -597,6 +597,17 @@ server: invia a questo server (nome interno)
 opzione: opzione extra, per alcuni server
 ----
 
+[[command_irc_remove]]
+[command]*`remove`* remove a user from the channel::
+
+----
+/remove  [<canale>] <nick> [<motivo>]
+
+channel: channel name
+   nick: nick
+ reason: reason (special variables $nick, $channel and $server are replaced by their value)
+----
+
 [[command_irc_restart]]
 [command]*`restart`* chiede al server di riavviarsi::
 

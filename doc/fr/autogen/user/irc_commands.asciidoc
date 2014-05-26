@@ -597,6 +597,17 @@ serveur : serveur pour se reconnecter (nom interne)
 option : option supplémentaire, pour certains serveurs
 ----
 
+[[command_irc_remove]]
+[command]*`remove`* supprimer un utilisateur du canal::
+
+----
+/remove  [<canal>] <pseudo> [<raison>]
+
+ canal : nom du canal
+pseudo : pseudo
+raison : raison (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+----
+
 [[command_irc_restart]]
 [command]*`restart`* demander au serveur de redémarrer::
 

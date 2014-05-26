@@ -597,6 +597,17 @@ server: 送信先サーバ (内部サーバ名)
 option: 追加オプション、いくつかのサーバ用
 ----
 
+[[command_irc_remove]]
+[command]*`remove`* remove a user from the channel::
+
+----
+/remove  [<channel>] <nick> [<reason>]
+
+channel: チャンネル名
+   nick: ニックネーム
+ reason: 理由 (特殊変数 $nick、$channel、$server はそれぞれの値に置換されます)
+----
+
 [[command_irc_restart]]
 [command]*`restart`* サーバに再起動を指示::
 
