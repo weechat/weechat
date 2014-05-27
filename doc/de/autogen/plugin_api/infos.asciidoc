@@ -14,9 +14,9 @@
 
 | irc | irc_nick | aktuellen Nicknamen für den Server erhalten | Servername
 
-| irc | irc_nick_color | holt Farbe-Code des Nick | Nickname
+| irc | irc_nick_color | zeigt Farbecode des Nick | Nickname
 
-| irc | irc_nick_color_name | holt Namen der Farbe des Nick | Nickname
+| irc | irc_nick_color_name | zeigt Farbnamen des Nick | Nickname
 
 | irc | irc_nick_from_host | Nicknamen des IRC-Hosts erhalten | IRC host (in der Form `:nick!name@server.com`)
 

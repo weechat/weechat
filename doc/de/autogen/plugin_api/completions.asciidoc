@@ -14,7 +14,7 @@
 
 | guile | guile_script | Liste der Skripten
 
-| irc | irc_channel | Aktueller IRC-Channel
+| irc | irc_channel | aktueller IRC-Channel
 
 | irc | irc_channel_nicks_hosts | Liste der Nicks und Hostnamen des aktuellen Channels
 
@@ -26,7 +26,7 @@
 
 | irc | irc_msg_kick | Standardmitteilung wenn man jemanden aus einem Channel wirft
 
-| irc | irc_msg_part | Standardnachricht beim Verlassen (/part) eines IRC-Channels
+| irc | irc_msg_part | Standardmitteilung beim Verlassen (/part) eines IRC-Channels
 
 | irc | irc_notify_nicks | Nicks für die eine Benachrichtigung existiert
 

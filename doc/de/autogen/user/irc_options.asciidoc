@@ -124,17 +124,17 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.display_host_join]] *irc.look.display_host_join*
-** Beschreibung: `Zeigt den Host in einer join Nachricht an`
+** Beschreibung: `zeigt den Host innerhalb einer join Nachricht an`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.display_host_join_local]] *irc.look.display_host_join_local*
-** Beschreibung: `Zeigt den Host in join Nachrichten des lokalen Client an`
+** Beschreibung: `zeigt den Host innerhalb einer  join Nachrichten des lokalen Client an`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.display_host_quit]] *irc.look.display_host_quit*
-** Beschreibung: `Zeigt den Host in einer part/quit Nachricht an`
+** Beschreibung: `zeigt den Host innerhalb einer part/quit Nachricht an`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -144,7 +144,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"329,332,333,366"`)
 
 * [[option_irc.look.display_old_topic]] *irc.look.display_old_topic*
-** Beschreibung: `Zeige das alte Thema an, falls das Thema des Channels geändert wurde`
+** Beschreibung: `zeige das alte Thema an, falls das Thema des Channels geändert wurde`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -179,7 +179,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"irc_privmsg,irc_notice"`)
 
 * [[option_irc.look.item_away_message]] *irc.look.item_away_message*
-** Beschreibung: `Abwesenheitsnachricht in der Away-Bar-Item anzeigen`
+** Beschreibung: `Abwesenheitsnachricht im Away-Bar-Item anzeigen`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -469,7 +469,7 @@
 ** Werte: 0 .. 86400 (Standardwert: `30`)
 
 * [[option_irc.server_default.away_check]] *irc.server_default.away_check*
-** Beschreibung: `Überprüft die Abwesenheit (/away) der Nutzer, in dem angegebenen Intervall (in Minuten, 0 = nicht überprüfen)`
+** Beschreibung: `überprüft die Abwesenheit (/away) der Nutzer, in dem angegebenen Intervall (in Minuten, 0 = nicht überprüfen)`
 ** Typ: integer
 ** Werte: 0 .. 10080 (Standardwert: `0`)
 
@@ -504,17 +504,17 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.default_msg_part]] *irc.server_default.default_msg_part*
-** Beschreibung: `Standardnachricht beim Verlassen eines Channels ("%v": wird durch die WeeChat-Version ersetzt)`
+** Beschreibung: `Standardmitteilung beim Verlassen eines Channels ("%v": wird durch die WeeChat-Version ersetzt)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"WeeChat %v"`)
 
 * [[option_irc.server_default.default_msg_quit]] *irc.server_default.default_msg_quit*
-** Beschreibung: `Standardnachricht beim Beenden (Verbindung zum Server trennen) ("%v": wird durch die WeeChat-Version ersetzt)`
+** Beschreibung: `Standardmitteilung beim Beenden (Verbindung zum Server trennen) ("%v": wird durch die WeeChat-Version ersetzt)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"WeeChat %v"`)
 
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
-** Beschreibung: `bei der Kommunikation mit dem Server wird das IPv6 Protokoll genutzt (sollte IPv6 nicht genutzt werden können, wird automatisch auf IPv4 zurückgegriffen); wird die Funktion deaktiviert, dann wird ausschließlich IPv4 genutzt`
+** Beschreibung: `bei der Kommunikation mit dem Server wird das IPv6 Protokoll genutzt (sollte IPv6 nicht verfügbar sein dann wird automatisch auf IPv4 umgeschaltet); wird die Funktion deaktiviert, dann wird ausschließlich IPv4 genutzt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -594,7 +594,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"NORMAL"`)
 
 * [[option_irc.server_default.ssl_verify]] *irc.server_default.ssl_verify*
-** Beschreibung: `Überprüft ob die SSL-Verbindung vertrauenswürdig ist`
+** Beschreibung: `überprüft ob die SSL-Verbindung vertrauenswürdig ist`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

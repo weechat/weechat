@@ -598,7 +598,7 @@ option: zusätzliche Option, die von manchen Servern berücksichtigt wird
 ----
 
 [[command_irc_remove]]
-[command]*`remove`* remove a user from the channel::
+[command]*`remove`* entfernt einen User aus dem Channel::
 
 ----
 /remove  [<channel>] <nick> [<reason>]
@@ -618,7 +618,7 @@ target: Servername
 ----
 
 [[command_irc_sajoin]]
-[command]*`sajoin`* zwingt einen User einen oder mehrere Channel zu betreten::
+[command]*`sajoin`* fordert einen User auf einen oder mehrere Channel zu betreten::
 
 ----
 /sajoin  <nick> <channel>[,<channel>...]
@@ -628,7 +628,7 @@ channel: Name des Channels
 ----
 
 [[command_irc_samode]]
-[command]*`samode`* Ändert den Modus des Channels ohne das Operator-Privilegien vorliegen::
+[command]*`samode`* ändert den Modus des Channels ohne das Operator-Privilegien vorliegen::
 
 ----
 /samode  <channel> <mode>
@@ -638,7 +638,7 @@ Channel: Name des Channel
 ----
 
 [[command_irc_sanick]]
-[command]*`sanick`* Zwingt einen User den Nick zu ändern::
+[command]*`sanick`* zwingt einen User den Nick zu ändern::
 
 ----
 /sanick  <nick> <new_nick>
@@ -648,7 +648,7 @@ new_nick: neuer Nickname
 ----
 
 [[command_irc_sapart]]
-[command]*`sapart`* Zwingt einen User den oder die Channel(s) zu verlassen::
+[command]*`sapart`* zwingt einen User den oder die Channel(s) zu verlassen::
 
 ----
 /sapart  <nick> <channel>[,<channel>...]
@@ -668,7 +668,7 @@ reason: Grund der Abmeldung
 ----
 
 [[command_irc_server]]
-[command]*`server`* Auflisten, Hinzufügen oder Entfernen von IRC-Servern::
+[command]*`server`* auflisten, hinzufügen oder entfernen von IRC-Servern::
 
 ----
 /server  list|listfull [<server>]
@@ -706,7 +706,7 @@ Beispiele:
 ----
 
 [[command_irc_service]]
-[command]*`service`* Einen neuen Service eintragen::
+[command]*`service`* einen neuen Service eintragen::
 
 ----
 /service  <nick> <reserved> <distribution> <type> <reserved> <info>
@@ -796,12 +796,12 @@ target: Servername
 ----
 
 [[command_irc_unban]]
-[command]*`unban`* Bann aufheben (Nicks oder Hosts)::
+[command]*`unban`* Bann von Nicks oder Hosts aufheben::
 
 ----
 /unban  [<channel>] <nick> [<nick>...]
 
-channel: NAme des Channel
+channel: Name des Channel
    nick: Nick oder Host
 ----
 
@@ -811,12 +811,12 @@ channel: NAme des Channel
 ----
 /unquiet  [<channel>] <nick> [<nick>...]
 
-channel: NAme des Channel
+channel: Name des Channel
    nick: Nick oder Host
 ----
 
 [[command_irc_userhost]]
-[command]*`userhost`* Zeigt Informationen zu Nicknamen an::
+[command]*`userhost`* zeigt Informationen zu Nicknamen an::
 
 ----
 /userhost  <nick> [<nick>...]
@@ -889,13 +889,13 @@ mask: nur Information über betreffende Nicknamen abfragen
 /whois  [<server>] [<nick>[,<nick>...]]
 
 server: Name des Servers (interner Servername)
-  nick: Nick, welcher abgefragt werden soll (kann auch eine Maske sein)
+  nick: Nick, welcher abgefragt werden soll (es kann auch eine Maske genutzt werden)
 
 Ohne Angabe von Argumenten, nutzt /whois folgende Nicks:
 - den eigenen Nick, falls es sich um einen Server/Channel Buffer handelt
 - den Nick des Gesprächspartners, falls es sich um einen privaten Buffer handelt.
 
-Sollte die Option irc.network.whois_double_nick aktiviert sein, wird ein Nick zweimal verwendet (sofern der Nick nur einmal angegeben wurde), um die Idle-Zeit zu erhalten.
+Sollte die Option irc.network.whois_double_nick aktiviert sein dann wird ein Nick zweimal verwendet (sofern der Nick nur einmal angegeben wurde), um die Idle-Zeit zu erhalten.
 ----
 
 [[command_irc_whowas]]
@@ -905,7 +905,7 @@ Sollte die Option irc.network.whois_double_nick aktiviert sein, wird ein Nick zw
 /whowas  <nick>[,<nick>...] [<count> [<target>]]
 
   nick: Nickname
- count: maximale Anzahl an Antworten (negative Zahl für eine vollständige Liste)
+ count: maximale Anzahl an Antworten (negative Zahl für eine vollständige Suche)
 target: Antwort soll auf diese Suchmaske zutreffen
 ----
 
