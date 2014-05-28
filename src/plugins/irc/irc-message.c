@@ -151,6 +151,12 @@ irc_message_parse (struct t_irc_server *server, const char *message,
             /* now we have: pos --> "#channel :hello!" */
             if (arguments)
                 *arguments = strdup (pos);
+            if ((pos[0] == ':')
+                && ((strncmp (ptr_message, "JOIN ", 5) == 0)
+                    || (strncmp (ptr_message, "PART ", 5) == 0)))
+            {
+                pos++;
+            }
             if (pos[0] != ':')
             {
                 if (irc_channel_is_channel (server, pos))
