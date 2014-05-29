@@ -29,10 +29,26 @@
 #include "relay-weechat-protocol.h"
 #include "relay-weechat-msg.h"
 #include "relay-weechat-nicklist.h"
+#include "../relay-buffer.h"
 #include "../relay-client.h"
 #include "../relay-config.h"
 #include "../relay-raw.h"
 
+
+/*
+ * Checks if the buffer pointer is a relay buffer (relay raw/list).
+ *
+ * Returns:
+ *   1: buffer is a relay buffer (raw/list)
+ *   0: buffer is NOT a relay buffer
+ */
+
+int
+relay_weechat_is_relay_buffer (struct t_gui_buffer *buffer)
+{
+    return ((relay_raw_buffer && (buffer == relay_raw_buffer))
+            || (relay_buffer && (buffer == relay_buffer))) ? 1 : 0;
+}
 
 /*
  * Gets buffer pointer with argument from a command.
@@ -626,7 +642,7 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
     else if (strcmp (signal, "buffer_cleared") == 0)
     {
         ptr_buffer = (struct t_gui_buffer *)signal_data;
-        if (!ptr_buffer)
+        if (!ptr_buffer || relay_weechat_is_relay_buffer (ptr_buffer))
             return WEECHAT_RC_OK;
 
         /* send signal only if sync with flag "buffer" */
@@ -687,7 +703,7 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
 
         ptr_buffer = weechat_hdata_pointer (ptr_hdata_line_data, ptr_line_data,
                                             "buffer");
-        if (!ptr_buffer || (relay_raw_buffer && (ptr_buffer == relay_raw_buffer)))
+        if (!ptr_buffer || relay_weechat_is_relay_buffer (ptr_buffer))
             return WEECHAT_RC_OK;
 
         /* send signal only if sync with flag "buffer" */
