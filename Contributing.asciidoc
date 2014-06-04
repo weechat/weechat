@@ -11,6 +11,7 @@ First, some basic things:
 * Use only English to communicate with developers.
 * If you can, please check if the problem has been fixed in development version
   (if you are using a stable release or old version).
+* Report only one bug or feature request per issue.
 
 === Required info
 
