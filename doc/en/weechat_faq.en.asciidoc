@@ -519,7 +519,7 @@ You can create such server and connect with following commands (replace name
 and address by appropriate values):
 
 ----
-/server add name irc.server.org -password="oauth:XXXX"
+/server add name irc.server.org -password=oauth:XXXX
 /connect name
 ----
 

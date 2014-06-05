@@ -546,7 +546,7 @@ Mit folgenden Befehlen kann man einen Server erstellen und sich mit diesem
 verbinden (Name und Adresse muss durch entsprechende Werte ersetzt werden):
 
 ----
-/server add name irc.server.org -password="oauth:XXXX"
+/server add name irc.server.org -password=oauth:XXXX
 /connect name
 ----
 

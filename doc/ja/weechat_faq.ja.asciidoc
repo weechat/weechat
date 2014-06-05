@@ -517,7 +517,7 @@ oauth を使うにはパスワードを "oauth:XXXX" のように指定してく
 (名前とアドレスは適当な値に変更してください):
 
 ----
-/server add name irc.server.org -password="oauth:XXXX"
+/server add name irc.server.org -password=oauth:XXXX
 /connect name
 ----
 

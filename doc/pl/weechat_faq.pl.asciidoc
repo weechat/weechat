@@ -526,7 +526,7 @@ W celu dodania takiego serwera i połączenia się z nim należ wykonać nastepu
 polecenia (należy zastąpić nazwę i adres odpowiednimi wartościami):
 
 ----
-/server add nazwa irc.server.org -password="oauth:hasło"
+/server add nazwa irc.server.org -password=oauth:hasło
 /connect nazwa
 ----
 
