@@ -122,6 +122,7 @@ struct t_config_option *config_look_hotlist_names_length;
 struct t_config_option *config_look_hotlist_names_level;
 struct t_config_option *config_look_hotlist_names_merged_buffers;
 struct t_config_option *config_look_hotlist_prefix;
+struct t_config_option *config_look_hotlist_remove;
 struct t_config_option *config_look_hotlist_short_names;
 struct t_config_option *config_look_hotlist_sort;
 struct t_config_option *config_look_hotlist_suffix;
@@ -2351,6 +2352,13 @@ config_weechat_init_options ()
         "hotlist_prefix", "string",
         N_("text displayed at the beginning of the hotlist"),
         NULL, 0, 0, "H: ", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_hotlist_remove = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "hotlist_remove", "integer",
+        N_("remove buffers in hotlist: buffer = remove buffer by buffer, "
+           "merged = remove all visible merged buffers at once"),
+        "buffer|merged",
+        0, 0, "buffer", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_hotlist_short_names = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_short_names", "boolean",

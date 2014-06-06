@@ -55,6 +55,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: fix "/window scroll -N" on a buffer with free content
 * core: add option weechat.look.hotlist_add_conditions, remove option
   weechat.look.hotlist_add_buffer_if_away
+* core: add option weechat.look.hotlist_remove (closes #99)
 * core: fix recursive calls to function eval_expression
 * core: mute all buffers by default in command /mute (replace option -all by
   -core)

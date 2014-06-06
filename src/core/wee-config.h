@@ -66,6 +66,12 @@ enum t_config_look_prefix_buffer_align
     CONFIG_LOOK_PREFIX_BUFFER_ALIGN_RIGHT,
 };
 
+enum t_config_look_hotlist_remove
+{
+    CONFIG_LOOK_HOTLIST_REMOVE_BUFFER = 0,
+    CONFIG_LOOK_HOTLIST_REMOVE_MERGED,
+};
+
 enum t_config_look_hotlist_sort
 {
     CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_ASC = 0,
@@ -153,6 +159,7 @@ extern struct t_config_option *config_look_hotlist_names_length;
 extern struct t_config_option *config_look_hotlist_names_level;
 extern struct t_config_option *config_look_hotlist_names_merged_buffers;
 extern struct t_config_option *config_look_hotlist_prefix;
+extern struct t_config_option *config_look_hotlist_remove;
 extern struct t_config_option *config_look_hotlist_short_names;
 extern struct t_config_option *config_look_hotlist_sort;
 extern struct t_config_option *config_look_hotlist_suffix;

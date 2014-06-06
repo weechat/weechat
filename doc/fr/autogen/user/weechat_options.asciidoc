@@ -603,6 +603,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"H: "`)
 
+* [[option_weechat.look.hotlist_remove]] *weechat.look.hotlist_remove*
+** description: `supprimer les tampons de la liste d'activité : buffer = supprimer tampon par tampon, merged = supprimer tous les tampons mélangés visibles d'un seul coup`
+** type: entier
+** valeurs: buffer, merged (valeur par défaut: `buffer`)
+
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
 ** description: `si défini, utilise des noms courts pour afficher les noms de tampons dans la hotlist (commence après le premier '.' dans le nom)`
 ** type: booléen

@@ -603,6 +603,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"H: "`)
 
+* [[option_weechat.look.hotlist_remove]] *weechat.look.hotlist_remove*
+** Beschreibung: `remove buffers in hotlist: buffer = remove buffer by buffer, merged = remove all visible merged buffers at once`
+** Typ: integer
+** Werte: buffer, merged (Standardwert: `buffer`)
+
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
 ** Beschreibung: `ist diese Option aktiviert, wird der Kurzname der zusammengefügten Buffer in der Hotlist dargestellt (die Darstellung geschieht nach dem ersten '.' im Namen)`
 ** Typ: boolesch

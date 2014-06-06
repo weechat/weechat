@@ -489,7 +489,7 @@ gui_hotlist_clear ()
 void
 gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
 {
-    int hotlist_changed;
+    int hotlist_changed, hotlist_remove, buffer_to_remove;
     struct t_gui_hotlist *ptr_hotlist, *next_hotlist;
 
     if (!buffer || weechat_upgrading)
@@ -497,14 +497,27 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
 
     hotlist_changed = 0;
 
+    hotlist_remove = CONFIG_INTEGER(config_look_hotlist_remove);
+
     ptr_hotlist = gui_hotlist;
     while (ptr_hotlist)
     {
         next_hotlist = ptr_hotlist->next_hotlist;
 
-        if ((ptr_hotlist->buffer->number == buffer->number)
-            && (!ptr_hotlist->buffer->zoomed
-                || (ptr_hotlist->buffer->active == 2)))
+        buffer_to_remove = 0;
+        switch (hotlist_remove)
+        {
+            case CONFIG_LOOK_HOTLIST_REMOVE_BUFFER:
+                buffer_to_remove = (ptr_hotlist->buffer == buffer);
+                break;
+            case CONFIG_LOOK_HOTLIST_REMOVE_MERGED:
+                buffer_to_remove =
+                    ((ptr_hotlist->buffer->number == buffer->number)
+                     && (!ptr_hotlist->buffer->zoomed
+                         || (ptr_hotlist->buffer->active == 2)));
+                break;
+        }
+        if (buffer_to_remove)
         {
             gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);
             hotlist_changed = 1;
