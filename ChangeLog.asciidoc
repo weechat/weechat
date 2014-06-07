@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.0 (under dev)
 
+* core: fix color display of last color number + 1 (closes #101)
 * core: add bar item "buffer_short_name" (task #10882)
 * core: add option "send" in command /input (send text to a buffer)
 * core: add option "-buffer" in command /command (closes #67)

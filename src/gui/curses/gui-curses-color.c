@@ -383,9 +383,9 @@ gui_color_get_pair (int fg, int bg)
         return COLOR_WHITE;
 
     /* if invalid color, use default fg/bg */
-    if (fg > gui_color_term_colors)
+    if (fg >= gui_color_term_colors)
         fg = -1;
-    if (bg > gui_color_term_colors)
+    if (bg >= gui_color_term_colors)
         bg = -1;
 
     /* compute index for gui_color_pairs with foreground and background */
