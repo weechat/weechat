@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-06 19:29+0200\n"
+"POT-Creation-Date: 2014-06-08 09:31+0200\n"
 "PO-Revision-Date: 2014-04-19 13:08+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6109,8 +6109,9 @@ msgstr ""
 "  /join -server freenode #weechat\n"
 "  /join -noswitch #weechat"
 
-msgid "forcibly remove a user from a channel"
-msgstr "siłowo usuwa użytkownika z kanału"
+#, fuzzy
+msgid "kick a user out of a channel"
+msgstr "zmusza użytkownika do opuszczenia kanału(ów)"
 
 msgid "[<channel>] <nick> [<reason>]"
 msgstr "[<kanał>] <nick> [<powód>]"
@@ -6127,8 +6128,9 @@ msgstr ""
 " powód: powód wykopania (specjalne zmienne jak $nick, $channel i $server są "
 "podmieniane na odpowiednie wartości)"
 
-msgid "kicks and bans a nick from a channel"
-msgstr "wykopuje i banuje użytkownika na kanale"
+#, fuzzy
+msgid "kick a user out of a channel and ban the host"
+msgstr "zmusza użytkownika do opuszczenia kanału(ów)"
 
 #, fuzzy
 msgid ""
@@ -6551,8 +6553,8 @@ msgid "option: extra option, for some servers"
 msgstr "opcje: dodatkowe opcje, dla niektórych serwerów"
 
 #, fuzzy
-msgid "remove a user from the channel"
-msgstr "siłowo usuwa użytkownika z kanału"
+msgid "force a user to leave a channel"
+msgstr "zmusza użytkownika do opuszczenia kanału(ów)"
 
 msgid "tell the server to restart itself"
 msgstr "mówi serwerowi, aby się ponownie uruchomił"
@@ -11399,3 +11401,14 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda: błąd %d %s"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+#, fuzzy
+#~ msgid "kick and ban a nick from a channel"
+#~ msgstr "wykopuje i banuje użytkownika na kanale"
+
+#~ msgid "forcibly remove a user from a channel"
+#~ msgstr "siłowo usuwa użytkownika z kanału"
+
+#, fuzzy
+#~ msgid "remove a user from the channel"
+#~ msgstr "siłowo usuwa użytkownika z kanału"

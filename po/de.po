@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-06 19:29+0200\n"
+"POT-Creation-Date: 2014-06-08 09:31+0200\n"
 "PO-Revision-Date: 2014-05-26 19:19+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -6465,8 +6465,9 @@ msgstr ""
 "  /join -server freenode #weechat\n"
 "  /join -noswitch #weechat"
 
-msgid "forcibly remove a user from a channel"
-msgstr "Einen User aus einem Channel herauswerfen"
+#, fuzzy
+msgid "kick a user out of a channel"
+msgstr "zwingt einen User den oder die Channel(s) zu verlassen"
 
 msgid "[<channel>] <nick> [<reason>]"
 msgstr "[<channel>] <nick> [<reason>]"
@@ -6482,8 +6483,9 @@ msgstr ""
 " reason: Begründung für den Rauswurf (Variablen die  genutzt werden können: "
 "$nick, $channel und $server)"
 
-msgid "kicks and bans a nick from a channel"
-msgstr "wirft jemanden aus dem Channel und verbannt ihn"
+#, fuzzy
+msgid "kick a user out of a channel and ban the host"
+msgstr "zwingt einen User den oder die Channel(s) zu verlassen"
 
 msgid ""
 "channel: channel name\n"
@@ -6906,8 +6908,9 @@ msgid "option: extra option, for some servers"
 msgstr ""
 "option: zusätzliche Option, die von manchen Servern berücksichtigt wird"
 
-msgid "remove a user from the channel"
-msgstr "entfernt einen User aus dem Channel"
+#, fuzzy
+msgid "force a user to leave a channel"
+msgstr "zwingt einen User den oder die Channel(s) zu verlassen"
 
 msgid "tell the server to restart itself"
 msgstr "Server dazu bringen sich selbst neu zu starten"
@@ -12035,3 +12038,13 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
+
+#, fuzzy
+#~ msgid "kick and ban a nick from a channel"
+#~ msgstr "wirft jemanden aus dem Channel und verbannt ihn"
+
+#~ msgid "forcibly remove a user from a channel"
+#~ msgstr "Einen User aus einem Channel herauswerfen"
+
+#~ msgid "remove a user from the channel"
+#~ msgstr "entfernt einen User aus dem Channel"

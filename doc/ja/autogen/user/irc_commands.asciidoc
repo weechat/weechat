@@ -288,7 +288,7 @@ nick: nick
 ----
 
 [[command_irc_kick]]
-[command]*`kick`* チャンネルからユーザを強制的に削除::
+[command]*`kick`* kick a user out of a channel::
 
 ----
 /kick  [<channel>] <nick> [<reason>]
@@ -299,7 +299,7 @@ channel: チャンネル名
 ----
 
 [[command_irc_kickban]]
-[command]*`kickban`* チャンネルからニックネームをキックして参加を禁止::
+[command]*`kickban`* kick a user out of a channel and ban the host::
 
 ----
 /kickban  [<channel>] <nick> [<reason>]
@@ -598,7 +598,7 @@ option: 追加オプション、いくつかのサーバ用
 ----
 
 [[command_irc_remove]]
-[command]*`remove`* remove a user from the channel::
+[command]*`remove`* force a user to leave a channel::
 
 ----
 /remove  [<channel>] <nick> [<reason>]

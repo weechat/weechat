@@ -499,7 +499,7 @@
 ** valeurs: 1 .. 3600 (valeur par défaut: `60`)
 
 * [[option_irc.server_default.default_msg_kick]] *irc.server_default.default_msg_kick*
-** description: `message par défaut pour l'élimination utilisé par les commandes "/kick" et "/kickban" (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)`
+** description: `message par défaut pour l'éjection utilisé par les commandes "/kick" et "/kickban" (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

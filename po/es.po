@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-06 19:29+0200\n"
+"POT-Creation-Date: 2014-06-08 09:31+0200\n"
 "PO-Revision-Date: 2014-04-19 13:08+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5835,8 +5835,9 @@ msgstr ""
 "  /join #canalprotegido,#weechat clave\n"
 "  /join -server freenode #weechat"
 
-msgid "forcibly remove a user from a channel"
-msgstr "expulsar forzosamente a un usuario de un canal"
+#, fuzzy
+msgid "kick a user out of a channel"
+msgstr "fuerza al usuario a abandonar el canal o canales"
 
 msgid "[<channel>] <nick> [<reason>]"
 msgstr "[<canal>] <apodo> [<razón>]"
@@ -5852,8 +5853,9 @@ msgstr ""
 "apodo: usuario a expulsar\n"
 "razón: razón de la expulsión"
 
-msgid "kicks and bans a nick from a channel"
-msgstr "expulsa y veta a un apodo de un canal"
+#, fuzzy
+msgid "kick a user out of a channel and ban the host"
+msgstr "fuerza al usuario a abandonar el canal o canales"
 
 #, fuzzy
 msgid ""
@@ -6278,8 +6280,8 @@ msgid "option: extra option, for some servers"
 msgstr "opción: opción extra, para algunos servidores"
 
 #, fuzzy
-msgid "remove a user from the channel"
-msgstr "expulsar forzosamente a un usuario de un canal"
+msgid "force a user to leave a channel"
+msgstr "fuerza al usuario a abandonar el canal o canales"
 
 msgid "tell the server to restart itself"
 msgstr "pedir al servidor que se reinicie"
@@ -10961,3 +10963,14 @@ msgstr "%s%s: no es posible configurar la opción \"nonblock\" para el socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
+
+#, fuzzy
+#~ msgid "kick and ban a nick from a channel"
+#~ msgstr "expulsa y veta a un apodo de un canal"
+
+#~ msgid "forcibly remove a user from a channel"
+#~ msgstr "expulsar forzosamente a un usuario de un canal"
+
+#, fuzzy
+#~ msgid "remove a user from the channel"
+#~ msgstr "expulsar forzosamente a un usuario de un canal"

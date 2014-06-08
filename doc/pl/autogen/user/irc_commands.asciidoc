@@ -288,7 +288,7 @@ Przykłady:
 ----
 
 [[command_irc_kick]]
-[command]*`kick`* siłowo usuwa użytkownika z kanału::
+[command]*`kick`* kick a user out of a channel::
 
 ----
 /kick  [<kanał>] <nick> [<powód>]
@@ -299,7 +299,7 @@ channel: channel name
 ----
 
 [[command_irc_kickban]]
-[command]*`kickban`* wykopuje i banuje użytkownika na kanale::
+[command]*`kickban`* kick a user out of a channel and ban the host::
 
 ----
 /kickban  [<kanał>] <nick> [<powód>]
@@ -598,7 +598,7 @@ opcje: dodatkowe opcje, dla niektórych serwerów
 ----
 
 [[command_irc_remove]]
-[command]*`remove`* remove a user from the channel::
+[command]*`remove`* force a user to leave a channel::
 
 ----
 /remove  [<kanał>] <nick> [<powód>]

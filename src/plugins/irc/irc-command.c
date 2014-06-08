@@ -6049,7 +6049,7 @@ irc_command_init ()
         &irc_command_join, NULL);
     weechat_hook_command (
         "kick",
-        N_("forcibly remove a user from a channel"),
+        N_("kick a user out of a channel"),
         N_("[<channel>] <nick> [<reason>]"),
         N_("channel: channel name\n"
            "   nick: nick\n"
@@ -6058,7 +6058,7 @@ irc_command_init ()
         "%(nicks) %(irc_msg_kick) %-", &irc_command_kick, NULL);
     weechat_hook_command (
         "kickban",
-        N_("kicks and bans a nick from a channel"),
+        N_("kick a user out of a channel and ban the host"),
         N_("[<channel>] <nick> [<reason>]"),
         N_("channel: channel name\n"
            "   nick: nick\n"
@@ -6307,7 +6307,7 @@ irc_command_init ()
         NULL, &irc_command_rehash, NULL);
     weechat_hook_command (
         "remove",
-        N_("remove a user from the channel"),
+        N_("force a user to leave a channel"),
         N_("[<channel>] <nick> [<reason>]"),
         N_("channel: channel name\n"
            "   nick: nick\n"

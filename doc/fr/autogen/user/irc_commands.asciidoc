@@ -288,7 +288,7 @@ Exemples :
 ----
 
 [[command_irc_kick]]
-[command]*`kick`* retirer par la force un utilisateur d'un canal::
+[command]*`kick`* éjecter un utilisateur d'un canal::
 
 ----
 /kick  [<canal>] <pseudo> [<raison>]
@@ -299,7 +299,7 @@ raison : raison (les variables spéciales $nick, $channel et $server sont rempl
 ----
 
 [[command_irc_kickban]]
-[command]*`kickban`* retirer par la force un pseudo d'un canal et le bannir::
+[command]*`kickban`* éjecter un utilisateur d'un canal et bannir l'hôte::
 
 ----
 /kickban  [<canal>] <pseudo> [<raison>]
@@ -308,7 +308,7 @@ raison : raison (les variables spéciales $nick, $channel et $server sont rempl
 pseudo : pseudo
 raison : raison (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 
-Il est possible d'éliminer/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*".
+Il est possible d'éjecter/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*".
 
 Exemple :
   bannir "*!*@host.com" puis éliminer "toto" :
@@ -598,7 +598,7 @@ option : option supplémentaire, pour certains serveurs
 ----
 
 [[command_irc_remove]]
-[command]*`remove`* supprimer un utilisateur du canal::
+[command]*`remove`* forcer un utilisateur à quitter un canal::
 
 ----
 /remove  [<canal>] <pseudo> [<raison>]

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-06 19:29+0200\n"
+"POT-Creation-Date: 2014-06-08 09:31+0200\n"
 "PO-Revision-Date: 2014-04-19 13:08+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5978,8 +5978,9 @@ msgstr ""
 "  /join -server freenode #weechat\n"
 "  /join -noswitch #weechat"
 
-msgid "forcibly remove a user from a channel"
-msgstr "caccia forzatamente un utente da un canale"
+#, fuzzy
+msgid "kick a user out of a channel"
+msgstr "forza un utente a lasciare uno o più canali"
 
 msgid "[<channel>] <nick> [<reason>]"
 msgstr "[<canale>] <nick> [<motivo>]"
@@ -5995,8 +5996,9 @@ msgstr ""
 "  nick: nick da cacciare\n"
 "motivo: motivo per il kick"
 
-msgid "kicks and bans a nick from a channel"
-msgstr "caccia e banna un nick da un canale"
+#, fuzzy
+msgid "kick a user out of a channel and ban the host"
+msgstr "forza un utente a lasciare uno o più canali"
 
 #, fuzzy
 msgid ""
@@ -6417,8 +6419,8 @@ msgid "option: extra option, for some servers"
 msgstr "opzione: opzione extra, per alcuni server"
 
 #, fuzzy
-msgid "remove a user from the channel"
-msgstr "caccia forzatamente un utente da un canale"
+msgid "force a user to leave a channel"
+msgstr "forza un utente a lasciare uno o più canali"
 
 msgid "tell the server to restart itself"
 msgstr "chiede al server di riavviarsi"
@@ -11132,3 +11134,14 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: timeout per \"%s\" con %s"
+
+#, fuzzy
+#~ msgid "kick and ban a nick from a channel"
+#~ msgstr "caccia e banna un nick da un canale"
+
+#~ msgid "forcibly remove a user from a channel"
+#~ msgstr "caccia forzatamente un utente da un canale"
+
+#, fuzzy
+#~ msgid "remove a user from the channel"
+#~ msgstr "caccia forzatamente un utente da un canale"
