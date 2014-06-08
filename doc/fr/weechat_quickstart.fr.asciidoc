@@ -145,6 +145,18 @@ Pour activer la connexion automatique au serveur lors du démarrage :
 /set irc.server.freenode.autoconnect on
 ----
 
+Pour se connecter avec SSL :
+
+----
+/set irc.server.freenode.addresses "chat.freenode.net/7000"
+/set irc.server.freenode.ssl on
+/set irc.server.freenode.ssl_dhkey_size 1024
+----
+
+[NOTE]
+Freenode ne supporte pas la clé dhkey par défaut de 2048, donc elle doit être
+définie à 1024.
+
 Si SASL est disponible sur le serveur, vous pouvez l'utiliser pour
 l'authentification (vous serez identifié avant de rejoindre les canaux) :
 
