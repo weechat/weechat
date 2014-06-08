@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-06-08 09:31+0200\n"
-"PO-Revision-Date: 2014-06-08 09:32+0200\n"
+"PO-Revision-Date: 2014-06-08 09:59+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -6371,7 +6371,7 @@ msgstr ""
 "masque et remplacé par \"*\".\n"
 "\n"
 "Exemple :\n"
-"  bannir \"*!*@host.com\" puis éliminer \"toto\" :\n"
+"  bannir \"*!*@host.com\" puis éjecter \"toto\" :\n"
 "    /kickban toto!*@host.com"
 
 msgid "close client-server connection"
@@ -8340,7 +8340,7 @@ msgstr "%s%s%s%s%s%s%s%s%s%s a rejoint %s%s%s"
 
 #, c-format
 msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
-msgstr "%s%s%s%s a expulsé %s%s%s %s(%s%s%s)"
+msgstr "%s%s%s%s a éjecté %s%s%s %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s%s%s has kicked %s%s%s"

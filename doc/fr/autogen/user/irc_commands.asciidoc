@@ -311,7 +311,7 @@ raison : raison (les variables spéciales $nick, $channel et $server sont rempl
 Il est possible d'éjecter/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*".
 
 Exemple :
-  bannir "*!*@host.com" puis éliminer "toto" :
+  bannir "*!*@host.com" puis éjecter "toto" :
     /kickban toto!*@host.com
 ----
 
