@@ -168,8 +168,9 @@ to 1024.
 /set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
+// TRANSLATION MISSING
 [NOTE]
-';' (セミコロン) で繋ぐことで複数のコマンドを設定することができます
+Many commands in option 'command' can be separated by ';' (semi-colon).
 
 チャンネルへの自動参加を設定する場合:
 

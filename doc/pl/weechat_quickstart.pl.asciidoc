@@ -170,8 +170,9 @@ przez nickserv (tylko jeśli nie uwierzytelniasz się przez SASL):
 /set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
+// TRANSLATION MISSING
 [NOTE]
-Wiele komend może być oddzielonych ';' (średnik).
+Many commands in option 'command' can be separated by ';' (semi-colon).
 
 Aby automatycznie wejść na kanały po połączeniu z serwerem:
 

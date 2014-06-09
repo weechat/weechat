@@ -173,8 +173,9 @@ autenticarsi con nickserv (solo se non viene usato SASL per l'autenticazione):
 /set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
+// TRANSLATION MISSING
 [NOTE]
-Più comandi possono essere separati da ';' (punto e virgola).
+Many commands in option 'command' can be separated by ';' (semi-colon).
 
 Per entrare automaticamente in alcuni canali quando ci si connette
 al server:

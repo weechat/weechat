@@ -175,7 +175,8 @@ l'authentification) :
 ----
 
 [NOTE]
-Plusieurs commandes peuvent être séparées par ';' (point-virgule).
+Plusieurs commandes dans l'option 'command' peuvent être séparées par ';'
+(point-virgule).
 
 Pour rejoindre automatiquement des canaux lors de la connexion au serveur :
 

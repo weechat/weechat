@@ -168,8 +168,9 @@ to 1024.
 /set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
+// TRANSLATION MISSING
 [NOTE]
-Несколько команд можно записать через ';' (двоеточие).
+Many commands in option 'command' can be separated by ';' (semi-colon).
 
 Для автовхода на определённые каналы при подключении к серверу используйте:
 

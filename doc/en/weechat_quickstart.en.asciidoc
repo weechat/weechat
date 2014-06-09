@@ -167,7 +167,7 @@ with nickserv (only if you don't use SASL for authentication):
 ----
 
 [NOTE]
-Many commands can be separated by ';' (semi-colon).
+Many commands in option 'command' can be separated by ';' (semi-colon).
 
 To auto-join some channels when connecting to server:
 

@@ -182,8 +182,9 @@ with nickserv (only if you don't use SASL for authentication):
 /set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
+// TRANSLATION MISSING
 [NOTE]
-Varios comandos pueden ser escritos separados por ';' (punto y coma).
+Many commands in option 'command' can be separated by ';' (semi-colon).
 
 Para unirse automáticamente a canales cuando el servidor se conecte:
 
