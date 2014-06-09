@@ -604,7 +604,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"H: "`)
 
 * [[option_weechat.look.hotlist_remove]] *weechat.look.hotlist_remove*
-** Beschreibung: `remove buffers in hotlist: buffer = remove buffer by buffer, merged = remove all visible merged buffers at once`
+** Beschreibung: `entfernt Buffer aus der Hotlist: buffer = entfernt einen einzelnen Buffer, merged = entfernt alle zusammengefügten Buffer auf einmal`
 ** Typ: integer
 ** Werte: buffer, merged (Standardwert: `buffer`)
 
