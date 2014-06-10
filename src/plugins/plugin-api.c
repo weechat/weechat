@@ -498,7 +498,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         if (pointer && (!gui_bar_valid (pointer)))
             return NULL;
 
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             if (pointer)
@@ -536,7 +536,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         if (pointer && (!gui_bar_item_valid (pointer)))
             return NULL;
 
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             if (pointer)
@@ -575,7 +575,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         if (pointer && (!gui_bar_window_valid (pointer)))
             return NULL;
 
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             if (pointer)
@@ -626,7 +626,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         if (pointer && (!gui_buffer_valid (pointer)))
             return NULL;
 
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             if (pointer)
@@ -670,7 +670,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
                 return NULL;
         }
 
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             for (ptr_line = ((struct t_gui_buffer *)pointer)->own_lines->first_line;
@@ -689,7 +689,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     }
     else if (string_strcasecmp (infolist_name, "filter") == 0)
     {
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             for (ptr_filter = gui_filters; ptr_filter;
@@ -714,7 +714,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         if (pointer && (!gui_buffer_valid (pointer)))
             return NULL;
 
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             for (ptr_history = (pointer) ?
@@ -736,7 +736,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         if (pointer && !hook_valid (pointer))
             return NULL;
 
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             if (!hook_add_to_infolist (ptr_infolist, pointer, arguments))
@@ -749,7 +749,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     }
     else if (string_strcasecmp (infolist_name, "hotlist") == 0)
     {
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             for (ptr_hotlist = gui_hotlist; ptr_hotlist;
@@ -766,7 +766,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     }
     else if (string_strcasecmp (infolist_name, "key") == 0)
     {
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             if (arguments && arguments[0])
@@ -790,7 +790,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     }
     else if (string_strcasecmp (infolist_name, "layout") == 0)
     {
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             for (ptr_layout = gui_layouts; ptr_layout;
@@ -811,7 +811,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         if (!pointer || (!gui_buffer_valid (pointer)))
             return NULL;
 
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             if (!gui_nicklist_add_to_infolist (ptr_infolist, pointer, arguments))
@@ -824,7 +824,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     }
     else if (string_strcasecmp (infolist_name, "option") == 0)
     {
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             if (!config_file_add_to_infolist (ptr_infolist, arguments))
@@ -841,7 +841,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         if (pointer && (!plugin_valid (pointer)))
             return NULL;
 
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             if (pointer)
@@ -880,7 +880,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         if (pointer && (!proxy_valid (pointer)))
             return NULL;
 
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             if (pointer)
@@ -915,7 +915,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     }
     else if (string_strcasecmp (infolist_name, "url_options") == 0)
     {
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             for (i = 0; url_options[i].name; i++)
@@ -935,7 +935,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         if (pointer && (!gui_window_valid (pointer)))
             return NULL;
 
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (ptr_infolist)
         {
             if (pointer)

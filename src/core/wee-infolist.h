@@ -68,7 +68,7 @@ extern struct t_infolist *last_weechat_infolist;
 
 /* list functions */
 
-extern struct t_infolist *infolist_new ();
+extern struct t_infolist *infolist_new (struct t_weechat_plugin *plugin);
 extern int infolist_valid (struct t_infolist *infolist);
 extern struct t_infolist_item *infolist_new_item (struct t_infolist *infolist);
 extern struct t_infolist_var *infolist_new_var_integer (struct t_infolist_item *item,

@@ -618,7 +618,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
         goto end;
     }
 
-    infolist = infolist_new ();
+    infolist = infolist_new (NULL);
     if (!infolist)
     {
         UPGRADE_ERROR(_("read - infolist creation"), "");

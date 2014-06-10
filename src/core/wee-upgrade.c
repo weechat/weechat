@@ -75,7 +75,7 @@ upgrade_weechat_save_history (struct t_upgrade_file *upgrade_file,
     if (!last_history)
         return 1;
 
-    ptr_infolist = infolist_new ();
+    ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return 0;
 
@@ -128,7 +128,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
          ptr_buffer = ptr_buffer->next_buffer)
     {
         /* save buffer */
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (!ptr_infolist)
             return 0;
         if (!gui_buffer_add_to_infolist (ptr_infolist, ptr_buffer))
@@ -146,7 +146,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
         /* save nicklist */
         if (ptr_buffer->nicklist)
         {
-            ptr_infolist = infolist_new ();
+            ptr_infolist = infolist_new (NULL);
             if (!ptr_infolist)
                 return 0;
             if (!gui_nicklist_add_to_infolist (ptr_infolist, ptr_buffer, NULL))
@@ -166,7 +166,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
         for (ptr_line = ptr_buffer->own_lines->first_line; ptr_line;
              ptr_line = ptr_line->next_line)
         {
-            ptr_infolist = infolist_new ();
+            ptr_infolist = infolist_new (NULL);
             if (!ptr_infolist)
                 return 0;
             if (!gui_line_add_to_infolist (ptr_infolist,
@@ -212,7 +212,7 @@ upgrade_weechat_save_misc (struct t_upgrade_file *upgrade_file)
     struct t_infolist_item *ptr_item;
     int rc;
 
-    ptr_infolist = infolist_new ();
+    ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return 0;
 
@@ -264,7 +264,7 @@ upgrade_weechat_save_hotlist (struct t_upgrade_file *upgrade_file)
     for (ptr_hotlist = gui_hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
     {
-        ptr_infolist = infolist_new ();
+        ptr_infolist = infolist_new (NULL);
         if (!ptr_infolist)
             return 0;
         if (!gui_hotlist_add_to_infolist (ptr_infolist, ptr_hotlist))
@@ -298,7 +298,7 @@ upgrade_weechat_save_layout_window_tree (struct t_upgrade_file *upgrade_file,
     struct t_infolist *ptr_infolist;
     int rc;
 
-    ptr_infolist = infolist_new ();
+    ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return 0;
 
