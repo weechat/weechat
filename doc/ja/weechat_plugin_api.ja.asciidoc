@@ -12138,8 +12138,7 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 ** 'active': アクティブウィンドウのみに表示されているバー
 ** 'inactive': 非アクティブウィンドウのみに表示されているバー
 ** 'nicklist': ニックネームリストを持つウィンドウに表示されているバー
-// TRANSLATION MISSING
-** evaluated expression: see chapter about bars in 'WeeChat User's guide'
+** 評価された式: 'WeeChat ユーザガイド' のバーに関する章を参照
 * 'position': 'top' 、'bottom' 、'left' 、'right'
 * 'filling_top_bottom':
 ** 'horizontal': 要素は水平方向に詰め込まれている (各要素の後に間隔)
@@ -13541,8 +13540,7 @@ WEECHAT_HDATA_VAR(struct t_myplugin_list, next, POINTER, 0, NULL, "myplugin_list
 
 ==== weechat_hdata_new_list
 
-// TRANSLATION MISSING
-_WeeChat ≥ 0.3.6, updated in 1.0._
+_WeeChat バージョン 0.3.6 以上で利用可、バージョン 1.0 で更新。_
 
 hdata に新しいリストへのポインタを作成。
 
@@ -13558,9 +13556,8 @@ void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *poin
 * 'hdata': hdata へのポインタ
 * 'name': 変数名
 * 'pointer': リストへのポインタ
-// TRANSLATION MISSING
-* 'flags': combination of following values: _(WeeChat ≥ 1.0)_
-** 'WEECHAT_HDATA_LIST_CHECK_POINTERS': list used to check pointers
+* 'flags': 以下の値の組み合わせ: _(WeeChat バージョン 1.0 以上)_
+** 'WEECHAT_HDATA_LIST_CHECK_POINTERS': ポインタをチェックする際に使うリスト
 
 C 言語での使用例:
 
@@ -14035,8 +14032,7 @@ buffers = weechat.hdata_get_list(hdata, "gui_buffers")
 
 ==== weechat_hdata_check_pointer
 
-// TRANSLATION MISSING
-_WeeChat ≥ 0.3.7, updated in 1.0._
+_WeeChat バージョン 0.3.7 以上で利用可、バージョン 1.0 で更新。_
 
 hdata とリストへのポインタを使ってポインタの妥当性を確認する。
 
@@ -14050,11 +14046,10 @@ int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointe
 引数:
 
 * 'hdata': hdata へのポインタ
-// TRANSLATION MISSING
-* 'list': list pointer; if NULL _(WeeChat ≥ 1.0)_, the pointer is checked with
-  the lists in hdata that have flag "check pointers" (see
-  <<_weechat_hdata_new_list,weechat_hdata_new_list>>), and if no such list
-  exists, the pointer is considered as valid
+* 'list': リストポインタ; NULL の場合 _(WeeChat バージョン 1.0 以上)_、ポインタは
+   hdata に含まれる "check pointers" フラグを持つリストでチェックされます
+  (<<_weechat_hdata_new_list,weechat_hdata_new_list>>
+  を参照)、このフラグを持つリストがない場合、ポインタは妥当とされます。
 * 'pointer': 確認するポインタ
 
 戻り値:
