@@ -12147,6 +12147,7 @@ Arguments:
 ** 'active': bar is displayed in active window only
 ** 'inactive': bar is displayed in inactive windows only
 ** 'nicklist': bar is displayed in windows with nicklist
+** evaluated expression: see chapter about bars in 'WeeChat User's guide'
 * 'position': 'top', 'bottom', 'left' or 'right'
 * 'filling_top_bottom':
 ** 'horizontal': items are filled horizontally (space after each item)

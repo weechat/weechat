@@ -12379,6 +12379,8 @@ Paramètres :
 ** 'inactive' : la barre est affichée dans les fenêtres inactives seulement
 ** 'nicklist' : la barre est affichée dans les fenêtres possédant une liste des
    pseudos
+** expression évaluée : voir le chapitre sur les barres dans le
+   'Guide utilisateur WeeChat'
 * 'position' : 'top' (en haut), 'bottom' (en bas), 'left' (à gauche) ou 'right'
   (à droite)
 * 'filling_top_bottom' :

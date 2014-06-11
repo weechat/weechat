@@ -12478,6 +12478,8 @@ Argomenti:
 ** 'active': la barra viene visualizzata solo nella finestra attiva
 ** 'inactive': la barra viene visualizzata solo nelle finestre inattive
 ** 'nicklist': la barra viene visualizzata nelle finestre con liste nick
+// TRANSLATION MISSING
+** evaluated expression: see chapter about bars in 'WeeChat User's guide'
 * 'position': 'top', 'bottom', 'left' o 'right'
 * 'filling_top_bottom':
 ** 'horizontal': gli elementi sono posizionati in orizzontale

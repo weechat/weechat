@@ -12138,6 +12138,8 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 ** 'active': アクティブウィンドウのみに表示されているバー
 ** 'inactive': 非アクティブウィンドウのみに表示されているバー
 ** 'nicklist': ニックネームリストを持つウィンドウに表示されているバー
+// TRANSLATION MISSING
+** evaluated expression: see chapter about bars in 'WeeChat User's guide'
 * 'position': 'top' 、'bottom' 、'left' 、'right'
 * 'filling_top_bottom':
 ** 'horizontal': 要素は水平方向に詰め込まれている (各要素の後に間隔)
