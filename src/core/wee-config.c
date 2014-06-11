@@ -2358,7 +2358,7 @@ config_weechat_init_options ()
         N_("remove buffers in hotlist: buffer = remove buffer by buffer, "
            "merged = remove all visible merged buffers at once"),
         "buffer|merged",
-        0, 0, "buffer", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        0, 0, "merged", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_hotlist_short_names = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_short_names", "boolean",

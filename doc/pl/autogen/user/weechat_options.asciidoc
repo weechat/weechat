@@ -606,7 +606,7 @@
 * [[option_weechat.look.hotlist_remove]] *weechat.look.hotlist_remove*
 ** opis: `remove buffers in hotlist: buffer = remove buffer by buffer, merged = remove all visible merged buffers at once`
 ** typ: liczba
-** wartości: buffer, merged (domyślna wartość: `buffer`)
+** wartości: buffer, merged (domyślna wartość: `merged`)
 
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
 ** opis: `jeśli ustawione, używa krótkich nazw do wyświetlania nazw buforów w hotliście (zaczyna po pierwszym wystąpieniu '.' w nazwie)`

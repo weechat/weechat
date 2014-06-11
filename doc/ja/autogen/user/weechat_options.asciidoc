@@ -606,7 +606,7 @@
 * [[option_weechat.look.hotlist_remove]] *weechat.look.hotlist_remove*
 ** 説明: `remove buffers in hotlist: buffer = remove buffer by buffer, merged = remove all visible merged buffers at once`
 ** タイプ: 整数
-** 値: buffer, merged (デフォルト値: `buffer`)
+** 値: buffer, merged (デフォルト値: `merged`)
 
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
 ** 説明: `セットされた場合、ホットリストではバッファ名に短い名前を使う (名前に含まれる最初の '.' 以降)`
