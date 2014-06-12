@@ -138,8 +138,7 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 /set irc.server.freenode.autoconnect on
 ----
 
-// TRANSLATION MISSING
-To connect with SSL:
+SSL を使って接続する場合:
 
 ----
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
@@ -147,10 +146,9 @@ To connect with SSL:
 /set irc.server.freenode.ssl_dhkey_size 1024
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-Freenode does not support the default dhkey size of 2048, so it has to be set
-to 1024.
+Freenode はデフォルトの鍵サイズ 2048 をサポートしません、鍵サイズを
+1024 にしてください。
 
 サーバで SASL を利用可能な場合、SASL を利用してニックネーム認証することができます
 (チャンネル参加前にニックネーム認証が行われるでしょう):
@@ -168,9 +166,8 @@ to 1024.
 /set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-Many commands in option 'command' can be separated by ';' (semi-colon).
+'command' オプションに複数のコマンドを含める場合は ';' (セミコロン) で区切ってください。
 
 チャンネルへの自動参加を設定する場合:
 
