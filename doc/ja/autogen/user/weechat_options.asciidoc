@@ -604,7 +604,7 @@
 ** 値: 未制約文字列 (デフォルト値: `"H: "`)
 
 * [[option_weechat.look.hotlist_remove]] *weechat.look.hotlist_remove*
-** 説明: `remove buffers in hotlist: buffer = remove buffer by buffer, merged = remove all visible merged buffers at once`
+** 説明: `ホットリストに含まれるバッファを削除: buffer = バッファを削除、merged = すべての可視状態でマージされたバッファを一括削除`
 ** タイプ: 整数
 ** 値: buffer, merged (デフォルト値: `merged`)
 
