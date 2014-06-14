@@ -380,15 +380,15 @@ message: zu sendende Nachricht
 ----
 
 [[command_irc_mode]]
-[command]*`mode`* Modus von einem Channel oder User ändern::
+[command]*`mode`* Eigenschaften eines Channel oder von einem User ändern::
 
 ----
 /mode  [<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>]
        <nick> [+|-]i|s|w|o
 
-Channel-Modi:
+Channel-Eigenschaften:
   channel: zu ändernder Channel (standardmäßig der erste Channel)
-  o: vergebt oder entzieht Operator Privilegien
+  o: vergibt/entzieht Operator Privilegien
   p: privater Channel
   s: geheimer Channel
   i: geschlossener Channel (Zutritt nur mit Einladung)
@@ -398,16 +398,16 @@ Channel-Modi:
   l: maximale Anzahl an Usern im Channel festlegen
   b: Bannmaske für zu sperrende User (in nick!ident@host-Form)
   e: legt Ausnahmemaske fest
-  v: vergibt oder entzieht Voice (d.h. Schreibrechte bei moderierten Channels)
+  v: vergibt/entzieht Schreibrechte (voice) in moderierten Channels
   k: legt ein Passwort für den Channel fest
-User-Modi:
+User-Eigenschaften:
   nick: zu ändernder Nickname
   i: User als unsichtbar kennzeichnen
   s: User empfängt Server-Nachrichten
   w: User empfängt WALLOPS
   o: User ist Channel-Operator
 
-Die Liste der hier dargestellten Modi ist nicht vollständig. Es sollte die Dokumentation des jeweiligen Servers zu Rate gezogen werden um alle verfügbaren Modi zu erfahren.
+Die Liste der hier dargestellten Eigenschaften ist nicht vollständig. Es sollte die Dokumentation des jeweiligen Servers zu Rate gezogen werden, um alle verfügbaren Modi zu erfahren.
 
 Beispiele:
   schützt das Thema des Channels #weechat:
