@@ -110,6 +110,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * alias: change default command for alias /beep to "/print -beep"
 * exec: add exec plugin: new command /exec and file exec.conf
 * guile: fix module used after unload of a script
+* irc: add value "+" for option irc.look.smart_filter_mode to use modes from
+  server prefixes (this is now the default value) (closes #90)
 * irc: fix extract of channel in parser for JOIN/PART messages when there is a
   colon before the channel name (closes #83)
 * irc: fix duplicate sender name in display of notice (closes #87)

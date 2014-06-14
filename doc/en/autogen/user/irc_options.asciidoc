@@ -329,9 +329,9 @@
 ** values: 0 .. 10080 (default value: `30`)
 
 * [[option_irc.look.smart_filter_mode]] *irc.look.smart_filter_mode*
-** description: `enable smart filter for "mode" messages: "*" to filter all modes, "xyz" to filter only modes x/y/z, "-xyz" to filter all modes but not x/y/z; examples: "ovh": filter modes o/v/h, "-bkl": filter all modes but not b/k/l`
+** description: `enable smart filter for "mode" messages: "*" to filter all modes, "+" to filter all modes in server prefixes (for example "ovh"), "xyz" to filter only modes x/y/z, "-xyz" to filter all modes but not x/y/z; examples: "ovh": filter modes o/v/h, "-bkl": filter all modes but not b/k/l`
 ** type: string
-** values: any string (default value: `"ovh"`)
+** values: any string (default value: `"+"`)
 
 * [[option_irc.look.smart_filter_nick]] *irc.look.smart_filter_nick*
 ** description: `enable smart filter for "nick" messages (nick changes)`

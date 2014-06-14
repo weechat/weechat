@@ -2660,10 +2660,11 @@ irc_config_init ()
         "smart_filter_mode", "string",
         /* TRANSLATORS: please do not translate "mode" */
         N_("enable smart filter for \"mode\" messages: \"*\" to filter all "
-           "modes, \"xyz\" to filter only modes x/y/z, \"-xyz\" to filter all "
-           "modes but not x/y/z; examples: \"ovh\": filter modes o/v/h, "
+           "modes, \"+\" to filter all modes in server prefixes (for example "
+           "\"ovh\"), \"xyz\" to filter only modes x/y/z, \"-xyz\" to filter "
+           "all modes but not x/y/z; examples: \"ovh\": filter modes o/v/h, "
            "\"-bkl\": filter all modes but not b/k/l"),
-        NULL, 0, 0, "ovh", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "+", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_nick = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter_nick", "boolean",
