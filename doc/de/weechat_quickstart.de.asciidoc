@@ -175,9 +175,8 @@ identifizieren:
 /set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-Many commands in option 'command' can be separated by ';' (semi-colon).
+Mehrere Befehle in der Option 'command' können durch ein ';' (Semikolon) voneinander getrennt werden.
 
 Um ein auto-join (automatisches 'betreten') von Channels (Räumen) nach der
 Verbindung zum Server durchzuführen, müssen die entsprechenden Channels in
