@@ -19,7 +19,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-set(WEECHAT_CURSES_SRC
+set(LIB_GUI_CURSES_SRC
 gui-curses.h
 gui-curses-bar-window.c
 gui-curses-chat.c
@@ -29,6 +29,9 @@ gui-curses-main.c
 gui-curses-mouse.c
 gui-curses-term.c
 gui-curses-window.c)
+
+set(WEECHAT_CURSES_MAIN_SRC
+main.c)
 
 set(EXECUTABLE weechat)
 
@@ -70,12 +73,16 @@ list(APPEND EXTRA_LIBS "m")
 
 list(APPEND EXTRA_LIBS ${CURL_LIBRARIES})
 
-add_executable(${EXECUTABLE} ${WEECHAT_CURSES_SRC})
-
 include_directories(.. ../../core ../../plugins ${NCURSES_INCLUDE_PATH})
 
+add_library(weechat_gui_curses STATIC ${LIB_GUI_CURSES_SRC})
+
+add_executable(${EXECUTABLE} ${WEECHAT_CURSES_MAIN_SRC})
+
+add_dependencies(${EXECUTABLE} weechat_gui_curses)
+
 # Because of a linker bug, we have to link 2 times with libweechat_core.a
-target_link_libraries(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS} ${STATIC_LIBS})
+target_link_libraries(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS} ${STATIC_LIBS} weechat_gui_curses)
 
 install(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)
 

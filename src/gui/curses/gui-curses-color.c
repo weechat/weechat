@@ -1481,26 +1481,11 @@ gui_color_init_weechat ()
 }
 
 /*
- * Pre-initializes colors.
+ * Allocates GUI colors.
  */
 
 void
-gui_color_pre_init ()
-{
-    int i;
-
-    for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
-    {
-        gui_color[i] = NULL;
-    }
-}
-
-/*
- * Initializes GUI colors.
- */
-
-void
-gui_color_init ()
+gui_color_alloc ()
 {
     if (has_colors())
     {

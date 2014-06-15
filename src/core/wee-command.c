@@ -6076,7 +6076,16 @@ COMMAND_CALLBACK(upgrade)
         }
     }
     if (!ptr_binary && !quit)
-        ptr_binary = strdup (weechat_argv0);
+    {
+        ptr_binary = (weechat_argv0) ? strdup (weechat_argv0) : NULL;
+        if (!ptr_binary)
+        {
+            gui_chat_printf (NULL,
+                             _("%sNo binary specified"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_OK;
+        }
+    }
 
     if (!ptr_binary && !quit)
     {

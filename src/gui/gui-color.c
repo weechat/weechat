@@ -1275,6 +1275,21 @@ gui_color_palette_free_structs ()
 }
 
 /*
+ * Initializes colors.
+ */
+
+void
+gui_color_init ()
+{
+    int i;
+
+    for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
+    {
+        gui_color[i] = NULL;
+    }
+}
+
+/*
  * Ends GUI colors.
  */
 
@@ -1286,6 +1301,7 @@ gui_color_end ()
     for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
     {
         gui_color_free (gui_color[i]);
+        gui_color[i] = NULL;
     }
     gui_color_palette_free_structs ();
     gui_color_free_vars ();

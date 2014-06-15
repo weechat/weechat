@@ -31,6 +31,7 @@
 #endif
 
 struct t_gui_buffer;
+struct t_gui_line;
 struct t_gui_window;
 struct t_gui_bar_window;
 
@@ -80,12 +81,15 @@ extern time_t gui_color_pairs_auto_reset_last;
 extern int gui_color_buffer_refresh_needed;
 extern int gui_window_current_emphasis;
 
+/* main functions */
+extern void gui_main_init ();
+extern void gui_main_loop ();
+
 /* color functions */
 extern int gui_color_get_extended_attrs (int color);
 extern int gui_color_get_pair (int fg, int bg);
 extern int gui_color_weechat_get_pair (int weechat_color);
-extern void gui_color_pre_init ();
-extern void gui_color_init ();
+extern void gui_color_alloc ();
 
 /* chat functions */
 extern void gui_chat_calculate_line_diff (struct t_gui_window *window,

@@ -123,24 +123,6 @@ gui_main_get_password (const char *prompt1, const char *prompt2,
 }
 
 /*
- * Pre-initializes GUI (called before gui_init).
- */
-
-void
-gui_main_pre_init (int *argc, char **argv[])
-{
-    /* make C compiler happy */
-    (void) argc;
-    (void) argv;
-
-    /* pre-init colors */
-    gui_color_pre_init ();
-
-    /* init some variables for chat area */
-    gui_chat_init ();
-}
-
-/*
  * Initializes GUI.
  */
 
@@ -162,7 +144,7 @@ gui_main_init ()
     nodelay (stdscr, TRUE);
     raw ();
 
-    gui_color_init ();
+    gui_color_alloc ();
 
     /* build prefixes according to configuration */
     gui_chat_prefix_build ();
@@ -244,45 +226,6 @@ gui_main_init ()
         gui_mouse_disable ();
 
     gui_window_set_bracketed_paste_mode (CONFIG_BOOLEAN(config_look_paste_bracketed));
-}
-
-/*
- * Callback for system signal SIGQUIT: quits WeeChat.
- */
-
-void
-gui_main_signal_sigquit ()
-{
-    log_printf (_("Signal %s received, exiting WeeChat..."),
-                "SIGQUIT");
-    (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-    weechat_quit = 1;
-}
-
-/*
- * Callback for system signal SIGTERM: quits WeeChat.
- */
-
-void
-gui_main_signal_sigterm ()
-{
-    log_printf (_("Signal %s received, exiting WeeChat..."),
-                "SIGTERM");
-    (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-    weechat_quit = 1;
-}
-
-/*
- * Callback for system signal SIGHUP: quits WeeChat.
- */
-
-void
-gui_main_signal_sighup ()
-{
-    log_printf (_("Signal %s received, exiting WeeChat..."),
-                "SIGHUP");
-    (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-    weechat_quit = 1;
 }
 
 /*
@@ -431,11 +374,6 @@ gui_main_loop ()
     fd_set read_fds, write_fds, except_fds;
     int max_fd;
     int ready;
-
-    /* catch SIGTERM/SIGQUIT/SIGHUP signals: quit program */
-    util_catch_signal (SIGTERM, &gui_main_signal_sigterm);
-    util_catch_signal (SIGQUIT, &gui_main_signal_sigquit);
-    util_catch_signal (SIGHUP, &gui_main_signal_sighup);
 
     /* catch SIGWINCH signal: redraw screen */
     util_catch_signal (SIGWINCH, &gui_main_signal_sigwinch);

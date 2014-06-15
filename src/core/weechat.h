@@ -108,5 +108,7 @@ extern char *weechat_startup_commands;
 
 extern void weechat_term_check ();
 extern void weechat_shutdown (int return_code, int crash);
+extern void weechat_init (int argc, char *argv[], void (*gui_init_cb)());
+extern void weechat_end (void (*gui_end_cb)(int clean_exit));
 
 #endif /* WEECHAT_H */
