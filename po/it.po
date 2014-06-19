@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-14 09:47+0200\n"
-"PO-Revision-Date: 2014-04-19 13:08+0200\n"
+"POT-Creation-Date: 2014-06-19 07:44+0200\n"
+"PO-Revision-Date: 2014-06-19 07:46+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -8466,7 +8466,7 @@ msgid "%s - client certificate info (%s):"
 msgstr "%s - info sul certificato (%s) del client:"
 
 #, c-format
-msgid "%sgnutls: unable to read certifcate \"%s\""
+msgid "%sgnutls: unable to read certificate \"%s\""
 msgstr "%sgnutls: impossibile leggere il certificato \"%s\""
 
 #, c-format

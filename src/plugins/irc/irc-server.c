@@ -3995,7 +3995,8 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                 else
                 {
                     weechat_printf (server->buffer,
-                                    _("%sgnutls: unable to read certifcate \"%s\""),
+                                    _("%sgnutls: unable to read certificate "
+                                      "\"%s\""),
                                     weechat_prefix ("error"), cert_path2);
                 }
             }
