@@ -486,7 +486,7 @@ weechat_shutdown (int return_code, int crash)
 
     if (crash)
         abort();
-    else
+    else if (return_code >= 0)
         exit (return_code);
 }
 
@@ -590,5 +590,5 @@ weechat_end (void (*gui_end_cb)(int clean_exit))
     hdata_end ();                       /* end hdata                        */
     secure_end ();                      /* end secured data                 */
     string_end ();                      /* end string                       */
-    weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */
+    weechat_shutdown (-1, 0);           /* end other things                 */
 }

@@ -41,6 +41,5 @@ main (int argc, char *argv[])
     gui_main_loop ();
     weechat_end (&gui_main_end);
 
-    /* make C compiler happy (never executed) */
     return EXIT_SUCCESS;
 }
