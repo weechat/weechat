@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-06-27 21:59+0200\n"
-"PO-Revision-Date: 2014-06-21 19:06+0200\n"
+"PO-Revision-Date: 2014-06-27 22:39+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -844,21 +844,21 @@ msgid_plural "%s%d%s options"
 msgstr[0] "%s%d%s Option"
 msgstr[1] "%s%d%s Optionen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Environment variable \"%s\" is not defined"
-msgstr "keine Variable"
+msgstr "Umgebungsvariable \"%s\" ist nicht definiert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: failed to set variable \"%s\": %s"
-msgstr "%sFehler: Option \"%s\" konnte nicht gesetzt werden"
+msgstr "%sFehler: Variable \"%s\" konnte nicht gesetzt werden: %s"
 
 #, c-format
 msgid "Variable \"%s\" unset"
-msgstr ""
+msgstr "Variable \"%s\" entfernt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: failed to unset variable \"%s\": %s"
-msgstr "%sFehler: Option \"%s\" konnte nicht gesetzt werden"
+msgstr "%sFehler: Variable \"%s\" konnte nicht entfernt werden: %s"
 
 #, c-format
 msgid "%s%d%s option with value changed"
@@ -2534,15 +2534,15 @@ msgstr ""
 "data.freenode}"
 
 msgid "set config options and environment variables"
-msgstr ""
+msgstr "um Konfigurationsoptionen und Umgebungsvariablen zu setzen"
 
-#, fuzzy
 msgid ""
 "[<option> [<value>]] || diff [<option> [<option>...]] || env [<variable> "
 "[<value>]]"
-msgstr "[<option> [<value>]] || diff [<option> [<option>...]]"
+msgstr ""
+"[<option> [<value>]] || diff [<option> [<option>...]] || env [<variable> "
+"[<value>]]"
 
-#, fuzzy
 msgid ""
 "option: name of an option (wildcard \"*\" is allowed)\n"
 " value: new value for option, according to type:\n"
@@ -2575,19 +2575,20 @@ msgid ""
 msgstr ""
 "option: Name der zu ändernden Option (um mehrere Optionen anzuzeigen, kann "
 "der Platzhalter \"*\" verwendet werden)\n"
-" value: neuer Wert, den die Option erhalten soll\n"
+" value: neuer Wert den die Option erhalten soll. Abhängig von der "
+"ausgewählten Option, kann die Variable folgenden Inhalt haben:\n"
+"          boolean: on, off oder toggle\n"
+"          integer: Nummer, ++Nummer oder --Nummer\n"
+"           string: beliebige Zeichenkette (\"\" für eine leere "
+"Zeichenkette)\n"
+"            color: Farbwert, ++Nummer oder --Nummer\n"
+"        Hinweis: für alle Typen von Variablen kann die Zeichenkette \"null"
+"\" (ohne \"\")  genutzt werden, um den Wert der Option zu löschen "
+"(undefinierter Wert). Dies kann nur auf einige besondere Variablen "
+"(Erweiterungen) angewendet werden.\n"
 "  diff: es werden nur Optionen angezeigt, die geändert wurden\n"
-"\n"
-"Abhängig von der ausgewählten Option, kann die Variable folgenden Inhalt "
-"haben:\n"
-"  boolean: on, off oder toggle\n"
-"  integer: Anzahl, ++Anzahl oder --Anzahl\n"
-"  string : jede Zeichenkette (\"\" für eine leere Zeichenkette)\n"
-"  color  : Name einer Farbe, ++Anzahl oder --Anzahl\n"
-"\n"
-"Für alle Typen von Variablen kann die Zeichenkette \"null\" (ohne \"\")  "
-"genutzt werden, um den Wert der Option zu löschen (undefinierter Wert). Dies "
-"kann nur auf einige besondere Variablen (Erweiterungen) angewendet werden.\n"
+"   env: setzt oder zeigt eine Umgebungsvariable an (um eine Variable zu "
+"entfernen muss der Wert \"\" genutzt werden)\n"
 "\n"
 "Beispiele:\n"
 "  Zeigt alle Optionen an, die etwas mit highlight zu tun haben:\n"
@@ -2597,7 +2598,14 @@ msgstr ""
 "  zeigt geänderte Optionen an:\n"
 "    /set diff\n"
 "  zeigt geänderte Optionen, der IRC Erweiterung, an:\n"
-"    /set diff irc.*"
+"    /set diff irc.*\n"
+"  zeigt den Wert der Umgebungsvariable LANG an:\n"
+"    /set env LANG\n"
+"  setzt die Umgebungsvariable LANG und nutzt diese:\n"
+"    /set env LANG fr_FR.UTF-8\n"
+"    /upgrade\n"
+"  entfernt die Umgebungsvariable ABC:\n"
+"    /set env ABC \"\""
 
 msgid "unset/reset config options"
 msgstr "Konfigurationsparameter freigeben/zurücksetzen"
@@ -3023,13 +3031,11 @@ msgstr "Namen der Layouts"
 msgid "names of secured data (file sec.conf, section data)"
 msgstr "Namen der geschützten Daten (Datei sec.conf, section data)"
 
-#, fuzzy
 msgid "environment variables"
-msgstr "keine Variable"
+msgstr "Umgebungsvariablen"
 
-#, fuzzy
 msgid "value of an environment variable"
-msgstr "keine Variable"
+msgstr "Wert einer Umgebungsvariable"
 
 msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
@@ -12074,16 +12080,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
-
-#~ msgid "set config options"
-#~ msgstr "Konfigurationsparameter setzen"
-
-#, fuzzy
-#~ msgid "kick and ban a nick from a channel"
-#~ msgstr "wirft jemanden aus dem Channel und verbannt ihn"
-
-#~ msgid "forcibly remove a user from a channel"
-#~ msgstr "Einen User aus einem Channel herauswerfen"
-
-#~ msgid "remove a user from the channel"
-#~ msgstr "entfernt einen User aus dem Channel"
