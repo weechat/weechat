@@ -274,16 +274,20 @@ Une autre solution est d'utiliser un script :
 [[change_locale_without_quit]]
 === Je souhaite changer la langue des messages affichés par WeeChat, mais sans quitter WeeChat, est-ce possible ?
 
-Oui, il faut utiliser le script python 'shell.py' (disponible sur le site de
-WeeChat) et taper ces commandes une fois le script chargé :
+Oui, avec WeeChat ≥ 1.0 :
 
 ----
-/shell setenv LANG=fr_FR.UTF-8
+/set env LANG fr_FR.UTF-8
 /upgrade
 ----
 
-Pour avoir des messages anglais avec encodage UTF-8 pour le terminal, pour les
-utilisateurs en ISO, vous pouvez taper : `/shell setenv LANG=fr_FR`.
+Avec un ancien WeeChat :
+
+----
+/script install shell.py
+/shell setenv LANG=fr_FR.UTF-8
+/upgrade
+----
 
 [[use_256_colors]]
 === Comment puis-je utiliser 256 couleurs sous WeeChat ?
@@ -307,11 +311,10 @@ term screen-256color
 ----
 
 Si votre variable 'TERM' a une valeur erronée et que WeeChat est déjà lancé,
-ne paniquez pas ! Vous pouvez la changer sans redémarrer, grâce au script
-'shell.py' :
+vous pouvez la changer avec ces deux commandes (avec WeeChat ≥ 1.0) :
 
 ----
-/shell setenv TERM=screen-256color
+/set env TERM screen-256color
 /upgrade
 ----
 

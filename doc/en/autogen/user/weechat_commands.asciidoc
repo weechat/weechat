@@ -755,23 +755,22 @@ Examples:
 ----
 
 [[command_weechat_set]]
-[command]*`set`* set config options::
+[command]*`set`* set config options and environment variables::
 
 ----
 /set  [<option> [<value>]]
       diff [<option> [<option>...]]
+      env [<variable> [<value>]]
 
 option: name of an option (wildcard "*" is allowed)
- value: new value for option
+ value: new value for option, according to type:
+          boolean: on, off or toggle
+          integer: number, ++number or --number
+           string: any string ("" for empty string)
+            color: color name, ++number or --number
+        Note: for all types, you can use null to remove option         value (undefined value). This works only for some special         plugin variables.
   diff: display only changed options
-
-New value can be, according to variable type:
-  boolean: on, off or toggle
-  integer: number, ++number or --number
-   string: any string ("" for empty string)
-    color: color name, ++number or --number
-
-For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
+   env: display or set an environment variable (use value "" to unset a variable)
 
 Examples:
   display options about highlight:
@@ -782,6 +781,13 @@ Examples:
     /set diff
   display changed options in irc plugin:
     /set diff irc.*
+  display value of environment variable LANG:
+    /set env LANG
+  set environment variable LANG and use it:
+    /set env LANG fr_FR.UTF-8
+    /upgrade
+  unset environment variable ABC:
+    /set env ABC ""
 ----
 
 [[command_weechat_unset]]

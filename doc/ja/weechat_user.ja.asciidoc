@@ -1439,11 +1439,12 @@ screen を使っている場合、'~/.screenrc' に以下の内容を追加し�
 term screen-256color
 ----
 
-'TERM' 環境変数に間違った値が設定された状態で WeeChat を起動しても、あわてないでください!
-'shell.py' スクリプトを使えば WeeChat を再起動せずに環境変数の値を変更できます。
+// TRANSLATION MISSING
+If your 'TERM' variable has wrong value and that WeeChat is already running,
+you can change it with these two commands:
 
 ----
-/shell setenv TERM=screen-256color
+/set env TERM screen-256color
 /upgrade
 ----
 

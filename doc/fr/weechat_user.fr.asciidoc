@@ -1482,11 +1482,10 @@ term screen-256color
 ----
 
 Si votre variable 'TERM' a une valeur erronée et que WeeChat est déjà lancé,
-ne paniquez pas ! Vous pouvez la changer sans redémarrer, grâce au script
-'shell.py' :
+vous pouvez la changer avec ces deux commandes :
 
 ----
-/shell setenv TERM=screen-256color
+/set env TERM screen-256color
 /upgrade
 ----
 

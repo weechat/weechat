@@ -1447,6 +1447,81 @@ completion_list_add_secured_data_cb (void *data,
 }
 
 /*
+ * Adds environment variables to completion list.
+ */
+
+int
+completion_list_add_env_vars_cb (void *data,
+                                 const char *completion_item,
+                                 struct t_gui_buffer *buffer,
+                                 struct t_gui_completion *completion)
+{
+    int i;
+    char *pos, *name;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (i = 0; environ[i]; i++)
+    {
+        pos = strchr (environ[i], '=');
+        if (pos)
+        {
+            name = string_strndup (environ[i], pos - environ[i]);
+            if (name)
+            {
+                gui_completion_list_add (completion, name,
+                                         0, WEECHAT_LIST_POS_SORT);
+                free (name);
+            }
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Adds value of an environment variable to completion list.
+ */
+
+int
+completion_list_add_env_value_cb (void *data,
+                                  const char *completion_item,
+                                  struct t_gui_buffer *buffer,
+                                  struct t_gui_completion *completion)
+{
+    char **argv, *value;
+    int argc;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    if (completion->args)
+    {
+        argv = string_split (completion->args, " ", 0, 0, &argc);
+        if (!argv)
+            return WEECHAT_RC_OK;
+
+        if (argc > 0)
+        {
+            value = getenv (argv[argc - 1]);
+            if (value)
+            {
+                gui_completion_list_add (completion, value,
+                                         0, WEECHAT_LIST_POS_END);
+            }
+        }
+        string_free_split (argv);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds hooks for completions done by WeeChat core.
  */
 
@@ -1547,4 +1622,10 @@ completion_init ()
     hook_completion (NULL, "secured_data",
                      N_("names of secured data (file sec.conf, section data)"),
                      &completion_list_add_secured_data_cb, NULL);
+    hook_completion (NULL, "env_vars",
+                     N_("environment variables"),
+                     &completion_list_add_env_vars_cb, NULL);
+    hook_completion (NULL, "env_value",
+                     N_("value of an environment variable"),
+                     &completion_list_add_env_value_cb, NULL);
 }

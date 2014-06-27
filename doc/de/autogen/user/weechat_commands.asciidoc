@@ -755,33 +755,39 @@ Beispiele:
 ----
 
 [[command_weechat_set]]
-[command]*`set`* Konfigurationsparameter setzen::
+[command]*`set`* set config options and environment variables::
 
 ----
 /set  [<option> [<value>]]
       diff [<option> [<option>...]]
+      env [<variable> [<value>]]
 
-option: Name der zu ändernden Option (um mehrere Optionen anzuzeigen, kann der Platzhalter "*" verwendet werden)
- value: neuer Wert, den die Option erhalten soll
-  diff: es werden nur Optionen angezeigt, die geändert wurden
+option: name of an option (wildcard "*" is allowed)
+ value: new value for option, according to type:
+          boolean: on, off or toggle
+          integer: number, ++number or --number
+           string: any string ("" for empty string)
+            color: color name, ++number or --number
+        Note: for all types, you can use null to remove option         value (undefined value). This works only for some special         plugin variables.
+  diff: display only changed options
+   env: display or set an environment variable (use value "" to unset a variable)
 
-Abhängig von der ausgewählten Option, kann die Variable folgenden Inhalt haben:
-  boolean: on, off oder toggle
-  integer: Anzahl, ++Anzahl oder --Anzahl
-  string : jede Zeichenkette ("" für eine leere Zeichenkette)
-  color  : Name einer Farbe, ++Anzahl oder --Anzahl
-
-Für alle Typen von Variablen kann die Zeichenkette "null" (ohne "")  genutzt werden, um den Wert der Option zu löschen (undefinierter Wert). Dies kann nur auf einige besondere Variablen (Erweiterungen) angewendet werden.
-
-Beispiele:
-  Zeigt alle Optionen an, die etwas mit highlight zu tun haben:
+Examples:
+  display options about highlight:
     /set *highlight*
-  Fügt ein highlight-Wort hinzu:
+  add a word to highlight:
     /set weechat.look.highlight "word"
-  zeigt geänderte Optionen an:
+  display changed options:
     /set diff
-  zeigt geänderte Optionen, der IRC Erweiterung, an:
+  display changed options in irc plugin:
     /set diff irc.*
+  display value of environment variable LANG:
+    /set env LANG
+  set environment variable LANG and use it:
+    /set env LANG fr_FR.UTF-8
+    /upgrade
+  unset environment variable ABC:
+    /set env ABC ""
 ----
 
 [[command_weechat_unset]]

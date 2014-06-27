@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.0 (under dev)
 
+* core: add option "env" in command /set (manage environment variables)
 * core: fix potential memory leak with infolists not freed in plugins
   (debian #751108)
 * core: fix color display of last color number + 1 (closes #101)

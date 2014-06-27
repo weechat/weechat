@@ -37,6 +37,7 @@
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <errno.h>
 
 #include "weechat.h"
 #include "wee-command.h"
@@ -5678,12 +5679,105 @@ command_set_display_option_lists (char **argv, int arg_start, int arg_end,
 COMMAND_CALLBACK(set)
 {
     char *value;
-    int number_found, rc, display_only_changed, arg_option_start, arg_option_end;
+    const char *ptr_string;
+    int i, number_found, rc, display_only_changed, arg_option_start;
+    int arg_option_end, list_size;
     struct t_config_option *ptr_option, *ptr_option_before;
+    struct t_weelist *list;
+    struct t_weelist_item *item;
 
     /* make C compiler happy */
     (void) data;
     (void) buffer;
+
+    /* display/set environment variables */
+    if ((argc > 1) && (string_strcasecmp (argv[1], "env") == 0))
+    {
+        if (argc == 2)
+        {
+            /* display a sorted list of all environment variables */
+            list = weelist_new ();
+            if (!list)
+                return WEECHAT_RC_ERROR;
+            for (i = 0; environ[i]; i++)
+            {
+                weelist_add (list, environ[i], WEECHAT_LIST_POS_SORT, NULL);
+            }
+            list_size = weelist_size (list);
+            for (i = 0; i < list_size; i++)
+            {
+                item = weelist_get (list, i);
+                if (item)
+                {
+                    ptr_string = weelist_string (item);
+                    if (ptr_string)
+                        gui_chat_printf (NULL, "%s", ptr_string);
+                }
+            }
+            weelist_free (list);
+            return WEECHAT_RC_OK;
+        }
+
+        if (argc == 3)
+        {
+            /* display an environment variable */
+            value = getenv (argv[2]);
+            if (value)
+            {
+                gui_chat_printf (NULL, "%s=%s", argv[2], value);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("Environment variable \"%s\" is not "
+                                   "defined"),
+                                 argv[2]);
+            }
+            return WEECHAT_RC_OK;
+        }
+
+        /* set/unset an environment variable */
+        value = string_remove_quotes (argv_eol[3], "'\"");
+        if (value && value[0])
+        {
+            /* set variable */
+            if (setenv (argv[2], value, 1) == 0)
+            {
+                gui_chat_printf (NULL, "%s=%s", argv[2], value);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: failed to set variable "
+                                   "\"%s\": %s"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2],
+                                 strerror (errno));
+            }
+        }
+        else
+        {
+            /* unset variable */
+            if (unsetenv (argv[2]) == 0)
+            {
+                gui_chat_printf (NULL,
+                                 _("Variable \"%s\" unset"),
+                                 argv[2]);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: failed to unset variable "
+                                   "\"%s\": %s"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2],
+                                 strerror (errno));
+            }
+        }
+        if (value)
+            free (value);
+        return WEECHAT_RC_OK;
+    }
 
     display_only_changed = 0;
     arg_option_start = 1;
@@ -7618,20 +7712,22 @@ command_init ()
         &command_secure, NULL);
     hook_command (
         NULL, "set",
-        N_("set config options"),
-        N_("[<option> [<value>]] || diff [<option> [<option>...]]"),
+        N_("set config options and environment variables"),
+        N_("[<option> [<value>]]"
+           " || diff [<option> [<option>...]]"
+           " || env [<variable> [<value>]]"),
         N_("option: name of an option (wildcard \"*\" is allowed)\n"
-           " value: new value for option\n"
+           " value: new value for option, according to type:\n"
+           "          boolean: on, off or toggle\n"
+           "          integer: number, ++number or --number\n"
+           "           string: any string (\"\" for empty string)\n"
+           "            color: color name, ++number or --number\n"
+           "        Note: for all types, you can use null to remove option "
+           "        value (undefined value). This works only for some special "
+           "        plugin variables.\n"
            "  diff: display only changed options\n"
-           "\n"
-           "New value can be, according to variable type:\n"
-           "  boolean: on, off or toggle\n"
-           "  integer: number, ++number or --number\n"
-           "   string: any string (\"\" for empty string)\n"
-           "    color: color name, ++number or --number\n"
-           "\n"
-           "For all types, you can use null to remove option value (undefined "
-           "value). This works only for some special plugin variables.\n"
+           "   env: display or set an environment variable (use value \"\" to "
+           "unset a variable)\n"
            "\n"
            "Examples:\n"
            "  display options about highlight:\n"
@@ -7641,9 +7737,17 @@ command_init ()
            "  display changed options:\n"
            "    /set diff\n"
            "  display changed options in irc plugin:\n"
-           "    /set diff irc.*"),
+           "    /set diff irc.*\n"
+           "  display value of environment variable LANG:\n"
+           "    /set env LANG\n"
+           "  set environment variable LANG and use it:\n"
+           "    /set env LANG fr_FR.UTF-8\n"
+           "    /upgrade\n"
+           "  unset environment variable ABC:\n"
+           "    /set env ABC \"\""),
         "%(config_options) %(config_option_values)"
-        " || diff %(config_options)|%*",
+        " || diff %(config_options)|%*"
+        " || env %(env_vars) %(env_value)",
         &command_set, NULL);
     hook_command (
         NULL, "unset",

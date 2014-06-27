@@ -263,16 +263,22 @@ WeeChat ≥ 0.3.6 では、"eat_newline_glitch" オプションを有効化で�
 [[change_locale_without_quit]]
 === WeeChat が出力するメッセージの言語を、再起動せずに変更したいです。このようなことは可能ですか。
 
-可能です。python スクリプト 'shell.py' (WeeChat ウェブサイトから入手可能) を使い、
-スクリプトを読み込んだら以下のコマンドを打ってください。
+// TRANSLATION MISSING
+Yes, with WeeChat ≥ 1.0:
 
 ----
-/shell setenv LANG=en_US.UTF-8
+/set env LANG ja_JP.UTF-8
 /upgrade
 ----
 
-UTF-8 エンコードされた英語メッセージが表示されるようになります、
-ISO ユーザは以下のようにして下さい: `/shell setenv LANG=en_US`
+// TRANSLATION MISSING
+With older WeeChat:
+
+----
+/script install shell.py
+/shell setenv LANG=ja_JP.UTF-8
+/upgrade
+----
 
 [[use_256_colors]]
 === どうすれば WeeChat で 256 色が使えますか。
@@ -295,11 +301,12 @@ screen を使っている場合は、以下の行を '~/.screenrc' に追加し�
 term screen-256color
 ----
 
-'TERM' 変数の設定に間違いがあり、WeeChat が起動中の場合でも、
-慌てないでください! 'shell.py' を使えば再起動せずに環境変数を変更できます。
+// TRANSLATION MISSING
+If your 'TERM' variable has wrong value and that WeeChat is already running,
+you can change it with these two commands (with WeeChat ≥ 1.0):
 
 ----
-/shell setenv TERM=screen-256color
+/set env TERM screen-256color
 /upgrade
 ----
 

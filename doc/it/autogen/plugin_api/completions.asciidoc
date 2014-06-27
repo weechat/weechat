@@ -114,6 +114,10 @@
 
 | weechat | cursor_areas | aree ("chat" o nome barra) per il movimento libero del cursore
 
+| weechat | env_value | value of an environment variable
+
+| weechat | env_vars | environment variables
+
 | weechat | filename | nome file
 
 | weechat | filters_names | nomi dei filtri

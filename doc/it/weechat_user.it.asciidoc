@@ -1495,11 +1495,12 @@ proprio '~/.screenrc':
 term screen-256color
 ----
 
-Se la variabile 'TERM' contiene un valore errato e WeeChat è già in esecuzione,
-niente panico! È possibile cambiarla senza riavviare, grazie allo script 'shell.py':
+// TRANSLATION MISSING
+If your 'TERM' variable has wrong value and that WeeChat is already running,
+you can change it with these two commands:
 
 ----
-/shell setenv TERM=screen-256color
+/set env TERM screen-256color
 /upgrade
 ----
 

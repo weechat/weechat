@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-19 07:44+0200\n"
+"POT-Creation-Date: 2014-06-27 07:39+0200\n"
 "PO-Revision-Date: 2014-06-19 07:45+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -834,6 +834,22 @@ msgid "%s%d%s option"
 msgid_plural "%s%d%s options"
 msgstr[0] "%s%d%s opción"
 msgstr[1] "%s%d%s opciones"
+
+#, fuzzy, c-format
+msgid "Environment variable \"%s\" is not defined"
+msgstr "Variables"
+
+#, fuzzy, c-format
+msgid "%sError: failed to set variable \"%s\": %s"
+msgstr "%sError: no se pudo configurar la opción \"%s\""
+
+#, c-format
+msgid "Variable \"%s\" unset"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: failed to unset variable \"%s\": %s"
+msgstr "%sError: no se pudo configurar la opción \"%s\""
 
 #, c-format
 msgid "%s%d%s option with value changed"
@@ -2277,26 +2293,29 @@ msgid ""
 "data.freenode}"
 msgstr ""
 
-msgid "set config options"
-msgstr "establecer opciones de configuración"
+msgid "set config options and environment variables"
+msgstr ""
 
-msgid "[<option> [<value>]] || diff [<option> [<option>...]]"
+#, fuzzy
+msgid ""
+"[<option> [<value>]] || diff [<option> [<option>...]] || env [<variable> "
+"[<value>]]"
 msgstr "[<opción> [<valor>]] || diff [<opción> [<opción>...]]"
 
 #, fuzzy
 msgid ""
 "option: name of an option (wildcard \"*\" is allowed)\n"
-" value: new value for option\n"
+" value: new value for option, according to type:\n"
+"          boolean: on, off or toggle\n"
+"          integer: number, ++number or --number\n"
+"           string: any string (\"\" for empty string)\n"
+"            color: color name, ++number or --number\n"
+"        Note: for all types, you can use null to remove option         value "
+"(undefined value). This works only for some special         plugin "
+"variables.\n"
 "  diff: display only changed options\n"
-"\n"
-"New value can be, according to variable type:\n"
-"  boolean: on, off or toggle\n"
-"  integer: number, ++number or --number\n"
-"   string: any string (\"\" for empty string)\n"
-"    color: color name, ++number or --number\n"
-"\n"
-"For all types, you can use null to remove option value (undefined value). "
-"This works only for some special plugin variables.\n"
+"   env: display or set an environment variable (use value \"\" to unset a "
+"variable)\n"
 "\n"
 "Examples:\n"
 "  display options about highlight:\n"
@@ -2306,7 +2325,14 @@ msgid ""
 "  display changed options:\n"
 "    /set diff\n"
 "  display changed options in irc plugin:\n"
-"    /set diff irc.*"
+"    /set diff irc.*\n"
+"  display value of environment variable LANG:\n"
+"    /set env LANG\n"
+"  set environment variable LANG and use it:\n"
+"    /set env LANG fr_FR.UTF-8\n"
+"    /upgrade\n"
+"  unset environment variable ABC:\n"
+"    /set env ABC \"\""
 msgstr ""
 "opción: nombre de la opción (puede empezar o terminar con '*' para listar "
 "varias opciones)\n"
@@ -2721,6 +2747,14 @@ msgstr "nombres de barras"
 
 msgid "names of secured data (file sec.conf, section data)"
 msgstr ""
+
+#, fuzzy
+msgid "environment variables"
+msgstr "Variables"
+
+#, fuzzy
+msgid "value of an environment variable"
+msgstr "Variables"
 
 msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
@@ -10964,6 +10998,9 @@ msgstr "%s%s: no es posible configurar la opción \"nonblock\" para el socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
+
+#~ msgid "set config options"
+#~ msgstr "establecer opciones de configuración"
 
 #, fuzzy
 #~ msgid "kick and ban a nick from a channel"
