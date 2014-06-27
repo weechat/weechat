@@ -114,9 +114,9 @@
 
 | weechat | cursor_areas | Bereiche in denen der Cursor frei bewegt werden kann ("chat" oder Name einer Bar)
 
-| weechat | env_value | value of an environment variable
+| weechat | env_value | Wert einer Umgebungsvariable
 
-| weechat | env_vars | environment variables
+| weechat | env_vars | Umgebungsvariablen
 
 | weechat | filename | Dateinamen
 

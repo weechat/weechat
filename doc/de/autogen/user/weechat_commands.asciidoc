@@ -755,38 +755,38 @@ Beispiele:
 ----
 
 [[command_weechat_set]]
-[command]*`set`* set config options and environment variables::
+[command]*`set`* um Konfigurationsoptionen und Umgebungsvariablen zu setzen::
 
 ----
 /set  [<option> [<value>]]
       diff [<option> [<option>...]]
       env [<variable> [<value>]]
 
-option: name of an option (wildcard "*" is allowed)
- value: new value for option, according to type:
-          boolean: on, off or toggle
-          integer: number, ++number or --number
-           string: any string ("" for empty string)
-            color: color name, ++number or --number
-        Note: for all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
-  diff: display only changed options
-   env: display or set an environment variable (use value "" to unset a variable)
+option: Name der zu ändernden Option (um mehrere Optionen anzuzeigen, kann der Platzhalter "*" verwendet werden)
+ value: neuer Wert den die Option erhalten soll. Abhängig von der ausgewählten Option, kann die Variable folgenden Inhalt haben:
+          boolean: on, off oder toggle
+          integer: Nummer, ++Nummer oder --Nummer
+           string: beliebige Zeichenkette ("" für eine leere Zeichenkette)
+            color: Farbwert, ++Nummer oder --Nummer
+        Hinweis: für alle Typen von Variablen kann die Zeichenkette "null" (ohne "")  genutzt werden, um den Wert der Option zu löschen (undefinierter Wert). Dies kann nur auf einige besondere Variablen (Erweiterungen) angewendet werden.
+  diff: es werden nur Optionen angezeigt, die geändert wurden
+   env: setzt oder zeigt eine Umgebungsvariable an (um eine Variable zu entfernen muss der Wert "" genutzt werden)
 
-Examples:
-  display options about highlight:
+Beispiele:
+  Zeigt alle Optionen an, die etwas mit highlight zu tun haben:
     /set *highlight*
-  add a word to highlight:
+  Fügt ein highlight-Wort hinzu:
     /set weechat.look.highlight "word"
-  display changed options:
+  zeigt geänderte Optionen an:
     /set diff
-  display changed options in irc plugin:
+  zeigt geänderte Optionen, der IRC Erweiterung, an:
     /set diff irc.*
-  display value of environment variable LANG:
+  zeigt den Wert der Umgebungsvariable LANG an:
     /set env LANG
-  set environment variable LANG and use it:
+  setzt die Umgebungsvariable LANG und nutzt diese:
     /set env LANG fr_FR.UTF-8
     /upgrade
-  unset environment variable ABC:
+  entfernt die Umgebungsvariable ABC:
     /set env ABC ""
 ----
 
