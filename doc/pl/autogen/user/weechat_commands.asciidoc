@@ -768,7 +768,7 @@ option: name of an option (wildcard "*" is allowed)
           integer: number, ++number or --number
            string: any string ("" for empty string)
             color: color name, ++number or --number
-        Note: for all types, you can use null to remove option         value (undefined value). This works only for some special         plugin variables.
+        Note: for all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
   diff: display only changed options
    env: display or set an environment variable (use value "" to unset a variable)
 
