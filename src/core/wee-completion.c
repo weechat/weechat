@@ -55,6 +55,9 @@
 #include "../plugins/plugin.h"
 
 
+extern char **environ;
+
+
 /*
  * Adds bar names to completion list.
  */

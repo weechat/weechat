@@ -78,6 +78,9 @@
 #include "../plugins/plugin-config.h"
 
 
+extern char **environ;
+
+
 /*
  * Callback for command "/away".
  *
