@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-27 21:59+0200\n"
+"POT-Creation-Date: 2014-06-28 13:14+0200\n"
 "PO-Revision-Date: 2014-06-19 07:46+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -4244,9 +4244,6 @@ msgstr "オン"
 
 msgid "off"
 msgstr "オフ"
-
-msgid "Passphrase"
-msgstr "パスフレーズ"
 
 msgid "Passphrase is set"
 msgstr "パスフレーズが設定されています"
@@ -11376,6 +11373,9 @@ msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できませ�
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: \"%s\" のタイムアウト %s"
+
+#~ msgid "Passphrase"
+#~ msgstr "パスフレーズ"
 
 #~ msgid "set config options"
 #~ msgstr "オプションの設定"

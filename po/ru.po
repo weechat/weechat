@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-27 21:59+0200\n"
+"POT-Creation-Date: 2014-06-28 13:14+0200\n"
 "PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3518,9 +3518,6 @@ msgstr "вкл."
 #, fuzzy
 msgid "off"
 msgstr "выкл."
-
-msgid "Passphrase"
-msgstr ""
 
 msgid "Passphrase is set"
 msgstr ""

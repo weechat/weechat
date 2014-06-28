@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-27 21:59+0200\n"
+"POT-Creation-Date: 2014-06-28 13:14+0200\n"
 "PO-Revision-Date: 2014-06-27 22:39+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -4534,9 +4534,6 @@ msgstr "an"
 
 msgid "off"
 msgstr "aus"
-
-msgid "Passphrase"
-msgstr "Passphrase"
 
 msgid "Passphrase is set"
 msgstr "Passphrase ist festgelegt"
@@ -12080,3 +12077,6 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
+
+#~ msgid "Passphrase"
+#~ msgstr "Passphrase"

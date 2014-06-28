@@ -1215,27 +1215,9 @@ secure_buffer_display ()
 
     /* display passphrase */
     line++;
-    if (secure_passphrase)
-    {
-        if (secure_buffer_display_values)
-        {
-            gui_chat_printf_y (secure_buffer, line++,
-                               "%s%s = %s\"%s%s%s\"",
-                               _("Passphrase"),
-                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                               GUI_COLOR(GUI_COLOR_CHAT),
-                               GUI_COLOR(GUI_COLOR_CHAT_VALUE),
-                               secure_passphrase,
-                               GUI_COLOR(GUI_COLOR_CHAT));
-        }
-        else
-            gui_chat_printf_y (secure_buffer, line++, _("Passphrase is set"));
-    }
-    else
-    {
-        gui_chat_printf_y (secure_buffer, line++,
-                           _("Passphrase is NOT set"));
-    }
+    gui_chat_printf_y (secure_buffer, line++,
+                       (secure_passphrase) ?
+                       _("Passphrase is set") : _("Passphrase is NOT set"));
 
     /* display secured data */
     count = secure_hashtable_data->items_count;
