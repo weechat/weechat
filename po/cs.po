@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-28 13:14+0200\n"
+"POT-Creation-Date: 2014-06-28 14:48+0200\n"
 "PO-Revision-Date: 2014-06-28 13:18+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3868,9 +3868,6 @@ msgid "off"
 msgstr "off"
 
 msgid "Passphrase is set"
-msgstr ""
-
-msgid "Passphrase is NOT set"
 msgstr ""
 
 msgid "Secured data:"

@@ -1217,7 +1217,7 @@ secure_buffer_display ()
     line++;
     gui_chat_printf_y (secure_buffer, line++,
                        (secure_passphrase) ?
-                       _("Passphrase is set") : _("Passphrase is NOT set"));
+                       _("Passphrase is set") : _("Passphrase is not set"));
 
     /* display secured data */
     count = secure_hashtable_data->items_count;
