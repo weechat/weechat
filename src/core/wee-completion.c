@@ -833,7 +833,7 @@ completion_list_add_plugins_commands_cb (void *data,
                                          struct t_gui_completion *completion)
 {
     char **argv;
-    int argc;
+    int argc, arg_index;
     struct t_weechat_plugin *ptr_plugin;
     struct t_hook *ptr_hook;
 
@@ -850,14 +850,17 @@ completion_list_add_plugins_commands_cb (void *data,
 
         if (argc > 0)
         {
+            arg_index = completion->base_command_arg_index - 2;
+            if ((arg_index < 0) || (arg_index > argc - 1))
+                arg_index = argc - 1;
             ptr_plugin = NULL;
-            if (string_strcasecmp (argv[argc - 1], PLUGIN_CORE) != 0)
+            if (string_strcasecmp (argv[arg_index], PLUGIN_CORE) != 0)
             {
                 /*
                  * plugin name is different from "core", then search it in
                  * plugin list
                  */
-                ptr_plugin = plugin_search (argv[argc - 1]);
+                ptr_plugin = plugin_search (argv[arg_index]);
                 if (!ptr_plugin)
                     return WEECHAT_RC_OK;
             }
