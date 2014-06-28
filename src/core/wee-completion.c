@@ -1496,7 +1496,7 @@ completion_list_add_env_value_cb (void *data,
                                   struct t_gui_completion *completion)
 {
     char **argv, *value;
-    int argc;
+    int argc, arg_index;
 
     /* make C compiler happy */
     (void) data;
@@ -1511,7 +1511,10 @@ completion_list_add_env_value_cb (void *data,
 
         if (argc > 0)
         {
-            value = getenv (argv[argc - 1]);
+            arg_index = completion->base_command_arg_index - 2;
+            if ((arg_index < 1) || (arg_index > argc - 1))
+                arg_index = argc - 1;
+            value = getenv (argv[arg_index]);
             if (value)
             {
                 gui_completion_list_add (completion, value,
