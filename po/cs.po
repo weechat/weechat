@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-06-28 13:14+0200\n"
-"PO-Revision-Date: 2014-06-19 07:45+0200\n"
+"PO-Revision-Date: 2014-06-28 13:18+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -10711,17 +10711,3 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
-
-#~ msgid "set config options"
-#~ msgstr "nastaví konfigurační možnosti"
-
-#, fuzzy
-#~ msgid "kick and ban a nick from a channel"
-#~ msgstr "vyhodit a zakázat přezdívku na kanálu"
-
-#~ msgid "forcibly remove a user from a channel"
-#~ msgstr "násilně odebrat uživatele z kanálu"
-
-#, fuzzy
-#~ msgid "remove a user from the channel"
-#~ msgstr "násilně odebrat uživatele z kanálu"

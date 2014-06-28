@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-06-28 13:14+0200\n"
-"PO-Revision-Date: 2014-06-19 07:46+0200\n"
+"PO-Revision-Date: 2014-06-28 13:18+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -11165,20 +11165,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: timeout per \"%s\" con %s"
-
-#~ msgid "Passphrase"
-#~ msgstr "Chiave di cifratura"
-
-#~ msgid "set config options"
-#~ msgstr "imposta le opzioni di configurazione"
-
-#, fuzzy
-#~ msgid "kick and ban a nick from a channel"
-#~ msgstr "caccia e banna un nick da un canale"
-
-#~ msgid "forcibly remove a user from a channel"
-#~ msgstr "caccia forzatamente un utente da un canale"
-
-#, fuzzy
-#~ msgid "remove a user from the channel"
-#~ msgstr "caccia forzatamente un utente da un canale"
