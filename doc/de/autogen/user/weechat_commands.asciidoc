@@ -229,50 +229,50 @@ infolists: zeigt Information über die Infolists an
 ----
 
 [[command_weechat_eval]]
-[command]*`eval`* evaluate expression::
+[command]*`eval`* evaluierter Ausdruck::
 
 ----
 /eval  [-n] <expression>
        [-n] -c <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching POSIX extended regex
-                !~  is NOT matching POSIX extended regex
+        -n: gibt das Ergebnis aus, ohne das dieses in den Buffer gesendet wird (debug Modus)
+        -c: Auswertung als Bedingung: nutzt Operatoren und runde Klammern, Rückgabewert als Boolean-Wert ("0" oder "1")
+expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${variable} werden ersetzt (siehe unten); mehrere Befehle werden durch ein Semikolon voneinander getrennt
+  operator: ein logischer oder vergleichender Operand:
+            - logische Operanden:
+                &&  boolean "und"
+                ||  boolean "oder"
+            - vergleichende Operanden:
+                ==  gleich
+                !=  ungleich
+                <=  kleiner oder gleich
+                <   kleiner
+                >=  größer oder gleich
+                >   größer
+                =~  stimmt mit regulärem POSIX Ausdruck überein
+                !~  stimmt NICHT mit regulärem POSIX Ausdruck überein
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using integers if the two expressions are valid integers.
-To force a string comparison, add double quotes around each expression, for example:
+Ein Ausdruck gilt als "wahr", sofern das Ergebnis nicht NULL, nicht leer und von "0" abweichend ist.
+Der Vergleich findet zwischen zwei Integer Werten statt, sofern die beiden Ausdrücke gültige Integer-Werte sind.
+Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrücke in Anführungszeichen gesetzt werden, zum Beispiel:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  2. a color (format: "color:xxx")
-  3. an info (format: "info:name,arguments", arguments are optional)
-  4. an option (format: "file.section.option")
-  5. a local variable in buffer
-  6. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Einige Variablen werden im Ausdruck, mittels der Formatierung ${Variable}, ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:
+  1. eine Zeichenkette mit Escapesequenzen (Format: "esc:xxx" oder "\xxx")
+  2. eine Farbe (Format: color:xxx)
+  3. eine Info (Format: "info:name,arguments", Argumente sind optional)
+  4. der Name einer Option (Format: file.section.option)
+  5. der Name einer lokalen Variablen eines Buffer
+  6. ein hdata Name/Variable (der Wert wird automatisch als Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
+Das Format für hdata kann wie folgt aufgebaut sein:
+  hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
+  hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
+    ${buffer[gui_buffers].full_name}: der vollständige Name des ersten Buffers, in der verknüpften Liste aller Buffer
+    ${plugin[weechat_plugins].name}: Name der ersten Erweiterung, in der verknüpften Liste aller Erweiterungen
+Die vorhandenen Namen für hdata und Variablen sind in der "Anleitung für API Erweiterung", Bereich "weechat_hdata_get". beschrieben
 
-Examples (simple strings):
+Beispiele (einfache Zeichenketten):
   /eval -n ${info:version}                 ==> 0.4.3
   /eval -n ${weechat.look.scroll_amount}   ==> 3
   /eval -n ${window}                       ==> 0x2549aa0
@@ -281,7 +281,7 @@ Examples (simple strings):
   /eval -n ${window.buffer.number}         ==> 1
   /eval -n ${\t}                           ==> <tab>
 
-Examples (conditions):
+Beispiele (Bedingungen):
   /eval -n -c ${window.buffer.number} > 2  ==> 0
   /eval -n -c ${window.win_width} > 100    ==> 1
   /eval -n -c (8 > 12) || (5 > 2)          ==> 1
