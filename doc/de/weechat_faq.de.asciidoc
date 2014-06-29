@@ -60,7 +60,7 @@ das Repository klont und daraus Updates installiert.
 Um Hilfe zu erhalten, nutze den `/help` Befehl. Eine Hilfe zu einem Befehl erhältst
 Du durch die Eingabe von: `/help Befehlsname`.
 Befehle sowie die Belegung der jeweiligen Tasten sind in der Dokumentation
-aufgeführt. (Tipp: Mit den Tasten <Bild-hoch>/<Bild-runter> kann man seitenweise
+beschrieben. (Tipp: Mit den Tasten <Bild-hoch>/<Bild-runter> kann man seitenweise
 in den Buffern blättern)
 
 Neue Benutzer sollten unbedingt die 'quickstart'-Anleitung lesen:
@@ -70,19 +70,19 @@ http://weechat.org/doc
 == Anzeige
 
 [[charset]]
-=== Teilweise fehlen den Zeichen die Akzente. Wie kann ich das korrigieren?
+=== Bei einigen Zeichen fehlen die Akzente. Wie kann ich das korrigieren?
 
 Dies ist ein bekanntes Problem. Aus diesem Grund sollten die folgenden Punkte
 sorgfältig durchgelesen und *alle* aufgezeigten Lösungsmöglichkeiten überprüft
 werden:
 
-* überprüfe, ob weechat mit libncursesw verlinkt ist (Warnung: Dies ist bei den
+* überprüfe, ob WeeChat mit libncursesw verlinkt ist (Warnung: Dies ist bei den
   meisten Distributionen nötig - jedoch nicht bei allen): `ldd /path/to/weechat`
 * prüfe mit dem Befehl `/plugin`, ob die "Charset" Erweiterung geladen ist (falls
   dies nicht der Fall sein sollte benötigst Du wahrscheinlich noch das Paket "weechat-plugins")
 * überprüfe die Ausgabe des `/charset` Befehls (im Server-Buffer). Du solltest
-  'ISO-XXXXXX' oder 'UTF-8' für den Terminal Zeichensatz als Antwort erhalten. Falls
-  'ANSI_X3.4-1968' oder einen anderer Wert angezeigt werden sollte, ist Deine lokale
+  für den Terminal 'ISO-XXXXXX' oder 'UTF-8' als Antwort erhalten. Sollte hingegen
+  'ANSI_X3.4-1968' oder ein anderer Wert angezeigt werden, ist Deine lokale
   Einstellung möglicherweise falsch.
 * Einstellen des globalen decode Wertes, z.B.:
   `/set charset.default.decode "ISO-8859-15"`
@@ -117,7 +117,7 @@ Falls nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
 [[screen_weird_chars]]
 === Wenn ich Weechat mit screen/tmux nutze habe ich merkwürdige Zeichen, wie kann ich dies beheben?
 
-Dies kann durch einen falschen Wert in der TERM-Variable Deiner Shell hervorgerufen
+Dies kann durch einen falschen Wert in der TERM-Umgebungsvariable Deiner Shell hervorgerufen
 werden. Bitte überprüfe die Ausgabe von `echo $TERM` in Deinem Terminal (*außerhalb von screen/tmux*).
 
 Als Beispiel, 'xterm-color' könnte solche merkwürdigen Zeichen produzieren.
@@ -277,16 +277,14 @@ Eine weitere Möglichkeit ist, ein Skript zu nutzen:
 [[change_locale_without_quit]]
 === Ich möchte die Meldungen von Weechat in einer anderen Sprache ausgeben lassen, ohne WeeChat zu beenden. Ist dies möglich?
 
-// TRANSLATION MISSING
-Yes, with WeeChat ≥ 1.0:
+Ja, mit WeeChat ≥ 1.0:
 
 ----
 /set env LANG de_DE.UTF-8
 /upgrade
 ----
 
-// TRANSLATION MISSING
-With older WeeChat:
+und mit einern älteren Version von WeeChat:
 
 ----
 /script install shell.py
@@ -316,9 +314,9 @@ Sollte screen genutzt werden, fügt man folgende Zeile an das Ende der Datei
 term screen-256color
 ----
 
-// TRANSLATION MISSING
-If your 'TERM' variable has wrong value and that WeeChat is already running,
-you can change it with these two commands (with WeeChat ≥ 1.0):
+Falls die Umgebungsvariable 'TERM' einen falschen Wert haben sollte und WeeChat
+schon gestartet wurde, kann man die Umgebungsvariable mit folgenden WeeChat Befehlen
+anpassen (WeeChat ≥ 1.0):
 
 ----
 /set env TERM screen-256color
@@ -750,18 +748,17 @@ Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
   verwendet werden.
 * nutze einen kleineren Wert für die Option 'weechat.history.max_commands'
 
-// TRANSLATION MISSING
 [[cpu_usage]]
-=== How can I tweak WeeChat to use less CPU?
+=== Wie kann ich WeeChat dazu bewegen die CPU weniger zu beanspruchen?
 
-// TRANSLATION MISSING
-You can follow same tips as for <<memory_usage,memory>>, and these ones:
+Man sollte sich die Tipps zum <<memory_usage,Speicherverbrauch>> ansehen
+und zusätzlich diese Tipps beherzigen:
 
-* hide "nicklist" bar: `/bar hide nicklist`
-* remove display of seconds in status bar time:
-  `/set weechat.look.item_time_format "%H:%M"` (this is the default value)
-* set the 'TZ' variable (for example: `export TZ="Europe/Paris"`), to prevent
-  frequent access to file '/etc/localtime'
+* "nicklist"-Bar sollte versteckt werden: `/bar hide nicklist`
+* die Sekundenanzeigen in der Statusbar sollte deaktiviert werden:
+  `/set weechat.look.item_time_format "%H:%M"` (dies ist die Standardeinstellung)
+* die Umgebungsvariable 'TZ' sollte gesetzt sein (zum Beispiel: `export TZ="Europe/Berlin"`). Dadurch wird
+  verhindert, dass auf die Datei '/etc/localtime' häufig zugegriffen wird.
 
 [[development]]
 == Entwicklung
