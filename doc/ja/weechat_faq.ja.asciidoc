@@ -710,6 +710,19 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
   'weechat.history.max_buffer_lines_minutes' オプションに値を設定してください。
 * 'weechat.history.max_commands' オプションの値を減らしてください。
 
+// TRANSLATION MISSING
+[[cpu_usage]]
+=== How can I tweak WeeChat to use less CPU?
+
+// TRANSLATION MISSING
+You can follow same tips as for <<memory_usage,memory>>, and these ones:
+
+* hide "nicklist" bar: `/bar hide nicklist`
+* remove display of seconds in status bar time:
+  `/set weechat.look.item_time_format "%H:%M"` (this is the default value)
+* set the 'TZ' variable (for example: `export TZ="Europe/Paris"`), to prevent
+  frequent access to file '/etc/localtime'
+
 [[development]]
 == 開発
 

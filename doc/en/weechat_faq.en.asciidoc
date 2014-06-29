@@ -709,6 +709,17 @@ You can try following tips to consume less memory:
   of option 'weechat.history.max_buffer_lines_minutes'
 * reduce value of option 'weechat.history.max_commands'
 
+[[cpu_usage]]
+=== How can I tweak WeeChat to use less CPU?
+
+You can follow same tips as for <<memory_usage,memory>>, and these ones:
+
+* hide "nicklist" bar: `/bar hide nicklist`
+* remove display of seconds in status bar time:
+  `/set weechat.look.item_time_format "%H:%M"` (this is the default value)
+* set the 'TZ' variable (for example: `export TZ="Europe/Paris"`), to prevent
+  frequent access to file '/etc/localtime'
+
 [[development]]
 == Development
 
