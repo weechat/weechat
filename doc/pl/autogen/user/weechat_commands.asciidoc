@@ -229,7 +229,7 @@ infolists: wyświetla informacje o infolistach
 ----
 
 [[command_weechat_eval]]
-[command]*`eval`* przetwarza wyrażenie i wysyła wynik do buforu::
+[command]*`eval`* evaluate expression::
 
 ----
 /eval  [-n] <wyrażenie>
@@ -237,7 +237,7 @@ infolists: wyświetla informacje o infolistach
 
         -n: display result without sending it to buffer (debug mode)
         -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below)
+expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
   operator: a logical or comparison operator:
             - logical operators:
                 &&  boolean "and"

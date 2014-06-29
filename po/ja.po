@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-28 14:48+0200\n"
+"POT-Creation-Date: 2014-06-29 11:41+0200\n"
 "PO-Revision-Date: 2014-06-28 14:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -1379,18 +1379,19 @@ msgstr ""
 "     term: ターミナルに関する情報を表示\n"
 "  windows: ウィンドウツリーの情報を表示"
 
-msgid "evaluate expression and send result to buffer"
-msgstr "式を評価して結果をバッファに送信"
+msgid "evaluate expression"
+msgstr ""
 
 msgid "[-n] <expression> || [-n] -c <expression1> <operator> <expression2>"
 msgstr "[-n] <expression> || [-n] -c <expression1> <operator> <expression2>"
 
+#, fuzzy
 msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
 "        -c: evaluate as condition: use operators and parentheses, return a "
 "boolean value (\"0\" or \"1\")\n"
 "expression: expression to evaluate, variables with format ${variable} are "
-"replaced (see below)\n"
+"replaced (see below); many commands can be separated by semicolons\n"
 "  operator: a logical or comparison operator:\n"
 "            - logical operators:\n"
 "                &&  boolean \"and\"\n"
@@ -11370,3 +11371,6 @@ msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できませ�
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: \"%s\" のタイムアウト %s"
+
+#~ msgid "evaluate expression and send result to buffer"
+#~ msgstr "式を評価して結果をバッファに送信"

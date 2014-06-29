@@ -7096,13 +7096,14 @@ command_init ()
         &command_debug, NULL);
     hook_command (
         NULL, "eval",
-        N_("evaluate expression and send result to buffer"),
+        N_("evaluate expression"),
         N_("[-n] <expression> || [-n] -c <expression1> <operator> <expression2>"),
         N_("        -n: display result without sending it to buffer (debug mode)\n"
            "        -c: evaluate as condition: use operators and parentheses, "
            "return a boolean value (\"0\" or \"1\")\n"
            "expression: expression to evaluate, variables with format "
-           "${variable} are replaced (see below)\n"
+           "${variable} are replaced (see below); many commands can be "
+           "separated by semicolons\n"
            "  operator: a logical or comparison operator:\n"
            "            - logical operators:\n"
            "                &&  boolean \"and\"\n"

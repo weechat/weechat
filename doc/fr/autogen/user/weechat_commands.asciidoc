@@ -229,7 +229,7 @@ infolists : afficher des infos sur les infolists
 ----
 
 [[command_weechat_eval]]
-[command]*`eval`* évaluer une expression et envoyer le résultat au tampon::
+[command]*`eval`* évaluer une expression::
 
 ----
 /eval  [-n] <expression>
@@ -237,7 +237,7 @@ infolists : afficher des infos sur les infolists
 
         -n : afficher le résultat sans envoyer au tampon (mode debug)
         -c : évaluer comme une condition : utiliser les opérateurs et les parenthèses, retourner une valeur booléenne ("0" ou "1")
-expression : expression à évaluer, les variables avec le format ${variable} sont remplacées (voir ci-dessous)
+expression : expression à évaluer, les variables avec le format ${variable} sont remplacées (voir ci-dessous) ; plusieurs commandes peuvent être séparées par des points-virgules
  opérateur : un opérateur logique ou de comparaison :
              - opérateurs logiques :
                  &&  "et" booléen
