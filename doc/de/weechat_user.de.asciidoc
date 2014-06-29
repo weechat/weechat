@@ -1462,9 +1462,9 @@ Sollte screen genutzt werden, fügt man folgende Zeile an das Ende der Datei
 term screen-256color
 ----
 
-// TRANSLATION MISSING
-If your 'TERM' variable has wrong value and that WeeChat is already running,
-you can change it with these two commands:
+Sollte die Umgebungsvariable 'TERM' falsch gesetzt worden sein und WeeChat
+wird derweil schon ausgeführt, kann die Variable mit folgenden zwei Befehlen
+geändert werden:
 
 ----
 /set env TERM screen-256color
