@@ -191,5 +191,5 @@
 * [[option_script.scripts.url]] *script.scripts.url*
 ** description: `URL for file with list of scripts`
 ** type: string
-** values: any string (default value: `"http://www.weechat.org/files/plugins.xml.gz"`)
+** values: any string (default value: `"http://weechat.org/files/plugins.xml.gz"`)
 

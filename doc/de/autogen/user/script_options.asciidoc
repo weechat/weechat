@@ -191,5 +191,5 @@
 * [[option_script.scripts.url]] *script.scripts.url*
 ** Beschreibung: `URL für Datei mit Inhalt der unterstützten Skripten`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"http://www.weechat.org/files/plugins.xml.gz"`)
+** Werte: beliebige Zeichenkette (Standardwert: `"http://weechat.org/files/plugins.xml.gz"`)
 

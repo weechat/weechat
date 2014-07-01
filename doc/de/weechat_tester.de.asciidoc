@@ -82,7 +82,7 @@ diesem Ordner.
 Ansonsten kannst Du das 'Entwickler-Paket' herunterladen und entpacken:
 
 ----
-$ wget http://www.weechat.org/files/src/weechat-devel.tar.bz2
+$ wget http://weechat.org/files/src/weechat-devel.tar.bz2
 $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
 ----

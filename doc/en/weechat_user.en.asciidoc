@@ -2317,8 +2317,8 @@ when replying to CTCP:
 | $git         | Git version ^(1)^                   | `v0.3.9-104-g7eb5cc4`
 | $compilation | WeeChat compilation date            | `Dec 16 2012`
 | $osinfo      | Info about OS                       | `Linux 2.6.32-5-amd64 / x86_64`
-| $site        | WeeChat site                        | `http://www.weechat.org/`
-| $download    | WeeChat site, download page         | `http://www.weechat.org/download`
+| $site        | WeeChat site                        | `http://weechat.org/`
+| $download    | WeeChat site, download page         | `http://weechat.org/download`
 | $time        | Current date/time                   | `Sun, 16 Dec 2012 10:40:48 +0100`
 | $username    | User name on IRC server             | `name`
 | $realname    | Real name on IRC server             | `John Doe`
@@ -2335,7 +2335,7 @@ If CTCP options are not defined (by default), CTCP replies are:
 | CTCP       | Reply format                         | Example
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
 | FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
-| SOURCE     | `$download`                          | `http://www.weechat.org/download`
+| SOURCE     | `$download`                          | `http://weechat.org/download`
 | TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
 | USERINFO   | `$username ($realname)`              | `name (John Doe)`
 | VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`

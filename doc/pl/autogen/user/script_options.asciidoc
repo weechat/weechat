@@ -191,5 +191,5 @@
 * [[option_script.scripts.url]] *script.scripts.url*
 ** opis: `adres URL pliku z lista skryptów`
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"http://www.weechat.org/files/plugins.xml.gz"`)
+** wartości: dowolny ciąg (domyślna wartość: `"http://weechat.org/files/plugins.xml.gz"`)
 

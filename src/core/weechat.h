@@ -52,8 +52,8 @@
 
 
 #define WEECHAT_COPYRIGHT_DATE   "(C) 2003-2014"
-#define WEECHAT_WEBSITE          "http://www.weechat.org/"
-#define WEECHAT_WEBSITE_DOWNLOAD "http://www.weechat.org/download"
+#define WEECHAT_WEBSITE          "http://weechat.org/"
+#define WEECHAT_WEBSITE_DOWNLOAD "http://weechat.org/download"
 
 /* log file */
 #define WEECHAT_LOG_NAME "weechat.log"

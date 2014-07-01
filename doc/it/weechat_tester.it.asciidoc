@@ -79,7 +79,7 @@ ricevere gli ultimi aggiornamenti.
 Altrimenti si può scaricare ed estrarre il pacchetto 'devel':
 
 ----
-$ wget http://www.weechat.org/files/src/weechat-devel.tar.bz2
+$ wget http://weechat.org/files/src/weechat-devel.tar.bz2
 $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
 ----

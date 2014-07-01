@@ -2419,8 +2419,8 @@ automaticamente da WeeChat quando si risponde alle CTCP
 | $git         | Git version ^(1)^                       | `v0.3.9-104-g7eb5cc4`
 | $compilation | Data di compilazione di WeeChat         | `Dec 16 2012`
 | $osinfo      | Informazioni sull'OS                    | `Linux 2.6.32-5-amd64 / x86_64`
-| $site        | Sito di WeeChat                         | `http://www.weechat.org/`
-| $download    | Sito di WeeChat, pagina di download     | `http://www.weechat.org/download`
+| $site        | Sito di WeeChat                         | `http://weechat.org/`
+| $download    | Sito di WeeChat, pagina di download     | `http://weechat.org/download`
 | $time        | Data/ora correnti                       | `Sun, 16 Dec 2012 10:40:48 +0100`
 | $username    | Nome utente sul server IRC              | `name`
 | $realname    | Nome reale sul server IRC               | `John Doe`
@@ -2440,7 +2440,7 @@ le risposte CTCP sono:
 | CTCP       | Formato risposta                     | Esempio
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
 | FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
-| SOURCE     | `$download`                          | `http://www.weechat.org/download`
+| SOURCE     | `$download`                          | `http://weechat.org/download`
 | TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
 | USERINFO   | `$username ($realname)`              | `name (John Doe)`
 | VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`

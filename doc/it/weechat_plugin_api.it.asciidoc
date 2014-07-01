@@ -7423,7 +7423,7 @@ struct t_hashtable *options = weechat_hashtable_new (8,
 if (options)
 {
     weechat_hashtable_set (options, "file_out", "/tmp/weechat.org.html");
-    struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:http://www.weechat.org/",
+    struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:http://weechat.org/",
                                                                      options,
                                                                      20000,
                                                                      &my_process_cb, NULL);
@@ -7488,7 +7488,7 @@ def my_process_cb(data, command, return_code, out, err):
     return weechat.WEECHAT_RC_OK
 
 # example 1: download URL
-hook1 = weechat.hook_process_hashtable("url:http://www.weechat.org/",
+hook1 = weechat.hook_process_hashtable("url:http://weechat.org/",
                                        { "file_out": "/tmp/weechat.org.html" },
                                        20000, "my_process_cb", "")
 

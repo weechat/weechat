@@ -30,8 +30,8 @@ Name:      %{name}
 Summary:   portable, fast, light and extensible IRC client
 Version:   %{version}
 Release:   %{release}
-Source:    http://www.weechat.org/files/src/%{name}-%{version}.tar.gz
-URL:       http://www.weechat.org/
+Source:    http://weechat.org/files/src/%{name}-%{version}.tar.gz
+URL:       http://weechat.org/
 Group:     Productivity/Networking/IRC
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 Requires:  perl, python, ruby, lua, tcl, guile, gcrypt, gnutls, ncurses, libcurl

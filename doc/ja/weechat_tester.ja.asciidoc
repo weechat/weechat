@@ -76,7 +76,7 @@ $ cd weechat
 他の方法として 'devel' パッケージをダウンロードして展開する方法があります:
 
 ----
-$ wget http://www.weechat.org/files/src/weechat-devel.tar.bz2
+$ wget http://weechat.org/files/src/weechat-devel.tar.bz2
 $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
 ----

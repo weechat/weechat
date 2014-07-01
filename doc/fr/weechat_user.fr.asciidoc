@@ -2394,8 +2394,8 @@ automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 | $git         | Version git ^(1)^                      | `v0.3.9-104-g7eb5cc4`
 | $compilation | Date de compilation WeeChat            | `Dec 16 2012`
 | $osinfo      | Information sur l'OS                   | `Linux 2.6.32-5-amd64 / x86_64`
-| $site        | Site WeeChat                           | `http://www.weechat.org/`
-| $download    | Site WeeChat, page téléchargement      | `http://www.weechat.org/download`
+| $site        | Site WeeChat                           | `http://weechat.org/`
+| $download    | Site WeeChat, page téléchargement      | `http://weechat.org/download`
 | $time        | Date/heure courante                    | `Sun, 16 Dec 2012 10:40:48 +0100`
 | $username    | Nom d'utilisateur sur le serveur       | `nom`
 | $realname    | Nom réel sur le serveur                | `John Doe`
@@ -2413,7 +2413,7 @@ Si les options CTCP ne sont pas définies (par défaut), les réponses CTCP sont
 | CTCP       | Format de réponse                    | Exemple
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
 | FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
-| SOURCE     | `$download`                          | `http://www.weechat.org/download`
+| SOURCE     | `$download`                          | `http://weechat.org/download`
 | TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
 | USERINFO   | `$username ($realname)`              | `nom (John Doe)`
 | VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`
