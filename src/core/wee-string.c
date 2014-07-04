@@ -74,6 +74,9 @@ string_strndup (const char *string, int length)
 {
     char *result;
 
+    if (!string)
+        return NULL;
+
     if ((int)strlen (string) < length)
         return strdup (string);
 
