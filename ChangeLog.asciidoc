@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.0 (under dev)
 
+* core: fix socks5 proxy for curl downloads (closes #119)
 * core: display curl error after a failed download
 * core: do not display content of passphrase on /secure buffer
 * core: add option "env" in command /set (manage environment variables)

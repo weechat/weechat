@@ -1095,21 +1095,24 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
             curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
             break;
         case PROXY_TYPE_SOCKS4:
-#if LIBCURL_VERSION_NUM >= 0x070A00
-            /* libcurl >= 7.10 */
-            curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
-#else
+#if LIBCURL_VERSION_NUM < 0x070A00
             /* proxy socks4 not supported in Curl < 7.10 */
             return;
 #endif
+            curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
             break;
         case PROXY_TYPE_SOCKS5:
-#if LIBCURL_VERSION_NUM >= 0x070A00
-            /* libcurl >= 7.10 */
-            curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
-#else
-            /* proxy socks4 not supported in Curl < 7.10 */
+#if LIBCURL_VERSION_NUM < 0x070A00
+            /* proxy socks5 not supported in Curl < 7.10 */
             return;
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071200
+            /* libcurl >= 7.18.0 */
+            curl_easy_setopt (curl, CURLOPT_PROXYTYPE,
+                              CURLPROXY_SOCKS5_HOSTNAME);
+#else
+            /* libcurl < 7.18.0 */
+            curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
 #endif
             break;
     }
