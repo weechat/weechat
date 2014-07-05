@@ -237,6 +237,9 @@ util_setrlimit ()
 int
 util_timeval_cmp (struct timeval *tv1, struct timeval *tv2)
 {
+    if (!tv1 || !tv2)
+        return (tv1) ? 1 : ((tv2) ? -1 : 0);
+
     if (tv1->tv_sec < tv2->tv_sec)
         return -1;
     if (tv1->tv_sec > tv2->tv_sec)
@@ -259,6 +262,9 @@ util_timeval_diff (struct timeval *tv1, struct timeval *tv2)
 {
     long diff_sec, diff_usec;
 
+    if (!tv1 || !tv2)
+        return 0;
+
     diff_sec = tv2->tv_sec - tv1->tv_sec;
     diff_usec = tv2->tv_usec - tv1->tv_usec;
 
@@ -278,6 +284,9 @@ void
 util_timeval_add (struct timeval *tv, long interval)
 {
     long usec;
+
+    if (!tv)
+        return;
 
     tv->tv_sec += (interval / 1000);
     usec = tv->tv_usec + ((interval % 1000) * 1000);
