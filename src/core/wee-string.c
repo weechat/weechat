@@ -854,10 +854,13 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
     int set_flag, flag;
     char *pos;
 
-    ptr_regex = regex;
     if (flags)
         *flags = default_flags;
 
+    if (!regex)
+        return NULL;
+
+    ptr_regex = regex;
     while (strncmp (ptr_regex, "(?", 2) == 0)
     {
         pos = strchr (ptr_regex, ')');
