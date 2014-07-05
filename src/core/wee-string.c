@@ -340,6 +340,8 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
 
 /*
  * Searches for a string in another string (locale and case independent).
+ *
+ * Returns pointer to string found, or NULL if not found.
  */
 
 char *
