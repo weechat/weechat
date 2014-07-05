@@ -594,9 +594,9 @@ Beispiele:
 ----
 buffer = weechat.current_buffer()
 
-nummer     = weechat.buffer_get_integer(buffer, "number")
-name       = weechat.buffer_get_string(buffer, "name")
-kurz_name  = weechat.buffer_get_string(buffer, "short_name")
+nummer = weechat.buffer_get_integer(buffer, "number")
+name = weechat.buffer_get_string(buffer, "name")
+kurz_name = weechat.buffer_get_string(buffer, "short_name")
 ----
 
 Es ist möglich lokale Variablen eines Buffers hinzuzufügen, zu
@@ -745,7 +745,7 @@ def my_process_cb(data, command, rc, out, err):
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process_hashtable("url:http://weechat.org/files/src/weechat-devel.tar.gz",
-                               { "file_out": "/tmp/weechat-devel.tar.gz" },
+                               {"file_out": "/tmp/weechat-devel.tar.gz"},
                                30 * 1000, "my_process_cb", "")
 ----
 
@@ -889,7 +889,7 @@ Man kann IRC Nachrichten mittels einer info_hashtable mit dem Namen "irc_message
 [source,python]
 ----
 dict = weechat.info_get_hashtable("irc_message_parse",
-                                  { "message": ":nick!user@host PRIVMSG #weechat :message here" })
+                                  {"message": ":nick!user@host PRIVMSG #weechat :message here"})
 weechat.prnt("", "dict: %s" % dict)
 
 # output:

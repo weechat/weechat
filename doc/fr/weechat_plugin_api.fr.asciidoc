@@ -491,7 +491,7 @@ Exemple en C :
 
 [source,C]
 ----
-char *str = weechat_strndup ("abcdef", 3); /* résultat : "abc" */
+char *str = weechat_strndup ("abcdef", 3);  /* résultat : "abc" */
 /* ... */
 free (str);
 ----
@@ -519,7 +519,7 @@ Exemple en C :
 [source,C]
 ----
 char str[] = "AbCdé";
-weechat_string_tolower (str); /* str vaut maintenant : "abcdé" */
+weechat_string_tolower (str);  /* str vaut maintenant : "abcdé" */
 ----
 
 [NOTE]
@@ -545,7 +545,7 @@ Exemple en C :
 [source,C]
 ----
 char str[] = "AbCdé";
-weechat_string_toupper (str); /* str vaut maintenant : "ABCDé" */
+weechat_string_toupper (str);  /* str vaut maintenant : "ABCDé" */
 ----
 
 [NOTE]
@@ -579,7 +579,7 @@ Exemple en C :
 
 [source,C]
 ----
-int diff = weechat_strcasecmp ("aaa", "CCC"); /* == -2 */
+int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -2 */
 ----
 
 [NOTE]
@@ -621,7 +621,7 @@ Exemple en C :
 
 [source,C]
 ----
-int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29); /* == 0 */
+int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29);  /* == 0 */
 ----
 
 [NOTE]
@@ -657,7 +657,7 @@ Exemple en C :
 
 [source,C]
 ----
-int diff = weechat_strncasecmp ("aabb", "aacc", 2); /* == 0 */
+int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
 ----
 
 [NOTE]
@@ -700,7 +700,7 @@ Exemple en C :
 
 [source,C]
 ----
-int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29); /* == 0 */
+int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29);  /* == 0 */
 ----
 
 [NOTE]
@@ -739,7 +739,7 @@ Exemple en C :
 
 [source,C]
 ----
-int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1); /* == -3 */
+int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 ----
 
 [NOTE]
@@ -769,7 +769,7 @@ Exemple en C :
 
 [source,C]
 ----
-char *pos = weechat_strcasestr ("aBcDeF", "de"); /* résultat : pointeur vers "DeF" */
+char *pos = weechat_strcasestr ("aBcDeF", "de");  /* résultat : pointeur vers "DeF" */
 ----
 
 [NOTE]
@@ -803,7 +803,7 @@ Exemple en C :
 
 [source,C]
 ----
-int length_on_screen = weechat_strlen_screen ("é"); /* == 1 */
+int length_on_screen = weechat_strlen_screen ("é");  /* == 1 */
 ----
 
 Script (Python) :
@@ -814,7 +814,7 @@ Script (Python) :
 length = weechat.strlen_screen(string)
 
 # exemple
-length = weechat.strlen_screen("é") # 1
+length = weechat.strlen_screen("é")  # 1
 ----
 
 ==== weechat_string_match
@@ -850,11 +850,11 @@ Exemple en C :
 
 [source,C]
 ----
-int match1 = weechat_string_match ("abcdef", "abc*", 0);  /* == 1 */
-int match2 = weechat_string_match ("abcdef", "*dd*", 0);  /* == 0 */
-int match3 = weechat_string_match ("abcdef", "*def", 0);  /* == 1 */
-int match4 = weechat_string_match ("abcdef", "*de*", 0);  /* == 1 */
-int match5 = weechat_string_match ("abcdef", "*b*d*", 0); /* == 1 */
+int match1 = weechat_string_match ("abcdef", "abc*", 0);   /* == 1 */
+int match2 = weechat_string_match ("abcdef", "*dd*", 0);   /* == 0 */
+int match3 = weechat_string_match ("abcdef", "*def", 0);   /* == 1 */
+int match4 = weechat_string_match ("abcdef", "*de*", 0);   /* == 1 */
+int match5 = weechat_string_match ("abcdef", "*b*d*", 0);  /* == 1 */
 ----
 
 Script (Python) :
@@ -865,11 +865,11 @@ Script (Python) :
 match = weechat.string_match(string, mask, case_sensitive)
 
 # exemples
-match1 = weechat.string_match("abcdef", "abc*", 0)  # 1
-match2 = weechat.string_match("abcdef", "*dd*", 0)  # 0
-match3 = weechat.string_match("abcdef", "*def", 0)  # 1
-match4 = weechat.string_match("abcdef", "*de*", 0)  # 1
-match5 = weechat.string_match("abcdef", "*b*d*", 0) # 1
+match1 = weechat.string_match("abcdef", "abc*", 0)   # 1
+match2 = weechat.string_match("abcdef", "*dd*", 0)   # 0
+match3 = weechat.string_match("abcdef", "*def", 0)   # 1
+match4 = weechat.string_match("abcdef", "*de*", 0)   # 1
+match5 = weechat.string_match("abcdef", "*b*d*", 0)  # 1
 ----
 
 ==== weechat_string_expand_home
@@ -971,7 +971,7 @@ Exemple en C :
 
 [source,C]
 ----
-char *str = weechat_string_strip (".abc -", 0, 1, "- ."); /* résultat : ".abc" */
+char *str = weechat_string_strip (".abc -", 0, 1, "- .");  /* résultat : ".abc" */
 /* ... */
 free (str);
 ----
@@ -1071,7 +1071,7 @@ Script (Python) :
 regex = weechat.string_mask_to_regex(mask)
 
 # exemple
-regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
+regex = weechat.string_mask_to_regex("test*mask")  # "test.*mask"
 ----
 
 ==== weechat_string_regex_flags
@@ -1199,7 +1199,7 @@ Exemple en C :
 
 [source,C]
 ----
-int hl = weechat_string_has_highlight ("my test string", "test,word2"); /* == 1 */
+int hl = weechat_string_has_highlight ("my test string", "test,word2");  /* == 1 */
 ----
 
 Script (Python) :
@@ -1210,7 +1210,7 @@ Script (Python) :
 highlight = weechat.string_has_highlight(string, highlight_words)
 
 # exemple
-highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
+highlight = weechat.string_has_highlight("my test string", "test,word2")  # 1
 ----
 
 ==== weechat_string_has_highlight_regex
@@ -1242,7 +1242,7 @@ Exemple en C :
 
 [source,C]
 ----
-int hl = weechat_string_has_highlight_regex ("my test string", "test|word2"); /* == 1 */
+int hl = weechat_string_has_highlight_regex ("my test string", "test|word2");  /* == 1 */
 ----
 
 Script (Python) :
@@ -1253,7 +1253,7 @@ Script (Python) :
 highlight = weechat.string_has_highlight_regex(string, regex)
 
 # exemple
-highlight = weechat.string_has_highlight_regex("my test string", "test|word2") # 1
+highlight = weechat.string_has_highlight_regex("my test string", "test|word2")  # 1
 ----
 
 ==== weechat_string_replace
@@ -1283,7 +1283,7 @@ Exemple en C :
 
 [source,C]
 ----
-char *str = weechat_string_replace ("test, test", "s", "x"); /* résultat : "text" */
+char *str = weechat_string_replace ("test, test", "s", "x");  /* résultat : "text" */
 /* ... */
 free (str);
 ----
@@ -1628,19 +1628,19 @@ Exemples en C :
 ----
 /* exemples avec la langue française */
 
-char *str = weechat_string_format_size (0); /* str == "0 octet" */
+char *str = weechat_string_format_size (0);  /* str == "0 octet" */
 /* ... */
 free (str);
 
-char *str = weechat_string_format_size (200); /* str == "200 octets" */
+char *str = weechat_string_format_size (200);  /* str == "200 octets" */
 /* ... */
 free (str);
 
-char *str = weechat_string_format_size (1536); /* str == "1.5 Ko" */
+char *str = weechat_string_format_size (1536);  /* str == "1.5 Ko" */
 /* ... */
 free (str);
 
-char *str = weechat_string_format_size (2097152); /* str == "2 Mo" */
+char *str = weechat_string_format_size (2097152);  /* str == "2 Mo" */
 /* ... */
 free (str);
 ----
@@ -1792,8 +1792,8 @@ Exemples en C :
 
 [source,C]
 ----
-int command_char1 = weechat_string_is_command_char ("/test"); /* == 1 */
-int command_char2 = weechat_string_is_command_char ("test");  /* == 0 */
+int command_char1 = weechat_string_is_command_char ("/test");  /* == 1 */
+int command_char2 = weechat_string_is_command_char ("test");   /* == 0 */
 ----
 
 Script (Python) :
@@ -1804,8 +1804,8 @@ Script (Python) :
 is_cmdchar = weechat.string_is_command_char(string)
 
 # exemples
-command_char1 = weechat.string_is_command_char("/test") # == 1
-command_char2 = weechat.string_is_command_char("test")  # == 0
+command_char1 = weechat.string_is_command_char("/test")  # == 1
+command_char2 = weechat.string_is_command_char("test")   # == 0
 ----
 
 ==== weechat_string_input_for_buffer
@@ -1834,9 +1834,9 @@ Exemples en C :
 
 [source,C]
 ----
-const char *str1 = weechat_string_input_for_buffer ("test");   /* "test"  */
-const char *str2 = weechat_string_input_for_buffer ("/test");  /* NULL    */
-const char *str3 = weechat_string_input_for_buffer ("//test"); /* "/test" */
+const char *str1 = weechat_string_input_for_buffer ("test");    /* "test"  */
+const char *str2 = weechat_string_input_for_buffer ("/test");   /* NULL    */
+const char *str3 = weechat_string_input_for_buffer ("//test");  /* "/test" */
 ----
 
 Script (Python) :
@@ -1847,9 +1847,9 @@ Script (Python) :
 str = weechat.string_input_for_buffer(string)
 
 # exemples
-str1 = weechat.string_input_for_buffer("test")   # "test"
-str2 = weechat.string_input_for_buffer("/test")  # ""
-str3 = weechat.string_input_for_buffer("//test") # "/test"
+str1 = weechat.string_input_for_buffer("test")    # "test"
+str2 = weechat.string_input_for_buffer("/test")   # ""
+str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ----
 
 ==== weechat_string_eval_expression
@@ -1908,9 +1908,9 @@ struct t_hashtable *options = weechat_hashtable_new (8,
                                                      NULL);
 if (options)
     weechat_hashtable_set (options, "type", "condition");
-char *str1 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);          /* "core.weechat" */
-char *str2 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options); /* "1" */
-char *str3 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options);                /* "0" */
+char *str1 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);           /* "core.weechat" */
+char *str2 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options);  /* "1" */
+char *str3 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options);                 /* "0" */
 ----
 
 Script (Python) :
@@ -1921,9 +1921,9 @@ Script (Python) :
 str = weechat.string_eval_expression(expr, pointers, extra_vars, options)
 
 # exemples
-str1 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {})                          # "core.weechat"
-str2 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"}) # "1"
-str3 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                # "0"
+str1 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {})                           # "core.weechat"
+str2 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
+str3 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
 ----
 
 [[utf-8]]
@@ -2115,7 +2115,7 @@ Exemple en C :
 
 [source,C]
 ----
-int char_int = weechat_utf8_char_int ("être"); /* "ê" comme entier */
+int char_int = weechat_utf8_char_int ("être");  /* "ê" comme entier */
 ----
 
 [NOTE]
@@ -2144,7 +2144,7 @@ Exemple en C :
 
 [source,C]
 ----
-int char_size = weechat_utf8_char_size ("être"); /* == 2 */
+int char_size = weechat_utf8_char_size ("être");  /* == 2 */
 ----
 
 [NOTE]
@@ -2173,7 +2173,7 @@ Exemple en C :
 
 [source,C]
 ----
-int length = weechat_utf8_strlen ("chêne"); /* == 5 */
+int length = weechat_utf8_strlen ("chêne");  /* == 5 */
 ----
 
 [NOTE]
@@ -2204,7 +2204,7 @@ Exemple en C :
 
 [source,C]
 ----
-int length = weechat_utf8_strnlen ("chêne", 4); /* == 3 */
+int length = weechat_utf8_strnlen ("chêne", 4);  /* == 3 */
 ----
 
 [NOTE]
@@ -2234,7 +2234,7 @@ Exemple en C :
 
 [source,C]
 ----
-int length_on_screen = weechat_utf8_strlen_screen ("é"); /* == 1 */
+int length_on_screen = weechat_utf8_strlen_screen ("é");  /* == 1 */
 ----
 
 [NOTE]
@@ -2268,7 +2268,7 @@ Exemple en C :
 
 [source,C]
 ----
-int diff = weechat_utf8_charcmp ("aaa", "ccc"); /* == -2 */
+int diff = weechat_utf8_charcmp ("aaa", "ccc");  /* == -2 */
 ----
 
 [NOTE]
@@ -2302,7 +2302,7 @@ Exemple en C :
 
 [source,C]
 ----
-int diff = weechat_utf8_charcasecmp ("aaa", "CCC"); /* == -2 */
+int diff = weechat_utf8_charcasecmp ("aaa", "CCC");  /* == -2 */
 ----
 
 [NOTE]
@@ -2332,7 +2332,7 @@ Exemple en C :
 
 [source,C]
 ----
-int length_on_screen = weechat_utf8_char_size_screen ("é"); /* == 1 */
+int length_on_screen = weechat_utf8_char_size_screen ("é");  /* == 1 */
 ----
 
 [NOTE]
@@ -2364,7 +2364,7 @@ Exemple en C :
 [source,C]
 ----
 char *str = "chêne";
-char *str2 = weechat_utf8_add_offset (str, 3); /* pointe vers "ne" */
+char *str2 = weechat_utf8_add_offset (str, 3);  /* pointe vers "ne" */
 ----
 
 [NOTE]
@@ -2394,7 +2394,7 @@ Exemple en C :
 
 [source,C]
 ----
-int pos = weechat_utf8_real_pos ("chêne", 3); /* == 4 */
+int pos = weechat_utf8_real_pos ("chêne", 3);  /* == 4 */
 ----
 
 [NOTE]
@@ -2424,7 +2424,7 @@ Exemple en C :
 
 [source,C]
 ----
-int pos = weechat_utf8_pos ("chêne", 4); /* == 3 */
+int pos = weechat_utf8_pos ("chêne", 4);  /* == 3 */
 ----
 
 [NOTE]
@@ -2455,7 +2455,7 @@ Exemple en C :
 
 [source,C]
 ----
-char *string = weechat_utf8_strndup ("chêne", 3); /* retourne "chê" */
+char *string = weechat_utf8_strndup ("chêne", 3);  /* retourne "chê" */
 /* ... */
 free (str);
 ----
@@ -2757,7 +2757,7 @@ Exemple en C :
 
 [source,C]
 ----
-weechat_util_timeval_add (&tv, 2000); /* ajoute 2 secondes */
+weechat_util_timeval_add (&tv, 2000);  /* ajoute 2 secondes */
 ----
 
 [NOTE]
@@ -2814,10 +2814,10 @@ Exemple en C :
 
 [source,C]
 ----
-version_number = weechat_util_version_number ("0.3.8");     /* == 0x00030800 */
-version_number = weechat_util_version_number ("0.3.9-dev"); /* == 0x00030900 */
-version_number = weechat_util_version_number ("0.3.9-rc1"); /* == 0x00030900 */
-version_number = weechat_util_version_number ("0.3.9");     /* == 0x00030900 */
+version_number = weechat_util_version_number ("0.3.8");      /* == 0x00030800 */
+version_number = weechat_util_version_number ("0.3.9-dev");  /* == 0x00030900 */
+version_number = weechat_util_version_number ("0.3.9-rc1");  /* == 0x00030900 */
+version_number = weechat_util_version_number ("0.3.9");      /* == 0x00030900 */
 ----
 
 [NOTE]
@@ -3094,7 +3094,7 @@ Exemple en C :
 
 [source,C]
 ----
-struct t_weelist_item *item = weechat_list_get (list, 0); /* premier élément */
+struct t_weelist_item *item = weechat_list_get (list, 0);  /* premier élément */
 ----
 
 Script (Python) :
@@ -4262,11 +4262,11 @@ my_section_delete_option_cb (void *data, struct t_config_file *config_file,
 /* section standard, l'utilisateur ne peut pas ajouter/supprimer des options */
 struct t_config_section *new_section1 =
     weechat_config_new_section (config_file, "section1", 0, 0,
-                                NULL, NULL, /* callback de lecture */
-                                NULL, NULL, /* callback d'écriture */
-                                NULL, NULL, /* callback d'écriture (valeurs par défaut) */
-                                NULL, NULL, /* callback de création d'option */
-                                NULL, NULL); /* callback de suppression d'option */
+                                NULL, NULL,  /* callback de lecture */
+                                NULL, NULL,  /* callback d'écriture */
+                                NULL, NULL,  /* callback d'écriture (valeurs par défaut) */
+                                NULL, NULL,  /* callback de création d'option */
+                                NULL, NULL);  /* callback de suppression d'option */
 
 /* section spéciale, l'utilisateur peut ajouter/supprimer des options, et les
    options nécessitent un callback pour la lecture/écriture */
@@ -4451,67 +4451,67 @@ Exemple en C :
 struct t_config_option *option1 =
     weechat_config_new_option (config_file, section, "option1", "boolean",
                                "Mon option, type booléen"
-                               NULL, /* valeurs sous forme de chaînes */
-                               0, 0, /* min, max */
-                               "on", /* défaut */
-                               "on", /* valeur */
-                               0, /* valeur null autorisée */
-                               NULL, NULL, /* callback de vérification */
-                               NULL, NULL, /* callback de changement de valeur */
-                               NULL, NULL); /* callback de suppression de l'option */
+                               NULL,  /* valeurs sous forme de chaînes */
+                               0, 0,  /* min, max */
+                               "on",  /* défaut */
+                               "on",  /* valeur */
+                               0,  /* valeur null autorisée */
+                               NULL, NULL,  /* callback de vérification */
+                               NULL, NULL,  /* callback de changement de valeur */
+                               NULL, NULL);  /* callback de suppression de l'option */
 
 /* entier */
 struct t_config_option *option2 =
     weechat_config_new_option (config_file, section, "option2", "integer",
                                "Mon option, type entier"
-                               NULL, /* valeurs sous forme de chaînes */
-                               0, 100, /* min, max */
-                               "15", /* défaut */
-                               "15", /* valeur */
-                               0, /* valeur null autorisée */
-                               NULL, NULL, /* callback de vérification */
-                               NULL, NULL, /* callback de changement de valeur */
-                               NULL, NULL); /* callback de suppression de l'option */
+                               NULL,  /* valeurs sous forme de chaînes */
+                               0, 100,  /* min, max */
+                               "15",  /* défaut */
+                               "15",  /* valeur */
+                               0,  /* valeur null autorisée */
+                               NULL, NULL,  /* callback de vérification */
+                               NULL, NULL,  /* callback de changement de valeur */
+                               NULL, NULL);  /* callback de suppression de l'option */
 
 /* entier (avec valeurs sous forme de chaînes) */
 struct t_config_option *option3 =
     weechat_config_new_option (config_file, section, "option3", "integer",
                                "Mon option, type entier "
                                "(avec valeurs sous forme de chaînes)"
-                               "top|bottom|left|right", /* valeurs sous forme de chaînes */
-                               0, 0, /* min, max */
-                               "bottom", /* défaut */
-                               "bottom", /* valeur */
-                               0, /* valeur null autorisée */
-                               NULL, NULL, /* callback de vérification */
-                               NULL, NULL, /* callback de changement de valeur */
-                               NULL, NULL); /* callback de suppression de l'option */
+                               "top|bottom|left|right",  /* valeurs sous forme de chaînes */
+                               0, 0,  /* min, max */
+                               "bottom",  /* défaut */
+                               "bottom",  /* valeur */
+                               0,  /* valeur null autorisée */
+                               NULL, NULL,  /* callback de vérification */
+                               NULL, NULL,  /* callback de changement de valeur */
+                               NULL, NULL);  /* callback de suppression de l'option */
 
 /* chaîne */
 struct t_config_option *option4 =
     weechat_config_new_option (config_file, section, "option4", "string",
                                "Mon option, type chaîne"
-                               NULL, /* valeurs sous forme de chaînes */
-                               0, 0, /* min, max */
-                               "test", /* défaut */
-                               "test", /* valeur */
-                               1, /* valeur null autorisée */
-                               NULL, NULL, /* callback de vérification */
-                               NULL, NULL, /* callback de changement de valeur */
-                               NULL, NULL); /* callback de suppression de l'option */
+                               NULL,  /* valeurs sous forme de chaînes */
+                               0, 0,  /* min, max */
+                               "test",  /* défaut */
+                               "test",  /* valeur */
+                               1,  /* valeur null autorisée */
+                               NULL, NULL,  /* callback de vérification */
+                               NULL, NULL,  /* callback de changement de valeur */
+                               NULL, NULL);  /* callback de suppression de l'option */
 
 /* couleur */
 struct t_config_option *option5 =
     weechat_config_new_option (config_file, section, "option5", "color",
                                "Mon option, type couleur"
-                               NULL, /* valeurs sous forme de chaînes */
-                               0, 0, /* min, max */
-                               "lightblue", /* défaut */
-                               "lightblue", /* valeur */
-                               0, /* valeur null autorisée */
-                               NULL, NULL, /* callback de vérification */
-                               NULL, NULL, /* callback de changement de valeur */
-                               NULL, NULL); /* callback de suppression de l'option */
+                               NULL,  /* valeurs sous forme de chaînes */
+                               0, 0,  /* min, max */
+                               "lightblue",  /* défaut */
+                               "lightblue",  /* valeur */
+                               0,  /* valeur null autorisée */
+                               NULL, NULL,  /* callback de vérification */
+                               NULL, NULL,  /* callback de changement de valeur */
+                               NULL, NULL);  /* callback de suppression de l'option */
 ----
 
 Script (Python) :
@@ -6296,9 +6296,9 @@ Script (Python) :
 num_keys = weechat.key_bind(context, keys)
 
 # exemple
-keys = { "@chat(python.test):button1": "hsignal:test_mouse",
-         "@chat(python.test):wheelup": "/mycommand up",
-         "@chat(python.test):wheeldown": "/mycommand down" }
+keys = {"@chat(python.test):button1": "hsignal:test_mouse",
+        "@chat(python.test):wheelup": "/mycommand up",
+        "@chat(python.test):wheeldown": "/mycommand down"}
 weechat.key_bind("mouse", keys)
 ----
 
@@ -6537,7 +6537,7 @@ weechat_printf (buffer, "Bonjour sur ce tampon");
 weechat_printf (buffer, "%sCeci est une erreur !", weechat_prefix ("error"));
 weechat_printf (buffer, " \tMessage sans préfixe mais avec \t quelques \t tabulations");
 weechat_printf (buffer, "\t\tMessage sans heure/alignement");
-weechat_printf (buffer, "\t\t"); /* ligne vide (sans heure) */
+weechat_printf (buffer, "\t\t");  /* ligne vide (sans heure) */
 ----
 
 Script (Python) :
@@ -6553,7 +6553,7 @@ weechat.prnt(buffer, "Bonjour sur ce tampon")
 weechat.prnt(buffer, "%sCeci est une erreur !" % weechat.prefix("error"))
 weechat.prnt(buffer, " \tMessage sans préfixe mais avec \t quelques \t tabulations")
 weechat.prnt(buffer, "\t\tMessage sans heure/alignement")
-weechat.prnt(buffer, "\t\t") # ligne vide (sans heure)
+weechat.prnt(buffer, "\t\t")  # ligne vide (sans heure)
 ----
 
 [NOTE]
@@ -7444,7 +7444,7 @@ if (options_cmd1)
     weechat_hashtable_set (options_cmd1, "arg1", "-from");
     weechat_hashtable_set (options_cmd1, "arg2", nick);
     weechat_hashtable_set (options_cmd1, "arg3", "-msg");
-    weechat_hashtable_set (options_cmd1, "arg4", message); /* paramètre non sûr */
+    weechat_hashtable_set (options_cmd1, "arg4", message);  /* paramètre non sûr */
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("my-notify-command",
                                                                      options_cmd1,
                                                                      20000,
@@ -7492,21 +7492,21 @@ def my_process_cb(data, command, return_code, out, err):
 
 # exemple 1 : téléchargement d'une URL
 hook1 = weechat.hook_process_hashtable("url:http://weechat.org/",
-                                       { "file_out": "/tmp/weechat.org.html" },
+                                       {"file_out": "/tmp/weechat.org.html"},
                                        20000, "my_process_cb", "")
 
 # exemple 2 : exécution d'un programme de notification avec le message de quelqu'un
 hook2 = weechat.hook_process_hashtable("my-notify-command",
-                                       { "arg1": "-from",
-                                         "arg2": nick,
-                                         "arg3": "-msg",
-                                         "arg4": message }, # paramètre non sûr
+                                       {"arg1": "-from",
+                                        "arg2": nick,
+                                        "arg3": "-msg",
+                                        "arg4": message},  # paramètre non sûr
                                        20000, "my_process_cb", "")
 
 # exemple 3 : appeler le shell pour exécuter la commande (la commande doit être SURE)
 hook3 = weechat.hook_process_hashtable("sh",
-                                       { "arg1": "-c",
-                                         "arg2": "ls -l /tmp | grep something" },
+                                       {"arg1": "-c",
+                                        "arg2": "ls -l /tmp | grep something"},
                                        20000, "my_process_cb", "")
 ----
 
@@ -7642,7 +7642,7 @@ my_connect_cb (void *data, int status, int gnutls_rc, int sock,
 struct t_hook *my_connect_hook = weechat_hook_connect (NULL,
                                                        "my.server.org", 1234,
                                                        1, 0,
-                                                       NULL, NULL, 0, /* GnuTLS */
+                                                       NULL, NULL, 0,  /* GnuTLS */
                                                        NULL,
                                                        &my_connect_cb, NULL);
 ----
@@ -8842,7 +8842,7 @@ Script (Python) :
 rc = weechat.hook_hsignal_send(signal, hashtable)
 
 # exemple
-rc = weechat.hook_hsignal_send("my_hsignal", { "clé": "valeur" })
+rc = weechat.hook_hsignal_send("my_hsignal", {"clé": "valeur"})
 ----
 
 [[hsignal_irc_redirect_command]]
@@ -8948,8 +8948,8 @@ def test_whois_cb(data, signal, hashtable):
 
 weechat.hook_hsignal ("irc_redirection_test_whois", "test_whois_cb", "")
 weechat.hook_hsignal_send("irc_redirect_command",
-                          { "server": "freenode", "pattern": "whois", "signal": "test",
-                            "string": "FlashCode" })
+                          {"server": "freenode", "pattern": "whois", "signal": "test",
+                           "string": "FlashCode"})
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
                          "freenode;;2;;/whois FlashCode")
 ----
@@ -9022,10 +9022,10 @@ Script (Python) :
 [source,python]
 ----
 weechat.hook_hsignal_send("irc_redirect_pattern",
-                          { "pattern": "my_whois", "timeout": "30",
-                            "cmd_start": "311:1",
-                            "cmd_stop": "318:1,401:1,402:1,431:1,461",
-                            "cmd_extra": "318:1" })
+                          {"pattern": "my_whois", "timeout": "30",
+                           "cmd_start": "311:1",
+                           "cmd_stop": "318:1,401:1,402:1,431:1,461",
+                           "cmd_extra": "318:1"})
 # rediriger maintenant la commande irc whois avec le hsignal irc_redirect_command,
 # en utilisant le modèle "my_whois"
 # ...
@@ -9677,7 +9677,7 @@ hook = weechat.hook_info_hashtable(info_name, description, args_description,
 
 # exemple
 def my_info_hashtable_cb(data, info_name, hashtable):
-    return { "test_cle": "test_valeur" }
+    return {"test_cle": "test_valeur"}
 
 hook = weechat.hook_info_hashtable("mon_info_hashtable", "Une information",
                                    "Info sur la table de hachage en entrée",
@@ -10039,7 +10039,7 @@ def my_process_cb(data, command, return_code, out, err):
     # ...
     return weechat.WEECHAT_RC_OK
 
-hook = weechat.hook_process_hashtable("/chemin/vers/commande", { "stdin": "1" },
+hook = weechat.hook_process_hashtable("/chemin/vers/commande", {"stdin": "1"},
                                       20000, "my_process_cb", "")
 weechat.hook_set(hook, "stdin", "données envoyées sur le stdin du processus fils")
 weechat.hook_set(hook, "stdin_close", "")  # facultatif
@@ -10270,7 +10270,7 @@ Exemples en C :
 [source,C]
 ----
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
-struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test"); /* WeeChat ≥ 1.0 */
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test");  /* WeeChat ≥ 1.0 */
 ----
 
 Script (Python) :
@@ -11027,10 +11027,10 @@ Exemple en C :
 struct t_gui_buffer *buffer = weechat_buffer_search ("irc", "freenode.#weechat");
 if (buffer)
 {
-    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*"));                   /* 1 */
-    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*,!*#weechat*"));       /* 0 */
-    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.freenode.*"));      /* 1 */
-    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.oftc.*,python.*")); /* 0 */
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*"));                    /* 1 */
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*,!*#weechat*"));        /* 0 */
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.freenode.*"));       /* 1 */
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.oftc.*,python.*"));  /* 0 */
 }
 ----
 
@@ -11044,10 +11044,10 @@ match = weechat.buffer_match_list(buffer, string)
 # exemple
 buffer = weechat.buffer_search("irc", "freenode.#weechat")
 if buffer:
-    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                   # 1
-    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*,!*#weechat*"))       # 0
-    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.freenode.*"))      # 1
-    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*")) # 0
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                    # 1
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*,!*#weechat*"))        # 0
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.freenode.*"))       # 1
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
 ----
 
 [[windows]]
@@ -12830,7 +12830,7 @@ Script (Python) :
 dict = weechat.info_get_hashtable(info_name, dict_in)
 
 # exemple
-dict_in = { "message": ":nick!user@host PRIVMSG #weechat :message ici" }
+dict_in = {"message": ":nick!user@host PRIVMSG #weechat :message ici"}
 weechat.prnt("", "message analysé: %s"
              % weechat.info_get_hashtable("irc_message_parse", dict_in))
 ----
@@ -14969,13 +14969,13 @@ Script (Python) :
 count = weechat.hdata_update(hdata, pointer, hashtable)
 
 # exemple : soustrait une heure sur le dernier message affiché dans le tampon courant
-own_lines = weechat.hdata_pointer(weechat.hdata_get('buffer'), weechat.current_buffer(), 'own_lines')
+own_lines = weechat.hdata_pointer(weechat.hdata_get("buffer"), weechat.current_buffer(), "own_lines")
 if own_lines:
-    line = weechat.hdata_pointer(weechat.hdata_get('lines'), own_lines, 'last_line')
+    line = weechat.hdata_pointer(weechat.hdata_get("lines"), own_lines, "last_line")
     if line:
-        line_data = weechat.hdata_pointer(weechat.hdata_get('line'), line, 'data')
-        hdata = weechat.hdata_get('line_data')
-        weechat.hdata_update(hdata, line_data, { 'date': str(weechat.hdata_time(hdata, line_data, 'date') - 3600) })
+        line_data = weechat.hdata_pointer(weechat.hdata_get("line"), line, "data")
+        hdata = weechat.hdata_get("line_data")
+        weechat.hdata_update(hdata, line_data, {"date": str(weechat.hdata_time(hdata, line_data, "date") - 3600)})
 ----
 
 ==== weechat_hdata_get_string

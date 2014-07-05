@@ -586,8 +586,8 @@ weechat.buffer_set(buffer, "localvar_set_no_log", "1")
 ----
 buffer = weechat.current_buffer()
 
-number     = weechat.buffer_get_integer(buffer, "number")
-name       = weechat.buffer_get_string(buffer, "name")
+number = weechat.buffer_get_integer(buffer, "number")
+name = weechat.buffer_get_string(buffer, "name")
 short_name = weechat.buffer_get_string(buffer, "short_name")
 ----
 
@@ -733,7 +733,7 @@ def my_process_cb(data, command, rc, out, err):
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process_hashtable("url:http://weechat.org/files/src/weechat-devel.tar.gz",
-                               { "file_out": "/tmp/weechat-devel.tar.gz" },
+                               {"file_out": "/tmp/weechat-devel.tar.gz"},
                                30 * 1000, "my_process_cb", "")
 ----
 
@@ -876,7 +876,7 @@ _バージョン 0.3.4 の新機能_
 [source,python]
 ----
 dict = weechat.info_get_hashtable("irc_message_parse",
-                                  { "message": ":nick!user@host PRIVMSG #weechat :message here" })
+                                  {"message": ":nick!user@host PRIVMSG #weechat :message here"})
 weechat.prnt("", "dict: %s" % dict)
 
 # 出力:

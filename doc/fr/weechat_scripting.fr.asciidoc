@@ -597,8 +597,8 @@ Exemples :
 ----
 buffer = weechat.current_buffer()
 
-number     = weechat.buffer_get_integer(buffer, "number")
-name       = weechat.buffer_get_string(buffer, "name")
+number = weechat.buffer_get_integer(buffer, "number")
+name = weechat.buffer_get_string(buffer, "name")
 short_name = weechat.buffer_get_string(buffer, "short_name")
 ----
 
@@ -749,7 +749,7 @@ def my_process_cb(data, command, rc, out, err):
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process_hashtable("url:http://weechat.org/files/src/weechat-devel.tar.gz",
-                               { "file_out": "/tmp/weechat-devel.tar.gz" },
+                               {"file_out": "/tmp/weechat-devel.tar.gz"},
                                30 * 1000, "my_process_cb", "")
 ----
 
@@ -897,7 +897,7 @@ Vous pouvez analyser un message IRC avec l'info_hashtable appelée
 [source,python]
 ----
 dict = weechat.info_get_hashtable("irc_message_parse",
-                                  { "message": ":nick!user@host PRIVMSG #weechat :message ici" })
+                                  {"message": ":nick!user@host PRIVMSG #weechat :message ici"})
 weechat.prnt("", "dict: %s" % dict)
 
 # output:
