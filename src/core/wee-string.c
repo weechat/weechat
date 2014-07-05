@@ -782,6 +782,8 @@ string_is_word_char (const char *string)
 /*
  * Converts a mask (string with only "*" as wildcard) to a regex, paying
  * attention to special chars in a regex.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
