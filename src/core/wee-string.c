@@ -560,7 +560,7 @@ string_strip (const char *string, int left, int right, const char *chars)
     if (!string)
         return NULL;
 
-    if (!string[0])
+    if (!string[0] || !chars)
         return strdup (string);
 
     ptr_start = string;
