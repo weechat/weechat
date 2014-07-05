@@ -124,9 +124,9 @@ string_toupper (char *string)
  * Compares two strings (locale and case independent).
  *
  * Returns:
- *   < 0: string1 < string2
- *     0: string1 == string2
- *   > 0: string1 > string2
+ *   -1: string1 < string2
+ *    0: string1 == string2
+ *    1: string1 > string2
  */
 
 int
@@ -141,7 +141,7 @@ string_strcasecmp (const char *string1, const char *string2)
     {
         diff = utf8_charcasecmp (string1, string2);
         if (diff != 0)
-            return diff;
+            return (diff < 0) ? -1 : 1;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
@@ -163,9 +163,9 @@ string_strcasecmp (const char *string1, const char *string2)
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
  * Returns:
- *   < 0: string1 < string2
- *     0: string1 == string2
- *   > 0: string1 > string2
+ *   -1: string1 < string2
+ *    0: string1 == string2
+ *    1: string1 > string2
  */
 
 int
@@ -180,7 +180,7 @@ string_strcasecmp_range (const char *string1, const char *string2, int range)
     {
         diff = utf8_charcasecmp_range (string1, string2, range);
         if (diff != 0)
-            return diff;
+            return (diff < 0) ? -1 : 1;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
@@ -193,9 +193,9 @@ string_strcasecmp_range (const char *string1, const char *string2, int range)
  * Compares two strings with max length (locale and case independent).
  *
  * Returns:
- *   < 0: string1 < string2
+ *    -1: string1 < string2
  *     0: string1 == string2
- *   > 0: string1 > string2
+ *     1: string1 > string2
  */
 
 int
@@ -211,7 +211,7 @@ string_strncasecmp (const char *string1, const char *string2, int max)
     {
         diff = utf8_charcasecmp (string1, string2);
         if (diff != 0)
-            return diff;
+            return (diff < 0) ? -1 : 1;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
@@ -238,9 +238,9 @@ string_strncasecmp (const char *string1, const char *string2, int max)
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
  * Returns:
- *   < 0: string1 < string2
- *     0: string1 == string2
- *   > 0: string1 > string2
+ *   -1: string1 < string2
+ *    0: string1 == string2
+ *    1: string1 > string2
  */
 
 int
@@ -257,7 +257,7 @@ string_strncasecmp_range (const char *string1, const char *string2, int max,
     {
         diff = utf8_charcasecmp_range (string1, string2, range);
         if (diff != 0)
-            return diff;
+            return (diff < 0) ? -1 : 1;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);
@@ -274,9 +274,9 @@ string_strncasecmp_range (const char *string1, const char *string2, int max,
  * Compares two strings, ignoring some chars.
  *
  * Returns:
- *   < 0: string1 < string2
- *     0: string1 == string2
- *   > 0: string1 > string2
+ *   -1: string1 < string2
+ *    0: string1 == string2
+ *    1: string1 > string2
  */
 
 int
@@ -285,12 +285,8 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
 {
     int diff;
 
-    if (!string1 && !string2)
-        return 0;
-    if (!string1 && string2)
-        return -1;
-    if (string1 && !string2)
-        return 1;
+    if (!string1 || !string2)
+        return (string1) ? 1 : ((string2) ? -1 : 0);
 
     while (string1 && string1[0] && string2 && string2[0])
     {
@@ -316,7 +312,7 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
         diff = (case_sensitive) ?
             (int)string1[0] - (int)string2[0] : utf8_charcasecmp (string1, string2);
         if (diff != 0)
-            return diff;
+            return (diff < 0) ? -1 : 1;
 
         string1 = utf8_next_char (string1);
         string2 = utf8_next_char (string2);

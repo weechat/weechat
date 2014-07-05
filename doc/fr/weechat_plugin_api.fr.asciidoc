@@ -553,6 +553,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_strcasecmp
 
+_Mis à jour dans la 1.0._
+
 Comparer deux chaînes indépendemment de la locale et de la casse.
 
 Prototype :
@@ -569,10 +571,9 @@ Paramètres :
 
 Valeur de retour :
 
-* différence entre les deux chaînes :
-** négative si string1 < string2
-** zéro si string1 == string2
-** positive si string1 > string2
+* -1 si string1 < string2
+* 0 si string1 == string2
+* 1 si string1 > string2
 
 Exemple en C :
 
@@ -586,7 +587,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_strcasecmp_range
 
-_WeeChat ≥ 0.3.7._
+_WeeChat ≥ 0.3.7, mis à jour dans la 1.0._
 
 Comparer deux chaînes indépendemment de la locale et de la casse, avec un
 intervalle pour comparer la casse.
@@ -612,10 +613,9 @@ Les valeurs 29 et 30 sont utilisés par quelques protocoles comme IRC.
 
 Valeur de retour :
 
-* différence entre les deux chaînes :
-** négative si string1 < string2
-** zéro si string1 == string2
-** positive si string1 > string2
+* -1 si string1 < string2
+* 0 si string1 == string2
+* 1 si string1 > string2
 
 Exemple en C :
 
@@ -628,6 +628,8 @@ int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29); /* == 0 */
 Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_strncasecmp
+
+_Mis à jour dans la 1.0._
 
 Comparer deux chaînes indépendemment de la locale et de la casse, pour 'max'
 caractères.
@@ -647,10 +649,9 @@ Paramètres :
 
 Valeur de retour :
 
-* différence entre les deux chaînes :
-** négative si string1 < string2
-** zéro si string1 == string2
-** positive si string1 > string2
+* -1 si string1 < string2
+* 0 si string1 == string2
+* 1 si string1 > string2
 
 Exemple en C :
 
@@ -664,7 +665,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_strncasecmp_range
 
-_WeeChat ≥ 0.3.7._
+_WeeChat ≥ 0.3.7, mis à jour dans la 1.0._
 
 Comparer deux chaînes indépendemment de la locale et de la casse, pour 'max'
 caractères, avec un intervalle pour comparer la casse.
@@ -691,10 +692,9 @@ Les valeurs 29 et 30 sont utilisés par quelques protocoles comme IRC.
 
 Valeur de retour :
 
-* différence entre les deux chaînes :
-** négative si string1 < string2
-** zéro si string1 == string2
-** positive si string1 > string2
+* -1 si string1 < string2
+* 0 si string1 == string2
+* 1 si string1 > string2
 
 Exemple en C :
 
@@ -707,6 +707,8 @@ int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29); /* == 
 Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_strcmp_ignore_chars
+
+_Mis à jour dans la 1.0._
 
 Comparer deux chaînes indépendemment de la locale (et en option de la casse), en
 ignorant des caractères.
@@ -729,10 +731,9 @@ Paramètres :
 
 Valeur de retour :
 
-* différence entre les deux chaînes :
-** négative si string1 < string2
-** zéro si string1 == string2
-** positive si string1 > string2
+* -1 si string1 < string2
+* 0 si string1 == string2
+* 1 si string1 > string2
 
 Exemple en C :
 
@@ -2241,6 +2242,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_charcmp
 
+_Mis à jour dans la 1.0._
+
 Comparer deux caractères UTF-8.
 
 Prototype :
@@ -2257,10 +2260,9 @@ Paramètres :
 
 Valeur de retour :
 
-* différence entre le premier caractère de chaque chaîne :
-** négative si char1 < char2
-** zéro si char1 == char2
-** positive si char1 > char2
+* -1 si string1 < string2
+* 0 si string1 == string2
+* 1 si string1 > string2
 
 Exemple en C :
 
@@ -2273,6 +2275,8 @@ int diff = weechat_utf8_charcmp ("aaa", "ccc"); /* == -2 */
 Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_charcasecmp
+
+_Mis à jour dans la 1.0._
 
 Comparer deux caractères UTF-8 en ignorant la casse.
 
@@ -2290,10 +2294,9 @@ Paramètres :
 
 Valeur de retour :
 
-* différence entre le premier caractère de chaque chaîne :
-** négative si char1 < char2
-** zéro si char1 == char2
-** positive si char1 > char2
+* -1 si string1 < string2
+* 0 si string1 == string2
+* 1 si string1 > string2
 
 Exemple en C :
 

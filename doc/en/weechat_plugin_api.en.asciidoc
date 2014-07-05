@@ -546,6 +546,8 @@ This function is not available in scripting API.
 
 ==== weechat_strcasecmp
 
+_Updated in 1.0._
+
 Locale and case independent string comparison.
 
 Prototype:
@@ -562,10 +564,9 @@ Arguments:
 
 Return value:
 
-* difference between two strings:
-** negative if string1 < string2
-** zero if string1 == string2
-** positive if string1 > string2
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C example:
 
@@ -579,7 +580,7 @@ This function is not available in scripting API.
 
 ==== weechat_strcasecmp_range
 
-_WeeChat ≥ 0.3.7._
+_WeeChat ≥ 0.3.7, updated in 1.0._
 
 Locale and case independent string comparison, using a range for case
 comparison.
@@ -605,10 +606,9 @@ Values 29 and 30 are used by some protocols like IRC.
 
 Return value:
 
-* difference between two strings:
-** negative if string1 < string2
-** zero if string1 == string2
-** positive if string1 > string2
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C example:
 
@@ -621,6 +621,8 @@ int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29); /* == 0 */
 This function is not available in scripting API.
 
 ==== weechat_strncasecmp
+
+_Updated in 1.0._
 
 Locale and case independent string comparison, for 'max' chars.
 
@@ -639,10 +641,9 @@ Arguments:
 
 Return value:
 
-* difference between two strings:
-** negative if string1 < string2
-** zero if string1 == string2
-** positive if string1 > string2
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C example:
 
@@ -656,7 +657,7 @@ This function is not available in scripting API.
 
 ==== weechat_strncasecmp_range
 
-_WeeChat ≥ 0.3.7._
+_WeeChat ≥ 0.3.7, updated in 1.0._
 
 Locale and case independent string comparison, for 'max' chars, using a range
 for case comparison.
@@ -683,10 +684,9 @@ Values 29 and 30 are used by some protocols like IRC.
 
 Return value:
 
-* difference between two strings:
-** negative if string1 < string2
-** zero if string1 == string2
-** positive if string1 > string2
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C example:
 
@@ -699,6 +699,8 @@ int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29); /* == 
 This function is not available in scripting API.
 
 ==== weechat_strcmp_ignore_chars
+
+_Updated in 1.0._
 
 Locale (and optionally case independent) string comparison, ignoring some
 chars.
@@ -721,10 +723,9 @@ Arguments:
 
 Return value:
 
-* difference between two strings:
-** negative if string1 < string2
-** zero if string1 == string2
-** positive if string1 > string2
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C example:
 
@@ -2201,6 +2202,8 @@ This function is not available in scripting API.
 
 ==== weechat_utf8_charcmp
 
+_Updated in 1.0._
+
 Compare two UTF-8 chars.
 
 Prototype:
@@ -2217,10 +2220,9 @@ Arguments:
 
 Return value:
 
-* difference between first char of each string:
-** negative if char1 < char2
-** zero if char1 == char2
-** positive if char1 > char2
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C example:
 
@@ -2233,6 +2235,8 @@ int diff = weechat_utf8_charcmp ("aaa", "ccc"); /* == -2 */
 This function is not available in scripting API.
 
 ==== weechat_utf8_charcasecmp
+
+_Updated in 1.0._
 
 Compare two UTF-8 chars, ignoring case.
 
@@ -2250,10 +2254,9 @@ Arguments:
 
 Return value:
 
-* difference between first char of each string:
-** negative if char1 < char2
-** zero if char1 == char2
-** positive if char1 > char2
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C example:
 

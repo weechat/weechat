@@ -546,6 +546,8 @@ weechat_string_toupper (str); /* str is now: "ABCDé" */
 
 ==== weechat_strcasecmp
 
+_バージョン 1.0 で更新。_
+
 ロケールと大文字小文字を無視して文字列を比較。
 
 プロトタイプ:
@@ -562,10 +564,10 @@ int weechat_strcasecmp (const char *string1, const char *string2);
 
 戻り値:
 
-* 2 つの文字列の差:
-** string1 < string2 の場合は負
-** string1 == string2 の場合はゼロ
-** string1 > string2 の場合は正
+// TRANSLATION MISSING
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C 言語での使用例:
 
@@ -579,7 +581,8 @@ int diff = weechat_strcasecmp ("aaa", "CCC"); /* == -2 */
 
 ==== weechat_strcasecmp_range
 
-_WeeChat バージョン 0.3.7 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.7, updated in 1.0._
 
 大文字小文字を無視する文字範囲の幅を使い、ロケールと大文字小文字を無視して文字列を比較。
 
@@ -604,10 +607,10 @@ int weechat_strcasecmp_range (const char *string1, const char *string2, int rang
 
 戻り値:
 
-* 2 つの文字列の差:
-** string1 < string2 の場合は負
-** string1 == string2 の場合はゼロ
-** string1 > string2 の場合は正
+// TRANSLATION MISSING
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C 言語での使用例:
 
@@ -620,6 +623,8 @@ int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29); /* == 0 */
 スクリプト API ではこの関数を利用できません。
 
 ==== weechat_strncasecmp
+
+_バージョン 1.0 で更新。_
 
 ロケールと大文字小文字を無視して 'max' 文字だけ文字列を比較。
 
@@ -638,10 +643,10 @@ int weechat_strncasecmp (const char *string1, const char *string2, int max);
 
 戻り値:
 
-* 2 つの文字列の差:
-** string1 < string2 の場合は負
-** string1 == string2 の場合はゼロ
-** string1 > string2 の場合は正
+// TRANSLATION MISSING
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C 言語での使用例:
 
@@ -655,7 +660,8 @@ int diff = weechat_strncasecmp ("aabb", "aacc", 2); /* == 0 */
 
 ==== weechat_strncasecmp_range
 
-_WeeChat バージョン 0.3.7 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.7, updated in 1.0._
 
 大文字小文字を無視する文字範囲の幅を使い、ロケールと大文字小文字を無視して
 'max' 文字だけ文字列を比較。
@@ -682,10 +688,10 @@ int weechat_strncasecmp_range (const char *string1, const char *string2, int max
 
 戻り値:
 
-* 2 つの文字列の差:
-** string1 < string2 の場合は負
-** string1 == string2 の場合はゼロ
-** string1 > string2 の場合は正
+// TRANSLATION MISSING
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C 言語での使用例:
 
@@ -698,6 +704,8 @@ int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29); /* == 
 スクリプト API ではこの関数を利用できません。
 
 ==== weechat_strcmp_ignore_chars
+
+_バージョン 1.0 で更新。_
 
 一部の文字列を無視して、ロケールに依存して
 (オプションで大文字小文字の区別をしない) 文字列を比較。
@@ -720,10 +728,10 @@ int weechat_strcmp_ignore_chars (const char *string1, const char *string2,
 
 戻り値:
 
-* 2 つの文字列の差:
-** string1 < string2 の場合は負
-** string1 == string2 の場合はゼロ
-** string1 > string2 の場合は正
+// TRANSLATION MISSING
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C 言語での使用例:
 
@@ -2197,6 +2205,8 @@ int length_on_screen = weechat_utf8_strlen_screen ("é"); /* == 1 */
 
 ==== weechat_utf8_charcmp
 
+_バージョン 1.0 で更新。_
+
 2 つの UTF-8 文字を比較。
 
 プロトタイプ:
@@ -2213,10 +2223,10 @@ int weechat_utf8_charcmp (const char *string1, const char *string2);
 
 戻り値:
 
-* 各文字列の 1 文字目同士の差:
-** char1 < char2 の場合は負
-** char1 == char2 の場合はゼロ
-** char1 > char2 の場合は正
+// TRANSLATION MISSING
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C 言語での使用例:
 
@@ -2229,6 +2239,8 @@ int diff = weechat_utf8_charcmp ("aaa", "ccc"); /* == -2 */
 スクリプト API ではこの関数を利用できません。
 
 ==== weechat_utf8_charcasecmp
+
+_バージョン 1.0 で更新。_
 
 大文字小文字の違いを無視して、2 つの UTF-8 文字を比較。
 
@@ -2246,10 +2258,10 @@ int weechat_utf8_charcasecmp (const char *string1, const char *string2);
 
 戻り値:
 
-* 各文字列の 1 文字目同士の差:
-** char1 < char2 の場合は負
-** char1 == char2 の場合はゼロ
-** char1 > char2 の場合は正
+// TRANSLATION MISSING
+* -1 if string1 < string2
+* 0 if string1 == string2
+* 1 if string1 > string2
 
 C 言語での使用例:
 

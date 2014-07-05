@@ -524,9 +524,9 @@ utf8_strlen_screen (const char *string)
  * Compares two UTF-8 chars (case sensitive).
  *
  * Returns:
- *   < 0: char1 < char2
- *     0: char1 == char2
- *   > 0: char1 > char2
+ *   -1: string1 < string2
+ *    0: string1 == string2
+ *    1: string1 > string2
  */
 
 int
@@ -545,7 +545,7 @@ utf8_charcmp (const char *string1, const char *string2)
     {
         diff = (int)((unsigned char) string1[i]) - (int)((unsigned char) string2[i]);
         if (diff != 0)
-            return diff;
+            return (diff < 0) ? -1 : 1;
         i++;
     }
     /* string1 == string2 ? */
@@ -562,9 +562,9 @@ utf8_charcmp (const char *string1, const char *string2)
  * Compares two UTF-8 chars (case is ignored).
  *
  * Returns:
- *   < 0: char1 < char2
- *     0: char1 == char2
- *   > 0: char1 > char2
+ *   -1: string1 < string2
+ *    0: string1 == string2
+ *    1: string1 > string2
  */
 
 int

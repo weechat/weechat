@@ -562,6 +562,9 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_strcasecmp
 
+// TRANSLATION MISSING
+_Updated in 1.0._
+
 Confronta stringa non sensibile alle maiuscole e alla localizzazione.
 
 Prototipo:
@@ -578,10 +581,9 @@ Argomenti:
 
 Valore restituito:
 
-* differenze tra le due stringhe:
-** negativa se stringa1 < stringa2
-** zero se stringa1 == stringa1
-** positiva se stringa1 > stringa2
+* -1 se stringa1 < stringa2
+* 0 se stringa1 == stringa1
+* 1 se stringa1 > stringa2
 
 Esempio in C:
 
@@ -594,6 +596,9 @@ int diff = weechat_strcasecmp ("aaa", "CCC"); /* == -2 */
 Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_strcasecmp_range
+
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.7, updated in 1.0._
 
 Confronta stringa non sensibile alle maiuscole e alla localizzazione, usando una
 serie per il confronto.
@@ -619,10 +624,9 @@ I valori 29 e 30 vengono usati da alcuni protocolli come IRC.
 
 Valore restituito:
 
-* differenze tra le due stringhe:
-** negativa se stringa1 < stringa2
-** zero se stringa1 == stringa1
-** positiva se stringa1 > stringa2
+* -1 se stringa1 < stringa2
+* 0 se stringa1 == stringa1
+* 1 se stringa1 > stringa2
 
 Esempio in C:
 
@@ -635,6 +639,9 @@ int diff = weechat_strcasecmp ("nick{away}", "NICK[AWAY]"); /* == 0 */
 Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_strncasecmp
+
+// TRANSLATION MISSING
+_Updated in 1.0._
 
 Confronta stringa indipendente non sensibile alle maiuscole e alla
 localizzazione, per un numero 'max' di caratteri.
@@ -654,10 +661,9 @@ Argomenti:
 
 Valore restituito:
 
-* differenze tra le due stringhe:
-** negativa se string1 < string2
-** zero se string1 == string1
-** positiva se string1 > string2
+* -1 se stringa1 < stringa2
+* 0 se stringa1 == stringa1
+* 1 se stringa1 > stringa2
 
 Esempio in C:
 
@@ -670,6 +676,9 @@ int diff = weechat_strncasecmp ("aabb", "aacc", 2); /* == 0 */
 Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_strncasecmp_range
+
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.7, updated in 1.0._
 
 Confronta una stringa non sensibile alle maiuscole e alla localizzazione, per un
 numero 'max' di caratteri, usando una serie per il confronto.
@@ -696,10 +705,9 @@ I valori 29 e 30 vengono usati da alcuni protocolli come IRC.
 
 Valore restituito:
 
-* differenze tra le due stringhe:
-** negativa se string1 < string2
-** zero se string1 == string1
-** positiva se string1 > string2
+* -1 se stringa1 < stringa2
+* 0 se stringa1 == stringa1
+* 1 se stringa1 > stringa2
 
 Esempio in C:
 
@@ -712,6 +720,9 @@ int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29); /* == 
 Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_strcmp_ignore_chars
+
+// TRANSLATION MISSING
+_Updated in 1.0._
 
 Confronta una stringa localizzata (e opzionalmente non sensibile alle
 maiuscole), ignorando alcuni caratteri.
@@ -734,10 +745,9 @@ Argomenti:
 
 Valore restituito:
 
-* differenza tra le due stringhe:
-** negativa se string1 < string2
-** zero se string1 == string2
-** positiva se string1 > string2
+* -1 se stringa1 < stringa2
+* 0 se stringa1 == stringa1
+* 1 se stringa1 > stringa2
 
 Esempio in C:
 
@@ -2255,6 +2265,9 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_utf8_charcmp
 
+// TRANSLATION MISSING
+_Updated in 1.0._
+
 Confronta due caratteri UTF-8.
 
 Prototipo:
@@ -2271,10 +2284,9 @@ Argomenti:
 
 Valore restituito:
 
-* differenza tra i primi caratteri di ogni stringa:
-** negativa se char1 < char2
-** zero se char1 == char2
-** positivao se char1 > char2
+* -1 se string1 < string2
+* 0 se string1 == string2
+* 1 se string1 > string2
 
 Esempio in C:
 
@@ -2287,6 +2299,9 @@ int diff = weechat_utf8_charcmp ("aaa", "ccc"); /* == -2 */
 Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_utf8_charcasecmp
+
+// TRANSLATION MISSING
+_Updated in 1.0._
 
 Confronta due caratteri UTF-8, ignorando la sensibilità alle maiuscole.
 
@@ -2304,10 +2319,9 @@ Argomenti:
 
 Valore restituito:
 
-* differenza tra i primi caratteri di ogni stringa:
-** negativa se char1 < char2
-** zero se char1 == char2
-** positivao se char1 > char2
+* -1 se string1 < string2
+* 0 se string1 == string2
+* 1 se string1 > string2
 
 Esempio in C:
 
