@@ -632,7 +632,7 @@ Esempio in C:
 
 [source,C]
 ----
-int diff = weechat_strcasecmp ("nick{away}", "NICK[AWAY]"); /* == 0 */
+int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29); /* == 0 */
 ----
 
 [NOTE]
