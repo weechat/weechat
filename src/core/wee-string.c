@@ -619,6 +619,9 @@ string_convert_escaped_chars (const char *string)
     int pos_output, i, length;
     unsigned int value;
 
+    if (!string)
+        return NULL;
+
     /* the output length is always <= to string length */
     output = malloc (strlen (string) + 1);
     if (!output)
