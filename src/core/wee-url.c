@@ -885,6 +885,8 @@ struct t_url_option url_options[] =
     { NULL, 0, 0, NULL },
 };
 
+char url_error[CURL_ERROR_SIZE + 1];
+
 
 /*
  * Searches for a constant in array of constants.
@@ -1160,7 +1162,7 @@ weeurl_download (const char *url, struct t_hashtable *options)
     CURLoption url_file_opt_data[2] = { CURLOPT_READDATA, CURLOPT_WRITEDATA };
     void *url_file_opt_cb[2] = { &weeurl_read, &weeurl_write };
     struct t_proxy *ptr_proxy;
-    int rc, i;
+    int rc, curl_rc, i;
 
     rc = 0;
 
@@ -1219,9 +1221,18 @@ weeurl_download (const char *url, struct t_hashtable *options)
     /* set other options in hashtable */
     hashtable_map (options, &weeurl_option_map_cb, curl);
 
+    /* set error buffer */
+    curl_easy_setopt (curl, CURLOPT_ERRORBUFFER, url_error);
+
     /* perform action! */
-    if (curl_easy_perform (curl) != CURLE_OK)
+    curl_rc = curl_easy_perform (curl);
+    if (curl_rc != CURLE_OK)
+    {
+        fprintf (stderr,
+                 _("curl error %d (%s) (URL: \"%s\")\n"),
+                 curl_rc, url_error, url);
         rc = 2;
+    }
 
     /* cleanup */
     curl_easy_cleanup (curl);

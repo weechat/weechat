@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-29 11:41+0200\n"
+"POT-Creation-Date: 2014-07-05 22:14+0200\n"
 "PO-Revision-Date: 2014-06-28 14:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -4352,6 +4352,10 @@ msgid ""
 msgstr ""
 "読み込み - 不正な署名 (ファイルフォーマットのアップグレードが最新バージョンか"
 "ら変更された可能性があります)"
+
+#, c-format
+msgid "curl error %d (%s) (URL: \"%s\")\n"
+msgstr ""
 
 #, c-format
 msgid "%sError: invalid limit for resource \"%s\": %s (must be >= -1)"

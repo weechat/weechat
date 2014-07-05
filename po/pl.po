@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-29 11:41+0200\n"
+"POT-Creation-Date: 2014-07-05 22:14+0200\n"
 "PO-Revision-Date: 2014-06-28 14:49+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4426,6 +4426,10 @@ msgid ""
 "version)"
 msgstr ""
 "odczyt - zła sygnatura (format pliku mógł ulec zmianie od poprzedniej wersji)"
+
+#, c-format
+msgid "curl error %d (%s) (URL: \"%s\")\n"
+msgstr ""
 
 #, c-format
 msgid "%sError: invalid limit for resource \"%s\": %s (must be >= -1)"

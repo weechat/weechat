@@ -1528,8 +1528,6 @@ hook_process_child (struct t_hook *hook_process)
             ptr_url++;
         }
         rc = weeurl_download (ptr_url, HOOK_PROCESS(hook_process, options));
-        if (rc != 0)
-            fprintf (stderr, "Error with URL '%s'\n", ptr_url);
     }
     else
     {

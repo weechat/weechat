@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.0 (under dev)
 
+* core: display curl error after a failed download
 * core: do not display content of passphrase on /secure buffer
 * core: add option "env" in command /set (manage environment variables)
 * core: fix potential memory leak with infolists not freed in plugins

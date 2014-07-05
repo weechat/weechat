@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-06-29 11:41+0200\n"
+"POT-Creation-Date: 2014-07-05 22:14+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3232,6 +3232,10 @@ msgstr ""
 msgid ""
 "read - bad signature (upgrade file format may have changed since last "
 "version)"
+msgstr ""
+
+#, c-format
+msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr ""
 
 #, c-format
