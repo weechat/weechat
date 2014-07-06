@@ -31,6 +31,7 @@ weechat_LDADD = ./../../core/lib_weechat_core.a \
                 $(NCURSES_LFLAGS) \
                 $(GCRYPT_LFLAGS) \
                 $(GNUTLS_LFLAGS) \
+                $(GNUTLS_DANE_LFLAGS) \
                 $(CURL_LFLAGS) \
                 -lm
 

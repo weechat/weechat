@@ -98,6 +98,7 @@ AH_VERBATIM([PREFIX], [#undef PREFIX])
 AH_VERBATIM([WEECHAT_LIBDIR], [#undef WEECHAT_LIBDIR])
 AH_VERBATIM([WEECHAT_SHAREDIR], [#undef WEECHAT_SHAREDIR])
 AH_VERBATIM([HAVE_GNUTLS], [#undef HAVE_GNUTLS])
+AH_VERBATIM([HAVE_GNUTLS_DANE], [#undef HAVE_GNUTLS_DANE])
 AH_VERBATIM([HAVE_FLOCK], [#undef HAVE_FLOCK])
 AH_VERBATIM([HAVE_EAT_NEWLINE_GLITCH], [#undef HAVE_EAT_NEWLINE_GLITCH])
 AH_VERBATIM([HAVE_ASPELL_VERSION_STRING], [#undef HAVE_ASPELL_VERSION_STRING])
@@ -127,6 +128,7 @@ AH_VERBATIM([CA_FILE], [#define CA_FILE "/etc/ssl/certs/ca-certificates.crt"])
 
 AC_ARG_ENABLE(ncurses,      [  --disable-ncurses       turn off ncurses interface (default=compiled if found)],enable_ncurses=$enableval,enable_ncurses=yes)
 AC_ARG_ENABLE(gnutls,       [  --disable-gnutls        turn off gnutls support (default=compiled if found)],enable_gnutls=$enableval,enable_gnutls=yes)
+AC_ARG_ENABLE(gnutls-dane,  [  --disable-gnutls-dane   turn off gnutls DANE support (default=compiled if found)],enable_gnutls_dane=$enableval,enable_gnutls_dane=yes)
 AC_ARG_ENABLE(largefile,    [  --disable-largefile     turn off Large File Support (default=on)],enable_largefile=$enableval,enable_largefile=yes)
 AC_ARG_ENABLE(alias,        [  --disable-alias         turn off Alias plugin (default=compiled)],enable_alias=$enableval,enable_alias=yes)
 AC_ARG_ENABLE(aspell,       [  --disable-aspell        turn off Aspell plugin (default=compiled)],enable_aspell=$enableval,enable_aspell=yes)
@@ -880,6 +882,80 @@ else
     not_asked="$not_asked gnutls"
 fi
 
+if test "x$enable_gnutls_dane" = "xyes" ; then
+    AC_CHECK_HEADER(gnutls/dane.h,ac_found_gnutls_dane_header="yes",ac_found_gnutls_dane_header="no")
+    AC_CHECK_LIB(gnutls-dane,dane_state_init,ac_found_gnutls_dane_lib="yes",ac_found_gnutls_dane_lib="no")
+
+    AC_MSG_CHECKING(for gnutls-dane headers and libraries)
+    if test "x$ac_found_gnutls_dane_header" = "xno" -o "x$ac_found_gnutls_dane_lib" = "xno" ; then
+        AC_MSG_RESULT(no)
+        AC_MSG_WARN([
+*** libgnutls-dane was not found.
+*** WeeChat will be built without GnuTLS DANE support.])
+        enable_gnutls_dane="no"
+        not_found="$not_found gnutls-dane"
+    else
+        # We MUST have http://savannah.gnu.org/support/?108549
+        # and http://savannah.gnu.org/support/?108551
+        # otherwise DANE verification will easily result in false negatives
+        # when there are multiple SSL certificates (highly likely for an IRC
+        # network) making it very difficult for IRC networks to enable it
+        ac_gnutls_dane_ok="no"
+        ac_gnutls_dane_version="`pkg-config gnutls-dane --modversion 2>/dev/null`"
+        ac_gnutls_dane_required=3.3.2
+
+        pkg-config gnutls-dane --atleast-version=3.3
+        if test "x$?" = "x0" ; then
+            pkg-config gnutls-dane --atleast-version=$ac_gnutls_dane_required
+            if test "x$?" = "x0" ; then
+                ac_gnutls_dane_ok="yes"
+            fi
+        else
+            pkg-config gnutls-dane --atleast-version=3.2
+            if test "x$?" = "x0" ; then
+                ac_gnutls_dane_required=3.2.14
+                pkg-config gnutls-dane --atleast-version=$ac_gnutls_dane_required
+                if test "x$?" = "x0" ; then
+                    ac_gnutls_dane_ok="yes"
+                fi
+            else
+                pkg-config gnutls-dane --atleast-version=3.1
+                if test "x$?" = "x0" ; then
+                    ac_gnutls_dane_required=3.1.24
+                    pkg-config gnutls-dane --atleast-version=$ac_gnutls_dane_required
+                    if test "x$?" = "x0" ; then
+                        ac_gnutls_dane_ok="yes"
+                    fi
+                fi
+            fi
+        fi
+
+        if test "x$ac_gnutls_dane_version" = "x" ; then
+            ac_gnutls_dane_version="unknown"
+        fi
+
+        if test "x$ac_gnutls_dane_ok" = "xno" ; then
+            AC_MSG_RESULT([$ac_gnutls_dane_version (too old)])
+				pkg-config gnutls-dane --modversion 1>/dev/null
+            AC_MSG_WARN([
+*** libgnutls-dane version >= $ac_gnutls_dane_required required.
+*** WeeChat will be built without GnuTLS DANE support.])
+            enable_gnutls_dane="no"
+            not_found="$not_found gnutls-dane"
+        else
+            AC_MSG_RESULT(yes)
+            GNUTLS_DANE_CFLAGS=`pkg-config gnutls-dane --cflags`
+            GNUTLS_DANE_LFLAGS=`pkg-config gnutls-dane --libs`
+            AC_SUBST(GNUTLS_DANE_CFLAGS)
+            AC_SUBST(GNUTLS_DANE_LFLAGS)
+            AC_DEFINE(HAVE_GNUTLS_DANE)
+            CFLAGS="$CFLAGS -DHAVE_GNUTLS_DANE"
+       fi
+    fi
+else
+    not_asked="$not_asked gnutls-dane"
+fi
+
 # ------------------------------------------------------------------------------
 #                                   flock
 # ------------------------------------------------------------------------------
@@ -1125,6 +1201,7 @@ CFLAGS="$CFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\" -DWEECHAT_LICENSE=\\\"$LICENS
 # ------------------------------------------------------------------------------
 
 AM_CONDITIONAL(HAVE_GNUTLS,             test "$enable_gnutls" = "yes")
+AM_CONDITIONAL(HAVE_GNUTLS_DANE,        test "$enable_gnutls_dane" = "yes")
 AM_CONDITIONAL(HAVE_FLOCK,              test "$enable_flock" = "yes")
 AM_CONDITIONAL(HAVE_EAT_NEWLINE_GLITCH, test "$enable_eatnewlineglitch" = "yes")
 AM_CONDITIONAL(GUI_NCURSES,             test "$enable_ncurses" = "yes")
@@ -1254,6 +1331,9 @@ fi
 listoptional=""
 if test "x$enable_gnutls" = "xyes"; then
     listoptional="$listoptional gnutls"
+fi
+if test "x$enable_gnutls_dane" = "xyes"; then
+    listoptional="$listoptional gnutls-dane"
 fi
 if test "x$enable_flock" = "xyes"; then
     listoptional="$listoptional flock"
