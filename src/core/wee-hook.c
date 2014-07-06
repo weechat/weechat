@@ -2040,6 +2040,12 @@ hook_connect_gnutls_verify_certificates (gnutls_session_t tls_session)
             rc = (int) (HOOK_CONNECT(ptr_hook, gnutls_cb))
                 (ptr_hook->callback_data, tls_session, NULL, 0,
                  NULL, 0, NULL,
+#ifdef HAVE_GNUTLS_DANE
+                 HOOK_CONNECT(ptr_hook, dane_data),
+                 HOOK_CONNECT(ptr_hook, dane_data_len),
+                 HOOK_CONNECT(ptr_hook, dane_secure),
+                 HOOK_CONNECT(ptr_hook, dane_bogus),
+#endif
                  WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT);
             break;
         }
@@ -2081,6 +2087,9 @@ hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
             rc = (int) (HOOK_CONNECT(ptr_hook, gnutls_cb))
                 (ptr_hook->callback_data, tls_session, req_ca, nreq,
                  pk_algos, pk_algos_len, answer,
+#ifdef HAVE_GNUTLS_DANE
+                 NULL, NULL, 0, 0,
+#endif
                  WEECHAT_HOOK_CONNECT_GNUTLS_CB_SET_CERT);
             break;
         }

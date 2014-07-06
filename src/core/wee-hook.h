@@ -242,6 +242,11 @@ typedef int (gnutls_callback_t)(void *data, gnutls_session_t tls_session,
 #else
                                 gnutls_retr_st *answer,
 #endif
+#ifdef HAVE_GNUTLS_DANE
+                                char * const*dane_data,
+                                const int *dane_data_len,
+                                int dane_secure, int dane_bogus,
+#endif
                                 int action);
 #endif
 

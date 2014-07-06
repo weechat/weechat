@@ -150,6 +150,8 @@ network_init_gnutls ()
     network_init_gnutls_ok = 1;
 }
 
+#ifdef HAVE_GNUTLS
+# ifdef HAVE_GNUTLS_DANE
 /*
  * Implementation of dane_query_to_raw_tlsa helper function.
  */
@@ -222,6 +224,8 @@ weechat__dane_query_to_raw_tlsa(dane_query_t q, unsigned int *dane_entries,
 
     return DANE_E_SUCCESS;
 }
+# endif
+#endif
 
 /*
  * Ends network.
