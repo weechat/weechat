@@ -114,9 +114,9 @@
 
 | weechat | cursor_areas | カーソルを自由に動かせるエリア ("chat" またはバーの名前)
 
-| weechat | env_value | value of an environment variable
+| weechat | env_value | 環境変数の値
 
-| weechat | env_vars | environment variables
+| weechat | env_vars | 環境変数
 
 | weechat | filename | ファイル名
 

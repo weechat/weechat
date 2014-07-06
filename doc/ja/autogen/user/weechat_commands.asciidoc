@@ -229,50 +229,50 @@ infolists: infolist に関する情報を表示
 ----
 
 [[command_weechat_eval]]
-[command]*`eval`* evaluate expression::
+[command]*`eval`* 式を評価::
 
 ----
 /eval  [-n] <expression>
        [-n] -c <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching POSIX extended regex
-                !~  is NOT matching POSIX extended regex
+        -n: 結果をバッファに送信せずに表示 (デバッグモード)
+        -c: 条件として評価: 演算子と括弧をを使い、ブール値 ("0" または "1") を返します
+expression: 評価する式、フォーマット、${variable} 型のフォーマットの変数は置換されます (以下を参照); 複数のコマンドを指定する場合はセミコロンで区切ってください
+  operator: 論理演算子や比較演算子:
+            - 論理演算子:
+                &&  ブール演算の "and"
+                ||  ブール演算の "or"
+            - 比較演算子:
+                ==  等しい
+                !=  等しくない
+                <=  以下
+                <   より少ない
+                >=  以上
+                >   より大きい
+                =~  正規表現にマッチ
+                !~  正規表現にマッチしない
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using integers if the two expressions are valid integers.
-To force a string comparison, add double quotes around each expression, for example:
+式が NULL でない場合、空でない場合、"0" でない場合、式は "真" と評価されます。
+両方の式が有効な整数である場合、比較は整数を使って行われます。
+文字列比較を強制するには、それぞれの式をダブルクォートで囲みます、例えば:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  2. a color (format: "color:xxx")
-  3. an info (format: "info:name,arguments", arguments are optional)
-  4. an option (format: "file.section.option")
-  5. a local variable in buffer
-  6. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+式中の ${variable} 型のフォーマットの変数は置換されます。変数は以下の優先順位に従います:
+  1. エスケープ文字を含む文字列 (フォーマット: "esc:xxx" または "\xxx")
+  2. 色 (フォーマット: "color:xxx")
+  3. 情報 (フォーマット: "info:name,arguments"、arguments は任意)
+  4. オプション (フォーマット: "file.section.option")
+  5. バッファのローカル変数
+  6. hdata の名前/変数 (値は自動的に文字列に変換されます)、デフォルトでは "window" と "buffer" は現在のウィンドウ/バッファを指します。
+hdata のフォーマットは以下の 1 つです:
+  hdata.var1.var2...: hdata (ポインタは既知) で始まり、1 個ずつ変数を続ける (他の hdata を続けることも可能)
+  hdata(list).var1.var2...: リストを使って hdata を始める、例:
+    ${buffer[gui_buffers].full_name}: バッファリストにリンクされた最初のバッファのフルネーム
+    ${plugin[weechat_plugins].name}: プラグインリストにリンクされた最初のプラグインの名前
+hdata と変数の名前については、"プラグイン API リファレンス" の "weechat_hdata_get" 関数を参照してください。
 
-Examples (simple strings):
+例 (単純な文字列):
   /eval -n ${info:version}                 ==> 0.4.3
   /eval -n ${weechat.look.scroll_amount}   ==> 3
   /eval -n ${window}                       ==> 0x2549aa0
@@ -281,7 +281,7 @@ Examples (simple strings):
   /eval -n ${window.buffer.number}         ==> 1
   /eval -n ${\t}                           ==> <tab>
 
-Examples (conditions):
+例 (条件):
   /eval -n -c ${window.buffer.number} > 2  ==> 0
   /eval -n -c ${window.win_width} > 100    ==> 1
   /eval -n -c (8 > 12) || (5 > 2)          ==> 1
@@ -755,38 +755,38 @@ ${sec.data.xxx} の形でフォーマットされた保護データは以下の�
 ----
 
 [[command_weechat_set]]
-[command]*`set`* set config options and environment variables::
+[command]*`set`* 設定オプションと環境変数を設定::
 
 ----
 /set  [<option> [<value>]]
       diff [<option> [<option>...]]
       env [<variable> [<value>]]
 
-option: name of an option (wildcard "*" is allowed)
- value: new value for option, according to type:
-          boolean: on, off or toggle
-          integer: number, ++number or --number
-           string: any string ("" for empty string)
-            color: color name, ++number or --number
-        Note: for all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
-  diff: display only changed options
-   env: display or set an environment variable (use value "" to unset a variable)
+option: オプションの名前 (ワイルドカード '*' を使うことができます)
+ value: オプションに対する新しい値、以下の型に従う:
+          boolean: on、off、toggle
+          integer: 番号、++番号、--番号
+           string: 任意の文字列 (空文字列は "")
+            color: 色の名前、++色番号、--色番号
+        注意: どんな型であっても、オプションの値を削除する (未定義値にする) には null が使えます。これはいくつかの特別なプラグイン変数でのみ有効です。
+  diff: 変更されたオプションのみを表示
+   env: 環境変数を表示または設定 (変数の値を削除するには値に "" を入れてください)
 
-Examples:
-  display options about highlight:
+例:
+  ハイライトに関するオプションを表示:
     /set *highlight*
-  add a word to highlight:
+  highlight に単語を追加:
     /set weechat.look.highlight "word"
-  display changed options:
+  変更されたオプションを表示:
     /set diff
-  display changed options in irc plugin:
+  irc プラグインのオプションの内、変更されたオプションを表示:
     /set diff irc.*
-  display value of environment variable LANG:
+  環境変数 LANG の値を表示:
     /set env LANG
-  set environment variable LANG and use it:
+  環境変数 LANG を設定し、これを使う:
     /set env LANG fr_FR.UTF-8
     /upgrade
-  unset environment variable ABC:
+  環境変数 ABC の値を削除する:
     /set env ABC ""
 ----
 

@@ -329,7 +329,7 @@
 ** 値: 0 .. 10080 (デフォルト値: `30`)
 
 * [[option_irc.look.smart_filter_mode]] *irc.look.smart_filter_mode*
-** 説明: `enable smart filter for "mode" messages: "*" to filter all modes, "+" to filter all modes in server prefixes (for example "ovh"), "xyz" to filter only modes x/y/z, "-xyz" to filter all modes but not x/y/z; examples: "ovh": filter modes o/v/h, "-bkl": filter all modes but not b/k/l`
+** 説明: `"mode" メッセージに対するスマートフィルタを有効化する: すべてのモード変更メッセージをフィルタするには "*"、サーバプレフィックス (例えば "ovh") モードの変更メッセージをフィルタするには "+"、x/y/z モードの変更メッセージをフィルタするには "xyz"、x/y/z モード以外のモード変更メッセージをフィルタするには "-xyz"; 例: "ovh": o/v/h モードの変更メッセージをフィルタする、"-bkl": b/k/l モード以外のモード変更メッセージをフィルタ`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"+"`)
 
