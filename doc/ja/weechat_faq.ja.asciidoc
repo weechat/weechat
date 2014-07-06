@@ -263,16 +263,14 @@ WeeChat ≥ 0.3.6 では、"eat_newline_glitch" オプションを有効化で�
 [[change_locale_without_quit]]
 === WeeChat が出力するメッセージの言語を、再起動せずに変更したいです。このようなことは可能ですか。
 
-// TRANSLATION MISSING
-Yes, with WeeChat ≥ 1.0:
+WeeChat ≥ 1.0 では、再起動せずに変更できます:
 
 ----
 /set env LANG ja_JP.UTF-8
 /upgrade
 ----
 
-// TRANSLATION MISSING
-With older WeeChat:
+古い WeeChat をお使いの場合は:
 
 ----
 /script install shell.py
@@ -301,9 +299,8 @@ screen を使っている場合は、以下の行を '~/.screenrc' に追加し�
 term screen-256color
 ----
 
-// TRANSLATION MISSING
-If your 'TERM' variable has wrong value and that WeeChat is already running,
-you can change it with these two commands (with WeeChat ≥ 1.0):
+'TERM' 変数が間違った値に設定された状態で WeeChat が起動完了している場合は、以下の
+2 つのコマンドを使って変数の値を変更してください (WeeChat バージョン 1.0 以上で可能):
 
 ----
 /set env TERM screen-256color
@@ -710,18 +707,16 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
   'weechat.history.max_buffer_lines_minutes' オプションに値を設定してください。
 * 'weechat.history.max_commands' オプションの値を減らしてください。
 
-// TRANSLATION MISSING
 [[cpu_usage]]
-=== How can I tweak WeeChat to use less CPU?
+=== どうすれば WeeChat の CPU 負荷を低減できますか?
 
-// TRANSLATION MISSING
-You can follow same tips as for <<memory_usage,memory>>, and these ones:
+以下に挙げる <<memory_usage,memory>> に関するヒントに従ってください:
 
-* hide "nicklist" bar: `/bar hide nicklist`
-* remove display of seconds in status bar time:
-  `/set weechat.look.item_time_format "%H:%M"` (this is the default value)
-* set the 'TZ' variable (for example: `export TZ="Europe/Paris"`), to prevent
-  frequent access to file '/etc/localtime'
+* "nicklist" バーを非表示にする: `/bar hide nicklist`
+* ステータスバー時間に秒の表示を止める:
+  `/set weechat.look.item_time_format "%H:%M"` (これはデフォルト値です)
+* 'TZ' 変数を設定する (例: `export TZ="Europe/Paris"`)、こうすることで
+  '/etc/localtime' ファイルへ頻繁にアクセスしないようになります。
 
 [[development]]
 == 開発
