@@ -51,6 +51,9 @@
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
+# ifdef HAVE_GNUTLS_DANE
+#  include <gnutls/dane.h>
+# endif
 #endif
 
 #include "weechat.h"
@@ -145,6 +148,79 @@ network_init_gnutls ()
 #endif /* HAVE_GNUTLS */
 
     network_init_gnutls_ok = 1;
+}
+
+/*
+ * Implementation of dane_query_to_raw_tlsa helper function.
+ */
+
+static int
+weechat__dane_query_to_raw_tlsa(dane_query_t q, unsigned int *dane_entries,
+  char ***dane_data, int **dane_data_len, int *secure, int *bogus)
+{
+    size_t data_sz;
+    char *data_buf;
+    unsigned int usage, type, match, i, j;
+    gnutls_datum_t tmp;
+
+    *dane_entries = dane_query_entries (q);
+    *dane_data = NULL;
+    *dane_data_len = NULL;
+
+    switch (dane_query_status (q))
+    {
+    case DANE_QUERY_DNSSEC_VERIFIED:
+        *secure = 1;
+        break;
+
+    case DANE_QUERY_BOGUS:
+        *bogus = 1;
+        break;
+
+    default:
+        break;
+    }
+
+    /* pack dane_data pointer list followed by dane_data contents */
+    data_sz = sizeof (**dane_data) * (*dane_entries + 1);
+    for (i = 0; i < *dane_entries; i++)
+        if (dane_query_data (q, i, NULL, NULL, NULL, &tmp) == DANE_E_SUCCESS)
+            data_sz += 3 + tmp.size;
+
+    *dane_data = calloc (1, data_sz);
+    if (*dane_data == NULL)
+        return DANE_E_MEMORY_ERROR;
+    data_buf = (char *)*dane_data;
+    data_buf += sizeof (**dane_data) * (*dane_entries + 1);
+
+    *dane_data_len = calloc (*dane_entries + 1, sizeof (**dane_data_len));
+    if (*dane_data_len == NULL)
+    {
+        free(*dane_data);
+        *dane_data = NULL;
+        return DANE_E_MEMORY_ERROR;
+    }
+
+    j = 0;
+    for (i = 0; i < *dane_entries; i++)
+    {
+        if (dane_query_data (q, i, &usage, &type, &match, &tmp) == DANE_E_SUCCESS)
+        {
+            (*dane_data)[j] = data_buf;
+            (*dane_data)[j][0] = usage;
+            (*dane_data)[j][1] = type;
+            (*dane_data)[j][2] = match;
+            memcpy(&(*dane_data)[j][3], tmp.data, tmp.size);
+            (*dane_data_len)[j] = 3 + tmp.size;
+            data_buf += 3 + tmp.size;
+            j++;
+        }
+    }
+    (*dane_data)[j] = NULL;
+    (*dane_data_len)[j] = 0;
+    *dane_entries = j;
+
+    return DANE_E_SUCCESS;
 }
 
 /*
@@ -767,6 +843,18 @@ network_connect_child (struct t_hook *hook_connect)
     struct addrinfo **res_reorder;
     int last_af;
     struct timeval tv_time;
+#ifdef HAVE_GNUTLS
+# ifdef HAVE_GNUTLS_DANE
+    dane_state_t dane_s;
+    dane_query_t dane_r;
+    unsigned int dane_entries = 0;
+    char **dane_data = NULL;
+    int *dane_data_len = NULL;
+    int dane_secure = 0;
+    int dane_bogus = 0;
+    unsigned int l;
+# endif
+#endif
 
     res_local = NULL;
     res_remote = NULL;
@@ -919,6 +1007,27 @@ network_connect_child (struct t_hook *hook_connect)
     }
 
     /* res_local != NULL now indicates that bind() is required */
+
+#ifdef HAVE_GNUTLS
+# ifdef HAVE_GNUTLS_DANE
+    if (HOOK_CONNECT(hook_connect, gnutls_sess) && dane_state_init (&dane_s, 0) == DANE_E_SUCCESS)
+    {
+        if (dane_query_tlsa (dane_s, &dane_r, HOOK_CONNECT(hook_connect, address),
+                             "tcp", HOOK_CONNECT(hook_connect, port)) == DANE_E_SUCCESS)
+        {
+            if (weechat__dane_query_to_raw_tlsa(dane_r, &dane_entries,
+                                                &dane_data, &dane_data_len,
+                                                &dane_secure, &dane_bogus) != DANE_E_SUCCESS)
+            {
+                dane_entries = 0;
+            }
+
+            dane_query_deinit (dane_r);
+        }
+        dane_state_deinit (dane_s);
+    }
+# endif
+#endif
 
     /*
      * count all the groups of hosts by tracking family, e.g.
@@ -1205,6 +1314,33 @@ network_connect_child (struct t_hook *hook_connect)
         num_written = write (HOOK_CONNECT(hook_connect, child_write), &sock, sizeof (sock));
         (void) num_written;
 #endif
+
+#ifdef HAVE_GNUTLS
+# ifdef HAVE_GNUTLS_DANE
+        num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                             &dane_secure, sizeof (dane_secure));
+        (void) num_written;
+
+        num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                             &dane_bogus, sizeof (dane_bogus));
+        (void) num_written;
+
+        num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                             &dane_entries, sizeof (dane_entries));
+        (void) num_written;
+
+        for (l = 0; l < dane_entries; l++)
+        {
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 &dane_data_len[l], sizeof (dane_data_len[l]));
+            (void) num_written;
+
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 dane_data[l], dane_data_len[l]);
+            (void) num_written;
+        }
+# endif
+#endif
     }
     else
     {
@@ -1224,6 +1360,14 @@ end:
         freeaddrinfo (res_local);
     if (res_remote)
         freeaddrinfo (res_remote);
+#ifdef HAVE_GNUTLS
+# ifdef HAVE_GNUTLS_DANE
+    if (dane_data)
+        free(dane_data);
+    if (dane_data_len)
+        free (dane_data_len);
+# endif
+#endif
 }
 
 /*
@@ -1471,6 +1615,70 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
 #ifdef HAVE_GNUTLS
             if (HOOK_CONNECT(hook_connect, gnutls_sess))
             {
+# ifdef HAVE_GNUTLS_DANE
+                unsigned int dane_entries = 0;
+                char **dane_data = NULL;
+                int *dane_data_len = NULL;
+                int dane_secure = 0;
+                int dane_bogus = 0;
+                unsigned int j;
+
+                num_read = read (HOOK_CONNECT(hook_connect, child_read), &dane_secure, sizeof (dane_secure));
+                (void) num_read;
+
+                num_read = read (HOOK_CONNECT(hook_connect, child_read), &dane_bogus, sizeof (dane_bogus));
+                (void) num_read;
+
+                num_read = read (HOOK_CONNECT(hook_connect, child_read), &dane_entries, sizeof (dane_entries));
+                (void) num_read;
+
+                dane_data = calloc (dane_entries + 1, sizeof (*dane_data));
+                dane_data_len = calloc (dane_entries + 1, sizeof (*dane_data_len));
+
+                if (dane_data == NULL || dane_data_len == NULL)
+                     goto malloc_failed;
+
+                for (j = 0; j < dane_entries; j++)
+                {
+                     num_read = read (HOOK_CONNECT(hook_connect, child_read), &dane_data_len[j], sizeof (*dane_data_len));
+                     (void) num_read;
+
+                     dane_data[j] = malloc (dane_data_len[j]);
+                     if (dane_data[j] == NULL)
+                         goto malloc_failed;
+
+                     num_read = read (HOOK_CONNECT(hook_connect, child_read), dane_data[j], dane_data_len[j]);
+                     (void) num_read;
+                }
+                dane_data[j] = NULL;
+                dane_data_len[j] = 0;
+
+                goto dane_ok;
+
+malloc_failed:
+                if (dane_data)
+                    for (j = 0; j < dane_entries; j++)
+                        free(dane_data[j]);
+                free(dane_data);
+                free(dane_data_len);
+
+                (void) (HOOK_CONNECT(hook_connect, callback))
+                    (hook_connect->callback_data, WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
+                     0, sock, cb_error, cb_ip_address);
+                unhook (hook_connect);
+                if (cb_error)
+                    free (cb_error);
+                if (cb_ip_address)
+                    free (cb_ip_address);
+                return WEECHAT_RC_OK;
+
+dane_ok:
+                HOOK_CONNECT(hook_connect, dane_data) = dane_data;
+                HOOK_CONNECT(hook_connect, dane_data_len) = dane_data_len;
+                HOOK_CONNECT(hook_connect, dane_secure) = dane_secure;
+                HOOK_CONNECT(hook_connect, dane_bogus) = dane_bogus;
+# endif
+
                 /*
                  * the socket needs to be non-blocking since the call to
                  * gnutls_handshake can block
