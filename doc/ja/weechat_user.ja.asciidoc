@@ -1439,9 +1439,8 @@ screen を使っている場合、'~/.screenrc' に以下の内容を追加し�
 term screen-256color
 ----
 
-// TRANSLATION MISSING
-If your 'TERM' variable has wrong value and that WeeChat is already running,
-you can change it with these two commands:
+'TERM' 変数が間違った値に設定された状態で WeeChat が起動完了している場合は、以下の
+2 つのコマンドを使って変数の値を変更してください:
 
 ----
 /set env TERM screen-256color

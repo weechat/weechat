@@ -564,10 +564,9 @@ int weechat_strcasecmp (const char *string1, const char *string2);
 
 戻り値:
 
-// TRANSLATION MISSING
-* -1 if string1 < string2
-* 0 if string1 == string2
-* 1 if string1 > string2
+* string1 < string2 の場合は -1
+* string1 == string2 の場合は 0
+* string1 > string2 の場合は 1
 
 C 言語での使用例:
 
@@ -581,8 +580,7 @@ int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -2 */
 
 ==== weechat_strcasecmp_range
 
-// TRANSLATION MISSING
-_WeeChat ≥ 0.3.7, updated in 1.0._
+_WeeChat バージョン 0.3.7 以上で利用可。バージョン 1.0 で更新。_
 
 大文字小文字を無視する文字範囲の幅を使い、ロケールと大文字小文字を無視して文字列を比較。
 
@@ -607,10 +605,9 @@ int weechat_strcasecmp_range (const char *string1, const char *string2, int rang
 
 戻り値:
 
-// TRANSLATION MISSING
-* -1 if string1 < string2
-* 0 if string1 == string2
-* 1 if string1 > string2
+* string1 < string2 の場合は -1
+* string1 == string2 の場合は 0
+* string1 > string2 の場合は 1
 
 C 言語での使用例:
 
@@ -643,10 +640,9 @@ int weechat_strncasecmp (const char *string1, const char *string2, int max);
 
 戻り値:
 
-// TRANSLATION MISSING
-* -1 if string1 < string2
-* 0 if string1 == string2
-* 1 if string1 > string2
+* string1 < string2 の場合は -1
+* string1 == string2 の場合は 0
+* string1 > string2 の場合は 1
 
 C 言語での使用例:
 
@@ -660,8 +656,7 @@ int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
 
 ==== weechat_strncasecmp_range
 
-// TRANSLATION MISSING
-_WeeChat ≥ 0.3.7, updated in 1.0._
+_WeeChat バージョン 0.3.7 以上で利用可。バージョン 1.0 で更新。_
 
 大文字小文字を無視する文字範囲の幅を使い、ロケールと大文字小文字を無視して
 'max' 文字だけ文字列を比較。
@@ -688,10 +683,9 @@ int weechat_strncasecmp_range (const char *string1, const char *string2, int max
 
 戻り値:
 
-// TRANSLATION MISSING
-* -1 if string1 < string2
-* 0 if string1 == string2
-* 1 if string1 > string2
+* string1 < string2 の場合は -1
+* string1 == string2 の場合は 0
+* string1 > string2 の場合は 1
 
 C 言語での使用例:
 
@@ -728,10 +722,9 @@ int weechat_strcmp_ignore_chars (const char *string1, const char *string2,
 
 戻り値:
 
-// TRANSLATION MISSING
-* -1 if string1 < string2
-* 0 if string1 == string2
-* 1 if string1 > string2
+* string1 < string2 の場合は -1
+* string1 == string2 の場合は 0
+* string1 > string2 の場合は 1
 
 C 言語での使用例:
 
@@ -2223,10 +2216,9 @@ int weechat_utf8_charcmp (const char *string1, const char *string2);
 
 戻り値:
 
-// TRANSLATION MISSING
-* -1 if string1 < string2
-* 0 if string1 == string2
-* 1 if string1 > string2
+* string1 < string2 の場合は -1
+* string1 == string2 の場合は 0
+* string1 > string2 の場合は 1
 
 C 言語での使用例:
 
@@ -2258,10 +2250,9 @@ int weechat_utf8_charcasecmp (const char *string1, const char *string2);
 
 戻り値:
 
-// TRANSLATION MISSING
-* -1 if string1 < string2
-* 0 if string1 == string2
-* 1 if string1 > string2
+* string1 < string2 の場合は -1
+* string1 == string2 の場合は 0
+* string1 > string2 の場合は 1
 
 C 言語での使用例:
 
