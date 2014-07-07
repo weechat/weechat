@@ -1170,7 +1170,8 @@ gui_bar_item_default_buffer_nicklist_count (void *data,
     if (!buffer || !buffer->nicklist)
         return NULL;
 
-    snprintf (str_count, sizeof (str_count), "%d",
+    snprintf (str_count, sizeof (str_count), "%s%d",
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_count_nicks))),
               buffer->nicklist_visible_count);
 
     return strdup (str_count);

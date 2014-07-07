@@ -256,6 +256,7 @@ extern struct t_config_option *config_color_input_text_not_found;
 extern struct t_config_option *config_color_separator;
 extern struct t_config_option *config_color_status_count_highlight;
 extern struct t_config_option *config_color_status_count_msg;
+extern struct t_config_option *config_color_status_count_nicks;
 extern struct t_config_option *config_color_status_count_other;
 extern struct t_config_option *config_color_status_count_private;
 extern struct t_config_option *config_color_status_data_highlight;

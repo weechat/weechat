@@ -221,6 +221,7 @@ struct t_config_option *config_color_input_text_not_found;
 struct t_config_option *config_color_separator;
 struct t_config_option *config_color_status_count_highlight;
 struct t_config_option *config_color_status_count_msg;
+struct t_config_option *config_color_status_count_nicks;
 struct t_config_option *config_color_status_count_other;
 struct t_config_option *config_color_status_count_private;
 struct t_config_option *config_color_status_data_highlight;
@@ -3048,6 +3049,12 @@ config_weechat_init_options ()
         "status_count_msg", "color",
         N_("text color for count of messages in hotlist (status bar)"),
         NULL, -1, 0, "brown", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_status_count_nicks = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "status_count_nicks", "color",
+        N_("text color for count of nicks in hotlist (status bar)"),
+        NULL, -1, 0, "white", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_count_other = config_file_new_option (
         weechat_config_file, ptr_section,
