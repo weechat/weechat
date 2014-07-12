@@ -671,7 +671,8 @@ irc_command_display_away (struct t_irc_server *server, const char *string1,
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+        if ((ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+            || (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE))
         {
             weechat_printf_tags (ptr_channel->buffer,
                                  "away_info",
