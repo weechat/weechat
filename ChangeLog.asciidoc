@@ -34,8 +34,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add hidden buffers, add options hide/unhide in command /buffer
 * core: fix "/buffer clear" with a name (don't clear all merged buffers with
   same number)
-* core: fix evaluation of expression with regex when a comparison char is in
-  the regex
+* core: fix evaluation of expression with regex: when a comparison char is in
+  the regex and don't evaluate the regex itself (closes #63)
 * core: close .upgrade files before deleting them after /upgrade
 * core: add default key key[alt--] (toggle filters in current buffer)
   (closes #17)
