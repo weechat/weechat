@@ -230,6 +230,7 @@ struct t_config_option *config_color_status_data_private;
 struct t_config_option *config_color_status_filter;
 struct t_config_option *config_color_status_name;
 struct t_config_option *config_color_status_name_ssl;
+struct t_config_option *config_color_status_nicklist_count;
 struct t_config_option *config_color_status_number;
 struct t_config_option *config_color_status_more;
 struct t_config_option *config_color_status_time;
@@ -3104,6 +3105,12 @@ config_weechat_init_options ()
         N_("text color for current buffer name in status bar, if data are "
            "secured with a protocol like SSL"),
         NULL, -1, 0, "lightgreen", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_status_nicklist_count = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "status_nicklist_count", "color",
+        N_("text color for number of nicks in nicklist (status bar)"),
+        NULL, -1, 0, "default", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_number = config_file_new_option (
         weechat_config_file, ptr_section,

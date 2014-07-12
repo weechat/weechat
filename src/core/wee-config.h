@@ -265,6 +265,7 @@ extern struct t_config_option *config_color_status_data_private;
 extern struct t_config_option *config_color_status_filter;
 extern struct t_config_option *config_color_status_name;
 extern struct t_config_option *config_color_status_name_ssl;
+extern struct t_config_option *config_color_status_nicklist_count;
 extern struct t_config_option *config_color_status_number;
 extern struct t_config_option *config_color_status_more;
 extern struct t_config_option *config_color_status_time;

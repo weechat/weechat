@@ -293,6 +293,11 @@
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `lightgreen`)
 
+* [[option_weechat.color.status_nicklist_count]] *weechat.color.status_nicklist_count*
+** 説明: `text color for number of nicks in nicklist (status bar)`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
+
 * [[option_weechat.color.status_number]] *weechat.color.status_number*
 ** 説明: `ステータスバーの現在のバッファ番号のテキスト色`
 ** タイプ: 色

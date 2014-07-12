@@ -15,6 +15,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.0 (under dev)
 
+* core: add option weechat.color.status_nicklist_count (closes #109,
+  closes #110)
 * core: fix socks5 proxy for curl downloads (closes #119)
 * core: display curl error after a failed download
 * core: do not display content of passphrase on /secure buffer

@@ -293,6 +293,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `lightgreen`)
 
+* [[option_weechat.color.status_nicklist_count]] *weechat.color.status_nicklist_count*
+** description: `couleur du texte pour le nombre de pseudos dans la liste de pseudos (barre de statut)`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
+
 * [[option_weechat.color.status_number]] *weechat.color.status_number*
 ** description: `couleur du texte pour le numéro du tampon courant dans la barre de statut`
 ** type: couleur

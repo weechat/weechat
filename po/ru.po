@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-05 22:14+0200\n"
+"POT-Creation-Date: 2014-07-12 08:02+0200\n"
 "PO-Revision-Date: 2014-06-28 13:18+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3138,6 +3138,10 @@ msgid ""
 "text color for current buffer name in status bar, if data are secured with a "
 "protocol like SSL"
 msgstr "цвет текущего канала в строке состояния"
+
+#, fuzzy
+msgid "text color for number of nicks in nicklist (status bar)"
+msgstr "цвет окна с подсвеченным сообщением (в строке состояния)"
 
 #, fuzzy
 msgid "text color for current buffer number in status bar"
