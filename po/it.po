@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-12 08:02+0200\n"
+"POT-Creation-Date: 2014-07-12 08:50+0200\n"
 "PO-Revision-Date: 2014-06-28 14:49+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -861,10 +861,6 @@ msgid "Option changed"
 msgstr "Opzione modificata"
 
 #, c-format
-msgid "%sReset of all options is not allowed"
-msgstr "%sIl ripristino di tutte le opzioni non è consentito"
-
-#, c-format
 msgid "%sFailed to unset option \"%s\""
 msgstr "%sImpossibile disabilitare l'opzione \"%s\""
 
@@ -874,6 +870,10 @@ msgstr "Reset dell'opzione: "
 #, c-format
 msgid "Option removed: %s"
 msgstr "Opzione rimossa: %s"
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr "%sIl ripristino di tutte le opzioni non è consentito"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
@@ -2446,13 +2446,14 @@ msgstr ""
 msgid "unset/reset config options"
 msgstr "annulla/ripristina opzione"
 
-msgid "<option>"
-msgstr "<opzione>"
+msgid "<option> || -mask <option>"
+msgstr ""
 
 #, fuzzy
 msgid ""
-"option: name of an option (wildcard \"*\" is allowed to mass-reset options, "
-"use carefully!)\n"
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values).\n"
@@ -2461,7 +2462,7 @@ msgid ""
 "  reset one option:\n"
 "    /unset weechat.look.item_time_format\n"
 "  reset all color options:\n"
-"    /unset weechat.color.*"
+"    /unset -mask weechat.color.*"
 msgstr ""
 "opzione: nome di un'opzione (può iniziare o terminare con \"*\" per il "
 "ripristino di più opzioni, attenzione!)\n"
@@ -11171,6 +11172,9 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: timeout per \"%s\" con %s"
+
+#~ msgid "<option>"
+#~ msgstr "<opzione>"
 
 #~ msgid "evaluate expression and send result to buffer"
 #~ msgstr "analizza l'espressione e invia il risultato al buffer"

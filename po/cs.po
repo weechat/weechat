@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-12 08:02+0200\n"
+"POT-Creation-Date: 2014-07-12 08:50+0200\n"
 "PO-Revision-Date: 2014-06-28 13:18+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -875,10 +875,6 @@ msgid "Option changed"
 msgstr "Volba změněna"
 
 #, c-format
-msgid "%sReset of all options is not allowed"
-msgstr ""
-
-#, c-format
 msgid "%sFailed to unset option \"%s\""
 msgstr "%sSelhalo odnastavení volby \"%s\""
 
@@ -888,6 +884,10 @@ msgstr "Volba resetována: "
 #, c-format
 msgid "Option removed: %s"
 msgstr "Volba odebrána: %s"
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr ""
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
@@ -2244,13 +2244,14 @@ msgstr ""
 msgid "unset/reset config options"
 msgstr "odnastavit/resetovat konfigurační možnosti"
 
-msgid "<option>"
-msgstr "<volba>"
+msgid "<option> || -mask <option>"
+msgstr ""
 
 #, fuzzy
 msgid ""
-"option: name of an option (wildcard \"*\" is allowed to mass-reset options, "
-"use carefully!)\n"
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values).\n"
@@ -2259,7 +2260,7 @@ msgid ""
 "  reset one option:\n"
 "    /unset weechat.look.item_time_format\n"
 "  reset all color options:\n"
-"    /unset weechat.color.*"
+"    /unset -mask weechat.color.*"
 msgstr ""
 "volba: jméno volby (může začínat nebo končit \"*\" pro hromadný reset voleb, "
 "používejte obezřetně!)\n"
@@ -10716,3 +10717,6 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "<option>"
+#~ msgstr "<volba>"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-12 08:02+0200\n"
+"POT-Creation-Date: 2014-07-12 08:50+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -822,10 +822,6 @@ msgid "Option changed"
 msgstr ""
 
 #, c-format
-msgid "%sReset of all options is not allowed"
-msgstr ""
-
-#, c-format
 msgid "%sFailed to unset option \"%s\""
 msgstr ""
 
@@ -834,6 +830,10 @@ msgstr ""
 
 #, c-format
 msgid "Option removed: %s"
+msgstr ""
+
+#, c-format
+msgid "%sReset of all options is not allowed"
 msgstr ""
 
 #, c-format
@@ -1790,12 +1790,13 @@ msgstr ""
 msgid "unset/reset config options"
 msgstr ""
 
-msgid "<option>"
+msgid "<option> || -mask <option>"
 msgstr ""
 
 msgid ""
-"option: name of an option (wildcard \"*\" is allowed to mass-reset options, "
-"use carefully!)\n"
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values).\n"
@@ -1804,7 +1805,7 @@ msgid ""
 "  reset one option:\n"
 "    /unset weechat.look.item_time_format\n"
 "  reset all color options:\n"
-"    /unset weechat.color.*"
+"    /unset -mask weechat.color.*"
 msgstr ""
 
 msgid "upgrade WeeChat without disconnecting from servers"

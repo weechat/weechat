@@ -5874,6 +5874,39 @@ COMMAND_CALLBACK(set)
 }
 
 /*
+ * Unsets/resets one option.
+ */
+
+void
+command_unset_option (struct t_config_option *option,
+                      const char *option_full_name,
+                      int *number_reset, int *number_removed)
+{
+    switch (config_file_option_unset (option))
+    {
+        case WEECHAT_CONFIG_OPTION_UNSET_ERROR:
+            gui_chat_printf (NULL,
+                             _("%sFailed to unset option \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             option_full_name);
+            break;
+        case WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET:
+            break;
+        case WEECHAT_CONFIG_OPTION_UNSET_OK_RESET:
+            command_set_display_option (option, _("Option reset: "));
+            if (number_reset)
+                (*number_reset)++;
+            break;
+        case WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED:
+            gui_chat_printf (NULL,
+                             _("Option removed: %s"), option_full_name);
+            if (number_removed)
+                (*number_removed)++;
+            break;
+    }
+}
+
+/*
  * Callback for command "/unset": unsets/resets configuration options.
  */
 
@@ -5882,21 +5915,31 @@ COMMAND_CALLBACK(unset)
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option, *next_option;
+    const char *ptr_name;
     char *option_full_name;
-    int length, number_reset, number_removed;
+    int mask, length, number_reset, number_removed;
 
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argv;
-
-    number_reset = 0;
-    number_removed = 0;
 
     if (argc < 2)
         return WEECHAT_RC_ERROR;
 
-    if (strcmp (argv_eol[1], "*") == 0)
+    mask = 0;
+    ptr_name = argv_eol[1];
+    number_reset = 0;
+    number_removed = 0;
+
+    if (string_strcasecmp (argv[1], "-mask") == 0)
+    {
+        mask = 1;
+        if (argc < 3)
+            return WEECHAT_RC_ERROR;
+        ptr_name = argv_eol[2];
+    }
+
+    if (mask && (strcmp (ptr_name, "*") == 0))
     {
         gui_chat_printf (NULL,
                          _("%sReset of all options is not allowed"),
@@ -5904,57 +5947,53 @@ COMMAND_CALLBACK(unset)
         return WEECHAT_RC_OK;
     }
 
-    for (ptr_config = config_files; ptr_config;
-         ptr_config = ptr_config->next_config)
+    if (mask)
     {
-        for (ptr_section = ptr_config->sections; ptr_section;
-             ptr_section = ptr_section->next_section)
+        /* unset all options matching the mask */
+        for (ptr_config = config_files; ptr_config;
+             ptr_config = ptr_config->next_config)
         {
-            ptr_option = ptr_section->options;
-            while (ptr_option)
+            for (ptr_section = ptr_config->sections; ptr_section;
+                 ptr_section = ptr_section->next_section)
             {
-                next_option = ptr_option->next_option;
-
-                length = strlen (ptr_config->name) + 1
-                    + strlen (ptr_section->name) + 1
-                    + strlen (ptr_option->name) + 1;
-                option_full_name = malloc (length);
-                if (option_full_name)
+                ptr_option = ptr_section->options;
+                while (ptr_option)
                 {
-                    snprintf (option_full_name, length, "%s.%s.%s",
-                              ptr_config->name, ptr_section->name,
-                              ptr_option->name);
-                    if (string_match (option_full_name, argv_eol[1], 0))
-                    {
-                        switch (config_file_option_unset (ptr_option))
-                        {
-                            case WEECHAT_CONFIG_OPTION_UNSET_ERROR:
-                                gui_chat_printf (NULL,
-                                                 _("%sFailed to unset "
-                                                   "option \"%s\""),
-                                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                                 option_full_name);
-                                break;
-                            case WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET:
-                                break;
-                            case WEECHAT_CONFIG_OPTION_UNSET_OK_RESET:
-                                command_set_display_option (ptr_option,
-                                                            _("Option reset: "));
-                                number_reset++;
-                                break;
-                            case WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED:
-                                gui_chat_printf (NULL,
-                                                 _("Option removed: %s"),
-                                                 option_full_name);
-                                number_removed++;
-                                break;
-                        }
-                    }
-                    free (option_full_name);
-                }
+                    next_option = ptr_option->next_option;
 
-                ptr_option = next_option;
+                    length = strlen (ptr_config->name) + 1
+                        + strlen (ptr_section->name) + 1
+                        + strlen (ptr_option->name) + 1;
+                    option_full_name = malloc (length);
+                    if (option_full_name)
+                    {
+                        snprintf (option_full_name, length, "%s.%s.%s",
+                                  ptr_config->name, ptr_section->name,
+                                  ptr_option->name);
+                        if (string_match (option_full_name, ptr_name, 0))
+                        {
+                            command_unset_option (ptr_option,
+                                                  option_full_name,
+                                                  &number_reset,
+                                                  &number_removed);
+                        }
+                        free (option_full_name);
+                    }
+
+                    ptr_option = next_option;
+                }
             }
+        }
+    }
+    else
+    {
+        /* unset one option */
+        config_file_search_with_string (ptr_name, NULL, NULL, &ptr_option,
+                                        NULL);
+        if (ptr_option)
+        {
+            command_unset_option (ptr_option, ptr_name,
+                                  &number_reset, &number_removed);
         }
     }
 
@@ -7756,9 +7795,11 @@ command_init ()
     hook_command (
         NULL, "unset",
         N_("unset/reset config options"),
-        N_("<option>"),
-        N_("option: name of an option (wildcard \"*\" is allowed to mass-reset "
-           "options, use carefully!)\n"
+        N_("<option>"
+           " || -mask <option>"),
+        N_("option: name of an option\n"
+           " -mask: use a mask in option (wildcard \"*\" is allowed to "
+           "mass-reset options, use carefully!)\n"
            "\n"
            "According to option, it's reset (for standard options) or removed "
            "(for optional settings, like server values).\n"
@@ -7767,8 +7808,9 @@ command_init ()
            "  reset one option:\n"
            "    /unset weechat.look.item_time_format\n"
            "  reset all color options:\n"
-           "    /unset weechat.color.*"),
-        "%(config_options)",
+           "    /unset -mask weechat.color.*"),
+        "%(config_options)"
+        " || -mask %(config_options)",
         &command_unset, NULL);
     hook_command (
         NULL, "upgrade",

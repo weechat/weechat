@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-12 08:02+0200\n"
+"POT-Creation-Date: 2014-07-12 08:50+0200\n"
 "PO-Revision-Date: 2014-06-29 12:38+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -884,10 +884,6 @@ msgid "Option changed"
 msgstr "Option geändert"
 
 #, c-format
-msgid "%sReset of all options is not allowed"
-msgstr "%sDas Zurücksetzen aller Optionen ist nicht zulässig"
-
-#, c-format
 msgid "%sFailed to unset option \"%s\""
 msgstr "%sOption \"%s\" konnte nicht zurück gesetzt werden"
 
@@ -897,6 +893,10 @@ msgstr "Option wieder hergestellt: "
 #, c-format
 msgid "Option removed: %s"
 msgstr "Option gelöscht: %s"
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr "%sDas Zurücksetzen aller Optionen ist nicht zulässig"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
@@ -2611,12 +2611,14 @@ msgstr ""
 msgid "unset/reset config options"
 msgstr "Konfigurationsparameter freigeben/zurücksetzen"
 
-msgid "<option>"
-msgstr "<option>"
+msgid "<option> || -mask <option>"
+msgstr ""
 
+#, fuzzy
 msgid ""
-"option: name of an option (wildcard \"*\" is allowed to mass-reset options, "
-"use carefully!)\n"
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values).\n"
@@ -2625,7 +2627,7 @@ msgid ""
 "  reset one option:\n"
 "    /unset weechat.look.item_time_format\n"
 "  reset all color options:\n"
-"    /unset weechat.color.*"
+"    /unset -mask weechat.color.*"
 msgstr ""
 "option: Name einer Option (Platzhalter \"*\" kann verwendet werden um viele "
 "Optionen in einem Arbeitsschritt zurückzusetzen. Nutzen Sie diese Funktion "
@@ -12085,6 +12087,9 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
+
+#~ msgid "<option>"
+#~ msgstr "<option>"
 
 #~ msgid "evaluate expression and send result to buffer"
 #~ msgstr "wertet eine Expression aus und zeigt das Resultat im Buffer an"

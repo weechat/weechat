@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.0 (under dev)
 
+* core: add option "-mask" in command /unset (closes #112)
 * core: add option weechat.color.status_nicklist_count (closes #109,
   closes #110)
 * core: fix socks5 proxy for curl downloads (closes #119)

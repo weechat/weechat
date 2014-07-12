@@ -795,8 +795,10 @@ Exemples :
 
 ----
 /unset  <option>
+        -mask <option>
 
-option : nom d'une option (le caractère joker "*" est autorisé pour réinitialiser plusieurs options, à utiliser avec prudence !)
+option : nom d'une option
+ -mask : utiliser un masque pour l'option (le caractère joker "*" est autorisé pour réinitialiser plusieurs options, à utiliser avec prudence !)
 
 Selon l'option, elle est réinitialisée (pour les options standards) ou supprimée (pour les options facultatives, comme les valeurs pour les serveurs).
 
@@ -804,7 +806,7 @@ Exemples :
   réinitialiser une option :
     /unset weechat.look.item_time_format
   réinitialiser toutes les options de couleur :
-    /unset weechat.color.*
+    /unset -mask weechat.color.*
 ----
 
 [[command_weechat_upgrade]]

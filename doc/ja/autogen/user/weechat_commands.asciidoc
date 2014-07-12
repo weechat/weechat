@@ -795,16 +795,18 @@ option: オプションの名前 (ワイルドカード '*' を使うことが�
 
 ----
 /unset  <option>
+        -mask <option>
 
-option: オプションの名前 (大量のオプションをリセットするにはワイルドカード "*" を使ってください、注意して使用!)
+option: name of an option
+ -mask: use a mask in option (wildcard "*" is allowed to mass-reset options, use carefully!)
 
-オプションの種類によって (一般的なオプションを) リセットまたは (サーバなどの任意な設定を) 削除が行われます。
+According to option, it's reset (for standard options) or removed (for optional settings, like server values).
 
-例:
-  オプションのリセット:
+Examples:
+  reset one option:
     /unset weechat.look.item_time_format
-  全ての色関連オプションをリセット:
-    /unset weechat.color.*
+  reset all color options:
+    /unset -mask weechat.color.*
 ----
 
 [[command_weechat_upgrade]]

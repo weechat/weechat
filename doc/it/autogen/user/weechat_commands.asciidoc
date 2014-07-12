@@ -794,9 +794,11 @@ Examples:
 [command]*`unset`* annulla/ripristina opzione::
 
 ----
-/unset  <opzione>
+/unset  <option>
+        -mask <option>
 
-option: name of an option (wildcard "*" is allowed to mass-reset options, use carefully!)
+option: name of an option
+ -mask: use a mask in option (wildcard "*" is allowed to mass-reset options, use carefully!)
 
 According to option, it's reset (for standard options) or removed (for optional settings, like server values).
 
@@ -804,7 +806,7 @@ Examples:
   reset one option:
     /unset weechat.look.item_time_format
   reset all color options:
-    /unset weechat.color.*
+    /unset -mask weechat.color.*
 ----
 
 [[command_weechat_upgrade]]

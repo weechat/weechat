@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-12 08:02+0200\n"
+"POT-Creation-Date: 2014-07-12 08:50+0200\n"
 "PO-Revision-Date: 2014-06-28 13:18+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -928,10 +928,6 @@ msgstr "не на канале"
 msgid "Option changed"
 msgstr "не на канале"
 
-#, c-format
-msgid "%sReset of all options is not allowed"
-msgstr "%sСброс всех опций запрещён"
-
 #, fuzzy, c-format
 msgid "%sFailed to unset option \"%s\""
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
@@ -943,6 +939,10 @@ msgstr "Настройки pluginов сохранены\n"
 #, fuzzy, c-format
 msgid "Option removed: %s"
 msgstr "не на канале"
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr "%sСброс всех опций запрещён"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
@@ -1994,13 +1994,13 @@ msgstr ""
 msgid "unset/reset config options"
 msgstr "настроить параметры конфигурации"
 
-#, fuzzy
-msgid "<option>"
-msgstr "[команда]"
+msgid "<option> || -mask <option>"
+msgstr ""
 
 msgid ""
-"option: name of an option (wildcard \"*\" is allowed to mass-reset options, "
-"use carefully!)\n"
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values).\n"
@@ -2009,7 +2009,7 @@ msgid ""
 "  reset one option:\n"
 "    /unset weechat.look.item_time_format\n"
 "  reset all color options:\n"
-"    /unset weechat.color.*"
+"    /unset -mask weechat.color.*"
 msgstr ""
 
 msgid "upgrade WeeChat without disconnecting from servers"
@@ -10125,3 +10125,7 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "<option>"
+#~ msgstr "[команда]"

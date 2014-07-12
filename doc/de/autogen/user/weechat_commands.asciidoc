@@ -795,16 +795,18 @@ Beispiele:
 
 ----
 /unset  <option>
+        -mask <option>
 
-option: Name einer Option (Platzhalter "*" kann verwendet werden um viele Optionen in einem Arbeitsschritt zurückzusetzen. Nutzen Sie diese Funktion mit äußerster Sorgfalt!)
+option: name of an option
+ -mask: use a mask in option (wildcard "*" is allowed to mass-reset options, use carefully!)
 
-Gemäß der jeweiligen Option wird diese zurückgesetzt (bei Standard-Optionen) oder komplett entfernt (bei optionalen Einstellungen, zum Beispiel die Server-Einstellungen).
+According to option, it's reset (for standard options) or removed (for optional settings, like server values).
 
-Beispiele:
-  Eine Option zurücksetzen:
+Examples:
+  reset one option:
     /unset weechat.look.item_time_format
-  Alle Farboptionen zurücksetzen:
-    /unset weechat.color.*
+  reset all color options:
+    /unset -mask weechat.color.*
 ----
 
 [[command_weechat_upgrade]]

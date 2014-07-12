@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-12 08:02+0200\n"
+"POT-Creation-Date: 2014-07-12 08:50+0200\n"
 "PO-Revision-Date: 2014-07-06 10:54+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -858,10 +858,6 @@ msgid "Option changed"
 msgstr "変更されたオプション"
 
 #, c-format
-msgid "%sReset of all options is not allowed"
-msgstr "%s全てのオプションをリセットすることは出来ません"
-
-#, c-format
 msgid "%sFailed to unset option \"%s\""
 msgstr "%sオプション \"%s\" の無効化に失敗しました"
 
@@ -871,6 +867,10 @@ msgstr "リセットされたオプション: "
 #, c-format
 msgid "Option removed: %s"
 msgstr "削除されたオプション: %s"
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr "%s全てのオプションをリセットすることは出来ません"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
@@ -2486,12 +2486,14 @@ msgstr ""
 msgid "unset/reset config options"
 msgstr "オプションのアンセット/リセット"
 
-msgid "<option>"
-msgstr "<option>"
+msgid "<option> || -mask <option>"
+msgstr ""
 
+#, fuzzy
 msgid ""
-"option: name of an option (wildcard \"*\" is allowed to mass-reset options, "
-"use carefully!)\n"
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values).\n"
@@ -2500,7 +2502,7 @@ msgid ""
 "  reset one option:\n"
 "    /unset weechat.look.item_time_format\n"
 "  reset all color options:\n"
-"    /unset weechat.color.*"
+"    /unset -mask weechat.color.*"
 msgstr ""
 "option: オプションの名前 (大量のオプションをリセットするにはワイルドカード "
 "\"*\" を使ってください、注意して使用!)\n"
@@ -11383,6 +11385,9 @@ msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できませ�
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: \"%s\" のタイムアウト %s"
+
+#~ msgid "<option>"
+#~ msgstr "<option>"
 
 #~ msgid "evaluate expression and send result to buffer"
 #~ msgstr "式を評価して結果をバッファに送信"

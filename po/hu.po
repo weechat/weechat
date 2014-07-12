@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-12 08:02+0200\n"
+"POT-Creation-Date: 2014-07-12 08:50+0200\n"
 "PO-Revision-Date: 2014-06-28 13:18+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -907,10 +907,6 @@ msgstr "nincs a szobában"
 msgid "Option changed"
 msgstr "nincs a szobában"
 
-#, c-format
-msgid "%sReset of all options is not allowed"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "%sFailed to unset option \"%s\""
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
@@ -922,6 +918,10 @@ msgstr "Modul beállítások elmentve\n"
 #, fuzzy, c-format
 msgid "Option removed: %s"
 msgstr "nincs a szobában"
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr ""
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
@@ -1971,13 +1971,13 @@ msgstr ""
 msgid "unset/reset config options"
 msgstr "konfigurációs paraméterek beállítása"
 
-#, fuzzy
-msgid "<option>"
-msgstr "[parancs]"
+msgid "<option> || -mask <option>"
+msgstr ""
 
 msgid ""
-"option: name of an option (wildcard \"*\" is allowed to mass-reset options, "
-"use carefully!)\n"
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values).\n"
@@ -1986,7 +1986,7 @@ msgid ""
 "  reset one option:\n"
 "    /unset weechat.look.item_time_format\n"
 "  reset all color options:\n"
-"    /unset weechat.color.*"
+"    /unset -mask weechat.color.*"
 msgstr ""
 
 msgid "upgrade WeeChat without disconnecting from servers"
@@ -10104,3 +10104,7 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "<option>"
+#~ msgstr "[parancs]"

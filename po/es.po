@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-12 08:02+0200\n"
+"POT-Creation-Date: 2014-07-12 08:50+0200\n"
 "PO-Revision-Date: 2014-06-28 13:18+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -875,10 +875,6 @@ msgid "Option changed"
 msgstr "Opción cambiada"
 
 #, c-format
-msgid "%sReset of all options is not allowed"
-msgstr "%sNo esta permitido reiniciar todas las opciones"
-
-#, c-format
 msgid "%sFailed to unset option \"%s\""
 msgstr "%sNo se pudo deshacer la opción \"%s\""
 
@@ -888,6 +884,10 @@ msgstr "Opción reiniciada: "
 #, c-format
 msgid "Option removed: %s"
 msgstr "Opción removida: %s"
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr "%sNo esta permitido reiniciar todas las opciones"
 
 # better way of handling plurals?
 #, c-format
@@ -2360,13 +2360,14 @@ msgstr ""
 msgid "unset/reset config options"
 msgstr "deshacer/reiniciar opciones de configuración"
 
-msgid "<option>"
-msgstr "<opción>"
+msgid "<option> || -mask <option>"
+msgstr ""
 
 #, fuzzy
 msgid ""
-"option: name of an option (wildcard \"*\" is allowed to mass-reset options, "
-"use carefully!)\n"
+"option: name of an option\n"
+" -mask: use a mask in option (wildcard \"*\" is allowed to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values).\n"
@@ -2375,7 +2376,7 @@ msgid ""
 "  reset one option:\n"
 "    /unset weechat.look.item_time_format\n"
 "  reset all color options:\n"
-"    /unset weechat.color.*"
+"    /unset -mask weechat.color.*"
 msgstr ""
 "opción: nombre de la opción (puede empezar o terminar con \"*\" para "
 "reiniciar varias opciones, usar con cuidado!)\n"
@@ -11000,6 +11001,9 @@ msgstr "%s%s: no es posible configurar la opción \"nonblock\" para el socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
+
+#~ msgid "<option>"
+#~ msgstr "<opción>"
 
 #~ msgid "evaluate expression and send result to buffer"
 #~ msgstr "evaluar la expresión y enviar el resultado al buffer"
