@@ -154,6 +154,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: fix parsing of nick in host when '!' is not found (bug #41640)
 * lua: fix interpreter used after unload of a script
 * perl: fix context used after unload of a script
+* python: fix read of return value for callbacks returning an integer
+  in Python 2.x (closes #125)
 * python: fix interpreter used after unload of a script
 * relay: fix crash when closing relay buffers (closes #57, closes #78)
 * relay: check pointers received in hdata command to prevent crashes with bad

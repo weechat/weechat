@@ -34,6 +34,14 @@
 #define PyUnicode_FromString PyString_FromString
 #endif
 
+#if PY_MAJOR_VERSION >= 3
+/* check of integer with Python >= 3.x */
+#define PY_INTEGER_CHECK(x) (PyLong_Check(x))
+#else
+/* check of integer with Python <= 2.x */
+#define PY_INTEGER_CHECK(x) (PyInt_Check(x) || PyLong_Check(x))
+#endif
+
 extern struct t_weechat_plugin *weechat_python_plugin;
 
 extern int python_quiet;

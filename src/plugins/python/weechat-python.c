@@ -391,11 +391,11 @@ weechat_python_exec (struct t_plugin_script *script,
             ret_value = NULL;
         Py_XDECREF(rc);
     }
-    else if ((ret_type == WEECHAT_SCRIPT_EXEC_INT) && (PyLong_Check (rc)))
+    else if ((ret_type == WEECHAT_SCRIPT_EXEC_INT) && (PY_INTEGER_CHECK(rc)))
     {
         ret_int = malloc (sizeof (*ret_int));
         if (ret_int)
-            *ret_int = (int) PyLong_AsLong(rc);
+            *ret_int = (int) PyLong_AsLong (rc);
         ret_value = ret_int;
         Py_XDECREF(rc);
     }
