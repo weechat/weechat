@@ -506,20 +506,23 @@ script_action_install_process_cb (void *data, const char *command,
     int quiet, length;
     struct t_script_repo *ptr_script;
 
+    /* make C compiler happy */
+    (void) out;
+
     quiet = (data) ? 1 : 0;
 
     if (return_code >= 0)
     {
         pos = strrchr (command, '/');
 
-        if ((err && err[0]) || (out && (strncmp (out, "error:", 6) == 0)))
+        if (err && err[0])
         {
             weechat_printf (NULL,
                             _("%s%s: error downloading script \"%s\": %s"),
                             weechat_prefix ("error"),
                             SCRIPT_PLUGIN_NAME,
                             (pos) ? pos + 1 : "?",
-                            (err && err[0]) ? err : out + 6);
+                            err);
             return WEECHAT_RC_OK;
         }
 
@@ -901,19 +904,20 @@ script_action_show_source_process_cb (void *data, const char *command,
 
     /* make C compiler happy */
     (void) data;
+    (void) out;
 
     if (return_code >= 0)
     {
         pos = strrchr (command, '/');
 
-        if ((err && err[0]) || (out && (strncmp (out, "error:", 6) == 0)))
+        if (err && err[0])
         {
             weechat_printf (NULL,
                             _("%s%s: error downloading script \"%s\": %s"),
                             weechat_prefix ("error"),
                             SCRIPT_PLUGIN_NAME,
                             (pos) ? pos + 1 : "?",
-                            (err && err[0]) ? err : out + 6);
+                            err);
             return WEECHAT_RC_OK;
         }
 

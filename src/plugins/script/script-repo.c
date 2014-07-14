@@ -1405,18 +1405,19 @@ script_repo_file_update_process_cb (void *data, const char *command,
 
     /* make C compiler happy */
     (void) command;
+    (void) out;
 
     quiet = (data == 0) ? 0 : 1;
 
     if (return_code >= 0)
     {
-        if ((err && err[0]) || (out && (strncmp (out, "error:", 6) == 0)))
+        if (err && err[0])
         {
             weechat_printf (NULL,
                             _("%s%s: error downloading list of scripts: %s"),
                             weechat_prefix ("error"),
                             SCRIPT_PLUGIN_NAME,
-                            (err && err[0]) ? err : out + 6);
+                            err);
             return WEECHAT_RC_OK;
         }
 

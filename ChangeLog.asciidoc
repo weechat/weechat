@@ -176,6 +176,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * rmodifier: remove plugin (replaced by trigger)
 * ruby: fix crash when trying to load a directory with /ruby load
 * ruby: add detection of Ruby 2.1
+* script: fix display of curl errors
 * script: set option script.scripts.cache_expire to 1440 by default
 * script: fix scroll on script buffer in the detailed view of script
   (closes #6)
