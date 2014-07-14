@@ -1774,6 +1774,7 @@ COMMAND_CALLBACK(debug)
     if (string_strcasecmp (argv[1], "term") == 0)
     {
         gui_window_term_display_infos ();
+        weechat_term_check ();
         return WEECHAT_RC_OK;
     }
 

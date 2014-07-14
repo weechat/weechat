@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-12 08:50+0200\n"
-"PO-Revision-Date: 2014-07-12 08:56+0200\n"
+"POT-Creation-Date: 2014-07-14 18:54+0200\n"
+"PO-Revision-Date: 2014-07-14 18:54+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -179,6 +179,20 @@ msgstr "Erreur : la base (%s) n'est pas un répertoire\n"
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Erreur : impossible de créer le répertoire \"%s\"\n"
+
+#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
+#, c-format
+msgid ""
+"%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
+"display bugs; $TERM should be set to \"screen-256color\" or \"screen\""
+msgstr ""
+"%sAttention : WeeChat tourne sous %s et $TERM est \"%s\", ce qui peut poser "
+"des problèmes d'affichage ; $TERM devrait être égal à \"screen-256color\" ou "
+"\"screen\""
+
+#, c-format
+msgid "%sYou should add this line in the file %s:  %s"
+msgstr "%sVous devriez ajouter cette ligne dans le fichier %s:  %s"
 
 msgid "List of bars:"
 msgstr "Liste des barres :"
@@ -11837,9 +11851,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "<option>"
-#~ msgstr "<option>"
-
-#~ msgid "evaluate expression and send result to buffer"
-#~ msgstr "évaluer une expression et envoyer le résultat au tampon"

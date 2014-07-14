@@ -386,6 +386,50 @@ weechat_welcome_message ()
 }
 
 /*
+ * Displays warnings about $TERM if it is detected as wrong.
+ *
+ * If $TERM is different from "screen" or "screen-256color" and that $STY is
+ * set (GNU screen) or $TMUX is set (tmux), then a warning is displayed.
+ */
+
+void
+weechat_term_check ()
+{
+    char *term, *sty, *tmux;
+    int is_term_ok, is_screen, is_tmux;
+
+    term = getenv ("TERM");
+    sty = getenv ("STY");
+    tmux = getenv ("TMUX");
+
+    is_term_ok = (term && ((strcmp (term, "screen") == 0)
+                           || (strcmp (term, "screen-256color") == 0)));
+    is_screen = (sty && sty[0]);
+    is_tmux = (tmux && tmux[0]);
+
+    if ((is_screen || is_tmux) && !is_term_ok)
+    {
+        gui_chat_printf (
+            NULL,
+            /* TRANSLATORS: the "under %s" can be "under screen" or "under tmux" */
+            _("%sWarning: WeeChat is running under %s and $TERM is \"%s\", "
+              "which can cause display bugs; $TERM should be set to "
+              "\"screen-256color\" or \"screen\""),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            (is_screen) ? "screen" : "tmux",
+            (term) ? term : "");
+        gui_chat_printf (
+            NULL,
+            _("%sYou should add this line in the file %s:  %s"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            (is_screen) ? "~/.screenrc" : "~/.tmux.conf",
+            (is_screen) ?
+            "term screen-256color" :
+            "set -g default-terminal \"screen-256color\"");
+    }
+}
+
+/*
  * Shutdowns WeeChat.
  */
 
@@ -466,6 +510,7 @@ main (int argc, char *argv[])
     }
     weechat_welcome_message ();         /* display WeeChat welcome message  */
     gui_chat_print_lines_waiting_buffer (NULL); /* display lines waiting    */
+    weechat_term_check ();              /* warnings about $TERM (if wrong)  */
     command_startup (0);                /* command executed before plugins  */
     plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */
                  argc, argv);

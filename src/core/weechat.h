@@ -106,6 +106,7 @@ extern int weechat_no_gnutls;
 extern int weechat_no_gcrypt;
 extern char *weechat_startup_commands;
 
+extern void weechat_term_check ();
 extern void weechat_shutdown (int return_code, int crash);
 
 #endif /* WEECHAT_H */
