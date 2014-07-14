@@ -1894,7 +1894,8 @@ gui_chat_get_bare_line (struct t_gui_line *line)
         goto end;
 
     str_time[0] = '\0';
-    if ((line->data->date > 0)
+    if (line->data->buffer->time_for_each_line
+        && (line->data->date > 0)
         && CONFIG_STRING(config_look_bare_display_time_format)
         && CONFIG_STRING(config_look_bare_display_time_format)[0])
     {
