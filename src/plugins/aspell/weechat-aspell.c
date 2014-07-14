@@ -433,15 +433,15 @@ weechat_aspell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
 int
 weechat_aspell_string_is_simili_number (const char *word)
 {
-    int utf8_char_int;
+    int code_point;
 
     if (!word || !word[0])
         return 0;
 
     while (word && word[0])
     {
-        utf8_char_int = weechat_utf8_char_int (word);
-        if (!iswpunct (utf8_char_int) && !iswdigit (utf8_char_int))
+        code_point = weechat_utf8_char_int (word);
+        if (!iswpunct (code_point) && !iswdigit (code_point))
             return 0;
         word = weechat_utf8_next_char (word);
     }
@@ -614,7 +614,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
     char *word_for_suggestions, *old_suggestions, *suggestions;
     char *word_and_suggestions;
     const char *color_normal, *color_error, *ptr_suggestions;
-    int utf8_char_int, char_size;
+    int code_point, char_size;
     int length, index_result, length_word, word_ok;
     int length_color_normal, length_color_error, rc;
     int input_pos, current_pos, word_start_pos, word_end_pos, word_end_pos_valid;
@@ -740,10 +740,10 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
             ptr_string_orig = NULL;
 
             /* find start of word: it must start with an alphanumeric char */
-            utf8_char_int = weechat_utf8_char_int (ptr_string);
-            while ((!iswalnum (utf8_char_int)) || iswspace (utf8_char_int))
+            code_point = weechat_utf8_char_int (ptr_string);
+            while ((!iswalnum (code_point)) || iswspace (code_point))
             {
-                if (!ptr_string_orig && !iswspace (utf8_char_int))
+                if (!ptr_string_orig && !iswspace (code_point))
                     ptr_string_orig = ptr_string;
                 char_size = weechat_utf8_char_size (ptr_string);
                 memcpy (result + index_result, ptr_string, char_size);
@@ -752,7 +752,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
                 current_pos++;
                 if (!ptr_string[0])
                     break;
-                utf8_char_int = weechat_utf8_char_int (ptr_string);
+                code_point = weechat_utf8_char_int (ptr_string);
             }
             if (!ptr_string[0])
                 break;
@@ -766,12 +766,12 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
             /* find end of word: ' and - allowed in word, but not at the end */
             ptr_end_valid = ptr_string;
             ptr_end = weechat_utf8_next_char (ptr_string);
-            utf8_char_int = weechat_utf8_char_int (ptr_end);
-            while (iswalnum (utf8_char_int) || (utf8_char_int == '\'')
-                   || (utf8_char_int == '-'))
+            code_point = weechat_utf8_char_int (ptr_end);
+            while (iswalnum (code_point) || (code_point == '\'')
+                   || (code_point == '-'))
             {
                 word_end_pos++;
-                if (iswalnum (utf8_char_int))
+                if (iswalnum (code_point))
                 {
                     /* pointer to last alphanumeric char in the word */
                     ptr_end_valid = ptr_end;
@@ -780,7 +780,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
                 ptr_end = weechat_utf8_next_char (ptr_end);
                 if (!ptr_end[0])
                     break;
-                utf8_char_int = weechat_utf8_char_int (ptr_end);
+                code_point = weechat_utf8_char_int (ptr_end);
             }
             ptr_end = weechat_utf8_next_char (ptr_end_valid);
             word_end_pos = word_end_pos_valid;
@@ -795,13 +795,13 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
                 word_ok = 1;
                 if (ptr_end[0])
                 {
-                    utf8_char_int = weechat_utf8_char_int (ptr_end);
-                    while (!iswspace (utf8_char_int))
+                    code_point = weechat_utf8_char_int (ptr_end);
+                    while (!iswspace (code_point))
                     {
                         ptr_end = weechat_utf8_next_char (ptr_end);
                         if (!ptr_end[0])
                             break;
-                        utf8_char_int = weechat_utf8_char_int (ptr_end);
+                        code_point = weechat_utf8_char_int (ptr_end);
                     }
                 }
             }
