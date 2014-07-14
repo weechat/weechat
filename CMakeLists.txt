@@ -118,6 +118,85 @@ set(CA_FILE "${CA_FILE}" CACHE
   FORCE)
 mark_as_advanced(CLEAR CA_FILE)
 
+if(COMMAND cmake_policy)
+  if(POLICY CMP0003)
+    cmake_policy(SET CMP0003 NEW)
+  endif()
+  if(POLICY CMP0017)
+    cmake_policy(SET CMP0017 NEW)
+  endif()
+endif()
+
+add_definitions(-DHAVE_CONFIG_H)
+
+include(CheckIncludeFiles)
+include(CheckFunctionExists)
+include(CheckSymbolExists)
+
+check_include_files("langinfo.h" HAVE_LANGINFO_CODESET)
+check_include_files("sys/resource.h" HAVE_SYS_RESOURCE_H)
+
+check_function_exists(mallinfo HAVE_MALLINFO)
+
+check_symbol_exists("eat_newline_glitch" "term.h" HAVE_EAT_NEWLINE_GLITCH)
+
+# Check for Large File Support
+if(ENABLE_LARGEFILE)
+  add_definitions(-D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_LARGE_FILES)
+endif()
+
+# Check for Gettext
+if(ENABLE_NLS)
+  find_package(Gettext)
+  if(GETTEXT_FOUND)
+    add_definitions(-DENABLE_NLS)
+  endif()
+endif()
+
+# Check for libgcrypt
+find_package(GCRYPT REQUIRED)
+add_definitions(-DHAVE_GCRYPT)
+list(APPEND EXTRA_LIBS ${GCRYPT_LDFLAGS})
+
+# Check for GnuTLS
+if(ENABLE_GNUTLS)
+  find_package(GnuTLS)
+  if(GNUTLS_FOUND)
+    string(REGEX REPLACE "/[^/]*$" "" GNUTLS_LIBRARY_PATH "${GNUTLS_LIBRARY}")
+    add_definitions(-DHAVE_GNUTLS)
+    include_directories(${GNUTLS_INCLUDE_PATH})
+    set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -L${GNUTLS_LIBRARY_PATH}")
+    list(APPEND EXTRA_LIBS gnutls)
+  endif()
+endif()
+
+# Check for zlib
+find_package(ZLIB REQUIRED)
+add_definitions(-DHAVE_ZLIB)
+
+# Check for iconv
+find_package(Iconv)
+if(ICONV_FOUND)
+  add_definitions( -DHAVE_ICONV )
+endif()
+
+# Check for CURL
+find_package(CURL REQUIRED)
+
+# weechat_gui_common MUST be the first lib in the list
+set(STATIC_LIBS weechat_gui_common)
+
+find_library(DL_LIBRARY
+  NAMES dl
+  PATHS /lib /usr/lib /usr/libexec /usr/local/lib /usr/local/libexec
+)
+list(APPEND STATIC_LIBS weechat_plugins)
+if(DL_LIBRARY)
+  string(REGEX REPLACE "/[^/]*$" "" DL_LIBRARY_PATH "${DL_LIBRARY}")
+  set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -L${DL_LIBRARY_PATH}")
+  list(APPEND EXTRA_LIBS dl)
+endif()
+
 if(ENABLE_NLS)
   add_subdirectory( po )
 endif()
