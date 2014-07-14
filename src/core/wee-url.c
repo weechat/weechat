@@ -45,10 +45,15 @@
 
 char *url_type_string[] = { "string", "long", "long long", "mask" };
 
+/*
+ * Constants/options for Curl 7.37.0
+ * (this list of options must be updated on every new Curl release)
+ */
+
 struct t_url_constant url_proxy_types[] =
 {
 #if LIBCURL_VERSION_NUM >= 0x070A00
-    /* libcurl >= 7.10 */
+    /* libcurl >= 7.10.0 */
     URL_DEF_CONST(PROXY, HTTP),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071304
@@ -56,7 +61,7 @@ struct t_url_constant url_proxy_types[] =
     URL_DEF_CONST(PROXY, HTTP_1_0),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A00
-    /* libcurl >= 7.10 */
+    /* libcurl >= 7.10.0 */
     URL_DEF_CONST(PROXY, SOCKS4),
     URL_DEF_CONST(PROXY, SOCKS5),
 #endif
@@ -331,23 +336,33 @@ struct t_url_constant url_ssh_auth[] =
     { NULL, 0 },
 };
 
+struct t_url_constant url_header[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x072500
+    /* libcurl >= 7.37.0 */
+    URL_DEF_CONST(HEADER, UNIFIED),
+    URL_DEF_CONST(HEADER, SEPARATE),
+#endif
+    { NULL, 0 },
+};
+
 struct t_url_option url_options[] =
 {
     /*
      * behavior options
      */
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(VERBOSE, LONG, NULL),
     URL_DEF_OPTION(HEADER, LONG, NULL),
     URL_DEF_OPTION(NOPROGRESS, LONG, NULL),
 #endif
     #if LIBCURL_VERSION_NUM >= 0x070A00
-    /* libcurl >= 7.10 */
+    /* libcurl >= 7.10.0 */
     URL_DEF_OPTION(NOSIGNAL, LONG, NULL),
 #endif
-#if LIBCURL_VERSION_NUM >= 0x071501
-    /* libcurl >= 7.21 */
+#if LIBCURL_VERSION_NUM >= 0x071500
+    /* libcurl >= 7.21.0 */
     URL_DEF_OPTION(WILDCARDMATCH, LONG, NULL),
 #endif
 
@@ -355,7 +370,7 @@ struct t_url_option url_options[] =
      * error options
      */
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(FAILONERROR, LONG, NULL),
 #endif
 
@@ -368,12 +383,12 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(REDIR_PROTOCOLS, MASK, url_protocols),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(PROXY, STRING, NULL),
     URL_DEF_OPTION(PROXYPORT, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A00
-    /* libcurl >= 7.10 */
+    /* libcurl >= 7.10.0 */
     URL_DEF_OPTION(PROXYTYPE, LONG, url_proxy_types),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071304
@@ -381,7 +396,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(NOPROXY, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070300
-    /* libcurl >= 7.3 */
+    /* libcurl >= 7.3.0 */
     URL_DEF_OPTION(HTTPPROXYTUNNEL, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071304
@@ -390,7 +405,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(SOCKS5_GSSAPI_NEC, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070300
-    /* libcurl >= 7.3 */
+    /* libcurl >= 7.3.0 */
     URL_DEF_OPTION(INTERFACE, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070F02
@@ -403,11 +418,11 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(DNS_CACHE_TIMEOUT, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A00
-    /* libcurl >= 7.10 */
+    /* libcurl >= 7.10.0 */
     URL_DEF_OPTION(BUFFERSIZE, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(PORT, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070B02
@@ -429,7 +444,7 @@ struct t_url_option url_options[] =
      * name and password options (authentication)
      */
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(NETRC, LONG, url_netrc),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070B00
@@ -437,7 +452,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(NETRC_FILE, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(USERPWD, STRING, NULL),
     URL_DEF_OPTION(PROXYUSERPWD, STRING, NULL),
 #endif
@@ -447,6 +462,10 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(PASSWORD, STRING, NULL),
     URL_DEF_OPTION(PROXYUSERNAME, STRING, NULL),
     URL_DEF_OPTION(PROXYPASSWORD, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072200
+    /* libcurl >= 7.34.0 */
+    URL_DEF_OPTION(LOGIN_OPTIONS, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A06
     /* libcurl >= 7.10.6 */
@@ -462,12 +481,20 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.10.7 */
     URL_DEF_OPTION(PROXYAUTH, MASK, url_auth),
 #endif
+#if LIBCURL_VERSION_NUM >= 0x071F00
+    /* libcurl >= 7.31.0 */
+    URL_DEF_OPTION(SASL_IR, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072100
+    /* libcurl >= 7.33.0 */
+    URL_DEF_OPTION(XOAUTH2_BEARER, STRING, NULL),
+#endif
 
     /*
      * HTTP options
      */
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(AUTOREFERER, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071506
@@ -476,7 +503,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(TRANSFER_ENCODING, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(FOLLOWLOCATION, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A04
@@ -484,7 +511,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(UNRESTRICTED_AUTH, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070500
-    /* libcurl >= 7.5 */
+    /* libcurl >= 7.5.0 */
     URL_DEF_OPTION(MAXREDIRS, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071301
@@ -492,13 +519,13 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(POSTREDIR, MASK, url_postredir),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(PUT, LONG, NULL),
     URL_DEF_OPTION(POST, LONG, NULL),
     URL_DEF_OPTION(POSTFIELDS, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070200
-    /* libcurl >= 7.2 */
+    /* libcurl >= 7.2.0 */
     URL_DEF_OPTION(POSTFIELDSIZE, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070B01
@@ -510,26 +537,31 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(COPYPOSTFIELDS, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     /*URL_DEF_OPTION(HTTPPOST, LIST, NULL),*/
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(REFERER, STRING, NULL),
     URL_DEF_OPTION(USERAGENT, STRING, NULL),
     /*URL_DEF_OPTION(HTTPHEADER, LIST, NULL),*/
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072500
+    /* libcurl >= 7.37.0 */
+    URL_DEF_OPTION(HEADEROPT, MASK, url_header),
+    /*URL_DEF_OPTION(PROXYHEADER, LIST, NULL),*/
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A03
     /* libcurl >= 7.10.3 */
     /*URL_DEF_OPTION(HTTP200ALIASES, LIST, NULL),*/
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(COOKIE, STRING, NULL),
     URL_DEF_OPTION(COOKIEFILE, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070900
-    /* libcurl >= 7.9 */
+    /* libcurl >= 7.9.0 */
     URL_DEF_OPTION(COOKIEJAR, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070907
@@ -557,6 +589,10 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(HTTP_CONTENT_DECODING, LONG, NULL),
     URL_DEF_OPTION(HTTP_TRANSFER_DECODING, LONG, NULL),
 #endif
+#if LIBCURL_VERSION_NUM >= 0x072400
+    /* libcurl >= 7.36.0 */
+    URL_DEF_OPTION(EXPECT_100_TIMEOUT_MS, LONG, NULL),
+#endif
 
     /*
      * SMTP options
@@ -583,7 +619,7 @@ struct t_url_option url_options[] =
      * FTP options
      */
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(FTPPORT, STRING, NULL),
     /*URL_DEF_OPTION(QUOTE, LIST, NULL),*/
     /*URL_DEF_OPTION(POSTQUOTE, LIST, NULL),*/
@@ -667,7 +703,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(PROXY_TRANSFER_MODE, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(CRLF, LONG, NULL),
     URL_DEF_OPTION(RANGE, STRING, NULL),
     URL_DEF_OPTION(RESUME_FROM, LONG, NULL),
@@ -677,15 +713,15 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(RESUME_FROM_LARGE, LONGLONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(CUSTOMREQUEST, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070500
-    /* libcurl >= 7.5 */
+    /* libcurl >= 7.5.0 */
     URL_DEF_OPTION(FILETIME, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(NOBODY, LONG, NULL),
     URL_DEF_OPTION(INFILESIZE, LONG, NULL),
 #endif
@@ -694,7 +730,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(INFILESIZE_LARGE, LONGLONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(UPLOAD, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A08
@@ -706,7 +742,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(MAXFILESIZE_LARGE, LONGLONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(TIMECONDITION, LONG, url_time_condition),
     URL_DEF_OPTION(TIMEVALUE, LONG, NULL),
 #endif
@@ -715,7 +751,7 @@ struct t_url_option url_options[] =
      * connection options
      */
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(TIMEOUT, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071002
@@ -723,7 +759,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(TIMEOUT_MS, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(LOW_SPEED_LIMIT, LONG, NULL),
     URL_DEF_OPTION(LOW_SPEED_TIME, LONG, NULL),
 #endif
@@ -737,7 +773,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(MAXCONNECTS, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070700
-    /* libcurl >= 7.7 */
+    /* libcurl >= 7.7.0 */
     URL_DEF_OPTION(FRESH_CONNECT, LONG, NULL),
     URL_DEF_OPTION(FORBID_REUSE, LONG, NULL),
     URL_DEF_OPTION(CONNECTTIMEOUT, LONG, NULL),
@@ -762,6 +798,12 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.21.3 */
     /*URL_DEF_OPTION(RESOLVE, LIST, NULL),*/
 #endif
+#if LIBCURL_VERSION_NUM >= 0x072100
+    /* libcurl >= 7.33.0 */
+    URL_DEF_OPTION(DNS_INTERFACE, STRING, NULL),
+    URL_DEF_OPTION(DNS_LOCAL_IP4, STRING, NULL),
+    URL_DEF_OPTION(DNS_LOCAL_IP6, STRING, NULL),
+#endif
 #if LIBCURL_VERSION_NUM >= 0x071800
     /* libcurl >= 7.24.0 */
     URL_DEF_OPTION(DNS_SERVERS, STRING, NULL),
@@ -772,7 +814,7 @@ struct t_url_option url_options[] =
      * SSL and security options
      */
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(SSLCERT, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070903
@@ -785,13 +827,18 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.17.0 */
     URL_DEF_OPTION(KEYPASSWD, STRING, NULL),
 #endif
+#if LIBCURL_VERSION_NUM >= 0x072400
+    /* libcurl >= 7.36.0 */
+    URL_DEF_OPTION(SSL_ENABLE_ALPN, LONG, NULL),
+    URL_DEF_OPTION(SSL_ENABLE_NPN, LONG, NULL),
+#endif
 #if LIBCURL_VERSION_NUM >= 0x070903
     /* libcurl >= 7.9.3 */
     URL_DEF_OPTION(SSLENGINE, STRING, NULL),
     URL_DEF_OPTION(SSLENGINE_DEFAULT, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
-    /* libcurl >= 7.1 */
+    /* libcurl >= 7.1.0 */
     URL_DEF_OPTION(SSLVERSION, LONG, url_ssl_version),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070402
@@ -820,12 +867,12 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(CERTINFO, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070700
-    /* libcurl >= 7.7 */
+    /* libcurl >= 7.7.0 */
     URL_DEF_OPTION(RANDOM_FILE, STRING, NULL),
     URL_DEF_OPTION(EGDSOCKET, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070900
-    /* libcurl >= 7.9 */
+    /* libcurl >= 7.9.0 */
     URL_DEF_OPTION(SSL_CIPHER_LIST, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071000

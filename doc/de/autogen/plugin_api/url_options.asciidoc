@@ -70,6 +70,8 @@
 
 | proxypassword | string |
 
+| login_options | string |
+
 | httpauth | mask | none, basic, digest, gssnegotiate, ntlm, digest_ie, ntlm_wb, only, any, anysafe
 
 | tlsauth_type | mask | none, srp
@@ -79,6 +81,10 @@
 | tlsauth_password | string |
 
 | proxyauth | mask | none, basic, digest, gssnegotiate, ntlm, digest_ie, ntlm_wb, only, any, anysafe
+
+| sasl_ir | long |
+
+| xoauth2_bearer | string |
 
 | autoreferer | long |
 
@@ -110,6 +116,8 @@
 
 | useragent | string |
 
+| headeropt | mask | unified, separate
+
 | cookie | string |
 
 | cookiefile | string |
@@ -129,6 +137,8 @@
 | http_content_decoding | long |
 
 | http_transfer_decoding | long |
+
+| expect_100_timeout_ms | long |
 
 | mail_from | string |
 
@@ -236,6 +246,12 @@
 
 | use_ssl | long | none, try, control, all
 
+| dns_interface | string |
+
+| dns_local_ip4 | string |
+
+| dns_local_ip6 | string |
+
 | dns_servers | string |
 
 | accepttimeout_ms | long |
@@ -249,6 +265,10 @@
 | sslkeytype | string |
 
 | keypasswd | string |
+
+| ssl_enable_alpn | long |
+
+| ssl_enable_npn | long |
 
 | sslengine | string |
 
