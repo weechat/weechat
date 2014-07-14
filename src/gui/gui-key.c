@@ -1376,7 +1376,7 @@ gui_key_pressed (const char *key_str)
         }
     }
 
-    if (!signal_sent && first_key)
+    if (!signal_sent)
     {
         snprintf (signal_name, sizeof (signal_name),
                   "key_combo_%s", gui_key_context_string[context]);
