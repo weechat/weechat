@@ -82,7 +82,7 @@ add_executable(${EXECUTABLE} ${WEECHAT_CURSES_MAIN_SRC})
 add_dependencies(${EXECUTABLE} weechat_gui_curses)
 
 # Because of a linker bug, we have to link 2 times with libweechat_core.a
-target_link_libraries(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS} ${STATIC_LIBS} weechat_gui_curses)
+target_link_libraries(${EXECUTABLE} ${STATIC_LIBS} weechat_gui_curses ${EXTRA_LIBS} ${STATIC_LIBS})
 
 install(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)
 
