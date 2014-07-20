@@ -18,6 +18,7 @@ Alphabetically:
 * Ailin Nemui (Nei)
 * Aleksey V Zapparov
 * Alex Tarkovsky
+* Anders Bergh
 * Andrew Potter (talisein)
 * Antoine Pietri (seirl)
 * Asakura
