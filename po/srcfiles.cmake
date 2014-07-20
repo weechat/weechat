@@ -54,6 +54,7 @@ SET(WEECHAT_SOURCES
 ./src/gui/curses/gui-curses-main.c
 ./src/gui/curses/gui-curses-mouse.c
 ./src/gui/curses/gui-curses-window.c
+./src/gui/curses/main.c
 ./src/gui/gui-bar.c
 ./src/gui/gui-bar.h
 ./src/gui/gui-bar-item.c
