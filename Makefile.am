@@ -58,6 +58,7 @@ EXTRA_DIST = AUTHORS.asciidoc \
              cmake/cmake_uninstall.cmake.in \
              po/CMakeLists.txt \
              po/srcfiles.cmake \
+             scripts/build.sh \
              scripts/git-version.sh \
              weechat.png \
              weechat.pc.in \
