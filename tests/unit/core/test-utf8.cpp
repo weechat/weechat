@@ -75,20 +75,24 @@ TEST(Utf8, Validity)
     POINTERS_EQUAL(noel_invalid + 2, error);
 
     /* 2 bytes: code point must be in range U+0080-07FF */
-    //LONGS_EQUAL(0, utf8_is_valid ("\xc0\x80", NULL));  /* U+0   */
-    //LONGS_EQUAL(0, utf8_is_valid ("\xc1\xbf", NULL));  /* U+7F  */
+    LONGS_EQUAL(0, utf8_is_valid ("\xc0\x80", NULL));  /* U+0   */
+    LONGS_EQUAL(0, utf8_is_valid ("\xc1\xbf", NULL));  /* U+7F  */
     LONGS_EQUAL(1, utf8_is_valid ("\xc2\x80", NULL));  /* U+80  */
     LONGS_EQUAL(1, utf8_is_valid ("\xdf\xbf", NULL));  /* U+7FF */
 
     /* 3 bytes: code point must be in range: U+0800-FFFF */
-    //LONGS_EQUAL(0, utf8_is_valid ("\xe0\x80\x80", NULL));  /* U+0    */
-    //LONGS_EQUAL(0, utf8_is_valid ("\xe0\x9f\xbf", NULL));  /* U+7FF  */
+    LONGS_EQUAL(0, utf8_is_valid ("\xe0\x80\x80", NULL));  /* U+0    */
+    LONGS_EQUAL(0, utf8_is_valid ("\xe0\x9f\xbf", NULL));  /* U+7FF  */
+    LONGS_EQUAL(0, utf8_is_valid ("\xed\xa0\x80", NULL));  /* U+D800 */
+    LONGS_EQUAL(0, utf8_is_valid ("\xed\xbf\xbf", NULL));  /* U+DFFF */
     LONGS_EQUAL(1, utf8_is_valid ("\xe0\xa0\x80", NULL));  /* U+800  */
+    LONGS_EQUAL(1, utf8_is_valid ("\xed\x9f\xbf", NULL));  /* U+D7FF */
+    LONGS_EQUAL(1, utf8_is_valid ("\xe7\x80\x80", NULL));  /* U+E000 */
     LONGS_EQUAL(1, utf8_is_valid ("\xef\xbf\xbf", NULL));  /* U+FFFF */
 
     /* 4 bytes: code point must be in range: U+10000-1FFFFF */
-    //LONGS_EQUAL(0, utf8_is_valid ("\xf0\x80\x80\x80", NULL));  /* U+0      */
-    //LONGS_EQUAL(0, utf8_is_valid ("\xf0\x8f\xbf\xbf", NULL));  /* U+FFFF   */
+    LONGS_EQUAL(0, utf8_is_valid ("\xf0\x80\x80\x80", NULL));  /* U+0      */
+    LONGS_EQUAL(0, utf8_is_valid ("\xf0\x8f\xbf\xbf", NULL));  /* U+FFFF   */
     LONGS_EQUAL(1, utf8_is_valid ("\xf0\x90\x80\x80", NULL));  /* U+10000  */
     LONGS_EQUAL(1, utf8_is_valid ("\xf7\xbf\xbf\xbf", NULL));  /* U+1FFFFF */
 }
@@ -187,9 +191,13 @@ TEST(Utf8, Convert)
     BYTES_EQUAL(0x80, utf8_char_int ("\xc2\x80"));
     BYTES_EQUAL(0x7ff, utf8_char_int ("\xdf\xbf"));
 
-    BYTES_EQUAL(0x0, utf8_char_int ("\xe0\x80\x80"));    /* invalid */
-    BYTES_EQUAL(0x7ff, utf8_char_int ("\xe0\x9f\xbf"));  /* invalid */
+    BYTES_EQUAL(0x0, utf8_char_int ("\xe0\x80\x80"));     /* invalid */
+    BYTES_EQUAL(0x7ff, utf8_char_int ("\xe0\x9f\xbf"));   /* invalid */
+    LONGS_EQUAL(0xd800, utf8_char_int ("\xed\xa0\x80"));  /* invalid */
+    LONGS_EQUAL(0xdfff, utf8_char_int ("\xed\xbf\xbf"));  /* invalid */
     BYTES_EQUAL(0x800, utf8_char_int ("\xe0\xa0\x80"));
+    BYTES_EQUAL(0xd7ff, utf8_char_int ("\xed\x9f\xbf"));
+    BYTES_EQUAL(0xe000, utf8_char_int ("\xe7\x80\x80"));
     BYTES_EQUAL(0xffff, utf8_char_int ("\xef\xbf\xbf"));
 
     BYTES_EQUAL(0x0, utf8_char_int ("\xf0\x80\x80\x80"));     /* invalid */
