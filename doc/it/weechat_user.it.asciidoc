@@ -112,6 +112,8 @@ compilare WeeChat.
 // TRANSLATION MISSING
 | xsltproc,
   docbook-xml, docbook-xsl       |             |           | Build of man page
+// TRANSLATION MISSING
+| libcpputest-dev                |             |           | Run tests
 |===
 
 [NOTE]
@@ -252,6 +254,10 @@ List of commonly used options:
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Compile <<xfer_plugin,Xfer plugin>>.
+
+// TRANSLATION MISSING
+| ENABLE_TESTS | `ON`, `OFF` | OFF |
+  Compile tests.
 |===
 
 The other options can be displayed with this command:

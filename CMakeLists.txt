@@ -99,6 +99,7 @@ option(ENABLE_TRIGGER   "Enable Trigger plugin"                     ON)
 option(ENABLE_XFER      "Enable Xfer plugin"                        ON)
 option(ENABLE_MAN       "Enable build of man page"                  OFF)
 option(ENABLE_DOC       "Enable build of documentation"             OFF)
+option(ENABLE_TESTS     "Enable tests"                              OFF)
 
 # option WEECHAT_HOME
 if(NOT DEFINED WEECHAT_HOME OR "${WEECHAT_HOME}" STREQUAL "")
@@ -203,6 +204,11 @@ endif()
 
 add_subdirectory( src )
 add_subdirectory( doc )
+
+if(ENABLE_TESTS)
+  enable_testing()
+  add_subdirectory( tests )
+endif()
 
 configure_file(config.h.cmake config.h @ONLY)
 

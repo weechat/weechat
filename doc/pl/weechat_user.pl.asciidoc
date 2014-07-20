@@ -102,6 +102,8 @@ WeeChat.
 | source-highlight                |             |          | Podświetlanie składni dla kodów źródłowych w dokumentacji
 | xsltproc,
   docbook-xml, docbook-xsl        |             |          | Tworzenie strony man
+// TRANSLATION MISSING
+| libcpputest-dev                 |             |          | Run tests
 |===
 
 [NOTE]
@@ -239,6 +241,10 @@ Lista popularnych opcji:
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Kompilacja <<xfer_plugin,wtyczki xfer>>.
+
+// TRANSLATION MISSING
+| ENABLE_TESTS | `ON`, `OFF` | OFF |
+  Compile tests.
 |===
 
 Pozostałe opcje można wyświetlić poleceniem:

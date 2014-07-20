@@ -104,6 +104,7 @@ compiler WeeChat.
 | source-highlight                |             |        | Coloration des sources dans la documentation
 | xsltproc,
   docbook-xml, docbook-xsl        |             |        | Construction de la page de manuel
+| libcpputest-dev                 |             |        | Run tests
 |===
 
 [NOTE]
@@ -241,6 +242,9 @@ Liste des options couramment utilisées :
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Compiler <<xfer_plugin,l'extension Xfer>>.
+
+| ENABLE_TESTS | `ON`, `OFF` | OFF |
+  Compiler les tests.
 |===
 
 Les autres options peuvent être affichées avec cette commande :

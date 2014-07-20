@@ -102,6 +102,8 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 | source-highlight                    |             |       | 文書中のソースに対するシンタックスハイライト
 | xsltproc,
   docbook-xml, docbook-xsl            |             |       | man ページのビルド
+// TRANSLATION MISSING
+| libcpputest-dev                     |             |       | Run tests
 |===
 
 [NOTE]
@@ -238,6 +240,10 @@ cmake に対するオプションを指定するには、以下のフォーマ�
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   <<xfer_plugin,Xfer プラグイン>>のコンパイル
+
+// TRANSLATION MISSING
+| ENABLE_TESTS | `ON`, `OFF` | OFF |
+  Compile tests.
 |===
 
 その他のオプションは以下のコマンドで確認してください:

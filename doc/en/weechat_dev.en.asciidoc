@@ -68,6 +68,9 @@ The main WeeChat directories are:
 |       guile/   | Guile (scheme) scripting API
 |       trigger/ | Trigger plugin
 |       xfer/    | Xfer plugin (IRC DCC file/chat)
+| tests/         | Tests
+|    unit/       | Unit tests
+|       core/    | Unit tests for core functions
 | doc/           | Documentation
 | po/            | Translations files (gettext)
 | test/          | Tools/files to test WeeChat (like Weercd, an IRC server)
@@ -279,6 +282,25 @@ WeeChat "core" is located in following directories:
 |       xfer-info.c                 | Xfer info/infolists/hdata
 |       xfer-network.c              | Network functions for xfer
 |       xfer-upgrade.c              | Save/restore of xfer data when upgrading WeeChat
+|===
+
+[[sources_tests]]
+==== Tests
+
+[width="100%",cols="1v,5",options="header"]
+|===
+| Path/file                         | Description
+| tests/                            | Root of tests
+|    unit/                          | Root of unit tests
+|       test-eval.cpp               | Tests: evaluation of expressions
+|       test-hashtble.cpp           | Tests: hashtables
+|       test-hdata.cpp              | Tests: hdata
+|       test-infolist.cpp           | Tests: infolists
+|       test-list.cpp               | Tests: lists
+|       test-string.cpp             | Tests: strings
+|       test-url.cpp                | Tests: URLs
+|       test-utf8.cpp               | Tests: UTF-8
+|       test-util.cpp               | Tests: util functions
 |===
 
 [[documentation_translations]]

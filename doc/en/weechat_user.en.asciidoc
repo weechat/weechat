@@ -102,6 +102,7 @@ compile WeeChat.
 | source-highlight                |             |          | Syntax highlight for sources in documentation
 | xsltproc,
   docbook-xml, docbook-xsl        |             |          | Build of man page
+| libcpputest-dev                 |             |          | Run tests
 |===
 
 [NOTE]
@@ -239,6 +240,9 @@ List of commonly used options:
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Compile <<xfer_plugin,Xfer plugin>>.
+
+| ENABLE_TESTS | `ON`, `OFF` | OFF |
+  Compile tests.
 |===
 
 The other options can be displayed with this command:

@@ -68,6 +68,12 @@ WeeChat の主要なリポジトリは 2 つあります:
 |       guile/   | guile (scheme) スクリプト用 API
 |       trigger/ | trigger プラグイン
 |       xfer/    | xfer (IRC DCC ファイル/チャット)
+// TRANSLATION MISSING
+| tests/         | Tests
+// TRANSLATION MISSING
+|    unit/       | Unit tests
+// TRANSLATION MISSING
+|       core/    | Unit tests for core functions
 | doc/           | 文書
 | po/            | 翻訳ファイル (gettext)
 | test/          | WeeChat をテストするためのツールおよびファイル (Weercd IRC サーバなど)
@@ -279,6 +285,27 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       xfer-info.c                 | xfer の情報/インフォリスト/hdata
 |       xfer-network.c              | xfer のネットワーク関数
 |       xfer-upgrade.c              | WeeChat をアップグレードする際の xfer データの保存および回復
+|===
+
+// TRANSLATION MISSING
+[[sources_tests]]
+==== Tests
+
+// TRANSLATION MISSING
+[width="100%",cols="1v,5",options="header"]
+|===
+| パス/ファイル名                   | 説明
+| tests/                            | Root of tests
+|    unit/                          | Root of unit tests
+|       test-eval.cpp               | Tests: evaluation of expressions
+|       test-hashtble.cpp           | Tests: hashtables
+|       test-hdata.cpp              | Tests: hdata
+|       test-infolist.cpp           | Tests: infolists
+|       test-list.cpp               | Tests: lists
+|       test-string.cpp             | Tests: strings
+|       test-url.cpp                | Tests: URLs
+|       test-utf8.cpp               | Tests: UTF-8
+|       test-util.cpp               | Tests: util functions
 |===
 
 [[documentation_translations]]
