@@ -79,55 +79,75 @@ utf8_has_8bits (const char *string)
 int
 utf8_is_valid (const char *string, char **error)
 {
-    int n;
+    int code_point;
+
     while (string && string[0])
     {
-        /* UTF-8, 2 bytes, should be: 110vvvvv 10vvvvvv and U+0080-07FF */
+        /*
+         * UTF-8, 2 bytes, should be: 110vvvvv 10vvvvvv
+         * and in range: U+0080 - U+07FF
+         */
         if (((unsigned char)(string[0]) & 0xE0) == 0xC0)
         {
             if (!string[1] || (((unsigned char)(string[1]) & 0xC0) != 0x80))
-                goto err;
-            n = utf8_char_int(string);
-            if (n < 0x80 || n > 0x7ff)
-                goto err;
+                goto invalid;
+            code_point = utf8_char_int (string);
+            if ((code_point < 0x0080) || (code_point > 0x07FF))
+                goto invalid;
             string += 2;
         }
-        /* UTF-8, 3 bytes, should be: 1110vvvv 10vvvvvv 10vvvvvv and U+0800-FFFF */
+        /*
+         * UTF-8, 3 bytes, should be: 1110vvvv 10vvvvvv 10vvvvvv
+         * and in range: U+0800 - U+FFFF
+         * (note: high and low surrogate halves used by UTF-16 (U+D800 through
+         * U+DFFF) are not legal Unicode values)
+         */
         else if (((unsigned char)(string[0]) & 0xF0) == 0xE0)
         {
             if (!string[1] || !string[2]
                 || (((unsigned char)(string[1]) & 0xC0) != 0x80)
                 || (((unsigned char)(string[2]) & 0xC0) != 0x80))
-                goto err;
-            n = utf8_char_int(string);
-            if (n < 0x800 || n > 0xffff || (n >= 0xd800 && n <= 0xdfff))
-                goto err;
+            {
+                goto invalid;
+            }
+            code_point = utf8_char_int (string);
+            if ((code_point < 0x0800)
+                || (code_point > 0xFFFF)
+                || ((code_point >= 0xD800) && (code_point <= 0xDFFF)))
+            {
+                goto invalid;
+            }
             string += 3;
         }
-        /* UTF-8, 4 bytes, should be: 11110vvv 10vvvvvv 10vvvvvv 10vvvvvv and U+10000-1FFFFF */
+        /*
+         * UTF-8, 4 bytes, should be: 11110vvv 10vvvvvv 10vvvvvv 10vvvvvv
+         * and in range: U+10000 - U+1FFFFF
+         */
         else if (((unsigned char)(string[0]) & 0xF8) == 0xF0)
         {
             if (!string[1] || !string[2] || !string[3]
                 || (((unsigned char)(string[1]) & 0xC0) != 0x80)
                 || (((unsigned char)(string[2]) & 0xC0) != 0x80)
                 || (((unsigned char)(string[3]) & 0xC0) != 0x80))
-                goto err;
-            n = utf8_char_int(string);
-            if (n < 0x10000 || n > 0x1fffff)
-                goto err;
-
+            {
+                goto invalid;
+            }
+            code_point = utf8_char_int(string);
+            if ((code_point < 0x10000) || (code_point > 0x1FFFFF))
+                goto invalid;
             string += 4;
         }
         /* UTF-8, 1 byte, should be: 0vvvvvvv */
         else if ((unsigned char)(string[0]) >= 0x80)
-            goto err;
+            goto invalid;
         else
             string++;
     }
     if (error)
         *error = NULL;
     return 1;
-err:
+
+invalid:
     if (error)
         *error = (char *)string;
     return 0;
