@@ -113,7 +113,8 @@ compilare WeeChat.
 | xsltproc,
   docbook-xml, docbook-xsl       |             |           | Build of man page
 // TRANSLATION MISSING
-| libcpputest-dev                |             |           | Run tests
+| libcpputest-dev,
+  C++ compiler                   |             |           | Run tests
 |===
 
 [NOTE]

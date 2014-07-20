@@ -104,7 +104,8 @@ compiler WeeChat.
 | source-highlight                |             |        | Coloration des sources dans la documentation
 | xsltproc,
   docbook-xml, docbook-xsl        |             |        | Construction de la page de manuel
-| libcpputest-dev                 |             |        | Run tests
+| libcpputest-dev,
+  compilateur C++                 |             |        | Lancement des tests
 |===
 
 [NOTE]

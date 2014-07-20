@@ -103,7 +103,8 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 | xsltproc,
   docbook-xml, docbook-xsl            |             |       | man ページのビルド
 // TRANSLATION MISSING
-| libcpputest-dev                     |             |       | Run tests
+| libcpputest-dev,
+  C++ compiler                        |             |       | Run tests
 |===
 
 [NOTE]

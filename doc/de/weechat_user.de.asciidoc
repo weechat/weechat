@@ -104,7 +104,8 @@ welche Pakete optional genutzt werden können.
 | xsltproc,
   docbook-xml, docbook-xsl          |             |          | Erstellt man page
 // TRANSLATION MISSING
-| libcpputest-dev                   |             |          | Run tests
+| libcpputest-dev,
+  C++ compiler                      |             |          | Run tests
 |===
 
 [NOTE]

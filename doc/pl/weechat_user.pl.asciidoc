@@ -103,7 +103,8 @@ WeeChat.
 | xsltproc,
   docbook-xml, docbook-xsl        |             |          | Tworzenie strony man
 // TRANSLATION MISSING
-| libcpputest-dev                 |             |          | Run tests
+| libcpputest-dev,
+  C++ compiler                    |             |          | Run tests
 |===
 
 [NOTE]
