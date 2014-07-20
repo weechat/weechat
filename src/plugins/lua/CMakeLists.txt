@@ -24,7 +24,7 @@ weechat-lua-api.h)
 set_target_properties(lua PROPERTIES PREFIX "")
 
 if(LUA_FOUND)
-  include_directories(${LUA_INCLUDE_PATH} )
+  include_directories(${LUA_INCLUDE_PATH})
   if(LUA_LIBRARY AND LUALIB_LIBRARY)
     target_link_libraries(lua ${LUA_LIBRARY} ${LUALIB_LIBRARY} weechat_plugins_scripts)
   else()

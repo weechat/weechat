@@ -178,7 +178,7 @@ add_definitions(-DHAVE_ZLIB)
 # Check for iconv
 find_package(Iconv)
 if(ICONV_FOUND)
-  add_definitions( -DHAVE_ICONV )
+  add_definitions(-DHAVE_ICONV)
 endif()
 
 # Check for CURL
@@ -199,15 +199,15 @@ if(DL_LIBRARY)
 endif()
 
 if(ENABLE_NLS)
-  add_subdirectory( po )
+  add_subdirectory(po)
 endif()
 
-add_subdirectory( src )
-add_subdirectory( doc )
+add_subdirectory(src)
+add_subdirectory(doc)
 
 if(ENABLE_TESTS)
   enable_testing()
-  add_subdirectory( tests )
+  add_subdirectory(tests)
 endif()
 
 configure_file(config.h.cmake config.h @ONLY)

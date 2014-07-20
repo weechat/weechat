@@ -43,5 +43,5 @@ include_directories(${CMAKE_BINARY_DIR})
 add_library(weechat_gui_common STATIC ${LIB_GUI_COMMON_SRC})
 
 if(ENABLE_NCURSES)
-  subdirs( curses )
+  subdirs(curses)
 endif()
