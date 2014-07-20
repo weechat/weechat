@@ -19,6 +19,18 @@
 
 AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(NCURSES_CFLAGS)
 
+noinst_LIBRARIES = lib_weechat_gui_curses.a
+
+lib_weechat_gui_curses_a_SOURCES = gui-curses-bar-window.c \
+                                   gui-curses-chat.c \
+                                   gui-curses-color.c \
+                                   gui-curses-key.c \
+                                   gui-curses-main.c \
+                                   gui-curses-mouse.c \
+                                   gui-curses-term.c \
+                                   gui-curses-window.c \
+                                   gui-curses.h
+
 bin_PROGRAMS = weechat
 
 # Because of a linker bug, we have to link 2 times with lib_weechat_core.a
@@ -26,6 +38,7 @@ bin_PROGRAMS = weechat
 weechat_LDADD = ./../../core/lib_weechat_core.a \
                 ../../plugins/lib_weechat_plugins.a \
                 ../lib_weechat_gui_common.a \
+                lib_weechat_gui_curses.a \
                 ../../core/lib_weechat_core.a \
                 $(PLUGINS_LFLAGS) \
                 $(NCURSES_LFLAGS) \
@@ -34,15 +47,7 @@ weechat_LDADD = ./../../core/lib_weechat_core.a \
                 $(CURL_LFLAGS) \
                 -lm
 
-weechat_SOURCES = gui-curses-bar-window.c \
-                  gui-curses-chat.c \
-                  gui-curses-color.c \
-                  gui-curses-key.c \
-                  gui-curses-main.c \
-                  gui-curses-mouse.c \
-                  gui-curses-term.c \
-                  gui-curses-window.c \
-                  gui-curses.h
+weechat_SOURCES = main.c
 
 EXTRA_DIST = CMakeLists.txt
 
