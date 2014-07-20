@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.0 (under dev)
 
+* core: check code point value in UTF-8 check function (closes #108)
 * core: display a warning on startup if $TERM is not screen(-256color) under
   screen/tmux
 * core: add option "-mask" in command /unset (closes #112)
