@@ -91,7 +91,7 @@ WeeChat "core" is located in following directories:
 |===
 | Path/file                     | Description
 | core/                         | Core functions: entry point, internal structures
-|    weechat.c                  | Entry point, command line options, main functions, startup
+|    weechat.c                  | Main functions: command line options, startup
 |    wee-backtrace.c            | Display a backtrace after a crash
 |    wee-command.c              | WeeChat core commands
 |    wee-completion.c           | Default completions
@@ -145,6 +145,7 @@ WeeChat "core" is located in following directories:
 |       gui-curses-mouse.c      | Mouse
 |       gui-curses-term.c       | Functions about terminal
 |       gui-curses-window.c     | Windows
+|       main.c                  | Entry point
 |===
 
 [[sources_plugins]]

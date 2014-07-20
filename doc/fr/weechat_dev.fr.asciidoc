@@ -92,7 +92,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |===
 | Chemin/fichier                | Description
 | core/                         | Fonctions du cœur : point d'entrée, structures internes
-|    weechat.c                  | Point d'entrée, options de ligne de commande, fonctions principales, démarrage
+|    weechat.c                  | Fonctions principales : options de ligne de commande, démarrage
 |    wee-backtrace.c            | Afficher une trace après un plantage
 |    wee-command.c              | Commandes du cœur de WeeChat
 |    wee-completion.c           | Complétions par défaut
@@ -146,6 +146,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       gui-curses-mouse.c      | Souris
 |       gui-curses-term.c       | Fonctions pour le terminal
 |       gui-curses-window.c     | Fenêtres
+|       main.c                  | Point d'entrée
 |===
 
 [[sources_plugins]]
