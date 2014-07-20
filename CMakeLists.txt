@@ -214,7 +214,7 @@ configure_file(config.h.cmake config.h @ONLY)
 
 # set the git version in "config-git.h"
 add_custom_target(version_git ALL
-  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/git-version.sh" "${CMAKE_CURRENT_SOURCE_DIR}" "${VERSION}" "config-git.h"
+  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/scripts/git-version.sh" "${CMAKE_CURRENT_SOURCE_DIR}" "${VERSION}" "config-git.h"
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
 
 configure_file(
