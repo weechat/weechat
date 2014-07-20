@@ -76,7 +76,6 @@ WeeChat の主要なリポジトリは 2 つあります:
 |       core/    | Unit tests for core functions
 | doc/           | 文書
 | po/            | 翻訳ファイル (gettext)
-| test/          | WeeChat をテストするためのツールおよびファイル (Weercd IRC サーバなど)
 | debian/        | Debian パッケージ用
 |===
 

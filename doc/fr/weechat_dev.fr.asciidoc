@@ -74,7 +74,6 @@ Les répertoires principaux de WeeChat sont :
 |       core/    | Tests unitaires pour les fonctions du cœur
 | doc/           | Documentation
 | po/            | Fichiers de traductions (gettext)
-| test/          | Outils/fichiers pour tester WeeChat (comme Weercd, un serveur IRC)
 | debian/        | Empaquetage Debian
 |===
 

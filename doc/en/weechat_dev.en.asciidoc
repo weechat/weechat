@@ -73,7 +73,6 @@ The main WeeChat directories are:
 |       core/    | Unit tests for core functions
 | doc/           | Documentation
 | po/            | Translations files (gettext)
-| test/          | Tools/files to test WeeChat (like Weercd, an IRC server)
 | debian/        | Debian packaging
 |===
 
