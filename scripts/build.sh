@@ -47,8 +47,8 @@ if [ -z "$BUILDTOOL" ]; then
 fi
 
 # create build directory
-mkdir $BUILDDIR || exit 1
-cd $BUILDDIR || exit 1
+run "mkdir $BUILDDIR"
+run "cd $BUILDDIR"
 
 if [ "$BUILDTOOL" = "cmake" ]; then
     # build with CMake
