@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-14 18:54+0200\n"
+"POT-Creation-Date: 2014-07-20 12:16+0200\n"
 "PO-Revision-Date: 2014-07-14 19:29+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -200,6 +200,10 @@ msgstr ""
 #, c-format
 msgid "%sYou should add this line in the file %s:  %s"
 msgstr "%sEs sollte folgende Zeile in Datei %s eingefügt werden:  %s"
+
+#, c-format
+msgid "Signal %s received, exiting WeeChat..."
+msgstr "Signal %s empfangen, beende WeeChat..."
 
 msgid "List of bars:"
 msgstr "Liste der vorhandenen Infobars:"
@@ -934,6 +938,10 @@ msgid ""
 msgstr ""
 "%sUpgrade nicht möglich: WeeChat Binärcode \"%s\" besitzt nicht die "
 "notwendigen Rechte"
+
+#, fuzzy, c-format
+msgid "%sNo binary specified"
+msgstr "Keine Infobar definiert"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -4752,10 +4760,6 @@ msgstr "WeeChat Farben (in Benutzung: %d; noch frei verfügbar: %d):"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal verloren, beende WeeChat..."
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
-msgstr "Signal %s empfangen, beende WeeChat..."
 
 msgid "Mouse is enabled"
 msgstr "Maus ist aktiviert"

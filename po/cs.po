@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-14 18:54+0200\n"
+"POT-Creation-Date: 2014-07-20 12:16+0200\n"
 "PO-Revision-Date: 2014-07-14 18:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -192,6 +192,10 @@ msgstr ""
 #, c-format
 msgid "%sYou should add this line in the file %s:  %s"
 msgstr ""
+
+#, c-format
+msgid "Signal %s received, exiting WeeChat..."
+msgstr "Obdržen signál %s, ukončuji WeeChat..."
 
 msgid "List of bars:"
 msgstr "Seznam polí:"
@@ -921,6 +925,10 @@ msgid ""
 "%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
 msgstr ""
 "%sNemohu aktualizovat: binární soubor WeeChat \"%s\" nemá přáva pro spuštění"
+
+#, fuzzy, c-format
+msgid "%sNo binary specified"
+msgstr "Žádné pole nejsou definovány"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -4066,10 +4074,6 @@ msgstr "Barvy Weechat (použité: %d, zbývá: %d):"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminál ztracen, ukončuji WeeChat..."
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
-msgstr "Obdržen signál %s, ukončuji WeeChat..."
 
 #, fuzzy
 msgid "Mouse is enabled"
