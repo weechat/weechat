@@ -4,6 +4,10 @@ compiler:
     - gcc
     - clang
 
+env:
+    - BUILDTOOL=cmake
+    - BUILDTOOL=autotools
+
 before_script:
     - echo 'APT::Install-Recommends "false";' | sudo tee -a /etc/apt/apt.conf
     - sudo apt-get update -qq
@@ -12,12 +16,7 @@ before_script:
     - sudo pip install msgcheck pylint
 
 script:
-    - mkdir build
-    - cd build
-    - cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON
-    - make VERBOSE=1
-    - sudo make install
-    - cd ..
+    - ./scripts/build.sh
     - msgcheck po/*.po
     - pylint doc/docgen.py
 

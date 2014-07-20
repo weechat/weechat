@@ -24,6 +24,9 @@
 ### common stuff
 ###
 
+DIR=$(cd $(dirname "$0"); pwd)
+cd $DIR
+
 AUTOGEN_LOG=autogen.log
 
 err ()
