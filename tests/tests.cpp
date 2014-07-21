@@ -28,7 +28,9 @@
 
 extern "C"
 {
+#ifndef HAVE_CONFIG_H
 #define HAVE_CONFIG_H
+#endif
 #include "../src/core/weechat.h"
 #include "../src/core/wee-hook.h"
 #include "../src/core/wee-input.h"
