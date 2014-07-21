@@ -25,7 +25,11 @@ BUILT_SOURCES = build-config-git.h
 build-config-git.h:
 	-$(abs_top_srcdir)/scripts/git-version.sh "$(abs_top_srcdir)" "$(VERSION)" config-git.h
 
-SUBDIRS = po doc intl src
+if TESTS
+tests_dir = tests
+endif
+
+SUBDIRS = po doc intl src $(tests_dir)
 
 EXTRA_DIST = AUTHORS.asciidoc \
              ChangeLog.asciidoc \

@@ -32,6 +32,7 @@ LICENSE="GPL3"
 
 # Checks for programs
 AC_PROG_CC
+AC_PROG_CXX
 AC_PROG_MAKE_SET
 AC_GNU_SOURCE
 AC_PROG_LN_S
@@ -118,6 +119,7 @@ AH_VERBATIM([PLUGIN_TCL], [#undef PLUGIN_TCL])
 AH_VERBATIM([PLUGIN_GUILE], [#undef PLUGIN_GUILE])
 AH_VERBATIM([PLUGIN_TRIGGER], [#undef PLUGIN_TRIGGER])
 AH_VERBATIM([PLUGIN_XFER], [#undef PLUGIN_XFER])
+AH_VERBATIM([TESTS], [#undef TESTS])
 AH_VERBATIM([MAN], [#undef MAN])
 AH_VERBATIM([DOC], [#undef DOC])
 AH_VERBATIM([WEECHAT_HOME], [#define WEECHAT_HOME "~/.weechat"])
@@ -152,9 +154,10 @@ AC_ARG_WITH(lua-inc,        [  --with-lua-inc=DIR,     lua include files are in 
 AC_ARG_WITH(lua-lib,        [  --with-lua-lib=DIR,     lua library files are in DIR (default=autodetect)],lua_lib=$withval,lua_lib='')
 AC_ARG_WITH(lua-suffix,     [  --with-lua-suffix=ARG   lua is suffixed with ARG (default=autodetect)],lua_suffix=$withval,lua_suffix='')
 AC_ARG_WITH(tclconfig,      [  --with-tclconfig=DIR    directory containing tcl configuration (tclConfig.sh)],tclconfig=$withval,tclconfig='')
+AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=1)],debug=$withval,debug=1)
+AC_ARG_ENABLE(tests,        [  --enable-tests          turn on build of tests (default=not built)],enable_tests=$enableval,enable_tests=no)
 AC_ARG_ENABLE(man,          [  --enable-man            turn on build of man page (default=not built)],enable_man=$enableval,enable_man=no)
 AC_ARG_ENABLE(doc,          [  --enable-doc            turn on build of documentation (default=not built)],enable_doc=$enableval,enable_doc=no)
-AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=1)],debug=$withval,debug=1)
 
 AC_ARG_VAR(WEECHAT_HOME, [WeeChat home directory for config, logs, scripts.. (default is "~/.weechat")])
 AC_ARG_VAR(CA_FILE, [File containing the certificate authorities (default is "/etc/ssl/certs/ca-certificates.crt"). This is the default value of option "weechat.network.gnutls_ca_file".])
@@ -902,6 +905,7 @@ fi
 # ------------------------------------------------------------------------------
 #                               large file support
 # ------------------------------------------------------------------------------
+
 if test "x$enable_largefile" = "xyes" ; then
    CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_LARGE_FILES"
 else
@@ -982,6 +986,36 @@ CURL_CFLAGS=`$CURL_CONFIG --cflags`
 CURL_LFLAGS=`$CURL_CONFIG --libs`
 AC_SUBST(CURL_CFLAGS)
 AC_SUBST(CURL_LFLAGS)
+
+# ------------------------------------------------------------------------------
+#                                    tests
+# ------------------------------------------------------------------------------
+
+if test "x$enable_tests" = "xyes" ; then
+    cpputest_found="no"
+    AC_MSG_CHECKING(for CppUTest headers and librairies)
+    echo
+    pkgconfig_cpputest_found=`$PKGCONFIG --exists cpputest 2>/dev/null`
+    if test "x$?" = "x0" ; then
+        CPPUTEST_VERSION=`$PKGCONFIG --modversion cpputest`
+        CPPUTEST_CFLAGS=`$PKGCONFIG --cflags cpputest`
+        CPPUTEST_LFLAGS=`$PKGCONFIG --libs cpputest`
+    else
+        AC_MSG_WARN([
+*** CppUTest couldn't be found on your system.
+*** WeeChat will be built without tests.])
+        enable_tests="no"
+        not_found="$not_found tests"
+    fi
+else
+    not_asked="$not_asked tests"
+fi
+
+if test "x$enable_tests" = "xyes" ; then
+    AC_SUBST(CPPUTEST_CFLAGS)
+    AC_SUBST(CPPUTEST_LFLAGS)
+    AC_DEFINE(TESTS)
+fi
 
 # ------------------------------------------------------------------------------
 #                           man page / documentation
@@ -1145,6 +1179,7 @@ AM_CONDITIONAL(PLUGIN_TCL,              test "$enable_tcl" = "yes")
 AM_CONDITIONAL(PLUGIN_GUILE,            test "$enable_guile" = "yes")
 AM_CONDITIONAL(PLUGIN_TRIGGER,          test "$enable_trigger" = "yes")
 AM_CONDITIONAL(PLUGIN_XFER,             test "$enable_xfer" = "yes")
+AM_CONDITIONAL(TESTS,                   test "$enable_tests" = "yes")
 AM_CONDITIONAL(MAN,                     test "$enable_man" = "yes")
 AM_CONDITIONAL(DOC,                     test "$enable_doc" = "yes")
 
@@ -1180,6 +1215,7 @@ AC_OUTPUT([Makefile
            src/plugins/xfer/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
+           tests/Makefile
            intl/Makefile
            po/Makefile.in])
 
@@ -1270,6 +1306,11 @@ if test "x$debug" != "x0"; then
     msg_debug="yes"
 fi
 
+msg_tests="no"
+if test "x$enable_tests" = "xyes"; then
+    msg_tests="yes"
+fi
+
 if test "x$msg_man" = "x"; then
     msg_man="no"
 else
@@ -1287,6 +1328,7 @@ echo "   Interfaces............. :$listgui"
 echo "   Plugins................ :$listplugins"
 echo "   Optional features...... :$listoptional"
 echo "   Compile with debug..... : $msg_debug"
+echo "   Compile tests.......... : $msg_tests"
 echo "   Man page............... : $msg_man"
 echo "   Documentation.......... : $msg_doc"
 echo "   Certificate authorities : ${CA_FILE}"
