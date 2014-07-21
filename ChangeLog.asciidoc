@@ -15,6 +15,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.0 (under dev)
 
+* core: fix insert of mouse code in input line after a partial key combo
+  (closes #130)
 * core: check code point value in UTF-8 check function (closes #108)
 * core: display a warning on startup if $TERM is not screen(-256color) under
   screen/tmux

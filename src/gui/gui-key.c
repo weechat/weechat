@@ -1240,6 +1240,34 @@ end:
 }
 
 /*
+ * Checks if the given combo of keys is complete or not.
+ * It's not complete if the end of string is in the middle of a key
+ * (for example meta- without the following char/key).
+ *
+ * Returns:
+ *   0: key is incomplete (truncated)
+ *   1: key is complete
+ */
+
+int
+gui_key_is_complete (const char *key)
+{
+    int length;
+
+    if (!key || !key[0])
+        return 1;
+
+    length = strlen (key);
+
+    if (((length >= 1) && (strcmp (key + length - 1, "\x01") == 0))
+        || ((length >= 2) && (strcmp (key + length - 2, "\x01[") == 0))
+        || ((length >= 3) && (strcmp (key + length - 3, "\x01[[") == 0)))
+        return 0;
+
+    return 1;
+}
+
+/*
  * Processes a new key pressed.
  *
  * Returns:
@@ -1289,7 +1317,7 @@ gui_key_pressed (const char *key_str)
         return 0;
     }
 
-    if (strcmp (gui_key_combo_buffer, "\x01[[M") == 0)
+    if (strstr (gui_key_combo_buffer, "\x01[[M"))
     {
         gui_key_combo_buffer[0] = '\0';
         gui_mouse_event_init ();
@@ -1389,7 +1417,8 @@ gui_key_pressed (const char *key_str)
         }
     }
 
-    gui_key_combo_buffer[0] = '\0';
+    if (gui_key_is_complete (gui_key_combo_buffer))
+        gui_key_combo_buffer[0] = '\0';
 
     /*
      * if this is first key and not found (even partial) => return 1
