@@ -39,6 +39,7 @@ EXTRA_DIST = AUTHORS.asciidoc \
              cmake/CMakeParseArguments.cmake \
              cmake/FindAsciidoc.cmake \
              cmake/FindAspell.cmake \
+             cmake/FindCppUTest.cmake \
              cmake/FindENCHANT.cmake \
              cmake/FindGCRYPT.cmake \
              cmake/FindGettext.cmake \
