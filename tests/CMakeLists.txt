@@ -48,15 +48,15 @@ set(WEECHAT_TESTS_SRC tests.cpp)
 add_executable(tests ${WEECHAT_TESTS_SRC})
 set(LIBS
   ${LIBS}
-  ${EXTRA_LIBS}
-  ${CPPUTEST_LIBRARIES}
   ${PROJECT_BINARY_DIR}/src/core/libweechat_core.a
   ${PROJECT_BINARY_DIR}/src/plugins/libweechat_plugins.a
   ${PROJECT_BINARY_DIR}/src/gui/libweechat_gui_common.a
   ${PROJECT_BINARY_DIR}/src/gui/curses/libweechat_gui_curses.a
-  ${CURL_LIBRARIES}
   ${CMAKE_CURRENT_BINARY_DIR}/libweechat_ncurses_fake.a
-  ${CMAKE_CURRENT_BINARY_DIR}/libweechat_unit_tests.a)
+  ${CMAKE_CURRENT_BINARY_DIR}/libweechat_unit_tests.a
+  ${EXTRA_LIBS}
+  ${CURL_LIBRARIES}
+  ${CPPUTEST_LIBRARIES})
 target_link_libraries(tests ${LIBS})
 add_dependencies(tests
   weechat_core weechat_plugins weechat_gui_common weechat_gui_curses
