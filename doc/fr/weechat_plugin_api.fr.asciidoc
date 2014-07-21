@@ -6654,6 +6654,7 @@ Tags couramment utilisés (liste non exhaustive) :
 | notify_highlight | Le tampon avec la ligne sera ajouté à la "hotlist" avec le niveau "highlight"
 | nick_xxx         | Le message vient du pseudo "xxx"
 | prefix_nick_ccc  | Le préfixe est un pseudo avec la couleur "ccc"
+| host_xxx         | Nom d'utilisateur et hôte dans le message
 | irc_xxx          | Message IRC "xxx" (peut-être une commande ou un numérique sur 3 chiffres)
 | irc_numeric      | Message IRC numérique
 | irc_error        | Erreur du serveur IRC

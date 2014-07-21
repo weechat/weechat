@@ -6666,6 +6666,8 @@ Tag usati di frequente (elenco non esaustivo):
 | notify_highlight | Il buffer con la riga viene aggiunto alla hotlist con il livello "higlight"
 | nick_xxx         | Il messaggio viene dal nick "xxx"
 | prefix_nick_ccc  | Il prefisso è un nick con il colore "ccc"
+// TRANSLATION MISSING
+| host_xxx         | Username and host in message
 | irc_xxx          | Messaggio IRC "xxx" (può essere un comando o un numero di 3 cifre)
 | irc_numeric      | Messaggio IRC numerico
 | irc_error        | Errore dal server IRC
