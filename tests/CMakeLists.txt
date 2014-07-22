@@ -66,4 +66,4 @@ add_dependencies(tests
 # test for cmake (ctest)
 add_test(NAME unit
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-  COMMAND tests)
+  COMMAND tests -v)
