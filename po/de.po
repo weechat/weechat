@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-07-20 12:16+0200\n"
-"PO-Revision-Date: 2014-07-14 19:29+0100\n"
+"PO-Revision-Date: 2014-07-22 12:01+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -939,9 +939,9 @@ msgstr ""
 "%sUpgrade nicht möglich: WeeChat Binärcode \"%s\" besitzt nicht die "
 "notwendigen Rechte"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sNo binary specified"
-msgstr "Keine Infobar definiert"
+msgstr "%skeine Binärdatei angegeben"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
