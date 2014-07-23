@@ -706,7 +706,8 @@ trigger_name_valid (const char *name)
     /* no spaces allowed */
     if (strchr (name, ' '))
         return 0;
-    /* no periods allowed since it is saved via wee_config option name */
+
+    /* no periods allowed */
     if (strchr (name, '.'))
         return 0;
 
