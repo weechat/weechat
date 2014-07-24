@@ -80,7 +80,7 @@ WeeChat can be compiled with cmake or autotools (cmake is recommended way).
 Following table shows list of packages that are required or optional to
 compile WeeChat.
 
-[width="100%",cols="5,^3,^3,13",options="header"]
+[width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
 | Package ^(1)^                   | Version     | Required | Feature
 | cmake                           |             | *yes*    | Build (autotools still possible, but cmake is recommended)
@@ -102,8 +102,8 @@ compile WeeChat.
 | source-highlight                |             |          | Syntax highlight for sources in documentation
 | xsltproc,
   docbook-xml, docbook-xsl        |             |          | Build of man page
-| libcpputest-dev,
-  C++ compiler                    |             |          | Run tests
+| libcpputest-dev                 | ≥ 3.4       |       .2+| Run tests
+| C++ compiler                    |             |
 |===
 
 [NOTE]

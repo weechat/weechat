@@ -80,7 +80,7 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 以下の表は WeeChat
 のコンパイルに必須または任意で必要なパッケージのリストです。
 
-[width="100%",cols="5,^3,^3,13",options="header"]
+[width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
 | パッケージ ^(1)^                    | バージョン  | 必須  | 機能
 | cmake                               |             | *yes* | ビルド (autotools でも可能ですが、cmake を推奨します)
@@ -103,8 +103,8 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 | xsltproc,
   docbook-xml, docbook-xsl            |             |       | man ページのビルド
 // TRANSLATION MISSING
-| libcpputest-dev,
-  C++ compiler                        |             |       | Run tests
+| libcpputest-dev                     | ≥ 3.4       |    .2+| Run tests
+| C++ compiler                        |             |
 |===
 
 [NOTE]

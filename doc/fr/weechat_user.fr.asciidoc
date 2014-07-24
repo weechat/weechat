@@ -82,7 +82,7 @@ recommandée).
 Le tableau suivant liste les paquets qui sont requis ou optionnels pour
 compiler WeeChat.
 
-[width="100%",cols="5,^3,^3,13",options="header"]
+[width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
 | Paquet ^(1)^                    | Version     | Requis | Fonctionnalité
 | cmake                           |             | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé)
@@ -104,8 +104,8 @@ compiler WeeChat.
 | source-highlight                |             |        | Coloration des sources dans la documentation
 | xsltproc,
   docbook-xml, docbook-xsl        |             |        | Construction de la page de manuel
-| libcpputest-dev,
-  compilateur C++                 |             |        | Lancement des tests
+| libcpputest-dev                 | ≥ 3.4       |     .2+| Lancement des tests
+| C++ compiler                    |             |
 |===
 
 [NOTE]

@@ -85,7 +85,7 @@ WeeChat può essere compilato con cmake oppure autotools
 La seguente tabella mostra l'elenco di pacchetti richiesti o opzionali per
 compilare WeeChat.
 
-[width="100%",cols="5,^3,^3,13",options="header"]
+[width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
 | Pacchetto ^(1)^                | Versione    | Richiesto | Caratteristica
 | cmake                          |             | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake)
@@ -113,8 +113,8 @@ compilare WeeChat.
 | xsltproc,
   docbook-xml, docbook-xsl       |             |           | Build of man page
 // TRANSLATION MISSING
-| libcpputest-dev,
-  C++ compiler                   |             |           | Run tests
+| libcpputest-dev                | ≥ 3.4       |        .2+| Run tests
+| C++ compiler                   |             |
 |===
 
 [NOTE]
