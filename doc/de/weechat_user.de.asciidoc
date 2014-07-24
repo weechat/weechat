@@ -103,8 +103,7 @@ welche Pakete optional genutzt werden können.
 | source-highlight                  |             |          | Syntax Highlight für Quelltext in Dokumentation
 | xsltproc,
   docbook-xml, docbook-xsl          |             |          | Erstellt man page
-// TRANSLATION MISSING
-| libcpputest-dev                   | ≥ 3.4       |       .2+| Run tests
+| libcpputest-dev                   | ≥ 3.4       |       .2+| Testlauf
 | C++ compiler                      |             |
 |===
 
@@ -244,9 +243,8 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_XFER | `ON`, `OFF` | ON |
   kompiliert <<xfer_plugin,Xfer Erweiterung>>.
 
-// TRANSLATION MISSING
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
-  Compile tests.
+  kompiliert Testumgebung.
 |===
 
 Weitere Optionen können mit folgendem Befehl angezeigt werden:
