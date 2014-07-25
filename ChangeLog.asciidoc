@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.0 (under dev)
 
+* core: add terabyte unit for size displayed
 * core: fix insert of mouse code in input line after a partial key combo
   (closes #130)
 * core: check code point value in UTF-8 check function (closes #108)

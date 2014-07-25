@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-20 12:16+0200\n"
-"PO-Revision-Date: 2014-07-22 12:01+0100\n"
+"POT-Creation-Date: 2014-07-24 22:41+0200\n"
+"PO-Revision-Date: 2014-07-25 07:49+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -4577,9 +4577,6 @@ msgstr ""
 msgid "No secured data set"
 msgstr "keine schutzwürdigen Daten definiert"
 
-msgid "bytes"
-msgstr "Bytes"
-
 msgid "KB"
 msgstr "KB"
 
@@ -4589,8 +4586,14 @@ msgstr "MB"
 msgid "GB"
 msgstr "GB"
 
+msgid "TB"
+msgstr ""
+
+#, fuzzy
 msgid "byte"
-msgstr "Byte"
+msgid_plural "bytes"
+msgstr[0] "Byte"
+msgstr[1] "Byte"
 
 #, c-format
 msgid "debug: removing file: %s"
