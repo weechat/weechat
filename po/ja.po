@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-24 22:41+0200\n"
+"POT-Creation-Date: 2014-07-25 20:37+0200\n"
 "PO-Revision-Date: 2014-07-25 07:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -4289,15 +4289,19 @@ msgstr ""
 msgid "No secured data set"
 msgstr "保護データが設定されていません"
 
+#. TRANSLATORS: file size unit "kilobyte"
 msgid "KB"
 msgstr "キロバイト"
 
+#. TRANSLATORS: file size unit "megabyte"
 msgid "MB"
 msgstr "メガバイト"
 
+#. TRANSLATORS: file size unit "gigabyte"
 msgid "GB"
 msgstr "ギガバイト"
 
+#. TRANSLATORS: file size unit "terabyte"
 msgid "TB"
 msgstr ""
 

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-24 22:41+0200\n"
+"POT-Creation-Date: 2014-07-25 20:37+0200\n"
 "PO-Revision-Date: 2014-07-25 07:50+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4359,15 +4359,19 @@ msgstr ""
 msgid "No secured data set"
 msgstr "Brak zabezpieczonych danych"
 
+#. TRANSLATORS: file size unit "kilobyte"
 msgid "KB"
 msgstr "KB"
 
+#. TRANSLATORS: file size unit "megabyte"
 msgid "MB"
 msgstr "MB"
 
+#. TRANSLATORS: file size unit "gigabyte"
 msgid "GB"
 msgstr "GB"
 
+#. TRANSLATORS: file size unit "terabyte"
 msgid "TB"
 msgstr ""
 
