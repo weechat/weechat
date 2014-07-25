@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-07-24 22:41+0200\n"
-"PO-Revision-Date: 2014-07-25 07:49+0200\n"
+"PO-Revision-Date: 2014-07-25 09:12+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -4587,13 +4587,12 @@ msgid "GB"
 msgstr "GB"
 
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
-#, fuzzy
 msgid "byte"
 msgid_plural "bytes"
 msgstr[0] "Byte"
-msgstr[1] "Byte"
+msgstr[1] "Bytes"
 
 #, c-format
 msgid "debug: removing file: %s"
@@ -4707,28 +4706,28 @@ msgid ""
 "Warning: the %d color pairs are used, do \"/color reset\" to remove unused "
 "pairs"
 msgstr ""
-"Warnung: die Farbpaarung %d wird bereits genutzt. Nutze \"/color reset\" um "
-"ungenutzte Farbpaarungen zu entfernen"
+"Warnung: die Farbpaarung %d wird bereits verwendet. Nutze \"/color reset\" "
+"um ungenutzte Farbpaarungen zu entfernen"
 
 msgid "Terminal infos:"
-msgstr "Terminal Informationen:"
+msgstr "Informationen zum Terminal:"
 
 msgid "No color support in terminal."
-msgstr "Keine Unterstützung von Farben im Terminal."
+msgstr "keine Farbunterstützung durch Terminal."
 
 msgid "Default colors:"
 msgstr "Standardfarben:"
 
 msgid "Terminal colors:"
-msgstr "Terminal-Farben:"
+msgstr "Terminalfarben:"
 
 msgid ""
 "WeeChat colors | Actions: [e] Display extra infos [r] Refresh [z] Reset "
 "colors [q] Close buffer | Keys: [alt-c] Temporarily switch to terminal colors"
 msgstr ""
-"WeeChat Farben | Aktionen: [e] Zeigt zusätzliche Informationen an [r] "
+"WeeChat Farben | Aktionen: [e] zeigt zusätzliche Informationen an [r] "
 "aktualisieren [z] Farben zurücksetzen [q] Buffer schließen | Befehle: [alt-"
-"c] wechselt Farben (für 10 Sekunden)"
+"c] wechsel zu Terminalfarben (für 10 Sekunden)"
 
 #, c-format
 msgid "WeeChat color pairs auto-allocated (in use: %d, left: %d):"
@@ -4765,10 +4764,10 @@ msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal verloren, beende WeeChat..."
 
 msgid "Mouse is enabled"
-msgstr "Maus ist aktiviert"
+msgstr "Maus ist aktiv"
 
 msgid "Mouse is disabled"
-msgstr "Maus ist deaktiviert"
+msgstr "Maus ist inaktiv"
 
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
@@ -4779,13 +4778,13 @@ msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
 "that"
 msgstr ""
-"%sKann Bar-Typ nicht ändern: Es muss zuerst die Bar gelöscht und danach neu "
+"%sBar-Typ kann nicht verändert werden: die Bar muss gelöscht und danach neu "
 "erstellt werden"
 
 msgid "true if bar is hidden, false if it is displayed"
 msgstr ""
-"Einschalten, falls Bar versteckt werden soll. Ausschalten, falls Bar "
-"angezeigt werden soll"
+"wahr, falls Bar versteckt werden soll. unwahr, falls Bar angezeigt werden "
+"soll"
 
 msgid "bar priority (high number means bar displayed first)"
 msgstr ""
@@ -4963,7 +4962,7 @@ msgstr "Alias \"%s\" => \"%s\" angelegt"
 
 #, c-format
 msgid "No alias found matching \"%s\""
-msgstr "Keinen passenden Alias zu \"%s\" gefunden"
+msgstr "keinen passenden Alias zu \"%s\" gefunden"
 
 #, c-format
 msgid "%sAlias \"%s\" not found"
@@ -5048,7 +5047,7 @@ msgstr ""
 "    /alias -completion %%sajoin forcejoin /quote forcejoin"
 
 msgid "remove aliases"
-msgstr "Entferne Alias"
+msgstr "entferne Alias"
 
 msgid "<alias> [<alias>...]"
 msgstr "<alias> [<alias>...]"
@@ -5103,7 +5102,7 @@ msgid ""
 "dictionary"
 msgstr ""
 "%s%s: es sind mehrere Wörterbücher für diesen Buffer definiert. Bitte wählen "
-"Sie ein Wörterbuch davon aus"
+"Sie ein Wörterbuch aus"
 
 #, c-format
 msgid "%s: word \"%s\" added to personal dictionary"
