@@ -6554,8 +6554,7 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 | notify_highlight | この行を含むバッファは "highlight" レベルでホットリストに追加される
 | nick_xxx         | ニックネーム "xxx" からのメッセージ
 | prefix_nick_ccc  | プレフィックスを色 "ccc" のニックネームにする
-// TRANSLATION MISSING
-| host_xxx         | Username and host in message
+| host_xxx         | メッセージ中のユーザ名とホスト
 | irc_xxx          | IRC メッセージ "xxx" (コマンドまたは 3 桁の番号)
 | irc_numeric      | IRC 番号メッセージ
 | irc_error        | IRC からのエラー
