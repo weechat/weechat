@@ -68,12 +68,9 @@ WeeChat の主要なリポジトリは 2 つあります:
 |       guile/   | guile (scheme) スクリプト用 API
 |       trigger/ | trigger プラグイン
 |       xfer/    | xfer (IRC DCC ファイル/チャット)
-// TRANSLATION MISSING
-| tests/         | Tests
-// TRANSLATION MISSING
-|    unit/       | Unit tests
-// TRANSLATION MISSING
-|       core/    | Unit tests for core functions
+| tests/         | テスト
+|    unit/       | 単体テスト
+|       core/    | コア関数の単体テスト
 | doc/           | 文書
 | po/            | 翻訳ファイル (gettext)
 | debian/        | Debian パッケージ用
@@ -94,8 +91,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |===
 | パス/ファイル名               | 説明
 | core/                         | コア関数: エントリポイント、内部構造体
-// TRANSLATION MISSING
-|    weechat.c                  | Main functions: command line options, startup
+|    weechat.c                  | 主要関数: コマンドラインオプション、起動
 |    wee-backtrace.c            | クラッシュした際にバックトレースを表示
 |    wee-command.c              | WeeChat コアコマンド
 |    wee-completion.c           | デフォルト補完
@@ -149,8 +145,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       gui-curses-mouse.c      | マウス
 |       gui-curses-term.c       | ターミナルについての関数
 |       gui-curses-window.c     | ウィンドウ
-// TRANSLATION MISSING
-|       main.c                  | Entry point
+|       main.c                  | エントリポイント
 |===
 
 [[sources_plugins]]
@@ -289,25 +284,23 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       xfer-upgrade.c              | WeeChat をアップグレードする際の xfer データの保存および回復
 |===
 
-// TRANSLATION MISSING
 [[sources_tests]]
-==== Tests
+==== テスト
 
-// TRANSLATION MISSING
 [width="100%",cols="1v,5",options="header"]
 |===
 | パス/ファイル名                   | 説明
-| tests/                            | Root of tests
-|    unit/                          | Root of unit tests
-|       test-eval.cpp               | Tests: evaluation of expressions
-|       test-hashtble.cpp           | Tests: hashtables
-|       test-hdata.cpp              | Tests: hdata
-|       test-infolist.cpp           | Tests: infolists
-|       test-list.cpp               | Tests: lists
-|       test-string.cpp             | Tests: strings
-|       test-url.cpp                | Tests: URLs
-|       test-utf8.cpp               | Tests: UTF-8
-|       test-util.cpp               | Tests: util functions
+| tests/                            | テストのルートディレクトリ
+|    unit/                          | 単体テストのルートディレクトリ
+|       test-eval.cpp               | テスト: 式の評価
+|       test-hashtble.cpp           | テスト: ハッシュテーブル
+|       test-hdata.cpp              | テスト: hdata
+|       test-infolist.cpp           | テスト: インフォリスト
+|       test-list.cpp               | テスト: リスト
+|       test-string.cpp             | テスト: 文字列
+|       test-url.cpp                | テスト: URL
+|       test-utf8.cpp               | テスト: UTF-8
+|       test-util.cpp               | テスト: ユーティリティ関数
 |===
 
 [[documentation_translations]]
@@ -1064,5 +1057,5 @@ asciidoc ファイルは 'doc/XX/' ディレクトリにあり、'XX' は言語�
 `<<link_name>>` の後に名前がある場合、これも必ず翻訳してください:
 
 ----
-<<link_name,this text must be translated>>
+<<link_name,このテキストは必ず翻訳してください>>
 ----
