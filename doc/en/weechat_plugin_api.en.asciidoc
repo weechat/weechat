@@ -1598,7 +1598,11 @@ C examples:
 ----
 /* examples with English locale */
 
-char *str = weechat_string_format_size (0);  /* str == "0 byte" */
+char *str = weechat_string_format_size (0);  /* str == "0 bytes" */
+/* ... */
+free (str);
+
+char *str = weechat_string_format_size (1);  /* str == "1 byte" */
 /* ... */
 free (str);
 
@@ -1606,11 +1610,11 @@ char *str = weechat_string_format_size (200);  /* str == "200 bytes" */
 /* ... */
 free (str);
 
-char *str = weechat_string_format_size (1536);  /* str == "1.5 KB" */
+char *str = weechat_string_format_size (15200);  /* str == "15.2 KB" */
 /* ... */
 free (str);
 
-char *str = weechat_string_format_size (2097152);  /* str == "2 MB" */
+char *str = weechat_string_format_size (2097152);  /* str == "2.10 MB" */
 /* ... */
 free (str);
 ----

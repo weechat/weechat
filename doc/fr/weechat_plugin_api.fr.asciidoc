@@ -1632,15 +1632,19 @@ char *str = weechat_string_format_size (0);  /* str == "0 octet" */
 /* ... */
 free (str);
 
+char *str = weechat_string_format_size (1);  /* str == "1 octet" */
+/* ... */
+free (str);
+
 char *str = weechat_string_format_size (200);  /* str == "200 octets" */
 /* ... */
 free (str);
 
-char *str = weechat_string_format_size (1536);  /* str == "1.5 Ko" */
+char *str = weechat_string_format_size (15200);  /* str == "15.2 Ko" */
 /* ... */
 free (str);
 
-char *str = weechat_string_format_size (2097152);  /* str == "2 Mo" */
+char *str = weechat_string_format_size (2097152);  /* str == "2.10 Mo" */
 /* ... */
 free (str);
 ----
