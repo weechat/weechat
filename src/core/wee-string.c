@@ -2066,7 +2066,12 @@ string_iconv (int from_utf8, const char *from_code, const char *to_code,
     char *ptr_inbuf_shift;
     int done;
     size_t err, inbytesleft, outbytesleft;
+#endif
 
+    if (!string)
+        return NULL;
+
+#ifdef HAVE_ICONV
     if (from_code && from_code[0] && to_code && to_code[0]
         && (string_strcasecmp(from_code, to_code) != 0))
     {
