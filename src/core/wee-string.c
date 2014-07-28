@@ -2585,6 +2585,9 @@ string_input_for_buffer (const char *string)
 {
     char *pos_slash, *pos_space, *next_char;
 
+    if (!string)
+        return NULL;
+
     /* special case for C comments pasted in input line */
     if (strncmp (string, "/*", 2) == 0)
         return string;
