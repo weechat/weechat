@@ -363,7 +363,6 @@ TEST(String, ConvertEscapedChars)
  *   string_is_word_char
  */
 
-/*
 TEST(String, IsWordChar)
 {
     LONGS_EQUAL(0, string_is_word_char (NULL));
@@ -379,7 +378,6 @@ TEST(String, IsWordChar)
     LONGS_EQUAL(1, string_is_word_char ("_abc"));
     LONGS_EQUAL(1, string_is_word_char ("|abc"));
 }
-*/
 
 /*
  * Tests functions:

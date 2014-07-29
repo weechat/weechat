@@ -48,6 +48,7 @@ extern char *string_remove_quotes (const char *string, const char *quotes);
 extern char *string_strip (const char *string, int left, int right,
                            const char *chars);
 extern char *string_convert_escaped_chars (const char *string);
+extern int string_is_word_char (const char *string);
 extern char *string_mask_to_regex (const char *mask);
 extern const char *string_regex_flags (const char *regex, int default_flags,
                                        int *flags);
