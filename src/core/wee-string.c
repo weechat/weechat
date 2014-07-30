@@ -2338,6 +2338,9 @@ string_encode_base16 (const char *from, int length, char *to)
     const char *hexa = "0123456789ABCDEF";
     char *ptr_to;
 
+    if (!from || !to)
+        return;
+
     ptr_to = to;
     ptr_to[0] = '\0';
     for (i = 0; i < length; i++)
@@ -2360,6 +2363,9 @@ string_decode_base16 (const char *from, char *to)
 {
     int length, to_length, i, pos;
     unsigned char *ptr_to, value;
+
+    if (!from || !to)
+        return 0;
 
     length = strlen (from) / 2;
 
@@ -2425,6 +2431,9 @@ string_encode_base64 (const char *from, int length, char *to)
     const char *ptr_from;
     char *ptr_to;
 
+    if (!from || !to)
+        return;
+
     ptr_from = from;
     ptr_to = to;
 
@@ -2486,6 +2495,9 @@ string_decode_base64 (const char *from, char *to)
     unsigned char c, in[4], out[3];
     unsigned char base64_table[]="|$$$}rstuvwxyz{$$$$$$$>?"
         "@ABCDEFGHIJKLMNOPQRSTUVW$$$$$$XYZ[\\]^_`abcdefghijklmnopq";
+
+    if (!from || !to)
+        return 0;
 
     ptr_from = from;
     ptr_to = to;
