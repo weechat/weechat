@@ -648,8 +648,39 @@ TEST(String, Iconv)
     const char *noel_utf8 = "no\xc3\xabl";  /* noël */
     const char *noel_iso = "no\xebl";
     char *str;
+    FILE *f;
 
-    /* TODO: write tests */
+    /* string_iconv */
+    POINTERS_EQUAL(NULL, string_iconv (0, NULL, NULL, NULL));
+    STRCMP_EQUAL("", string_iconv (0, NULL, NULL, ""));
+    STRCMP_EQUAL("abc", string_iconv (0, NULL, NULL, "abc"));
+    STRCMP_EQUAL("abc", string_iconv (1, "UTF-8", "ISO-8859-15", "abc"));
+    STRCMP_EQUAL(noel_iso,
+                 string_iconv (1, "UTF-8", "ISO-8859-15", noel_utf8));
+    STRCMP_EQUAL(noel_utf8,
+                 string_iconv (0, "ISO-8859-15", "UTF-8", noel_iso));
+
+    /* string_iconv_to_internal */
+    POINTERS_EQUAL(NULL, string_iconv_to_internal (NULL, NULL));
+    STRCMP_EQUAL("", string_iconv_to_internal (NULL, ""));
+    STRCMP_EQUAL("abc", string_iconv_to_internal (NULL, "abc"));
+    STRCMP_EQUAL(noel_utf8,
+                 string_iconv_to_internal ("ISO-8859-15", noel_iso));
+
+    /* string_iconv_from_internal */
+    POINTERS_EQUAL(NULL, string_iconv_from_internal (NULL, NULL));
+    STRCMP_EQUAL("", string_iconv_from_internal (NULL, ""));
+    STRCMP_EQUAL("abc", string_iconv_from_internal (NULL, "abc"));
+    STRCMP_EQUAL(noel_iso,
+                 string_iconv_from_internal ("ISO-8859-15", noel_utf8));
+
+    /* string_iconv_fprintf */
+    f = fopen ("/dev/null", "w");
+    LONGS_EQUAL(0, string_iconv_fprintf (f, NULL));
+    LONGS_EQUAL(1, string_iconv_fprintf (f, "abc"));
+    LONGS_EQUAL(1, string_iconv_fprintf (f, noel_utf8));
+    LONGS_EQUAL(1, string_iconv_fprintf (f, noel_iso));
+    fclose (f);
 }
 
 /*
