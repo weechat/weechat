@@ -29,13 +29,18 @@ extern "C"
 #include "../src/core/wee-string.h"
 }
 
+#define ONE_KB 1000UL
+#define ONE_MB (ONE_KB * 1000UL)
+#define ONE_GB (ONE_MB * 1000UL)
+#define ONE_TB (ONE_GB * 1000UL)
+
 #define WEE_HAS_HL_STR(__result, __str, __words)                        \
     LONGS_EQUAL(__result, string_has_highlight (__str, __words));
 
 #define WEE_HAS_HL_REGEX(__result_regex, __result_hl, __str, __regex)   \
     LONGS_EQUAL(__result_hl,                                            \
                 string_has_highlight_regex (__str, __regex));           \
-    LONGS_EQUAL(__result_regex,                                          \
+    LONGS_EQUAL(__result_regex,                                         \
                 string_regcomp (&regex, __regex, REG_ICASE));           \
     if (__result_regex == 0)                                            \
     {                                                                   \
@@ -43,10 +48,12 @@ extern "C"
                     string_has_highlight_regex_compiled (__str,         \
                                                          &regex));      \
         regfree(&regex);                                                \
-    }                                                                   \
+    }
 
-#define WEE_HAS_HL_REGEX_COMP(__result, __str, __regex)                 \
-
+#define WEE_FORMAT_SIZE(__result, __size)                               \
+    str = string_format_size (__size);                                  \
+    STRCMP_EQUAL(__result, str);                                        \
+    free (str);
 
 TEST_GROUP(String)
 {
@@ -690,7 +697,34 @@ TEST(String, Iconv)
 
 TEST(String, FormatSize)
 {
-    /* TODO: write tests */
+    char *str;
+
+    WEE_FORMAT_SIZE("0 bytes", 0);
+    WEE_FORMAT_SIZE("1 byte", 1);
+    WEE_FORMAT_SIZE("2 bytes", 2);
+    WEE_FORMAT_SIZE("42 bytes", 42);
+    WEE_FORMAT_SIZE("999 bytes", ONE_KB - 1);
+    WEE_FORMAT_SIZE("1000 bytes", ONE_KB);
+    WEE_FORMAT_SIZE("9999 bytes", (10 * ONE_KB) - 1);
+
+    WEE_FORMAT_SIZE("10.0 KB", 10 * ONE_KB);
+    WEE_FORMAT_SIZE("10.1 KB", (10 * ONE_KB) + (ONE_KB / 10));
+    WEE_FORMAT_SIZE("42.0 KB", 42 * ONE_KB);
+    WEE_FORMAT_SIZE("1000.0 KB", ONE_MB - 1);
+
+    WEE_FORMAT_SIZE("1.00 MB", ONE_MB);
+    WEE_FORMAT_SIZE("1.10 MB", ONE_MB + (ONE_MB / 10));
+    WEE_FORMAT_SIZE("42.00 MB", 42 * ONE_MB);
+    WEE_FORMAT_SIZE("1000.00 MB", ONE_GB - 1);
+
+    WEE_FORMAT_SIZE("1.00 GB", ONE_GB);
+    WEE_FORMAT_SIZE("1.10 GB", ONE_GB + (ONE_GB / 10));
+    WEE_FORMAT_SIZE("42.00 GB", 42 * ONE_GB);
+    WEE_FORMAT_SIZE("1000.00 GB", ONE_TB - 1);
+
+    WEE_FORMAT_SIZE("1.00 TB", ONE_TB);
+    WEE_FORMAT_SIZE("1.10 TB", ONE_TB + (ONE_TB / 10));
+    WEE_FORMAT_SIZE("42.00 TB", 42 * ONE_TB);
 }
 
 /*
