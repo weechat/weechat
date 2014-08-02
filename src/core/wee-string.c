@@ -2477,7 +2477,7 @@ string_convbase64_6x4_to_8x3 (const unsigned char *from, unsigned char *to)
 {
     to[0] = from[0] << 2 | from[1] >> 4;
     to[1] = from[1] << 4 | from[2] >> 2;
-    to[2] = ((from[2] << 6) & 0xc0) | from[3];
+    to[2] = from[2] << 6 | from[3];
 }
 
 /*
@@ -2508,34 +2508,28 @@ string_decode_base64 (const char *from, char *to)
     while (ptr_from && ptr_from[0])
     {
         length = 0;
+        in[0] = 0;
+        in[1] = 0;
+        in[2] = 0;
+        in[3] = 0;
         for (i = 0; i < 4; i++)
         {
-            in[i] = 0;
-        }
-        for (i = 0; i < 4; i++)
-        {
-            c = 0;
-            while (ptr_from[0] && (c == 0))
-            {
-                c = (unsigned char) ptr_from[0];
-                ptr_from++;
-                c = ((c < 43) || (c > 122)) ? 0 : base64_table[c - 43];
-                if (c)
-                    c = (c == '$') ? 0 : c - 61;
-            }
-            if (ptr_from[0])
+            if (!ptr_from[0])
+                break;
+            c = (unsigned char) ptr_from[0];
+            ptr_from++;
+            c = ((c < 43) || (c > 122)) ? 0 : base64_table[c - 43];
+            if (c)
+                c = (c == '$') ? 0 : c - 61;
+            if (c)
             {
                 length++;
-                if (c)
-                    in[i] = c - 1;
+                in[i] = c - 1;
             }
             else
-            {
-                in[i] = '\0';
                 break;
-            }
         }
-        if (length)
+        if (length > 0)
         {
             string_convbase64_6x4_to_8x3 (in, out);
             for (i = 0; i < length - 1; i++)

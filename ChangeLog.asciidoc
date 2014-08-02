@@ -100,6 +100,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: display a warning in case of inconsistency between the options
   weechat.look.save_{config|layout}_on_exit
 * tests: add unit tests using CppUTest
+* api: fix function string_decode_base64
 * api: fix function string_format_size on 32-bit systems
 * api: add argument "flags" in function hdata_new_list
 * api: change type of arguments displayed/highlight in hook_print callback from
