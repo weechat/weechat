@@ -55,6 +55,7 @@ Alphabetically:
 * Matt Robinson
 * Mantas Mikulėnas (grawity)
 * Mateusz Poszwa
+* Max Anton Teufel
 * Murilo Opsfelder Araujo
 * Nicolas Cavigneaux
 * Nils Görs (nils_2)

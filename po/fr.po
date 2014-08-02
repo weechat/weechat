@@ -8477,8 +8477,8 @@ msgid "%s%s%s%s has unset topic for %s%s%s"
 msgstr "%s%s%s%s a retiré le titre pour %s%s%s"
 
 #, c-format
-msgid "%sWallops from %s%s %s(%s%s%s)%s: %s"
-msgstr "%sWallops de %s%s %s(%s%s%s)%s : %s"
+msgid "%sWallops from %s: %s"
+msgstr "%sWallops de %s : %s"
 
 #, c-format
 msgid "%sUser mode for %s%s%s is %s[%s%s%s]"

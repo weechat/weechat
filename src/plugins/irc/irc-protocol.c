@@ -145,6 +145,53 @@ irc_protocol_tags (const char *command, const char *tags, const char *nick,
 }
 
 /*
+ * Builds a string with nick and optional address.
+ *
+ * Argument nickname is mandatory, address can be NULL.
+ * If nickname and address are NULL, an empty string is returned.
+ */
+
+const char *
+irc_protocol_nick_address (struct t_irc_server *server,
+                           struct t_irc_nick *nick,
+                           const char *nickname,
+                           const char *address)
+{
+    static char string[1024];
+
+    string[0] = '\0';
+
+    if (nickname && address && (strcmp (nickname, address) != 0))
+    {
+        /* display nick and address if they are different */
+        snprintf (string, sizeof (string),
+                  "%s%s %s(%s%s%s)%s",
+                  irc_nick_color_for_message (server,
+                                              nick,
+                                              nickname),
+                  nickname,
+                  IRC_COLOR_CHAT_DELIMITERS,
+                  IRC_COLOR_CHAT_HOST,
+                  address,
+                  IRC_COLOR_CHAT_DELIMITERS,
+                  IRC_COLOR_RESET);
+    }
+    else if (nickname)
+    {
+        /* display only nick if no address or if nick == address */
+        snprintf (string, sizeof (string),
+                  "%s%s%s",
+                  irc_nick_color_for_message (server,
+                                              nick,
+                                              nickname),
+                  nickname,
+                  IRC_COLOR_RESET);
+    }
+
+    return string;
+}
+
+/*
  * Callback for the IRC message "AUTHENTICATE".
  *
  * Message looks like:
@@ -1138,6 +1185,7 @@ IRC_PROTOCOL_CALLBACK(nick)
 IRC_PROTOCOL_CALLBACK(notice)
 {
     char *pos_target, *pos_args, *pos, end_char, *channel, status_notice[2];
+    const char *nick_address;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     int notify_private, is_channel, is_channel_orig;
@@ -1362,59 +1410,20 @@ IRC_PROTOCOL_CALLBACK(notice)
                 }
                 else
                 {
-                    if (address && address[0] && (strcmp (nick, address) != 0))
-                    {
-                        weechat_printf_date_tags (ptr_buffer,
-                                                  date,
-                                                  irc_protocol_tags (command,
-                                                                     (notify_private) ? "notify_private" : NULL,
-                                                                     nick,
-                                                                     address),
-                                                  "%s%s%s %s(%s%s%s)%s: %s",
-                                                  weechat_prefix ("network"),
-                                                  irc_nick_color_for_message (server,
-                                                                              NULL,
-                                                                              nick),
-                                                  nick,
-                                                  IRC_COLOR_CHAT_DELIMITERS,
-                                                  IRC_COLOR_CHAT_HOST,
-                                                  address,
-                                                  IRC_COLOR_CHAT_DELIMITERS,
-                                                  IRC_COLOR_RESET,
-                                                  pos_args);
-                    }
-                    else
-                    {
-                        if (nick && nick[0])
-                        {
-                            weechat_printf_date_tags (ptr_buffer,
-                                                      date,
-                                                      irc_protocol_tags (command,
-                                                                         (notify_private) ? "notify_private" : NULL,
-                                                                         nick,
-                                                                         address),
-                                                      "%s%s%s%s: %s",
-                                                      weechat_prefix ("network"),
-                                                      irc_nick_color_for_message (server,
-                                                                                  NULL,
-                                                                                  nick),
-                                                      nick,
-                                                      IRC_COLOR_RESET,
-                                                      pos_args);
-                        }
-                        else
-                        {
-                            weechat_printf_date_tags (ptr_buffer,
-                                                      date,
-                                                      irc_protocol_tags (command,
-                                                                         (notify_private) ? "notify_private" : NULL,
-                                                                         NULL,
-                                                                         address),
-                                                      "%s%s",
-                                                      weechat_prefix ("network"),
-                                                      pos_args);
-                        }
-                    }
+                    nick_address = irc_protocol_nick_address (server, NULL,
+                                                              nick, address);
+                    weechat_printf_date_tags (
+                        ptr_buffer,
+                        date,
+                        irc_protocol_tags (command,
+                                           (notify_private) ? "notify_private" : NULL,
+                                           nick,
+                                           address),
+                        "%s%s%s%s",
+                        weechat_prefix ("network"),
+                        nick_address,
+                        (nick_address[0]) ? ": " : "",
+                        pos_args);
                 }
             }
         }
@@ -2199,25 +2208,22 @@ IRC_PROTOCOL_CALLBACK(topic)
 
 IRC_PROTOCOL_CALLBACK(wallops)
 {
+    const char *nick_address;
+
     IRC_PROTOCOL_MIN_ARGS(3);
 
     if (ignored)
         return WEECHAT_RC_OK;
 
+    nick_address = irc_protocol_nick_address (server, NULL, nick, address);
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, nick,
                                                                command, NULL,
                                                                NULL),
                               date,
                               irc_protocol_tags (command, NULL, nick, address),
-                              _("%sWallops from %s%s %s(%s%s%s)%s: %s"),
+                              _("%sWallops from %s: %s"),
                               weechat_prefix ("network"),
-                              irc_nick_color_for_message (server, NULL, nick),
-                              nick,
-                              IRC_COLOR_CHAT_DELIMITERS,
-                              IRC_COLOR_CHAT_HOST,
-                              address,
-                              IRC_COLOR_CHAT_DELIMITERS,
-                              IRC_COLOR_RESET,
+                              (nick_address[0]) ? nick_address : "?",
                               (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]);
 
     return WEECHAT_RC_OK;

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-25 20:37+0200\n"
+"POT-Creation-Date: 2014-08-02 11:25+0200\n"
 "PO-Revision-Date: 2014-07-25 07:49+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7063,7 +7063,7 @@ msgid "%s%s%s%s has unset topic for %s%s%s"
 msgstr "%s%s%s törölte a %s%s szoba témáját\n"
 
 #, fuzzy, c-format
-msgid "%sWallops from %s%s %s(%s%s%s)%s: %s"
+msgid "%sWallops from %s: %s"
 msgstr "%s%s %s(%s%s@%s%s)%s neve %s volt\n"
 
 #, fuzzy, c-format
