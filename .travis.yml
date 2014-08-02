@@ -25,3 +25,5 @@ script:
 after_success:
     - weechat --help
     - weechat -r /quit
+matrix:
+    fast_finish: true
