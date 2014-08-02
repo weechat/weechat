@@ -25,8 +25,6 @@
 # This script is used to build WeeChat in Travis CI environment.
 #
 
-set -x
-
 run ()
 {
     echo "Running \"$@\"..."
