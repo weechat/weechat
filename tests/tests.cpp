@@ -37,7 +37,9 @@ extern "C"
 #include "../src/plugins/plugin.h"
 #include "../src/gui/gui-main.h"
 #include "../src/gui/gui-buffer.h"
-#include "../src/gui/curses/gui-curses.h"
+
+    extern void gui_main_init ();
+    extern void gui_main_loop ();
 }
 
 #include "CppUTest/CommandLineTestRunner.h"
