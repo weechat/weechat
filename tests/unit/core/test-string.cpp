@@ -737,7 +737,82 @@ TEST(String, FormatSize)
 
 TEST(String, BaseN)
 {
-    /* TODO: write tests */
+    char str[1024];
+    const char *str_abc = "abc";
+    const char *str_abc_base64 = "YWJj";
+    const char *str_base64[][2] =
+        { { "", "" },
+          { "A", "QQ==" },
+          { "B", "Qg==" },
+          { "C", "Qw==" },
+          { "D", "RA==" },
+          { "abc", "YWJj" },
+          { "This is a test.", "VGhpcyBpcyBhIHRlc3Qu" },
+          { "This is a test..", "VGhpcyBpcyBhIHRlc3QuLg==" },
+          { "This is a test...", "VGhpcyBpcyBhIHRlc3QuLi4=" },
+          { "This is a test....", "VGhpcyBpcyBhIHRlc3QuLi4u" },
+          { "This is a long long long sentence here...",
+            "VGhpcyBpcyBhIGxvbmcgbG9uZyBsb25nIHNlbnRlbmNlIGhlcmUuLi4=" },
+          { "Another example for base64",
+            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQ=" },
+          { "Another example for base64.",
+            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQu" },
+          { "Another example for base64..",
+            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQuLg==" },
+          { "Another example for base64...",
+            "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQuLi4=" },
+          { NULL, NULL } };
+    int i, length;
+
+    /* string_encode_base16 */
+    string_encode_base16 (NULL, 0, NULL);
+    string_encode_base16 (NULL, 0, str);
+    string_encode_base16 ("", 0, NULL);
+    str[0] = 0xAA;
+    string_encode_base16 ("", -1, str);
+    BYTES_EQUAL(0x0, str[0]);
+    str[0] = 0xAA;
+    string_encode_base16 ("", 0, str);
+    BYTES_EQUAL(0x0, str[0]);
+    string_encode_base16 ("abc", 3, str);
+    STRCMP_EQUAL("616263", str);
+
+    /* string_decode_base16 */
+    LONGS_EQUAL(0, string_decode_base16 (NULL, NULL));
+    LONGS_EQUAL(0, string_decode_base16 (NULL, str));
+    LONGS_EQUAL(0, string_decode_base16 ("", NULL));
+    LONGS_EQUAL(0, string_decode_base16 ("", str));
+    LONGS_EQUAL(3, string_decode_base16 ("616263", str));
+    STRCMP_EQUAL("abc", str);
+
+    /* string_encode_base64 */
+    string_encode_base64 (NULL, 0, NULL);
+    string_encode_base64 (NULL, 0, str);
+    string_encode_base64 ("", 0, NULL);
+    str[0] = 0xAA;
+    string_encode_base64 ("", -1, str);
+    BYTES_EQUAL(0x0, str[0]);
+    str[0] = 0xAA;
+    string_encode_base64 ("", 0, str);
+    BYTES_EQUAL(0x0, str[0]);
+    for (i = 0; str_base64[i][0]; i++)
+    {
+        string_encode_base64 (str_base64[i][0], strlen (str_base64[i][0]),
+                              str);
+        STRCMP_EQUAL(str_base64[i][1], str);
+    }
+
+    /* string_decode_base64 */
+    LONGS_EQUAL(0, string_decode_base64 (NULL, NULL));
+    LONGS_EQUAL(0, string_decode_base64 (NULL, str));
+    LONGS_EQUAL(0, string_decode_base64 ("", NULL));
+    LONGS_EQUAL(0, string_decode_base64 ("", str));
+    for (i = 0; str_base64[i][0]; i++)
+    {
+        length = string_decode_base64 (str_base64[i][1], str);
+        STRCMP_EQUAL(str_base64[i][0], str);
+        LONGS_EQUAL(strlen (str_base64[i][0]), length);
+    }
 }
 
 /*
