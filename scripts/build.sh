@@ -52,15 +52,17 @@ run "cd $BUILDDIR"
 
 if [ "$BUILDTOOL" = "cmake" ]; then
     # build with CMake
-    run "cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON"
+    run "cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
     run "make VERBOSE=1"
     run "sudo make install"
+    run "ctest -V"
 fi
 
 if [ "$BUILDTOOL" = "autotools" ]; then
     # build with autotools
     run "../autogen.sh"
-    run "../configure --enable-man --enable-doc"
+    run "../configure --enable-man --enable-doc --enable-tests"
     run "make"
     run "sudo make install"
+    run "./tests/tests -v"
 fi
