@@ -823,17 +823,29 @@ TEST(String, BaseN)
 
 TEST(String, Input)
 {
-    /* TODO: write tests */
-}
+    char *str;
 
-/*
- * Tests functions:
- *    string_is_command_char
- */
+    /* string_is_command_char */
+    LONGS_EQUAL(0, string_is_command_char (NULL));
+    LONGS_EQUAL(0, string_is_command_char (""));
+    LONGS_EQUAL(0, string_is_command_char ("abc"));
+    LONGS_EQUAL(1, string_is_command_char ("/"));
+    LONGS_EQUAL(1, string_is_command_char ("/abc"));
+    LONGS_EQUAL(1, string_is_command_char ("//abc"));
 
-TEST(String, CommandChar)
-{
-    /* TODO: write tests */
+    /* string_input_for_buffer */
+    POINTERS_EQUAL(NULL, string_input_for_buffer (NULL));
+    POINTERS_EQUAL(NULL, string_input_for_buffer ("/"));
+    POINTERS_EQUAL(NULL, string_input_for_buffer ("/abc"));
+    str = strdup ("");
+    STRCMP_EQUAL(str, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("abc");
+    STRCMP_EQUAL(str, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("//abc");
+    STRCMP_EQUAL(str + 1, string_input_for_buffer (str));
+    free (str);
 }
 
 /*
