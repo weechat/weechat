@@ -9337,11 +9337,11 @@ msgstr "Clientes conectados para retransmitir:"
 
 #, c-format
 msgid ""
-"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %lu "
+"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %llu recv, %llu "
 "sent"
 msgstr ""
-"  %s%s%s (%s%s%s), iniciado en: %s, última actividad: %s, bytes: %lu "
-"recibidos, %lu enviados"
+"  %s%s%s (%s%s%s), iniciado en: %s, última actividad: %s, bytes: %llu "
+"recibidos, %llu enviados"
 
 #, c-format
 msgid "  %s%s%s (%s%s%s), started on: %s"

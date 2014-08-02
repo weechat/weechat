@@ -9541,10 +9541,10 @@ msgstr "リレーする接続済みクライアント:"
 
 #, c-format
 msgid ""
-"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %lu "
+"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %llu recv, %llu "
 "sent"
 msgstr ""
-"  %s%s%s (%s%s%s)、開始日時: %s、最新の活動: %s、バイト数: %lu 受信、%lu 送信"
+"  %s%s%s (%s%s%s)、開始日時: %s、最新の活動: %s、バイト数: %llu 受信、%llu 送信"
 
 #, c-format
 msgid "  %s%s%s (%s%s%s), started on: %s"

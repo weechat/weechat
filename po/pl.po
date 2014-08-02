@@ -9660,11 +9660,11 @@ msgstr "Klienci do przekazywania:"
 
 #, c-format
 msgid ""
-"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %lu "
+"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %llu recv, %llu "
 "sent"
 msgstr ""
-"  %s%s%s (%s%s%s), rozpoczęto: %s, ostatnia aktywność: %s, bajtów: %lu "
-"odebrano, %lu wysłano"
+"  %s%s%s (%s%s%s), rozpoczęto: %s, ostatnia aktywność: %s, bajtów: %llu "
+"odebrano, %llu wysłano"
 
 #, c-format
 msgid "  %s%s%s (%s%s%s), started on: %s"

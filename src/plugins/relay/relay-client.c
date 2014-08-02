@@ -1253,9 +1253,9 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
             new_client->hook_fd = NULL;
         new_client->last_activity = weechat_infolist_time (infolist, "last_activity");
         sscanf (weechat_infolist_string (infolist, "bytes_recv"),
-                "%lu", &(new_client->bytes_recv));
+                "%llu", &(new_client->bytes_recv));
         sscanf (weechat_infolist_string (infolist, "bytes_sent"),
-                "%lu", &(new_client->bytes_sent));
+                "%llu", &(new_client->bytes_sent));
         new_client->recv_data_type = weechat_infolist_integer (infolist, "recv_data_type");
         new_client->send_data_type = weechat_infolist_integer (infolist, "send_data_type");
         str = weechat_infolist_string (infolist, "partial_message");
@@ -1554,10 +1554,10 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "last_activity", client->last_activity))
         return 0;
-    snprintf (value, sizeof (value), "%lu", client->bytes_recv);
+    snprintf (value, sizeof (value), "%llu", client->bytes_recv);
     if (!weechat_infolist_new_var_string (ptr_item, "bytes_recv", value))
         return 0;
-    snprintf (value, sizeof (value), "%lu", client->bytes_sent);
+    snprintf (value, sizeof (value), "%llu", client->bytes_sent);
     if (!weechat_infolist_new_var_string (ptr_item, "bytes_sent", value))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "recv_data_type", client->recv_data_type))
@@ -1622,8 +1622,8 @@ relay_client_print_log ()
         weechat_log_printf ("  end_time. . . . . . . : %ld",   ptr_client->end_time);
         weechat_log_printf ("  hook_fd . . . . . . . : 0x%lx", ptr_client->hook_fd);
         weechat_log_printf ("  last_activity . . . . : %ld",   ptr_client->last_activity);
-        weechat_log_printf ("  bytes_recv. . . . . . : %lu",   ptr_client->bytes_recv);
-        weechat_log_printf ("  bytes_sent. . . . . . : %lu",   ptr_client->bytes_sent);
+        weechat_log_printf ("  bytes_recv. . . . . . : %llu",  ptr_client->bytes_recv);
+        weechat_log_printf ("  bytes_sent. . . . . . : %llu",  ptr_client->bytes_sent);
         weechat_log_printf ("  recv_data_type. . . . : %d (%s)",
                             ptr_client->recv_data_type,
                             relay_client_data_type_string[ptr_client->recv_data_type]);

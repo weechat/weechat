@@ -9914,11 +9914,11 @@ msgstr "Clients connectés pour le relai :"
 
 #, c-format
 msgid ""
-"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %lu "
+"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %llu recv, %llu "
 "sent"
 msgstr ""
-"  %s%s%s (%s%s%s), démarré le : %s, dernière activité : %s, octets : %lu "
-"reçus, %lu envoyés"
+"  %s%s%s (%s%s%s), démarré le : %s, dernière activité : %s, octets : %llu "
+"reçus, %llu envoyés"
 
 #, c-format
 msgid "  %s%s%s (%s%s%s), started on: %s"

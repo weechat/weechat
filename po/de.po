@@ -10140,11 +10140,11 @@ msgstr "Verbindungen zu Clients für Relay:"
 
 #, c-format
 msgid ""
-"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %lu "
+"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %llu recv, %llu "
 "sent"
 msgstr ""
-"  %s%s%s (%s%s%s), gestartet am: %s, letzte Aktivität: %s, Bytes: %lu "
-"empfangen, %lu gesendet"
+"  %s%s%s (%s%s%s), gestartet am: %s, letzte Aktivität: %s, Bytes: %llu "
+"empfangen, %llu gesendet"
 
 #, c-format
 msgid "  %s%s%s (%s%s%s), started on: %s"

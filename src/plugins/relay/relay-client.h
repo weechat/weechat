@@ -93,8 +93,8 @@ struct t_relay_client
     time_t end_time;                   /* time of client disconnection      */
     struct t_hook *hook_fd;            /* hook for socket or child pipe     */
     time_t last_activity;              /* time of last byte received/sent   */
-    unsigned long bytes_recv;          /* bytes received from client        */
-    unsigned long bytes_sent;          /* bytes sent to client              */
+    unsigned long long bytes_recv;     /* bytes received from client        */
+    unsigned long long bytes_sent;     /* bytes sent to client              */
     enum t_relay_client_data_type recv_data_type; /* type recv from client  */
     enum t_relay_client_data_type send_data_type; /* type sent to client    */
     char *partial_message;             /* partial text message received     */

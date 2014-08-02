@@ -82,7 +82,7 @@ relay_command_client_list (int full)
         {
             weechat_printf (NULL,
                             _("  %s%s%s (%s%s%s), started on: %s, last activity: %s, "
-                              "bytes: %lu recv, %lu sent"),
+                              "bytes: %llu recv, %llu sent"),
                             RELAY_COLOR_CHAT_CLIENT,
                             ptr_client->desc,
                             RELAY_COLOR_CHAT,

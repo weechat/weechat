@@ -9494,11 +9494,11 @@ msgstr "Client connessi per il relay:"
 
 #, c-format
 msgid ""
-"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %lu "
+"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %llu recv, %llu "
 "sent"
 msgstr ""
-"  %s%s%s (%s%s%s), avviato il %s, attività recente: %s byte: %lu ricevuti, "
-"%lu inviati"
+"  %s%s%s (%s%s%s), avviato il %s, attività recente: %s byte: %llu ricevuti, "
+"%llu inviati"
 
 #, c-format
 msgid "  %s%s%s (%s%s%s), started on: %s"
