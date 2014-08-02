@@ -10,7 +10,6 @@ env:
 
 before_script:
     - echo 'APT::Install-Recommends "false";' | sudo tee -a /etc/apt/apt.conf
-    - sudo add-apt-repository --yes ppa:bcandrea/backports
     - sudo apt-get update -qq
     - wget http://weechat.org/files/tests/ubuntu/precise/amd64/libcpputest-dev_3.4-3_amd64.deb
     - sudo dpkg -i libcpputest-dev_3.4-3_amd64.deb
