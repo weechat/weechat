@@ -2204,21 +2204,38 @@ IRC_PROTOCOL_CALLBACK(wallops)
     if (ignored)
         return WEECHAT_RC_OK;
 
-    weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, nick,
-                                                               command, NULL,
-                                                               NULL),
-                              date,
-                              irc_protocol_tags (command, NULL, nick, address),
-                              _("%sWallops from %s%s %s(%s%s%s)%s: %s"),
-                              weechat_prefix ("network"),
-                              irc_nick_color_for_message (server, NULL, nick),
-                              nick,
-                              IRC_COLOR_CHAT_DELIMITERS,
-                              IRC_COLOR_CHAT_HOST,
-                              address,
-                              IRC_COLOR_CHAT_DELIMITERS,
-                              IRC_COLOR_RESET,
-                              (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]);
+    if ((strcmp (nick, address) != 0))
+    {
+        weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, nick,
+                                                                   command, NULL,
+                                                                   NULL),
+                                  date,
+                                  irc_protocol_tags (command, NULL, nick, address),
+                                  _("%sWallops from %s%s %s(%s%s%s)%s: %s"),
+                                  weechat_prefix ("network"),
+                                  irc_nick_color_for_message (server, NULL, nick),
+                                  nick,
+                                  IRC_COLOR_CHAT_DELIMITERS,
+                                  IRC_COLOR_CHAT_HOST,
+                                  address,
+                                  IRC_COLOR_CHAT_DELIMITERS,
+                                  IRC_COLOR_RESET,
+                                  (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]);
+    }
+    else
+    {
+        weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, nick,
+                                                                   command, NULL,
+                                                                   NULL),
+                                  date,
+                                  irc_protocol_tags (command, NULL, nick, address),
+                                  _("%sWallops from %s%s%s:  %s"),
+                                  weechat_prefix ("network"),
+                                  irc_nick_color_for_message (server, NULL, nick),
+                                  nick,
+                                  IRC_COLOR_RESET,
+                                  (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]);
+    }
 
     return WEECHAT_RC_OK;
 }
