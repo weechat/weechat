@@ -1137,7 +1137,7 @@ gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
     if (!buffer)
         return NULL;
 
-    if (!gui_filters_enabled || !gui_filters || !buffer->lines->lines_hidden)
+    if (!gui_filters_enabled || !gui_filters || !buffer->lines->lines_hidden || !buffer->filter)
         return NULL;
 
     snprintf (str_filter, sizeof (str_filter),
