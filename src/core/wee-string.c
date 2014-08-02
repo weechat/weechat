@@ -2779,7 +2779,7 @@ string_replace_with_callback (const char *string,
  * Returns the hash of the shared string (variant of djb2).
  */
 
-unsigned long
+unsigned long long
 string_shared_hash_key (struct t_hashtable *hashtable,
                         const void *key)
 {

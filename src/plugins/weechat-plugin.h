@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20140610-01"
+#define WEECHAT_PLUGIN_API_VERSION "20140802-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -339,8 +339,8 @@ struct t_weechat_plugin
     struct t_hashtable *(*hashtable_new) (int size,
                                           const char *type_keys,
                                           const char *type_values,
-                                          unsigned long (*callback_hash_key)(struct t_hashtable *hashtable,
-                                                                             const void *key),
+                                          unsigned long long (*callback_hash_key)(struct t_hashtable *hashtable,
+                                                                                  const void *key),
                                           int (*callback_keycmp)(struct t_hashtable *hashtable,
                                                                  const void *key1,
                                                                  const void *key2));

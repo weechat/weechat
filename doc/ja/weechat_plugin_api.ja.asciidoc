@@ -3362,8 +3362,8 @@ _WeeChat バージョン 0.3.3 以上で利用可。_
 struct t_hashtable *weechat_hashtable_new (int size,
                                            const char *type_keys,
                                            const char *type_values,
-                                           unsigned long (*callback_hash_key)(struct t_hashtable *hashtable,
-                                                                              const void *key),
+                                           unsigned long long (*callback_hash_key)(struct t_hashtable *hashtable,
+                                                                                   const void *key),
                                            int (*callback_keycmp)(struct t_hashtable *hashtable,
                                                                   const void *key1,
                                                                   const void *key2));

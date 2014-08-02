@@ -23,8 +23,8 @@
 struct t_hashtable;
 struct t_infolist_item;
 
-typedef unsigned long (t_hashtable_hash_key)(struct t_hashtable *hashtable,
-                                             const void *key);
+typedef unsigned long long (t_hashtable_hash_key)(struct t_hashtable *hashtable,
+                                                  const void *key);
 typedef int (t_hashtable_keycmp)(struct t_hashtable *hashtable,
                                  const void *key1, const void *key2);
 typedef void (t_hashtable_free_key)(struct t_hashtable *hashtable,
@@ -40,7 +40,7 @@ typedef void (t_hashtable_map_string)(void *data,
 
 /*
  * Hashtable is a structure with an array "htable", each entry is a pointer
- * to a linked list, and it is read with hashed key (as unsigned long).
+ * to a linked list, and it is read with hashed key (as unsigned long long).
  * Keys with same hashed key are grouped in a linked list pointed by htable.
  * The htable is not sorted, the linked list is sorted.
  *
@@ -112,7 +112,7 @@ struct t_hashtable
                                        /* never asked)                      */
 };
 
-extern unsigned long hashtable_hash_key_djb2 (const char *string);
+extern unsigned long long hashtable_hash_key_djb2 (const char *string);
 extern struct t_hashtable *hashtable_new (int size,
                                           const char *type_keys,
                                           const char *type_values,
@@ -128,7 +128,7 @@ extern struct t_hashtable_item *hashtable_set (struct t_hashtable *hashtable,
                                                const void *value);
 extern struct t_hashtable_item *hashtable_get_item (struct t_hashtable *hashtable,
                                                     const void *key,
-                                                    unsigned long *hash);
+                                                    unsigned long long *hash);
 extern void *hashtable_get (struct t_hashtable *hashtable, const void *key);
 extern int hashtable_has_key (struct t_hashtable *hashtable, const void *key);
 extern void hashtable_map (struct t_hashtable *hashtable,
