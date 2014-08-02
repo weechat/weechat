@@ -2300,13 +2300,13 @@ string_format_size (unsigned long long size)
 
     str_size[0] = '\0';
 
-    if (size < 10UL * 1000UL)
+    if (size < 10ULL * 1000ULL)
         num_unit = 0;
-    else if (size < 1000UL * 1000UL)
+    else if (size < 1000ULL * 1000ULL)
         num_unit = 1;
-    else if (size < 1000UL * 1000UL * 1000UL)
+    else if (size < 1000ULL * 1000ULL * 1000ULL)
         num_unit = 2;
-    else if (size < 1000UL * 1000UL * 1000UL * 1000UL)
+    else if (size < 1000ULL * 1000ULL * 1000ULL * 1000ULL)
         num_unit = 3;
     else
         num_unit = 4;

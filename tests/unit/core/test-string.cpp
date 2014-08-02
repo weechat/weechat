@@ -29,10 +29,10 @@ extern "C"
 #include "../src/core/wee-string.h"
 }
 
-#define ONE_KB 1000UL
-#define ONE_MB (ONE_KB * 1000UL)
-#define ONE_GB (ONE_MB * 1000UL)
-#define ONE_TB (ONE_GB * 1000UL)
+#define ONE_KB 1000ULL
+#define ONE_MB (ONE_KB * 1000ULL)
+#define ONE_GB (ONE_MB * 1000ULL)
+#define ONE_TB (ONE_GB * 1000ULL)
 
 #define WEE_HAS_HL_STR(__result, __str, __words)                        \
     LONGS_EQUAL(__result, string_has_highlight (__str, __words));
