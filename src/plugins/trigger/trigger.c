@@ -1106,8 +1106,8 @@ trigger_print_log ()
             weechat_log_printf ("    hooks[%03d]. . . . . . : 0x%lx",
                                 i, ptr_trigger->hooks[i]);
         }
-        weechat_log_printf ("  hook_count_cb . . . . . : %lu",   ptr_trigger->hook_count_cb);
-        weechat_log_printf ("  hook_count_cmd. . . . . : %lu",   ptr_trigger->hook_count_cmd);
+        weechat_log_printf ("  hook_count_cb . . . . . : %llu",  ptr_trigger->hook_count_cb);
+        weechat_log_printf ("  hook_count_cmd. . . . . : %llu",  ptr_trigger->hook_count_cmd);
         weechat_log_printf ("  hook_running. . . . . . : %d",    ptr_trigger->hook_running);
         weechat_log_printf ("  hook_print_buffers. . . : '%s'",  ptr_trigger->hook_print_buffers);
         weechat_log_printf ("  regex_count . . . . . . : %d",    ptr_trigger->regex_count);

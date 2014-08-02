@@ -86,8 +86,8 @@ struct t_trigger
     /* hooks */
     int hooks_count;                   /* number of hooks                   */
     struct t_hook **hooks;             /* array of hooks (signal, ...)      */
-    unsigned long hook_count_cb;       /* number of calls made to callback  */
-    unsigned long hook_count_cmd;      /* number of commands run in callback*/
+    unsigned long long hook_count_cb;  /* number of calls made to callback  */
+    unsigned long long hook_count_cmd; /* number of commands run in callback*/
     int hook_running;                  /* 1 if one hook callback is running */
     char *hook_print_buffers;          /* buffers (for hook_print only)     */
 
