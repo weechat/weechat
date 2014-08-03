@@ -68,6 +68,7 @@ else
     else
         # git version not found in file => update file with this git version
         echo "Updating file ${HEADERFILE} with git version: \"${GIT_VERSION}\""
-        sed -i "s/#define PACKAGE_VERSION_GIT \".*\"/#define PACKAGE_VERSION_GIT \"${GIT_VERSION}\"/" ${HEADERFILE}
+        sed "s/#define PACKAGE_VERSION_GIT \".*\"/#define PACKAGE_VERSION_GIT \"${GIT_VERSION}\"/" ${HEADERFILE} >${HEADERFILE}.tmp
+        mv -f ${HEADERFILE}.tmp ${HEADERFILE}
     fi
 fi
