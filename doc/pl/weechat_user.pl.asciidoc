@@ -886,11 +886,11 @@ Tryb niesformatowanego ekranu posiada następujące cechy:
 * wyświetlana jest tylko zawartość obecnego bufora: bez podziału okna i pasków
   (brak tematu, listy nicków, statusu, wejścia, ...)
 * wsparcie dla myszy w WeeChat jest wyłączone (jeśli zostało włączone): możesz
-  używać myszy jak w normalnym terminalu do klikania w adresy URL i zaznaczania 
+  używać myszy jak w normalnym terminalu do klikania w adresy URL i zaznaczania
   tekstu
 * ncurses nie jest używane, dlatego URLe nie są obcinane z końcem linii.
 
-Domyślnym skrótem uruchamiającym ten tryb jest key[alt-l], tak jak wyłączającym 
+Domyślnym skrótem uruchamiającym ten tryb jest key[alt-l], tak jak wyłączającym
 go (lub domyślnie dowolna zmiana wejścia spowoduje wyjście z tego trybu, zobacz
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
 
@@ -1637,7 +1637,7 @@ hasła, za pomocą formatu: "${sec.data.xxx}", gdzie "xxx" to nazwa zabezpieczon
 danych (utworzone za pomocą `/secure set xxx ...`). +
 Pełną listę dostępnych opcji można uzyskać wykonując `/help secure`.
 
-W celu użycia hasła 'freenode', na przykład z 
+W celu użycia hasła 'freenode', na przykład z
 <<irc_sasl_authentication,SASL authentication>>:
 
 ----
@@ -1961,7 +1961,7 @@ W celu wyświetlenia wszystkich ustawionych kodowań, wykonaj:
 W razie jakichś problemów z kodowaniem, zajrzyj do 'WeeChat FAQ'.
 
 [[exec_plugin]]
-=== Wtyczka exec 
+=== Wtyczka exec
 
 Komenda `/exec` pozwala wykonać zewnętrzne polecenie wewnątrz WeeChat i wyświetlić
 jej wynik lokalnie lub wysłać do bufora.
@@ -3081,7 +3081,7 @@ Dopasowane grupy, które mogą zostać użyte w "zamień":
 
 * `$0` to `$99`: `$0` to pełne dopasowanie, `$1` do `$99` to przechwycone grupy
 * `$+`: ostatnie dopasowanie (z najwyższym numerem)
-* `$.cN`: dopasowanie "N" z wszystkimi znakami zastąpionymi "c" (przykład: `$.*2` 
+* `$.cN`: dopasowanie "N" z wszystkimi znakami zastąpionymi "c" (przykład: `$.*2`
   to grupa #2 ze znakami zastąpionymi `*`).
 
 Przykład: użyj pogrubienia dla słów pomiędzy "*":
@@ -3118,7 +3118,7 @@ Przykład: domyślny trigger 'beep' używa tej komendy do wydania dźwięku (BEL
 [[trigger_callback_data]]
 ==== Dane w callbackach
 
-Dane otrzymane w callbackach są przechowywane w tablicach hashy (wskaźniki i 
+Dane otrzymane w callbackach są przechowywane w tablicach hashy (wskaźniki i
 ciągi) i mogą zostać użyte w następujących opcjach:
 
 * 'warunki'
@@ -3368,7 +3368,7 @@ Argumenty dla uchwytu timera to:
 * '0': wyrównanie sekund (nie ustawione)
 * '0': maksymalna ilość wywołań (0 = brak ograniczenia ilości wywołań)
 
-Komenda `/mute /save` zapisze po cichu pliki konfiguracyjne (nic się nie 
+Komenda `/mute /save` zapisze po cichu pliki konfiguracyjne (nic się nie
 wyświetli w buforze rdzenia).
 
 [[xfer_plugin]]
