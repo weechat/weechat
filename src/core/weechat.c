@@ -402,8 +402,7 @@ weechat_term_check ()
     sty = getenv ("STY");
     tmux = getenv ("TMUX");
 
-    is_term_ok = (term && ((strcmp (term, "screen") == 0)
-                           || (strcmp (term, "screen-256color") == 0)));
+    is_term_ok = (term && (strncmp (term, "screen", 6) == 0));
     is_screen = (sty && sty[0]);
     is_tmux = (tmux && tmux[0]);
 
