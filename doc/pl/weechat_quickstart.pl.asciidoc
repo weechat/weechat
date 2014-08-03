@@ -94,11 +94,9 @@ na liście "irc" oraz inne wtyczki.
 [[create_irc_server]]
 == Tworzenie serwera IRC
 
-// TRANSLATION MISSING
-The server 'freenode' is created by default on first startup.
+Serwer 'freenode' jest tworzony domyślnie przy pierwszym uruchomieniu.
 
-// TRANSLATION MISSING
-You can add another IRC server with `/server` command, for example:
+Możesz dodać inne serwery IRC za pomocą komendy '/server', na przykład:
 
 ----
 /server add oftc irc.oftc.net/6667
@@ -140,8 +138,7 @@ Aby włączyć automatyczne łączenie się z serwerem przy starcie:
 /set irc.server.freenode.autoconnect on
 ----
 
-// TRANSLATION MISSING
-To connect with SSL:
+W celu połączenia z użyciem SSL:
 
 ----
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
@@ -149,10 +146,9 @@ To connect with SSL:
 /set irc.server.freenode.ssl_dhkey_size 1024
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-Freenode does not support the default dhkey size of 2048, so it has to be set
-to 1024.
+Freenode nie wspiera domyślnego rozmiaru klucza dhkey 2048, dlatego należy go
+ustawić na 1024.
 
 Jeśli SASL jest dostępny na serwerze, można użyć go do uwierzytelnienia (zostaniesz
 zidentyfikowany przed wejściem na kanał):
@@ -170,9 +166,8 @@ przez nickserv (tylko jeśli nie uwierzytelniasz się przez SASL):
 /set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-Many commands in option 'command' can be separated by ';' (semi-colon).
+Opcja 'command' może zawierać wiele komend, należy je oddzielić ';' (średnik).
 
 Aby automatycznie wejść na kanały po połączeniu z serwerem:
 
@@ -202,12 +197,12 @@ nazwa opcji):
 ----
 
 [NOTE]
-Ta komenda może być użyta do utworzenia i połączenia sie z nowym serwerem bez
+Ta komenda może być użyta do utworzenia i połączenia się z nowym serwerem bez
 użycia komendy `/server` (czy mam powtarzać, że pomoc dla tej komendy można
 uzyskać dzięki `/help connect` ?).
 
 Domyślnie bufory serwerów są połączone z buforem WeeChat 'core'. Aby przełączać
-się pomiędzy biforem 'core' a buforami serwerów możesz użyć key[ctrl-x].
+się pomiędzy buforem 'core' a buforami serwerów możesz użyć key[ctrl-x].
 
 Jest możliwe wyłączenie automatycznego łączenia buforów serwerów, aby mieć
 oddzielne bufory dla serwerów:
@@ -237,17 +232,16 @@ Zamknięcie bufora serwera lub kanału (`/close` jest aliasem `/buffer close`):
 /close
 ----
 
-// TRANSLATION MISSING
 [[irc_private_messages]]
-== IRC private messages
+== Prywatne wiadomości IRC
 
-Open a buffer and send a message to another user (nick 'foo'):
+Otworzenie bufora i wysłanie wiadomości do innego użytkownika (nick 'foo'):
 
 ----
-/query foo this is a message
+/query foo to jest wiadomość
 ----
 
-Close the private buffer:
+Zamykanie prywatnego bufora:
 
 ----
 /close

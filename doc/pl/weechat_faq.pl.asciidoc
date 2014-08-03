@@ -35,8 +35,7 @@ Więcej informacji na stronie: http://weechat.org/about/features
 [[gui]]
 === Słyszałem o wielu GUI dla WeeChat. Jak mogę je skompilować/użyć?
 
-// TRANSLATION MISSING
-Some remote GUIs are available, see the links on features page:
+Dostępne są zdalne interfejsy, linki można znaleźć na stronie z cechami:
 http://weechat.org/about/features
 
 [[compile_git]]
@@ -218,8 +217,7 @@ użyty w żadnym z pasków:
 [[terminal_copy_paste]]
 === Jak mogę kopiować/wklejać tekst bez wklejania listy nicków?
 
-// TRANSLATION MISSING
-With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-l]).
+W WeeChat od wersji ≥ 1.0, możesz użyć trybu niesformatowanego wyświetlania (domyślnie: key[alt-l]).
 
 Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
 konsole, gnome-terminal, ...). Klawisze to zazwyczaj key[ctrl-]key[alt-] zaznaczenie myszką.
@@ -233,8 +231,7 @@ Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na prz
 [[urls]]
 === Jak mogę kliknąć na długi URL (dłuższy niż linia)?
 
-// TRANSLATION MISSING
-With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-l]).
+W WeeChat od wersji ≥ 1.0, możesz użyć trybu niesformatowanego wyświetlania (domyślnie: key[alt-l]).
 
 Domyślnie WeeChat wyświetla czas i przedrostki dla każdej linii i opcjonalne paski
 dookoła obszaru rozmowy. Aby usprawnić klikanie w urle można przesunąć listę nicków
@@ -267,16 +264,14 @@ Innym rozwiązaniem jest użycie skryptu:
 [[change_locale_without_quit]]
 === Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego zamykania, czy jest to możliwe?
 
-// TRANSLATION MISSING
-Yes, with WeeChat ≥ 1.0:
+Tak, dla wersji WeeChat ≥ 1.0:
 
 ----
 /set env LANG pl_PL.UTF-8
 /upgrade
 ----
 
-// TRANSLATION MISSING
-With older WeeChat:
+Dla starszych wersji WeeChat:
 
 ----
 /script install shell.py
@@ -305,9 +300,8 @@ Jeśli używasz screena, możesz dodać to do swojego '~/.screenrc':
 term screen-256color
 ----
 
-// TRANSLATION MISSING
-If your 'TERM' variable has wrong value and that WeeChat is already running,
-you can change it with these two commands (with WeeChat ≥ 1.0):
+Jeśli twoja zmienna 'TERM' posiada złą wartość i WeeChat jest już uruchomiony,
+możesz zmienić ją za pomocą tych dwóch komend (dla wersji Weechat ≥ 1.0):
 
 ----
 /set env TERM screen-256color
@@ -330,25 +324,24 @@ Poruszanie się między podświetleniami: key[alt-p] / key[alt-n].
 
 Po więcej informacji zajrzyj do poradnika użytkownika (domyślne skróty klawiszowe).
 
-// TRANSLATION MISSING
 [[terminal_focus]]
-=== How can I execute commands when terminal gets/loses focus?
+=== Jak mogę wykonywać komendy, kiedy terminal stanie się/przestanie być aktywny?
 
-You must enable the focus events with a special code sent to terminal.
+Musisz włączyć obsługę tego zdarzenia za pomocą specjalnego kodu wysyłanego do terminala.
 
-*Important*:
+*Ważne*:
 
-* Currently, *only* 'xterm' seems to support this feature.
-* It does *not* work under screen/tmux.
+* Obecnie *tylko* 'xterm' wspiera tą funkcję.
+* *Nie* działa to pod screen/tmux.
 
-To send the code when WeeChat is starting:
+Żeby wysłać kod podczas uruchamiania WeeChat:
 
 ----
 /set weechat.startup.command_after_plugins "/print -stdout \033[?1004h\n"
 ----
 
-And then you bind two keys for the focus (replace the `/print` commands by the
-commands of your choice):
+Następnie przypisz dwie kombinacje klawiszy dla stanu aktywności (zamień komendy
+`/print` własnymi komendami:
 
 ----
 /key bind meta2-I /print -core focus
@@ -469,9 +462,8 @@ key[shift]).
 [[irc_ssl_connection]]
 === Mam problemy podczas połączenia z serwerem używającym SSL, co mogę zrobić?
 
-// TRANSLATION MISSING
-If you are using Mac OS X, you must install `curl-ca-bundle` and set the path
-to certificates in WeeChat:
+Jeśli używasz Mac OS X, musisz zainstalować `curl-ca-bundle` i ustawić ścieżkę
+do certyfikatów w WeeChat:
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt"
@@ -529,7 +521,7 @@ Niektóre serwery jak 'twitch' wymagają oauth do połączenia.
 
 Oauth to po prostu hasło w postaci "oauth:hasło".
 
-W celu dodania takiego serwera i połączenia się z nim należ wykonać nastepujące
+W celu dodania takiego serwera i połączenia się z nim należ wykonać następujące
 polecenia (należy zastąpić nazwę i adres odpowiednimi wartościami):
 
 ----
@@ -595,15 +587,13 @@ Więcej informacji: `/help filter` i `/help irc.look.smart_filter`
 [[filter_irc_join_channel_messages]]
 === Jak mogę filtrować wyświetlane wiadomości podczas wejścia na kanał IRC?
 
-// TRANSLATION MISSING
-With WeeChat ≥ 0.4.1, you can choose which messages are displayed or not when
-joining a channel with the option 'irc.look.display_join_message' (see
-`/help irc.look.display_join_message` for more info).
+W wersjach WeeChat ≥ 0.4.1, możesz wybrać to, jakie wiadomości są wyświetlane
+a jakie nie podczas wchodzenia na kanał, za pomocą opcji 'irc.look.display_join_message'
+(więcej informacji można znaleźć wykonując `/help irc.look.display_join_message`).
 
-// TRANSLATION MISSING
-To hide messages (but keep them in buffer), you can filter them using the tag
-(for example 'irc_329' for channel creation date). See `/help filter` for help
-with filters.
+W celu ukrycia wiadomości (ale zachowując je w buforze), możesz je filtrować
+używając tagu (na przykład 'irc_329' dla daty utworzenia kanału). zobacz
+`/help filter` w celu uzyskania pomocy z filtrami.
 
 [[filter_voice_messages]]
 === Jak mogę filtrować informacje o przyznaniu voice (np na serwerze Bitlbee)?
@@ -695,13 +685,11 @@ Musisz ustawić:
 /plugin autoload
 ----
 
-// TRANSLATION MISSING
 [[install_scripts]]
-=== How can I install scripts? Are scripts compatible with other IRC clients?
+=== Jak mogę instalować skrypty? Czy są one kompatybilne z innymi klientami IRC?
 
-// TRANSLATION MISSING
-You can use the command `/script` to install and manage scripts
-(see `/help script` for help).
+Możesz użyć komendy `/script` do instalowania i zarządzania skryptami
+(zobacz `/help script` po więcej informacji).
 
 Skrypty nie są kompatybilne z innymi klientami IRC.
 
@@ -724,18 +712,16 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
   wartość opcji 'weechat.history.max_buffer_lines_minutes'
 * zmniejszyć wartość opcji 'weechat.history.max_commands'
 
-// TRANSLATION MISSING
 [[cpu_usage]]
-=== How can I tweak WeeChat to use less CPU?
+=== Jak mogę zmusić WeeChat do zużywania mniejszej mocy CPU?
 
-// TRANSLATION MISSING
-You can follow same tips as for <<memory_usage,memory>>, and these ones:
+Możesz skorzystać z tych samych porad jak dla  <<memory_usage,memory>>, oraz tych:
 
-* hide "nicklist" bar: `/bar hide nicklist`
-* remove display of seconds in status bar time:
-  `/set weechat.look.item_time_format "%H:%M"` (this is the default value)
-* set the 'TZ' variable (for example: `export TZ="Europe/Paris"`), to prevent
-  frequent access to file '/etc/localtime'
+* schowaj pasek "nicklist": `/bar hide nicklist`
+* usuń wyświetlanie sekund w czasie na pasku statusu:
+  `/set weechat.look.item_time_format "%H:%M"` (domyślna wartość)
+* ustaw zmienną 'TZ' (na przykład: `export TZ="Europe/Warsaw"`), w celu zmniejszenia
+  częstotliwości czytania pliku '/etc/localtime'
 
 [[development]]
 == Rozwój
@@ -743,8 +729,7 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
 [[bug_task_patch]]
 === Jak zgłaszać błędy, prosić o nowe możliwości lub wysyłać patche?
 
-// TRANSLATION MISSING
-See: http://weechat.org/dev/support
+Zobacz: http://weechat.org/dev/support
 
 [[gdb_error_threads]]
 === Kiedy uruchamiam WeeChat pod gdb dostaję komunikat o wątkach, co mogę z tym zrobić?

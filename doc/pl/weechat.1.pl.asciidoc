@@ -98,8 +98,6 @@ Pełna licencja znajduje się w pliku COPYING.
 
 Strona www: <http://weechat.org/>
 
-// TRANSLATION MISSING
-== SUPPORT / REPORTING BUGS
+== WSPARCIE / ZGŁASZANIE BŁĘDÓW
 
-// TRANSLATION MISSING
-For help or a bug report: <http://weechat.org/dev/support>
+W celu uzyskania pomocy, lub zgłoszenia błędu zajrzyj na: <http://weechat.org/dev/support>
