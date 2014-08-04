@@ -23,7 +23,9 @@
 
 extern "C"
 {
+#include <string.h>
 #include "../src/core/wee-hashtable.h"
+#include "../src/plugins/plugin.h"
 }
 
 TEST_GROUP(Hashtable)
@@ -37,7 +39,35 @@ TEST_GROUP(Hashtable)
 
 TEST(Hashtable, HashDbj2)
 {
-    /* TODO: write tests */
+    unsigned long long hash;
+
+    hash = hashtable_hash_key_djb2 ("test");
+    CHECK(hash == 5849825121ULL);
+}
+
+/*
+ * Test callback hashing a key.
+ *
+ * It returns the djb2 hash + 1.
+ */
+
+unsigned long long
+test_hashtable_hash_key_cb (struct t_hashtable *hashtable, const void *key)
+{
+    return hashtable_hash_key_djb2 ((const char *)key) + 1;
+}
+
+/*
+ * Test callback comparing two keys.
+ *
+ * It just makes a string comparison (strcmp) between both keys.
+ */
+
+int
+test_hashtable_keycmp_cb (struct t_hashtable *hashtable,
+                          const void *key1, const void *key2)
+{
+    return strcmp ((const char *)key1, (const char *)key2);
 }
 
 /*
@@ -47,7 +77,42 @@ TEST(Hashtable, HashDbj2)
 
 TEST(Hashtable, New)
 {
-    /* TODO: write tests */
+    struct t_hashtable *hashtable;
+
+    hashtable = hashtable_new (-1, NULL, NULL, NULL, NULL);
+    POINTERS_EQUAL(NULL, hashtable);
+
+    /* test invalid size */
+    POINTERS_EQUAL(NULL,
+                   hashtable_new (-1,
+                                  WEECHAT_HASHTABLE_STRING,
+                                  WEECHAT_HASHTABLE_STRING,
+                                  NULL, NULL));
+
+    /* test invalid type for keys/values */
+    POINTERS_EQUAL(NULL,
+                   hashtable_new (32,
+                                  "xxxxx",  /* invalid */
+                                  "yyyyy",  /* invalid */
+                                  NULL, NULL));
+
+    /* valid hashtable */
+    hashtable = hashtable_new (32,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_INTEGER,
+                               &test_hashtable_hash_key_cb,
+                               &test_hashtable_keycmp_cb);
+    CHECK(hashtable);
+    LONGS_EQUAL(32, hashtable->size);
+    CHECK(hashtable->htable);
+    LONGS_EQUAL(0, hashtable->items_count);
+    LONGS_EQUAL(HASHTABLE_STRING, hashtable->type_keys);
+    LONGS_EQUAL(HASHTABLE_INTEGER, hashtable->type_values);
+    POINTERS_EQUAL(&test_hashtable_hash_key_cb, hashtable->callback_hash_key);
+    POINTERS_EQUAL(&test_hashtable_keycmp_cb, hashtable->callback_keycmp);
+    POINTERS_EQUAL(NULL, hashtable->callback_free_key);
+    POINTERS_EQUAL(NULL, hashtable->callback_free_value);
+    hashtable_free (hashtable);
 }
 
 /*
