@@ -46,6 +46,7 @@ Following packages are optional:
 * for scripting: python, perl, ruby, lua, tcl, guile
 * for building doc: asciidoc, source-highlight
   (for man page: xsltproc, docbook-xml, docbook-xsl)
+* for building tests: C++ compiler, CppUTest
 
 For a complete list of dependencies and versions recommended, please look at
 http://weechat.org/files/doc/devel/weechat_user.en.html#dependencies[user's guide].
