@@ -528,6 +528,9 @@ TEST(String, Replace)
     STRCMP_EQUAL("test xxx def", string_replace("test abc def", "abc", "xxx"));
     STRCMP_EQUAL("xxx test xxx def xxx",
                  string_replace("abc test abc def abc", "abc", "xxx"));
+
+    /* TODO: write tests for string_replace_regex */
+    /* TODO: write tests for string_replace_with_callback */
 }
 
 /*
