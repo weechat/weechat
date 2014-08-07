@@ -1354,12 +1354,12 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
  *
  * Examples:
  *
- *    string   | regex         | replace   | result
- *   ----------+---------------+-----------+-------------
- *    test foo | test          | Z         | Z foo
- *    test foo | ^(test +)(.*) | $2        | foo
- *    test foo | ^(test +)(.*) | $1 / $.*2 | test / ***
- *    test foo | ^(test +)(.*) | $.%+      | %%%
+ *    string   | regex         | replace  | result
+ *   ----------+---------------+----------+-------------
+ *    test foo | test          | Z        | Z foo
+ *    test foo | ^(test +)(.*) | $2       | foo
+ *    test foo | ^(test +)(.*) | $1/ $.*2 | test / ***
+ *    test foo | ^(test +)(.*) | $.%+     | %%%
  *
  * Note: result must be freed after use.
  */
