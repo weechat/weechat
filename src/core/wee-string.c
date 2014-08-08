@@ -1374,7 +1374,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
     int length, length_replace, start_offset, i, rc, end, last_match;
     regmatch_t regex_match[100];
 
-    if (!string)
+    if (!string || !regex)
         return NULL;
 
     length = strlen (string) + 1;
