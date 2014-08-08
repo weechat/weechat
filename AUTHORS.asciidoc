@@ -89,5 +89,5 @@ Alphabetically:
 
 Developers are connected to IRC:
 
-* server: 'irc.freenode.net'
-* channels: '#weechat' (English) and '#weechat-fr' (French)
+* server: 'chat.freenode.net'
+* channels: '#weechat' (English), '#weechat-fr' (French) and unofficial '#weechat-de' (German)
