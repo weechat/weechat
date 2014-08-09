@@ -757,6 +757,8 @@ upgrade_file_read (struct t_upgrade_file *upgrade_file,
 
     if (!signature || (strcmp (signature, UPGRADE_SIGNATURE) != 0))
     {
+        if (signature)
+            free (signature);
         UPGRADE_ERROR(_("read - bad signature (upgrade file format may have "
                         "changed since last version)"), "");
         return 0;
