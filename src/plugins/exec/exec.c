@@ -135,10 +135,11 @@ exec_add ()
 
     new_exec_cmd->prev_cmd = last_exec_cmd;
     new_exec_cmd->next_cmd = NULL;
-    if (!exec_cmds)
-        exec_cmds = new_exec_cmd;
-    else
+    if (exec_cmds)
         last_exec_cmd->next_cmd = new_exec_cmd;
+    else
+        exec_cmds = new_exec_cmd;
+
     last_exec_cmd = new_exec_cmd;
 
     new_exec_cmd->number = number;
