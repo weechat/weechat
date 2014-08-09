@@ -388,6 +388,7 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
                          */
                         free (client->partial_message);
                         client->partial_message = NULL;
+                        weechat_string_free_split (lines);
                         return;
                     }
                 }
