@@ -379,7 +379,6 @@ gui_mouse_event_code2key (const char *code)
      *   buttonX-gesture-right-long | >= 40 |
      */
 
-    distance = 0;
     if (key[0]
         && ((gui_mouse_event_x[0] != gui_mouse_event_x[1])
             || (gui_mouse_event_y[0] != gui_mouse_event_y[1])))

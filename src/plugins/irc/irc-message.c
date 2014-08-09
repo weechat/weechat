@@ -822,7 +822,6 @@ irc_message_split (struct t_irc_server *server, const char *message)
     host = NULL;
     command = NULL;
     arguments = NULL;
-    index_args = 0;
     argv = NULL;
     argv_eol = NULL;
 
