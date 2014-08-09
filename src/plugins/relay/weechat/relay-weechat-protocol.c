@@ -1394,6 +1394,7 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
 
     if (id)
         free (id);
+    free (command);
     if (argv)
         weechat_string_free_split (argv);
     if (argv_eol)
