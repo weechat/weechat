@@ -417,17 +417,23 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
      *   Linux 2.6.32-5-amd64 / x86_64
      */
     buf_uname = (struct utsname *)malloc (sizeof (struct utsname));
-    if (buf_uname && (uname (buf_uname) >= 0))
+    if (buf_uname)
     {
-        snprintf (buf, sizeof (buf), "%s %s / %s",
-                  buf_uname->sysname, buf_uname->release,
-                  buf_uname->machine);
+        if (uname (buf_uname) >= 0)
+        {
+            snprintf (buf, sizeof (buf), "%s %s / %s",
+                      buf_uname->sysname, buf_uname->release,
+                      buf_uname->machine);
+            temp = weechat_string_replace (res, "$osinfo", buf);
+            free (res);
+            if (!temp)
+            {
+                free (buf_uname);
+                return NULL;
+            }
+            res = temp;
+        }
         free (buf_uname);
-        temp = weechat_string_replace (res, "$osinfo", buf);
-        free (res);
-        if (!temp)
-            return NULL;
-        res = temp;
     }
 
     /*

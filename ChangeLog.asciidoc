@@ -128,6 +128,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * alias: change default command for alias /beep to "/print -beep"
 * exec: add exec plugin: new command /exec and file exec.conf
 * guile: fix module used after unload of a script
+* irc: fix memory leak in CTCP answer
 * irc: fix duplicate sender name in display of wallops (closes #142,
   closes #145)
 * irc: display locally away status changes in private buffers (in addition to
