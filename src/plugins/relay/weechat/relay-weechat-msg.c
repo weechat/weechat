@@ -628,7 +628,6 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
         goto end;
     ptr_hdata = ptr_hdata_head;
     strcpy (path_returned, hdata_head);
-    hdata_name = hdata_head;
     for (i = 1; i < num_path; i++)
     {
         pos = strchr (list_path[i], '(');
