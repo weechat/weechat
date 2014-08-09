@@ -979,6 +979,9 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                     option->value = malloc (sizeof (int));
                     if (option->value)
                         CONFIG_INTEGER(option) = 0;
+                    else
+                        // malloc failed, could not set
+                        return rc;
                 }
                 if (CONFIG_INTEGER(option) == CONFIG_INTEGER_DEFAULT(option))
                     rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
@@ -1009,6 +1012,9 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                     option->value = malloc (sizeof (int));
                     if (option->value)
                         CONFIG_INTEGER(option) = 0;
+                    else
+                        // malloc failed, could not set
+                        return rc;
                 }
                 if (CONFIG_COLOR(option) == CONFIG_COLOR_DEFAULT(option))
                     rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
