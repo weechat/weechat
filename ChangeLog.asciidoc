@@ -171,6 +171,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * python: fix read of return value for callbacks returning an integer
   in Python 2.x (closes #125)
 * python: fix interpreter used after unload of a script
+* relay: fix crash when an IRC "MODE" command is received from client without
+  arguments
 * relay: fix number of bytes sent/received on 32-bit systems
 * relay: fix crash when closing relay buffers (closes #57, closes #78)
 * relay: check pointers received in hdata command to prevent crashes with bad

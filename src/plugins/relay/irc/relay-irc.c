@@ -1633,58 +1633,58 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                 weechat_hashtable_set (hash_redirect, "signal", str_signal);
                 if (weechat_strcasecmp (irc_command, "mode") == 0)
                 {
-                    if (irc_argc == 1)
-                        redirect_msg = 1;
-                    weechat_hashtable_set (hash_redirect, "pattern",
-                                           "mode_channel");
                     if (irc_argc > 0)
                     {
+                        if (irc_argc == 1)
+                            redirect_msg = 1;
+                        weechat_hashtable_set (hash_redirect, "pattern",
+                                               "mode_channel");
                         weechat_hashtable_set (hash_redirect, "string",
                                                irc_argv[0]);
-                    }
-                    snprintf (str_server_channel,
-                              sizeof (str_server_channel),
-                              "%s,%s",
-                              client->protocol_args,
-                              irc_argv[0]);
-                    info = weechat_info_get ("irc_is_channel",
-                                             str_server_channel);
-                    if (info && (strcmp (info, "1") == 0))
-                    {
-                        /* command "MODE #channel ..." */
-                        if (irc_argc == 2)
+                        snprintf (str_server_channel,
+                                  sizeof (str_server_channel),
+                                  "%s,%s",
+                                  client->protocol_args,
+                                  irc_argv[0]);
+                        info = weechat_info_get ("irc_is_channel",
+                                                 str_server_channel);
+                        if (info && (strcmp (info, "1") == 0))
                         {
-                            if ((strcmp (irc_argv[1], "b") == 0)
-                                || (strcmp (irc_argv[1], "+b") == 0))
+                            /* command "MODE #channel ..." */
+                            if (irc_argc == 2)
                             {
-                                redirect_msg = 1;
-                                weechat_hashtable_set (hash_redirect, "pattern",
-                                                       "mode_channel_ban");
-                            }
-                            else if ((strcmp (irc_argv[1], "e") == 0)
-                                     || (strcmp (irc_argv[1], "+e") == 0))
-                            {
-                                redirect_msg = 1;
-                                weechat_hashtable_set (hash_redirect, "pattern",
-                                                       "mode_channel_ban_exception");
-                            }
-                            else if ((strcmp (irc_argv[1], "I") == 0)
-                                     || (strcmp (irc_argv[1], "+I") == 0))
-                            {
-                                redirect_msg = 1;
-                                weechat_hashtable_set (hash_redirect, "pattern",
-                                                       "mode_channel_invite");
+                                if ((strcmp (irc_argv[1], "b") == 0)
+                                    || (strcmp (irc_argv[1], "+b") == 0))
+                                {
+                                    redirect_msg = 1;
+                                    weechat_hashtable_set (hash_redirect, "pattern",
+                                                           "mode_channel_ban");
+                                }
+                                else if ((strcmp (irc_argv[1], "e") == 0)
+                                         || (strcmp (irc_argv[1], "+e") == 0))
+                                {
+                                    redirect_msg = 1;
+                                    weechat_hashtable_set (hash_redirect, "pattern",
+                                                           "mode_channel_ban_exception");
+                                }
+                                else if ((strcmp (irc_argv[1], "I") == 0)
+                                         || (strcmp (irc_argv[1], "+I") == 0))
+                                {
+                                    redirect_msg = 1;
+                                    weechat_hashtable_set (hash_redirect, "pattern",
+                                                           "mode_channel_invite");
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        /* command "MODE nick ..." */
-                        if (irc_argc == 1)
+                        else
                         {
-                            redirect_msg = 1;
-                            weechat_hashtable_set (hash_redirect, "pattern",
-                                                   "mode_user");
+                            /* command "MODE nick ..." */
+                            if (irc_argc == 1)
+                            {
+                                redirect_msg = 1;
+                                weechat_hashtable_set (hash_redirect, "pattern",
+                                                       "mode_user");
+                            }
                         }
                     }
                 }
