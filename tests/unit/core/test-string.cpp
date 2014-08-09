@@ -42,13 +42,29 @@ extern "C"
                 string_has_highlight_regex (__str, __regex));           \
     LONGS_EQUAL(__result_regex,                                         \
                 string_regcomp (&regex, __regex, REG_ICASE));           \
+    LONGS_EQUAL(__result_hl,                                            \
+                string_has_highlight_regex_compiled (__str,             \
+                                                     &regex));          \
     if (__result_regex == 0)                                            \
+        regfree(&regex);
+
+#define WEE_REPLACE_REGEX(__result_regex, __result_replace, __str,      \
+                          __regex, __replace, __ref_char, __callback)   \
+    LONGS_EQUAL(__result_regex,                                         \
+                string_regcomp (&regex, __regex,                        \
+                                REG_EXTENDED | REG_ICASE));             \
+    result = string_replace_regex (__str, &regex, __replace,            \
+                                   __ref_char, __callback, NULL);       \
+    if (__result_replace == NULL)                                       \
     {                                                                   \
-        LONGS_EQUAL(__result_hl,                                        \
-                    string_has_highlight_regex_compiled (__str,         \
-                                                         &regex));      \
-        regfree(&regex);                                                \
-    }
+        POINTERS_EQUAL(NULL, result);                                   \
+    }                                                                   \
+    else                                                                \
+    {                                                                   \
+        STRCMP_EQUAL(__result_replace, result);                         \
+    }                                                                   \
+    if (__result_regex == 0)                                            \
+        regfree(&regex);
 
 #define WEE_FORMAT_SIZE(__result, __size)                               \
     str = string_format_size (__size);                                  \
@@ -516,6 +532,10 @@ TEST(String, Highlight)
 
 TEST(String, Replace)
 {
+    regex_t regex;
+    char *result;
+
+    /* basic replace */
     POINTERS_EQUAL(NULL, string_replace (NULL, NULL, NULL));
     POINTERS_EQUAL(NULL, string_replace ("string", NULL, NULL));
     POINTERS_EQUAL(NULL, string_replace (NULL, "search", NULL));
@@ -529,7 +549,17 @@ TEST(String, Replace)
     STRCMP_EQUAL("xxx test xxx def xxx",
                  string_replace("abc test abc def abc", "abc", "xxx"));
 
-    /* TODO: write tests for string_replace_regex */
+    /* replace with regex */
+    WEE_REPLACE_REGEX(-1, NULL, NULL, NULL, NULL, '$', NULL);
+    WEE_REPLACE_REGEX(0, NULL, NULL, "", NULL, '$', NULL);
+    WEE_REPLACE_REGEX(0, "string", "string", "", NULL, '$', NULL);
+    WEE_REPLACE_REGEX(0, "test abc def", "test abc def", "xyz", "xxx", '$', NULL);
+    WEE_REPLACE_REGEX(0, "test xxx def", "test abc def", "abc", "xxx", '$', NULL);
+    WEE_REPLACE_REGEX(0, "foo", "test foo", "^(test +)(.*)", "$2", '$', NULL);
+    WEE_REPLACE_REGEX(0, "test / ***", "test foo", "^(test +)(.*)", "$1/ $.*2", '$', NULL);
+    WEE_REPLACE_REGEX(0, "%%%", "test foo", "^(test +)(.*)", "$.%+", '$', NULL);
+
+    /* replace with a callback */
     /* TODO: write tests for string_replace_with_callback */
 }
 
