@@ -429,6 +429,11 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
             return NULL;
         res = temp;
     }
+    else if (buf_uname)
+    {
+      // uname call failed
+      free (buf_uname);
+    }
 
     /*
      * $site: WeeChat web site, example:
