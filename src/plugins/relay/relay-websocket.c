@@ -215,6 +215,8 @@ relay_websocket_build_handshake (struct t_relay_client *client)
     weechat_string_encode_base64 ((char *)result, length, sec_websocket_accept);
     gcry_md_close (hd);
 
+    free (key);
+
     /* build the handshake (it will be sent as-is to client) */
     snprintf (handshake, sizeof (handshake),
               "HTTP/1.1 101 Switching Protocols\r\n"

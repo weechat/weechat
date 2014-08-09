@@ -171,6 +171,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * python: fix read of return value for callbacks returning an integer
   in Python 2.x (closes #125)
 * python: fix interpreter used after unload of a script
+* relay: fix memory leak during handshake on websocket
 * relay: fix memory leak when receiving commands from client (weechat protocol)
 * relay: fix crash when an IRC "MODE" command is received from client without
   arguments
