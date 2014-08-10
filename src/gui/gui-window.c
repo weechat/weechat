@@ -1191,8 +1191,9 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
     {
         old_date = ptr_line->data->date;
         date_tmp = localtime (&old_date);
-        if (date_tmp)
-            memcpy (&old_line_date, date_tmp, sizeof (struct tm));
+        if (!date_tmp)
+            return;
+        memcpy (&old_line_date, date_tmp, sizeof (struct tm));
     }
 
     while (ptr_line)
@@ -1213,8 +1214,9 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
             else
             {
                 date_tmp = localtime (&(ptr_line->data->date));
-                if (date_tmp)
-                    memcpy (&line_date, date_tmp, sizeof (struct tm));
+                if (!date_tmp)
+                    return;
+                memcpy (&line_date, date_tmp, sizeof (struct tm));
                 if (old_date > ptr_line->data->date)
                     diff_date = old_date - ptr_line->data->date;
                 else
