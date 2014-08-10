@@ -664,6 +664,17 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     new_nick->host = (host) ? strdup (host) : NULL;
     length = strlen (irc_server_get_prefix_chars (server));
     new_nick->prefixes = malloc (length + 1);
+    if (!new_nick->name || !new_nick->prefixes)
+    {
+        if (new_nick->name)
+            free (new_nick->name);
+        if (new_nick->host)
+            free (new_nick->host);
+        if (new_nick->prefixes)
+            free (new_nick->prefixes);
+        free (new_nick);
+        return NULL;
+    }
     if (new_nick->prefixes)
     {
         memset (new_nick->prefixes, ' ', length);
