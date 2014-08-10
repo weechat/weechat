@@ -28,7 +28,7 @@ typedef unsigned long long (t_hashtable_hash_key)(struct t_hashtable *hashtable,
 typedef int (t_hashtable_keycmp)(struct t_hashtable *hashtable,
                                  const void *key1, const void *key2);
 typedef void (t_hashtable_free_key)(struct t_hashtable *hashtable,
-                                    void *key, const void *value);
+                                    void *key);
 typedef void (t_hashtable_free_value)(struct t_hashtable *hashtable,
                                       const void *key, void *value);
 typedef void (t_hashtable_map)(void *data,

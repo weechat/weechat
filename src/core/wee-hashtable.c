@@ -307,8 +307,7 @@ hashtable_free_key (struct t_hashtable *hashtable,
     if (hashtable->callback_free_key)
     {
         (void) (hashtable->callback_free_key) (hashtable,
-                                               item->key,
-                                               item->value);
+                                               item->key);
     }
     else
     {
