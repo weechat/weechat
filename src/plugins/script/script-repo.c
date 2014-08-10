@@ -174,22 +174,22 @@ script_repo_get_filename_loaded (struct t_script_repo *script)
     weechat_home = weechat_info_get ("weechat_dir", NULL);
     length = strlen (weechat_home) + strlen (script->name_with_extension) + 64;
     filename = malloc (length);
-    if (filename)
+    if (!filename)
+        return NULL;
+
+    snprintf (filename, length, "%s/%s/autoload/%s",
+              weechat_home,
+              script_language[script->language],
+              script->name_with_extension);
+    if (stat (filename, &st) != 0)
     {
-        snprintf (filename, length, "%s/%s/autoload/%s",
+        snprintf (filename, length, "%s/%s/%s",
                   weechat_home,
                   script_language[script->language],
                   script->name_with_extension);
         if (stat (filename, &st) != 0)
         {
-            snprintf (filename, length, "%s/%s/%s",
-                      weechat_home,
-                      script_language[script->language],
-                      script->name_with_extension);
-            if (stat (filename, &st) != 0)
-            {
-                filename[0] = '\0';
-            }
+            filename[0] = '\0';
         }
     }
 
