@@ -674,11 +674,8 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     if (!buffer || !string || !string[0])
         return -1;
 
-    rc = hook_command_run_exec (buffer, string);
-    if (rc == WEECHAT_RC_OK_EAT)
+    if (hook_command_run_exec (buffer, string) == WEECHAT_RC_OK_EAT)
         return 1;
-
-    rc = -1;
 
     argv = string_split (string, " ", 0, 0, &argc);
     if (argc == 0)
@@ -726,12 +723,9 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
         ptr_hook = next_hook;
     }
 
-    if (!hook_plugin && !hook_other_plugin)
-    {
-        /* command not found at all */
-        rc = -1;
-    }
-    else
+    rc = -1;
+
+    if (hook_plugin || hook_other_plugin)
     {
         if (!hook_plugin && (count_other_plugin > 1)
             && (hook_other_plugin->priority == hook_other_plugin2->priority))
