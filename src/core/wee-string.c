@@ -2816,11 +2816,10 @@ string_shared_keycmp (struct t_hashtable *hashtable,
 
 void
 string_shared_free_key (struct t_hashtable *hashtable,
-                        void *key, const void *value)
+                        void *key)
 {
     /* make C compiler happy */
     (void) hashtable;
-    (void) value;
 
     free (key);
 }
