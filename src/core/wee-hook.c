@@ -1511,7 +1511,7 @@ hook_process_child (struct t_hook *hook_process)
         (void) f;
     }
 
-    rc = EXIT_SUCCESS;
+    rc = EXIT_FAILURE;
 
     if (strncmp (HOOK_PROCESS(hook_process, command), "url:", 4) == 0)
     {
@@ -1599,7 +1599,6 @@ hook_process_child (struct t_hook *hook_process)
             string_free_split (exec_args);
         fprintf (stderr, "Error with command '%s'\n",
                  HOOK_PROCESS(hook_process, command));
-        rc = EXIT_FAILURE;
     }
 
     fflush (stdout);
