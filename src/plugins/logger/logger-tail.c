@@ -101,6 +101,8 @@ logger_tail_file (const char *filename, int n_lines)
         bytes_read = read (fd, buf, to_read);
         if (bytes_read <= 0)
         {
+            if (part_of_line)
+                free (part_of_line);
             logger_tail_free (ptr_line);
             close (fd);
             return NULL;
@@ -140,6 +142,7 @@ logger_tail_file (const char *filename, int n_lines)
                         if (!new_line->data)
                         {
                             free (part_of_line);
+                            free (new_line);
                             logger_tail_free (ptr_line);
                             close (fd);
                             return NULL;
