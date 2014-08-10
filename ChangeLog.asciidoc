@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.0 (under dev)
 
+* core: fix zero-length malloc of an hashtable item with type "buffer"
 * core: fix memory leak on /upgrade when file signature in upgrade file is
   invalid
 * core: fix memory leak in completion of config options values

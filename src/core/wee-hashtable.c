@@ -270,7 +270,7 @@ hashtable_alloc_type (enum t_hashtable_type type,
             *size = sizeof (void *);
             break;
         case HASHTABLE_BUFFER:
-            if (value)
+            if (value && (size_value > 0))
             {
                 *pointer = malloc (size_value);
                 if (*pointer)
