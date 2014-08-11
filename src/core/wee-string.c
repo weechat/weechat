@@ -2661,7 +2661,7 @@ string_replace_with_callback (const char *string,
 
     *errors = 0;
 
-    if (!string || !prefix || !prefix[0] || !suffix || !suffix[0])
+    if (!string || !prefix || !prefix[0] || !suffix || !suffix[0] || !callback)
         return NULL;
 
     length_prefix = strlen (prefix);
