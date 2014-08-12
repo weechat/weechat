@@ -298,6 +298,11 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
             weechat_unhook (xfer->hook_timer);
             xfer->hook_timer = NULL;
         }
+        if (xfer->hook_connect)
+        {
+            weechat_unhook (xfer->hook_connect);
+            xfer->hook_connect = NULL;
+        }
         if (XFER_IS_FILE(xfer->type))
         {
             weechat_printf (NULL,
@@ -479,6 +484,7 @@ xfer_alloc ()
     new_xfer->child_write = -1;
     new_xfer->hook_fd = NULL;
     new_xfer->hook_timer = NULL;
+    new_xfer->hook_connect = NULL;
     new_xfer->unterminated_message = NULL;
     new_xfer->file = -1;
     new_xfer->local_filename = NULL;
@@ -1571,6 +1577,8 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
         return 0;
     if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer", xfer->hook_timer))
         return 0;
+    if (!weechat_infolist_new_var_pointer (ptr_item, "hook_connect", xfer->hook_connect))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "unterminated_message", xfer->unterminated_message))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "file", xfer->file))
@@ -1661,6 +1669,7 @@ xfer_print_log ()
         weechat_log_printf ("  child_write . . . . . . : %d",    ptr_xfer->child_write);
         weechat_log_printf ("  hook_fd . . . . . . . . : 0x%lx", ptr_xfer->hook_fd);
         weechat_log_printf ("  hook_timer. . . . . . . : 0x%lx", ptr_xfer->hook_timer);
+        weechat_log_printf ("  hook_connect. . . . . . : 0x%lx", ptr_xfer->hook_connect);
         weechat_log_printf ("  unterminated_message. . : '%s'",  ptr_xfer->unterminated_message);
         weechat_log_printf ("  file. . . . . . . . . . : %d",    ptr_xfer->file);
         weechat_log_printf ("  local_filename. . . . . : '%s'",  ptr_xfer->local_filename);

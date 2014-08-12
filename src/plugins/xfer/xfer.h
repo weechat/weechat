@@ -163,6 +163,7 @@ struct t_xfer
     int child_write;                   /* to write into child pipe          */
     struct t_hook *hook_fd;            /* hook for socket or child pipe     */
     struct t_hook *hook_timer;         /* timeout for receiver accept       */
+    struct t_hook *hook_connect;       /* hook for connection to chat recv  */
     char *unterminated_message;        /* beginning of a message            */
     int file;                          /* local file (read or write)        */
     char *local_filename;              /* local filename (with path)        */
