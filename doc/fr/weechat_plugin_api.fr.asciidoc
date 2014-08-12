@@ -3870,7 +3870,14 @@ my_free_value_cb (struct t_hashtable *hashtable, const void *key, void *value)
     /* ... */
 }
 
+void
+my_free_key_cb (struct t_hashtable *hashtable, void *key)
+{
+    /* ... */
+}
+
 weechat_hashtable_set_pointer (hashtable, "callback_free_value", &my_free_value_cb);
+weechat_hashtable_set_pointer (hashtable, "callback_free_key", &my_free_key_cb);
 ----
 
 [NOTE]
