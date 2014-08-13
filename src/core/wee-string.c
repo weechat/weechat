@@ -2641,7 +2641,8 @@ string_input_for_buffer (const char *string)
  *
  * Nested variables are supported, for example: "${var1:${var2}}".
  *
- * Argument "errors" is set with number of keys not found by callback.
+ * Argument "errors" (if not NULL) is set with number of keys not found by
+ * callback.
  *
  * Note: result must be freed after use.
  */
@@ -2659,7 +2660,8 @@ string_replace_with_callback (const char *string,
     char *result, *result2, *key, *key2, *value;
     const char *pos_end_name;
 
-    *errors = 0;
+    if (errors)
+        *errors = 0;
 
     if (!string || !prefix || !prefix[0] || !suffix || !suffix[0] || !callback)
         return NULL;
@@ -2710,7 +2712,8 @@ string_replace_with_callback (const char *string,
                 if (!pos_end_name[0])
                 {
                     result[index_result] = '\0';
-                    (*errors)++;
+                    if (errors)
+                        (*errors)++;
                     return result;
                 }
                 key = string_strndup (string + index_string + length_prefix,
@@ -2724,7 +2727,8 @@ string_replace_with_callback (const char *string,
                                                              suffix, callback,
                                                              callback_data,
                                                              &sub_errors);
-                        (*errors) += sub_errors;
+                        if (errors)
+                            (*errors) += sub_errors;
                         free (key);
                         key = key2;
                     }
@@ -2755,7 +2759,8 @@ string_replace_with_callback (const char *string,
                     else
                     {
                         result[index_result++] = string[index_string++];
-                        (*errors)++;
+                        if (errors)
+                            (*errors)++;
                     }
                     if (key)
                         free (key);

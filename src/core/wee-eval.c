@@ -395,16 +395,13 @@ eval_replace_vars (const char *expr, struct t_hashtable *pointers,
                    struct t_hashtable *extra_vars,
                    const char *prefix, const char *suffix)
 {
-    int errors;
     void *ptr[2];
 
     ptr[0] = pointers;
     ptr[1] = extra_vars;
 
     return string_replace_with_callback (expr, prefix, suffix,
-                                         &eval_replace_vars_cb,
-                                         ptr,
-                                         &errors);
+                                         &eval_replace_vars_cb, ptr, NULL);
 }
 
 /*
