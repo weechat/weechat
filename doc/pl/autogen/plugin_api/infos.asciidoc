@@ -26,17 +26,17 @@
 
 | python | python2_bin | ścieżka do interpretera pythona 2.x | -
 
-| relay | relay_client_count | number of clients for relay | status name (optional): connecting, waiting_auth, connected, auth_failed, disconnected
+| relay | relay_client_count | liczba podłączonych klientów | nazwa statusu (opcjonalne): łączenie, oczekiwanie na uwierzytelnienie, połączono, uwierzytelnienie nieudane, rozłączono
 
 | weechat | charset_internal | wewnętrzne kodowanie WeeChat | -
 
 | weechat | charset_terminal | kodowanie terminala | -
 
-| weechat | color_ansi_regex | POSIX extended regular expression to search ANSI escape codes | -
+| weechat | color_ansi_regex | Rozszerzone wyrażenia regularne POSIX do wyszukiwania kodów escapującyhc ANSI | -
 
-| weechat | color_rgb2term | RGB color converted to terminal color (0-255) | rgb,limit (limit is optional and is set to 256 by default)
+| weechat | color_rgb2term | kolor RGB skonwertowany na kolor terminala (0-255) | rgb,limit (limit jest opcjonalny i ustawiony domyślnie na 256)
 
-| weechat | color_term2rgb | terminal color (0-255) converted to RGB color | color (terminal color: 0-255)
+| weechat | color_term2rgb | kolor terminala (0-255) skonwertowany na kolor RGB | kolor (kolor terminala: 0-255)
 
 | weechat | cursor_mode | 1 jeśli tryb kursora jest aktywny | -
 

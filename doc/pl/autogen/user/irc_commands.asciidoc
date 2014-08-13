@@ -13,39 +13,39 @@ cel: nazwa serwera
 ----
 /allchan  [-current] [-exclude=<kanał>[,<kanał>...]] <komenda> [<argumenty>]
 
- -current: execute command for channels of current server only
- -exclude: exclude some channels (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: wykonuje komendę tylko na kanałach obecnego serwera
+ -exclude: wyklucza niektóre kanały (wildcard "*" jest dozwolony)
+  komenda: komenda do wykonania
+argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
 
-Examples:
-  execute '/me is testing' on all channels:
-    /allchan me is testing
-  say 'hello' everywhere but not on #weechat:
-    /allchan -exclude=#weechat msg * hello
-  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
-    /allchan -exclude=#weechat,#linux* msg * hello
+Przykłady:
+  wykonuje '/me testuje' na wszystkich kanałach:
+    /allchan me testuje
+  mówi 'witam' wszędzie tylko nie na #weechat:
+    /allchan -exclude=#weechat msg * witam
+  mówi 'witam' wszędzie poza #weechat oraz kanałami zaczynającymi się od #linux:
+    /allchan -exclude=#weechat,#linux* msg * witam
 ----
 
 [[command_irc_allpv]]
-[command]*`allpv`* execute a command on all private buffers of all connected servers::
+[command]*`allpv`* wykonuje komendę na wszystkich prywatnych buforach wszystkich połączonych serwerów::
 
 ----
-/allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
+/allpv  [-current] [-exclude=<nick>[,<nick>...]] <komenda> [<argumenty>]
 
- -current: execute command for private buffers of current server only
- -exclude: exclude some nicks (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: wykonuje komendę tylko na prywatnych buforach obecnego serwera
+ -exclude: wyklucza niektóre nicki (wildcard "*" jest dozwolony)
+  komenda: komenda do wykonania
+argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
 
-Examples:
-  execute '/me is testing' on all private buffers:
+Przykłady:
+  wykonuje '/me testuje' we wszystkich prywatnych buforach:
     /allpv me is testing
-  say 'hello' everywhere but not for nick foo:
+  wysyła wszędzie 'hello' tylko nie nickowi foo:
     /allpv -exclude=foo msg * hello
-  say 'hello' everywhere but not for nick foo and nicks beginning with bar:
+  wysyła wszędzie 'hello' tylko nie nickowi foo i nickom zaczynającym się od bar:
     /allpv -exclude=foo,bar* msg * hello
-  close all private buffers:
+  zamyka wszystkie prywatne bufory:
     /allpv close
 ----
 
@@ -55,16 +55,16 @@ Examples:
 ----
 /allserv  [-exclude=<serwer>[,<serwer>...]] <komenda> [<argumenty>]
 
- -exclude: exclude some servers (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -exclude: wyklucza niektóre serwery (wildcard "*" jest dozwolony)
+  komenda: komenda do wykonania
+argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
 
-Examples:
-  change nick on all servers:
-    /allserv nick newnick
-  set away on all servers:
-    /allserv away I'm away
-  do a whois on my nick on all servers:
+Przykłady:
+  zmienia nick na wszystkich serwerach:
+    /allserv nick nowy_nick
+  ustawia stan nieobecności na wszystkich serwerach:
+    /allserv away Jestem nieobecny
+  wykonuje whois na własnym nicku na wszystkich serwerach:
     /allserv whois $nick
 ----
 
@@ -74,10 +74,10 @@ Examples:
 ----
 /ban  [<kanał>] [<nick> [<nick>...]]
 
-channel: channel name
-   nick: nick or host
+kanał: nazwa kanału
+   nick: nick lub host
 
-Without argument, this command display ban list for current channel.
+Bez podania argumentu komenda wyświetla listę banów na obecnym kanale.
 ----
 
 [[command_irc_connect]]
@@ -117,9 +117,9 @@ Przykłady:
 ----
 /ctcp  <cel> <typ> [<argumenty>]
 
- target: nick or channel name to send CTCP to
-   type: CTCP type (examples: "version", "ping", ..)
-arguments: arguments for CTCP
+ cel: nick albo kanał, na który wysłać CTCP
+     typ: typ CTCP (przykłady: "version", "ping", ..)
+argumenty: argumenty dla CTCP
 ----
 
 [[command_irc_cycle]]
@@ -128,8 +128,8 @@ arguments: arguments for CTCP
 ----
 /cycle  [<kanał>[,<kanał>...]] [<wiadomość>]
 
-channel: channel name
-message: part message (displayed to other users)
+kanał: nazwa kanału
+wiadomość: wiadomość pożegnalna (pokazywana innym użytkownikom)
 ----
 
 [[command_irc_dcc]]
@@ -140,12 +140,12 @@ message: part message (displayed to other users)
       send <nick> <plik>
 
 nick: nick
-file: filename (on local host)
+plik: nazwa pliku (na lokalnym hoście)
 
-Examples:
-  chat with nick "toto":
+Przykłady:
+  rozmowa z użytkownikiem "toto":
     /dcc chat toto
-  send file "/home/foo/bar.txt" to nick "toto":
+  wyśle plik "/home/foo/bar.txt" użytkownikowi "toto":
     /dcc send toto /home/foo/bar.txt
 ----
 
@@ -155,8 +155,8 @@ Examples:
 ----
 /dehalfop  <nick> [<nick>...]
 
-nick: nick or mask (wildcard "*" is allowed)
-   *: remove channel half-operator status from everybody on channel except yourself
+nick: nick lub maska (wildcard "*" jest dozwolony)
+   *: zabiera status pół-operatora kanału wszystkim na kanale poza tobą
 ----
 
 [[command_irc_deop]]
@@ -166,8 +166,8 @@ nick: nick or mask (wildcard "*" is allowed)
 /deop  <nick> [<nick>...]
        * -yes
 
-nick: nick or mask (wildcard "*" is allowed)
-   *: remove channel operator status from everybody on channel except yourself
+nick: nick lub maska (wildcard "*" jest dozwolony)
+   *: zabiera status operatora kanału wszystkim na kanale poza tobą
 ----
 
 [[command_irc_devoice]]
@@ -177,8 +177,8 @@ nick: nick or mask (wildcard "*" is allowed)
 /devoice  <nick> [<nick>...]
           * -yes
 
-nick: nick or mask (wildcard "*" is allowed)
-   *: remove voice from everybody on channel
+nick: nick lub maska (wildcard "*" jest dozwolony)
+   *: odbiera głos wszystkim na kanale
 ----
 
 [[command_irc_die]]
@@ -196,10 +196,10 @@ cel: nazwa serwera
 ----
 /disconnect  [<serwer>|-all|-pending [<powód>]]
 
-  server: internal server name
-    -all: disconnect from all servers
--pending: cancel auto-reconnection on servers currently reconnecting
-  reason: reason for the "quit"
+  serwer: wewnętrzna nazwa serwera
+    -all: rozłącza się ze wszystkimi serwerami
+-pending: anuluje automatyczne łączenie dla serwerów ponownie łączących się
+  powód: powód dla "quit"
 ----
 
 [[command_irc_halfop]]
@@ -209,8 +209,8 @@ cel: nazwa serwera
 /halfop  <nick> [<nick>...]
          * -yes
 
-nick: nick or mask (wildcard "*" is allowed)
-   *: give channel half-operator status to everybody on channel
+nick: nick lub maska (wildcard "*" jest dozwolony)
+   *: nadaje status pół-operatora kanału wszystkim na kanale
 ----
 
 [[command_irc_ignore]]
@@ -288,30 +288,30 @@ Przykłady:
 ----
 
 [[command_irc_kick]]
-[command]*`kick`* kick a user out of a channel::
+[command]*`kick`* wyrzuca użytkownika z kanału::
 
 ----
 /kick  [<kanał>] <nick> [<powód>]
 
-channel: channel name
+kanał: nazwa kanału
    nick: nick
- reason: reason (special variables $nick, $channel and $server are replaced by their value)
+ powód: powód(specjalne zmienne jak $nick, $channel i $server są podmieniane na odpowiednie wartości)
 ----
 
 [[command_irc_kickban]]
-[command]*`kickban`* kick a user out of a channel and ban the host::
+[command]*`kickban`* wyrzuca użytkownika z kanału i banuje hosta::
 
 ----
 /kickban  [<kanał>] <nick> [<powód>]
 
-channel: channel name
+kanał: nazwa kanału
    nick: nick
- reason: reason (special variables $nick, $channel and $server are replaced by their value)
+ powód: powód (specjalne zmienne jak $nick, $channel i $server są podmieniane na odpowiednie wartości)
 
-It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
+Możliwe jest kopanie/banowanie za pomocą maski, nick zostanie wyciągnięty z maski i zastąpiony "*".
 
-Example:
-  ban "*!*@host.com" and then kick "toto":
+Przykład:
+  zbanuje "*!*@host.com", następnie wykopie "toto":
     /kickban toto!*@host.com
 ----
 
@@ -319,7 +319,7 @@ Example:
 [command]*`kill`* zamyka połączenie klient-serwer::
 
 ----
-/kill  <nick> [<reason>]
+/kill  <nick> [<powód>]
 
   nick: nick
 powód: powód
@@ -461,9 +461,9 @@ nick: nowy nick
 ----
 /notice  [-server <serwer>] <cel> <tekst>
 
-server: send to this server (internal name)
-target: nick or channel name
-  text: text to send
+serwer: wyślij do tego serwera (nazwa wewnętrzna)
+cel: nick lub kanał
+  tekst: wiadomość do wysłania
 ----
 
 [[command_irc_notify]]
@@ -498,8 +498,8 @@ Przykłady:
 /op  <nick> [<nick>...]
      * -yes
 
-nick: nick or mask (wildcard "*" is allowed)
-   *: give channel operator status to everybody on channel
+nick: nick lub maska (wildcard "*" jest dozwolony)
+   *: nadaje status operatora kanału wszystkim na kanale
 ----
 
 [[command_irc_oper]]
@@ -548,9 +548,9 @@ demon2: prześlij do tego demona
 ----
 /query  [-server <serwer>] <nick>[,<nick>...] [<tekst>]
 
-server: send to this server (internal name)
+serwer: wyślij do tego serwera (nazwa wewnętrzna)
   nick: nick
-  text: text to send
+  tekst: wiadomość do wysłania
 ----
 
 [[command_irc_quiet]]
@@ -559,10 +559,10 @@ server: send to this server (internal name)
 ----
 /quiet  [<kanał>] [<nick> [<nick>...]]
 
-channel: channel name
-   nick: nick or host
+kanał: nazwa kanału
+   nick: nazwa użytkownika lub host
 
-Without argument, this command display quiet list for current channel.
+Bez podania argumentu komenda wyświetla listę uciszeń dla obecnego kanału.
 ----
 
 [[command_irc_quote]]
@@ -582,10 +582,10 @@ serwer: wyślij do tego serwera (nazwa wewnętrzna)
 /reconnect  <serwer> [<serwer>...] [-nojoin] [-switch]
             -all [-nojoin] [-switch]
 
- server: server to reconnect (internal name)
-   -all: reconnect to all servers
--nojoin: do not join any channel (even if autojoin is enabled on server)
--switch: switch to next server address
+ serwer: nazwa serwera do ponownego połączenia (wewnętrzna nazwa)
+   -all: ponownie łączy się ze wszystkimi serwerami
+-nojoin: nie wchodź na żadne kanały (nawet jeśli są zdefiniowane kanały do automatycznego wejścia dla serwera)
+-switch: przełącza na kolejny adres serwera
 ----
 
 [[command_irc_rehash]]
@@ -598,14 +598,14 @@ opcje: dodatkowe opcje, dla niektórych serwerów
 ----
 
 [[command_irc_remove]]
-[command]*`remove`* force a user to leave a channel::
+[command]*`remove`* zmusza użytkownika do opuszczenia kanału::
 
 ----
 /remove  [<kanał>] <nick> [<powód>]
 
-channel: channel name
+kanał: nazwa kanału
    nick: nick
- reason: reason (special variables $nick, $channel and $server are replaced by their value)
+ powód: powód(specjalne zmienne jak $nick, $channel i $server są podmieniane na odpowiednie wartości)
 ----
 
 [[command_irc_restart]]
@@ -740,8 +740,8 @@ usługa: nazwa usługi
 ----
 /squit  <serwer> <komentarz>
 
- server: server name
-comment: comment
+ serwer: nazwa serwera
+komentarz: komentarz
 ----
 
 [[command_irc_stats]]
@@ -780,9 +780,9 @@ cel: pobierz czas podanego serwera
 ----
 /topic  [<kanał>] [<temat>|-delete]
 
-channel: channel name
-  topic: new topic
--delete: delete channel topic
+kanał: nazwa kanału
+  temat: nowy temat kanału
+-delete: kasuje temat kanału
 ----
 
 [[command_irc_trace]]
@@ -800,18 +800,18 @@ cel: nazwa serwera
 ----
 /unban  [<kanał>] <nick> [<nick> ...]
 
-channel: channel name
-   nick: nick or host
+kanał: nazwa kanału
+   nick: użytkownik lub host
 ----
 
 [[command_irc_unquiet]]
-[command]*`unquiet`* unquiet nicks or hosts::
+[command]*`unquiet`* nicki albo hosty przestają być uciszone::
 
 ----
 /unquiet  [<kanał>] <nick> [<nick> ...]
 
-channel: channel name
-   nick: nick or host
+kanał: nazwa kanału
+   nick: użytkownik lub host
 ----
 
 [[command_irc_userhost]]
@@ -848,8 +848,8 @@ serwer: nazwa serwera
 ----
 /voice  <nick> [<nick>...]
 
-nick: nick or mask (wildcard "*" is allowed)
-   *: give voice to everybody on channel
+nick: nick lub maska (wildcard "*" jest dozwolony)
+   *: daje głos każdemu na kanale
 ----
 
 [[command_irc_wallchops]]
@@ -887,14 +887,14 @@ maska: tylko informacje pasujące do maski
 ----
 /whois  [<serwer>] [<nick>[,<nick>...]]
 
-server: server name
-  nick: nick (may be a mask)
+serwer: nazwa serwera
+  nick: nick (może być maska)
 
-Without argument, this command will do a whois on:
-- your own nick if buffer is a server/channel
-- remote nick if buffer is a private.
+Bez argumentu, komenda ta wykona whois na:
+- twoim własnym nicki, jeśli bufor to serwer/kanał
+- zdalnym nicku, jeśli bufor to rozmowa prywatna.
 
-If option irc.network.whois_double_nick is enabled, two nicks are sent (if only one nick is given), to get idle time in answer.
+Jeśli opcja irc.network.whois_double_nick jest włączona, wysyłane są dwa nicki (jeśli został podany tylko jeden), aby uzyskać czas bezczynności w odpowiedzi.
 ----
 
 [[command_irc_whowas]]
@@ -904,7 +904,7 @@ If option irc.network.whois_double_nick is enabled, two nicks are sent (if only 
 /whowas  <nick>[,<nick>...] [<ilość> [<cel>]]
 
   nick: nick
- count: number of replies to return (full search if negative number)
-target: reply should match this mask
+ ilość: ilość zwracanych odpowiedzi (pełne wyszukiwanie dla numerów ujemnych)
+cel: odpowiedź powinna pasować do maski
 ----
 

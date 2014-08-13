@@ -24,7 +24,7 @@
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
 
 * [[option_irc.color.item_nick_modes]] *irc.color.item_nick_modes*
-** opis: `color for nick modes in bar item "input_prompt"`
+** opis: `kolor dla atrybutów nicka w elemencie paska "input_prompt"`
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
 
@@ -39,7 +39,7 @@
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `red`)
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
-** opis: `remap mirc colors in messages using a hashtable: keys are "fg,bg" as integers between -1 (not specified) and 15, values are WeeChat color names or numbers (format is: "1,-1:color1;2,7:color2"), example: "1,-1:darkgray;1,2:white,blue" to remap black to "darkgray" and black on blue to "white,blue"; default WeeChat colors for IRC codes: 0=white, 1=black, 2=blue, 3=green, 4=lightred, 5=red, 6=magenta, 7=brown, 8=yellow, 9=lightgreen, 10=cyan, 11=lightcyan, 12=lightblue, 13=lightmagenta, 14=gray, 15=white`
+** opis: `zamień kolory mirca w wiadomościach używając tablicy hashy: klucze to  "fg,bg" przyjmują one wartości pomiędzy -1 (nie określono) a 15, wartości to nazwy lub numery kolorów WeeChat (format: "1,-1:kolor1;2,7:kolor2"), przykład: "1,-1:darkgray;1,2:white,blue" w celu przemapowania czarnego na "darkgray" oraz czarnego na niebieskim tle na "white,blue"; domyślne kolory WeeChat dla kodów IRC: 0-=white, 1=black, 2=blue, 3=green, 4=lightred, 5=red, 6=magenta, 7=brown, 8=yellow, 9=lightgreen, 10=cyan, 11=lightcyan, 12=lightblue, 13=lightmagenta, 14=gray, 15=white`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"1,-1:darkgray"`)
 
@@ -139,7 +139,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_irc.look.display_join_message]] *irc.look.display_join_message*
-** opis: `comma-separated list of messages to display after joining a channel: 324 = channel modes, 329 = channel creation date, 332 = topic, 333 = nick/date for topic, 353 = names on channel, 366 = names count`
+** opis: `oddzielona przecinkami lista wiadomości wyświetlanych po wejściu na kanał: 324 = atrybuty kanału, 329 = data utworzenia, 332 = temat, 333 = autor/data tematu, 353 = osoby na kanale, 366 = ilość osób na kanale`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"329,332,333,366"`)
 
@@ -174,7 +174,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `"$nick"`)
 
 * [[option_irc.look.highlight_tags_restrict]] *irc.look.highlight_tags_restrict*
-** opis: `restrict highlights to these tags on irc buffers (to have highlight on user messages but not server messages); tags must be separated by a comma and "+" can be used to make a logical "and" between tags; wildcard "*" is allowed in tags; an empty value allows highlight on any tag`
+** opis: `ogranicza podświetlenia do tych tagów w buforach irc (żeby mieć podświetlenia tylko od wiadomości użytkowników ale nie serwera); tagi muszą być oddzielone przecinkami, "+" może zostać użyty w celu uzyskania logicznego "i" pomiędzy tagami; wildcard "*" jest dozwolony w tagach; pusta wartość zezwala na podświetlenia przez dowolny tag`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"irc_privmsg,irc_notice"`)
 
@@ -184,7 +184,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
-** opis: `hide channel modes arguments if at least one of these modes is in channel modes ("*" to always hide all arguments, empty value to never hide arguments); example: "kf" to hide arguments if "k" or "f" are in channel modes`
+** opis: `ukryj atrybuty trybów kanałów jeśli przynajmniej jeden z tych trybów jest ustawiony ("*" zawsze ukrywaj argumenty, pusta wartość - nigdy nie ukrywaj); przykład: "kf" dla ukrycia argumentów, jeśli ustawiony jest tryb "k" lub "f"`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"k"`)
 
@@ -194,17 +194,17 @@
 ** wartości: buffer_plugin, buffer_name (domyślna wartość: `buffer_plugin`)
 
 * [[option_irc.look.item_nick_modes]] *irc.look.item_nick_modes*
-** opis: `display nick modes in bar item "input_prompt"`
+** opis: `wyświetlaj tryby nicka w elemencie paska "input_prompt"`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_irc.look.item_nick_prefix]] *irc.look.item_nick_prefix*
-** opis: `display nick prefix in bar item "input_prompt"`
+** opis: `wyświetlaj przedrostek nicka w elemencie paska "input_prompt"`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_irc.look.join_auto_add_chantype]] *irc.look.join_auto_add_chantype*
-** opis: `automatically add channel type in front of channel name on command /join if the channel name does not start with a valid channel type for the server; for example: "/join weechat" will in fact send: "/join #weechat"`
+** opis: `automatycznie dodawaj typ kanału z przodu nazwy kanału dla komendy /join jeśli nazwa kanału nie zaczyna się od poprawnego typu kanału na serwerze; na przykład: "/join weechat" zostanie wysłane jako: "/join #weechat"`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 
@@ -329,7 +329,7 @@
 ** wartości: 0 .. 10080 (domyślna wartość: `30`)
 
 * [[option_irc.look.smart_filter_mode]] *irc.look.smart_filter_mode*
-** opis: `enable smart filter for "mode" messages: "*" to filter all modes, "+" to filter all modes in server prefixes (for example "ovh"), "xyz" to filter only modes x/y/z, "-xyz" to filter all modes but not x/y/z; examples: "ovh": filter modes o/v/h, "-bkl": filter all modes but not b/k/l`
+** opis: `włącz inteligentny filtr dla wiadomości "mode": "*" filtruje wszystkie tryby, "+" filtruje wszystkie tryby w prefiksach serwera (na przykład "ovh"), "xyz" filtruje tylko tryby x/y/z, "-xyz" filtruje wszystkie tryby poza x/y/z; przykład: "ovh": filtruje tryby o/v/h, "-bkl" filtruje wszystkie tryby poza b/k/l`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"+"`)
 
@@ -364,7 +364,7 @@
 ** wartości: 0 .. 604800 (domyślna wartość: `600`)
 
 * [[option_irc.network.ban_mask_default]] *irc.network.ban_mask_default*
-** opis: `default ban mask for commands /ban, /unban and /kickban; variables $nick, $user, $ident and $host are replaced by their values (extracted from "nick!user@host"); $ident is the same as $user if $user does not start with "~", otherwise it is set to "*"; this default mask is used only if WeeChat knows the host for the nick`
+** opis: `domyślna maska dla bana dla komend /ban, /unban i /kickban; zmienne $nick, $user, $ident i $host są zastępowane odpowiednimi wartościami (pobranymi z "nick!user@host"); $ident jest taki sam jak $user, jeśli $user nie zaczyna się od "~", w przeciwnym wypadku jest ustawiany na "*"; domyślna maska używana jest tylko, kiedy WeeChat zna nazwę hosta dla nicka`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"*!$ident@$host"`)
 
@@ -479,7 +479,7 @@
 ** wartości: 0 .. 1000000 (domyślna wartość: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** opis: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: multi-prefix, userhost-in-names, away-notify (example: "multi-prefix,userhost-in-names,away-notify")`
+** opis: `oddzielona przecinkami lista opcji klienta do włączenia dla serwera, jeśli są dostępne; opcje wspierane przez WeeChat: multi-prefix, userhost-in-names, away-notify (przykład: "multi-prefix,userhost-in-names,away-notify")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -544,7 +544,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_irc.server_default.realname]] *irc.server_default.realname*
-** opis: `real name to use on server (note: content is evaluated, see /help eval)`
+** opis: `prawdziwa nazwa do użycia na serwerze (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -584,7 +584,7 @@
 ** wartości: 0 .. 2147483647 (domyślna wartość: `2048`)
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** opis: `SHA1 fingerprint of certificate which is trusted and accepted for the server (it must be exactly 40 hexadecimal digits without separators); many fingerprints can be separated by commas; if this option is set, the other checks on certificates are NOT performed (option "ssl_verify")`
+** opis: `skrót SHA1 certyfikatu, który jest zaufany i akceptowany dla serwera (dokładnie 40 znaków heksadecymalnych bez separatorów); wiele skrótów można oddzielić przecinkami; jeśli ta opcja jest ustawiona, certyfikat NIE jest dalej sprawdzany (opcja "ssl_verify")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -599,7 +599,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_irc.server_default.username]] *irc.server_default.username*
-** opis: `user name to use on server (note: content is evaluated, see /help eval)`
+** opis: `nazwa użytkownika do użycia na serwerze (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 

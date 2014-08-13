@@ -294,7 +294,7 @@
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightgreen`)
 
 * [[option_weechat.color.status_nicklist_count]] *weechat.color.status_nicklist_count*
-** opis: `text color for number of nicks in nicklist (status bar)`
+** opis: `kolor tekstu dla numeru nicków w liście nicków (pasek statusu)`
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
 
@@ -414,12 +414,12 @@
 ** wartości: dowolny ciąg (domyślna wartość: `"--"`)
 
 * [[option_weechat.look.bare_display_exit_on_input]] *weechat.look.bare_display_exit_on_input*
-** opis: `exit the bare display mode on any changes in input`
+** opis: `wyjście z trybu niesformatowanego wyświetlania po każdej zmianie wejścia`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_weechat.look.bare_display_time_format]] *weechat.look.bare_display_time_format*
-** opis: `time format in bare display mode (see man strftime for date/time specifiers)`
+** opis: `format czasu dla trybu niesformatowanego wyświetlania  (zobacz man strftime dla specyfikatorów daty/czasu)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"%H:%M"`)
 
@@ -559,12 +559,12 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** opis: `comma separated list of tags to highlight; case insensitive comparison; wildcard "*" is allowed in each tag; many tags can be separated by "+" to make a logical "and" between tags; examples: "nick_flashcode" for messages from nick "FlashCode", "irc_notice+nick_toto*" for notices from a nick starting with "toto"`
+** opis: `oddzielona przecinkami lista tagów do podświetleń; porównywanie bez uwzględnienia wielkości znaków; wildcard "*" jest dozwolony w każdym tagu; wiele tagów może być oddzielonych "+" jako logicznym "i" pomiędzy tagami; przykłady: "nick_flashcode" dla wiadomości od nicka "FlashCode", "irc_notice+nick_toto*" dla powiadomień od nicka zaczynającego się na "toto"`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_weechat.look.hotlist_add_conditions]] *weechat.look.hotlist_add_conditions*
-** opis: `conditions to add a buffer in hotlist (if notify level is OK for the buffer); you can use in these conditions: "window" (current window pointer), "buffer" (buffer pointer to add in hotlist), "priority" (0 = low, 1 = message, 2 = private, 3 = highlight); by default a buffer is added to hotlist if you are away, or if the buffer is not visible on screen (not displayed in any window)`
+** opis: `warunki dla dodania buforu na hotlistę (jeśli poziom powiadomień jest OK dla bufora); możesz użyć następujących warunków:  "window" (wskaźnik obecnego okna), "buffer" (wskaźnik bufora do dodania na hotlistę), "priority" (0 = niski, 1 = wiadomość, 2 = rozmowa prywatna, 3 = highlight); domyślnie bufor jest dodawany do hotlisty jeśli jesteś niedostępny lub jeśli bufor nie jest widoczny na ekranie (nie jest wyświetlany w żadnym oknie)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"${away} || ${buffer.num_displayed} == 0"`)
 
@@ -609,7 +609,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `"H: "`)
 
 * [[option_weechat.look.hotlist_remove]] *weechat.look.hotlist_remove*
-** opis: `remove buffers in hotlist: buffer = remove buffer by buffer, merged = remove all visible merged buffers at once`
+** opis: `usuwa bufor z hotlisty: buffer = usuwa bufor po buforze, merged = usuwa wszystkie widoczne połączone bufory`
 ** typ: liczba
 ** wartości: buffer, merged (domyślna wartość: `merged`)
 
@@ -619,7 +619,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_weechat.look.hotlist_sort]] *weechat.look.hotlist_sort*
-** opis: `sort of hotlist: group_time_*: group by notify level (highlights first) then sort by time, group_number_*: group by notify level (highlights first) then sort by number, number_*: sort by number; asc = ascending sort, desc = descending sort`
+** opis: `sortowanie hotlisty: group_time_*: grupuj po poziomie powiadomień (powiadomienia pierwsze) następnie sortuj po czasie, group_number_*: grupuj po poziomie powiadomień (powiadomienia pierwsze) następnie sortuj po numerze, number_*: sortuj po numerze; asc = sortowanie rosnące, desc = sortowanie malejące`
 ** typ: liczba
 ** wartości: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (domyślna wartość: `group_time_asc`)
 
@@ -909,7 +909,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
-** opis: `comma separated list of plugins to load automatically at startup, "*" means all plugins found, a name beginning with "!" is a negative value to prevent a plugin from being loaded, wildcard "*" is allowed in names (examples: "*" or "*,!lua,!tcl")`
+** opis: `oddzielona przecinkami lista wtyczek do automatycznego załadowania podczas startu, "*" oznacza wszystkie znalezione wtyczki, nazwa zaczynająca się od "!" powoduje nie ładowanie tej wtyczki, wildcard "*" jest dozwolony w nazwach (przykłady: "*" lub "*,!lua,!tcl")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"*"`)
 

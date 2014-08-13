@@ -2,51 +2,51 @@
 |===
 | Wtyczka | Nazwa | Opis | Wskaźnik | Argumenty
 
-| alias | alias | lista aliasów | wskaźnik aliasu (opcjonalny) | alias name (wildcard "*" is allowed) (optional)
+| alias | alias | lista aliasów | wskaźnik aliasu (opcjonalny) | nazwa aliasu (wildcard "*" jest dozwolony) (opcjonalne)
 
-| guile | guile_script | lista skryptów | wskaźnik skryptu (opcjonalne) | script name (wildcard "*" is allowed) (optional)
+| guile | guile_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)
 
 | irc | irc_channel | lista kanałów IRC | wskaźnik kanału (opcjonalne) | serwer,kanał (kanał jest opcjonalny)
 
 | irc | irc_ignore | lista ignorów IRC | wskaźnik ignorowania (opcjonalne) | -
 
-| irc | irc_nick | lista nicków na kanale IRC | wskaźnik nicka (opcjonalne) | server,channel,nick (nick is optional)
+| irc | irc_nick | lista nicków na kanale IRC | wskaźnik nicka (opcjonalne) | serwer,kanał,nick (nick jest opcjonalny)
 
-| irc | irc_notify | lista powiadomień | wskaźnik powiadomienia (opcjonalne) | server name (wildcard "*" is allowed) (optional)
+| irc | irc_notify | lista powiadomień | wskaźnik powiadomienia (opcjonalne) | nazwa serwera (wildcard "*" jest dozwolony) (opcjonalne)
 
-| irc | irc_server | lista serwerów IRC | wskaźnik serwera (opcjonalny) | server name (wildcard "*" is allowed) (optional)
+| irc | irc_server | lista serwerów IRC | wskaźnik serwera (opcjonalny) | nazwa serwera (wildcard "*" jest dozwolony) (opcjonalne)
 
 | logger | logger_buffer | lista logowanych buforów | wskaźnik logger (opcjonalny) | -
 
-| lua | lua_script | lista skryptów | wskaźnik skryptu (opcjonalne) | script name (wildcard "*" is allowed) (optional)
+| lua | lua_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)
 
-| perl | perl_script | lista skryptów | wskaźnik skryptu (opcjonalne) | script name (wildcard "*" is allowed) (optional)
+| perl | perl_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)
 
-| python | python_script | lista skryptów | wskaźnik skryptu (opcjonalne) | script name (wildcard "*" is allowed) (optional)
+| python | python_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)
 
 | relay | relay | lista zdalnych klientów | wskaźnik relay (opcjonalny) | -
 
-| ruby | ruby_script | lista skryptów | wskaźnik skryptu (opcjonalne) | script name (wildcard "*" is allowed) (optional)
+| ruby | ruby_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)
 
-| script | script_script | lista skryptów | wskaźnik skryptu (opcjonalne) | script name with extension (wildcard "*" is allowed) (optional)
+| script | script_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu z rozszerzeniem (wildcard "*" jest dozwolony) (opcjonalne)"
 
-| tcl | tcl_script | lista skryptów | wskaźnik skryptu (opcjonalne) | script name (wildcard "*" is allowed) (optional)
+| tcl | tcl_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)
 
-| weechat | bar | lista pasków | wskaźnik paska (opcjonalne) | bar name (wildcard "*" is allowed) (optional)
+| weechat | bar | lista pasków | wskaźnik paska (opcjonalne) | nazwa paska (wildcard "*" jest dozwolony) (opcjonalne)
 
-| weechat | bar_item | lista elementów pasków | wskaźnik elementu paska (opcjonalne) | bar item name (wildcard "*" is allowed) (optional)
+| weechat | bar_item | lista elementów pasków | wskaźnik elementu paska (opcjonalne) | nazwa elementu paska (wildcard "*" jest dozwolony) (opcjonalne)
 
 | weechat | bar_window | lista pasków okien | wskaźnik paska okna (opcjonalne) | -
 
-| weechat | buffer | lista buforów | wskaźnik bufora (opcjonalne) | buffer name (wildcard "*" is allowed) (optional)
+| weechat | buffer | lista buforów | wskaźnik bufora (opcjonalne) | nazwa bufora (wildcard "*" jest dozwolony) (opcjonalne)
 
 | weechat | buffer_lines | linie w buforze | wskaźnik bufora | -
 
-| weechat | filter | lista filtrów | - | filter name (wildcard "*" is allowed) (optional)
+| weechat | filter | lista filtrów | - | nazwa filtru (wildcard "*" jest dozwolony) (opcjonalne)
 
 | weechat | history | historia komend | wskaźnik bufora (jeśli nie ustawiony, zwraca globalną historię) (opcjonalne) | -
 
-| weechat | hook | lista powiązań | wskaźnik uchwytu (opcjonalne) | type,arguments (type is command/timer/.., arguments to get only some hooks (wildcard "*" is allowed), both are optional)
+| weechat | hook | lista powiązań | wskaźnik uchwytu (opcjonalne) | typ,argumenty (typ to komenda/timer/.., argumenty do uzyskania tylko niektórych hooków (wildcard "*" jest dozwolony), oba są opcjonalne)
 
 | weechat | hotlist | lista buforów w hotliście | - | -
 
@@ -56,11 +56,11 @@
 
 | weechat | nicklist | nicki na liście nicków bufora | wskaźnik bufora | nick_xxx lub group_xxx w celu pozyskania tylko nick/group xxx (opcjonalne)
 
-| weechat | option | lista opcji | - | option name (wildcard "*" is allowed) (optional)
+| weechat | option | lista opcji | - | nazwa opcji (wildcard "*" jest dozwolony) (opcjonalne)
 
-| weechat | plugin | lista wtyczek | wskaźnik wtyczki (opcjonalne) | plugin name (wildcard "*" is allowed) (optional)
+| weechat | plugin | lista wtyczek | wskaźnik wtyczki (opcjonalne) | nazwa wtyczki (wildcard "*" jest dozwolony) (opcjonalne)
 
-| weechat | proxy | lista pośredników | wskaźnik pośrednika (opcjonalny) | proxy name (wildcard "*" is allowed) (optional)
+| weechat | proxy | lista pośredników | wskaźnik pośrednika (opcjonalny) | nazwa pośrednika (wildcard "*" jest dozwolony) (opcjonalne)
 
 | weechat | url_options | opcje dla URLi | - | -
 

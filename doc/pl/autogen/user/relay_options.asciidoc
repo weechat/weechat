@@ -89,7 +89,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_relay.network.clients_purge_delay]] *relay.network.clients_purge_delay*
-** opis: `delay for purging disconnected clients (in minutes, 0 = purge clients immediately, -1 = never purge)`
+** opis: `opóźnienie, z jakim zostaną skasowane rozłączone klienty (w minutach, 0 = natychmiast, -1 nigdy)`
 ** typ: liczba
 ** wartości: -1 .. 43200 (domyślna wartość: `0`)
 

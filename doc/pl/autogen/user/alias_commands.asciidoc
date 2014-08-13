@@ -4,31 +4,31 @@
 ----
 /alias  [-completion <dopełnienie>] <alias> [<komenda> [;<komenda>...]]
 
-completion: completion for alias (optional, by default completion is done with target command)
-            note: you can use %%command to use completion of an existing command
-     alias: name of alias (wildcard "*" is allowed)
-   command: command name with arguments (many commands can be separated by semicolons)
+completion: dopełnienie dla aliasu (opcjonalne, domyślnie dopełnienie wykonuje się z docelową komendą)
+            uwaga: można użyć %%komenda w celu użycia dopełnień dla istniejących komend
+     alias: nazwa aliasu (wildcard "*" jest dozwolony)
+   komenda: nazwa komendy (wiele komend można oddzielić za pomocą średnika)
 
-Without argument, this command lists all defined alias.
+Bez podania argumentu komenda wyświetla listę wszystkich zdefiniowanych aliasów.
 
-Note: in command, special variables are replaced:
-        $n: argument 'n' (between 1 and 9)
-       $-m: arguments from 1 to 'm'
-       $n-: arguments from 'n' to last
-      $n-m: arguments from 'n' to 'm'
-        $*: all arguments
-        $~: last argument
-      $var: where "var" is a local variable of buffer (see /buffer localvar)
-            examples: $nick, $channel, $server, $plugin, $name
+Ważne: dla komend specjalne zmienne są zastępowane odpowiednimi wartościami:
+        $n: argument 'n' (pomiędzy 1 i 9)
+       $-m: argumenty od 1 do 'm'
+       $n-: argumenty od 'n' do ostatniego
+      $n-m: argumenty od 'n' od 'm'
+        $*: wszystkie argumenty
+        $~: ostatni argument
+      $var: gdzie "var" to zmienna lokalna buforu (zobacz /buffer localvar)
+            przykłady: $nick, $channel, $server, $plugin, $name
 
-To remove an alias, use command /unalias.
+Do usunięcia aliasu służy komenda /unalias.
 
-Examples:
-  alias /split to split window horizontally:
+Przykłady:
+  alias /split do poziomego podziału:
     /alias split /window splith
-  alias /hello to say "hello" on all channels but not on #weechat:
+  alias /hello pisze "hello" na wszystkich kanałach poza #weechat:
     /alias hello /allchan -exclude=#weechat msg * hello
-  alias /forcejoin to send IRC command "forcejoin" with completion of /sajoin:
+  alias /forcejoin wysyłający komende IRC "forcejoin" z dopełnieniem dla /sajoin:
     /alias -completion %%sajoin forcejoin /quote forcejoin
 ----
 

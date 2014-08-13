@@ -1,5 +1,5 @@
 * [[option_charset.default.decode]] *charset.default.decode*
-** opis: `global decoding charset: charset used to decode incoming messages when they are not UTF-8 valid`
+** opis: `globalne dekodowanie: kodowanie użyte do dekodowania przychodzących wiadomości, kiedy nie są one zgodne z UTF-8`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"iso-8859-1"`)
 

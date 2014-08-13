@@ -74,7 +74,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_xfer.file.convert_spaces]] *xfer.file.convert_spaces*
-** opis: `convert spaces to underscores when sending and receiving files`
+** opis: `zamień spacje na podkreślenia podczas wysyłania i odbierania plików`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
 

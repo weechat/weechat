@@ -65,71 +65,71 @@ Przykłady:
 
 ----
 /buffer  list
-         clear [<number>|<name>|-merged|-all [<number>|<name>...]]
-         move <number>|-|+
-         swap <number1>|<name1> [<number2>|<name2>]
-         merge <number>
-         unmerge [<number>|-all]
-         hide [<number>|<name>|-all [<number>|<name>...]]
-         unhide [<number>|<name>|-all [<number>|<name>...]]
-         renumber [<number1> [<number2> [<start>]]]
-         close [<n1>[-<n2>]|<name>]
-         notify <level>
+         clear [<numer>|<nazwa>|-merged|-all [<number>|<nazwa>...]]
+         move <numer>|-|+
+         swap <numer1>|<nazwa1> [<numer2>|<nazwa2>]
+         merge <numer>
+         unmerge [<numer>|-all]
+         hide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
+         unhide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
+         renumber [<numer1> [<numer2> [<start>]]]
+         close [<n1>[-<n2>]|<nazwa>]
+         notify <poxiom>
          localvar
-         set <property> <value>
-         get <property>
-         <number>|-|+|<name>
+         set <właściwość> <wartość>
+         get <właściwość>
+         <numer>|-|+|<nazwa>
 
-    list: list buffers (without argument, this list is displayed)
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
-    swap: swap two buffers (swap with current buffer if only one number/name given)
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-    hide: hide the buffer
-  unhide: unhide the buffer
-renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
-   close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-       -: jump to first buffer number
-       +: jump to last buffer number
-    name: jump to buffer by (partial) name
+    list: wyświetla listę buforów (bez podania argumenty wyświetlana jest ta lista)
+   clear: czyści zawartość bufora (numer bufora, -merged dla połączonych buforów, -all dla wszystkich buforów, lub nic dla obecnego bufora)
+    move: przesuwa bufor na liście (może być względne, np -1); "-" = przesuwa na pierwszy numer, "+" = przesuwa na ostatni numer bufora +1
+    swap: zamienia miejscami dwa bufory (zamienia z obecnym buforem, jeśli podano tylko jeden numer/nazwę)
+   merge: łączy obecny bufor z innym (obszar rozmowy zostanie pomieszany między oba bufory)
+          (domyślnie ctrl-x przełącza pomiędzy połączonymi buforami)
+ unmerge: odłącza bufor od innych mających taki sam numer
+    hide: ukrywa bufor
+  unhide: przywraca ukryty bufor
+renumber: zmienia numer bufora (działa tylko, jeśli opcja weechat.look.buffer_auto_renumber jest wyłączona)
+   close: zamyka bufor (numer/przedział są opcjonalne)
+  notify: ustawia poziom powiadomień dla obecnego bufora: ten poziom określa czy bufor zostanie dodany do hotlisty czy nie:
+               none: nigdy
+          highlight: tylko dla higlightów
+            message: wiadomości od użytkowników + highlighty
+                all: wszystkie wiadomości
+              reset: przywraca wartości domyślne (all)
+localvar: wyświetla zmienne lokalne obecnego bufora
+     set: ustawia właściwość obecnego bufora
+     get: wyświetla właściwości obecnego bufora
+  numer: przechodzi do bufora o numerze, dostępne prefiksy:
+          '+': przejście względne, dodaje numer do obecnego
+          '-': przejście względne, odejmuje numer od obecnego
+          '*': przejście do numeru, używając opcji "weechat.look.jump_current_to_previous_buffer"
+       -: przejście do pierwszego bufora
+       +: przejście do ostatniego bufora
+    nazwa: przejście do bufora o (częściowej) nazwie
 
-Examples:
-  clear current buffer:
+Przykłady:
+  czyści zawartość obecnego bufora:
     /buffer clear
-  move buffer to number 5:
+  przenosi bufor na numer 5:
     /buffer move 5
-  swap buffer 1 with 3:
+  zamienia bufor 1 z 3:
     /buffer swap 1 3
-  swap buffer #weechat with current buffer:
+  zamienia bufor #weechat z obecnym buforem:
     /buffer swap #weechat
-  merge with core buffer:
+  łączy z głównym buforem:
     /buffer merge 1
-  unmerge buffer:
+  odłącza bufory:
     /buffer unmerge
-  close current buffer:
+  zamyka obecny bufor:
     /buffer close
-  close buffers 5 to 7:
+  zamyka bufory od 5 do 7:
     /buffer close 5-7
-  jump to #weechat:
+  przechodzi do #weechat:
     /buffer #weechat
-  jump to next buffer:
+  przechodzi do następnego bufora:
     /buffer +1
-  jump to last buffer number:
+  przechodzi do ostatniego bufora:
     /buffer +
 ----
 
@@ -137,29 +137,29 @@ Examples:
 [command]*`color`* definiuje aliasy i wyświetla paletę kolorów::
 
 ----
-/color  alias <color> <name>
-        unalias <color>
+/color  alias <kolor> <nazwa>
+        unalias <kolor>
         reset
-        term2rgb <color>
+        term2rgb <kolor>
         rgb2term <rgb> [<limit>]
         -o
 
-   alias: add an alias for a color
- unalias: delete an alias
-   color: color number (greater than or equal to 0, max depends on terminal, commonly 63 or 255)
-    name: alias name for color (for example: "orange")
-   reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option weechat.look.color_pairs_auto_reset)
-term2rgb: convert a terminal color (0-255) to RGB color
-rgb2term: convert a RGB color to terminal color (0-255)
-   limit: number of colors to use in terminal table (starting from 0); default is 256
-      -o: send terminal/colors info to current buffer as input
+  alias: dodaje alias dla koloru
+unalias: usuwa alias
+  color: numer koloru (większy lub równy 0, maksymalna wartość zależy od terminala, zazwyczaj 63 lub 255)
+   nazwa: nazwa aliasu dla koloru (na przykład: "orange")
+  reset: resetuje wszystkie pary kolorów (wymagane jeśli nie ma dostępnej większej ilości par kolorów, jeśli automatyczny reset jest wyłączony, zobacz opcję weechat.look.color_pairs_auto_reset)
+term2rgb: konwersja koloru terminala (0-255) na kolor RGB
+rgb2term: konwersja koloru RGB na kolor terminala (0-255)
+   limit: liczba kolorów w tabeli kolorów terminala (numerowane od 0); domyślnie 256
+     -o: wysyła informacje o terminalu/kolorach do obecnego bufora
 
-Without argument, this command displays colors in a new buffer.
+Bez podania argumentu komenda wyświetli kolory w nowym buforze.
 
-Examples:
-  add alias "orange" for color 214:
+Przykłady:
+  dodaje alias "orange" dla koloru 214:
     /color alias 214 orange
-  delete color 214:
+  usuwa kolor 214:
     /color unalias 214
 ----
 
@@ -167,11 +167,11 @@ Examples:
 [command]*`command`* wywołaj wyraźnie komendę WeeChat lub wtyczki::
 
 ----
-/command  [-buffer <name>] <plugin> <command>
+/command  [-buffer <nazwa>] <wtyczka> <komenda>
 
--buffer: execute the command on this buffer
- plugin: execute the command from this plugin; 'core' for a WeeChat command, '*' for automatic plugin (it depends on the buffer where the command is executed)
-command: command to execute (a '/' is automatically added if not found at beginning of command)
+-buffer: wykonaj komendę na tym buforze
+ wtyczka: wykonaj komendę z tej wtyczki;'core' dla wewnętrznych komend WeeChat, '*' wykryj wtyczkę (zależy od bufora, gdzie komenda jest wykonywana)
+komenda: komenda do wywołania ( '/' jest automatycznie dodawane jeśli nie występuje na początku komendy)
 ----
 
 [[command_weechat_cursor]]
@@ -229,50 +229,50 @@ infolists: wyświetla informacje o infolistach
 ----
 
 [[command_weechat_eval]]
-[command]*`eval`* evaluate expression::
+[command]*`eval`* przetwórz wyrażenie::
 
 ----
 /eval  [-n] <wyrażenie>
        [-n] -c <wyrażenie1> <operator> <wyrażenie2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching POSIX extended regex
-                !~  is NOT matching POSIX extended regex
+        -n: wyświetla wynik bez wysyłania go do buforu (tryb debugowania)
+        -c: przetwarza jako warunek: użyj operatorów i nawiasów, zwraca wartość logiczną ("0" lub "1")
+wyrażenie: wyrażenie do przetworzenia, zmienne o formacie ${zmienna} są zastępowane (zobacz niżej); wiele komend można oddzielić średnikami
+  operator: operator logiczny lub porównania:
+            - operatory logiczne:
+                &&  boolowskie "i"
+                ||  boolowskie "lub"
+            - operatory porównania:
+                ==  równy
+                !=  różny
+                <=  mniejszy lub równy
+                <   mniejszy
+                >=  większy lub równy
+                >   większy
+                =~  pasuje do rozszerzonego wyrażenia regularnego POSIX
+                !~  NIE pasuje do rozszerzonego wyrażenia regularnego POSIX
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using integers if the two expressions are valid integers.
-To force a string comparison, add double quotes around each expression, for example:
+Wyrażenie jest uznawane za "prawdziwe" jeśli nie jest NULL, nie jest puste, oraz różni się od "0".
+Porównania dokonuje się z użyciem liczb całkowitych jeśli oba wyrażenia są liczbami całkowitymi.
+W celu wymuszenia porównywania ciągów, należy umieścić każde wyrażenie w cudzysłowie, na przykład:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  2. a color (format: "color:xxx")
-  3. an info (format: "info:name,arguments", arguments are optional)
-  4. an option (format: "file.section.option")
-  5. a local variable in buffer
-  6. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Niektóre zmienne w wyrażeniach są zamieniane, poprzez zastosowanie formatu ${zmienna}, według priorytetu zmienną może być:
+  1. ciąg z wyescapowanymi znakami (format: "esc:xxx" lub "\xxx")
+  2. kolor (format color:xxx)
+  3. informacja (format: "info:nazwa,argumenty", argumenty są opcjonalne)
+  4. opcja (format: plik.sekcja.opcja)
+  5. zmienna lokalna w buforze
+  6. nazwa hdatay/zmiennej (wartość jest automatycznie konwertowana na ciąg znaków), domyślnie "window" i "buffer" wskazują na aktualne okno/bufor.
+Format dla hdata może być jednym z poniższych:
+  hdata.zmienna1.zmienna2...: inicjuje hdata (wskaźnik musi być znany), następnie wypytuje zmienne jedna po drugiej (inne hdata mogą być następne)
+  hdata[list].zmienna1.zmienna2...: inicjuje hdata z wykorzystaniem listy, na przykład:
+    ${buffer[gui_buffers].full_name}: pełna nazwa buforu w połączonej liście buforów
+    ${plugin[weechat_plugins].name}: nazwa pierwszej wtyczki w połączonej liście wtyczek
+Nazwy hdata i zmiennych, można znaleźć w  "Opisie API wtyczek", fukcja "weechat_hdata_get".
 
-Examples (simple strings):
+Przykłady (proste ciągi):
   /eval -n ${info:version}                 ==> 0.4.3
   /eval -n ${weechat.look.scroll_amount}   ==> 3
   /eval -n ${window}                       ==> 0x2549aa0
@@ -281,7 +281,7 @@ Examples (simple strings):
   /eval -n ${window.buffer.number}         ==> 1
   /eval -n ${\t}                           ==> <tab>
 
-Examples (conditions):
+Przykłady (warunki):
   /eval -n -c ${window.buffer.number} > 2  ==> 0
   /eval -n -c ${window.win_width} > 100    ==> 1
   /eval -n -c (8 > 12) || (5 > 2)          ==> 1
@@ -297,60 +297,60 @@ Examples (conditions):
 
 ----
 /filter  list
-         enable|disable|toggle [<name>|@]
-         add <name> <buffer>[,<buffer>...] <tags> <regex>
-         rename <name> <new_name>
-         del <name>|-all
+         enable|disable|toggle [<nazwa>|@]
+         add <nazwa> <bufor>[,<bufor>...] <tagi> <regex>
+         rename <nazwa> <nowa_nazwa>
+         del <nazwa>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name ("@" = enable/disable all filters in current buffer)
-    add: add a filter
- rename: rename a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - wildcard "*" is allowed
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - wildcard "*" is allowed
-         - if tag starts with '!', then it is excluded and must NOT be in message
-  regex: POSIX extended regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: wyświetla wszystkie filtry
+ enable: włącza filtry (filtry są domyślnie włączone)
+disable: wyłącza filtry
+ toggle: przełącza filtry
+  nazwa: nazwa filtru
+    add: dodaje filtr
+ rename: zmienia nazwę filtru
+    del: usuwa filtr
+   -all: usuwa wszystkie filtry
+ bufor: oddzielona przecinkami lisa buforów, dla których filtr jest aktywny:
+         - jest to pełna nazwa zawierająca wtyczkę (przykład: "irc.freenode.#weechat")
+         - "*" oznacza wszystkie bufory
+         - nazwa zaczynająca się od '!' jest wykluczana
+         - nazwa może zaczynać się lub kończyć '*', aby dopasować wiele buforów
+   tagi: lista tagów oddzielona przecinkiem, np: "irc_join,irc_part,irc_quit"
+         - logiczne "i": użyj "+" pomiędzy tagami (na przykład: "nick_toto+irc_action")
+         - dozwolony jest znak "*"
+         - jeśli tag zaczyna się od '!', wtedy jest on wykluczony i NIE może znajdować się w wiadomości
+  regex: rozszerzone wyrażenie regularne POSIX do wyszukania w linii
+         - użyj '\t' do oddzielenia prefiksu od wiadomości, znaki specjalne jak '|' muszą zostać poprzedzone '\' np: '\|'
+         - jeśli wyrażenie zaczyna się od '!', wtedy pasujący wynik jest odwracany (użyj '\!', aby zacząć od '!')
+         - dwa wyrażenia są tworzone: jedno dla prefiksu, drugie dla wiadomości
+         - wielkość znaków nie ma znaczenia dla wyrażeń, jeśli zaczynają się od "(?-i)" wielkość znaków ma znaczenie
 
-The default key alt+'=' toggles filtering on/off.
+Domyślny skrót klawiszowy alt+'=' włącza/wyłącza filtrowanie.
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
+Najczęściej używane tagi:
+  no_filter, no_highlight, no_log, log0..log9 (poziom logowania),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  host_xxx (xxx is username + host in message),
-  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
+  nick_xxx (xxx to nick w wiadomości), prefix_nick_ccc (ccc to kolor nicka),
+  host_xxx (xxx to nazwa użytkownika + host w wiadomości),
+  irc_xxx (xxx ito nazwa komendy lub numer, zobacz /server raw lub /debug tags),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+Aby zobaczyć listę tagów w liniach buforów wykonaj: /debug tags
 
-Examples:
-  use IRC smart filter on all buffers:
+Przykłady:
+  użyj inteligentnego filtru we wszystkich buforach IRC:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  użyj inteligentnego filtru we wszystkich buforach IRC poza tymi zawierającymi "#weechat" w nazwie:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  filtruj wszystkie wiadomości IRC o join/part/quit:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  filtruj nicki wyświetlane przy wejściu na kanał albo za pomocą /names:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  filtruj nick "toto" na kanale IRC #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  filtruj wejścia/akcje IRC od użytkownika "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  filtruj linie zawierające fraze "weechat sucks" na kanale IRC #weechat:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ----
 
@@ -386,58 +386,58 @@ Wartość: ilość elementów historii do pokazania
 ----
 /input  <akcja> [<argumenty>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_switch_regex: switch search type: string/regular expression
-  search_switch_where: switch search in messages/prefixes
-  search_previous: search previous line
-  search_next: search next line
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  zoom_merged_buffer: zoom on merged buffer
-  insert: insert text in command line (escaped chars are allowed, see /help print)
-  send: send text to the buffer
-  paste_start: start paste (bracketed paste mode)
-  paste_stop: stop paste (bracketed paste mode)
+lista akcji:
+  return: symuluje klawisz "enter"
+  complete_next: dopełnia słowo następnym dopełnieniem
+  complete_previous: dopełnia słowo poprzednim dopełnieniem
+  search_text: szuka tekstu w buforze
+  search_switch_case: przełącza na dokładne dopasowanie przy szukaniu
+  search_switch_regex: przełącza typy wyszukiwania ciąg/wyrażenie regularne
+  search_switch_where: zmienia miejsce przeszukiwania na wiadomości/przedrostki
+  search_previous: szuka poprzednich linii
+  search_next: szuka następnych linii
+  search_stop: zatrzymuje wyszukiwanie
+  delete_previous_char: usuwa poprzedni znak
+  delete_next_char: usuwa następny znak
+  delete_previous_word: usuwa poprzednie słowo
+  delete_next_word: usuwa następne słowo
+  delete_beginning_of_line: usuwa od początku linii do kursora
+  delete_end_of_line: usuwa od kursora do końca linii
+  delete_line: usuwa cała linię
+  clipboard_paste: wkleja ze schowka
+  transpose_chars: zamienia dwa znaki
+  undo: cofa ostatnia akcję w linii poleceń
+  redo: ponownie wykonuje cofniętą akcję w linii poleceń
+  move_beginning_of_line: przesuwa kursor na początek linii
+  move_end_of_line: przesuwa kursor na koniec linii
+  move_previous_char: przesuwa kursor do poprzedniego znaku
+  move_next_char: przesuwa kursor do następnego znaku
+  move_previous_word: przesuwa kursor do poprzedniego słowa
+  move_next_word: przesuwa kursor do następnego słowa
+  history_previous: przywołuje poprzednia komendę z historii obecnego bufora
+  history_next: przywołuje następną komendę z historii obecnego bufora
+  history_global_previous: przywołuje poprzednią komendę z globalnej historii
+  history_global_next: przywołuje następną komendę z globalnej historii
+  jump_smart: przechodzi do następnego bufora z aktywnością
+  jump_last_buffer_displayed: przechodzi do ostatnio wyświetlanego bufora (przed ostatnim przeskoczeniem do bufora)
+  jump_previously_visited_buffer: przeskakuje do poprzedniego bufora
+  jump_next_visited_buffer: przeskakuje to następnego bufora
+  hotlist_clear: czyści hotlistę
+  grab_key: przechwytuje klawisz (opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
+  grab_key_command: przechwytuje klawisz z przypisaną komendą(opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
+  grab_mouse: przechwytuje kod zdarzenia myszy
+  grab_mouse_area: przechwytuje kod zdarzenia myszy z obszarem
+  set_unread: ustawia znacznik nie przeczytania dla wszystkich buforów
+  set_unread_current_buffer: ustawia znacznik nie przeczytania dla obecnego bufora
+  switch_active_buffer: przełącza do następnego połączonego buforu
+  switch_active_buffer_previous: przełącza do poprzedniego połączonego buforu
+  zoom_merged_buffer: zoom na połączony bufor
+  insert: wkleja tekst do linii poleceń (dozwolone są wyescapowane znaki, zobacz /help print)
+  send: wysyła tekst do bufora
+  paste_start: zaczyna wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
+  paste_stop: kończy wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
 
-This command is used by key bindings or plugins.
+Ta komenda jest używana do przypisywania klawiszy lub przez wtyczki.
 ----
 
 [[command_weechat_key]]
@@ -454,44 +454,44 @@ This command is used by key bindings or plugins.
       resetall -yes [<kontekst>]
       missing [<kontekst>]
 
-       list: list all current keys (without argument, this list is displayed)
-listdefault: list default keys
-   listdiff: list differences between current and default keys (keys added, redefined or deleted)
-    context: name of context ("default" or "search")
-       bind: bind a command to a key or display command bound to key (for context "default")
-   bindctxt: bind a command to a key or display command bound to key, for given context
-    command: command (many commands can be separated by semicolons)
-     unbind: remove a key binding (for context "default")
- unbindctxt: remove a key binding for given context
-      reset: reset a key to default binding (for context "default")
-  resetctxt: reset a key to default binding, for given context
-   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
-    missing: add missing keys (using default bindings), useful after installing new WeeChat version
+       list: wyświetla wszystkie obecne skróty (bez podanego argumentu, pokazywana jest ta lista)
+listdefault: wyświetla domyślne skróty klawiszowe
+   listdiff: wyświetla różnice pomiędzy obecnymi a domyślnymi skrótami klawiszowymi (dodane, przedefiniowane oraz usunięte)
+    kontekst: nazwa kontekstu ("default" lub "search")
+       bind: przypisuje komendę do klawisza lub wyświetla komendę przypisaną do klawisza
+   bindctxt: przypisuje komendę do klawiszy lub wyświetla taką komendę dla podanego kontekstu
+    komenda: komenda (wiele komend może być oddzielonych średnikiem)
+     unbind: usuwa przypisanie dla klawisza (dla kontekstu "default")
+ unbindctxt: usuwa skrót klawiszowy dla podanego kontekstu
+      reset: przywraca domyślne ustawienia dla klawiszy (dla kontekstu "default")
+  resetctxt:przywraca domyślne ustawienia dla klawiszy, dla podanego kontekstu
+   resetall: przywraca przypisania do domyślnych wartości oraz kasuje WSZYSTKIE własne przypisania (używaj ostrożnie!)
+    missing: dodaje brakujące przypisania (korzystając z domyślnych wartości), przydatne po instalacji nowej wersji WeeChat
 
-When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
+Podczas przypisania komendy do klawisza, zaleca się użycie alt+k (lub Esc następnie k), następnie wciśnięcie pożądanej kombinacji: umieści to kod klawiszowy w linii poleceń.
 
-For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
-          *: any area on screen
-       chat: chat area (any buffer)
-  chat(xxx): char area for buffer with name "xxx" (full name including plugin)
-     bar(*): any bar
-   bar(xxx): bar "xxx"
-    item(*): any bar item
-  item(xxx): bar item "xxx"
-Wildcard "*" is allowed in key to match many mouse events.
-A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
-Another special value "-" can be used to disable key (it will be ignored when looking for keys).
+Dla kontekstu "mouse" (możliwe również w kontekście "cursor"), klucz ma postać: "@obszar:klucz" lub "@obszar1>obszar2:klucz", gdzie obszar to:
+          *: dowolny obszar na ekranie
+       chat: obszar rozmowy (dowolny bufor)
+  chat(xxx): obszar rozmowy w buforze o nazwie "xxx" (pełna nazwa włączając w to wtyczkę)
+     bar(*): dowolny pasek
+   bar(xxx): pasek "xxx"
+    item(*): dowolny element paska
+  item(xxx): element paska "xxx"
+Klucz może zaczynać się, lub kończyć '*' aby dopasować wiele zdarzeń myszy.
+Specjalna wartość dla komendy o formacie "hsignal:nazwa" może być użyte dla kontekstu myszy, wyśle to hsignal "nazwa" z aktywną tablica haszy jako argumentem.
+Inna specjalna wartość "-" może zostać użyta do wyłączenia klucza (zostanie on zignorowany podczas szukania kluczy).
 
-Examples:
-  key alt-x to toggle nicklist bar:
+Przykłady:
+  kombinacja alt-x przełączająca wyświetlanie listy nicków:
     /key bind meta-x /bar toggle nicklist
-  key alt-r to jump to #weechat IRC channel:
+  kombinacja alt-r przechodząca do kanału IRC #weechat IRCl:
     /key bind meta-r /buffer #weechat
-  restore default binding for key alt-r:
+  przywrócenie domyślnego przypisania dla kombinacji alt-r:
     /key reset meta-r
-  key "tab" to stop search in buffer:
+  przycisk "tab" zatrzyma wyszukiwanie w buforze:
     /key bindctxt search ctrl-I /input search_stop
-  middle button of mouse on a nick to retrieve info on nick:
+  środkowy przycisk myszy wciśnięty na nicku pozyska o nim informacje:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
 
@@ -542,23 +542,23 @@ Przykłady:
 [command]*`mute`* wykonuje komendę po cichu::
 
 ----
-/mute  [-core | -current | -buffer <name>] <command>
+/mute  [-core | -current | -buffer <nazwa>] <komenda>
 
-   -core: no output on WeeChat core buffer
--current: no output on current buffer
- -buffer: no output on specified buffer
-    name: full buffer name (examples: "irc.server.freenode", "irc.freenode.#weechat")
- command: command to execute silently (a '/' is automatically added if not found at beginning of command)
+   -core: bez wyświetlania wyjścia w głównym buforze WeeChat
+-current: bez wyświetlania wyjścia na obecnym kanale
+ -buffer: bez wyświetlania wyjścia w podanym buforze
+    nazwa: pełna nazwa bufora (przykłady: "irc.server.freenode", "irc.freenode.#weechat")
+ komenda: komenda do cichego wykonania ( '/' jest dodawane automatycznie jeśli nie znalezione na początku komendy)
 
-If no target is specified (-core, -current or -buffer), then default is to mute all buffers.
+Jeżeli nie podano celu (-core, -current lub -buffer), wtedy domyślnie jest wyciszane są wszystkie bufory.
 
-Examples:
-  config save:
+Przykłady:
+  zapisanie konfiguracji:
     /mute save
-  message to current IRC channel:
-    /mute -current msg * hi!
-  message to #weechat channel:
-    /mute -buffer irc.freenode.#weechat msg #weechat hi!
+  wiadomość do obecnego kanału IRC:
+    /mute -current msg * hej!
+  wiadomość na kanał #weechat:
+    /mute -buffer irc.freenode.#weechat msg #weechat hej!
 ----
 
 [[command_weechat_plugin]]
@@ -588,43 +588,43 @@ Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki.
 [command]*`print`* wyświetl tekst w buforze::
 
 ----
-/print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]
-        -stdout|-stderr [<text>]
+/print  [-buffer <numer>|<nazwa>] [-core] [-escape] [-date <data>] [-tags <tagi>] [-action|-error|-join|-network|-quit] <tekst>
+        -stdout|-stderr <tekst>
         -beep
 
- -buffer: display text in this buffer (default: buffer where command is executed)
-   -core: alias of "-buffer core.weechat"
--current: display text on current buffer
- -escape: interpret escaped chars (for example \a, \07, \x07)
-   -date: message date, format can be:
-            -n: 'n' seconds before now
-            +n: 'n' seconds in the future
-             n: 'n' seconds since the Epoch (see man time)
-            date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
-            time: hh:mm:ss (example: 04:32:55)
-   -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
-    text: text to display (prefix and message must be separated by "\t", if text starts with "-", then add a "\" before)
- -stdout: display text on stdout (escaped chars are interpreted)
- -stderr: display text on stderr (escaped chars are interpreted)
-   -beep: alias of "-stderr \a"
+-buffer: bufor, w którym zostanie wyświetlony tekst (domyślnie: obecny bufor)
+  -core: alias dla bufora "-buffer core.weechat"
+-current: wyświetl tekst w obecnym buforze
+-escape: interpretuj znaki poprzedzone \ (na przykład \a, \07, \x07)
+  -date: data wiadomości, możliwe formaty:
+           -n: 'n' sekund wcześniej
+           +n: 'n' sekund później
+            n: 'n' sekund od Epoch (zobacz man time)
+           data/czas (ISO 8601): yyyy-mm-ddThh:mm:ss, przykład: 2014-01-19T04:32:55
+           czas: hh:mm:ss (przykład: 04:32:55)
+  -tags: oddzielona przecinkami lista tagów (zobacz /help filter w celu wyświetlenia listy najczęstszych tagów)
+   tekst: tekst do wyświetlenia (prefiks i wiadomość muszą być oddzielone za pomocą "\t", jeśli tekst zaczyna się od "-" dodaj "\" przed nim)
+-stdout: wyświetl tekst na standardowe wyjście (znaki poprzedzone \ są interpretowane)
+-stderr: wyświetl tekst na standardowe wyjście błędów (znaki poprzedzone \ są interpretowane)
+   -beep: alias dla "-stderr \a"
 
-The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
+Opcje -action ... -quit używają prefiksów zdefiniowanych w opcjach "weechat.look.prefix_*".
 
-Following escaped chars are supported:
+Wspierane znaczniki specjalne:
   \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
-Examples:
-  display a reminder on core buffer with a highlight:
-    /print -core -tags notify_highlight Reminder: buy milk
-  display an error on core buffer:
-    /print -core -error Some error here
-  display message on core buffer with prefix "abc":
-    /print -core abc\tThe message
-  display a message on channel #weechat:
+Przykłady:
+  wyświetla przypomnienie w buforze głównym z higlightem:
+    /print -core -tags notify_highlight Reminder: kup mleko
+  wyświetla błąd w głównym buforze:
+    /print -core -error Jakiś błąd
+  wyświetla wiadomość w głównym buforze z prefiksem "abc":
+    /print -core abc\tWiadomość
+  wyświetla wiadomość na kanale #weechat:
     /print -buffer irc.freenode.#weechat Message on #weechat
-  display a snowman (U+2603):
+  wyświetla bałwana (U+2603):
     /print -escape \u2603
-  send alert (BEL):
+  wysyła alert (BEL):
     /print -beep
 ----
 
@@ -721,72 +721,72 @@ Bez podania argumentu wszystkie pliki (WeeChat oraz wtyczki) zostaną przeładow
          set <nazwa> <wartość>
          del <nazwa>
 
-passphrase: change the passphrase (without passphrase, data is stored as plain text in file sec.conf)
-   -delete: delete passphrase
-   decrypt: decrypt data still encrypted (it happens only if passphrase was not given on startup)
-  -discard: discard all data still encrypted
-       set: add or change secured data
-       del: delete secured data
+passphrase: zmienia hasło (bez hasła dane są przechowywane w postaci tekstu w pliku sec.conf)
+   -delete: kasuje hasło
+   decrypt: rozszyfrowuje dane będące ciągle zaszyfrowane (zdarza się to tylko jeśli hasło nie zostało podane przy uruchomieniu)
+  -discard: odrzuca wszystkie nadal zaszyfrowane dane
+       set: dodaje lub zmienia zaszyfrowane dane
+       del: kasuje zaszyfrowane dane
 
-Without argument, this command displays secured data in a new buffer.
+Bez argumentu, komenda wyświetli zabezpieczone dane w nowym buforze.
 
-When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
-It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
+Jeśli używane jest hasło (dane zaszyfrowane), należy je podać podczas startu WeeChat.
+Jest możliwe ustawienie zmiennej środowiskowej "WEECHAT_PASSPHRASE", aby nie podawać hasła przy uruchomieniu (ta sama zmienna jest używana przez WeeChat podczas wykonywania /upgrade).
 
-Secured data with format ${sec.data.xxx} can be used in:
-  - command line argument "--run-command"
-  - options weechat.startup.command_{before|after}_plugins
-  - proxy options: username, password
-  - irc server options: autojoin, command, password, sasl_{username|password}, username, realname
-  - option relay.network.password
-  - command /eval.
+Zabezpieczone dane w formacie ${sec.data.xxx} można użyć w:
+  - argumencie w linii poleceń "--run-command"
+  - opcjach weechat.startup.command_{before|after}_plugins
+  - opcjach proxy: username, password
+  - opcji serwera autojoin, command, password, sasl_{username|password}, username, realname
+  - opcji relay.network.password
+  - komendzie /eval.
 
-Examples:
-  set a passphrase:
-    /secure passphrase this is my passphrase
-  encrypt freenode SASL password:
-    /secure set freenode mypassword
+Przykłady:
+  ustawienie hasła:
+    /secure passphrase to jest moje hasło
+  zaszyfrowanie hasła dla freenode SASL:
+    /secure set freenode mojehasło
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"
-  encrypt oftc password for nickserv:
-    /secure set oftc mypassword
+  zaszyfrowanie hasła dla nickserva na serwerze oftc:
+    /secure set oftc mojehasło
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
-  alias to ghost the nick "mynick":
-    /alias ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
+  alias dla polecenia ghost dla nicka "mójnick":
+    /alias ghost /eval /msg -server freenode nickserv ghost mójnick ${sec.data.freenode}
 ----
 
 [[command_weechat_set]]
-[command]*`set`* set config options and environment variables::
+[command]*`set`* ustaw opcje konfiguracyjne i zmienne środowiskowe::
 
 ----
-/set  [<option> [<value>]]
-      diff [<option> [<option>...]]
-      env [<variable> [<value>]]
+/set  [<opcja> [<wartość>]]
+      diff [<opcja> [<opcja>...]]
+      env [<zmienna> [<wartość>]]
 
-option: name of an option (wildcard "*" is allowed)
- value: new value for option, according to type:
-          boolean: on, off or toggle
-          integer: number, ++number or --number
-           string: any string ("" for empty string)
-            color: color name, ++number or --number
-        Note: for all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
-  diff: display only changed options
-   env: display or set an environment variable (use value "" to unset a variable)
+opcja: nazwa opcji (może zawierać wildcard"*")
+ wartość: nowa wartość opcji, zgodnie z typem:
+          boolean: on, off lub toggle
+          integer: numer, ++numer lub --numer
+           string: dowolny ciąg ("" dla pustego ciągu)
+            color: nazwa koloru, ++numer lub --numer
+        Uwaga: dla wszystkich typów, można użyć null dla usunięcia wartości opcji (niezdefiniowana wartość). Działa to tylko z niektórymi specjalnymi zmiennymi wtyczek.
+  diff: wyświetla tylko zmienione opcje
+   env: wyśiwietla lub ustawia zmienne środowiskowe (użyj "" żeby skasować zmienną)
 
-Examples:
-  display options about highlight:
+Przykłady:
+  wyświetla opcje dotyczące podświetleń:
     /set *highlight*
-  add a word to highlight:
-    /set weechat.look.highlight "word"
-  display changed options:
+  dodaje słowo do podświetlenia:
+    /set weechat.look.highlight "słowo"
+  wyświetla zmienione opcje:
     /set diff
-  display changed options in irc plugin:
+  wyświetla zmienione opcje dla wtyczki irc:
     /set diff irc.*
-  display value of environment variable LANG:
+  wyświetla wartość zmiennej środowiskowej LANG:
     /set env LANG
-  set environment variable LANG and use it:
+  ustawia zmienną środowiskową LANG i używa jej:
     /set env LANG fr_FR.UTF-8
     /upgrade
-  unset environment variable ABC:
+  kasuje zmienną środowiskową ABC:
     /set env ABC ""
 ----
 
@@ -794,19 +794,19 @@ Examples:
 [command]*`unset`* skasuj/zresetuj zmienną konfiguracyjną::
 
 ----
-/unset  <option>
-        -mask <option>
+/unset  <opcja>
+        -mask <opcja>
 
-option: name of an option
- -mask: use a mask in option (wildcard "*" is allowed to mass-reset options, use carefully!)
+opcja: nazwa opcji
+ -mask: używa maski w opcji (wildcard "*" jest dozwolony do masowego resetowania opcji, używaj ostrożnie!)
 
-According to option, it's reset (for standard options) or removed (for optional settings, like server values).
+W zależności od opcji, jest resetowana (dla standardowych opcji) lub usuwana (dla opcjonalnych ustawień, jak wartości dotyczące serwerów).
 
-Examples:
-  reset one option:
+Przykłady:
+  resetowanie jednej opcji:
     /unset weechat.look.item_time_format
-  reset all color options:
-    /unset -mask weechat.color.*
+  resetowanie wszystkich opcji dotyczących kolorów:
+    /unset weechat.color.*
 ----
 
 [[command_weechat_upgrade]]
@@ -890,66 +890,66 @@ Przykłady:
 
 ----
 /window  list
-         -1|+1|b#|up|down|left|right [-window <number>]
-         <number>
-         splith|splitv [-window <number>] [<pct>]
-         resize [-window <number>] [+/-]<pct>
+         -1|+1|b#|up|down|left|right [-window <numer>]
+         <numer>
+         splith|splitv [-window <numer>] [<pct>]
+         resize [-window <numer>] [+/-]<pct>
          balance
-         merge [-window <number>] [all]
-         page_up|page_down [-window <number>]
+         merge [-window <numer>] [all]
+         page_up|page_down [-window <numer>]
          refresh
-         scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]
-         scroll_horiz [-window <number>] [+/-]<value>[%]
-         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
-         swap [-window <number>] [up|down|left|right]
-         zoom[-window <number>]
-         bare [<delay>]
+         scroll [-window <numer>] [+/-]<wartość>[s|m|h|d|M|y]
+         scroll_horiz [-window <numer>] [+/-]<wartość>[%]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <numer>]
+         swap [-window <numer>] [up|down|left|right]
+         zoom[-window <numer>]
+         bare [<opóźnienie>]
 
-         list: list opened windows (without argument, this list is displayed)
-           -1: jump to previous window
-           +1: jump to next window
-           b#: jump to next window displaying buffer number #
-           up: switch to window above current one
-         down: switch to window below current one
-         left: switch to window on the left
-        right: switch to window on the right
-       number: window number (see /window list)
-       splith: split current window horizontally
-       splitv: split current window vertically
-       resize: resize window size, new size is <pct> percentage of parent window
-      balance: balance the sizes of all windows
-        merge: merge window with another (all = keep only one window)
-      page_up: scroll one page up
-    page_down: scroll one page down
-      refresh: refresh screen
-       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
- scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
-    scroll_up: scroll a few lines up
-  scroll_down: scroll a few lines down
-   scroll_top: scroll to top of buffer
-scroll_bottom: scroll to bottom of buffer
-scroll_beyond_end: scroll beyond the end of buffer
-scroll_previous_highlight: scroll to previous highlight
-scroll_next_highlight: scroll to next highlight
-scroll_unread: scroll to unread marker
-         swap: swap buffers of two windows (with optional direction for target window)
-         zoom: zoom on window
-         bare: toggle bare display (with optional delay in seconds for automatic return to standard display mode)
+         list: lista otwartych okien (bez argumentu wyświetlana jest ta lista)
+           -1: skok do poprzedniego okna
+           +1: skok do następnego okna
+           b#: skok do następnego okna pokazującego bufor o numerze #
+           up: przełączenie na okno ponad obecnym
+         down: przełączenie na okno pod obecnym
+         left: przełączenie na okno po lewej
+        right: przełączenie na okno po prawej
+       numer: okno numer (zobacz /window list)
+       splith: dzieli obecne okno poziomo
+       splitv: dzieli obecne okno pionowo
+       resize: zmienia rozmiar okna, nowy rozmiar to <pct> procent okna nadrzędnego
+      balance: balansuje rozmiary pomiędzy oknami
+        merge: łączy okno z innym (all = posiadanie tylko jednego okna)
+      page_up: przewija stronę do góry
+    page_down: przewija stronę w dół
+      refresh: odświeża ekran
+       scroll: przewija ilość linii (+/-N) lub o czas: s=sekundy, m=minuty, h=godziny, d=dni, M=miesiące, y=lata
+ scroll_horiz: przewija poziomo ilość kolumn (+/-N) lub procent rozmiaru okna (takie przewijanie jest możliwe tylko w buforach z wolną zawartością)
+    scroll_up: przewija kilka linii w gorę
+  scroll_down: przewija kilka linii w dół
+   scroll_top: przewija na samą górę bufora
+scroll_bottom: przewija na spód bufora
+scroll_beyond_end: przewija poza koniec bufora
+scroll_previous_highlight: przewija do poprzedniego highlighta
+scroll_next_highlight: przewija do następnego highlighta
+scroll_unread: przewija do znacznika nie przeczytania
+         swap: zamienia bufory między dwoma oknami (z opcjonalnym kierunkiem dla docelowego okna)
+         zoom: powiększa okno
+         bare: przełącza niesformatowane wysiwetlanie (z opcjonalnym czasem, po jakim nastąpi automatyczny powrót do standardowego trybu)
 
-For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+Dla splith i splitv, pct oznacza procent reprezentujący rozmiar nowego okna, porównany z obecnym oknem jako odniesieniem. Na przykład 25 oznacza utworzenie nowego okna o rozmiarze = obecny_rozmiar / 4
 
-Examples:
-  jump to window displaying buffer #1:
+Przykłady:
+  skok do okna wyświetlającego bufor #1:
     /window b1
-  scroll 2 lines up:
+  przewiń 2 linie do góry:
     /window scroll -2
-  scroll 2 days up:
+  przewiń 2 dni do góry:
     /window scroll -2d
-  scroll to beginning of current day:
+  przewiń do początku obecnego dnia:
     /window scroll -d
-  zoom on window #2:
+  powiększ okno 2 #2:
     /window zoom -window 2
-  enable bare display for 2 seconds:
+  włączenie trybu niesformatowanego na 2 sekundy:
     /window bare 2
 ----
 

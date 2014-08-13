@@ -1,65 +1,65 @@
 [[command_exec_exec]]
-[command]*`exec`* execute external commands::
+[command]*`exec`* wykonywanie zewnętrznych komend::
 
 ----
 /exec  -list
-       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-n|-nf] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] [-flush|-noflush] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <timeout>] [-name <name>] [-pipe <command>] [-hsignal <name>] <command>
-       -in <id> <text>
-       -inclose <id> [<text>]
-       -signal <id> <signal>
+       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <nazwa>] [-l|-o|-n|-nf] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] [-flush|-noflush] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <czas>] [-name <nazwa>] [-pipe <komenda>] [-hsignal <nazwa>] <komenda>
+       -in <id> <tekst>
+       -inclose <id> [<tekst>]
+       -signal <id> <sygnał>
        -kill <id>
        -killall
-       -set <id> <property> <value>
+       -set <id> <właściwość> <wartość>
        -del <id>|-all [<id>...]
 
-   -list: list commands
-     -sh: use the shell to execute the command (WARNING: use this option ONLY if all arguments are safe, see option -nosh)
-   -nosh: do not use the shell to execute the command (required if the command has some unsafe data, for example the content of a message from another user) (default)
-     -bg: run process in background: do not display process output neither return code (not compatible with options -o/-n)
-   -nobg: catch process output and display return code (default)
-  -stdin: create a pipe for sending data to the process (with /exec -in/-inclose)
--nostdin: do not create a pipe for stdin (default)
- -buffer: display/send output of command on this buffer (if the buffer is not found, a new buffer with name "exec.exec.xxx" is created)
-      -l: display locally output of command on buffer (default)
-      -o: send output of command to the buffer (not compatible with option -bg)
-      -n: display output of command in a new buffer (not compatible with option -bg)
-     -nf: display output of command in a new buffer with free content (no word-wrap, no limit on number of lines) (not compatible with option -bg)
-     -cl: clear the new buffer before displaying output
-   -nocl: append to the new buffer without clear (default)
-     -sw: switch to the output buffer (default)
-   -nosw: don't switch to the output buffer
-     -ln: display line numbers (default in new buffer only)
-   -noln: don't display line numbers
-  -flush: display output of command in real time (default)
--noflush: display output of command after its end
-  -color: action on ANSI colors in output:
-             ansi: keep ANSI codes as-is
-             auto: convert ANSI colors to WeeChat/IRC (default)
-              irc: convert ANSI colors to IRC colors
-          weechat: convert ANSI colors to WeeChat colors
-            strip: remove ANSI colors
-     -rc: display return code (default)
-   -norc: don't display return code
--timeout: set a timeout for the command (in seconds)
-   -name: set a name for the command (to name it later with /exec)
-   -pipe: send the output to a WeeChat/plugin command (line by line); if there are spaces in command/arguments, enclose them with double quotes; variable $line is replaced by the line (by default the line is added after the command, separated by a space) (not compatible with options -bg/-o/-n)
--hsignal: send the output as a hsignal (to be used for example in a trigger) (not compatible with options -bg/-o/-n)
- command: the command to execute; if beginning with "url:", the shell is disabled and the content of URL is downloaded and sent as output
-      id: command identifier: either its number or name (if set with "-name xxx")
-     -in: send text on standard input of process
--inclose: same as -in, but stdin is closed after (and text is optional: without text, the stdin is just closed)
- -signal: send a signal to the process; the signal can be an integer or one of these names: hup, int, quit, kill, term, usr1, usr2
-   -kill: alias of "-signal <id> kill"
--killall: kill all running processes
-    -set: set a hook property (see function hook_set in plugin API reference)
-property: hook property
-   value: new value for hook property
-    -del: delete a terminated command
-    -all: delete all terminated commands
+   -list: lista komend
+     -sh: użyj powłoki do wykonania komendy (UWAGA: użyj tej opcji TYLKO jeśli wszystkie argumenty są bezpieczne, zobacz opcję -nosh)
+   -nosh: nie używaj powłoki do wykonania komendy (wymagane jeśli komenda posiada niebezpieczne dane, na przykład zawartość wiadomości od innego użytkownika) (domyślne)
+     -bg: uruchom proces w tle: nie wyświetlaj wyjścia z procesu ani zwracanego kodu (nie kompatybilne z opcjami -o/-n)
+   -nobg: przechwyć całość wyjścia z procesu i wyświetl kod wyjścia (domyślne)
+  -stdin: tworzy strumień do wysyłania danych do procesu (za pomocą /exec -in/-inclose)
+-nostdin: nie twórz strumienia dla stdin (domyślne)
+ -buffer: wyświetl/wyślij wyjście komendy do tego bufora (jeśli bufor nie zostanie znaleziony zostanie utworzony nowy bufor o nazwie "exec.exec.xxx")
+      -l: wyświetl lokalnie wyście z komendy w buforze (domyślne)
+      -o: wyślij wyjście z komendy do bufora (nie kompatybilne z opcją -bg)
+      -n: wyświetl wyjście komendy w nowym buforze (nie kompatybilne z opcją -bg)
+     -nf: wyświetl wyjście komendy w nowym buforze z wolna zawartością (brak zawijania słów, bez limitu ilości linii) (nie kompatybilne z opcją -bg)
+     -cl: wyczyść nowy bufor przed wyświetleniem wyjścia
+   -nocl: dodaj do nowego bufora bez czyszczenia zawartości (domyślne)
+     -sw: przełącz na bufor wyjściowy (domyślne)
+   -nosw: nie przełączaj na bufor wyjściowy
+     -ln: wyświetl numery linii (domyślne tylko w nowym buforze)
+   -noln: nie wyświetlaj numerów linii
+  -flush: wyświetl wyjście z komendy w czasie rzeczywistym (domyślne)
+-noflush: wyświetl wyjście z komendy po jej zakończeniu
+  -color: akcja na kolorach ANSI w wyjściu:
+             ansi: zachowaj kody ANSI
+             auto: konwertuj kolory ANSI na WeeChat/IRC (domyślne)
+              irc: konwertuj kolory ANSI na kolory IRC
+          weechat: konwertuj kolory ANSI na kolory WeeChat
+            strip: usuń kolory ANSI
+     -rc: wyświetl kod wyjścia (domyślne)
+   -norc: nie wyświetlaj kodu wyjścia
+-timeout: ustaw timeout dla komendy (w sekundach)
+   -name: ustaw nazwę dla komendy (do wywołania później za pomocą /exec)
+   -pipe: wyślij wyjście do WeeChat/wtyczki (linia po linii); jeśli występują spacje w komendzie/argumentach, otocz je cudzysłowem; zmienna $line jest zastępowana przez linie (domyślnie linia jest dodawana za komendą, oddzielona spacją) (nie kompatybilne z opcjami -bg/-o/-n)
+-hsignal: wyślij wyjście jako hsignal (w celu użycia na przykład w triggerze) (nie kompatybilne z opcjami -bg/-o/-n)
+ komenda: komenda do wykonania; jeśli zaczyna się od "url:", powłoka jest wyłączana i zawartość URLa jest pobierana i wysyłana jako wyjście
+      id: identyfikator komendy: numer lub nazwa (jeśli ustawiona przez "-name xxx")
+     -in: wyślij tekst na standardowe wejście procesu
+-inclose: to samo co -in, ale stdin jest zamykane (tekst jest opcjonalny: bez niego stdin jest po prostu zamykane)
+ -signal: wysyła sygnał do procesu; sygnał może być liczbą całkowitą lub jedna z nazw: hup, int, quit, kill, term, usr1, usr2
+   -kill: alias dla "-signal <id> kill"
+-killall: zabija wszystkie działające procesy
+    -set: ustawia przypisaną właściwość (zobacz funkcję hook_set w opisie API wtyczek)
+właściwość: przypisana właściwość
+   wartość: nowa wartość
+    -del: usuń zakończoną komendę
+    -all: usuń wszystkie zakończone komendy
 
-Default options can be set in the option exec.command.default_options.
+Domyślne opcje moga być ustawione za pomocą opcji exec.command.default_options.
 
-Examples:
+Przykłady:
   /exec -n ls -l /tmp
   /exec -n ps xu | grep weechat
   /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx
