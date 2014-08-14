@@ -26,13 +26,9 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <wctype.h>
+#include "../tests/tests.h"
 #include "../src/core/wee-utf8.h"
 }
-
-#define WEE_CHECK_STRNDUP(__result, __string, __length)                 \
-    str = utf8_strndup (__string, __length);                            \
-    STRCMP_EQUAL(__result, str);                                        \
-    free (str);
 
 const char *noel_valid = "no\xc3\xabl";  /* noël */
 const char *noel_invalid = "no\xc3l";
@@ -337,10 +333,10 @@ TEST(Utf8, Duplicate)
 {
     char *str;
 
-    WEE_CHECK_STRNDUP("", noel_valid, 0);
-    WEE_CHECK_STRNDUP("n", noel_valid, 1);
-    WEE_CHECK_STRNDUP("no", noel_valid, 2);
-    WEE_CHECK_STRNDUP("noë", noel_valid, 3);
-    WEE_CHECK_STRNDUP("noël", noel_valid, 4);
-    WEE_CHECK_STRNDUP("noël", noel_valid, 5);
+    WEE_TEST_STR("", utf8_strndup (noel_valid, 0));
+    WEE_TEST_STR("n", utf8_strndup (noel_valid, 1));
+    WEE_TEST_STR("no", utf8_strndup (noel_valid, 2));
+    WEE_TEST_STR("noë", utf8_strndup (noel_valid, 3));
+    WEE_TEST_STR("noël", utf8_strndup (noel_valid, 4));
+    WEE_TEST_STR("noël", utf8_strndup (noel_valid, 5));
 }

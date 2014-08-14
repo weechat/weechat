@@ -51,6 +51,7 @@ tests_LDADD = ./../src/core/lib_weechat_core.a \
               $(CPPUTEST_LFLAGS) \
               -lm
 
-tests_SOURCES = tests.cpp
+tests_SOURCES = tests.cpp \
+                tests.h
 
 EXTRA_DIST = CMakeLists.txt

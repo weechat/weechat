@@ -26,6 +26,7 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <regex.h>
+#include "../tests/tests.h"
 #include "../src/core/wee-string.h"
 }
 
@@ -62,6 +63,7 @@ extern "C"
     else                                                                \
     {                                                                   \
         STRCMP_EQUAL(__result_replace, result);                         \
+        free (result);                                                  \
     }                                                                   \
     if (__result_regex == 0)                                            \
         regfree(&regex);
@@ -80,6 +82,7 @@ extern "C"
     else                                                                \
     {                                                                   \
         STRCMP_EQUAL(__result_replace, result);                         \
+        free (result);                                                  \
     }                                                                   \
     if (__result_errors >= 0)                                           \
     {                                                                   \
@@ -336,19 +339,21 @@ TEST(String, ExpandHome)
 
 TEST(String, RemoveQuotes)
 {
-    POINTERS_EQUAL(NULL, string_remove_quotes (NULL, NULL));
-    POINTERS_EQUAL(NULL, string_remove_quotes (NULL, "abc"));
-    POINTERS_EQUAL(NULL, string_remove_quotes ("abc", NULL));
-    STRCMP_EQUAL("", string_remove_quotes("", ""));
-    STRCMP_EQUAL("", string_remove_quotes("", "\"'"));
-    STRCMP_EQUAL("abc", string_remove_quotes("abc", "\"'"));
-    STRCMP_EQUAL(" abc ", string_remove_quotes(" abc ", "\"'"));
-    STRCMP_EQUAL("abc", string_remove_quotes("'abc'", "\"'"));
-    STRCMP_EQUAL("abc", string_remove_quotes(" 'abc' ", "\"'"));
-    STRCMP_EQUAL("'abc'", string_remove_quotes("\"'abc'\"", "\"'"));
-    STRCMP_EQUAL("'abc'", string_remove_quotes(" \"'abc'\" ", "\"'"));
-    STRCMP_EQUAL("'a'b'c'", string_remove_quotes("\"'a'b'c'\"", "\"'"));
-    STRCMP_EQUAL("'a'b'c'", string_remove_quotes(" \"'a'b'c'\" ", "\"'"));
+    char *str;
+
+    WEE_TEST_STR(NULL, string_remove_quotes (NULL, NULL));
+    WEE_TEST_STR(NULL, string_remove_quotes (NULL, "abc"));
+    WEE_TEST_STR(NULL, string_remove_quotes ("abc", NULL));
+    WEE_TEST_STR("", string_remove_quotes("", ""));
+    WEE_TEST_STR("", string_remove_quotes("", "\"'"));
+    WEE_TEST_STR("abc", string_remove_quotes("abc", "\"'"));
+    WEE_TEST_STR(" abc ", string_remove_quotes(" abc ", "\"'"));
+    WEE_TEST_STR("abc", string_remove_quotes("'abc'", "\"'"));
+    WEE_TEST_STR("abc", string_remove_quotes(" 'abc' ", "\"'"));
+    WEE_TEST_STR("'abc'", string_remove_quotes("\"'abc'\"", "\"'"));
+    WEE_TEST_STR("'abc'", string_remove_quotes(" \"'abc'\" ", "\"'"));
+    WEE_TEST_STR("'a'b'c'", string_remove_quotes("\"'a'b'c'\"", "\"'"));
+    WEE_TEST_STR("'a'b'c'", string_remove_quotes(" \"'a'b'c'\" ", "\"'"));
 }
 
 /*
@@ -358,14 +363,16 @@ TEST(String, RemoveQuotes)
 
 TEST(String, Strip)
 {
-    POINTERS_EQUAL(NULL, string_strip (NULL, 1, 1, NULL));
-    POINTERS_EQUAL(NULL, string_strip (NULL, 1, 1, ".;"));
-    STRCMP_EQUAL("test", string_strip ("test", 1, 1, NULL));
-    STRCMP_EQUAL("test", string_strip ("test", 1, 1, ".;"));
-    STRCMP_EQUAL(".-test.-", string_strip (".-test.-", 0, 0, ".-"));
-    STRCMP_EQUAL("test", string_strip (".-test.-", 1, 1, ".-"));
-    STRCMP_EQUAL("test.-", string_strip (".-test.-", 1, 0, ".-"));
-    STRCMP_EQUAL(".-test", string_strip (".-test.-", 0, 1, ".-"));
+    char *str;
+
+    WEE_TEST_STR(NULL, string_strip (NULL, 1, 1, NULL));
+    WEE_TEST_STR(NULL, string_strip (NULL, 1, 1, ".;"));
+    WEE_TEST_STR("test", string_strip ("test", 1, 1, NULL));
+    WEE_TEST_STR("test", string_strip ("test", 1, 1, ".;"));
+    WEE_TEST_STR(".-test.-", string_strip (".-test.-", 0, 0, ".-"));
+    WEE_TEST_STR("test", string_strip (".-test.-", 1, 1, ".-"));
+    WEE_TEST_STR("test.-", string_strip (".-test.-", 1, 0, ".-"));
+    WEE_TEST_STR(".-test", string_strip (".-test.-", 0, 1, ".-"));
 }
 
 /*
@@ -375,29 +382,31 @@ TEST(String, Strip)
 
 TEST(String, ConvertEscapedChars)
 {
-    POINTERS_EQUAL(NULL, string_convert_escaped_chars (NULL));
-    STRCMP_EQUAL("", string_convert_escaped_chars (""));
-    STRCMP_EQUAL("\"", string_convert_escaped_chars ("\\\""));
-    STRCMP_EQUAL("\\", string_convert_escaped_chars ("\\\\"));
-    STRCMP_EQUAL("\a", string_convert_escaped_chars ("\\a"));
-    STRCMP_EQUAL("\a", string_convert_escaped_chars ("\\a"));
-    STRCMP_EQUAL("\b", string_convert_escaped_chars ("\\b"));
-    STRCMP_EQUAL("\e", string_convert_escaped_chars ("\\e"));
-    STRCMP_EQUAL("\f", string_convert_escaped_chars ("\\f"));
-    STRCMP_EQUAL("\n", string_convert_escaped_chars ("\\n"));
-    STRCMP_EQUAL("\r", string_convert_escaped_chars ("\\r"));
-    STRCMP_EQUAL("\t", string_convert_escaped_chars ("\\t"));
-    STRCMP_EQUAL("\v", string_convert_escaped_chars ("\\v"));
-    STRCMP_EQUAL("\123", string_convert_escaped_chars ("\\0123"));
-    STRCMP_EQUAL("\123",
+    char *str;
+
+    WEE_TEST_STR(NULL, string_convert_escaped_chars (NULL));
+    WEE_TEST_STR("", string_convert_escaped_chars (""));
+    WEE_TEST_STR("\"", string_convert_escaped_chars ("\\\""));
+    WEE_TEST_STR("\\", string_convert_escaped_chars ("\\\\"));
+    WEE_TEST_STR("\a", string_convert_escaped_chars ("\\a"));
+    WEE_TEST_STR("\a", string_convert_escaped_chars ("\\a"));
+    WEE_TEST_STR("\b", string_convert_escaped_chars ("\\b"));
+    WEE_TEST_STR("\e", string_convert_escaped_chars ("\\e"));
+    WEE_TEST_STR("\f", string_convert_escaped_chars ("\\f"));
+    WEE_TEST_STR("\n", string_convert_escaped_chars ("\\n"));
+    WEE_TEST_STR("\r", string_convert_escaped_chars ("\\r"));
+    WEE_TEST_STR("\t", string_convert_escaped_chars ("\\t"));
+    WEE_TEST_STR("\v", string_convert_escaped_chars ("\\v"));
+    WEE_TEST_STR("\123", string_convert_escaped_chars ("\\0123"));
+    WEE_TEST_STR("\123",
                  string_convert_escaped_chars ("\\0123"));  /* invalid */
-    STRCMP_EQUAL("\x41", string_convert_escaped_chars ("\\x41"));
-    STRCMP_EQUAL("\x04z", string_convert_escaped_chars ("\\x4z"));
-    STRCMP_EQUAL("\u0012zz", string_convert_escaped_chars ("\\u12zz"));
-    STRCMP_EQUAL("\U00123456", string_convert_escaped_chars ("\\U00123456"));
-    STRCMP_EQUAL("\U00000123zzz",
+    WEE_TEST_STR("\x41", string_convert_escaped_chars ("\\x41"));
+    WEE_TEST_STR("\x04z", string_convert_escaped_chars ("\\x4z"));
+    WEE_TEST_STR("\u0012zz", string_convert_escaped_chars ("\\u12zz"));
+    WEE_TEST_STR("\U00123456", string_convert_escaped_chars ("\\U00123456"));
+    WEE_TEST_STR("\U00000123zzz",
                  string_convert_escaped_chars ("\\U00123zzz"));
-    STRCMP_EQUAL("",
+    WEE_TEST_STR("",
                  string_convert_escaped_chars ("\\U12345678")); /* invalid */
 }
 
@@ -429,13 +438,15 @@ TEST(String, IsWordChar)
 
 TEST(String, MaskToRegex)
 {
-    POINTERS_EQUAL(NULL, string_mask_to_regex (NULL));
-    STRCMP_EQUAL("", string_mask_to_regex (""));
-    STRCMP_EQUAL("test", string_mask_to_regex ("test"));
-    STRCMP_EQUAL("test.*", string_mask_to_regex ("test*"));
-    STRCMP_EQUAL(".*test.*", string_mask_to_regex ("*test*"));
-    STRCMP_EQUAL(".*te.*st.*", string_mask_to_regex ("*te*st*"));
-    STRCMP_EQUAL("test\\.\\[\\]\\{\\}\\(\\)\\?\\+\\|\\^\\$\\\\",
+    char *str;
+
+    WEE_TEST_STR(NULL, string_mask_to_regex (NULL));
+    WEE_TEST_STR("", string_mask_to_regex (""));
+    WEE_TEST_STR("test", string_mask_to_regex ("test"));
+    WEE_TEST_STR("test.*", string_mask_to_regex ("test*"));
+    WEE_TEST_STR(".*test.*", string_mask_to_regex ("*test*"));
+    WEE_TEST_STR(".*te.*st.*", string_mask_to_regex ("*te*st*"));
+    WEE_TEST_STR("test\\.\\[\\]\\{\\}\\(\\)\\?\\+\\|\\^\\$\\\\",
                  string_mask_to_regex ("test.[]{}()?+|^$\\"));
 }
 
@@ -569,17 +580,19 @@ test_replace_cb (void *data, const char *text)
 
 TEST(String, Replace)
 {
-    POINTERS_EQUAL(NULL, string_replace (NULL, NULL, NULL));
-    POINTERS_EQUAL(NULL, string_replace ("string", NULL, NULL));
-    POINTERS_EQUAL(NULL, string_replace (NULL, "search", NULL));
-    POINTERS_EQUAL(NULL, string_replace (NULL, NULL, "replace"));
-    POINTERS_EQUAL(NULL, string_replace ("string", "search", NULL));
-    POINTERS_EQUAL(NULL, string_replace ("string", NULL, "replace"));
-    POINTERS_EQUAL(NULL, string_replace (NULL, "search", "replace"));
+    char *str;
 
-    STRCMP_EQUAL("test abc def", string_replace("test abc def", "xyz", "xxx"));
-    STRCMP_EQUAL("test xxx def", string_replace("test abc def", "abc", "xxx"));
-    STRCMP_EQUAL("xxx test xxx def xxx",
+    WEE_TEST_STR(NULL, string_replace (NULL, NULL, NULL));
+    WEE_TEST_STR(NULL, string_replace ("string", NULL, NULL));
+    WEE_TEST_STR(NULL, string_replace (NULL, "search", NULL));
+    WEE_TEST_STR(NULL, string_replace (NULL, NULL, "replace"));
+    WEE_TEST_STR(NULL, string_replace ("string", "search", NULL));
+    WEE_TEST_STR(NULL, string_replace ("string", NULL, "replace"));
+    WEE_TEST_STR(NULL, string_replace (NULL, "search", "replace"));
+
+    WEE_TEST_STR("test abc def", string_replace("test abc def", "xyz", "xxx"));
+    WEE_TEST_STR("test xxx def", string_replace("test abc def", "abc", "xxx"));
+    WEE_TEST_STR("xxx test xxx def xxx",
                  string_replace("abc test abc def abc", "abc", "xxx"));
 }
 
@@ -859,28 +872,24 @@ TEST(String, Iconv)
     FILE *f;
 
     /* string_iconv */
-    POINTERS_EQUAL(NULL, string_iconv (0, NULL, NULL, NULL));
-    STRCMP_EQUAL("", string_iconv (0, NULL, NULL, ""));
-    STRCMP_EQUAL("abc", string_iconv (0, NULL, NULL, "abc"));
-    STRCMP_EQUAL("abc", string_iconv (1, "UTF-8", "ISO-8859-15", "abc"));
-    STRCMP_EQUAL(noel_iso,
-                 string_iconv (1, "UTF-8", "ISO-8859-15", noel_utf8));
-    STRCMP_EQUAL(noel_utf8,
-                 string_iconv (0, "ISO-8859-15", "UTF-8", noel_iso));
+    WEE_TEST_STR(NULL, string_iconv (0, NULL, NULL, NULL));
+    WEE_TEST_STR("", string_iconv (0, NULL, NULL, ""));
+    WEE_TEST_STR("abc", string_iconv (0, NULL, NULL, "abc"));
+    WEE_TEST_STR("abc", string_iconv (1, "UTF-8", "ISO-8859-15", "abc"));
+    WEE_TEST_STR(noel_iso, string_iconv (1, "UTF-8", "ISO-8859-15", noel_utf8));
+    WEE_TEST_STR(noel_utf8, string_iconv (0, "ISO-8859-15", "UTF-8", noel_iso));
 
     /* string_iconv_to_internal */
-    POINTERS_EQUAL(NULL, string_iconv_to_internal (NULL, NULL));
-    STRCMP_EQUAL("", string_iconv_to_internal (NULL, ""));
-    STRCMP_EQUAL("abc", string_iconv_to_internal (NULL, "abc"));
-    STRCMP_EQUAL(noel_utf8,
-                 string_iconv_to_internal ("ISO-8859-15", noel_iso));
+    WEE_TEST_STR(NULL, string_iconv_to_internal (NULL, NULL));
+    WEE_TEST_STR("", string_iconv_to_internal (NULL, ""));
+    WEE_TEST_STR("abc", string_iconv_to_internal (NULL, "abc"));
+    WEE_TEST_STR(noel_utf8, string_iconv_to_internal ("ISO-8859-15", noel_iso));
 
     /* string_iconv_from_internal */
-    POINTERS_EQUAL(NULL, string_iconv_from_internal (NULL, NULL));
-    STRCMP_EQUAL("", string_iconv_from_internal (NULL, ""));
-    STRCMP_EQUAL("abc", string_iconv_from_internal (NULL, "abc"));
-    STRCMP_EQUAL(noel_iso,
-                 string_iconv_from_internal ("ISO-8859-15", noel_utf8));
+    WEE_TEST_STR(NULL, string_iconv_from_internal (NULL, NULL));
+    WEE_TEST_STR("", string_iconv_from_internal (NULL, ""));
+    WEE_TEST_STR("abc", string_iconv_from_internal (NULL, "abc"));
+    WEE_TEST_STR(noel_iso, string_iconv_from_internal ("ISO-8859-15", noel_utf8));
 
     /* string_iconv_fprintf */
     f = fopen ("/dev/null", "w");

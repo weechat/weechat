@@ -44,7 +44,7 @@ set(LIB_WEECHAT_UNIT_TESTS_SRC
 add_library(weechat_unit_tests STATIC ${LIB_WEECHAT_UNIT_TESTS_SRC})
 
 # binary to run tests
-set(WEECHAT_TESTS_SRC tests.cpp)
+set(WEECHAT_TESTS_SRC tests.cpp tests.h)
 add_executable(tests ${WEECHAT_TESTS_SRC})
 set(LIBS
   ${LIBS}
