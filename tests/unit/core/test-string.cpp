@@ -66,6 +66,26 @@ extern "C"
     if (__result_regex == 0)                                            \
         regfree(&regex);
 
+#define WEE_REPLACE_CB(__result_replace, __result_errors,               \
+                       __str, __prefix, __suffix,                       \
+                       __callback, __callback_data, __errors)           \
+    errors = -1;                                                        \
+    result = string_replace_with_callback (                             \
+        __str, __prefix, __suffix, __callback, __callback_data,         \
+        __errors);                                                      \
+    if (__result_replace == NULL)                                       \
+    {                                                                   \
+        POINTERS_EQUAL(NULL, result);                                   \
+    }                                                                   \
+    else                                                                \
+    {                                                                   \
+        STRCMP_EQUAL(__result_replace, result);                         \
+    }                                                                   \
+    if (__result_errors >= 0)                                           \
+    {                                                                   \
+        LONGS_EQUAL(__result_errors, errors);                           \
+    }
+
 #define WEE_FORMAT_SIZE(__result, __size)                               \
     str = string_format_size (__size);                                  \
     STRCMP_EQUAL(__result, str);                                        \
@@ -524,18 +544,31 @@ TEST(String, Highlight)
 }
 
 /*
+ * Test callback for function string_replace_with_callback.
+ *
+ * It replaces "abc" by "def", "xxx" by empty string, and for any other value
+ * it returns NULL (so the value is kept as-is).
+ */
+
+char *
+test_replace_cb (void *data, const char *text)
+{
+    if (strcmp (text, "abc") == 0)
+        return strdup ("def");
+
+    if (strcmp (text, "xxx") == 0)
+        return strdup ("");
+
+    return NULL;
+}
+
+/*
  * Tests functions:
- *    string_replace
- *    string_replace_regex
- *    string_replace_with_callback
+ *   string_replace
  */
 
 TEST(String, Replace)
 {
-    regex_t regex;
-    char *result;
-
-    /* basic replace */
     POINTERS_EQUAL(NULL, string_replace (NULL, NULL, NULL));
     POINTERS_EQUAL(NULL, string_replace ("string", NULL, NULL));
     POINTERS_EQUAL(NULL, string_replace (NULL, "search", NULL));
@@ -548,19 +581,84 @@ TEST(String, Replace)
     STRCMP_EQUAL("test xxx def", string_replace("test abc def", "abc", "xxx"));
     STRCMP_EQUAL("xxx test xxx def xxx",
                  string_replace("abc test abc def abc", "abc", "xxx"));
+}
 
-    /* replace with regex */
+/*
+ * Tests functions:
+ *   string_replace_regex
+ */
+
+TEST(String, ReplaceRegex)
+{
+    regex_t regex;
+    char *result;
+
     WEE_REPLACE_REGEX(-1, NULL, NULL, NULL, NULL, '$', NULL);
     WEE_REPLACE_REGEX(0, NULL, NULL, "", NULL, '$', NULL);
     WEE_REPLACE_REGEX(0, "string", "string", "", NULL, '$', NULL);
-    WEE_REPLACE_REGEX(0, "test abc def", "test abc def", "xyz", "xxx", '$', NULL);
-    WEE_REPLACE_REGEX(0, "test xxx def", "test abc def", "abc", "xxx", '$', NULL);
+    WEE_REPLACE_REGEX(0, "test abc def", "test abc def",
+                      "xyz", "xxx", '$', NULL);
+    WEE_REPLACE_REGEX(0, "test xxx def", "test abc def",
+                      "abc", "xxx", '$', NULL);
     WEE_REPLACE_REGEX(0, "foo", "test foo", "^(test +)(.*)", "$2", '$', NULL);
-    WEE_REPLACE_REGEX(0, "test / ***", "test foo", "^(test +)(.*)", "$1/ $.*2", '$', NULL);
-    WEE_REPLACE_REGEX(0, "%%%", "test foo", "^(test +)(.*)", "$.%+", '$', NULL);
+    WEE_REPLACE_REGEX(0, "test / ***", "test foo",
+                      "^(test +)(.*)", "$1/ $.*2", '$', NULL);
+    WEE_REPLACE_REGEX(0, "%%%", "test foo",
+                      "^(test +)(.*)", "$.%+", '$', NULL);
+}
 
-    /* replace with a callback */
-    /* TODO: write tests for string_replace_with_callback */
+/*
+ * Tests functions:
+ *   string_replace_with_callback
+ */
+
+TEST(String, ReplaceWithCallback)
+{
+    regex_t regex;
+    char *result;
+    int errors;
+
+    /* tests with invalid arguments */
+    WEE_REPLACE_CB(NULL, -1, NULL, NULL, NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, "", NULL, NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, NULL, "", NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, NULL, NULL, "", NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, NULL, NULL, NULL, &test_replace_cb, NULL, NULL);
+    WEE_REPLACE_CB(NULL, 0, NULL, NULL, NULL, NULL, NULL, &errors);
+    WEE_REPLACE_CB(NULL, -1, "test", NULL, NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, "test", "${", NULL, NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, "test", NULL, "}", NULL, NULL, NULL);
+    WEE_REPLACE_CB(NULL, -1, "test", NULL, NULL, &test_replace_cb, NULL, NULL);
+    WEE_REPLACE_CB(NULL, 0, "test", NULL, NULL, NULL, NULL, &errors);
+    WEE_REPLACE_CB(NULL, -1, "test", "${", "}", NULL, NULL, NULL);
+
+    /* valid arguments */
+    WEE_REPLACE_CB("test", -1, "test", "${", "}",
+                   &test_replace_cb, NULL, NULL);
+    WEE_REPLACE_CB("test", 0, "test", "${", "}",
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test def", 0, "test ${abc}", "${", "}",
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test ", 0, "test ${xxx}", "${", "}",
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test ${aaa}", 1, "test ${aaa}", "${", "}",
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test def  ${aaa}", 1, "test ${abc} ${xxx} ${aaa}",
+                   "${", "}", &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test ", 1, "test ${abc", "${", "}",
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test abc}", 0, "test abc}", "${", "}",
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test ${}", 1, "test ${}", "${", "}",
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("test ${ }", 1, "test ${ }", "${", "}",
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("def", 0, "${abc}", "${", "}",
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("", 0, "${xxx}", "${", "}",
+                   &test_replace_cb, NULL, &errors);
+    WEE_REPLACE_CB("${aaa}", 1, "${aaa}", "${", "}",
+                   &test_replace_cb, NULL, &errors);
 }
 
 /*
