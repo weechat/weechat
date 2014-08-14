@@ -123,7 +123,21 @@ TEST(Hashtable, New)
 
 TEST(Hashtable, Set)
 {
-    /* TODO: write tests */
+    struct t_hashtable *hashtable;
+    struct t_hashtable_item *item;
+    const char *value = "this is a string";
+
+    hashtable = hashtable_new (32,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               &test_hashtable_hash_key_cb,
+                               &test_hashtable_keycmp_cb);
+    POINTERS_EQUAL(NULL, hashtable_set_with_size (NULL, NULL, -1, NULL, -1));
+    POINTERS_EQUAL(NULL, hashtable_set_with_size (NULL, NULL, -1, NULL, -1));
+
+    /* TODO: write more tests */
+
+    hashtable_free (hashtable);
 }
 
 /*
