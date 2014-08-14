@@ -664,13 +664,7 @@ TEST(String, ReplaceWithCallback)
 /*
  * Tests functions:
  *    string_split
- *    string_split_shared
- *    string_split_shell
  *    string_free_split
- *    string_free_split_shared
- *    string_build_with_split_string
- *    string_split_command
- *    string_free_split_command
  */
 
 TEST(String, Split)
@@ -698,8 +692,6 @@ TEST(String, Split)
 
     /* free split with NULL */
     string_free_split (NULL);
-    string_free_split_shared (NULL);
-    string_free_split_command (NULL);
 
     /* standard split */
     argv = string_split (" abc de  fghi ", " ", 0, 0, &argc);
@@ -734,43 +726,121 @@ TEST(String, Split)
     STRCMP_EQUAL("de  fghi", argv[1]);
     POINTERS_EQUAL(NULL, argv[2]);
     string_free_split (argv);
+}
 
-    /* split with shared strings */
+/*
+ * Tests functions:
+ *    string_split_shared
+ *    string_free_split_shared
+ */
+
+TEST(String, SplitShared)
+{
+    char **argv, *str;
+    int argc;
+
+    POINTERS_EQUAL(NULL, string_split_shared (NULL, NULL, 0, 0, NULL));
+    POINTERS_EQUAL(NULL, string_split_shared (NULL, "", 0, 0, NULL));
+    POINTERS_EQUAL(NULL, string_split_shared ("", NULL, 0, 0, NULL));
+    POINTERS_EQUAL(NULL, string_split_shared ("", "", 0, 0, NULL));
+
     argv = string_split_shared (" abc de  abc ", " ", 0, 0, &argc);
     LONGS_EQUAL(3, argc);
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("abc", argv[2]);
     POINTERS_EQUAL(NULL, argv[3]);
+
     /* same content == same pointer for shared strings */
     POINTERS_EQUAL(argv[0], argv[2]);
+
     string_free_split_shared (argv);
 
-    /* build string with split string */
-    str = string_build_with_split_string (NULL, NULL);
-    POINTERS_EQUAL(NULL, str);
-    argv = string_split (" abc de  fghi ", " ", 0, 0, &argc);
-    str = string_build_with_split_string ((const char **)argv, NULL);
-    STRCMP_EQUAL("abcdefghi", str);
-    free (str);
-    str = string_build_with_split_string ((const char **)argv, "");
-    STRCMP_EQUAL("abcdefghi", str);
-    free (str);
-    str = string_build_with_split_string ((const char **)argv, ";;");
-    STRCMP_EQUAL("abc;;de;;fghi", str);
-    free (str);
+    /* free split with NULL */
+    string_free_split_shared (NULL);
+}
+
+/*
+ * Tests functions:
+ *    string_split_shell
+ *    string_free_split
+ */
+
+TEST(String, SplitShell)
+{
+    char **argv, *str;
+    int argc;
+
+    POINTERS_EQUAL(NULL, string_split_shell (NULL, NULL));
+
+    argv = string_split_shell ("/path/to/bin arg1 \"arg2 here\" 'arg3 here'",
+                               &argc);
+    LONGS_EQUAL(4, argc);
+    STRCMP_EQUAL("/path/to/bin", argv[0]);
+    STRCMP_EQUAL("arg1", argv[1]);
+    STRCMP_EQUAL("arg2 here", argv[2]);
+    STRCMP_EQUAL("arg3 here", argv[3]);
+    POINTERS_EQUAL(NULL, argv[4]);
+
     string_free_split (argv);
 
-    /* split command */
+    /* free split with NULL */
+    string_free_split_shared (NULL);
+}
+
+/*
+ * Tests functions:
+ *    string_split_command
+ *    string_free_split_command
+ */
+
+TEST(String, SplitCommand)
+{
+    char **argv, *str;
+    int argc;
+
     POINTERS_EQUAL(NULL, string_split_command (NULL, ';'));
     POINTERS_EQUAL(NULL, string_split_command ("", ';'));
     argv = string_split_command ("abc;de;fghi", ';');
-    LONGS_EQUAL(3, argc);
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
     POINTERS_EQUAL(NULL, argv[3]);
+
     string_free_split_command (argv);
+
+    /* free split with NULL */
+    string_free_split_command (NULL);
+}
+
+/*
+ * Tests functions:
+ *    string_build_with_split_string
+ */
+
+TEST(String, SplitBuildWithSplitString)
+{
+    char **argv, *str;
+    int argc;
+
+    str = string_build_with_split_string (NULL, NULL);
+    POINTERS_EQUAL(NULL, str);
+
+    argv = string_split (" abc de  fghi ", " ", 0, 0, &argc);
+
+    str = string_build_with_split_string ((const char **)argv, NULL);
+    STRCMP_EQUAL("abcdefghi", str);
+    free (str);
+
+    str = string_build_with_split_string ((const char **)argv, "");
+    STRCMP_EQUAL("abcdefghi", str);
+    free (str);
+
+    str = string_build_with_split_string ((const char **)argv, ";;");
+    STRCMP_EQUAL("abc;;de;;fghi", str);
+    free (str);
+
+    string_free_split (argv);
 }
 
 /*
