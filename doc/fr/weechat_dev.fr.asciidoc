@@ -292,16 +292,18 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |===
 | Chemin/fichier                    | Description
 | tests/                            | Racine des tests
+|    tests.cpp                      | Programme utilisé pour lancer les tests
 |    unit/                          | Racine des tests unitaires
-|       test-eval.cpp               | Tests : évaluation d'expressions
-|       test-hashtble.cpp           | Tests : tables de hachage
-|       test-hdata.cpp              | Tests : hdata
-|       test-infolist.cpp           | Tests : infolists
-|       test-list.cpp               | Tests : listes
-|       test-string.cpp             | Tests : chaînes
-|       test-url.cpp                | Tests : URLs
-|       test-utf8.cpp               | Tests : UTF-8
-|       test-util.cpp               | Tests : fonctions utiles
+|       core/                       | Racine des tests unitaires pour le cœur
+|          test-eval.cpp            | Tests : évaluation d'expressions
+|          test-hashtble.cpp        | Tests : tables de hachage
+|          test-hdata.cpp           | Tests : hdata
+|          test-infolist.cpp        | Tests : infolists
+|          test-list.cpp            | Tests : listes
+|          test-string.cpp          | Tests : chaînes
+|          test-url.cpp             | Tests : URLs
+|          test-utf8.cpp            | Tests : UTF-8
+|          test-util.cpp            | Tests : fonctions utiles
 |===
 
 [[documentation_translations]]
