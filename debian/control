@@ -18,8 +18,8 @@ Build-Depends:
     tcl8.5-dev,
     guile-2.0-dev,
     libcurl4-gnutls-dev,
-    libgcrypt11-dev,
-    libgnutls-dev,
+    libgcrypt20-dev,
+    libgnutls28-dev,
     zlib1g-dev
 Standards-Version: 3.9.5
 Homepage: http://weechat.org/
