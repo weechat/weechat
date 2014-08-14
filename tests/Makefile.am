@@ -33,7 +33,7 @@ lib_weechat_unit_tests_a_SOURCES = unit/core/test-eval.cpp \
                                    unit/core/test-utf8.cpp \
                                    unit/core/test-util.cpp
 
-bin_PROGRAMS = tests
+noinst_PROGRAMS = tests
 
 # Because of a linker bug, we have to link 2 times with lib_weechat_core.a
 # (and it must be 2 different path/names to be kept by linker)
