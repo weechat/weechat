@@ -29,7 +29,8 @@
 #     $ cygport weechat-X.Y.Z-1.cygport fetch
 #     $ cygport weechat-X.Y.Z-1.cygport almostall
 #
-#     ==> packages are built in directory ./weechat-X.Y.Z-1/dist/weechat/
+#     ==> packages are built in directory:
+#             ./weechat-X.Y.Z-1.<arch>/dist/weechat/
 #
 
 inherit cmake
@@ -45,9 +46,9 @@ HOMEPAGE="http://weechat.org/"
 SRC_URI="http://weechat.org/files/src/weechat-${VERSION}.tar.bz2"
 
 # Build dependencies only
-DEPEND="asciidoc cmake docbook-xml-simple11 docbook-xsl gettext gnutls-devel \
-libaspell-devel libcurl-devel libgcrypt-devel libncursesw-devel lua perl \
-python ruby source-highlight tcl zlib-devel"
+DEPEND="asciidoc cmake docbook-xml-simple11 docbook-xsl gettext gettext-devel \
+gnutls-devel libaspell-devel libcurl-devel libgcrypt-devel libncursesw-devel \
+lua perl python ruby source-highlight tcl zlib-devel"
 
 #
 # CMake compilation of WeeChat:
