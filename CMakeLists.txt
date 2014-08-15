@@ -241,6 +241,17 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.pc DESTINATION ${LIBDIR}/../pk
 # cygport file (used to build Cygwin packages)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/weechat.cygport.in ${CMAKE_CURRENT_BINARY_DIR}/weechat-${VERSION}-1.cygport @ONLY)
 
+# install some files (only on Cygwin)
+if(CYGWIN)
+  install(FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/AUTHORS.asciidoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/ChangeLog.asciidoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Contributing.asciidoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/README.asciidoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/ReleaseNotes.asciidoc
+    DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+endif()
+
 # icon
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat.png DESTINATION ${SHAREDIR}/icons/hicolor/32x32/apps)
 
