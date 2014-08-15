@@ -31,7 +31,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add option "env" in command /set (manage environment variables)
 * core: add bar item "buffer_short_name" (task #10882)
 * core: add option "send" in command /input (send text to a buffer)
-* core: add support of negated tags in filters (with '!')
+* core: add support of negated tags in filters (with "!")
   (closes #72, closes #74)
 * core: add hidden buffers, add options hide/unhide in command /buffer
 * core: add default key key[alt--] (toggle filters in current buffer)
