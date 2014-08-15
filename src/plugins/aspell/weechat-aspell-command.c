@@ -441,9 +441,13 @@ weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
     /* add word to personal dictionary */
     if (weechat_strcasecmp (argv[1], "addword") == 0)
     {
+        if (argc <= 2)
+            return WEECHAT_RC_ERROR;
         if (argc > 3)
+            /* use a given dict */
             weechat_aspell_command_add_word (buffer, argv[2], argv_eol[3]);
-        else
+        else if (argc > 2)
+            /* use default dict */
             weechat_aspell_command_add_word (buffer, NULL, argv_eol[2]);
         return WEECHAT_RC_OK;
     }
