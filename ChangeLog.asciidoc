@@ -13,6 +13,12 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'ReleaseNotes.asciidoc' in sources).
 
 
+== Version 1.1 (under dev)
+
+=== Bugs fixed
+
+* tests: fix memory leak in tests launcher
+
 == Version 1.0 (2014-08-15)
 
 === New features
