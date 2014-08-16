@@ -3459,16 +3459,18 @@ include::autogen/user/xfer_commands.asciidoc[]
 [[support]]
 == Unterstützung
 
-Bevor Sie um Unterstützung nachsuchen lesen Sie bitte die Dokumentation und die FAQ
-von WeeChat durch (mit Dokumentation ist dieses Dokument gemeint. Falls Sie nicht
-alles gelesen haben sollten und trotzdem diese Zeilen lesen, dann beginnen Sie
-bitte noch mal von vorne!).
+// TRANSLATION MISSING
+Before asking for support, be sure you've read documentation and FAQ provided
+with WeeChat.
 
-Wie erhalte ich Unterstützung:
+// TRANSLATION MISSING
+For support with IRC, on server 'chat.freenode.net':
 
-* IRC: Server 'irc.freenode.net', Channels '#weechat' (englisch) und
-  '#weechat-fr' (französisch)
-* Mailing Liste:
-** Bestellen: http://mail.nongnu.org/mailman/listinfo/weechat-support
-** sende email an: weechat-support@nongnu.org
-** Archiv: http://mail.nongnu.org/archive/html/weechat-support
+* official channels (with developers):
+** '#weechat' (English)
+** '#weechat-fr' (French)
+* non-official channels:
+** '#weechat-de' (German)
+
+// TRANSLATION MISSING
+For other ways of support, see: http://weechat.org/dev/support

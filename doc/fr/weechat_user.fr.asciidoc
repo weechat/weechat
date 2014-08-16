@@ -3495,14 +3495,14 @@ include::autogen/user/xfer_commands.asciidoc[]
 == Support
 
 Avant de faire appel au support, merci de lire la documentation et la FAQ de
-WeeChat (la documentation est le document que vous êtes en train de lire, si
-vous n'avez pas tout lu jusqu'ici, il est encore temps de recommencer !).
+WeeChat.
 
-Moyens d'obtenir du support :
+Pour le support via IRC, sur le serveur 'chat.freenode.net' :
 
-* IRC : serveur 'irc.freenode.net', canaux '#weechat' (anglais) et
-  '#weechat-fr' (français)
-* Liste de diffusion :
-** inscription : http://mail.nongnu.org/mailman/listinfo/weechat-support
-** envoi d'un mail à weechat-support@nongnu.org
-** archives : http://mail.nongnu.org/archive/html/weechat-support
+* canaux officiels (avec les développeurs) :
+** '#weechat' (Anglais)
+** '#weechat-fr' (Français)
+* canaux non officiels :
+** '#weechat-de' (Allemand)
+
+Pour les autres formes de support, voir : http://weechat.org/dev/support

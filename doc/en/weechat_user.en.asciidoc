@@ -3386,14 +3386,14 @@ include::autogen/user/xfer_commands.asciidoc[]
 == Support
 
 Before asking for support, be sure you've read documentation and FAQ provided
-with WeeChat (documentation is this document, if you don't read all lines
-until this sentence, you can start again!).
+with WeeChat.
 
-Ways to get support:
+For support with IRC, on server 'chat.freenode.net':
 
-* IRC: server 'irc.freenode.net', channels '#weechat' (English) and
-  '#weechat-fr' (French)
-* Mailing list:
-** subscribe: http://mail.nongnu.org/mailman/listinfo/weechat-support
-** send mail to weechat-support@nongnu.org
-** archives: http://mail.nongnu.org/archive/html/weechat-support
+* official channels (with developers):
+** '#weechat' (English)
+** '#weechat-fr' (French)
+* non-official channels:
+** '#weechat-de' (German)
+
+For other ways of support, see: http://weechat.org/dev/support
