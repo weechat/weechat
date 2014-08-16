@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-25 20:37+0200\n"
-"PO-Revision-Date: 2014-07-25 07:49+0200\n"
+"POT-Creation-Date: 2014-08-16 11:34+0200\n"
+"PO-Revision-Date: 2014-08-16 11:31+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -8141,9 +8141,10 @@ msgstr "%sCTCP demandé par %s%s%s : %s%s%s%s%s%s"
 msgid " (blocked)"
 msgstr " (bloqué)"
 
+#. TRANSLATORS: %.3fs is a float number + "s" ("seconds")
 #, c-format
-msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
-msgstr "%sRéponse CTCP de %s%s%s : %s%s%s %ld.%ld %s"
+msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
+msgstr "%sRéponse CTCP de %s%s%s : %s%s%s %.3fs"
 
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
@@ -11861,3 +11862,6 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
+#~ msgstr "%sRéponse CTCP de %s%s%s : %s%s%s %ld.%ld %s"

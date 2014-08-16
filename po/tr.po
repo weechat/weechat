@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-02 16:12+0200\n"
+"POT-Creation-Date: 2014-08-16 11:34+0200\n"
 "PO-Revision-Date: 2014-07-25 07:50+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5999,9 +5999,11 @@ msgstr ""
 msgid " (blocked)"
 msgstr ""
 
-#, c-format
-msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
+#. TRANSLATORS: %.3fs is a float number + "s" ("seconds")
+#, fuzzy, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
 msgstr ""
+"%sKanal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
 
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"

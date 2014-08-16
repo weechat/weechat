@@ -155,6 +155,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server, time_t date,
     char *pos_end, *pos_space, *pos_args, *pos_usec;
     struct timeval tv;
     long sec1, usec1, sec2, usec2, difftime;
+    float seconds;
 
     while (arguments && arguments[0])
     {
@@ -186,30 +187,22 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server, time_t date,
 
                     difftime = ((sec2 * 1000000) + usec2) -
                         ((sec1 * 1000000) + usec1);
-                    weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server,
-                                                                               nick,
-                                                                               NULL,
-                                                                               "ctcp",
-                                                                               NULL),
-                                              date,
-                                              irc_protocol_tags (command,
-                                                                 "irc_ctcp",
-                                                                 NULL, NULL),
-                                              _("%sCTCP reply from %s%s%s: %s%s%s "
-                                                "%ld.%ld %s"),
-                                              weechat_prefix ("network"),
-                                              irc_nick_color_for_message (server,
-                                                                          NULL,
-                                                                          nick),
-                                              nick,
-                                              IRC_COLOR_RESET,
-                                              IRC_COLOR_CHAT_CHANNEL,
-                                              arguments + 1,
-                                              IRC_COLOR_RESET,
-                                              difftime / 1000000,
-                                              (difftime % 1000000) / 1000,
-                                              (NG_("second", "seconds",
-                                                   (difftime / 1000000))));
+                    seconds = (float)difftime / 1000000.0;
+                    weechat_printf_date_tags (
+                        irc_msgbuffer_get_target_buffer (server, nick, NULL,
+                                                         "ctcp", NULL),
+                        date,
+                        irc_protocol_tags (command, "irc_ctcp", NULL, NULL),
+                        /* TRANSLATORS: %.3fs is a float number + "s" ("seconds") */
+                        _("%sCTCP reply from %s%s%s: %s%s%s %.3fs"),
+                        weechat_prefix ("network"),
+                        irc_nick_color_for_message (server, NULL, nick),
+                        nick,
+                        IRC_COLOR_RESET,
+                        IRC_COLOR_CHAT_CHANNEL,
+                        arguments + 1,
+                        IRC_COLOR_RESET,
+                        seconds);
 
                     pos_usec[0] = ' ';
                 }

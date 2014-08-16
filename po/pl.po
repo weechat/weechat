@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-07-25 20:37+0200\n"
+"POT-Creation-Date: 2014-08-16 11:34+0200\n"
 "PO-Revision-Date: 2014-08-13 21:27+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7978,9 +7978,10 @@ msgstr "%sCTCP zażądane przez %s%s%s: %s%s%s%s%s%s"
 msgid " (blocked)"
 msgstr " (zablokowane)"
 
-#, c-format
-msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
-msgstr "%sOdpowiedź CTCP od %s%s%s: %s%s%s %ld.%ld %s"
+#. TRANSLATORS: %.3fs is a float number + "s" ("seconds")
+#, fuzzy, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
+msgstr "%sOdpowiedź CTCP od %s%s%s: %s%s%s%s%s"
 
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
@@ -11619,3 +11620,6 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda: błąd %d %s"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+#~ msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
+#~ msgstr "%sOdpowiedź CTCP od %s%s%s: %s%s%s %ld.%ld %s"
