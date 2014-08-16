@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-16 11:34+0200\n"
-"PO-Revision-Date: 2014-08-03 00:32+0900\n"
+"POT-Creation-Date: 2014-08-16 11:45+0200\n"
+"PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -4315,9 +4315,9 @@ msgstr[0] "バイト"
 msgid "debug: removing file: %s"
 msgstr "デバッグ: ファイル削除中: %s"
 
-#. TRANSLATORS: "%s" is translation of "second" or "seconds"
-#, c-format
-msgid "Upgrade done (%.02f %s)"
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
+#, fuzzy, c-format
+msgid "Upgrade done (%.02fs)"
 msgstr "アップグレード完了 (%.02f %s)"
 
 #, c-format
@@ -11409,6 +11409,3 @@ msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できませ�
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: \"%s\" のタイムアウト %s"
-
-#~ msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
-#~ msgstr "%s%s%s%s からの CTCP 応答: %s%s%s %ld.%ld %s"

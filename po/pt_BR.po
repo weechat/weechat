@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-16 11:34+0200\n"
-"PO-Revision-Date: 2014-07-14 18:44+0200\n"
+"POT-Creation-Date: 2014-08-16 11:45+0200\n"
+"PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -4030,9 +4030,9 @@ msgstr[1] ""
 msgid "debug: removing file: %s"
 msgstr ""
 
-#. TRANSLATORS: "%s" is translation of "second" or "seconds"
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
 #, c-format
-msgid "Upgrade done (%.02f %s)"
+msgid "Upgrade done (%.02fs)"
 msgstr ""
 
 #, c-format
@@ -10388,6 +10388,3 @@ msgstr "%s%s: não foi possível setar opção \"nonblock\" para o socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: tempo esgotado para \"%s\" com %s"
-
-#~ msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
-#~ msgstr "%sresposta CTCP de %s%s%s: %s%s%s %ld.%ld %s"

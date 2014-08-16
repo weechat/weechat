@@ -910,10 +910,9 @@ upgrade_weechat_end ()
     gettimeofday (&tv_now, NULL);
     time_diff = util_timeval_diff (&weechat_current_start_timeval, &tv_now);
     gui_chat_printf (NULL,
-                     /* TRANSLATORS: "%s" is translation of "second" or "seconds" */
-                     _("Upgrade done (%.02f %s)"),
-                     ((float)time_diff) / 1000,
-                     NG_("second", "seconds", time_diff / 1000));
+                     /* TRANSLATORS: %.02fs is a float number + "s" ("seconds") */
+                     _("Upgrade done (%.02fs)"),
+                     ((float)time_diff) / 1000);
 
     /* upgrading ended */
     weechat_upgrading = 0;

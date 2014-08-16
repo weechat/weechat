@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-16 11:34+0200\n"
+"POT-Creation-Date: 2014-08-16 11:45+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3190,9 +3190,9 @@ msgstr[1] ""
 msgid "debug: removing file: %s"
 msgstr ""
 
-#. TRANSLATORS: "%s" is translation of "second" or "seconds"
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
 #, c-format
-msgid "Upgrade done (%.02f %s)"
+msgid "Upgrade done (%.02fs)"
 msgstr ""
 
 #, c-format

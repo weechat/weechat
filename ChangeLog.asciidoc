@@ -17,6 +17,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: fix translation of message displayed after /upgrade
 * tests: fix memory leak in tests launcher
 * aspell: fix crash with command "/aspell addword" if no word is given
   (closes #164, closes #165)

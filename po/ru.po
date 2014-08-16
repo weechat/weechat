@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-16 11:34+0200\n"
-"PO-Revision-Date: 2014-07-25 07:50+0200\n"
+"POT-Creation-Date: 2014-08-16 11:45+0200\n"
+"PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -3581,9 +3581,9 @@ msgstr[2] "байтов"
 msgid "debug: removing file: %s"
 msgstr "       IRC(%s)\n"
 
-#. TRANSLATORS: "%s" is translation of "second" or "seconds"
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
 #, c-format
-msgid "Upgrade done (%.02f %s)"
+msgid "Upgrade done (%.02fs)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -10148,7 +10148,3 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
-#~ msgstr "Ответ на %sPING%s от %s%s%s: %ld.%ld секунд\n"

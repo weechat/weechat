@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-16 11:34+0200\n"
-"PO-Revision-Date: 2014-08-13 21:27+0100\n"
+"POT-Creation-Date: 2014-08-16 11:45+0200\n"
+"PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -4416,9 +4416,9 @@ msgstr[2] "bajtów"
 msgid "debug: removing file: %s"
 msgstr "debug: usuwam plik: %s"
 
-#. TRANSLATORS: "%s" is translation of "second" or "seconds"
-#, c-format
-msgid "Upgrade done (%.02f %s)"
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
+#, fuzzy, c-format
+msgid "Upgrade done (%.02fs)"
 msgstr "Uaktualnienie zakończyło się powodzeniem (%.02f %s)"
 
 #, c-format
@@ -11620,6 +11620,3 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda: błąd %d %s"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
-
-#~ msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
-#~ msgstr "%sOdpowiedź CTCP od %s%s%s: %s%s%s %ld.%ld %s"
