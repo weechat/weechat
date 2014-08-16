@@ -155,7 +155,6 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server, time_t date,
     char *pos_end, *pos_space, *pos_args, *pos_usec;
     struct timeval tv;
     long sec1, usec1, sec2, usec2, difftime;
-    float seconds;
 
     while (arguments && arguments[0])
     {
@@ -187,7 +186,6 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server, time_t date,
 
                     difftime = ((sec2 * 1000000) + usec2) -
                         ((sec1 * 1000000) + usec1);
-                    seconds = (float)difftime / 1000000.0;
                     weechat_printf_date_tags (
                         irc_msgbuffer_get_target_buffer (server, nick, NULL,
                                                          "ctcp", NULL),
@@ -202,7 +200,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server, time_t date,
                         IRC_COLOR_CHAT_CHANNEL,
                         arguments + 1,
                         IRC_COLOR_RESET,
-                        seconds);
+                        (float)difftime / 1000000.0);
 
                     pos_usec[0] = ' ';
                 }
