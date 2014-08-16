@@ -87,7 +87,4 @@ Alphabetically:
 
 == Contact
 
-Developers are connected to IRC:
-
-* server: 'irc.freenode.net'
-* channels: '#weechat' (English) and '#weechat-fr' (French)
+See 'WeeChat User's guide' or http://weechat.org/dev/support
