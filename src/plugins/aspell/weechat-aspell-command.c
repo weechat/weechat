@@ -420,14 +420,13 @@ weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
     /* set dictionary for current buffer */
     if (weechat_strcasecmp (argv[1], "setdict") == 0)
     {
-        if (argc > 2)
-        {
-            dicts = weechat_string_replace (argv_eol[2], " ", "");
-            weechat_aspell_command_set_dict (buffer,
-                                             (dicts) ? dicts : argv[2]);
-            if (dicts)
-                free (dicts);
-        }
+        if (argc < 3)
+            return WEECHAT_RC_ERROR;
+        dicts = weechat_string_replace (argv_eol[2], " ", "");
+        weechat_aspell_command_set_dict (buffer,
+                                         (dicts) ? dicts : argv[2]);
+        if (dicts)
+            free (dicts);
         return WEECHAT_RC_OK;
     }
 
