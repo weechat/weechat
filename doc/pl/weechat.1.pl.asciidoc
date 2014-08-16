@@ -52,6 +52,10 @@ $HOME/.weechat/weechat.conf::
 $HOME/.weechat/plugins.conf::
     plik konfiguracyjny wtyczek
 
+// TRANSLATION MISSING
+$HOME/.weechat/sec.conf::
+    configuration file with secured data
+
 $HOME/.weechat/alias.conf::
     plik konfiguracyjny wtyczki 'alias'
 
@@ -60,6 +64,9 @@ $HOME/.weechat/aspell.conf::
 
 $HOME/.weechat/charset.conf::
     plik konfiguracyjny wtyczki 'charset'
+
+$HOME/.weechat/exec.conf::
+    plik konfiguracyjny wtyczki 'exec'
 
 $HOME/.weechat/irc.conf::
     plik konfiguracyjny wtyczki 'irc'
