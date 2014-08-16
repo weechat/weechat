@@ -890,7 +890,7 @@ URL を簡単にクリックしたり、テキストを簡単に選択できる�
 オプションを使えば、時間フォーマットを変更することも可能です。
 
 <<command_weechat_window,/window>>
-コマンドを使えば、指定秒後に最低限表示を有効化することができます。
+コマンドを使えば、指定秒後に最小限表示を有効化することができます。
 
 WeeChat が以下のような表示状態の場合:
 
@@ -919,7 +919,7 @@ WeeChat が以下のような表示状態の場合:
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
-最低限表示では以下の様に表示されます:
+最小限表示では以下の様に表示されます:
 
 ....
 ┌───────────────────────────────────────────────────────────────────────────┐
@@ -3381,18 +3381,14 @@ include::autogen/user/xfer_commands.asciidoc[]
 [[support]]
 == サポート
 
-// TRANSLATION MISSING
-Before asking for support, be sure you've read documentation and FAQ provided
-with WeeChat.
+サポートを依頼する前に、必ず WeeChat に付属するドキュメントと FAQ を読んでください。
 
-// TRANSLATION MISSING
-For support with IRC, on server 'chat.freenode.net':
+IRC を使ったサポート窓口は 'chat.freenode.net' サーバにあります:
 
-* official channels (with developers):
-** '#weechat' (English)
-** '#weechat-fr' (French)
-* non-official channels:
-** '#weechat-de' (German)
+* 公式チャンネル (開発者もいます):
+** '#weechat' (英語)
+** '#weechat-fr' (フランス語)
+* 非公式チャンネル:
+** '#weechat-de' (ドイツ語)
 
-// TRANSLATION MISSING
-For other ways of support, see: http://weechat.org/dev/support
+他の方法でサポートを受けるには、以下のページをご覧ください: http://weechat.org/dev/support
