@@ -87,4 +87,5 @@ Alphabetically:
 
 == Contact
 
-See 'WeeChat User's guide' or http://weechat.org/dev/support
+See http://weechat.org/files/doc/devel/weechat_user.en.html[user's guide]
+or http://weechat.org/dev/support
