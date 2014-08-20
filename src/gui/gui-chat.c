@@ -639,7 +639,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                            const char *tags, const char *message, ...)
 {
     time_t date_printed;
-    int display_time, length, at_least_one_message_printed;
+    int display_time, length, at_least_one_message_printed, msg_discarded;
     char *pos, *pos_prefix, *pos_tab, *pos_end, *pos_lines;
     char *modifier_data, *new_msg, *ptr_msg, *lines_waiting;
     struct t_gui_line *ptr_line;
@@ -693,6 +693,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 
         /* call modifier for message printed ("weechat_print") */
         new_msg = NULL;
+        msg_discarded = 0;
         if (buffer)
         {
             length = strlen (gui_buffer_get_plugin_name (buffer)) + 1 +
@@ -718,9 +719,10 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                          * print anything
                          */
                         free (new_msg);
-                        goto end;
+                        new_msg = NULL;
+                        msg_discarded = 1;
                     }
-                    if (strcmp (message, new_msg) == 0)
+                    else if (strcmp (message, new_msg) == 0)
                     {
                         /* no changes in new message */
                         free (new_msg);
@@ -730,89 +732,92 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
             }
         }
 
-        pos_prefix = NULL;
-        display_time = 1;
-        ptr_msg = (new_msg) ? new_msg : pos;
+        if (!msg_discarded)
+        {
+            pos_prefix = NULL;
+            display_time = 1;
+            ptr_msg = (new_msg) ? new_msg : pos;
 
-        /* space followed by tab => prefix ignored */
-        if ((ptr_msg[0] == ' ') && (ptr_msg[1] == '\t'))
-        {
-            ptr_msg += 2;
-        }
-        else
-        {
-            /* if two first chars are tab, then do not display time */
-            if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
+            /* space followed by tab => prefix ignored */
+            if ((ptr_msg[0] == ' ') && (ptr_msg[1] == '\t'))
             {
-                display_time = 0;
                 ptr_msg += 2;
             }
             else
             {
-                /* if tab found, use prefix (before tab) */
-                pos_tab = strchr (ptr_msg, '\t');
-                if (pos_tab)
+                /* if two first chars are tab, then do not display time */
+                if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
                 {
-                    pos_tab[0] = '\0';
-                    pos_prefix = ptr_msg;
-                    ptr_msg = pos_tab + 1;
-                }
-            }
-        }
-
-        if (gui_init_ok)
-        {
-            ptr_line = gui_line_add (buffer, (display_time) ? date : 0,
-                                     date_printed, tags, pos_prefix, ptr_msg);
-            if (ptr_line)
-            {
-                if (buffer && buffer->print_hooks_enabled)
-                    hook_print_exec (buffer, ptr_line);
-                if (ptr_line->data->displayed)
-                    at_least_one_message_printed = 1;
-            }
-        }
-        else
-        {
-            length = ((pos_prefix) ? strlen (pos_prefix) + 1 : 0) +
-                strlen (ptr_msg) + 1;
-            if (gui_chat_lines_waiting_buffer)
-            {
-                length += strlen (gui_chat_lines_waiting_buffer) + 1;
-                lines_waiting = realloc (gui_chat_lines_waiting_buffer, length);
-                if (lines_waiting)
-                {
-                    gui_chat_lines_waiting_buffer = lines_waiting;
+                    display_time = 0;
+                    ptr_msg += 2;
                 }
                 else
                 {
-                    free (gui_chat_lines_waiting_buffer);
-                    gui_chat_lines_waiting_buffer = NULL;
+                    /* if tab found, use prefix (before tab) */
+                    pos_tab = strchr (ptr_msg, '\t');
+                    if (pos_tab)
+                    {
+                        pos_tab[0] = '\0';
+                        pos_prefix = ptr_msg;
+                        ptr_msg = pos_tab + 1;
+                    }
+                }
+            }
+
+            if (gui_init_ok)
+            {
+                ptr_line = gui_line_add (buffer, (display_time) ? date : 0,
+                                         date_printed, tags, pos_prefix, ptr_msg);
+                if (ptr_line)
+                {
+                    if (buffer && buffer->print_hooks_enabled)
+                        hook_print_exec (buffer, ptr_line);
+                    if (ptr_line->data->displayed)
+                        at_least_one_message_printed = 1;
                 }
             }
             else
             {
-                gui_chat_lines_waiting_buffer = malloc (length);
+                length = ((pos_prefix) ? strlen (pos_prefix) + 1 : 0) +
+                    strlen (ptr_msg) + 1;
                 if (gui_chat_lines_waiting_buffer)
-                    gui_chat_lines_waiting_buffer[0] = '\0';
-            }
-            if (gui_chat_lines_waiting_buffer)
-            {
-                pos_lines = gui_chat_lines_waiting_buffer +
-                    strlen (gui_chat_lines_waiting_buffer);
-                if (pos_lines > gui_chat_lines_waiting_buffer)
                 {
-                    pos_lines[0] = '\n';
-                    pos_lines++;
+                    length += strlen (gui_chat_lines_waiting_buffer) + 1;
+                    lines_waiting = realloc (gui_chat_lines_waiting_buffer, length);
+                    if (lines_waiting)
+                    {
+                        gui_chat_lines_waiting_buffer = lines_waiting;
+                    }
+                    else
+                    {
+                        free (gui_chat_lines_waiting_buffer);
+                        gui_chat_lines_waiting_buffer = NULL;
+                    }
                 }
-                if (pos_prefix)
+                else
                 {
-                    memcpy (pos_lines, pos_prefix, strlen (pos_prefix));
-                    pos_lines += strlen (pos_prefix);
-                    pos_lines[0] = '\t';
-                    pos_lines++;
+                    gui_chat_lines_waiting_buffer = malloc (length);
+                    if (gui_chat_lines_waiting_buffer)
+                        gui_chat_lines_waiting_buffer[0] = '\0';
                 }
-                memcpy (pos_lines, ptr_msg, strlen (ptr_msg) + 1);
+                if (gui_chat_lines_waiting_buffer)
+                {
+                    pos_lines = gui_chat_lines_waiting_buffer +
+                        strlen (gui_chat_lines_waiting_buffer);
+                    if (pos_lines > gui_chat_lines_waiting_buffer)
+                    {
+                        pos_lines[0] = '\n';
+                        pos_lines++;
+                    }
+                    if (pos_prefix)
+                    {
+                        memcpy (pos_lines, pos_prefix, strlen (pos_prefix));
+                        pos_lines += strlen (pos_prefix);
+                        pos_lines[0] = '\t';
+                        pos_lines++;
+                    }
+                    memcpy (pos_lines, ptr_msg, strlen (ptr_msg) + 1);
+                }
             }
         }
 
@@ -825,7 +830,6 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     if (gui_init_ok && at_least_one_message_printed)
         gui_buffer_ask_chat_refresh (buffer, 1);
 
-end:
     free (vbuffer);
 }
 
