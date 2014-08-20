@@ -149,6 +149,9 @@ main (int argc, char *argv[])
     /* init WeeChat */
     printf ("------------------------------------------------------------\n");
     weechat_init (weechat_argc, weechat_argv, &test_gui_init);
+    if (weechat_argv)
+        string_free_split (weechat_argv);
+    free (args);
 
     /* display WeeChat version */
     input_data (gui_buffer_search_main (), "/command core version");
@@ -169,8 +172,6 @@ main (int argc, char *argv[])
     printf ("\33[%d;1m*** %s ***\33[0m\n",
             (rc == 0) ? 32 : 31,  /* 32 = green (OK), 31 = red (error) */
             (rc == 0) ? "OK" : "ERROR");
-
-    string_free_split (weechat_argv);
 
     return rc;
 }
