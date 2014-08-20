@@ -184,7 +184,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
-** Beschreibung: `unterdrückt die Ausgabe von Argumenten die die Channel-Modi betreffen, sofern der entsprechende Modus für den Channel gesetzt ist ("*" unterdrückt jedwede Ausgabe von Argumenten; wird kein Wert angegeben, dann werden alle Argumente angezeigt); Beispiele: "kf" unterdrückt die Argumente, falls "k" oder "f"  für den Channel gesetzt sind`
+** Beschreibung: `unterdrückt die Ausgabe von Argumenten, die die Channel-Modi betreffen, sofern der entsprechende Modus für den Channel gesetzt ist ("*" unterdrückt jedwede Ausgabe von Argumenten; wird kein Wert angegeben, dann werden alle Argumente angezeigt); Beispiele: "kf" unterdrückt die Argumente, falls "k" oder "f"  für den Channel gesetzt sind`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"k"`)
 
