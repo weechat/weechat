@@ -64,6 +64,7 @@ Alphabetically:
 * Paul Komkoff
 * Pavel Shevchuk (Stalwart)
 * Peter Boström (pbos)
+* Phillip Sz
 * Pierre Carru
 * Piotr Szymaniak
 * Pistos
