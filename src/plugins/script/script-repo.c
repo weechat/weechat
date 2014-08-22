@@ -652,6 +652,10 @@ script_repo_remove (struct t_script_repo *script)
 {
     struct t_script_repo *new_scripts_repo;
 
+    /* unlink script from buffer (if it is used) */
+    if (script_buffer_detail_script == script)
+        script_buffer_detail_script = NULL;
+
     /* remove script from list */
     if (last_script_repo == script)
         last_script_repo = script->prev_script;
