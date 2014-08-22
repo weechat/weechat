@@ -64,11 +64,11 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "==^("
       "(/(msg|quote) +nickserv "
-      "+(id|identify|register|ghost +\\S+|release +\\S+|regain +\\S+) +)|"
-      "/oper +\\S+ +|"
+      "+(id|identify|register|ghost +[^ ]+|release +[^ ]+|regain +[^ ]+) +)|"
+      "/oper +[^ ]+ +|"
       "/quote +pass +|"
-      "/set +\\S*password\\S* +|"
-      "/secure +(passphrase|decrypt|set +\\S+) +)"
+      "/set +[^ ]*password[^ ]* +|"
+      "/secure +(passphrase|decrypt|set +[^ ]+) +)"
       "(.*)"
       "==$1$.*+",
       "",
@@ -78,7 +78,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|irc_message_auth",
       "",
-      "==^(.*(id|identify|register|ghost +\\S+|release +\\S+) +)(.*)==$1$.*+",
+      "==^(.*(id|identify|register|ghost +[^ ]+|release +[^ ]+) +)(.*)==$1$.*+",
       "",
       "" },
     /* hide server password in commands /server and /connect */
@@ -86,7 +86,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|input_text_display;5000|history_add",
       "",
-      "==^(/(server|connect) .*-(sasl_)?password=)(\\S+)(.*)==$1$.*4$5"
+      "==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==$1$.*4$5"
       "",
       "" },
     { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL },

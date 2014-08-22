@@ -22,6 +22,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * tests: fix memory leak in tests launcher
 * aspell: fix crash with command "/aspell addword" if no word is given
   (closes #164, closes #165)
+* trigger: fix regex used in default triggers to hide passwords ("\S" is not
+  supported on *BSD) (closes #172)
 
 == Version 1.0 (2014-08-15)
 
