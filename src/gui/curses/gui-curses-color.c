@@ -1184,7 +1184,8 @@ gui_color_buffer_assign ()
 {
     if (!gui_color_buffer)
     {
-        gui_color_buffer = gui_buffer_search_by_name (NULL, "color");
+        gui_color_buffer = gui_buffer_search_by_name (NULL,
+                                                      GUI_COLOR_BUFFER_NAME);
         if (gui_color_buffer)
         {
             gui_color_buffer->input_callback = &gui_color_buffer_input_cb;
@@ -1202,13 +1203,13 @@ gui_color_buffer_open ()
 {
     if (!gui_color_buffer)
     {
-        gui_color_buffer = gui_buffer_new (NULL, "color",
+        gui_color_buffer = gui_buffer_new (NULL, GUI_COLOR_BUFFER_NAME,
                                            &gui_color_buffer_input_cb, NULL,
                                            &gui_color_buffer_close_cb, NULL);
         if (gui_color_buffer)
         {
             if (!gui_color_buffer->short_name)
-                gui_color_buffer->short_name = strdup ("color");
+                gui_color_buffer->short_name = strdup (GUI_COLOR_BUFFER_NAME);
             gui_buffer_set (gui_color_buffer, "type", "free");
             gui_buffer_set (gui_color_buffer, "localvar_set_no_log", "1");
             gui_buffer_set (gui_color_buffer, "key_bind_meta-c", "/color switch");

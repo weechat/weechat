@@ -144,6 +144,8 @@ enum t_gui_color_enum
     "([<>])|"                                   \
     "(\\[[0-9;?]*[A-Za-z]))"
 
+#define GUI_COLOR_BUFFER_NAME "color"
+
 /* color structure */
 
 struct t_gui_color
