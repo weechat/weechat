@@ -21,6 +21,7 @@
 
 set(LIB_CORE_SRC
 weechat.c weechat.h
+wee-arraylist.c wee-arraylist.h
 wee-backtrace.c wee-backtrace.h
 wee-command.c wee-command.h
 wee-completion.c wee-completion.h
