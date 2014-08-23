@@ -15,6 +15,18 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file 'ChangeLog.asciidoc' in sources).
 
 
+== Version 1.1 (under dev)
+
+=== Default triggers for hiding passwords
+
+Triggers used to hide passwords have been fixed for *BSD operating systems.
+
+You can restore them with the following command:
+
+----
+/trigger restore cmd_pass msg_auth server_pass
+----
+
 == Version 1.0 (2014-08-15)
 
 === Channel type not added by default on /join
