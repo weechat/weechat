@@ -658,8 +658,10 @@ hook_command (struct t_weechat_plugin *plugin, const char *command,
  *   HOOK_COMMAND_EXEC_OK: command executed successfully
  *   HOOK_COMMAND_EXEC_ERROR: command executed and failed
  *   HOOK_COMMAND_EXEC_NOT_FOUND: command not found
- *   HOOK_COMMAND_EXEC_AMBIGUOUS: command is ambiguous (same command exists for
- *     another plugin, and we don't know which one to run)
+ *   HOOK_COMMAND_EXEC_AMBIGUOUS_PLUGINS: command is ambiguous (same command
+ *     exists for another plugin, and we don't know which one to run)
+ *   HOOK_COMMAND_EXEC_AMBIGUOUS_INCOMPLETE: command is ambiguous (incomplete
+ *     command and multiple commands start with this name)
  *   HOOK_COMMAND_EXEC_RUNNING: command is already running
  */
 
