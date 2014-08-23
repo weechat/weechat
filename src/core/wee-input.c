@@ -155,7 +155,7 @@ input_exec_command (struct t_gui_buffer *buffer,
         case HOOK_COMMAND_EXEC_RUNNING:
             /* command is running */
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError: too much calls to command "
+                                       _("%sError: too many calls to command "
                                          "\"%s\" (looping)"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                        command_name);

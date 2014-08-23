@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-23 12:27+0200\n"
+"POT-Creation-Date: 2014-08-23 12:32+0200\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3415,7 +3415,7 @@ msgid ""
 msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
 
 #, fuzzy, c-format
-msgid "%sError: too much calls to command \"%s\" (looping)"
+msgid "%sError: too many calls to command \"%s\" (looping)"
 msgstr "%s helytelen érték a \"%s\" paraméternek\n"
 
 #, fuzzy
