@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-23 12:32+0200\n"
+"POT-Creation-Date: 2014-08-23 12:35+0200\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3896,7 +3896,7 @@ msgstr "%sErro: outro comando \"%s\" já existe para o plugin \"%s\""
 
 #, c-format
 msgid ""
-"%sError: incomplete command \"%s\" and many commands start with this name"
+"%sError: incomplete command \"%s\" and multiple commands start with this name"
 msgstr ""
 
 #, c-format

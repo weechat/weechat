@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-23 12:32+0200\n"
+"POT-Creation-Date: 2014-08-23 12:35+0200\n"
 "PO-Revision-Date: 2014-08-23 10:49+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -4429,7 +4429,7 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid ""
-"%sError: incomplete command \"%s\" and many commands start with this name"
+"%sError: incomplete command \"%s\" and multiple commands start with this name"
 msgstr "%sFehler mit dem Befehl \"%s\" aufgetreten (nutze: /help %s)"
 
 #, fuzzy, c-format

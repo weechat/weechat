@@ -142,13 +142,13 @@ input_exec_command (struct t_gui_buffer *buffer,
             break;
         case HOOK_COMMAND_EXEC_AMBIGUOUS_INCOMPLETE:
             /*
-             * command is ambiguous (incomplete command and many commands
+             * command is ambiguous (incomplete command and multiple commands
              * start with this name)
              */
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                        _("%sError: incomplete command \"%s\" "
-                                         "and many commands start with this "
-                                         "name"),
+                                         "and multiple commands start with "
+                                         "this name"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                        command_name);
             break;
