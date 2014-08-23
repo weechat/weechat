@@ -784,7 +784,7 @@ Exemples :
   afficher la valeur de la variable d'environnement LANG :
     /set env LANG
   modifier la variable d'environnement LANG et l'utiliser :
-    /set env LANG=fr_FR.UTF-8
+    /set env LANG fr_FR.UTF-8
     /upgrade
   réinitialiser la variable d'environnement ABC :
     /set env ABC ""
