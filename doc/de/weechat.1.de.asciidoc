@@ -53,9 +53,8 @@ $HOME/.weechat/weechat.conf::
 $HOME/.weechat/plugins.conf::
     Konfigurationsdatei für Erweiterungen
 
-// TRANSLATION MISSING
 $HOME/.weechat/sec.conf::
-    configuration file with secured data
+    Konfigurationsdatei für sensible Daten
 
 $HOME/.weechat/alias.conf::
     Konfigurationsdatei für 'alias' Erweiterung
