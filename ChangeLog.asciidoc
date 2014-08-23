@@ -17,6 +17,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: allow incomplete commands if unambiguous (task #5419)
 * trigger: add option "restore" in command /trigger
 
 === Bugs fixed

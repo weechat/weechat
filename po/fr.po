@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-22 22:25+0200\n"
-"PO-Revision-Date: 2014-08-22 22:25+0200\n"
+"POT-Creation-Date: 2014-08-23 11:34+0200\n"
+"PO-Revision-Date: 2014-08-23 11:39+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -3269,6 +3269,13 @@ msgstr ""
 "\")"
 
 msgid ""
+"if set, incomplete and unambigous commands are allowed, for example /he for /"
+"help"
+msgstr ""
+"si activé, les commandes incomplètes et non ambiguës sont autorisées, par "
+"exemple /he pour /help"
+
+msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
 "help quit)"
 msgstr ""
@@ -4309,6 +4316,10 @@ msgid "%sError with command \"%s\" (help on command: /help %s)"
 msgstr "%sErreur avec la commande \"%s\" (aide sur la commande : /help %s)"
 
 #, c-format
+msgid "%sError: unknown command \"%s\" (type /help for help)"
+msgstr "%sErreur : commande \"%s\" inconnue (tapez /help pour l'aide)"
+
+#, c-format
 msgid ""
 "%sError: ambiguous command \"%s\": it exists in many plugins and not in \"%s"
 "\" plugin"
@@ -4317,12 +4328,15 @@ msgstr ""
 "et pas dans l'extension \"%s\""
 
 #, c-format
-msgid "%sError: too much calls to command \"%s\" (looping)"
-msgstr "%sErreur : trop d'appels à la commande \"%s\" (boucle)"
+msgid ""
+"%sError: incomplete command \"%s\" and many commands start with this name"
+msgstr ""
+"%sErreur : commande \"%s\" incomplète et plusieurs commandes commencent par "
+"ce nom"
 
 #, c-format
-msgid "%sError: unknown command \"%s\" (type /help for help)"
-msgstr "%sErreur : commande \"%s\" inconnue (tapez /help pour l'aide)"
+msgid "%sError: too much calls to command \"%s\" (looping)"
+msgstr "%sErreur : trop d'appels à la commande \"%s\" (boucle)"
 
 msgid ""
 "Error: unable to create/append to log file (weechat.log)\n"

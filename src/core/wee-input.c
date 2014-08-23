@@ -100,35 +100,22 @@ input_exec_command (struct t_gui_buffer *buffer,
     /* execute command */
     switch (hook_command_exec (buffer, any_plugin, plugin, command))
     {
-        case 0: /* command hooked, KO */
+        case HOOK_COMMAND_EXEC_OK:
+            /* command hooked, OK (executed) */
+            break;
+        case HOOK_COMMAND_EXEC_ERROR:
+            /* command hooked, error */
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                        _("%sError with command \"%s\" (help on "
                                          "command: /help %s)"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                        command, command_name + 1);
             break;
-        case 1: /* command hooked, OK (executed) */
-            break;
-        case -2: /* command is ambiguous (exists for other plugins) */
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError: ambiguous command \"%s\": "
-                                         "it exists in many plugins and not in "
-                                         "\"%s\" plugin"),
-                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                       command_name,
-                                       plugin_get_name (plugin));
-            break;
-        case -3: /* command is running */
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError: too much calls to command "
-                                         "\"%s\" (looping)"),
-                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                       command_name);
-            break;
-        default: /* no command hooked */
+        case HOOK_COMMAND_EXEC_NOT_FOUND:
             /*
-             * if unknown commands are accepted by this buffer, just send
-             * input text as data to buffer, otherwise display error
+             * command not found: if unknown commands are accepted by this
+             * buffer, just send input text as data to buffer,
+             * otherwise display error
              */
             if (buffer->input_get_unknown_commands)
             {
@@ -142,6 +129,38 @@ input_exec_command (struct t_gui_buffer *buffer,
                                            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                            command_name);
             }
+            break;
+        case HOOK_COMMAND_EXEC_AMBIGUOUS_PLUGINS:
+            /* command is ambiguous (exists for other plugins) */
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError: ambiguous command \"%s\": "
+                                         "it exists in many plugins and not in "
+                                         "\"%s\" plugin"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                       command_name,
+                                       plugin_get_name (plugin));
+            break;
+        case HOOK_COMMAND_EXEC_AMBIGUOUS_INCOMPLETE:
+            /*
+             * command is ambiguous (incomplete command and many commands
+             * start with this name)
+             */
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError: incomplete command \"%s\" "
+                                         "and many commands start with this "
+                                         "name"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                       command_name);
+            break;
+        case HOOK_COMMAND_EXEC_RUNNING:
+            /* command is running */
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError: too much calls to command "
+                                         "\"%s\" (looping)"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                       command_name);
+            break;
+        default:
             break;
     }
     free (command);

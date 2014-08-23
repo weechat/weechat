@@ -82,6 +82,14 @@ enum t_hook_type
 /* max calls that can be done for a command (recursive calls) */
 #define HOOK_COMMAND_MAX_CALLS  5
 
+/* return code when a command is executed */
+#define HOOK_COMMAND_EXEC_OK                    1
+#define HOOK_COMMAND_EXEC_ERROR                 0
+#define HOOK_COMMAND_EXEC_NOT_FOUND            -1
+#define HOOK_COMMAND_EXEC_AMBIGUOUS_PLUGINS    -2
+#define HOOK_COMMAND_EXEC_AMBIGUOUS_INCOMPLETE -3
+#define HOOK_COMMAND_EXEC_RUNNING              -4
+
 /* flags for fd hooks */
 #define HOOK_FD_FLAG_READ       1
 #define HOOK_FD_FLAG_WRITE      2

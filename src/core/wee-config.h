@@ -141,6 +141,7 @@ extern struct t_config_option *config_look_color_nick_offline;
 extern struct t_config_option *config_look_color_pairs_auto_reset;
 extern struct t_config_option *config_look_color_real_white;
 extern struct t_config_option *config_look_command_chars;
+extern struct t_config_option *config_look_command_incomplete;
 extern struct t_config_option *config_look_confirm_quit;
 extern struct t_config_option *config_look_day_change;
 extern struct t_config_option *config_look_day_change_message_1date;

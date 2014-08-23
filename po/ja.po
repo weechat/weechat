@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-22 22:25+0200\n"
+"POT-Creation-Date: 2014-08-23 11:34+0200\n"
 "PO-Revision-Date: 2014-08-16 23:57+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -3175,6 +3175,11 @@ msgstr ""
 "て扱われる (例: \".$\")"
 
 msgid ""
+"if set, incomplete and unambigous commands are allowed, for example /he for /"
+"help"
+msgstr ""
+
+msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
 "help quit)"
 msgstr ""
@@ -4134,6 +4139,10 @@ msgstr ""
 "%sコマンド \"%s\" にエラーがあります (コマンドに関するヘルプ: /help %s)"
 
 #, c-format
+msgid "%sError: unknown command \"%s\" (type /help for help)"
+msgstr "%sエラー: 未定義のコマンド \"%s\" (ヘルプを見るには /help)"
+
+#, c-format
 msgid ""
 "%sError: ambiguous command \"%s\": it exists in many plugins and not in \"%s"
 "\" plugin"
@@ -4141,14 +4150,16 @@ msgstr ""
 "%sエラー: あいまいなコマンド \"%s\": 多くのプラグインで定義されており、\"%s"
 "\" プラグインでは定義されていません"
 
+#, fuzzy, c-format
+msgid ""
+"%sError: incomplete command \"%s\" and many commands start with this name"
+msgstr ""
+"%sコマンド \"%s\" にエラーがあります (コマンドに関するヘルプ: /help %s)"
+
 #, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
 msgstr ""
 "%sエラー: コマンド \"%s\" の呼び出し回数が多すぎます (ループしています)"
-
-#, c-format
-msgid "%sError: unknown command \"%s\" (type /help for help)"
-msgstr "%sエラー: 未定義のコマンド \"%s\" (ヘルプを見るには /help)"
 
 msgid ""
 "Error: unable to create/append to log file (weechat.log)\n"

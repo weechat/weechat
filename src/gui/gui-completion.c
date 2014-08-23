@@ -224,27 +224,45 @@ struct t_hook *
 gui_completion_search_command (struct t_weechat_plugin *plugin,
                                const char *command)
 {
-    struct t_hook *ptr_hook, *hook_for_other_plugin;
+    struct t_hook *ptr_hook, *hook_for_other_plugin, *hook_incomplete_command;
+    int length_command, allow_incomplete_commands, count_incomplete_commands;
 
     hook_for_other_plugin = NULL;
+    hook_incomplete_command = NULL;
+    length_command = strlen (command);
+    count_incomplete_commands = 0;
+    allow_incomplete_commands = CONFIG_BOOLEAN(config_look_command_incomplete);
 
     for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
         if (!ptr_hook->deleted
             && HOOK_COMMAND(ptr_hook, command)
-            && HOOK_COMMAND(ptr_hook, command)[0]
-            && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
-                                   command) == 0))
+            && HOOK_COMMAND(ptr_hook, command)[0])
         {
-            if (ptr_hook->plugin == plugin)
-                return ptr_hook;
-
-            hook_for_other_plugin = ptr_hook;
+            if (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
+                                   command) == 0)
+            {
+                if (ptr_hook->plugin == plugin)
+                    return ptr_hook;
+                hook_for_other_plugin = ptr_hook;
+            }
+            else if (allow_incomplete_commands
+                     && (string_strncasecmp (HOOK_COMMAND(ptr_hook, command),
+                                             command,
+                                             length_command) == 0))
+            {
+                hook_incomplete_command = ptr_hook;
+                count_incomplete_commands++;
+            }
         }
     }
 
-    return hook_for_other_plugin;
+    if (hook_for_other_plugin)
+        return hook_for_other_plugin;
+
+    return (count_incomplete_commands == 1) ?
+        hook_incomplete_command : NULL;
 }
 
 /*

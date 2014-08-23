@@ -103,6 +103,7 @@ struct t_config_option *config_look_color_nick_offline;
 struct t_config_option *config_look_color_pairs_auto_reset;
 struct t_config_option *config_look_color_real_white;
 struct t_config_option *config_look_command_chars;
+struct t_config_option *config_look_command_incomplete;
 struct t_config_option *config_look_confirm_quit;
 struct t_config_option *config_look_day_change;
 struct t_config_option *config_look_day_change_message_1date;
@@ -2219,6 +2220,12 @@ config_weechat_init_options ()
            "input must start with one of these chars; the slash (\"/\") is "
            "always considered as command prefix (example: \".$\")"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_command_incomplete = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "command_incomplete", "boolean",
+        N_("if set, incomplete and unambigous commands are allowed, for "
+           "example /he for /help"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_confirm_quit = config_file_new_option (
         weechat_config_file, ptr_section,
         "confirm_quit", "boolean",

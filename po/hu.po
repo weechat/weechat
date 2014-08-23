@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-22 22:25+0200\n"
+"POT-Creation-Date: 2014-08-23 11:34+0200\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2519,6 +2519,11 @@ msgid ""
 msgstr ""
 
 msgid ""
+"if set, incomplete and unambigous commands are allowed, for example /he for /"
+"help"
+msgstr ""
+
+msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
 "help quit)"
 msgstr ""
@@ -3395,18 +3400,23 @@ msgid "%sError with command \"%s\" (help on command: /help %s)"
 msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
 
 #, fuzzy, c-format
+msgid "%sError: unknown command \"%s\" (type /help for help)"
+msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
+
+#, fuzzy, c-format
 msgid ""
 "%sError: ambiguous command \"%s\": it exists in many plugins and not in \"%s"
 "\" plugin"
 msgstr "%s az ignore már létezik\n"
 
 #, fuzzy, c-format
-msgid "%sError: too much calls to command \"%s\" (looping)"
-msgstr "%s helytelen érték a \"%s\" paraméternek\n"
+msgid ""
+"%sError: incomplete command \"%s\" and many commands start with this name"
+msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
 
 #, fuzzy, c-format
-msgid "%sError: unknown command \"%s\" (type /help for help)"
-msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
+msgid "%sError: too much calls to command \"%s\" (looping)"
+msgstr "%s helytelen érték a \"%s\" paraméternek\n"
 
 #, fuzzy
 msgid ""

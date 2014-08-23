@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-22 22:25+0200\n"
+"POT-Creation-Date: 2014-08-23 11:34+0200\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2542,6 +2542,11 @@ msgid ""
 msgstr ""
 
 msgid ""
+"if set, incomplete and unambigous commands are allowed, for example /he for /"
+"help"
+msgstr ""
+
+msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
 "help quit)"
 msgstr ""
@@ -3421,18 +3426,23 @@ msgid "%sError with command \"%s\" (help on command: /help %s)"
 msgstr "%s сокращение или команда \"%s\" не найдены\n"
 
 #, fuzzy, c-format
+msgid "%sError: unknown command \"%s\" (type /help for help)"
+msgstr "%s сокращение или команда \"%s\" не найдены\n"
+
+#, fuzzy, c-format
 msgid ""
 "%sError: ambiguous command \"%s\": it exists in many plugins and not in \"%s"
 "\" plugin"
 msgstr "%s игнорирование уже существует\n"
 
 #, fuzzy, c-format
-msgid "%sError: too much calls to command \"%s\" (looping)"
-msgstr "%s некорректное значение параметра \"%s\"\n"
+msgid ""
+"%sError: incomplete command \"%s\" and many commands start with this name"
+msgstr "%s сокращение или команда \"%s\" не найдены\n"
 
 #, fuzzy, c-format
-msgid "%sError: unknown command \"%s\" (type /help for help)"
-msgstr "%s сокращение или команда \"%s\" не найдены\n"
+msgid "%sError: too much calls to command \"%s\" (looping)"
+msgstr "%s некорректное значение параметра \"%s\"\n"
 
 #, fuzzy
 msgid ""
