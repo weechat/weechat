@@ -12,6 +12,7 @@
           restart <name>|-all [<name>...]
           show <name>
           del <name>|-all [<name>...]
+          restore <name> [<name>...]
           default -yes
           monitor [<filter>]
 
@@ -54,7 +55,8 @@ return_code: return code in callback (ok (default), ok_eat, error)
        show: show detailed info on a trigger (with some stats)
         del: delete a trigger
        -all: do action on all triggers
-    default: restore default triggers
+    restore: restore trigger(s) with the default values (works only for default triggers)
+    default: delete all triggers and restore default ones
     monitor: open the trigger monitor buffer, with optional filter:
      filter: filter hooks/triggers to display (a hook must start with "@", for example "@signal"), many filters can be separated by commas; wildcard "*" is allowed in each trigger name
 

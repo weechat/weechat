@@ -15,6 +15,10 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.1 (under dev)
 
+=== New features
+
+* trigger: add option "restore" in command /trigger
+
 === Bugs fixed
 
 * core: fix modifier "weechat_print": discard only one line when several lines

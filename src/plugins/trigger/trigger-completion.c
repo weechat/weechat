@@ -25,6 +25,7 @@
 
 #include "../weechat-plugin.h"
 #include "trigger.h"
+#include "trigger-config.h"
 
 
 /*
@@ -47,6 +48,33 @@ trigger_completion_triggers_cb (void *data, const char *completion_item,
          ptr_trigger = ptr_trigger->next_trigger)
     {
         weechat_hook_completion_list_add (completion, ptr_trigger->name,
+                                          0, WEECHAT_LIST_POS_SORT);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Adds default triggers to completion list.
+ */
+
+int
+trigger_completion_triggers_default_cb (void *data,
+                                        const char *completion_item,
+                                        struct t_gui_buffer *buffer,
+                                        struct t_gui_completion *completion)
+{
+    int i;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (i = 0; trigger_config_default_list[i][0]; i++)
+    {
+        weechat_hook_completion_list_add (completion,
+                                          trigger_config_default_list[i][0],
                                           0, WEECHAT_LIST_POS_SORT);
     }
 
@@ -393,6 +421,9 @@ trigger_completion_init ()
     weechat_hook_completion ("trigger_names",
                              N_("triggers"),
                              &trigger_completion_triggers_cb, NULL);
+    weechat_hook_completion ("trigger_names_default",
+                             N_("default triggers"),
+                             &trigger_completion_triggers_default_cb, NULL);
     weechat_hook_completion ("trigger_options",
                              N_("options for triggers"),
                              &trigger_completion_options_cb, NULL);

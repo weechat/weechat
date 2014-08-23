@@ -434,7 +434,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     struct t_trigger *ptr_trigger, *ptr_trigger2;
     struct t_trigger_regex *regex;
     char *value, **sargv, **items, input[1024], str_pos[16];
-    int rc, i, type, count, index_option, enable, sargc, num_items, add_rc;
+    int rc, i, j, type, count, index_option, enable, sargc, num_items, add_rc;
     int regex_count, regex_rc;
 
     /* make C compiler happy */
@@ -890,7 +890,49 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         goto end;
     }
 
-    /* restore default triggers */
+    /* restore default trigger(s) */
+    if (weechat_strcasecmp (argv[1], "restore") == 0)
+    {
+        if (argc < 3)
+            goto error;
+        for (i = 2; i < argc; i++)
+        {
+            for (j = 0; trigger_config_default_list[j][0]; j++)
+            {
+                if (weechat_strcasecmp (trigger_config_default_list[j][0],
+                                        argv[i]) == 0)
+                {
+                    break;
+                }
+            }
+            if (trigger_config_default_list[j][0])
+            {
+                ptr_trigger = trigger_search (argv[i]);
+                if (ptr_trigger)
+                    trigger_free (ptr_trigger);
+                trigger_new (
+                    trigger_config_default_list[j][0],   /* name */
+                    trigger_config_default_list[j][1],   /* enabled */
+                    trigger_config_default_list[j][2],   /* hook */
+                    trigger_config_default_list[j][3],   /* arguments */
+                    trigger_config_default_list[j][4],   /* conditions */
+                    trigger_config_default_list[j][5],   /* regex */
+                    trigger_config_default_list[j][6],   /* command */
+                    trigger_config_default_list[j][7]);  /* return code */
+                weechat_printf_tags (NULL, "no_trigger",
+                                     _("Trigger \"%s\" restored"), argv[i]);
+            }
+            else
+            {
+                weechat_printf_tags (NULL, "no_trigger",
+                                     _("%sDefault trigger \"%s\" not found"),
+                                     weechat_prefix ("error"), argv[i]);
+            }
+        }
+        goto end;
+    }
+
+    /* delete all triggers and restore default ones */
     if (weechat_strcasecmp (argv[1], "default") == 0)
     {
         if ((argc >= 3) && (weechat_strcasecmp (argv[2], "-yes") == 0))
@@ -948,6 +990,7 @@ trigger_command_init ()
            " || restart <name>|-all [<name>...]"
            " || show <name>"
            " || del <name>|-all [<name>...]"
+           " || restore <name> [<name>...]"
            " || default -yes"
            " || monitor [<filter>]"),
         N_("       list: list triggers (without argument, this list is displayed)\n"
@@ -1000,7 +1043,9 @@ trigger_command_init ()
            "       show: show detailed info on a trigger (with some stats)\n"
            "        del: delete a trigger\n"
            "       -all: do action on all triggers\n"
-           "    default: restore default triggers\n"
+           "    restore: restore trigger(s) with the default values (works "
+           "only for default triggers)\n"
+           "    default: delete all triggers and restore default ones\n"
            "    monitor: open the trigger monitor buffer, with optional filter:\n"
            "     filter: filter hooks/triggers to display (a hook must start "
            "with \"@\", for example \"@signal\"), many filters can be separated "
@@ -1043,6 +1088,7 @@ trigger_command_init ()
         " || enable|disable|toggle|restart|del %(trigger_names)|-all "
         "%(trigger_names)|%*"
         " || show %(trigger_names)"
+        " || restore %(trigger_names_default)|%*"
         " || default"
         " || monitor %(trigger_names)|%(trigger_hooks_filter)",
         &trigger_command_trigger, NULL);

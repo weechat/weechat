@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-17 09:50+0200\n"
+"POT-Creation-Date: 2014-08-22 22:25+0200\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10536,6 +10536,14 @@ msgstr "Rmodifier \"%s\" eliminato"
 msgid "Trigger:"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Trigger \"%s\" restored"
+msgstr "Barra \"%s\" creata"
+
+#, fuzzy, c-format
+msgid "%sDefault trigger \"%s\" not found"
+msgstr "%sTasto \"%s\" non trovato"
+
 #, fuzzy
 msgid "Default triggers restored:"
 msgstr "Rmodifier predefiniti ripristinati:"
@@ -10557,8 +10565,8 @@ msgid ""
 "\" [\"<return_code>\"]]]]] || addinput [<hook>] || input|output|recreate "
 "<name> || set <name> <option> <value> || rename|copy <name> <new_name> || "
 "enable|disable|toggle [<name>|-all [<name>...]] || restart <name>|-all "
-"[<name>...] || show <name> || del <name>|-all [<name>...] || default -yes || "
-"monitor [<filter>]"
+"[<name>...] || show <name> || del <name>|-all [<name>...] || restore <name> "
+"[<name>...] || default -yes || monitor [<filter>]"
 msgstr ""
 
 msgid ""
@@ -10611,7 +10619,9 @@ msgid ""
 "       show: show detailed info on a trigger (with some stats)\n"
 "        del: delete a trigger\n"
 "       -all: do action on all triggers\n"
-"    default: restore default triggers\n"
+"    restore: restore trigger(s) with the default values (works only for "
+"default triggers)\n"
+"    default: delete all triggers and restore default ones\n"
 "    monitor: open the trigger monitor buffer, with optional filter:\n"
 "     filter: filter hooks/triggers to display (a hook must start with \"@\", "
 "for example \"@signal\"), many filters can be separated by commas; wildcard "
@@ -10646,6 +10656,10 @@ msgstr ""
 
 msgid "triggers"
 msgstr ""
+
+#, fuzzy
+msgid "default triggers"
+msgstr "Elenco degli alias:"
 
 #, fuzzy
 msgid "options for triggers"

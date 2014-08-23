@@ -12,6 +12,7 @@
           restart <nom>|-all [<nom>...]
           show <nom>
           del <nom>|-all [<nom>...]
+          restore <nom> [<nom>...]
           default -yes
           monitor [<filtre>]
 
@@ -54,6 +55,7 @@ code_retour : code retour dans le callback (ok (par défaut), ok_eat, error)
        show : afficher des informations détaillées sur un trigger (avec quelques statistiques)
         del : supprimer un trigger
        -all : effectuer l'action sur tous les triggers
+    restore : restaurer un/des trigger(s) avec les valeurs par défaut (fonctionne seulement pour les triggers par défaut)
     default : restaurer les triggers par défaut
     monitor : ouvrir le tampon moniteur des triggers
      filtre : filtrer les hooks/triggers à afficher (un hook doit commencer par "@", par exemple "@signal"), plusieurs filtres peuvent être séparés par des virgules ; le caractère joker "*" est autorisé dans chaque nom de trigger
