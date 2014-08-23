@@ -518,6 +518,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
+* [[option_weechat.look.command_incomplete]] *weechat.look.command_incomplete*
+** descrizione: `if set, incomplete and unambigous commands are allowed, for example /he for /help`
+** tipo: bool
+** valori: on, off (valore predefinito: `off`)
+
 * [[option_weechat.look.confirm_quit]] *weechat.look.confirm_quit*
 ** descrizione: `se impostata, il comando /quit deve essere confermato con l'argomento extra "-yes" (consultare /help quit)`
 ** tipo: bool

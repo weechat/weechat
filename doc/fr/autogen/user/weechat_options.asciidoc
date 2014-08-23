@@ -518,6 +518,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
+* [[option_weechat.look.command_incomplete]] *weechat.look.command_incomplete*
+** description: `si activé, les commandes incomplètes et non ambiguës sont autorisées, par exemple /he pour /help`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * [[option_weechat.look.confirm_quit]] *weechat.look.confirm_quit*
 ** description: `si activé, la commande /quit doit être confirmée par le paramètre supplémentaire "-yes" (voir /help quit)`
 ** type: booléen
