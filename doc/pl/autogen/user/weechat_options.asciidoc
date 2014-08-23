@@ -519,7 +519,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_weechat.look.command_incomplete]] *weechat.look.command_incomplete*
-** opis: `if set, incomplete and unambigous commands are allowed, for example /he for /help`
+** opis: `if set, incomplete and unambiguous commands are allowed, for example /he for /help`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 

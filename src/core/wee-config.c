@@ -2223,7 +2223,7 @@ config_weechat_init_options ()
     config_look_command_incomplete = config_file_new_option (
         weechat_config_file, ptr_section,
         "command_incomplete", "boolean",
-        N_("if set, incomplete and unambigous commands are allowed, for "
+        N_("if set, incomplete and unambiguous commands are allowed, for "
            "example /he for /help"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_confirm_quit = config_file_new_option (
