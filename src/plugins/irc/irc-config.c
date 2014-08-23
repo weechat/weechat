@@ -1677,8 +1677,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 N_("comma-separated list of client capabilities to enable for "
                    "server if they are available; capabilities supported by "
                    "WeeChat are: away-notify, multi-prefix, server-time, "
-                   "userhost-in-names, (example: "
-                   "\"away-notify,multi-prefix\")"),
+                   "userhost-in-names (example: \"away-notify,multi-prefix\")"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
