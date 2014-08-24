@@ -6,7 +6,8 @@ Build-Depends:
     asciidoc (>= 8.5),
     source-highlight,
     xsltproc,
-    docbook-xml, docbook-xsl,
+    docbook-xsl,
+    docbook-xml,
     debhelper (>= 9),
     cmake, pkg-config,
     libncursesw5-dev,
@@ -123,7 +124,7 @@ Package: weechat-dev
 Section: devel
 Architecture: all
 Depends: ${misc:Depends}
-Description: Fast, light and extensible chat client - developement headers
+Description: Fast, light and extensible chat client - development headers
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  .
