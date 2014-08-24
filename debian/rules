@@ -23,6 +23,9 @@ override_dh_auto_configure:
 	# debhelper try to use it but that's not needed
 	echo
 
+override_dh_installchangelogs:
+	dh_installchangelogs ChangeLog.asciidoc
+
 override_dh_strip:
 	dh_strip --dbg-package=weechat-dbg
 

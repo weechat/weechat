@@ -1,3 +1,34 @@
+weechat (1.0-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #758230, #751108)
+    - Remove the patch to fix FTBFS while building against ruby 2.1
+    - Fix the way to install upstream changelog
+    - Add new plugins (exec, trigger)
+    - Fix the way to install docs (upstream changes to asciidoc)
+  * Re-enable the build of guile plugin
+  * Fix various typos in packaging
+  * Update copyright years in debian/copyright
+  * Add new doc-base files (Relay Protocol in Japanese)
+  * Add git-buildpackage configuration
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 24 Aug 2014 17:40:36 +0200
+
+weechat (0.4.3-4) unstable; urgency=medium
+
+  * Fix FTBFS by adding a missing Build Depends on docbook-xml
+    (Closes:#753166)
+  * Update libgnutls and libgcrypt Build Depends to libgnutls28-dev and
+    libgcrypt20-dev (Closes: #753167)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Wed, 02 Jul 2014 23:42:41 +0200
+
+weechat (0.4.3-3) unstable; urgency=medium
+
+  * Add patch (backported from upstream) to fix a FTBFS while building
+    against ruby 2.1 (Closes: #747708)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Mon, 12 May 2014 12:49:14 +0200
+
 weechat (0.4.3-2) unstable; urgency=medium
 
   * Add missing symlink for Polish manpage
