@@ -32,13 +32,13 @@ extern "C"
 #ifndef HAVE_CONFIG_H
 #define HAVE_CONFIG_H
 #endif
-#include "../src/core/weechat.h"
-#include "../src/core/wee-hook.h"
-#include "../src/core/wee-input.h"
-#include "../src/core/wee-string.h"
-#include "../src/plugins/plugin.h"
-#include "../src/gui/gui-main.h"
-#include "../src/gui/gui-buffer.h"
+#include "src/core/weechat.h"
+#include "src/core/wee-hook.h"
+#include "src/core/wee-input.h"
+#include "src/core/wee-string.h"
+#include "src/plugins/plugin.h"
+#include "src/gui/gui-main.h"
+#include "src/gui/gui-buffer.h"
 
     extern void gui_main_init ();
     extern void gui_main_loop ();

@@ -24,11 +24,11 @@
 extern "C"
 {
 #include <stdio.h>
-#include "../src/core/wee-eval.h"
-#include "../src/core/wee-config.h"
-#include "../src/core/wee-hashtable.h"
-#include "../src/core/wee-version.h"
-#include "../src/plugins/plugin.h"
+#include "src/core/wee-eval.h"
+#include "src/core/wee-config.h"
+#include "src/core/wee-hashtable.h"
+#include "src/core/wee-version.h"
+#include "src/plugins/plugin.h"
 }
 
 #define WEE_CHECK_EVAL(__result, __expr)                                \

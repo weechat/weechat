@@ -24,8 +24,8 @@
 extern "C"
 {
 #include <string.h>
-#include "../src/core/wee-hashtable.h"
-#include "../src/plugins/plugin.h"
+#include "src/core/wee-hashtable.h"
+#include "src/plugins/plugin.h"
 }
 
 TEST_GROUP(Hashtable)

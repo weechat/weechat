@@ -23,7 +23,7 @@
 
 extern "C"
 {
-#include "../src/core/wee-list.h"
+#include "src/core/wee-list.h"
 }
 
 TEST_GROUP(List)
