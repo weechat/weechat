@@ -23,7 +23,7 @@
 
 extern "C"
 {
-#include "../src/core/wee-url.h"
+#include "src/core/wee-url.h"
 }
 
 TEST_GROUP(Url)

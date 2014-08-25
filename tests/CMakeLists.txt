@@ -26,8 +26,7 @@ set(LIB_WEECHAT_NCURSES_FAKE_SRC ncurses-fake.c)
 add_library(weechat_ncurses_fake STATIC ${LIB_WEECHAT_NCURSES_FAKE_SRC})
 
 remove_definitions(-DHAVE_CONFIG_H)
-include_directories(${CPPUTEST_INCLUDE_DIRS})
-include_directories(${PROJECT_BINARY_DIR})
+include_directories(${CPPUTEST_INCLUDE_DIRS} ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
 
 # unit tests
 set(LIB_WEECHAT_UNIT_TESTS_SRC

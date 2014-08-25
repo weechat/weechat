@@ -26,8 +26,8 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <regex.h>
-#include "../tests/tests.h"
-#include "../src/core/wee-string.h"
+#include "tests/tests.h"
+#include "src/core/wee-string.h"
 }
 
 #define ONE_KB 1000ULL

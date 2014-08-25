@@ -23,7 +23,7 @@
 
 extern "C"
 {
-#include "../src/core/wee-hdata.h"
+#include "src/core/wee-hdata.h"
 }
 
 TEST_GROUP(Hdata)

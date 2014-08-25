@@ -26,8 +26,8 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <wctype.h>
-#include "../tests/tests.h"
-#include "../src/core/wee-utf8.h"
+#include "tests/tests.h"
+#include "src/core/wee-utf8.h"
 }
 
 const char *noel_valid = "no\xc3\xabl";  /* noël */

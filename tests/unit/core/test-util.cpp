@@ -27,7 +27,7 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <sys/time.h>
-#include "../src/core/wee-util.h"
+#include "src/core/wee-util.h"
 }
 
 TEST_GROUP(Util)

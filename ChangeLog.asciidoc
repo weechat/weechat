@@ -19,6 +19,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * core: fix modifier "weechat_print": discard only one line when several lines
   are displayed in same message (closes #171)
+* tests: fix build of tests when the build directory is outside source tree
+  (closes #178)
 * tests: fix memory leak in tests launcher
 * aspell: fix crash with command "/aspell addword" if no word is given
   (closes #164, closes #165)
