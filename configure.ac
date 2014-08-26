@@ -444,7 +444,7 @@ if test "x$enable_perl" = "xyes" ; then
         PERL_VERSION=`perl -V:version | sed "s/version='\(.*\)';/\1/"`
         AC_MSG_CHECKING(for Perl headers files)
 
-        PERL_HEADER_TEST=`PT=perltest.c ; echo "#include <EXTERN.h>" > $PT;  echo "#include <perl.h>" >> $PT;  echo "#include <XSUB.h>" >> $PT ;  echo "int main() { return 0; }" >> $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ccopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
+        PERL_HEADER_TEST=`PT=perltest.c ; echo "#include <EXTERN.h>" > $PT;  echo "#include <perl.h>" >> $PT;  echo "#include <XSUB.h>" >> $PT ;  echo "int main() { return 0; }" >> $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ccopts -e ldopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
 
         if test "x$PERL_HEADER_TEST" = "x0" ; then
             PERL_CFLAGS=`$PERL -MExtUtils::Embed -e ccopts`
