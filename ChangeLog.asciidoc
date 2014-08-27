@@ -26,6 +26,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: fix modifier "weechat_print": discard only one line when several lines
   are displayed in same message (closes #171)
 * core: fix translation of message displayed after /upgrade
+* api: fix bug in function hdata_move when absolute value of count is greater
+  than 1
 * tests: fix build of tests when the build directory is outside source tree
   (closes #178)
 * tests: fix memory leak in tests launcher

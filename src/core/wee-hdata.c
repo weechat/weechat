@@ -562,11 +562,11 @@ hdata_move (struct t_hdata *hdata, void *pointer, int count)
     for (i = 0; i < abs_count; i++)
     {
         pointer = hdata_pointer (hdata, pointer, ptr_var);
-        if (pointer)
-            return pointer;
+        if (!pointer)
+            break;
     }
 
-    return NULL;
+    return pointer;
 }
 
 /*
