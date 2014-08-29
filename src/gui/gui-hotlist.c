@@ -190,7 +190,7 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist,
                 if ((new_hotlist->priority > ptr_hotlist->priority)
                     || ((new_hotlist->priority == ptr_hotlist->priority)
                         && (util_timeval_diff (&(new_hotlist->creation_time),
-                                                   &(ptr_hotlist->creation_time)) < 0)))
+                                               &(ptr_hotlist->creation_time)) < 0)))
                     return ptr_hotlist;
             }
             break;
