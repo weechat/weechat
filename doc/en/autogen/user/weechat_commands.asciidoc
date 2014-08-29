@@ -312,7 +312,7 @@ disable: disable filters
     del: delete a filter
    -all: delete all filters
  buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
+         - this is full name including plugin (example: "irc.freenode.#weechat" or "irc.server.freenode")
          - "*" means all buffers
          - a name starting with '!' is excluded
          - wildcard "*" is allowed

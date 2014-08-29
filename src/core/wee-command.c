@@ -7240,7 +7240,7 @@ command_init ()
            "   -all: delete all filters\n"
            " buffer: comma separated list of buffers where filter is active:\n"
            "         - this is full name including plugin (example: \"irc."
-           "freenode.#weechat\")\n"
+           "freenode.#weechat\" or \"irc.server.freenode\")\n"
            "         - \"*\" means all buffers\n"
            "         - a name starting with '!' is excluded\n"
            "         - wildcard \"*\" is allowed\n"

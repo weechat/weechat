@@ -312,7 +312,7 @@ Exemples (conditions) :
        del : supprimer un filtre
       -all : supprimer tous les filtres
     tampon : liste des tampons, séparés par des virgules, où le filtre est actif :
-             - il s'agit du nom complet incluant l'extension (exemple : "irc.freenode.#weechat")
+             - il s'agit du nom complet incluant l'extension (exemple : "irc.freenode.#weechat" ou "irc.server.freenode")
              - "*" signifie tous les tampons
              - un nom commençant par '!' est exclu
              - le caractère joker "*" est autorisé
