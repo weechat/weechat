@@ -17,6 +17,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: fix window/buffer pointers used in command /eval
 * core: fix modifier "weechat_print": discard only one line when several lines
   are displayed in same message (closes #171)
 * api: fix bug in function hdata_move when absolute value of count is greater
