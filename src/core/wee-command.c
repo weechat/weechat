@@ -1835,10 +1835,9 @@ COMMAND_CALLBACK(eval)
 {
     int i, print_only, condition;
     char *result, *ptr_args, *expr, **commands;
-    struct t_hashtable *options;
+    struct t_hashtable *pointers, *options;
 
     /* make C compiler happy */
-    (void) buffer;
     (void) data;
     (void) argv;
 
@@ -1870,12 +1869,24 @@ COMMAND_CALLBACK(eval)
 
     if (ptr_args)
     {
+        pointers = hashtable_new (32,
+                                  WEECHAT_HASHTABLE_STRING,
+                                  WEECHAT_HASHTABLE_POINTER,
+                                  NULL,
+                                  NULL);
+        if (pointers)
+        {
+            hashtable_set (pointers, "window",
+                           gui_window_search_with_buffer (buffer));
+            hashtable_set (pointers, "buffer", buffer);
+        }
+
         options = NULL;
         if (condition)
         {
             options = hashtable_new (32,
                                      WEECHAT_HASHTABLE_STRING,
-                                     WEECHAT_HASHTABLE_POINTER,
+                                     WEECHAT_HASHTABLE_STRING,
                                      NULL,
                                      NULL);
             if (options)
@@ -1888,7 +1899,7 @@ COMMAND_CALLBACK(eval)
             expr = string_remove_quotes (ptr_args, "\"");
             if (expr)
             {
-                result = eval_expression (expr, NULL, NULL, options);
+                result = eval_expression (expr, pointers, NULL, options);
                 gui_chat_printf_date_tags (NULL, 0, "no_log", "\t>> %s", ptr_args);
                 if (result)
                 {
@@ -1911,7 +1922,7 @@ COMMAND_CALLBACK(eval)
         }
         else
         {
-            result = eval_expression (ptr_args, NULL, NULL, options);
+            result = eval_expression (ptr_args, pointers, NULL, options);
             if (result)
             {
                 commands = string_split_command (result, ';');
@@ -1933,6 +1944,8 @@ COMMAND_CALLBACK(eval)
         }
         if (result)
             free (result);
+        if (pointers)
+            hashtable_free (pointers);
         if (options)
             hashtable_free (options);
     }
