@@ -2736,13 +2736,17 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_util_timeval_diff
 
-Restituisce la differenza (in millisecondi) tra due strutture "timeval".
+// TRANSLATION MISSING
+_Updated in 1.1._
+
+// TRANSLATION MISSING
+Return difference (in microseconds) between two "timeval" structures.
 
 Prototipo:
 
 [source,C]
 ----
-long weechat_util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
+long long weechat_util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 ----
 
 Argomenti:
@@ -2752,13 +2756,18 @@ Argomenti:
 
 Valore restituito:
 
-* differenza in millisecondi
+// TRANSLATION MISSING
+* difference in microseconds
+
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≤ 1.0, the returned value was in milliseconds.
 
 Esempio in C:
 
 [source,C]
 ----
-long diff = weechat_util_timeval_diff (&tv1, &tv2);
+long long diff = weechat_util_timeval_diff (&tv1, &tv2);
 ----
 
 [NOTE]
@@ -2766,25 +2775,34 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_util_timeval_add
 
-Aggiungi intervallo (in millisecondi) ad una struttura timeval.
+// TRANSLATION MISSING
+_Updated in 1.1._
+
+// TRANSLATION MISSING
+Add interval (in microseconds) to a timeval structure.
 
 Prototipo:
 
 [source,C]
 ----
-void weechat_util_timeval_add (struct timeval *tv, long interval);
+void weechat_util_timeval_add (struct timeval *tv, long long interval);
 ----
 
 Argomenti:
 
 * 'tv': struttura timeval
-* 'interval': intervallo (in millisecondi)
+// TRANSLATION MISSING
+* 'interval': interval (in microseconds)
+
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≤ 1.0, the interval was expressed in milliseconds.
 
 Esempio in C:
 
 [source,C]
 ----
-weechat_util_timeval_add (&tv, 2000);  /* aggiunge 2 secondi */
+weechat_util_timeval_add (&tv, 2000000);  /* aggiunge 2 secondi */
 ----
 
 [NOTE]

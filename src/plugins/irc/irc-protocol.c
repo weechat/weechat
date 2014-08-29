@@ -1633,8 +1633,8 @@ IRC_PROTOCOL_CALLBACK(pong)
         /* calculate lag (time diff with lag check) */
         old_lag = server->lag;
         gettimeofday (&tv, NULL);
-        server->lag = (int) weechat_util_timeval_diff (&(server->lag_check_time),
-                                                       &tv);
+        server->lag = (int)(weechat_util_timeval_diff (&(server->lag_check_time),
+                                                       &tv) / 1000);
         if (old_lag != server->lag)
             weechat_bar_item_update ("lag");
 

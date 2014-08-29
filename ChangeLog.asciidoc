@@ -19,6 +19,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * core: allow incomplete commands if unambiguous, new option
   weechat.look.command_incomplete (task #5419)
+* api: use microseconds instead of milliseconds in functions util_timeval_diff
+  and util_timeval_add
 * trigger: add option "restore" in command /trigger
 
 === Bugs fixed

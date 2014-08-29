@@ -984,7 +984,8 @@ hook_timer_init (struct t_hook *hook)
     HOOK_TIMER(hook, next_exec).tv_usec = HOOK_TIMER(hook, last_exec).tv_usec;
 
     /* add interval to next call date */
-    util_timeval_add (&HOOK_TIMER(hook, next_exec), HOOK_TIMER(hook, interval));
+    util_timeval_add (&HOOK_TIMER(hook, next_exec),
+                      ((long long)HOOK_TIMER(hook, interval)) * 1000);
 }
 
 /*
@@ -1179,8 +1180,9 @@ hook_timer_exec ()
                 HOOK_TIMER(ptr_hook, last_exec).tv_sec = tv_time.tv_sec;
                 HOOK_TIMER(ptr_hook, last_exec).tv_usec = tv_time.tv_usec;
 
-                util_timeval_add (&HOOK_TIMER(ptr_hook, next_exec),
-                                  HOOK_TIMER(ptr_hook, interval));
+                util_timeval_add (
+                    &HOOK_TIMER(ptr_hook, next_exec),
+                    ((long long)HOOK_TIMER(ptr_hook, interval)) * 1000);
 
                 if (HOOK_TIMER(ptr_hook, remaining_calls) > 0)
                 {

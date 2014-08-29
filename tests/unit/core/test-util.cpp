@@ -43,9 +43,11 @@ TEST_GROUP(Util)
 
 TEST(Util, Timeval)
 {
+    struct timeval tv_zero = { 0, 0 };
     struct timeval tv1 = { 123456, 12000 };
     struct timeval tv2 = { 123456, 15000 };
     struct timeval tv3 = { 123457, 15000 };
+    struct timeval tv4 = { 1409288400, 0 };  /* 2014-08-29 05:00:00 GMT */
     struct timeval tv;
 
     /* comparison */
@@ -60,17 +62,18 @@ TEST(Util, Timeval)
     LONGS_EQUAL(0, util_timeval_diff (NULL, NULL));
     LONGS_EQUAL(0, util_timeval_diff (NULL, &tv1));
     LONGS_EQUAL(0, util_timeval_diff (&tv1, NULL));
-    LONGS_EQUAL(3, util_timeval_diff (&tv1, &tv2));
-    LONGS_EQUAL(1003, util_timeval_diff (&tv1, &tv3));
+    LONGS_EQUAL(3000, util_timeval_diff (&tv1, &tv2));
+    LONGS_EQUAL(1003000, util_timeval_diff (&tv1, &tv3));
+    CHECK(1409288400 * 1000000LL == util_timeval_diff (&tv_zero, &tv4));
 
     /* add interval */
     util_timeval_add (NULL, 0);
     tv.tv_sec = 123456;
     tv.tv_usec = 12000;
-    util_timeval_add (&tv, 10);
+    util_timeval_add (&tv, 10000);
     LONGS_EQUAL(123456, tv.tv_sec);
     LONGS_EQUAL(22000, tv.tv_usec);
-    util_timeval_add (&tv, 4000);
+    util_timeval_add (&tv, 4000000);
     LONGS_EQUAL(123460, tv.tv_sec);
     LONGS_EQUAL(22000, tv.tv_usec);
 }

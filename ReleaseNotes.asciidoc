@@ -17,6 +17,15 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 1.1 (under dev)
 
+=== Microseconds in API timeval functions
+
+The API functions using timeval are now using or returning microseconds,
+instead of milliseconds:
+
+* function 'util_timeval_diff': returns microseconds
+* function 'util_timeval_add': the argument 'interval' is now expressed in
+  microseconds.
+
 === Default triggers for hiding passwords
 
 Triggers used to hide passwords have been fixed for *BSD operating systems.

@@ -2898,8 +2898,8 @@ irc_server_timer_cb (void *data, int remaining_calls)
             if (ptr_server->lag_check_time.tv_sec != 0)
             {
                 gettimeofday (&tv, NULL);
-                ptr_server->lag = (int) weechat_util_timeval_diff (&(ptr_server->lag_check_time),
-                                                                   &tv);
+                ptr_server->lag = (int)(weechat_util_timeval_diff (&(ptr_server->lag_check_time),
+                                                                   &tv) / 1000);
                 /* refresh lag item if needed */
                 if (((ptr_server->lag_last_refresh == 0)
                      || (current_time >= ptr_server->lag_last_refresh + weechat_config_integer (irc_config_network_lag_refresh_interval)))

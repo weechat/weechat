@@ -898,7 +898,7 @@ void
 upgrade_weechat_end ()
 {
     struct timeval tv_now;
-    long time_diff;
+    long long time_diff;
 
     /* remove .upgrade files */
     util_exec_on_files (weechat_home,
@@ -912,7 +912,7 @@ upgrade_weechat_end ()
     gui_chat_printf (NULL,
                      /* TRANSLATORS: %.02fs is a float number + "s" ("seconds") */
                      _("Upgrade done (%.02fs)"),
-                     ((float)time_diff) / 1000);
+                     ((float)time_diff) / 1000000);
 
     /* upgrading ended */
     weechat_upgrading = 0;

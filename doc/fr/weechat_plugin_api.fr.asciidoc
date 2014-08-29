@@ -2713,13 +2713,15 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_util_timeval_diff
 
-Retourner la différence (en millisecondes) entre deux structures "timeval".
+_Mis à jour dans la 1.1._
+
+Retourner la différence (en microsecondes) entre deux structures "timeval".
 
 Prototype :
 
 [source,C]
 ----
-long weechat_util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
+long long weechat_util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 ----
 
 Paramètres :
@@ -2729,13 +2731,16 @@ Paramètres :
 
 Valeur de retour :
 
-* différence en millisecondes
+* différence en microsecondes
+
+[NOTE]
+Avec WeeChat ≤ 1.0, la valeur retournée était en millisecondes.
 
 Exemple en C :
 
 [source,C]
 ----
-long diff = weechat_util_timeval_diff (&tv1, &tv2);
+long long diff = weechat_util_timeval_diff (&tv1, &tv2);
 ----
 
 [NOTE]
@@ -2743,25 +2748,30 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_util_timeval_add
 
-Ajouter un intervalle (en millisecondes) à une structure "timeval".
+_Mis à jour dans la 1.1._
+
+Ajouter un intervalle (en microsecondes) à une structure "timeval".
 
 Prototype :
 
 [source,C]
 ----
-void weechat_util_timeval_add (struct timeval *tv, long interval);
+void weechat_util_timeval_add (struct timeval *tv, long long interval);
 ----
 
 Paramètres :
 
 * 'tv' : structure "timeval"
-* 'interval' : intervalle (en millisecondes)
+* 'interval' : intervalle (en microsecondes)
+
+[NOTE]
+Avec WeeChat ≤ 1.0, l'intervalle était exprimé en millisecondes.
 
 Exemple en C :
 
 [source,C]
 ----
-weechat_util_timeval_add (&tv, 2000);  /* ajoute 2 secondes */
+weechat_util_timeval_add (&tv, 2000000);  /* ajouter 2 secondes */
 ----
 
 [NOTE]

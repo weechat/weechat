@@ -254,13 +254,13 @@ util_timeval_cmp (struct timeval *tv1, struct timeval *tv2)
 /*
  * Calculates difference between two timeval structures.
  *
- * Returns difference in milliseconds.
+ * Returns difference in microseconds.
  */
 
-long
+long long
 util_timeval_diff (struct timeval *tv1, struct timeval *tv2)
 {
-    long diff_sec, diff_usec;
+    long long diff_sec, diff_usec;
 
     if (!tv1 || !tv2)
         return 0;
@@ -273,23 +273,24 @@ util_timeval_diff (struct timeval *tv1, struct timeval *tv2)
         diff_usec += 1000000;
         diff_sec--;
     }
-    return ((diff_usec / 1000) + (diff_sec * 1000));
+
+    return (diff_sec * 1000000) + diff_usec;
 }
 
 /*
- * Adds interval (in milliseconds) to a timeval structure.
+ * Adds interval (in microseconds) to a timeval structure.
  */
 
 void
-util_timeval_add (struct timeval *tv, long interval)
+util_timeval_add (struct timeval *tv, long long interval)
 {
-    long usec;
+    long long usec;
 
     if (!tv)
         return;
 
-    tv->tv_sec += (interval / 1000);
-    usec = tv->tv_usec + ((interval % 1000) * 1000);
+    tv->tv_sec += (interval / 1000000);
+    usec = tv->tv_usec + (interval % 1000000);
     if (usec > 1000000)
     {
         tv->tv_usec = usec % 1000000;

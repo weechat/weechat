@@ -1023,7 +1023,7 @@ relay_weechat_msg_send (struct t_relay_client *client,
     Bytef *dest;
     uLongf dest_size;
     struct timeval tv1, tv2;
-    long time_diff;
+    long long time_diff;
 
     if (weechat_config_integer (relay_config_network_compression_level) > 0)
     {
@@ -1049,11 +1049,11 @@ relay_weechat_msg_send (struct t_relay_client *client,
 
                         /* display message in raw buffer */
                         snprintf (raw_message, sizeof (raw_message),
-                                  "obj: %d/%d bytes (%d%%, %ldms), id: %s",
+                                  "obj: %d/%d bytes (%d%%, %.2fms), id: %s",
                                   (int)dest_size + 5,
                                   msg->data_size,
                                   100 - ((((int)dest_size + 5) * 100) / msg->data_size),
-                                  time_diff,
+                                  ((float)time_diff) / 1000,
                                   msg->id);
 
                         /* send compressed data */
