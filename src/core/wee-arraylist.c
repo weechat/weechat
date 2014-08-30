@@ -126,6 +126,9 @@ arraylist_grow (struct t_arraylist *arraylist)
     int new_size_alloc;
     void **data;
 
+    if (!arraylist)
+        return 0;
+
     /* if we have enough space allocated, do nothing */
     if (arraylist->size + 1 <= arraylist->size_alloc)
         return 1;
@@ -162,6 +165,9 @@ arraylist_shrink (struct t_arraylist *arraylist)
 {
     int new_size_alloc;
     void **data;
+
+    if (!arraylist)
+        return 0;
 
     /* we don't shrink if we are below the min allocated size */
     if ((arraylist->size_alloc == 0)
@@ -217,6 +223,9 @@ arraylist_binary_search (struct t_arraylist *arraylist, void *pointer,
     ret_index = -1;
     ret_index_insert = -1;
     ret_pointer = NULL;
+
+    if (!arraylist)
+        goto end;
 
     start = 0;
     end = arraylist->size - 1;
@@ -339,6 +348,9 @@ arraylist_standard_search (struct t_arraylist *arraylist, void *pointer,
 {
     int i;
 
+    if (!arraylist)
+        goto end;
+
     for (i = 0; i < arraylist->size; i++)
     {
         if ((arraylist->callback_cmp) (arraylist->callback_cmp_data,
@@ -353,6 +365,7 @@ arraylist_standard_search (struct t_arraylist *arraylist, void *pointer,
         }
     }
 
+end:
     if (index)
         *index = -1;
     if (index_insert)
@@ -381,7 +394,7 @@ arraylist_search (struct t_arraylist *arraylist, void *pointer,
     if (index_insert)
         *index_insert = -1;
 
-    if (arraylist->size == 0)
+    if (!arraylist || (arraylist->size == 0))
         return NULL;
 
     if (arraylist->sorted)
@@ -410,6 +423,9 @@ int
 arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer)
 {
     int index_insert, i;
+
+    if (!arraylist)
+        return -1;
 
     if (arraylist->sorted)
     {
@@ -492,6 +508,9 @@ arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer)
 int
 arraylist_add (struct t_arraylist *arraylist, void *pointer)
 {
+    if (!arraylist)
+        return -1;
+
     return arraylist_insert (arraylist, -1, pointer);
 }
 
@@ -504,7 +523,7 @@ arraylist_add (struct t_arraylist *arraylist, void *pointer)
 int
 arraylist_remove (struct t_arraylist *arraylist, int index)
 {
-    if ((index < 0) || (index >= arraylist->size))
+    if (!arraylist || (index < 0) || (index >= arraylist->size))
         return -1;
 
     if (index < arraylist->size - 1)
@@ -538,7 +557,8 @@ arraylist_remove (struct t_arraylist *arraylist, int index)
 int
 arraylist_clear (struct t_arraylist *arraylist)
 {
-    void **data;
+    if (!arraylist)
+        return 0;
 
     if (arraylist->data
         && (arraylist->size_alloc != arraylist->size_alloc_min))
@@ -572,6 +592,9 @@ arraylist_clear (struct t_arraylist *arraylist)
 void
 arraylist_free (struct t_arraylist *arraylist)
 {
+    if (!arraylist)
+        return;
+
     if (arraylist->data)
         free (arraylist->data);
 
