@@ -483,6 +483,8 @@ weechat_shutdown (int return_code, int crash)
 
     network_end ();
 
+    debug_end ();
+
     if (crash)
         abort();
     else if (return_code >= 0)

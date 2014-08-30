@@ -29,6 +29,7 @@
 #endif
 #include <string.h>
 #include <time.h>
+#include <sys/time.h>
 #include <gcrypt.h>
 #include <curl/curl.h>
 #include <zlib.h>
@@ -48,6 +49,7 @@
 #include "wee-log.h"
 #include "wee-proxy.h"
 #include "wee-string.h"
+#include "wee-util.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-buffer.h"
@@ -62,6 +64,9 @@
 
 
 int debug_dump_active = 0;
+
+char *debug_time_name = NULL;
+struct timeval debug_timeval_start = { 0, 0 };
 
 
 /*
@@ -578,7 +583,62 @@ debug_directories ()
 }
 
 /*
- * Hooks signals for debug.
+ * Starts time measure.
+ */
+
+void
+debug_time_start (const char *name)
+{
+    if (debug_time_name)
+    {
+        free (debug_time_name);
+        debug_time_name = NULL;
+    }
+    if (name)
+        debug_time_name = strdup (name);
+
+    gettimeofday (&debug_timeval_start, NULL);
+}
+
+/*
+ * Ends time measure and display elapsed time.
+ *
+ * If display is 1, the message is displayed in core buffer, otherwise it's
+ * written in log file.
+ */
+
+void
+debug_time_end (int display)
+{
+    struct timeval debug_timeval_end;
+    long long diff, diff_hour, diff_min, diff_sec, diff_usec;
+
+    gettimeofday (&debug_timeval_end, NULL);
+    diff = util_timeval_diff (&debug_timeval_start,
+                              &debug_timeval_end);
+
+    diff_usec = diff % 1000000;
+    diff_sec = (diff / 1000000) % 60;
+    diff_min = ((diff / 1000000) / 60) % 60;
+    diff_hour = (diff / 1000000) / 3600;
+
+    if (display)
+    {
+        gui_chat_printf (NULL,
+                         "debug: time[%s] -> %lld:%02lld:%02lld.%06d",
+                         (debug_time_name) ? debug_time_name : "?",
+                         diff_hour, diff_min, diff_sec, diff_usec);
+    }
+    else
+    {
+        log_printf ("debug: time[%s] -> %lld:%02lld:%02lld.%06d",
+                    (debug_time_name) ? debug_time_name : "?",
+                    diff_hour, diff_min, diff_sec, diff_usec);
+    }
+}
+
+/*
+ * Initializes debug.
  */
 
 void
@@ -591,4 +651,18 @@ debug_init ()
      */
     hook_signal (NULL, "2000|debug_dump", &debug_dump_cb, NULL);
     hook_signal (NULL, "2000|debug_libs", &debug_libs_cb, NULL);
+}
+
+/*
+ * Ends debug.
+ */
+
+void
+debug_end ()
+{
+    if (debug_time_name)
+    {
+        free (debug_time_name);
+        debug_time_name = NULL;
+    }
 }
