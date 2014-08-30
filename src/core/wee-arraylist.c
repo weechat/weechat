@@ -416,6 +416,9 @@ arraylist_search (struct t_arraylist *arraylist, void *pointer,
  * If the index is negative and that the arraylist is not sorted, the element
  * is added at the end of arraylist.
  *
+ * If the arraylist is sorted, the argument "index" is ignored (the element
+ * will be inserted at appropriate position, to keep arraylist sorted).
+ *
  * Returns the index of the new element (>= 0) or -1 if error.
  */
 
