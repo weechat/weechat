@@ -30,6 +30,7 @@ include_directories(${CPPUTEST_INCLUDE_DIRS} ${PROJECT_BINARY_DIR} ${PROJECT_SOU
 
 # unit tests
 set(LIB_WEECHAT_UNIT_TESTS_SRC
+  unit/core/test-arraylist.cpp
   unit/core/test-eval.cpp
   unit/core/test-hashtable.cpp
   unit/core/test-hdata.cpp
@@ -53,6 +54,8 @@ set(LIBS
   ${PROJECT_BINARY_DIR}/src/gui/curses/libweechat_gui_curses.a
   ${CMAKE_CURRENT_BINARY_DIR}/libweechat_ncurses_fake.a
   ${CMAKE_CURRENT_BINARY_DIR}/libweechat_unit_tests.a
+  # due to circular references, we must link two times with libweechat_core.a
+  ${PROJECT_BINARY_DIR}/src/core/libweechat_core.a
   ${EXTRA_LIBS}
   ${CURL_LIBRARIES}
   ${CPPUTEST_LIBRARIES})

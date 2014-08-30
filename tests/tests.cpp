@@ -47,6 +47,7 @@ extern "C"
 #include "CppUTest/CommandLineTestRunner.h"
 
 /* import tests from libs */
+IMPORT_TEST_GROUP(Arraylist);
 IMPORT_TEST_GROUP(Eval);
 IMPORT_TEST_GROUP(Hashtable);
 IMPORT_TEST_GROUP(Hdata);
