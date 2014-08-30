@@ -563,21 +563,17 @@ arraylist_clear (struct t_arraylist *arraylist)
     if (arraylist->data
         && (arraylist->size_alloc != arraylist->size_alloc_min))
     {
-        if (arraylist->size_alloc_min == 0)
+        free (arraylist->data);
+        arraylist->data = NULL;
+        arraylist->size_alloc = 0;
+        if (arraylist->size_alloc_min > 0)
         {
-            free (arraylist->data);
-            arraylist->data = NULL;
-        }
-        else
-        {
-            data = realloc (
-                arraylist->data,
-                arraylist->size_alloc_min * sizeof (*arraylist->data));
-            if (!data)
+            arraylist->data = calloc(arraylist->size_alloc_min,
+                                     sizeof (*arraylist->data));
+            if (!arraylist->data)
                 return 0;
-            arraylist->data = data;
+            arraylist->size_alloc = arraylist->size_alloc_min;
         }
-        arraylist->size_alloc = arraylist->size_alloc_min;
     }
 
     arraylist->size = 0;
