@@ -2666,8 +2666,7 @@ if (weechat_util_timeval_cmp (&tv1, &tv2) > 0)
 
 _バージョン 1.1 で更新。_
 
-// TRANSLATION MISSING
-Return difference (in microseconds) between two "timeval" structures.
+2 つの "timeval" 構造体の差を返す (マイクロ秒単位)。
 
 プロトタイプ:
 
@@ -2683,12 +2682,10 @@ long long weechat_util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 
 戻り値:
 
-// TRANSLATION MISSING
-* difference in microseconds
+* マイクロ秒単位の差
 
-// TRANSLATION MISSING
 [NOTE]
-With WeeChat ≤ 1.0, the returned value was in milliseconds.
+WeeChat バージョン 1.0 以前の場合、戻り値の単位はミリ秒でした。
 
 C 言語での使用例:
 
@@ -2704,8 +2701,7 @@ long long diff = weechat_util_timeval_diff (&tv1, &tv2);
 
 _バージョン 1.1 で更新。_
 
-// TRANSLATION MISSING
-Add interval (in microseconds) to a timeval structure.
+timeval 構造体に時間間隔を追加 (マイクロ秒単位)。
 
 プロトタイプ:
 
@@ -2717,12 +2713,10 @@ void weechat_util_timeval_add (struct timeval *tv, long long interval);
 引数:
 
 * 'tv': timeval 構造体
-// TRANSLATION MISSING
-* 'interval': interval (in microseconds)
+* 'interval': 時間間隔 (マイクロ秒単位)
 
-// TRANSLATION MISSING
 [NOTE]
-With WeeChat ≤ 1.0, the interval was expressed in milliseconds.
+WeeChat バージョン 1.0 以前の場合、時間間隔の単位はミリ秒でした。
 
 C 言語での使用例:
 
