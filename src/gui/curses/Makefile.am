@@ -33,8 +33,8 @@ lib_weechat_gui_curses_a_SOURCES = gui-curses-bar-window.c \
 
 bin_PROGRAMS = weechat
 
-# Because of a linker bug, we have to link 2 times with lib_weechat_core.a
-# (and it must be 2 different path/names to be kept by linker)
+# Due to circular references, we must link two times with libweechat_core.a
+# (and with two different path/names to be kept by linker)
 weechat_LDADD = ./../../core/lib_weechat_core.a \
                 ../../plugins/lib_weechat_plugins.a \
                 ../lib_weechat_gui_common.a \
