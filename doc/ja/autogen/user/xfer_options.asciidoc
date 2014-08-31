@@ -104,7 +104,7 @@
 ** 値: 0 .. 256 (デフォルト値: `20`)
 
 * [[option_xfer.look.pv_tags]] *xfer.look.pv_tags*
-** 説明: `プライベートメッセージに使われたタグのコンマ区切りリスト、例えば: "notify_message"、"notify_private"、"notify_highlight"`
+** 説明: `プライベートメッセージに使われたタグのコンマ区切りリスト、例: "notify_message"、"notify_private"、"notify_highlight"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"notify_private"`)
 

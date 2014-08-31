@@ -519,7 +519,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.look.command_incomplete]] *weechat.look.command_incomplete*
-** 説明: `if set, incomplete and unambiguous commands are allowed, for example /he for /help`
+** 説明: `セットされた場合、不完全なコマンドと完全なコマンドを両方使えるようになります、例えば /he は /help の意味で使うことができます`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 

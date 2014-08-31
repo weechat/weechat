@@ -86,7 +86,7 @@
 
 | trigger | trigger_names | トリガ
 
-| trigger | trigger_names_default | default triggers
+| trigger | trigger_names_default | デフォルトトリガ
 
 | trigger | trigger_option_value | トリガオプションの値
 

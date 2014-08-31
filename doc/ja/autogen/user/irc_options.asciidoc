@@ -269,7 +269,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.notice_welcome_tags]] *irc.look.notice_welcome_tags*
-** 説明: `ようこそ通知に使われ、チャンネルに転送するタグのコンマ区切りリスト、例えば: "notify_private"`
+** 説明: `ようこそ通知に使われ、チャンネルに転送するタグのコンマ区切りリスト、例: "notify_private"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -279,7 +279,7 @@
 ** 値: 未制約文字列 (デフォルト値: `"notify_message"`)
 
 * [[option_irc.look.notify_tags_whois]] *irc.look.notify_tags_whois*
-** 説明: `ニックネームの離席状態に変化があった場合の (whois コマンドの結果)、notify によって表示されたメッセージに使われたタグのコンマ区切りリスト、例えば: "notify_message"、"notify_private"、"notify_highlight"`
+** 説明: `ニックネームの離席状態に変化があった場合の (whois コマンドの結果)、notify によって表示されたメッセージに使われたタグのコンマ区切りリスト、例: "notify_message"、"notify_private"、"notify_highlight"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"notify_message"`)
 
@@ -294,7 +294,7 @@
 ** 値: independent, merge_by_server, merge_all (デフォルト値: `independent`)
 
 * [[option_irc.look.pv_tags]] *irc.look.pv_tags*
-** 説明: `プライベートメッセージに使われたタグのコンマ区切りリスト、例えば: "notify_message"、"notify_private"、"notify_highlight"`
+** 説明: `プライベートメッセージに使われたタグのコンマ区切りリスト、例: "notify_message"、"notify_private"、"notify_highlight"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"notify_private"`)
 
@@ -479,7 +479,7 @@
 ** 値: 0 .. 1000000 (デフォルト値: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** 説明: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: away-notify, multi-prefix, server-time, userhost-in-names (example: "away-notify,multi-prefix")`
+** 説明: `サーバで利用可能ならば有効化する "client capabilities" のコンマ区切りリスト; WeeChat で利用できる機能: away-notify、multi-prefix、server-time、userhost-in-names (例: "away-notify,multi-prefix")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
