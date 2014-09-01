@@ -1417,7 +1417,7 @@ Beispiel: Im Buffer wird "Hallo an alle!" ausgegeben. Dabei wird "Hallo" in fett
 und "an alle" rot und unterstrichen dargestellt.
 
 ----
-^Cc12^CbHallo ^Cb^Cc04^Cuan alle^Cu^Cc!
+^Cc12^CbHallo ^Cb^Cc04^C_an alle^C_^Cc!
 ----
 
 [NOTE]

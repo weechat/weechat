@@ -1454,7 +1454,7 @@ Esempio: visualizza "ciao a tutti!" con "ciao" scritto in blu chiaro grassetto
 e "a tutti" in rosso chiaro sottolineato:
 
 ----
-^Cc12^Cbciao ^Cb^Cc04^Cua tutti^Cu^Cc !
+^Cc12^Cbciao ^Cb^Cc04^C_a tutti^C_^Cc !
 ----
 
 [NOTE]

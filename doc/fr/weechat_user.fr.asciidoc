@@ -1438,7 +1438,7 @@ Exemple : affichage de "bonjour tout le monde !" avec "bonjour" en bleu clair
 gras, et "tout le monde" en rouge clair souligné :
 
 ----
-^Cc12^Cbbonjour ^Cb^Cc04^Cutout le monde^Cu^Cc !
+^Cc12^Cbbonjour ^Cb^Cc04^C_tout le monde^C_^Cc !
 ----
 
 [NOTE]
