@@ -34,6 +34,7 @@
 #include <unistd.h>
 
 #include "weechat.h"
+#include "wee-arraylist.h"
 #include "wee-config.h"
 #include "wee-hashtable.h"
 #include "wee-hook.h"
@@ -625,12 +626,12 @@ completion_list_add_nicks_cb (void *data,
     (void) completion_item;
     (void) buffer;
 
-    count_before = weelist_size (completion->completion_list);
+    count_before = completion->list->size;
     hook_completion_exec (completion->buffer->plugin,
                           "nick",
                           completion->buffer,
                           completion);
-    if (weelist_size (completion->completion_list) == count_before)
+    if (completion->list->size == count_before)
     {
         /*
          * no plugin overrides nick completion => use default nick

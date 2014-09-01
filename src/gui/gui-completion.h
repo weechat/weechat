@@ -25,12 +25,12 @@
 #define GUI_COMPLETION_COMMAND_ARG  2
 #define GUI_COMPLETION_AUTO         3
 
-struct t_gui_completion_partial
+struct t_gui_completion_word
 {
-    char *word;                   /* (partial) word matching completion      */
+    char *word;                   /* word matching completion                */
+    char nick_completion;         /* 1 if it is completion of a nick         */
     int count;                    /* number of matching items with this word */
-    struct t_gui_completion_partial *prev_item;
-    struct t_gui_completion_partial *next_item;
+                                  /* (for partial completion)                */
 };
 
 struct t_gui_completion
@@ -49,7 +49,7 @@ struct t_gui_completion
     int force_partial_completion; /* force partial completion?               */
 
     /* for command argument completion */
-    struct t_weelist *completion_list; /* data list for completion           */
+    struct t_arraylist *list;     /* data list for completion                */
 
     /* completion found */
     char *word_found;             /* word found (to replace base word)       */
@@ -59,8 +59,7 @@ struct t_gui_completion
     int diff_length;              /* length difference (<= diff_size)        */
 
     /* partial completion */
-    struct t_gui_completion_partial *partial_completion_list;
-    struct t_gui_completion_partial *last_partial_completion;
+    struct t_arraylist *partial_list;
 };
 
 /* completion variables */

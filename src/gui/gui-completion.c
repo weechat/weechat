@@ -33,6 +33,7 @@
 #include <unistd.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-arraylist.h"
 #include "../core/wee-completion.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hdata.h"
@@ -49,6 +50,48 @@
 int gui_completion_freeze = 0;         /* 1 to freeze completions (do not   */
                                        /* stop partial completion on key)   */
 
+
+/*
+ * Compares two words in completion list.
+ */
+
+int
+gui_completion_word_compare_cb (void *data, struct t_arraylist *arraylist,
+                                void *pointer1, void *pointer2)
+{
+    struct t_gui_completion_word *completion_word1, *completion_word2;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    completion_word1 = (struct t_gui_completion_word *)pointer1;
+    completion_word2 = (struct t_gui_completion_word *)pointer2;
+
+    return string_strcasecmp (completion_word1->word, completion_word2->word);
+}
+
+/*
+ * Frees a word in completion list.
+ */
+
+void
+gui_completion_word_free_cb (void *data, struct t_arraylist *arraylist,
+                             void *pointer)
+{
+    struct t_gui_completion_word *completion_word;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    completion_word = (struct t_gui_completion_word *)pointer;
+
+    if (completion_word->word)
+        free (completion_word->word);
+
+    free (completion_word);
+}
 
 /*
  * Initializes completion for a buffer.
@@ -70,7 +113,9 @@ gui_completion_buffer_init (struct t_gui_completion *completion,
     completion->add_space = 1;
     completion->force_partial_completion = 0;
 
-    completion->completion_list = weelist_new ();
+    completion->list = arraylist_new (32, 1, 0,
+                                      &gui_completion_word_compare_cb, NULL,
+                                      &gui_completion_word_free_cb, NULL);
 
     completion->word_found = NULL;
     completion->word_found_is_nick = 0;
@@ -78,8 +123,10 @@ gui_completion_buffer_init (struct t_gui_completion *completion,
     completion->diff_size = 0;
     completion->diff_length = 0;
 
-    completion->partial_completion_list = NULL;
-    completion->last_partial_completion = NULL;
+    completion->partial_list = arraylist_new (
+        0, 0, 0,
+        &gui_completion_word_compare_cb, NULL,
+        &gui_completion_word_free_cb, NULL);
 }
 
 /*
@@ -88,66 +135,23 @@ gui_completion_buffer_init (struct t_gui_completion *completion,
  * Returns pointer to new item, NULL if error.
  */
 
-struct t_gui_completion_partial *
+struct t_gui_completion_word *
 gui_completion_partial_list_add (struct t_gui_completion *completion,
                                  const char *word, int count)
 {
-    struct t_gui_completion_partial *new_item;
+    struct t_gui_completion_word *new_completion_word;
 
-    new_item = malloc (sizeof (*new_item));
-    if (new_item)
+    new_completion_word = malloc (sizeof (*new_completion_word));
+    if (new_completion_word)
     {
-        new_item->word = strdup (word);
-        new_item->count = count;
+        new_completion_word->word = strdup (word);
+        new_completion_word->nick_completion = 0;
+        new_completion_word->count = count;
 
-        new_item->prev_item = completion->last_partial_completion;
-        if (completion->partial_completion_list)
-            (completion->last_partial_completion)->next_item = new_item;
-        else
-            completion->partial_completion_list = new_item;
-        completion->last_partial_completion = new_item;
-        new_item->next_item = NULL;
+        arraylist_add (completion->partial_list, new_completion_word);
     }
-    return new_item;
-}
 
-/*
- * Removes an item from partial completion list.
- */
-
-void
-gui_completion_partial_list_free (struct t_gui_completion *completion,
-                                  struct t_gui_completion_partial *item)
-{
-    /* remove partial completion item from list */
-    if (item->prev_item)
-        (item->prev_item)->next_item = item->next_item;
-    if (item->next_item)
-        (item->next_item)->prev_item = item->prev_item;
-    if (completion->partial_completion_list == item)
-        completion->partial_completion_list = item->next_item;
-    if (completion->last_partial_completion == item)
-        completion->last_partial_completion = item->prev_item;
-
-    /* free data */
-    if (item->word)
-        free (item->word);
-
-    free (item);
-}
-
-/*
- * Removes partial completion list.
- */
-
-void
-gui_completion_partial_list_free_all (struct t_gui_completion *completion)
-{
-    while (completion->partial_completion_list)
-    {
-        gui_completion_partial_list_free (completion,
-                                          completion->partial_completion_list);
-    }
+    return new_completion_word;
 }
 
 /*
@@ -169,17 +173,17 @@ gui_completion_free_data (struct t_gui_completion *completion)
         free (completion->args);
     completion->args = NULL;
 
-    if (completion->completion_list)
+    if (completion->list)
     {
-        weelist_free (completion->completion_list);
-        completion->completion_list = NULL;
+        arraylist_free (completion->list);
+        completion->list = NULL;
     }
 
     if (completion->word_found)
         free (completion->word_found);
     completion->word_found = NULL;
 
-    gui_completion_partial_list_free_all (completion);
+    arraylist_clear (completion->partial_list);
 }
 
 /*
@@ -206,9 +210,9 @@ gui_completion_stop (struct t_gui_completion *completion)
     completion->context = GUI_COMPLETION_NULL;
     completion->position = -1;
 
-    if (completion->partial_completion_list)
+    if (completion->partial_list->size > 0)
     {
-        gui_completion_partial_list_free_all (completion);
+        arraylist_clear (completion->partial_list);
         (void) hook_signal_send ("partial_completion",
                                  WEECHAT_HOOK_SIGNAL_STRING, NULL);
     }
@@ -369,7 +373,9 @@ void
 gui_completion_list_add (struct t_gui_completion *completion, const char *word,
                          int nick_completion, const char *where)
 {
+    struct t_gui_completion_word *completion_word;
     char buffer[512];
+    int index;
 
     if (!word || !word[0])
         return;
@@ -380,17 +386,37 @@ gui_completion_list_add (struct t_gui_completion *completion, const char *word,
         || (!nick_completion && (string_strncasecmp (completion->base_word, word,
                                                      utf8_strlen (completion->base_word)) == 0)))
     {
-        if (nick_completion && (completion->base_word_pos == 0))
+        completion_word = malloc (sizeof (*completion_word));
+        if (completion_word)
         {
-            snprintf (buffer, sizeof (buffer), "%s%s",
-                      word, CONFIG_STRING(config_completion_nick_completer));
-            weelist_add (completion->completion_list, buffer, where,
-                         (nick_completion) ? (void *)1 : (void *)0);
-        }
-        else
-        {
-            weelist_add (completion->completion_list, word, where,
-                         (nick_completion) ? (void *)1 : (void *)0);
+            completion_word->nick_completion = nick_completion;
+            completion_word->count = 0;
+
+            index = -1;
+            if (strcmp (where, WEECHAT_LIST_POS_BEGINNING) == 0)
+            {
+                completion->list->sorted = 0;
+                index = 0;
+            }
+            else if (strcmp (where, WEECHAT_LIST_POS_END) == 0)
+            {
+                completion->list->sorted = 0;
+                index = -1;
+            }
+
+            if (nick_completion && (completion->base_word_pos == 0))
+            {
+                snprintf (buffer, sizeof (buffer), "%s%s",
+                          word,
+                          CONFIG_STRING(config_completion_nick_completer));
+                completion_word->word = strdup (buffer);
+                arraylist_insert (completion->list, index, completion_word);
+            }
+            else
+            {
+                completion_word->word = strdup (word);
+                arraylist_insert (completion->list, index, completion_word);
+            }
         }
     }
 }
@@ -842,28 +868,32 @@ gui_completion_find_context (struct t_gui_completion *completion,
  */
 
 int
-gui_completion_common_prefix_size (struct t_weelist *list,
+gui_completion_common_prefix_size (struct t_arraylist *list,
                                    const char *utf_char)
 {
-    struct t_weelist_item *ptr_item;
     char *ptr_first_item, *ptr_char, *next_char;
+    struct t_gui_completion_word *ptr_completion_word;
+    int i;
 
-    ptr_first_item = list->items->data;
+    ptr_first_item = ((struct t_gui_completion_word *)(list->data[0]))->word;
     ptr_char = ptr_first_item;
 
     while (ptr_char && ptr_char[0])
     {
         next_char = utf8_next_char (ptr_char);
 
-        for (ptr_item = list->items->next_item; ptr_item;
-             ptr_item = ptr_item->next_item)
+        for (i = 1; i < list->size; i++)
         {
+            ptr_completion_word =
+                (struct t_gui_completion_word *)(list->data[i]);
             if (!utf_char
-                || (utf8_charcasecmp (utf_char, ptr_item->data) == 0))
+                || (utf8_charcasecmp (utf_char,
+                                      ptr_completion_word->word) == 0))
             {
-                if ((ptr_item->data[ptr_char - ptr_first_item] == '\0')
-                    || (utf8_charcasecmp (ptr_char,
-                                          ptr_item->data + (ptr_char - ptr_first_item)) != 0))
+                if ((ptr_completion_word->word[ptr_char - ptr_first_item] == '\0')
+                    || (utf8_charcasecmp (
+                            ptr_char,
+                            ptr_completion_word->word + (ptr_char - ptr_first_item)) != 0))
                 {
                     return ptr_char - ptr_first_item;
                 }
@@ -883,65 +913,78 @@ void
 gui_completion_partial_build_list (struct t_gui_completion *completion,
                                    int common_prefix_size)
 {
-    int char_size, items_count;
+    int i, char_size, items_count, index;
     char utf_char[16], *word;
-    struct t_weelist *weelist_temp;
-    struct t_weelist_item *ptr_item, *next_item;
+    struct t_gui_completion_word *ptr_completion_word, *new_completion_word;
+    struct t_arraylist *list_temp;
 
-    gui_completion_partial_list_free_all (completion);
+    arraylist_clear (completion->partial_list);
 
-    if (!completion->completion_list || !completion->completion_list->items)
+    if (!completion->list || (completion->list->size == 0))
         return;
 
-    weelist_temp = weelist_new ();
-    if (!weelist_temp)
+    list_temp = arraylist_new (completion->list->size, 0, 0,
+                               &gui_completion_word_compare_cb, NULL,
+                               &gui_completion_word_free_cb, NULL);
+    if (!list_temp)
         return;
 
-    for (ptr_item = completion->completion_list->items; ptr_item;
-         ptr_item = ptr_item->next_item)
+    for (i = 0; i < completion->list->size; i++)
     {
-        weelist_add (weelist_temp, ptr_item->data + common_prefix_size,
-                     WEECHAT_LIST_POS_END, NULL);
+        ptr_completion_word =
+            (struct t_gui_completion_word *)completion->list->data[i];
+        new_completion_word = malloc (sizeof (*new_completion_word));
+        if (new_completion_word)
+        {
+            new_completion_word->word = strdup (
+                ptr_completion_word->word + common_prefix_size);
+            new_completion_word->nick_completion = 0;
+            new_completion_word->count = 0;
+            arraylist_add (list_temp, new_completion_word);
+        }
     }
 
-    while (weelist_temp->items)
+    while (list_temp->size > 0)
     {
-        char_size = utf8_char_size (weelist_temp->items->data);
-        memcpy (utf_char, weelist_temp->items->data, char_size);
+        ptr_completion_word =
+            (struct t_gui_completion_word *)list_temp->data[0];
+        char_size = utf8_char_size (ptr_completion_word->word);
+        memcpy (utf_char, ptr_completion_word->word, char_size);
         utf_char[char_size] = '\0';
         word = NULL;
-        common_prefix_size = gui_completion_common_prefix_size (weelist_temp,
+        common_prefix_size = gui_completion_common_prefix_size (list_temp,
                                                                 utf_char);
         if (common_prefix_size > 0)
         {
-            word = string_strndup (weelist_temp->items->data,
+            word = string_strndup (ptr_completion_word->word,
                                    common_prefix_size);
         }
         items_count = 0;
-        ptr_item = weelist_temp->items;
-        while (ptr_item)
+        index = 0;
+        while (index < list_temp->size)
         {
-            next_item = ptr_item->next_item;
-
-            if (utf8_charcasecmp (utf_char, ptr_item->data) == 0)
+            ptr_completion_word =
+                (struct t_gui_completion_word *)list_temp->data[index];
+            if (utf8_charcasecmp (utf_char, ptr_completion_word->word) == 0)
             {
-                weelist_remove (weelist_temp, ptr_item);
+                arraylist_remove (list_temp, index);
                 items_count++;
             }
-
-            ptr_item = next_item;
+            else
+                index++;
         }
         if (word)
         {
-            gui_completion_partial_list_add (completion,
-                                             word,
-                                             CONFIG_BOOLEAN(config_completion_partial_completion_count) ?
-                                             items_count : -1);
+            gui_completion_partial_list_add (
+                completion,
+                word,
+                CONFIG_BOOLEAN(config_completion_partial_completion_count) ?
+                items_count : -1);
             free (word);
         }
     }
 
-    weelist_free (weelist_temp);
+    arraylist_free (list_temp);
 }
 
 /*
@@ -952,8 +995,8 @@ void
 gui_completion_complete (struct t_gui_completion *completion)
 {
     int length, word_found_seen, other_completion, partial_completion;
-    int common_prefix_size, item_is_nick;
-    struct t_weelist_item *ptr_item, *ptr_item2;
+    int common_prefix_size, index, index2;
+    struct t_gui_completion_word *ptr_completion_word, *ptr_completion_word2;
 
     length = utf8_strlen (completion->base_word);
     word_found_seen = 0;
@@ -977,19 +1020,10 @@ gui_completion_complete (struct t_gui_completion *completion)
 
     common_prefix_size = 0;
     if (partial_completion
-        && completion->completion_list && completion->completion_list->items)
+        && completion->list && (completion->list->size > 0))
     {
-        common_prefix_size = gui_completion_common_prefix_size (completion->completion_list,
+        common_prefix_size = gui_completion_common_prefix_size (completion->list,
                                                                 NULL);
-    }
-
-    ptr_item = NULL;
-    if (completion->completion_list)
-    {
-        if (completion->direction < 0)
-            ptr_item = completion->completion_list->last_item;
-        else
-            ptr_item = completion->completion_list->items;
     }
 
     if (partial_completion
@@ -999,59 +1033,68 @@ gui_completion_complete (struct t_gui_completion *completion)
         return;
     }
 
-    while (ptr_item)
+    index = -1;
+    if (completion->list)
     {
-        item_is_nick = ((long)(ptr_item->user_data) == 1);
-        if ((item_is_nick
-             && (gui_completion_nickncmp (completion->base_word, ptr_item->data,
+        if (completion->direction < 0)
+            index = completion->list->size - 1;
+        else
+            index = 0;
+    }
+
+    while ((index >= 0) && (index < completion->list->size))
+    {
+        ptr_completion_word =
+            (struct t_gui_completion_word *)(completion->list->data[index]);
+        if ((ptr_completion_word->nick_completion
+             && (gui_completion_nickncmp (completion->base_word,
+                                          ptr_completion_word->word,
                                           length) == 0))
-            || ((!item_is_nick)
-                && (string_strncasecmp (completion->base_word, ptr_item->data,
+            || (!ptr_completion_word->nick_completion
+                && (string_strncasecmp (completion->base_word,
+                                        ptr_completion_word->word,
                                         length) == 0)))
         {
             if ((!completion->word_found) || word_found_seen)
             {
                 if (completion->word_found)
                     free (completion->word_found);
-                completion->word_found = strdup (ptr_item->data);
-                completion->word_found_is_nick = item_is_nick;
-                if (item_is_nick
+                completion->word_found = strdup (ptr_completion_word->word);
+                completion->word_found_is_nick =
+                    ptr_completion_word->nick_completion;
+                if (ptr_completion_word->nick_completion
                     && !CONFIG_BOOLEAN(config_completion_nick_add_space))
                 {
                     completion->add_space = 0;
                 }
 
                 /* stop after first nick if user asked that */
-                if (item_is_nick
+                if (ptr_completion_word->nick_completion
                     && CONFIG_BOOLEAN(config_completion_nick_first_only))
                 {
                     gui_completion_stop (completion);
                     return;
                 }
 
-                if (completion->direction < 0)
-                    ptr_item2 = ptr_item->prev_item;
-                else
-                    ptr_item2 = ptr_item->next_item;
-
-                while (ptr_item2)
+                index2 = (completion->direction < 0) ? index - 1 : index + 1;
+                while ((index2 >= 0) && (index2 < completion->list->size))
                 {
-                    if ((item_is_nick
+                    ptr_completion_word2 =
+                        (struct t_gui_completion_word *)(completion->list->data[index2]);
+                    if ((ptr_completion_word->nick_completion
                          && (gui_completion_nickncmp (completion->base_word,
-                                                      ptr_item2->data,
+                                                      ptr_completion_word2->word,
                                                       length) == 0))
-                        || ((!item_is_nick)
+                        || (!ptr_completion_word->nick_completion
                             && (string_strncasecmp (completion->base_word,
-                                                    ptr_item2->data,
+                                                    ptr_completion_word2->word,
                                                     length) == 0)))
                     {
                         other_completion++;
                     }
 
-                    if (completion->direction < 0)
-                        ptr_item2 = ptr_item2->prev_item;
-                    else
-                        ptr_item2 = ptr_item2->next_item;
+                    index2 = (completion->direction < 0) ?
+                        index2 - 1 : index2 + 1;
                 }
 
                 if (other_completion == 0)
@@ -1086,20 +1129,17 @@ gui_completion_complete (struct t_gui_completion *completion)
                     return;
                 }
 
-                gui_completion_partial_list_free_all (completion);
+                arraylist_clear (completion->partial_list);
 
                 return;
             }
             other_completion++;
         }
         if (completion->word_found &&
-            (strcmp (ptr_item->data, completion->word_found) == 0))
+            (strcmp (ptr_completion_word->word, completion->word_found) == 0))
             word_found_seen = 1;
 
-        if (completion->direction < 0)
-            ptr_item = ptr_item->prev_item;
-        else
-            ptr_item = ptr_item->next_item;
+        index = (completion->direction < 0) ? index - 1 : index + 1;
     }
 
     /*
@@ -1124,7 +1164,7 @@ gui_completion_command (struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook;
 
-    if (!completion->completion_list->items)
+    if (completion->list->size == 0)
     {
         for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
              ptr_hook = ptr_hook->next_hook)
@@ -1154,18 +1194,19 @@ gui_completion_auto (struct t_gui_completion *completion)
     if ((completion->base_word[0] == '/')
         || (completion->base_word[0] == '~'))
     {
-        if (!completion->completion_list->items)
+        if (completion->list->size == 0)
             completion_list_add_filename_cb (NULL, NULL, NULL, completion);
         gui_completion_complete (completion);
         return;
     }
 
     /* use default template completion */
-    if (!completion->completion_list->items)
+    if (completion->list->size == 0)
     {
-        gui_completion_build_list_template (completion,
-                                            CONFIG_STRING(config_completion_default_template),
-                                            NULL);
+        gui_completion_build_list_template (
+            completion,
+            CONFIG_STRING(config_completion_default_template),
+            NULL);
     }
     gui_completion_complete (completion);
 }
@@ -1205,7 +1246,7 @@ gui_completion_search (struct t_gui_completion *completion, int direction,
             gui_completion_command (completion);
             break;
         case GUI_COMPLETION_COMMAND_ARG:
-            if (completion->completion_list->items)
+            if (completion->list->size > 0)
                 gui_completion_complete (completion);
             else
             {
@@ -1286,24 +1327,23 @@ gui_completion_hdata_completion_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_completion, direction, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, add_space, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, force_partial_completion, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_completion, completion_list, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, list, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, word_found, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, word_found_is_nick, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, position_replace, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, diff_size, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, diff_length, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_completion, partial_completion_list, POINTER, 0, NULL, "completion_partial");
-        HDATA_VAR(struct t_gui_completion, last_partial_completion, POINTER, 0, NULL, "completion_partial");
+        HDATA_VAR(struct t_gui_completion, partial_list, POINTER, 0, NULL, NULL);
     }
     return hdata;
 }
 
 /*
- * Returns hdata for partial completion.
+ * Returns hdata for completion word.
  */
 
 struct t_hdata *
-gui_completion_hdata_completion_partial_cb (void *data, const char *hdata_name)
+gui_completion_hdata_completion_word_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
 
@@ -1314,12 +1354,32 @@ gui_completion_hdata_completion_partial_cb (void *data, const char *hdata_name)
                        0, 0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_completion_partial, word, STRING, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_completion_partial, count, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_completion_partial, prev_item, POINTER, 0, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_completion_partial, next_item, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_completion_word, word, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion_word, nick_completion, CHAR, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion_word, count, INTEGER, 0, NULL, NULL);
     }
     return hdata;
+}
+
+/*
+ * Prints list of completion words in WeeChat log file (usually for crash dump).
+ */
+
+void
+gui_completion_list_words_print_log (struct t_arraylist *list,
+                                     const char *name)
+{
+    int i;
+    struct t_gui_completion_word *ptr_completion_word;
+
+    for (i = 0; i < list->size; i++)
+    {
+        ptr_completion_word = (struct t_gui_completion_word *)(list->data[i]);
+        log_printf ("[%s (addr:0x%lx)]", name, ptr_completion_word);
+        log_printf ("  word. . . . . . . . . . : '%s'", ptr_completion_word->word);
+        log_printf ("  nicklist_completion . . : %d",   ptr_completion_word->nick_completion);
+        log_printf ("  count . . . . . . . . . : %d",   ptr_completion_word->count);
+    }
 }
 
 /*
@@ -1329,8 +1389,6 @@ gui_completion_hdata_completion_partial_cb (void *data, const char *hdata_name)
 void
 gui_completion_print_log (struct t_gui_completion *completion)
 {
-    struct t_gui_completion_partial *ptr_item;
-
     log_printf ("[completion (addr:0x%lx)]", completion);
     log_printf ("  buffer. . . . . . . . . : 0x%lx", completion->buffer);
     log_printf ("  context . . . . . . . . : %d",    completion->context);
@@ -1343,29 +1401,22 @@ gui_completion_print_log (struct t_gui_completion *completion)
     log_printf ("  direction . . . . . . . : %d",    completion->direction);
     log_printf ("  add_space . . . . . . . : %d",    completion->add_space);
     log_printf ("  force_partial_completion: %d",    completion->force_partial_completion);
-    log_printf ("  completion_list . . . . : 0x%lx", completion->completion_list);
+    log_printf ("  list. . . . . . . . . . : 0x%lx", completion->list);
     log_printf ("  word_found. . . . . . . : '%s'",  completion->word_found);
     log_printf ("  word_found_is_nick. . . : %d",    completion->word_found_is_nick);
     log_printf ("  position_replace. . . . : %d",    completion->position_replace);
     log_printf ("  diff_size . . . . . . . : %d",    completion->diff_size);
     log_printf ("  diff_length . . . . . . : %d",    completion->diff_length);
-    if (completion->completion_list)
+    if (completion->list)
     {
         log_printf ("");
-        weelist_print_log (completion->completion_list,
-                           "completion list element");
+        gui_completion_list_words_print_log (completion->list,
+                                             "completion word");
     }
-    if (completion->partial_completion_list)
+    if (completion->partial_list)
     {
         log_printf ("");
-        for (ptr_item = completion->partial_completion_list;
-             ptr_item; ptr_item = ptr_item->next_item)
-        {
-            log_printf ("[partial completion item (addr:0x%lx)]", ptr_item);
-            log_printf ("  word. . . . . . . . . . : '%s'",  ptr_item->word);
-            log_printf ("  count . . . . . . . . . : %d",    ptr_item->count);
-            log_printf ("  prev_item . . . . . . . : 0x%lx", ptr_item->prev_item);
-            log_printf ("  next_item . . . . . . . : 0x%lx", ptr_item->next_item);
-        }
+        arraylist_print_log (completion->partial_list,
+                             "partial completion word");
     }
 }
