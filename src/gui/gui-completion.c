@@ -923,7 +923,7 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
     if (!completion->list || (completion->list->size == 0))
         return;
 
-    list_temp = arraylist_new (completion->list->size, 0, 0,
+    list_temp = arraylist_new (completion->list->size, 1, 0,
                                &gui_completion_word_compare_cb, NULL,
                                &gui_completion_word_free_cb, NULL);
     if (!list_temp)
