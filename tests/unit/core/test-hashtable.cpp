@@ -28,6 +28,10 @@ extern "C"
 #include "src/plugins/plugin.h"
 }
 
+#define HASHTABLE_TEST_KEY      "test"
+#define HASHTABLE_TEST_KEY_HASH 5849825121ULL
+#define HASHTABLE_TEST_VALUE    "this is a value"
+
 TEST_GROUP(Hashtable)
 {
 };
@@ -41,8 +45,8 @@ TEST(Hashtable, HashDbj2)
 {
     unsigned long long hash;
 
-    hash = hashtable_hash_key_djb2 ("test");
-    CHECK(hash == 5849825121ULL);
+    hash = hashtable_hash_key_djb2 (HASHTABLE_TEST_KEY);
+    CHECK(hash == HASHTABLE_TEST_KEY_HASH);
 }
 
 /*
@@ -119,37 +123,149 @@ TEST(Hashtable, New)
  * Tests functions:
  *   hashtable_set_with_size
  *   hashtable_set
+ *   hashtable_get_item
+ *   hashtable_get
+ *   hashtable_has_key
+ *   hashtable_dup
+ *   hashtable_remove
+ *   hashtable_remove_all
+ *   hashtable_free
  */
 
-TEST(Hashtable, Set)
+TEST(Hashtable, SetGetRemove)
 {
-    struct t_hashtable *hashtable;
-    struct t_hashtable_item *item;
-    const char *value = "this is a string";
+    struct t_hashtable *hashtable, *hashtable2;
+    struct t_hashtable_item *item, *ptr_item, *ptr_item2;
+    const char *str_key = HASHTABLE_TEST_KEY;
+    const char *str_value = HASHTABLE_TEST_VALUE;
+    const char *ptr_value;
+    unsigned long long hash;
+    int i, j;
 
     hashtable = hashtable_new (32,
                                WEECHAT_HASHTABLE_STRING,
                                WEECHAT_HASHTABLE_STRING,
                                &test_hashtable_hash_key_cb,
                                &test_hashtable_keycmp_cb);
+    LONGS_EQUAL(32, hashtable->size);
+    LONGS_EQUAL(0, hashtable->items_count);
+
+    /* invalid set of items */
     POINTERS_EQUAL(NULL, hashtable_set_with_size (NULL, NULL, -1, NULL, -1));
     POINTERS_EQUAL(NULL, hashtable_set_with_size (NULL, NULL, -1, NULL, -1));
 
-    /* TODO: write more tests */
+    /* add an item in hashtable with NULL value */
+    item = hashtable_set (hashtable, str_key, NULL);
+    CHECK(item);
+    LONGS_EQUAL(1, hashtable->items_count);
+    STRCMP_EQUAL(str_key, (const char *)item->key);
+    LONGS_EQUAL(strlen (str_key) + 1, item->key_size);
+    POINTERS_EQUAL(NULL, item->value);
+    LONGS_EQUAL(0, item->value_size);
+    POINTERS_EQUAL(NULL, item->prev_item);
+    POINTERS_EQUAL(NULL, item->next_item);
 
+    /* set a string value for the same key */
+    item = hashtable_set (hashtable, str_key, str_value);
+    CHECK(item);
+    LONGS_EQUAL(1, hashtable->items_count);
+    STRCMP_EQUAL(str_key, (const char *)item->key);
+    LONGS_EQUAL(strlen (str_key) + 1, item->key_size);
+    STRCMP_EQUAL(str_value, (const char *)item->value);
+    LONGS_EQUAL(strlen (str_value) + 1, item->value_size);
+    POINTERS_EQUAL(NULL, item->prev_item);
+    POINTERS_EQUAL(NULL, item->next_item);
+
+    /* get item */
+    item = hashtable_get_item (hashtable, str_key, &hash);
+    CHECK(item);
+    STRCMP_EQUAL(str_key, (const char *)item->key);
+    STRCMP_EQUAL(str_value, (const char *)item->value);
+    LONGS_EQUAL(2, hash);
+
+    /* get value */
+    ptr_value = (const char *)hashtable_get (hashtable, str_key);
+    CHECK(ptr_value);
+    STRCMP_EQUAL(ptr_value, str_value);
+
+    /* check if key is in hashtable */
+    LONGS_EQUAL(0, hashtable_has_key (hashtable, NULL));
+    LONGS_EQUAL(0, hashtable_has_key (hashtable, ""));
+    LONGS_EQUAL(0, hashtable_has_key (hashtable, "xxx"));
+    LONGS_EQUAL(1, hashtable_has_key (hashtable, str_key));
+
+    /* delete an item */
+    hashtable_remove (hashtable, str_key);
+    LONGS_EQUAL(0, hashtable->items_count);
+
+    /* add an item with size in hashtable */
+    item = hashtable_set_with_size (hashtable,
+                                    str_key, strlen (str_key) + 1,
+                                    str_value, strlen (str_value) + 1);
+    CHECK(item);
+    LONGS_EQUAL(1, hashtable->items_count);
+    STRCMP_EQUAL(str_key, (const char *)item->key);
+    LONGS_EQUAL(strlen (str_key) + 1, item->key_size);
+    STRCMP_EQUAL(str_value, (const char *)item->value);
+    LONGS_EQUAL(strlen (str_value) + 1, item->value_size);
+
+    /* add another item */
+    hashtable_set (hashtable, "xxx", "zzz");
+    LONGS_EQUAL(2, hashtable->items_count);
+
+    /*
+     * test duplication of hashtable and check that duplicated content is
+     * exactly the same as initial hashtable
+     */
+    hashtable2 = hashtable_dup (hashtable);
+    CHECK(hashtable2);
+    LONGS_EQUAL(hashtable->size, hashtable2->size);
+    LONGS_EQUAL(hashtable->items_count, hashtable2->items_count);
+    for (i = 0; i < hashtable->size; i++)
+    {
+        if (hashtable->htable[i])
+        {
+            ptr_item = hashtable->htable[i];
+            ptr_item2 = hashtable2->htable[i];
+            while (ptr_item && ptr_item2)
+            {
+                LONGS_EQUAL(ptr_item->key_size, ptr_item2->key_size);
+                LONGS_EQUAL(ptr_item->value_size, ptr_item2->value_size);
+                if (ptr_item->key)
+                {
+                    STRCMP_EQUAL((const char *)ptr_item->key,
+                                 (const char *)ptr_item2->key);
+                }
+                else
+                {
+                    POINTERS_EQUAL(ptr_item->key, ptr_item2->key);
+                }
+                if (ptr_item->value)
+                {
+                    STRCMP_EQUAL((const char *)ptr_item->value,
+                                 (const char *)ptr_item2->value);
+                }
+                else
+                {
+                    POINTERS_EQUAL(ptr_item->value, ptr_item2->value);
+                }
+                ptr_item = ptr_item->next_item;
+                ptr_item2 = ptr_item2->next_item;
+                CHECK((ptr_item && ptr_item2) || (!ptr_item && !ptr_item2));
+            }
+        }
+        else
+        {
+            POINTERS_EQUAL(hashtable->htable[i], hashtable2->htable[i]);
+        }
+    }
+
+    /* remove all items */
+    hashtable_remove_all (hashtable);
+    LONGS_EQUAL(0, hashtable->items_count);
+
+    /* free hashtable */
     hashtable_free (hashtable);
-}
-
-/*
- * Tests functions:
- *   hashtable_get_item
- *   hashtable_get
- *   hashtable_has_key
- */
-
-TEST(Hashtable, Get)
-{
-    /* TODO: write tests */
 }
 
 /*
@@ -159,16 +275,6 @@ TEST(Hashtable, Get)
  */
 
 TEST(Hashtable, Map)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   hashtable_dup
- */
-
-TEST(Hashtable, Dup)
 {
     /* TODO: write tests */
 }
@@ -192,18 +298,6 @@ TEST(Hashtable, Properties)
  */
 
 TEST(Hashtable, Infolist)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   hashtable_remove
- *   hashtable_remove_all
- *   hashtable_free
- */
-
-TEST(Hashtable, Free)
 {
     /* TODO: write tests */
 }
