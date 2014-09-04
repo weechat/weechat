@@ -87,21 +87,22 @@ channel: チャンネル名
 /connect  <server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
           -all|-auto|-open [-nojoin] [-switch]
 
-    server: サーバ名、これは:
-            - 内部サーバ名 (/server add で作成されたもの、利用推奨)
-            - ホスト名/ポート番号、又は IP アドレス/ポート番号 (これは一時的サーバを作る)、デフォルトのポート番号は 6667
-            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
-    option: サーバに関するオプション (ブール型オプションでは、value は無視される)
-  nooption: ブール型オプションを 'off' にする (例: -nossl)
-      -all: 設定された全てのサーバに接続
-     -auto: 自動接続を有効化してサーバに接続
-     -open: 現在接続されていないがオープンされているサーバに接続
-   -nojoin: チャンネルに入らない (autojoin が有効化されていても)
-   -switch: 次のサーバアドレスに移動
+    server: server name, which can be:
+            - internal server name (created by /server add, recommended usage)
+            - hostname/port or IP/port, port is 6667 by default
+            - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
+            Note: for an address/IP/URL, a temporary server is created (NOT SAVED), see /help irc.look.temporary_servers
+    option: set option for server (for boolean option, value can be omitted)
+  nooption: set boolean option to 'off' (for example: -nossl)
+      -all: connect to all servers defined in configuration
+     -auto: connect to servers with autoconnect enabled
+     -open: connect to all opened servers that are not currently connected
+   -nojoin: do not join any channel (even if autojoin is enabled on server)
+   -switch: switch to next server address
 
-サーバとの接続を切断するか、接続試行を中止するには /disconnect コマンドを使ってください。
+To disconnect from a server or stop any connection attempt, use command /disconnect.
 
-例:
+Examples:
   /connect freenode
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6

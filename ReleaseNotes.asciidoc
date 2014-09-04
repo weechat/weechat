@@ -17,6 +17,18 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 1.1 (under dev)
 
+=== Temporary servers disabled by default with /connect
+
+Creating a temporary server with command `/connect <address>` or
+`/connect irc://...` is now forbidden by default.
+
+A new option has been added to unlock the feature, you can do that for
+the old behavior in command `/connect`:
+
+----
+/set irc.look.temporary_servers on
+----
+
 === Microseconds in API timeval functions
 
 The API functions using timeval are now using or returning microseconds,

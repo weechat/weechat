@@ -343,6 +343,11 @@
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
 
+* [[option_irc.look.temporary_servers]] *irc.look.temporary_servers*
+** opis: `enable creation of temporary servers with command /connect`
+** typ: bool
+** wartości: on, off (domyślna wartość: `off`)
+
 * [[option_irc.look.topic_strip_colors]] *irc.look.topic_strip_colors*
 ** opis: `usuń kolory w tematach (używane przy wyświetlaniu tytułu bufora)`
 ** typ: bool

@@ -1172,7 +1172,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                         connect_ok = 0;
                     }
                 }
-                else
+                else if (weechat_config_boolean (irc_config_look_temporary_servers))
                 {
                     if ((strncmp (argv[i], "irc", 3) == 0)
                         && strstr (argv[i], "://"))
@@ -1221,6 +1221,24 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                                         weechat_prefix ("error"),
                                         IRC_PLUGIN_NAME, argv[i]);
                     }
+                }
+                else
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: unable to create temporary server \"%s\" "
+                          "because the creation of temporary servers with "
+                          "command /connect is currently disabled"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[i]);
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: if you want to create a standard server, "
+                          "use the command \"/server add\" (see /help "
+                          "server); if you really want to create a temporary "
+                          "server (NOT SAVED), turn on the option "
+                          "irc.look.temporary_servers"),
+                        weechat_prefix ("error"),
+                        IRC_PLUGIN_NAME);
                 }
             }
             else
@@ -5873,10 +5891,11 @@ irc_command_init ()
         N_("    server: server name, which can be:\n"
            "            - internal server name (created by /server add, "
            "recommended usage)\n"
-           "            - hostname/port or IP/port (this will create a TEMPORARY "
-           "server), port is 6667 by default\n"
+           "            - hostname/port or IP/port, port is 6667 by default\n"
            "            - URL with format: irc[6][s]://[nickname[:password]@]"
            "irc.example.org[:port][/#channel1][,#channel2[...]]\n"
+           "            Note: for an address/IP/URL, a temporary server is "
+           "created (NOT SAVED), see /help irc.look.temporary_servers\n"
            "    option: set option for server (for boolean option, value can be "
            "omitted)\n"
            "  nooption: set boolean option to 'off' (for example: -nossl)\n"

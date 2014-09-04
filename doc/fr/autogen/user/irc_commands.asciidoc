@@ -89,8 +89,9 @@ Sans paramètre, cette commande affiche la liste des bannissements pour le canal
 
  serveur : nom du serveur, qui peut être :
            - nom interne de serveur (créé par /server add, usage recommandé)
-           - nom/port ou IP/port (ceci créera un serveur TEMPORAIRE), le port par défaut est 6667
+           - nom/port ou IP/port, le port par défaut est 6667
            - URL avec le format : irc[6][s]://[pseudo[:mot_passe]@]irc.example.org[:port][/#canal1][,#canal2[...]]
+           Note : pour une addresse/IP/URL, un serveur temporaire est créé (NON SAUVÉ), voir /help irc.look.temporary_servers
   option : définir l'option pour le serveur (pour une option booléenne, la valeur peut être omise)
 nooption : définir l'option booléenne à 'off' (par exemple : -nossl)
     -all : se connecter à tous les serveurs définis dans la configuration

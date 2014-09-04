@@ -87,27 +87,28 @@ Bez podania argumentu komenda wyświetla listę banów na obecnym kanale.
 /connect  [<serwer> [<serwer>...] [-<opcja>[=<wartość>]] [-no<opcja>] [-nojoin] [-switch]
           -all|-auto|-open [-nojoin] [-switch]
 
-    serwer: nazwa serwera, może nią być:
-            - wewnętrzna nazwa serwera (tworzona przez /server add, zalecane użycie)
-            - nazwa hosta/port lub IP/port (stworzy to TYMCZASOWY serwer), domyślny port to 6667
-            - URL o formacie: irc[6][s]://[nick[:hasło]@]irc.example.org[:port][/#kanał1][,#kanał2[...]]
-    opcja: ustawia opcję dla serwera (dla opcji boolowskich można pominąć wartość)
-  nooption: ustawia opcje boolowskie na 'off' (na przykład: -nossl)
-      -all: łączy się ze wszystkimi serwerami zdefiniowanymi w konfiguracji
-     -auto: łączy się z serwerami z włączonym automatycznym połączeniem
-     -open: łączy się ze wszystkimi otwartymi ale nie połączonymi serwerami
-   -nojoin: nie wchodź na żaden kanał (nawet jeśli autojoin jest włączony dla tego serwera)
-   -switch: przełącza adres serwera na kolejny
+    server: server name, which can be:
+            - internal server name (created by /server add, recommended usage)
+            - hostname/port or IP/port, port is 6667 by default
+            - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
+            Note: for an address/IP/URL, a temporary server is created (NOT SAVED), see /help irc.look.temporary_servers
+    option: set option for server (for boolean option, value can be omitted)
+  nooption: set boolean option to 'off' (for example: -nossl)
+      -all: connect to all servers defined in configuration
+     -auto: connect to servers with autoconnect enabled
+     -open: connect to all opened servers that are not currently connected
+   -nojoin: do not join any channel (even if autojoin is enabled on server)
+   -switch: switch to next server address
 
-W celu rozłączenia z serwerem lub przerwania próby połączenia, użyj komendy /disconnect.
+To disconnect from a server or stop any connection attempt, use command /disconnect.
 
-Przykłady:
+Examples:
   /connect freenode
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6
   /connect irc6.oftc.net/6697 -ipv6 -ssl
   /connect my.server.org/6697 -ssl -password=test
-  /connect irc://nick@irc.oftc.net/#kanał
+  /connect irc://nick@irc.oftc.net/#channel
   /connect -switch
 ----
 

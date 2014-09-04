@@ -343,6 +343,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_irc.look.temporary_servers]] *irc.look.temporary_servers*
+** description: `activer la création des serveurs temporaires avec la commande /connect`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * [[option_irc.look.topic_strip_colors]] *irc.look.topic_strip_colors*
 ** description: `supprimer les couleurs dans le titre (utilisé seulement lors de l'affichage du titre du tampon)`
 ** type: booléen

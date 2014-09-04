@@ -103,6 +103,7 @@ struct t_config_option *irc_config_look_smart_filter_join_unmask;
 struct t_config_option *irc_config_look_smart_filter_mode;
 struct t_config_option *irc_config_look_smart_filter_nick;
 struct t_config_option *irc_config_look_smart_filter_quit;
+struct t_config_option *irc_config_look_temporary_servers;
 struct t_config_option *irc_config_look_topic_strip_colors;
 
 /* IRC config, color section */
@@ -2677,6 +2678,12 @@ irc_config_init ()
         /* TRANSLATORS: please do not translate "part" and "quit" */
         N_("enable smart filter for \"part\" and \"quit\" messages"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_temporary_servers = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "temporary_servers", "boolean",
+        N_("enable creation of temporary servers with command "
+           "/connect"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_topic_strip_colors = weechat_config_new_option (
         irc_config_file, ptr_section,
         "topic_strip_colors", "boolean",

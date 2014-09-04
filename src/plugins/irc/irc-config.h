@@ -151,6 +151,7 @@ extern struct t_config_option *irc_config_look_smart_filter_join_unmask;
 extern struct t_config_option *irc_config_look_smart_filter_mode;
 extern struct t_config_option *irc_config_look_smart_filter_nick;
 extern struct t_config_option *irc_config_look_smart_filter_quit;
+extern struct t_config_option *irc_config_look_temporary_servers;
 extern struct t_config_option *irc_config_look_topic_strip_colors;
 
 extern struct t_config_option *irc_config_color_input_nick;

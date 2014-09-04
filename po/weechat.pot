@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-29 18:18+0200\n"
+"POT-Creation-Date: 2014-09-03 22:08+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4161,6 +4161,19 @@ msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr ""
 
 #, c-format
+msgid ""
+"%s%s: unable to create temporary server \"%s\" because the creation of "
+"temporary servers with command /connect is currently disabled"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: if you want to create a standard server, use the command \"/server add"
+"\" (see /help server); if you really want to create a temporary server (NOT "
+"SAVED), turn on the option irc.look.temporary_servers"
+msgstr ""
+
+#, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
 msgstr ""
 
@@ -4491,10 +4504,11 @@ msgid ""
 "    server: server name, which can be:\n"
 "            - internal server name (created by /server add, recommended "
 "usage)\n"
-"            - hostname/port or IP/port (this will create a TEMPORARY "
-"server), port is 6667 by default\n"
+"            - hostname/port or IP/port, port is 6667 by default\n"
 "            - URL with format: irc[6][s]://[nickname[:password]@]irc.example."
 "org[:port][/#channel1][,#channel2[...]]\n"
+"            Note: for an address/IP/URL, a temporary server is created (NOT "
+"SAVED), see /help irc.look.temporary_servers\n"
 "    option: set option for server (for boolean option, value can be "
 "omitted)\n"
 "  nooption: set boolean option to 'off' (for example: -nossl)\n"
@@ -5807,6 +5821,9 @@ msgstr ""
 
 #. TRANSLATORS: please do not translate "part" and "quit"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
+msgstr ""
+
+msgid "enable creation of temporary servers with command /connect"
 msgstr ""
 
 msgid "strip colors in topic (used only when displaying buffer title)"

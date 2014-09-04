@@ -343,6 +343,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
+* [[option_irc.look.temporary_servers]] *irc.look.temporary_servers*
+** 説明: `enable creation of temporary servers with command /connect`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
 * [[option_irc.look.topic_strip_colors]] *irc.look.topic_strip_colors*
 ** 説明: `トピックにつけられた色を無効化 (バッファタイルに表示される場合のみ利用)`
 ** タイプ: ブール

@@ -343,6 +343,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
+* [[option_irc.look.temporary_servers]] *irc.look.temporary_servers*
+** Beschreibung: `enable creation of temporary servers with command /connect`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
 * [[option_irc.look.topic_strip_colors]] *irc.look.topic_strip_colors*
 ** Beschreibung: `Farben werden im Channel-Thema entfernt (wird nur genutzt wenn der Buffer-Titel angezeigt wird)`
 ** Typ: boolesch

@@ -89,8 +89,9 @@ Without argument, this command display ban list for current channel.
 
     server: server name, which can be:
             - internal server name (created by /server add, recommended usage)
-            - hostname/port or IP/port (this will create a TEMPORARY server), port is 6667 by default
+            - hostname/port or IP/port, port is 6667 by default
             - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
+            Note: for an address/IP/URL, a temporary server is created (NOT SAVED), see /help irc.look.temporary_servers
     option: set option for server (for boolean option, value can be omitted)
   nooption: set boolean option to 'off' (for example: -nossl)
       -all: connect to all servers defined in configuration
