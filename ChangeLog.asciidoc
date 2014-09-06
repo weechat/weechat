@@ -21,6 +21,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   weechat.look.command_incomplete (task #5419)
 * api: use microseconds instead of milliseconds in functions util_timeval_diff
   and util_timeval_add
+* irc: display nick changes in server buffer (closes #188)
 * irc: disable creation of temporary servers by default with command /connect,
   new option irc.look.temporary_servers
 * trigger: add option "restore" in command /trigger

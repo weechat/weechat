@@ -1055,6 +1055,33 @@ IRC_PROTOCOL_CALLBACK(nick)
 
     ptr_nick_found = NULL;
 
+    /* first display message in server buffer if it's local nick */
+    if (local_nick)
+    {
+        /* temporary disable hotlist */
+        weechat_buffer_set (NULL, "hotlist", "-");
+
+        snprintf (str_tags, sizeof (str_tags),
+                  "irc_nick1_%s,irc_nick2_%s",
+                  nick,
+                  new_nick);
+        weechat_printf_date_tags (server->buffer,
+                                  date,
+                                  irc_protocol_tags (command,
+                                                     str_tags,
+                                                     NULL,
+                                                     address),
+                                  _("%sYou are now known as "
+                                    "%s%s%s"),
+                                  weechat_prefix ("network"),
+                                  IRC_COLOR_CHAT_NICK_SELF,
+                                  new_nick,
+                                  IRC_COLOR_RESET);
+
+        /* enable hotlist */
+        weechat_buffer_set (NULL, "hotlist", "+");
+    }
+
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
@@ -1094,7 +1121,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                     if (!ptr_nick->host)
                         ptr_nick->host = strdup (address);
 
-                    /* change nick and display message on all channels */
+                    /* change nick and display message on channel */
                     old_color = strdup (ptr_nick->color);
                     irc_nick_change (server, ptr_channel, ptr_nick, new_nick);
                     if (local_nick)
