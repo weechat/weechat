@@ -41,4 +41,11 @@ else()
 
   mark_as_advanced(ENCHANT_INCLUDE_DIR ENCHANT_LIBRARIES)
 
+  # check if function enchant_get_version() exists
+  set(CMAKE_REQUIRED_INCLUDES ${ENCHANT_INCLUDE_DIR})
+  set(CMAKE_REQUIRED_LIBRARIES ${ENCHANT_LIBRARIES})
+  check_symbol_exists(enchant_get_version "enchant.h" HAVE_ENCHANT_GET_VERSION)
+  set(CMAKE_REQUIRED_INCLUDES)
+  set(CMAKE_REQUIRED_LIBRARIES)
+
 endif()
