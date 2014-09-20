@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-08-23 21:09+0200\n"
+"POT-Creation-Date: 2014-09-20 14:54+0200\n"
 "PO-Revision-Date: 2014-07-25 07:49+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10255,6 +10255,12 @@ msgstr "Ningún modificador regular definido"
 #, fuzzy
 msgid "List of default triggers:"
 msgstr "Lista de alias:"
+
+#, c-format
+msgid ""
+"%s%s: action \"%s\" can not be executed on trigger \"%s\" because it is "
+"currently running"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Trigger \"%s\" restarted"

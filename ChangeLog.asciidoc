@@ -31,6 +31,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * perl: fix detection of Perl >= 5.20 with autotools
 * script: fix crash on "/script update" if a script detail is displayed in
   buffer (closes #177)
+* trigger: do not allow any changes on a trigger when it is currently running
+  (closes #189)
 * trigger: fix regex used in default triggers to hide passwords ("\S" is not
   supported on *BSD) (closes #172)
 
