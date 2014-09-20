@@ -19,6 +19,10 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #undef _
 
 #include <libguile.h>
@@ -971,12 +975,14 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     guile_stdout = NULL;
 
+#ifdef HAVE_GUILE_GMP_MEMORY_FUNCTIONS
     /*
      * prevent guile to use its own gmp allocator, because it can conflict
      * with other plugins using GnuTLS like relay, which can crash WeeChat
      * on unload (or exit)
      */
     scm_install_gmp_memory_functions = 0;
+#endif
 
     scm_init_guile ();
 
