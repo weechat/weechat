@@ -102,6 +102,7 @@ AH_VERBATIM([HAVE_GNUTLS], [#undef HAVE_GNUTLS])
 AH_VERBATIM([HAVE_FLOCK], [#undef HAVE_FLOCK])
 AH_VERBATIM([HAVE_EAT_NEWLINE_GLITCH], [#undef HAVE_EAT_NEWLINE_GLITCH])
 AH_VERBATIM([HAVE_ASPELL_VERSION_STRING], [#undef HAVE_ASPELL_VERSION_STRING])
+AH_VERBATIM([HAVE_ENCHANT_GET_VERSION], [#undef HAVE_ENCHANT_GET_VERSION])
 AH_VERBATIM([PLUGIN_ALIAS], [#undef PLUGIN_ALIAS])
 AH_VERBATIM([PLUGIN_ASPELL], [#undef PLUGIN_ASPELL])
 AH_VERBATIM([PLUGIN_CHARSET], [#undef PLUGIN_CHARSET])
@@ -307,6 +308,23 @@ if test "x$enable_aspell" = "xyes" ; then
     if test "x$ac_found_enchant_lib" = "xyes" ; then
         CFLAGS="$CFLAGS -DUSE_ENCHANT"
         ASPELL_LIB_USED="enchant"
+
+        # check if function enchant_get_version() exists
+        ac_save_CFLAGS="$CFLAGS"
+        ac_save_LDFLAGS="$LDFLAGS"
+        CFLAGS="$CFLAGS $ENCHANT_CFLAGS"
+        LDFLAGS="$LDFLAGS $ENCHANT_LIBS"
+        AC_CACHE_CHECK([for enchant_get_version() support], ac_cv_have_enchant_get_version, [
+        AC_LINK_IFELSE([AC_LANG_PROGRAM(
+            [[ #include <enchant.h>]],
+            [[ const char *version = enchant_get_version(); ]])],
+            [ ac_have_enchant_get_version="yes" ],
+            [ ac_have_enchant_get_version="no" ])])
+        CFLAGS="$ac_save_CFLAGS"
+        LDFLAGS="$ac_save_LDFLAGS"
+        if test "x$ac_have_enchant_get_version" = "xyes"; then
+            AC_DEFINE(HAVE_ENCHANT_GET_VERSION)
+        fi
     else
         ASPELL_CFLAGS=""
         ASPELL_LFLAGS=""
@@ -327,6 +345,8 @@ if test "x$enable_aspell" = "xyes" ; then
             AC_MSG_RESULT(yes)
             ASPELL_LFLAGS="$ASPELL_LFLAGS -laspell"
             ASPELL_LIB_USED="aspell"
+
+            # check if function aspell_version_string() exists
             ac_save_LDFLAGS="$LDFLAGS"
             LDFLAGS="$LDFLAGS $ASPELL_LFLAGS"
             AC_CACHE_CHECK([for aspell_version_string() support], ac_cv_have_aspell_version_string, [

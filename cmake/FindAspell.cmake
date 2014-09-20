@@ -42,12 +42,14 @@ find_library(ASPELL_LIBRARY
 )
 
 if(ASPELL_INCLUDE_PATH AND ASPELL_LIBRARY)
+  set(ASPELL_FOUND TRUE)
+
+  # check if function aspell_version_string() exists
   set(CMAKE_REQUIRED_INCLUDES ${ASPELL_INCLUDE_PATH})
   set(CMAKE_REQUIRED_LIBRARIES ${ASPELL_LIBRARY})
   check_symbol_exists(aspell_version_string "aspell.h" HAVE_ASPELL_VERSION_STRING)
   set(CMAKE_REQUIRED_INCLUDES)
   set(CMAKE_REQUIRED_LIBRARIES)
-  set(ASPELL_FOUND TRUE)
 endif()
 
 mark_as_advanced(

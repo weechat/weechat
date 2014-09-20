@@ -37,6 +37,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * tests: fix build of tests when the build directory is outside source tree
   (closes #178)
 * tests: fix memory leak in tests launcher
+* aspell: fix compilation with enchant version older than 1.6.0 (closes #192)
 * aspell: fix crash with command "/aspell addword" if no word is given
   (closes #164, closes #165)
 * irc: fix translation of CTCP PING reply (closes #137)
