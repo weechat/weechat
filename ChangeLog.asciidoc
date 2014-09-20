@@ -41,6 +41,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * aspell: fix crash with command "/aspell addword" if no word is given
   (closes #164, closes #165)
 * irc: fix translation of CTCP PING reply (closes #137)
+* guile: fix compilation with Guile < 2.0.4 (closes #198)
 * perl: fix detection of Perl >= 5.20 with autotools
 * script: fix crash on "/script update" if a script detail is displayed in
   buffer (closes #177)

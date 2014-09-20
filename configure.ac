@@ -103,6 +103,7 @@ AH_VERBATIM([HAVE_FLOCK], [#undef HAVE_FLOCK])
 AH_VERBATIM([HAVE_EAT_NEWLINE_GLITCH], [#undef HAVE_EAT_NEWLINE_GLITCH])
 AH_VERBATIM([HAVE_ASPELL_VERSION_STRING], [#undef HAVE_ASPELL_VERSION_STRING])
 AH_VERBATIM([HAVE_ENCHANT_GET_VERSION], [#undef HAVE_ENCHANT_GET_VERSION])
+AH_VERBATIM([HAVE_GUILE_GMP_MEMORY_FUNCTIONS], [#undef HAVE_GUILE_GMP_MEMORY_FUNCTIONS])
 AH_VERBATIM([PLUGIN_ALIAS], [#undef PLUGIN_ALIAS])
 AH_VERBATIM([PLUGIN_ASPELL], [#undef PLUGIN_ASPELL])
 AH_VERBATIM([PLUGIN_CHARSET], [#undef PLUGIN_CHARSET])
@@ -814,7 +815,24 @@ if test "x$enable_guile" = "xyes" ; then
         fi
     done
 
-    if test "x$guile_found" = "xno" ; then
+    if test "x$guile_found" = "xyes" ; then
+        # check if variable "scm_install_gmp_memory_functions" exists
+        ac_save_CFLAGS="$CFLAGS"
+        ac_save_LDFLAGS="$LDFLAGS"
+        CFLAGS="$CFLAGS $GUILE_CFLAGS"
+        LDFLAGS="$LDFLAGS $GUILE_LFLAGS"
+        AC_CACHE_CHECK([for variable scm_install_gmp_memory_functions], ac_cv_have_guile_gmp_memory_functions, [
+        AC_LINK_IFELSE([AC_LANG_PROGRAM(
+            [[ #include <libguile.h>]],
+            [[ scm_install_gmp_memory_functions = 0; ]])],
+            [ ac_have_guile_gmp_memory_functions="yes" ],
+            [ ac_have_guile_gmp_memory_functions="no" ])])
+        CFLAGS="$ac_save_CFLAGS"
+        LDFLAGS="$ac_save_LDFLAGS"
+        if test "x$ac_have_guile_gmp_memory_functions" = "xyes"; then
+            AC_DEFINE(HAVE_GUILE_GMP_MEMORY_FUNCTIONS)
+        fi
+    else
         AC_MSG_WARN([
 *** Guile >= 2.0 couldn't be found on your system.
 *** WeeChat will be built without Guile (scheme) support.])
