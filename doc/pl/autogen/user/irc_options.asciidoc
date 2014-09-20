@@ -344,7 +344,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_irc.look.temporary_servers]] *irc.look.temporary_servers*
-** opis: `enable creation of temporary servers with command /connect`
+** opis: `włącza tworzenie tymczasowych serwerów za pomocą komendy /connect`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 
@@ -484,7 +484,7 @@
 ** wartości: 0 .. 1000000 (domyślna wartość: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** opis: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: away-notify, multi-prefix, server-time, userhost-in-names (example: "away-notify,multi-prefix")`
+** opis: `oddzielona przecinkami lista opcji klienta do włączenia dla serwera, jeśli są dostępne; opcje wspierane przez WeeChat: away-notify, multi-prefix, server-time, userhost-in-names (przykład: "away-notify,multi-prefix")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 

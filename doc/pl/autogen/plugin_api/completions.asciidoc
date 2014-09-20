@@ -86,7 +86,7 @@
 
 | trigger | trigger_names | triggery
 
-| trigger | trigger_names_default | default triggers
+| trigger | trigger_names_default | domyślne triggery
 
 | trigger | trigger_option_value | wartość opcji triggera
 
