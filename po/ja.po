@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-09-03 22:08+0200\n"
+"POT-Creation-Date: 2014-09-20 14:37+0200\n"
 "PO-Revision-Date: 2014-08-31 05:54+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -10605,6 +10605,12 @@ msgstr "トリガは定義されていません"
 
 msgid "List of default triggers:"
 msgstr "デフォルトトリガのリスト:"
+
+#, c-format
+msgid ""
+"%s%s: action \"%s\" can not be executed on trigger \"%s\" because it is "
+"currently running"
+msgstr ""
 
 #, c-format
 msgid "Trigger \"%s\" restarted"

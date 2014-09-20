@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-09-03 22:08+0200\n"
+"POT-Creation-Date: 2014-09-20 14:37+0200\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10466,6 +10466,12 @@ msgstr "Nessun rmodifier definito"
 #, fuzzy
 msgid "List of default triggers:"
 msgstr "Elenco degli alias:"
+
+#, c-format
+msgid ""
+"%s%s: action \"%s\" can not be executed on trigger \"%s\" because it is "
+"currently running"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Trigger \"%s\" restarted"

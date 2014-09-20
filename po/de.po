@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-09-03 22:08+0200\n"
+"POT-Creation-Date: 2014-09-20 14:37+0200\n"
 "PO-Revision-Date: 2014-08-23 10:49+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -11259,6 +11259,12 @@ msgstr "Kein Trigger definiert"
 
 msgid "List of default triggers:"
 msgstr "Liste der standardmäßigen Trigger:"
+
+#, c-format
+msgid ""
+"%s%s: action \"%s\" can not be executed on trigger \"%s\" because it is "
+"currently running"
+msgstr ""
 
 #, c-format
 msgid "Trigger \"%s\" restarted"

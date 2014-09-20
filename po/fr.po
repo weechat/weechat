@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-09-03 22:08+0200\n"
-"PO-Revision-Date: 2014-09-03 22:09+0200\n"
+"POT-Creation-Date: 2014-09-20 14:37+0200\n"
+"PO-Revision-Date: 2014-09-20 14:38+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -11013,6 +11013,14 @@ msgstr "Pas de trigger défini"
 
 msgid "List of default triggers:"
 msgstr "Liste des triggers par défaut :"
+
+#, c-format
+msgid ""
+"%s%s: action \"%s\" can not be executed on trigger \"%s\" because it is "
+"currently running"
+msgstr ""
+"%s%s : l'action \"%s\" ne peut pas être exécutée sur le trigger \"%s\" car "
+"il est actuellement en cours d'exécution"
 
 #, c-format
 msgid "Trigger \"%s\" restarted"
