@@ -18,7 +18,7 @@ listdict: インストール済み辞書を表示
 
 いくつかのコマンドを除いて '/' で始まる入力行はチェックされません (/set aspell.check.commands を参照)。
 
-全てのバッファで aspell を有効化するには、"default_dict" オプションを設定した後に、aspell を有効化してください。例えば:
+全てのバッファで aspell を有効化するには、"default_dict" オプションを設定した後に、aspell を有効化してください。例:
   /set aspell.check.default_dict "en"
   /aspell enable
 
