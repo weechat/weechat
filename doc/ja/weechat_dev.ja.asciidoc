@@ -290,12 +290,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 [width="100%",cols="1v,5",options="header"]
 |===
 | パス/ファイル名                   | 説明
-| tests/                            | テストのルートディレクトリ
-// TRANSLATION MISSING
-|    tests.cpp                      | Program used to run tests
-|    unit/                          | 単体テストのルートディレクトリ
-// TRANSLATION MISSING
-|       core/                       | Root of unit tests for core
+| tests/                            | テスト用のルートディレクトリ
+|    tests.cpp                      | テスト実行に使うプログラム
+|    unit/                          | 単体テスト用のルートディレクトリ
+|       core/                       | core 向け単体テスト用のルートディレクトリ
 |          test-eval.cpp            | テスト: 式の評価
 |          test-hashtble.cpp        | テスト: ハッシュテーブル
 |          test-hdata.cpp           | テスト: hdata

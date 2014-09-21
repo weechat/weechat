@@ -51,9 +51,8 @@ $HOME/.weechat/weechat.conf::
 $HOME/.weechat/plugins.conf::
     プラグイン設定ファイル
 
-// TRANSLATION MISSING
 $HOME/.weechat/sec.conf::
-    configuration file with secured data
+    保護されたデータを含む設定ファイル
 
 $HOME/.weechat/alias.conf::
     'alias' プラグイン用の設定ファイル
