@@ -782,7 +782,16 @@ gui_line_has_highlight (struct t_gui_line *line)
     {
         length = strlen (ptr_nick);
         if (strncmp (ptr_msg_no_color, ptr_nick, length) == 0)
+        {
+            /* skip nick at beginning (for example: "FlashCode") */
             ptr_msg_no_color += length;
+        }
+        else if (ptr_msg_no_color[0]
+                 && (strncmp (ptr_msg_no_color + 1, ptr_nick, length) == 0))
+        {
+            /* skip prefix and nick at beginning (for example: "@FlashCode") */
+            ptr_msg_no_color += length + 1;
+        }
     }
 
     /*
