@@ -628,7 +628,7 @@ IRC_PROTOCOL_CALLBACK(join)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
-    char *pos_channel;
+    char *pos_channel, *pos_realname;
     int local_join, display_host, smart_filter;
 
     IRC_PROTOCOL_MIN_ARGS(3);
@@ -637,6 +637,8 @@ IRC_PROTOCOL_CALLBACK(join)
     local_join = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
     pos_channel = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
+    pos_realname = (argc > 4) ?
+        ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
 
     ptr_channel = irc_channel_search (server, pos_channel);
     if (ptr_channel)
@@ -711,28 +713,62 @@ IRC_PROTOCOL_CALLBACK(join)
                         && !ptr_nick_speaking);
 
         /* display the join */
-        weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                   command, NULL,
-                                                                   ptr_channel->buffer),
-                                  date,
-                                  irc_protocol_tags (command,
-                                                     smart_filter ? "irc_smart_filter" : NULL,
-                                                     nick, address),
-                                  _("%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"),
-                                  weechat_prefix ("join"),
-                                  irc_nick_color_for_msg (server, 1, ptr_nick,
-                                                          nick),
-                                  nick,
-                                  IRC_COLOR_CHAT_DELIMITERS,
-                                  (display_host) ? " (" : "",
-                                  IRC_COLOR_CHAT_HOST,
-                                  (display_host) ? address : "",
-                                  IRC_COLOR_CHAT_DELIMITERS,
-                                  (display_host) ? ")" : "",
-                                  IRC_COLOR_MESSAGE_JOIN,
-                                  IRC_COLOR_CHAT_CHANNEL,
-                                  pos_channel,
-                                  IRC_COLOR_MESSAGE_JOIN);
+        if (argc >= 4)
+        {
+            weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                                       command, NULL,
+                                                                       ptr_channel->buffer),
+                                      date,
+                                      irc_protocol_tags (command,
+                                                         smart_filter ? "irc_smart_filter" : NULL,
+                                                         nick, address),
+                                      _("%s%s%s%s%s%s%s%s%s%s%s%s)%s%s%s%s%s%s has joined %s%s%s"),
+                                      weechat_prefix ("join"),
+                                      irc_nick_color_for_msg (server, 1, ptr_nick, nick),
+                                      nick,
+                                      (strcmp(argv[3], "*") != 0) ? IRC_COLOR_CHAT_DELIMITERS : "",
+                                      (strcmp(argv[3], "*") != 0) ? " [" : "",
+                                      (strcmp(argv[3], "*") != 0) ? IRC_COLOR_CHAT_HOST : "",
+                                      (strcmp(argv[3], "*") != 0) ? argv[3] : "",
+                                      IRC_COLOR_CHAT_DELIMITERS,
+                                      (strcmp(argv[3], "*") != 0) ? "] (" : " (",
+                                      IRC_COLOR_CHAT_HOST,
+                                      pos_realname,
+                                      IRC_COLOR_CHAT_DELIMITERS,
+                                      (display_host) ? " (" : "",
+                                      IRC_COLOR_CHAT_HOST,
+                                      (display_host) ? address : "",
+                                      IRC_COLOR_CHAT_DELIMITERS,
+                                      (display_host) ? ")" : "",
+                                      IRC_COLOR_MESSAGE_JOIN,
+                                      IRC_COLOR_CHAT_CHANNEL,
+                                      pos_channel,
+                                      IRC_COLOR_MESSAGE_JOIN);
+        }
+        else
+        {
+            weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                                       command, NULL,
+                                                                       ptr_channel->buffer),
+                                      date,
+                                      irc_protocol_tags (command,
+                                                         smart_filter ? "irc_smart_filter" : NULL,
+                                                         nick, address),
+                                      _("%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"),
+                                      weechat_prefix ("join"),
+                                      irc_nick_color_for_msg (server, 1, ptr_nick, nick),
+                                      nick,
+                                      IRC_COLOR_CHAT_DELIMITERS,
+                                      (display_host) ? " (" : "",
+                                      IRC_COLOR_CHAT_HOST,
+                                      (display_host) ? address : "",
+                                      IRC_COLOR_CHAT_DELIMITERS,
+                                      (display_host) ? ")" : "",
+                                      IRC_COLOR_MESSAGE_JOIN,
+                                      IRC_COLOR_CHAT_CHANNEL,
+                                      pos_channel,
+                                      IRC_COLOR_MESSAGE_JOIN);
+        }
 
         /*
          * if join is smart filtered, save the nick in hashtable, and if nick
