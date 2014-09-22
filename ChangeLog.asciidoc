@@ -32,6 +32,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * aspell: fix compilation with Enchant < 1.6.0 (closes #192)
 * aspell: fix crash with command "/aspell addword" if no word is given
   (closes #164, closes #165)
+* irc: fix type of value stored in hashtable when joining a channel
+  (closes #211)
 * guile: fix compilation with Guile < 2.0.4 (closes #198)
 * perl: fix detection of Perl >= 5.20 with autotools
 * script: fix crash on "/script update" if a script detail is displayed in

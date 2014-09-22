@@ -2184,7 +2184,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
     char *new_args, **channels, **keys, *pos_space, *pos_keys, *pos_channel;
     char *channel_name;
     int i, num_channels, num_keys, length;
-    int time_now;
+    time_t time_now;
     struct t_irc_channel *ptr_channel;
 
     if (server->sock < 0)
@@ -2247,7 +2247,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                 }
             }
             new_args[0] = '\0';
-            time_now = (int)time (NULL);
+            time_now = time (NULL);
             for (i = 0; i < num_channels; i++)
             {
                 if (i > 0)
