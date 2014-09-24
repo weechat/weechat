@@ -1224,7 +1224,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     gui_buffer_compute_num_displayed ();
 
     if (!weechat_upgrading && (old_buffer != buffer))
-        gui_hotlist_remove_buffer (buffer);
+        gui_hotlist_remove_buffer (buffer, 0);
 
     gui_bar_window_remove_unused_bars (window);
     gui_bar_window_add_missing_bars (window);

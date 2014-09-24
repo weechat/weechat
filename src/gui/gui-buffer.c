@@ -1730,7 +1730,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             if (error && !error[0])
             {
                 if (number < 0)
-                    gui_hotlist_remove_buffer (buffer);
+                    gui_hotlist_remove_buffer (buffer, 0);
                 else
                     (void) gui_hotlist_add (buffer, number, NULL);
             }
@@ -2480,7 +2480,7 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
         }
     }
 
-    gui_hotlist_remove_buffer (buffer);
+    gui_hotlist_remove_buffer (buffer, 0);
 
     gui_buffer_ask_chat_refresh (buffer, 2);
 
@@ -2601,7 +2601,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         }
     }
 
-    gui_hotlist_remove_buffer (buffer);
+    gui_hotlist_remove_buffer (buffer, 1);
     if (gui_hotlist_initial_buffer == buffer)
         gui_hotlist_initial_buffer = NULL;
 

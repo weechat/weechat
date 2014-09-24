@@ -1673,7 +1673,7 @@ gui_window_search_stop (struct t_gui_window *window)
     }
     window->scroll->start_line = NULL;
     window->scroll->start_line_pos = 0;
-    gui_hotlist_remove_buffer (window->buffer);
+    gui_hotlist_remove_buffer (window->buffer, 0);
     gui_buffer_ask_chat_refresh (window->buffer, 2);
 }
 

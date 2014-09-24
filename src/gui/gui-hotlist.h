@@ -59,7 +59,8 @@ extern struct t_gui_hotlist *gui_hotlist_add (struct t_gui_buffer *buffer,
                                               struct timeval *creation_time);
 extern void gui_hotlist_resort ();
 extern void gui_hotlist_clear ();
-extern void gui_hotlist_remove_buffer (struct t_gui_buffer *buffer);
+extern void gui_hotlist_remove_buffer (struct t_gui_buffer *buffer,
+                                       int force_remove_buffer);
 extern struct t_hdata *gui_hotlist_hdata_hotlist_cb (void *data,
                                                      const char *hdata_name);
 extern int gui_hotlist_add_to_infolist (struct t_infolist *infolist,

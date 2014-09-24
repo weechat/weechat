@@ -487,7 +487,8 @@ gui_hotlist_clear ()
  */
 
 void
-gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
+gui_hotlist_remove_buffer (struct t_gui_buffer *buffer,
+                           int force_remove_buffer)
 {
     int hotlist_changed, hotlist_remove, buffer_to_remove;
     struct t_gui_hotlist *ptr_hotlist, *next_hotlist;
@@ -504,19 +505,22 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
     {
         next_hotlist = ptr_hotlist->next_hotlist;
 
-        buffer_to_remove = 0;
+        buffer_to_remove = (force_remove_buffer) ?
+            (ptr_hotlist->buffer == buffer) : 0;
+
         switch (hotlist_remove)
         {
             case CONFIG_LOOK_HOTLIST_REMOVE_BUFFER:
-                buffer_to_remove = (ptr_hotlist->buffer == buffer);
+                buffer_to_remove |= (ptr_hotlist->buffer == buffer);
                 break;
             case CONFIG_LOOK_HOTLIST_REMOVE_MERGED:
-                buffer_to_remove =
+                buffer_to_remove |=
                     ((ptr_hotlist->buffer->number == buffer->number)
                      && (!ptr_hotlist->buffer->zoomed
                          || (ptr_hotlist->buffer->active == 2)));
                 break;
         }
+
         if (buffer_to_remove)
         {
             gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);

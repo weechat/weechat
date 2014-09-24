@@ -1383,7 +1383,7 @@ gui_input_jump_smart (struct t_gui_buffer *buffer)
             if (!gui_hotlist_initial_buffer)
                 gui_hotlist_initial_buffer = window->buffer;
             gui_window_switch_to_buffer (window, gui_hotlist->buffer, 1);
-            gui_hotlist_remove_buffer (window->buffer);
+            gui_hotlist_remove_buffer (window->buffer, 0);
             scroll_to_bottom = 1;
         }
         else
