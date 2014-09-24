@@ -17,6 +17,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: fix crash on buffer close when option weechat.look.hotlist_remove is
+  set to "merged" (closes #199)
 * core: fix highlight of IRC action messages when option irc.look.nick_mode is
   set to "action" or "both" (closes #206)
 * core: fix compilation of plugin API functions (macros) when compiler
