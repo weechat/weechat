@@ -63,17 +63,17 @@ if(PYTHON_EXECUTABLE)
 
   find_path(PYTHON_INCLUDE_PATH
     NAMES Python.h
-    PATHS ${PYTHON_INC_DIR}
+    HINTS ${PYTHON_INC_DIR}
     )
   if(ENABLE_PYTHON3)
     find_library(PYTHON_LIBRARY
       NAMES python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python
-      PATHS ${PYTHON_POSSIBLE_LIB_PATH}
+      HINTS ${PYTHON_POSSIBLE_LIB_PATH}
       )
   else()
     find_library(PYTHON_LIBRARY
       NAMES python2.7 python2.6 python2.5 python
-      PATHS ${PYTHON_POSSIBLE_LIB_PATH}
+      HINTS ${PYTHON_POSSIBLE_LIB_PATH}
       )
   endif()
 
