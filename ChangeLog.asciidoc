@@ -38,6 +38,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (closes #211)
 * guile: fix compilation with Guile < 2.0.4 (closes #198)
 * perl: fix detection of Perl >= 5.20 with autotools
+* relay: fix send of signals "relay_client_xxx" (closes #214)
 * script: fix crash on "/script update" if a script detail is displayed in
   buffer (closes #177)
 * trigger: do not allow any changes on a trigger when it is currently running
