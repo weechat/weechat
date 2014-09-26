@@ -1374,9 +1374,9 @@ relay_client_set_status (struct t_relay_client *client,
                 gnutls_deinit (client->gnutls_sess);
 #endif
         }
-
-        relay_client_send_signal (client);
     }
+
+    relay_client_send_signal (client);
 
     relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
 }
