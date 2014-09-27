@@ -76,7 +76,7 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 
 // TRANSLATION MISSING
 [NOTE]
-On OS X, you can use Homebrew:
+On OS X, you can use http://brew.sh/[Homebrew]:
 `brew install weechat --with-python --with-perl`
 (for help: `brew info weechat`).
 

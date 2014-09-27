@@ -59,7 +59,7 @@ das Repository klont und daraus Updates installiert.
 === How can I install WeeChat on OS X?
 
 // TRANSLATION MISSING
-It is recommended to use Homebrew, you can get help with:
+It is recommended to use http://brew.sh/[Homebrew], you can get help with:
 
 ----
 brew info weechat
