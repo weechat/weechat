@@ -51,6 +51,21 @@ base git. Notez que ce paquet peut ne pas correspondre exactement à la base
 git et qu'il est moins pratique que de cloner la base git pour installer des
 mises à jour.
 
+[[compile_osx]]
+=== Comment puis-je installer WeeChat sous OS X ?
+
+Il est recommandé d'utiliser Homebrew, vous pouvez avoir de l'aide avec :
+
+----
+brew info weechat
+----
+
+Vous pouvez installer WeeChat avec cette commande :
+
+----
+brew install weechat --with-python --with-perl
+----
+
 [[lost]]
 === J'ai lancé WeeChat, mais je suis perdu, que puis-je faire ?
 

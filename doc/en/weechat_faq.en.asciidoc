@@ -51,6 +51,21 @@ This package is built almost every day using git repository. Note that this
 package may not correspond exactly to git base and that it's less convenient
 than git cloning for installing updates.
 
+[[compile_osx]]
+=== How can I install WeeChat on OS X?
+
+It is recommended to use Homebrew, you can get help with:
+
+----
+brew info weechat
+----
+
+You can install WeeChat with this command:
+
+----
+brew install weechat --with-python --with-perl
+----
+
 [[lost]]
 === I've launched WeeChat, but I'm lost, what can I do?
 

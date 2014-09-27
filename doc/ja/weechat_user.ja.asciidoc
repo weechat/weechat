@@ -74,6 +74,12 @@ WeeChat をインストールするには、以下のものが必要です:
 
 WeeChat は cmake または autotools を使ってコンパイルできます (cmake を使うことが推奨されています)。
 
+// TRANSLATION MISSING
+[NOTE]
+On OS X, you can use Homebrew:
+`brew install weechat --with-python --with-perl`
+(for help: `brew info weechat`).
+
 [[dependencies]]
 ==== 依存関係
 

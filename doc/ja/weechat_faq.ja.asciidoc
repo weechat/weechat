@@ -51,6 +51,24 @@ autotools を使って (cmake を使わずに) コンパイルする場合、
 リポジトリからほぼ毎日ビルドされます。このパッケージは厳密には git ベースではなく、
 アップデートをインストールする場合には git をクローンする方法よりも不便であることに注意してください。
 
+// TRANSLATION MISSING
+[[compile_osx]]
+=== How can I install WeeChat on OS X?
+
+// TRANSLATION MISSING
+It is recommended to use Homebrew, you can get help with:
+
+----
+brew info weechat
+----
+
+// TRANSLATION MISSING
+You can install WeeChat with this command:
+
+----
+brew install weechat --with-python --with-perl
+----
+
 [[lost]]
 === WeeChat を起動しました。でも何をすればいいかわかりません。
 

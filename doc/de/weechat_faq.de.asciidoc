@@ -54,6 +54,24 @@ Beachte, dass dieses Paket nicht immer exakt mit dem git Repository übereinstim
 und daher auch weniger brauchbar sein kann. Im Gegensatz zu der Möglichkeit, dass man selbst
 das Repository klont und daraus Updates installiert.
 
+// TRANSLATION MISSING
+[[compile_osx]]
+=== How can I install WeeChat on OS X?
+
+// TRANSLATION MISSING
+It is recommended to use Homebrew, you can get help with:
+
+----
+brew info weechat
+----
+
+// TRANSLATION MISSING
+You can install WeeChat with this command:
+
+----
+brew install weechat --with-python --with-perl
+----
+
 [[lost]]
 === Ich habe WeeChat gestartet, komme aber nicht mehr weiter - was kann ich tun?
 

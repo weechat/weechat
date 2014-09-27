@@ -76,6 +76,11 @@ la distribution pour la méthode d'installation.
 WeeChat peut être compilé avec cmake ou les autotools (cmake est la méthode
 recommandée).
 
+[NOTE]
+Sous OS X, vous pouvez utiliser Homebrew :
+`brew install weechat --with-python --with-perl`
+(pour l'aide : `brew info weechat`).
+
 [[dependencies]]
 ==== Dépendances
 
