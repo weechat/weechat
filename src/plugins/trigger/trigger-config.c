@@ -53,7 +53,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
     { "beep", "on",
       "print",
       "",
-      "${tg_displayed) && (${tg_highlight} || ${tg_msg_pv})",
+      "${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})",
       "",
       "/print -beep",
       "ok" },
