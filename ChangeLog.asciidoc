@@ -28,6 +28,13 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: fix translation of message displayed after /upgrade
+* irc: fix translation of CTCP PING reply (closes #137)
+
+== Version 1.0.1 (2014-09-28)
+
+=== Bugs fixed
+
 * core: fix crash on buffer close when option weechat.look.hotlist_remove is
   set to "merged" (closes #199)
 * core: fix highlight of IRC action messages when option irc.look.nick_mode is
@@ -37,7 +44,6 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: fix window/buffer pointers used in command /eval
 * core: fix modifier "weechat_print": discard only one line when several lines
   are displayed in same message (closes #171)
-* core: fix translation of message displayed after /upgrade
 * api: fix bug in function hdata_move when absolute value of count is greater
   than 1
 * tests: fix build of tests when the build directory is outside source tree
@@ -48,7 +54,6 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (closes #164, closes #165)
 * irc: fix type of value stored in hashtable when joining a channel
   (closes #211)
-* irc: fix translation of CTCP PING reply (closes #137)
 * guile: fix compilation with Guile < 2.0.4 (closes #198)
 * perl: fix detection of Perl >= 5.20 with autotools
 * relay: fix send of signals "relay_client_xxx" (closes #214)
