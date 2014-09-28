@@ -80,6 +80,7 @@ Alphabetically:
 * Simon Kuhnle
 * Stefano Pigozzi
 * Stfn
+* Tim D. Smith
 * Tom Alsberg
 * Tor Hveem (xt)
 * Valentin Lorentz (progval)
