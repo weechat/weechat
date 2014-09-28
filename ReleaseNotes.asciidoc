@@ -17,6 +17,14 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 1.1 (under dev)
 
+=== IPv4-mapped IPv6 client address in relay
+
+The string "::ffff:" has been removed from IPv4-mapped IPv6 client address
+in relay plugin.
+
+If you are using "::ffff:" in option 'relay.network.allowed_ips', you can
+remove it.
+
 === Temporary servers disabled by default with /connect
 
 Creating a temporary server with command `/connect <address>` or
