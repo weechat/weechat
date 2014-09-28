@@ -48,6 +48,10 @@ You can restore them with the following command:
 /trigger restore cmd_pass msg_auth server_pass
 ----
 
+== Version 1.0.1 (2014-09-28)
+
+Bug fix and maintenance release.
+
 == Version 1.0 (2014-08-15)
 
 === Channel type not added by default on /join
