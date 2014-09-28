@@ -2256,6 +2256,10 @@ string_iconv_fprintf (FILE *file, const char *data, ...)
     int rc, num_written;
 
     rc = 0;
+
+    if (!data)
+        return rc;
+
     weechat_va_format (data);
     if (vbuffer)
     {
