@@ -30,7 +30,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * core: fix translation of message displayed after /upgrade
 * irc: fix translation of CTCP PING reply (closes #137)
-* relay: remove "::ffff:" from IPv4-mapped IPv6 client address
+* relay: remove "::ffff:" from IPv4-mapped IPv6 client address (closes #111)
 
 == Version 1.0.1 (2014-09-28)
 
