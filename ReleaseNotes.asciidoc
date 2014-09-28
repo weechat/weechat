@@ -46,6 +46,17 @@ instead of milliseconds:
 * function 'util_timeval_add': the argument 'interval' is now expressed in
   microseconds.
 
+=== Default "beep" trigger
+
+The command of "beep" trigger is now executed only if the message is displayed
+(not filtered with /filter).
+
+You can restore the default "beep" trigger with the following command:
+
+----
+/trigger restore beep
+----
+
 === Default triggers for hiding passwords
 
 Triggers used to hide passwords have been fixed for *BSD operating systems.
