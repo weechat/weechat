@@ -509,7 +509,7 @@ Bar 'status' has following default items:
 |===
 | Item                  | Example               | Description
 | time                  | `[12:55]`             | Time
-| buffer_count          | `[6]`                 | Number of opened buffers
+| buffer_last_number    | `[6]`                 | Number of last buffer in list
 | buffer_plugin         | `[irc/freenode]`      | Plugin of current buffer (irc plugin can add IRC server name used by buffer)
 | buffer_number         | `3`                   | Current buffer number
 | buffer_name           | `#test`               | Current buffer name
@@ -528,10 +528,10 @@ Bar 'input' has following default items:
 [width="100%",cols="^3,^6,8",options="header"]
 |===
 | Item         | Example                                      | Description
-| input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | Question to user for pasting lines
 | input_prompt | `[@Flashy(i)]`                               | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode)
 | away         | `(away)`                                     | Away indicator
 | input_search | `[Search (~ str,msg)]`                       | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
+| input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | Question to user for pasting lines
 | input_text   | `hi peter!`                                  | Input text
 |===
 

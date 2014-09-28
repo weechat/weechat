@@ -509,7 +509,8 @@ WeeChat を起動したターミナルの例:
 |===
 | アイテム              | 例                    | 説明
 | time                  | `[12:55]`             | 時刻
-| buffer_count          | `[6]`                 | 開いているバッファの数
+// TRANSLATION MISSING
+| buffer_last_number    | `[6]`                 | Number of last buffer in list
 | buffer_plugin         | `[irc/freenode]`      | 現在のバッファのプラグイン (irc プラグインではバッファで利用されている IRC サーバ名を追加できます)
 | buffer_number         | `3`                   | 現在のバッファの番号
 | buffer_name           | `#test`               | 現在のバッファの名前
@@ -528,10 +529,10 @@ WeeChat を起動したターミナルの例:
 [width="100%",cols="^3,^6,8",options="header"]
 |===
 | アイテム     | 例                                           | 説明
-| input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | 行をペーストする場合にユーザへ行われる質問
 | input_prompt | `[@Flashy]`                                  | 入力プロンプト、irc の場合: ニックネームとモード (freenode では "+i" モードは不可視状態を意味します)
 | away         | `(away)`                                     | 離席状態表示
 | input_search | `[Search (~ str,msg)]`                       | 検索インジケータ ("`~`": 大文字小文字を区別しない、"`==`": 大文字小文字を区別する、"`str`": 検索文字列、"`regex`": 検索正規表現、"`msg`": メッセージ部分から検索、"`pre`": プレフィックス部分から検索、"`pre\|msg`": プレフィックス部分とメッセージ部分から検索)
+| input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | 行をペーストする場合にユーザへ行われる質問
 | input_text   | `hi peter!`                                  | 入力テキスト
 |===
 

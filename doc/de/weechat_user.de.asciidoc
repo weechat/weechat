@@ -511,7 +511,8 @@ Die 'status'-Bar besitzt als Standardeinträge:
 |===
 | Item                  | Beispiel              | Beschreibung
 | time                  | `[12:55]`             | Uhrzeit
-| buffer_count          | `[6]`                 | Anzahl der geöffneten Buffer
+// TRANSLATION MISSING
+| buffer_last_number    | `[6]`                 | Number of last buffer in list
 | buffer_plugin         | `[irc/freenode]`      | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
 | buffer_number         | `3`                   | Aktuelle Nummer des Buffers
 | buffer_name           | `#test`               | Name des aktuellen Buffers
@@ -530,10 +531,10 @@ In der 'input' Bar lautet die Standardeinstellung:
 [width="100%",cols="^3,^6,8",options="header"]
 |===
 | Item         | Beispiel                                      | Beschreibung
-| input_paste  | `[Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein]` | Nachfrage ob sieben Zeilen eingefügt werden sollen
 | input_prompt | `[@Flashy(i)]`                                | Input prompt, für irc: Nick und Modi (Modus "+i" bedeutet auf freenode, unsichtbar)
 | away         | `(away)`                                      | Abwesenheitsanzeige
 | input_search | `[Search (~ str,msg)]`                        | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten)
+| input_paste  | `[Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein]` | Nachfrage ob sieben Zeilen eingefügt werden sollen
 | input_text   | `hi peter!`                                   | Text der eingegeben wird
 |===
 

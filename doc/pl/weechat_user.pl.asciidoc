@@ -513,7 +513,8 @@ Pasek 'status' posiada następujące domyślne elementy:
 |===
 | Element               | Przykład              | Opis
 | time                  | `[12:55]`             | Czas
-| buffer_count          | `[6]`                 | Ilość otwartych buforów
+// TRANSLATION MISSING
+| buffer_last_number    | `[6]`                 | Number of last buffer in list
 | buffer_plugin         | `[irc/freenode]`      | Wtyczka dla obecnego bufora (wtyczka irc może dodać nazwę serwera IRC używanego przez bufor)
 | buffer_number         | `3`                   | Numer obecnego buforu
 | buffer_name           | `#test`               | Nazwa obecnego buforu
@@ -532,10 +533,10 @@ Pasek 'input' posiada następujące domyślne elementy:
 [width="100%",cols="^3,^6,8",options="header"]
 |===
 | Element      | Przykład                                       | Opis
-| input_paste  | `[Wkleić 7 linii ? [ctrl-Y] Tak [ctrl-N] Nie]` | Pyta użytkownika podczas wklejania kilku linii tekstu
 | input_prompt | `[@Flashy(i)]`                                 | Input prompt, dla irc: nick i tryby (tryb "+i" oznacza niewidzialny na freenode)
 | away         | `(away)`                                       | Wskaźnik nieobecności
 | input_search | `[Szukam (~ str,msg)]`                         | Wskaźnik wyszukiwania ("`~`": wielkość liter ma znaczenie, "`==`": wielkość liter nie ma znaczenia, "`str`": wyszukiwanie ciągu, "`regex`": wyszukiwanie wyrażenia regularnego, "`msg`": wyszukiwanie w wiadomościach, "`pre`": wyszukiwanie w prefiksach, "`pre\|msg`": wyszukiwanie w prefiksach i wiadomościach)
+| input_paste  | `[Wkleić 7 linii ? [ctrl-Y] Tak [ctrl-N] Nie]` | Pyta użytkownika podczas wklejania kilku linii tekstu
 | input_text   | `hi peter!`                                    | Wprowadzony tekst
 |===
 
