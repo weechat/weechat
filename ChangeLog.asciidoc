@@ -13,7 +13,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'ReleaseNotes.asciidoc' in sources).
 
 
-== Version 1.0.1 (under dev)
+== Version 1.0.1 (2014-09-28)
 
 === Bugs fixed
 
