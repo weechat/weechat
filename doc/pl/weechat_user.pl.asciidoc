@@ -521,10 +521,10 @@ Pasek 'status' posiada następujące domyślne elementy:
 | buffer_nicklist_count | `{4}`                 | Ilość nicków na liście nicków
 | buffer_zoom           | !                     | `!` oznacza, że połączony bufor jest przybliżony (tylko ten jest wyświetlany), pusta wartość oznacza, że wszystkie połączone bufory są wyświetlane
 | buffer_filter         | `*`                   | Wskaźnik filtrowania: `*` oznacza, że niektóre linie zostały odfiltrowywane (ukryte), pusta wartość oznacza, że wszystkie linie są wyświetlane
+| scroll                | `-Więcej(50)-`        | Wskaźnik przewijania, z numerem linii poniżej ostatniej wyświetlanej
 | lag                   | `[Lag: 2.5]`          | Wskaźnik opóźnienia, w sekundach (ukryty dla niskich opóźnień)
 | hotlist               | `[H: 4:#abc(2,5), 6]` | Lista buforów z aktywnością (nieprzeczytane wiadomości) (w przykładzie, 2 podświetlenia i 5 nieprzeczytanych wiadomości w '#abc', jedna wiadomość w buforze #6)
 | completion            | `abc(2) def(5)`       | Lista słów do dopełnienia, z ilością możliwych dopełnień dla każdego słowa
-| scroll                | `-Więcej(50)-`        | Wskaźnik przewijania, z numerem linii poniżej ostatniej wyświetlanej
 |===
 
 Pasek 'input' posiada następujące domyślne elementy:

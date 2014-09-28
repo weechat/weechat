@@ -517,10 +517,10 @@ Bar 'status' has following default items:
 | buffer_nicklist_count | `{4}`                 | Number of nicks in nicklist
 | buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed
 | buffer_filter         | `*`                   | Filtering indicator: `*` means some lines are filtered (hidden), empty value means all lines are displayed
+| scroll                | `-MORE(50)-`          | Scroll indicator, with number of lines below last line displayed
 | lag                   | `[Lag: 2.5]`          | Lag indicator, in seconds (hidden if lag is low)
 | hotlist               | `[H: 4:#abc(2,5), 6]` | List of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on '#abc', one unread message on buffer #6)
 | completion            | `abc(2) def(5)`       | List of words for completion, with number of possible completions for each word
-| scroll                | `-MORE(50)-`          | Scroll indicator, with number of lines below last line displayed
 |===
 
 Bar 'input' has following default items:
