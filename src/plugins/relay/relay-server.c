@@ -269,6 +269,12 @@ relay_server_sock_cb (void *data, int fd)
                        INET6_ADDRSTRLEN))
         {
             ptr_ip_address = ipv6_address;
+
+            if (strncmp (ptr_ip_address, "::ffff:", 7) == 0)
+            {
+                /* actually an IPv4-mapped IPv6 address, so skip ::ffff: */
+                ptr_ip_address += 7;
+            }
         }
     }
     else
