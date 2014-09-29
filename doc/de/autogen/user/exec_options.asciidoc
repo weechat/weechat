@@ -9,7 +9,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `lightgreen`)
 
 * [[option_exec.command.default_options]] *exec.command.default_options*
-** Beschreibung: `Standardoptionen für den Befehl /exec (siehe /help exec); Beispiele:  "-nosh -bg" führt alle Befehle im Hintergrund aus (keine Textausgabe) und ohne das die shell genutzt wird`
+** Beschreibung: `Standardoptionen für den Befehl /exec (siehe /help exec); Beispiele: "-nosh -bg" führt alle Befehle im Hintergrund aus (keine Textausgabe) und ohne das die shell genutzt wird`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

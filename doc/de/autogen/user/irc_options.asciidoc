@@ -129,7 +129,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.display_host_join_local]] *irc.look.display_host_join_local*
-** Beschreibung: `zeigt den Host innerhalb einer  join Nachrichten des lokalen Client an`
+** Beschreibung: `zeigt den Host innerhalb einer join Nachrichten des lokalen Client an`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -159,17 +159,17 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in Channel-Buffern als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal  "highlight_words" hinzugefügt. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in Channel-Buffern als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal "highlight_words" hinzugefügt. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in einem privaten Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal  "highlight_words" hinzugefügt. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in einem privaten Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal "highlight_words" hinzugefügt. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in Server-Buffern als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal  "highlight_words" hinzugefügt. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in Server-Buffern als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal "highlight_words" hinzugefügt. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
@@ -329,7 +329,7 @@
 ** Werte: 0 .. 10080 (Standardwert: `30`)
 
 * [[option_irc.look.smart_filter_mode]] *irc.look.smart_filter_mode*
-** Beschreibung: `aktiviert einen intelligenten Filter für "mode" Nachrichten: "*" filtert alle Modi-Nachrichten, "+" um alle Modi im Server-Präfix zu filtern (zum Beispiel "ovh"), "xyz" um die Modi x/y/z zu filtern, "-xyz" um alle Modi, außer  x/y/z, zu filtern; Beispiele: "ovh": filtert die Modi o/v/h, "-bkl": filtert alle Modi, ausgenommen b/k/l`
+** Beschreibung: `aktiviert einen intelligenten Filter für "mode" Nachrichten: "*" filtert alle Modi-Nachrichten, "+" um alle Modi im Server-Präfix zu filtern (zum Beispiel "ovh"), "xyz" um die Modi x/y/z zu filtern, "-xyz" um alle Modi, außer x/y/z, zu filtern; Beispiele: "ovh": filtert die Modi o/v/h, "-bkl": filtert alle Modi, ausgenommen b/k/l`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"+"`)
 
@@ -344,7 +344,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.temporary_servers]] *irc.look.temporary_servers*
-** Beschreibung: `enable creation of temporary servers with command /connect`
+** Beschreibung: `aktiviert die Erstellung von temporären Servern mit dem Befehl /connect`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -369,7 +369,7 @@
 ** Werte: 0 .. 604800 (Standardwert: `600`)
 
 * [[option_irc.network.ban_mask_default]] *irc.network.ban_mask_default*
-** Beschreibung: `Vorgabewert für Befehle /ban, /unban und /kickban; Variablen $nick, $user, $ident und $host werden durch den jeweiligen Wert ersetzt (extrahiert aus "nick!user@host"); $ident ist identisch mit $user, sofern $user nicht mit  "~" beginnt. Andernfalls wird daraus "*"; diese Vorgabemaske wird nur angewendet, sofern WeeChat den Host des Nicks ermitteln kann`
+** Beschreibung: `Vorgabewert für Befehle /ban, /unban und /kickban; Variablen $nick, $user, $ident und $host werden durch den jeweiligen Wert ersetzt (extrahiert aus "nick!user@host"); $ident ist identisch mit $user, sofern $user nicht mit "~" beginnt. Andernfalls wird daraus "*"; diese Vorgabemaske wird nur angewendet, sofern WeeChat den Host des Nicks ermitteln kann`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"*!$ident@$host"`)
 
@@ -484,7 +484,7 @@
 ** Werte: 0 .. 1000000 (Standardwert: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** Beschreibung: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: away-notify, multi-prefix, server-time, userhost-in-names (example: "away-notify,multi-prefix")`
+** Beschreibung: `durch Kommata getrennte Liste von erweiterten Client Fähigkeiten ("client capabilities"), welche vom Server angeboten und genutzt werden sollen. Fähigkeiten die von WeeChat unterstützt werden: away-notify, multi-prefix, server-time, userhost-in-name (Beispiel: "away-notify,multi-prefix")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

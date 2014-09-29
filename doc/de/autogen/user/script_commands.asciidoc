@@ -56,7 +56,7 @@ Befehle die in der Eingabezeile des Skript-Buffers eingegeben werden können:
   i/r/l/L/u/h  Aktionen die für ein Skript ausgeführt werden können (siehe Tastenbefehle, weiter oben)
   q            schließt den Buffer
   $            Buffer wird aktualisiert
-  s:x,y        Buffer wird nach den Vorgaben x und y  sortiert (siehe /help script.look.sort)
+  s:x,y        Buffer wird nach den Vorgaben x und y sortiert (siehe /help script.look.sort)
   s:           die Sortierung des Buffers wird zurückgesetzt (Standardwerte werden genutzt)
   word(s)      Skripten werden gefiltert: sucht nach einem oder mehreren Wörtern in den Skripten (der Beschreibung, in den Schlagwörtern, ...)
   *            Filter wird zurückgesetzt

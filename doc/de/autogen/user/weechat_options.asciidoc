@@ -519,7 +519,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.command_incomplete]] *weechat.look.command_incomplete*
-** Beschreibung: `if set, incomplete and unambiguous commands are allowed, for example /he for /help`
+** Beschreibung: `ist diese Option aktiviert werden unvollständige und eindeutige Befehle akzeptiert, zum Beispiel /he für /help`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
