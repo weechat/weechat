@@ -43,9 +43,9 @@ WeeChat homepage is here: http://weechat.org/
 In order to install WeeChat, you need:
 
 * a running GNU/Linux system (with compiler tools for source
-  package), or compatible OS
+  package), or a compatible OS
 * 'root' privileges (to install WeeChat in a system directory)
-* ncurses library
+* some libraries (see <<dependencies,dependencies>>).
 
 [[install]]
 == Installation

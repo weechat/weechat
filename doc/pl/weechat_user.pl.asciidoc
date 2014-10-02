@@ -45,7 +45,8 @@ Strona domowa WeeChat: http://weechat.org/
 * działający system GNU/Linux (z narzędziami kompilatora dla kompilacji ze
   źródeł), lub kompatybilny system
 * przywileje 'roota' (do instalacji w katalogu systemowym)
-* bibliotekę ncurses
+// TRANSLATION MISSING
+* some libraries (see <<dependencies,dependencies>>).
 
 [[install]]
 == Instalacja

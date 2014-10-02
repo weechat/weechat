@@ -48,7 +48,8 @@ Per poter installare WeeChat, è necessario:
   compilazione per i sorgenti), oppure OS compatibile
 * privilegi di 'root' (per installare WeeChat in una directory di
   sistema)
-* librerie ncurses
+// TRANSLATION MISSING
+* some libraries (see <<dependencies,dependencies>>).
 
 [[install]]
 == Installazione

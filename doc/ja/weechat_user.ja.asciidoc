@@ -45,7 +45,8 @@ WeeChat をインストールするには、以下のものが必要です:
 * GNU/Linux が稼動しているシステム (ソースパッケージを使う場合は、
   コンパイラツールも必要)、又は互換 OS
 * 'root' 特権 (WeeChat をシステムディレクトリにインストールする場合)
-* ncurses ライブラリ
+// TRANSLATION MISSING
+* some libraries (see <<dependencies,dependencies>>).
 
 [[install]]
 == インストール方法
