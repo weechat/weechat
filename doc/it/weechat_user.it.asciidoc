@@ -110,7 +110,7 @@ compilare WeeChat.
 | python-dev                     | ≥ 2.5 ^(3)^ |           | Plugin python
 | libperl-dev                    |             |           | Plugin perl
 | ruby2.1-dev                    | ≥ 1.8       |           | Plugin ruby
-| liblua5.1-0-dev                |             |           | Plugin lua
+| liblua5.2-dev                  |             |           | Plugin lua
 | tcl-dev                        | ≥ 8.5       |           | Plugin tcl
 | guile-2.0-dev                  | ≥ 2.0       |           | Plugin guile (scheme)
 // TRANSLATION MISSING

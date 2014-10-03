@@ -102,7 +102,7 @@ compiler WeeChat.
 | python-dev                      | ≥ 2.5 ^(3)^ |        | Extension python
 | libperl-dev                     |             |        | Extension perl
 | ruby2.1-dev                     | ≥ 1.8       |        | Extension ruby
-| liblua5.1-0-dev                 |             |        | Extension lua
+| liblua5.2-dev                   |             |        | Extension lua
 | tcl-dev                         | ≥ 8.5       |        | Extension tcl
 | guile-2.0-dev                   | ≥ 2.0       |        | Extension guile (scheme)
 | asciidoc                        | ≥ 8.5.0     |        | Construction de la page man et de la documentation
