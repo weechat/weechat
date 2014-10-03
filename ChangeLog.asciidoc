@@ -33,6 +33,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * core: fix translation of message displayed after /upgrade
 * irc: fix translation of CTCP PING reply (closes #137)
+* lua: add detection of Lua 5.2
 * python: fix Python detection with Homebrew (closes #217)
 * relay: remove "::ffff:" from IPv4-mapped IPv6 client address (closes #111)
 
