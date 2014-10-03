@@ -152,9 +152,6 @@ AC_ARG_ENABLE(tcl,          [  --disable-tcl           turn off Tcl script plugi
 AC_ARG_ENABLE(guile,        [  --disable-guile         turn off Guile (scheme) script plugin (default=compiled if found)],enable_guile=$enableval,enable_guile=yes)
 AC_ARG_ENABLE(trigger,      [  --disable-trigger       turn off Trigger plugin (default=compiled)],enable_trigger=$enableval,enable_trigger=yes)
 AC_ARG_ENABLE(xfer,         [  --disable-xfer          turn off Xfer (file transfer) plugin (default=compiled if found)],enable_xfer=$enableval,enable_xfer=yes)
-AC_ARG_WITH(lua-inc,        [  --with-lua-inc=DIR,     lua include files are in DIR (default=autodetect)],lua_inc=$withval,lua_inc='')
-AC_ARG_WITH(lua-lib,        [  --with-lua-lib=DIR,     lua library files are in DIR (default=autodetect)],lua_lib=$withval,lua_lib='')
-AC_ARG_WITH(lua-suffix,     [  --with-lua-suffix=ARG   lua is suffixed with ARG (default=autodetect)],lua_suffix=$withval,lua_suffix='')
 AC_ARG_WITH(tclconfig,      [  --with-tclconfig=DIR    directory containing tcl configuration (tclConfig.sh)],tclconfig=$withval,tclconfig='')
 AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=1)],debug=$withval,debug=1)
 AC_ARG_ENABLE(tests,        [  --enable-tests          turn on build of tests (default=not built)],enable_tests=$enableval,enable_tests=no)
@@ -656,7 +653,7 @@ if test "x$enable_lua" = "xyes" ; then
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
         AC_MSG_CHECKING(for Lua headers and librairies with pkg-config)
         echo
-        for l in "$lua_suffix" "" "51" "5.1" "50" "5.0" ; do
+        for l in "$lua_suffix" "" "52" "5.2" "51" "5.1" "50" "5.0" ; do
             pkgconfig_lua_found=`$PKGCONFIG --exists lua$l 2>/dev/null`
             if test "x$?" = "x0" ; then
                 LUA_VERSION=`$PKGCONFIG --modversion lua$l`
@@ -675,7 +672,7 @@ if test "x$enable_lua" = "xyes" ; then
 
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
         LUACONFIG=""
-        AC_CHECK_PROGS(LUACONFIG, lua-config lua-config51 lua-config5.1 lua-config50 lua-config5.0)
+        AC_CHECK_PROGS(LUACONFIG, lua-config lua-config52 lua-config5.2 lua-config51 lua-config5.1 lua-config50 lua-config5.0)
         if test "x$LUACONFIG" != "x" ; then
             AC_MSG_CHECKING(for Lua headers and librairies with lua-config)
             echo
@@ -693,7 +690,7 @@ if test "x$enable_lua" = "xyes" ; then
         if test "x$ac_found_lua_header" = "xyes" -a "x$ac_found_liblua_header" = "xyes"; then
             LUA_CFLAGS="$CFLAGS"
         fi
-        for l in "$lua_suffix" "" "51" "5.1" "50" "5.0" ; do
+        for l in "$lua_suffix" "" "52" "5.2" "51" "5.1" "50" "5.0" ; do
             AC_CHECK_LIB(lua$l,lua_call,ac_found_lua_lib="yes",ac_found_lua_lib="no")
             if test "x$ac_found_lua_lib" = "xyes" ; then
                 LUA_VERSION=">=5.1.0"
