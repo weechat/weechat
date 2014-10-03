@@ -92,6 +92,8 @@ welche Pakete optional genutzt werden können.
 |===
 | Paket ^(1)^                       | Version     | benötigt | Funktion
 | cmake                             |             | *ja*     | Zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
+// TRANSLATION MISSING
+| pkg-config                        |             | *ja*     | Detect installed libraries
 | libncursesw5-dev ^(2)^            |             | *ja*     | Ncurses Oberfläche
 | libcurl4-gnutls-dev               |             | *ja*     | URL Transfer
 | zlib1g-dev                        |             | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden

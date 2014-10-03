@@ -91,6 +91,7 @@ compiler WeeChat.
 |===
 | Paquet ^(1)^                    | Version     | Requis | Fonctionnalité
 | cmake                           |             | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé)
+| pkg-config                      |             | *oui*  | Détection des bibliothèques installées
 | libncursesw5-dev ^(2)^          |             | *oui*  | Interface ncurses
 | libcurl4-gnutls-dev             |             | *oui*  | Transfert d'URL
 | zlib1g-dev                      |             | *oui*  | Compression des paquets dans l'extension relay (protocole weechat), extension script

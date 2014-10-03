@@ -91,6 +91,8 @@ WeeChat.
 |===
 | Pakiet ^(1)^                    | Wersja      | Wymagany | Opis
 | cmake                           |             | *tak*    | Kompilacja (możliwe jest użycie autotools, jednak cmake jest zalecany)
+// TRANSLATION MISSING
+| pkg-config                      |             | *tak*    | Detect installed libraries
 | libncursesw5-dev ^(2)^          |             | *tak*    | Interfejs ncurses
 | libcurl4-gnutls-dev             |             | *tak*    | Transfer URL
 | zlib1g-dev                      |             | *tak*    | Kompresja pakietów we wtyczce relay (protokół weechat), wtyczka script

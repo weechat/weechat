@@ -91,6 +91,8 @@ On OS X, you can use http://brew.sh/[Homebrew]:
 |===
 | パッケージ ^(1)^                    | バージョン  | 必須  | 機能
 | cmake                               |             | *yes* | ビルド (autotools でも可能ですが、cmake を推奨します)
+// TRANSLATION MISSING
+| pkg-config                          |             | *yes* | Detect installed libraries
 | libncursesw5-dev ^(2)^              |             | *yes* | ncurses インターフェイス
 | libcurl4-gnutls-dev                 |             | *yes* | URL 転送
 | zlib1g-dev                          |             | *yes* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン

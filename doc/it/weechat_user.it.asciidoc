@@ -96,6 +96,8 @@ compilare WeeChat.
 |===
 | Pacchetto ^(1)^                | Versione    | Richiesto | Caratteristica
 | cmake                          |             | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake)
+// TRANSLATION MISSING
+| pkg-config                     |             | *sì*      | Detect installed libraries
 | libncursesw5-dev ^(2)^         |             | *sì*      | Interfaccia ncurses
 | libcurl4-gnutls-dev            |             | *sì*      | Trasferimento URL
 // TRANSLATION MISSING

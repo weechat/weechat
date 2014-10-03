@@ -89,6 +89,7 @@ compile WeeChat.
 |===
 | Package ^(1)^                   | Version     | Required | Feature
 | cmake                           |             | *yes*    | Build (autotools still possible, but cmake is recommended)
+| pkg-config                      |             | *yes*    | Detect installed libraries
 | libncursesw5-dev ^(2)^          |             | *yes*    | Ncurses interface
 | libcurl4-gnutls-dev             |             | *yes*    | URL transfer
 | zlib1g-dev                      |             | *yes*    | Compression of packets in relay plugin (weechat protocol), script plugin
