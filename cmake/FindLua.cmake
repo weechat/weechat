@@ -35,5 +35,5 @@ endif()
 
 find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
-  pkg_search_module(LUA lua5.2 lua5.1 lua5.0)
+  pkg_search_module(LUA lua5.2 lua52 lua5.1 lua51 lua5.0 lua50)
 endif()
