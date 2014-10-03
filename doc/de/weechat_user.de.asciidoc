@@ -95,14 +95,14 @@ welche Pakete optional genutzt werden können.
 | libncursesw5-dev ^(2)^            |             | *ja*     | Ncurses Oberfläche
 | libcurl4-gnutls-dev               |             | *ja*     | URL Transfer
 | zlib1g-dev                        |             | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden
-| libgcrypt11-dev                   |             | *ja*     | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES), Skript-Erweiterung
-| libgnutls-dev                     | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung
+| libgcrypt20-dev                   |             | *ja*     | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES), Skript-Erweiterung
+| libgnutls28-dev                   | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung
 | gettext                           |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | ca-certificates                   |             |          | Zertifikate für SSL Verbindungen
 | libaspell-dev oder libenchant-dev |             |          | Aspell Erweiterung
 | python-dev                        | ≥ 2.5 ^(3)^ |          | Python Erweiterung
 | libperl-dev                       |             |          | Perl Erweiterung
-| ruby1.9.1-dev                     | ≥ 1.8       |          | Ruby Erweiterung
+| ruby2.1-dev                       | ≥ 1.8       |          | Ruby Erweiterung
 | liblua5.1-0-dev                   |             |          | Lua Erweiterung
 | tcl-dev                           | ≥ 8.5       |          | Tcl Erweiterung
 | guile-2.0-dev                     | ≥ 2.0       |          | Guile (scheme) Erweiterung

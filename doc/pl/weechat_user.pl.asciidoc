@@ -94,14 +94,14 @@ WeeChat.
 | libncursesw5-dev ^(2)^          |             | *tak*    | Interfejs ncurses
 | libcurl4-gnutls-dev             |             | *tak*    | Transfer URL
 | zlib1g-dev                      |             | *tak*    | Kompresja pakietów we wtyczce relay (protokół weechat), wtyczka script
-| libgcrypt11-dev                 |             | *tak*    | Zabezpieczone dane, uwierzytelnianie IRC SASL (DH-BLOWFISH/DH-AES), wtyczka script
-| libgnutls-dev                   | ≥ 2.2.0     |          | Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay
+| libgcrypt20-dev                 |             | *tak*    | Zabezpieczone dane, uwierzytelnianie IRC SASL (DH-BLOWFISH/DH-AES), wtyczka script
+| libgnutls28-dev                 | ≥ 2.2.0     |          | Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay
 | gettext                         |             |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski)
 | ca-certificates                 |             |          | Certyfikaty dla połączeń SSL
 | libaspell-dev or libenchant-dev |             |          | Wtyczka aspell
 | python-dev                      | ≥ 2.5 ^(3)^ |          | Wtyczka python
 | libperl-dev                     |             |          | Wtyczka perl
-| ruby1.9.1-dev                   | ≥ 1.8       |          | Wtyczka ruby
+| ruby2.1-dev                     | ≥ 1.8       |          | Wtyczka ruby
 | liblua5.1-0-dev                 |             |          | Wtyczka lua
 | tcl-dev                         | ≥ 8.5       |          | Wtyczka tcl
 | guile-2.0-dev                   | ≥ 2.0       |          | Wtyczka guile (scheme)
