@@ -519,7 +519,6 @@ La barre 'status' contient les objets (items) suivants par défaut :
 |===
 | Objet (item)          | Exemple               | Description
 | time                  | `[12:55]`             | Heure
-// TRANSLATION MISSING
 | buffer_last_number    | `[6]`                 | Numéro du dernier tampon de la liste
 | buffer_plugin         | `[irc/freenode]`      | Extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon)
 | buffer_number         | `3`                   | Numéro du tampon courant
