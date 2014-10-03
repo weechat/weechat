@@ -33,51 +33,7 @@ if(LUA_FOUND)
    set(LUA_FIND_QUIETLY TRUE)
 endif()
 
-find_path(
-        LUA51_INCLUDE_PATH lua.h
-        PATHS /usr/include /usr/local/include /usr/pkg/include
-        PATH_SUFFIXES lua51 lua5.1 lua-5.1
-)
-
-find_library(
-        LUA51_LIBRARY NAMES lua51 lua5.1 lua-5.1 lua
-        PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
-        PATH_SUFFIXES lua51 lua5.1 lua-5.1
-)
-
-if(LUA51_INCLUDE_PATH AND LUA51_LIBRARY)
-  set(LUA_INCLUDE_PATH "${LUA51_INCLUDE_PATH}")
-  set(LUA_LIBRARY "${LUA51_LIBRARY}")
-  set(LUA_VERSION "5.1")
-  set(LUA_FOUND TRUE)
-else()
-  find_path(
-        LUA50_INCLUDE_PATH lua.h
-        PATHS /usr/include /usr/local/include /usr/pkg/include
-        PATH_SUFFIXES lua50 lua5.0 lua-5.0 lua
-  )
-  find_library(
-        LUA50_LIBRARY NAMES lua50 lua5.0 lua-5.0 lua
-        PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
-        PATH_SUFFIXES lua50 lua5.0 lua-5.0 lua
-  )
-  find_library(
-        LUALIB50_LIBRARY NAMES lualib50 lualib5.0 lualib-5.0 lualib
-        PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
-        PATH_SUFFIXES lua50 lua5.0 lua-5.0 lua
-  )
-  if(LUA50_INCLUDE_PATH AND LUA50_LIBRARY AND LUALIB50_LIBRARY)
-    set(LUA_INCLUDE_PATH "${LUA50_INCLUDE_PATH}")
-    set(LUA_LIBRARY "${LUA50_LIBRARY}")
-    set(LUALIB_LIBRARY "${LUALIB50_LIBRARY}")
-    set(LUA_VERSION "5.0")
-    set(LUA_FOUND TRUE)
-  endif()
+find_package(PkgConfig)
+if(PKG_CONFIG_FOUND)
+  pkg_search_module(LUA lua5.2 lua5.1 lua5.0)
 endif()
-
-mark_as_advanced(
-  LUA_INCLUDE_PATH
-  LUA_LIBRARY
-  LUALIB_LIBRARY
-#  LUA_VERSION
-)
