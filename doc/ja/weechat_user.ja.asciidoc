@@ -45,8 +45,7 @@ WeeChat をインストールするには、以下のものが必要です:
 * GNU/Linux が稼動しているシステム (ソースパッケージを使う場合は、
   コンパイラツールも必要)、又は互換 OS
 * 'root' 特権 (WeeChat をシステムディレクトリにインストールする場合)
-// TRANSLATION MISSING
-* some libraries (see <<dependencies,dependencies>>).
+* 一部のライブラリ (<<dependencies,依存関係>>を参照)。
 
 [[install]]
 == インストール方法
@@ -75,11 +74,10 @@ WeeChat をインストールするには、以下のものが必要です:
 
 WeeChat は cmake または autotools を使ってコンパイルできます (cmake を使うことが推奨されています)。
 
-// TRANSLATION MISSING
 [NOTE]
-On OS X, you can use http://brew.sh/[Homebrew]:
+OS X では、http://brew.sh/[Homebrew] を使ってください:
 `brew install weechat --with-python --with-perl`
-(for help: `brew info weechat`).
+(ヘルプを見るには: `brew info weechat`)。
 
 [[dependencies]]
 ==== 依存関係
@@ -91,8 +89,7 @@ On OS X, you can use http://brew.sh/[Homebrew]:
 |===
 | パッケージ ^(1)^                    | バージョン  | 必須  | 機能
 | cmake                               |             | *yes* | ビルド (autotools でも可能ですが、cmake を推奨します)
-// TRANSLATION MISSING
-| pkg-config                          |             | *yes* | Detect installed libraries
+| pkg-config                          |             | *yes* | インストール済みライブラリを検出
 | libncursesw5-dev ^(2)^              |             | *yes* | ncurses インターフェイス
 | libcurl4-gnutls-dev                 |             | *yes* | URL 転送
 | zlib1g-dev                          |             | *yes* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
@@ -512,8 +509,7 @@ WeeChat を起動したターミナルの例:
 |===
 | アイテム              | 例                    | 説明
 | time                  | `[12:55]`             | 時刻
-// TRANSLATION MISSING
-| buffer_last_number    | `[6]`                 | Number of last buffer in list
+| buffer_last_number    | `[6]`                 | リスト中の最後のバッファ番号
 | buffer_plugin         | `[irc/freenode]`      | 現在のバッファのプラグイン (irc プラグインではバッファで利用されている IRC サーバ名を追加できます)
 | buffer_number         | `3`                   | 現在のバッファの番号
 | buffer_name           | `#test`               | 現在のバッファの名前
@@ -2189,7 +2185,7 @@ WeeChat は SASL 認証をサポートします、以下の認証メカニズム
 
 [NOTE]
 "dh-blowfish" メカニズムを利用する場合、"gcrypt" ライブラリが
-WeeChat のコンパイル時に必要です (<<dependencies,依存関係>> を参照)。
+WeeChat のコンパイル時に必要です (<<dependencies,依存関係>>を参照)。
 
 [[irc_tor_freenode]]
 ==== TOR/SASL を使って Freenode に接続する場合
