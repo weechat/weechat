@@ -1,10 +1,10 @@
-= Reporting WeeChat issues
+= Contributing to WeeChat
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en
 
 
-== Report bugs
+== Reporting bugs
 
 First, some basic things:
 
@@ -13,55 +13,74 @@ First, some basic things:
   (if you are using a stable release or old version).
 * Report only one bug or feature request per issue.
 
+=== Security reports
+
+Please *DO NOT* file a GitHub issue for security related problems, but send an
+email to <security@weechat.org> instead.
+
 === Required info
 
-Please give some info:
+When reporting https://github.com/weechat/weechat/issues[issues] on GitHub,
+please include:
 
-* The *version* of WeeChat: output of `/v` in WeeChat, for example:
-  `WeeChat 1.0-dev (git: v0.4.3-475-gb174b3c)`. +
-  If WeeChat does not start at all, give the version displayed by
+* your *WeeChat version*: the output of `/v` in WeeChat, for example:
+  'WeeChat 1.0-dev (git: v0.4.3-475-gb174b3c)'. +
+  If WeeChat does not start at all, please include the version displayed by
   `weechat --help` (or the version installed with your package manager).
-* The operating system, including distribution name (for Linux) and its version
-  (examples: Linux Debian Wheezy, FreeBSD 10.0, Windows/Cygwin 64-bit, ...).
-* If possible, please include a reproducible example: explain the steps which
-  led you to the problem. +
+* your *operating system*: its name and version (examples: Linux Debian Wheezy,
+  FreeBSD 10.0, Windows/Cygwin 64-bit, ...).
+* the *steps to reproduce*: if possible, please include a reproducible example:
+  explain the steps which led you to the problem. +
   It's even better if you can reproduce the problem with a new config (and no
   scripts loaded): try `weechat --dir /tmp/weechat` and check if you have the
   problem here.
+* the *gdb's backtrace* (only for a crash): if you can reproduce the crash
+(or if you have a core file), please include the backtrace from gdb (look at
+http://weechat.org/files/doc/devel/weechat_user.en.html#report_crashes[User's guide]
+for more info).
 
-=== Use of scripts
+[IMPORTANT]
+Most of times, the WeeChat crash log file ('weechat_crash_YYYYMMDD_xxx.log') is
+*NOT USEFUL* to fix the bug, so please report this file *ONLY* if a developer
+asked you to send it (and be extremely careful, this file can contain personal
+data like passwords and contents of your chats).
+
+=== Scripts related issues
 
 If you are using scripts, they can cause problems/crashes. To check if the
 problem is related to one script, try to unload them one by one (using
 command `/script unload <name>`).
 
+Many issues reported are in fact related to bugs in scripts, so please first
+check that before reporting any issue on WeeChat itself.
+
 If you think the problem comes from a specific script, please report the issue
-in the https://github.com/weechat/scripts[scripts git repository].
+in the https://github.com/weechat/scripts/issues[scripts git repository]
+instead.
 
-=== Report a crash
+== Translations
 
-If you are reporting a crash, please attach the backtrace from gdb (look at
-http://weechat.org/files/doc/devel/weechat_user.en.html#report_crashes[user's guide]
-for more info).
+Pull requests on GitHub for fixes or new translations are welcome at any
+time, for https://github.com/weechat/weechat[WeeChat] and
+the web site https://github.com/weechat/weechat.org[weechat.org].
 
-Most of times, the WeeChat crash log file (`weechat_crash_YYYYMMDD_xxx.log`) is
-*not useful* to fix the bug, so please report this file *ONLY* if a developer
-asks you to send it (and be careful, this file can contain personal data like
-passwords).
+To start a translation in a new language (not yet supported), please look at
+http://weechat.org/files/doc/devel/weechat_dev.en.html#translations[translations]
+in Developer's guide.
 
 == Feature requests
 
 WeeChat is under active development, so your idea may already have been
 implemented, or scheduled for a future version (you can check in
-http://weechat.org/dev/[roadmap]).
+http://weechat.org/dev/[roadmap] or
+https://github.com/weechat/weechat/milestones[milestones] on GitHub.
 
-Before submitting a feature request, it's better to discuss about it in IRC
+Pull requests on GitHub are welcome for minor new features.
+
+For major new features, it's better to discuss about it in IRC
 (server: 'chat.freenode.net', channel '#weechat').
 
-== Contributing
-
-If you want to fix a bug or add a new feature, it's always a good idea to
-discuss about it in IRC.
-
-And you can look at http://weechat.org/files/doc/devel/weechat_dev.en.html[developer's guide] for coding rules
-(styles, naming convention, and other useful info).
+Before submitting any pull request, be sure you have read the
+http://weechat.org/files/doc/devel/weechat_dev.en.html#coding_rules[coding rules]
+in Developer's guide, which contains info about styles used, naming convention
+and other useful info.
