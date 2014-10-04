@@ -87,13 +87,13 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
-| パッケージ ^(1)^                    | バージョン  | 必須  | 機能
-| cmake                               |             | *yes* | ビルド (autotools でも可能ですが、cmake を推奨します)
-| pkg-config                          |             | *yes* | インストール済みライブラリを検出
-| libncursesw5-dev ^(2)^              |             | *yes* | ncurses インターフェイス
-| libcurl4-gnutls-dev                 |             | *yes* | URL 転送
-| zlib1g-dev                          |             | *yes* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
-| libgcrypt20-dev                     |             | *yes* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
+| パッケージ ^(1)^                    | バージョン  | 要件  | 機能
+| cmake                               |             | *必須* | ビルド (autotools でも可能ですが、cmake を推奨します)
+| pkg-config                          |             | *必須* | インストール済みライブラリを検出
+| libncursesw5-dev ^(2)^              |             | *必須* | ncurses インターフェイス
+| libcurl4-gnutls-dev                 |             | *必須* | URL 転送
+| zlib1g-dev                          |             | *必須* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
+| libgcrypt20-dev                     |             | *必須* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
 | libgnutls28-dev                     | ≥ 2.2.0     |       | IRC サーバへの SSL 接続
 | gettext                             |             |       | 国際化 (メッセージの翻訳; ベース言語は英語です)
 | ca-certificates                     |             |       | SSL 接続に必要な証明書、relay プラグインで SSL サポート
