@@ -1298,8 +1298,6 @@ plugin_api_init ()
                 &gui_buffer_hdata_buffer_visited_cb, NULL);
     hook_hdata (NULL, "completion", N_("structure with completion"),
                 &gui_completion_hdata_completion_cb, NULL);
-    hook_hdata (NULL, "completion_partial", N_("structure with partial completion"),
-                &gui_completion_hdata_completion_partial_cb, NULL);
     hook_hdata (NULL, "config_file", N_("config file"),
                 &config_file_hdata_config_file_cb, NULL);
     hook_hdata (NULL, "config_section", N_("config section"),

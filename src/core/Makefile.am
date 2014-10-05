@@ -23,6 +23,8 @@ noinst_LIBRARIES = lib_weechat_core.a
 
 lib_weechat_core_a_SOURCES = weechat.c \
                              weechat.h \
+                             wee-arraylist.c \
+                             wee-arraylist.h \
                              wee-backtrace.c \
                              wee-backtrace.h \
                              wee-command.c \

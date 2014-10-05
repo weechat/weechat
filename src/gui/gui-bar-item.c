@@ -29,6 +29,7 @@
 #include <time.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-arraylist.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
@@ -1484,9 +1485,9 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
                                  struct t_gui_buffer *buffer,
                                  struct t_hashtable *extra_info)
 {
-    int length;
+    int length, i;
     char *buf, str_number[64];
-    struct t_gui_completion_partial *ptr_item;
+    struct t_gui_completion_word *ptr_completion_word;
 
     /* make C compiler happy */
     (void) data;
@@ -1495,37 +1496,39 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
     (void) extra_info;
 
     if (!buffer || !buffer->completion
-        || !buffer->completion->partial_completion_list)
+        || (buffer->completion->partial_list->size == 0))
     {
         return NULL;
     }
 
     length = 1;
-    for (ptr_item = buffer->completion->partial_completion_list;
-         ptr_item; ptr_item = ptr_item->next_item)
+    for (i = 0; i < buffer->completion->partial_list->size; i++)
     {
-        length += strlen (ptr_item->word) + 32;
+        ptr_completion_word =
+            (struct t_gui_completion_word *)(buffer->completion->partial_list->data[i]);
+        length += strlen (ptr_completion_word->word) + 32;
     }
 
     buf = malloc (length);
     if (buf)
     {
         buf[0] = '\0';
-        for (ptr_item = buffer->completion->partial_completion_list;
-             ptr_item; ptr_item = ptr_item->next_item)
+        for (i = 0; i < buffer->completion->partial_list->size; i++)
         {
+            ptr_completion_word =
+                (struct t_gui_completion_word *)(buffer->completion->partial_list->data[i]);
             strcat (buf, GUI_COLOR_CUSTOM_BAR_FG);
-            strcat (buf, ptr_item->word);
-            if (ptr_item->count > 0)
+            strcat (buf, ptr_completion_word->word);
+            if (ptr_completion_word->count > 0)
             {
                 strcat (buf, GUI_COLOR_CUSTOM_BAR_DELIM);
                 strcat (buf, "(");
                 snprintf (str_number, sizeof (str_number),
-                          "%d", ptr_item->count);
+                          "%d", ptr_completion_word->count);
                 strcat (buf, str_number);
                 strcat (buf, ")");
             }
-            if (ptr_item->next_item)
+            if (i < buffer->completion->partial_list->size - 1)
                 strcat (buf, " ");
         }
     }

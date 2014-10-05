@@ -1,5 +1,7 @@
 SET(WEECHAT_SOURCES
 ./doc/docgen.py
+./src/core/wee-arraylist.c
+./src/core/wee-arraylist.h
 ./src/core/wee-backtrace.c
 ./src/core/wee-backtrace.h
 ./src/core/weechat.c
