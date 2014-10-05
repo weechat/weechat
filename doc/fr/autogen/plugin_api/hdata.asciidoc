@@ -586,21 +586,13 @@
 *** 'direction' (integer)
 *** 'add_space' (integer)
 *** 'force_partial_completion' (integer)
-*** 'completion_list' (pointer)
+*** 'list' (pointer)
 *** 'word_found' (string)
 *** 'word_found_is_nick' (integer)
 *** 'position_replace' (integer)
 *** 'diff_size' (integer)
 *** 'diff_length' (integer)
-*** 'partial_completion_list' (pointer, hdata: "completion_partial")
-*** 'last_partial_completion' (pointer, hdata: "completion_partial")
-* 'completion_partial': structure avec une complétion partielle
-** extension: weechat
-** variables:
-*** 'word' (string)
-*** 'count' (integer)
-*** 'prev_item' (pointer, hdata: "completion_partial")
-*** 'next_item' (pointer, hdata: "completion_partial")
+*** 'partial_list' (pointer)
 * 'config_file': fichier de configuration
 ** extension: weechat
 ** variables:
