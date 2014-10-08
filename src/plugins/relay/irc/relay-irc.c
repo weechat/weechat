@@ -571,13 +571,13 @@ relay_irc_hsignal_irc_redir_cb (void *data, const char *signal,
  *   - date
  *   - nick
  *   - nick1 and nick2 (old and new nick for irc "nick" command)
- *   - host (without colors)
+ *   - host
  *   - message (without colors).
  *
  * Arguments hdata_line_data and line_data must be non NULL, the other arguments
  * can be NULL.
  *
- * Note: tags, host and message (if given and filled) must be freed after use.
+ * Note: tags and message (if given and filled) must be freed after use.
  */
 
 void
@@ -586,13 +586,13 @@ relay_irc_get_line_info (struct t_relay_client *client,
                          struct t_hdata *hdata_line_data, void *line_data,
                          int *irc_command, int *irc_action, time_t *date,
                          const char **nick, const char **nick1,
-                         const char **nick2, char **tags, char **host,
-                         char **message)
+                         const char **nick2, const char **host,
+                         char **tags, char **message)
 {
     int i, num_tags, command, action, all_tags, length;
-    char str_tag[256], *pos, *pos2, *message_no_color, str_time[256];
+    char str_tag[256], *pos, *message_no_color, str_time[256];
     const char *ptr_tag, *ptr_message, *ptr_nick, *ptr_nick1, *ptr_nick2;
-    const char *localvar_nick, *time_format;
+    const char *ptr_host, *localvar_nick, *time_format;
     time_t msg_date;
     struct tm *tm;
 
@@ -608,10 +608,10 @@ relay_irc_get_line_info (struct t_relay_client *client,
         *nick1 = NULL;
     if (nick2)
         *nick2 = NULL;
-    if (tags)
-        *tags = NULL;
     if (host)
         *host = NULL;
+    if (tags)
+        *tags = NULL;
     if (message)
         *message = NULL;
 
@@ -629,6 +629,7 @@ relay_irc_get_line_info (struct t_relay_client *client,
     ptr_nick = NULL;
     ptr_nick1 = NULL;
     ptr_nick2 = NULL;
+    ptr_host = NULL;
     all_tags = weechat_hashtable_has_key (relay_config_hashtable_irc_backlog_tags,
                                           "*");
     for (i = 0; i < num_tags; i++)
@@ -645,6 +646,8 @@ relay_irc_get_line_info (struct t_relay_client *client,
                 ptr_nick1 = ptr_tag + 10;
             else if (strncmp (ptr_tag, "irc_nick2_", 10) == 0)
                 ptr_nick2 = ptr_tag + 10;
+            else if (strncmp (ptr_tag, "host_", 5) == 0)
+                ptr_host = ptr_tag + 5;
             else if ((command < 0)
                      && (all_tags
                          || (weechat_hashtable_has_key (relay_config_hashtable_irc_backlog_tags,
@@ -684,8 +687,11 @@ relay_irc_get_line_info (struct t_relay_client *client,
         *nick1 = ptr_nick1;
     if (nick2)
         *nick2 = ptr_nick2;
+    if (host)
+        *host = ptr_host;
     message_no_color = (ptr_message) ?
         weechat_string_remove_color (ptr_message, NULL) : NULL;
+
     if ((command == RELAY_IRC_CMD_PRIVMSG) && message && message_no_color)
     {
         pos = message_no_color;
@@ -720,25 +726,7 @@ relay_irc_get_line_info (struct t_relay_client *client,
         else
             *message = strdup (pos);
     }
-    switch (command)
-    {
-        case RELAY_IRC_CMD_JOIN:
-        case RELAY_IRC_CMD_PART:
-        case RELAY_IRC_CMD_QUIT:
-            if (host && message && message_no_color)
-            {
-                pos = strstr (message_no_color, " (");
-                if (pos)
-                {
-                    pos2 = strchr (pos, ')');
-                    if (pos2)
-                        *host = weechat_strndup (pos + 2, pos2 - pos - 2);
-                }
-            }
-            break;
-        default:
-            break;
-    }
+
     /* if server capability "server-time" is enabled, add an irc tag with time */
     if (tags
         && (RELAY_IRC_DATA(client, server_capabilities) & (1 << RELAY_IRC_CAPAB_SERVER_TIME)))
@@ -765,8 +753,8 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
     struct t_relay_server *ptr_server;
     void *ptr_own_lines, *ptr_line, *ptr_line_data;
     void *ptr_hdata_line, *ptr_hdata_line_data;
-    char *tags, *host, *message;
-    const char *ptr_nick, *ptr_nick1, *ptr_nick2;
+    char *tags, *message;
+    const char *ptr_nick, *ptr_nick1, *ptr_nick2, *ptr_host;
     int irc_command, irc_action, count, max_number, max_minutes;
     time_t date_min, date_min2, date;
 
@@ -825,8 +813,8 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
                                      NULL, /* nick */
                                      NULL, /* nick1 */
                                      NULL, /* nick2 */
-                                     NULL, /* tags */
                                      NULL, /* host */
+                                     NULL, /* tags */
                                      NULL); /* message */
             if (irc_command >= 0)
             {
@@ -872,8 +860,8 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
                                      &ptr_nick,
                                      &ptr_nick1,
                                      &ptr_nick2,
+                                     &ptr_host,
                                      &tags,
-                                     &host,
                                      &message);
             switch (irc_command)
             {
@@ -882,8 +870,8 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
                                      "%s:%s%s%s JOIN :%s",
                                      (tags) ? tags : "",
                                      ptr_nick,
-                                     (host) ? "!" : "",
-                                     (host) ? host : "",
+                                     (ptr_host) ? "!" : "",
+                                     (ptr_host) ? ptr_host : "",
                                      channel);
                     break;
                 case RELAY_IRC_CMD_PART:
@@ -891,16 +879,16 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
                                      "%s:%s%s%s PART %s",
                                      (tags) ? tags : "",
                                      ptr_nick,
-                                     (host) ? "!" : "",
-                                     (host) ? host : "",
+                                     (ptr_host) ? "!" : "",
+                                     (ptr_host) ? ptr_host : "",
                                      channel);
                 case RELAY_IRC_CMD_QUIT:
                     relay_irc_sendf (client,
                                      "%s:%s%s%s QUIT",
                                      (tags) ? tags : "",
                                      ptr_nick,
-                                     (host) ? "!" : "",
-                                     (host) ? host : "");
+                                     (ptr_host) ? "!" : "",
+                                     (ptr_host) ? ptr_host : "");
                     break;
                 case RELAY_IRC_CMD_NICK:
                     if (ptr_nick1 && ptr_nick2)
@@ -916,9 +904,11 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
                     if (ptr_nick && message)
                     {
                         relay_irc_sendf (client,
-                                         "%s:%s PRIVMSG %s :%s%s%s",
+                                         "%s:%s%s%s PRIVMSG %s :%s%s%s",
                                          (tags) ? tags : "",
                                          ptr_nick,
+                                         (ptr_host) ? "!" : "",
+                                         (ptr_host) ? ptr_host : "",
                                          channel,
                                          (irc_action) ? "\01ACTION " : "",
                                          message,
@@ -931,8 +921,6 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
             }
             if (tags)
                 free (tags);
-            if (host)
-                free (host);
             if (message)
                 free (message);
         }
