@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-09-20 14:37+0200\n"
+"POT-Creation-Date: 2014-10-08 22:22+0200\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8100,10 +8100,6 @@ msgid "structure with completion"
 msgstr "вставить строку в поле ввода"
 
 #, fuzzy
-msgid "structure with partial completion"
-msgstr "вставить строку в поле ввода"
-
-#, fuzzy
 msgid "config file"
 msgstr "перезагрузить конфигурационный файл сервера"
 
@@ -8729,9 +8725,9 @@ msgid "display backlog starting from last client disconnect"
 msgstr ""
 
 msgid ""
-"tags of messages which are displayed in backlog per IRC channel (supported "
-"tags: \"irc_join\", \"irc_part\", \"irc_quit\", \"irc_nick\", \"irc_privmsg"
-"\"), \"*\" = all supported tags"
+"comma-separated list of messages tags which are displayed in backlog per IRC "
+"channel (supported tags: \"irc_join\", \"irc_part\", \"irc_quit\", \"irc_nick"
+"\", \"irc_privmsg\"), \"*\" = all supported tags"
 msgstr ""
 
 msgid ""
@@ -10195,3 +10191,7 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "structure with partial completion"
+#~ msgstr "вставить строку в поле ввода"

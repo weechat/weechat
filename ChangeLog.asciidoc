@@ -37,6 +37,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: fix translation of CTCP PING reply (closes #137)
 * lua: add detection of Lua 5.2
 * python: fix Python detection with Homebrew (closes #217)
+* relay: use comma separator in option relay.irc.backlog_tags, check the value
+  of option when it is changed with /set
 * relay: remove "::ffff:" from IPv4-mapped IPv6 client address (closes #111)
 
 == Version 1.0.1 (2014-09-28)

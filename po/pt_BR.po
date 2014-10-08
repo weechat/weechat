@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-09-20 14:37+0200\n"
+"POT-Creation-Date: 2014-10-08 22:22+0200\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8348,9 +8348,6 @@ msgstr "lista de buffers"
 msgid "structure with completion"
 msgstr "estrutura com completação"
 
-msgid "structure with partial completion"
-msgstr "estrutura com completação parcial"
-
 msgid "config file"
 msgstr "arquivo de configuração"
 
@@ -8976,9 +8973,9 @@ msgid "display backlog starting from last client disconnect"
 msgstr ""
 
 msgid ""
-"tags of messages which are displayed in backlog per IRC channel (supported "
-"tags: \"irc_join\", \"irc_part\", \"irc_quit\", \"irc_nick\", \"irc_privmsg"
-"\"), \"*\" = all supported tags"
+"comma-separated list of messages tags which are displayed in backlog per IRC "
+"channel (supported tags: \"irc_join\", \"irc_part\", \"irc_quit\", \"irc_nick"
+"\", \"irc_privmsg\"), \"*\" = all supported tags"
 msgstr ""
 
 msgid ""
@@ -10440,3 +10437,6 @@ msgstr "%s%s: não foi possível setar opção \"nonblock\" para o socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: tempo esgotado para \"%s\" com %s"
+
+#~ msgid "structure with partial completion"
+#~ msgstr "estrutura com completação parcial"

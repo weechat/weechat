@@ -20,12 +20,14 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include <limits.h>
 #include <regex.h>
 
 #include "../weechat-plugin.h"
 #include "relay.h"
 #include "relay-config.h"
+#include "irc/relay-irc.h"
 #include "relay-client.h"
 #include "relay-buffer.h"
 #include "relay-network.h"
@@ -229,6 +231,50 @@ relay_config_change_network_websocket_allowed_origins (void *data,
 }
 
 /*
+ * Checks if IRC backlog tags are valid.
+ *
+ * Returns:
+ *   1: IRC backlog tags are valid
+ *   0: IRC backlog tags are not valid
+ */
+
+int
+relay_config_check_irc_backlog_tags (void *data,
+                                     struct t_config_option *option,
+                                     const char *value)
+{
+    char **tags;
+    int num_tags, i, rc;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    rc = 1;
+
+    /* "*" means all tags */
+    if (strcmp (value, "*") == 0)
+        return rc;
+
+    /* split tags and check them */
+    tags = weechat_string_split (value, ",", 0, 0, &num_tags);
+    if (tags)
+    {
+        for (i = 0; i < num_tags; i++)
+        {
+            if (relay_irc_search_backlog_commands_tags (tags[i]) < 0)
+            {
+                rc = 0;
+                break;
+            }
+        }
+        weechat_string_free_split (tags);
+    }
+
+    return rc;
+}
+
+/*
  * Callback for changes on option "relay.irc.backlog_tags".
  */
 
@@ -255,7 +301,7 @@ relay_config_change_irc_backlog_tags (void *data,
         weechat_hashtable_remove_all (relay_config_hashtable_irc_backlog_tags);
 
     items = weechat_string_split (weechat_config_string (relay_config_irc_backlog_tags),
-                                  ";", 0, 0, &num_items);
+                                  ",", 0, 0, &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -696,10 +742,12 @@ relay_config_init ()
     relay_config_irc_backlog_tags = weechat_config_new_option (
         relay_config_file, ptr_section,
         "backlog_tags", "string",
-        N_("tags of messages which are displayed in backlog per IRC channel "
-           "(supported tags: \"irc_join\", \"irc_part\", \"irc_quit\", "
-           "\"irc_nick\", \"irc_privmsg\"), \"*\" = all supported tags"),
-        NULL, 0, 0, "irc_privmsg", NULL, 0, NULL, NULL,
+        N_("comma-separated list of messages tags which are displayed in "
+           "backlog per IRC channel (supported tags: \"irc_join\", "
+           "\"irc_part\", \"irc_quit\", \"irc_nick\", \"irc_privmsg\"), "
+           "\"*\" = all supported tags"),
+        NULL, 0, 0, "irc_privmsg", NULL, 0,
+        &relay_config_check_irc_backlog_tags, NULL,
         &relay_config_change_irc_backlog_tags, NULL, NULL, NULL);
     relay_config_irc_backlog_time_format = weechat_config_new_option (
         relay_config_file, ptr_section,

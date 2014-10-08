@@ -59,7 +59,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
-** descrizione: `tags of messages which are displayed in backlog per IRC channel (supported tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = all supported tags`
+** descrizione: `comma-separated list of messages tags which are displayed in backlog per IRC channel (supported tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = all supported tags`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"irc_privmsg"`)
 

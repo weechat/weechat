@@ -62,6 +62,7 @@ enum t_relay_irc_server_capab
     RELAY_IRC_NUM_CAPAB,
 };
 
+extern int relay_irc_search_backlog_commands_tags (const char *tag);
 extern void relay_irc_recv (struct t_relay_client *client,
                             const char *data);
 extern void relay_irc_close_connection (struct t_relay_client *client);

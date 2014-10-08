@@ -17,6 +17,14 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 1.1 (under dev)
 
+=== Relay option relay.irc.backlog_tags
+
+The option 'relay.irc.backlog_tags' is now a list separated by commas
+(it was separated by semicolons in older versions).
+
+If you are using a list of tags in this option, you must adjust the value
+manually.
+
 === IPv4-mapped IPv6 client address in relay
 
 The string "::ffff:" has been removed from IPv4-mapped IPv6 client address

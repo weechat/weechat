@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-09-20 14:37+0200\n"
+"POT-Creation-Date: 2014-10-08 22:22+0200\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8680,10 +8680,6 @@ msgid "structure with completion"
 msgstr "funkce pro příkazovou řádku"
 
 #, fuzzy
-msgid "structure with partial completion"
-msgstr "upozornit uživatele pokud nastane částečné doplnění"
-
-#, fuzzy
 msgid "config file"
 msgstr "konfigurační soubory"
 
@@ -9332,9 +9328,9 @@ msgid "display backlog starting from last client disconnect"
 msgstr ""
 
 msgid ""
-"tags of messages which are displayed in backlog per IRC channel (supported "
-"tags: \"irc_join\", \"irc_part\", \"irc_quit\", \"irc_nick\", \"irc_privmsg"
-"\"), \"*\" = all supported tags"
+"comma-separated list of messages tags which are displayed in backlog per IRC "
+"channel (supported tags: \"irc_join\", \"irc_part\", \"irc_quit\", \"irc_nick"
+"\", \"irc_privmsg\"), \"*\" = all supported tags"
 msgstr ""
 
 msgid ""
@@ -10793,3 +10789,7 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#, fuzzy
+#~ msgid "structure with partial completion"
+#~ msgstr "upozornit uživatele pokud nastane částečné doplnění"

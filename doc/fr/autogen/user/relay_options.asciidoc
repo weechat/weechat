@@ -59,7 +59,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
-** description: `étiquettes des messages qui sont affichés dans l'historique par canal IRC (étiquettes supportées : "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = toutes les étiquettes supportées`
+** description: `liste d'étiquettes de messages (séparées par des virgules) qui sont affichés dans l'historique par canal IRC (étiquettes supportées : "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = toutes les étiquettes supportées`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"irc_privmsg"`)
 
