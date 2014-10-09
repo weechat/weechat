@@ -59,6 +59,7 @@ Alphabetically:
 * Murilo Opsfelder Araujo
 * Nicolas Cavigneaux
 * Nils Görs (nils_2)
+* nyuszika7h
 * Odin
 * Patrick Steinhardt
 * Paul Komkoff
