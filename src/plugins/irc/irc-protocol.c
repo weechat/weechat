@@ -599,7 +599,7 @@ IRC_PROTOCOL_CALLBACK(invite)
                                                                    NULL),
                                   date,
                                   irc_protocol_tags (command, "notify_highlight",
-                                                     NULL, address),
+                                                     nick, address),
                                   _("%sYou have been invited to %s%s%s by "
                                     "%s%s%s"),
                                   weechat_prefix ("network"),
