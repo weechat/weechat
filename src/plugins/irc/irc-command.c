@@ -6195,7 +6195,7 @@ irc_command_init ()
         N_("server: send to this server (internal name)\n"
            "target: nick or channel (may be mask, '*' = current channel)\n"
            "  text: text to send"),
-        "-server %(irc_servers)"
+        "-server %(irc_servers) %(nicks)"
         " || %(nicks)",
         &irc_command_msg, NULL);
     weechat_hook_command (
@@ -6220,7 +6220,9 @@ irc_command_init ()
         N_("server: send to this server (internal name)\n"
            "target: nick or channel name\n"
            "  text: text to send"),
-        "%(nicks)|-server %(irc_servers)", &irc_command_notice, NULL);
+        "-server %(irc_servers) %(nicks)"
+        " || %(nicks)",
+        &irc_command_notice, NULL);
     weechat_hook_command (
         "notify",
         N_("add a notification for presence or away status of nicks on servers"),
@@ -6289,7 +6291,9 @@ irc_command_init ()
         N_("server: send to this server (internal name)\n"
            "  nick: nick\n"
            "  text: text to send"),
-        "%(nicks)|-server %(irc_servers)", &irc_command_query, NULL);
+        "-server %(irc_servers) %(nicks)"
+        " || %(nicks)",
+        &irc_command_query, NULL);
     weechat_hook_command (
         "quiet",
         N_("quiet nicks or hosts"),
