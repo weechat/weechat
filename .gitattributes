@@ -3,3 +3,4 @@
 .git*               export-ignore
 debian              export-ignore
 weechat.spec        export-ignore
+.mailmap            export-ignore
