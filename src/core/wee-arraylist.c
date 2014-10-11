@@ -243,7 +243,7 @@ arraylist_binary_search (struct t_arraylist *arraylist, void *pointer,
     {
         ret_index = end;
         /* by convention, add an element with same value after the last one */
-        ret_index_insert = -1;
+        ret_index_insert = end + 1;
         ret_pointer = arraylist->data[end];
         goto end;
     }
@@ -269,7 +269,7 @@ arraylist_binary_search (struct t_arraylist *arraylist, void *pointer,
     if (rc == 0)
     {
         ret_index = start;
-        ret_index_insert = start;
+        ret_index_insert = start + 1;
         ret_pointer = arraylist->data[start];
         goto end;
     }
@@ -303,7 +303,7 @@ arraylist_binary_search (struct t_arraylist *arraylist, void *pointer,
         if (rc == 0)
         {
             ret_index = middle;
-            ret_index_insert = middle;
+            ret_index_insert = middle + 1;
             ret_pointer = arraylist->data[middle];
             goto end;
         }
@@ -322,10 +322,49 @@ arraylist_binary_search (struct t_arraylist *arraylist, void *pointer,
     }
 
 end:
+    if ((ret_index >= 0) && arraylist->allow_duplicates)
+    {
+        /*
+         * in case of duplicates in table, the index of element found
+         * is the first element with the value, and the index for
+         * insert is the last element with the value + 1
+         */
+        start = ret_index - 1;
+        while (start >= 0)
+        {
+            rc = (arraylist->callback_cmp) (
+                arraylist->callback_cmp_data,
+                arraylist,
+                pointer,
+                arraylist->data[start]);
+            if (rc != 0)
+                break;
+            start--;
+        }
+        start++;
+        end = ret_index + 1;
+        while (end < arraylist->size)
+        {
+            rc = (arraylist->callback_cmp) (
+                arraylist->callback_cmp_data,
+                arraylist,
+                pointer,
+                arraylist->data[end]);
+            if (rc != 0)
+                break;
+            end++;
+        }
+        end--;
+        ret_index = start;
+        ret_index_insert = end + 1;
+        ret_pointer = arraylist->data[start];
+    }
+
     if (index)
         *index = ret_index;
     if (index_insert)
         *index_insert = ret_index_insert;
+
     return ret_pointer;
 }
 

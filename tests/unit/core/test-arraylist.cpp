@@ -32,12 +32,28 @@ extern "C"
     LONGS_EQUAL(__result,                                               \
                 arraylist_add (arraylist, (void *)(__value)));
 
+#define TEST_ARRAYLIST_SEARCH(__result_ptr, __result_index,             \
+                              __result_index_insert, __value)           \
+    pointer = arraylist_search (arraylist, (void *)(__value),           \
+                                &index, &index_insert);                 \
+    if (__result_ptr && pointer)                                        \
+    {                                                                   \
+        STRCMP_EQUAL(__result_ptr, (const char *)pointer);              \
+    }                                                                   \
+    else                                                                \
+    {                                                                   \
+        POINTERS_EQUAL(__result_ptr, pointer);                          \
+    }                                                                   \
+    LONGS_EQUAL(__result_index, index);                                 \
+    LONGS_EQUAL(__result_index_insert, index_insert);
+
 TEST_GROUP(Arraylist)
 {
 };
 
 /*
  * Test callback comparing two arraylist elements.
+ * Note: NULL element is considered lower than any other.
  *
  * Returns:
  *   -1: element(pointer1) < element(pointer2)
@@ -60,11 +76,14 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
 {
     struct t_arraylist *arraylist;
     int i, index, index_insert, expected_pos;
+    void *pointer;
     const char *item_aaa = "aaa";
     const char *item_abc = "abc";
     const char *item_DEF = "DEF";
+    const char *item_Def = "Def";
     const char *item_def = "def";
     const char *item_xxx = "xxx";
+    const char *item_zzz = "zzz";
 
     /* create arraylist */
     arraylist = arraylist_new (initial_size,
@@ -118,128 +137,152 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
     /* add some elements */
     if (sorted)
     {
+        TEST_ARRAYLIST_ADD(0, item_zzz);
         TEST_ARRAYLIST_ADD(0, item_xxx);
         TEST_ARRAYLIST_ADD(0, NULL);
-        TEST_ARRAYLIST_ADD(1, item_def);
         TEST_ARRAYLIST_ADD(1, item_DEF);
+        TEST_ARRAYLIST_ADD((allow_duplicates) ? 2 : 1, item_def);
+        TEST_ARRAYLIST_ADD((allow_duplicates) ? 3 : 1, item_Def);
         TEST_ARRAYLIST_ADD(1, item_abc);
     }
     else
     {
-        TEST_ARRAYLIST_ADD(0, item_xxx);
-        TEST_ARRAYLIST_ADD(1, NULL);
-        TEST_ARRAYLIST_ADD(2, item_def);
-        TEST_ARRAYLIST_ADD((allow_duplicates) ? 3 : 2, item_DEF);
-        TEST_ARRAYLIST_ADD((allow_duplicates) ? 4 : 3, item_abc);
+        TEST_ARRAYLIST_ADD(0, item_zzz);
+        TEST_ARRAYLIST_ADD(1, item_xxx);
+        TEST_ARRAYLIST_ADD(2, NULL);
+        TEST_ARRAYLIST_ADD(3, item_DEF);
+        TEST_ARRAYLIST_ADD((allow_duplicates) ? 4 : 3, item_def);
+        TEST_ARRAYLIST_ADD((allow_duplicates) ? 5 : 3, item_Def);
+        TEST_ARRAYLIST_ADD((allow_duplicates) ? 6 : 4, item_abc);
     }
 
     /*
      * arraylist is now:
      *   sorted:
-     *     allow dup: [NULL, "abc", "DEF", "def", "xxx", (NULL)]
-     *     no dup   : [NULL, "abc", "DEF", "xxx"]
+     *     dup   : [NULL, "abc", "DEF", "def", "Def", "xxx", "zzz"] + 2 NULL
+     *     no dup: [NULL, "abc", "Def", "xxx", "zzz"] + 1 NULL
      *   not sorted:
-     *     allow dup: ["xxx", NULL, "def", "DEF", "abc", (NULL)]
-     *     no dup   : ["xxx", NULL, "DEF", "abc"]
+     *     dup   : ["zzz", "xxx", NULL, "DEF", "def", "Def", "abc"] + 2 NULL
+     *     no dup: ["zzz", "xxx", NULL, "Def", "abc"] + 1 NULL
      */
 
     /* check size after adds */
-    LONGS_EQUAL((allow_duplicates) ? 5 : 4, arraylist->size);
-    LONGS_EQUAL((allow_duplicates) ? 5 : 4, arraylist_size (arraylist));
-    LONGS_EQUAL((allow_duplicates) ? 6 : 4, arraylist->size_alloc);
+    LONGS_EQUAL((allow_duplicates) ? 7 : 5, arraylist->size);
+    LONGS_EQUAL((allow_duplicates) ? 7 : 5, arraylist_size (arraylist));
+    LONGS_EQUAL((allow_duplicates) ? 9 : 6, arraylist->size_alloc);
 
     /* check content after adds */
     if (sorted)
     {
-        POINTERS_EQUAL(NULL, arraylist->data[0]);
-        STRCMP_EQUAL(item_abc, (const char *)arraylist->data[1]);
         if (allow_duplicates)
         {
+            POINTERS_EQUAL(NULL, arraylist->data[0]);
+            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[1]);
             STRCMP_EQUAL(item_DEF, (const char *)arraylist->data[2]);
             STRCMP_EQUAL(item_def, (const char *)arraylist->data[3]);
-            STRCMP_EQUAL(item_xxx, (const char *)arraylist->data[4]);
-            POINTERS_EQUAL(NULL, arraylist->data[5]);
+            STRCMP_EQUAL(item_Def, (const char *)arraylist->data[4]);
+            STRCMP_EQUAL(item_xxx, (const char *)arraylist->data[5]);
+            STRCMP_EQUAL(item_zzz, (const char *)arraylist->data[6]);
+            for (i = 7; i < arraylist->size_alloc; i++)
+            {
+                POINTERS_EQUAL(NULL, arraylist->data[i]);
+            }
         }
         else
         {
-            STRCMP_EQUAL(item_DEF, (const char *)arraylist->data[2]);
+            POINTERS_EQUAL(NULL, arraylist->data[0]);
+            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[1]);
+            STRCMP_EQUAL(item_Def, (const char *)arraylist->data[2]);
             STRCMP_EQUAL(item_xxx, (const char *)arraylist->data[3]);
+            STRCMP_EQUAL(item_zzz, (const char *)arraylist->data[4]);
+            for (i = 5; i < arraylist->size_alloc; i++)
+            {
+                POINTERS_EQUAL(NULL, arraylist->data[i]);
+            }
         }
     }
     else
     {
-        STRCMP_EQUAL(item_xxx, (const char *)arraylist->data[0]);
-        POINTERS_EQUAL(NULL, arraylist->data[1]);
         if (allow_duplicates)
         {
-            STRCMP_EQUAL(item_def, (const char *)arraylist->data[2]);
+            STRCMP_EQUAL(item_zzz, (const char *)arraylist->data[0]);
+            STRCMP_EQUAL(item_xxx, (const char *)arraylist->data[1]);
+            POINTERS_EQUAL(NULL, arraylist->data[2]);
             STRCMP_EQUAL(item_DEF, (const char *)arraylist->data[3]);
-            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[4]);
-            POINTERS_EQUAL(NULL, arraylist->data[5]);
+            STRCMP_EQUAL(item_def, (const char *)arraylist->data[4]);
+            STRCMP_EQUAL(item_Def, (const char *)arraylist->data[5]);
+            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[6]);
+            for (i = 7; i < arraylist->size_alloc; i++)
+            {
+                POINTERS_EQUAL(NULL, arraylist->data[i]);
+            }
         }
         else
         {
-            STRCMP_EQUAL(item_DEF, (const char *)arraylist->data[2]);
-            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[3]);
+            STRCMP_EQUAL(item_zzz, (const char *)arraylist->data[0]);
+            STRCMP_EQUAL(item_xxx, (const char *)arraylist->data[1]);
+            POINTERS_EQUAL(NULL, arraylist->data[2]);
+            STRCMP_EQUAL(item_Def, (const char *)arraylist->data[3]);
+            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[4]);
+            for (i = 5; i < arraylist->size_alloc; i++)
+            {
+                POINTERS_EQUAL(NULL, arraylist->data[i]);
+            }
         }
     }
 
     /* search elements */
     if (sorted)
     {
-        /* search first element */
-        POINTERS_EQUAL(NULL, arraylist_search (arraylist, NULL,
-                                               &index, &index_insert));
-        LONGS_EQUAL(0, index);
-        LONGS_EQUAL(0, index_insert);
-
-        /* search second element */
-        POINTERS_EQUAL(item_abc, arraylist_search (arraylist, (void *)item_abc,
-                                                   &index, &index_insert));
-        LONGS_EQUAL(1, index);
-        LONGS_EQUAL(1, index_insert);
-
-        /* search last element */
-        POINTERS_EQUAL(item_xxx,
-                       arraylist_search (arraylist, (void *)item_xxx,
-                                         &index, &index_insert));
-        LONGS_EQUAL((allow_duplicates) ? 4 : 3, index);
-        LONGS_EQUAL(-1, index_insert);
+        if (allow_duplicates)
+        {
+            TEST_ARRAYLIST_SEARCH(NULL, 0, 1, NULL);
+            TEST_ARRAYLIST_SEARCH(item_abc, 1, 2, item_abc);
+            TEST_ARRAYLIST_SEARCH(item_DEF, 2, 5, item_DEF);
+            TEST_ARRAYLIST_SEARCH(item_DEF, 2, 5, item_def);
+            TEST_ARRAYLIST_SEARCH(item_DEF, 2, 5, item_Def);
+            TEST_ARRAYLIST_SEARCH(item_xxx, 5, 6, item_xxx);
+            TEST_ARRAYLIST_SEARCH(item_zzz, 6, 7, item_zzz);
+        }
+        else
+        {
+            TEST_ARRAYLIST_SEARCH(NULL, 0, 1, NULL);
+            TEST_ARRAYLIST_SEARCH(item_abc, 1, 2, item_abc);
+            TEST_ARRAYLIST_SEARCH(item_Def, 2, 3, item_DEF);
+            TEST_ARRAYLIST_SEARCH(item_Def, 2, 3, item_def);
+            TEST_ARRAYLIST_SEARCH(item_Def, 2, 3, item_Def);
+            TEST_ARRAYLIST_SEARCH(item_xxx, 3, 4, item_xxx);
+            TEST_ARRAYLIST_SEARCH(item_zzz, 4, 5, item_zzz);
+        }
 
         /* search non-existing element */
-        POINTERS_EQUAL(NULL,
-                       arraylist_search (arraylist, (void *)item_aaa,
-                                         &index, &index_insert));
-        LONGS_EQUAL(-1, index);
-        LONGS_EQUAL(1, index_insert);
+        TEST_ARRAYLIST_SEARCH(NULL, -1, 1, item_aaa);
     }
     else
     {
-        /* search first element */
-        POINTERS_EQUAL(item_xxx, arraylist_search (arraylist, (void *)item_xxx,
-                                                   &index, &index_insert));
-        LONGS_EQUAL(0, index);
-        LONGS_EQUAL(-1, index_insert);
-
-        /* search second element */
-        POINTERS_EQUAL(NULL, arraylist_search (arraylist, NULL,
-                                               &index, &index_insert));
-        LONGS_EQUAL(1, index);
-        LONGS_EQUAL(-1, index_insert);
-
-        /* search last element */
-        POINTERS_EQUAL(item_abc,
-                       arraylist_search (arraylist, (void *)item_abc,
-                                         &index, &index_insert));
-        LONGS_EQUAL((allow_duplicates) ? 4 : 3, index);
-        LONGS_EQUAL(-1, index_insert);
+        if (allow_duplicates)
+        {
+            TEST_ARRAYLIST_SEARCH(item_zzz, 0, -1, item_zzz);
+            TEST_ARRAYLIST_SEARCH(item_xxx, 1, -1, item_xxx);
+            TEST_ARRAYLIST_SEARCH(NULL, 2, -1, NULL);
+            TEST_ARRAYLIST_SEARCH(item_DEF, 3, -1, item_DEF);
+            TEST_ARRAYLIST_SEARCH(item_DEF, 3, -1, item_def);
+            TEST_ARRAYLIST_SEARCH(item_DEF, 3, -1, item_Def);
+            TEST_ARRAYLIST_SEARCH(item_abc, 6, -1, item_abc);
+        }
+        else
+        {
+            TEST_ARRAYLIST_SEARCH(item_zzz, 0, -1, item_zzz);
+            TEST_ARRAYLIST_SEARCH(item_xxx, 1, -1, item_xxx);
+            TEST_ARRAYLIST_SEARCH(NULL, 2, -1, NULL);
+            TEST_ARRAYLIST_SEARCH(item_Def, 3, -1, item_DEF);
+            TEST_ARRAYLIST_SEARCH(item_Def, 3, -1, item_def);
+            TEST_ARRAYLIST_SEARCH(item_Def, 3, -1, item_Def);
+            TEST_ARRAYLIST_SEARCH(item_abc, 4, -1, item_abc);
+        }
 
         /* search non-existing element */
-        POINTERS_EQUAL(NULL,
-                       arraylist_search (arraylist, (void *)item_aaa,
-                                         &index, &index_insert));
-        LONGS_EQUAL(-1, index);
-        LONGS_EQUAL(-1, index_insert);
+        TEST_ARRAYLIST_SEARCH(NULL, -1, -1, item_aaa);
     }
 
     /* invalid remove of elements */
@@ -249,26 +292,26 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
 
     /* remove the 3 first elements and check size after each remove */
     LONGS_EQUAL(0, arraylist_remove (arraylist, 0));
-    LONGS_EQUAL((allow_duplicates) ? 4 : 3, arraylist->size);
-    LONGS_EQUAL((allow_duplicates) ? 4 : 3, arraylist_size (arraylist));
-    LONGS_EQUAL((allow_duplicates) ? 6 : 4, arraylist->size_alloc);
+    LONGS_EQUAL((allow_duplicates) ? 6 : 4, arraylist->size);
+    LONGS_EQUAL((allow_duplicates) ? 6 : 4, arraylist_size (arraylist));
+    LONGS_EQUAL((allow_duplicates) ? 9 : 6, arraylist->size_alloc);
     LONGS_EQUAL(0, arraylist_remove (arraylist, 0));
-    LONGS_EQUAL((allow_duplicates) ? 3 : 2, arraylist->size);
-    LONGS_EQUAL((allow_duplicates) ? 3 : 2, arraylist_size (arraylist));
-    LONGS_EQUAL((allow_duplicates) ? 6 : 4, arraylist->size_alloc);
+    LONGS_EQUAL((allow_duplicates) ? 5 : 3, arraylist->size);
+    LONGS_EQUAL((allow_duplicates) ? 5 : 3, arraylist_size (arraylist));
+    LONGS_EQUAL((allow_duplicates) ? 9 : 6, arraylist->size_alloc);
     LONGS_EQUAL(0, arraylist_remove (arraylist, 0));
-    LONGS_EQUAL((allow_duplicates) ? 2 : 1, arraylist->size);
-    LONGS_EQUAL((allow_duplicates) ? 2 : 1, arraylist_size (arraylist));
-    LONGS_EQUAL((allow_duplicates) ? 3 : 2, arraylist->size_alloc);
+    LONGS_EQUAL((allow_duplicates) ? 4 : 2, arraylist->size);
+    LONGS_EQUAL((allow_duplicates) ? 4 : 2, arraylist_size (arraylist));
+    LONGS_EQUAL((allow_duplicates) ? 5 : 3, arraylist->size_alloc);
 
     /*
      * arraylist is now:
      *   sorted:
-     *     allow dup: ["def", "xxx", (NULL)]
-     *     no dup   : ["xxx"]
+     *     dup   : ["def", "Def", "xxx", "zzz"] + 1 NULL
+     *     no dup: ["xxx", "zzz"] + 1 NULL
      *   not sorted:
-     *     allow dup: ["DEF", "abc", (NULL)]
-     *     no dup   : ["abc"]
+     *     dup   : ["DEF", "def", "Def", "abc"] + 1 NULL
+     *     no dup: ["Def", "abc"] + 1 NULL
      */
 
     /* check content after the 3 deletions */
@@ -277,12 +320,22 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
         if (allow_duplicates)
         {
             STRCMP_EQUAL(item_def, (const char *)arraylist->data[0]);
-            STRCMP_EQUAL(item_xxx, (const char *)arraylist->data[1]);
-            POINTERS_EQUAL(NULL, arraylist->data[2]);
+            STRCMP_EQUAL(item_Def, (const char *)arraylist->data[1]);
+            STRCMP_EQUAL(item_xxx, (const char *)arraylist->data[2]);
+            STRCMP_EQUAL(item_zzz, (const char *)arraylist->data[3]);
+            for (i = 4; i < arraylist->size_alloc; i++)
+            {
+                POINTERS_EQUAL(NULL, arraylist->data[i]);
+            }
         }
         else
         {
             STRCMP_EQUAL(item_xxx, (const char *)arraylist->data[0]);
+            STRCMP_EQUAL(item_zzz, (const char *)arraylist->data[1]);
+            for (i = 2; i < arraylist->size_alloc; i++)
+            {
+                POINTERS_EQUAL(NULL, arraylist->data[i]);
+            }
         }
     }
     else
@@ -290,12 +343,22 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
         if (allow_duplicates)
         {
             STRCMP_EQUAL(item_DEF, (const char *)arraylist->data[0]);
-            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[1]);
-            POINTERS_EQUAL(NULL, arraylist->data[2]);
+            STRCMP_EQUAL(item_def, (const char *)arraylist->data[1]);
+            STRCMP_EQUAL(item_Def, (const char *)arraylist->data[2]);
+            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[3]);
+            for (i = 4; i < arraylist->size_alloc; i++)
+            {
+                POINTERS_EQUAL(NULL, arraylist->data[i]);
+            }
         }
         else
         {
-            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[0]);
+            STRCMP_EQUAL(item_Def, (const char *)arraylist->data[0]);
+            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[1]);
+            for (i = 2; i < arraylist->size_alloc; i++)
+            {
+                POINTERS_EQUAL(NULL, arraylist->data[i]);
+            }
         }
     }
 
@@ -308,17 +371,17 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
     /*
      * arraylist is now:
      *   sorted:
-     *     allow dup: ["aaa", "def", "xxx", (NULL)]
-     *     no dup   : ["aaa", "xxx"]
+     *     dup   : ["aaa", "def", "Def", "xxx", "zzz"]
+     *     no dup: ["aaa", "xxx", "zzz"]
      *   not sorted:
-     *     allow dup: ["aaa", "DEF", "abc", (NULL)]
-     *     no dup   : ["aaa", "abc"]
+     *     dup   : ["aaa", "DEF", "def", "Def", "abc"]
+     *     no dup: ["aaa", "Def", "abc"]
      */
 
     /* check size after insert */
-    LONGS_EQUAL((allow_duplicates) ? 3 : 2, arraylist->size);
-    LONGS_EQUAL((allow_duplicates) ? 3 : 2, arraylist_size (arraylist));
-    LONGS_EQUAL((allow_duplicates) ? 3 : 2, arraylist->size_alloc);
+    LONGS_EQUAL((allow_duplicates) ? 5 : 3, arraylist->size);
+    LONGS_EQUAL((allow_duplicates) ? 5 : 3, arraylist_size (arraylist));
+    LONGS_EQUAL((allow_duplicates) ? 5 : 3, arraylist->size_alloc);
 
     /* check content after the insert */
     if (sorted)
@@ -327,12 +390,23 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
         {
             STRCMP_EQUAL(item_aaa, (const char *)arraylist->data[0]);
             STRCMP_EQUAL(item_def, (const char *)arraylist->data[1]);
-            STRCMP_EQUAL(item_xxx, (const char *)arraylist->data[2]);
+            STRCMP_EQUAL(item_Def, (const char *)arraylist->data[2]);
+            STRCMP_EQUAL(item_xxx, (const char *)arraylist->data[3]);
+            STRCMP_EQUAL(item_zzz, (const char *)arraylist->data[4]);
+            for (i = 5; i < arraylist->size_alloc; i++)
+            {
+                POINTERS_EQUAL(NULL, arraylist->data[i]);
+            }
         }
         else
         {
             STRCMP_EQUAL(item_aaa, (const char *)arraylist->data[0]);
             STRCMP_EQUAL(item_xxx, (const char *)arraylist->data[1]);
+            STRCMP_EQUAL(item_zzz, (const char *)arraylist->data[2]);
+            for (i = 3; i < arraylist->size_alloc; i++)
+            {
+                POINTERS_EQUAL(NULL, arraylist->data[i]);
+            }
         }
     }
     else
@@ -341,12 +415,23 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
         {
             STRCMP_EQUAL(item_aaa, (const char *)arraylist->data[0]);
             STRCMP_EQUAL(item_DEF, (const char *)arraylist->data[1]);
-            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[2]);
+            STRCMP_EQUAL(item_def, (const char *)arraylist->data[2]);
+            STRCMP_EQUAL(item_Def, (const char *)arraylist->data[3]);
+            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[4]);
+            for (i = 5; i < arraylist->size_alloc; i++)
+            {
+                POINTERS_EQUAL(NULL, arraylist->data[i]);
+            }
         }
         else
         {
             STRCMP_EQUAL(item_aaa, (const char *)arraylist->data[0]);
-            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[1]);
+            STRCMP_EQUAL(item_Def, (const char *)arraylist->data[1]);
+            STRCMP_EQUAL(item_abc, (const char *)arraylist->data[2]);
+            for (i = 3; i < arraylist->size_alloc; i++)
+            {
+                POINTERS_EQUAL(NULL, arraylist->data[i]);
+            }
         }
     }
 
