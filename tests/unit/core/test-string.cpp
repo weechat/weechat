@@ -709,6 +709,7 @@ TEST(String, Split)
     /* standard split */
     argv = string_split (" abc de  fghi ", " ", 0, 0, &argc);
     LONGS_EQUAL(3, argc);
+    CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
@@ -718,6 +719,7 @@ TEST(String, Split)
     /* max 2 items */
     argv = string_split (" abc de  fghi ", " ", 0, 2, &argc);
     LONGS_EQUAL(2, argc);
+    CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     POINTERS_EQUAL(NULL, argv[2]);
@@ -726,6 +728,7 @@ TEST(String, Split)
     /* keep eol */
     argv = string_split (" abc de  fghi ", " ", 1, 0, &argc);
     LONGS_EQUAL(3, argc);
+    CHECK(argv);
     STRCMP_EQUAL("abc de  fghi", argv[0]);
     STRCMP_EQUAL("de  fghi", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
@@ -735,6 +738,7 @@ TEST(String, Split)
     /* keep eol and max 2 items */
     argv = string_split (" abc de  fghi ", " ", 1, 2, &argc);
     LONGS_EQUAL(2, argc);
+    CHECK(argv);
     STRCMP_EQUAL("abc de  fghi", argv[0]);
     STRCMP_EQUAL("de  fghi", argv[1]);
     POINTERS_EQUAL(NULL, argv[2]);
@@ -759,6 +763,7 @@ TEST(String, SplitShared)
 
     argv = string_split_shared (" abc de  abc ", " ", 0, 0, &argc);
     LONGS_EQUAL(3, argc);
+    CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("abc", argv[2]);
@@ -789,6 +794,7 @@ TEST(String, SplitShell)
     argv = string_split_shell ("/path/to/bin arg1 \"arg2 here\" 'arg3 here'",
                                &argc);
     LONGS_EQUAL(4, argc);
+    CHECK(argv);
     STRCMP_EQUAL("/path/to/bin", argv[0]);
     STRCMP_EQUAL("arg1", argv[1]);
     STRCMP_EQUAL("arg2 here", argv[2]);
@@ -815,6 +821,7 @@ TEST(String, SplitCommand)
     POINTERS_EQUAL(NULL, string_split_command (NULL, ';'));
     POINTERS_EQUAL(NULL, string_split_command ("", ';'));
     argv = string_split_command ("abc;de;fghi", ';');
+    CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
