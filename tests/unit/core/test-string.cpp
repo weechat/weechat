@@ -791,6 +791,15 @@ TEST(String, SplitShell)
 
     POINTERS_EQUAL(NULL, string_split_shell (NULL, NULL));
 
+    /* test with an empty string */
+    argc = -1;
+    argv = string_split_shell ("", &argc);
+    LONGS_EQUAL(0, argc);
+    CHECK(argv);
+    POINTERS_EQUAL(NULL, argv[0]);
+    string_free_split (argv);
+
+    /* test with a real string (command + arguments) */
     argv = string_split_shell ("/path/to/bin arg1 \"arg2 here\" 'arg3 here'",
                                &argc);
     LONGS_EQUAL(4, argc);
@@ -800,7 +809,6 @@ TEST(String, SplitShell)
     STRCMP_EQUAL("arg2 here", argv[2]);
     STRCMP_EQUAL("arg3 here", argv[3]);
     POINTERS_EQUAL(NULL, argv[4]);
-
     string_free_split (argv);
 
     /* free split with NULL */
