@@ -690,16 +690,16 @@ TEST(String, Split)
     POINTERS_EQUAL(NULL, string_split ("", NULL, 0, 0, NULL));
     POINTERS_EQUAL(NULL, string_split ("", "", 0, 0, NULL));
 
-    argc = 1;
+    argc = -1;
     POINTERS_EQUAL(NULL, string_split (NULL, NULL, 0, 0, &argc));
     LONGS_EQUAL(0, argc);
-    argc = 1;
+    argc = -1;
     POINTERS_EQUAL(NULL, string_split (NULL, "", 0, 0, &argc));
     LONGS_EQUAL(0, argc);
-    argc = 1;
+    argc = -1;
     POINTERS_EQUAL(NULL, string_split ("", NULL, 0, 0, &argc));
     LONGS_EQUAL(0, argc);
-    argc = 1;
+    argc = -1;
     POINTERS_EQUAL(NULL, string_split ("", "", 0, 0, &argc));
     LONGS_EQUAL(0, argc);
 
