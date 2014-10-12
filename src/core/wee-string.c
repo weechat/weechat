@@ -1473,7 +1473,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
  *         array[1] = "de"
  *         array[2] = "fghi"
  *         array[3] = NULL
- *         string_split ("abc de  fghi", " ", 1, 0, NULL)
+ *   string_split ("abc de  fghi", " ", 1, 0, NULL)
  *     ==> array[0] = "abc de  fghi"
  *         array[1] = "de  fghi"
  *         array[2] = "fghi"
