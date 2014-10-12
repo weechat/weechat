@@ -191,6 +191,9 @@ TEST(Eval, EvalExpression)
     WEE_CHECK_EVAL("", "${xyz}");
     WEE_CHECK_EVAL("\t", "${\\t}");
     WEE_CHECK_EVAL(version_get_version (), "${info:version}");
+    WEE_CHECK_EVAL("x", "x${buffer.number");
+    WEE_CHECK_EVAL("x${buffer.number}1",
+                   "x\\${buffer.number}${buffer.number}");
     WEE_CHECK_EVAL("1", "${buffer.number}");
     WEE_CHECK_EVAL("1", "${window.buffer.number}");
     WEE_CHECK_EVAL("core.weechat", "${buffer.full_name}");
@@ -198,6 +201,9 @@ TEST(Eval, EvalExpression)
     snprintf (str_value, sizeof (str_value),
               "%d", CONFIG_INTEGER(config_look_scroll_amount));
     WEE_CHECK_EVAL(str_value, "${weechat.look.scroll_amount}");
+
+    /* test nested variables */
+    WEE_CHECK_EVAL(str_value, "${${window.buffer.name}.look.scroll_amount}");
 
     hashtable_free (extra_vars);
 }
