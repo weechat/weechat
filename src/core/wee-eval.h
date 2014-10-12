@@ -20,8 +20,11 @@
 #ifndef WEECHAT_EVAL_H
 #define WEECHAT_EVAL_H 1
 
-#define EVAL_STR_FALSE "0"
-#define EVAL_STR_TRUE  "1"
+#define EVAL_STR_FALSE      "0"
+#define EVAL_STR_TRUE       "1"
+
+#define EVAL_DEFAULT_PREFIX "${"
+#define EVAL_DEFAULT_SUFFIX "}"
 
 struct t_hashtable;
 

@@ -823,7 +823,9 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
 {
     int condition, rc, pointers_allocated;
     char *value;
-    const char *prefix, *suffix, *default_prefix = "${", *default_suffix = "}";
+    const char *prefix, *suffix;
+    const char *default_prefix = EVAL_DEFAULT_PREFIX;
+    const char *default_suffix = EVAL_DEFAULT_SUFFIX;
     const char *ptr_value;
     struct t_gui_window *window;
 
