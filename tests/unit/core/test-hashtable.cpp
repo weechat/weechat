@@ -266,6 +266,7 @@ TEST(Hashtable, SetGetRemove)
 
     /* free hashtable */
     hashtable_free (hashtable);
+    hashtable_free (hashtable2);
 }
 
 /*
