@@ -183,7 +183,11 @@ gui_completion_free_data (struct t_gui_completion *completion)
         free (completion->word_found);
     completion->word_found = NULL;
 
-    arraylist_clear (completion->partial_list);
+    if (completion->partial_list)
+    {
+        arraylist_free (completion->partial_list);
+        completion->partial_list = NULL;
+    }
 }
 
 /*
