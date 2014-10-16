@@ -28,6 +28,7 @@ extern "C"
 #include "src/core/wee-config.h"
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-version.h"
+#include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
 }
 
@@ -182,6 +183,8 @@ TEST(Eval, EvalExpression)
     CHECK(extra_vars);
 
     POINTERS_EQUAL(NULL, eval_expression (NULL, NULL, NULL, NULL));
+
+    /* test with simple strings */
     WEE_CHECK_EVAL("", "");
     WEE_CHECK_EVAL("a b c", "a b c");
     WEE_CHECK_EVAL("$", "$");
@@ -189,8 +192,32 @@ TEST(Eval, EvalExpression)
     WEE_CHECK_EVAL("}", "}");
     WEE_CHECK_EVAL("", "${}");
     WEE_CHECK_EVAL("", "${xyz}");
+
+    /* test value from extra_vars */
+    WEE_CHECK_EVAL("value", "${test}");
+
+    /* test escaped chars */
     WEE_CHECK_EVAL("\t", "${\\t}");
+    WEE_CHECK_EVAL("\t", "${esc:\t}");
+
+    /* test hidden chars */
+    WEE_CHECK_EVAL("********", "${hide:*,password}");
+    WEE_CHECK_EVAL("\u2603\u2603\u2603", "${hide:${esc:\u2603},abc}");
+
+    /* test color */
+    WEE_CHECK_EVAL(gui_color_get_custom ("green"), "${color:green}");
+    WEE_CHECK_EVAL(gui_color_get_custom ("*214"), "${color:*214}");
+
+    /* test info */
     WEE_CHECK_EVAL(version_get_version (), "${info:version}");
+
+    /* test option */
+    snprintf (str_value, sizeof (str_value),
+              "%d", CONFIG_INTEGER(config_look_scroll_amount));
+    WEE_CHECK_EVAL(str_value, "${weechat.look.scroll_amount}");
+    WEE_CHECK_EVAL(str_value, "${${window.buffer.name}.look.scroll_amount}");
+
+    /* test hdata */
     WEE_CHECK_EVAL("x", "x${buffer.number");
     WEE_CHECK_EVAL("x${buffer.number}1",
                    "x\\${buffer.number}${buffer.number}");
@@ -198,12 +225,6 @@ TEST(Eval, EvalExpression)
     WEE_CHECK_EVAL("1", "${window.buffer.number}");
     WEE_CHECK_EVAL("core.weechat", "${buffer.full_name}");
     WEE_CHECK_EVAL("core.weechat", "${window.buffer.full_name}");
-    snprintf (str_value, sizeof (str_value),
-              "%d", CONFIG_INTEGER(config_look_scroll_amount));
-    WEE_CHECK_EVAL(str_value, "${weechat.look.scroll_amount}");
-
-    /* test nested variables */
-    WEE_CHECK_EVAL(str_value, "${${window.buffer.name}.look.scroll_amount}");
 
     hashtable_free (extra_vars);
 }

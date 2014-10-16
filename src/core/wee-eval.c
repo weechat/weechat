@@ -35,6 +35,7 @@
 #include "wee-hook.h"
 #include "wee-secure.h"
 #include "wee-string.h"
+#include "wee-utf8.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-window.h"
@@ -238,10 +239,11 @@ eval_replace_vars_cb (void *data, const char *text)
     struct t_config_option *ptr_option;
     struct t_gui_buffer *ptr_buffer;
     char str_value[64], *value, *pos, *pos1, *pos2, *hdata_name, *list_name;
-    char *tmp, *info_name;
-    const char *ptr_value, *ptr_arguments;
+    char *tmp, *info_name, *hide_char, *hidden_string;
+    const char *ptr_value, *ptr_arguments, *ptr_string;
     struct t_hdata *hdata;
     void *pointer;
+    int i, length_hide_char, length, index;
 
     pointers = (struct t_hashtable *)(((void **)data)[0]);
     extra_vars = (struct t_hashtable *)(((void **)data)[1]);
@@ -260,14 +262,44 @@ eval_replace_vars_cb (void *data, const char *text)
     if ((text[0] == '\\') && text[1] && (text[1] != '\\'))
         return string_convert_escaped_chars (text);
 
-    /* 3. look for a color */
+    /* 3. hide chars: replace all chars by a given char */
+    if (strncmp (text, "hide:", 5) == 0)
+    {
+        hidden_string = NULL;
+        ptr_string = strchr (text + 5,
+                             (text[5] == ',') ? ';' : ',');
+        if (!ptr_string)
+            return strdup ("");
+        hide_char = string_strndup (text + 5, ptr_string - text - 5);
+        if (hide_char)
+        {
+            length_hide_char = strlen (hide_char);
+            length = utf8_strlen (ptr_string + 1);
+            hidden_string = malloc ((length * length_hide_char) + 1);
+            if (hidden_string)
+            {
+                index = 0;
+                for (i = 0; i < length; i++)
+                {
+                    memcpy (hidden_string + index, hide_char,
+                            length_hide_char);
+                    index += length_hide_char;
+                }
+                hidden_string[length * length_hide_char] = '\0';
+            }
+            free (hide_char);
+        }
+        return (hidden_string) ? hidden_string : strdup ("");
+    }
+
+    /* 4. look for a color */
     if (strncmp (text, "color:", 6) == 0)
     {
         ptr_value = gui_color_get_custom (text + 6);
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 4. look for an info */
+    /* 5. look for an info */
     if (strncmp (text, "info:", 5) == 0)
     {
         ptr_value = NULL;
@@ -287,7 +319,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 5. look for name of option: if found, return this value */
+    /* 6. look for name of option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -320,7 +352,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 6. look for local variable in buffer */
+    /* 7. look for local variable in buffer */
     ptr_buffer = hashtable_get (pointers, "buffer");
     if (ptr_buffer)
     {
@@ -329,7 +361,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 7. look for hdata */
+    /* 8. look for hdata */
     value = NULL;
     hdata_name = NULL;
     list_name = NULL;
