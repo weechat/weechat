@@ -479,12 +479,6 @@ arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer)
                                                    arraylist, arraylist->data[index],
                                                    pointer)) == 0))
             {
-                if (arraylist->callback_free)
-                {
-                    (arraylist->callback_free) (arraylist->callback_free_data,
-                                                arraylist,
-                                                arraylist->data[index]);
-                }
                 arraylist_remove (arraylist, index);
             }
         }
@@ -504,12 +498,6 @@ arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer)
                                            arraylist, arraylist->data[i],
                                            pointer) == 0)
             {
-                if (arraylist->callback_free)
-                {
-                    (arraylist->callback_free) (arraylist->callback_free_data,
-                                                arraylist,
-                                                arraylist->data[i]);
-                }
                 arraylist_remove (arraylist, i);
             }
             else
@@ -568,6 +556,13 @@ arraylist_remove (struct t_arraylist *arraylist, int index)
     if (!arraylist || (index < 0) || (index >= arraylist->size))
         return -1;
 
+    if (arraylist->callback_free)
+    {
+        (arraylist->callback_free) (arraylist->callback_free_data,
+                                    arraylist,
+                                    arraylist->data[index]);
+    }
+
     if (index < arraylist->size - 1)
     {
         memmove (&arraylist->data[index],
@@ -599,8 +594,20 @@ arraylist_remove (struct t_arraylist *arraylist, int index)
 int
 arraylist_clear (struct t_arraylist *arraylist)
 {
+    int i;
+
     if (!arraylist)
         return 0;
+
+    if (arraylist->callback_free)
+    {
+        for (i = 0; i < arraylist->size; i++)
+        {
+            (arraylist->callback_free) (arraylist->callback_free_data,
+                                        arraylist,
+                                        arraylist->data[i]);
+        }
+    }
 
     if (arraylist->data
         && (arraylist->size_alloc != arraylist->size_alloc_min))
@@ -617,6 +624,12 @@ arraylist_clear (struct t_arraylist *arraylist)
             arraylist->size_alloc = arraylist->size_alloc_min;
         }
     }
+    else if (arraylist->size_alloc > 0)
+    {
+        memset (arraylist->data,
+                0,
+                arraylist->size_alloc * sizeof (*arraylist->data));
+    }
 
     arraylist->size = 0;
 
@@ -630,8 +643,20 @@ arraylist_clear (struct t_arraylist *arraylist)
 void
 arraylist_free (struct t_arraylist *arraylist)
 {
+    int i;
+
     if (!arraylist)
         return;
+
+    if (arraylist->callback_free)
+    {
+        for (i = 0; i < arraylist->size; i++)
+        {
+            (arraylist->callback_free) (arraylist->callback_free_data,
+                                        arraylist,
+                                        arraylist->data[i]);
+        }
+    }
 
     if (arraylist->data)
         free (arraylist->data);
