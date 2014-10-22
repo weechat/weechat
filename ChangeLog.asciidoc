@@ -23,6 +23,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   of status bar
 * core: allow incomplete commands if unambiguous, new option
   weechat.look.command_incomplete (task #5419)
+* api: add regex replace feature in function string_eval_expression
 * api: use microseconds instead of milliseconds in functions util_timeval_diff
   and util_timeval_add
 * irc: display own nick changes in server buffer (closes #188)

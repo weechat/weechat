@@ -220,11 +220,15 @@ end:
 
 /*
  * Replaces variables, which can be, by order of priority:
- *   1. an extra variable (from hashtable "extra_vars")
- *   2. a color (format: color:xxx)
- *   3. an option (format: file.section.option)
- *   4. a buffer local variable
- *   5. a hdata name/variable
+ *   1. an extra variable from hashtable "extra_vars"
+ *   2. a string with escaped chars (format: esc:xxx or \xxx)
+ *   3. a string with chars to hide (format: hide:char,string)
+ *   4. a regex group captured (format: re:N (0.99) or re:+)
+ *   5. a color (format: color:xxx)
+ *   6. an info (format: info:name,arguments)
+ *   7. an option (format: file.section.option)
+ *   8. a buffer local variable
+ *   9. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2)
  *
  * Examples:
  *   option: ${weechat.look.scroll_amount}
@@ -236,19 +240,22 @@ char *
 eval_replace_vars_cb (void *data, const char *text)
 {
     struct t_hashtable *pointers, *extra_vars;
+    struct t_eval_regex *eval_regex;
     struct t_config_option *ptr_option;
     struct t_gui_buffer *ptr_buffer;
     char str_value[64], *value, *pos, *pos1, *pos2, *hdata_name, *list_name;
-    char *tmp, *info_name, *hide_char, *hidden_string;
+    char *tmp, *info_name, *hide_char, *hidden_string, *error;
     const char *ptr_value, *ptr_arguments, *ptr_string;
     struct t_hdata *hdata;
     void *pointer;
     int i, length_hide_char, length, index;
+    long number;
 
     pointers = (struct t_hashtable *)(((void **)data)[0]);
     extra_vars = (struct t_hashtable *)(((void **)data)[1]);
+    eval_regex = (struct t_eval_regex *)(((void **)data)[2]);
 
-    /* 1. look for var in hashtable "extra_vars" */
+    /* 1. variable in hashtable "extra_vars" */
     if (extra_vars)
     {
         ptr_value = hashtable_get (extra_vars, text);
@@ -262,7 +269,7 @@ eval_replace_vars_cb (void *data, const char *text)
     if ((text[0] == '\\') && text[1] && (text[1] != '\\'))
         return string_convert_escaped_chars (text);
 
-    /* 3. hide chars: replace all chars by a given char */
+    /* 3. hide chars: replace all chars by a given char/string */
     if (strncmp (text, "hide:", 5) == 0)
     {
         hidden_string = NULL;
@@ -292,14 +299,37 @@ eval_replace_vars_cb (void *data, const char *text)
         return (hidden_string) ? hidden_string : strdup ("");
     }
 
-    /* 4. look for a color */
+    /* 4. regex group captured */
+    if (strncmp (text, "re:", 3) == 0)
+    {
+        if (eval_regex && eval_regex->result)
+        {
+            if (strcmp (text + 3, "+") == 0)
+                number = eval_regex->last_match;
+            else
+            {
+                number = strtol (text + 3, &error, 10);
+                if (!error || error[0])
+                    number = -1;
+            }
+            if ((number >= 0) && (number <= eval_regex->last_match))
+            {
+                return string_strndup (
+                    eval_regex->result + eval_regex->match[number].rm_so,
+                    eval_regex->match[number].rm_eo - eval_regex->match[number].rm_so);
+            }
+        }
+        return strdup ("");
+    }
+
+    /* 5. color code */
     if (strncmp (text, "color:", 6) == 0)
     {
         ptr_value = gui_color_get_custom (text + 6);
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 5. look for an info */
+    /* 6. info */
     if (strncmp (text, "info:", 5) == 0)
     {
         ptr_value = NULL;
@@ -319,7 +349,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 6. look for name of option: if found, return this value */
+    /* 7. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -352,7 +382,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 7. look for local variable in buffer */
+    /* 8. local variable in buffer */
     ptr_buffer = hashtable_get (pointers, "buffer");
     if (ptr_buffer)
     {
@@ -361,7 +391,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 8. look for hdata */
+    /* 9. hdata */
     value = NULL;
     hdata_name = NULL;
     list_name = NULL;
@@ -425,12 +455,14 @@ end:
 char *
 eval_replace_vars (const char *expr, struct t_hashtable *pointers,
                    struct t_hashtable *extra_vars,
-                   const char *prefix, const char *suffix)
+                   const char *prefix, const char *suffix,
+                   struct t_eval_regex *eval_regex)
 {
-    void *ptr[2];
+    void *ptr[3];
 
     ptr[0] = pointers;
     ptr[1] = extra_vars;
+    ptr[2] = eval_regex;
 
     return string_replace_with_callback (expr, prefix, suffix,
                                          &eval_replace_vars_cb, ptr, NULL);
@@ -712,10 +744,12 @@ eval_expression_condition (const char *expr,
                 /* for regex: just replace vars in both expressions */
                 tmp_value = eval_replace_vars (sub_expr, pointers,
                                                extra_vars,
-                                               prefix, suffix);
+                                               prefix, suffix,
+                                               NULL);
                 tmp_value2 = eval_replace_vars (pos, pointers,
                                                 extra_vars,
-                                                prefix, suffix);
+                                                prefix, suffix,
+                                                NULL);
             }
             else
             {
@@ -799,13 +833,133 @@ eval_expression_condition (const char *expr,
      * at this point, there is no more logical operator neither comparison,
      * so we just replace variables in string and return the result
      */
-    value = eval_replace_vars (expr2, pointers, extra_vars, prefix, suffix);
+    value = eval_replace_vars (expr2, pointers, extra_vars, prefix, suffix,
+                               NULL);
 
 end:
     if (expr2)
         free (expr2);
 
     return value;
+}
+
+/*
+ * Replaces text in a string using a regular expression and replacement text.
+ *
+ * The argument "regex" is a pointer to a regex compiled with WeeChat function
+ * string_regcomp (or function regcomp).
+ *
+ * The argument "replace" is evaluated and can contain any valid expression,
+ * and these ones:
+ *   ${re:0} .. ${re:99}  match 0 to 99 (0 is whole match, 1 .. 99 are groups
+ *                        captured)
+ *   ${re:+}              the last match (with highest number)
+ *
+ * Examples:
+ *
+ *    string   | regex         | replace                    | result
+ *   ----------+---------------+----------------------------+-------------
+ *    test foo | test          | Z                          | Z foo
+ *    test foo | ^(test +)(.*) | ${re:2}                    | foo
+ *    test foo | ^(test +)(.*) | ${re:1}/ ${hide:*,${re:2}} | test / ***
+ *    test foo | ^(test +)(.*) | ${hide:%,${re:+}}          | %%%
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_replace_regex (const char *string, regex_t *regex, const char *replace,
+                    struct t_hashtable *pointers,
+                    struct t_hashtable *extra_vars,
+                    const char *prefix, const char *suffix)
+{
+    char *result, *result2, *str_replace;
+    int length, length_replace, start_offset, i, rc, end;
+    struct t_eval_regex eval_regex;
+
+    if (!string || !regex || !replace)
+        return NULL;
+
+    length = strlen (string) + 1;
+    result = malloc (length);
+    if (!result)
+        return NULL;
+    snprintf (result, length, "%s", string);
+
+    start_offset = 0;
+    while (result && result[start_offset])
+    {
+        for (i = 0; i < 100; i++)
+        {
+            eval_regex.match[i].rm_so = -1;
+        }
+
+        rc = regexec (regex, result + start_offset, 100, eval_regex.match, 0);
+        /*
+         * no match found: exit the loop (if rm_eo == 0, it is an empty match
+         * at beginning of string: we consider there is no match, to prevent an
+         * infinite loop)
+         */
+        if ((rc != 0)
+            || (eval_regex.match[0].rm_so < 0)
+            || (eval_regex.match[0].rm_eo <= 0))
+        {
+            break;
+        }
+
+        /* adjust the start/end offsets */
+        eval_regex.last_match = 0;
+        for (i = 0; i < 100; i++)
+        {
+            if (eval_regex.match[i].rm_so >= 0)
+            {
+                eval_regex.last_match = i;
+                eval_regex.match[i].rm_so += start_offset;
+                eval_regex.match[i].rm_eo += start_offset;
+            }
+        }
+
+        /* check if the regex matched the end of string */
+        end = !result[eval_regex.match[0].rm_eo];
+
+        eval_regex.result = result;
+
+        str_replace = eval_replace_vars (replace, pointers, extra_vars,
+                                         prefix, suffix, &eval_regex);
+
+        length_replace = (str_replace) ? strlen (str_replace) : 0;
+
+        length = eval_regex.match[0].rm_so + length_replace +
+            strlen (result + eval_regex.match[0].rm_eo) + 1;
+        result2 = malloc (length);
+        if (!result2)
+        {
+            free (result);
+            return NULL;
+        }
+        result2[0] = '\0';
+        if (eval_regex.match[0].rm_so > 0)
+        {
+            memcpy (result2, result, eval_regex.match[0].rm_so);
+            result2[eval_regex.match[0].rm_so] = '\0';
+        }
+        if (str_replace)
+            strcat (result2, str_replace);
+        strcat (result2, result + eval_regex.match[0].rm_eo);
+
+        free (result);
+        result = result2;
+
+        if (str_replace)
+            free (str_replace);
+
+        if (end)
+            break;
+
+        start_offset = eval_regex.match[0].rm_so + length_replace;
+    }
+
+    return result;
 }
 
 /*
@@ -853,25 +1007,33 @@ char *
 eval_expression (const char *expr, struct t_hashtable *pointers,
                  struct t_hashtable *extra_vars, struct t_hashtable *options)
 {
-    int condition, rc, pointers_allocated;
+    int condition, rc, pointers_allocated, regex_allocated;
     char *value;
     const char *prefix, *suffix;
     const char *default_prefix = EVAL_DEFAULT_PREFIX;
     const char *default_suffix = EVAL_DEFAULT_SUFFIX;
-    const char *ptr_value;
+    const char *ptr_value, *regex_replace;
     struct t_gui_window *window;
+    regex_t *regex;
 
     if (!expr)
         return NULL;
 
     condition = 0;
     pointers_allocated = 0;
+    regex_allocated = 0;
     prefix = default_prefix;
     suffix = default_suffix;
+    regex = NULL;
+    regex_replace = NULL;
 
-    /* create hashtable pointers if it's NULL */
-    if (!pointers)
+    if (pointers)
     {
+        regex = (regex_t *)hashtable_get (pointers, "regex");
+    }
+    else
+    {
+        /* create hashtable pointers if it's NULL */
         pointers = hashtable_new (32,
                                   WEECHAT_HASHTABLE_STRING,
                                   WEECHAT_HASHTABLE_POINTER,
@@ -915,6 +1077,30 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         ptr_value = hashtable_get (options, "suffix");
         if (ptr_value && ptr_value[0])
             suffix = ptr_value;
+
+        /* check for regex */
+        ptr_value = hashtable_get (options, "regex");
+        if (ptr_value && ptr_value[0])
+        {
+            regex = malloc (sizeof (*regex));
+            if (string_regcomp (regex, ptr_value,
+                                REG_EXTENDED | REG_ICASE) == 0)
+            {
+                regex_allocated = 1;
+            }
+            else
+            {
+                free (regex);
+                regex = NULL;
+            }
+        }
+
+        /* check for regex replacement (evaluated later) */
+        ptr_value = hashtable_get (options, "regex_replace");
+        if (ptr_value && ptr_value[0])
+        {
+            regex_replace = ptr_value;
+        }
     }
 
     /* evaluate expression */
@@ -930,12 +1116,28 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     }
     else
     {
-        /* only replace variables in expression */
-        value = eval_replace_vars (expr, pointers, extra_vars, prefix, suffix);
+        if (regex && regex_replace)
+        {
+            /* replace with regex */
+            value = eval_replace_regex (expr, regex, regex_replace,
+                                        pointers, extra_vars,
+                                        prefix, suffix);
+        }
+        else
+        {
+            /* only replace variables in expression */
+            value = eval_replace_vars (expr, pointers, extra_vars,
+                                       prefix, suffix, NULL);
+        }
     }
 
     if (pointers_allocated)
         hashtable_free (pointers);
+    if (regex && regex_allocated)
+    {
+        regfree (regex);
+        free (regex);
+    }
 
     return value;
 }

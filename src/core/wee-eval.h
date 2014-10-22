@@ -20,6 +20,8 @@
 #ifndef WEECHAT_EVAL_H
 #define WEECHAT_EVAL_H 1
 
+#include <regex.h>
+
 #define EVAL_STR_FALSE      "0"
 #define EVAL_STR_TRUE       "1"
 
@@ -48,6 +50,13 @@ enum t_eval_comparison
     EVAL_COMPARE_GREATER,
     /* number of comparison strings */
     EVAL_NUM_COMPARISONS,
+};
+
+struct t_eval_regex
+{
+    const char *result;
+    regmatch_t match[100];
+    int last_match;
 };
 
 extern int eval_is_true (const char *value);

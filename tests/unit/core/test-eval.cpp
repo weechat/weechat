@@ -24,23 +24,20 @@
 extern "C"
 {
 #include <stdio.h>
+#include <regex.h>
 #include "src/core/wee-eval.h"
 #include "src/core/wee-config.h"
 #include "src/core/wee-hashtable.h"
+#include "src/core/wee-string.h"
 #include "src/core/wee-version.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
 }
 
 #define WEE_CHECK_EVAL(__result, __expr)                                \
-    value = eval_expression (__expr, NULL, extra_vars, NULL);           \
+    value = eval_expression (__expr, pointers, extra_vars, options);    \
     STRCMP_EQUAL(__result, value);                                      \
     free (value);
-#define WEE_CHECK_EVAL_COND(__result, __expr)                           \
-    value = eval_expression (__expr, NULL, extra_vars, options);        \
-    STRCMP_EQUAL(__result, value);                                      \
-    free (value);
-
 TEST_GROUP(Eval)
 {
 };
@@ -71,94 +68,96 @@ TEST(Eval, Boolean)
 
 TEST(Eval, EvalCondition)
 {
-    struct t_hashtable *extra_vars, *options;
+    struct t_hashtable *pointers, *extra_vars, *options;
     char *value;
+
+    pointers = NULL;
 
     extra_vars = hashtable_new (32,
                                 WEECHAT_HASHTABLE_STRING,
                                 WEECHAT_HASHTABLE_STRING,
                                 NULL, NULL);
-    hashtable_set (extra_vars, "test", "value");
     CHECK(extra_vars);
+    hashtable_set (extra_vars, "test", "value");
 
     options = hashtable_new (32,
                              WEECHAT_HASHTABLE_STRING,
                              WEECHAT_HASHTABLE_STRING,
                              NULL, NULL);
-    hashtable_set (options, "type", "condition");
     CHECK(options);
+    hashtable_set (options, "type", "condition");
 
     POINTERS_EQUAL(NULL, eval_expression (NULL, NULL, NULL, options));
 
     /* conditions evaluated as false */
-    WEE_CHECK_EVAL_COND("0", "");
-    WEE_CHECK_EVAL_COND("0", "0");
-    WEE_CHECK_EVAL_COND("0", "1 == 2");
-    WEE_CHECK_EVAL_COND("0", "1 >= 2");
-    WEE_CHECK_EVAL_COND("0", "2 <= 1");
-    WEE_CHECK_EVAL_COND("0", "2 != 2");
-    WEE_CHECK_EVAL_COND("0", "18 < 5");
-    WEE_CHECK_EVAL_COND("0", "5 > 18");
-    WEE_CHECK_EVAL_COND("0", "1 == 5 > 18");
-    WEE_CHECK_EVAL_COND("0", "abc == def");
-    WEE_CHECK_EVAL_COND("0", "()");
-    WEE_CHECK_EVAL_COND("0", "(5 > 26)");
-    WEE_CHECK_EVAL_COND("0", "((5 > 26))");
-    WEE_CHECK_EVAL_COND("0", "(26 < 5)");
-    WEE_CHECK_EVAL_COND("0", "abc > def");
-    WEE_CHECK_EVAL_COND("0", "1 && 0");
-    WEE_CHECK_EVAL_COND("0", "abc && 0");
-    WEE_CHECK_EVAL_COND("0", "0 || 0");
-    WEE_CHECK_EVAL_COND("0", "0 || 0 || 0");
-    WEE_CHECK_EVAL_COND("0", "0 || 1 && 0");
-    WEE_CHECK_EVAL_COND("0", "0 || (1 && 0)");
-    WEE_CHECK_EVAL_COND("0", "0 || (0 || (1 && 0))");
-    WEE_CHECK_EVAL_COND("0", "1 && (0 || 0)");
-    WEE_CHECK_EVAL_COND("0", "(0 || 1) && 0");
-    WEE_CHECK_EVAL_COND("0", "((0 || 1) && 1) && 0");
-    WEE_CHECK_EVAL_COND("0", "abcd =~ (?-i)^ABC");
-    WEE_CHECK_EVAL_COND("0", "abcd =~ \\(abcd\\)");
-    WEE_CHECK_EVAL_COND("0", "(abcd) =~ \\(\\(abcd\\)\\)");
-    WEE_CHECK_EVAL_COND("0", "${test} == test");
-    WEE_CHECK_EVAL_COND("0", "${test2} == value2");
-    WEE_CHECK_EVAL_COND("0", "${buffer.number} == 2");
-    WEE_CHECK_EVAL_COND("0", "${window.buffer.number} == 2");
+    WEE_CHECK_EVAL("0", "");
+    WEE_CHECK_EVAL("0", "0");
+    WEE_CHECK_EVAL("0", "1 == 2");
+    WEE_CHECK_EVAL("0", "1 >= 2");
+    WEE_CHECK_EVAL("0", "2 <= 1");
+    WEE_CHECK_EVAL("0", "2 != 2");
+    WEE_CHECK_EVAL("0", "18 < 5");
+    WEE_CHECK_EVAL("0", "5 > 18");
+    WEE_CHECK_EVAL("0", "1 == 5 > 18");
+    WEE_CHECK_EVAL("0", "abc == def");
+    WEE_CHECK_EVAL("0", "()");
+    WEE_CHECK_EVAL("0", "(5 > 26)");
+    WEE_CHECK_EVAL("0", "((5 > 26))");
+    WEE_CHECK_EVAL("0", "(26 < 5)");
+    WEE_CHECK_EVAL("0", "abc > def");
+    WEE_CHECK_EVAL("0", "1 && 0");
+    WEE_CHECK_EVAL("0", "abc && 0");
+    WEE_CHECK_EVAL("0", "0 || 0");
+    WEE_CHECK_EVAL("0", "0 || 0 || 0");
+    WEE_CHECK_EVAL("0", "0 || 1 && 0");
+    WEE_CHECK_EVAL("0", "0 || (1 && 0)");
+    WEE_CHECK_EVAL("0", "0 || (0 || (1 && 0))");
+    WEE_CHECK_EVAL("0", "1 && (0 || 0)");
+    WEE_CHECK_EVAL("0", "(0 || 1) && 0");
+    WEE_CHECK_EVAL("0", "((0 || 1) && 1) && 0");
+    WEE_CHECK_EVAL("0", "abcd =~ (?-i)^ABC");
+    WEE_CHECK_EVAL("0", "abcd =~ \\(abcd\\)");
+    WEE_CHECK_EVAL("0", "(abcd) =~ \\(\\(abcd\\)\\)");
+    WEE_CHECK_EVAL("0", "${test} == test");
+    WEE_CHECK_EVAL("0", "${test2} == value2");
+    WEE_CHECK_EVAL("0", "${buffer.number} == 2");
+    WEE_CHECK_EVAL("0", "${window.buffer.number} == 2");
 
     /* conditions evaluated as true */
-    WEE_CHECK_EVAL_COND("1", "1");
-    WEE_CHECK_EVAL_COND("1", "123");
-    WEE_CHECK_EVAL_COND("1", "abc");
-    WEE_CHECK_EVAL_COND("1", "2 == 2");
-    WEE_CHECK_EVAL_COND("1", "2 >= 1");
-    WEE_CHECK_EVAL_COND("1", "1 <= 2");
-    WEE_CHECK_EVAL_COND("1", "1 != 2");
-    WEE_CHECK_EVAL_COND("1", "18 > 5");
-    WEE_CHECK_EVAL_COND("1", "5 < 18");
-    WEE_CHECK_EVAL_COND("1", "1 == 18 > 5");
-    WEE_CHECK_EVAL_COND("1", "abc == abc");
-    WEE_CHECK_EVAL_COND("1", "(26 > 5)");
-    WEE_CHECK_EVAL_COND("1", "((26 > 5))");
-    WEE_CHECK_EVAL_COND("1", "(5 < 26)");
-    WEE_CHECK_EVAL_COND("1", "def > abc");
-    WEE_CHECK_EVAL_COND("1", "1 && 1");
-    WEE_CHECK_EVAL_COND("1", "abc && 1");
-    WEE_CHECK_EVAL_COND("1", "0 || 1");
-    WEE_CHECK_EVAL_COND("1", "0 || 0 || 1");
-    WEE_CHECK_EVAL_COND("1", "1 || 1 && 0");
-    WEE_CHECK_EVAL_COND("1", "0 || (1 && 1)");
-    WEE_CHECK_EVAL_COND("1", "0 || (0 || (1 && 1))");
-    WEE_CHECK_EVAL_COND("1", "1 && (0 || 1)");
-    WEE_CHECK_EVAL_COND("1", "(0 || 1) && 1");
-    WEE_CHECK_EVAL_COND("1", "((0 || 1) && 1) && 1");
-    WEE_CHECK_EVAL_COND("1", "abcd =~ ^ABC");
-    WEE_CHECK_EVAL_COND("1", "abcd =~ (?-i)^abc");
-    WEE_CHECK_EVAL_COND("1", "(abcd) =~ (abcd)");
-    WEE_CHECK_EVAL_COND("1", "(abcd) =~ \\(abcd\\)");
-    WEE_CHECK_EVAL_COND("1", "((abcd)) =~ \\(\\(abcd\\)\\)");
-    WEE_CHECK_EVAL_COND("1", "${test} == value");
-    WEE_CHECK_EVAL_COND("1", "${test2} ==");
-    WEE_CHECK_EVAL_COND("1", "${buffer.number} == 1");
-    WEE_CHECK_EVAL_COND("1", "${window.buffer.number} == 1");
+    WEE_CHECK_EVAL("1", "1");
+    WEE_CHECK_EVAL("1", "123");
+    WEE_CHECK_EVAL("1", "abc");
+    WEE_CHECK_EVAL("1", "2 == 2");
+    WEE_CHECK_EVAL("1", "2 >= 1");
+    WEE_CHECK_EVAL("1", "1 <= 2");
+    WEE_CHECK_EVAL("1", "1 != 2");
+    WEE_CHECK_EVAL("1", "18 > 5");
+    WEE_CHECK_EVAL("1", "5 < 18");
+    WEE_CHECK_EVAL("1", "1 == 18 > 5");
+    WEE_CHECK_EVAL("1", "abc == abc");
+    WEE_CHECK_EVAL("1", "(26 > 5)");
+    WEE_CHECK_EVAL("1", "((26 > 5))");
+    WEE_CHECK_EVAL("1", "(5 < 26)");
+    WEE_CHECK_EVAL("1", "def > abc");
+    WEE_CHECK_EVAL("1", "1 && 1");
+    WEE_CHECK_EVAL("1", "abc && 1");
+    WEE_CHECK_EVAL("1", "0 || 1");
+    WEE_CHECK_EVAL("1", "0 || 0 || 1");
+    WEE_CHECK_EVAL("1", "1 || 1 && 0");
+    WEE_CHECK_EVAL("1", "0 || (1 && 1)");
+    WEE_CHECK_EVAL("1", "0 || (0 || (1 && 1))");
+    WEE_CHECK_EVAL("1", "1 && (0 || 1)");
+    WEE_CHECK_EVAL("1", "(0 || 1) && 1");
+    WEE_CHECK_EVAL("1", "((0 || 1) && 1) && 1");
+    WEE_CHECK_EVAL("1", "abcd =~ ^ABC");
+    WEE_CHECK_EVAL("1", "abcd =~ (?-i)^abc");
+    WEE_CHECK_EVAL("1", "(abcd) =~ (abcd)");
+    WEE_CHECK_EVAL("1", "(abcd) =~ \\(abcd\\)");
+    WEE_CHECK_EVAL("1", "((abcd)) =~ \\(\\(abcd\\)\\)");
+    WEE_CHECK_EVAL("1", "${test} == value");
+    WEE_CHECK_EVAL("1", "${test2} ==");
+    WEE_CHECK_EVAL("1", "${buffer.number} == 1");
+    WEE_CHECK_EVAL("1", "${window.buffer.number} == 1");
 
     hashtable_free (extra_vars);
     hashtable_free (options);
@@ -171,16 +170,20 @@ TEST(Eval, EvalCondition)
 
 TEST(Eval, EvalExpression)
 {
-    struct t_hashtable *extra_vars;
+    struct t_hashtable *pointers, *extra_vars, *options;
     char *value, str_value[256];
     void *toto;
+
+    pointers = NULL;
 
     extra_vars = hashtable_new (32,
                                 WEECHAT_HASHTABLE_STRING,
                                 WEECHAT_HASHTABLE_STRING,
                                 NULL, NULL);
-    hashtable_set (extra_vars, "test", "value");
     CHECK(extra_vars);
+    hashtable_set (extra_vars, "test", "value");
+
+    options = NULL;
 
     POINTERS_EQUAL(NULL, eval_expression (NULL, NULL, NULL, NULL));
 
@@ -227,4 +230,73 @@ TEST(Eval, EvalExpression)
     WEE_CHECK_EVAL("core.weechat", "${window.buffer.full_name}");
 
     hashtable_free (extra_vars);
+}
+
+/*
+ * Tests functions:
+ *   eval_expression (replace with regex)
+ */
+
+TEST(Eval, EvalReplaceRegex)
+{
+    struct t_hashtable *pointers, *extra_vars, *options;
+    char *value;
+    regex_t regex;
+
+    pointers = hashtable_new (32,
+                              WEECHAT_HASHTABLE_STRING,
+                              WEECHAT_HASHTABLE_POINTER,
+                              NULL, NULL);
+    CHECK(pointers);
+
+    extra_vars = hashtable_new (32,
+                                WEECHAT_HASHTABLE_STRING,
+                                WEECHAT_HASHTABLE_STRING,
+                                NULL, NULL);
+    CHECK(extra_vars);
+    hashtable_set (extra_vars, "test", "value");
+
+    options = hashtable_new (32,
+                             WEECHAT_HASHTABLE_STRING,
+                             WEECHAT_HASHTABLE_STRING,
+                             NULL, NULL);
+    CHECK(options);
+
+    /* add brackets around URLs (regex as string) */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", "\\w+://\\S+");
+    hashtable_set (options, "regex_replace", "[ ${re:0} ]");
+    WEE_CHECK_EVAL("test: [ http://weechat.org ]",
+                   "test: http://weechat.org");
+
+    /* add brackets around URLs (compiled regex) */
+    LONGS_EQUAL(0, string_regcomp (&regex, "\\w+://\\S+",
+                                   REG_EXTENDED | REG_ICASE));
+    hashtable_set (pointers, "regex", &regex);
+    hashtable_remove (options, "regex");
+    hashtable_set (options, "regex_replace", "[ ${re:0} ]");
+    WEE_CHECK_EVAL("test: [ http://weechat.org ]",
+                   "test: http://weechat.org");
+    regfree (&regex);
+
+    /* hide passwords (regex as string) */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", "(password=)(\\S+)");
+    hashtable_set (options, "regex_replace", "${re:1}${hide:*,${re:2}}");
+    WEE_CHECK_EVAL("password=*** password=***",
+                   "password=abc password=def");
+
+    /* hide passwords (compiled regex) */
+    LONGS_EQUAL(0, string_regcomp (&regex, "(password=)(\\S+)",
+                                   REG_EXTENDED | REG_ICASE));
+    hashtable_set (pointers, "regex", &regex);
+    hashtable_remove (options, "regex");
+    hashtable_set (options, "regex_replace", "${re:1}${hide:*,${re:2}}");
+    WEE_CHECK_EVAL("password=*** password=***",
+                   "password=abc password=def");
+    regfree (&regex);
+
+    hashtable_free (pointers);
+    hashtable_free (extra_vars);
+    hashtable_free (options);
 }

@@ -1879,12 +1879,11 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== weechat_string_eval_expression
 
 // TRANSLATION MISSING
-_WeeChat ≥ 0.4.0, updated in 0.4.2._
+_WeeChat ≥ 0.4.0, updated in 0.4.2 and 1.1._
 
 // TRANSLATION MISSING
 Evaluate an expression and return result as a string.
-Special variables with format `${variable}` are expanded (see command `/eval` in
-'WeeChat User's guide').
+Special variables with format `${variable}` are expanded (see table below).
 
 // TRANSLATION MISSING
 [NOTE]
@@ -1904,10 +1903,14 @@ char *weechat_string_eval_expression (const char *expr,
 Argomenti:
 
 // TRANSLATION MISSING
-* 'expr': the expression to evaluate
+* 'expr': the expression to evaluate (see table below)
 * 'pointers': hashtable with pointers (keys must be string, values must be
   pointer); pointers "window" and "buffer" are automatically added if they are
-  not in hashtable (with pointer to current window/buffer) (can be NULL)
+  not in hashtable (with pointer to current window/buffer) (can be NULL):
+** 'regex': pointer to a regular expression ('regex_t' structure) compiled with
+   WeeChat function <<_weechat_string_regcomp,weechat_string_regcomp>> or
+   regcomp (see `man regcomp`); this option is similar to 'regex' in hashtable
+   'options' (below), but is used for better performance
 * 'extra_vars': extra variables that will be expanded (can be NULL)
 * 'options': a hashtable with some options (keys and values must be string)
   (can be NULL):
@@ -1917,6 +1920,11 @@ Argomenti:
     parentheses are used, result is a boolean ("0" or "1")
 ** 'prefix': prefix before variables to replace (default: "${")
 ** 'suffix': suffix after variables to replace (default: "}")
+** 'regex': a regex used to replace text in 'expr' (which is then not
+   evaluated)
+** 'regex_replace': the replacement text to use with 'regex', to replace
+   text in 'expr' (the 'regex_replace' is evaluated on each match of 'regex'
+   against 'expr', until no match is found)
 
 Valore restituito:
 
@@ -1924,20 +1932,109 @@ Valore restituito:
 * evaluated expression (must be freed by calling "free" after use), or NULL
   if problem (invalid expression or not enough memory)
 
+// TRANSLATION MISSING
+List of variables expanded in expression (by order of priority, from first
+expanded to last):
+
+// TRANSLATION MISSING
+[width="100%",cols="2,8,3,3",options="header"]
+|===
+| Format | Description | Examples | Results
+
+| `${name}` | Variable `name` from hashtable 'extra_vars' |
+  `${name}` | `value`
+
+| `${esc:xxx}` +
+  `${\xxx}` | String with escaped chars |
+  `${esc:prefix\tmessage}` +
+  `${\ua9}` |
+  `prefix<TAB>message` +
+  `©`
+
+| `${hide:x,value}` |
+  String with hidden chars (all chars in `value` replaced `x`) |
+  `${hide:*,password}` |
+ `********`
+
+| `${re:N}` |
+  Regex captured group: 0 = whole string matching, 1 to 99 = group captured,
+  `+` = last group captured |
+  `${re:1}` |
+  `test`
+
+| `${color:name}` |
+  WeeChat color code (the name of color has optional attributes) |
+  `${color:red}red text` +
+  `${color:*214}bold orange text` |
+  `red text` (in red) +
+  `bold orange text` (in bold orange)
+
+| `${info:name}` +
+  `${indo:name,arguments}` |
+  Info from WeeChat or a plugin, see function
+  <<_weechat_info_get,weechat_info_get>> |
+  `${info:version}` +
+  `${info:irc_nick_color_name,foo}` |
+  `1.0` +
+  `lightblue`
+
+| `${sec.data.name}` |
+  Value of the secured data `name` |
+  `${sec.data.freenode_pass}` |
+  `my_password`
+
+| `${file.section.option}` |
+  Value of the option |
+  `${weechat.look.buffer_time_format}` |
+  `%H:%M:%S`
+
+| `${name}` |
+  Value of local variable `name` in buffer |
+  `${nick}` |
+  `FlashCode`
+
+| `${hdata.var1.var2...}` +
+  `${hdata[list].var1.var2...}` |
+  Hdata value (pointers `window` and `buffer` are set by default with current
+  window/buffer) |
+  `${buffer[gui_buffers].full_name}` +
+  `${window.buffer.number}` |
+  `core.weechat` +
+  `1`
+|===
+
 Esempi in C:
 
 [source,C]
 ----
-struct t_hashtable *options = weechat_hashtable_new (8,
-                                                     WEECHAT_HASHTABLE_STRING,
-                                                     WEECHAT_HASHTABLE_STRING,
-                                                     NULL,
-                                                     NULL);
-if (options)
-    weechat_hashtable_set (options, "type", "condition");
-char *str1 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);           /* "core.weechat" */
-char *str2 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options);  /* "1" */
-char *str3 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options);                 /* "0" */
+/* conditions */
+struct t_hashtable *options1 = weechat_hashtable_new (8,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      NULL,
+                                                      NULL);
+weechat_hashtable_set (options1, "type", "condition");
+char *str1 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options1);  /* "1" */
+char *str2 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options1);                 /* "0" */
+
+/* simple expression */
+char *str3 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);  /* "core.weechat" */
+
+/* replace with regex */
+struct t_hashtable *options2 = weechat_hashtable_new (8,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      NULL,
+                                                      NULL);
+/* add brackets around URLs */
+weechat_hashtable_set (options2, "regex", "\\w+://\\S+");
+weechat_hashtable_set (options2, "regex_replace", "[ ${re:0} ]");
+char *str4 = weechat_string_eval_expression ("test: http://weechat.org", NULL, NULL, NULL);  /* "test: [ http://weechat.org ]" */
+
+/* hide passwords */
+weechat_hashtable_set (options2, "regex", "(password=)(\\S+)");
+weechat_hashtable_set (options2, "regex_replace", "${re:1}${hide:*,${re:2}}");
+char *str5 = weechat_string_eval_expression ("password=abc password=def", NULL, NULL, NULL);  /* "password=*** password=***" */
 ----
 
 Script (Python):
@@ -1948,9 +2045,27 @@ Script (Python):
 str = weechat.string_eval_expression(expr, pointers, extra_vars, options)
 
 # esempi
-str1 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {})                           # "core.weechat"
-str2 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
-str3 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
+
+# conditions
+str1 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
+str2 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
+
+# simple expression
+str3 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) # "core.weechat"
+
+# replace with regex: add brackets around URLs
+options = {
+    "regex": "\\w+://\\S+",
+    "regex_replace": "[ ${re:0} ]",
+}
+str4 = weechat.string_eval_expression("test: http://weechat.org", {}, {}, options)  # "test: [ http://weechat.org ]"
+
+# replace with regex: hide passwords
+options = {
+    "regex": "(password=)(\\S+)",
+    "regex_replace": "${re:1}${hide:*,${re:2}}",
+}
+str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"
 ----
 
 [[utf-8]]
