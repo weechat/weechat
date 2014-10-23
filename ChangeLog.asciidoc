@@ -38,6 +38,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: display time in bare display only if option
   weechat.look.buffer_time_format is not an empty string
 * core: fix translation of message displayed after /upgrade
+* api: fix crash when reading config options with NULL value (closes #238)
 * irc: add tag "nick_xxx" in invite messages
 * irc: fix completion of commands /msg, /notice and /query
 * irc: fix translation of CTCP PING reply (closes #137)

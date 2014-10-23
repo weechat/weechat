@@ -1852,13 +1852,12 @@ config_file_option_set_with_string (const char *option_name, const char *value)
 int
 config_file_option_boolean (struct t_config_option *option)
 {
-    if (!option)
-        return 0;
-
-    if (option->type == CONFIG_OPTION_TYPE_BOOLEAN)
+    if (option && option->value
+        && (option->type == CONFIG_OPTION_TYPE_BOOLEAN))
+    {
         return CONFIG_BOOLEAN(option);
-    else
-        return 0;
+    }
+    return 0;
 }
 
 /*
@@ -1870,13 +1869,12 @@ config_file_option_boolean (struct t_config_option *option)
 int
 config_file_option_boolean_default (struct t_config_option *option)
 {
-    if (!option)
-        return 0;
-
-    if (option->type == CONFIG_OPTION_TYPE_BOOLEAN)
+    if (option && option->default_value
+        && (option->type == CONFIG_OPTION_TYPE_BOOLEAN))
+    {
         return CONFIG_BOOLEAN_DEFAULT(option);
-    else
-        return 0;
+    }
+    return 0;
 }
 
 /*
@@ -1886,23 +1884,23 @@ config_file_option_boolean_default (struct t_config_option *option)
 int
 config_file_option_integer (struct t_config_option *option)
 {
-    if (!option)
-        return 0;
-
-    switch (option->type)
+    if (option && option->value)
     {
-        case CONFIG_OPTION_TYPE_BOOLEAN:
-            if (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE)
-                return 1;
-            else
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                if (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE)
+                    return 1;
+                else
+                    return 0;
+            case CONFIG_OPTION_TYPE_INTEGER:
+            case CONFIG_OPTION_TYPE_COLOR:
+                return CONFIG_INTEGER(option);
+            case CONFIG_OPTION_TYPE_STRING:
                 return 0;
-        case CONFIG_OPTION_TYPE_INTEGER:
-        case CONFIG_OPTION_TYPE_COLOR:
-            return CONFIG_INTEGER(option);
-        case CONFIG_OPTION_TYPE_STRING:
-            return 0;
-        case CONFIG_NUM_OPTION_TYPES:
-            break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
+        }
     }
     return 0;
 }
@@ -1914,23 +1912,23 @@ config_file_option_integer (struct t_config_option *option)
 int
 config_file_option_integer_default (struct t_config_option *option)
 {
-    if (!option)
-        return 0;
-
-    switch (option->type)
+    if (option && option->default_value)
     {
-        case CONFIG_OPTION_TYPE_BOOLEAN:
-            if (CONFIG_BOOLEAN_DEFAULT(option) == CONFIG_BOOLEAN_TRUE)
-                return 1;
-            else
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                if (CONFIG_BOOLEAN_DEFAULT(option) == CONFIG_BOOLEAN_TRUE)
+                    return 1;
+                else
+                    return 0;
+            case CONFIG_OPTION_TYPE_INTEGER:
+            case CONFIG_OPTION_TYPE_COLOR:
+                return CONFIG_INTEGER_DEFAULT(option);
+            case CONFIG_OPTION_TYPE_STRING:
                 return 0;
-        case CONFIG_OPTION_TYPE_INTEGER:
-        case CONFIG_OPTION_TYPE_COLOR:
-            return CONFIG_INTEGER_DEFAULT(option);
-        case CONFIG_OPTION_TYPE_STRING:
-            return 0;
-        case CONFIG_NUM_OPTION_TYPES:
-            break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
+        }
     }
     return 0;
 }
@@ -1942,26 +1940,26 @@ config_file_option_integer_default (struct t_config_option *option)
 const char *
 config_file_option_string (struct t_config_option *option)
 {
-    if (!option)
-        return NULL;
-
-    switch (option->type)
+    if (option && option->value)
     {
-        case CONFIG_OPTION_TYPE_BOOLEAN:
-            if (CONFIG_BOOLEAN(option))
-                return config_boolean_true[0];
-            else
-                return config_boolean_false[0];
-        case CONFIG_OPTION_TYPE_INTEGER:
-            if (option->string_values)
-                return option->string_values[CONFIG_INTEGER(option)];
-            return NULL;
-        case CONFIG_OPTION_TYPE_STRING:
-            return CONFIG_STRING(option);
-        case CONFIG_OPTION_TYPE_COLOR:
-            return gui_color_get_name (CONFIG_COLOR(option));
-        case CONFIG_NUM_OPTION_TYPES:
-            return NULL;
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                if (CONFIG_BOOLEAN(option))
+                    return config_boolean_true[0];
+                else
+                    return config_boolean_false[0];
+            case CONFIG_OPTION_TYPE_INTEGER:
+                if (option->string_values)
+                    return option->string_values[CONFIG_INTEGER(option)];
+                return NULL;
+            case CONFIG_OPTION_TYPE_STRING:
+                return CONFIG_STRING(option);
+            case CONFIG_OPTION_TYPE_COLOR:
+                return gui_color_get_name (CONFIG_COLOR(option));
+            case CONFIG_NUM_OPTION_TYPES:
+                return NULL;
+        }
     }
     return NULL;
 }
@@ -1973,26 +1971,26 @@ config_file_option_string (struct t_config_option *option)
 const char *
 config_file_option_string_default (struct t_config_option *option)
 {
-    if (!option)
-        return NULL;
-
-    switch (option->type)
+    if (option && option->default_value)
     {
-        case CONFIG_OPTION_TYPE_BOOLEAN:
-            if (CONFIG_BOOLEAN_DEFAULT(option))
-                return config_boolean_true[0];
-            else
-                return config_boolean_false[0];
-        case CONFIG_OPTION_TYPE_INTEGER:
-            if (option->string_values)
-                return option->string_values[CONFIG_INTEGER_DEFAULT(option)];
-            return NULL;
-        case CONFIG_OPTION_TYPE_STRING:
-            return CONFIG_STRING_DEFAULT(option);
-        case CONFIG_OPTION_TYPE_COLOR:
-            return gui_color_get_name (CONFIG_COLOR_DEFAULT(option));
-        case CONFIG_NUM_OPTION_TYPES:
-            return NULL;
+        switch (option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                if (CONFIG_BOOLEAN_DEFAULT(option))
+                    return config_boolean_true[0];
+                else
+                    return config_boolean_false[0];
+            case CONFIG_OPTION_TYPE_INTEGER:
+                if (option->string_values)
+                    return option->string_values[CONFIG_INTEGER_DEFAULT(option)];
+                return NULL;
+            case CONFIG_OPTION_TYPE_STRING:
+                return CONFIG_STRING_DEFAULT(option);
+            case CONFIG_OPTION_TYPE_COLOR:
+                return gui_color_get_name (CONFIG_COLOR_DEFAULT(option));
+            case CONFIG_NUM_OPTION_TYPES:
+                return NULL;
+        }
     }
     return NULL;
 }
@@ -2004,10 +2002,12 @@ config_file_option_string_default (struct t_config_option *option)
 const char *
 config_file_option_color (struct t_config_option *option)
 {
-    if (!option)
-        return NULL;
-
-    return gui_color_get_name (CONFIG_COLOR(option));
+    if (option && option->value
+        && (option->type == CONFIG_OPTION_TYPE_COLOR))
+    {
+        return gui_color_get_name (CONFIG_COLOR(option));
+    }
+    return NULL;
 }
 
 /*
@@ -2017,10 +2017,12 @@ config_file_option_color (struct t_config_option *option)
 const char *
 config_file_option_color_default (struct t_config_option *option)
 {
-    if (!option)
-        return NULL;
-
-    return gui_color_get_name (CONFIG_COLOR_DEFAULT(option));
+    if (option && option->default_value
+        && (option->type == CONFIG_OPTION_TYPE_COLOR))
+    {
+        return gui_color_get_name (CONFIG_COLOR_DEFAULT(option));
+    }
+    return NULL;
 }
 
 /*
