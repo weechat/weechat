@@ -854,7 +854,7 @@ int match5 = weechat_string_match ("abcdef", "*b*d*", 0);  /* == 1 */
 # プロトタイプ
 match = weechat.string_match(string, mask, case_sensitive)
 
-# 例s
+# 例
 match1 = weechat.string_match("abcdef", "abc*", 0)   # 1
 match2 = weechat.string_match("abcdef", "*dd*", 0)   # 0
 match3 = weechat.string_match("abcdef", "*def", 0)   # 1
@@ -1771,7 +1771,7 @@ int command_char2 = weechat_string_is_command_char ("test");   /* == 0 */
 # プロトタイプ
 is_cmdchar = weechat.string_is_command_char(string)
 
-# 例s
+# 例
 command_char1 = weechat.string_is_command_char("/test")  # == 1
 command_char2 = weechat.string_is_command_char("test")   # == 0
 ----
@@ -1814,7 +1814,7 @@ const char *str3 = weechat_string_input_for_buffer ("//test");  /* "/test" */
 # プロトタイプ
 str = weechat.string_input_for_buffer(string)
 
-# 例s
+# 例
 str1 = weechat.string_input_for_buffer("test")    # "test"
 str2 = weechat.string_input_for_buffer("/test")   # ""
 str3 = weechat.string_input_for_buffer("//test")  # "/test"
@@ -1822,12 +1822,10 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== weechat_string_eval_expression
 
-// TRANSLATION MISSING
-_WeeChat ≥ 0.4.0, updated in 0.4.2 and 1.1._
+_WeeChat バージョン 0.4.0 以上で利用可、バージョン 0.4.2 と 1.1 で更新。_
 
-// TRANSLATION MISSING
-Evaluate an expression and return result as a string.
-Special variables with format `${variable}` are expanded (see table below).
+式を評価して文字列として返す。`${variable}`
+という書式で書かれた特殊変数は展開されます (以下の表を参照)。
 
 [NOTE]
 バージョン 1.0 以降、入れ子変数を使えるようになりました、例:
@@ -1845,16 +1843,14 @@ char *weechat_string_eval_expression (const char *expr,
 
 引数:
 
-// TRANSLATION MISSING
-* 'expr': 評価する式 (see table below)
+* 'expr': 評価する式 (以下の表を参照)
 * 'pointers': ポインタを含むハッシュテーブル (キーは文字列、値はポインタ);
   (現在のウィンドウやバッファへのポインタを持つ) ハッシュテーブルが "window" と
   "buffer" ポインタを持たない場合はこれらは自動的に追加される (NULL でも可):
-// TRANSLATION MISSING
-** 'regex': pointer to a regular expression ('regex_t' structure) compiled with
-   WeeChat function <<_weechat_string_regcomp,weechat_string_regcomp>> or
-   regcomp (see `man regcomp`); this option is similar to 'regex' in hashtable
-   'options' (below), but is used for better performance
+** 'regex': WeeChat 関数 <<_weechat_string_regcomp,weechat_string_regcomp>>
+   または regcomp (`man regcomp` を参照) でコンパイル済みの正規表現へのポインタ
+   ('regex_t' 構造体); このオプションは (以下の) ハッシュテーブル構造体 'options'
+   メンバの 'regex' とよく似ていますが、より高速に動作します
 * 'extra_vars': 展開される追加変数 (NULL でも可)
 * 'options': いくつかのオプションを含むハッシュテーブル (キーと値は必ず文字列)
   (NULL でも可):
@@ -1864,84 +1860,80 @@ char *weechat_string_eval_expression (const char *expr,
     演算子と括弧が使われます、結果はブール値 ("0" または "1") です
 ** 'prefix': 置換する変数のプレフィックス (デフォルト: "${")
 ** 'suffix': 置換する変数のサフィックス (デフォルト: "}")
-// TRANSLATION MISSING
-** 'regex': a regex used to replace text in 'expr' (which is then not
-   evaluated)
-// TRANSLATION MISSING
-** 'regex_replace': the replacement text to use with 'regex', to replace
-   text in 'expr' (the 'regex_replace' is evaluated on each match of 'regex'
-   against 'expr', until no match is found)
+** 'regex': 'expr' のテキストを置換する正規表現
+   (この場合 'expr' は評価されません)
+** 'regex_replace': 'regex' と一緒に使われる置換テキスト、'expr'
+   に含まれるテキストを置換する ('regex_replace' は、'expr' 内で
+   'regex' 引数にマッチする部分が見つからなくなるまで、毎回評価されます)
 
 戻り値:
 
 * 評価された式 (使用後には必ず "free" を呼び出して領域を開放してください)、失敗した場合は
   NULL (式が不正な場合やメモリが不足している場合)
 
-// TRANSLATION MISSING
-List of variables expanded in expression (by order of priority, from first
-expanded to last):
+式中で展開される変数のリスト
+(優先度の高い順、展開順の早いものを上に遅いものを下に):
 
-// TRANSLATION MISSING
 [width="100%",cols="2,8,3,3",options="header"]
 |===
-| Format | Description | Examples | Results
+| フォーマット | 説明 | 例 | 結果
 
-| `${name}` | Variable `name` from hashtable 'extra_vars' |
+| `${name}` | 'extra_vars' の変数 `name` の値に展開 |
   `${name}` | `value`
 
 | `${esc:xxx}` +
-  `${\xxx}` | String with escaped chars |
+  `${\xxx}` | エスケープ文字を含む文字列 |
   `${esc:prefix\tmessage}` +
   `${\ua9}` |
   `prefix<TAB>message` +
   `©`
 
 | `${hide:x,value}` |
-  String with hidden chars (all chars in `value` replaced `x`) |
+  隠す文字を含むテキスト (`value` に含まれる文字をすべて `x` で置換) |
   `${hide:*,password}` |
  `********`
 
 | `${re:N}` |
-  Regex captured group: 0 = whole string matching, 1 to 99 = group captured,
-  `+` = last group captured |
+  正規表現のキャプチャグループ: 0 = マッチするすべての文字列、1 から 99 =
+  キャプチャされたグループ、`+` = 最後にキャプチャされたグループ |
   `${re:1}` |
   `test`
 
 | `${color:name}` |
-  WeeChat color code (the name of color has optional attributes) |
+  WeeChat 色コード (色名部分はオプション属性をとることも可能です) |
   `${color:red}red text` +
   `${color:*214}bold orange text` |
-  `red text` (in red) +
-  `bold orange text` (in bold orange)
+  `red text` (赤色で) +
+  `bold orange text` (太字オレンジ色で)
 
 | `${info:name}` +
   `${indo:name,arguments}` |
-  Info from WeeChat or a plugin, see function
-  <<_weechat_info_get,weechat_info_get>> |
+  WeeChat またはプラグインのインフォ、<<_weechat_info_get,weechat_info_get>>
+  を参照 |
   `${info:version}` +
   `${info:irc_nick_color_name,foo}` |
   `1.0` +
   `lightblue`
 
 | `${sec.data.name}` |
-  Value of the secured data `name` |
+  セキュアデータ `name` の値 |
   `${sec.data.freenode_pass}` |
   `my_password`
 
 | `${file.section.option}` |
-  Value of the option |
+  オプションの値 |
   `${weechat.look.buffer_time_format}` |
   `%H:%M:%S`
 
 | `${name}` |
-  Value of local variable `name` in buffer |
+  バッファに対するローカル変数 `name` の値 |
   `${nick}` |
   `FlashCode`
 
 | `${hdata.var1.var2...}` +
   `${hdata[list].var1.var2...}` |
-  Hdata value (pointers `window` and `buffer` are set by default with current
-  window/buffer) |
+  hdata の値 (`window` と `buffer`
+  ポインタはデフォルトで現在のウィンドウ/バッファに設定されます) |
   `${buffer[gui_buffers].full_name}` +
   `${window.buffer.number}` |
   `core.weechat` +
@@ -1950,10 +1942,9 @@ expanded to last):
 
 C 言語での使用例:
 
-// TRANSLATION MISSING
 [source,C]
 ----
-/* conditions */
+/* 条件式の評価 */
 struct t_hashtable *options1 = weechat_hashtable_new (8,
                                                       WEECHAT_HASHTABLE_STRING,
                                                       WEECHAT_HASHTABLE_STRING,
@@ -1963,21 +1954,21 @@ weechat_hashtable_set (options1, "type", "condition");
 char *str1 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options1);  /* "1" */
 char *str2 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options1);                 /* "0" */
 
-/* simple expression */
+/* 単純な展開 */
 char *str3 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);  /* "core.weechat" */
 
-/* replace with regex */
+/* 正規表現を用いた置換 */
 struct t_hashtable *options2 = weechat_hashtable_new (8,
                                                       WEECHAT_HASHTABLE_STRING,
                                                       WEECHAT_HASHTABLE_STRING,
                                                       NULL,
                                                       NULL);
-/* add brackets around URLs */
+/* URL に関するブラックリストを追加 */
 weechat_hashtable_set (options2, "regex", "\\w+://\\S+");
 weechat_hashtable_set (options2, "regex_replace", "[ ${re:0} ]");
 char *str4 = weechat_string_eval_expression ("test: http://weechat.org", NULL, NULL, NULL);  /* "test: [ http://weechat.org ]" */
 
-/* hide passwords */
+/* パスワードを隠す */
 weechat_hashtable_set (options2, "regex", "(password=)(\\S+)");
 weechat_hashtable_set (options2, "regex_replace", "${re:1}${hide:*,${re:2}}");
 char *str5 = weechat_string_eval_expression ("password=abc password=def", NULL, NULL, NULL);  /* "password=*** password=***" */
@@ -1985,29 +1976,28 @@ char *str5 = weechat_string_eval_expression ("password=abc password=def", NULL, 
 
 スクリプト (Python) での使用例:
 
-// TRANSLATION MISSING
 [source,python]
 ----
 # プロトタイプ
 str = weechat.string_eval_expression(expr, pointers, extra_vars, options)
 
-# 例s
+# 例
 
-# conditions
+# 条件式の評価
 str1 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
 str2 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
 
-# simple expression
+# 単純な展開
 str3 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) # "core.weechat"
 
-# replace with regex: add brackets around URLs
+# 正規表現を用いた置換: URL に関するブラックリストを追加
 options = {
     "regex": "\\w+://\\S+",
     "regex_replace": "[ ${re:0} ]",
 }
 str4 = weechat.string_eval_expression("test: http://weechat.org", {}, {}, options)  # "test: [ http://weechat.org ]"
 
-# replace with regex: hide passwords
+# 正規表現を用いた置換: パスワードを隠す
 options = {
     "regex": "(password=)(\\S+)",
     "regex_replace": "${re:1}${hide:*,${re:2}}",
@@ -6398,7 +6388,7 @@ weechat_key_unbind ("mouse", "area:chat(plugin.buffer)");
 # プロトタイプ
 num_keys = weechat.key_unbind(context, key)
 
-# 例s
+# 例
 
 # remove a single key
 weechat.key_unbind("mouse", "@chat(plugin.buffer):button1")
@@ -10798,7 +10788,7 @@ weechat_buffer_set (my_buffer, "localvar_del_toto", NULL);
 # プロトタイプ
 weechat.buffer_set(buffer, property, value)
 
-# 例s
+# 例
 
 # disable hotlist (for all buffers)
 weechat.buffer_set("", "hotlist", "-")
@@ -11786,7 +11776,7 @@ weechat_nicklist_group_set (buffer, group, "visible", "0");
 # プロトタイプ
 weechat.nicklist_group_set(buffer, group, property, value)
 
-# 例s
+# 例
 
 # change group color to "bar_fg"
 weechat.nicklist_group_set(buffer, group, "color", "bar_fg")
@@ -12001,7 +11991,7 @@ weechat_nicklist_nick_set (buffer, nick, "visible", "0");
 # プロトタイプ
 weechat.nicklist_nick_set(buffer, nick, property, value)
 
-# 例s
+# 例
 
 # change nick color to cyan
 weechat.nicklist_nick_set(buffer, nick, "color", "cyan")
