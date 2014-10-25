@@ -235,61 +235,63 @@ infolists: wyświetla informacje o infolistach
 /eval  [-n] <wyrażenie>
        [-n] -c <wyrażenie1> <operator> <wyrażenie2>
 
-        -n: wyświetla wynik bez wysyłania go do buforu (tryb debugowania)
-        -c: przetwarza jako warunek: użyj operatorów i nawiasów, zwraca wartość logiczną ("0" lub "1")
-wyrażenie: wyrażenie do przetworzenia, zmienne o formacie ${zmienna} są zastępowane (zobacz niżej); wiele komend można oddzielić średnikami
-  operator: operator logiczny lub porównania:
-            - operatory logiczne:
-                &&  boolowskie "i"
-                ||  boolowskie "lub"
-            - operatory porównania:
-                ==  równy
-                !=  różny
-                <=  mniejszy lub równy
-                <   mniejszy
-                >=  większy lub równy
-                >   większy
-                =~  pasuje do rozszerzonego wyrażenia regularnego POSIX
-                !~  NIE pasuje do rozszerzonego wyrażenia regularnego POSIX
+        -n: display result without sending it to buffer (debug mode)
+        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
+expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
+  operator: a logical or comparison operator:
+            - logical operators:
+                &&  boolean "and"
+                ||  boolean "or"
+            - comparison operators:
+                ==  equal
+                !=  not equal
+                <=  less or equal
+                <   less
+                >=  greater or equal
+                >   greater
+                =~  is matching POSIX extended regex
+                !~  is NOT matching POSIX extended regex
 
-Wyrażenie jest uznawane za "prawdziwe" jeśli nie jest NULL, nie jest puste, oraz różni się od "0".
-Porównania dokonuje się z użyciem liczb całkowitych jeśli oba wyrażenia są liczbami całkowitymi.
-W celu wymuszenia porównywania ciągów, należy umieścić każde wyrażenie w cudzysłowie, na przykład:
+An expression is considered as "true" if it is not NULL, not empty, and different from "0".
+The comparison is made using integers if the two expressions are valid integers.
+To force a string comparison, add double quotes around each expression, for example:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Niektóre zmienne w wyrażeniach są zamieniane, poprzez zastosowanie formatu ${zmienna}, według priorytetu zmienną może być:
-  1. ciąg z wyescapowanymi znakami (format: "esc:xxx" lub "\xxx")
-  2. kolor (format color:xxx)
-  3. informacja (format: "info:nazwa,argumenty", argumenty są opcjonalne)
-  4. opcja (format: plik.sekcja.opcja)
-  5. zmienna lokalna w buforze
-  6. nazwa hdatay/zmiennej (wartość jest automatycznie konwertowana na ciąg znaków), domyślnie "window" i "buffer" wskazują na aktualne okno/bufor.
-Format dla hdata może być jednym z poniższych:
-  hdata.zmienna1.zmienna2...: inicjuje hdata (wskaźnik musi być znany), następnie wypytuje zmienne jedna po drugiej (inne hdata mogą być następne)
-  hdata[list].zmienna1.zmienna2...: inicjuje hdata z wykorzystaniem listy, na przykład:
-    ${buffer[gui_buffers].full_name}: pełna nazwa buforu w połączonej liście buforów
-    ${plugin[weechat_plugins].name}: nazwa pierwszej wtyczki w połączonej liście wtyczek
-Nazwy hdata i zmiennych, można znaleźć w  "Opisie API wtyczek", fukcja "weechat_hdata_get".
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
+  1. a string with escaped chars (format: "esc:xxx" or "\xxx")
+  2. a string with chars to hide (format: "hide:char,string")
+  3. a color (format: "color:xxx")
+  4. an info (format: "info:name,arguments", arguments are optional)
+  5. an option (format: "file.section.option")
+  6. a local variable in buffer
+  7. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+Format for hdata can be one of following:
+  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
+  hdata[list].var1.var2...: start with a hdata using a list, for example:
+    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
+    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
+For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
-Przykłady (proste ciągi):
-  /eval -n ${info:version}                 ==> 0.4.3
-  /eval -n ${weechat.look.scroll_amount}   ==> 3
-  /eval -n ${window}                       ==> 0x2549aa0
-  /eval -n ${window.buffer}                ==> 0x2549320
-  /eval -n ${window.buffer.full_name}      ==> core.weechat
-  /eval -n ${window.buffer.number}         ==> 1
-  /eval -n ${\t}                           ==> <tab>
+Examples (simple strings):
+  /eval -n ${info:version}                     ==> 0.4.3
+  /eval -n ${weechat.look.scroll_amount}       ==> 3
+  /eval -n ${window}                           ==> 0x2549aa0
+  /eval -n ${window.buffer}                    ==> 0x2549320
+  /eval -n ${window.buffer.full_name}          ==> core.weechat
+  /eval -n ${window.buffer.number}             ==> 1
+  /eval -n ${\t}                               ==> <tab>
+  /eval -n ${hide:-,${relay.network.password}} ==> --------
 
-Przykłady (warunki):
-  /eval -n -c ${window.buffer.number} > 2  ==> 0
-  /eval -n -c ${window.win_width} > 100    ==> 1
-  /eval -n -c (8 > 12) || (5 > 2)          ==> 1
-  /eval -n -c (8 > 12) && (5 > 2)          ==> 0
-  /eval -n -c abcd =~ ^ABC                 ==> 1
-  /eval -n -c abcd =~ (?-i)^ABC            ==> 0
-  /eval -n -c abcd =~ (?-i)^abc            ==> 1
-  /eval -n -c abcd !~ abc                  ==> 0
+Examples (conditions):
+  /eval -n -c ${window.buffer.number} > 2 ==> 0
+  /eval -n -c ${window.win_width} > 100   ==> 1
+  /eval -n -c (8 > 12) || (5 > 2)         ==> 1
+  /eval -n -c (8 > 12) && (5 > 2)         ==> 0
+  /eval -n -c abcd =~ ^ABC                ==> 1
+  /eval -n -c abcd =~ (?-i)^ABC           ==> 0
+  /eval -n -c abcd =~ (?-i)^abc           ==> 1
+  /eval -n -c abcd !~ abc                 ==> 0
 ----
 
 [[command_weechat_filter]]

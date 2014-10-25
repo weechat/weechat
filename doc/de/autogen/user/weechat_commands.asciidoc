@@ -260,11 +260,12 @@ Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrü
 
 Einige Variablen werden im Ausdruck, mittels der Formatierung ${Variable}, ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:
   1. eine Zeichenkette mit Escapesequenzen (Format: "esc:xxx" oder "\xxx")
-  2. eine Farbe (Format: color:xxx)
-  3. eine Info (Format: "info:name,arguments", Argumente sind optional)
-  4. der Name einer Option (Format: file.section.option)
-  5. der Name einer lokalen Variablen eines Buffer
-  6. ein hdata Name/Variable (der Wert wird automatisch als Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
+  2. Zeichen welche in einer Zeichenkette nicht dargestellt werden sollen (Format: "hide:Zeichen,Zeichenkette")
+  3. eine Farbe (Format: color:xxx)
+  4. eine Info (Format: "info:name,arguments", Argumente sind optional)
+  5. der Name einer Option (Format: file.section.option)
+  6. der Name einer lokalen Variablen eines Buffer
+  7. ein hdata Name/Variable (der Wert wird automatisch als Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
 Das Format für hdata kann wie folgt aufgebaut sein:
   hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
   hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
@@ -280,6 +281,7 @@ Beispiele (einfache Zeichenketten):
   /eval -n ${window.buffer.full_name}      ==> core.weechat
   /eval -n ${window.buffer.number}         ==> 1
   /eval -n ${\t}                           ==> <tab>
+  /eval -n ${hide:-,${relay.network.password}} ==> --------
 
 Beispiele (Bedingungen):
   /eval -n -c ${window.buffer.number} > 2  ==> 0
