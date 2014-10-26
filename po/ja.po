@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 11:00+0100\n"
+"POT-Creation-Date: 2014-10-26 13:07+0100\n"
 "PO-Revision-Date: 2014-10-25 08:29+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -3711,15 +3711,20 @@ msgstr ""
 "ニックネームプレフィックスの色 (プレフィックス中のニックネームの前に表示され"
 "る文字列)"
 
-msgid "text color for offline nick (not in nicklist any more)"
+msgid ""
+"text color for offline nick (not in nicklist any more); this color is used "
+"only if option weechat.look.color_nick_offline is enabled"
 msgstr ""
-"オフラインのニックネームのテキスト色 (ニックネームリストにも表示されない)"
 
-msgid "text color for offline nick with highlight"
-msgstr "ハイライトされたオフラインのニックネームのテキスト色"
+msgid ""
+"text color for offline nick with highlight; this color is used only if "
+"option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
-msgid "background color for offline nick with highlight"
-msgstr "ハイライトされたオフラインのニックネームの背景色"
+msgid ""
+"background color for offline nick with highlight; this color is used only if "
+"option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
 msgid "text color for other nick in private buffer"
 msgstr "プライベートバッファ内の他のニックネームのテキスト色"
@@ -11472,6 +11477,16 @@ msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できませ�
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: \"%s\" のタイムアウト %s"
+
+#~ msgid "text color for offline nick (not in nicklist any more)"
+#~ msgstr ""
+#~ "オフラインのニックネームのテキスト色 (ニックネームリストにも表示されない)"
+
+#~ msgid "text color for offline nick with highlight"
+#~ msgstr "ハイライトされたオフラインのニックネームのテキスト色"
+
+#~ msgid "background color for offline nick with highlight"
+#~ msgstr "ハイライトされたオフラインのニックネームの背景色"
 
 #~ msgid "structure with partial completion"
 #~ msgstr "部分補完する構造"

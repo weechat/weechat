@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 11:00+0100\n"
+"POT-Creation-Date: 2014-10-26 13:07+0100\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2953,17 +2953,20 @@ msgstr "idő színe a beszédablakban"
 msgid "color for nick prefix (string displayed before nick in prefix)"
 msgstr ""
 
-#, fuzzy
-msgid "text color for offline nick (not in nicklist any more)"
-msgstr "távollevő felhasználók nevének színe"
+msgid ""
+"text color for offline nick (not in nicklist any more); this color is used "
+"only if option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
-#, fuzzy
-msgid "text color for offline nick with highlight"
-msgstr "távollevő felhasználók nevének színe"
+msgid ""
+"text color for offline nick with highlight; this color is used only if "
+"option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
-#, fuzzy
-msgid "background color for offline nick with highlight"
-msgstr "címsor háttere"
+msgid ""
+"background color for offline nick with highlight; this color is used only if "
+"option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
 #, fuzzy
 msgid "text color for other nick in private buffer"
@@ -10172,6 +10175,18 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "text color for offline nick (not in nicklist any more)"
+#~ msgstr "távollevő felhasználók nevének színe"
+
+#, fuzzy
+#~ msgid "text color for offline nick with highlight"
+#~ msgstr "távollevő felhasználók nevének színe"
+
+#, fuzzy
+#~ msgid "background color for offline nick with highlight"
+#~ msgstr "címsor háttere"
 
 #, fuzzy
 #~ msgid "structure with partial completion"

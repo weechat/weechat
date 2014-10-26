@@ -2843,19 +2843,23 @@ config_weechat_init_options ()
     config_color_chat_nick_offline = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick_offline", "color",
-        N_("text color for offline nick (not in nicklist any more)"),
+        N_("text color for offline nick (not in nicklist any more); this "
+           "color is used only if option weechat.look.color_nick_offline is "
+           "enabled"),
         NULL, GUI_COLOR_CHAT_NICK_OFFLINE, 0, "default", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_offline_highlight = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick_offline_highlight", "color",
-        N_("text color for offline nick with highlight"),
+        N_("text color for offline nick with highlight; this color is used "
+           "only if option weechat.look.color_nick_offline is enabled"),
         NULL, -1, 0, "default", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_offline_highlight_bg = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick_offline_highlight_bg", "color",
-        N_("background color for offline nick with highlight"),
+        N_("background color for offline nick with highlight; this color is "
+           "used only if option weechat.look.color_nick_offline is enabled"),
         NULL, -1, 0, "blue", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_other = config_file_new_option (

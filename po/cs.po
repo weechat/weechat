@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 11:00+0100\n"
+"POT-Creation-Date: 2014-10-26 13:07+0100\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3353,17 +3353,20 @@ msgid "color for nick prefix (string displayed before nick in prefix)"
 msgstr ""
 "barva prefixu přezdívky (prefix je uživatelský řetězec před přezdívkou)"
 
-#, fuzzy
-msgid "text color for offline nick (not in nicklist any more)"
-msgstr "barva textu pro nepřipojené přezdíveky"
+msgid ""
+"text color for offline nick (not in nicklist any more); this color is used "
+"only if option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
-#, fuzzy
-msgid "text color for offline nick with highlight"
-msgstr "barva textu pro nepřipojené přezdíveky"
+msgid ""
+"text color for offline nick with highlight; this color is used only if "
+"option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
-#, fuzzy
-msgid "background color for offline nick with highlight"
-msgstr "barva pozadí pro zvýrazněný prefix"
+msgid ""
+"background color for offline nick with highlight; this color is used only if "
+"option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
 msgid "text color for other nick in private buffer"
 msgstr "barva textu pro jiné přezdívky v soukromém bufferu"
@@ -10792,6 +10795,18 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#, fuzzy
+#~ msgid "text color for offline nick (not in nicklist any more)"
+#~ msgstr "barva textu pro nepřipojené přezdíveky"
+
+#, fuzzy
+#~ msgid "text color for offline nick with highlight"
+#~ msgstr "barva textu pro nepřipojené přezdíveky"
+
+#, fuzzy
+#~ msgid "background color for offline nick with highlight"
+#~ msgstr "barva pozadí pro zvýrazněný prefix"
 
 #, fuzzy
 #~ msgid "structure with partial completion"

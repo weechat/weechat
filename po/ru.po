@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 11:00+0100\n"
+"POT-Creation-Date: 2014-10-26 13:07+0100\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2983,17 +2983,20 @@ msgstr "цвет времени в окне чата"
 msgid "color for nick prefix (string displayed before nick in prefix)"
 msgstr ""
 
-#, fuzzy
-msgid "text color for offline nick (not in nicklist any more)"
-msgstr "цвет отошедших ников"
+msgid ""
+"text color for offline nick (not in nicklist any more); this color is used "
+"only if option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
-#, fuzzy
-msgid "text color for offline nick with highlight"
-msgstr "цвет отошедших ников"
+msgid ""
+"text color for offline nick with highlight; this color is used only if "
+"option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
-#, fuzzy
-msgid "background color for offline nick with highlight"
-msgstr "цвет фона заголовка"
+msgid ""
+"background color for offline nick with highlight; this color is used only if "
+"option weechat.look.color_nick_offline is enabled"
+msgstr ""
 
 #, fuzzy
 msgid "text color for other nick in private buffer"
@@ -10194,6 +10197,18 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "text color for offline nick (not in nicklist any more)"
+#~ msgstr "цвет отошедших ников"
+
+#, fuzzy
+#~ msgid "text color for offline nick with highlight"
+#~ msgstr "цвет отошедших ников"
+
+#, fuzzy
+#~ msgid "background color for offline nick with highlight"
+#~ msgstr "цвет фона заголовка"
 
 #, fuzzy
 #~ msgid "structure with partial completion"
