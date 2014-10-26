@@ -11,10 +11,9 @@ env:
 before_script:
     - echo 'APT::Install-Recommends "false";' | sudo tee -a /etc/apt/apt.conf
     - sudo apt-get update -qq
+    - sudo apt-get -y install devscripts equivs python-pip libenchant-dev autopoint asciidoc source-highlight xsltproc docbook-xsl docbook-xml cmake pkg-config libncursesw5-dev gem2deb libperl-dev python-dev libaspell-dev liblua5.1-0-dev tcl8.5-dev guile-2.0-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev zlib1g-dev
     - wget http://weechat.org/files/tests/ubuntu/precise/amd64/libcpputest-dev_3.4-3_amd64.deb
     - sudo dpkg -i libcpputest-dev_3.4-3_amd64.deb
-    - sudo apt-get -y install devscripts equivs python-pip libenchant-dev autopoint
-    - sudo mk-build-deps -i debian/control
     - sudo pip install msgcheck pylint
 
 script:
