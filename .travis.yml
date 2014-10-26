@@ -24,7 +24,7 @@ script:
 
 after_success:
     - weechat --help
-    - weechat -r /quit
+    - weechat -r "/debug libs;/quit"
 
 matrix:
     fast_finish: true
