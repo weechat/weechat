@@ -17,6 +17,45 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 1.1 (under dev)
 
+=== New format for regex replacement in triggers
+
+A new format is used in regex replacement to use regex groups, this format
+is incompatible with version 1.0.
+
+The existing triggers are *NOT automatically updated*.
+
+[width="50%",cols="1,1,3",options="header"]
+|===
+| Old format     | New format               | Examples (new format)
+| `$0` ... `$99` | `${re:0}` ... `${re:99}` | `${re:1}`
+| `$+`           | `${re:+}`                | `${re:+}`
+| `$.*N`         | `${hide:*,${re:N}}`      | `${hide:*,${re:2}}` +
+                                              `${hide:-,${re:+}}`
+|===
+
+Moreover, default triggers used to hide passwords have been fixed for *BSD
+operating systems.
+
+You can restore them with the following command:
+
+----
+/trigger restore cmd_pass msg_auth server_pass
+----
+
+If you added triggers with the old regex replacement format, you must update
+them manually.
+
+=== Default "beep" trigger
+
+The command of "beep" trigger is now executed only if the message is displayed
+(not filtered with /filter).
+
+You can restore the default "beep" trigger with the following command:
+
+----
+/trigger restore beep
+----
+
 === Relay option relay.irc.backlog_tags
 
 The option 'relay.irc.backlog_tags' is now a list separated by commas
@@ -53,27 +92,6 @@ instead of milliseconds:
 * function 'util_timeval_diff': returns microseconds
 * function 'util_timeval_add': the argument 'interval' is now expressed in
   microseconds.
-
-=== Default "beep" trigger
-
-The command of "beep" trigger is now executed only if the message is displayed
-(not filtered with /filter).
-
-You can restore the default "beep" trigger with the following command:
-
-----
-/trigger restore beep
-----
-
-=== Default triggers for hiding passwords
-
-Triggers used to hide passwords have been fixed for *BSD operating systems.
-
-You can restore them with the following command:
-
-----
-/trigger restore cmd_pass msg_auth server_pass
-----
 
 == Version 1.0.1 (2014-09-28)
 

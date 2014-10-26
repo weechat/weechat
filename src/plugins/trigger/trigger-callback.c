@@ -30,8 +30,11 @@
 #include "trigger-buffer.h"
 
 
-/* one hashtable by hook, used in callback to evaluate "conditions" */
-struct t_hashtable *trigger_callback_hashtable_options = NULL;
+/* hashtable used to evaluate "conditions" */
+struct t_hashtable *trigger_callback_hashtable_options_conditions = NULL;
+
+/* hashtable used to replace with regex */
+struct t_hashtable *trigger_callback_hashtable_options_regex = NULL;
 
 
 /*
@@ -148,10 +151,11 @@ trigger_callback_check_conditions (struct t_trigger *trigger,
     if (!conditions || !conditions[0])
         return 1;
 
-    value = weechat_string_eval_expression (conditions,
-                                            pointers,
-                                            extra_vars,
-                                            trigger_callback_hashtable_options);
+    value = weechat_string_eval_expression (
+        conditions,
+        pointers,
+        extra_vars,
+        trigger_callback_hashtable_options_conditions);
     rc = (value && (strcmp (value, "1") == 0));
     if (value)
         free (value);
@@ -169,12 +173,26 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
                                 struct t_hashtable *extra_vars,
                                 int display_monitor)
 {
-    char *value, *replace_eval;
+    char *value;
     const char *ptr_key, *ptr_value;
-    int i;
+    int i, pointers_allocated;
+
+    pointers_allocated = 0;
 
     if (trigger->regex_count == 0)
         return;
+
+    if (!pointers)
+    {
+        pointers = weechat_hashtable_new (32,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          WEECHAT_HASHTABLE_POINTER,
+                                          NULL,
+                                          NULL);
+        if (!pointers)
+            return;
+        pointers_allocated = 1;
+    }
 
     for (i = 0; i < trigger->regex_count; i++)
     {
@@ -208,43 +226,45 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
             continue;
         }
 
-        replace_eval = weechat_string_eval_expression (
-            trigger->regex[i].replace_escaped,
+        weechat_hashtable_set (pointers, "regex", trigger->regex[i].regex);
+        weechat_hashtable_set (trigger_callback_hashtable_options_regex,
+                               "regex_replace",
+                               trigger->regex[i].replace_escaped);
+
+        value = weechat_string_eval_expression (
+            ptr_value,
             pointers,
             extra_vars,
-            NULL);
-        if (replace_eval)
+            trigger_callback_hashtable_options_regex);
+
+        if (value)
         {
-            value = weechat_string_replace_regex (ptr_value,
-                                                  trigger->regex[i].regex,
-                                                  replace_eval,
-                                                  '$',
-                                                  NULL, NULL);
-            if (value)
+            /* display debug info on trigger buffer */
+            if (trigger_buffer && display_monitor)
             {
-                /* display debug info on trigger buffer */
-                if (trigger_buffer && display_monitor)
-                {
-                    weechat_printf_tags (trigger_buffer, "no_trigger",
-                                         "\t  regex %d %s(%s%s%s)%s: "
-                                         "%s\"%s%s%s\"",
-                                         i + 1,
-                                         weechat_color ("chat_delimiters"),
-                                         weechat_color ("reset"),
-                                         ptr_key,
-                                         weechat_color ("chat_delimiters"),
-                                         weechat_color ("reset"),
-                                         weechat_color ("chat_delimiters"),
-                                         weechat_color ("reset"),
-                                         value,
-                                         weechat_color ("chat_delimiters"));
-                }
-                weechat_hashtable_set (extra_vars, ptr_key, value);
-                free (value);
+                weechat_printf_tags (trigger_buffer, "no_trigger",
+                                     "\t  regex %d %s(%s%s%s)%s: "
+                                     "%s\"%s%s%s\"",
+                                     i + 1,
+                                     weechat_color ("chat_delimiters"),
+                                     weechat_color ("reset"),
+                                     ptr_key,
+                                     weechat_color ("chat_delimiters"),
+                                     weechat_color ("reset"),
+                                     weechat_color ("chat_delimiters"),
+                                     weechat_color ("reset"),
+                                     value,
+                                     weechat_color ("chat_delimiters"));
             }
-            free (replace_eval);
+            weechat_hashtable_set (extra_vars, ptr_key, value);
+            free (value);
         }
     }
+
+    if (pointers_allocated)
+        weechat_hashtable_free (pointers);
+    else
+        weechat_hashtable_remove (pointers, "regex");
 }
 
 /*
@@ -912,16 +932,24 @@ end:
 void
 trigger_callback_init ()
 {
-    trigger_callback_hashtable_options = weechat_hashtable_new (32,
-                                                                WEECHAT_HASHTABLE_STRING,
-                                                                WEECHAT_HASHTABLE_STRING,
-                                                                NULL,
-                                                                NULL);
-    if (trigger_callback_hashtable_options)
+    trigger_callback_hashtable_options_conditions = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL,
+        NULL);
+    if (trigger_callback_hashtable_options_conditions)
     {
-        weechat_hashtable_set (trigger_callback_hashtable_options,
+        weechat_hashtable_set (trigger_callback_hashtable_options_conditions,
                                "type", "condition");
     }
+
+    trigger_callback_hashtable_options_regex = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL,
+        NULL);
 }
 
 /*
@@ -931,6 +959,8 @@ trigger_callback_init ()
 void
 trigger_callback_end ()
 {
-    if (trigger_callback_hashtable_options)
-        weechat_hashtable_free (trigger_callback_hashtable_options);
+    if (trigger_callback_hashtable_options_conditions)
+        weechat_hashtable_free (trigger_callback_hashtable_options_conditions);
+    if (trigger_callback_hashtable_options_regex)
+        weechat_hashtable_free (trigger_callback_hashtable_options_regex);
 }

@@ -3138,15 +3138,17 @@ oder mehrere identische Zeichen).
 
 Matching groups können in "replace" genutzt werden:
 
-* `$0` bis `$99`: `$0` um alles zu matchen, `$1` bis `$99` um Gruppen zu fangen
-* `$+`: der letzte match (mit der höchsten Nummer)
-* `$.cN`: match "N" mit allen Zeichen die durch "c" ersetzt wurden (Beispiel: `$.*2` ist die group
-  #2 mit allen Zeichen die durch `*` ersetzt wurden).
+* `${re:0}` bis `${re:99}`: `${re:0}` um alles zu matchen, `${re:1}` bis
+  `${re:99}` um Gruppen zu fangen
+* `${re:+}`: der letzte match (mit der höchsten Nummer)
+* `${hide:c,${re:N}}`: match "N" mit allen Zeichen die durch "c" ersetzt wurden
+  (Beispiel: `${hide:*,${re:2}}` ist die group #2 mit allen Zeichen die durch
+  `*` ersetzt wurden).
 
 Beispiel: nutzte Fettschrift zwischen dem Zeichen "*":
 
 ----
-/\*(\S+)\*/*${color:bold}$1${color:-bold}*/
+/\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
 Beispiel: der Standard-Trigger 'server_pass' nutzt folgenden regulären Ausdruck
@@ -3154,7 +3156,7 @@ um ein Passwort in den Befehlen `/server` und `/connect` zu verbergen (die
 einzelnen Zeichen des Passwortes werden durch `*` ersetzt):
 
 ----
-==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==$1$.*4$5
+==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]

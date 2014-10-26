@@ -3089,22 +3089,23 @@ identycznymi znakami).
 
 Dopasowane grupy, które mogą zostać użyte w "zamień":
 
-* `$0` to `$99`: `$0` to pełne dopasowanie, `$1` do `$99` to przechwycone grupy
-* `$+`: ostatnie dopasowanie (z najwyższym numerem)
-* `$.cN`: dopasowanie "N" z wszystkimi znakami zastąpionymi "c" (przykład: `$.*2`
-  to grupa #2 ze znakami zastąpionymi `*`).
+* `${re:0}` to `${re:99}`: `${re:0}` to pełne dopasowanie, `${re:1}` do
+  `${re:99}` to przechwycone grupy
+* `${re:+}`: ostatnie dopasowanie (z najwyższym numerem)
+* `${hide:c,${re:N}}`: dopasowanie "N" z wszystkimi znakami zastąpionymi "c"
+  (przykład: `${hide:*,${re:2}}` to grupa #2 ze znakami zastąpionymi `*`).
 
 Przykład: użyj pogrubienia dla słów pomiędzy "*":
 
 ----
-/\*(\S+)\*/*${color:bold}$1${color:-bold}*/
+/\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
 Przykład: domyślny trigger 'server_pass' używa tego wyrażenia do ukrycia hasła
 w komendach `/server` i `/connect` (znaki haseł są zastępowane przez `*`):
 
 ----
-==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==$1$.*4$5
+==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]

@@ -3204,15 +3204,17 @@ The char "/" can be replaced by any char (one or more identical chars).
 
 Matching groups can be used in "replace":
 
-* `$0` to `$99`: `$0` is the whole match, `$1` to `$99` are groups captured
-* `$+`: the last match (with highest number)
-* `$.cN`: match "N" with all chars replaced by "c" (example: `$.*2` is the group
-  #2 with all chars replaced by `*`).
+* `${re:0}` to `${re:99}`: `${re:0}` is the whole match, `${re:1}` to
+  `${re:99}` are groups captured
+* `${re:+}`: the last match (with highest number)
+* `${hide:c,${re:N}}`: match "N" with all chars replaced by "c"
+  (example: `${hide:*,${re:2}}` is the group #2 with all chars replaced by
+  `*`).
 
 Example: use bold for words between "*":
 
 ----
-/\*(\S+)\*/*${color:bold}$1${color:-bold}*/
+/\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
 Example: default trigger 'server_pass' uses this regular expression to hide
@@ -3220,7 +3222,7 @@ password in commands `/server` and `/connect` (chars in passwords are replaced
 by `*`):
 
 ----
-==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==$1$.*4$5
+==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]

@@ -3161,17 +3161,17 @@ caractères identiques).
 
 Les groupes de correspondance peuvent être utilisés dans le "remplacement" :
 
-* `$0` à `$99` : `$0` est la correspondance complète, `$1` à `$99` sont les
-  groupes capturés
-* `$+` : la dernière correspondance (avec le numéro le plus élevé)
-* `$.cN` : la correspondance "N" avec tous les caractères remplacés par "c"
-  (exemple : `$.*2` est le groupe n°2 avec tous les caractères remplacés par
-  `*`).
+* `${re:0}` à `${re:99}` : `${re:0}` est la correspondance complète, `${re:1}`
+  à `${re:99}` sont les groupes capturés
+* `${re:+}` : la dernière correspondance (avec le numéro le plus élevé)
+* `${hide:c,${re:N}}` : la correspondance "N" avec tous les caractères
+  remplacés par "c" (exemple : `${hide:*,${re:2}}` est le groupe n°2 avec tous
+  les caractères remplacés par `*`).
 
 Exemple : utiliser du gras pour les mots entre "*" :
 
 ----
-/\*(\S+)\*/*${color:bold}$1${color:-bold}*/
+/\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
 Exemple : le trigger par défaut 'server_pass' utilise cette expression régulière
@@ -3179,7 +3179,7 @@ pour cacher le mot de passe dans les commandes `/server` et `/connect` (les
 caractères des mots de passe sont remplacés par `*`) :
 
 ----
-==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==$1$.*4$5
+==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]
