@@ -44,6 +44,7 @@ extern struct t_config_option *relay_config_network_ipv6;
 extern struct t_config_option *relay_config_network_max_clients;
 extern struct t_config_option *relay_config_network_password;
 extern struct t_config_option *relay_config_network_ssl_cert_key;
+extern struct t_config_option *relay_config_network_ssl_priorities;
 extern struct t_config_option *relay_config_network_websocket_allowed_origins;
 
 extern struct t_config_option *relay_config_irc_backlog_max_minutes;

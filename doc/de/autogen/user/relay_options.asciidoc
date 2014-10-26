@@ -118,6 +118,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/ssl/relay.pem"`)
 
+* [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
+** Beschreibung: `Zeichenkette mit Prioritäten für gnutls (für die korrekte Syntax siehe gnutls Dokumentation unter Funktion gnutls_priority_init. Gebräuchliche Zeichenketten sind: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"PERFORMANCE"`)
+
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** Beschreibung: `erweiterter regulärer POSIX Ausdruck für Origins in WebSockets (Groß- und Kleinschreibung wird ignoriert, um Groß- und Kleinschreibung zu nutzen muss "(?-i)" dem Origin vorangestellt werden), Beispiele: "^http://(www\.)?example\.(com|org)"`
 ** Typ: Zeichenkette

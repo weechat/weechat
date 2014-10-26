@@ -29,6 +29,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: display own nick changes in server buffer (closes #188)
 * irc: disable creation of temporary servers by default with command /connect,
   new option irc.look.temporary_servers
+* relay: add option relay.network.ssl_priorities (closes #234)
 * relay: add host in sender for IRC backlog PRIVMSG messages sent to clients
 * trigger: evaluate and replace regex groups at same time, new format for regex
   option in triggers (incompatible with version 1.0) (closes #224)

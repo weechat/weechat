@@ -60,6 +60,7 @@ struct t_config_option *relay_config_network_ipv6;
 struct t_config_option *relay_config_network_max_clients;
 struct t_config_option *relay_config_network_password;
 struct t_config_option *relay_config_network_ssl_cert_key;
+struct t_config_option *relay_config_network_ssl_priorities;
 struct t_config_option *relay_config_network_websocket_allowed_origins;
 
 /* relay config, irc section */
@@ -190,6 +191,74 @@ relay_config_change_network_ssl_cert_key (void *data,
 
     if (relay_network_init_ok)
         relay_network_set_ssl_cert_key (1);
+}
+
+/*
+ * Callback for changes on option "relay.network.ssl_priorities".
+ */
+
+int
+relay_config_check_network_ssl_priorities (void *data,
+                                           struct t_config_option *option,
+                                           const char *value)
+{
+#ifdef HAVE_GNUTLS
+    gnutls_priority_t priority_cache;
+    const char *pos_error;
+    int rc;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    pos_error = value;
+
+    if (value && value[0])
+    {
+        rc = gnutls_priority_init (&priority_cache, value, &pos_error);
+        if (rc == GNUTLS_E_SUCCESS)
+        {
+            gnutls_priority_deinit (priority_cache);
+            return 1;
+        }
+    }
+
+    weechat_printf (NULL,
+                    _("%s%s: invalid priorities string, error "
+                      "at this position in string: \"%s\""),
+                    weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                    (pos_error) ? pos_error : value);
+
+    return 0;
+#else
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    (void) value;
+
+    return 1;
+#endif
+}
+
+/*
+ * Callback for changes on option "relay.network.ssl_priorities".
+ */
+
+void
+relay_config_change_network_ssl_priorities (void *data,
+                                            struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+#ifdef HAVE_GNUTLS
+    if (relay_network_init_ok && relay_gnutls_priority_cache)
+    {
+        gnutls_priority_deinit (*relay_gnutls_priority_cache);
+        relay_network_set_priority ();
+    }
+#endif
 }
 
 /*
@@ -697,6 +766,16 @@ relay_config_init ()
            "with SSL)"),
         NULL, 0, 0, "%h/ssl/relay.pem", NULL, 0, NULL, NULL,
         &relay_config_change_network_ssl_cert_key, NULL, NULL, NULL);
+    relay_config_network_ssl_priorities = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "ssl_priorities", "string",
+        N_("string with priorities for gnutls (for syntax, see "
+           "documentation of function gnutls_priority_init in gnutls "
+           "manual, common strings are: \"PERFORMANCE\", \"NORMAL\", "
+           "\"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"),
+        NULL, 0, 0, "PERFORMANCE", NULL, 0,
+        &relay_config_check_network_ssl_priorities, NULL,
+        &relay_config_change_network_ssl_priorities, NULL, NULL, NULL);
     relay_config_network_websocket_allowed_origins = weechat_config_new_option (
         relay_config_file, ptr_section,
         "websocket_allowed_origins", "string",

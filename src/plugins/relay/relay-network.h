@@ -34,6 +34,7 @@ extern gnutls_dh_params_t *relay_gnutls_dh_params;
 #endif
 
 extern void relay_network_set_ssl_cert_key (int verbose);
+extern void relay_network_set_priority ();
 extern void relay_network_init ();
 extern void relay_network_end ();
 

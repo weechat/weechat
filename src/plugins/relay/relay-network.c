@@ -104,6 +104,28 @@ relay_network_set_ssl_cert_key (int verbose)
 }
 
 /*
+ * Sets gnutls priority cache.
+ */
+
+void
+relay_network_set_priority ()
+{
+#ifdef HAVE_GNUTLS
+    if (gnutls_priority_init (relay_gnutls_priority_cache,
+                              weechat_config_string (
+                                  relay_config_network_ssl_priorities),
+                              NULL) != GNUTLS_E_SUCCESS)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: unable to initialize priority for SSL"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+        free (relay_gnutls_priority_cache);
+        relay_gnutls_priority_cache = NULL;
+    }
+#endif
+}
+
+/*
  * Initializes network for relay.
  */
 
@@ -119,17 +141,7 @@ relay_network_init ()
     /* priority */
     relay_gnutls_priority_cache = malloc (sizeof (*relay_gnutls_priority_cache));
     if (relay_gnutls_priority_cache)
-    {
-        if (gnutls_priority_init (relay_gnutls_priority_cache,
-                                  "PERFORMANCE", NULL) != GNUTLS_E_SUCCESS)
-        {
-            weechat_printf (NULL,
-                            _("%s%s: unable to initialize priority for SSL"),
-                            weechat_prefix ("error"), RELAY_PLUGIN_NAME);
-            free (relay_gnutls_priority_cache);
-            relay_gnutls_priority_cache = NULL;
-        }
-    }
+        relay_network_set_priority ();
 #endif
     relay_network_init_ok = 1;
 }

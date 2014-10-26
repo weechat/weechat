@@ -118,6 +118,11 @@
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"%h/ssl/relay.pem"`)
 
+* [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
+** opis: `ciąg z priorytetami dla gnutls (składnię można znaleźć w dokumentacji gnutls dla funkcji  gnutls_priority_init, często używane ciągi to: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `"PERFORMANCE"`)
+
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** opis: `rozszerzone wyrażenia regularne POSIX ze źródłami dozwolonymi dla gniazd webowych (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^http://(www\.)?przykład\.(com|org)"`
 ** typ: ciąg

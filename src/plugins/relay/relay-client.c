@@ -217,6 +217,7 @@ relay_client_handshake_timer_cb (void *data, int remaining_calls)
         /* handshake OK, set status to "connected" */
         weechat_unhook (client->hook_timer_handshake);
         client->hook_timer_handshake = NULL;
+        client->gnutls_handshake_ok = 1;
         relay_client_set_status (client, RELAY_STATUS_CONNECTED);
         return WEECHAT_RC_OK;
     }
@@ -1062,6 +1063,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->ssl = server->ssl;
 #ifdef HAVE_GNUTLS
         new_client->hook_timer_handshake = NULL;
+        new_client->gnutls_handshake_ok = 0;
 #endif
         new_client->websocket = 0;
         new_client->http_headers = NULL;
@@ -1230,6 +1232,7 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
 #ifdef HAVE_GNUTLS
         new_client->gnutls_sess = NULL;
         new_client->hook_timer_handshake = NULL;
+        new_client->gnutls_handshake_ok = 0;
 #endif
         new_client->websocket = weechat_infolist_integer (infolist, "websocket");
         new_client->http_headers = NULL;
@@ -1321,6 +1324,14 @@ relay_client_set_status (struct t_relay_client *client,
 
         relay_client_outqueue_free_all (client);
 
+#ifdef HAVE_GNUTLS
+        if (client->hook_timer_handshake)
+        {
+            weechat_unhook (client->hook_timer_handshake);
+            client->hook_timer_handshake = NULL;
+        }
+        client->gnutls_handshake_ok = 0;
+#endif
         if (client->hook_fd)
         {
             weechat_unhook (client->hook_fd);
@@ -1364,7 +1375,7 @@ relay_client_set_status (struct t_relay_client *client,
         if (client->sock >= 0)
         {
 #ifdef HAVE_GNUTLS
-            if (client->ssl)
+            if (client->ssl && client->gnutls_handshake_ok)
                 gnutls_bye (client->gnutls_sess, GNUTLS_SHUT_WR);
 #endif
             close (client->sock);
@@ -1528,6 +1539,8 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
 #ifdef HAVE_GNUTLS
     if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer_handshake", client->hook_timer_handshake))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "gnutls_handshake_ok", client->gnutls_handshake_ok))
+        return 0;
 #endif
     if (!weechat_infolist_new_var_integer (ptr_item, "websocket", client->websocket))
         return 0;
@@ -1604,6 +1617,7 @@ relay_client_print_log ()
 #ifdef HAVE_GNUTLS
         weechat_log_printf ("  gnutls_sess . . . . . : 0x%lx", ptr_client->gnutls_sess);
         weechat_log_printf ("  hook_timer_handshake. : 0x%lx", ptr_client->hook_timer_handshake);
+        weechat_log_printf ("  gnutls_handshake_ok . : 0x%lx", ptr_client->gnutls_handshake_ok);
 #endif
         weechat_log_printf ("  websocket . . . . . . : %d",   ptr_client->websocket);
         weechat_log_printf ("  http_headers. . . . . : 0x%lx (hashtable: '%s')",

@@ -118,6 +118,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%h/ssl/relay.pem"`)
 
+* [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
+** description: `chaîne avec les priorités pour gnutls (pour la syntaxe, voir la documentation de la fonction gnutls_priority_init du manuel gnutls, les chaînes courantes sont : "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"PERFORMANCE"`)
+
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** description: `expression régulière POSIX étendue avec les origines autorisées dans les websockets (insensible à la casse, utilisez "(?-i)" en début de chaîne pour la rendre insensible à la casse), exemple : "^http://(www\.)?example\.(com|org)"`
 ** type: chaîne
