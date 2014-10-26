@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 13:07+0100\n"
+"POT-Creation-Date: 2014-10-26 19:18+0100\n"
 "PO-Revision-Date: 2014-10-25 08:29+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -6618,7 +6618,8 @@ msgstr "<nick> <channel>[,<channel>...]"
 msgid "change mode on channel, without having operator status"
 msgstr "チャンネルモードを変更、オペレータ権無しに"
 
-msgid "<channel> <mode>"
+#, fuzzy
+msgid "[<channel>] <mode>"
 msgstr "<channel> <mode>"
 
 msgid ""

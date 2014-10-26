@@ -632,7 +632,7 @@ channel: チャンネル名
 [command]*`samode`* チャンネルモードを変更、オペレータ権無しに::
 
 ----
-/samode  <channel> <mode>
+/samode  [<channel>] <mode>
 
 channel: チャンネル名
    mode: チャンネルモード

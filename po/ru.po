@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 13:07+0100\n"
+"POT-Creation-Date: 2014-10-26 19:18+0100\n"
 "PO-Revision-Date: 2014-08-16 11:46+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5651,7 +5651,7 @@ msgid "change mode on channel, without having operator status"
 msgstr ""
 
 #, fuzzy
-msgid "<channel> <mode>"
+msgid "[<channel>] <mode>"
 msgstr "%d канал"
 
 #, fuzzy

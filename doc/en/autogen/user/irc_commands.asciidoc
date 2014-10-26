@@ -632,7 +632,7 @@ channel: channel name
 [command]*`samode`* change mode on channel, without having operator status::
 
 ----
-/samode  <channel> <mode>
+/samode  [<channel>] <mode>
 
 channel: channel name
    mode: mode for channel

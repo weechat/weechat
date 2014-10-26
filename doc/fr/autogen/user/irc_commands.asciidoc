@@ -632,7 +632,7 @@ pseudo : pseudo
 [command]*`samode`* changer le mode du canal, sans avoir le statut d'opérateur::
 
 ----
-/samode  <canal> <mode>
+/samode  [<canal>] <mode>
 
 canal : nom du canal
  mode : mode pour le canal

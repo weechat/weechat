@@ -632,7 +632,7 @@ channel: Name des Channels
 [command]*`samode`* ändert den Modus des Channels ohne das Operator-Privilegien vorliegen::
 
 ----
-/samode  <channel> <mode>
+/samode  [<channel>] <mode>
 
 Channel: Name des Channel
    Mode: neuer Modus für Channel

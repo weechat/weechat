@@ -632,7 +632,7 @@ kanał: nazwa kanału
 [command]*`samode`* zmienia atrybuty kanału, bez posiadania statusu operatora::
 
 ----
-/samode  <kanał> <atrybuty>
+/samode  [<channel>] <mode>
 
 kanał: nazwa kanału
    atrybuty: atrybuty kanału

@@ -4419,7 +4419,7 @@ IRC_PROTOCOL_CALLBACK(366)
 
         if (!weechat_hashtable_has_key (ptr_channel->join_msg_received, command))
         {
-            irc_command_mode_server (server, ptr_channel, NULL,
+            irc_command_mode_server (server, "MODE", ptr_channel, NULL,
                                      IRC_SERVER_SEND_OUTQ_PRIO_LOW);
             irc_channel_check_away (server, ptr_channel);
         }
