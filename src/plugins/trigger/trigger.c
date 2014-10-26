@@ -572,6 +572,8 @@ trigger_regex_split (const char *str_regex,
                                                      pos_replace - ptr_regex);
         if (!(*regex)[index].str_regex)
             goto memory_error;
+        if (str_regex_escaped)
+            free (str_regex_escaped);
         str_regex_escaped = weechat_string_convert_escaped_chars ((*regex)[index].str_regex);
         if (!str_regex_escaped)
             goto memory_error;

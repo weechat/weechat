@@ -49,6 +49,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * relay: use comma separator in option relay.irc.backlog_tags, check the value
   of option when it is changed with /set
 * relay: remove "::ffff:" from IPv4-mapped IPv6 client address (closes #111)
+* trigger: fix memory leak when allocating a new trigger with several regex
 
 == Version 1.0.1 (2014-09-28)
 
