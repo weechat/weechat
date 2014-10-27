@@ -114,7 +114,7 @@ the new option:
 === Hide IRC channel modes arguments
 
 The option 'irc.look.item_channel_modes_hide_key' has been renamed to
-'irc.look.item_channel_modes_hide_args' and it now a string. +
+'irc.look.item_channel_modes_hide_args' and is now a string. +
 It can now hide arguments for multiple channel modes.
 
 By default, a channel key (mode "k") will hide channel arguments. For old
@@ -808,7 +808,7 @@ IRC commands /ame and /amsg are now aliases, if you are upgrading from version
 == Version 0.3.0 (2009-09-06)
 
 This version brings *MAJOR* changes, especially for configuration files and
-plugin API and it not compatible with previous versions.
+plugin API and is not compatible with previous versions.
 
 Major differences:
 
