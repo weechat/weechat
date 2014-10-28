@@ -55,7 +55,7 @@ $HOME/.weechat/plugins.conf::
     fichier de configuration des extensions
 
 $HOME/.weechat/sec.conf::
-    configuration file with secured data
+    fichier de configuration avec les données sécurisées
 
 $HOME/.weechat/alias.conf::
     fichier de configuration pour l'extension 'alias'
