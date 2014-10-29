@@ -674,7 +674,7 @@ struct t_gui_window *gui_current_window = NULL; /* current window           */
 ----
 
 Il n'y a pas de convention pour les variables locales (dans les fonctions).
-La seule recommendation est que le nom soit explicite (et pas trop court). +
+La seule recommandation est que le nom soit explicite (et pas trop court). +
 Cependant, les pointeurs vers les structures sont souvent nommés 'ptr_xxxx', par
 exemple un pointeur sur 'struct t_gui_buffer *' sera : '*ptr_buffer'.
 

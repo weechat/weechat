@@ -1636,7 +1636,7 @@ Le chiffrement des données se fait en 3 étapes :
 
 . Dériver une clé de la phrase secrète (avec du salage en option).
 . Calculer la somme de contrôle des données à chiffrer.
-. Chiffrer la seomme de contrôle + les données (la sortie est : sel + somme de
+. Chiffrer la somme de contrôle + les données (la sortie est : sel + somme de
   contrôle et données chiffrées).
 
 [NOTE]
@@ -2032,8 +2032,8 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle | Description
-| command | /set exec.command.*  | Options for commands
-| color   | /set exec.color.*    | Colors
+| command | /set exec.command.*  | Options pour les commandes
+| color   | /set exec.color.*    | Couleurs
 |===
 
 Options :
@@ -3245,7 +3245,7 @@ suivantes sont ajoutées dans la table de hachage :
 | message_without_tags | chaîne | Message sans les étiquettes
 | nick                 | chaîne | Pseudo
 | host                 | chaîne | Nom d'hôte
-| command              | chaîne | Commane IRC (exemple : "PRIVMSG", "NOTICE", ...)
+| command              | chaîne | Commande IRC (exemple : "PRIVMSG", "NOTICE", ...)
 | channel              | chaîne | Canal IRC
 | arguments            | chaîne | Paramètres de la commande (inclut la valeur de 'channel')
 |===
@@ -3306,7 +3306,7 @@ Le callback "print" définit les variables suivantes dans la table de hachage :
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Type     | Description
-| buffer             | pointeur | Buffer
+| buffer             | pointeur | Tampon
 | tg_date            | chaîne   | Date/heure du message (format : `YYYY-MM-DD hh:mm:ss`)
 | tg_displayed       | chaîne   | "1" si affiché, "0" si ligne filtrée
 | tg_highlight       | chaîne   | "1" si highlight, sinon "0"

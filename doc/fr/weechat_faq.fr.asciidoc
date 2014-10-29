@@ -625,7 +625,7 @@ Pour l'aide : `/help filter` et `/help irc.look.smart_filter`
 [[filter_irc_join_channel_messages]]
 === Comment puis-je filtrer certains messages affichés quand je rejoins un canal IRC ?
 
-Avec WeeChat ≥ 0.4.1, vous pouvez choisir les messages affichés ou non lorque
+Avec WeeChat ≥ 0.4.1, vous pouvez choisir les messages affichés ou non lorsque
 vous rejoignez un canal avec l'option 'irc.look.display_join_message' (voir
 `/help irc.look.display_join_message` pour plus d'informations).
 

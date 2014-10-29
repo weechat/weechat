@@ -959,7 +959,7 @@ Paramètres :
 
 * 'string' : chaîne
 * 'left' : supprime les caractères en début de chaîne si différent de 0
-* 'right' : supprime les caractères en fin de chaîne si different de 0
+* 'right' : supprime les caractères en fin de chaîne si différent de 0
 * 'chars' : chaîne avec les caractères à supprimer
 
 Valeur de retour :
@@ -3276,7 +3276,7 @@ weechat.list_set(item, "nouvelle donnée")
 
 ==== weechat_list_next
 
-Retourner l'éléement suivant dans la liste.
+Retourner l'élément suivant dans la liste.
 
 Prototype :
 
@@ -7705,8 +7705,8 @@ Paramètres :
 * 'callback' : fonction appelée lorsque la connexion est ok ou a échoué,
   paramètres et valeur de retour :
 ** 'void *data' : pointeur
-** 'int status' : connection status :
-*** 'WEECHAT_HOOK_CONNECT_OK' : connextion ok
+** 'int status' : statut de connexion :
+*** 'WEECHAT_HOOK_CONNECT_OK' : connexion ok
 *** 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND' : adresse non trouvée
 *** 'WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND' : adresse IP non trouvée
 *** 'WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED' : connexion refusée
@@ -8356,7 +8356,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Filtre ajouté
 
 | weechat | filter_removing |
-  Pointre : filtre |
+  Pointeur : filtre |
   Suppression de filtre en cours
 
 | weechat | filter_removed |
@@ -9410,7 +9410,7 @@ Paramètres :
 * 'completion' : pointeur vers la complétion
 * 'word' : mot à ajouter
 * 'nick_completion' : 1 si le mot est un pseudo, sinon 0
-* 'where' : pposition où sera inséré le mot dans la liste :
+* 'where' : position où sera inséré le mot dans la liste :
 ** 'WEECHAT_LIST_POS_SORT' : n'importe où, pour maintenir la liste triée
 ** 'WEECHAT_LIST_POS_BEGINNING' : au début de la liste
 ** 'WEECHAT_LIST_POS_END' : à la fin de la liste
@@ -9857,7 +9857,7 @@ Paramètres :
 ** 'void *data' : pointeur
 ** 'const char *infolist_name' : nom de l'infolist
 ** 'void *pointer' : pointeur vers un objet que l'infolist doit retourner (pour
-   obtenir unituqment cet objet dans l'infolist)
+   obtenir uniquement cet objet dans l'infolist)
 ** 'const char *arguments' : paramètres additionnels, dépendant de l'infolist
 ** valeur de retour : infolist demandée
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
@@ -12771,7 +12771,7 @@ Paramètres :
 
 * 'proxy' : nom du proxy à utiliser
 * 'sock' : socket à utiliser
-* 'address' : addresse (nom de machine ou adresse IP)
+* 'address' : adresse (nom de machine ou adresse IP)
 * 'port' : port
 
 Valeur de retour :
