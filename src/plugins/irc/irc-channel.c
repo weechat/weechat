@@ -389,6 +389,26 @@ irc_channel_add_nicklist_groups (struct t_irc_server *server,
 }
 
 /*
+ * Sets the buffer title with the channel topic.
+ */
+
+void
+irc_channel_set_buffer_title (struct t_irc_channel *channel)
+{
+    char *title_color;
+
+    if (channel->topic)
+    {
+        title_color = irc_color_decode (
+            channel->topic,
+            (weechat_config_boolean (irc_config_look_topic_strip_colors)) ? 0 : 1);
+        weechat_buffer_set (channel->buffer, "title", title_color);
+    }
+    else
+        weechat_buffer_set (channel->buffer, "title", "");
+}
+
+/*
  * Sets topic for a channel.
  */
 
@@ -397,10 +417,9 @@ irc_channel_set_topic (struct t_irc_channel *channel, const char *topic)
 {
     if (channel->topic)
         free (channel->topic);
-
     channel->topic = (topic) ? strdup (topic) : NULL;
-    weechat_buffer_set (channel->buffer, "title",
-                        (channel->topic) ? channel->topic : "");
+
+    irc_channel_set_buffer_title (channel);
 }
 
 /*

@@ -652,11 +652,23 @@ void
 irc_config_change_look_topic_strip_colors (void *data,
                                            struct t_config_option *option)
 {
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+
     /* make C compiler happy */
     (void) data;
     (void) option;
 
-    weechat_bar_item_update ("buffer_title");
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if (ptr_channel->buffer)
+                irc_channel_set_buffer_title (ptr_channel);
+        }
+    }
 }
 
 /*

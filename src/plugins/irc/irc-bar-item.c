@@ -88,39 +88,6 @@ irc_bar_item_away (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Returns content of bar item "buffer_title": bar item with buffer title.
- */
-
-char *
-irc_bar_item_buffer_title (void *data, struct t_gui_bar_item *item,
-                           struct t_gui_window *window,
-                           struct t_gui_buffer *buffer,
-                           struct t_hashtable *extra_info)
-{
-    const char *title;
-    char *title_color;
-
-    /* make C compiler happy */
-    (void) data;
-    (void) item;
-    (void) window;
-    (void) extra_info;
-
-    if (!buffer)
-        return NULL;
-
-    title = weechat_buffer_get_string (buffer, "title");
-    if (!title)
-        return NULL;
-
-    title_color = irc_color_decode (title,
-                                    (weechat_config_boolean (irc_config_look_topic_strip_colors)) ?
-                                    0 : 1);
-
-    return (title_color) ? title_color : strdup (title);
-}
-
-/*
  * Returns content of bar item "buffer_plugin": bar item with buffer plugin.
  */
 
@@ -634,7 +601,6 @@ irc_bar_item_buffer_switch (void *data, const char *signal,
     (void) signal_data;
 
     weechat_bar_item_update ("away");
-    weechat_bar_item_update ("buffer_title");
     weechat_bar_item_update ("buffer_name");
     weechat_bar_item_update ("buffer_short_name");
     weechat_bar_item_update ("buffer_modes");
@@ -666,7 +632,6 @@ void
 irc_bar_item_init ()
 {
     weechat_bar_item_new ("away", &irc_bar_item_away, NULL);
-    weechat_bar_item_new ("buffer_title", &irc_bar_item_buffer_title, NULL);
     weechat_bar_item_new ("buffer_plugin", &irc_bar_item_buffer_plugin, NULL);
     weechat_bar_item_new ("buffer_name", &irc_bar_item_buffer_name, NULL);
     weechat_bar_item_new ("buffer_short_name", &irc_bar_item_buffer_short_name, NULL);
