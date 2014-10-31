@@ -69,17 +69,17 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
 * [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
-** Beschreibung: `text color for offline nick (not in nicklist any more); this color is used only if option weechat.look.color_nick_offline is enabled`
+** Beschreibung: `Textfarbe für Nicks die nicht angemeldet sind (nicht in der Nickliste aufgeführt sind); diese Farbeinstellung wird aber nur verwendet wenn die Option  weechat.look.color_nick_offline aktiviert ist`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
-** Beschreibung: `text color for offline nick with highlight; this color is used only if option weechat.look.color_nick_offline is enabled`
+** Beschreibung: `Textfarbe bei Highlights für Nicks die nicht angemeldet sind; diese Farbeinstellung wird aber nur verwendet wenn die Option  weechat.look.color_nick_offline aktiviert ist`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
-** Beschreibung: `background color for offline nick with highlight; this color is used only if option weechat.look.color_nick_offline is enabled`
+** Beschreibung: `Hintergrundfarbe bei Highlights für Nicks die nicht angemeldet sind, diese Farbeinstellung wird aber nur verwendet wenn die Option  weechat.look.color_nick_offline aktiviert ist`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `blue`)
 
