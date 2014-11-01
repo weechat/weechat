@@ -116,7 +116,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    wee-upgrade.c              | Mise à jour du cœur de WeeChat (tampons, lignes, historique, ...)
 |    wee-url.c                  | Transfert d'URL (en utilisant libcurl)
 |    wee-utf8.c                 | Fonctions UTF-8
-|    wee-util.c                 | Quelques autres fonctions
+|    wee-util.c                 | Quelques autres fonctions utilitaires
 |    wee-version.c              | Fonctions pour la version de WeeChat
 | gui/                          | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces)
 |    gui-bar-item.c             | Objets de barre
@@ -961,7 +961,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 Le dépôt Git est à cette URL : https://github.com/weechat/weechat
 
 Tout patch pour un bug ou une nouvelle fonctionnalité doit être effectué sur la
-branche master, le format préféré étant une "pull request" sur Github. Un  patch
+branche master, le format préféré étant une "pull request" sur GitHub. Un patch
 peut aussi être envoyé par e-mail (fait avec `git diff` ou `git format-patch`).
 
 Le format du message de commit est le suivant (pour fermer un bug GitHub) :
