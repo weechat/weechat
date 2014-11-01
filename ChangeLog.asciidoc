@@ -26,6 +26,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add regex replace feature in function string_eval_expression
 * api: use microseconds instead of milliseconds in functions util_timeval_diff
   and util_timeval_add
+* irc: add support of "extended-join" capability (closes #212)
 * irc: automatically add current channel in command /samode (closes #241)
 * irc: display own nick changes in server buffer (closes #188)
 * irc: disable creation of temporary servers by default with command /connect,
