@@ -68,7 +68,7 @@ Lorsqu'un callback de trigger est appelé, les actions suivantes sont exécutée
 
 Exemples (vous pouvez aussi regarder les triggers par défaut avec /trigger listdefault) :
   ajouter des attributs *gras*, _souligné_ et /italique/ (seulement dans les messages d'utilisateurs) :
-    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}$1${color:-bold}*== ==_(\S+)_==_${color:underline}$1${color:-underline}_== ==/(\S+)/==/${color:italic}$1${color:-italic}/"
+    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}${re:1}${color:-bold}*== ==_(\S+)_==_${color:underline}${re:1}${color:-underline}_== ==/(\S+)/==/${color:italic}${re:1}${color:-italic}/"
   cacher la barre de pseudos sur les petits terminaux :
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
