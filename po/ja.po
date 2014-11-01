@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-01 11:55+0100\n"
+"POT-Creation-Date: 2014-11-01 15:08+0100\n"
 "PO-Revision-Date: 2014-11-01 11:58+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -8116,8 +8116,8 @@ msgstr "%1$s%5$s%6$s%7$s から %2$s%3$s%4$s に招待されました"
 msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: 新しいチャンネル \"%s\" を作れません"
 
-#, c-format
-msgid "%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
+#, fuzzy, c-format
+msgid "%s%s%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
 msgstr "%s%s%s%s%s%s%s%s%s%s が %s%s%s に参加"
 
 #, c-format

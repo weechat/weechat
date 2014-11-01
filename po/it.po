@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-01 11:55+0100\n"
+"POT-Creation-Date: 2014-11-01 15:08+0100\n"
 "PO-Revision-Date: 2014-11-01 11:58+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8019,8 +8019,8 @@ msgstr "%sSei stato invitato su %s%s%s da %s%s%s"
 msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: impossibile creare il nuovo canale \"%s\""
 
-#, c-format
-msgid "%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
+#, fuzzy, c-format
+msgid "%s%s%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
 msgstr "%s%s%s%s%s%s%s%s%s%s è entrato in %s%s%s"
 
 #, c-format
