@@ -2008,6 +2008,12 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     new_hook_connect->gnutls_dhkey_size = gnutls_dhkey_size;
     new_hook_connect->gnutls_priorities = (gnutls_priorities) ?
         strdup (gnutls_priorities) : NULL;
+# ifdef HAVE_GNUTLS_DANE
+    new_hook_connect->dane_data = NULL;
+    new_hook_connect->dane_data_len = NULL;
+    new_hook_connect->dane_secure = 0;
+    new_hook_connect->dane_bogus = 0;
+# endif
 #endif
     new_hook_connect->local_hostname = (local_hostname) ?
         strdup (local_hostname) : NULL;
@@ -2060,6 +2066,12 @@ hook_connect_gnutls_verify_certificates (gnutls_session_t tls_session)
             rc = (int) (HOOK_CONNECT(ptr_hook, gnutls_cb))
                 (ptr_hook->callback_data, tls_session, NULL, 0,
                  NULL, 0, NULL,
+#ifdef HAVE_GNUTLS_DANE
+                 HOOK_CONNECT(ptr_hook, dane_data),
+                 HOOK_CONNECT(ptr_hook, dane_data_len),
+                 HOOK_CONNECT(ptr_hook, dane_secure),
+                 HOOK_CONNECT(ptr_hook, dane_bogus),
+#endif
                  WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT);
             break;
         }
@@ -2101,6 +2113,9 @@ hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
             rc = (int) (HOOK_CONNECT(ptr_hook, gnutls_cb))
                 (ptr_hook->callback_data, tls_session, req_ca, nreq,
                  pk_algos, pk_algos_len, answer,
+#ifdef HAVE_GNUTLS_DANE
+                 NULL, NULL, 0, 0,
+#endif
                  WEECHAT_HOOK_CONNECT_GNUTLS_CB_SET_CERT);
             break;
         }
@@ -3492,6 +3507,12 @@ unhook (struct t_hook *hook)
 #ifdef HAVE_GNUTLS
                 if (HOOK_CONNECT(hook, gnutls_priorities))
                     free (HOOK_CONNECT(hook, gnutls_priorities));
+# ifdef HAVE_GNUTLS_DANE
+                if (HOOK_CONNECT(hook, dane_data))
+                    free (HOOK_CONNECT(hook, dane_data));
+                if (HOOK_CONNECT(hook, dane_data_len))
+                    free (HOOK_CONNECT(hook, dane_data_len));
+# endif
 #endif
                 if (HOOK_CONNECT(hook, local_hostname))
                     free (HOOK_CONNECT(hook, local_hostname));
@@ -3845,6 +3866,16 @@ hook_add_to_infolist_pointer (struct t_infolist *infolist, struct t_hook *hook)
                     return 0;
                 if (!infolist_new_var_integer (ptr_item, "gnutls_dhkey_size", HOOK_CONNECT(hook, gnutls_dhkey_size)))
                     return 0;
+# ifdef HAVE_GNUTLS_DANE
+                if (!infolist_new_var_pointer (ptr_item, "dane_data", HOOK_CONNECT(hook, dane_data)))
+                    return 0;
+                if (!infolist_new_var_pointer (ptr_item, "dane_data_len", HOOK_CONNECT(hook, dane_data_len)))
+                    return 0;
+                if (!infolist_new_var_integer (ptr_item, "dane_secure", HOOK_CONNECT(hook, dane_secure)))
+                    return 0;
+                if (!infolist_new_var_integer (ptr_item, "dane_bogus", HOOK_CONNECT(hook, dane_bogus)))
+                    return 0;
+# endif
 #endif
                 if (!infolist_new_var_string (ptr_item, "local_hostname", HOOK_CONNECT(hook, local_hostname)))
                     return 0;
@@ -4309,6 +4340,12 @@ hook_print_log ()
                         log_printf ("    gnutls_cb . . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, gnutls_cb));
                         log_printf ("    gnutls_dhkey_size . . : %d",    HOOK_CONNECT(ptr_hook, gnutls_dhkey_size));
                         log_printf ("    gnutls_priorities . . : '%s'",  HOOK_CONNECT(ptr_hook, gnutls_priorities));
+# ifdef HAVE_GNUTLS_DANE
+                        log_printf ("    dane_data . . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, dane_data));
+                        log_printf ("    dane_data_len . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, dane_data_len));
+                        log_printf ("    dane_secure . . . . . : %d",    HOOK_CONNECT(ptr_hook, dane_secure));
+                        log_printf ("    dane_bogus. . . . . . : %d",    HOOK_CONNECT(ptr_hook, dane_bogus));
+# endif
 #endif
                         log_printf ("    local_hostname. . . . : '%s'",  HOOK_CONNECT(ptr_hook, local_hostname));
                         log_printf ("    child_read. . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_read));

@@ -44,6 +44,9 @@
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
+# ifdef HAVE_GNUTLS_DANE
+#  include <gnutls/dane.h>
+# endif
 #endif
 
 #include "../weechat-plugin.h"
@@ -3670,6 +3673,11 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
 #else
                             gnutls_retr_st *answer,
 #endif
+#ifdef HAVE_GNUTLS_DANE
+                            char * const*dane_data,
+                            const int *dane_data_len,
+                            int dane_secure, int dane_bogus,
+#endif
                             int action)
 {
     struct t_irc_server *server;
@@ -3690,6 +3698,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
     gnutls_datum_t cinfo;
     int rinfo;
 #endif
+    int using_dane = 0;
 
     /* make C compiler happy */
     (void) req_ca;
@@ -3715,6 +3724,89 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                         weechat_prefix ("network"),
                         IRC_SERVER_OPTION_INTEGER (server,
                                                    IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
+
+#ifdef HAVE_GNUTLS_DANE
+        if (dane_data != NULL)
+        {
+            dane_state_t dane_s;
+            dane_query_t dane_r;
+            unsigned int dane_status = 0;
+
+            ret = dane_state_init (&dane_s, 0);
+            if (ret == DANE_E_SUCCESS)
+            {
+                ret = dane_raw_tlsa (dane_s, &dane_r, dane_data,
+                                     dane_data_len,
+                                     dane_secure,
+                                     dane_bogus);
+                if (ret == DANE_E_SUCCESS)
+                {
+                    const gnutls_datum_t *chain;
+                    unsigned int chain_size = 0;
+                    unsigned int chain_type;
+
+                    chain = gnutls_certificate_get_peers(tls_session, &chain_size);
+                    chain_type = gnutls_certificate_type_get(tls_session);
+
+                    if (chain_size > 0)
+                    {
+                        ret = dane_verify_crt_raw (dane_s, chain, chain_size, chain_type,
+                                                   dane_r, 0, DANE_VFLAG_FAIL_IF_NOT_CHECKED,
+                                                   &dane_status);
+                    }
+                    else
+                    {
+                        ret = DANE_E_NO_CERT;
+                    }
+
+                    if (ret == DANE_E_SUCCESS)
+                    {
+                        using_dane = 1;
+
+                        if (dane_status == 0)
+                        {
+                            weechat_printf (server->buffer,
+                                            _("%sgnutls: hostname %s port %d verified using DANE"),
+                                            weechat_prefix ("network"), server->current_address,
+                                            server->current_port);
+                        }
+                        else
+                        {
+                            weechat_printf (server->buffer,
+                                            _("%sgnutls: hostname %s port %d rejected by DANE"),
+                                            weechat_prefix ("error"), server->current_address,
+                                            server->current_port);
+                            rc = -1;
+                        }
+                    }
+                    else
+                    {
+                        weechat_printf (server->buffer,
+                                        _("%sgnutls: hostname %s port %d could not be verified with DANE: %s"),
+                                        weechat_prefix ("network"), server->current_address,
+                                        server->current_port, dane_strerror(ret));
+                    }
+
+                    dane_query_deinit(dane_r);
+                }
+
+                dane_state_deinit(dane_s);
+            }
+            else
+            {
+                weechat_printf (server->buffer,
+                                _("%sgnutls: hostname %s port %d could not be verified with DANE: %s"),
+                                weechat_prefix ("network"), server->current_address,
+                                server->current_port, dane_strerror(ret));
+            }
+        }
+        else
+        {
+            weechat_printf (server->buffer,
+                            _("%sgnutls: hostname %s port %d could not be verified with DANE"),
+                            weechat_prefix ("network"), server->current_address, server->current_port);
+        }
+#endif
 
         /* initialize the certificate structure */
         if (gnutls_x509_crt_init (&cert_temp) != GNUTLS_E_SUCCESS)
@@ -3798,8 +3890,8 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                     gnutls_free (cinfo.data);
                 }
 #endif
-                /* check dates, only if fingerprint is not set */
-                if (!fingerprint || !fingerprint[0])
+                /* check dates, only if fingerprint is not set or when using DANE */
+                if (using_dane || !fingerprint || !fingerprint[0])
                 {
                     /* check expiration date */
                     cert_time = gnutls_x509_crt_get_expiration_time (cert_temp);
@@ -3834,6 +3926,12 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                                     _("%sgnutls: certificate fingerprint "
                                       "matches"),
                                     weechat_prefix ("network"));
+
+                    if (!using_dane)
+                    {
+                        /* fingerprint check must not bypass DANE */
+                        goto end;
+                    }
                 }
                 else
                 {
@@ -3843,8 +3941,8 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                                       "irc.server.%s.ssl_fingerprint)"),
                                     weechat_prefix ("error"), server->name);
                     rc = -1;
+                    goto end;
                 }
-                goto end;
             }
 
             if (!hostname_match)
@@ -3856,6 +3954,20 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                                 server->current_address);
                 rc = -1;
             }
+
+            if (using_dane)
+            {
+                /* no more checks required */
+                goto end;
+            }
+        }
+        else if (using_dane)
+        {
+            weechat_printf (server->buffer,
+                            _("%sgnutls: error while checking peer's certificate"),
+                            weechat_prefix ("error"));
+            rc = -1;
+            goto end;
         }
 
         /* verify the peer’s certificate */
@@ -4011,6 +4123,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
 end:
     /* an error should stop the handshake unless the user doesn't care */
     if ((rc == -1)
+        && !using_dane
         && (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL_VERIFY) == 0))
     {
         rc = 0;

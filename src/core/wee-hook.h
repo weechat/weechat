@@ -250,6 +250,11 @@ typedef int (gnutls_callback_t)(void *data, gnutls_session_t tls_session,
 #else
                                 gnutls_retr_st *answer,
 #endif
+#ifdef HAVE_GNUTLS_DANE
+                                char * const*dane_data,
+                                const int *dane_data_len,
+                                int dane_secure, int dane_bogus,
+#endif
                                 int action);
 #endif
 
@@ -267,6 +272,12 @@ struct t_hook_connect
     gnutls_callback_t *gnutls_cb;      /* GnuTLS callback during handshake  */
     int gnutls_dhkey_size;             /* Diffie Hellman Key Exchange size  */
     char *gnutls_priorities;           /* GnuTLS priorities                 */
+# ifdef HAVE_GNUTLS_DANE
+    char **dane_data;                  /* GnuTLS DANE data */
+    int *dane_data_len;                /* GnuTLS DANE data lengths */
+    int dane_secure;                   /* GnuTLS DANE secure flag */
+    int dane_bogus;                    /* GnuTLS DANE bogus flag */
+# endif
 #endif
     char *local_hostname;              /* force local hostname (optional)   */
     int child_read;                    /* to read data in pipe from child   */
