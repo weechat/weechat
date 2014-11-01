@@ -362,6 +362,7 @@ irc_upgrade_read_cb (void *data,
                     if (str)
                         irc_upgrade_current_server->nick_modes = strdup (str);
                     irc_upgrade_current_server->cap_away_notify = weechat_infolist_integer (infolist, "cap_away_notify");
+                    irc_upgrade_current_server->cap_account_notify = weechat_infolist_integer (infolist, "cap_account_notify");
                     str = weechat_infolist_string (infolist, "isupport");
                     if (str)
                         irc_upgrade_current_server->isupport = strdup (str);
@@ -477,7 +478,7 @@ irc_upgrade_read_cb (void *data,
                                 weechat_string_free_split (items);
                             }
                         }
-                        irc_upgrade_current_channel->checking_away = weechat_infolist_integer (infolist, "checking_away");
+                        irc_upgrade_current_channel->checking_whox = weechat_infolist_integer (infolist, "checking_whox");
                         str = weechat_infolist_string (infolist, "away_message");
                         if (str)
                             irc_upgrade_current_channel->away_message = strdup (str);
@@ -561,7 +562,8 @@ irc_upgrade_read_cb (void *data,
                                              weechat_infolist_string (infolist, "name"),
                                              weechat_infolist_string (infolist, "host"),
                                              weechat_infolist_string (infolist, "prefixes"),
-                                             weechat_infolist_integer (infolist, "away"));
+                                             weechat_infolist_integer (infolist, "away"),
+                                             weechat_infolist_string (infolist, "account"));
                     if (ptr_nick)
                     {
                         /*

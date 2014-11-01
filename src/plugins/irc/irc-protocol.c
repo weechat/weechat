@@ -295,6 +295,37 @@ IRC_PROTOCOL_CALLBACK(away)
 }
 
 /*
+ * Callback for the IRC message "ACCOUNT": account info about a nick
+ * (with capability "account-notify").
+ *
+ * Message looks like:
+ *   :nick!user@host ACCOUNT *
+ *   :nick!user@host ACCOUNT accountname
+ */
+
+IRC_PROTOCOL_CALLBACK(account)
+{
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    IRC_PROTOCOL_MIN_ARGS(3);
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        ptr_nick = irc_nick_search (server, ptr_channel, nick);
+        if (ptr_nick)
+        {
+            if (ptr_nick->account)
+                free (ptr_nick->account);
+            ptr_nick->account = strdup (argv[2]);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC message "CAP": client capability.
  *
  * Message looks like:
@@ -436,6 +467,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                     else if (strcmp (caps_supported[i], "away-notify") == 0)
                     {
                         server->cap_away_notify = 1;
+                    }
+                    else if (strcmp (caps_supported[i], "account-notify") == 0)
+                    {
+                        server->cap_account_notify = 1;
                     }
                 }
                 weechat_string_free_split (caps_supported);
@@ -704,11 +739,14 @@ IRC_PROTOCOL_CALLBACK(join)
         }
         ptr_channel->limit = 0;
         weechat_hashtable_remove_all (ptr_channel->join_msg_received);
-        ptr_channel->checking_away = 0;
+        ptr_channel->checking_whox = 0;
     }
 
     /* add nick in channel */
-    ptr_nick = irc_nick_new (server, ptr_channel, nick, address, NULL, 0);
+    if (pos_account)
+        ptr_nick = irc_nick_new (server, ptr_channel, nick, address, NULL, 0, pos_account);
+    else
+        ptr_nick = irc_nick_new (server, ptr_channel, nick, address, NULL, 0, "*");
 
     /* rename the nick if it was in list with a different case */
     irc_channel_nick_speaking_rename_if_present (server, ptr_channel, nick);
@@ -2860,9 +2898,9 @@ IRC_PROTOCOL_CALLBACK(315)
     IRC_PROTOCOL_MIN_ARGS(5);
 
     ptr_channel = irc_channel_search (server, argv[3]);
-    if (ptr_channel && (ptr_channel->checking_away > 0))
+    if (ptr_channel && (ptr_channel->checking_whox > 0))
     {
-        ptr_channel->checking_away--;
+        ptr_channel->checking_whox--;
     }
     else
     {
@@ -4023,7 +4061,7 @@ IRC_PROTOCOL_CALLBACK(352)
     }
 
     /* display output of who (manual who from user) */
-    if (!ptr_channel || (ptr_channel->checking_away <= 0))
+    if (!ptr_channel || (ptr_channel->checking_whox <= 0))
     {
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
@@ -4132,7 +4170,7 @@ IRC_PROTOCOL_CALLBACK(353)
             if (ptr_channel && ptr_channel->nicks)
             {
                 if (!irc_nick_new (server, ptr_channel, nickname, pos_host,
-                                   prefixes, 0))
+                                   prefixes, 0, "*"))
                 {
                     weechat_printf (
                         server->buffer,
@@ -4193,6 +4231,108 @@ IRC_PROTOCOL_CALLBACK(353)
 
     if (str_nicks)
         free (str_nicks);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "354": WHOX output
+ *
+ * Message looks like:
+ *   :server 354 mynick #channel user host server nick status hopcount account :GECOS Information
+ */
+
+IRC_PROTOCOL_CALLBACK(354)
+{
+    char *pos_attr, *pos_hopcount, *pos_account, *pos_realname;
+    int length;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    IRC_PROTOCOL_MIN_ARGS(5);
+
+    /* silently ignore malformed 354 message (missing infos) */
+    if (argc < 11)
+        return WEECHAT_RC_OK;
+
+    pos_attr = argv[8];
+    pos_hopcount = argv[9];
+    pos_account = NULL;
+    pos_realname = (argc > 11) ?
+        ((argv_eol[11][0] == ':') ? argv_eol[11] + 1 : argv_eol[11]) : NULL;
+
+    if (argv[10][0] != '0')
+        pos_account = argv[10];
+
+    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_nick = (ptr_channel) ?
+        irc_nick_search (server, ptr_channel, argv[7]) : NULL;
+
+    /* update host for nick */
+    if (ptr_nick)
+    {
+        if (ptr_nick->host)
+            free (ptr_nick->host);
+        length = strlen (argv[4]) + 1 + strlen (argv[5]) + 1;
+        ptr_nick->host = malloc (length);
+        if (ptr_nick->host)
+            snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
+    }
+
+    /* update away flag for nick */
+    if (ptr_channel && ptr_nick && pos_attr
+        && (server->cap_away_notify
+            || ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
+                && ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS) == 0)
+                    || (ptr_channel->nicks_count <= IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS))))))
+    {
+        irc_nick_set_away (server, ptr_channel, ptr_nick,
+                           (pos_attr[0] == 'G') ? 1 : 0);
+    }
+    else
+    {
+        irc_nick_set_away (server, ptr_channel, ptr_nick, 0);
+    }
+
+    /* update account flag for nick */
+    if (ptr_channel && ptr_nick && pos_account && server->cap_account_notify)
+        ptr_nick->account = (pos_account) ? strdup (pos_account) : strdup ("*");
+    else
+        ptr_nick->account = strdup ("*");
+
+    /* display output of who (manual who from user) */
+    if (!ptr_channel || (ptr_channel->checking_whox <= 0))
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, NULL, command, "who", NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            "%s%s[%s%s%s] %s%s %s%s%s%s%s%s(%s%s@%s%s)%s %s%s%s%s(%s)",
+            weechat_prefix("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_CHAT_CHANNEL,
+            argv[3],
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, argv[7]),
+            argv[7],
+            IRC_COLOR_CHAT_DELIMITERS,
+            (pos_account) ? "[" : "",
+            (pos_account) ? IRC_COLOR_CHAT_HOST : "",
+            (pos_account) ? pos_account : "",
+            (pos_account) ? IRC_COLOR_CHAT_DELIMITERS : "",
+            (pos_account) ? "] " : "",
+            IRC_COLOR_CHAT_HOST,
+            argv[4],
+            argv[5],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (pos_attr) ? pos_attr : "",
+            (pos_attr) ? " " : "",
+            (pos_hopcount) ? pos_hopcount : "",
+            (pos_hopcount) ? " " : "",
+            (pos_realname) ? pos_realname : "");
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -4388,7 +4528,7 @@ IRC_PROTOCOL_CALLBACK(366)
         {
             irc_command_mode_server (server, "MODE", ptr_channel, NULL,
                                      IRC_SERVER_SEND_OUTQ_PRIO_LOW);
-            irc_channel_check_away (server, ptr_channel);
+            irc_channel_check_whox (server, ptr_channel);
         }
     }
     else
@@ -5258,6 +5398,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
     struct t_irc_protocol_msg irc_protocol_messages[] =
         { { "authenticate", /* authenticate */ 1, 0, &irc_protocol_cb_authenticate },
           { "away", /* away (cap away-notify) */ 1, 0, &irc_protocol_cb_away },
+          { "account", /* account (cap account-notify) */ 1, 0, &irc_protocol_cb_account },
           { "cap", /* client capability */ 1, 0, &irc_protocol_cb_cap },
           { "error", /* error received from IRC server */ 1, 0, &irc_protocol_cb_error },
           { "invite", /* invite a nick on a channel */ 1, 0, &irc_protocol_cb_invite },
@@ -5323,6 +5464,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "351", /* server version */ 1, 0, &irc_protocol_cb_351 },
           { "352", /* who */ 1, 0, &irc_protocol_cb_352 },
           { "353", /* list of nicks on channel */ 1, 0, &irc_protocol_cb_353 },
+          { "354", /* whox */ 1, 0, &irc_protocol_cb_354 },
           { "366", /* end of /names list */ 1, 0, &irc_protocol_cb_366 },
           { "367", /* banlist */ 1, 0, &irc_protocol_cb_367 },
           { "368", /* end of banlist */ 1, 0, &irc_protocol_cb_368 },

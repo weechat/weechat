@@ -624,7 +624,7 @@ irc_nick_nicklist_set_color_all ()
 struct t_irc_nick *
 irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
               const char *nickname, const char *host, const char *prefixes,
-              int away)
+              int away, char *account)
 {
     struct t_irc_nick *new_nick, *ptr_nick;
     int length;
@@ -642,12 +642,16 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         /* save away status from existing nick (before removing it) */
         away = ptr_nick->away;
 
+        /* save account from existing nick (before removing it) */
+        account = ptr_nick->account;
+
         /* remove old nick from nicklist */
         irc_nick_nicklist_remove (server, channel, ptr_nick);
 
         /* update nick */
         irc_nick_set_prefixes (server, ptr_nick, prefixes);
         ptr_nick->away = away;
+        ptr_nick->account = account;
 
         /* add new nick in nicklist */
         irc_nick_nicklist_add (server, channel, ptr_nick);
@@ -662,6 +666,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     /* initialize new nick */
     new_nick->name = strdup (nickname);
     new_nick->host = (host) ? strdup (host) : NULL;
+    new_nick->account = (account) ? strdup (account) : NULL;
     length = strlen (irc_server_get_prefix_chars (server));
     new_nick->prefixes = malloc (length + 1);
     if (!new_nick->name || !new_nick->prefixes)
@@ -670,6 +675,8 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
             free (new_nick->name);
         if (new_nick->host)
             free (new_nick->host);
+        if (new_nick->account)
+            free (new_nick->account);
         if (new_nick->prefixes)
             free (new_nick->prefixes);
         free (new_nick);
@@ -810,6 +817,8 @@ irc_nick_free (struct t_irc_server *server, struct t_irc_channel *channel,
         free (nick->host);
     if (nick->prefixes)
         free (nick->prefixes);
+    if (nick->account)
+        free (nick->account);
     if (nick->color)
         free (nick->color);
 
@@ -1166,6 +1175,8 @@ irc_nick_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "prefix", nick->prefix))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "away", nick->away))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "account", nick->account))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "color", nick->color))
         return 0;
