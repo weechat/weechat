@@ -8418,6 +8418,16 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Chaîne : combinaison de touches |
   Combinaison de touches dans le contexte 'cursor'
 
+| weechat | mouse_enabled +
+  _(WeeChat ≥ 1.1)_ |
+  - |
+  Souris activée
+
+| weechat | mouse_disabled +
+  _(WeeChat ≥ 1.1)_ |
+  - |
+  Souris désactivée
+
 | weechat | nicklist_group_added +
   _(WeeChat ≥ 0.3.2)_ |
   Chaîne : pointeur tampon + "," + nom du groupe |

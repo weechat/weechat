@@ -8272,6 +8272,16 @@ List of signals sent by WeeChat and plugins:
   String: key combo |
   Key combo in 'cursor' context
 
+| weechat | mouse_enabled +
+  _(WeeChat ≥ 1.1)_ |
+  - |
+  Mouse enabled
+
+| weechat | mouse_disabled +
+  _(WeeChat ≥ 1.1)_ |
+  - |
+  Mouse disabled
+
 | weechat | nicklist_group_added +
   _(WeeChat ≥ 0.3.2)_ |
   String: buffer pointer + "," + group name |

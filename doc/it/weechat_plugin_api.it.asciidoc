@@ -8483,6 +8483,18 @@ List of signals sent by WeeChat and plugins:
   Key combo in 'cursor' context
 
 // TRANSLATION MISSING
+| weechat | mouse_enabled +
+  _(WeeChat ≥ 1.1)_ |
+  - |
+  Mouse enabled
+
+// TRANSLATION MISSING
+| weechat | mouse_disabled +
+  _(WeeChat ≥ 1.1)_ |
+  - |
+  Mouse disabled
+
+// TRANSLATION MISSING
 | weechat | nicklist_group_added +
   _(WeeChat ≥ 0.3.2)_ |
   String: buffer pointer + "," + group name |

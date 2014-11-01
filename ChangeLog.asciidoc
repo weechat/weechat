@@ -17,6 +17,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: add signals "mouse_enabled" and "mouse_disabled" (closes #244)
 * core: add hide of chars in string in evaluation of expressions
 * core: add arraylists, improve speed of completions (about 50x faster)
 * core: move bar item "scroll" between buffer name and lag in default bar items
