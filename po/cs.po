@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 19:18+0100\n"
-"PO-Revision-Date: 2014-08-16 11:46+0200\n"
+"POT-Creation-Date: 2014-11-01 11:55+0100\n"
+"PO-Revision-Date: 2014-11-01 11:58+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -7738,12 +7738,12 @@ msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sReop kanálu %s%s%s: %s%s"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s pozván uživatelem %s%s %s(%s%s%s)%s v %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s pozván uživatelem %s%s %s(%s%s%s)"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s"
 msgstr "%s%s[%s%s%s] %s%s%s pozván uživatelem %s%s %s(%s%s%s)"
 
 #, fuzzy, c-format
@@ -7751,9 +7751,13 @@ msgid "%s%s[%s%s%s] %s%s%s invited"
 msgstr "%s%s[%s%s%s] %s%s%s pozván uživatelem %s%s %s(%s%s%s)"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
 msgstr "%s%s[%s%s%s]%s vyjímka %s%s%s od %s%s %s(%s%s%s)%s v %s"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgstr "%s%s[%s%s%s]%s vyjímka %s%s"
 
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s"
@@ -7800,13 +7804,17 @@ msgstr[1] "přezdívka"
 msgstr[2] "přezdívky"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s zakázán uživatelem %s%s %s(%s%s%s)%s v %s"
-
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s zakázán uživatelem %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgstr "%s%s[%s%s%s] %s%s%s zakázán uživatelem %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
+msgstr "%s%s[%s%s%s] %s%s%s pozván uživatelem %s%s %s(%s%s%s)"
 
 #, c-format
 msgid ""
@@ -7841,11 +7849,15 @@ msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s pozván uživatelem %s%s %s(%s%s%s)%s v %s"
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s pozván uživatelem %s%s %s(%s%s%s)"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgstr "%s%s[%s%s%s] %s%s%s pozván uživatelem %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s pozván uživatelem %s%s %s(%s%s%s)"
 
 #, c-format
@@ -10796,19 +10808,3 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
-
-#, fuzzy
-#~ msgid "text color for offline nick (not in nicklist any more)"
-#~ msgstr "barva textu pro nepřipojené přezdíveky"
-
-#, fuzzy
-#~ msgid "text color for offline nick with highlight"
-#~ msgstr "barva textu pro nepřipojené přezdíveky"
-
-#, fuzzy
-#~ msgid "background color for offline nick with highlight"
-#~ msgstr "barva pozadí pro zvýrazněný prefix"
-
-#, fuzzy
-#~ msgid "structure with partial completion"
-#~ msgstr "upozornit uživatele pokud nastane částečné doplnění"

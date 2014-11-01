@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 19:18+0100\n"
+"POT-Creation-Date: 2014-11-01 11:55+0100\n"
 "PO-Revision-Date: 2014-07-25 07:50+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6453,22 +6453,26 @@ msgid "%sChannel reop %s%s%s: %s%s"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
+msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s"
+msgstr "%s%s[%s%s%s]%s uzakta: %s"
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
+msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgstr "%s%s[%s%s%s]%s uzakta: %s"
 
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s"
@@ -6508,13 +6512,17 @@ msgid_plural "nicks"
 msgstr[0] "rumuz"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
+msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgstr "%s%s[%s%s%s]%s uzakta: %s"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
+msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
 
 #, c-format
 msgid ""
@@ -6541,13 +6549,17 @@ msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s%s: \"%s\" takma adı kullanılamıyor,  \"%s\" takma adı deneniyor"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
+msgstr "%s%s%s%s%s%s%s%s%s%s çıktı %s(%s%s%s)"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgstr "%s%s[%s%s%s]%s uzakta: %s"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted"
+msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 19:18+0100\n"
-"PO-Revision-Date: 2014-08-16 11:46+0200\n"
+"POT-Creation-Date: 2014-11-01 11:55+0100\n"
+"PO-Revision-Date: 2014-11-01 11:58+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -7188,11 +7188,11 @@ msgstr "%s szoba: %s> %s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
+msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s invited by %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
@@ -7201,7 +7201,11 @@ msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
+msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
 msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
 
 #, fuzzy, c-format
@@ -7250,11 +7254,15 @@ msgstr[1] "név"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
@@ -7285,11 +7293,15 @@ msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
@@ -10175,19 +10187,3 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
-
-#, fuzzy
-#~ msgid "text color for offline nick (not in nicklist any more)"
-#~ msgstr "távollevő felhasználók nevének színe"
-
-#, fuzzy
-#~ msgid "text color for offline nick with highlight"
-#~ msgstr "távollevő felhasználók nevének színe"
-
-#, fuzzy
-#~ msgid "background color for offline nick with highlight"
-#~ msgstr "címsor háttere"
-
-#, fuzzy
-#~ msgid "structure with partial completion"
-#~ msgstr "szöveg beillesztése a parancssorba"

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 19:18+0100\n"
-"PO-Revision-Date: 2014-10-30 07:36+0100\n"
+"POT-Creation-Date: 2014-11-01 11:55+0100\n"
+"PO-Revision-Date: 2014-11-01 11:58+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -8627,12 +8627,12 @@ msgstr "%sReop canal %s%s%s : %s%s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s invité par %s%s %s(%s%s%s)%s le %s"
+msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s invité par %s le %s"
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
-msgstr "%s%s[%s%s%s] %s%s%s invité par %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s invited by %s"
+msgstr "%s%s[%s%s%s] %s%s%s invité par %s"
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited"
@@ -8640,8 +8640,12 @@ msgstr "%s%s[%s%s%s] %s%s%s invité"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s]%s exception %s%s%s par %s%s %s(%s%s%s)%s le %s"
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
+msgstr "%s%s[%s%s%s]%s exception %s%s%s par %s le %s"
+
+#, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgstr "%s%s[%s%s%s]%s exception %s%s%s par %s"
 
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s"
@@ -8685,12 +8689,16 @@ msgstr[1] "pseudos"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s banni par %s%s %s(%s%s%s)%s le %s"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s banni par %s le %s"
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
-msgstr "%s%s[%s%s%s] %s%s%s banni par %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgstr "%s%s[%s%s%s] %s%s%s banni par %s"
+
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
+msgstr "%s%s[%s%s%s] %s%s%s banni"
 
 #, c-format
 msgid ""
@@ -8725,12 +8733,16 @@ msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s rendu silencieux par %s%s %s(%s%s%s)%s le %s"
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s rendu silencieux par %s le %s"
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
-msgstr "%s%s[%s%s%s] %s%s%s rendu silencieux par %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgstr "%s%s[%s%s%s] %s%s%s rendu silencieux par %s"
+
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted"
+msgstr "%s%s[%s%s%s] %s%s%s rendu silencieux"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -11939,17 +11951,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "text color for offline nick (not in nicklist any more)"
-#~ msgstr ""
-#~ "couleur du texte pour un pseudo déconnecté (qui n'est plus dans la liste "
-#~ "de pseudos)"
-
-#~ msgid "text color for offline nick with highlight"
-#~ msgstr "couleur du texte pour un pseudo déconnecté avec highlight"
-
-#~ msgid "background color for offline nick with highlight"
-#~ msgstr "couleur du fond pour un pseudo déconnecté avec highlight"
-
-#~ msgid "structure with partial completion"
-#~ msgstr "structure avec une complétion partielle"

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 19:18+0100\n"
-"PO-Revision-Date: 2014-08-16 11:46+0200\n"
+"POT-Creation-Date: 2014-11-01 11:55+0100\n"
+"PO-Revision-Date: 2014-11-01 11:59+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -7443,12 +7443,12 @@ msgid "%sChannel reop %s%s%s: %s%s"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)%s em %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s"
 msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)"
 
 #, fuzzy, c-format
@@ -7456,9 +7456,13 @@ msgid "%s%s[%s%s%s] %s%s%s invited"
 msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
 msgstr "%s%s[%s%s%s]%s exceção %s%s%s por %s%s %s(%s%s%s)%s em %s"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgstr "%s%s[%s%s%s]%s exceção %s%s"
 
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s"
@@ -7501,13 +7505,17 @@ msgstr[0] "apelido"
 msgstr[1] "apelidos"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s banido por %s%s %s(%s%s%s)%s em %s"
-
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s banido por %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgstr "%s%s[%s%s%s] %s%s%s banido por %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
+msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)"
 
 #, c-format
 msgid ""
@@ -7539,11 +7547,15 @@ msgstr "%s%s: apelido \"%s\" está indisponível, tentando apelido #%d (\"%s\")"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)%s em %s"
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)"
 
 #, c-format
@@ -10446,16 +10458,3 @@ msgstr "%s%s: não foi possível setar opção \"nonblock\" para o socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: tempo esgotado para \"%s\" com %s"
-
-#~ msgid "text color for offline nick (not in nicklist any more)"
-#~ msgstr ""
-#~ "cor de texto para apelidos desconectados (não mais na lista de apelidos)"
-
-#~ msgid "text color for offline nick with highlight"
-#~ msgstr "cor de texto para apelidos desconectados com destaque"
-
-#~ msgid "background color for offline nick with highlight"
-#~ msgstr "cor de fundo para apelido desconectado com destaque"
-
-#~ msgid "structure with partial completion"
-#~ msgstr "estrutura com completação parcial"

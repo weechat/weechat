@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 19:18+0100\n"
+"POT-Creation-Date: 2014-11-01 11:55+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6391,11 +6391,11 @@ msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
+msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s invited by %s"
 msgstr ""
 
 #, c-format
@@ -6404,7 +6404,11 @@ msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
 msgstr ""
 
 #, c-format
@@ -6449,11 +6453,15 @@ msgstr[1] ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
 msgstr ""
 
 #, c-format
@@ -6482,11 +6490,15 @@ msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted"
 msgstr ""
 
 #, c-format

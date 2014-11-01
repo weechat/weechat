@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 19:18+0100\n"
-"PO-Revision-Date: 2014-10-25 08:29+0900\n"
+"POT-Creation-Date: 2014-11-01 11:55+0100\n"
+"PO-Revision-Date: 2014-11-01 11:58+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -8284,23 +8284,27 @@ msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sチャンネルは %s%s%s を reop しました: %s%s"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s)%s によって %s に招待されました"
-
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって招待されました"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s"
+msgstr "%s%s[%s%s%s] %s%s%s が招待されました"
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited"
 msgstr "%s%s[%s%s%s] %s%s%s が招待されました"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
 msgstr ""
 "%s%s[%s%s%s]%s %s%s%s の除外は %s%s %s(%s%s%s)%s によって %s に設定されました"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgstr "%s%s[%s%s%s]%s %s%s の除外"
 
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s"
@@ -8339,13 +8343,17 @@ msgid_plural "nicks"
 msgstr[0] "ニックネーム"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s)%s によって %s に参加禁止"
-
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって参加禁止"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって参加禁止"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
+msgstr "%s%s[%s%s%s] %s%s%s が招待されました"
 
 #, c-format
 msgid ""
@@ -8381,14 +8389,17 @@ msgstr ""
 "ます"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
-msgstr ""
-"%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s)%s によって %s で発言禁止にされました"
-
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって発言禁止にされました"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって発言禁止にされました"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted"
+msgstr "%s%s[%s%s%s] %s%s%s が招待されました"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -11478,16 +11489,3 @@ msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できませ�
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: \"%s\" のタイムアウト %s"
-
-#~ msgid "text color for offline nick (not in nicklist any more)"
-#~ msgstr ""
-#~ "オフラインのニックネームのテキスト色 (ニックネームリストにも表示されない)"
-
-#~ msgid "text color for offline nick with highlight"
-#~ msgstr "ハイライトされたオフラインのニックネームのテキスト色"
-
-#~ msgid "background color for offline nick with highlight"
-#~ msgstr "ハイライトされたオフラインのニックネームの背景色"
-
-#~ msgid "structure with partial completion"
-#~ msgstr "部分補完する構造"

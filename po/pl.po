@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 19:18+0100\n"
-"PO-Revision-Date: 2014-09-14 00:18+0100\n"
+"POT-Creation-Date: 2014-11-01 11:55+0100\n"
+"PO-Revision-Date: 2014-11-01 11:58+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -8457,22 +8457,26 @@ msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sReop kanału %s%s%s: %s%s"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s zaproszony przez %s%s %s(%s%s%s)%s na %s"
-
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s zaproszony przez %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s"
+msgstr "%s%s[%s%s%s] %s%s%s zaproszony"
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited"
 msgstr "%s%s[%s%s%s] %s%s%s zaproszony"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
 msgstr "%s%s[%s%s%s]%s wyjątek %s%s%s ustawiony przez %s%s %s(%s%s%s)%s na %s"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgstr "%s%s[%s%s%s]%s wyjątek %s%s"
 
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s"
@@ -8519,13 +8523,17 @@ msgstr[1] "nick"
 msgstr[2] "nick"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s zbanowany przez %s%s %s(%s%s%s)%s na %s"
-
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s zbanowany przez %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgstr "%s%s[%s%s%s] %s%s%s zbanowany przez %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
+msgstr "%s%s[%s%s%s] %s%s%s zaproszony"
 
 #, c-format
 msgid ""
@@ -8556,13 +8564,17 @@ msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s%s: nick \"%s\" jest niedostępny, próbuje nicku \"%s\""
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s uciszony przez %s%s %s(%s%s%s)%s na %s"
-
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s uciszony przez %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgstr "%s%s[%s%s%s] %s%s%s uciszony przez %s%s %s(%s%s%s)"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted"
+msgstr "%s%s[%s%s%s] %s%s%s zaproszony"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -11690,16 +11702,3 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda: błąd %d %s"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
-
-#~ msgid "text color for offline nick (not in nicklist any more)"
-#~ msgstr ""
-#~ "kolor dla nieobecnych nicków (nie znajdujących się na liście nicków)"
-
-#~ msgid "text color for offline nick with highlight"
-#~ msgstr "kolor dla nieobecnych nicków z podświetleniem"
-
-#~ msgid "background color for offline nick with highlight"
-#~ msgstr "kolor tła dla nieobecnych nicków z podświetleniem"
-
-#~ msgid "structure with partial completion"
-#~ msgstr "struktura z częściowym uzupełnianiem"

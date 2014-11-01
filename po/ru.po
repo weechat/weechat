@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-10-26 19:18+0100\n"
-"PO-Revision-Date: 2014-08-16 11:46+0200\n"
+"POT-Creation-Date: 2014-11-01 11:55+0100\n"
+"PO-Revision-Date: 2014-11-01 11:59+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -7217,11 +7217,11 @@ msgstr "Реоп канала %s%s%s: %s%s\n"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
+msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s invited by %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
@@ -7230,7 +7230,11 @@ msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
+msgstr "%s[%s%s%s] %s%s%s забанен\n"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
 msgstr "%s[%s%s%s] %s%s%s забанен\n"
 
 #, fuzzy, c-format
@@ -7283,11 +7287,15 @@ msgstr[2] "ник"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
@@ -7317,11 +7325,15 @@ msgstr "%s: ник \"%s\" уже используется, пробую втор
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
@@ -10197,19 +10209,3 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
-
-#, fuzzy
-#~ msgid "text color for offline nick (not in nicklist any more)"
-#~ msgstr "цвет отошедших ников"
-
-#, fuzzy
-#~ msgid "text color for offline nick with highlight"
-#~ msgstr "цвет отошедших ников"
-
-#, fuzzy
-#~ msgid "background color for offline nick with highlight"
-#~ msgstr "цвет фона заголовка"
-
-#, fuzzy
-#~ msgid "structure with partial completion"
-#~ msgstr "вставить строку в поле ввода"
