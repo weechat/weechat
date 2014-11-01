@@ -40,6 +40,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: send mouse code only one time to terminal with command
+  /mouse enable|disable|toggle
 * core: fix buffer property "lines_hidden" when merging buffers or when a line
   is removed from a buffer (closes #226)
 * core: display time in bare display only if option
