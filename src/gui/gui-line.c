@@ -947,6 +947,10 @@ gui_line_add_to_list (struct t_gui_lines *lines,
     if (prefix_length > lines->prefix_max_length)
         lines->prefix_max_length = prefix_length;
 
+    /* adjust "lines_hidden" if the line is hidden */
+    if (!line->data->displayed)
+        (lines->lines_hidden)++;
+
     lines->lines_count++;
 }
 
@@ -995,6 +999,10 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
         lines->first_line_not_read = (lines->last_read_line) ? 0 : 1;
         gui_buffer_ask_chat_refresh (buffer, 1);
     }
+
+    /* adjust "lines_hidden" if the line was hidden */
+    if (!line->data->displayed && (lines->lines_hidden > 0))
+        (lines->lines_hidden)--;
 
     /* free data */
     if (free_data)
@@ -1287,9 +1295,6 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     }
     else
     {
-        buffer->own_lines->lines_hidden++;
-        if (buffer->mixed_lines)
-            buffer->mixed_lines->lines_hidden++;
         (void) hook_signal_send ("buffer_lines_hidden",
                                  WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
