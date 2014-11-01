@@ -3899,16 +3899,9 @@ command_mouse_timer_cb (void *data, int remaining_calls)
     (void) data;
     (void) remaining_calls;
 
-    if (gui_mouse_enabled)
-    {
-        gui_mouse_disable ();
-        config_file_option_set (config_look_mouse, "0", 1);
-    }
-    else
-    {
-        gui_mouse_enable ();
-        config_file_option_set (config_look_mouse, "1", 1);
-    }
+    config_file_option_set (config_look_mouse,
+                            (gui_mouse_enabled) ? "0" : "1",
+                            1);
 
     return WEECHAT_RC_OK;
 }
