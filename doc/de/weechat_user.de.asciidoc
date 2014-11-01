@@ -43,11 +43,10 @@ Die WeeChat Homepage findet man unter: http://weechat.org/
 
 Um WeeChat zu installieren wird folgendes benötigt:
 
-* ein laufendes GNU/Linux System (mit Kompilierungswerkzeugen für Quellpakete),
+* ein lauffähiges GNU/Linux System (mit Kompilierungswerkzeugen für Quellpakete),
   oder ein kompatibles OS
-* 'root' Privilegien (um WeeChat im Systemverzeichnis zu installieren)
-// TRANSLATION MISSING
-* some libraries (see <<dependencies,dependencies>>).
+* 'root' Privilegien (um WeeChat in das Systemverzeichnis zu installieren)
+* einige Bibliotheken (siehe <<dependencies,Abhängigkeiten>>).
 
 [[install]]
 == Installation
@@ -76,24 +75,22 @@ wie Pakete installiert werden können.
 
 WeeChat kann mittels cmake oder autotools kompiliert werden (cmake sollte dabei die bevorzugte Methode sein).
 
-// TRANSLATION MISSING
 [NOTE]
-On OS X, you can use http://brew.sh/[Homebrew]:
+Unter OS X kann http://brew.sh/[Homebrew] verwendet werden:
 `brew install weechat --with-python --with-perl`
-(for help: `brew info weechat`).
+(für Hilfe: `brew info weechat`).
 
 [[dependencies]]
 ==== Abhängigkeiten
 
-folgende Tabelle beschreibt welche Pakete zwingend notwendig sind um WeeChat zu kompilieren und
+folgende Tabelle beschreibt, welche Pakete zwingend notwendig sind um WeeChat zu kompilieren und
 welche Pakete optional genutzt werden können.
 
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
 | Paket ^(1)^                       | Version     | benötigt | Funktion
 | cmake                             |             | *ja*     | Zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
-// TRANSLATION MISSING
-| pkg-config                        |             | *ja*     | Detect installed libraries
+| pkg-config                        |             | *ja*     | entdeckt installierte Bibliotheken
 | libncursesw5-dev ^(2)^            |             | *ja*     | Ncurses Oberfläche
 | libcurl4-gnutls-dev               |             | *ja*     | URL Transfer
 | zlib1g-dev                        |             | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden
@@ -514,13 +511,12 @@ Die 'status'-Bar besitzt als Standardeinträge:
 |===
 | Item                  | Beispiel              | Beschreibung
 | time                  | `[12:55]`             | Uhrzeit
-// TRANSLATION MISSING
-| buffer_last_number    | `[6]`                 | Number of last buffer in list
+| buffer_last_number    | `[6]`                 | Nummer des letzten Buffers
 | buffer_plugin         | `[irc/freenode]`      | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
 | buffer_number         | `3`                   | Aktuelle Nummer des Buffers
 | buffer_name           | `#test`               | Name des aktuellen Buffers
 | buffer_modes          | `+n`                  | IRC Channel-Modi
-| buffer_nicklist_count | `{4}`                 | Anzahl der Nicks in Nickliste
+| buffer_nicklist_count | `{4}`                 | Anzahl der Nicks in Benutzerliste
 | buffer_zoom           | !                     | `!` bedeutet, dass ein zusammengefügter Buffer gezoomed (nur dieser Buffer wird angezeigt) wird.
 | buffer_filter         | `*`                   | Filteranzeige: `*` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag zeigt an dass alle Zeilen dargestellt werden
 | scroll                | `-MORE(50)-`          | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind
@@ -760,7 +756,7 @@ Dies ist für root-Bars sinnvoll, um gezielt ein Item eines bestimmten Buffers
 anzuzeigen, welcher nicht im aktuellen Fenster oder überhaupt nicht sichtbar
 ist.
 
-Beispiel: Nickliste von bitlbee permanent in einer root-Bar darstellen (die Bar
+Beispiel: Benutzerliste von bitlbee permanent in einer root-Bar darstellen (die Bar
 heißt hierbei 'bitlist' und der Name des bitlbee Servers 'bitlbee'):
 
 ----
@@ -859,7 +855,7 @@ Folgende Zeichenketten sind möglich:
 * 'active'  : das Fenster muss das aktive Fenster sein
 * 'inactive': das Fenster muss das inaktive Fenster sein
 * 'nicklist': der Buffer der in einem Fenster dargestellt wird, muss eine
-              Nickliste anzeigen.
+              Benutzerliste anzeigen.
 * ein Ausdruck: wird als boolescher Wert ausgewertet (siehe Befehl
   <<command_weechat_eval,/eval>>)
 
@@ -881,7 +877,7 @@ darstellt, aber nur wenn das Fenster eine Mindestbreite von > 100 Pixeln aufweis
 /set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
 ----
 
-Gleiche Bedingungen, aber die Nickliste wird im Buffer '&bitlbee' immer angezeigt
+Gleiche Bedingungen, aber die Benutzerliste wird im Buffer '&bitlbee' immer angezeigt
 (auch wenn das Fenster kleiner als 100 Pixel ist):
 
 ----
@@ -1103,10 +1099,10 @@ Befehl festgelegt werden:
 | key[F8]            | zum nächsten Fenster wechseln | `/window +1`
 | key[F9]            | Titel des Buffers nach links verschieben | `/bar scroll title * -30%`
 | key[F10]           | Titel des Buffers nach rechts verschieben | `/bar scroll title * +30%`
-| key[F11]           | Nickliste um eine Seite nach oben blättern | `/bar scroll nicklist * -100%`
-| key[F12]           | Nickliste um eine Seite nach unten blättern | `/bar scroll nicklist * +100%`
-| key[alt-F11]       | springt zum Anfang der Nickliste | `/bar scroll nicklist * b`
-| key[alt-F12]       | springt zum Ende der Nickliste | `/bar scroll nicklist * e`
+| key[F11]           | Benutzerliste um eine Seite nach oben blättern | `/bar scroll nicklist * -100%`
+| key[F12]           | Benutzerliste um eine Seite nach unten blättern | `/bar scroll nicklist * +100%`
+| key[alt-F11]       | springt zum Anfang der Benutzerliste | `/bar scroll nicklist * b`
+| key[alt-F12]       | springt zum Ende der Benutzerliste | `/bar scroll nicklist * e`
 | key[alt-a]         | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...) | `/input jump_smart`
 | key[alt-h]         | löscht Hotliste (Aktivitätsanzeige für die Buffer) | `/input hotlist_clear`
 | key[alt-j,alt-f]   | wechselt zum ersten Buffer | `/buffer -`
@@ -1172,11 +1168,11 @@ Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bild
 | key[m]        | Chat      | quotet Nachricht | `hsignal:chat_quote_message;/cursor stop`
 | key[q]        | Chat      | quotet prefix + Nachricht | `hsignal:chat_quote_prefix_message;/cursor stop`
 | key[Q]        | Chat      | quotet Uhrzeit + prefix + Nachricht | `hsignal:chat_quote_time_prefix_message;/cursor stop`
-| key[b]        | Nickliste | verbannt nick (Ban) | `/window ${_window_number};/ban ${nick}`
-| key[k]        | Nickliste | kickt nick | `/window ${_window_number};/kick ${nick}`
-| key[K]        | Nickliste | kickt und verbannt nick | `/window ${_window_number};/kickban ${nick}`
-| key[q]        | Nickliste | öffnet privaten Chat mit Nick | `/window ${_window_number};/query ${nick};/cursor stop`
-| key[w]        | Nickliste | führt einen whois für Nick aus | `/window ${_window_number};/whois ${nick}`
+| key[b]        | Benutzerliste | verbannt nick (Ban) | `/window ${_window_number};/ban ${nick}`
+| key[k]        | Benutzerliste | kickt nick | `/window ${_window_number};/kick ${nick}`
+| key[K]        | Benutzerliste | kickt und verbannt nick | `/window ${_window_number};/kickban ${nick}`
+| key[q]        | Benutzerliste | öffnet privaten Chat mit Nick | `/window ${_window_number};/query ${nick};/cursor stop`
+| key[w]        | Benutzerliste | führt einen whois für Nick aus | `/window ${_window_number};/whois ${nick}`
 | key[Enter] .3+| -      .3+| beendet den Cursor-Modus .3+| `/cursor stop`
 | key[ctrl-j]
 | key[ctrl-m]
@@ -1203,15 +1199,15 @@ Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt
 | ⇓           | -            | chat (script buffer) | fünf Zeilen nach unten blättern, im Script-Buffer | `/script down 5`
 | key[ctrl-]⇑ | -            | chat                 | horizontal, nach links scrollen | `/window scroll_horiz -window ${_window_number} -10%`
 | key[ctrl-]⇓ | -            | chat                 | horizontal, nach rechts scrollen | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽         | hoch         | Nickliste            | Nickliste um eine Seite nach oben blättern | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽         | runter       | Nickliste            | Nickliste um eine Seite nach unten blättern | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽         | hoch(lang)   | Nickliste            | springt zum Anfang der Nickliste | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽         | runter(lang) | Nickliste            | springt zum Ende der Nickliste | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽         | -            | Nickliste            | öffnet privaten Chat mit Nick | `/window ${_window_number};/query ${nick}`
-| ◽◽◾         | -            | Nickliste            | führt einen whois für Nick aus | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽         | links        | Nickliste            | kickt Nick | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽         | links(lang)  | Nickliste            | kickt und verbannt Nick | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾         | links        | Nickliste            | verbannt Nick | `/window ${_window_number};/ban ${nick}`
+| ◾◽◽         | hoch         | Benutzerliste        | Benutzerliste um eine Seite nach oben blättern | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽         | runter       | Benutzerliste        | Benutzerliste um eine Seite nach unten blättern | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽         | hoch(lang)   | Benutzerliste        | springt zum Anfang der Benutzerliste | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽         | runter(lang) | Benutzerliste        | springt zum Ende der Benutzerliste | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽         | -            | Benutzerliste        | öffnet privaten Chat mit Nick | `/window ${_window_number};/query ${nick}`
+| ◽◽◾         | -            | Benutzerliste        | führt einen whois für Nick aus | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽         | links        | Benutzerliste        | kickt Nick | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽         | links(lang)  | Benutzerliste        | kickt und verbannt Nick | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾         | links        | Benutzerliste        | verbannt Nick | `/window ${_window_number};/ban ${nick}`
 | ◽◽◾         | -            | Input                | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein | `/input grab_mouse_area`
 | ⇑           | -            | jede Bar             | blättert Bar um 20% nach oben | `/bar scroll ${_bar_name} ${_window_number} -20%`
 | ⇓           | -            | jede Bar             | blättert Bar um 20% nach unten | `/bar scroll ${_bar_name} ${_window_number} +20%`
@@ -3414,7 +3410,7 @@ Die Bedingung `${info:term_width}` überprüft die Breite des Terminal (zusätzl
 auch `${info:term_height}` genutzt werden).
 
 In obigem Beispiel wird die Nicklist versteckt, sobald das Terminal verkleinert wird.
-Die Nickliste wird wieder angezeigt, sobald die Breite des Terminals größer oder
+Die Benutzerliste wird wieder angezeigt, sobald die Breite des Terminals größer oder
 gleich 100 Zeichen ist.
 
 [[trigger_example_config_save]]
