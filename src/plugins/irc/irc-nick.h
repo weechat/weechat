@@ -93,12 +93,10 @@ extern const char *irc_nick_as_prefix (struct t_irc_server *server,
                                        struct t_irc_nick *nick,
                                        const char *nickname,
                                        const char *force_color);
-extern const char *irc_nick_color_for_message (struct t_irc_server *server,
-                                               struct t_irc_nick *nick,
-                                               const char *nickname);
-extern const char *irc_nick_color_for_server_message (struct t_irc_server *server,
-                                                      struct t_irc_nick *nick,
-                                                      const char *nickname);
+extern const char *irc_nick_color_for_msg (struct t_irc_server *server,
+                                           int server_message,
+                                           struct t_irc_nick *nick,
+                                           const char *nickname);
 extern const char * irc_nick_color_for_pv (struct t_irc_channel *channel,
                                            const char *nickname);
 extern char *irc_nick_default_ban_mask (struct t_irc_nick *nick);
