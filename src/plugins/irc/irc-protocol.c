@@ -3854,50 +3854,69 @@ IRC_PROTOCOL_CALLBACK(348)
     ptr_channel = irc_channel_search (server, argv[3]);
     ptr_buffer = (ptr_channel && ptr_channel->nicks) ?
         ptr_channel->buffer : server->buffer;
-    if (argc >= 7)
+    if (argc >= 6)
     {
         nick_address = irc_protocol_nick_address (
             server, 1, NULL, irc_message_get_nick_from_host (argv[5]),
             irc_message_get_address_from_host (argv[5]));
-        datetime = (time_t)(atol (argv[6]));
-        weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                   command, "exceptionlist",
-                                                                   ptr_buffer),
-                                  date,
-                                  irc_protocol_tags (command, "irc_numeric",
-                                                     NULL, NULL),
-                                  /* TRANSLATORS: "%s" after "on" is a date */
-                                  _("%s%s[%s%s%s]%s exception %s%s%s by %s "
-                                    "on %s"),
-                                  weechat_prefix ("network"),
-                                  IRC_COLOR_CHAT_DELIMITERS,
-                                  IRC_COLOR_CHAT_CHANNEL,
-                                  argv[3],
-                                  IRC_COLOR_CHAT_DELIMITERS,
-                                  IRC_COLOR_RESET,
-                                  IRC_COLOR_CHAT_HOST,
-                                  argv[4],
-                                  IRC_COLOR_RESET,
-                                  (nick_address[0]) ? nick_address : "?",
-                                  weechat_util_get_time_string (&datetime));
+        if (argc >= 7)
+        {
+            datetime = (time_t)(atol (argv[6]));
+            weechat_printf_date_tags (
+                irc_msgbuffer_get_target_buffer (server, NULL, command,
+                                                 "exceptionlist", ptr_buffer),
+                date,
+                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                /* TRANSLATORS: "%s" after "on" is a date */
+                _("%s%s[%s%s%s]%s exception %s%s%s by %s on %s"),
+                weechat_prefix ("network"),
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_CHAT_CHANNEL,
+                argv[3],
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_RESET,
+                IRC_COLOR_CHAT_HOST,
+                argv[4],
+                IRC_COLOR_RESET,
+                (nick_address[0]) ? nick_address : "?",
+                weechat_util_get_time_string (&datetime));
+        }
+        else
+        {
+            weechat_printf_date_tags (
+                irc_msgbuffer_get_target_buffer (server, NULL, command,
+                                                 "exceptionlist", ptr_buffer),
+                date,
+                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                _("%s%s[%s%s%s]%s exception %s%s%s by %s"),
+                weechat_prefix ("network"),
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_CHAT_CHANNEL,
+                argv[3],
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_RESET,
+                IRC_COLOR_CHAT_HOST,
+                argv[4],
+                IRC_COLOR_RESET,
+                (nick_address[0]) ? nick_address : "?");
+        }
     }
     else
     {
-        weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                   command, "exceptionlist",
-                                                                   ptr_buffer),
-                                  date,
-                                  irc_protocol_tags (command, "irc_numeric",
-                                                     NULL, NULL),
-                                  _("%s%s[%s%s%s]%s exception %s%s"),
-                                  weechat_prefix ("network"),
-                                  IRC_COLOR_CHAT_DELIMITERS,
-                                  IRC_COLOR_CHAT_CHANNEL,
-                                  argv[3],
-                                  IRC_COLOR_CHAT_DELIMITERS,
-                                  IRC_COLOR_RESET,
-                                  IRC_COLOR_CHAT_HOST,
-                                  argv[4]);
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (server, NULL, command,
+                                             "exceptionlist", ptr_buffer),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            _("%s%s[%s%s%s]%s exception %s%s"),
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_CHAT_CHANNEL,
+            argv[3],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            IRC_COLOR_CHAT_HOST,
+            argv[4]);
     }
 
     return WEECHAT_RC_OK;
