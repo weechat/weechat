@@ -484,7 +484,7 @@
 ** valeurs: 0 .. 1000000 (valeur par défaut: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** description: `liste séparée par des virgules de capacités client ("client capabilities") à activer sur le serveur si elles sont disponibles ; les capacités supportées par WeeChat sont : away-notify, multi-prefix, server-time, userhost-in-names (exemple : "away-notify,multi-prefix")`
+** description: `liste séparée par des virgules de capacités client ("client capabilities") à activer sur le serveur si elles sont disponibles ; les capacités supportées par WeeChat sont : away-notify, extended-join, multi-prefix, server-time, userhost-in-names (exemple : "away-notify,multi-prefix")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

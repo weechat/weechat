@@ -484,7 +484,7 @@
 ** Werte: 0 .. 1000000 (Standardwert: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** Beschreibung: `durch Kommata getrennte Liste von erweiterten Client Fähigkeiten ("client capabilities"), welche vom Server angeboten und genutzt werden sollen. Fähigkeiten die von WeeChat unterstützt werden: away-notify, multi-prefix, server-time, userhost-in-name (Beispiel: "away-notify,multi-prefix")`
+** Beschreibung: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: away-notify, extended-join, multi-prefix, server-time, userhost-in-names (example: "away-notify,multi-prefix")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
