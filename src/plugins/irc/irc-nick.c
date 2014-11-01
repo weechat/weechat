@@ -959,12 +959,13 @@ irc_nick_mode_for_display (struct t_irc_server *server, struct t_irc_nick *nick,
             {
                 str_prefix[0] = '\0';
             }
-            str_prefix_color = weechat_color (irc_nick_get_prefix_color_name (server,
-                                                                              nick->prefix[0]));
+            str_prefix_color = weechat_color (
+                irc_nick_get_prefix_color_name (server, nick->prefix[0]));
         }
         else
         {
-            str_prefix[0] = (prefix && weechat_config_boolean (irc_config_look_nick_mode_empty)) ?
+            str_prefix[0] = (prefix
+                             && weechat_config_boolean (irc_config_look_nick_mode_empty)) ?
                 ' ' : '\0';
             str_prefix_color = IRC_COLOR_RESET;
         }

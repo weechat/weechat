@@ -293,10 +293,10 @@ irc_redirect_pattern_new (const char *name, int temp_pattern, int timeout,
 
     if (!cmd_stop || !cmd_stop[0])
     {
-        weechat_printf (NULL,
-                        _("%s%s: missing argument \"%s\" for redirect pattern"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                        "cmd_stop");
+        weechat_printf (
+            NULL,
+            _("%s%s: missing argument \"%s\" for redirect pattern"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, "cmd_stop");
         return NULL;
     }
 
@@ -304,10 +304,10 @@ irc_redirect_pattern_new (const char *name, int temp_pattern, int timeout,
     ptr_redirect_pattern = irc_redirect_pattern_search (name);
     if (ptr_redirect_pattern)
     {
-        weechat_printf (NULL,
-                        _("%s%s: redirect pattern \"%s\" already exists"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                        name);
+        weechat_printf (
+            NULL,
+            _("%s%s: redirect pattern \"%s\" already exists"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, name);
         return NULL;
     }
 
@@ -512,42 +512,48 @@ irc_redirect_new (struct t_irc_server *server,
 
     if (!server->is_connected)
     {
-        weechat_printf (NULL,
-                        _("%s%s: no connection to server \"%s\" for redirect"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                        server->name);
+        weechat_printf (
+            NULL,
+            _("%s%s: no connection to server \"%s\" for redirect"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, server->name);
         return NULL;
     }
 
     if (!pattern || !pattern[0])
     {
-        weechat_printf (NULL, _("%s%s: missing argument \"%s\" for redirect"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME, "pattern");
+        weechat_printf (
+            NULL,
+            _("%s%s: missing argument \"%s\" for redirect"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, "pattern");
         return NULL;
     }
     if (!signal || !signal[0])
     {
-        weechat_printf (NULL, _("%s%s: missing argument \"%s\" for redirect"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME, "signal");
+        weechat_printf (
+            NULL,
+            _("%s%s: missing argument \"%s\" for redirect"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, "signal");
         return NULL;
     }
 
     ptr_redirect_pattern = irc_redirect_pattern_search (pattern);
     if (!ptr_redirect_pattern)
     {
-        weechat_printf (NULL, _("%s%s: redirect pattern \"%s\" not found"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                        pattern);
+        weechat_printf (
+            NULL,
+            _("%s%s: redirect pattern \"%s\" not found"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, pattern);
         return NULL;
     }
 
-    new_redirect = irc_redirect_new_with_commands (server, pattern, signal,
-                                                   count, string,
-                                                   (timeout > 0) ? timeout : ptr_redirect_pattern->timeout,
-                                                   ptr_redirect_pattern->cmd_start,
-                                                   ptr_redirect_pattern->cmd_stop,
-                                                   ptr_redirect_pattern->cmd_extra,
-                                                   cmd_filter);
+    new_redirect = irc_redirect_new_with_commands (
+        server, pattern, signal,
+        count, string,
+        (timeout > 0) ? timeout : ptr_redirect_pattern->timeout,
+        ptr_redirect_pattern->cmd_start,
+        ptr_redirect_pattern->cmd_stop,
+        ptr_redirect_pattern->cmd_extra,
+        cmd_filter);
 
     /*
      * remove redirect pattern if it is temporary (created by external
@@ -615,13 +621,12 @@ irc_redirect_init_command (struct t_irc_redirect *redirect,
 
     if (weechat_irc_plugin->debug >= 2)
     {
-        weechat_printf (redirect->server->buffer,
-                        _("%s: starting redirection for command \"%s\" "
-                          "on server \"%s\" (redirect pattern: \"%s\")"),
-                        IRC_PLUGIN_NAME,
-                        redirect->command,
-                        redirect->server->name,
-                        redirect->pattern);
+        weechat_printf (
+            redirect->server->buffer,
+            _("%s: starting redirection for command \"%s\" on server \"%s\" "
+              "(redirect pattern: \"%s\")"),
+            IRC_PLUGIN_NAME, redirect->command, redirect->server->name,
+            redirect->pattern);
     }
 }
 
@@ -1254,19 +1259,19 @@ irc_redirect_pattern_hsignal_cb (void *data, const char *signal,
 
     if (!pattern || !pattern[0])
     {
-        weechat_printf (NULL,
-                        _("%s%s: missing argument \"%s\" for redirect "
-                          "pattern"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME, "pattern");
+        weechat_printf (
+            NULL,
+            _("%s%s: missing argument \"%s\" for redirect pattern"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, "pattern");
         return WEECHAT_RC_ERROR;
     }
 
     if (!cmd_stop || !cmd_stop[0])
     {
-        weechat_printf (NULL,
-                        _("%s%s: missing argument \"%s\" for redirect "
-                          "pattern"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME, "cmd_stop");
+        weechat_printf (
+            NULL,
+            _("%s%s: missing argument \"%s\" for redirect pattern"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, "cmd_stop");
         return WEECHAT_RC_ERROR;
     }
 
@@ -1322,17 +1327,19 @@ irc_redirect_command_hsignal_cb (void *data, const char *signal,
 
     if (!server || !server[0])
     {
-        weechat_printf (NULL,
-                        _("%s%s: missing argument \"%s\" for redirect"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME, "server");
+        weechat_printf (
+            NULL,
+            _("%s%s: missing argument \"%s\" for redirect"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, "server");
         return WEECHAT_RC_ERROR;
     }
     ptr_server = irc_server_search (server);
     if (!ptr_server)
     {
-        weechat_printf (NULL,
-                        _("%s%s: server \"%s\" not found for redirect"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME, server);
+        weechat_printf (
+            NULL,
+            _("%s%s: server \"%s\" not found for redirect"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, server);
         return WEECHAT_RC_ERROR;
     }
 

@@ -64,8 +64,9 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
     else
         text2 = strdup (text);
 
-    text_decoded = irc_color_decode ((text2) ? text2 : text,
-                                     weechat_config_boolean (irc_config_network_colors_send));
+    text_decoded = irc_color_decode (
+        (text2) ? text2 : text,
+        weechat_config_boolean (irc_config_network_colors_send));
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -85,7 +86,9 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
         }
         else
         {
-            str_color = irc_color_for_tags (weechat_config_color (weechat_config_get ("weechat.color.chat_nick_self")));
+            str_color = irc_color_for_tags (
+                weechat_config_color (
+                    weechat_config_get ("weechat.color.chat_nick_self")));
             snprintf (str_tags, sizeof (str_tags),
                       "notify_none,no_highlight,prefix_nick_%s",
                       (str_color) ? str_color : "default");
@@ -95,32 +98,35 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
         ptr_text = (text_decoded) ? text_decoded : ((text2) ? text2 : text);
         if (action)
         {
-            weechat_printf_tags (buffer,
-                                 irc_protocol_tags ("privmsg",
-                                                    str_tags,
-                                                    (ptr_nick) ? ptr_nick->name : ptr_server->nick,
-                                                    NULL),
-                                 "%s%s%s%s%s %s",
-                                 weechat_prefix ("action"),
-                                 irc_nick_mode_for_display (ptr_server, ptr_nick, 0),
-                                 IRC_COLOR_CHAT_NICK_SELF,
-                                 ptr_server->nick,
-                                 IRC_COLOR_RESET,
-                                 ptr_text);
+            weechat_printf_tags (
+                buffer,
+                irc_protocol_tags (
+                    "privmsg", str_tags,
+                    (ptr_nick) ? ptr_nick->name : ptr_server->nick,
+                    NULL),
+                "%s%s%s%s%s %s",
+                weechat_prefix ("action"),
+                irc_nick_mode_for_display (ptr_server, ptr_nick, 0),
+                IRC_COLOR_CHAT_NICK_SELF,
+                ptr_server->nick,
+                IRC_COLOR_RESET,
+                ptr_text);
         }
         else
         {
-            weechat_printf_tags (buffer,
-                                 irc_protocol_tags ("privmsg",
-                                                    str_tags,
-                                                    (ptr_nick) ? ptr_nick->name : ptr_server->nick,
-                                                    NULL),
-                                 "%s%s",
-                                 irc_nick_as_prefix (ptr_server,
-                                                     (ptr_nick) ? ptr_nick : NULL,
-                                                     (ptr_nick) ? NULL : ptr_server->nick,
-                                                     IRC_COLOR_CHAT_NICK_SELF),
-                                 ptr_text);
+            weechat_printf_tags (
+                buffer,
+                irc_protocol_tags (
+                    "privmsg", str_tags,
+                    (ptr_nick) ? ptr_nick->name : ptr_server->nick,
+                    NULL),
+                "%s%s",
+                irc_nick_as_prefix (
+                    ptr_server,
+                    (ptr_nick) ? ptr_nick : NULL,
+                    (ptr_nick) ? NULL : ptr_server->nick,
+                    IRC_COLOR_CHAT_NICK_SELF),
+                ptr_text);
         }
     }
 
@@ -217,8 +223,9 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags)
             ptr_data = weechat_string_input_for_buffer (input_data);
             if (!ptr_data)
                 ptr_data = input_data;
-            data_with_colors = irc_color_encode (ptr_data,
-                                                 weechat_config_boolean (irc_config_network_colors_send));
+            data_with_colors = irc_color_encode (
+                ptr_data,
+                weechat_config_boolean (irc_config_network_colors_send));
 
             msg = strdup ((data_with_colors) ? data_with_colors : ptr_data);
             if (msg)
@@ -368,10 +375,12 @@ irc_input_send_cb (void *data, const char *signal,
             else
             {
                 /* command */
-                data_with_colors = irc_color_encode (ptr_message,
-                                                     weechat_config_boolean (irc_config_network_colors_send));
-                weechat_command (ptr_buffer,
-                                 (data_with_colors) ? data_with_colors : ptr_message);
+                data_with_colors = irc_color_encode (
+                    ptr_message,
+                    weechat_config_boolean (irc_config_network_colors_send));
+                weechat_command (
+                    ptr_buffer,
+                    (data_with_colors) ? data_with_colors : ptr_message);
                 if (data_with_colors)
                     free (data_with_colors);
             }

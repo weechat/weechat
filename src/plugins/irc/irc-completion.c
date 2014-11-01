@@ -262,7 +262,8 @@ irc_completion_channel_nicks_add_speakers (struct t_gui_completion *completion,
         list_size = weechat_list_size (channel->nicks_speaking[highlight]);
         for (i = 0; i < list_size; i++)
         {
-            nick = weechat_list_string (weechat_list_get (channel->nicks_speaking[highlight], i));
+            nick = weechat_list_string (
+                weechat_list_get (channel->nicks_speaking[highlight], i));
             if (nick && irc_nick_search (server, channel, nick))
             {
                 weechat_hook_completion_list_add (completion,
@@ -379,20 +380,16 @@ irc_completion_channel_nicks_hosts_cb (void *data, const char *completion_item,
                         {
                             snprintf (buf, length, "%s!%s",
                                       ptr_nick->name, ptr_nick->host);
-                            weechat_hook_completion_list_add (completion,
-                                                              buf,
-                                                              0,
-                                                              WEECHAT_LIST_POS_SORT);
+                            weechat_hook_completion_list_add (
+                                completion, buf, 0, WEECHAT_LIST_POS_SORT);
                             free (buf);
                         }
                     }
                 }
                 break;
             case IRC_CHANNEL_TYPE_PRIVATE:
-                weechat_hook_completion_list_add (completion,
-                                                  ptr_channel->name,
-                                                  1,
-                                                  WEECHAT_LIST_POS_SORT);
+                weechat_hook_completion_list_add (
+                    completion, ptr_channel->name, 1, WEECHAT_LIST_POS_SORT);
                 break;
         }
     }

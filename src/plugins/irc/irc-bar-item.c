@@ -290,8 +290,8 @@ irc_bar_item_buffer_modes (void *data, struct t_gui_bar_item *item,
             pos_space = strchr(channel->modes, ' ');
             if (pos_space)
             {
-                modes_without_args = weechat_strndup (channel->modes,
-                                                      pos_space - channel->modes);
+                modes_without_args = weechat_strndup (
+                    channel->modes, pos_space - channel->modes);
             }
         }
         snprintf (modes, sizeof (modes),
@@ -464,7 +464,9 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
             if (ptr_nick->prefix[0] != ' ')
             {
                 snprintf (str_prefix, sizeof (str_prefix), "%s%s",
-                          weechat_color (irc_nick_get_prefix_color_name (server, ptr_nick->prefix[0])),
+                          weechat_color (
+                              irc_nick_get_prefix_color_name (
+                                  server, ptr_nick->prefix[0])),
                           ptr_nick->prefix);
             }
         }

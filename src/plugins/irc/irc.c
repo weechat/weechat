@@ -77,8 +77,9 @@ irc_signal_quit_cb (void *data, const char *signal, const char *type_data,
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
-            irc_command_quit_server (ptr_server,
-                                     (signal_data) ? (char *)signal_data : NULL);
+            irc_command_quit_server (
+                ptr_server,
+                (signal_data) ? (char *)signal_data : NULL);
         }
     }
 
@@ -110,20 +111,20 @@ irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
          ptr_server = ptr_server->next_server)
     {
         /*
-         * FIXME: it's not possible to upgrade with SSL servers connected (GnuTLS
-         * lib can't reload data after upgrade), so we close connection for
-         * all SSL servers currently connected
+         * FIXME: it's not possible to upgrade with SSL servers connected
+         * (GnuTLS library can't reload data after upgrade), so we close
+         * connection for all SSL servers currently connected
          */
         if (ptr_server->is_connected && (ptr_server->ssl_connected || quit))
         {
             if (!quit)
             {
                 ssl_disconnected++;
-                weechat_printf (ptr_server->buffer,
-                                _("%s%s: disconnecting from server because upgrade "
-                                  "can't work for servers connected via SSL"),
-                                weechat_prefix ("error"),
-                                IRC_PLUGIN_NAME);
+                weechat_printf (
+                    ptr_server->buffer,
+                    _("%s%s: disconnecting from server because upgrade can't "
+                      "work for servers connected via SSL"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME);
             }
             irc_server_disconnect (ptr_server, 0, 0);
             /*
@@ -137,13 +138,15 @@ irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
     }
     if (ssl_disconnected > 0)
     {
-        weechat_printf (NULL,
-                        /* TRANSLATORS: "%s" after "%d" is "server" or "servers" */
-                        _("%s%s: disconnected from %d %s (SSL connection "
-                          "not supported with upgrade)"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                        ssl_disconnected,
-                        NG_("server", "servers", ssl_disconnected));
+        weechat_printf (
+            NULL,
+            /* TRANSLATORS: "%s" after "%d" is "server" or "servers" */
+            _("%s%s: disconnected from %d %s (SSL connection not supported "
+              "with upgrade)"),
+            weechat_prefix ("error"),
+            IRC_PLUGIN_NAME,
+            ssl_disconnected,
+            NG_("server", "servers", ssl_disconnected));
     }
 
     return WEECHAT_RC_OK;
@@ -210,12 +213,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         {
             if (!irc_server_alloc_with_url (argv[i]))
             {
-                weechat_printf (NULL,
-                                _("%s%s: unable to create temporary server "
-                                  "\"%s\" (check if there is already a server "
-                                  "with this name)"),
-                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                argv[i]);
+                weechat_printf (
+                    NULL,
+                    _("%s%s: unable to create temporary server \"%s\" (check "
+                      "if there is already a server with this name)"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[i]);
             }
         }
         else if (weechat_strcasecmp (argv[i], "--upgrade") == 0)
@@ -228,11 +230,12 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     {
         if (!irc_upgrade_load ())
         {
-            weechat_printf (NULL,
-                            _("%s%s: WARNING: some network connections may "
-                              "still be opened and not visible, you should "
-                              "restart WeeChat now (with /quit)."),
-                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            weechat_printf (
+                NULL,
+                _("%s%s: WARNING: some network connections may still be "
+                  "opened and not visible, you should restart WeeChat now "
+                  "(with /quit)."),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME);
         }
     }
     else

@@ -243,9 +243,11 @@ irc_config_set_nick_colors ()
     }
 
     irc_config_nick_colors =
-        weechat_string_split (weechat_config_string (weechat_config_get ("weechat.color.chat_nick_colors")),
-                              ",", 0, 0,
-                              &irc_config_num_nick_colors);
+        weechat_string_split (
+            weechat_config_string (
+                weechat_config_get ("weechat.color.chat_nick_colors")),
+            ",", 0, 0,
+            &irc_config_num_nick_colors);
 }
 
 /*
@@ -338,17 +340,19 @@ irc_config_change_look_display_join_message (void *data,
 
     if (!irc_config_hashtable_display_join_message)
     {
-        irc_config_hashtable_display_join_message = weechat_hashtable_new (32,
-                                                                           WEECHAT_HASHTABLE_STRING,
-                                                                           WEECHAT_HASHTABLE_STRING,
-                                                                           NULL,
-                                                                           NULL);
+        irc_config_hashtable_display_join_message = weechat_hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL,
+            NULL);
     }
     else
         weechat_hashtable_remove_all (irc_config_hashtable_display_join_message);
 
-    items = weechat_string_split (weechat_config_string (irc_config_look_display_join_message),
-                                  ",", 0, 0, &num_items);
+    items = weechat_string_split (
+        weechat_config_string (irc_config_look_display_join_message),
+        ",", 0, 0, &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -520,16 +524,18 @@ irc_config_change_look_highlight_tags_restrict (void *data,
     {
         if (ptr_server->buffer)
         {
-            weechat_buffer_set (ptr_server->buffer, "highlight_tags_restrict",
-                                weechat_config_string (irc_config_look_highlight_tags_restrict));
+            weechat_buffer_set (
+                ptr_server->buffer, "highlight_tags_restrict",
+                weechat_config_string (irc_config_look_highlight_tags_restrict));
         }
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
             if (ptr_channel->buffer)
             {
-                weechat_buffer_set (ptr_channel->buffer, "highlight_tags_restrict",
-                                    weechat_config_string (irc_config_look_highlight_tags_restrict));
+                weechat_buffer_set (
+                    ptr_channel->buffer, "highlight_tags_restrict",
+                    weechat_config_string (irc_config_look_highlight_tags_restrict));
             }
         }
     }
@@ -552,17 +558,19 @@ irc_config_change_look_nick_color_force (void *data,
 
     if (!irc_config_hashtable_nick_color_force)
     {
-        irc_config_hashtable_nick_color_force = weechat_hashtable_new (32,
-                                                                       WEECHAT_HASHTABLE_STRING,
-                                                                       WEECHAT_HASHTABLE_STRING,
-                                                                       NULL,
-                                                                       NULL);
+        irc_config_hashtable_nick_color_force = weechat_hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL,
+            NULL);
     }
     else
         weechat_hashtable_remove_all (irc_config_hashtable_nick_color_force);
 
-    items = weechat_string_split (weechat_config_string (irc_config_look_nick_color_force),
-                                  ";", 0, 0, &num_items);
+    items = weechat_string_split (
+        weechat_config_string (irc_config_look_nick_color_force),
+        ";", 0, 0, &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -638,9 +646,9 @@ irc_config_change_look_nicks_hide_password (void *data,
     nicks_hide_password = weechat_config_string (irc_config_look_nicks_hide_password);
     if (nicks_hide_password && nicks_hide_password[0])
     {
-        irc_config_nicks_hide_password = weechat_string_split (nicks_hide_password,
-                                                               ",", 0, 0,
-                                                               &irc_config_num_nicks_hide_password);
+        irc_config_nicks_hide_password = weechat_string_split (
+            nicks_hide_password, ",", 0, 0,
+            &irc_config_num_nicks_hide_password);
     }
 }
 
@@ -764,17 +772,19 @@ irc_config_change_color_mirc_remap (void *data, struct t_config_option *option)
 
     if (!irc_config_hashtable_color_mirc_remap)
     {
-        irc_config_hashtable_color_mirc_remap = weechat_hashtable_new (32,
-                                                                       WEECHAT_HASHTABLE_STRING,
-                                                                       WEECHAT_HASHTABLE_STRING,
-                                                                       NULL,
-                                                                       NULL);
+        irc_config_hashtable_color_mirc_remap = weechat_hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL,
+            NULL);
     }
     else
         weechat_hashtable_remove_all (irc_config_hashtable_color_mirc_remap);
 
-    items = weechat_string_split (weechat_config_string (irc_config_color_mirc_remap),
-                                  ";", 0, 0, &num_items);
+    items = weechat_string_split (
+        weechat_config_string (irc_config_color_mirc_remap),
+        ";", 0, 0, &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -809,17 +819,19 @@ irc_config_change_color_nick_prefixes (void *data,
 
     if (!irc_config_hashtable_nick_prefixes)
     {
-        irc_config_hashtable_nick_prefixes = weechat_hashtable_new (32,
-                                                                    WEECHAT_HASHTABLE_STRING,
-                                                                    WEECHAT_HASHTABLE_STRING,
-                                                                    NULL,
-                                                                    NULL);
+        irc_config_hashtable_nick_prefixes = weechat_hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL,
+            NULL);
     }
     else
         weechat_hashtable_remove_all (irc_config_hashtable_nick_prefixes);
 
-    items = weechat_string_split (weechat_config_string (irc_config_color_nick_prefixes),
-                                  ";", 0, 0, &num_items);
+    items = weechat_string_split (
+        weechat_config_string (irc_config_color_nick_prefixes),
+        ";", 0, 0, &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -1069,7 +1081,8 @@ irc_config_server_check_value_cb (void *data,
                     {
                         while (weechat_infolist_next (infolist))
                         {
-                            proxy_name = weechat_infolist_string (infolist, "name");
+                            proxy_name = weechat_infolist_string (infolist,
+                                                                  "name");
                             if (proxy_name && (strcmp (value, proxy_name) == 0))
                             {
                                 proxy_found = 1;
@@ -1080,12 +1093,11 @@ irc_config_server_check_value_cb (void *data,
                     }
                     if (!proxy_found)
                     {
-                        weechat_printf (NULL,
-                                        _("%s%s: warning: proxy \"%s\" does not "
-                                          "exist (you can create it with command "
-                                          "/proxy)"),
-                                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                        value);
+                        weechat_printf (
+                            NULL,
+                            _("%s%s: warning: proxy \"%s\" does not exist "
+                              "(you can create it with command /proxy)"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME, value);
                     }
                 }
                 break;
@@ -1093,18 +1105,19 @@ irc_config_server_check_value_cb (void *data,
                 pos_error = irc_config_check_gnutls_priorities (value);
                 if (pos_error)
                 {
-                    weechat_printf (NULL,
-                                    _("%s%s: invalid priorities string, error "
-                                      "at this position in string: \"%s\""),
-                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                    pos_error);
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: invalid priorities string, error at this "
+                          "position in string: \"%s\""),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME, pos_error);
                     return 0;
                 }
                 break;
             case IRC_SERVER_OPTION_SSL_FINGERPRINT:
                 if (value && value[0] && (strlen (value) != 40))
                 {
-                    fingerprints = weechat_string_split (value, ",", 0, 0, NULL);
+                    fingerprints = weechat_string_split (value, ",", 0, 0,
+                                                         NULL);
                     if (fingerprints)
                     {
                         rc = 1;
@@ -1119,12 +1132,11 @@ irc_config_server_check_value_cb (void *data,
                         weechat_string_free_split (fingerprints);
                         if (!rc)
                         {
-                            weechat_printf (NULL,
-                                            _("%s%s: fingerprint must have "
-                                              "exactly 40 hexadecimal "
-                                              "digits"),
-                                            weechat_prefix ("error"),
-                                            IRC_PLUGIN_NAME);
+                            weechat_printf (
+                                NULL,
+                                _("%s%s: fingerprint must have exactly 40 "
+                                  "hexadecimal digits"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME);
                             return 0;
                         }
                     }
@@ -1157,14 +1169,16 @@ irc_config_server_change_cb (void *data, struct t_config_option *option)
             switch (index_option)
             {
                 case IRC_SERVER_OPTION_ADDRESSES:
-                    irc_server_set_addresses (ptr_server,
-                                              IRC_SERVER_OPTION_STRING(ptr_server,
-                                                                       IRC_SERVER_OPTION_ADDRESSES));
+                    irc_server_set_addresses (
+                        ptr_server,
+                        IRC_SERVER_OPTION_STRING(ptr_server,
+                                                 IRC_SERVER_OPTION_ADDRESSES));
                     break;
                 case IRC_SERVER_OPTION_NICKS:
-                    irc_server_set_nicks (ptr_server,
-                                          IRC_SERVER_OPTION_STRING(ptr_server,
-                                                                   IRC_SERVER_OPTION_NICKS));
+                    irc_server_set_nicks (
+                        ptr_server,
+                        IRC_SERVER_OPTION_STRING(ptr_server,
+                                                 IRC_SERVER_OPTION_NICKS));
                     break;
                 case IRC_SERVER_OPTION_AWAY_CHECK:
                 case IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS:
@@ -1247,12 +1261,13 @@ irc_config_reload (void *data, struct t_config_file *config_file)
         {
             if (ptr_server->is_connected)
             {
-                weechat_printf (NULL,
-                                _("%s%s: warning: server \"%s\" not found "
-                                  "in configuration file, not deleted in "
-                                  "memory because it's currently used"),
-                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                ptr_server->name);
+                weechat_printf (
+                    NULL,
+                    _("%s%s: warning: server \"%s\" not found in "
+                      "configuration file, not deleted in memory because it's "
+                      "currently used"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                    ptr_server->name);
             }
             else
                 irc_server_free (ptr_server);
@@ -1308,7 +1323,8 @@ irc_config_msgbuffer_create_option (void *data,
                     "weechat|server|current|private", 0, 0, value, value, 0,
                     NULL, NULL, NULL, NULL, NULL, NULL);
                 rc = (ptr_option) ?
-                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE :
+                    WEECHAT_CONFIG_OPTION_SET_ERROR;
             }
             else
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
@@ -1317,10 +1333,10 @@ irc_config_msgbuffer_create_option (void *data,
 
     if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
-        weechat_printf (NULL,
-                        _("%s%s: error creating \"%s\" => \"%s\""),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                        option_name, value);
+        weechat_printf (
+            NULL,
+            _("%s%s: error creating \"%s\" => \"%s\""),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, option_name, value);
     }
 
     return rc;
@@ -1387,7 +1403,8 @@ irc_config_ctcp_create_option (void *data, struct t_config_file *config_file,
                     NULL, 0, 0, default_value, value, 0,
                     NULL, NULL, NULL, NULL, NULL, NULL);
                 rc = (ptr_option) ?
-                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE :
+                    WEECHAT_CONFIG_OPTION_SET_ERROR;
             }
             else
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
@@ -1396,10 +1413,10 @@ irc_config_ctcp_create_option (void *data, struct t_config_file *config_file,
 
     if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
-        weechat_printf (NULL,
-                        _("%s%s: error creating CTCP \"%s\" => \"%s\""),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                        option_name, value);
+        weechat_printf (
+            NULL,
+            _("%s%s: error creating CTCP \"%s\" => \"%s\""),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, option_name, value);
     }
 
     return rc;
@@ -1553,7 +1570,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("list of hostname/port or IP/port for server (separated by comma)"),
+                N_("list of hostname/port or IP/port for server (separated by "
+                   "comma)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1565,8 +1583,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("name of proxy used for this server (optional, proxy must be "
-                    "defined with command /proxy)"),
+                N_("name of proxy used for this server (optional, proxy must "
+                   "be defined with command /proxy)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1632,7 +1650,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "integer",
-                N_("size of the key used during the Diffie-Hellman Key Exchange"),
+                N_("size of the key used during the Diffie-Hellman Key "
+                   "Exchange"),
                 NULL, 0, INT_MAX,
                 default_value, value,
                 null_value_allowed,
@@ -1781,7 +1800,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "integer",
-                N_("delay (in seconds) before trying again to reconnect to server"),
+                N_("delay (in seconds) before trying again to reconnect to "
+                   "server"),
                 NULL, 1, 65535,
                 default_value, value,
                 null_value_allowed,
@@ -2090,21 +2110,21 @@ irc_config_server_read_cb (void *data, struct t_config_file *config_file,
                         {
                             for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
                             {
-                                weechat_config_option_set (ptr_server->options[i],
-                                                           NULL, 1);
+                                weechat_config_option_set (
+                                    ptr_server->options[i], NULL, 1);
                             }
                             ptr_server->reloaded_from_config = 1;
                         }
-                        rc = weechat_config_option_set (ptr_server->options[index_option],
-                                                        value, 1);
+                        rc = weechat_config_option_set (
+                            ptr_server->options[index_option], value, 1);
                     }
                     else
                     {
-                        weechat_printf (NULL,
-                                        _("%s%s: error creating server "
-                                          "\"%s\""),
-                                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                        server_name);
+                        weechat_printf (
+                            NULL,
+                            _("%s%s: error creating server \"%s\""),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                            server_name);
                     }
                 }
                 free (server_name);
@@ -2114,10 +2134,10 @@ irc_config_server_read_cb (void *data, struct t_config_file *config_file,
 
     if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
-        weechat_printf (NULL,
-                        _("%s%s: error creating server option \"%s\""),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                        option_name);
+        weechat_printf (
+            NULL,
+            _("%s%s: error creating server option \"%s\""),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, option_name);
     }
 
     return rc;
@@ -2248,26 +2268,30 @@ irc_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    irc_config_hashtable_display_join_message = weechat_hashtable_new (32,
-                                                                       WEECHAT_HASHTABLE_STRING,
-                                                                       WEECHAT_HASHTABLE_STRING,
-                                                                       NULL,
-                                                                       NULL);
-    irc_config_hashtable_nick_color_force = weechat_hashtable_new (32,
-                                                                   WEECHAT_HASHTABLE_STRING,
-                                                                   WEECHAT_HASHTABLE_STRING,
-                                                                   NULL,
-                                                                   NULL);
-    irc_config_hashtable_nick_prefixes = weechat_hashtable_new (32,
-                                                                WEECHAT_HASHTABLE_STRING,
-                                                                WEECHAT_HASHTABLE_STRING,
-                                                                NULL,
-                                                                NULL);
-    irc_config_hashtable_color_mirc_remap = weechat_hashtable_new (32,
-                                                                   WEECHAT_HASHTABLE_STRING,
-                                                                   WEECHAT_HASHTABLE_STRING,
-                                                                   NULL,
-                                                                   NULL);
+    irc_config_hashtable_display_join_message = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL,
+        NULL);
+    irc_config_hashtable_nick_color_force = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL,
+        NULL);
+    irc_config_hashtable_nick_prefixes = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL,
+        NULL);
+    irc_config_hashtable_color_mirc_remap = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL,
+        NULL);
 
     irc_config_file = weechat_config_new (IRC_CONFIG_NAME,
                                           &irc_config_reload, NULL);
@@ -2532,9 +2556,9 @@ irc_config_init ()
     irc_config_look_nick_color_hash = weechat_config_new_option (
         irc_config_file, ptr_section,
         "nick_color_hash", "integer",
-        N_("hash algorithm used to find the color for a nick: djb2 = variant of "
-           "djb2 (position of letters matters: anagrams of a nick have different "
-           "color), sum = sum of letters"),
+        N_("hash algorithm used to find the color for a nick: djb2 = variant "
+           "of djb2 (position of letters matters: anagrams of a nick have "
+           "different color), sum = sum of letters"),
         "djb2|sum", 0, 0, "sum", NULL, 0, NULL, NULL,
         &irc_config_change_look_nick_colors, NULL, NULL, NULL);
     irc_config_look_nick_color_stop_chars = weechat_config_new_option (
@@ -3005,8 +3029,9 @@ irc_config_init ()
     }
     irc_config_section_server = ptr_section;
 
-    irc_config_hook_config_nick_colors = weechat_hook_config ("weechat.color.chat_nick_colors",
-                                                              &irc_config_change_nick_colors_cb, NULL);
+    irc_config_hook_config_nick_colors = weechat_hook_config (
+        "weechat.color.chat_nick_colors",
+        &irc_config_change_nick_colors_cb, NULL);
 
     return 1;
 }
