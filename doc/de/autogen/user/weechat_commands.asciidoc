@@ -30,7 +30,7 @@ message: Abwesenheitsnachricht (ohne Angabe einer Nachricht wird der Abwesenheit
     condition: Merkmal(e) für eine Infobar (nur nutzbar mit der Type-Option "window"):
                  active: in einem aktiven Fenster
                inactive: in einem inaktiven Fenster
-               nicklist: in Fenstern mit einer Nickliste
+               nicklist: in Fenstern mit einer Benutzerliste
                weitere Merkmale: siehe /help weechat.bar.xxx.conditions und /help eval
                ohne Angabe von Merkmalen wird die Infobar immer angezeigt
      position: bottom (unten), top (oben), left (links) oder right (rechts)
@@ -54,7 +54,7 @@ Beispiele:
     /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
   versteckt die Infobar (meinebar):
     /bar hide meinebar
-  scrollt die Nickliste im aktuellen Buffer um 10 Zeilen nach unten:
+  scrollt die Benutzerliste im aktuellen Buffer um 10 Zeilen nach unten:
     /bar scroll nicklist * y+10
   scrollt zum Ende der Nicklist im aktuellen Buffer:
     /bar scroll nicklist * ye
@@ -191,7 +191,7 @@ Ohne Angabe von Argumenten wird der Cursor-Modus umgeschaltet.
 Ist die Mausfunktion aktiviert (siehe /help mouse), startet man den Cursor-Modus mit der mittleren Maustaste und positioniert den Cursor auf diesen Punkt.
 
 Beispiele:
-  gehe zur Nickliste:
+  gehe zur Benutzerliste:
     /cursor go nicklist
   gehe zu den Koordinaten x=10, y=5:
     /cursor go 10,5

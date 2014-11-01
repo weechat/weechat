@@ -807,7 +807,7 @@
 *** 'buffer_max_length_refresh' (integer)
 *** 'prefix_max_length' (integer)
 *** 'prefix_max_length_refresh' (integer)
-* 'nick': Nick in Nickliste
+* 'nick': Nick in Benutzerliste
 ** Erweiterung: weechat
 ** Variablen:
 *** 'group' (pointer, hdata: "nick_group")
@@ -818,7 +818,7 @@
 *** 'visible' (integer)
 *** 'prev_nick' (pointer, hdata: "nick")
 *** 'next_nick' (pointer, hdata: "nick")
-* 'nick_group': Gruppen in Nickliste
+* 'nick_group': Gruppen in Benutzerliste
 ** Erweiterung: weechat
 ** Variablen:
 *** 'name' (shared_string)

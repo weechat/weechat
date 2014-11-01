@@ -54,7 +54,7 @@
 
 | weechat | layout | Auflistung der Layouts | - | -
 
-| weechat | nicklist | Nicks in Nickliste für einen Buffer | Buffer Pointer | nick_xxx oder group_xxx um nur den Nick/Group xxx abzufragen (optional)
+| weechat | nicklist | Nicks in Benutzerliste für einen Buffer | Buffer Pointer | nick_xxx oder group_xxx um nur den Nick/Group xxx abzufragen (optional)
 
 | weechat | option | Auflistung der Optionen | - | Name einer Option (Platzhalter "*" kann verwendet werden) (optional)
 

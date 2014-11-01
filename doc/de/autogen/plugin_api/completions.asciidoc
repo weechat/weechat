@@ -136,7 +136,7 @@
 
 | weechat | layouts_names | Namen der Layouts
 
-| weechat | nicks | Nicks in Nickliste für aktuellen Buffer
+| weechat | nicks | Nicks in Benutzerliste für aktuellen Buffer
 
 | weechat | palette_colors | Farbpalette
 
