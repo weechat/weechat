@@ -135,6 +135,7 @@ struct t_config_option *config_look_input_undo_max;
 struct t_config_option *config_look_item_time_format;
 struct t_config_option *config_look_item_buffer_filter;
 struct t_config_option *config_look_item_buffer_zoom;
+struct t_config_option *config_look_item_mouse_status;
 struct t_config_option *config_look_jump_current_to_previous_buffer;
 struct t_config_option *config_look_jump_previous_buffer_when_closing;
 struct t_config_option *config_look_jump_smart_back_to_buffer;
@@ -229,6 +230,7 @@ struct t_config_option *config_color_status_data_msg;
 struct t_config_option *config_color_status_data_other;
 struct t_config_option *config_color_status_data_private;
 struct t_config_option *config_color_status_filter;
+struct t_config_option *config_color_status_mouse;
 struct t_config_option *config_color_status_name;
 struct t_config_option *config_color_status_name_ssl;
 struct t_config_option *config_color_status_nicklist_count;
@@ -2437,6 +2439,12 @@ config_weechat_init_options ()
         N_("string used to show zoom on merged buffer "
            "(bar item \"buffer_zoom\")"),
         NULL, 0, 0, "!", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_item_mouse_status = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "item_mouse_status", "string",
+        N_("string used to show if mouse is enabled/disabled"
+           "(bar item \"mouse_status\")"),
+        NULL, 0, 0, "M", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_jump_current_to_previous_buffer = config_file_new_option (
         weechat_config_file, ptr_section,
         "jump_current_to_previous_buffer", "boolean",
@@ -3102,6 +3110,12 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "status_filter", "color",
         N_("text color for filter indicator in status bar"),
+        NULL, -1, 0, "green", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_status_mouse = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "status_mouse", "color",
+        N_("text color for mouse indicator in status bar"),
         NULL, -1, 0, "green", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_name = config_file_new_option (
