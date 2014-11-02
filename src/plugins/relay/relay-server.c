@@ -546,15 +546,7 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
         new_server->start_time = 0;
         new_server->last_client_disconnect = 0;
 
-        if (!relay_server_create_socket (new_server))
-        {
-            if (new_server->protocol_string)
-                free (new_server->protocol_string);
-            if (new_server->protocol_args)
-                free (new_server->protocol_args);
-            free (new_server);
-            return NULL;
-        }
+        relay_server_create_socket (new_server);
 
         new_server->prev_server = NULL;
         new_server->next_server = relay_servers;

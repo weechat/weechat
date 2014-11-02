@@ -137,24 +137,40 @@ relay_command_server_list ()
         for (ptr_server = relay_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
-            date_start[0] = '\0';
-            date_tmp = localtime (&(ptr_server->start_time));
-            if (date_tmp)
+            if (ptr_server->sock < 0)
             {
-                strftime (date_start, sizeof (date_start),
-                          "%a, %d %b %Y %H:%M:%S", date_tmp);
+                weechat_printf (
+                    NULL,
+                    _("  port %s%d%s, relay: %s%s%s, %s (not started)"),
+                    RELAY_COLOR_CHAT_BUFFER,
+                    ptr_server->port,
+                    RELAY_COLOR_CHAT,
+                    RELAY_COLOR_CHAT_BUFFER,
+                    ptr_server->protocol_string,
+                    RELAY_COLOR_CHAT,
+                    ((ptr_server->ipv4 && ptr_server->ipv6) ? "IPv4+6" : ((ptr_server->ipv6) ? "IPv6" : "IPv4")));
             }
-
-            weechat_printf (NULL,
-                            _("  port %s%d%s, relay: %s%s%s, %s, started on: %s"),
-                            RELAY_COLOR_CHAT_BUFFER,
-                            ptr_server->port,
-                            RELAY_COLOR_CHAT,
-                            RELAY_COLOR_CHAT_BUFFER,
-                            ptr_server->protocol_string,
-                            RELAY_COLOR_CHAT,
-                            ((ptr_server->ipv4 && ptr_server->ipv6) ? "IPv4+6" : ((ptr_server->ipv6) ? "IPv6" : "IPv4")),
-                            date_start);
+            else
+            {
+                date_start[0] = '\0';
+                date_tmp = localtime (&(ptr_server->start_time));
+                if (date_tmp)
+                {
+                    strftime (date_start, sizeof (date_start),
+                              "%a, %d %b %Y %H:%M:%S", date_tmp);
+                }
+                weechat_printf (
+                    NULL,
+                    _("  port %s%d%s, relay: %s%s%s, %s, started on: %s"),
+                    RELAY_COLOR_CHAT_BUFFER,
+                    ptr_server->port,
+                    RELAY_COLOR_CHAT,
+                    RELAY_COLOR_CHAT_BUFFER,
+                    ptr_server->protocol_string,
+                    RELAY_COLOR_CHAT,
+                    ((ptr_server->ipv4 && ptr_server->ipv6) ? "IPv4+6" : ((ptr_server->ipv6) ? "IPv6" : "IPv4")),
+                    date_start);
+            }
             i++;
         }
     }
@@ -246,6 +262,47 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
             return WEECHAT_RC_OK;
         }
 
+        if (weechat_strcasecmp (argv[1], "stop") == 0)
+        {
+            if (argc < 3)
+                return WEECHAT_RC_ERROR;
+            ptr_server = relay_server_search (argv_eol[2]);
+            if (ptr_server)
+            {
+                relay_server_close_socket (ptr_server);
+            }
+            else
+            {
+                weechat_printf (NULL,
+                                _("%s%s: relay \"%s\" not found"),
+                                weechat_prefix ("error"),
+                                RELAY_PLUGIN_NAME,
+                                argv_eol[2]);
+            }
+            return WEECHAT_RC_OK;
+        }
+
+        if (weechat_strcasecmp (argv[1], "restart") == 0)
+        {
+            if (argc < 3)
+                return WEECHAT_RC_ERROR;
+            ptr_server = relay_server_search (argv_eol[2]);
+            if (ptr_server)
+            {
+                relay_server_close_socket (ptr_server);
+                relay_server_create_socket (ptr_server);
+            }
+            else
+            {
+                weechat_printf (NULL,
+                                _("%s%s: relay \"%s\" not found"),
+                                weechat_prefix ("error"),
+                                RELAY_PLUGIN_NAME,
+                                argv_eol[2]);
+            }
+            return WEECHAT_RC_OK;
+        }
+
         if (weechat_strcasecmp (argv[1], "raw") == 0)
         {
             relay_raw_open (1);
@@ -299,15 +356,25 @@ relay_command_init ()
         "relay",
         N_("relay control"),
         N_("list|listfull|listrelay"
-           " || add [ipv4.][ipv6.][ssl.]<protocol.name> <port>"
-           " || del [ipv4.][ipv6.][ssl.]<protocol.name>"
+           " || add <name> <port>"
+           " || del|stop|restart <name>"
            " || raw"
            " || sslcertkey"),
         N_("         list: list relay clients (only active relays)\n"
            "     listfull: list relay clients (verbose, all relays)\n"
            "    listrelay: list relays (name and port)\n"
-           "          add: add relay for a protocol + name\n"
-           "          del: remove relay for a protocol + name\n"
+           "          add: add a relay (listen on a port)\n"
+           "          del: remove a relay (clients remain connected)\n"
+           "         stop: close the server socket (clients remain connected)\n"
+           "      restart: close the server socket and listen again on port "
+           "(clients remain connected)\n"
+           "         name: relay name (see format below)\n"
+           "         port: port used for relay\n"
+           "          raw: open buffer with raw Relay data\n"
+           "   sslcertkey: set SSL certificate/key using path in option "
+           "relay.network.ssl_cert_key\n"
+           "\n"
+           "Relay name is: [ipv4.][ipv6.][ssl.]<protocol.name>\n"
            "         ipv4: force use of IPv4\n"
            "         ipv6: force use of IPv6\n"
            "          ssl: enable SSL\n"
@@ -316,10 +383,11 @@ relay_command_init ()
            "(optional, if not given, the server name must be sent by client in "
            "command \"PASS\", with format: \"PASS server:password\")\n"
            "                 - protocol \"weechat\" (name is not used)\n"
-           "         port: port used for relay\n"
-           "          raw: open buffer with raw Relay data\n"
-           "   sslcertkey: set SSL certificate/key using path in option "
-           "relay.network.ssl_cert_key\n"
+           "\n"
+           "The \"irc\" protocol allows any IRC client (including WeeChat "
+           "itself) to connect on the port.\n"
+           "The \"weechat\" protocol allows a remote interface to connect on "
+           "the port, see the list here: http://weechat.org/download/\n"
            "\n"
            "Without argument, this command opens buffer with list of relay "
            "clients.\n"
@@ -346,6 +414,8 @@ relay_command_init ()
         " || listrelay"
         " || add %(relay_protocol_name) %(relay_free_port)"
         " || del %(relay_relays)"
+        " || stop %(relay_relays)"
+        " || restart %(relay_relays)"
         " || raw"
         " || sslcertkey",
         &relay_command_relay, NULL);

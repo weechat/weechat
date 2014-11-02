@@ -32,6 +32,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: display own nick changes in server buffer (closes #188)
 * irc: disable creation of temporary servers by default with command /connect,
   new option irc.look.temporary_servers
+* relay: add options "stop" and "restart" in command /relay
 * relay: add option relay.network.ssl_priorities (closes #234)
 * relay: add host in sender for IRC backlog PRIVMSG messages sent to clients
 * trigger: evaluate and replace regex groups at same time, new format for regex
@@ -55,6 +56,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: fix translation of CTCP PING reply (closes #137)
 * lua: add detection of Lua 5.2
 * python: fix Python detection with Homebrew (closes #217)
+* relay: don't remove relay from config when the binding fails (closes #225)
 * relay: use comma separator in option relay.irc.backlog_tags, check the value
   of option when it is changed with /set
 * relay: remove "::ffff:" from IPv4-mapped IPv6 client address (closes #111)

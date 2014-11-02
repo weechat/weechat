@@ -3,25 +3,33 @@
 
 ----
 /relay  list|listfull|listrelay
-        add [ipv4.][ipv6.][ssl.]<protocol.name> <port>
-        del [ipv4.][ipv6.][ssl.]<protocol.name>
+        add <name> <port>
+        del|stop|restart <name>
         raw
         sslcertkey
 
          list: list relay clients (only active relays)
      listfull: list relay clients (verbose, all relays)
     listrelay: list relays (name and port)
-          add: add relay for a protocol + name
-          del: remove relay for a protocol + name
+          add: add a relay (listen on a port)
+          del: remove a relay (clients remain connected)
+         stop: close the server socket (clients remain connected)
+      restart: close the server socket and listen again on port (clients remain connected)
+         name: relay name (see format below)
+         port: port used for relay
+          raw: open buffer with raw Relay data
+   sslcertkey: set SSL certificate/key using path in option relay.network.ssl_cert_key
+
+Relay name is: [ipv4.][ipv6.][ssl.]<protocol.name>
          ipv4: force use of IPv4
          ipv6: force use of IPv6
           ssl: enable SSL
 protocol.name: protocol and name to relay:
                  - protocol "irc": name is the server to share (optional, if not given, the server name must be sent by client in command "PASS", with format: "PASS server:password")
                  - protocol "weechat" (name is not used)
-         port: port used for relay
-          raw: open buffer with raw Relay data
-   sslcertkey: set SSL certificate/key using path in option relay.network.ssl_cert_key
+
+The "irc" protocol allows any IRC client (including WeeChat itself) to connect on the port.
+The "weechat" protocol allows a remote interface to connect on the port, see the list here: http://weechat.org/download/
 
 Without argument, this command opens buffer with list of relay clients.
 

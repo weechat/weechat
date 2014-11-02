@@ -3,25 +3,33 @@
 
 ----
 /relay  list|listfull|listrelay
-        add [ipv4.][ipv6.][ssl.]<protocole.nom> <port>
-        del [ipv4.][ipv6.][ssl.]<protocole.nom>
+        add <nom> <port>
+        del|stop|restart <nom>
         raw
         sslcertkey
 
-         list : lister les clients pour le relai
-     listfull : lister les clients pour le relai (verbeux)
-    listrelay : lister les relais (nom et port)
-          add : ajouter un relai pour un protocole + nom
-          del : supprimer un relai pour un protocole + nom
+      list : lister les clients pour le relai
+  listfull : lister les clients pour le relai (verbeux)
+ listrelay : lister les relais (nom et port)
+       add : ajouter un relai (écouter sur un port)
+       del : supprimer un relai (les clients restent connectés)
+      stop : fermer le socket serveur (les clients restent connectés)
+   restart : fermer le socket serveur et écouter à nouveau sur le port (les clients restent connectés)
+       nom : nom du relai (voir le format ci-dessous)
+      port : port utilisé pour le relai
+       raw : ouvrir le tampon avec les données brutes Relay
+sslcertkey : définir le certificat/clé SSL en utilisant le chemin de l'option relay.network.ssl_cert_key
+
+Le nom du relai est : [ipv4.][ipv6.][ssl.]<protocole.nom>
          ipv4 : forcer l'utilisation d'IPv4
          ipv6 : forcer l'utilisation d'IPv6
           ssl : activer SSL
 protocole.nom : protocole et nom à relayer :
                   - protocole "irc" : le nom est le serveur à partager (optionnel, si non donné, le nom de serveur doit être envoyé par le client dans la commande "PASS", avec le format : "PASS serveur:motdepasse")
                   - protocole "weechat" (le nom n'est pas utilisé)
-         port : port utilisé pour le relai
-          raw : ouvrir le tampon avec les données brutes Relay
-   sslcertkey : définir le certificat/clé SSL en utilisant le chemin de l'option relay.network.ssl_cert_key
+
+Le protocole "irc" permet à n'importe quel client IRC (incluant WeeChat lui-même) de se connecter sur le port.
+Le protocole "weechat" permet à une interface distante de se connecter sur le port, voir la liste ici : http://weechat.org/download/
 
 Sans paramètre, cette commande ouvre le tampon avec la liste des clients pour le relai.
 
