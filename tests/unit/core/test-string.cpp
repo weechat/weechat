@@ -28,6 +28,7 @@ extern "C"
 #include <regex.h>
 #include "tests/tests.h"
 #include "src/core/wee-string.h"
+#include "src/core/wee-hashtable.h"
 }
 
 #define ONE_KB 1000ULL
@@ -93,6 +94,8 @@ extern "C"
     str = string_format_size (__size);                                  \
     STRCMP_EQUAL(__result, str);                                        \
     free (str);
+
+extern struct t_hashtable *string_hashtable_shared;
 
 TEST_GROUP(String)
 {
@@ -1081,5 +1084,35 @@ TEST(String, Input)
 
 TEST(String, Shared)
 {
-    /* TODO: write tests */
+    const char *str1, *str2, *str3;
+    int count;
+
+    count = string_hashtable_shared->items_count;
+
+    str1 = string_shared_get ("this is a test");
+    CHECK(str1);
+
+    LONGS_EQUAL(count + 1, string_hashtable_shared->items_count);
+
+    str2 = string_shared_get ("this is a test");
+    CHECK(str2);
+    POINTERS_EQUAL(str1, str2);
+
+    LONGS_EQUAL(count + 1, string_hashtable_shared->items_count);
+
+    str3 = string_shared_get ("this is another test");
+    CHECK(str3);
+    CHECK(str1 != str3);
+    CHECK(str2 != str3);
+
+    LONGS_EQUAL(count + 2, string_hashtable_shared->items_count);
+
+    string_shared_free (str1);
+    LONGS_EQUAL(count + 2, string_hashtable_shared->items_count);
+
+    string_shared_free (str2);
+    LONGS_EQUAL(count + 1, string_hashtable_shared->items_count);
+
+    string_shared_free (str3);
+    LONGS_EQUAL(count + 0, string_hashtable_shared->items_count);
 }
