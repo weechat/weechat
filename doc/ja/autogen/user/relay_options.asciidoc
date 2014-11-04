@@ -121,7 +121,7 @@
 * [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
 ** 説明: `gnutls の優先度を示した文字列 (構文は、gnutls マニュアルの gnutls_priority_init 関数のドキュメントを参照、通例: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `"PERFORMANCE"`)
+** 値: 未制約文字列 (デフォルト値: `"NORMAL:-VERS-SSL3.0"`)
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** 説明: `ウェブソケットに使うことを許可する origin の "POSIX 拡張正規表現 (大文字小文字を区別しない、"(?-i)" を先頭に置くと大文字小文字を区別する)、例: "^http://(www\.)?example\.(com|org)"`

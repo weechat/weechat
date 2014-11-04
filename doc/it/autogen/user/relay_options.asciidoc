@@ -121,7 +121,7 @@
 * [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
 ** descrizione: `stringa con le priorità per gnutls (per la sintassi, consultare la documentazione per la funzione gnutls_priority_init nel manuale di gnutls, stringhe comuni sono: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `"PERFORMANCE"`)
+** valori: qualsiasi stringa (valore predefinito: `"NORMAL:-VERS-SSL3.0"`)
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** descrizione: `POSIX extended regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"`

@@ -773,7 +773,7 @@ relay_config_init ()
            "documentation of function gnutls_priority_init in gnutls "
            "manual, common strings are: \"PERFORMANCE\", \"NORMAL\", "
            "\"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"),
-        NULL, 0, 0, "PERFORMANCE", NULL, 0,
+        NULL, 0, 0, "NORMAL:-VERS-SSL3.0", NULL, 0,
         &relay_config_check_network_ssl_priorities, NULL,
         &relay_config_change_network_ssl_priorities, NULL, NULL, NULL);
     relay_config_network_websocket_allowed_origins = weechat_config_new_option (
