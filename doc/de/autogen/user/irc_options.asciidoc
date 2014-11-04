@@ -596,7 +596,7 @@
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** Beschreibung: `Zeichenkette mit Prioritäten für gnutls (für die korrekte Syntax siehe gnutls Dokumentation unter Funktion gnutls_priority_init. Gebräuchliche Zeichenketten sind: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"NORMAL"`)
+** Werte: beliebige Zeichenkette (Standardwert: `"NORMAL:-VERS-SSL3.0"`)
 
 * [[option_irc.server_default.ssl_verify]] *irc.server_default.ssl_verify*
 ** Beschreibung: `überprüft ob die SSL-Verbindung vertrauenswürdig ist`

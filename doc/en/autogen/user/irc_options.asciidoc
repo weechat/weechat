@@ -596,7 +596,7 @@
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** description: `string with priorities for gnutls (for syntax, see documentation of function gnutls_priority_init in gnutls manual, common strings are: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** type: string
-** values: any string (default value: `"NORMAL"`)
+** values: any string (default value: `"NORMAL:-VERS-SSL3.0"`)
 
 * [[option_irc.server_default.ssl_verify]] *irc.server_default.ssl_verify*
 ** description: `check that the SSL connection is fully trusted`

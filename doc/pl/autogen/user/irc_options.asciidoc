@@ -596,7 +596,7 @@
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** opis: `ciąg z priorytetami dla gnutls (składnię można znaleźć w dokumentacji gnutls dla funkcji  gnutls_priority_init, często używane ciągi to: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"NORMAL"`)
+** wartości: dowolny ciąg (domyślna wartość: `"NORMAL:-VERS-SSL3.0"`)
 
 * [[option_irc.server_default.ssl_verify]] *irc.server_default.ssl_verify*
 ** opis: `sprawdź czy połączenie ssl jest w pełni zaufane`

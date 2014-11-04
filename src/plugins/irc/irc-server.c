@@ -89,7 +89,7 @@ char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
 
 char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
 { "", "", "on",
-  "off", "", "NORMAL", "2048", "",
+  "off", "", "NORMAL:-VERS-SSL3.0", "2048", "",
   "on",
   "", "",
   "plain", "", "", "15",

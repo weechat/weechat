@@ -596,7 +596,7 @@
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** 説明: `gnutls の優先度を示した文字列 (構文は、gnutls マニュアルの gnutls_priority_init 関数のドキュメントを参照、通例: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `"NORMAL"`)
+** 値: 未制約文字列 (デフォルト値: `"NORMAL:-VERS-SSL3.0"`)
 
 * [[option_irc.server_default.ssl_verify]] *irc.server_default.ssl_verify*
 ** 説明: `SSL 接続が完全に信頼できることを確認`
