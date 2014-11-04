@@ -2592,7 +2592,7 @@ irc_config_init ()
         N_("display a space if nick mode is enabled but nick has no mode (not "
            "op, voice, ...)"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL,
-        NULL, NULL, NULL, NULL);
+        &irc_config_change_bar_item_input_prompt, NULL, NULL, NULL);
     irc_config_look_notice_as_pv = weechat_config_new_option (
         irc_config_file, ptr_section,
         "notice_as_pv", "integer",

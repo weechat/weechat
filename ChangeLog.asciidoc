@@ -51,6 +51,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   weechat.look.buffer_time_format is not an empty string
 * core: fix translation of message displayed after /upgrade
 * api: fix crash when reading config options with NULL value (closes #238)
+* irc: use option irc.look.nick_mode_empty to display nick prefix in bar item
+  "input_prompt"
 * irc: remove IRC color codes from buffer title in channels (closes #237)
 * irc: add tag "nick_xxx" in invite messages
 * irc: fix completion of commands /msg, /notice and /query
