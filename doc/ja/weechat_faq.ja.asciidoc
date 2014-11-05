@@ -661,7 +661,21 @@ WeeChat 0.3.3 以下では、オプション名が 'irc.network.away_check' と
 [[highlight_notification]]
 === どうすればあるチャンネルで自分が呼ばれたら警告できますか。
 
-'beep.pl' や 'launcher.pl' 等のスクリプトを使ってください。
+// TRANSLATION MISSING
+With WeeChat ≥ 1.0, there is a default trigger "beep" which sends a 'BEL' to
+the terminal on a highlight or private message. Thus you can configure your
+terminal (or multiplexer like screen/tmux) to run a command or play a sound
+when a 'BEL' occurs.
+
+// TRANSLATION MISSING
+Or you can add a command in "beep" trigger:
+
+----
+/set trigger.trigger.beep.command "/print -beep;/exec -bg /path/to/command arguments"
+----
+
+// TRANSLATION MISSING
+With an older WeeChat, you can use a script like 'beep.pl' or 'launcher.pl'.
 
 'launcher.pl' の場合、コマンドの設定が必要です:
 

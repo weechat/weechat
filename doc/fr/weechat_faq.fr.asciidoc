@@ -691,7 +691,19 @@ Pour WeeChat ≤ 0.3.3, les options sont 'irc.network.away_check' et
 [[highlight_notification]]
 === Comment être averti lorsque quelqu'un prononce mon pseudo sur un canal ?
 
-Vous pouvez utiliser un script comme 'beep.pl' ou 'launcher.pl'.
+Avec WeeChat ≥ 1.0, il y a un trigger "beep" qui envoie 'BEL' au terminal sur
+un highlight ou un message privé. Par conséquent vous pouvez configurer votre
+terminal (ou multiplexeur comme screen/tmux) pour lancer une commande ou jouer
+un son lorsque le 'BEL' se produit.
+
+Ou vous pouvez ajouter une commande dans le trigger "beep" :
+
+----
+/set trigger.trigger.beep.command "/print -beep;/exec -bg /chemin/vers/commande paramètres"
+----
+
+Avec un WeeChat plus ancien, vous pouvez utiliser un script comme 'beep.pl' or
+'launcher.pl'.
 
 Pour 'launcher.pl', vous devez configurer la commande :
 
