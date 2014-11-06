@@ -283,6 +283,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `yellow`)
 
+* [[option_weechat.color.status_mouse]] *weechat.color.status_mouse*
+** description: `couleur du texte pour l'indicateur de la souris dans la barre de statut`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `green`)
+
 * [[option_weechat.color.status_name]] *weechat.color.status_name*
 ** description: `couleur du texte pour le nom du tampon courant dans la barre de statut`
 ** type: couleur
@@ -667,6 +672,11 @@
 ** description: `chaîne utilisée pour montrer le zoom sur un tampon mélangé (objet de barre "buffer_zoom")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"!"`)
+
+* [[option_weechat.look.item_mouse_status]] *weechat.look.item_mouse_status*
+** description: `chaîne utilisée pour montrer si la souris est activée (objet de barre "mouse_status")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"M"`)
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
 ** description: `format de date/heure pour l'objet de barre "time" (voir man strftime pour le format de date/heure)`

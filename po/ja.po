@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-02 11:09+0100\n"
+"POT-Creation-Date: 2014-11-06 20:22+0100\n"
 "PO-Revision-Date: 2014-11-01 11:58+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -3403,6 +3403,12 @@ msgstr ""
 "マージされたバッファでズームされたことを示す文字列 (バーアイテム "
 "\"buffer_zoom\")"
 
+#, fuzzy
+msgid "string used to show if mouse is enabled (bar item \"mouse_status\")"
+msgstr ""
+"マージされたバッファでズームされたことを示す文字列 (バーアイテム "
+"\"buffer_zoom\")"
+
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
 "with /buffer *N (where N is a buffer number), to easily switch to another "
@@ -3866,6 +3872,10 @@ msgstr ""
 "プライベートメッセージを受けとったバッファのテキスト色 (ステータスバー)"
 
 msgid "text color for filter indicator in status bar"
+msgstr "ステータスバーのフィルタ表示のテキスト色"
+
+#, fuzzy
+msgid "text color for mouse indicator in status bar"
 msgstr "ステータスバーのフィルタ表示のテキスト色"
 
 msgid "text color for current buffer name in status bar"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-02 11:09+0100\n"
+"POT-Creation-Date: 2014-11-06 20:22+0100\n"
 "PO-Revision-Date: 2014-07-25 07:50+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2433,6 +2433,9 @@ msgstr ""
 msgid "string used to show zoom on merged buffer (bar item \"buffer_zoom\")"
 msgstr ""
 
+msgid "string used to show if mouse is enabled (bar item \"mouse_status\")"
+msgstr ""
+
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
 "with /buffer *N (where N is a buffer number), to easily switch to another "
@@ -2812,6 +2815,10 @@ msgstr ""
 
 msgid "text color for filter indicator in status bar"
 msgstr ""
+
+#, fuzzy
+msgid "text color for mouse indicator in status bar"
+msgstr "zaman için metin rengi (durum çubuğu)"
 
 msgid "text color for current buffer name in status bar"
 msgstr ""

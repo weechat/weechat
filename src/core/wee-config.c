@@ -2442,7 +2442,7 @@ config_weechat_init_options ()
     config_look_item_mouse_status = config_file_new_option (
         weechat_config_file, ptr_section,
         "item_mouse_status", "string",
-        N_("string used to show if mouse is enabled/disabled"
+        N_("string used to show if mouse is enabled "
            "(bar item \"mouse_status\")"),
         NULL, 0, 0, "M", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_jump_current_to_previous_buffer = config_file_new_option (

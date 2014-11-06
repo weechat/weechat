@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-02 11:09+0100\n"
+"POT-Creation-Date: 2014-11-06 20:22+0100\n"
 "PO-Revision-Date: 2014-11-01 11:58+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3479,6 +3479,12 @@ msgstr ""
 "ciąg użyty do pokazania przybliżenia w połączonym buforze (element paska "
 "\"buffer_zoom\")"
 
+#, fuzzy
+msgid "string used to show if mouse is enabled (bar item \"mouse_status\")"
+msgstr ""
+"ciąg użyty do pokazania przybliżenia w połączonym buforze (element paska "
+"\"buffer_zoom\")"
+
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
 "with /buffer *N (where N is a buffer number), to easily switch to another "
@@ -3958,6 +3964,10 @@ msgid "text color for buffer with private message (status bar)"
 msgstr "kolor bufora z prywatną wiadomością (pasek statusu)"
 
 msgid "text color for filter indicator in status bar"
+msgstr "kolor wskaźnika filtru w pasku statusu"
+
+#, fuzzy
+msgid "text color for mouse indicator in status bar"
 msgstr "kolor wskaźnika filtru w pasku statusu"
 
 msgid "text color for current buffer name in status bar"

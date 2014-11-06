@@ -283,6 +283,11 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `yellow`)
 
+* [[option_weechat.color.status_mouse]] *weechat.color.status_mouse*
+** Beschreibung: `text color for mouse indicator in status bar`
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `green`)
+
 * [[option_weechat.color.status_name]] *weechat.color.status_name*
 ** Beschreibung: `Farbe des aktuellen Buffer-Namens in der Statuszeile`
 ** Typ: Farbe
@@ -667,6 +672,11 @@
 ** Beschreibung: `Zeichen mit welchem signalisiert wird ob im aktuellen Buffer der Zoom aktiviert ist (durch Bar-Item "buffer_zoom")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"!"`)
+
+* [[option_weechat.look.item_mouse_status]] *weechat.look.item_mouse_status*
+** Beschreibung: `string used to show if mouse is enabled (bar item "mouse_status")`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"M"`)
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
 ** Beschreibung: `Format für die Zeitanzeige des Bar-Items, "time" (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden)`

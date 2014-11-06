@@ -283,6 +283,11 @@
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `yellow`)
 
+* [[option_weechat.color.status_mouse]] *weechat.color.status_mouse*
+** description: `text color for mouse indicator in status bar`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `green`)
+
 * [[option_weechat.color.status_name]] *weechat.color.status_name*
 ** description: `text color for current buffer name in status bar`
 ** type: color
@@ -667,6 +672,11 @@
 ** description: `string used to show zoom on merged buffer (bar item "buffer_zoom")`
 ** type: string
 ** values: any string (default value: `"!"`)
+
+* [[option_weechat.look.item_mouse_status]] *weechat.look.item_mouse_status*
+** description: `string used to show if mouse is enabled (bar item "mouse_status")`
+** type: string
+** values: any string (default value: `"M"`)
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
 ** description: `time format for "time" bar item (see man strftime for date/time specifiers)`
