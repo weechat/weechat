@@ -17,6 +17,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: add bar item "mouse_status", new options weechat.look.item_mouse_status
+  and weechat.color.status_mouse (closes #247)
 * core: add signals "mouse_enabled" and "mouse_disabled" (closes #244)
 * core: add hide of chars in string in evaluation of expressions
 * core: add arraylists, improve speed of completions (about 50x faster)
