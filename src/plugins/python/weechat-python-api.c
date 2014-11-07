@@ -1409,11 +1409,7 @@ weechat_python_api_config_boolean (PyObject *self, PyObject *args)
 {
     char *option;
     int value;
-/*
-    if (option == NULL)
-      API_RETURN_INT();
-      API_RETURN_ERROR;
-*/
+
     API_FUNC(1, "config_boolean", API_RETURN_INT(0));
     option = NULL;
     if (!PyArg_ParseTuple (args, "s", &option))
