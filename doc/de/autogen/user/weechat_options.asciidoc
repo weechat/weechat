@@ -284,7 +284,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `yellow`)
 
 * [[option_weechat.color.status_mouse]] *weechat.color.status_mouse*
-** Beschreibung: `text color for mouse indicator in status bar`
+** Beschreibung: `Farbe des Zeichens welches den Status der Maus anzeigt`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `green`)
 
@@ -674,7 +674,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"!"`)
 
 * [[option_weechat.look.item_mouse_status]] *weechat.look.item_mouse_status*
-** Beschreibung: `string used to show if mouse is enabled (bar item "mouse_status")`
+** Beschreibung: `Zeichen mit welchem signalisiert wird ob die Mausfunktionalität eingeschaltet ist (durch Bar-Item "mouse_status")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"M"`)
 
