@@ -505,7 +505,7 @@ WeeChat を起動したターミナルの例:
 
 状態 ('status') バーは以下の初期値を持っています:
 
-[width="100%",cols="^3,^3,10",options="header"]
+[width="100%",cols="^3,^4,10",options="header"]
 |===
 | アイテム              | 例                    | 説明
 | time                  | `[12:55]`             | 時刻
@@ -525,7 +525,7 @@ WeeChat を起動したターミナルの例:
 
 入力 ('input') バーは以下の初期値を持っています:
 
-[width="100%",cols="^3,^6,8",options="header"]
+[width="100%",cols="^3,^4,10",options="header"]
 |===
 | アイテム     | 例                                           | 説明
 | input_prompt | `[@Flashy]`                                  | 入力プロンプト、irc の場合: ニックネームとモード (freenode では "+i" モードは不可視状態を意味します)
@@ -533,6 +533,23 @@ WeeChat を起動したターミナルの例:
 | input_search | `[Search (~ str,msg)]`                       | 検索インジケータ ("`~`": 大文字小文字を区別しない、"`==`": 大文字小文字を区別する、"`str`": 検索文字列、"`regex`": 検索正規表現、"`msg`": メッセージ部分から検索、"`pre`": プレフィックス部分から検索、"`pre\|msg`": プレフィックス部分とメッセージ部分から検索)
 | input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | 行をペーストする場合にユーザへ行われる質問
 | input_text   | `hi peter!`                                  | 入力テキスト
+|===
+
+// TRANSLATION MISSING
+Other items available (not used in bars by default):
+
+// TRANSLATION MISSING
+[width="100%",cols="^3,^4,10",options="header"]
+|===
+| Item              | Example             | Description
+| aspell_dict       | `fr,en`             | Spelling dictionaries used on current buffer
+| aspell_suggest    | `print,prone,prune` | Spelling suggestions for word under cursor (if misspelled)
+| buffer_count      | `10`                | Total number of buffers opened
+| buffer_short_name | `#test`             | Current buffer short name
+| irc_channel       | `#test`             | Current IRC channel name
+| irc_nick_modes    | `@`                 | IRC modes for self nick
+| mouse_status      | `M`                 | Mouse status (empty if mouse is disabled)
+| window_number     | `2`                 | Current window number
 |===
 
 [[buffers_and_windows]]

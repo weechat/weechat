@@ -506,7 +506,7 @@ Screen is composed by following areas:
 
 Bar 'status' has following default items:
 
-[width="100%",cols="^3,^3,10",options="header"]
+[width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item                  | Example               | Description
 | time                  | `[12:55]`             | Time
@@ -526,7 +526,7 @@ Bar 'status' has following default items:
 
 Bar 'input' has following default items:
 
-[width="100%",cols="^3,^6,8",options="header"]
+[width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item         | Example                                      | Description
 | input_prompt | `[@Flashy(i)]`                               | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode)
@@ -534,6 +534,21 @@ Bar 'input' has following default items:
 | input_search | `[Search (~ str,msg)]`                       | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
 | input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | Question to user for pasting lines
 | input_text   | `hi peter!`                                  | Input text
+|===
+
+Other items available (not used in bars by default):
+
+[width="100%",cols="^3,^4,10",options="header"]
+|===
+| Item              | Example             | Description
+| aspell_dict       | `fr,en`             | Spelling dictionaries used on current buffer
+| aspell_suggest    | `print,prone,prune` | Spelling suggestions for word under cursor (if misspelled)
+| buffer_count      | `10`                | Total number of buffers opened
+| buffer_short_name | `#test`             | Current buffer short name
+| irc_channel       | `#test`             | Current IRC channel name
+| irc_nick_modes    | `@`                 | IRC modes for self nick
+| mouse_status      | `M`                 | Mouse status (empty if mouse is disabled)
+| window_number     | `2`                 | Current window number
 |===
 
 [[buffers_and_windows]]

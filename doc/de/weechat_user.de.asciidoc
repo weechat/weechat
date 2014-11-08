@@ -507,7 +507,7 @@ Der Bildschirm setzt sich aus folgenden Bereichen zusammen:
 
 Die 'status'-Bar besitzt als Standardeinträge:
 
-[width="100%",cols="^3,^3,10",options="header"]
+[width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item                  | Beispiel              | Beschreibung
 | time                  | `[12:55]`             | Uhrzeit
@@ -527,7 +527,7 @@ Die 'status'-Bar besitzt als Standardeinträge:
 
 In der 'input' Bar lautet die Standardeinstellung:
 
-[width="100%",cols="^3,^6,8",options="header"]
+[width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item         | Beispiel                                      | Beschreibung
 | input_prompt | `[@Flashy(i)]`                                | Input prompt, für irc: Nick und Modi (Modus "+i" bedeutet auf freenode, unsichtbar)
@@ -535,6 +535,23 @@ In der 'input' Bar lautet die Standardeinstellung:
 | input_search | `[Search (~ str,msg)]`                        | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten)
 | input_paste  | `[Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein]` | Nachfrage ob sieben Zeilen eingefügt werden sollen
 | input_text   | `hi peter!`                                   | Text der eingegeben wird
+|===
+
+// TRANSLATION MISSING
+Other items available (not used in bars by default):
+
+// TRANSLATION MISSING
+[width="100%",cols="^3,^4,10",options="header"]
+|===
+| Item              | Example             | Description
+| aspell_dict       | `fr,en`             | Spelling dictionaries used on current buffer
+| aspell_suggest    | `print,prone,prune` | Spelling suggestions for word under cursor (if misspelled)
+| buffer_count      | `10`                | Total number of buffers opened
+| buffer_short_name | `#test`             | Current buffer short name
+| irc_channel       | `#test`             | Current IRC channel name
+| irc_nick_modes    | `@`                 | IRC modes for self nick
+| mouse_status      | `M`                 | Mouse status (empty if mouse is disabled)
+| window_number     | `2`                 | Current window number
 |===
 
 [[buffers_and_windows]]
