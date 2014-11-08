@@ -537,21 +537,19 @@ In der 'input' Bar lautet die Standardeinstellung:
 | input_text   | `hi peter!`                                   | Text der eingegeben wird
 |===
 
-// TRANSLATION MISSING
-Other items available (not used in bars by default):
+andere Items die man nutzen kann (die aber nicht standardmäßig in einer Bar aktiviert sind):
 
-// TRANSLATION MISSING
 [width="100%",cols="^3,^4,10",options="header"]
 |===
-| Item              | Example             | Description
-| aspell_dict       | `fr,en`             | Spelling dictionaries used on current buffer
-| aspell_suggest    | `print,prone,prune` | Spelling suggestions for word under cursor (if misspelled)
-| buffer_count      | `10`                | Total number of buffers opened
-| buffer_short_name | `#test`             | Current buffer short name
-| irc_channel       | `#test`             | Current IRC channel name
-| irc_nick_modes    | `@`                 | IRC modes for self nick
-| mouse_status      | `M`                 | Mouse status (empty if mouse is disabled)
-| window_number     | `2`                 | Current window number
+| Item              | Beispiel            | Beschreibung
+| aspell_dict       | `de,en`             | zeigt an welche Wörterbücher für die Rechtschreibung im aktuellen Buffer genutzt werden
+| aspell_suggest    | `Glück,Glocke,Block`| Vorschläge für ein falsch geschriebenes Wort
+| buffer_count      | `10`                | absolute Anzahl an geöffneten Buffern
+| buffer_short_name | `#test`             | Kurzname des aktuellen Buffers
+| irc_channel       | `#test`             | aktueller IRC Channelname
+| irc_nick_modes    | `@`                 | IRC Modi für den eigenen Nick
+| mouse_status      | `M`                 | Status der Maus (keine Anzeige, falls Maus deaktiviert)
+| window_number     | `2`                 | Nummer des aktuellen Fensters
 |===
 
 [[buffers_and_windows]]

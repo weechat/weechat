@@ -699,25 +699,24 @@ Für Weechat ≤ 0.3.3, lauten die Optionen 'irc.network.away_check' und
 'irc.network.away_check_max_nicks'.
 
 [[highlight_notification]]
-=== Wie kann ich mich darüber informieren lassen falls mich jemand in einem Channel highlighted
+=== Wie kann ich mich benachrichtigen lassen, falls mich jemand in einem Channel highlighted
 
-// TRANSLATION MISSING
-With WeeChat ≥ 1.0, there is a default trigger "beep" which sends a 'BEL' to
-the terminal on a highlight or private message. Thus you can configure your
-terminal (or multiplexer like screen/tmux) to run a command or play a sound
-when a 'BEL' occurs.
+Seit WeeChat ≥ 1.0 gibt es standardmäßig einen Trigger, "beep", der an das Terminal
+ein 'BEL' Signal schickt, sobald man eine highlight oder private Nachricht erhält.
+Nun muss man lediglich im Terminalprogramm (oder einem Multiplexer wie screen/tmux)
+einstellen welcher Befehl ausgeführt werden soll, sobald das Terminal das 'BEL'
+Signal erhält.
 
-// TRANSLATION MISSING
-Or you can add a command in "beep" trigger:
+Oder man führt im Trigger "beep" direkt einen Befehl aus:
 
 ----
 /set trigger.trigger.beep.command "/print -beep;/exec -bg /Pfad/zum/Befehl Argumente"
 ----
 
-// TRANSLATION MISSING
-With an older WeeChat, you can use a script like 'beep.pl' or 'launcher.pl'.
+Nutzt man eine ältere Version von WeeChat, können z.B. die Skripten 'beep.pl' oder 'launcher.pl'
+genutzt werden.
 
-Beim Skript 'launcher.pl' müssen noch die Befehle angepasst werden:
+Beim 'launcher.pl' Skript müssen noch die Befehle angepasst werden:
 
 ----
 /set plugins.var.perl.launcher.signal.weechat_highlight "/Pfad/zum/Befehl Argumente"
