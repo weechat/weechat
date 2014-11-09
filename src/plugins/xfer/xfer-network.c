@@ -521,6 +521,121 @@ xfer_network_timer_cb (void *arg_xfer, int remaining_calls)
     return WEECHAT_RC_OK;
 }
 
+static int
+xfer_network_connect_chat_recv_cb (void *data,
+                                   int status,
+                                   int gnutls_rc,
+                                   int sock,
+                                   const char *error,
+                                   const char *ip_address)
+{
+    (void) gnutls_rc;
+    (void) ip_address;
+    (void) error;
+    struct t_xfer *xfer = (struct t_xfer*)data;
+
+    /* Unhook */
+    weechat_unhook (xfer->hook_connect);
+    xfer->hook_connect = NULL;
+
+    /* handle success */
+    if (WEECHAT_HOOK_CONNECT_OK == status)
+    {
+        xfer->sock = sock;
+
+        int flags = fcntl (xfer->sock, F_GETFL);
+        if (flags == -1)
+            flags = 0;
+        if (fcntl (xfer->sock, F_SETFL, flags | O_NONBLOCK) == -1)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: unable to connect set DCC chat nonblocking"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
+            close (sock);
+            xfer_close (xfer, XFER_STATUS_FAILED);
+            xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+            return WEECHAT_RC_OK;
+        }
+
+        xfer->hook_fd = weechat_hook_fd (xfer->sock,
+                                         1, 0, 0,
+                                         &xfer_chat_recv_cb,
+                                         xfer);
+
+        xfer_chat_open_buffer (xfer);
+        xfer->status = XFER_STATUS_ACTIVE;
+        xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+
+        return WEECHAT_RC_OK;
+    }
+
+    /* Report the error and fail xfer */
+    switch (status)
+    {
+        case WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
+            weechat_printf (NULL,
+                            _("%s%s: unable to connect to DCC chat: Address (%s) not found"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                            xfer->remote_address_str);
+            break;
+        case WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND:
+            weechat_printf (NULL,
+                            _("%s%s: unable to connect to DCC chat: IP address (%s) not found"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                            xfer->remote_address_str);
+            break;
+        case WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED:
+            weechat_printf (NULL,
+                            _("%s%s: unable to connect to DCC chat: Connection refused"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
+            break;
+        case WEECHAT_HOOK_CONNECT_PROXY_ERROR:
+            weechat_printf (NULL,
+                            _("%s%s: unable to connect to DCC chat: Proxy error"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
+            break;
+        case WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR:
+            weechat_printf (NULL,
+                            _("%s%s: unable to connect to DCC chat: Local hostname error"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
+            break;
+        case WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR:
+            weechat_printf (NULL,
+                            _("%s%s: unable to connect to DCC chat: GNUTLS initialization"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
+            break;
+        case WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR:
+            weechat_printf (NULL,
+                            _("%s%s: unable to connect to DCC chat: GNUTLS handshake error"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
+            break;
+        case WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
+            weechat_printf (NULL,
+                            _("%s%s: unable to connect to DCC chat: Insufficient memory"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
+            break;
+        case WEECHAT_HOOK_CONNECT_TIMEOUT:
+            weechat_printf (NULL,
+                            _("%s%s: unable to connect to DCC chat: Timed out"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
+            break;
+        case WEECHAT_HOOK_CONNECT_SOCKET_ERROR:
+            weechat_printf (NULL,
+                            _("%s%s: unable to connect to DCC chat: Unable to create socket"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
+            break;
+        default:
+            weechat_printf (NULL,
+                            _("%s%s: unable to connect to DCC chat: Unexpected error"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
+            break;
+    }
+    xfer_close (xfer, XFER_STATUS_FAILED);
+    xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+
+    return WEECHAT_RC_OK;
+}
+
 /*
  * Connects to another host.
  *
@@ -579,26 +694,12 @@ xfer_network_connect (struct t_xfer *xfer)
     /* for chat receiving, connect to listening host */
     if (xfer->type == XFER_TYPE_CHAT_RECV)
     {
-        xfer->sock = weechat_network_connect_to (xfer->proxy,
-                                                 xfer->remote_address,
-                                                 xfer->remote_address_length);
-        if (xfer->sock < 0)
-            return 0;
-
-        flags = fcntl (xfer->sock, F_GETFL);
-        if (flags == -1)
-            flags = 0;
-        if (fcntl (xfer->sock, F_SETFL, flags | O_NONBLOCK) == -1)
-        {
-            close (xfer->sock);
-            xfer->sock = -1;
-            return 0;
-        }
-
-        xfer->hook_fd = weechat_hook_fd (xfer->sock,
-                                         1, 0, 0,
-                                         &xfer_chat_recv_cb,
-                                         xfer);
+        xfer->hook_connect = weechat_hook_connect (xfer->proxy,
+                                                   xfer->remote_address_str,
+                                                   xfer->port, 1, 0, NULL, NULL,
+                                                   0, "NONE", NULL,
+                                                   &xfer_network_connect_chat_recv_cb,
+                                                   xfer);
     }
 
     /* for file receiving, connection is made in child process (blocking) */
@@ -623,17 +724,12 @@ xfer_network_connect_init (struct t_xfer *xfer)
         /* for a file: launch child process */
         if (XFER_IS_FILE(xfer->type))
         {
-            xfer->status = XFER_STATUS_CONNECTING;
             xfer_network_recv_file_fork (xfer);
         }
-        else
-        {
-            /* for a chat => associate with buffer */
-            xfer->status = XFER_STATUS_ACTIVE;
-            xfer_chat_open_buffer (xfer);
-        }
+
+        xfer->status = XFER_STATUS_CONNECTING;
+        xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
     }
-    xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
 }
 
 /*
