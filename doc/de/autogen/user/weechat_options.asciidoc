@@ -319,7 +319,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
-** Beschreibung: `if enabled, the commands inside command line are completed (the command at beginning of line has higher priority and is used first); note: when this option is enabled, there is no more automatic completion of paths beginning with '/' (outside commands arguments)`
+** Beschreibung: `ist diese Option aktiviert werden Befehle innerhalb der Eingabezeile vervollständigt (ein Befehl zu Beginn der Eingabezeile besitzt die höhere Priorität und wird zuerst verwendet). Hinweis: die Vervollständigung von Verzeichnissen, die mit  '/' beginnen, funktioniert außerhalb von Befehlen nicht mehr`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
