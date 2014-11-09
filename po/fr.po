@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-09 16:21+0100\n"
-"PO-Revision-Date: 2014-11-09 16:23+0100\n"
+"POT-Creation-Date: 2014-11-09 17:33+0100\n"
+"PO-Revision-Date: 2014-11-09 17:34+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -11670,7 +11670,8 @@ msgstr "%s : fichier %s (nom local : %s) sera recommencé en position %llu"
 
 #, c-format
 msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
-msgstr "%s%s: l'adresse \"%s\" a été résolue en un sockaddr plus grand que prévu"
+msgstr ""
+"%s%s: l'adresse \"%s\" a été résolue en un sockaddr plus grand que prévu"
 
 #, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
@@ -11998,3 +11999,7 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
+
+#, c-format
+msgid "%s%s: unable to connect: unexpected error (%d)"
+msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"

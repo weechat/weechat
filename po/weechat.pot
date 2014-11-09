@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-09 16:21+0100\n"
+"POT-Creation-Date: 2014-11-09 17:33+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9164,4 +9164,8 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
