@@ -17,6 +17,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: add option weechat.completion.command_inline (task #12491)
 * core: add bar item "mouse_status", new options weechat.look.item_mouse_status
   and weechat.color.status_mouse (closes #247)
 * core: add signals "mouse_enabled" and "mouse_disabled" (closes #244)

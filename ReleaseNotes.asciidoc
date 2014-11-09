@@ -56,6 +56,21 @@ You can restore the default "beep" trigger with the following command:
 /trigger restore beep
 ----
 
+=== Completion of inline commands
+
+WeeChat now completes by default inline commands (not only at beginning of
+line).
+
+When this feature is enabled, there is no more automatic completion of
+absolute paths (except if you are completing a path inside a command argument,
+like `/dcc send <nick> <path>`).
+
+To restore the old behavior (no completion of inline commands):
+
+----
+/set weechat.completion.command_inline off
+----
+
 === Relay option relay.irc.backlog_tags
 
 The option 'relay.irc.backlog_tags' is now a list separated by commas

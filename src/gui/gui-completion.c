@@ -705,33 +705,77 @@ void
 gui_completion_find_context (struct t_gui_completion *completion,
                              const char *data, int size, int pos)
 {
-    int i, command, command_arg, pos_start, pos_end;
+    int i, command_arg, pos_start, pos_end;
+    const char *ptr_command, *ptr_data;
     char *prev_char;
 
     /* look for context */
     gui_completion_free_data (completion);
     gui_completion_buffer_init (completion, completion->buffer);
-    command = (string_is_command_char (data)) ? 1 : 0;
+    ptr_command = NULL;
     command_arg = 0;
-    i = 0;
-    while (i < pos)
+
+    /* check if data starts with a command */
+    ptr_data = data;
+    if (string_is_command_char (ptr_data))
     {
-        if (data[i] == ' ')
+        ptr_data = utf8_next_char (ptr_data);
+        if (ptr_data < data + pos)
         {
-            command_arg++;
-            i++;
-            while ((i < pos) && (data[i] == ' '))
+            if (string_is_command_char (ptr_data))
+                ptr_data = utf8_next_char (ptr_data);
+        }
+        if (!string_is_command_char (ptr_data))
+            ptr_command = ptr_data;
+    }
+
+    /*
+     * search for the last command in data (only if there is no command at
+     * beginning and if completion of inline commands is enabled)
+     */
+    if (!ptr_command && CONFIG_BOOLEAN(config_completion_command_inline))
+    {
+        ptr_data = data;
+        while (ptr_data && (ptr_data < data + pos))
+        {
+            ptr_data = strchr (ptr_data, ' ');
+            if (!ptr_data)
+                break;
+            if (ptr_data < data + pos)
             {
-                i++;
+                while ((ptr_data < data + pos) && (ptr_data[0] == ' '))
+                {
+                    ptr_data++;
+                }
+            }
+            if ((ptr_data < data + pos) && string_is_command_char (ptr_data))
+            {
+                ptr_data = utf8_next_char (ptr_data);
+                if (!string_is_command_char (ptr_data))
+                    ptr_command = ptr_data;
+            }
+        }
+    }
+
+    if (ptr_command)
+    {
+        /* search argument number and string with arguments */
+        ptr_data = ptr_command;
+        while (ptr_data < data + pos)
+        {
+            ptr_data = strchr (ptr_data, ' ');
+            if (!ptr_data)
+                break;
+            command_arg++;
+            while ((ptr_data < data + pos) && (ptr_data[0] == ' '))
+            {
+                ptr_data++;
             }
             if (!completion->args)
-                completion->args = strdup (data + i);
+                completion->args = strdup (ptr_data);
         }
-        else
-            i++;
-    }
-    if (command)
-    {
+
+        /* set completion context */
         if (command_arg > 0)
         {
             completion->context = GUI_COMPLETION_COMMAND_ARG;
@@ -817,35 +861,29 @@ gui_completion_find_context (struct t_gui_completion *completion,
     /* find command (for command argument completion only) */
     if (completion->context == GUI_COMPLETION_COMMAND_ARG)
     {
-        pos_start = 0;
-        while ((pos_start < size) && !string_is_command_char (data + pos_start))
+        pos_start = ptr_command - data;
+        pos_end = pos_start;
+        while ((pos_end < size) && (data[pos_end] != ' '))
         {
-            pos_start += utf8_char_size (data + pos_start);
+            pos_end += utf8_char_size (data + pos_end);
         }
-        if (string_is_command_char (data + pos_start))
+        if (data[pos_end] == ' ')
         {
-            pos_start += utf8_char_size (data + pos_start);
-            if (string_is_command_char (data + pos_start))
-                pos_start += utf8_char_size (data + pos_start);
-            pos_end = pos_start;
-            while ((pos_end < size) && (data[pos_end] != ' '))
-            {
-                pos_end += utf8_char_size (data + pos_end);
-            }
-            if (data[pos_end] == ' ')
-            {
-                prev_char = utf8_prev_char (data, data + pos_end);
-                pos_end -= utf8_char_size (prev_char);
-            }
-
+            prev_char = utf8_prev_char (data, data + pos_end);
+            pos_end -= utf8_char_size (prev_char);
+        }
+        if (pos_end >= pos_start)
+        {
             completion->base_command = malloc (pos_end - pos_start + 2);
             for (i = pos_start; i <= pos_end; i++)
             {
                 completion->base_command[i - pos_start] = data[i];
             }
             completion->base_command[pos_end - pos_start + 1] = '\0';
-            gui_completion_build_list (completion);
         }
+        else
+            completion->base_command = strdup ("");
+        gui_completion_build_list (completion);
     }
 
     /*

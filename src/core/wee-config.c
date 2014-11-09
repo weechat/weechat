@@ -244,6 +244,7 @@ struct t_config_option *config_color_nicklist_offline;
 /* config, completion section */
 
 struct t_config_option *config_completion_base_word_until_cursor;
+struct t_config_option *config_completion_command_inline;
 struct t_config_option *config_completion_default_template;
 struct t_config_option *config_completion_nick_add_space;
 struct t_config_option *config_completion_nick_completer;
@@ -3191,6 +3192,15 @@ config_weechat_init_options ()
         "base_word_until_cursor", "boolean",
         N_("if enabled, the base word to complete ends at char before cursor; "
            "otherwise the base word ends at first space after cursor"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_command_inline = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "command_inline", "boolean",
+        N_("if enabled, the commands inside command line are completed (the "
+           "command at beginning of line has higher priority and is used "
+           "first); note: when this option is enabled, there is no more "
+           "automatic completion of paths beginning with '/' (outside "
+           "commands arguments)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_default_template = config_file_new_option (
         weechat_config_file, ptr_section,

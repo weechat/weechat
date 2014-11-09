@@ -318,6 +318,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
+* [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
+** Beschreibung: `if enabled, the commands inside command line are completed (the command at beginning of line has higher priority and is used first); note: when this option is enabled, there is no more automatic completion of paths beginning with '/' (outside commands arguments)`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
 ** Beschreibung: `Standardvorlage für die automatische Vervollständigung (in der API-Dokumentation findet man die vorgegebenen Codes und Werte, Funktion "weechat_hook_command")`
 ** Typ: Zeichenkette

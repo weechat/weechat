@@ -318,6 +318,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
+** description: `si activé, les commandes à l'intérieur de la ligne de commande sont complétées (la commande en début de ligne a une priorité plus élevée et est utilisée en premier) ; note : lorsque cette option est activée, il n'y a plus de complétion automatique des chemins commençant par '/' (en dehors des paramètres de commandes)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
 ** description: `modèle de complétion par défaut (merci de consulter la documentation pour les codes et valeurs du modèle : Référence API extension, fonction "weechat_hook_command")`
 ** type: chaîne
