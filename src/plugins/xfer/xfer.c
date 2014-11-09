@@ -927,6 +927,60 @@ xfer_free (struct t_xfer *xfer)
         xfer_buffer_selected_line = (xfer_count == 0) ? 0 : xfer_count - 1;
 }
 
+
+/*
+ * Lookup str_address and resolve into sockaddr addr.
+ */
+static int
+xfer_resolve_addr (const char *str_address, const char *str_port,
+                   struct sockaddr *addr, socklen_t *addr_len, int ai_flags)
+{
+    struct addrinfo *ainfo, hints;
+    int rc;
+
+    memset (&hints, 0, sizeof (struct addrinfo));
+    hints.ai_flags = ai_flags;
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_protocol = 0;
+    hints.ai_canonname = NULL;
+    hints.ai_addr = NULL;
+    hints.ai_next = NULL;
+
+    rc = getaddrinfo (str_address, str_port, &hints, &ainfo);
+    if ((rc == 0) && ainfo && ainfo->ai_addr)
+    {
+        if (ainfo->ai_addrlen > *addr_len)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: address \"%s\" resolved to a larger "
+                              "sockaddr than expected."),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                            str_address);
+
+            freeaddrinfo (ainfo);
+            return WEECHAT_RC_ERROR;
+        }
+        memcpy (addr, ainfo->ai_addr, ainfo->ai_addrlen);
+        *addr_len = ainfo->ai_addrlen;
+
+        freeaddrinfo (ainfo);
+        return WEECHAT_RC_OK;
+    }
+    else
+    {
+        weechat_printf (NULL,
+                        _("%s%s: invalid address \"%s\". error %d %s"),
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        str_address, rc, gai_strerror (rc));
+        if (rc == 0 && ainfo)
+            freeaddrinfo (ainfo);
+        return WEECHAT_RC_ERROR;
+    }
+
+    return WEECHAT_RC_ERROR;
+}
+
 /*
  * Callback for signal "xfer_add".
  */
@@ -942,10 +996,9 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     int type, protocol, args, port_start, port_end, sock, port, rc;
     char *dir1, *dir2, *filename2, *short_filename, *pos, str_port_temp[16];
     struct stat st;
-    struct addrinfo *ainfo, hints;
-    struct sockaddr_storage addr, own_ip_addr;
+    struct sockaddr_storage addr, own_ip_addr, bind_addr;
     struct sockaddr *out_addr = (struct sockaddr*)&addr;
-    socklen_t length;
+    socklen_t length, bind_addr_len;
     unsigned long long file_size;
     struct t_xfer *ptr_xfer;
 
@@ -1095,80 +1148,71 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     }
     port = weechat_infolist_integer (infolist, "port");
 
-    /* set address */
-    memset (&hints, 0, sizeof (struct addrinfo));
-    hints.ai_flags = AI_NUMERICHOST | AI_NUMERICSERV;
-    hints.ai_family = AF_UNSPEC;  /* allow IPv4 or IPv6 */
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_protocol = 0;
-    hints.ai_canonname = NULL;
-    hints.ai_addr = NULL;
-    hints.ai_next = NULL;
-
+    /* resolve addresses */
     if (XFER_IS_RECV(type))
     {
         str_address = weechat_infolist_string (infolist, "remote_address");
         snprintf (str_port_temp, sizeof (str_port_temp), "%d", port);
         str_port = str_port_temp;
+        length = sizeof (addr);
+        rc = xfer_resolve_addr (str_address, str_port,
+                                (struct sockaddr*)&addr, &length,
+                                AI_NUMERICSERV | AI_NUMERICHOST);
+        if (rc == WEECHAT_RC_ERROR)
+            goto error;
     }
-    else
+    else /* XFER_IS_SEND */
     {
-        str_port = NULL;
+        memset(&bind_addr, 0, sizeof(bind_addr));
+
+        /* Determine bind_addr family from either own_ip or default */
         if (weechat_config_string (xfer_config_network_own_ip)
             && weechat_config_string (xfer_config_network_own_ip)[0])
         {
+            /* Resolve own_ip to a numeric address */
             str_address = weechat_config_string (xfer_config_network_own_ip);
-            hints.ai_flags = AI_NUMERICSERV;
+            length = sizeof (own_ip_addr);
 
-            rc = getaddrinfo (str_address, str_port, &hints, &ainfo);
-            if ((rc == 0) && ainfo && ainfo->ai_addr)
-            {
-                out_addr = (struct sockaddr*)&own_ip_addr;
-                memset (&own_ip_addr,  0, sizeof (addr));
-                memcpy (&own_ip_addr, ainfo->ai_addr, ainfo->ai_addrlen);
-                length = ainfo->ai_addrlen;
-                freeaddrinfo (ainfo);
-            }
-            else
-            {
-                weechat_printf (NULL,
-                                _("%s%s: invalid address \"%s\" (option "
-                                  "xfer.network.own_ip): error %d %s"),
-                                weechat_prefix ("error"), XFER_PLUGIN_NAME,
-                                str_address, rc, gai_strerror (rc));
-                if (rc == 0)
-                    freeaddrinfo (ainfo);
+            rc = xfer_resolve_addr (str_address, NULL,
+                                    (struct sockaddr*)&own_ip_addr, &length,
+                                    AI_NUMERICSERV);
+            if (rc == WEECHAT_RC_ERROR)
                 goto error;
-            }
+
+            /* set the advertised address to own_ip */
+            out_addr = (struct sockaddr*)&own_ip_addr;
+
+            /* bind_addr's family should be the advertised family */
+            bind_addr.ss_family = own_ip_addr.ss_family;
+        }
+        else
+        {
+            /* No own_ip, so bind_addr's family comes from irc connection  */
+            str_address = weechat_infolist_string (infolist, "local_address");
+            length = sizeof (addr);
+            rc = xfer_resolve_addr (str_address, NULL,
+                                    (struct sockaddr*)&addr, &length,
+                                    AI_NUMERICSERV | AI_NUMERICHOST);
+            if (rc == WEECHAT_RC_ERROR)
+                goto error;
+            bind_addr.ss_family = addr.ss_family;
         }
 
-        str_address = weechat_infolist_string (infolist, "local_address");
-    }
+        /* Determine bind wildcard address */
+        if (bind_addr.ss_family == AF_INET)
+        {
+            ((struct sockaddr_in*)&bind_addr)->sin_addr.s_addr = INADDR_ANY;
+            bind_addr_len = sizeof (struct sockaddr_in);
+        }
+        else
+        {
+            memcpy (&((struct sockaddr_in6*)&bind_addr)->sin6_addr,
+                    &in6addr_any, sizeof (in6addr_any));
+            bind_addr_len = sizeof (struct sockaddr_in6);
+        }
 
-    rc = getaddrinfo (str_address, str_port, &hints, &ainfo);
-    if ((rc == 0) && ainfo && ainfo->ai_addr)
-    {
-        memset (&addr,  0, sizeof (addr));
-        memcpy (&addr, ainfo->ai_addr, ainfo->ai_addrlen);
-        length = ainfo->ai_addrlen;
-        freeaddrinfo (ainfo);
-    }
-    else
-    {
-        weechat_printf (NULL,
-                        _("%s%s: unable to find address for \"%s\": "
-                          "error %d %s"),
-                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
-                        str_address, rc, gai_strerror (rc));
-        if (rc == 0)
-            freeaddrinfo (ainfo);
-        goto error;
-    }
-
-    if (XFER_IS_SEND(type))
-    {
         /* open socket for xfer */
-        sock = socket (addr.ss_family, SOCK_STREAM, 0);
+        sock = socket (bind_addr.ss_family, SOCK_STREAM, 0);
         if (sock < 0)
         {
             weechat_printf (NULL,
@@ -1199,11 +1243,11 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                     if (!xfer_port_in_use (port))
                     {
                         /* attempt to bind to the free port */
-                        if (addr.ss_family == AF_INET)
-                            ((struct sockaddr_in *)&addr)->sin_port = htons (port);
+                        if (bind_addr.ss_family == AF_INET)
+                            ((struct sockaddr_in *)&bind_addr)->sin_port = htons (port);
                         else
-                            ((struct sockaddr_in6 *)&addr)->sin6_port = htons (port);
-                        if (bind (sock, (struct sockaddr *)&addr, length) == 0)
+                            ((struct sockaddr_in6 *)&bind_addr)->sin6_port = htons (port);
+                        if (bind (sock, (struct sockaddr *)&bind_addr, bind_addr_len) == 0)
                             break;
                     }
                     port++;
@@ -1217,13 +1261,13 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
         if (port == 0)
         {
             /* find port automatically */
-            if (bind (sock, (struct sockaddr *)&addr, length) == 0)
+            if (bind (sock, (struct sockaddr *)&bind_addr, bind_addr_len) == 0)
             {
-                getsockname (sock, (struct sockaddr *)&addr, &length);
-                if (addr.ss_family == AF_INET)
-                    port = ntohs (((struct sockaddr_in *)&addr)->sin_port);
+                getsockname (sock, (struct sockaddr *)&bind_addr, &bind_addr_len);
+                if (bind_addr.ss_family == AF_INET)
+                    port = ntohs (((struct sockaddr_in *)&bind_addr)->sin_port);
                 else
-                    port = ntohs (((struct sockaddr_in6 *)&addr)->sin6_port);
+                    port = ntohs (((struct sockaddr_in6 *)&bind_addr)->sin6_port);
             }
             else
                 port = -1;
