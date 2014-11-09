@@ -535,21 +535,19 @@ WeeChat を起動したターミナルの例:
 | input_text   | `hi peter!`                                  | 入力テキスト
 |===
 
-// TRANSLATION MISSING
-Other items available (not used in bars by default):
+その他の利用可能なアイテム (デフォルトではバーで使われていない):
 
-// TRANSLATION MISSING
 [width="100%",cols="^3,^4,10",options="header"]
 |===
-| Item              | Example             | Description
-| aspell_dict       | `fr,en`             | Spelling dictionaries used on current buffer
-| aspell_suggest    | `print,prone,prune` | Spelling suggestions for word under cursor (if misspelled)
-| buffer_count      | `10`                | Total number of buffers opened
-| buffer_short_name | `#test`             | Current buffer short name
-| irc_channel       | `#test`             | Current IRC channel name
-| irc_nick_modes    | `@`                 | IRC modes for self nick
-| mouse_status      | `M`                 | Mouse status (empty if mouse is disabled)
-| window_number     | `2`                 | Current window number
+| アイテム          | 例                  | 説明
+| aspell_dict       | `fr,en`             | 現在のバッファにおけるスペリング辞書
+| aspell_suggest    | `print,prone,prune` | カーソル下の単語に対するスペリング候補 (スペルが間違っている場合)
+| buffer_count      | `10`                | 開いているバッファの総数
+| buffer_short_name | `#test`             | 現在のバッファの短い名前
+| irc_channel       | `#test`             | 現在の IRC チャンネル名
+| irc_nick_modes    | `@`                 | 自分のニックネームに対する IRC モード
+| mouse_status      | `M`                 | マウスの状態 (マウスが無効化されている場合は空文字列)
+| window_number     | `2`                 | 現在のウィンドウ番号
 |===
 
 [[buffers_and_windows]]
