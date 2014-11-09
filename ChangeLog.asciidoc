@@ -67,6 +67,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   of option when it is changed with /set
 * relay: remove "::ffff:" from IPv4-mapped IPv6 client address (closes #111)
 * trigger: fix memory leak when allocating a new trigger with several regex
+* xfer: bind to wildcard address when sending (closes #173)
 
 == Version 1.0.1 (2014-09-28)
 
