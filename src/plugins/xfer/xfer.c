@@ -1188,7 +1188,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
         }
         else
         {
-            /* No own_ip, so bind_addr's family comes from irc connection  */
+            /* no own_ip, so bind_addr's family comes from irc connection  */
             str_address = weechat_infolist_string (infolist, "local_address");
             length = sizeof (addr);
             if (!xfer_resolve_addr (str_address, NULL,
@@ -1200,7 +1200,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
             bind_addr.ss_family = addr.ss_family;
         }
 
-        /* Determine bind wildcard address */
+        /* determine bind wildcard address */
         if (bind_addr.ss_family == AF_INET)
         {
             ((struct sockaddr_in*)&bind_addr)->sin_addr.s_addr = INADDR_ANY;
