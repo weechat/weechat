@@ -929,9 +929,14 @@ xfer_free (struct t_xfer *xfer)
 
 
 /*
- * Lookup str_address and resolve into sockaddr addr.
+ * Resolves address.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
-static int
+
+int
 xfer_resolve_addr (const char *str_address, const char *str_port,
                    struct sockaddr *addr, socklen_t *addr_len, int ai_flags)
 {
@@ -954,31 +959,25 @@ xfer_resolve_addr (const char *str_address, const char *str_port,
         {
             weechat_printf (NULL,
                             _("%s%s: address \"%s\" resolved to a larger "
-                              "sockaddr than expected."),
+                              "sockaddr than expected"),
                             weechat_prefix ("error"), XFER_PLUGIN_NAME,
                             str_address);
-
             freeaddrinfo (ainfo);
-            return WEECHAT_RC_ERROR;
+            return 0;
         }
         memcpy (addr, ainfo->ai_addr, ainfo->ai_addrlen);
         *addr_len = ainfo->ai_addrlen;
-
         freeaddrinfo (ainfo);
-        return WEECHAT_RC_OK;
-    }
-    else
-    {
-        weechat_printf (NULL,
-                        _("%s%s: invalid address \"%s\". error %d %s"),
-                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
-                        str_address, rc, gai_strerror (rc));
-        if (rc == 0 && ainfo)
-            freeaddrinfo (ainfo);
-        return WEECHAT_RC_ERROR;
+        return 1;
     }
 
-    return WEECHAT_RC_ERROR;
+    weechat_printf (NULL,
+                    _("%s%s: invalid address \"%s\": error %d %s"),
+                    weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                    str_address, rc, gai_strerror (rc));
+    if ((rc == 0) && ainfo)
+        freeaddrinfo (ainfo);
+    return 0;
 }
 
 /*
@@ -993,7 +992,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     const char *plugin_name, *plugin_id, *str_type, *str_protocol;
     const char *remote_nick, *local_nick, *charset_modifier, *filename, *proxy;
     const char *weechat_dir, *str_address, *str_port;
-    int type, protocol, args, port_start, port_end, sock, port, rc;
+    int type, protocol, args, port_start, port_end, sock, port;
     char *dir1, *dir2, *filename2, *short_filename, *pos, str_port_temp[16];
     struct stat st;
     struct sockaddr_storage addr, own_ip_addr, bind_addr;
@@ -1148,36 +1147,38 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     }
     port = weechat_infolist_integer (infolist, "port");
 
-    /* resolve addresses */
+    /* resolve address */
     if (XFER_IS_RECV(type))
     {
         str_address = weechat_infolist_string (infolist, "remote_address");
         snprintf (str_port_temp, sizeof (str_port_temp), "%d", port);
         str_port = str_port_temp;
         length = sizeof (addr);
-        rc = xfer_resolve_addr (str_address, str_port,
+        if (!xfer_resolve_addr (str_address, str_port,
                                 (struct sockaddr*)&addr, &length,
-                                AI_NUMERICSERV | AI_NUMERICHOST);
-        if (rc == WEECHAT_RC_ERROR)
+                                AI_NUMERICSERV | AI_NUMERICHOST))
+        {
             goto error;
+        }
     }
-    else /* XFER_IS_SEND */
+    else
     {
         memset(&bind_addr, 0, sizeof(bind_addr));
 
-        /* Determine bind_addr family from either own_ip or default */
+        /* determine bind_addr family from either own_ip or default */
         if (weechat_config_string (xfer_config_network_own_ip)
             && weechat_config_string (xfer_config_network_own_ip)[0])
         {
-            /* Resolve own_ip to a numeric address */
+            /* resolve own_ip to a numeric address */
             str_address = weechat_config_string (xfer_config_network_own_ip);
             length = sizeof (own_ip_addr);
 
-            rc = xfer_resolve_addr (str_address, NULL,
+            if (!xfer_resolve_addr (str_address, NULL,
                                     (struct sockaddr*)&own_ip_addr, &length,
-                                    AI_NUMERICSERV);
-            if (rc == WEECHAT_RC_ERROR)
+                                    AI_NUMERICSERV))
+            {
                 goto error;
+            }
 
             /* set the advertised address to own_ip */
             out_addr = (struct sockaddr*)&own_ip_addr;
@@ -1190,11 +1191,12 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
             /* No own_ip, so bind_addr's family comes from irc connection  */
             str_address = weechat_infolist_string (infolist, "local_address");
             length = sizeof (addr);
-            rc = xfer_resolve_addr (str_address, NULL,
+            if (!xfer_resolve_addr (str_address, NULL,
                                     (struct sockaddr*)&addr, &length,
-                                    AI_NUMERICSERV | AI_NUMERICHOST);
-            if (rc == WEECHAT_RC_ERROR)
+                                    AI_NUMERICSERV | AI_NUMERICHOST))
+            {
                 goto error;
+            }
             bind_addr.ss_family = addr.ss_family;
         }
 
