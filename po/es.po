@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-09 11:32+0100\n"
-"PO-Revision-Date: 2014-11-01 11:58+0100\n"
+"POT-Creation-Date: 2014-11-09 16:21+0100\n"
+"PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -10812,6 +10812,14 @@ msgstr ""
 "posición %llu"
 
 #, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
+msgstr "%s%s: set de caracteres inválido: \"%s\""
+
+#, c-format
 msgid "%s%s: missing arguments (%s)"
 msgstr "%s%s: argumentos faltantes (%s)"
 
@@ -10826,14 +10834,6 @@ msgstr "%s%s: protocolo de transferencia desconocido \"%s\""
 #, c-format
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s%s: no es posible acceder el archivo \"%s\""
-
-#, fuzzy, c-format
-msgid "%s%s: invalid address \"%s\" (option xfer.network.own_ip): error %d %s"
-msgstr "%s%s: set de caracteres inválido: \"%s\""
-
-#, fuzzy, c-format
-msgid "%s%s: unable to find address for \"%s\": error %d %s"
-msgstr "%s%s: set de caracteres inválido: \"%s\""
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"

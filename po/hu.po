@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-09 11:32+0100\n"
-"PO-Revision-Date: 2014-11-01 11:58+0100\n"
+"POT-Creation-Date: 2014-11-09 16:21+0100\n"
+"PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -9901,6 +9901,14 @@ msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr ""
 "DCC: a %s%s%s fájl (helyi fájlnév: %s%s%s) a(z) %u pozíción fog visszatérni\n"
 
+#, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
 #, fuzzy, c-format
 msgid "%s%s: missing arguments (%s)"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
@@ -9916,14 +9924,6 @@ msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" fájlt elérni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: invalid address \"%s\" (option xfer.network.own_ip): error %d %s"
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to find address for \"%s\": error %d %s"
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"

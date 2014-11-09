@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-09 11:32+0100\n"
-"PO-Revision-Date: 2014-11-09 11:33+0100\n"
+"POT-Creation-Date: 2014-11-09 16:21+0100\n"
+"PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -11669,6 +11669,14 @@ msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr "%s : fichier %s (nom local : %s) sera recommencé en position %llu"
 
 #, c-format
+msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
+msgstr "%s%s: l'adresse \"%s\" a été résolue en un sockaddr plus grand que prévu"
+
+#, c-format
+msgid "%s%s: invalid address \"%s\": error %d %s"
+msgstr "%s%s : adresse \"%s\" invalide : erreur %d %s"
+
+#, c-format
 msgid "%s%s: missing arguments (%s)"
 msgstr "%s%s : paramètres manquants (%s)"
 
@@ -11683,15 +11691,6 @@ msgstr "%s%s : protocole xfer inconnu \"%s\""
 #, c-format
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s%s : impossible d'accéder au fichier \"%s\""
-
-#, c-format
-msgid "%s%s: invalid address \"%s\" (option xfer.network.own_ip): error %d %s"
-msgstr ""
-"%s%s : adresse \"%s\" invalide (option xfer.network.own_ip) : erreur %d %s"
-
-#, c-format
-msgid "%s%s: unable to find address for \"%s\": error %d %s"
-msgstr "%s%s : impossible de trouver l'adresse pour \"%s\" : erreur %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
