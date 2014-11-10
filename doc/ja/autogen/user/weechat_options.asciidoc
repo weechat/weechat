@@ -69,17 +69,17 @@
 ** 値: 未制約文字列 (デフォルト値: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
 * [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
-** 説明: `text color for offline nick (not in nicklist any more); this color is used only if option weechat.look.color_nick_offline is enabled`
+** 説明: `オフラインのニックネームのテキスト色 (ニックネームリストにも表示されない); この色はオプション weechat.look.color_nick_offline が有効化されている場合にのみ使われます`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
-** 説明: `text color for offline nick with highlight; this color is used only if option weechat.look.color_nick_offline is enabled`
+** 説明: `ハイライトされたオフラインのニックネームのテキスト色; この色はオプション weechat.look.color_nick_offline が有効化されている場合にのみ使われます`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
-** 説明: `background color for offline nick with highlight; this color is used only if option weechat.look.color_nick_offline is enabled`
+** 説明: `ハイライトされたオフラインのニックネームの背景色; この色はオプション weechat.look.color_nick_offline が有効化されている場合にのみ使われます`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `blue`)
 
@@ -274,7 +274,7 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `lightgreen`)
 
 * [[option_weechat.color.status_filter]] *weechat.color.status_filter*
-** 説明: `ステータスバーのフィルタ表示のテキスト色`
+** 説明: `ステータスバー内のフィルタインジケータのテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `green`)
 
@@ -284,17 +284,17 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `yellow`)
 
 * [[option_weechat.color.status_mouse]] *weechat.color.status_mouse*
-** 説明: `text color for mouse indicator in status bar`
+** 説明: `ステータスバー内のマウスインジケータのテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `green`)
 
 * [[option_weechat.color.status_name]] *weechat.color.status_name*
-** 説明: `ステータスバーの現在のバッファ名のテキスト色`
+** 説明: `ステータスバー内の現在のバッファ名のテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `white`)
 
 * [[option_weechat.color.status_name_ssl]] *weechat.color.status_name_ssl*
-** 説明: `SSL などでセキュリティプロトコルを使っている場合のステータスバーの現在のバッファ名のテキスト色、`
+** 説明: `バッファで SSL などのセキュリティプロトコルを使っている場合に、ステータスバー内の現在のバッファ名に使うテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `lightgreen`)
 
@@ -304,7 +304,7 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_weechat.color.status_number]] *weechat.color.status_number*
-** 説明: `ステータスバーの現在のバッファ番号のテキスト色`
+** 説明: `ステータスバー内の現在のバッファ番号のテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `yellow`)
 
@@ -314,12 +314,12 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
-** 説明: `有効化された場合、補完する元単語はカーソル前の文字で終了; そうでなければ元単語はカーソル後の最初の文字で終了`
+** 説明: `これが有効な場合、補完する元単語はカーソル前の文字で終了; そうでなければ元単語はカーソル後の最初の文字で終了`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
-** 説明: `if enabled, the commands inside command line are completed (the command at beginning of line has higher priority and is used first); note: when this option is enabled, there is no more automatic completion of paths beginning with '/' (outside commands arguments)`
+** 説明: `これが有効な場合、コマンドライン中のコマンドを補完します (行頭のコマンドが最も優先度が高く、最初に評価されます); 注意: このオプションが有効な場合、'/' で始まるパスの自動補完は行われません (外部コマンドの引数)`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -674,12 +674,12 @@
 ** 値: 未制約文字列 (デフォルト値: `"*"`)
 
 * [[option_weechat.look.item_buffer_zoom]] *weechat.look.item_buffer_zoom*
-** 説明: `マージされたバッファでズームされたことを示す文字列 (バーアイテム "buffer_zoom")`
+** 説明: `マージされたバッファがズーム状態であることを示す文字列 (バーアイテム "buffer_zoom")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"!"`)
 
 * [[option_weechat.look.item_mouse_status]] *weechat.look.item_mouse_status*
-** 説明: `string used to show if mouse is enabled (bar item "mouse_status")`
+** 説明: `マウスが有効であることを示す文字列 (バーアイテム "mouse_status")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"M"`)
 
