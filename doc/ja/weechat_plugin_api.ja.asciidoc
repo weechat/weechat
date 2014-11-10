@@ -8266,17 +8266,15 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: キーの組み合わせ |
   'cursor' コンテキスト内のキーの組み合わせ
 
-// TRANSLATION MISSING
 | weechat | mouse_enabled +
-  _(WeeChat ≥ 1.1)_ |
+  _(WeeChat バージョン 1.1 以上で利用可)_ |
   - |
-  Mouse enabled
+  マウスが有効化された
 
-// TRANSLATION MISSING
 | weechat | mouse_disabled +
-  _(WeeChat ≥ 1.1)_ |
+  _(WeeChat バージョン 1.1 以上で利用可)_ |
   - |
-  Mouse disabled
+  マウスが無効化された
 
 | weechat | nicklist_group_added +
   _(WeeChat バージョン 0.3.2 以上で利用可)_ |

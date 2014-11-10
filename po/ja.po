@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2012-2013 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
+# Copyright (C) 2012-2014 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-11-09 17:33+0100\n"
-"PO-Revision-Date: 2014-11-09 16:23+0100\n"
+"PO-Revision-Date: 2014-11-10 06:29+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -40,11 +40,11 @@ msgid "max chars"
 msgstr "最大文字数"
 
 msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
-"for italic, \"_\" for underline"
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)"
+"green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal "
+"color number or an alias; attributes are allowed before color (for text "
+"color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" for "
+"italic, \"_\" for underline"
 msgstr ""
 "WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、"
 "brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号ま"
@@ -3400,14 +3400,11 @@ msgstr ""
 
 msgid "string used to show zoom on merged buffer (bar item \"buffer_zoom\")"
 msgstr ""
-"マージされたバッファでズームされたことを示す文字列 (バーアイテム "
+"マージされたバッファがズーム状態であることを示す文字列 (バーアイテム "
 "\"buffer_zoom\")"
 
-#, fuzzy
 msgid "string used to show if mouse is enabled (bar item \"mouse_status\")"
-msgstr ""
-"マージされたバッファでズームされたことを示す文字列 (バーアイテム "
-"\"buffer_zoom\")"
+msgstr "マウスが有効であることを示す文字列 (バーアイテム \"mouse_status\")"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -3721,16 +3718,23 @@ msgid ""
 "text color for offline nick (not in nicklist any more); this color is used "
 "only if option weechat.look.color_nick_offline is enabled"
 msgstr ""
+"オフラインのニックネームのテキスト色 (ニックネームリストにも表示されない); こ"
+"の色はオプション weechat.look.color_nick_offline が有効化されている場合にのみ"
+"使われます"
 
 msgid ""
 "text color for offline nick with highlight; this color is used only if "
 "option weechat.look.color_nick_offline is enabled"
 msgstr ""
+"ハイライトされたオフラインのニックネームのテキスト色; この色はオプション "
+"weechat.look.color_nick_offline が有効化されている場合にのみ使われます"
 
 msgid ""
 "background color for offline nick with highlight; this color is used only if "
 "option weechat.look.color_nick_offline is enabled"
 msgstr ""
+"ハイライトされたオフラインのニックネームの背景色; この色はオプション weechat."
+"look.color_nick_offline が有効化されている場合にのみ使われます"
 
 msgid "text color for other nick in private buffer"
 msgstr "プライベートバッファ内の他のニックネームのテキスト色"
@@ -3872,27 +3876,26 @@ msgstr ""
 "プライベートメッセージを受けとったバッファのテキスト色 (ステータスバー)"
 
 msgid "text color for filter indicator in status bar"
-msgstr "ステータスバーのフィルタ表示のテキスト色"
+msgstr "ステータスバー内のフィルタインジケータのテキスト色"
 
-#, fuzzy
 msgid "text color for mouse indicator in status bar"
-msgstr "ステータスバーのフィルタ表示のテキスト色"
+msgstr "ステータスバー内のマウスインジケータのテキスト色"
 
 msgid "text color for current buffer name in status bar"
-msgstr "ステータスバーの現在のバッファ名のテキスト色"
+msgstr "ステータスバー内の現在のバッファ名のテキスト色"
 
 msgid ""
 "text color for current buffer name in status bar, if data are secured with a "
 "protocol like SSL"
 msgstr ""
-"SSL などでセキュリティプロトコルを使っている場合のステータスバーの現在のバッ"
-"ファ名のテキスト色、"
+"バッファで SSL などのセキュリティプロトコルを使っている場合に、ステータスバー"
+"内の現在のバッファ名に使うテキスト色"
 
 msgid "text color for number of nicks in nicklist (status bar)"
 msgstr "ニックネームリスト内のニックネーム数のテキスト色 (ステータスバー)"
 
 msgid "text color for current buffer number in status bar"
-msgstr "ステータスバーの現在のバッファ番号のテキスト色"
+msgstr "ステータスバー内の現在のバッファ番号のテキスト色"
 
 msgid "text color for buffer with new data (status bar)"
 msgstr "新しいデータを受け取ったバッファのテキスト色 (ステータスバー)"
@@ -3913,7 +3916,7 @@ msgid ""
 "if enabled, the base word to complete ends at char before cursor; otherwise "
 "the base word ends at first space after cursor"
 msgstr ""
-"有効化された場合、補完する元単語はカーソル前の文字で終了; そうでなければ元単"
+"これが有効な場合、補完する元単語はカーソル前の文字で終了; そうでなければ元単"
 "語はカーソル後の最初の文字で終了"
 
 msgid ""
@@ -3922,6 +3925,9 @@ msgid ""
 "option is enabled, there is no more automatic completion of paths beginning "
 "with '/' (outside commands arguments)"
 msgstr ""
+"これが有効な場合、コマンドライン中のコマンドを補完します (行頭のコマンドが最"
+"も優先度が高く、最初に評価されます); 注意: このオプションが有効な場合、'/' で"
+"始まるパスの自動補完は行われません (外部コマンドの引数)"
 
 msgid ""
 "default completion template (please see documentation for template codes and "
@@ -5940,8 +5946,8 @@ msgstr ""
 "            - 内部サーバ名 (/server add で作成されたもの、利用推奨)\n"
 "            - ホスト名/ポート番号又は IP アドレス/ポート番号、デフォルトの"
 "ポート番号は 6667\n"
-"            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:"
-"password]@]irc.example.org[:port][/#channel1][,#channel2[...]]\n"
+"            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:password]@]"
+"irc.example.org[:port][/#channel1][,#channel2[...]]\n"
 "            注意: アドレス/IP/URL を指定した場合、サーバを一時的に作ります "
 "(保存しません)、/help irc.look.temporary_servers を参照してください。\n"
 "    option: サーバに関するオプション (ブール型オプションでは、value は無視さ"
@@ -6635,9 +6641,8 @@ msgstr "<nick> <channel>[,<channel>...]"
 msgid "change mode on channel, without having operator status"
 msgstr "チャンネルモードを変更、オペレータ権無しに"
 
-#, fuzzy
 msgid "[<channel>] <mode>"
-msgstr "<channel> <mode>"
+msgstr "[<channel>] <mode>"
 
 msgid ""
 "channel: channel name\n"
@@ -7136,7 +7141,6 @@ msgstr ""
 "サーバのパスワード (注意: 値は評価されます、/help eval を参照してください)"
 
 #. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
-#, fuzzy
 msgid ""
 "comma-separated list of client capabilities to enable for server if they are "
 "available; capabilities supported by WeeChat are: away-notify, extended-"
@@ -7144,8 +7148,8 @@ msgid ""
 "multi-prefix\")"
 msgstr ""
 "サーバで利用可能ならば有効化する \"client capabilities\" のコンマ区切りリス"
-"ト; WeeChat で利用できる機能: away-notify、multi-prefix、server-time、"
-"userhost-in-names (例: \"away-notify,multi-prefix\")"
+"ト; WeeChat で利用できる機能: away-notify、extended-join、multi-prefix、"
+"server-time、userhost-in-names (例: \"away-notify,multi-prefix\")"
 
 msgid ""
 "mechanism for SASL authentication: \"plain\" for plain text password, \"dh-"
@@ -8135,9 +8139,9 @@ msgstr "%1$s%5$s%6$s%7$s から %2$s%3$s%4$s に招待されました"
 msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: 新しいチャンネル \"%s\" を作れません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
-msgstr "%s%s%s%s%s%s%s%s%s%s が %s%s%s に参加"
+msgstr "%s%s%s%s%s%s%s%s%s%s%s%s が %s%s%s に参加"
 
 #, c-format
 msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
@@ -8303,31 +8307,31 @@ msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sチャンネルは %s%s%s を reop しました: %s%s"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって招待されました"
+msgstr "%1$s%2$s[%3$s%4$s%5$s] %10$s に %9$s が %6$s%7$s%8$s を招待しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s"
-msgstr "%s%s[%s%s%s] %s%s%s が招待されました"
+msgstr "%1$s%2$s[%3$s%4$s%5$s] %9$s が %6$s%7$s%8$s を招待しました"
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited"
-msgstr "%s%s[%s%s%s] %s%s%s が招待されました"
+msgstr "%s%s[%s%s%s] %s%s%s を招待しました"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
 msgstr ""
-"%s%s[%s%s%s]%s %s%s%s の除外は %s%s %s(%s%s%s)%s によって %s に設定されました"
+"%1$s%2$s[%3$s%4$s%5$s]%6$s %11$s に %10$s が除外 %7$s%8$s%9$s を設定しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
-msgstr "%s%s[%s%s%s]%s %s%s の除外"
+msgstr "%1$s%2$s[%3$s%4$s%5$s]%6$s %10$s が除外 %7$s%8$s%9$s を設定しました"
 
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s"
-msgstr "%s%s[%s%s%s]%s %s%s の除外"
+msgstr "%s%s[%s%s%s]%s 除外 %s%s を設定しました"
 
 #, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -8362,17 +8366,18 @@ msgid_plural "nicks"
 msgstr[0] "ニックネーム"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって参加禁止"
+msgstr ""
+"%1$s%2$s[%3$s%4$s%5$s] %10$s に %9$s が %6$s%7$s%8$s の参加を禁止しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s"
-msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって参加禁止"
+msgstr "%1$s%2$s[%3$s%4$s%5$s] %9$s が %6$s%7$s%8$s の参加を禁止しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned"
-msgstr "%s%s[%s%s%s] %s%s%s が招待されました"
+msgstr "%1$s%2$s[%3$s%4$s%5$s] %6$s%7$s%8$s の参加を禁止しました"
 
 #, c-format
 msgid ""
@@ -8408,17 +8413,18 @@ msgstr ""
 "ます"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって発言禁止にされました"
+msgstr ""
+"%1$s%2$s[%3$s%4$s%5$s] %10$s に %9$s が %6$s%7$s%8$s の発言を禁止しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
-msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって発言禁止にされました"
+msgstr "%1$s%2$s[%3$s%4$s%5$s] %9$s が %6$s%7$s%8$s の発言を禁止しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s quieted"
-msgstr "%s%s[%s%s%s] %s%s%s が招待されました"
+msgstr "%1$s%2$s[%3$s%4$s%5$s] %6$s%7$s%8$s の発言を禁止しました"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -9635,13 +9641,13 @@ msgstr "リレーするクライアントはありません"
 msgid "Listening on ports:"
 msgstr "リッスンポート:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  port %s%d%s, relay: %s%s%s, %s (not started)"
-msgstr "  ポート %s%d%s、リレー: %s%s%s, %s、開始日時: %s"
+msgstr "  ポート %s%d%s、リレー: %s%s%s、%s (開始していません)"
 
 #, c-format
 msgid "  port %s%d%s, relay: %s%s%s, %s, started on: %s"
-msgstr "  ポート %s%d%s、リレー: %s%s%s, %s、開始日時: %s"
+msgstr "  ポート %s%d%s、リレー: %s%s%s、%s、開始日時: %s"
 
 msgid "No server for relay"
 msgstr "リレーするサーバがありません"
@@ -9661,15 +9667,13 @@ msgstr "%s%s: リレー \"%s\" が見つかりません"
 msgid "relay control"
 msgstr "リレー管理"
 
-#, fuzzy
 msgid ""
 "list|listfull|listrelay || add <name> <port> || del|stop|restart <name> || "
 "raw || sslcertkey"
 msgstr ""
-"list|listfull|listrelay || add [ipv4.][ipv6.][ssl.]<protocol.name> <port> || "
-"del [ipv4.][ipv6.][ssl.]<protocol.name> || raw || sslcertkey"
+"list|listfull|listrelay || add <name> <port> || del|stop|restart <name> || "
+"raw || sslcertkey"
 
-#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
@@ -9723,21 +9727,32 @@ msgstr ""
 "         list: リレーするクライアントをリストアップ (アクティブなもののみ)\n"
 "     listfull: リレーするクライアントをリストアップ (詳細、全てのリレー)\n"
 "    listrelay: リレーをリストアップ (名前とポート番号)\n"
-"          add: プロトコル + 名前のリレーを追加\n"
-"          del: プロトコル + 名前のリレーを削除\n"
+"          add: リレーを追加 (ポートで接続を待ち受ける)\n"
+"          del: リレーを削除 (クライアントとの接続は保持)\n"
+"         stop: サーバソケットを閉じる (クライアントとの接続は保持)\n"
+"      restart: サーバソケットを閉じて同じポートで接続を待つ (クライアントとの"
+"接続は保持)\n"
+"         name: リレー名 (以下のフォーマットを参照)\n"
+"         port: リレーが使うポートの番号\n"
+"          raw: 生リレーデータを表示するバッファを開く\n"
+"   sslcertkey: オプション relay.network.ssl_cert_key のパスを使って SSL 証明"
+"書/鍵を指定\n"
+"\n"
+"リレー名のフォーマット: [ipv4.][ipv6.][ssl.]<protocol.name>\n"
 "         ipv4: IPv4 を強制的に利用\n"
 "         ipv6: IPv6 を強制的に利用\n"
 "          ssl: SSL を有効化\n"
 "protocol.name: リレーするプロトコルと名前:\n"
-"                 - protocol \"irc\": name は共有するサーバ名 (任意指定、指定"
-"しない場合、サーバ名は \"PASS\" コマンドでクライアントが送信するものと同じで"
-"なければいけません、\"PASS\" コマンドのフォーマットは \"PASS server:password"
-"\")\n"
-"                 - protocol \"weechat\" (name は使われません)\n"
-"         port: リレーに使うポート番号\n"
-"          raw: 生 Relay データバッファを開く\n"
-"   sslcertkey: オプション relay.network.ssl_cert_key のパスを使って SSL 証明"
-"書/鍵を設定\n"
+"                 - \"irc\" プロトコル: name は共有するサーバ名 (任意指定、指"
+"定しない場合、サーバ名は \"PASS\" コマンドでクライアントが送信するものと同じ"
+"でなければいけません、\"PASS\" コマンドのフォーマットは \"PASS server:"
+"password\")\n"
+"                 - \"weechat\" プロトコル (name は使われません)\n"
+"\n"
+"\"irc\" プロトコルを指定した場合、どんな IRC クライアント (WeeChat 自身を含め"
+"て) でもポートに接続することができます。\n"
+"\"weechat\" プロトコルを指定した場合、リモートインターフェイスを使ってポート"
+"に接続することができます、参照: http://weechat.org/download/\n"
 "\n"
 "引数無しの場合、リレークライアントのリストを含むバッファを開く\n"
 "\n"
@@ -10810,7 +10825,6 @@ msgstr ""
 "[<name>...] || show <name> || del <name>|-all [<name>...] || restore <name> "
 "[<name>...] || default -yes || monitor [<filter>]"
 
-#, fuzzy
 msgid ""
 "       list: list triggers (without argument, this list is displayed)\n"
 "   listfull: list triggers with detailed info for each trigger\n"
@@ -10880,8 +10894,8 @@ msgid ""
 "Examples (you can also look at default triggers with /trigger listdefault):\n"
 "  add text attributes *bold*, _underline_ and /italic/ (only in user "
 "messages):\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
-"\\*(\\S+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_(\\S+)_==_${color:"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
+"(\\S+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_(\\S+)_==_${color:"
 "underline}${re:1}${color:-underline}_== ==/(\\S+)/==/${color:"
 "italic}${re:1}${color:-italic}/\"\n"
 "  hide nicklist bar on small terminals:\n"
@@ -10957,10 +10971,10 @@ msgstr ""
 "\n"
 "例 (/trigger listdefault でデフォルトトリガを見ることができます):\n"
 "  テキスト属性 *太字*、_下線_、/イタリック/ を追加 (ユーザメッセージのみ):\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
-"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
-"underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
-"italic}/\"\n"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
+"(\\S+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_(\\S+)_==_${color:"
+"underline}${re:1}${color:-underline}_== ==/(\\S+)/==/${color:"
+"italic}${re:1}${color:-italic}/\"\n"
 "  狭い端末ではニックネームリストバーを隠す:\n"
 "    /trigger add resize_small signal signal_sigwinch \"${info:term_width} < "
 "100\" \"\" \"/bar hide nicklist\"\n"
@@ -11038,7 +11052,6 @@ msgstr ""
 "コマンドを実行する条件 (フックコールバック内で確認されます) (注意: 内容はトリ"
 "ガの実行時に評価されます、/help eval を参照)"
 
-#, fuzzy
 msgid ""
 "replace text with a POSIX extended regular expression (it is done only if "
 "conditions are OK, and before running the command) (note: content is "
@@ -11058,8 +11071,8 @@ msgstr ""
 "regex2/replace2/var2\"; 正規表現内のエスケープ文字は解釈さえます (例えば "
 "\"\\n\"); 区切り文字 \"/\" は任意の文字で置換できます (1 文字以上の同一文"
 "字)、ただし '\\' と括弧を除く; マッチするグループを置換テキストに使うこともで"
-"きます: $0 から $99、$+ は最後にマッチしたグループ、$.cN グループ N のすべて"
-"の文字を c で置換"
+"きます: ${re:0} から ${re:99}、${re:+} は最後にマッチしたグループ、${hide:c,"
+"${re:N}} はグループ N のすべての文字を 'c' で置換"
 
 msgid ""
 "command(s) to run if conditions are OK, after regex replacements (many "
@@ -11217,11 +11230,11 @@ msgstr "%s: ファイル %s (ローカルファイル名: %s) を位置 %llu か
 
 #, c-format
 msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
-msgstr ""
+msgstr "%s%s: アドレス \"%s\" は予想以上に大きな sockaddr に解決されました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr "%s%s: \"%s\" のアドレスが見つかりません: エラー %d %s"
+msgstr "%s%s: \"%s\" は無効なアドレスです: エラー %d %s"
 
 #, c-format
 msgid "%s%s: missing arguments (%s)"
@@ -11526,6 +11539,6 @@ msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できませ�
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: \"%s\" のタイムアウト %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
-msgstr "%s%s: 送信者に接続できません"
+msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
