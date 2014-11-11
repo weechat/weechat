@@ -26,6 +26,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-channel.h"
+#include "irc-color.h"
 #include "irc-config.h"
 #include "irc-ignore.h"
 #include "irc-message.h"
@@ -563,6 +564,20 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
             }
         }
     }
+    else if (weechat_strcasecmp (infolist_name, "irc_color_weechat") == 0)
+    {
+        ptr_infolist = weechat_infolist_new ();
+        if (ptr_infolist)
+        {
+            /* build list with all IRC colors */
+            if (!irc_color_weechat_add_to_infolist (ptr_infolist))
+            {
+                weechat_infolist_free (ptr_infolist);
+                return NULL;
+            }
+            return ptr_infolist;
+        }
+    }
 
     return NULL;
 }
@@ -657,6 +672,11 @@ irc_info_init ()
                            N_("list of notify"),
                            N_("notify pointer (optional)"),
                            N_("server name (wildcard \"*\" is allowed) (optional)"),
+                           &irc_info_get_infolist_cb, NULL);
+    weechat_hook_infolist ("irc_color_weechat",
+                           N_("mapping between IRC color codes and WeeChat color names"),
+                           NULL,
+                           NULL,
                            &irc_info_get_infolist_cb, NULL);
 
     /* hdata hooks */

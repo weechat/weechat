@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-09 17:33+0100\n"
+"POT-Creation-Date: 2014-11-11 10:02+0100\n"
 "PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -119,6 +119,14 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+msgid "IRC color"
+msgstr "cor"
+
+#, fuzzy
+msgid "WeeChat color"
+msgstr "Cores básicas do WeeChat:"
 
 # Common conventions used here:
 # hotlist -> lista de atividade
@@ -7170,6 +7178,9 @@ msgid "list of notify"
 msgstr ""
 
 msgid "notify pointer (optional)"
+msgstr ""
+
+msgid "mapping between IRC color codes and WeeChat color names"
 msgstr ""
 
 msgid "irc nick"

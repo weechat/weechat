@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-09 17:33+0100\n"
+"POT-Creation-Date: 2014-11-11 10:02+0100\n"
 "PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -115,6 +115,14 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#, fuzzy
+msgid "IRC color"
+msgstr "color"
+
+#, fuzzy
+msgid "WeeChat color"
+msgstr "Colores básicos de WeeChat:"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -7757,6 +7765,9 @@ msgstr "lista de notificaciones"
 
 msgid "notify pointer (optional)"
 msgstr "puntero de la notificación (opcional)"
+
+msgid "mapping between IRC color codes and WeeChat color names"
+msgstr ""
 
 msgid "irc nick"
 msgstr "apodo irc"

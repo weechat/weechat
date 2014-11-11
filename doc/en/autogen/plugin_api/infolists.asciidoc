@@ -8,6 +8,8 @@
 
 | irc | irc_channel | list of channels for an IRC server | channel pointer (optional) | server,channel (channel is optional)
 
+| irc | irc_color_weechat | mapping between IRC color codes and WeeChat color names | - | -
+
 | irc | irc_ignore | list of IRC ignores | ignore pointer (optional) | -
 
 | irc | irc_nick | list of nicks for an IRC channel | nick pointer (optional) | server,channel,nick (nick is optional)

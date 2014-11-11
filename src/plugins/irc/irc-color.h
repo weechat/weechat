@@ -109,6 +109,7 @@ extern char *irc_color_modifier_cb (void *data, const char *modifier,
                                     const char *modifier_data,
                                     const char *string);
 extern char *irc_color_for_tags (const char *color);
+extern int irc_color_weechat_add_to_infolist (struct t_infolist *infolist);
 extern void irc_color_end ();
 
 #endif /* WEECHAT_IRC_COLOR_H */

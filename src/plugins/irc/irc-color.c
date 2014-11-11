@@ -806,6 +806,40 @@ irc_color_for_tags (const char *color)
 }
 
 /*
+ * Adds mapping between IRC color codes and WeeChat color names in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+irc_color_weechat_add_to_infolist (struct t_infolist *infolist)
+{
+    struct t_infolist_item *ptr_item;
+    char str_color_irc[32];
+    int i;
+
+    if (!infolist)
+        return 0;
+
+    for (i = 0; i < IRC_NUM_COLORS; i++)
+    {
+        ptr_item = weechat_infolist_new_item (infolist);
+        if (!ptr_item)
+            return 0;
+
+        snprintf (str_color_irc, sizeof (str_color_irc), "%02d", i);
+        if (!weechat_infolist_new_var_string (ptr_item, "color_irc", str_color_irc))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "color_weechat", irc_color_to_weechat[i]))
+            return 0;
+    }
+
+    return 1;
+}
+
+/*
  * Ends IRC colors.
  */
 

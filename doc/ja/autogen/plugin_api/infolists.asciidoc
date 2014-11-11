@@ -8,6 +8,8 @@
 
 | irc | irc_channel | IRC サーバのチャンネルリスト | チャンネルポインタ (任意) | server,channel (チャンネルは任意)
 
+| irc | irc_color_weechat | mapping between IRC color codes and WeeChat color names | - | -
+
 | irc | irc_ignore | IRC 無視のリスト | 無視ポインタ (任意) | -
 
 | irc | irc_nick | IRC チャンネルのニックネームのリスト | ニックネームポインタ (任意) | サーバ、チャンネル、ニックネーム (ニックネームは任意)
