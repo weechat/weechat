@@ -30,6 +30,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add regex replace feature in function string_eval_expression
 * api: use microseconds instead of milliseconds in functions util_timeval_diff
   and util_timeval_add
+* irc: add support for color codes 16-99 in IRC messages (closes #228)
 * irc: disable SSLv3 by default in server option "ssl_priorities" (closes #248)
 * irc: add support of "extended-join" capability (closes #143, closes #212)
 * irc: automatically add current channel in command /samode (closes #241)

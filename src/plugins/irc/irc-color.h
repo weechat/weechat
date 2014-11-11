@@ -20,7 +20,7 @@
 #ifndef WEECHAT_IRC_COLOR_H
 #define WEECHAT_IRC_COLOR_H 1
 
-#define IRC_NUM_COLORS        16
+#define IRC_NUM_COLORS        100
 
 /*
  * shift ncurses colors for compatibility with colors
