@@ -1434,26 +1434,12 @@ stopper l'attribut défini.
 
 Les codes couleur pour key[ctrl-c,c] sont :
 
-[width="50%",cols="^1m,3,3",options="header"]
-|===
-| Code | IRC          | WeeChat (curses)
-| 00   | blanc        | white
-| 01   | noir         | black
-| 02   | bleu foncé   | blue
-| 03   | vert foncé   | green
-| 04   | rouge clair  | lightred
-| 05   | rouge foncé  | red
-| 06   | violet       | magenta
-| 07   | orange       | brown
-| 08   | jaune        | yellow
-| 09   | vert clair   | lightgreen
-| 10   | cyan         | cyan
-| 11   | cyan clair   | lightcyan
-| 12   | bleu clair   | lightblue
-| 13   | violet clair | lightmagenta
-| 14   | gris         | darkgray
-| 15   | gris clair   | gray
-|===
+include::autogen/user/irc_colors.asciidoc[]
+
+[NOTE]
+Pour voir toutes les couleurs disponibles dans votre terminal, vous pouvez
+taper `/color` puis key[alt-c] dans WeeChat ou lancez cette commande dans le
+terminal : `weechat --colors`.
 
 Exemple : affichage de "bonjour tout le monde !" avec "bonjour" en bleu clair
 gras, et "tout le monde" en rouge clair souligné :

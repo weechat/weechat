@@ -335,6 +335,23 @@ def get_url_options():
     return url_options
 
 
+def get_irc_colors():
+    """
+    Get list of IRC colors in a dict with 2 indexes:
+    color_irc, color_weechat.
+    """
+    irc_colors = []
+    infolist = weechat.infolist_get('irc_color_weechat', '', '')
+    while weechat.infolist_next(infolist):
+        irc_colors.append({
+            'color_irc': weechat.infolist_string(infolist, 'color_irc'),
+            'color_weechat': weechat.infolist_string(infolist,
+                                                     'color_weechat'),
+        })
+    weechat.infolist_free(infolist)
+    return irc_colors
+
+
 def update_file(oldfile, newfile, num_files, num_files_updated, obj):
     """Update a doc file."""
     try:
@@ -377,6 +394,7 @@ def docgen_cmd_cb(data, buf, args):
     hdata = get_hdata()
     completions = get_completions()
     url_options = get_url_options()
+    irc_colors = get_irc_colors()
 
     # get path and replace ~ by home if needed
     path = weechat.config_get_plugin('path')
@@ -640,6 +658,23 @@ def docgen_cmd_cb(data, buf, args):
         _file.close()
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'url_options')
+
+        # write IRC colors
+        filename = directory + '/user/irc_colors.asciidoc'
+        tmpfilename = filename + '.tmp'
+        _file = open(tmpfilename, 'w')
+        _file.write('[width="30%",cols="^2m,3",options="header"]\n')
+        _file.write('|===\n')
+        _file.write('| {0} | {1}\n\n'
+                    ''.format(_('IRC color'), _('WeeChat color')))
+        for color in irc_colors:
+            _file.write('| {0} | {1}\n'
+                        ''.format(escape(color['color_irc']),
+                                  escape(color['color_weechat'])))
+        _file.write('|===\n')
+        _file.close()
+        update_file(filename, tmpfilename, num_files, num_files_updated,
+                    'irc_colors')
 
         # write counters
         weechat.prnt('',

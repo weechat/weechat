@@ -1409,26 +1409,12 @@ atrybutu.
 
 Kody kolorów dla key[ctrl-c,c]:
 
-[width="50%",cols="^1m,3,3",options="header"]
-|===
-| Kod  | IRC           | WeeChat (curses)
-| 00   | white         | white
-| 01   | black         | black
-| 02   | dark blue     | blue
-| 03   | dark green    | green
-| 04   | light red     | lightred
-| 05   | dark red      | red
-| 06   | magenta       | magenta
-| 07   | orange        | brown
-| 08   | yellow        | yellow
-| 09   | light green   | lightgreen
-| 10   | cyan          | cyan
-| 11   | light cyan    | lightcyan
-| 12   | light blue    | lightblue
-| 13   | light magenta | lightmagenta
-| 14   | gray          | darkgray
-| 15   | light gray    | gray
-|===
+include::autogen/user/irc_colors.asciidoc[]
+
+// TRANSLATION MISSING
+[NOTE]
+To show all available colors in your terminal, you can do `/color` then
+key[alt-c] in WeeChat or run this command in terminal: `weechat --colors`.
 
 Przykład: wyświetlenie "hello everybody!" z pogrubionym jasno niebieskim "hello"
 i podkreślonym jasno czerwonym "everybody":

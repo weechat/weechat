@@ -1456,26 +1456,12 @@ terminare l'attributo.
 
 I codici colore per key[ctrl-c,c] sono:
 
-[width="50%",cols="^1m,3,3",options="header"]
-|===
-| Codice | IRC            | WeeChat (curses)
-| 00     | bianco         | white
-| 01     | nero           | black
-| 02     | blu scuro      | blue
-| 03     | verde scuro    | green
-| 04     | rosso chiaro   | lightred
-| 05     | rosso scuro    | red
-| 06     | rosa scuro     | magenta
-| 07     | arancione      | brown
-| 08     | giallo         | yellow
-| 09     | verde chiaro   | lightgreen
-| 10     | azzurro scuro  | cyan
-| 11     | azzurro chiaro | lightcyan
-| 12     | blu chiaro     | lightblue
-| 13     | rosa chiaro    | lightmagenta
-| 14     | grigio         | darkgray
-| 15     | grigio chiaro  | gray
-|===
+include::autogen/user/irc_colors.asciidoc[]
+
+// TRANSLATION MISSING
+[NOTE]
+To show all available colors in your terminal, you can do `/color` then
+key[alt-c] in WeeChat or run this command in terminal: `weechat --colors`.
 
 Esempio: visualizza "ciao a tutti!" con "ciao" scritto in blu chiaro grassetto
 e "a tutti" in rosso chiaro sottolineato:

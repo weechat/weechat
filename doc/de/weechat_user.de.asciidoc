@@ -1413,26 +1413,12 @@ um die Farbkodierungen bzw. Attribute zu deaktivieren.
 
 Farbtabelle für key[ctrl-c,c]:
 
-[width="50%",cols="^1m,3,3",options="header"]
-|===
-| Code | IRC          | WeeChat (curses)
-| 00   | weiß         | white
-| 01   | schwarz      | black
-| 02   | dunkelblau   | blue
-| 03   | dunkelgrün   | green
-| 04   | hellrot      | lightred
-| 05   | dunkelrot    | red
-| 06   | magenta      | magenta
-| 07   | orange       | brown
-| 08   | gelb         | yellow
-| 09   | hellgrün     | lightgreen
-| 10   | türkis       | cyan
-| 11   | hell türkis  | lightcyan
-| 12   | hellblau     | lightblue
-| 13   | hell magenta | lightmagenta
-| 14   | grau         | darkgray
-| 15   | hellgrau     | gray
-|===
+include::autogen/user/irc_colors.asciidoc[]
+
+// TRANSLATION MISSING
+[NOTE]
+To show all available colors in your terminal, you can do `/color` then
+key[alt-c] in WeeChat or run this command in terminal: `weechat --colors`.
 
 Beispiel: Im Buffer wird "Hallo an alle!" ausgegeben. Dabei wird "Hallo" in fett und hellblau
 und "an alle" rot und unterstrichen dargestellt.

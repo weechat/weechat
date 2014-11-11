@@ -1393,26 +1393,12 @@ key[ctrl-c,_]::
 
 key[ctrl-c,c] 用の色コード:
 
-[width="50%",cols="^1m,3,3",options="header"]
-|===
-| コード | IRC           | WeeChat (curses)
-| 00   | 白              | white
-| 01   | 黒              | black
-| 02   | 暗い青          | blue
-| 03   | 暗い緑          | green
-| 04   | 明るい赤        | lightred
-| 05   | 暗い赤          | red
-| 06   | 赤紫            | magenta
-| 07   | 橙色            | brown
-| 08   | 黄色            | yellow
-| 09   | 明るい緑色      | lightgreen
-| 10   | 青緑            | cyan
-| 11   | 明るい青緑色    | lightcyan
-| 12   | 明るい青        | lightblue
-| 13   | 明るい赤紫色    | lightmagenta
-| 14   | 灰色            | darkgray
-| 15   | 明るい灰色      | gray
-|===
+include::autogen/user/irc_colors.asciidoc[]
+
+// TRANSLATION MISSING
+[NOTE]
+To show all available colors in your terminal, you can do `/color` then
+key[alt-c] in WeeChat or run this command in terminal: `weechat --colors`.
 
 例: "こんにちは皆さん!" の "こんにちは" を太字の明るい青、"皆さん"
 を下線付きの明るい赤に表示したい場合:
