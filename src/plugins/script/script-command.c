@@ -19,6 +19,10 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -287,7 +291,7 @@ script_command_init ()
 {
     weechat_hook_command (
         "script",
-        N_("WeeChat scripts manager"),
+        N_(PACKAGE_NAME " scripts manager"),
         N_("list [-o|-i]"
            " || search <text>"
            " || show <script>"

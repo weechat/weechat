@@ -111,14 +111,18 @@ weechat_display_copyright ()
     string_iconv_fprintf (stdout, "\n");
     string_iconv_fprintf (stdout,
                           /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
-                          _("WeeChat %s Copyright %s, compiled on %s %s\n"
-                            "Developed by Sébastien Helleu <flashcode@flashtux.org> "
+                          _(PACKAGE_NAME " %s Copyright %s, compiled on %s %s\n"
+                            "Developed by " PACKAGE_AUTHOR " <" PACKAGE_AUTHOR_EMAIL "> "
                             "- %s"),
                           version_get_version_with_git (),
                           WEECHAT_COPYRIGHT_DATE,
                           version_get_compilation_date (),
                           version_get_compilation_time (),
                           WEECHAT_WEBSITE);
+#if PACKAGE_BRANDED == 1
+    string_iconv_fprintf (stdout,
+                          _("\nShell by Sébastien Helleu <flashcode@flashtux.org> - http://www.weechat.org/"));
+#endif
     string_iconv_fprintf (stdout, "\n");
 }
 
@@ -138,16 +142,16 @@ weechat_display_usage (char *exec_name)
     string_iconv_fprintf (stdout,
                           _("  -a, --no-connect         disable auto-connect to servers at startup\n"
                             "  -c, --colors             display default colors in terminal\n"
-                            "  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
+                            "  -d, --dir <path>         set " PACKAGE_NAME " home directory (default: ~/." PACKAGE_NAME_LOWER ")\n"
                             "  -h, --help               display this help\n"
-                            "  -l, --license            display WeeChat license\n"
+                            "  -l, --license            display " PACKAGE_NAME " license\n"
                             "  -p, --no-plugin          don't load any plugin at startup\n"
                             "  -r, --run-command <cmd>  run command(s) after startup\n"
                             "                           (many commands can be separated by semicolons)\n"
                             "  -s, --no-script          don't load any script at startup\n"
-                            "      --upgrade            upgrade WeeChat using session files (see /help upgrade in WeeChat)\n"
-                            "  -v, --version            display WeeChat version\n"
-                            "  plugin:option            option for plugin (see man weechat)\n"));
+                            "      --upgrade            upgrade " PACKAGE_NAME " using session files (see /help upgrade in " PACKAGE_NAME ")\n"
+                            "  -v, --version            display " PACKAGE_NAME " version\n"
+                            "  plugin:option            option for plugin (see man " PACKAGE_NAME_LOWER ")\n"));
     string_iconv_fprintf(stdout, "\n");
 }
 
@@ -202,7 +206,7 @@ weechat_parse_args (int argc, char *argv[])
         {
             weechat_display_copyright ();
             string_iconv_fprintf (stdout, "\n");
-            string_iconv_fprintf (stdout, "%s%s", WEECHAT_LICENSE_TEXT);
+            string_iconv_fprintf (stdout, "%s", WEECHAT_LICENSE_TEXT);
             weechat_shutdown (EXIT_SUCCESS, 0);
         }
         else if (strcmp (argv[i], "--no-dlclose") == 0)
@@ -357,21 +361,32 @@ weechat_create_home_dir ()
  */
 
 void
+weechat_ascii_logo ()
+{
+	const char * cur_line = WEECHAT_ASCII_LOGO;
+	while(cur_line)
+	{
+		const char * next_line = strchr(cur_line, '\n');
+		int cur_len = next_line ? (next_line - cur_line) : strlen(cur_line);
+		char * temp_s = (char *) malloc(cur_len + 1);
+		if (temp_s)
+		{
+			memcpy(temp_s, cur_line, cur_len);
+			temp_s[cur_len] = '\0';
+			gui_chat_printf (NULL, "%s %s\n", GUI_COLOR(GUI_COLOR_CHAT_NICK), temp_s);
+			free(temp_s);
+		}
+
+		cur_line = next_line ? (next_line + 1) : NULL;
+	}
+}
+
+void
 weechat_welcome_message ()
 {
     if (CONFIG_BOOLEAN(config_startup_display_logo))
     {
-        gui_chat_printf (NULL,
-                         "%s  ___       __         ______________        _____ \n"
-                         "%s  __ |     / /___________  ____/__  /_______ __  /_\n"
-                         "%s  __ | /| / /_  _ \\  _ \\  /    __  __ \\  __ `/  __/\n"
-                         "%s  __ |/ |/ / /  __/  __/ /___  _  / / / /_/ // /_  \n"
-                         "%s  ____/|__/  \\___/\\___/\\____/  /_/ /_/\\__,_/ \\__/  ",
-                         GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                         GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                         GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                         GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                         GUI_COLOR(GUI_COLOR_CHAT_NICK));
+		weechat_ascii_logo ();
     }
     if (CONFIG_BOOLEAN(config_startup_display_version))
     {
@@ -411,7 +426,7 @@ weechat_term_check ()
         gui_chat_printf (
             NULL,
             /* TRANSLATORS: the "under %s" can be "under screen" or "under tmux" */
-            _("%sWarning: WeeChat is running under %s and $TERM is \"%s\", "
+            _("%sWarning: " PACKAGE_NAME " is running under %s and $TERM is \"%s\", "
               "which can cause display bugs; $TERM should be set to "
               "\"screen-256color\" or \"screen\""),
             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
@@ -435,7 +450,7 @@ weechat_term_check ()
 void
 weechat_sighup ()
 {
-    log_printf (_("Signal %s received, exiting WeeChat..."), "SIGHUP");
+    log_printf (_("Signal %s received, exiting " PACKAGE_NAME "..."), "SIGHUP");
     (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
     weechat_quit = 1;
 }
@@ -447,7 +462,7 @@ weechat_sighup ()
 void
 weechat_sigquit ()
 {
-    log_printf (_("Signal %s received, exiting WeeChat..."), "SIGQUIT");
+    log_printf (_("Signal %s received, exiting " PACKAGE_NAME "..."), "SIGQUIT");
     (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
     weechat_quit = 1;
 }
@@ -459,7 +474,7 @@ weechat_sigquit ()
 void
 weechat_sigterm ()
 {
-    log_printf (_("Signal %s received, exiting WeeChat..."), "SIGTERM");
+    log_printf (_("Signal %s received, exiting " PACKAGE_NAME "..."), "SIGTERM");
     (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
     weechat_quit = 1;
 }

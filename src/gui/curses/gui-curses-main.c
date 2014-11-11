@@ -181,7 +181,7 @@ gui_main_init ()
             ptr_buffer->short_name = strdup (GUI_BUFFER_MAIN);
 
         /* set title for core buffer */
-        snprintf (title, sizeof (title), "WeeChat %s %s - %s",
+        snprintf (title, sizeof (title), PACKAGE_NAME " %s %s - %s",
                   version_get_version (),
                   WEECHAT_COPYRIGHT_DATE,
                   WEECHAT_WEBSITE);
