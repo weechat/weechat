@@ -138,7 +138,8 @@ IGNORE_COMPLETIONS_ITEMS = (
 
 def get_commands():
     """
-    Get list of commands in a dict with 3 indexes: plugin, command, xxx.
+    Get list of WeeChat/plugins commands as dictionary with 3 indexes: plugin,
+    command, xxx.
     """
     commands = defaultdict(lambda: defaultdict(defaultdict))
     infolist = weechat.infolist_get('hook', '', 'command')
@@ -157,8 +158,8 @@ def get_commands():
 
 def get_options():
     """
-    Get list of config options in a dict with 4 indexes: config,
-    section, option, xxx.
+    Get list of WeeChat/plugins config options as dictionary with 4 indexes:
+    config, section, option, xxx.
     """
     options = \
         defaultdict(lambda: defaultdict(lambda: defaultdict(defaultdict)))
@@ -183,8 +184,8 @@ def get_options():
 
 def get_infos():
     """
-    Get list of infos hooked by plugins in a dict with 3 indexes:
-    plugin, name, xxx.
+    Get list of WeeChat/plugins infos as dictionary with 3 indexes: plugin,
+    name, xxx.
     """
     infos = defaultdict(lambda: defaultdict(defaultdict))
     infolist = weechat.infolist_get('hook', '', 'info')
@@ -200,8 +201,8 @@ def get_infos():
 
 def get_infos_hashtable():
     """
-    Get list of infos (hashtable) hooked by plugins in a dict with 3
-    indexes: plugin, name, xxx.
+    Get list of WeeChat/plugins infos (hashtable) as dictionary with 3 indexes:
+    plugin, name, xxx.
     """
     infos_hashtable = defaultdict(lambda: defaultdict(defaultdict))
     infolist = weechat.infolist_get('hook', '', 'info_hashtable')
@@ -217,8 +218,8 @@ def get_infos_hashtable():
 
 def get_infolists():
     """
-    Get list of infolists hooked by plugins in a dict with 3 indexes:
-    plugin, name, xxx.
+    Get list of WeeChat/plugins infolists as dictionary with 3 indexes: plugin,
+    name, xxx.
     """
     infolists = defaultdict(lambda: defaultdict(defaultdict))
     infolist = weechat.infolist_get('hook', '', 'infolist')
@@ -235,8 +236,8 @@ def get_infolists():
 # pylint: disable=too-many-locals
 def get_hdata():
     """
-    Get list of hdata hooked by plugins in a dict with 3 indexes:
-    plugin, name, xxx.
+    Get list of WeeChat/plugins hdata as dictionary with 3 indexes: plugin,
+    name, xxx.
     """
     hdata = defaultdict(lambda: defaultdict(defaultdict))
     infolist = weechat.infolist_get('hook', '', 'hdata')
@@ -300,7 +301,7 @@ def get_hdata():
 
 def get_completions():
     """
-    Get list of completions hooked by plugins in a dict with 3 indexes:
+    Get list of WeeChat/plugins completions as dictionary with 3 indexes:
     plugin, item, xxx.
     """
     completions = defaultdict(lambda: defaultdict(defaultdict))
@@ -318,8 +319,7 @@ def get_completions():
 
 def get_url_options():
     """
-    Get list of completions hooked by plugins in a dict with 3 indexes:
-    plugin, item, xxx.
+    Get list of URL options as list of dictionaries.
     """
     url_options = []
     infolist = weechat.infolist_get('url_options', '', '')
@@ -337,8 +337,7 @@ def get_url_options():
 
 def get_irc_colors():
     """
-    Get list of IRC colors in a dict with 2 indexes:
-    color_irc, color_weechat.
+    Get list of IRC colors as list of dictionaries.
     """
     irc_colors = []
     infolist = weechat.infolist_get('irc_color_weechat', '', '')
