@@ -14,39 +14,39 @@
 
 | failonerror | long |
 
-| protocols | mask | http, https, ftp, ftps, scp, sftp, telnet, ldap, ldaps, dict, file, tftp, imap, imaps, pop3, pop3s, smtp, smtps, rtsp, rtmp, rtmpt, rtmpe, rtmpte, rtmps, rtmpts, gopher, all
-
-| redir_protocols | mask | http, https, ftp, ftps, scp, sftp, telnet, ldap, ldaps, dict, file, tftp, imap, imaps, pop3, pop3s, smtp, smtps, rtsp, rtmp, rtmpt, rtmpe, rtmpte, rtmps, rtmpts, gopher, all
-
 | proxy | string |
 
 | proxyport | long |
 
-| proxytype | long | http, http_1_0, socks4, socks5, socks4a, socks5_hostname
-
-| noproxy | string |
+| port | long |
 
 | httpproxytunnel | long |
 
-| socks5_gssapi_service | string |
-
-| socks5_gssapi_nec | long |
-
 | interface | string |
+
+| dns_cache_timeout | long |
+
+| proxytype | long | http, socks4, socks5, socks4a, socks5_hostname, http_1_0
+
+| buffersize | long |
+
+| tcp_nodelay | long |
 
 | localport | long |
 
 | localportrange | long |
 
-| dns_cache_timeout | long |
-
-| buffersize | long |
-
-| port | long |
-
-| tcp_nodelay | long |
-
 | address_scope | long |
+
+| protocols | mask | http, https, ftp, ftps, scp, sftp, telnet, ldap, ldaps, dict, file, tftp, all, imap, imaps, pop3, pop3s, smtp, smtps, rtsp, rtmp, rtmpt, rtmpe, rtmpte, rtmps, rtmpts, gopher
+
+| redir_protocols | mask | http, https, ftp, ftps, scp, sftp, telnet, ldap, ldaps, dict, file, tftp, all, imap, imaps, pop3, pop3s, smtp, smtps, rtsp, rtmp, rtmpt, rtmpe, rtmpte, rtmps, rtmpts, gopher
+
+| noproxy | string |
+
+| socks5_gssapi_service | string |
+
+| socks5_gssapi_nec | long |
 
 | tcp_keepalive | long |
 
@@ -56,11 +56,15 @@
 
 | netrc | long | ignored, optional, required
 
-| netrc_file | string |
-
 | userpwd | string |
 
 | proxyuserpwd | string |
+
+| httpauth | mask | none, basic, digest, gssnegotiate, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate
+
+| proxyauth | mask | none, basic, digest, gssnegotiate, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate
+
+| netrc_file | string |
 
 | username | string |
 
@@ -70,35 +74,21 @@
 
 | proxypassword | string |
 
-| login_options | string |
-
-| httpauth | mask | none, basic, digest, gssnegotiate, ntlm, digest_ie, ntlm_wb, only, any, anysafe
-
 | tlsauth_type | mask | none, srp
 
 | tlsauth_username | string |
 
 | tlsauth_password | string |
 
-| proxyauth | mask | none, basic, digest, gssnegotiate, ntlm, digest_ie, ntlm_wb, only, any, anysafe
-
 | sasl_ir | long |
 
 | xoauth2_bearer | string |
 
+| login_options | string |
+
 | autoreferer | long |
 
-| accept_encoding | string |
-
-| transfer_encoding | long |
-
 | followlocation | long |
-
-| unrestricted_auth | long |
-
-| maxredirs | long |
-
-| postredir | mask | post_301, post_302
 
 | put | long |
 
@@ -106,39 +96,49 @@
 
 | postfields | string |
 
-| postfieldsize | long |
-
-| postfieldsize_large | long long |
-
-| copypostfields | string |
-
 | referer | string |
 
 | useragent | string |
-
-| headeropt | mask | unified, separate
 
 | cookie | string |
 
 | cookiefile | string |
 
-| cookiejar | string |
+| postfieldsize | long |
 
-| cookiesession | long |
-
-| cookielist | string |
+| maxredirs | long |
 
 | httpget | long |
 
+| cookiejar | string |
+
 | http_version | long | none, 1_0, 1_1
 
+| cookiesession | long |
+
+| unrestricted_auth | long |
+
+| postfieldsize_large | long long |
+
+| cookielist | string |
+
 | ignore_content_length | long |
+
+| accept_encoding | string |
+
+| transfer_encoding | long |
 
 | http_content_decoding | long |
 
 | http_transfer_decoding | long |
 
+| copypostfields | string |
+
+| postredir | mask | post_301, post_302
+
 | expect_100_timeout_ms | long |
+
+| headeropt | mask | unified, separate
 
 | mail_from | string |
 
@@ -148,31 +148,31 @@
 
 | ftpport | string |
 
-| dirlistonly | long |
-
-| append | long |
-
-| ftp_use_eprt | long |
-
 | ftp_use_epsv | long |
 
-| ftp_use_pret | long |
+| ftp_use_eprt | long |
 
 | ftp_create_missing_dirs | long |
 
 | ftp_response_timeout | long |
 
-| ftp_alternative_to_user | string |
-
-| ftp_skip_pasv_ip | long |
-
 | ftpsslauth | long | default, ssl, tls
-
-| ftp_ssl_ccc | long | ccc_none, ccc_passive, ccc_active
 
 | ftp_account | string |
 
+| ftp_skip_pasv_ip | long |
+
 | ftp_filemethod | long | multicwd, nocwd, singlecwd
+
+| ftp_alternative_to_user | string |
+
+| ftp_ssl_ccc | long | ccc_none, ccc_active, ccc_passive
+
+| dirlistonly | long |
+
+| append | long |
+
+| ftp_use_pret | long |
 
 | rtsp_request | long | options, describe, announce, setup, play, pause, teardown, get_parameter, set_parameter, record, receive
 
@@ -186,51 +186,43 @@
 
 | rtsp_server_cseq | long |
 
-| transfertext | long |
-
-| proxy_transfer_mode | long |
-
 | crlf | long |
 
 | range | string |
 
 | resume_from | long |
 
-| resume_from_large | long long |
-
 | customrequest | string |
-
-| filetime | long |
 
 | nobody | long |
 
 | infilesize | long |
 
-| infilesize_large | long long |
-
 | upload | long |
-
-| maxfilesize | long |
-
-| maxfilesize_large | long long |
 
 | timecondition | long | none, ifmodsince, ifunmodsince, lastmod
 
 | timevalue | long |
 
-| timeout | long |
+| transfertext | long |
 
-| timeout_ms | long |
+| filetime | long |
+
+| maxfilesize | long |
+
+| proxy_transfer_mode | long |
+
+| resume_from_large | long long |
+
+| infilesize_large | long long |
+
+| maxfilesize_large | long long |
+
+| timeout | long |
 
 | low_speed_limit | long |
 
 | low_speed_time | long |
-
-| max_send_speed_large | long long |
-
-| max_recv_speed_large | long long |
-
-| maxconnects | long |
 
 | fresh_connect | long |
 
@@ -238,13 +230,25 @@
 
 | connecttimeout | long |
 
-| connecttimeout_ms | long |
-
 | ipresolve | long | whatever, v4, v6
 
 | connect_only | long |
 
+| max_send_speed_large | long long |
+
+| max_recv_speed_large | long long |
+
+| timeout_ms | long |
+
+| connecttimeout_ms | long |
+
+| maxconnects | long |
+
 | use_ssl | long | none, try, control, all
+
+| dns_servers | string |
+
+| accepttimeout_ms | long |
 
 | dns_interface | string |
 
@@ -252,27 +256,7 @@
 
 | dns_local_ip6 | string |
 
-| dns_servers | string |
-
-| accepttimeout_ms | long |
-
 | sslcert | string |
-
-| sslcerttype | string |
-
-| sslkey | string |
-
-| sslkeytype | string |
-
-| keypasswd | string |
-
-| ssl_enable_alpn | long |
-
-| ssl_enable_npn | long |
-
-| sslengine | string |
-
-| sslengine_default | long |
 
 | sslversion | long | default, tlsv1, sslv2, sslv3
 
@@ -280,37 +264,53 @@
 
 | cainfo | string |
 
-| issuercert | string |
-
-| capath | string |
-
-| crlfile | string |
-
-| ssl_verifyhost | long |
-
-| certinfo | long |
-
 | random_file | string |
 
 | egdsocket | string |
 
+| ssl_verifyhost | long |
+
 | ssl_cipher_list | string |
+
+| sslcerttype | string |
+
+| sslkey | string |
+
+| sslkeytype | string |
+
+| sslengine | string |
+
+| sslengine_default | long |
+
+| capath | string |
 
 | ssl_sessionid_cache | long |
 
-| ssl_options | long | allow_beast
-
 | krblevel | string |
+
+| keypasswd | string |
+
+| issuercert | string |
+
+| crlfile | string |
+
+| certinfo | long |
 
 | gssapi_delegation | long | none, policy_flag, flag
 
-| ssh_auth_types | mask | none, policy_flag, flag
+| ssl_options | long | allow_beast
 
-| ssh_host_public_key_md5 | string |
+| ssl_enable_alpn | long |
+
+| ssl_enable_npn | long |
+
+| ssh_auth_types | mask | none, policy_flag, flag
 
 | ssh_public_keyfile | string |
 
 | ssh_private_keyfile | string |
+
+| ssh_host_public_key_md5 | string |
 
 | ssh_knownhosts | string |
 
