@@ -1450,6 +1450,17 @@ hook_process_hashtable (struct t_weechat_plugin *plugin,
 
     hook_add_to_list (new_hook);
 
+    if (weechat_debug_core >= 1)
+    {
+        gui_chat_printf (NULL,
+                         "debug: hook_process: command=\"%s\", "
+                         "options=\"%s\", timeout=%d",
+                         new_hook_process->command,
+                         hashtable_get_string (new_hook_process->options,
+                                               "keys_values"),
+                         new_hook_process->timeout);
+    }
+
     hook_process_run (new_hook);
 
     return new_hook;
