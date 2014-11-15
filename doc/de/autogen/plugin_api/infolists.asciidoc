@@ -48,7 +48,7 @@
 
 | weechat | history | Verlaufspeicher der Befehle | Buffer Pointer (falls nicht gesetzt, wird der globale Verlauf zurückgegeben) (optional) | -
 
-| weechat | hook | Auflistung der Hooks | Hook-Pointer (optional) | type,arguments (type ist ein command/timer/.., arguments dient dazu nur einige hooks abzufragen (Platzhalter "*" kann verwendet werden), beide Optionen sind optional)
+| weechat | hook | Auflistung der Hooks | Hook-Pointer (optional) | type,arguments (type ist ein command/timer/.., arguments dient dazu nur einige hooks abzufragen (Platzhalter "*" kann verwendet werden), beide Einstellungen sind optional)
 
 | weechat | hotlist | Liste der Buffer in Hotlist | - | -
 
@@ -58,13 +58,13 @@
 
 | weechat | nicklist | Nicks in Benutzerliste für einen Buffer | Buffer Pointer | nick_xxx oder group_xxx um nur den Nick/Group xxx abzufragen (optional)
 
-| weechat | option | Auflistung der Optionen | - | Name einer Option (Platzhalter "*" kann verwendet werden) (optional)
+| weechat | option | Auflistung der Einstellungen | - | Name einer Einstellung (Platzhalter "*" kann verwendet werden) (optional)
 
 | weechat | plugin | Auflistung der Erweiterungen | Pointer der Erweiterung (optional) | Name einer Erweiterung (Platzhalter "*" kann verwendet werden) (optional)
 
 | weechat | proxy | Liste der Proxys | Proxy Pointer (optional) | Name des Proxy (Platzhalter "*" kann verwendet werden) (optional)
 
-| weechat | url_options | Optionen für URL | - | -
+| weechat | url_options | Einstellungen für URL | - | -
 
 | weechat | window | Auflistung der Fenster | Fenster Pointer (optional) | "current" für aktuelles Fenster oder die Nummer eines Fensters (optional)
 

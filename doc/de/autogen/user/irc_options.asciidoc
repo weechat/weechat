@@ -159,17 +159,17 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in Channel-Buffern als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal "highlight_words" hinzugefügt. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in Channel-Buffern als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal "highlight_words" hinzugefügt. Dies bedeutet, dass diese Einstellung keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in einem privaten Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal "highlight_words" hinzugefügt. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in einem privaten Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal "highlight_words" hinzugefügt. Dies bedeutet, dass diese Einstellung keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in Server-Buffern als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal "highlight_words" hinzugefügt. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in Server-Buffern als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann werden die angegeben Wörter dem Buffer-Merkmal "highlight_words" hinzugefügt. Dies bedeutet, dass diese Einstellung keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
@@ -224,7 +224,7 @@
 ** Werte: none, next, near_server (Standardwert: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** Beschreibung: `erzwingt für einen Nick eine spezielle Farbe. Die standardmäßig, mittels Streuwertfunktion aus dem Nicknamen, generierte Farbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Zuerst wird beim Namen des Nick nach Groß- und Kleinschreibung unterschieden. Sollte der Nick nicht gefunden werden, findet keine Unterscheidung mehr statt. Somit ist es möglich die Nicks, für dieser Option, ausschließlich in Kleinschrift aufzuführen`
+** Beschreibung: `erzwingt für einen Nick eine spezielle Farbe. Die standardmäßig, mittels Streuwertfunktion aus dem Nicknamen, generierte Farbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Zuerst wird beim Namen des Nick nach Groß- und Kleinschreibung unterschieden. Sollte der Nick nicht gefunden werden findet keine Unterscheidung mehr statt. Somit ist es möglich die Nicks, für diese Einstellung, ausschließlich in Kleinschrift aufzuführen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -259,7 +259,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"nickserv"`)
 
 * [[option_irc.look.notice_as_pv]] *irc.look.notice_as_pv*
-** Beschreibung: `zeigt Notizen als private Nachricht an (wird die "auto" Option verwendet dann wird ein privater Buffer genutzt, falls vorhanden)`
+** Beschreibung: `zeigt Notizen als private Nachricht an (wird die "auto" Einstellung verwendet dann wird ein privater Buffer genutzt, falls vorhanden)`
 ** Typ: integer
 ** Werte: auto, never, always (Standardwert: `auto`)
 
@@ -449,7 +449,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** Beschreibung: `durch Kommata getrennte Liste von Channels, die beim Verbinden mit dem Server automatisch betreten werden (nachdem die Optionen command + delay ausgeführt wurden). Channels die einen Schlüssel benötigen müssen in der Auflistung als erstes aufgeführt werden. Die Schlüssel, zu den jeweiligen Channels, werden nach den Channels aufgeführt (eine Trennung von Channels und Schlüssel erfolgt mittels einem Leerzeichen. Schlüssel werden untereinander auch durch Kommata voneinander getrennt) (Beispiel: "#channel1,#channel2,#channnel3 key1,key2", #channel1 und #channel2 sind durch jeweils einen Schlüssel, key1 und key2, geschützt) (Hinweis: Inhalt wird evaluiert, siehe /help eval)"`
+** Beschreibung: `durch Kommata getrennte Liste von Channels, die beim Verbinden mit dem Server automatisch betreten werden (nachdem die Einstellungen command + delay ausgeführt wurden). Channels die einen Schlüssel benötigen müssen in der Auflistung als erstes aufgeführt werden. Die Schlüssel, zu den jeweiligen Channels, werden nach den Channels aufgeführt (eine Trennung von Channels und Schlüssel erfolgt mittels einem Leerzeichen. Schlüssel werden untereinander auch durch Kommata voneinander getrennt) (Beispiel: "#channel1,#channel2,#channnel3 key1,key2", #channel1 und #channel2 sind durch jeweils einen Schlüssel, key1 und key2, geschützt) (Hinweis: Inhalt wird evaluiert, siehe /help eval)"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -534,7 +534,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.notify]] *irc.server_default.notify*
-** Beschreibung: `Liste mit Benachrichtigung für Server (diese Option sollte nicht direkt verändert werden. Dazu sollte der Befehl /notify genutzt werden)`
+** Beschreibung: `Liste mit Benachrichtigung für Server (diese Einstellung sollte nicht direkt verändert werden. Dazu sollte der Befehl /notify genutzt werden)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -589,7 +589,7 @@
 ** Werte: 0 .. 2147483647 (Standardwert: `2048`)
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** Beschreibung: `SHA1 Fingerprint des Zertifikates welches als vertrauenswürdig eingestuft und für diesen Server akzeptiert wird (hier müssen exakt 40 hexadezimale Zeichen, ohne Trennung, angegeben werden); mehrere Fingerprints können durch Kommata voneinander getrennt werden; wenn diese Option verwendet wird, dann werden andere Optionen, die eine Überprüfung von Zertifikaten vornehmen, NICHT berücksichtigt (Option "ssl_verify")`
+** Beschreibung: `SHA1 Fingerprint des Zertifikates welches als vertrauenswürdig eingestuft und für diesen Server akzeptiert wird (hier müssen exakt 40 hexadezimale Zeichen, ohne Trennung, angegeben werden); mehrere Fingerprints können durch Kommata voneinander getrennt werden; wenn diese Einstellung verwendet wird, dann werden andere Einstellungen, die eine Überprüfung von Zertifikaten vornehmen, NICHT berücksichtigt (Einstellung "ssl_verify")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

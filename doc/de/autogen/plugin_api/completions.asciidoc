@@ -88,13 +88,13 @@
 
 | trigger | trigger_names_default | voreingestellte Trigger
 
-| trigger | trigger_option_value | Werte für Trigger-Option
+| trigger | trigger_option_value | Werte für Trigger-Einstellung
 
-| trigger | trigger_options | Optionen für Trigger
+| trigger | trigger_options | Einstellungen für Trigger
 
 | weechat | bars_names | Namen der Infobars
 
-| weechat | bars_options | Optionen für Infobars
+| weechat | bars_options | Einstellungen für Infobars
 
 | weechat | buffer_properties_get | Eigenschaften die für den Buffer gelesen werden können
 
@@ -148,7 +148,7 @@
 
 | weechat | proxies_names | Namen aller Proxys
 
-| weechat | proxies_options | Optionen für Proxys
+| weechat | proxies_options | Einstellungen für Proxys
 
 | weechat | secured_data | Namen der geschützten Daten (Datei sec.conf, section data)
 

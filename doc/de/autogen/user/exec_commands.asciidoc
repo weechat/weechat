@@ -13,17 +13,17 @@
        -del <id>|-all [<id>...]
 
    -list: zeigt laufende Befehle an
-     -sh: es wird die shell verwendet um Befehle auszuführen (WARNUNG: Diese Option sollte nur verwendet werden, falls alle Argumente unbedenklich sind, siehe Option -nosh)
+     -sh: es wird die shell verwendet um Befehle auszuführen (WARNUNG: Dieses Argument sollte nur verwendet werden, falls alle Argumente unbedenklich sind, siehe Argument -nosh)
    -nosh: die shell wird nicht verwendet um Befehle auszuführen (wird benötigt, falls der Befehl mit sensiblen Daten hantiert. Zum Beispiel der Inhalt einer Nachricht eines anderen Users)
-     -bg: führt Prozess im Hintergrund aus: gibt weder eine Prozessausgabe noch einen Rückgabewert aus (nicht kompatibel mit Optionen -o/-n)
+     -bg: führt Prozess im Hintergrund aus: gibt weder eine Prozessausgabe noch einen Rückgabewert aus (nicht kompatibel mit Argumenten -o/-n)
    -nobg: gibt Prozessausgabe und Rückgabewert aus (Standardverhalten)
   -stdin: erstellt eine PIPE um Daten zu dem Prozess zu senden (mittels /exec -in/-inclose)
 -nostdin: es wird keine PIPE für stdin erstellt (Standardverhalten)
  -buffer: zeigt/sendet Ausgabe des Befehls an diesen Buffer (wird der angegebene Buffer nicht gefunden wird ein neuer Bufger mit dem Namen "exec.exec.xxx" erstellt)
       -l: gibt die Ausgabe des Befehls lokal im Buffer aus (Standardverhalten)
-      -o: gibt die Ausgabe des Befehls im Buffer aus (nicht kompatibel mit Option -bg)
-      -n: gibt die Ausgabe des Befehls in einem neuen Buffer aus (nicht kompatibel mit Option -bg)
-     -nf: gibt die Ausgabe des Befehls in einem neuen Buffer, mit einem freien Inhalt (kein Zeilenumbruch, keine Limitierung in der Anzahl der Zeilen), aus (nicht kompatibel mit Option -bg)
+      -o: gibt die Ausgabe des Befehls im Buffer aus (nicht kompatibel mit Argument -bg)
+      -n: gibt die Ausgabe des Befehls in einem neuen Buffer aus (nicht kompatibel mit Argument -bg)
+     -nf: gibt die Ausgabe des Befehls in einem neuen Buffer, mit einem freien Inhalt (kein Zeilenumbruch, keine Limitierung in der Anzahl der Zeilen), aus (nicht kompatibel mit Argument -bg)
      -cl: der neue Buffer wird vor einer Ausgabe gelöscht
    -nocl: Ausgabe wird an neuen Buffer angehangen, ohne diesen vorher zu löschen (Standardverhalten)
      -sw: es wird zum Ausgabebuffer gewechselt (Standardverhalten)
@@ -42,8 +42,8 @@
    -norc: der Rückgabewert wird unterdrückt
 -timeout: gibt eine Zeitbeschränkung für den auszuführenden Befehl an (in Sekunden)
    -name: dem Befehl wird ein Name zugewiesen (um den Befehl später mittels /exec zu nutzen)
-   -pipe: sendet die Ausgabe an einen Befehl von WeeChat/Erweiterung (Zeile für Zeile); sollen Leerzeichen im Befehl/Argument verwendet werden, müssen diese mit Anführungszeichen eingeschlossen werden; Variable $line wird durch die entsprechende Zeile ersetzt (standardmäßig wird die Zeile, getrennt durch ein Leerzeichen, dem Befehl nachgestellt (nicht kompatibel mit den Optionen -bg/-o/-n)
- -hsignal: sendet die Ausgabe als hsignal (um es z.B. mittels /trigger zu verwenden) (nicht kompatibel mit den Optionen -bg/-o/-n)
+   -pipe: sendet die Ausgabe an einen Befehl von WeeChat/Erweiterung (Zeile für Zeile); sollen Leerzeichen im Befehl/Argument verwendet werden, müssen diese mit Anführungszeichen eingeschlossen werden; Variable $line wird durch die entsprechende Zeile ersetzt (standardmäßig wird die Zeile, getrennt durch ein Leerzeichen, dem Befehl nachgestellt (nicht kompatibel mit den Argumenten -bg/-o/-n)
+ -hsignal: sendet die Ausgabe als hsignal (um es z.B. mittels /trigger zu verwenden) (nicht kompatibel mit den Argumenten -bg/-o/-n)
  command: Befehl der ausgeführt werden soll; beginnt der Befehl mit "url:", wird die shell deaktiviert und der Inhalt der URL wird heruntergeladen und im Buffer ausgegeben
       id: identifiziert eindeutig einen Befehl: entweder durch eine Nummer oder einen Namen (sofern ein Name mittels "-name xxx" zugewiesen wurde)
      -in: sendet Text an die Standardeingabe des Prozesses
@@ -57,7 +57,7 @@ property: Hook-Fähigkeit
     -del: entfernt einen beendeten Befehl
     -all: entfernt alle beendeten Befehle
 
-Standardoptionen können in der Option exec.command.default_options bestimmt werden.
+Standardoptionen können in der Einstellung exec.command.default_options bestimmt werden.
 
 Beispiele:
   /exec -n ls -l /tmp

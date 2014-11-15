@@ -24,7 +24,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_logger.file.mask]] *logger.file.mask*
-** Beschreibung: `Standardmaske für Protokolldateien (Format: "Verzeichnis/zur/Datei" oder "Datei", ohne ein führendes "/", da die "Verzeichnis" Option genutzt wird um vollständige Verzeichnisstrukturen zu erstellen); lokale Buffer Variablen und Datumsspezifikationen (siehe: man strftime) sind zulässig`
+** Beschreibung: `Standardmaske für Protokolldateien (Format: "Verzeichnis/zur/Datei" oder "Datei", ohne ein führendes "/", da die "Verzeichnis" Einstellung genutzt wird um vollständige Verzeichnisstrukturen zu erstellen); lokale Buffer Variablen und Datumsspezifikationen (siehe: man strftime) sind zulässig`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$plugin.$name.weechatlog"`)
 

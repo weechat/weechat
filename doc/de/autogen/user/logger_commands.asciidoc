@@ -13,7 +13,7 @@
   flush: sichert alle Protokolle umgehend
 disable: die Protokollierung wird für den aktuellen Buffer ausgeschaltet (der Level wird auf 0 gestellt)
 
-Die Optionen "logger.level.*" und "logger.mask.*" können genutzt werden um den Level der Protokollierung festzulegen und um eine Maske für einen oder mehrere Buffer zu definieren.
+Die Einstellungen "logger.level.*" und "logger.mask.*" können genutzt werden um den Level der Protokollierung festzulegen und um eine Maske für einen oder mehrere Buffer zu definieren.
 
 Level der Protokollierung, die die IRC Erweiterung unterstützt:
   1: Nachrichten von Usern, private Nachrichten und Bemerkungen

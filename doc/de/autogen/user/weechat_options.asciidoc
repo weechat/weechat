@@ -69,17 +69,17 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
 * [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
-** Beschreibung: `Textfarbe für Nicks die nicht angemeldet sind (nicht in der Benutzerliste aufgeführt sind); diese Farbeinstellung wird aber nur verwendet wenn die Option  weechat.look.color_nick_offline aktiviert ist`
+** Beschreibung: `Textfarbe für Nicks die nicht angemeldet sind (nicht in der Benutzerliste aufgeführt sind); diese Farbeinstellung wird aber nur verwendet wenn die Einstellung weechat.look.color_nick_offline aktiviert ist`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
-** Beschreibung: `Textfarbe bei Highlights für Nicks die nicht angemeldet sind; diese Farbeinstellung wird aber nur verwendet wenn die Option  weechat.look.color_nick_offline aktiviert ist`
+** Beschreibung: `Textfarbe bei Highlights für Nicks die nicht angemeldet sind; diese Farbeinstellung wird aber nur verwendet wenn die Einstellung weechat.look.color_nick_offline aktiviert ist`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
-** Beschreibung: `Hintergrundfarbe bei Highlights für Nicks die nicht angemeldet sind, diese Farbeinstellung wird aber nur verwendet wenn die Option  weechat.look.color_nick_offline aktiviert ist`
+** Beschreibung: `Hintergrundfarbe bei Highlights für Nicks die nicht angemeldet sind, diese Farbeinstellung wird aber nur verwendet wenn die Einstellung weechat.look.color_nick_offline aktiviert ist`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `blue`)
 
@@ -194,12 +194,12 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `cyan`)
 
 * [[option_weechat.color.emphasized]] *weechat.color.emphasized*
-** Beschreibung: `Textfarbe um Text hervorzuheben (zum Beispiel bei der Textsuche); wird ausschließlich dann genutzt, falls die Option weechat.look.emphasized_attributes keinen Eintrag besitzt (Standardwert)`
+** Beschreibung: `Textfarbe um Text hervorzuheben (zum Beispiel bei der Textsuche); wird ausschließlich dann genutzt, falls die Einstellung weechat.look.emphasized_attributes keinen Eintrag besitzt (Standardwert)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `yellow`)
 
 * [[option_weechat.color.emphasized_bg]] *weechat.color.emphasized_bg*
-** Beschreibung: `Hintergrundfarbe um Textpassagen hervorzuheben (zum Beispiel bei der Textsuche); wird ausschließlich dann genutzt, falls die Option weechat.look.emphasized_attributes keinen Eintrag besitzt (Standardwert)`
+** Beschreibung: `Hintergrundfarbe um Textpassagen hervorzuheben (zum Beispiel bei der Textsuche); wird ausschließlich dann genutzt, falls die Einstellung weechat.look.emphasized_attributes keinen Eintrag besitzt (Standardwert)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `magenta`)
 
@@ -314,12 +314,12 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
-** Beschreibung: `ist diese Option aktiviert wird ein zu vervollständigendes Wort in den fließenden Text, mit einem Leerzeichen, hinzugefügt. Ist diese Option deaktiviert, muss in den fließenden Text ein Leerzeichen manuell einfügt werden, um eine Vervollständigung durchführen zu können (Beispiel: In einen schon geschriebenen Text, einen Nick einzufügen)`
+** Beschreibung: `ist diese Einstellung aktiviert wird ein zu vervollständigendes Wort in den fließenden Text, mit einem Leerzeichen, hinzugefügt. Ist diese Einstellung deaktiviert, muss in den fließenden Text ein Leerzeichen manuell einfügt werden, um eine Vervollständigung durchführen zu können (Beispiel: In einen schon geschriebenen Text, einen Nick einzufügen)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
-** Beschreibung: `ist diese Option aktiviert werden Befehle innerhalb der Eingabezeile vervollständigt (ein Befehl zu Beginn der Eingabezeile besitzt die höhere Priorität und wird zuerst verwendet). Hinweis: die Vervollständigung von Verzeichnissen, die mit  '/' beginnen, funktioniert außerhalb von Befehlen nicht mehr`
+** Beschreibung: `ist diese Einstellung aktiviert werden Befehle innerhalb der Eingabezeile vervollständigt (ein Befehl zu Beginn der Eingabezeile besitzt die höhere Priorität und wird zuerst verwendet). Hinweis: die Vervollständigung von Verzeichnissen, die mit  '/' beginnen, funktioniert außerhalb von Befehlen nicht mehr`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -404,17 +404,17 @@
 ** Werte: time, buffer, prefix, suffix, message (Standardwert: `message`)
 
 * [[option_weechat.look.bar_more_down]] *weechat.look.bar_more_down*
-** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach unten gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist)`
+** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach unten gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Einstellung "/set *.filling_*" nicht auf "horizontal" eingestellt ist)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"++"`)
 
 * [[option_weechat.look.bar_more_left]] *weechat.look.bar_more_left*
-** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach links gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist)`
+** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach links gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Einstellung "/set *.filling_*" nicht auf "horizontal" eingestellt ist)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"<<"`)
 
 * [[option_weechat.look.bar_more_right]] *weechat.look.bar_more_right*
-** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach rechts gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist)`
+** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach rechts gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Einstellung "/set *.filling_*" nicht auf "horizontal" eingestellt ist)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `">>"`)
 
@@ -434,7 +434,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M"`)
 
 * [[option_weechat.look.buffer_auto_renumber]] *weechat.look.buffer_auto_renumber*
-** Beschreibung: `automatisches nummerieren von Buffern um ausschließlich eine aufeinander folgende Durchnummerierung zu besitzen, die bei 1 beginnt; ist diese Option deaktiviert sind Lücken zwischen den Buffern möglich und der erste Buffer muss nicht mit der Zahl 1 beginnen`
+** Beschreibung: `automatisches nummerieren von Buffern um ausschließlich eine aufeinander folgende Durchnummerierung zu besitzen, die bei 1 beginnt; ist diese Einstellung deaktiviert sind Lücken zwischen den Buffern möglich und der erste Buffer muss nicht mit der Zahl 1 beginnen`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -444,7 +444,7 @@
 ** Werte: none, highlight, message, all (Standardwert: `all`)
 
 * [[option_weechat.look.buffer_position]] *weechat.look.buffer_position*
-** Beschreibung: `Position auf der ein neuer Buffer geöffnet werden soll: end = am Ende der Liste (Nummer = letzter Buffer + 1) (Standard), first_gap = erste mögliche Nummer die frei ist (wird das Ende der Liste erreicht, wird der Buffer hinten an gehangen); diese Option wird nur angewendet sofern dem Buffer keine Position, durch Layout, zugeordnet wurde`
+** Beschreibung: `Position auf der ein neuer Buffer geöffnet werden soll: end = am Ende der Liste (Nummer = letzter Buffer + 1) (Standard), first_gap = erste mögliche Nummer die frei ist (wird das Ende der Liste erreicht, wird der Buffer hinten an gehangen); diese Einstellung wird nur angewendet sofern dem Buffer keine Position, durch Layout, zugeordnet wurde`
 ** Typ: integer
 ** Werte: end, first_gap (Standardwert: `end`)
 
@@ -474,7 +474,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M:%S"`)
 
 * [[option_weechat.look.color_basic_force_bold]] *weechat.look.color_basic_force_bold*
-** Beschreibung: `erzwingt das Textattribut "fett" für helle Farben und "darkgray", um diese Farben stärker hervorzuheben (diese Option ist standardmäßig deaktiviert: "fett" findet ausschließlich dann Verwendung falls das Terminal weniger als 16 Farben zur Verfügung stellt)`
+** Beschreibung: `erzwingt das Textattribut "fett" für helle Farben und "darkgray", um diese Farben stärker hervorzuheben (diese Einstellung ist standardmäßig deaktiviert: "fett" findet ausschließlich dann Verwendung falls das Terminal weniger als 16 Farben zur Verfügung stellt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -519,7 +519,7 @@
 ** Werte: -1 .. 256 (Standardwert: `5`)
 
 * [[option_weechat.look.color_real_white]] *weechat.look.color_real_white*
-** Beschreibung: `falls diese Option aktiviert ist, wird echtes weiß als Farbe genutzt. Standardmäßig ist diese Option deaktiviert, damit keine Probleme bei Terminals auftreten, die einen weißen Hintergrund nutzen (falls man keinen weißen Hintergrund nutzt, dann ist es ratsam diese Option zu aktivieren. Andernfalls wird die voreingestellte Vordergrundfarbe des Terminals verwendet)`
+** Beschreibung: `falls diese Einstellung aktiviert ist, wird echtes weiß als Farbe genutzt. Standardmäßig ist diese Einstellung deaktiviert, damit keine Probleme bei Terminals auftreten, die einen weißen Hintergrund nutzen (falls man keinen weißen Hintergrund nutzt, dann ist es ratsam diese Einstellung zu aktivieren. Andernfalls wird die voreingestellte Vordergrundfarbe des Terminals verwendet)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -529,12 +529,12 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.command_incomplete]] *weechat.look.command_incomplete*
-** Beschreibung: `ist diese Option aktiviert werden unvollständige und eindeutige Befehle akzeptiert, zum Beispiel /he für /help`
+** Beschreibung: `ist diese Einstellung aktiviert werden unvollständige und eindeutige Befehle akzeptiert, zum Beispiel /he für /help`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.confirm_quit]] *weechat.look.confirm_quit*
-** Beschreibung: `ist diese Option aktiviert, muss der "/quit" Befehl mit der Option "-yes" ausgeführt werden (siehe /help quit)`
+** Beschreibung: `ist diese Einstellung aktiviert, muss der "/quit" Befehl mit dem Argument "-yes" ausgeführt werden (siehe /help quit)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -554,12 +554,12 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"-- %%a, %%d %%b %%Y (%a, %d %b %Y) --"`)
 
 * [[option_weechat.look.eat_newline_glitch]] *weechat.look.eat_newline_glitch*
-** Beschreibung: `aktiviert man diese Option, dann wird "eat_newline_glitch" auf 0 gesetzt; dies bedeutet, dass am Ende einer Zeile kein Zeilenumbruch an gehangen wird und somit der Text beim kopieren aus WeeChat und beim einfügen in einer anderen Applikation nicht umgebrochen wird (diese Option ist standardmäßig deaktiviert, da es zu schwerwiegenden Grafikfehlern kommen kann)`
+** Beschreibung: `aktiviert man diese Einstellung, dann wird "eat_newline_glitch" auf 0 gesetzt; dies bedeutet, dass am Ende einer Zeile kein Zeilenumbruch an gehangen wird und somit der Text beim kopieren aus WeeChat und beim einfügen in einer anderen Applikation nicht umgebrochen wird (diese Einstellung ist standardmäßig deaktiviert, da es zu schwerwiegenden Grafikfehlern kommen kann)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.emphasized_attributes]] *weechat.look.emphasized_attributes*
-** Beschreibung: `Attribute um Textpassagen hervorzuheben: Das setzen von ein- oder mehreren Attributen ist möglich ("*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen); falls die Option weechat.look.emphasized_attributes keinen Eintrag besitzt, werden die Farben genutzt die durch weechat.color.emphasized* definiert sind`
+** Beschreibung: `Attribute um Textpassagen hervorzuheben: Das setzen von ein- oder mehreren Attributen ist möglich ("*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen); falls die Einstellung weechat.look.emphasized_attributes keinen Eintrag besitzt, werden die Farben genutzt die durch weechat.color.emphasized* definiert sind`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -614,7 +614,7 @@
 ** Werte: 1 .. 15 (Standardwert: `12`)
 
 * [[option_weechat.look.hotlist_names_merged_buffers]] *weechat.look.hotlist_names_merged_buffers*
-** Beschreibung: `ist diese Option aktiviert, werden die Namen der zusammengefügten Buffer in der Hotlist dargestellt`
+** Beschreibung: `ist diese Einstellung aktiviert, werden die Namen der zusammengefügten Buffer in der Hotlist dargestellt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -629,7 +629,7 @@
 ** Werte: buffer, merged (Standardwert: `merged`)
 
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
-** Beschreibung: `ist diese Option aktiviert, wird der Kurzname der zusammengefügten Buffer in der Hotlist dargestellt (die Darstellung geschieht nach dem ersten '.' im Namen)`
+** Beschreibung: `ist diese Einstellung aktiviert, wird der Kurzname der zusammengefügten Buffer in der Hotlist dargestellt (die Darstellung geschieht nach dem ersten '.' im Namen)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -644,7 +644,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.hotlist_unique_numbers]] *weechat.look.hotlist_unique_numbers*
-** Beschreibung: `die Nummer des Buffers wird nur einmal in der Hotlist angezeigt (diese Option kommt nur zum Tragen sofern KEINE Buffernamen angezeigt werden)`
+** Beschreibung: `die Nummer des Buffers wird nur einmal in der Hotlist angezeigt (diese Einstellung kommt nur zum Tragen sofern KEINE Buffernamen angezeigt werden)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -654,12 +654,12 @@
 ** Werte: 0 .. 100 (Standardwert: `20`)
 
 * [[option_weechat.look.input_share]] *weechat.look.input_share*
-** Beschreibung: `diese Option erlaubt es den Inhalt der aktuellen Eingabezeile in andere Buffern zu übernehmen. Dabei kann unterschieden werden, ob ausschließlich Befehle (commands), nur Text (text) oder beides (all) berücksichtigt werden soll (der Befehlsverlauf der einzelnen Buffer bleibt davon unberührt)`
+** Beschreibung: `diese Einstellung erlaubt es den Inhalt der aktuellen Eingabezeile in andere Buffern zu übernehmen. Dabei kann unterschieden werden, ob ausschließlich Befehle (commands), nur Text (text) oder beides (all) berücksichtigt werden soll (der Befehlsverlauf der einzelnen Buffer bleibt davon unberührt)`
 ** Typ: integer
 ** Werte: none, commands, text, all (Standardwert: `none`)
 
 * [[option_weechat.look.input_share_overwrite]] *weechat.look.input_share_overwrite*
-** Beschreibung: `ist diese Option aktiviert und die Eingabezeile wird für alle Buffer gleichberechtigt genutzt, dann wird der Inhalt im Zielbuffer überschrieben`
+** Beschreibung: `ist diese Einstellung aktiviert und die Eingabezeile wird für alle Buffer gleichberechtigt genutzt, dann wird der Inhalt im Zielbuffer überschrieben`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -829,7 +829,7 @@
 ** Werte: none, line, char (Standardwert: `line`)
 
 * [[option_weechat.look.read_marker_always_show]] *weechat.look.read_marker_always_show*
-** Beschreibung: `ist diese Option gesetzt wird das Lesezeichen immer im Buffer dargestellt, auch wenn noch keine neue Nachricht geschrieben wurde`
+** Beschreibung: `ist diese Einstellung gesetzt wird das Lesezeichen immer im Buffer dargestellt, auch wenn noch keine neue Nachricht geschrieben wurde`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -894,12 +894,12 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.window_separator_horizontal]] *weechat.look.window_separator_horizontal*
-** Beschreibung: `ist die Option aktiviert dann wird eine horizontale Trennlinie zwischen Fenstern gezeichnet`
+** Beschreibung: `ist die Einstellung aktiviert dann wird eine horizontale Trennlinie zwischen Fenstern gezeichnet`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.window_separator_vertical]] *weechat.look.window_separator_vertical*
-** Beschreibung: `ist die Option aktiviert dann wird eine vertikale Trennlinie zwischen Fenstern gezeichnet`
+** Beschreibung: `ist die Einstellung aktiviert dann wird eine vertikale Trennlinie zwischen Fenstern gezeichnet`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -934,7 +934,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"*"`)
 
 * [[option_weechat.plugin.debug]] *weechat.plugin.debug*
-** Beschreibung: `aktiviert Debug-Nachrichten für alle Erweiterungen (diese Option ist standardmäßig deaktiviert und das ist auch gut so)`
+** Beschreibung: `aktiviert Debug-Nachrichten für alle Erweiterungen (diese Einstellung ist standardmäßig deaktiviert und das ist auch gut so)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

@@ -32,7 +32,7 @@ listdefault: zeigt die standardmäßig genutzen Trigger an
              command: Befehl (erforderlich), Beschreibung, Argumente, Beschreibung der Argumente, Vervollständigung
              command_run: Befehl(e) (erforderlich)
              timer: Intervall (erforderlich), Anpassung an Sekunden (erforderlich), maximale Anzahl an Aufrufen
-             config: Name der Option (erforderlich)
+             config: Name der Einstellung (erforderlich)
              focus: Name(n) für sichtbaren Bereich (erforderlich) (z.B. "chat" für Chatbereich)
  conditions: evaluierte Bedingungen für den Trigger
       regex: einer oder mehrere reguläre Ausdrücke um Zeichenketten in Variablen zu ersetzen
@@ -41,11 +41,11 @@ return_code: Rückgabewert für Callback (ok (standard), ok_eat, error)
    addinput: erstellt einen Trigger mit einer standardmäßigen Mustervorlage
       input: kopiert den kompletten Trigger-Befehl in die Eingabezeile
      output: schickt den Trigger-Befehl als Text in den Buffer
-   recreate: wie "input", allerdings wird die Option "addreplace" anstelle von "add" genutzt
-        set: definiert, innerhalb eines Triggers, eine Option neu
-     option: Name einer Option: name, hook, arguments, conditions, regex, command, return_code
-             (um Hilfe über eine Option zu erhalten: /help trigger.trigger.<name>.<option>)
-      value: neuer Wert für Option
+   recreate: wie "input", allerdings wird die Einstellung "addreplace" anstelle von "add" genutzt
+        set: definiert, innerhalb eines Triggers, eine Einstellung neu
+     option: Name einer Einstellung: name, hook, arguments, conditions, regex, command, return_code
+             (um Hilfe über eine Einstellung zu erhalten: /help trigger.trigger.<name>.<option>)
+      value: neuer Wert für Einstellung
      rename: benennt einen Trigger um
        copy: kopiert einen Trigger
      enable: aktiviert Trigger (ohne Angabe von Argumenten: aktiviert alle Trigger)

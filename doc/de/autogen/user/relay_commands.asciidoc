@@ -18,7 +18,7 @@
          name: Name des Relays (siehe Format weiter unten)
          port: Port der für Relay genutzt werden soll
           raw: öffnet einen Buffer mit Relay-Rohdaten
-   sslcertkey: setzt SSL Zertifikat/Schlüssel mittels Pfad in Option relay.network.ssl_cert_key
+   sslcertkey: setzt SSL Zertifikat/Schlüssel mittels Pfad in Einstellung relay.network.ssl_cert_key
 
 Aufbau des Relay-Namens: [ipv4.][ipv6.][ssl.]<Protokoll.Name>
          ipv4: erzwingt die Nutzung von IPv4

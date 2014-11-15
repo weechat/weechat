@@ -9,12 +9,12 @@
 ** Werte: sha224, sha256, sha384, sha512 (Standardwert: `sha256`)
 
 * [[option_sec.crypt.passphrase_file]] *sec.crypt.passphrase_file*
-** Beschreibung: `Pfad zu einer Datei die die Passphrase enthält um damit schutzwürdige Daten zu ver- und entschlüsseln. Diese Option findet nur Anwendung, wenn die Datei sec.conf gelesen wird. Es wird auch nur die erste Zeile eingelesen. Diese Datei wird nur verwendet, falls die Umgebungsvariable "WEECHAT_PASSPHRASE" nicht genutzt wird (die Umgebungsvariable besitzt eine höhere Priorität). Sicherheitshinweis: Es ist anzuraten dieser Datei nur für die eigene Person Leserechte zu gewähren und die Datei nicht im Heimatverzeichnis von WeeChat zu sichern (zum Beispiel im /home/ Order); Beispiel: "~/.weechat-passphrase"`
+** Beschreibung: `Pfad zu einer Datei die die Passphrase enthält um damit schutzwürdige Daten zu ver- und entschlüsseln. Diese Einstellung findet nur Anwendung, wenn die Datei sec.conf gelesen wird. Es wird auch nur die erste Zeile eingelesen. Diese Datei wird nur verwendet, falls die Umgebungsvariable "WEECHAT_PASSPHRASE" nicht genutzt wird (die Umgebungsvariable besitzt eine höhere Priorität). Sicherheitshinweis: Es ist anzuraten dieser Datei nur für die eigene Person Leserechte zu gewähren und die Datei nicht im Heimatverzeichnis von WeeChat zu sichern (zum Beispiel im /home/ Order); Beispiel: "~/.weechat-passphrase"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_sec.crypt.salt]] *sec.crypt.salt*
-** Beschreibung: `nutzt salt bei der Schlüsselerstellung für die Verschlüsselung (wird für maximale Sicherheit empfohlen); wenn aktiviert, ist der Inhalt der verschlüsselten Daten bei jeder Sicherung in die Datei sec.conf verschieden. Wird die Datei sec.conf in eine Versionsverwaltung eingepflegt kann die Option deaktiviert werden, um immer den selben Dateiinhalt zu erhalten`
+** Beschreibung: `nutzt salt bei der Schlüsselerstellung für die Verschlüsselung (wird für maximale Sicherheit empfohlen); wenn aktiviert, ist der Inhalt der verschlüsselten Daten bei jeder Sicherung in die Datei sec.conf verschieden. Wird die Datei sec.conf in eine Versionsverwaltung eingepflegt kann die Einstellung deaktiviert werden, um immer den selben Dateiinhalt zu erhalten`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

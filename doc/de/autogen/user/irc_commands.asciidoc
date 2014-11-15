@@ -92,10 +92,10 @@ Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel angezei
             - Hostname/Port oder IP/Port, Port 6667 wird standardmäßig verwendet
             - URL mit folgendem Format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
             Hinweis: bei einer Adresse/IP/URL, wird ein temporärer Server erstellt (DIESER WIRD NICHT GESPEICHERT), siehe /help irc.look.temporary_servers
-    option: legt Option für den Server fest (die Boolean-Optionen können weggelassen werden)
-  nooption: deaktiviert eine Boolean Option (Beispiel: -nossl)
+    option: legt Einstellung für den Server fest (die Boolean-Einstellungen können weggelassen werden)
+  nooption: deaktiviert eine Boolean Einstellung (Beispiel: -nossl)
       -all: Verbindung wird zu den Servern hergestellt, für die eine Konfiguration vorhanden ist
-     -auto: Verbindung zu den Servern herstellen, für die die Option "autoconnect" aktiviert ist
+     -auto: Verbindung zu den Servern herstellen, für die die Einstellung "autoconnect" aktiviert ist
      -open: stellt eine Verbindung zu allen geöffneten Servern her, zu denen aktuell keine Verbindung besteht
    -nojoin: Channel(s) werden nicht betreten (auch falls die Funktion "autojoin" aktiviert sein sollte)
    -switch: wechselt zur nächsten Server-Adresse
@@ -595,7 +595,7 @@ data: unbearbeitete (RAW) Daten die gesendet werden sollen
 ----
 /rehash  [<option>]
 
-option: zusätzliche Option, die von manchen Servern berücksichtigt wird
+option: zusätzliche Einstellung, die von manchen Servern berücksichtigt wird
 ----
 
 [[command_irc_remove]]
@@ -685,7 +685,7 @@ listfull: listet Server mit detaillierten Informationen über jeden einzelnen Se
 hostname: Name oder IP-Adresse des Servers. Optional kann noch der Port festgelegt werden (Standard-Port: 6667). Verschiedene Ports können durch Kommata getrennt werden
     temp: erstellt temporären Server (wird nicht gespeichert)
   option: legt die Optionen für den Server fest (die Boolean-Optionen können weggelassen werden)
-nooption: stellt die Boolean Option auf "off" (Beispiel: -nossl)
+nooption: stellt die Boolean Einstellung auf "off" (Beispiel: -nossl)
     copy: erstellt eine Kopie des Servers
   rename: benennt den Server um
     keep: behält den Server in der Konfigurationsdatei (ausschließlich für die Nutzung bei temporären Servern)
@@ -896,7 +896,7 @@ Ohne Angabe von Argumenten, nutzt /whois folgende Nicks:
 - den eigenen Nick, falls es sich um einen Server/Channel Buffer handelt
 - den Nick des Gesprächspartners, falls es sich um einen privaten Buffer handelt.
 
-Sollte die Option irc.network.whois_double_nick aktiviert sein dann wird ein Nick zweimal verwendet (sofern der Nick nur einmal angegeben wurde), um die Idle-Zeit zu erhalten.
+Sollte die Einstellung irc.network.whois_double_nick aktiviert sein dann wird ein Nick zweimal verwendet (sofern der Nick nur einmal angegeben wurde), um die Idle-Zeit zu erhalten.
 ----
 
 [[command_irc_whowas]]

@@ -18,7 +18,7 @@ listdict: die, auf dem System, installierten Wörterbücher werden aufgelistet
 
 Eingaben die mit '/' beginnen werden nicht überprüft, davon ausgenommen sind einige Befehle (siehe /set aspell.check.commands).
 
-Um Aspell auf alle Buffer anzuwenden sollte die Option "default_dict" genutzt und Aspell aktiviert werden:
+Um Aspell auf alle Buffer anzuwenden sollte die Einstellung "default_dict" genutzt und Aspell aktiviert werden:
   /set aspell.check.default_dict "de_DE-neu"
   /aspell enable
 

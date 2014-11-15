@@ -149,7 +149,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_script.look.quiet_actions]] *script.look.quiet_actions*
-** Beschreibung: `diese Option stellt einen stummen Modus für den Skripten-Buffer zu Verfügung: Es werden keine Nachrichten im Core-Buffer ausgegeben, wenn Skripten installiert/entfernt/gestartet/beendet werden (lediglich Fehler werden ausgegeben)`
+** Beschreibung: `diese Einstellung stellt einen stummen Modus für den Skripten-Buffer zu Verfügung: Es werden keine Nachrichten im Core-Buffer ausgegeben, wenn Skripten installiert/entfernt/gestartet/beendet werden (lediglich Fehler werden ausgegeben)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -164,7 +164,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_script.look.use_keys]] *script.look.use_keys*
-** Beschreibung: `Um Tastenkurzbefehle im Skript-Buffer direkt nutzen zu können (zum Beispiel: alt+i = installieren, alt+r = entfernen, ...), muss diese Option aktiviert werden. Andernfalls können Aktionen nur über die Eingabezeile durchgeführt werden: i,r...`
+** Beschreibung: `Um Tastenkurzbefehle im Skript-Buffer direkt nutzen zu können (zum Beispiel: alt+i = installieren, alt+r = entfernen, ...), muss diese Einstellung aktiviert werden. Andernfalls können Aktionen nur über die Eingabezeile durchgeführt werden: i,r...`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -194,7 +194,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"http://weechat.org/files/plugins.xml.gz"`)
 
 * [[option_script.scripts.url_force_https]] *script.scripts.url_force_https*
-** Beschreibung: `force use of HTTPS for downloads (index and scripts); you should disable this option only if you have problems with the downloads`
+** Beschreibung: `HTTPS wird für das Herunterladen der Indexdatei und der Skripten bevorzugt; diese Einstellung sollte nur deaktiviert werden falls Probleme beim Herunterladen auftreten`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
