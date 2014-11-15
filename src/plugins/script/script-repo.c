@@ -1445,7 +1445,6 @@ void
 script_repo_file_update (int quiet)
 {
     char *filename, *url;
-    int length;
     struct t_hashtable *options;
 
     script_repo_remove_all ();
@@ -1461,8 +1460,8 @@ script_repo_file_update (int quiet)
                                      NULL);
     if (options)
     {
-        length = 4 + strlen (weechat_config_string (script_config_scripts_url)) + 1;
-        url = malloc (length);
+        url = script_build_download_url (
+            weechat_config_string (script_config_scripts_url));
         if (url)
         {
             if (!quiet)
@@ -1471,9 +1470,6 @@ script_repo_file_update (int quiet)
                                 _("%s: downloading list of scripts..."),
                                 SCRIPT_PLUGIN_NAME);
             }
-
-            snprintf (url, length, "url:%s",
-                      weechat_config_string (script_config_scripts_url));
             weechat_hashtable_set (options, "file_out", filename);
             weechat_hook_process_hashtable (url, options, 30000,
                                             &script_repo_file_update_process_cb,

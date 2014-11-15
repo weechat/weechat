@@ -65,6 +65,7 @@ extern struct t_config_option *script_config_scripts_cache_expire;
 extern struct t_config_option *script_config_scripts_dir;
 extern struct t_config_option *script_config_scripts_hold;
 extern struct t_config_option *script_config_scripts_url;
+extern struct t_config_option *script_config_scripts_url_force_https;
 
 extern const char *script_config_get_diff_command ();
 extern char *script_config_get_dir ();

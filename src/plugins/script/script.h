@@ -34,7 +34,7 @@ extern struct t_hashtable *script_loaded;
 
 extern int script_language_search (const char *language);
 extern int script_language_search_by_extension (const char *extension);
-extern void script_actions_add (const char *action);
+extern char *script_build_download_url (const char *url);
 extern void script_get_loaded_plugins_and_scripts ();
 
 #endif /* WEECHAT_SCRIPT_H */

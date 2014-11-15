@@ -193,3 +193,8 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"http://weechat.org/files/plugins.xml.gz"`)
 
+* [[option_script.scripts.url_force_https]] *script.scripts.url_force_https*
+** Beschreibung: `force use of HTTPS for downloads (index and scripts); you should disable this option only if you have problems with the downloads`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+

@@ -96,6 +96,43 @@ script_language_search_by_extension (const char *extension)
 }
 
 /*
+ * Builds download URL (to use with hook_process or hook_process_hashtable).
+ *
+ * If the option script.scripts.url_force_https is enabled, the protocol is
+ * forced to HTTPS (if URL starts with "http://").
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+script_build_download_url (const char *url)
+{
+    char *result;
+    int length;
+
+    if (!url || !url[0])
+        return NULL;
+
+    /* length of url + "url:" + 1 (for httpS) */
+    length = 4 + 1 + strlen (url) + 1;
+    result = malloc (length);
+    if (!result)
+        return NULL;
+
+    if (weechat_config_boolean (script_config_scripts_url_force_https)
+        && (weechat_strncasecmp (url, "http://", 7) == 0))
+    {
+        snprintf (result, length, "url:https://%s", url + 7);
+    }
+    else
+    {
+        snprintf (result, length, "url:%s", url);
+    }
+
+    return result;
+}
+
+/*
  * Gets loaded plugins (in array of integers) and scripts (in hashtable).
  */
 

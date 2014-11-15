@@ -193,3 +193,8 @@
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"http://weechat.org/files/plugins.xml.gz"`)
 
+* [[option_script.scripts.url_force_https]] *script.scripts.url_force_https*
+** opis: `force use of HTTPS for downloads (index and scripts); you should disable this option only if you have problems with the downloads`
+** typ: bool
+** wartości: on, off (domyślna wartość: `on`)
+

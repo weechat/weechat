@@ -600,7 +600,6 @@ script_action_install (int quiet)
 {
     struct t_script_repo *ptr_script_to_install;
     char *filename, *url;
-    int length;
     struct t_hashtable *options;
 
     while (1)
@@ -638,8 +637,7 @@ script_action_install (int quiet)
                                          NULL);
         if (options)
         {
-            length = 4 + strlen (ptr_script_to_install->url) + 1;
-            url = malloc (length);
+            url = script_build_download_url (ptr_script_to_install->url);
             if (url)
             {
                 if (!weechat_config_boolean (script_config_look_quiet_actions))
@@ -649,9 +647,6 @@ script_action_install (int quiet)
                                     SCRIPT_PLUGIN_NAME,
                                     ptr_script_to_install->name_with_extension);
                 }
-
-                snprintf (url, length, "url:%s",
-                          ptr_script_to_install->url);
                 weechat_hashtable_set (options, "file_out", filename);
                 weechat_hook_process_hashtable (url, options, 30000,
                                                 &script_action_install_process_cb,
@@ -1031,7 +1026,6 @@ script_action_show (const char *name, int quiet)
 {
     struct t_script_repo *ptr_script;
     char *filename, *url;
-    int length;
     struct t_hashtable *options;
 
     if (name)
@@ -1069,11 +1063,9 @@ script_action_show (const char *name, int quiet)
                                                      NULL);
                     if (options)
                     {
-                        length = 4 + strlen (ptr_script->url) + 1;
-                        url = malloc (length);
+                        url = script_build_download_url (ptr_script->url);
                         if (url)
                         {
-                            snprintf (url, length, "url:%s", ptr_script->url);
                             weechat_hashtable_set (options, "file_out", filename);
                             weechat_hook_process_hashtable (url, options, 30000,
                                                             &script_action_show_source_process_cb,
