@@ -46,7 +46,7 @@
 char *url_type_string[] = { "string", "long", "long long", "mask" };
 
 /*
- * Constants/options for Curl 7.37.0
+ * Constants/options for Curl 7.38.0
  * (this list of options must be updated on every new Curl release)
  */
 
@@ -136,6 +136,9 @@ struct t_url_constant url_auth[] =
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071600 /* 7.22.0 */
     URL_DEF_CONST(AUTH, NTLM_WB),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072600 /* 7.38.0 */
+    URL_DEF_CONST(AUTH, NEGOTIATE),
 #endif
     { NULL, 0 },
 };
