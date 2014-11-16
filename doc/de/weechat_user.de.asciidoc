@@ -1415,13 +1415,13 @@ Farbtabelle für key[ctrl-c,c]:
 
 include::autogen/user/irc_colors.asciidoc[]
 
-// TRANSLATION MISSING
 [NOTE]
-To show all available colors in your terminal, you can do `/color` then
-key[alt-c] in WeeChat or run this command in terminal: `weechat --colors`.
+Um sich alle verfügbaren Farben anzeigen zu lassen, die der Terminal
+unterstützt, kann man in WeeChat die Tastenkombination key[alt-c]
+im `/color` Buffer nutzen oder im Terminal den Befehl `weechat --colors` ausführen.
 
-Beispiel: Im Buffer wird "Hallo an alle!" ausgegeben. Dabei wird "Hallo" in fett und hellblau
-und "an alle" rot und unterstrichen dargestellt.
+Beispiel: Im Buffer wird "Hallo an alle!" ausgegeben. Dabei wird "Hallo" in Fettschrift
+und hellblau und "an alle" rot und unterstrichen dargestellt.
 
 ----
 ^Cc12^CbHallo ^Cb^Cc04^C_an alle^C_^Cc!
