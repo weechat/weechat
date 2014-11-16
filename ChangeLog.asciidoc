@@ -49,6 +49,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: fix display bug when scrolling in buffer on a filtered line
+  (closes #240)
 * core: send mouse code only one time to terminal with command
   /mouse enable|disable|toggle
 * core: fix buffer property "lines_hidden" when merging buffers or when a line

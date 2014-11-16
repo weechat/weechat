@@ -1739,6 +1739,12 @@ gui_chat_draw_formatted_buffer (struct t_gui_window *window)
                 }
             }
         }
+        else if (!ptr_line->data->displayed)
+        {
+            /* skip filtered lines on top when scrolling */
+            ptr_line = gui_line_get_next_displayed (ptr_line);
+            line_pos = 0;
+        }
     }
 
     if (auto_search_first_line)
@@ -1747,6 +1753,9 @@ gui_chat_draw_formatted_buffer (struct t_gui_window *window)
         gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
                                       (-1) * (window->win_chat_height - 1));
     }
+
+    if (!ptr_line)
+        return;
 
     count = 0;
 
