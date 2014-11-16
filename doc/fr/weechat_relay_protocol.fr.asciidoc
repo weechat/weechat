@@ -536,6 +536,9 @@ Les identifiants réservés par WeeChat :
 | _buffer_opened | buffers / buffer | hdata : buffer |
   Tampon ouvert | Ouvrir le tampon
 
+| _buffer_type_changed | buffers / buffer | hdata : buffer |
+  Type de tampon changé | Changer le type de tampon
+
 | _buffer_moved | buffers / buffer | hdata : buffer |
   Tampon déplacé | Déplacer le tampon
 
@@ -557,26 +560,23 @@ Les identifiants réservés par WeeChat :
 | _buffer_title_changed | buffers / buffer | hdata : buffer |
   Titre du tampon changé | Changer le titre du tampon
 
-| _buffer_cleared | buffer | hdata : buffer |
-  Tampon qui est vidé | Vider le tampon
-
-| _buffer_type_changed | buffer | hdata : buffer |
-  Type de tampon changé | Changer le type de tampon
-
-| _buffer_localvar_added | buffer | hdata : buffer |
+| _buffer_localvar_added | buffers / buffer | hdata : buffer |
   Variable locale ajoutée | Ajouter la variable locale dans le tampon
 
-| _buffer_localvar_changed | buffer | hdata : buffer |
+| _buffer_localvar_changed | buffers / buffer | hdata : buffer |
   Variable locale changée | Changer la variable locale dans le tampon
 
-| _buffer_localvar_removed | buffer | hdata : buffer |
+| _buffer_localvar_removed | buffers / buffer | hdata : buffer |
   Variable locale supprimée | Supprimer la variable locale du tampon
-
-| _buffer_line_added | buffer | hdata : line |
-  Ligne ajoutée dans le tampon | Afficher la ligne dans le tampon
 
 | _buffer_closing | buffers / buffer | hdata : buffer |
   Tampon qui se ferme | Fermer le tampon
+
+| _buffer_cleared | buffer | hdata : buffer |
+  Tampon qui est vidé | Vider le tampon
+
+| _buffer_line_added | buffer | hdata : line |
+  Ligne ajoutée dans le tampon | Afficher la ligne dans le tampon
 
 | _nicklist | nicklist | hdata : nicklist_item |
   Liste de pseudos pour un tampon | Remplacer la liste de pseudos

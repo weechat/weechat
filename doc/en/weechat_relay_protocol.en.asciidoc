@@ -518,6 +518,9 @@ WeeChat reserved identifiers:
 | _buffer_opened | buffers / buffer | hdata: buffer |
   Buffer opened | Open buffer
 
+| _buffer_type_changed | buffers / buffer | hdata: buffer |
+  Type of buffer changed | Change type of buffer
+
 | _buffer_moved | buffers / buffer | hdata: buffer |
   Buffer moved | Move buffer
 
@@ -539,26 +542,23 @@ WeeChat reserved identifiers:
 | _buffer_title_changed | buffers / buffer | hdata: buffer |
   Title of buffer changed | Change title of buffer
 
-| _buffer_cleared | buffer | hdata: buffer |
-  Buffer cleared | Clear buffer
-
-| _buffer_type_changed | buffer | hdata: buffer |
-  Type of buffer changed | Change type of buffer
-
-| _buffer_localvar_added | buffer | hdata: buffer |
+| _buffer_localvar_added | buffers / buffer | hdata: buffer |
   Local variable added | Add local variable in buffer
 
-| _buffer_localvar_changed | buffer | hdata: buffer |
+| _buffer_localvar_changed | buffers / buffer | hdata: buffer |
   Local variable changed | Change local variable in buffer
 
-| _buffer_localvar_removed | buffer | hdata: buffer |
+| _buffer_localvar_removed | buffers / buffer | hdata: buffer |
   Local variable removed | Remove local variable from buffer
-
-| _buffer_line_added | buffer | hdata: line |
-  Line added in buffer | Display line in buffer
 
 | _buffer_closing | buffers / buffer | hdata: buffer |
   Buffer closing | Close buffer
+
+| _buffer_cleared | buffer | hdata: buffer |
+  Buffer cleared | Clear buffer
+
+| _buffer_line_added | buffer | hdata: line |
+  Line added in buffer | Display line in buffer
 
 | _nicklist | nicklist | hdata: nicklist_item |
   Nicklist for a buffer | Replace nicklist

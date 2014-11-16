@@ -519,6 +519,9 @@ WeeChat の予約識別子:
 | _buffer_opened | buffers / buffer | hdata: buffer |
   バッファのオープン | バッファを開く
 
+| _buffer_type_changed | buffers / buffer | hdata: buffer |
+  バッファの種類変更 | バッファの種類を変更
+
 | _buffer_moved | buffers / buffer | hdata: buffer |
   バッファの移動 | バッファを移動
 
@@ -540,26 +543,23 @@ WeeChat の予約識別子:
 | _buffer_title_changed | buffers / buffer | hdata: buffer |
   バッファのタイトル変更 | バッファのタイトルを変更
 
-| _buffer_cleared | buffer | hdata: buffer |
-  バッファのクリア | バッファをクリア
-
-| _buffer_type_changed | buffer | hdata: buffer |
-  バッファの種類変更 | バッファの種類を変更
-
-| _buffer_localvar_added | buffer | hdata: buffer |
+| _buffer_localvar_added | buffers / buffer | hdata: buffer |
   ローカル変数の追加 | バッファに対するローカル変数を追加
 
-| _buffer_localvar_changed | buffer | hdata: buffer |
+| _buffer_localvar_changed | buffers / buffer | hdata: buffer |
   ローカル変数の変更 | バッファに対するローカル変数を変更
 
-| _buffer_localvar_removed | buffer | hdata: buffer |
+| _buffer_localvar_removed | buffers / buffer | hdata: buffer |
   ローカル変数を削除 | バッファからローカル変数を削除
-
-| _buffer_line_added | buffer | hdata: line |
-  バッファへの行追加 | バッファに行を表示
 
 | _buffer_closing | buffers / buffer | hdata: buffer |
   バッファのクローズ | バッファを閉じる
+
+| _buffer_cleared | buffer | hdata: buffer |
+  バッファのクリア | バッファをクリア
+
+| _buffer_line_added | buffer | hdata: line |
+  バッファへの行追加 | バッファに行を表示
 
 | _nicklist | nicklist | hdata: nicklist_item |
   バッファのニックネームリスト | ニックネームリストを置換

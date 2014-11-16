@@ -502,8 +502,9 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
         if (!ptr_buffer)
             return WEECHAT_RC_OK;
 
-        /* send signal only if sync with flag "buffer" */
+        /* send signal only if sync with flag "buffers" or "buffer" */
         if (relay_weechat_protocol_is_sync (ptr_client, ptr_buffer,
+                                            RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |
                                             RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
             msg = relay_weechat_msg_new (str_signal);
@@ -639,6 +640,29 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
             }
         }
     }
+    else if (strncmp (signal, "buffer_localvar_", 16) == 0)
+    {
+        ptr_buffer = (struct t_gui_buffer *)signal_data;
+        if (!ptr_buffer)
+            return WEECHAT_RC_OK;
+
+        /* send signal only if sync with flag "buffers" or "buffer" */
+        if (relay_weechat_protocol_is_sync (ptr_client, ptr_buffer,
+                                            RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS |
+                                            RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
+        {
+            msg = relay_weechat_msg_new (str_signal);
+            if (msg)
+            {
+                snprintf (cmd_hdata, sizeof (cmd_hdata),
+                          "buffer:0x%lx", (long unsigned int)ptr_buffer);
+                relay_weechat_msg_add_hdata (msg, cmd_hdata,
+                                             "number,full_name,local_variables");
+                relay_weechat_msg_send (ptr_client, msg);
+                relay_weechat_msg_free (msg);
+            }
+        }
+    }
     else if (strcmp (signal, "buffer_cleared") == 0)
     {
         ptr_buffer = (struct t_gui_buffer *)signal_data;
@@ -656,28 +680,6 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
                           "buffer:0x%lx", (long unsigned int)ptr_buffer);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "number,full_name");
-                relay_weechat_msg_send (ptr_client, msg);
-                relay_weechat_msg_free (msg);
-            }
-        }
-    }
-    else if (strncmp (signal, "buffer_localvar_", 16) == 0)
-    {
-        ptr_buffer = (struct t_gui_buffer *)signal_data;
-        if (!ptr_buffer)
-            return WEECHAT_RC_OK;
-
-        /* send signal only if sync with flag "buffer" */
-        if (relay_weechat_protocol_is_sync (ptr_client, ptr_buffer,
-                                            RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
-        {
-            msg = relay_weechat_msg_new (str_signal);
-            if (msg)
-            {
-                snprintf (cmd_hdata, sizeof (cmd_hdata),
-                          "buffer:0x%lx", (long unsigned int)ptr_buffer);
-                relay_weechat_msg_add_hdata (msg, cmd_hdata,
-                                             "number,full_name,local_variables");
                 relay_weechat_msg_send (ptr_client, msg);
                 relay_weechat_msg_free (msg);
             }
