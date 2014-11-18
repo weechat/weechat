@@ -264,9 +264,66 @@ TEST(Hashtable, SetGetRemove)
     hashtable_remove_all (hashtable);
     LONGS_EQUAL(0, hashtable->items_count);
 
-    /* free hashtable */
+    /* free hashtables */
     hashtable_free (hashtable);
     hashtable_free (hashtable2);
+
+    /*
+     * create a hashtable with size 8, and add 6 items,
+     * to check if many items with same hashed key work fine,
+     * the expected htable inside hashtable is:
+     *   +-----+
+     *   |   0 |
+     *   +-----+
+     *   |   1 |
+     *   +-----+
+     *   |   2 | --> "extensible"
+     *   +-----+
+     *   |   3 | --> "fast" --> "light"
+     *   +-----+
+     *   |   4 |
+     *   +-----+
+     *   |   5 | --> "chat"
+     *   +-----+
+     *   |   6 | --> "client"
+     *   +-----+
+     *   |   7 | --> "weechat"
+     *   +-----+
+     */
+    hashtable = hashtable_new (8,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+    LONGS_EQUAL(8, hashtable->size);
+    LONGS_EQUAL(0, hashtable->items_count);
+
+    item = hashtable_set (hashtable, "weechat", NULL);
+    CHECK(item);
+    POINTERS_EQUAL(item, hashtable->htable[7]);
+
+    item = hashtable_set (hashtable, "fast", NULL);
+    CHECK(item);
+    POINTERS_EQUAL(item, hashtable->htable[3]);
+
+    item = hashtable_set (hashtable, "light", NULL);
+    CHECK(item);
+    POINTERS_EQUAL(item, hashtable->htable[3]->next_item);
+
+    item = hashtable_set (hashtable, "extensible", NULL);
+    CHECK(item);
+    POINTERS_EQUAL(item, hashtable->htable[2]);
+
+    item = hashtable_set (hashtable, "chat", NULL);
+    CHECK(item);
+    POINTERS_EQUAL(item, hashtable->htable[5]);
+
+    item = hashtable_set (hashtable, "client", NULL);
+    CHECK(item);
+    POINTERS_EQUAL(item, hashtable->htable[6]);
+
+    /* free hashtable */
+    hashtable_free (hashtable);
 }
 
 /*
