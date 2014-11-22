@@ -6146,7 +6146,8 @@ COMMAND_CALLBACK(uptime)
     if ((argc >= 2) && (string_strcasecmp (argv[1], "-o") == 0))
     {
         snprintf (string, sizeof (string),
-                  "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s",
+                  "%s uptime: %d %s %02d:%02d:%02d, started on %s",
+				  PACKAGE_NAME,
                   day,
                   (day > 1) ? "days" : "day",
                   hour,
@@ -6160,7 +6161,8 @@ COMMAND_CALLBACK(uptime)
     {
         snprintf (string, sizeof (string),
                   /* TRANSLATORS: "%s" after "started on" is a date */
-                  _("WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"),
+                  _("%s uptime: %d %s %02d:%02d:%02d, started on %s"),
+				  PACKAGE_NAME,
                   day,
                   NG_("day", "days", day),
                   hour,
@@ -6173,9 +6175,10 @@ COMMAND_CALLBACK(uptime)
     {
         gui_chat_printf (NULL,
                          /* TRANSLATORS: "%s%s" after "started on" is a date */
-                         _("WeeChat uptime: %s%d %s%s "
+                         _("%s uptime: %s%d %s%s "
                            "%s%02d%s:%s%02d%s:%s%02d%s, "
                            "started on %s%s"),
+						 PACKAGE_NAME,
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                          day,
                          GUI_COLOR(GUI_COLOR_CHAT),
@@ -6213,9 +6216,10 @@ command_version_display (struct t_gui_buffer *buffer,
         if (translated_string)
         {
             snprintf (string, sizeof (string),
-                      "WeeChat %s [%s %s %s]",
+                      "%s %s [%s %s %s]",
                       (display_git_version) ? version_get_version_with_git () : version_get_version (),
                       _("compiled on"),
+					  PACKAGE_NAME,
                       version_get_compilation_date (),
                       version_get_compilation_time ());
             (void) input_data (buffer, string);
@@ -6233,9 +6237,10 @@ command_version_display (struct t_gui_buffer *buffer,
         else
         {
             snprintf (string, sizeof (string),
-                      "WeeChat %s [%s %s %s]",
+                      "%s %s [%s %s %s]",
                       (display_git_version) ? version_get_version_with_git () : version_get_version (),
                       "compiled on",
+					  PACKAGE_NAME,
                       version_get_compilation_date (),
                       version_get_compilation_time ());
             (void) input_data (buffer, string);
@@ -6253,7 +6258,7 @@ command_version_display (struct t_gui_buffer *buffer,
     }
     else
     {
-        gui_chat_printf (NULL, "%sWeeChat %s %s[%s%s %s %s%s]",
+        gui_chat_printf (NULL, "%s" PACKAGE_NAME " %s %s[%s%s %s %s%s]",
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                          (display_git_version) ? version_get_version_with_git () : version_get_version (),
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
@@ -6940,8 +6945,8 @@ command_init ()
            "    /buffer move 5\n"
            "  swap buffer 1 with 3:\n"
            "    /buffer swap 1 3\n"
-           "  swap buffer #weechat with current buffer:\n"
-           "    /buffer swap #weechat\n"
+           "  swap buffer #" PACKAGE_NAME_LOWER " with current buffer:\n"
+           "    /buffer swap #" PACKAGE_NAME_LOWER "\n"
            "  merge with core buffer:\n"
            "    /buffer merge 1\n"
            "  unmerge buffer:\n"
@@ -6950,8 +6955,8 @@ command_init ()
            "    /buffer close\n"
            "  close buffers 5 to 7:\n"
            "    /buffer close 5-7\n"
-           "  jump to #weechat:\n"
-           "    /buffer #weechat\n"
+           "  jump to #" PACKAGE_NAME_LOWER ":\n"
+           "    /buffer #" PACKAGE_NAME_LOWER "\n"
            "  jump to next buffer:\n"
            "    /buffer +1\n"
            "  jump to last buffer number:\n"
@@ -7023,7 +7028,7 @@ command_init ()
         N_("[-buffer <name>] <plugin> <command>"),
         N_("-buffer: execute the command on this buffer\n"
            " plugin: execute the command from this plugin; 'core' for a "
-           "WeeChat command, '*' for automatic plugin (it depends on the "
+           PACKAGE_NAME " command, '*' for automatic plugin (it depends on the "
            "buffer where the command is executed)\n"
            "command: command to execute (a '/' is automatically added if not "
            "found at beginning of command)"),
@@ -7202,7 +7207,7 @@ command_init ()
            "   -all: delete all filters\n"
            " buffer: comma separated list of buffers where filter is active:\n"
            "         - this is full name including plugin (example: \"irc."
-           "freenode.#weechat\" or \"irc.server.freenode\")\n"
+           "freenode.#" PACKAGE_NAME_LOWER "\" or \"irc.server.freenode\")\n"
            "         - \"*\" means all buffers\n"
            "         - a name starting with '!' is excluded\n"
            "         - wildcard \"*\" is allowed\n"
@@ -7240,19 +7245,19 @@ command_init ()
            "Examples:\n"
            "  use IRC smart filter on all buffers:\n"
            "    /filter add irc_smart * irc_smart_filter *\n"
-           "  use IRC smart filter on all buffers except those with \"#weechat\" "
+           "  use IRC smart filter on all buffers except those with \"#" PACKAGE_NAME_LOWER "\" "
            "in name:\n"
-           "    /filter add irc_smart *,!*#weechat* irc_smart_filter *\n"
+           "    /filter add irc_smart *,!*#" PACKAGE_NAME_LOWER "* irc_smart_filter *\n"
            "  filter all IRC join/part/quit messages:\n"
            "    /filter add joinquit * irc_join,irc_part,irc_quit *\n"
            "  filter nicks displayed when joining channels or with /names:\n"
            "    /filter add nicks * irc_366 *\n"
-           "  filter nick \"toto\" on IRC channel #weechat:\n"
-           "    /filter add toto irc.freenode.#weechat nick_toto *\n"
+           "  filter nick \"toto\" on IRC channel #" PACKAGE_NAME_LOWER ":\n"
+           "    /filter add toto irc.freenode.#" PACKAGE_NAME_LOWER " nick_toto *\n"
            "  filter IRC join/action messages from nick \"toto\":\n"
            "    /filter add toto * nick_toto+irc_join,nick_toto+irc_action *\n"
-           "  filter lines containing \"weechat sucks\" on IRC channel #weechat:\n"
-           "    /filter add sucks irc.freenode.#weechat * weechat sucks"),
+           "  filter lines containing \"" PACKAGE_NAME_LOWER " sucks\" on IRC channel #" PACKAGE_NAME_LOWER ":\n"
+           "    /filter add sucks irc.freenode.#" PACKAGE_NAME_LOWER " * " PACKAGE_NAME_LOWER " sucks"),
         "list"
         " || enable %(filters_names)|@"
         " || disable %(filters_names)|@"
@@ -7419,8 +7424,8 @@ command_init ()
            "Examples:\n"
            "  key alt-x to toggle nicklist bar:\n"
            "    /key bind meta-x /bar toggle nicklist\n"
-           "  key alt-r to jump to #weechat IRC channel:\n"
-           "    /key bind meta-r /buffer #weechat\n"
+           "  key alt-r to jump to #" PACKAGE_NAME_LOWER " IRC channel:\n"
+           "    /key bind meta-r /buffer #" PACKAGE_NAME_LOWER "\n"
            "  restore default binding for key alt-r:\n"
            "    /key reset meta-r\n"
            "  key \"tab\" to stop search in buffer:\n"
@@ -7493,7 +7498,7 @@ command_init ()
            "-current: no output on current buffer\n"
            " -buffer: no output on specified buffer\n"
            "    name: full buffer name (examples: \"irc.server.freenode\", "
-           "\"irc.freenode.#weechat\")\n"
+           "\"irc.freenode.#" PACKAGE_NAME_LOWER "\")\n"
            " command: command to execute silently (a '/' is automatically added "
            "if not found at beginning of command)\n"
            "\n"
@@ -7505,8 +7510,8 @@ command_init ()
            "    /mute save\n"
            "  message to current IRC channel:\n"
            "    /mute -current msg * hi!\n"
-           "  message to #weechat channel:\n"
-           "    /mute -buffer irc.freenode.#weechat msg #weechat hi!"),
+           "  message to #" PACKAGE_NAME_LOWER " channel:\n"
+           "    /mute -buffer irc.freenode.#" PACKAGE_NAME_LOWER " msg #" PACKAGE_NAME_LOWER " hi!"),
         "-core|-current %(commands)|%*"
         " || -buffer %(buffers_plugins_names) %(commands)|%*"
         " || %(commands)|%*",
@@ -7579,8 +7584,8 @@ command_init ()
            "    /print -core -error Some error here\n"
            "  display message on core buffer with prefix \"abc\":\n"
            "    /print -core abc\\tThe message\n"
-           "  display a message on channel #weechat:\n"
-           "    /print -buffer irc.freenode.#weechat Message on #weechat\n"
+           "  display a message on channel #" PACKAGE_NAME_LOWER ":\n"
+           "    /print -buffer irc.freenode.#" PACKAGE_NAME_LOWER " Message on #" PACKAGE_NAME_LOWER "\n"
            "  display a snowman (U+2603):\n"
            "    /print -escape \\u2603\n"
            "  send alert (BEL):\n"

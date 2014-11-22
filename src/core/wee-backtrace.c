@@ -156,8 +156,8 @@ weechat_backtrace ()
     char **symbols;
 #endif
 
-    weechat_backtrace_printf ("======= WeeChat backtrace =======");
-    weechat_backtrace_printf ("(written by WeeChat %s, compiled on %s %s)",
+    weechat_backtrace_printf ("======= " PACKAGE_NAME " backtrace =======");
+    weechat_backtrace_printf ("(written by " PACKAGE_NAME " %s, compiled on %s %s)",
                               version_get_version_with_git (),
                               version_get_compilation_date (),
                               version_get_compilation_time ());

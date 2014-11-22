@@ -19,6 +19,10 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -1013,8 +1017,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
            "  alias /split to split window horizontally:\n"
            "    /alias split /window splith\n"
            "  alias /hello to say \"hello\" on all channels but not on "
-           "#weechat:\n"
-           "    /alias hello /allchan -exclude=#weechat msg * hello\n"
+           "#" PACKAGE_NAME_LOWER ":\n"
+           "    /alias hello /allchan -exclude=#" PACKAGE_NAME_LOWER " msg * hello\n"
            "  alias /forcejoin to send IRC command \"forcejoin\" with "
            "completion of /sajoin:\n"
            "    /alias -completion %%sajoin forcejoin /quote forcejoin"),

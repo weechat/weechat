@@ -2740,7 +2740,7 @@ config_weechat_init_options ()
         N_("title for window (terminal for Curses GUI), set on startup; "
            "an empty string will keep title unchanged "
            "(note: content is evaluated, see /help eval)"),
-        NULL, 0, 0, "WeeChat ${info:version}", NULL, 0, NULL, NULL,
+        NULL, 0, 0, PACKAGE_NAME " ${info:version}", NULL, 0, NULL, NULL,
         &config_change_window_title, NULL, NULL, NULL);
 
     /* palette */
@@ -3393,7 +3393,7 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "path", "string",
         N_("path for searching plugins (\"%h\" will be replaced by "
-           "WeeChat home, \"~/.weechat\" by default)"),
+           PACKAGE_NAME " home, \"~/.weechat\" by default)"),
         NULL, 0, 0, "%h/plugins", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_save_config_on_unload = config_file_new_option (
         weechat_config_file, ptr_section,

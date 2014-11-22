@@ -19,6 +19,10 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #ifndef __USE_GNU
@@ -224,7 +228,7 @@ charset_config_init ()
         charset_config_file, ptr_section,
         "encode", "string",
         N_("global encoding charset: charset used to encode outgoing messages "
-           "(if empty, default is UTF-8 because it is the WeeChat internal "
+           "(if empty, default is UTF-8 because it is the " PACKAGE_NAME " internal "
            "charset)"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);

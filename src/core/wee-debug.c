@@ -155,14 +155,14 @@ debug_sigsegv ()
     gui_main_end (0);
 
     string_iconv_fprintf (stderr, "\n");
-    string_iconv_fprintf (stderr, "*** Very bad! WeeChat is crashing (SIGSEGV received)\n");
+    string_iconv_fprintf (stderr, "*** Very bad! " PACKAGE_NAME " is crashing (SIGSEGV received)\n");
     if (!log_crash_rename ())
         string_iconv_fprintf (stderr,
                               "*** Full crash dump was saved to %s/weechat.log file.\n",
                               weechat_home);
     string_iconv_fprintf (stderr, "***\n");
-    string_iconv_fprintf (stderr, "*** Please help WeeChat developers to fix this bug:\n");
-    string_iconv_fprintf (stderr, "***   1. If you have a core file, please run:  gdb /path/to/weechat core\n");
+    string_iconv_fprintf (stderr, "*** Please help " PACKAGE_NAME " developers to fix this bug:\n");
+    string_iconv_fprintf (stderr, "***   1. If you have a core file, please run:  gdb /path/to/" PACKAGE_NAME_LOWER " core\n");
     string_iconv_fprintf (stderr, "***      then issue command: \"bt full\" and send result to developers\n");
     string_iconv_fprintf (stderr, "***      (see user's guide for more info about report of crashes).\n");
     string_iconv_fprintf (stderr, "***   2. Otherwise send backtrace (below), only if it is a complete trace.\n");

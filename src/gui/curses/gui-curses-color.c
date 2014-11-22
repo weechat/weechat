@@ -801,7 +801,7 @@ gui_color_buffer_display ()
 
     /* set title buffer */
     gui_buffer_set_title (gui_color_buffer,
-                          _("WeeChat colors | Actions: "
+                          _(PACKAGE_NAME " colors | Actions: "
                             "[e] Display extra infos [r] Refresh "
                             "[z] Reset colors [q] Close buffer | "
                             "Keys: [alt-c] Temporarily switch to terminal "
@@ -822,7 +822,7 @@ gui_color_buffer_display ()
     else
     {
         gui_chat_printf_y (gui_color_buffer, y++,
-                           _("WeeChat color pairs auto-allocated "
+                           _(PACKAGE_NAME " color pairs auto-allocated "
                              "(in use: %d, left: %d):"),
                            gui_color_pairs_used,
                            gui_color_num_pairs - gui_color_pairs_used);
@@ -894,7 +894,7 @@ gui_color_buffer_display ()
         /* display WeeChat basic colors */
         y++;
         gui_chat_printf_y (gui_color_buffer, y++,
-                           _("WeeChat basic colors:"));
+                           _(PACKAGE_NAME " basic colors:"));
         str_line[0] = '\0';
         for (i = 0; i < GUI_CURSES_NUM_WEECHAT_COLORS; i++)
         {
@@ -1510,7 +1510,7 @@ gui_color_dump ()
 
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL,
-                     _("WeeChat colors (in use: %d, left: %d):"),
+                     _(PACKAGE_NAME " colors (in use: %d, left: %d):"),
                      gui_color_pairs_used,
                      gui_color_num_pairs - gui_color_pairs_used);
     if (gui_color_pairs)

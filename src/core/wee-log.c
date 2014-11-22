@@ -118,7 +118,7 @@ log_init ()
                                 "with another home using \"--dir\" command line option.\n"));
         exit (1);
     }
-    log_printf ("WeeChat %s (%s %s %s)",
+    log_printf (PACKAGE_NAME " %s (%s %s %s)",
                 version_get_version_with_git (),
                 _("compiled on"),
                 version_get_compilation_date (),
@@ -268,7 +268,7 @@ log_crash_rename ()
         time_now = time (NULL);
         local_time = localtime (&time_now);
         snprintf (new_name, length,
-                  "%s/weechat_crash_%04d%02d%02d_%d.log",
+                  "%s/" PACKAGE_NAME_LOWER "_crash_%04d%02d%02d_%d.log",
                   weechat_home,
                   local_time->tm_year + 1900,
                   local_time->tm_mon + 1,

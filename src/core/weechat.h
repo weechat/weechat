@@ -51,28 +51,16 @@
 #endif
 
 
-#define WEECHAT_COPYRIGHT_DATE   "(C) 2003-2014"
-#define WEECHAT_WEBSITE          "http://weechat.org/"
-#define WEECHAT_WEBSITE_DOWNLOAD "http://weechat.org/download"
+#define WEECHAT_COPYRIGHT_DATE   PACKAGE_COPYRIGHT
+#define WEECHAT_WEBSITE          PACKAGE_URL
+#define WEECHAT_WEBSITE_DOWNLOAD PACKAGE_URL_DOWNLOAD
+#define WEECHAT_ASCII_LOGO       PACKAGE_ASCII_LOGO
 
 /* log file */
-#define WEECHAT_LOG_NAME "weechat.log"
+#define WEECHAT_LOG_NAME PACKAGE_NAME_LOWER ".log"
 
 /* license */
-#define WEECHAT_LICENSE_TEXT \
-    "WeeChat is free software; you can redistribute it and/or modify\n" \
-    "it under the terms of the GNU General Public License as published by\n" \
-    "the Free Software Foundation; either version 3 of the License, or\n" \
-    "(at your option) any later version.\n" \
-    "\n", \
-    \
-    "WeeChat is distributed in the hope that it will be useful,\n" \
-    "but WITHOUT ANY WARRANTY; without even the implied warranty of\n" \
-    "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" \
-    "GNU General Public License for more details.\n" \
-    "\n" \
-    "You should have received a copy of the GNU General Public License\n" \
-    "along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.\n\n"
+#define WEECHAT_LICENSE_TEXT PACKAGE_LICENSE_TEXT
 
 /* directory separator, depending on OS */
 #ifdef _WIN32

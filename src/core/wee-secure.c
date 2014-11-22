@@ -1202,7 +1202,7 @@ secure_buffer_display ()
 
     /* set title buffer */
     gui_buffer_set_title (secure_buffer,
-                          _("WeeChat secured data (sec.conf) | "
+                          _(PACKAGE_NAME " secured data (sec.conf) | "
                             "Keys: [alt-v] Toggle values"));
 
     line = 0;

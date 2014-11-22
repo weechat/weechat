@@ -1602,7 +1602,7 @@ completion_init ()
                      N_("values for a configuration option"),
                      &completion_list_add_config_option_values_cb, NULL);
     hook_completion (NULL, "weechat_commands", /* formerly "%w" */
-                     N_("weechat commands"),
+                     N_(PACKAGE_NAME " commands"),
                      &completion_list_add_weechat_commands_cb, NULL);
     hook_completion (NULL, "proxies_names", /* formerly "%y" */
                      N_("names of proxies"),

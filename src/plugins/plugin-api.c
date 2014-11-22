@@ -1162,36 +1162,36 @@ plugin_api_init ()
                    &plugin_api_modifier_color_decode_ansi, NULL);
 
     /* WeeChat core info hooks */
-    hook_info (NULL, "version", N_("WeeChat version"), NULL,
+    hook_info (NULL, "version", N_(PACKAGE_NAME " version"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "version_number", N_("WeeChat version (as number)"), NULL,
+    hook_info (NULL, "version_number", N_(PACKAGE_NAME " version (as number)"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "version_git", N_("WeeChat git version (output of "
+    hook_info (NULL, "version_git", N_(PACKAGE_NAME " git version (output of "
                                        "command \"git describe\" for a "
                                        "development version only, empty for a "
                                        "stable release)"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "date", N_("WeeChat compilation date"), NULL,
+    hook_info (NULL, "date", N_(PACKAGE_NAME " compilation date"), NULL,
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "dir_separator", N_("directory separator"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_dir", N_("WeeChat directory"), NULL,
+    hook_info (NULL, "weechat_dir", N_(PACKAGE_NAME " directory"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_libdir", N_("WeeChat \"lib\" directory"), NULL,
+    hook_info (NULL, "weechat_libdir", N_(PACKAGE_NAME " \"lib\" directory"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_sharedir", N_("WeeChat \"share\" directory"), NULL,
+    hook_info (NULL, "weechat_sharedir", N_(PACKAGE_NAME " \"share\" directory"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_localedir", N_("WeeChat \"locale\" directory"), NULL,
+    hook_info (NULL, "weechat_localedir", N_(PACKAGE_NAME " \"locale\" directory"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_site", N_("WeeChat site"), NULL,
+    hook_info (NULL, "weechat_site", N_(PACKAGE_NAME " site"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_site_download", N_("WeeChat site, download page"), NULL,
+    hook_info (NULL, "weechat_site_download", N_(PACKAGE_NAME " site, download page"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_upgrading", N_("1 if WeeChat is upgrading (command `/upgrade`)"), NULL,
+    hook_info (NULL, "weechat_upgrading", N_("1 if " PACKAGE_NAME " is upgrading (command `/upgrade`)"), NULL,
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "charset_terminal", N_("terminal charset"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "charset_internal", N_("WeeChat internal charset"), NULL,
+    hook_info (NULL, "charset_internal", N_(PACKAGE_NAME " internal charset"), NULL,
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "locale", N_("locale used for translating messages"), NULL,
                &plugin_api_info_get_internal, NULL);

@@ -21,7 +21,18 @@
 
 cmake_minimum_required(VERSION 2.4)
 
-project(weechat C)
+# Project branding
+if(EXISTS branding-cust.cmake)
+	include(branding-cust.cmake)
+	set(PROJECT_BRANDED 1)
+else()
+	include(branding.cmake)
+	set(PROJECT_BRANDED 0)
+endif()
+
+string(TOLOWER "${PROJECT_NAME}" PROJECT_NAME_LOWER)
+
+project(${PROJECT_NAME} C)
 
 # CMake options
 set(CMAKE_VERBOSE_MAKEFILE OFF)
@@ -33,8 +44,8 @@ if(PREFIX)
 endif()
 
 # version
-set(VERSION_MAJOR "1")
-set(VERSION_MINOR "1-dev")
+set(VERSION_MAJOR ${PROJECT_VER_MAJOR})
+set(VERSION_MINOR ${PROJECT_VER_MINOR})
 set(VERSION_PATCH "")
 if(VERSION_PATCH STREQUAL "")
   set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
@@ -43,7 +54,7 @@ else()
 endif()
 
 # license
-set(LICENSE "GPL3")
+set(LICENSE ${PROJECT_LICENSE})
 
 # package string
 set(PKG_STRING "${PROJECT_NAME} ${VERSION}")
@@ -103,10 +114,10 @@ option(ENABLE_TESTS     "Enable tests"                              OFF)
 
 # option WEECHAT_HOME
 if(NOT DEFINED WEECHAT_HOME OR "${WEECHAT_HOME}" STREQUAL "")
-  set(WEECHAT_HOME "~/.weechat")
+  set(WEECHAT_HOME "~/.${PROJECT_NAME_LOWER}")
 endif()
 set(WEECHAT_HOME "${WEECHAT_HOME}" CACHE
-  STRING "WeeChat home directory for config, logs, scripts.. (default is \"~/.weechat\")"
+  STRING "${PROJECT_NAME} home directory for config, logs, scripts.. (default is \"~/.${PROJECT_NAME_LOWER}\")"
   FORCE)
 mark_as_advanced(CLEAR WEECHAT_HOME)
 

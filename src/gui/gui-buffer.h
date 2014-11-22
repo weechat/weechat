@@ -20,6 +20,10 @@
 #ifndef WEECHAT_GUI_BUFFER_H
 #define WEECHAT_GUI_BUFFER_H 1
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <limits.h>
 #include <regex.h>
 
@@ -45,7 +49,7 @@ enum t_gui_buffer_notify
     GUI_BUFFER_NUM_NOTIFY,
 };
 
-#define GUI_BUFFER_MAIN "weechat"
+#define GUI_BUFFER_MAIN PACKAGE_NAME_LOWER
 
 #define GUI_BUFFERS_MAX 10000
 

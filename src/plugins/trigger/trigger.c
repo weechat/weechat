@@ -19,6 +19,10 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -34,7 +38,7 @@
 
 
 WEECHAT_PLUGIN_NAME(TRIGGER_PLUGIN_NAME);
-WEECHAT_PLUGIN_DESCRIPTION(N_("Text replacement and command execution on events triggered by WeeChat/plugins"));
+WEECHAT_PLUGIN_DESCRIPTION(N_("Text replacement and command execution on events triggered by " PACKAGE_NAME "/plugins"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
