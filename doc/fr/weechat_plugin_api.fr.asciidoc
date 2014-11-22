@@ -12719,13 +12719,15 @@ Fonctions pour exécuter des commandes WeeChat.
 
 ==== weechat_command
 
+_Mis à jour dans la 1.1._
+
 Exécuter une commande.
 
 Prototype :
 
 [source,C]
 ----
-void weechat_command (struct t_gui_buffer *buffer, const char *command);
+int weechat_command (struct t_gui_buffer *buffer, const char *command);
 ----
 
 Paramètres :
@@ -12735,12 +12737,18 @@ Paramètres :
 * 'command' : commande à exécuter (si elle commence par "/"), ou texte à
   envoyer au tampon
 
+Valeur de retour : (_WeeChat ≥ 1.1_)
+
+* 'WEECHAT_RC_OK' si ok
+* 'WEECHAT_RC_ERROR' si erreur
+
 Exemple en C :
 
 [source,C]
 ----
-weechat_command (weechat_buffer_search ("irc", "freenode.#weechat"),
-                 "/whois FlashCode");
+int rc;
+rc = weechat_command (weechat_buffer_search ("irc", "freenode.#weechat"),
+                      "/whois FlashCode");
 ----
 
 Script (Python) :
@@ -12751,7 +12759,7 @@ Script (Python) :
 weechat.command(buffer, command)
 
 # exemple
-weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois FlashCode")
+rc = weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois FlashCode")
 ----
 
 [[network]]

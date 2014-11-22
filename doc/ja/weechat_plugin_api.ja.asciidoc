@@ -12463,13 +12463,15 @@ WeeChat コマンドを実行する関数。
 
 ==== weechat_command
 
+_バージョン 1.1 で更新。_
+
 コマンドを実行。
 
 プロトタイプ:
 
 [source,C]
 ----
-void weechat_command (struct t_gui_buffer *buffer, const char *command);
+int weechat_command (struct t_gui_buffer *buffer, const char *command);
 ----
 
 引数:
@@ -12479,12 +12481,19 @@ void weechat_command (struct t_gui_buffer *buffer, const char *command);
 * 'command': 実行するコマンド ("/"
   で始まっている場合)、またはバッファに送信するテキスト
 
+// TRANSLATION MISSING
+Return value: (_WeeChat ≥ 1.1_)
+
+* 'WEECHAT_RC_OK' if successful
+* 'WEECHAT_RC_ERROR' if error
+
 C 言語での使用例:
 
 [source,C]
 ----
-weechat_command (weechat_buffer_search ("irc", "freenode.#weechat"),
-                 "/whois FlashCode");
+int rc;
+rc = weechat_command (weechat_buffer_search ("irc", "freenode.#weechat"),
+                      "/whois FlashCode");
 ----
 
 スクリプト (Python) での使用例:
@@ -12495,7 +12504,7 @@ weechat_command (weechat_buffer_search ("irc", "freenode.#weechat"),
 weechat.command(buffer, command)
 
 # 例
-weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois FlashCode")
+rc = weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois FlashCode")
 ----
 
 [[network]]

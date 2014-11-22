@@ -260,21 +260,24 @@ plugin_api_color (const char *color_name)
  * Executes a command on a buffer (simulates user entry).
  */
 
-void
+int
 plugin_api_command (struct t_weechat_plugin *plugin,
                     struct t_gui_buffer *buffer, const char *command)
 {
     char *command2;
+    int rc;
 
     if (!plugin || !command)
-        return;
+        return WEECHAT_RC_ERROR;
 
     command2 = string_iconv_to_internal (plugin->charset, command);
     if (!buffer)
         buffer = gui_current_window->buffer;
-    input_data (buffer, (command2) ? command2 : command);
+    rc = input_data (buffer, (command2) ? command2 : command);
     if (command2)
         free (command2);
+
+    return rc;
 }
 
 /*

@@ -4663,7 +4663,7 @@ weechat_tcl_api_command (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj *objp;
     char *buffer, *command;
-    int i;
+    int i, rc;
 
     API_FUNC(1, "command", API_RETURN_ERROR);
     if (objc < 3)
@@ -4672,12 +4672,12 @@ weechat_tcl_api_command (ClientData clientData, Tcl_Interp *interp,
     buffer = Tcl_GetStringFromObj (objv[1], &i);
     command = Tcl_GetStringFromObj (objv[2], &i);
 
-    plugin_script_api_command (weechat_tcl_plugin,
-                               tcl_current_script,
-                               API_STR2PTR(buffer),
-                               command);
+    rc = plugin_script_api_command (weechat_tcl_plugin,
+                                    tcl_current_script,
+                                    API_STR2PTR(buffer),
+                                    command);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 static int

@@ -53,8 +53,9 @@ extern const char *plugin_api_prefix (const char *prefix);
 extern const char *plugin_api_color (const char *color_name);
 
 /* command */
-extern void plugin_api_command (struct t_weechat_plugin *plugin,
-                                struct t_gui_buffer *buffer, const char *command);
+extern int plugin_api_command (struct t_weechat_plugin *plugin,
+                               struct t_gui_buffer *buffer,
+                               const char *command);
 
 /* infolist */
 extern int plugin_api_infolist_next (struct t_infolist *infolist);

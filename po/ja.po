@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-15 18:20+0100\n"
+"POT-Creation-Date: 2014-11-21 18:33+0100\n"
 "PO-Revision-Date: 2014-11-10 06:29+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -2826,6 +2826,16 @@ msgstr ""
 "  最小限表示を 2 秒間有効にする:\n"
 "    /window bare 2"
 
+#, fuzzy, c-format
+msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
+msgstr ""
+"%sコマンド \"%s\" にエラーがあります (コマンドに関するヘルプ: /help %s)"
+
+#, c-format
+msgid "%sError with command \"%s\" (help on command: /help %s)"
+msgstr ""
+"%sコマンド \"%s\" にエラーがあります (コマンドに関するヘルプ: /help %s)"
+
 msgid "names of buffers"
 msgstr "バッファの名前"
 
@@ -4174,11 +4184,6 @@ msgstr "%sシグナル %d を pid %d に送信中にエラー: %s"
 #, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%sこのバッファに書き込むことは出来ません"
-
-#, c-format
-msgid "%sError with command \"%s\" (help on command: /help %s)"
-msgstr ""
-"%sコマンド \"%s\" にエラーがあります (コマンドに関するヘルプ: /help %s)"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"

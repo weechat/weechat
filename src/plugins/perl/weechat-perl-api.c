@@ -4019,6 +4019,7 @@ XS (XS_weechat_api_bar_remove)
 XS (XS_weechat_api_command)
 {
     char *buffer, *command;
+    int rc;
     dXSARGS;
 
     API_FUNC(1, "command", API_RETURN_ERROR);
@@ -4028,12 +4029,12 @@ XS (XS_weechat_api_command)
     buffer = SvPV_nolen (ST (0));
     command = SvPV_nolen (ST (1));
 
-    plugin_script_api_command (weechat_perl_plugin,
-                               perl_current_script,
-                               API_STR2PTR(buffer),
-                               command);
+    rc = plugin_script_api_command (weechat_perl_plugin,
+                                    perl_current_script,
+                                    API_STR2PTR(buffer),
+                                    command);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 XS (XS_weechat_api_info_get)

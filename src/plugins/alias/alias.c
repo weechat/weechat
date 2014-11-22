@@ -815,8 +815,7 @@ unalias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     (void) buffer;
     (void) argv_eol;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     for (i = 1; i < argc; i++)
     {

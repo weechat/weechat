@@ -630,7 +630,7 @@ weechat_guile_command_cb (void *data, struct t_gui_buffer *buffer,
             weechat_guile_unload_all ();
         }
         else
-            return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_ERROR;
     }
     else
     {
@@ -691,7 +691,7 @@ weechat_guile_command_cb (void *data, struct t_gui_buffer *buffer,
             weechat_guile_stdout_flush ();
         }
         else
-            return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_ERROR;
     }
 
     return WEECHAT_RC_OK;

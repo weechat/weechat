@@ -4198,6 +4198,7 @@ static PyObject *
 weechat_python_api_command (PyObject *self, PyObject *args)
 {
     char *buffer, *command;
+    int rc;
 
     API_FUNC(1, "command", API_RETURN_ERROR);
     buffer = NULL;
@@ -4205,12 +4206,12 @@ weechat_python_api_command (PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple (args, "ss", &buffer, &command))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    plugin_script_api_command (weechat_python_plugin,
-                               python_current_script,
-                               API_STR2PTR(buffer),
-                               command);
+    rc = plugin_script_api_command (weechat_python_plugin,
+                                    python_current_script,
+                                    API_STR2PTR(buffer),
+                                    command);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 static PyObject *

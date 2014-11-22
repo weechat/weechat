@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-15 18:20+0100\n"
-"PO-Revision-Date: 2014-11-15 18:20+0100\n"
+"POT-Creation-Date: 2014-11-21 18:33+0100\n"
+"PO-Revision-Date: 2014-11-22 07:54+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -2902,6 +2902,16 @@ msgstr ""
 "  activer le mode d'affichage dépouillé pendant 2 secondes :\n"
 "    /window bare 2"
 
+#, c-format
+msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
+msgstr ""
+"%sPas assez de paramètres pour la commande \"%s%s%s\" (aide sur la "
+"commande : /help %s)"
+
+#, c-format
+msgid "%sError with command \"%s\" (help on command: /help %s)"
+msgstr "%sErreur avec la commande \"%s\" (aide sur la commande : /help %s)"
+
 msgid "names of buffers"
 msgstr "noms des tampons"
 
@@ -4354,10 +4364,6 @@ msgstr "%sErreur d'envoi du signal %d au pid %d : %s"
 #, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%sVous ne pouvez pas écrire de texte dans ce tampon"
-
-#, c-format
-msgid "%sError with command \"%s\" (help on command: /help %s)"
-msgstr "%sErreur avec la commande \"%s\" (aide sur la commande : /help %s)"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"

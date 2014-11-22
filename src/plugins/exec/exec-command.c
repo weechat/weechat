@@ -627,8 +627,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     /* send text to a running process */
     if (weechat_strcasecmp (argv[1], "-in") == 0)
     {
-        if (argc < 4)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(4, "-in");
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
         if (ptr_exec_cmd && ptr_exec_cmd->hook)
         {
@@ -647,8 +646,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     /* send text to a running process (if given), then close stdin */
     if (weechat_strcasecmp (argv[1], "-inclose") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "-inclose");
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
         if (ptr_exec_cmd && ptr_exec_cmd->hook)
         {
@@ -671,8 +669,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     /* send a signal to a running process */
     if (weechat_strcasecmp (argv[1], "-signal") == 0)
     {
-        if (argc < 4)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(4, "-signal");
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
         if (ptr_exec_cmd)
             weechat_hook_set (ptr_exec_cmd->hook, "signal", argv[3]);
@@ -682,8 +679,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     /* send a KILL signal to a running process */
     if (weechat_strcasecmp (argv[1], "-kill") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "-kill");
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
         if (ptr_exec_cmd)
             weechat_hook_set (ptr_exec_cmd->hook, "signal", "kill");
@@ -707,8 +703,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     /* set a hook property */
     if (weechat_strcasecmp (argv[1], "-set") == 0)
     {
-        if (argc < 5)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(5, "-set");
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
         if (ptr_exec_cmd)
             weechat_hook_set (ptr_exec_cmd->hook, argv[3], argv_eol[4]);
@@ -718,8 +713,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     /* delete terminated command(s) */
     if (weechat_strcasecmp (argv[1], "-del") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "-del");
         if (weechat_strcasecmp (argv[2], "-all") == 0)
         {
             count = 0;

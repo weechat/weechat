@@ -4249,6 +4249,7 @@ static int
 weechat_lua_api_command (lua_State *L)
 {
     const char *buffer, *command;
+    int rc;
 
     API_FUNC(1, "command", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
@@ -4257,12 +4258,12 @@ weechat_lua_api_command (lua_State *L)
     buffer = lua_tostring (L, -2);
     command = lua_tostring (L, -1);
 
-    plugin_script_api_command (weechat_lua_plugin,
-                               lua_current_script,
-                               API_STR2PTR(buffer),
-                               command);
+    rc = plugin_script_api_command (weechat_lua_plugin,
+                                    lua_current_script,
+                                    API_STR2PTR(buffer),
+                                    command);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 static int

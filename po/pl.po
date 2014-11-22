@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-15 18:20+0100\n"
+"POT-Creation-Date: 2014-11-21 18:33+0100\n"
 "PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2879,6 +2879,14 @@ msgstr ""
 "  włączenie trybu niesformatowanego na 2 sekundy:\n"
 "    /window bare 2"
 
+#, fuzzy, c-format
+msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
+msgstr "%sBłąd komendy \"%s\" (pomoc dla komendy: /help %s)"
+
+#, c-format
+msgid "%sError with command \"%s\" (help on command: /help %s)"
+msgstr "%sBłąd komendy \"%s\" (pomoc dla komendy: /help %s)"
+
 msgid "names of buffers"
 msgstr "nazwy buforów"
 
@@ -4267,10 +4275,6 @@ msgstr "%sBłąd wysyłania sygnału %d do pid %d: %s"
 #, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%s nie możesz nic pisać w tym buforze"
-
-#, c-format
-msgid "%sError with command \"%s\" (help on command: /help %s)"
-msgstr "%sBłąd komendy \"%s\" (pomoc dla komendy: /help %s)"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"

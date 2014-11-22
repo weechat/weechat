@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-15 18:20+0100\n"
+"POT-Creation-Date: 2014-11-21 18:33+0100\n"
 "PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2203,6 +2203,14 @@ msgstr ""
 "hogy az új ablak hány százaléka lesz a szülőablaknak. Például 25 esetén a "
 "szülőablak negyedét kapjuk."
 
+#, fuzzy, c-format
+msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
+msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
+
+#, fuzzy, c-format
+msgid "%sError with command \"%s\" (help on command: /help %s)"
+msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
+
 #, fuzzy
 msgid "names of buffers"
 msgstr "puffer betöltése sikertelen"
@@ -3421,10 +3429,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%s az utolsó puffert nem lehet bezárni\n"
-
-#, fuzzy, c-format
-msgid "%sError with command \"%s\" (help on command: /help %s)"
-msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
 
 #, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"

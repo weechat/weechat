@@ -1049,6 +1049,9 @@ end:
     if (sargv)
         weechat_string_free_split (sargv);
 
+    if (rc == WEECHAT_RC_ERROR)
+        WEECHAT_COMMAND_ERROR;
+
     return rc;
 }
 

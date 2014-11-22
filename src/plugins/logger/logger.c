@@ -906,7 +906,7 @@ logger_command_cb (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
 
-    return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_ERROR;
 }
 
 /*

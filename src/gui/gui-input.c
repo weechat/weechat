@@ -437,7 +437,7 @@ gui_input_return (struct t_gui_buffer *buffer)
             gui_input_text_changed_modifier_and_signal (window->buffer,
                                                         0, /* save undo */
                                                         1); /* stop completion */
-            input_data (window->buffer, command);
+            (void) input_data (window->buffer, command);
             free (command);
         }
     }

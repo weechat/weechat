@@ -3875,16 +3875,18 @@ weechat_guile_api_bar_remove (SCM bar)
 SCM
 weechat_guile_api_command (SCM buffer, SCM command)
 {
+    int rc;
+
     API_FUNC(1, "command", API_RETURN_ERROR);
     if (!scm_is_string (buffer) || !scm_is_string (command))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    plugin_script_api_command (weechat_guile_plugin,
-                               guile_current_script,
-                               API_STR2PTR(API_SCM_TO_STRING(buffer)),
-                               API_SCM_TO_STRING(command));
+    rc = plugin_script_api_command (weechat_guile_plugin,
+                                    guile_current_script,
+                                    API_STR2PTR(API_SCM_TO_STRING(buffer)),
+                                    API_SCM_TO_STRING(command));
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 SCM

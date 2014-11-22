@@ -373,8 +373,7 @@ irc_command_allchan (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     current_server = 0;
     ptr_exclude_channels = NULL;
@@ -425,8 +424,7 @@ irc_command_allpv (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     current_server = 0;
     ptr_exclude_channels = NULL;
@@ -547,8 +545,7 @@ irc_command_allserv (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) buffer;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     ptr_exclude_servers = NULL;
     ptr_command = argv_eol[1];
@@ -1277,12 +1274,11 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 3)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(3, "");
 
     irc_cmd = strdup (argv[2]);
     if (!irc_cmd)
-        return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_ERROR;
 
     weechat_string_toupper (irc_cmd);
 
@@ -1462,8 +1458,7 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 3)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(3, "");
 
     /* use the local interface, from the server socket */
     memset (&addr, 0, sizeof (addr));
@@ -1484,8 +1479,7 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
     /* DCC SEND file */
     if (weechat_strcasecmp (argv[1], "send") == 0)
     {
-        if (argc < 4)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(4, "send");
         infolist = weechat_infolist_new ();
         if (infolist)
         {
@@ -1513,8 +1507,7 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
     /* DCC CHAT */
     if (weechat_strcasecmp (argv[1], "chat") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "chat");
         infolist = weechat_infolist_new ();
         if (infolist)
         {
@@ -1539,7 +1532,7 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
-    return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_ERROR;
 }
 
 /*
@@ -1948,8 +1941,7 @@ irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
     /* add ignore */
     if (weechat_strcasecmp (argv[1], "add") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "add");
 
         mask = argv[2];
         server = (argc > 3) ? argv[3] : NULL;
@@ -2015,8 +2007,7 @@ irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
     /* delete ignore */
     if (weechat_strcasecmp (argv[1], "del") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "del");
 
         if (weechat_strcasecmp (argv[2], "-all") == 0)
         {
@@ -2069,7 +2060,7 @@ irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
-    return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_ERROR;
 }
 
 /*
@@ -2119,8 +2110,7 @@ irc_command_invite (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv_eol;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     if (argc > 2)
     {
@@ -2182,8 +2172,7 @@ irc_command_ison (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "ISON :%s", argv_eol[1]);
@@ -2345,10 +2334,10 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
         if (weechat_strcasecmp (argv[i], "-server") == 0)
         {
             if (argc <= i + 1)
-                return WEECHAT_RC_ERROR;
+                WEECHAT_COMMAND_ERROR;
             ptr_server = irc_server_search (argv[i + 1]);
             if (!ptr_server)
-                return WEECHAT_RC_ERROR;
+                WEECHAT_COMMAND_ERROR;
             arg_channels = i + 2;
             i++;
         }
@@ -2380,7 +2369,7 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
                                      1, noswitch);
         }
         else
-            return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_ERROR;
     }
 
     return WEECHAT_RC_OK;
@@ -2437,13 +2426,11 @@ irc_command_kick (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     if (irc_channel_is_channel (ptr_server, argv[1]))
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "");
         pos_channel = argv[1];
         pos_nick = argv[2];
         pos_comment = argv_eol[3];
@@ -2488,13 +2475,11 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     if (irc_channel_is_channel (ptr_server, argv[1]))
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "");
         pos_channel = argv[1];
         pos_nick = argv[2];
         pos_comment = argv_eol[3];
@@ -2518,7 +2503,7 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
     /* kick nick from channel */
     nick_only = strdup (pos_nick);
     if (!nick_only)
-        return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_ERROR;
 
     pos = strchr (nick_only, '@');
     if (pos)
@@ -2582,8 +2567,7 @@ irc_command_kill (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     if (argc < 3)
     {
@@ -2951,8 +2935,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 3)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(3, "");
 
     arg_target = 1;
     arg_text = 2;
@@ -2970,7 +2953,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
     targets = weechat_string_split (argv[arg_target], ",", 0, 0,
                                     &num_targets);
     if (!targets)
-        return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_ERROR;
 
     for (i = 0; i < num_targets; i++)
     {
@@ -3222,13 +3205,12 @@ irc_command_nick (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv_eol;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     if (argc > 2)
     {
         if (weechat_strcasecmp (argv[1], "-all") != 0)
-            return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_ERROR;
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
@@ -3259,8 +3241,7 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 3)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(3, "");
 
     arg_target = 1;
     arg_text = 2;
@@ -3356,8 +3337,7 @@ irc_command_notify (void *data, struct t_gui_buffer *buffer, int argc,
     /* add notify */
     if (weechat_strcasecmp (argv[1], "add") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "add");
 
         check_away = 0;
 
@@ -3440,8 +3420,7 @@ irc_command_notify (void *data, struct t_gui_buffer *buffer, int argc,
     /* delete notify */
     if (weechat_strcasecmp (argv[1], "del") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "del");
 
         if (argc > 3)
         {
@@ -3514,7 +3493,7 @@ irc_command_notify (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
-    return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_ERROR;
 }
 
 /*
@@ -3572,8 +3551,7 @@ irc_command_oper (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv;
 
-    if (argc < 3)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(3, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "OPER %s", argv_eol[1]);
@@ -3693,8 +3671,7 @@ irc_command_ping (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "PING %s", argv_eol[1]);
@@ -3717,8 +3694,7 @@ irc_command_pong (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "PONG %s", argv_eol[1]);
@@ -3742,8 +3718,7 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     arg_nick = 1;
     arg_text = 2;
@@ -3758,7 +3733,7 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
 
     nicks = weechat_string_split (argv[arg_nick], ",", 0, 0, &num_nicks);
     if (!nicks)
-        return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_ERROR;
 
     for (i = 0; i < num_nicks; i++)
     {
@@ -3901,21 +3876,20 @@ irc_command_quote (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     if ((argc >= 4) && (weechat_strcasecmp (argv[1], "-server") == 0))
     {
         ptr_server = irc_server_search (argv[2]);
         if (!ptr_server || (ptr_server->sock < 0))
-            return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_ERROR;
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "%s", argv_eol[3]);
     }
     else
     {
         if (!ptr_server || (ptr_server->sock < 0))
-            return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_ERROR;
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "%s", argv_eol[1]);
     }
@@ -4102,16 +4076,14 @@ irc_command_remove (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     ptr_channel_name = (ptr_channel) ? ptr_channel->name : NULL;
     index_nick = 1;
 
     if (irc_channel_is_channel (ptr_server, argv[1]))
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "");
         ptr_channel_name = argv[1];
         index_nick = 2;
     }
@@ -4192,8 +4164,7 @@ irc_command_sajoin (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 3)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(3, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "SAJOIN %s %s", argv[1], argv_eol[2]);
@@ -4276,8 +4247,7 @@ irc_command_sanick (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 3)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(3, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "SANICK %s %s", argv[1], argv_eol[2]);
@@ -4299,8 +4269,7 @@ irc_command_sapart (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 3)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(3, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "SAPART %s %s", argv[1], argv_eol[2]);
@@ -4322,8 +4291,7 @@ irc_command_saquit (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 3)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(3, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "SAQUIT %s :%s", argv[1], argv_eol[2]);
@@ -4784,8 +4752,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (weechat_strcasecmp (argv[1], "add") == 0)
     {
-        if (argc < 4)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(4, "add");
         ptr_server2 = irc_server_casesearch (argv[2]);
         if (ptr_server2)
         {
@@ -4829,8 +4796,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (weechat_strcasecmp (argv[1], "copy") == 0)
     {
-        if (argc < 4)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(4, "copy");
 
         /* look for server by name */
         server_found = irc_server_search (argv[2]);
@@ -4873,13 +4839,12 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             return WEECHAT_RC_OK;
         }
 
-        return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_ERROR;
     }
 
     if (weechat_strcasecmp (argv[1], "rename") == 0)
     {
-        if (argc < 4)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(4, "rename");
 
         /* look for server by name */
         server_found = irc_server_search (argv[2]);
@@ -4921,13 +4886,12 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             return WEECHAT_RC_OK;
         }
 
-        return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_ERROR;
     }
 
     if (weechat_strcasecmp (argv[1], "keep") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "keep");
 
         /* look for server by name */
         server_found = irc_server_search (argv[2]);
@@ -4968,8 +4932,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (weechat_strcasecmp (argv[1], "del") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "del");
 
         /* look for server by name */
         server_found = irc_server_search (argv[2]);
@@ -5040,8 +5003,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (weechat_strcasecmp (argv[1], "fakerecv") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "fakerecv");
         IRC_COMMAND_CHECK_SERVER("server fakerecv", 1);
         length = strlen (argv_eol[2]);
         if (length > 0)
@@ -5060,7 +5022,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
-    return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_ERROR;
 }
 
 /*
@@ -5078,8 +5040,7 @@ irc_command_service (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "SERVICE %s", argv_eol[1]);
@@ -5131,8 +5092,7 @@ irc_command_squery (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     if (argc > 2)
     {
@@ -5163,8 +5123,7 @@ irc_command_squit (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     irc_server_sendf (ptr_server, 0, NULL, "SQUIT %s", argv_eol[1]);
 
@@ -5216,8 +5175,7 @@ irc_command_summon (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "SUMMON %s", argv_eol[1]);
@@ -5379,8 +5337,7 @@ irc_command_unban (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv_eol;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     if (irc_channel_is_channel (ptr_server, argv[1]))
     {
@@ -5438,8 +5395,7 @@ irc_command_unquiet (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv_eol;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     if (irc_channel_is_channel (ptr_server, argv[1]))
     {
@@ -5505,8 +5461,7 @@ irc_command_userhost (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "USERHOST %s", argv_eol[1]);
@@ -5641,8 +5596,7 @@ irc_command_wallchops (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     if (irc_channel_is_channel (ptr_server, argv[1]))
     {
@@ -5750,8 +5704,7 @@ irc_command_wallops (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "WALLOPS :%s", argv_eol[1]);
@@ -5829,7 +5782,7 @@ irc_command_whois (void *data, struct t_gui_buffer *buffer, int argc,
     }
 
     if (!ptr_nick)
-        return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_ERROR;
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "WHOIS %s%s%s",
@@ -5856,8 +5809,7 @@ irc_command_whowas (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv;
 
-    if (argc < 2)
-        return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                       "WHOWAS %s", argv_eol[1]);

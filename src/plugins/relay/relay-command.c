@@ -216,8 +216,7 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
 
         if (weechat_strcasecmp (argv[1], "add") == 0)
         {
-            if (argc < 4)
-                return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_MIN_ARGS(4, "add");
             if (relay_config_create_option_port (NULL,
                                                  relay_config_file,
                                                  relay_config_section_port,
@@ -234,8 +233,7 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
 
         if (weechat_strcasecmp (argv[1], "del") == 0)
         {
-            if (argc < 3)
-                return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_MIN_ARGS(3, "del");
             ptr_server = relay_server_search (argv_eol[2]);
             if (ptr_server)
             {
@@ -264,8 +262,7 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
 
         if (weechat_strcasecmp (argv[1], "stop") == 0)
         {
-            if (argc < 3)
-                return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_MIN_ARGS(3, "stop");
             ptr_server = relay_server_search (argv_eol[2]);
             if (ptr_server)
             {
@@ -284,8 +281,7 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
 
         if (weechat_strcasecmp (argv[1], "restart") == 0)
         {
-            if (argc < 3)
-                return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_MIN_ARGS(3, "restart");
             ptr_server = relay_server_search (argv_eol[2]);
             if (ptr_server)
             {
@@ -315,7 +311,7 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
             return WEECHAT_RC_OK;
         }
 
-        return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_ERROR;
     }
 
     if (!relay_buffer)

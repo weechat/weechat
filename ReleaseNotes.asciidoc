@@ -56,6 +56,18 @@ You can restore the default "beep" trigger with the following command:
 /trigger restore beep
 ----
 
+=== Return code of commands
+
+The API function 'weechat_command' now sends the value returned return by
+command callback.
+
+WeeChat does not display any more an error when a command returns
+'WEECHAT_RC_ERROR'. Consequently, all plugins/scripts should display an
+explicit error message before returning 'WEECHAT_RC_ERROR'.
+
+For C plugins, two macros have been added in weechat-plugin.h:
+'WEECHAT_COMMAND_MIN_ARGS' and 'WEECHAT_COMMAND_ERROR'.
+
 === Completion of inline commands
 
 WeeChat now completes by default inline commands (not only at beginning of

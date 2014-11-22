@@ -275,7 +275,7 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
-    return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_ERROR;
 }
 
 /*

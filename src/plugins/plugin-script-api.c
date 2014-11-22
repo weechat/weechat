@@ -1331,20 +1331,23 @@ plugin_script_api_bar_item_remove (struct t_weechat_plugin *weechat_plugin,
  * Executes a command on a buffer (simulates user entry).
  */
 
-void
+int
 plugin_script_api_command (struct t_weechat_plugin *weechat_plugin,
                            struct t_plugin_script *script,
                            struct t_gui_buffer *buffer, const char *command)
 {
     char *command2;
+    int rc;
 
     command2 = (script->charset && script->charset[0]) ?
         weechat_iconv_to_internal (script->charset, command) : NULL;
 
-    weechat_command (buffer, (command2) ? command2 : command);
+    rc = weechat_command (buffer, (command2) ? command2 : command);
 
     if (command2)
         free (command2);
+
+    return rc;
 }
 
 /*

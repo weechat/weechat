@@ -61,22 +61,27 @@ input_exec_data (struct t_gui_buffer *buffer, const char *data)
 
 /*
  * Executes a command.
+ *
+ * Returns:
+ *   WEECHAT_RC_OK: command executed
+ *   WEECHAT_RC_ERROR: error, command not executed
  */
 
-void
+int
 input_exec_command (struct t_gui_buffer *buffer,
                     int any_plugin,
                     struct t_weechat_plugin *plugin,
                     const char *string)
 {
     char *command, *command_name, *pos;
+    int rc;
 
     if ((!string) || (!string[0]))
-        return;
+        return WEECHAT_RC_ERROR;
 
     command = strdup (string);
     if (!command)
-        return;
+        return WEECHAT_RC_ERROR;
 
     /* ignore spaces at the end of command */
     pos = &command[strlen (command) - 1];
@@ -94,10 +99,11 @@ input_exec_command (struct t_gui_buffer *buffer,
     if (!command_name)
     {
         free (command);
-        return;
+        return WEECHAT_RC_ERROR;
     }
 
     /* execute command */
+    rc = WEECHAT_RC_OK;
     switch (hook_command_exec (buffer, any_plugin, plugin, command))
     {
         case HOOK_COMMAND_EXEC_OK:
@@ -105,11 +111,7 @@ input_exec_command (struct t_gui_buffer *buffer,
             break;
         case HOOK_COMMAND_EXEC_ERROR:
             /* command hooked, error */
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError with command \"%s\" (help on "
-                                         "command: /help %s)"),
-                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                       command, command_name + 1);
+            rc = WEECHAT_RC_ERROR;
             break;
         case HOOK_COMMAND_EXEC_NOT_FOUND:
             /*
@@ -128,6 +130,7 @@ input_exec_command (struct t_gui_buffer *buffer,
                                              "(type /help for help)"),
                                            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                            command_name);
+                rc = WEECHAT_RC_ERROR;
             }
             break;
         case HOOK_COMMAND_EXEC_AMBIGUOUS_PLUGINS:
@@ -139,6 +142,7 @@ input_exec_command (struct t_gui_buffer *buffer,
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                        command_name,
                                        plugin_get_name (plugin));
+            rc = WEECHAT_RC_ERROR;
             break;
         case HOOK_COMMAND_EXEC_AMBIGUOUS_INCOMPLETE:
             /*
@@ -151,6 +155,7 @@ input_exec_command (struct t_gui_buffer *buffer,
                                          "this name"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                        command_name);
+            rc = WEECHAT_RC_ERROR;
             break;
         case HOOK_COMMAND_EXEC_RUNNING:
             /* command is running */
@@ -159,34 +164,44 @@ input_exec_command (struct t_gui_buffer *buffer,
                                          "\"%s\" (looping)"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                        command_name);
+            rc = WEECHAT_RC_ERROR;
             break;
         default:
             break;
     }
+
     free (command);
     free (command_name);
+
+    return rc;
 }
 
 /*
  * Reads user input and sends data to buffer's callback.
+ *
+ * Returns:
+ *   WEECHAT_RC_OK: data properly sent (or command executed successfully)
+ *   WEECHAT_RC_ERROR: error
  */
 
-void
+int
 input_data (struct t_gui_buffer *buffer, const char *data)
 {
     char *pos, *buf, str_buffer[128], *new_data, *buffer_full_name;
     const char *ptr_data, *ptr_data_for_buffer;
-    int length, char_size, first_command;
+    int length, char_size, first_command, rc;
+
+    rc = WEECHAT_RC_OK;
 
     if (!buffer || !gui_buffer_valid (buffer)
         || !data || !data[0] || (data[0] == '\r') || (data[0] == '\n'))
     {
-        return;
+        return WEECHAT_RC_ERROR;
     }
 
     buffer_full_name = strdup (buffer->full_name);
     if (!buffer_full_name)
-        return;
+        return WEECHAT_RC_ERROR;
 
     /* execute modifier "input_text_for_buffer" */
     snprintf (str_buffer, sizeof (str_buffer),
@@ -252,7 +267,7 @@ input_data (struct t_gui_buffer *buffer, const char *data)
         else
         {
             /* input string is a command */
-            input_exec_command (buffer, 1, buffer->plugin, ptr_data);
+            rc = input_exec_command (buffer, 1, buffer->plugin, ptr_data);
         }
 
         if (pos)
@@ -271,4 +286,6 @@ end:
         free (new_data);
     if (buffer_full_name)
         free (buffer_full_name);
+
+    return rc;
 }

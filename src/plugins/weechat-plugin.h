@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20140829-01"
+#define WEECHAT_PLUGIN_API_VERSION "20141122-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -190,6 +190,38 @@ struct timeval;
             }                                                           \
             vbuffer = vaa_buffer2;                                      \
         }                                                               \
+    }
+
+/*
+ * macro to return error in case of missing arguments in callback of
+ * hook_command
+ */
+#define WEECHAT_COMMAND_MIN_ARGS(__min_args, __option)                  \
+    if (argc < __min_args)                                              \
+    {                                                                   \
+        weechat_printf_date_tags (                                      \
+            NULL, 0, "no_filter",                                       \
+            _("%sToo few arguments for command \"%s%s%s\" "             \
+              "(help on command: /help %s)"),                           \
+            weechat_prefix ("error"),                                   \
+            argv[0],                                                    \
+            (__option && __option[0]) ? " " : "",                       \
+            (__option && __option[0]) ? __option : "",                  \
+            argv[0] + 1);                                               \
+        return WEECHAT_RC_ERROR;                                        \
+    }
+
+/* macro to return error in callback of hook_command */
+#define WEECHAT_COMMAND_ERROR                                           \
+    {                                                                   \
+        weechat_printf_date_tags (                                      \
+            NULL, 0, "no_filter",                                       \
+            _("%sError with command \"%s\" "                            \
+              "(help on command: /help %s)"),                           \
+            weechat_prefix ("error"),                                   \
+            argv_eol[0],                                                \
+            argv[0] + 1);                                               \
+        return WEECHAT_RC_ERROR;                                        \
     }
 
 struct t_weechat_plugin
@@ -813,8 +845,8 @@ struct t_weechat_plugin
     void (*bar_remove) (struct t_gui_bar *bar);
 
     /* command */
-    void (*command) (struct t_weechat_plugin *plugin,
-                     struct t_gui_buffer *buffer, const char *command);
+    int (*command) (struct t_weechat_plugin *plugin,
+                    struct t_gui_buffer *buffer, const char *command);
 
     /* network */
     int (*network_pass_proxy) (const char *proxy, int sock,

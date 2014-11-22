@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-15 18:20+0100\n"
+"POT-Creation-Date: 2014-11-21 18:33+0100\n"
 "PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2226,6 +2226,14 @@ msgstr ""
 "Для splith и splitv <прцт> - процент размера создаваемого окна относительно "
 "текущего. Например, 25 означает создать окно в 4 раза меньше текущего"
 
+#, fuzzy, c-format
+msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
+msgstr "%s сокращение или команда \"%s\" не найдены\n"
+
+#, fuzzy, c-format
+msgid "%sError with command \"%s\" (help on command: /help %s)"
+msgstr "%s сокращение или команда \"%s\" не найдены\n"
+
 #, fuzzy
 msgid "names of buffers"
 msgstr "загрузка буфера не удалась"
@@ -3447,10 +3455,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%s невозможно закрыть единственный буфер\n"
-
-#, fuzzy, c-format
-msgid "%sError with command \"%s\" (help on command: /help %s)"
-msgstr "%s сокращение или команда \"%s\" не найдены\n"
 
 #, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"

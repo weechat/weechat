@@ -550,7 +550,7 @@ weechat_tcl_command_cb (void *data, struct t_gui_buffer *buffer,
             weechat_tcl_unload_all ();
         }
         else
-            return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_ERROR;
     }
     else
     {
@@ -600,7 +600,7 @@ weechat_tcl_command_cb (void *data, struct t_gui_buffer *buffer,
             tcl_quiet = 0;
         }
         else
-            return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_ERROR;
     }
 
     return WEECHAT_RC_OK;

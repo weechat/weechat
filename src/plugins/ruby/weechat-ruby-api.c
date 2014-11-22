@@ -4897,6 +4897,7 @@ static VALUE
 weechat_ruby_api_command (VALUE class, VALUE buffer, VALUE command)
 {
     char *c_buffer, *c_command;
+    int rc;
 
     API_FUNC(1, "command", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (command))
@@ -4908,12 +4909,12 @@ weechat_ruby_api_command (VALUE class, VALUE buffer, VALUE command)
     c_buffer = StringValuePtr (buffer);
     c_command = StringValuePtr (command);
 
-    plugin_script_api_command (weechat_ruby_plugin,
-                               ruby_current_script,
-                               API_STR2PTR(c_buffer),
-                               c_command);
+    rc = plugin_script_api_command (weechat_ruby_plugin,
+                                    ruby_current_script,
+                                    API_STR2PTR(c_buffer),
+                                    c_command);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 static VALUE

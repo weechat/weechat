@@ -1148,7 +1148,7 @@ gui_key_focus_command (const char *key, int context,
                                                      command,
                                                      ptr_buffer->full_name);
                                 }
-                                input_data (ptr_buffer, command);
+                                (void) input_data (ptr_buffer, command);
                             }
                             free (command);
                         }
@@ -1377,7 +1377,8 @@ gui_key_pressed (const char *key_str)
                 {
                     for (i = 0; commands[i]; i++)
                     {
-                        input_data (gui_current_window->buffer, commands[i]);
+                        (void) input_data (gui_current_window->buffer,
+                                           commands[i]);
                     }
                     string_free_split (commands);
                 }

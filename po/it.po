@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-11-15 18:20+0100\n"
+"POT-Creation-Date: 2014-11-21 18:33+0100\n"
 "PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2768,6 +2768,14 @@ msgstr ""
 "  zoom sulla finestra #2:\n"
 "    /window zoom -window 2"
 
+#, fuzzy, c-format
+msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
+msgstr "%sErrore con il comando \"%s\" (digita /help %s)"
+
+#, fuzzy, c-format
+msgid "%sError with command \"%s\" (help on command: /help %s)"
+msgstr "%sErrore con il comando \"%s\" (digita /help %s)"
+
 msgid "names of buffers"
 msgstr "nomi dei buffer"
 
@@ -4125,10 +4133,6 @@ msgstr ""
 #, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%sNon è possibile scrivere del testo in questo buffer"
-
-#, fuzzy, c-format
-msgid "%sError with command \"%s\" (help on command: /help %s)"
-msgstr "%sErrore con il comando \"%s\" (digita /help %s)"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"

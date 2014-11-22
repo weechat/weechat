@@ -45,6 +45,39 @@
         return WEECHAT_RC_OK;                                           \
     }
 
+/*
+ * macro to return error in case of missing arguments in callback of
+ * hook_command
+ */
+#define COMMAND_MIN_ARGS(__min_args, __option)                          \
+    if (argc < __min_args)                                              \
+    {                                                                   \
+        gui_chat_printf_date_tags (                                     \
+            NULL, 0, GUI_FILTER_TAG_NO_FILTER,                          \
+            _("%sToo few arguments for command \"%s%s%s\" "             \
+              "(help on command: /help %s)"),                           \
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],                     \
+            argv[0],                                                    \
+            (__option && __option[0]) ? " " : "",                       \
+            (__option && __option[0]) ? __option : "",                  \
+            argv[0] + 1);                                               \
+        return WEECHAT_RC_ERROR;                                        \
+    }
+
+/* macro to return error in callback of hook_command */
+#define COMMAND_ERROR                                                   \
+    {                                                                   \
+        gui_chat_printf_date_tags (                                     \
+            NULL, 0, GUI_FILTER_TAG_NO_FILTER,                          \
+            _("%sError with command \"%s\" "                            \
+              "(help on command: /help %s)"),                           \
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],                     \
+            argv_eol[0],                                                \
+            argv[0] + 1);                                               \
+        return WEECHAT_RC_ERROR;                                        \
+    }
+
+
 struct t_gui_buffer;
 
 extern int command_reload (void *data, struct t_gui_buffer *buffer,

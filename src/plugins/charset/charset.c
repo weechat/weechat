@@ -488,7 +488,7 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         length = strlen (plugin_name) + 1 + strlen (name) + 1;
         option_name = malloc (length);
         if (!option_name)
-            return WEECHAT_RC_ERROR;
+            WEECHAT_COMMAND_ERROR;
 
         snprintf (option_name, length, "%s.%s", plugin_name, name);
     }

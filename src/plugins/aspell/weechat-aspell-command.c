@@ -420,8 +420,7 @@ weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
     /* set dictionary for current buffer */
     if (weechat_strcasecmp (argv[1], "setdict") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "setdict");
         dicts = weechat_string_replace (argv_eol[2], " ", "");
         weechat_aspell_command_set_dict (buffer,
                                          (dicts) ? dicts : argv[2]);
@@ -440,8 +439,7 @@ weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
     /* add word to personal dictionary */
     if (weechat_strcasecmp (argv[1], "addword") == 0)
     {
-        if (argc < 3)
-            return WEECHAT_RC_ERROR;
+        WEECHAT_COMMAND_MIN_ARGS(3, "addword");
         if (argc > 3)
         {
             /* use a given dict */
@@ -455,7 +453,7 @@ weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
 
-    return WEECHAT_RC_ERROR;
+    WEECHAT_COMMAND_ERROR;
 }
 
 /*
