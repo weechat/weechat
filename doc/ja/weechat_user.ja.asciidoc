@@ -1395,10 +1395,9 @@ key[ctrl-c,c] 用の色コード:
 
 include::autogen/user/irc_colors.asciidoc[]
 
-// TRANSLATION MISSING
 [NOTE]
-To show all available colors in your terminal, you can do `/color` then
-key[alt-c] in WeeChat or run this command in terminal: `weechat --colors`.
+端末で利用可能なすべての色を表示するには、WeeChat で `/color` を実行した後
+key[alt-c] を入力するか、端末で以下のコマンドを実行してください: `weechat --colors`。
 
 例: "こんにちは皆さん!" の "こんにちは" を太字の明るい青、"皆さん"
 を下線付きの明るい赤に表示したい場合:
