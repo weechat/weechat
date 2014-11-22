@@ -12481,11 +12481,10 @@ int weechat_command (struct t_gui_buffer *buffer, const char *command);
 * 'command': 実行するコマンド ("/"
   で始まっている場合)、またはバッファに送信するテキスト
 
-// TRANSLATION MISSING
-Return value: (_WeeChat ≥ 1.1_)
+戻り値: (_WeeChat バージョン 1.1 以上で利用可_)
 
-* 'WEECHAT_RC_OK' if successful
-* 'WEECHAT_RC_ERROR' if error
+* 'WEECHAT_RC_OK' 成功した場合
+* 'WEECHAT_RC_ERROR' エラーが起きた場合
 
 C 言語での使用例:
 
