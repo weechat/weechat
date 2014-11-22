@@ -1,6 +1,6 @@
 [width="30%",cols="^2m,3",options="header"]
 |===
-| IRC color | WeeChat color
+| IRC 色 | WeeChat 色
 
 | 00 | white
 | 01 | black

@@ -194,7 +194,7 @@
 ** 値: 未制約文字列 (デフォルト値: `"http://weechat.org/files/plugins.xml.gz"`)
 
 * [[option_script.scripts.url_force_https]] *script.scripts.url_force_https*
-** 説明: `force use of HTTPS for downloads (index and scripts); you should disable this option only if you have problems with the downloads`
+** 説明: `ダウンロード (インデックスおよびスクリプト) の際に HTTPS を使うことを強制する; ダウンロードに問題がある場合のみこのオプションを無効化してください`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
