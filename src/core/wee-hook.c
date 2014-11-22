@@ -1708,7 +1708,7 @@ void
 hook_process_child_read (struct t_hook *hook_process, int fd,
                          int index_buffer, struct t_hook **hook_fd)
 {
-    char buffer[4096];
+    char buffer[HOOK_PROCESS_BUFFER_SIZE / 8];
     int num_read;
 
     if (hook_process->deleted)
@@ -1764,6 +1764,80 @@ hook_process_child_read_stderr_cb (void *arg_hook_process, int fd)
 }
 
 /*
+ * Reads process output from child process until EOF
+ * (called when the child process has ended).
+ */
+
+void
+hook_process_child_read_until_eof (struct t_hook *hook_process)
+{
+    struct timeval tv_timeout;
+    fd_set read_fds, write_fds, except_fds;
+    int count, fd_stdout, fd_stderr, max_fd, ready;
+
+    fd_stdout = HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]);
+    fd_stderr = HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDERR]);
+
+    /*
+     * use a counter to prevent any infinite loop
+     * (if child's output is very very long...)
+     */
+    count = 0;
+    while (count < 1024)
+    {
+        FD_ZERO (&read_fds);
+        FD_ZERO (&write_fds);
+        FD_ZERO (&except_fds);
+
+        max_fd = -1;
+        if (HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDOUT])
+            && ((fcntl (fd_stdout, F_GETFD) != -1) || (errno != EBADF)))
+        {
+            FD_SET (fd_stdout, &read_fds);
+            if (fd_stdout > max_fd)
+                max_fd = fd_stdout;
+        }
+        if (HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDERR])
+            && ((fcntl (fd_stderr, F_GETFD) != -1) || (errno != EBADF)))
+        {
+            FD_SET (fd_stderr, &read_fds);
+            if (fd_stderr > max_fd)
+                max_fd = fd_stderr;
+        }
+
+        if (max_fd < 0)
+            break;
+
+        tv_timeout.tv_sec = 0;
+        tv_timeout.tv_usec = 0;
+
+        ready = select (max_fd + 1,
+                        &read_fds, &write_fds, &except_fds,
+                        &tv_timeout);
+
+        if (ready <= 0)
+            break;
+
+        if (FD_ISSET(fd_stdout, &read_fds))
+        {
+            (void) hook_process_child_read_stdout_cb (
+                hook_process,
+                HOOK_PROCESS(hook_process,
+                             child_read[HOOK_PROCESS_STDOUT]));
+        }
+        if (FD_ISSET(fd_stderr, &read_fds))
+        {
+            (void) hook_process_child_read_stderr_cb (
+                hook_process,
+                HOOK_PROCESS(hook_process,
+                             child_read[HOOK_PROCESS_STDERR]));
+        }
+
+        count++;
+    }
+}
+
+/*
  * Checks if child process is still alive.
  */
 
@@ -1804,12 +1878,14 @@ hook_process_timer_cb (void *arg_hook_process, int remaining_calls)
             {
                 /* child terminated normally */
                 rc = WEXITSTATUS(status);
+                hook_process_child_read_until_eof (hook_process);
                 hook_process_send_buffers (hook_process, rc);
                 unhook (hook_process);
             }
             else if (WIFSIGNALED(status))
             {
                 /* child terminated by a signal */
+                hook_process_child_read_until_eof (hook_process);
                 hook_process_send_buffers (hook_process,
                                            WEECHAT_HOOK_PROCESS_ERROR);
                 unhook (hook_process);
