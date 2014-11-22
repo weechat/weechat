@@ -5089,6 +5089,18 @@ IRC_PROTOCOL_CALLBACK(sasl_end)
                              date, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
 
+    if (strcmp (argv[1], "903") != 0 && IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SASL_DISCONNECT_ON_FAIL))
+    {
+        /* Check if we are already connected to the server,
+         * to prevent disconnects in case of 907.
+         */
+
+        if (!server->is_connected)
+            irc_server_disconnect (server, 0, 1);
+
+        return WEECHAT_RC_OK;
+    }
+
     if (!server->is_connected)
         irc_server_sendf (server, 0, NULL, "CAP END");
 
