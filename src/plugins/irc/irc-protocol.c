@@ -5076,7 +5076,7 @@ IRC_PROTOCOL_CALLBACK(901)
 }
 
 /*
- * Callback for the IRC messages "903" to "907".
+ * Callback for the IRC messages "902" to "907".
  *
  * Messages look like:
  *   :server 903 nick :SASL authentication successful
@@ -5363,6 +5363,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "734", /* monitor list is full */ 1, 0, &irc_protocol_cb_734 },
           { "900", /* logged in as (SASL) */ 1, 0, &irc_protocol_cb_900 },
           { "901", /* you are now logged in */ 1, 0, &irc_protocol_cb_901 },
+          { "902", /* SASL authentication failed because account is locked or held */ 1, 0, &irc_protocol_cb_sasl_end },
           { "903", /* SASL authentication successful */ 1, 0, &irc_protocol_cb_sasl_end },
           { "904", /* SASL authentication failed */ 1, 0, &irc_protocol_cb_sasl_end },
           { "905", /* SASL message too long */ 1, 0, &irc_protocol_cb_sasl_end },
