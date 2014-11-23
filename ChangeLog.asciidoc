@@ -32,6 +32,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add regex replace feature in function string_eval_expression()
 * api: use microseconds instead of milliseconds in functions
   util_timeval_diff() and util_timeval_add()
+* irc: add server option "sasl_fail" (continue/reconnect/disconnect if SASL
+  fails) (closes #265, task #12204)
 * irc: add support for color codes 16-99 in IRC messages (closes #228), add
   infolist "irc_color_weechat"
 * irc: disable SSLv3 by default in server option "ssl_priorities" (closes #248)
