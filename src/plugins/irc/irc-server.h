@@ -49,6 +49,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_SASL_USERNAME, /* username for SASL authentication     */
     IRC_SERVER_OPTION_SASL_PASSWORD, /* password for SASL authentication     */
     IRC_SERVER_OPTION_SASL_TIMEOUT,  /* timeout for SASL authentication      */
+    IRC_SERVER_OPTION_SASL_DISCONNECT_ON_FAIL, /* disconnect on SASL fail    */
     IRC_SERVER_OPTION_AUTOCONNECT,   /* autoconnect to server at startup     */
     IRC_SERVER_OPTION_AUTORECONNECT, /* autoreconnect when disconnected      */
     IRC_SERVER_OPTION_AUTORECONNECT_DELAY, /* delay before trying again reco */

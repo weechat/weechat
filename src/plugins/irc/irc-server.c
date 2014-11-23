@@ -76,7 +76,7 @@ char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
   "ssl", "ssl_cert", "ssl_priorities", "ssl_dhkey_size", "ssl_fingerprint",
   "ssl_verify",
   "password", "capabilities",
-  "sasl_mechanism", "sasl_username", "sasl_password", "sasl_timeout",
+  "sasl_mechanism", "sasl_username", "sasl_password", "sasl_timeout", "sasl_disconnect_on_fail",
   "autoconnect", "autoreconnect", "autoreconnect_delay",
   "nicks", "username", "realname", "local_hostname",
   "command", "command_delay", "autojoin", "autorejoin", "autorejoin_delay",
@@ -92,7 +92,7 @@ char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
   "off", "", "NORMAL:-VERS-SSL3.0", "2048", "",
   "on",
   "", "",
-  "plain", "", "", "15",
+  "plain", "", "", "15", "off",
   "off", "on", "10",
   "", "", "", "",
   "", "0", "", "off", "30",
@@ -2786,7 +2786,10 @@ irc_server_timer_sasl_cb (void *data, int remaining_calls)
         weechat_printf (server->buffer,
                         _("%s%s: sasl authentication timeout"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME);
-        irc_server_sendf (server, 0, NULL, "CAP END");
+        if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SASL_DISCONNECT_ON_FAIL))
+            irc_server_disconnect (server, 0, 1);
+        else
+            irc_server_sendf (server, 0, NULL, "CAP END");
     }
 
     return WEECHAT_RC_OK;
@@ -5067,6 +5070,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "sasl_password",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD)))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "sasl_disconnect_on_fail",
+                                           IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SASL_DISCONNECT_ON_FAIL)))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "autoconnect",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOCONNECT)))
         return 0;
@@ -5325,6 +5331,15 @@ irc_server_print_log ()
             weechat_log_printf ("  sasl_password. . . . : null");
         else
             weechat_log_printf ("  sasl_password. . . . : (hidden)");
+        /* sasl_disconnect_on_fail */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_DISCONNECT_ON_FAIL]))
+            weechat_log_printf ("  sasl_disconnect_on_fail: null (%s)",
+                                (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_SASL_DISCONNECT_ON_FAIL)) ?
+                                "on" : "off");
+        else
+            weechat_log_printf ("  sasl_disconnect_on_fail: %s",
+                                 weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_SASL_DISCONNECT_ON_FAIL]) ?
+                                 "on" : "off");
         /* autoconnect */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOCONNECT]))
             weechat_log_printf ("  autoconnect. . . . . : null (%s)",
