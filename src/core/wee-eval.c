@@ -1080,7 +1080,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
 
         /* check for regex */
         ptr_value = hashtable_get (options, "regex");
-        if (ptr_value && ptr_value[0])
+        if (ptr_value)
         {
             regex = malloc (sizeof (*regex));
             if (string_regcomp (regex, ptr_value,
@@ -1097,7 +1097,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
 
         /* check for regex replacement (evaluated later) */
         ptr_value = hashtable_get (options, "regex_replace");
-        if (ptr_value && ptr_value[0])
+        if (ptr_value)
         {
             regex_replace = ptr_value;
         }
