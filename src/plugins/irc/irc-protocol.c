@@ -5085,8 +5085,6 @@ IRC_PROTOCOL_CALLBACK(901)
 
 IRC_PROTOCOL_CALLBACK(sasl_end_ok)
 {
-    int sasl_fail;
-
     irc_protocol_cb_numeric (server,
                              date, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
