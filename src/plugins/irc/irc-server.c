@@ -71,36 +71,44 @@ struct t_irc_server *last_irc_server = NULL;
 struct t_irc_message *irc_recv_msgq = NULL;
 struct t_irc_message *irc_msgq_last_msg = NULL;
 
-char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
-{ "addresses", "proxy", "ipv6",
-  "ssl", "ssl_cert", "ssl_priorities", "ssl_dhkey_size", "ssl_fingerprint",
-  "ssl_verify",
-  "password", "capabilities",
-  "sasl_mechanism", "sasl_username", "sasl_password", "sasl_timeout", "sasl_disconnect_on_fail",
-  "autoconnect", "autoreconnect", "autoreconnect_delay",
-  "nicks", "username", "realname", "local_hostname",
-  "command", "command_delay", "autojoin", "autorejoin", "autorejoin_delay",
-  "connection_timeout",
-  "anti_flood_prio_high", "anti_flood_prio_low",
-  "away_check", "away_check_max_nicks",
-  "default_msg_kick", "default_msg_part", "default_msg_quit",
-  "notify",
-};
-
-char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
-{ "", "", "on",
-  "off", "", "NORMAL:-VERS-SSL3.0", "2048", "",
-  "on",
-  "", "",
-  "plain", "", "", "15", "off",
-  "off", "on", "10",
-  "", "", "", "",
-  "", "0", "", "off", "30",
-  "60",
-  "2", "2",
-  "0", "25",
-  "","WeeChat %v", "WeeChat %v",
-  "",
+char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
+{ { "addresses",            ""                    },
+  { "proxy",                ""                    },
+  { "ipv6",                 "on"                  },
+  { "ssl",                  "off"                 },
+  { "ssl_cert",             ""                    },
+  { "ssl_priorities",       "NORMAL:-VERS-SSL3.0" },
+  { "ssl_dhkey_size",       "2048"                },
+  { "ssl_fingerprint",      ""                    },
+  { "ssl_verify",           "on"                  },
+  { "password",             ""                    },
+  { "capabilities",         ""                    },
+  { "sasl_mechanism",       "plain"               },
+  { "sasl_username",        ""                    },
+  { "sasl_password",        ""                    },
+  { "sasl_timeout",         "15"                  },
+  { "sasl_disconnect_on_fail", "off"              },
+  { "autoconnect",          "off"                 },
+  { "autoreconnect",        "on"                  },
+  { "autoreconnect_delay",  "10"                  },
+  { "nicks",                ""                    },
+  { "username",             ""                    },
+  { "realname",             ""                    },
+  { "local_hostname",       ""                    },
+  { "command",              ""                    },
+  { "command_delay",        "0"                   },
+  { "autojoin",             ""                    },
+  { "autorejoin",           "off"                 },
+  { "autorejoin_delay",     "30"                  },
+  { "connection_timeout",   "60"                  },
+  { "anti_flood_prio_high", "2"                   },
+  { "anti_flood_prio_low",  "2"                   },
+  { "away_check",           "0"                   },
+  { "away_check_max_nicks", "25"                  },
+  { "default_msg_kick",     ""                    },
+  { "default_msg_part",     "WeeChat %v"          },
+  { "default_msg_quit",     "WeeChat %v"          },
+  { "notify",               ""                    },
 };
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
@@ -211,8 +219,7 @@ irc_server_search_option (const char *option_name)
 
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
     {
-        if (weechat_strcasecmp (irc_server_option_string[i],
-                                option_name) == 0)
+        if (weechat_strcasecmp (irc_server_options[i][0], option_name) == 0)
             return i;
     }
 
@@ -1035,13 +1042,13 @@ irc_server_alloc (const char *name)
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
     {
         length = strlen (new_server->name) + 1 +
-            strlen (irc_server_option_string[i]) + 1;
+            strlen (irc_server_options[i][0]) + 1;
         option_name = malloc (length);
         if (option_name)
         {
             snprintf (option_name, length, "%s.%s",
                       new_server->name,
-                      irc_server_option_string[i]);
+                      irc_server_options[i][0]);
             new_server->options[i] =
                 irc_config_server_new_option (irc_config_file,
                                               irc_config_section_server,
@@ -1051,10 +1058,10 @@ irc_server_alloc (const char *name)
                                               NULL,
                                               1,
                                               &irc_config_server_check_value_cb,
-                                              irc_server_option_string[i],
+                                              irc_server_options[i][0],
                                               &irc_config_server_change_cb,
-                                              irc_server_option_string[i]);
-            irc_config_server_change_cb (irc_server_option_string[i],
+                                              irc_server_options[i][0]);
+            irc_config_server_change_cb (irc_server_options[i][0],
                                          new_server->options[i]);
             free (option_name);
         }

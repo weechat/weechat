@@ -1517,7 +1517,7 @@ irc_config_server_write_default_cb (void *data,
     {
         snprintf (option_name, sizeof (option_name),
                   "freenode.%s",
-                  irc_server_option_string[i]);
+                  irc_server_options[i][0]);
         switch (i)
         {
             case IRC_SERVER_OPTION_ADDRESSES:
@@ -2243,20 +2243,20 @@ irc_config_server_create_default_options (struct t_config_section *section)
                 break;
         }
         if (!default_value)
-            default_value = irc_server_option_default[i];
+            default_value = irc_server_options[i][1];
 
         irc_config_server_default[i] = irc_config_server_new_option (
             irc_config_file,
             section,
             i,
-            irc_server_option_string[i],
-            irc_server_option_default[i],
+            irc_server_options[i][0],
+            irc_server_options[i][1],
             default_value,
             0,
             &irc_config_server_check_value_cb,
-            irc_server_option_string[i],
+            irc_server_options[i][0],
             &irc_config_server_default_change_cb,
-            irc_server_option_string[i]);
+            irc_server_options[i][0]);
     }
 
     if (nicks)

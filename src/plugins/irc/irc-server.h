@@ -236,8 +236,7 @@ extern const int gnutls_cert_type_prio[];
 extern const int gnutls_prot_prio[];
 #endif
 extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
-extern char *irc_server_option_string[];
-extern char *irc_server_option_default[];
+extern char *irc_server_options[][2];
 
 extern int irc_server_valid (struct t_irc_server *server);
 extern struct t_irc_server *irc_server_search (const char *server_name);
