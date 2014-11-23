@@ -262,6 +262,24 @@ TEST(Eval, EvalReplaceRegex)
                              NULL, NULL);
     CHECK(options);
 
+    /* replace regex by empty string */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", ".*");
+    hashtable_set (options, "regex_replace", "");
+    WEE_CHECK_EVAL("", "test");
+
+    /* replace empty regex */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", "");
+    hashtable_set (options, "regex_replace", "abc");
+    WEE_CHECK_EVAL("test", "test");
+
+    /* replace empty regex by empty string */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", "");
+    hashtable_set (options, "regex_replace", "");
+    WEE_CHECK_EVAL("test", "test");
+
     /* add brackets around URLs (regex as string) */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", "\\w+://\\S+");
