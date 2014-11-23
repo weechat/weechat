@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-11-23 10:38+0100\n"
-"PO-Revision-Date: 2014-11-15 19:32+0100\n"
+"PO-Revision-Date: 2014-11-23 12:17+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -2975,9 +2975,11 @@ msgstr ""
 "  aktiviert den einfachen Anzeigemodus für zwei Sekunden:\n"
 "    /window bare 2"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sToo few arguments for command \"%s%s%s\" (help on command: /help %s)"
-msgstr "%sFehler mit dem Befehl \"%s\" aufgetreten (nutze: /help %s)"
+msgstr ""
+"%szu wenig Argumente für den Befehl \"%s%s%s\" (nutze die Hilfe für den "
+"Befehl: /help %s)"
 
 #, c-format
 msgid "%sError with command \"%s\" (help on command: /help %s)"
@@ -7648,6 +7650,10 @@ msgid ""
 "authentication problem, \"reconnect\" to schedule a reconnection to the "
 "server, \"disconnect\" to disconnect from server"
 msgstr ""
+"auszuführende Aktion falls die SASL Authentifizierung fehlschlägt:  "
+"\"continue\" ignoriert das Problem, das bei der Authentifizierung "
+"aufgetreten ist, \"reconnect\" versucht erneut eine Verbindung herzustellen, "
+"\"disconnect\" trennt die Verbindung zum Server"
 
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "Beim Programmstart von Weechat automatisch mit dem Server verbinden"
