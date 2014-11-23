@@ -553,6 +553,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
+* [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
+** Beschreibung: `action to perform if SASL authentication fails: "continue" to ignore the authentication problem, "reconnect" to schedule a reconnection to the server, "disconnect" to disconnect from server`
+** Typ: integer
+** Werte: continue, reconnect, disconnect (Standardwert: `continue`)
+
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
 ** Beschreibung: `Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort wird im Klartext gesendet, "dh-blowfish" Passwort wird mittels blowfish verschlüsselt, "dh-aes" Passwort wird mittels AES verschlüsselt, "external" SSL Zertifikat welches auf Client Seite vorliegt, wird verwendet`
 ** Typ: integer

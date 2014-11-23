@@ -553,6 +553,11 @@
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
+* [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
+** opis: `action to perform if SASL authentication fails: "continue" to ignore the authentication problem, "reconnect" to schedule a reconnection to the server, "disconnect" to disconnect from server`
+** typ: liczba
+** wartości: continue, reconnect, disconnect (domyślna wartość: `continue`)
+
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
 ** opis: `mechanizm autentykacji SASL: "plain" dla hasła w czystym tekście, "dh-blowfish" dla hasła szyfrowanego za pomocą blowfish, "dh-aes" dla hasła szyfrowanego za pomocą AES, "external" dla uwierzytelnienia za pomocą certyfikatu SSL po stronie klienta`
 ** typ: liczba
