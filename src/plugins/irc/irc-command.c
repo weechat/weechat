@@ -4440,6 +4440,24 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  sasl_password. . . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
                             _("(hidden)"));
+        /* sasl_timeout */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SASL_TIMEOUT]))
+            weechat_printf (NULL, "  sasl_timeout . . . . :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_TIMEOUT),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_TIMEOUT)));
+        else
+            weechat_printf (NULL, "  sasl_timeout . . . . : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_SASL_TIMEOUT]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_SASL_TIMEOUT])));
+        /* sasl_fail */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SASL_FAIL]))
+            weechat_printf (NULL, "  sasl_fail. . . . . . :   ('%s')",
+                            irc_server_sasl_fail_string[IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL)]);
+        else
+            weechat_printf (NULL, "  sasl_fail. . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            irc_server_sasl_fail_string[weechat_config_integer (server->options[IRC_SERVER_OPTION_SASL_FAIL])]);
         /* autoconnect */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOCONNECT]))
             weechat_printf (NULL, "  autoconnect. . . . . :   (%s)",
@@ -4634,6 +4652,14 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  default_msg_quit . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_QUIT]));
+        /* notify */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_NOTIFY]))
+            weechat_printf (NULL, "  notify . . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_NOTIFY));
+        else
+            weechat_printf (NULL, "  notify . . . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_NOTIFY]));
     }
     else
     {
