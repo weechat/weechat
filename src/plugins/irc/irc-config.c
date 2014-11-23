@@ -1772,12 +1772,15 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_SASL_DISCONNECT_ON_FAIL:
+        case IRC_SERVER_OPTION_SASL_FAIL:
             new_option = weechat_config_new_option (
                 config_file, section,
-                option_name, "boolean",
-                N_("disconnect if SASL authentication fails (to prevent hostname leaks)"),
-                NULL, 0, 0,
+                option_name, "integer",
+                N_("action to perform if SASL authentication fails: "
+                   "\"continue\" to ignore the authentication problem, "
+                   "\"reconnect\" to schedule a reconnection to the server, "
+                   "\"disconnect\" to disconnect from server"),
+                "continue|reconnect|disconnect", 0, 0,
                 default_value, value,
                 null_value_allowed,
                 callback_check_value, callback_check_value_data,

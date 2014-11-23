@@ -5076,28 +5076,49 @@ IRC_PROTOCOL_CALLBACK(901)
 }
 
 /*
- * Callback for the IRC messages "902" to "907".
+ * Callback for the IRC messages "903" and "907" (SASL OK).
  *
  * Messages look like:
  *   :server 903 nick :SASL authentication successful
  *   :server 904 nick :SASL authentication failed
  */
 
-IRC_PROTOCOL_CALLBACK(sasl_end)
+IRC_PROTOCOL_CALLBACK(sasl_end_ok)
 {
+    int sasl_fail;
+
     irc_protocol_cb_numeric (server,
                              date, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
 
-    if (strcmp (argv[1], "903") != 0 && IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SASL_DISCONNECT_ON_FAIL))
+    if (!server->is_connected)
+        irc_server_sendf (server, 0, NULL, "CAP END");
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC messages "902", "904", "905", "906" (SASL failed).
+ *
+ * Messages look like:
+ *   :server 904 nick :SASL authentication failed
+ */
+
+IRC_PROTOCOL_CALLBACK(sasl_end_fail)
+{
+    int sasl_fail;
+
+    irc_protocol_cb_numeric (server,
+                             date, nick, address, host, command,
+                             ignored, argc, argv, argv_eol);
+
+    sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
+    if ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
+        || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT))
     {
-        /* Check if we are already connected to the server,
-         * to prevent disconnects in case of 907.
-         */
-
-        if (!server->is_connected)
-            irc_server_disconnect (server, 0, 1);
-
+        irc_server_disconnect (
+            server, 0,
+            (sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT) ? 1 : 0);
         return WEECHAT_RC_OK;
     }
 
@@ -5375,12 +5396,12 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "734", /* monitor list is full */ 1, 0, &irc_protocol_cb_734 },
           { "900", /* logged in as (SASL) */ 1, 0, &irc_protocol_cb_900 },
           { "901", /* you are now logged in */ 1, 0, &irc_protocol_cb_901 },
-          { "902", /* SASL authentication failed because account is locked or held */ 1, 0, &irc_protocol_cb_sasl_end },
-          { "903", /* SASL authentication successful */ 1, 0, &irc_protocol_cb_sasl_end },
-          { "904", /* SASL authentication failed */ 1, 0, &irc_protocol_cb_sasl_end },
-          { "905", /* SASL message too long */ 1, 0, &irc_protocol_cb_sasl_end },
-          { "906", /* SASL authentication aborted */ 1, 0, &irc_protocol_cb_sasl_end },
-          { "907", /* You have already completed SASL authentication */ 1, 0, &irc_protocol_cb_sasl_end },
+          { "902", /* SASL authentication failed (account locked/held) */ 1, 0, &irc_protocol_cb_sasl_end_fail },
+          { "903", /* SASL authentication successful */ 1, 0, &irc_protocol_cb_sasl_end_ok },
+          { "904", /* SASL authentication failed */ 1, 0, &irc_protocol_cb_sasl_end_fail },
+          { "905", /* SASL message too long */ 1, 0, &irc_protocol_cb_sasl_end_fail },
+          { "906", /* SASL authentication aborted */ 1, 0, &irc_protocol_cb_sasl_end_fail },
+          { "907", /* You have already completed SASL authentication */ 1, 0, &irc_protocol_cb_sasl_end_ok },
           { "936", /* censored word */ 1, 0, &irc_protocol_cb_generic_error },
           { "973", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_server_mode_reason },
           { "974", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_server_mode_reason },
