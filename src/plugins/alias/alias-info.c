@@ -26,62 +26,56 @@
 
 
 /*
- * Returns infolist with alias info.
+ * Returns alias infolist "alias".
  */
 
 struct t_infolist *
-alias_info_get_infolist_cb (void *data, const char *infolist_name,
-                            void *pointer, const char *arguments)
+alias_info_infolist_alias_cb (void *data, const char *infolist_name,
+                              void *pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_alias *ptr_alias;
 
     /* make C compiler happy */
     (void) data;
+    (void) infolist_name;
     (void) arguments;
 
-    if (!infolist_name || !infolist_name[0])
+    if (pointer && !alias_valid (pointer))
         return NULL;
 
-    if (weechat_strcasecmp (infolist_name, ALIAS_PLUGIN_NAME) == 0)
-    {
-        if (pointer && !alias_valid (pointer))
-            return NULL;
+    ptr_infolist = weechat_infolist_new ();
+    if (!ptr_infolist)
+        return NULL;
 
-        ptr_infolist = weechat_infolist_new ();
-        if (ptr_infolist)
+    if (pointer)
+    {
+        /* build list with only one alias */
+        if (!alias_add_to_infolist (ptr_infolist, pointer))
         {
-            if (pointer)
+            weechat_infolist_free (ptr_infolist);
+            return NULL;
+        }
+        return ptr_infolist;
+    }
+    else
+    {
+        /* build list with all aliases matching arguments */
+        for (ptr_alias = alias_list; ptr_alias;
+             ptr_alias = ptr_alias->next_alias)
+        {
+            if (!arguments || !arguments[0]
+                || weechat_string_match (ptr_alias->name, arguments, 0))
             {
-                /* build list with only one alias */
-                if (!alias_add_to_infolist (ptr_infolist, pointer))
+                if (!alias_add_to_infolist (ptr_infolist, ptr_alias))
                 {
                     weechat_infolist_free (ptr_infolist);
                     return NULL;
                 }
-                return ptr_infolist;
-            }
-            else
-            {
-                /* build list with all aliases matching arguments */
-                for (ptr_alias = alias_list; ptr_alias;
-                     ptr_alias = ptr_alias->next_alias)
-                {
-                    if (!arguments || !arguments[0]
-                        || weechat_string_match (ptr_alias->name, arguments, 0))
-                    {
-                        if (!alias_add_to_infolist (ptr_infolist, ptr_alias))
-                        {
-                            weechat_infolist_free (ptr_infolist);
-                            return NULL;
-                        }
-                    }
-                }
-                return ptr_infolist;
             }
         }
+        return ptr_infolist;
     }
-
     return NULL;
 }
 
@@ -92,8 +86,9 @@ alias_info_get_infolist_cb (void *data, const char *infolist_name,
 void
 alias_info_init ()
 {
-    weechat_hook_infolist ("alias", N_("list of aliases"),
-                           N_("alias pointer (optional)"),
-                           N_("alias name (wildcard \"*\" is allowed) (optional)"),
-                           &alias_info_get_infolist_cb, NULL);
+    weechat_hook_infolist (
+        "alias", N_("list of aliases"),
+        N_("alias pointer (optional)"),
+        N_("alias name (wildcard \"*\" is allowed) (optional)"),
+        &alias_info_infolist_alias_cb, NULL);
 }
