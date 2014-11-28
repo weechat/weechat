@@ -28,12 +28,12 @@
 
 
 /*
- * Returns aspell info.
+ * Returns aspell info "aspell_dict".
  */
 
 const char *
-weechat_aspell_info_get_info_cb (void *data, const char *info_name,
-                                 const char *arguments)
+weechat_aspell_info_info_aspell_dict_cb (void *data, const char *info_name,
+                                         const char *arguments)
 {
     int rc;
     long unsigned int value;
@@ -42,33 +42,30 @@ weechat_aspell_info_get_info_cb (void *data, const char *info_name,
 
     /* make C compiler happy */
     (void) data;
+    (void) info_name;
 
-    if (weechat_strcasecmp (info_name, "aspell_dict") == 0)
-    {
-        if (arguments)
-        {
-            buffer_full_name = NULL;
-            if (strncmp (arguments, "0x", 2) == 0)
-            {
-                rc = sscanf (arguments, "%lx", &value);
-                if ((rc != EOF) && (rc != 0))
-                {
-                    buffer = (struct t_gui_buffer *)value;
-                    if (buffer)
-                    {
-                        buffer_full_name = weechat_buffer_get_string (buffer,
-                                                                      "full_name");
-                    }
-                }
-            }
-            else
-                buffer_full_name = arguments;
-
-            if (buffer_full_name)
-                return weechat_aspell_get_dict_with_buffer_name (buffer_full_name);
-        }
+    if (!arguments)
         return NULL;
+
+    buffer_full_name = NULL;
+    if (strncmp (arguments, "0x", 2) == 0)
+    {
+        rc = sscanf (arguments, "%lx", &value);
+        if ((rc != EOF) && (rc != 0))
+        {
+            buffer = (struct t_gui_buffer *)value;
+            if (buffer)
+            {
+                buffer_full_name = weechat_buffer_get_string (buffer,
+                                                              "full_name");
+            }
+        }
     }
+    else
+        buffer_full_name = arguments;
+
+    if (buffer_full_name)
+        return weechat_aspell_get_dict_with_buffer_name (buffer_full_name);
 
     return NULL;
 }
@@ -81,9 +78,10 @@ void
 weechat_aspell_info_init ()
 {
     /* info hooks */
-    weechat_hook_info ("aspell_dict",
-                       N_("comma-separated list of dictionaries used in buffer"),
-                       N_("buffer pointer (\"0x12345678\") or buffer full name "
-                          "(\"irc.freenode.#weechat\")"),
-                       &weechat_aspell_info_get_info_cb, NULL);
+    weechat_hook_info (
+        "aspell_dict",
+        N_("comma-separated list of dictionaries used in buffer"),
+        N_("buffer pointer (\"0x12345678\") or buffer full name "
+           "(\"irc.freenode.#weechat\")"),
+        &weechat_aspell_info_info_aspell_dict_cb, NULL);
 }
