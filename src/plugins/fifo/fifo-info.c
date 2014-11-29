@@ -26,23 +26,19 @@
 
 
 /*
- * Returns info about FIFO pipe.
+ * Returns FIFO info "fifo_filename".
  */
 
 const char *
-fifo_info_get_info_cb (void *data, const char *info_name,
-                       const char *arguments)
+fifo_info_info_fifo_filename_cb (void *data, const char *info_name,
+                                 const char *arguments)
 {
     /* make C compiler happy */
     (void) data;
+    (void) info_name;
     (void) arguments;
 
-    if (weechat_strcasecmp (info_name, "fifo_filename") == 0)
-    {
-        return fifo_filename;
-    }
-
-    return NULL;
+    return fifo_filename;
 }
 
 /*
@@ -53,5 +49,5 @@ void
 fifo_info_init ()
 {
     weechat_hook_info ("fifo_filename", N_("name of FIFO pipe"), NULL,
-                       &fifo_info_get_info_cb, NULL);
+                       &fifo_info_info_fifo_filename_cb, NULL);
 }
