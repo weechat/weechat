@@ -28,57 +28,52 @@
 
 
 /*
- * Returns infolist with logger info.
+ * Returns logger infolist "logger_buffer".
  */
 
 struct t_infolist *
-logger_info_get_infolist_cb (void *data, const char *infolist_name,
-                             void *pointer, const char *arguments)
+logger_info_infolist_logger_buffer_cb (void *data, const char *infolist_name,
+                                       void *pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_logger_buffer *ptr_logger_buffer;
 
     /* make C compiler happy */
     (void) data;
+    (void) infolist_name;
     (void) arguments;
 
-    if (!infolist_name || !infolist_name[0])
+    if (pointer && !logger_buffer_valid (pointer))
         return NULL;
 
-    if (weechat_strcasecmp (infolist_name, "logger_buffer") == 0)
-    {
-        if (pointer && !logger_buffer_valid (pointer))
-            return NULL;
+    ptr_infolist = weechat_infolist_new ();
+    if (!ptr_infolist)
+        return NULL;
 
-        ptr_infolist = weechat_infolist_new ();
-        if (ptr_infolist)
+    if (pointer)
+    {
+        /* build list with only one logger buffer */
+        if (!logger_buffer_add_to_infolist (ptr_infolist, pointer))
         {
-            if (pointer)
+            weechat_infolist_free (ptr_infolist);
+            return NULL;
+        }
+        return ptr_infolist;
+    }
+    else
+    {
+        /* build list with all logger buffers */
+        for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
+             ptr_logger_buffer = ptr_logger_buffer->next_buffer)
+        {
+            if (!logger_buffer_add_to_infolist (ptr_infolist,
+                                                ptr_logger_buffer))
             {
-                /* build list with only one logger buffer */
-                if (!logger_buffer_add_to_infolist (ptr_infolist, pointer))
-                {
-                    weechat_infolist_free (ptr_infolist);
-                    return NULL;
-                }
-                return ptr_infolist;
-            }
-            else
-            {
-                /* build list with all logger buffers */
-                for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
-                     ptr_logger_buffer = ptr_logger_buffer->next_buffer)
-                {
-                    if (!logger_buffer_add_to_infolist (ptr_infolist,
-                                                        ptr_logger_buffer))
-                    {
-                        weechat_infolist_free (ptr_infolist);
-                        return NULL;
-                    }
-                }
-                return ptr_infolist;
+                weechat_infolist_free (ptr_infolist);
+                return NULL;
             }
         }
+        return ptr_infolist;
     }
 
     return NULL;
@@ -91,8 +86,9 @@ logger_info_get_infolist_cb (void *data, const char *infolist_name,
 void
 logger_info_init ()
 {
-    weechat_hook_infolist ("logger_buffer", N_("list of logger buffers"),
-                           N_("logger pointer (optional)"),
-                           NULL,
-                           &logger_info_get_infolist_cb, NULL);
+    weechat_hook_infolist (
+        "logger_buffer", N_("list of logger buffers"),
+        N_("logger pointer (optional)"),
+        NULL,
+        &logger_info_infolist_logger_buffer_cb, NULL);
 }
