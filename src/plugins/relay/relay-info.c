@@ -28,12 +28,12 @@
 
 
 /*
- * Returns relay info.
+ * Returns relay info "relay_client_count".
  */
 
 const char *
-relay_info_get_info_cb (void *data, const char *info_name,
-                        const char *arguments)
+relay_info_info_relay_client_count_cb (void *data, const char *info_name,
+                                       const char *arguments)
 {
     static char str_count[32];
     int count, status;
@@ -41,82 +41,75 @@ relay_info_get_info_cb (void *data, const char *info_name,
 
     /* make C compiler happy */
     (void) data;
+    (void) info_name;
 
-    if (weechat_strcasecmp (info_name, "relay_client_count") == 0)
+    str_count[0] = '\0';
+    count = relay_client_count;
+    if (arguments && arguments[0])
     {
-        str_count[0] = '\0';
-        count = relay_client_count;
-        if (arguments && arguments[0])
+        status = relay_client_status_search (arguments);
+        if (status < 0)
+            return NULL;
+        count = 0;
+        for (ptr_client = relay_clients; ptr_client;
+             ptr_client = ptr_client->next_client)
         {
-            status = relay_client_status_search (arguments);
-            if (status < 0)
-                return NULL;
-            count = 0;
-            for (ptr_client = relay_clients; ptr_client;
-                 ptr_client = ptr_client->next_client)
-            {
-                if ((int)ptr_client->status == status)
-                    count++;
-            }
+            if ((int)ptr_client->status == status)
+                count++;
         }
-        snprintf (str_count, sizeof (str_count), "%d", count);
-        return str_count;
     }
+    snprintf (str_count, sizeof (str_count), "%d", count);
+    return str_count;
 
     return NULL;
 }
 
 /*
- * Returns infolist with relay info.
+ * Returns relay infolist "relay".
  */
 
 struct t_infolist *
-relay_info_get_infolist_cb (void *data, const char *infolist_name,
-                            void *pointer, const char *arguments)
+relay_info_infolist_relay_cb (void *data, const char *infolist_name,
+                              void *pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_relay_client *ptr_client;
 
     /* make C compiler happy */
     (void) data;
+    (void) infolist_name;
     (void) arguments;
 
-    if (!infolist_name || !infolist_name[0])
+    if (pointer && !relay_client_valid (pointer))
         return NULL;
 
-    if (weechat_strcasecmp (infolist_name, "relay") == 0)
-    {
-        if (pointer && !relay_client_valid (pointer))
-            return NULL;
+    ptr_infolist = weechat_infolist_new ();
+    if (!ptr_infolist)
+        return NULL;
 
-        ptr_infolist = weechat_infolist_new ();
-        if (ptr_infolist)
+    if (pointer)
+    {
+        /* build list with only one relay */
+        if (!relay_client_add_to_infolist (ptr_infolist, pointer))
         {
-            if (pointer)
+            weechat_infolist_free (ptr_infolist);
+            return NULL;
+        }
+        return ptr_infolist;
+    }
+    else
+    {
+        /* build list with all relays */
+        for (ptr_client = relay_clients; ptr_client;
+             ptr_client = ptr_client->next_client)
+        {
+            if (!relay_client_add_to_infolist (ptr_infolist, ptr_client))
             {
-                /* build list with only one relay */
-                if (!relay_client_add_to_infolist (ptr_infolist, pointer))
-                {
-                    weechat_infolist_free (ptr_infolist);
-                    return NULL;
-                }
-                return ptr_infolist;
-            }
-            else
-            {
-                /* build list with all relays */
-                for (ptr_client = relay_clients; ptr_client;
-                     ptr_client = ptr_client->next_client)
-                {
-                    if (!relay_client_add_to_infolist (ptr_infolist, ptr_client))
-                    {
-                        weechat_infolist_free (ptr_infolist);
-                        return NULL;
-                    }
-                }
-                return ptr_infolist;
+                weechat_infolist_free (ptr_infolist);
+                return NULL;
             }
         }
+        return ptr_infolist;
     }
 
     return NULL;
@@ -130,16 +123,18 @@ void
 relay_info_init ()
 {
     /* info hooks */
-    weechat_hook_info ("relay_client_count",
-                       N_("number of clients for relay"),
-                       /* TRANSLATORS: please do not translate the status names, they must be used in English */
-                       N_("status name (optional): connecting, waiting_auth, "
-                          "connected, auth_failed, disconnected"),
-                       &relay_info_get_info_cb, NULL);
+    weechat_hook_info (
+        "relay_client_count",
+        N_("number of clients for relay"),
+        /* TRANSLATORS: please do not translate the status names, they must be used in English */
+        N_("status name (optional): connecting, waiting_auth, "
+           "connected, auth_failed, disconnected"),
+        &relay_info_info_relay_client_count_cb, NULL);
 
     /* infolist hooks */
-    weechat_hook_infolist ("relay", N_("list of relay clients"),
-                           N_("relay pointer (optional)"),
-                           NULL,
-                           &relay_info_get_infolist_cb, NULL);
+    weechat_hook_infolist (
+        "relay", N_("list of relay clients"),
+        N_("relay pointer (optional)"),
+        NULL,
+        &relay_info_infolist_relay_cb, NULL);
 }
