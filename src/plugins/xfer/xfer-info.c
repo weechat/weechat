@@ -27,56 +27,51 @@
 
 
 /*
- * Returns infolist with xfer info.
+ * Returns xfer infolist "xfer".
  */
 
 struct t_infolist *
-xfer_info_get_infolist_cb (void *data, const char *infolist_name,
-                           void *pointer, const char *arguments)
+xfer_info_infolist_xfer_cb (void *data, const char *infolist_name,
+                            void *pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_xfer *ptr_xfer;
 
     /* make C compiler happy */
     (void) data;
+    (void) infolist_name;
     (void) arguments;
 
-    if (!infolist_name || !infolist_name[0])
+    if (pointer && !xfer_valid (pointer))
         return NULL;
 
-    if (weechat_strcasecmp (infolist_name, "xfer") == 0)
-    {
-        if (pointer && !xfer_valid (pointer))
-            return NULL;
+    ptr_infolist = weechat_infolist_new ();
+    if (!ptr_infolist)
+        return NULL;
 
-        ptr_infolist = weechat_infolist_new ();
-        if (ptr_infolist)
+    if (pointer)
+    {
+        /* build list with only one xfer */
+        if (!xfer_add_to_infolist (ptr_infolist, pointer))
         {
-            if (pointer)
+            weechat_infolist_free (ptr_infolist);
+            return NULL;
+        }
+        return ptr_infolist;
+    }
+    else
+    {
+        /* build list with all xfers */
+        for (ptr_xfer = xfer_list; ptr_xfer;
+             ptr_xfer = ptr_xfer->next_xfer)
+        {
+            if (!xfer_add_to_infolist (ptr_infolist, ptr_xfer))
             {
-                /* build list with only one xfer */
-                if (!xfer_add_to_infolist (ptr_infolist, pointer))
-                {
-                    weechat_infolist_free (ptr_infolist);
-                    return NULL;
-                }
-                return ptr_infolist;
-            }
-            else
-            {
-                /* build list with all xfers */
-                for (ptr_xfer = xfer_list; ptr_xfer;
-                     ptr_xfer = ptr_xfer->next_xfer)
-                {
-                    if (!xfer_add_to_infolist (ptr_infolist, ptr_xfer))
-                    {
-                        weechat_infolist_free (ptr_infolist);
-                        return NULL;
-                    }
-                }
-                return ptr_infolist;
+                weechat_infolist_free (ptr_infolist);
+                return NULL;
             }
         }
+        return ptr_infolist;
     }
 
     return NULL;
@@ -89,8 +84,9 @@ xfer_info_get_infolist_cb (void *data, const char *infolist_name,
 void
 xfer_info_init ()
 {
-    weechat_hook_infolist ("xfer", N_("list of xfer"),
-                           N_("xfer pointer (optional)"),
-                           NULL,
-                           &xfer_info_get_infolist_cb, NULL);
+    weechat_hook_infolist (
+        "xfer", N_("list of xfer"),
+        N_("xfer pointer (optional)"),
+        NULL,
+        &xfer_info_infolist_xfer_cb, NULL);
 }
