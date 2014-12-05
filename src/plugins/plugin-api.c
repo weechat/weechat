@@ -285,729 +285,1267 @@ plugin_api_command (struct t_weechat_plugin *plugin,
  */
 
 char *
-plugin_api_modifier_color_decode_ansi (void *data,
-                                       const char *modifier,
-                                       const char *modifier_data,
-                                       const char *string)
+plugin_api_modifier_color_decode_ansi_cb (void *data,
+                                          const char *modifier,
+                                          const char *modifier_data,
+                                          const char *string)
 {
     /* make C compiler happy */
     (void) data;
     (void) modifier;
 
-    return gui_color_decode_ansi (string,
-                                  (modifier_data && (strcmp (modifier_data, "1") == 0)) ?
-                                  1: 0);
+    return gui_color_decode_ansi (
+        string,
+        (modifier_data && (strcmp (modifier_data, "1") == 0)) ?
+        1: 0);
 }
 
 /*
- * Gets info about WeeChat.
+ * Returns WeeChat info "version".
  */
 
 const char *
-plugin_api_info_get_internal (void *data, const char *info_name,
-                              const char *arguments)
+plugin_api_info_version_cb (void *data, const char *info_name,
+                            const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return version_get_version ();
+}
+
+/*
+ * Returns WeeChat info "version_number".
+ */
+
+const char *
+plugin_api_info_version_number_cb (void *data, const char *info_name,
+                                   const char *arguments)
+{
+    static char version_number[32] = { '\0' };
+
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    if (!version_number[0])
+    {
+        snprintf (version_number, sizeof (version_number), "%d",
+                  util_version_number (version_get_version ()));
+    }
+    return version_number;
+}
+
+/*
+ * Returns WeeChat info "version_git".
+ */
+
+const char *
+plugin_api_info_version_git_cb (void *data, const char *info_name,
+                                const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return version_get_git ();
+}
+
+/*
+ * Returns WeeChat info "date".
+ */
+
+const char *
+plugin_api_info_date_cb (void *data, const char *info_name,
+                         const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return version_get_compilation_date ();
+}
+
+/*
+ * Returns WeeChat info "dir_separator".
+ */
+
+const char *
+plugin_api_info_dir_separator_cb (void *data, const char *info_name,
+                                  const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return DIR_SEPARATOR;
+}
+
+/*
+ * Returns WeeChat info "weechat_dir".
+ */
+
+const char *
+plugin_api_info_weechat_dir_cb (void *data, const char *info_name,
+                                const char *arguments)
+{
+    static char weechat_dir_absolute_path[PATH_MAX] = { '\0' };
+
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    if (!weechat_dir_absolute_path[0])
+    {
+        if (!realpath (weechat_home, weechat_dir_absolute_path))
+            return NULL;
+    }
+    return (weechat_dir_absolute_path[0]) ?
+        weechat_dir_absolute_path : weechat_home;
+}
+
+/*
+ * Returns WeeChat info "weechat_libdir".
+ */
+
+const char *
+plugin_api_info_weechat_libdir_cb (void *data, const char *info_name,
+                                   const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return WEECHAT_LIBDIR;
+}
+
+/*
+ * Returns WeeChat info "weechat_sharedir".
+ */
+
+const char *
+plugin_api_info_weechat_sharedir_cb (void *data, const char *info_name,
+                                     const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return WEECHAT_SHAREDIR;
+}
+
+/*
+ * Returns WeeChat info "weechat_localedir".
+ */
+
+const char *
+plugin_api_info_weechat_localedir_cb (void *data, const char *info_name,
+                                      const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return LOCALEDIR;
+}
+
+/*
+ * Returns WeeChat info "weechat_site".
+ */
+
+const char *
+plugin_api_info_weechat_site_cb (void *data, const char *info_name,
+                                 const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return WEECHAT_WEBSITE;
+}
+
+/*
+ * Returns WeeChat info "weechat_site_download".
+ */
+
+const char *
+plugin_api_info_weechat_site_download_cb (void *data, const char *info_name,
+                                          const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return WEECHAT_WEBSITE_DOWNLOAD;
+}
+
+/*
+ * Returns WeeChat info "weechat_upgrading".
+ */
+
+const char *
+plugin_api_info_weechat_upgrading_cb (void *data, const char *info_name,
+                                      const char *arguments)
+{
+    static char value[32];
+
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", weechat_upgrading);
+    return value;
+}
+
+/*
+ * Returns WeeChat info "charset_terminal".
+ */
+
+const char *
+plugin_api_info_charset_terminal_cb (void *data, const char *info_name,
+                                     const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return weechat_local_charset;
+}
+
+/*
+ * Returns WeeChat info "charset_internal".
+ */
+
+const char *
+plugin_api_info_charset_internal_cb (void *data, const char *info_name,
+                                     const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return WEECHAT_INTERNAL_CHARSET;
+}
+
+/*
+ * Returns WeeChat info "locale".
+ */
+
+const char *
+plugin_api_info_locale_cb (void *data, const char *info_name,
+                           const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return setlocale (LC_MESSAGES, NULL);
+}
+
+/*
+ * Returns WeeChat info "inactivity".
+ */
+
+const char *
+plugin_api_info_inactivity_cb (void *data, const char *info_name,
+                               const char *arguments)
 {
     time_t inactivity;
-    static char value[32], version_number[32] = { '\0' };
-    static char weechat_dir_absolute_path[PATH_MAX] = { '\0' };
+    static char value[32];
+
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    if (gui_key_last_activity_time == 0)
+        inactivity = 0;
+    else
+        inactivity = time (NULL) - gui_key_last_activity_time;
+    snprintf (value, sizeof (value), "%ld", (long int)inactivity);
+    return value;
+}
+
+/*
+ * Returns WeeChat info "filters_enabled".
+ */
+
+const char *
+plugin_api_info_filters_enabled_cb (void *data, const char *info_name,
+                                    const char *arguments)
+{
+    static char value[32];
+
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", gui_filters_enabled);
+    return value;
+}
+
+/*
+ * Returns WeeChat info "cursor_mode".
+ */
+
+const char *
+plugin_api_info_cursor_mode_cb (void *data, const char *info_name,
+                                const char *arguments)
+{
+    static char value[32];
+
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", gui_cursor_mode);
+    return value;
+}
+
+/*
+ * Returns WeeChat info "term_width".
+ */
+
+const char *
+plugin_api_info_term_width_cb (void *data, const char *info_name,
+                               const char *arguments)
+{
+    static char value[32];
+
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", gui_window_get_width ());
+    return value;
+}
+
+/*
+ * Returns WeeChat info "term_height".
+ */
+
+const char *
+plugin_api_info_term_height_cb (void *data, const char *info_name,
+                                const char *arguments)
+{
+    static char value[32];
+
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", gui_window_get_height ());
+    return value;
+}
+
+/*
+ * Returns WeeChat info "color_ansi_regex".
+ */
+
+const char *
+plugin_api_info_color_ansi_regex_cb (void *data, const char *info_name,
+                                     const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return GUI_COLOR_REGEX_ANSI_DECODE;
+}
+
+/*
+ * Returns WeeChat info "color_term2rgb".
+ */
+
+const char *
+plugin_api_info_color_term2rgb_cb (void *data, const char *info_name,
+                                   const char *arguments)
+{
+    static char value[32];
+
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    snprintf (value, sizeof (value),
+              "%d",
+              gui_color_convert_term_to_rgb (atoi (arguments)));
+    return value;
+}
+
+/*
+ * Returns WeeChat info "color_rgb2term".
+ */
+
+const char *
+plugin_api_info_color_rgb2term_cb (void *data, const char *info_name,
+                                   const char *arguments)
+{
+    static char value[32];
     int rgb, limit;
     char *pos, *color;
 
     /* make C compiler happy */
     (void) data;
+    (void) info_name;
 
-    if (!info_name)
+    if (!arguments || !arguments[0])
         return NULL;
 
-    if (string_strcasecmp (info_name, "version") == 0)
+    limit = 256;
+    pos = strchr (arguments, ',');
+    if (pos)
     {
-        return version_get_version ();
+        color = string_strndup (arguments, pos - arguments);
+        if (!color)
+            return NULL;
+        rgb = atoi (color);
+        limit = atoi (pos + 1);
+        free (color);
     }
-    else if (string_strcasecmp (info_name, "version_number") == 0)
+    else
     {
-        if (!version_number[0])
-        {
-            snprintf (version_number, sizeof (version_number), "%d",
-                      util_version_number (version_get_version ()));
-        }
-        return version_number;
+        rgb = atoi (arguments);
     }
-    else if (string_strcasecmp (info_name, "version_git") == 0)
-    {
-        return version_get_git ();
-    }
-    else if (string_strcasecmp (info_name, "date") == 0)
-    {
-        return version_get_compilation_date ();
-    }
-    else if (string_strcasecmp (info_name, "dir_separator") == 0)
-    {
-        return DIR_SEPARATOR;
-    }
-    else if (string_strcasecmp (info_name, "weechat_dir") == 0)
-    {
-        if (!weechat_dir_absolute_path[0])
-        {
-            if (!realpath (weechat_home, weechat_dir_absolute_path))
-                return NULL;
-        }
-        return (weechat_dir_absolute_path[0]) ?
-            weechat_dir_absolute_path : weechat_home;
-    }
-    else if (string_strcasecmp (info_name, "weechat_libdir") == 0)
-    {
-        return WEECHAT_LIBDIR;
-    }
-    else if (string_strcasecmp (info_name, "weechat_sharedir") == 0)
-    {
-        return WEECHAT_SHAREDIR;
-    }
-    else if (string_strcasecmp (info_name, "weechat_localedir") == 0)
-    {
-        return LOCALEDIR;
-    }
-    else if (string_strcasecmp (info_name, "weechat_site") == 0)
-    {
-        return WEECHAT_WEBSITE;
-    }
-    else if (string_strcasecmp (info_name, "weechat_site_download") == 0)
-    {
-        return WEECHAT_WEBSITE_DOWNLOAD;
-    }
-    else if (string_strcasecmp (info_name, "weechat_upgrading") == 0)
-    {
-        snprintf (value, sizeof (value), "%d", weechat_upgrading);
-        return value;
-    }
-    else if (string_strcasecmp (info_name, "charset_terminal") == 0)
-    {
-        return weechat_local_charset;
-    }
-    else if (string_strcasecmp (info_name, "charset_internal") == 0)
-    {
-        return WEECHAT_INTERNAL_CHARSET;
-    }
-    else if (string_strcasecmp (info_name, "locale") == 0)
-    {
-        return setlocale (LC_MESSAGES, NULL);
-    }
-    else if (string_strcasecmp (info_name, "inactivity") == 0)
-    {
-        if (gui_key_last_activity_time == 0)
-            inactivity = 0;
-        else
-            inactivity = time (NULL) - gui_key_last_activity_time;
-        snprintf (value, sizeof (value), "%ld", (long int)inactivity);
-        return value;
-    }
-    else if (string_strcasecmp (info_name, "filters_enabled") == 0)
-    {
-        snprintf (value, sizeof (value), "%d", gui_filters_enabled);
-        return value;
-    }
-    else if (string_strcasecmp (info_name, "cursor_mode") == 0)
-    {
-        snprintf (value, sizeof (value), "%d", gui_cursor_mode);
-        return value;
-    }
-    else if (string_strcasecmp (info_name, "term_width") == 0)
-    {
-        snprintf (value, sizeof (value), "%d", gui_window_get_width ());
-        return value;
-    }
-    else if (string_strcasecmp (info_name, "term_height") == 0)
-    {
-        snprintf (value, sizeof (value), "%d", gui_window_get_height ());
-        return value;
-    }
-    else if (string_strcasecmp (info_name, "color_ansi_regex") == 0)
-    {
-        return GUI_COLOR_REGEX_ANSI_DECODE;
-    }
-    else if (string_strcasecmp (info_name, "color_term2rgb") == 0)
-    {
-        if (arguments && arguments[0])
-        {
-            snprintf (value, sizeof (value),
-                      "%d",
-                      gui_color_convert_term_to_rgb (atoi (arguments)));
-            return value;
-        }
-    }
-    else if (string_strcasecmp (info_name, "color_rgb2term") == 0)
-    {
-        if (arguments && arguments[0])
-        {
-            limit = 256;
-            pos = strchr (arguments, ',');
-            if (pos)
-            {
-                color = string_strndup (arguments, pos - arguments);
-                if (!color)
-                    return NULL;
-                rgb = atoi (color);
-                limit = atoi (pos + 1);
-                free (color);
-            }
-            else
-                rgb = atoi (arguments);
-            snprintf (value, sizeof (value),
-                      "%d",
-                      gui_color_convert_rgb_to_term (rgb, limit));
-            return value;
-        }
-    }
+    snprintf (value, sizeof (value),
+              "%d",
+              gui_color_convert_rgb_to_term (rgb, limit));
 
-    /* info not found */
-    return NULL;
+    return value;
 }
 
 /*
- * Gets infolist about WeeChat.
+ * Returns WeeChat infolist "bar".
  *
  * Note: result must be freed with function "weechat_infolist_free".
  */
 
 struct t_infolist *
-plugin_api_infolist_get_internal (void *data, const char *infolist_name,
-                                  void *pointer, const char *arguments)
+plugin_api_infolist_bar_cb (void *data, const char *infolist_name,
+                            void *pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_bar *ptr_bar;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+
+    /* invalid bar pointer ? */
+    if (pointer && (!gui_bar_valid (pointer)))
+        return NULL;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    if (pointer)
+    {
+        /* build list with only one bar */
+        if (!gui_bar_add_to_infolist (ptr_infolist, pointer))
+        {
+            infolist_free (ptr_infolist);
+            return NULL;
+        }
+        return ptr_infolist;
+    }
+    else
+    {
+        /* build list with all bars matching arguments */
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+        {
+            if (!arguments || !arguments[0]
+                || string_match (ptr_bar->name, arguments, 0))
+            {
+                if (!gui_bar_add_to_infolist (ptr_infolist, ptr_bar))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+        }
+        return ptr_infolist;
+    }
+
+    return NULL;
+}
+
+/*
+ * Returns WeeChat infolist "bar_item".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_bar_item_cb (void *data, const char *infolist_name,
+                                 void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
     struct t_gui_bar_item *ptr_bar_item;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+
+    /* invalid bar item pointer ? */
+    if (pointer && (!gui_bar_item_valid (pointer)))
+        return NULL;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    if (pointer)
+    {
+        /* build list with only one bar item */
+        if (!gui_bar_item_add_to_infolist (ptr_infolist, pointer))
+        {
+            infolist_free (ptr_infolist);
+            return NULL;
+        }
+        return ptr_infolist;
+    }
+    else
+    {
+        /* build list with all bar items matching arguments */
+        for (ptr_bar_item = gui_bar_items; ptr_bar_item;
+             ptr_bar_item = ptr_bar_item->next_item)
+        {
+            if (!arguments || !arguments[0]
+                || string_match (ptr_bar_item->name, arguments, 0))
+            {
+                if (!gui_bar_item_add_to_infolist (ptr_infolist, ptr_bar_item))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+        }
+        return ptr_infolist;
+    }
+
+    return NULL;
+}
+
+/*
+ * Returns WeeChat infolist "bar_window".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_bar_window_cb (void *data, const char *infolist_name,
+                                   void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+    struct t_gui_bar *ptr_bar;
     struct t_gui_bar_window *ptr_bar_window;
-    struct t_gui_buffer *ptr_buffer;
-    struct t_gui_line *ptr_line;
-    struct t_gui_history *ptr_history;
-    struct t_gui_filter *ptr_filter;
     struct t_gui_window *ptr_window;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+    (void) arguments;
+
+    /* invalid bar window pointer ? */
+    if (pointer && (!gui_bar_window_valid (pointer)))
+        return NULL;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    if (pointer)
+    {
+        /* build list with only one bar window */
+        if (!gui_bar_window_add_to_infolist (ptr_infolist, pointer))
+        {
+            infolist_free (ptr_infolist);
+            return NULL;
+        }
+        return ptr_infolist;
+    }
+    else
+    {
+        /* build list with all bar windows (from root and window bars) */
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+        {
+            if (ptr_bar->bar_window)
+            {
+                if (!gui_bar_window_add_to_infolist (ptr_infolist, ptr_bar->bar_window))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+        }
+        for (ptr_window = gui_windows; ptr_window;
+             ptr_window = ptr_window->next_window)
+        {
+            for (ptr_bar_window = ptr_window->bar_windows;
+                 ptr_bar_window;
+                 ptr_bar_window = ptr_bar_window->next_bar_window)
+            {
+                if (!gui_bar_window_add_to_infolist (ptr_infolist, ptr_bar_window))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+        }
+        return ptr_infolist;
+    }
+
+    return NULL;
+}
+
+/*
+ * Returns WeeChat infolist "buffer".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_buffer_cb (void *data, const char *infolist_name,
+                               void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+    struct t_gui_buffer *ptr_buffer;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+
+    /* invalid buffer pointer ? */
+    if (pointer && (!gui_buffer_valid (pointer)))
+        return NULL;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    if (pointer)
+    {
+        /* build list with only one buffer */
+        if (!gui_buffer_add_to_infolist (ptr_infolist, pointer))
+        {
+            infolist_free (ptr_infolist);
+            return NULL;
+        }
+        return ptr_infolist;
+    }
+    else
+    {
+        /* build list with all buffers matching arguments */
+        for (ptr_buffer = gui_buffers; ptr_buffer;
+             ptr_buffer = ptr_buffer->next_buffer)
+        {
+            if (!arguments || !arguments[0]
+                || string_match (ptr_buffer->full_name, arguments, 0))
+            {
+                if (!gui_buffer_add_to_infolist (ptr_infolist, ptr_buffer))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+        }
+        return ptr_infolist;
+    }
+
+    return NULL;
+}
+
+/*
+ * Returns WeeChat infolist "buffer_lines".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_buffer_lines_cb (void *data, const char *infolist_name,
+                                     void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+    struct t_gui_line *ptr_line;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+    (void) arguments;
+
+    if (!pointer)
+        pointer = gui_buffers;
+    else
+    {
+        /* invalid buffer pointer ? */
+        if (!gui_buffer_valid (pointer))
+            return NULL;
+    }
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    for (ptr_line = ((struct t_gui_buffer *)pointer)->own_lines->first_line;
+         ptr_line; ptr_line = ptr_line->next_line)
+    {
+        if (!gui_line_add_to_infolist (ptr_infolist,
+                                       ((struct t_gui_buffer *)pointer)->own_lines,
+                                       ptr_line))
+        {
+            infolist_free (ptr_infolist);
+            return NULL;
+        }
+    }
+    return ptr_infolist;
+}
+
+/*
+ * Returns WeeChat infolist "filter".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_filter_cb (void *data, const char *infolist_name,
+                               void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+    struct t_gui_filter *ptr_filter;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+    (void) pointer;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    for (ptr_filter = gui_filters; ptr_filter;
+         ptr_filter = ptr_filter->next_filter)
+    {
+        if (!arguments || !arguments[0]
+            || string_match (ptr_filter->name, arguments, 0))
+        {
+            if (!gui_filter_add_to_infolist (ptr_infolist, ptr_filter))
+            {
+                infolist_free (ptr_infolist);
+                return NULL;
+            }
+        }
+    }
+    return ptr_infolist;
+}
+
+/*
+ * Returns WeeChat infolist "history".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_history_cb (void *data, const char *infolist_name,
+                                void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+    struct t_gui_history *ptr_history;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+    (void) arguments;
+
+    /* invalid buffer pointer ? */
+    if (pointer && (!gui_buffer_valid (pointer)))
+        return NULL;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    for (ptr_history = (pointer) ?
+             ((struct t_gui_buffer *)pointer)->history : gui_history;
+         ptr_history; ptr_history = ptr_history->next_history)
+    {
+        if (!gui_history_add_to_infolist (ptr_infolist, ptr_history))
+        {
+            infolist_free (ptr_infolist);
+            return NULL;
+        }
+    }
+    return ptr_infolist;
+}
+
+/*
+ * Returns WeeChat infolist "hook".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_hook_cb (void *data, const char *infolist_name,
+                             void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+
+    /* invalid hook pointer ? */
+    if (pointer && !hook_valid (pointer))
+        return NULL;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    if (!hook_add_to_infolist (ptr_infolist, pointer, arguments))
+    {
+        infolist_free (ptr_infolist);
+        return NULL;
+    }
+    return ptr_infolist;
+}
+
+/*
+ * Returns WeeChat infolist "hotlist".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_hotlist_cb (void *data, const char *infolist_name,
+                                void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
     struct t_gui_hotlist *ptr_hotlist;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+    (void) pointer;
+    (void) arguments;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+         ptr_hotlist = ptr_hotlist->next_hotlist)
+    {
+        if (!gui_hotlist_add_to_infolist (ptr_infolist, ptr_hotlist))
+        {
+            infolist_free (ptr_infolist);
+            return NULL;
+        }
+    }
+    return ptr_infolist;
+}
+
+/*
+ * Returns WeeChat infolist "key".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_key_cb (void *data, const char *infolist_name,
+                            void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
     struct t_gui_key *ptr_key;
-    struct t_weechat_plugin *ptr_plugin;
-    struct t_proxy *ptr_proxy;
+    int context;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+    (void) pointer;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    if (arguments && arguments[0])
+        context = gui_key_search_context (arguments);
+    else
+        context = GUI_KEY_CONTEXT_DEFAULT;
+    if (context >= 0)
+    {
+        for (ptr_key = gui_keys[context]; ptr_key;
+             ptr_key = ptr_key->next_key)
+        {
+            if (!gui_key_add_to_infolist (ptr_infolist, ptr_key))
+            {
+                infolist_free (ptr_infolist);
+                return NULL;
+            }
+        }
+    }
+    return ptr_infolist;
+}
+
+/*
+ * Returns WeeChat infolist "layout".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_layout_cb (void *data, const char *infolist_name,
+                               void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
     struct t_gui_layout *ptr_layout;
-    int context, number, i;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+    (void) pointer;
+    (void) arguments;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    for (ptr_layout = gui_layouts; ptr_layout;
+         ptr_layout = ptr_layout->next_layout)
+    {
+        if (!gui_layout_add_to_infolist (ptr_infolist,ptr_layout))
+        {
+            infolist_free (ptr_infolist);
+            return NULL;
+        }
+    }
+    return ptr_infolist;
+}
+
+/*
+ * Returns WeeChat infolist "nicklist".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_nicklist_cb (void *data, const char *infolist_name,
+                                 void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+
+    /* invalid buffer pointer ? */
+    if (!pointer || (!gui_buffer_valid (pointer)))
+        return NULL;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    if (!gui_nicklist_add_to_infolist (ptr_infolist, pointer, arguments))
+    {
+        infolist_free (ptr_infolist);
+        return NULL;
+    }
+    return ptr_infolist;
+}
+
+/*
+ * Returns WeeChat infolist "option".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_option_cb (void *data, const char *infolist_name,
+                               void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+    (void) pointer;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    if (!config_file_add_to_infolist (ptr_infolist, arguments))
+    {
+        infolist_free (ptr_infolist);
+        return NULL;
+    }
+    return ptr_infolist;
+}
+
+/*
+ * Returns WeeChat infolist "plugin".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_plugin_cb (void *data, const char *infolist_name,
+                               void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+    struct t_weechat_plugin *ptr_plugin;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+
+    /* invalid plugin pointer ? */
+    if (pointer && (!plugin_valid (pointer)))
+        return NULL;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    if (pointer)
+    {
+        /* build list with only one plugin */
+        if (!plugin_add_to_infolist (ptr_infolist, pointer))
+        {
+            infolist_free (ptr_infolist);
+            return NULL;
+        }
+        return ptr_infolist;
+    }
+    else
+    {
+        /* build list with all plugins matching arguments */
+        for (ptr_plugin = weechat_plugins; ptr_plugin;
+             ptr_plugin = ptr_plugin->next_plugin)
+        {
+            if (!arguments || !arguments[0]
+                || string_match (ptr_plugin->name, arguments, 0))
+            {
+                if (!plugin_add_to_infolist (ptr_infolist, ptr_plugin))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+        }
+        return ptr_infolist;
+    }
+
+    return NULL;
+}
+
+/*
+ * Returns WeeChat infolist "proxy".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_proxy_cb (void *data, const char *infolist_name,
+                              void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+    struct t_proxy *ptr_proxy;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+
+    /* invalid proxy pointer ? */
+    if (pointer && (!proxy_valid (pointer)))
+        return NULL;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    if (pointer)
+    {
+        /* build list with only one proxy */
+        if (!proxy_add_to_infolist (ptr_infolist, pointer))
+        {
+            infolist_free (ptr_infolist);
+            return NULL;
+        }
+        return ptr_infolist;
+    }
+    else
+    {
+        /* build list with all proxies matching arguments */
+        for (ptr_proxy = weechat_proxies; ptr_proxy;
+             ptr_proxy = ptr_proxy->next_proxy)
+        {
+            if (!arguments || !arguments[0]
+                || string_match (ptr_proxy->name, arguments, 0))
+            {
+                if (!proxy_add_to_infolist (ptr_infolist, ptr_proxy))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+        }
+        return ptr_infolist;
+    }
+
+    return NULL;
+}
+
+/*
+ * Returns WeeChat infolist "url_options".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_url_options_cb (void *data, const char *infolist_name,
+                                    void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+    int i;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) infolist_name;
+    (void) pointer;
+    (void) arguments;
+
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    for (i = 0; url_options[i].name; i++)
+    {
+        if (!weeurl_option_add_to_infolist (ptr_infolist, &url_options[i]))
+        {
+            infolist_free (ptr_infolist);
+            return NULL;
+        }
+    }
+    return ptr_infolist;
+}
+
+/*
+ * Returns WeeChat infolist "window".
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
+ */
+
+struct t_infolist *
+plugin_api_infolist_window_cb (void *data, const char *infolist_name,
+                               void *pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+    struct t_gui_window *ptr_window;
+    int number;
     char *error;
 
     /* make C compiler happy */
     (void) data;
+    (void) infolist_name;
 
-    if (!infolist_name || !infolist_name[0])
+    /* invalid window pointer ? */
+    if (pointer && (!gui_window_valid (pointer)))
         return NULL;
 
-    if (string_strcasecmp (infolist_name, "bar") == 0)
+    ptr_infolist = infolist_new (NULL);
+    if (!ptr_infolist)
+        return NULL;
+
+    if (pointer)
     {
-        /* invalid bar pointer ? */
-        if (pointer && (!gui_bar_valid (pointer)))
+        /* build list with only one window */
+        if (!gui_window_add_to_infolist (ptr_infolist, pointer))
+        {
+            infolist_free (ptr_infolist);
             return NULL;
-
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            if (pointer)
-            {
-                /* build list with only one bar */
-                if (!gui_bar_add_to_infolist (ptr_infolist, pointer))
-                {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-                return ptr_infolist;
-            }
-            else
-            {
-                /* build list with all bars matching arguments */
-                for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-                {
-                    if (!arguments || !arguments[0]
-                        || string_match (ptr_bar->name, arguments, 0))
-                    {
-                        if (!gui_bar_add_to_infolist (ptr_infolist, ptr_bar))
-                        {
-                            infolist_free (ptr_infolist);
-                            return NULL;
-                        }
-                    }
-                }
-                return ptr_infolist;
-            }
         }
+        return ptr_infolist;
     }
-    else if (string_strcasecmp (infolist_name, "bar_item") == 0)
+    else
     {
-        /* invalid bar item pointer ? */
-        if (pointer && (!gui_bar_item_valid (pointer)))
-            return NULL;
-
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
+        if (arguments && arguments[0])
         {
-            if (pointer)
+            if ((string_strcasecmp (arguments, "current") == 0))
             {
-                /* build list with only one bar item */
-                if (!gui_bar_item_add_to_infolist (ptr_infolist, pointer))
+                if (gui_current_window)
                 {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-                return ptr_infolist;
-            }
-            else
-            {
-                /* build list with all bar items matching arguments */
-                for (ptr_bar_item = gui_bar_items; ptr_bar_item;
-                     ptr_bar_item = ptr_bar_item->next_item)
-                {
-                    if (!arguments || !arguments[0]
-                        || string_match (ptr_bar_item->name, arguments, 0))
-                    {
-                        if (!gui_bar_item_add_to_infolist (ptr_infolist, ptr_bar_item))
-                        {
-                            infolist_free (ptr_infolist);
-                            return NULL;
-                        }
-                    }
-                }
-                return ptr_infolist;
-            }
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "bar_window") == 0)
-    {
-        /* invalid bar window pointer ? */
-        if (pointer && (!gui_bar_window_valid (pointer)))
-            return NULL;
-
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            if (pointer)
-            {
-                /* build list with only one bar window */
-                if (!gui_bar_window_add_to_infolist (ptr_infolist, pointer))
-                {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-                return ptr_infolist;
-            }
-            else
-            {
-                /* build list with all bar windows (from root and window bars) */
-                for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-                {
-                    if (ptr_bar->bar_window)
-                    {
-                        if (!gui_bar_window_add_to_infolist (ptr_infolist, ptr_bar->bar_window))
-                        {
-                            infolist_free (ptr_infolist);
-                            return NULL;
-                        }
-                    }
-                }
-                for (ptr_window = gui_windows; ptr_window;
-                     ptr_window = ptr_window->next_window)
-                {
-                    for (ptr_bar_window = ptr_window->bar_windows;
-                         ptr_bar_window;
-                         ptr_bar_window = ptr_bar_window->next_bar_window)
-                    {
-                        if (!gui_bar_window_add_to_infolist (ptr_infolist, ptr_bar_window))
-                        {
-                            infolist_free (ptr_infolist);
-                            return NULL;
-                        }
-                    }
-                }
-                return ptr_infolist;
-            }
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "buffer") == 0)
-    {
-        /* invalid buffer pointer ? */
-        if (pointer && (!gui_buffer_valid (pointer)))
-            return NULL;
-
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            if (pointer)
-            {
-                /* build list with only one buffer */
-                if (!gui_buffer_add_to_infolist (ptr_infolist, pointer))
-                {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-                return ptr_infolist;
-            }
-            else
-            {
-                /* build list with all buffers matching arguments */
-                for (ptr_buffer = gui_buffers; ptr_buffer;
-                     ptr_buffer = ptr_buffer->next_buffer)
-                {
-                    if (!arguments || !arguments[0]
-                        || string_match (ptr_buffer->full_name, arguments, 0))
-                    {
-                        if (!gui_buffer_add_to_infolist (ptr_infolist, ptr_buffer))
-                        {
-                            infolist_free (ptr_infolist);
-                            return NULL;
-                        }
-                    }
-                }
-                return ptr_infolist;
-            }
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "buffer_lines") == 0)
-    {
-        if (!pointer)
-            pointer = gui_buffers;
-        else
-        {
-            /* invalid buffer pointer ? */
-            if (!gui_buffer_valid (pointer))
-                return NULL;
-        }
-
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            for (ptr_line = ((struct t_gui_buffer *)pointer)->own_lines->first_line;
-                 ptr_line; ptr_line = ptr_line->next_line)
-            {
-                if (!gui_line_add_to_infolist (ptr_infolist,
-                                               ((struct t_gui_buffer *)pointer)->own_lines,
-                                               ptr_line))
-                {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-            }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "filter") == 0)
-    {
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            for (ptr_filter = gui_filters; ptr_filter;
-                 ptr_filter = ptr_filter->next_filter)
-            {
-                if (!arguments || !arguments[0]
-                    || string_match (ptr_filter->name, arguments, 0))
-                {
-                    if (!gui_filter_add_to_infolist (ptr_infolist, ptr_filter))
+                    if (!gui_window_add_to_infolist (ptr_infolist,
+                                                     gui_current_window))
                     {
                         infolist_free (ptr_infolist);
                         return NULL;
                     }
+                    return ptr_infolist;
                 }
-            }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "history") == 0)
-    {
-        /* invalid buffer pointer ? */
-        if (pointer && (!gui_buffer_valid (pointer)))
-            return NULL;
-
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            for (ptr_history = (pointer) ?
-                     ((struct t_gui_buffer *)pointer)->history : gui_history;
-                 ptr_history; ptr_history = ptr_history->next_history)
-            {
-                if (!gui_history_add_to_infolist (ptr_infolist, ptr_history))
-                {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-            }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "hook") == 0)
-    {
-        /* invalid hook pointer ? */
-        if (pointer && !hook_valid (pointer))
-            return NULL;
-
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            if (!hook_add_to_infolist (ptr_infolist, pointer, arguments))
-            {
-                infolist_free (ptr_infolist);
                 return NULL;
             }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "hotlist") == 0)
-    {
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            for (ptr_hotlist = gui_hotlist; ptr_hotlist;
-                 ptr_hotlist = ptr_hotlist->next_hotlist)
+            /* check if argument is a window number */
+            error = NULL;
+            number = (int)strtol (arguments, &error, 10);
+            if (error && !error[0])
             {
-                if (!gui_hotlist_add_to_infolist (ptr_infolist, ptr_hotlist))
+                ptr_window = gui_window_search_by_number (number);
+                if (ptr_window)
                 {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-            }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "key") == 0)
-    {
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            if (arguments && arguments[0])
-                context = gui_key_search_context (arguments);
-            else
-                context = GUI_KEY_CONTEXT_DEFAULT;
-            if (context >= 0)
-            {
-                for (ptr_key = gui_keys[context]; ptr_key;
-                     ptr_key = ptr_key->next_key)
-                {
-                    if (!gui_key_add_to_infolist (ptr_infolist, ptr_key))
+                    if (!gui_window_add_to_infolist (ptr_infolist,
+                                                     ptr_window))
                     {
                         infolist_free (ptr_infolist);
                         return NULL;
-                    }
-                }
-            }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "layout") == 0)
-    {
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            for (ptr_layout = gui_layouts; ptr_layout;
-                 ptr_layout = ptr_layout->next_layout)
-            {
-                if (!gui_layout_add_to_infolist (ptr_infolist,ptr_layout))
-                {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-            }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "nicklist") == 0)
-    {
-        /* invalid buffer pointer ? */
-        if (!pointer || (!gui_buffer_valid (pointer)))
-            return NULL;
-
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            if (!gui_nicklist_add_to_infolist (ptr_infolist, pointer, arguments))
-            {
-                infolist_free (ptr_infolist);
-                return NULL;
-            }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "option") == 0)
-    {
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            if (!config_file_add_to_infolist (ptr_infolist, arguments))
-            {
-                infolist_free (ptr_infolist);
-                return NULL;
-            }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "plugin") == 0)
-    {
-        /* invalid plugin pointer ? */
-        if (pointer && (!plugin_valid (pointer)))
-            return NULL;
-
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            if (pointer)
-            {
-                /* build list with only one plugin */
-                if (!plugin_add_to_infolist (ptr_infolist, pointer))
-                {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-                return ptr_infolist;
-            }
-            else
-            {
-                /* build list with all plugins matching arguments */
-                for (ptr_plugin = weechat_plugins; ptr_plugin;
-                     ptr_plugin = ptr_plugin->next_plugin)
-                {
-                    if (!arguments || !arguments[0]
-                        || string_match (ptr_plugin->name, arguments, 0))
-                    {
-                        if (!plugin_add_to_infolist (ptr_infolist, ptr_plugin))
-                        {
-                            infolist_free (ptr_infolist);
-                            return NULL;
-                        }
-                    }
-                }
-                return ptr_infolist;
-            }
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "proxy") == 0)
-    {
-        /* invalid proxy pointer ? */
-        if (pointer && (!proxy_valid (pointer)))
-            return NULL;
-
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            if (pointer)
-            {
-                /* build list with only one proxy */
-                if (!proxy_add_to_infolist (ptr_infolist, pointer))
-                {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-                return ptr_infolist;
-            }
-            else
-            {
-                /* build list with all proxies matching arguments */
-                for (ptr_proxy = weechat_proxies; ptr_proxy;
-                     ptr_proxy = ptr_proxy->next_proxy)
-                {
-                    if (!arguments || !arguments[0]
-                        || string_match (ptr_proxy->name, arguments, 0))
-                    {
-                        if (!proxy_add_to_infolist (ptr_infolist, ptr_proxy))
-                        {
-                            infolist_free (ptr_infolist);
-                            return NULL;
-                        }
-                    }
-                }
-                return ptr_infolist;
-            }
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "url_options") == 0)
-    {
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            for (i = 0; url_options[i].name; i++)
-            {
-                if (!weeurl_option_add_to_infolist (ptr_infolist, &url_options[i]))
-                {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-            }
-            return ptr_infolist;
-        }
-    }
-    else if (string_strcasecmp (infolist_name, "window") == 0)
-    {
-        /* invalid window pointer ? */
-        if (pointer && (!gui_window_valid (pointer)))
-            return NULL;
-
-        ptr_infolist = infolist_new (NULL);
-        if (ptr_infolist)
-        {
-            if (pointer)
-            {
-                /* build list with only one window */
-                if (!gui_window_add_to_infolist (ptr_infolist, pointer))
-                {
-                    infolist_free (ptr_infolist);
-                    return NULL;
-                }
-                return ptr_infolist;
-            }
-            else
-            {
-                if (arguments && arguments[0])
-                {
-                    if ((string_strcasecmp (arguments, "current") == 0))
-                    {
-                        if (gui_current_window)
-                        {
-                            if (!gui_window_add_to_infolist (ptr_infolist,
-                                                             gui_current_window))
-                            {
-                                infolist_free (ptr_infolist);
-                                return NULL;
-                            }
-                            return ptr_infolist;
-                        }
-                        return NULL;
-                    }
-                    /* check if argument is a window number */
-                    error = NULL;
-                    number = (int)strtol (arguments, &error, 10);
-                    if (error && !error[0])
-                    {
-                        ptr_window = gui_window_search_by_number (number);
-                        if (ptr_window)
-                        {
-                            if (!gui_window_add_to_infolist (ptr_infolist,
-                                                             ptr_window))
-                            {
-                                infolist_free (ptr_infolist);
-                                return NULL;
-                            }
-                            return ptr_infolist;
-                        }
-                    }
-                    return NULL;
-                }
-                else
-                {
-                    /* build list with all windows */
-                    for (ptr_window = gui_windows; ptr_window;
-                         ptr_window = ptr_window->next_window)
-                    {
-                        if (!gui_window_add_to_infolist (ptr_infolist,
-                                                         ptr_window))
-                        {
-                            infolist_free (ptr_infolist);
-                            return NULL;
-                        }
                     }
                     return ptr_infolist;
                 }
             }
+            return NULL;
+        }
+        else
+        {
+            /* build list with all windows */
+            for (ptr_window = gui_windows; ptr_window;
+                 ptr_window = ptr_window->next_window)
+            {
+                if (!gui_window_add_to_infolist (ptr_infolist,
+                                                 ptr_window))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+            return ptr_infolist;
         }
     }
 
-    /* infolist not found */
     return NULL;
 }
 
@@ -1159,134 +1697,174 @@ plugin_api_init ()
 {
     /* WeeChat core modifiers */
     hook_modifier (NULL, "color_decode_ansi",
-                   &plugin_api_modifier_color_decode_ansi, NULL);
+                   &plugin_api_modifier_color_decode_ansi_cb, NULL);
 
     /* WeeChat core info hooks */
-    hook_info (NULL, "version", N_("WeeChat version"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "version_number", N_("WeeChat version (as number)"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "version_git", N_("WeeChat git version (output of "
-                                       "command \"git describe\" for a "
-                                       "development version only, empty for a "
-                                       "stable release)"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "date", N_("WeeChat compilation date"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "dir_separator", N_("directory separator"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_dir", N_("WeeChat directory"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_libdir", N_("WeeChat \"lib\" directory"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_sharedir", N_("WeeChat \"share\" directory"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_localedir", N_("WeeChat \"locale\" directory"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_site", N_("WeeChat site"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_site_download", N_("WeeChat site, download page"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_upgrading", N_("1 if WeeChat is upgrading (command `/upgrade`)"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "charset_terminal", N_("terminal charset"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "charset_internal", N_("WeeChat internal charset"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "locale", N_("locale used for translating messages"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "inactivity", N_("keyboard inactivity (seconds)"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "filters_enabled", N_("1 if filters are enabled"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "cursor_mode", N_("1 if cursor mode is enabled"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "term_width", N_("width of terminal"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "term_height", N_("height of terminal"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "color_ansi_regex", N_("POSIX extended regular expression to search ANSI escape codes"), NULL,
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "color_term2rgb", N_("terminal color (0-255) converted to RGB color"),
+    hook_info (NULL, "version",
+               N_("WeeChat version"),
+               NULL, &plugin_api_info_version_cb, NULL);
+    hook_info (NULL, "version_number",
+               N_("WeeChat version (as number)"),
+               NULL, &plugin_api_info_version_number_cb, NULL);
+    hook_info (NULL, "version_git",
+               N_("WeeChat git version (output of command \"git describe\" "
+                  "for a development version only, empty for a stable "
+                  "release)"),
+               NULL, &plugin_api_info_version_git_cb, NULL);
+    hook_info (NULL, "date",
+               N_("WeeChat compilation date"),
+               NULL, &plugin_api_info_date_cb, NULL);
+    hook_info (NULL, "dir_separator",
+               N_("directory separator"),
+               NULL, &plugin_api_info_dir_separator_cb, NULL);
+    hook_info (NULL, "weechat_dir",
+               N_("WeeChat directory"),
+               NULL, &plugin_api_info_weechat_dir_cb, NULL);
+    hook_info (NULL, "weechat_libdir",
+               N_("WeeChat \"lib\" directory"),
+               NULL, &plugin_api_info_weechat_libdir_cb, NULL);
+    hook_info (NULL, "weechat_sharedir",
+               N_("WeeChat \"share\" directory"),
+               NULL, &plugin_api_info_weechat_sharedir_cb, NULL);
+    hook_info (NULL, "weechat_localedir",
+               N_("WeeChat \"locale\" directory"),
+               NULL, &plugin_api_info_weechat_localedir_cb, NULL);
+    hook_info (NULL, "weechat_site",
+               N_("WeeChat site"),
+               NULL, &plugin_api_info_weechat_site_cb, NULL);
+    hook_info (NULL, "weechat_site_download",
+               N_("WeeChat site, download page"),
+               NULL, &plugin_api_info_weechat_site_download_cb, NULL);
+    hook_info (NULL, "weechat_upgrading",
+               N_("1 if WeeChat is upgrading (command `/upgrade`)"),
+               NULL, &plugin_api_info_weechat_upgrading_cb, NULL);
+    hook_info (NULL, "charset_terminal",
+               N_("terminal charset"),
+               NULL, &plugin_api_info_charset_terminal_cb, NULL);
+    hook_info (NULL, "charset_internal",
+               N_("WeeChat internal charset"),
+               NULL, &plugin_api_info_charset_internal_cb, NULL);
+    hook_info (NULL, "locale",
+               N_("locale used for translating messages"),
+               NULL, &plugin_api_info_locale_cb, NULL);
+    hook_info (NULL, "inactivity",
+               N_("keyboard inactivity (seconds)"),
+               NULL, &plugin_api_info_inactivity_cb, NULL);
+    hook_info (NULL, "filters_enabled",
+               N_("1 if filters are enabled"),
+               NULL, &plugin_api_info_filters_enabled_cb, NULL);
+    hook_info (NULL, "cursor_mode",
+               N_("1 if cursor mode is enabled"),
+               NULL, &plugin_api_info_cursor_mode_cb, NULL);
+    hook_info (NULL, "term_width",
+               N_("width of terminal"),
+               NULL, &plugin_api_info_term_width_cb, NULL);
+    hook_info (NULL, "term_height",
+               N_("height of terminal"),
+               NULL, &plugin_api_info_term_height_cb, NULL);
+    hook_info (NULL, "color_ansi_regex",
+               N_("POSIX extended regular expression to search ANSI escape "
+                  "codes"),
+               NULL, &plugin_api_info_color_ansi_regex_cb, NULL);
+    hook_info (NULL, "color_term2rgb",
+               N_("terminal color (0-255) converted to RGB color"),
                N_("color (terminal color: 0-255)"),
-               &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "color_rgb2term", N_("RGB color converted to terminal color (0-255)"),
+               &plugin_api_info_color_term2rgb_cb, NULL);
+    hook_info (NULL, "color_rgb2term",
+               N_("RGB color converted to terminal color (0-255)"),
                N_("rgb,limit (limit is optional and is set to 256 by default)"),
-               &plugin_api_info_get_internal, NULL);
+               &plugin_api_info_color_rgb2term_cb, NULL);
 
     /* WeeChat core infolist hooks */
-    hook_infolist (NULL, "bar", N_("list of bars"),
+    hook_infolist (NULL, "bar",
+                   N_("list of bars"),
                    N_("bar pointer (optional)"),
                    N_("bar name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "bar_item", N_("list of bar items"),
+                   &plugin_api_infolist_bar_cb, NULL);
+    hook_infolist (NULL, "bar_item",
+                   N_("list of bar items"),
                    N_("bar item pointer (optional)"),
                    N_("bar item name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "bar_window", N_("list of bar windows"),
+                   &plugin_api_infolist_bar_item_cb, NULL);
+    hook_infolist (NULL, "bar_window",
+                   N_("list of bar windows"),
                    N_("bar window pointer (optional)"),
                    NULL,
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "buffer", N_("list of buffers"),
+                   &plugin_api_infolist_bar_window_cb, NULL);
+    hook_infolist (NULL, "buffer",
+                   N_("list of buffers"),
                    N_("buffer pointer (optional)"),
                    N_("buffer name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "buffer_lines", N_("lines of a buffer"),
+                   &plugin_api_infolist_buffer_cb, NULL);
+    hook_infolist (NULL, "buffer_lines",
+                   N_("lines of a buffer"),
                    N_("buffer pointer"),
                    NULL,
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "filter", N_("list of filters"),
+                   &plugin_api_infolist_buffer_lines_cb, NULL);
+    hook_infolist (NULL, "filter",
+                   N_("list of filters"),
                    NULL,
                    N_("filter name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "history", N_("history of commands"),
+                   &plugin_api_infolist_filter_cb, NULL);
+    hook_infolist (NULL, "history",
+                   N_("history of commands"),
                    N_("buffer pointer (if not set, return global history) (optional)"),
                    NULL,
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "hook", N_("list of hooks"),
+                   &plugin_api_infolist_history_cb, NULL);
+    hook_infolist (NULL, "hook",
+                   N_("list of hooks"),
                    N_("hook pointer (optional)"),
                    N_("type,arguments (type is command/timer/.., arguments to "
                       "get only some hooks (wildcard \"*\" is allowed), "
                       "both are optional)"),
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "hotlist", N_("list of buffers in hotlist"),
+                   &plugin_api_infolist_hook_cb, NULL);
+    hook_infolist (NULL, "hotlist",
+                   N_("list of buffers in hotlist"),
                    NULL,
                    NULL,
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "key", N_("list of key bindings"),
+                   &plugin_api_infolist_hotlist_cb, NULL);
+    hook_infolist (NULL, "key",
+                   N_("list of key bindings"),
                    NULL,
                    N_("context (\"default\", \"search\", \"cursor\" or "
                       "\"mouse\") (optional)"),
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "layout", N_("list of layouts"),
+                   &plugin_api_infolist_key_cb, NULL);
+    hook_infolist (NULL, "layout",
+                   N_("list of layouts"),
                    NULL,
                    NULL,
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "nicklist", N_("nicks in nicklist for a buffer"),
+                   &plugin_api_infolist_layout_cb, NULL);
+    hook_infolist (NULL, "nicklist",
+                   N_("nicks in nicklist for a buffer"),
                    N_("buffer pointer"),
                    N_("nick_xxx or group_xxx to get only nick/group xxx "
                       "(optional)"),
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "option", N_("list of options"),
+                   &plugin_api_infolist_nicklist_cb, NULL);
+    hook_infolist (NULL, "option",
+                   N_("list of options"),
                    NULL,
                    N_("option name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "plugin", N_("list of plugins"),
+                   &plugin_api_infolist_option_cb, NULL);
+    hook_infolist (NULL, "plugin",
+                   N_("list of plugins"),
                    N_("plugin pointer (optional)"),
                    N_("plugin name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "proxy", N_("list of proxies"),
+                   &plugin_api_infolist_plugin_cb, NULL);
+    hook_infolist (NULL, "proxy",
+                   N_("list of proxies"),
                    N_("proxy pointer (optional)"),
                    N_("proxy name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "url_options", N_("options for URL"),
+                   &plugin_api_infolist_proxy_cb, NULL);
+    hook_infolist (NULL, "url_options",
+                   N_("options for URL"),
                    NULL,
                    NULL,
-                   &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "window", N_("list of windows"),
+                   &plugin_api_infolist_url_options_cb, NULL);
+    hook_infolist (NULL, "window",
+                   N_("list of windows"),
                    N_("window pointer (optional)"),
                    N_("\"current\" for current window or a window number (optional)"),
-                   &plugin_api_infolist_get_internal, NULL);
+                   &plugin_api_infolist_window_cb, NULL);
 
     /* WeeChat core hdata */
     hook_hdata (NULL, "bar", N_("bar"),
