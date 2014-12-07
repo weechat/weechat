@@ -32,12 +32,12 @@ struct t_relay_irc_data
     int password_ok;                   /* password received and OK?         */
     char *nick;                        /* nick for client                   */
     int user_received;                 /* command "USER" received           */
+    int cap_ls_received;               /* 1 if CAP LS was received          */
+    int cap_end_received;              /* 1 if CAP END was received         */
     int connected;                     /* 1 if client is connected as IRC   */
                                        /* client                            */
     int server_capabilities;           /* server capabilities enabled (one  */
                                        /* bit per capability)               */
-    struct t_hook *hook_timer_signals_joins;/* timer to hooks signals and   */
-                                            /* send joins to client         */
     struct t_hook *hook_signal_irc_in2;     /* signal "irc_in2"             */
     struct t_hook *hook_signal_irc_outtags; /* signal "irc_outtags"         */
     struct t_hook *hook_signal_irc_disc;    /* signal "irc_disconnected"    */

@@ -74,6 +74,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: fix translation of CTCP PING reply (closes #137)
 * lua: add detection of Lua 5.2
 * python: fix Python detection with Homebrew (closes #217)
+* relay: wait for message CAP END before sending join of channels and backlog
+  to the client (closes #223)
 * relay: send messages "_buffer_localvar_*" and "_buffer_type_changed" with
   sync "buffers" (closes #191)
 * relay: don't remove relay from config when the binding fails (closes #225)
