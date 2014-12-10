@@ -405,8 +405,8 @@ TEST(String, ConvertEscapedChars)
                  string_convert_escaped_chars ("\\0123"));  /* invalid */
     WEE_TEST_STR("\x41", string_convert_escaped_chars ("\\x41"));
     WEE_TEST_STR("\x04z", string_convert_escaped_chars ("\\x4z"));
-    WEE_TEST_STR("\u0012zz", string_convert_escaped_chars ("\\u12zz"));
-    WEE_TEST_STR("\U00123456", string_convert_escaped_chars ("\\U00123456"));
+    WEE_TEST_STR(" zz", string_convert_escaped_chars ("\\u20zz"));
+    WEE_TEST_STR("\U00012345", string_convert_escaped_chars ("\\U00012345"));
     WEE_TEST_STR("\U00000123zzz",
                  string_convert_escaped_chars ("\\U00123zzz"));
     WEE_TEST_STR("",
