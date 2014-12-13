@@ -109,7 +109,7 @@ $ make install
 
 Selon votre distribution Linux :
 
-* Debian: http://debian.flashtux.org/
+* Debian: https://weechat.org/download/debian
 * Gentoo: https://weechat.org/download
 * ArchLinux: PKGBUILD depuis http://aur.archlinux.org/
 * autre: nous ne savons pas ! Eheh.
