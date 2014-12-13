@@ -36,7 +36,7 @@ please include:
   problem here.
 * the *gdb's backtrace* (only for a crash): if you can reproduce the crash
 (or if you have a core file), please include the backtrace from gdb (look at
-http://weechat.org/files/doc/devel/weechat_user.en.html#report_crashes[User's guide]
+https://weechat.org/files/doc/devel/weechat_user.en.html#report_crashes[User's guide]
 for more info).
 
 [IMPORTANT]
@@ -65,14 +65,14 @@ time, for https://github.com/weechat/weechat[WeeChat] and
 the web site https://github.com/weechat/weechat.org[weechat.org].
 
 To start a translation in a new language (not yet supported), please look at
-http://weechat.org/files/doc/devel/weechat_dev.en.html#translations[translations]
+https://weechat.org/files/doc/devel/weechat_dev.en.html#translations[translations]
 in Developer's guide.
 
 == Feature requests
 
 WeeChat is under active development, so your idea may already have been
 implemented, or scheduled for a future version (you can check in
-http://weechat.org/dev/[roadmap] or
+https://weechat.org/dev[roadmap] or
 https://github.com/weechat/weechat/milestones[milestones] on GitHub.
 
 Pull requests on GitHub are welcome for minor new features.
@@ -81,6 +81,6 @@ For major new features, it's better to discuss about it in IRC
 (server: 'chat.freenode.net', channel '#weechat').
 
 Before submitting any pull request, be sure you have read the
-http://weechat.org/files/doc/devel/weechat_dev.en.html#coding_rules[coding rules]
+https://weechat.org/files/doc/devel/weechat_dev.en.html#coding_rules[coding rules]
 in Developer's guide, which contains info about styles used, naming convention
 and other useful info.

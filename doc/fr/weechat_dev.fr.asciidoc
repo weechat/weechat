@@ -10,7 +10,7 @@ Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.
 
 La dernière version de ce document peut être téléchargée sur cette page :
-http://weechat.org/doc
+https://weechat.org/doc
 
 
 [[introduction]]

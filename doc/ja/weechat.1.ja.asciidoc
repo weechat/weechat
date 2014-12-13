@@ -28,7 +28,7 @@ include::cmdline_options.ja.asciidoc[]
 == プラグインオプション
 
 プラグインオプションに関する完全な文書は
-http://weechat.org/doc[WeeChat ユーザーガイド] のプラグインリファレンスを参照してください。
+https://weechat.org/doc[WeeChat ユーザーガイド] のプラグインリファレンスを参照してください。
 
 irc プラグインでは以下の様な URL で一時的なサーバに接続することができます:
 
@@ -100,8 +100,8 @@ GNU 一般公衆利用許諾契約書 (バージョン2か、希望によって�
 
 より詳しい情報は COPYING ファイルを読んでください。
 
-Web: <http://weechat.org/>
+Web: <https://weechat.org/>
 
 == サポート / バグ報告
 
-手助けを受けたりバグを報告するには: <http://weechat.org/dev/support>
+手助けを受けたりバグを報告するには: <https://weechat.org/dev/support>

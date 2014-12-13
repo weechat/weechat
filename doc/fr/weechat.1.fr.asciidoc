@@ -30,7 +30,7 @@ include::cmdline_options.fr.asciidoc[]
 
 Pour une documentation complète sur les options des extensions, merci de
 consulter la documentation des extensions dans le
-http://weechat.org/doc[guide utilisateur de WeeChat].
+https://weechat.org/doc[guide utilisateur de WeeChat].
 
 Avec l'extension irc, vous pouvez vous connecter à un serveur de manière
 temporaire avec une URL, comme ceci :
@@ -104,8 +104,8 @@ choix) toute version ultérieure.
 
 Merci de consulter le fichier COPYING pour plus d'informations.
 
-Site web : <http://weechat.org/>
+Site web : <https://weechat.org/>
 
 == SUPPORT / SIGNALER DES BUGS
 
-Pour de l'aide ou signaler un bug : <http://weechat.org/dev/support>
+Pour de l'aide ou signaler un bug : <https://weechat.org/dev/support>

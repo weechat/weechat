@@ -28,7 +28,7 @@ Aber dieses trifft nicht auf WeeChat zu!)
 WeeChat ist sehr Speicher schonend und besticht durch innovative Funktionen.
 
 Weitere Informationen gibt es auf der folgenden Internetseite:
-http://weechat.org/about/features
+https://weechat.org/about/features
 
 [[compilation_install]]
 == Kompilierung / Installation
@@ -37,7 +37,7 @@ http://weechat.org/about/features
 === Ich habe gehört es gibt verschiedene GUIs für WeeChat. Wie kann ich diese kompilieren bzw. nutzen?
 
 Die grafischen Oberflächen findet man auf folgender Seite:
-http://weechat.org/about/features
+https://weechat.org/about/features
 
 [[compile_git]]
 === Ich kann WeeChat nach Cloning des git Repository nicht kompilieren - weshalb?
@@ -80,7 +80,7 @@ beschrieben. (Tipp: Mit den Tasten <Bild-hoch>/<Bild-runter> kann man seitenweis
 in den Buffern blättern)
 
 Neue Benutzer sollten unbedingt die 'quickstart'-Anleitung lesen:
-http://weechat.org/doc
+https://weechat.org/doc
 
 [[display]]
 == Anzeige
@@ -795,7 +795,7 @@ und zusätzlich diese Tipps beherzigen:
 [[bug_task_patch]]
 === Was kann ich machen falls ich einen Fehler gefunden habe, mich nach neuen Funktionen erkundigen, oder Patches einsenden möchte?
 
-siehe: http://weechat.org/dev/support
+siehe: https://weechat.org/dev/support
 
 [[gdb_error_threads]]
 === Wenn man WeeChat in gdb startet, kann ein Thread-Fehler auftreten. Was beudeutet das?
@@ -820,7 +820,7 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /Pfad/zu/weechat
 [[supported_os]]
 === Auf welchen Plattformen läuft WeeChat und wird es noch auf andere Betriebssystemen portiert?
 
-Eine vollständige Liste der Portierungen findest Du unter: http://weechat.org/download
+Eine vollständige Liste der Portierungen findest Du unter: https://weechat.org/download
 
 Wir geben unser Bestes um WeeChat auf möglichst viele Plattformen zu portieren.
 Aber um WeeChat auf fremden Betriebssystemen zu testen, zu denen wir keinen Zugang haben,
@@ -832,10 +832,10 @@ ist Hilfe gerne gesehen.
 Es gibt einiges zu tun z.B. testen, programmieren, Dokumentation, ...
 
 Bitte kontaktiere uns via IRC oder email, wirf einen Blick auf die Support-Seite:
-http://weechat.org/dev/support
+https://weechat.org/dev/support
 
 [[donate]]
 === Kann ich Geld oder anderes an die WeeChat Entwickler spenden?
 
 Du kannst uns Geld zur Unterstützung der weiteren Entwicklung spenden.
-Details hierzu gibt es auf: http://weechat.org/about/donate
+Details hierzu gibt es auf: https://weechat.org/about/donate

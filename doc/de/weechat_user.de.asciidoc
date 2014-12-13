@@ -9,7 +9,7 @@
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
 
 Die aktuelle Version dieser Anleitung finden Sie auf:
-http://weechat.org/doc
+https://weechat.org/doc
 
 
 [[introduction]]
@@ -36,7 +36,7 @@ wesentliche Merkmale:
 * Betriebssystemunabhängig (GNU/Linux, *BSD, MacOS X, Windows und weitere)
 * 100% GPL, freie Software
 
-Die WeeChat Homepage findet man unter: http://weechat.org/
+Die WeeChat Homepage findet man unter: https://weechat.org/
 
 [[prerequisites]]
 === Vorbereitung
@@ -936,9 +936,9 @@ Im normalen Modus sieht WeeChat wie folgt aus:
 │12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal) │+weebot│
 │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
 │12:54:15 peter | hey!                                              │       │
-│12:55:01  @joe | peter: hook_process: http://weechat.org/files/doc │       │
-│               | /devel/weechat_plugin_api.en.html#_weechat_hook_p │       │
-│               | rocess                                            │       │
+│12:55:01  @joe | peter: hook_process: https://weechat.org/files/do │       │
+│               | c/devel/weechat_plugin_api.en.html#_weechat_hook_ │       │
+│               | process                                           │       │
 │                                                                   │       │
 │                                                                   │       │
 │                                                                   │       │
@@ -975,8 +975,8 @@ Der selbe Bildschirm sieht im vereinfachten Anzeigemodus wie folgt aus:
 │12:52 -- Channel #test: 4 nicks (2 ops, 1 voice, 1 normal)                 │
 │12:52 -- Channel created on Tue Jan 27 06:30:17 2009                       │
 │12:54 <peter> hey!                                                         │
-│12:55 <@joe> peter: hook_process: http://weechat.org/files/doc/devel/weecha│
-│t_plugin_api.en.html#_weechat_hook_process                                 │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weech│
+│at_plugin_api.en.html#_weechat_hook_process                                │
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -2377,8 +2377,8 @@ mit dem entsprechenden Wert ersetzt:
 | $git         | Git Version ^(1)^                   | `v0.3.9-104-g7eb5cc4`
 | $compilation | Datum der Kompilierung              | `Dec 16 2012`
 | $osinfo      | Info über das genutzte OS           | `Linux 2.6.32-5-amd64 / x86_64`
-| $site        | WeeChat Seite                       | `http://weechat.org/`
-| $download    | WeeChat, Download Seite             | `http://weechat.org/download`
+| $site        | WeeChat Seite                       | `https://weechat.org/`
+| $download    | WeeChat, Download Seite             | `https://weechat.org/download`
 | $time        | Aktuelle Uhrzeit/Datum              | `Sun, 16 Dec 2012 10:40:48 +0100`
 | $username    | Username beim IRC Server            | `Name`
 | $realname    | Realname beim IRC Server            | `John Doe`
@@ -2396,7 +2396,7 @@ Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
 | CTCP       | Antwortformat                        | Beispiel
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
 | FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
-| SOURCE     | `$download`                          | `http://weechat.org/download`
+| SOURCE     | `$download`                          | `https://weechat.org/download`
 | TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
 | USERINFO   | `$username ($realname)`              | `Name (John Doe)`
 | VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`
@@ -2805,7 +2805,7 @@ externe Oberfläche senden.
 
 Nun kann man mittels einer remote Oberfläche Kontakt zu WeeChat herstellen.
 Eine Liste der remote Oberflächen findet man auf der Homepage:
-http://weechat.org/download
+https://weechat.org/download
 
 [IMPORTANT]
 WeeChat selber kann sich NICHT mit einer anderen WeeChat Instanz über
@@ -2851,7 +2851,7 @@ und entfernt werden.
 Eine weitere Erweiterung ist "script". Dies ist ein Skripten-Manager mit dem es möglich ist,
 unabhängig von der Skript-Sprache, Skripten zu laden und zu entfernen. Des weiteren können
 Skripten, aus dem Skript-Repository, installiert und deinstalliert werden. Das Skript-Repository
-kann unter folgender URL eingesehen werden: http://weechat.org/scripts
+kann unter folgender URL eingesehen werden: https://weechat.org/scripts
 
 Sollten wir Ihr Interesse geweckt haben, selber Skripten für WeeChat zu programmieren, dann lesen Sie
 bitte die 'WeeChat Scripting Guide'.
@@ -3479,4 +3479,4 @@ Unterstützung im IRC findet man auf dem Server 'chat.freenode.net':
 * kein offizieller Channel:
 ** '#weechat-de' (deutsch)
 
-Weitere Möglichkeiten, um mit den Entwicklern in Kontakt zu treten, siehe: http://weechat.org/dev/support
+Weitere Möglichkeiten, um mit den Entwicklern in Kontakt zu treten, siehe: https://weechat.org/dev/support

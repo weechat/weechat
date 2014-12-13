@@ -9,7 +9,7 @@
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
 
 Die aktuelle Version dieser Anleitung finden Sie auf:
-http://weechat.org/doc
+https://weechat.org/doc
 
 
 [[introduction]]
@@ -727,12 +727,12 @@ def weechat_process_cb(data, command, rc, out, err):
         weechat.prnt("", "aktuelle stabile WeeChat-Version: %s" % weechat_version)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process("url:http://weechat.org/dev/info/stable/",
+weechat.hook_process("url:https://weechat.org/dev/info/stable/",
                      30 * 1000, "weechat_process_cb", "")
 ----
 
 [TIP]
-Alle Informationen die WeeChat betreffen findet man auf: http://weechat.org/dev/info
+Alle Informationen die WeeChat betreffen findet man auf: https://weechat.org/dev/info
 
 Beispiel eines URL Transfers, mit zusätzliche Optionen: Es wird das neuste
 WeeChat Entwicklerpaket in die Datei '/tmp/weechat-devel.tar.gz' gesichert:
@@ -744,7 +744,7 @@ def my_process_cb(data, command, rc, out, err):
         weechat.prnt("", "End of transfer (rc=%s)" % rc)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process_hashtable("url:http://weechat.org/files/src/weechat-devel.tar.gz",
+weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.tar.gz",
                                {"file_out": "/tmp/weechat-devel.tar.gz"},
                                30 * 1000, "my_process_cb", "")
 ----

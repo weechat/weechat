@@ -9,7 +9,7 @@
 このマニュアルは WeeChat チャットクライアントについての文書で、これは WeeChat の一部です。
 
 この文書の最新版は以下のページにあります:
-http://weechat.org/doc
+https://weechat.org/doc
 
 
 [[introduction]]
@@ -35,7 +35,7 @@ WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライ
 * マルチプラットフォーム (GNU/Linux、*BSD、MacOS X、Windows 等)
 * 完全な GPL、フリーソフトウェア
 
-WeeChat のホームページ: http://weechat.org/
+WeeChat のホームページ: https://weechat.org/
 
 [[prerequisites]]
 === 事前に必要なもの
@@ -923,9 +923,9 @@ WeeChat が以下のような表示状態の場合:
 │12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal) │+weebot│
 │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
 │12:54:15 peter | hey!                                              │       │
-│12:55:01  @joe | peter: hook_process: http://weechat.org/files/doc │       │
-│               | /devel/weechat_plugin_api.en.html#_weechat_hook_p │       │
-│               | rocess                                            │       │
+│12:55:01  @joe | peter: hook_process: https://weechat.org/files/do │       │
+│               | c/devel/weechat_plugin_api.en.html#_weechat_hook_ │       │
+│               | process                                           │       │
 │                                                                   │       │
 │                                                                   │       │
 │                                                                   │       │
@@ -962,8 +962,8 @@ WeeChat が以下のような表示状態の場合:
 │12:52 -- Channel #test: 4 nicks (2 ops, 1 voice, 1 normal)                 │
 │12:52 -- Channel created on Tue Jan 27 06:30:17 2009                       │
 │12:54 <peter> hey!                                                         │
-│12:55 <@joe> peter: hook_process: http://weechat.org/files/doc/devel/weecha│
-│t_plugin_api.en.html#_weechat_hook_process                                 │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weech│
+│at_plugin_api.en.html#_weechat_hook_process                                │
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -2327,8 +2327,8 @@ CTCP 応答時に自動的に WeeChat によって展開されます:
 | $git         | git バージョン ^(1)^                      | `v0.3.9-104-g7eb5cc4`
 | $compilation | WeeChat コンパイル日時                    | `Dec 16 2012`
 | $osinfo      | OS に関する情報                           | `Linux 2.6.32-5-amd64 / x86_64`
-| $site        | WeeChat ウェブサイト                      | `http://weechat.org/`
-| $download    | WeeChat ウェブサイトのダウンロードページ  | `http://weechat.org/download`
+| $site        | WeeChat ウェブサイト                      | `https://weechat.org/`
+| $download    | WeeChat ウェブサイトのダウンロードページ  | `https://weechat.org/download`
 | $time        | 現在の日時                                | `Sun, 16 Dec 2012 10:40:48 +0100`
 | $username    | IRC サーバのユーザネーム                  | `ログイン名`
 | $realname    | IRC サーバのリアルネーム                  | `John Doe`
@@ -2345,7 +2345,7 @@ CTCP オプションが設定されていない (デフォルトの) 場合、CT
 | CTCP       | 応答フォーマット                     | 例
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
 | FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
-| SOURCE     | `$download`                          | `http://weechat.org/download`
+| SOURCE     | `$download`                          | `https://weechat.org/download`
 | TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
 | USERINFO   | `$username ($realname)`              | `ログイン名 (John Doe)`
 | VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`
@@ -2739,7 +2739,7 @@ IRC プロキシを設定した場合には "freenode:mypass") で 8000 番ポ�
 Relay プラグインは WeeChat プロトコルを使ってリモートインターフェイスに対してデータを送信できます。
 
 リモートインターフェイスを使って接続できます、ダウンロードページのリストを御覧ください:
-http://weechat.org/download
+https://weechat.org/download
 
 [IMPORTANT]
 このプロトコルを使った場合 WeeChat から他の WeeChat に接続することはできません。
@@ -2782,7 +2782,7 @@ WeeChat は 6 種類のスクリプトプラグインを備えています: Pyth
 これらのプラグインでそれぞれの言語で書かれたスクリプトのロード、実行、アンロードができます。
 
 "スクリプト" と呼ばれるほかのプラグインはスクリプトマネージャで、任意の言語で書かれたスクリプトをロード
-/ アンロードしたり、WeeChat スクリプトリポジトリ (http://weechat.org/scripts から参照可能)
+/ アンロードしたり、WeeChat スクリプトリポジトリ (https://weechat.org/scripts から参照可能)
 のスクリプトをインストール / 削除するために利用します。
 
 スクリプトの書き方やスクリプト用の WeeChat API についての詳しい情報は、
@@ -3398,4 +3398,4 @@ IRC を使ったサポート窓口は 'chat.freenode.net' サーバにありま�
 * 非公式チャンネル:
 ** '#weechat-de' (ドイツ語)
 
-他の方法でサポートを受けるには、以下のページをご覧ください: http://weechat.org/dev/support
+他の方法でサポートを受けるには、以下のページをご覧ください: https://weechat.org/dev/support

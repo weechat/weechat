@@ -284,8 +284,8 @@ TEST(Eval, EvalReplaceRegex)
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", "\\w+://\\S+");
     hashtable_set (options, "regex_replace", "[ ${re:0} ]");
-    WEE_CHECK_EVAL("test: [ http://weechat.org ]",
-                   "test: http://weechat.org");
+    WEE_CHECK_EVAL("test: [ https://weechat.org ]",
+                   "test: https://weechat.org");
 
     /* add brackets around URLs (compiled regex) */
     LONGS_EQUAL(0, string_regcomp (&regex, "\\w+://\\S+",
@@ -293,8 +293,8 @@ TEST(Eval, EvalReplaceRegex)
     hashtable_set (pointers, "regex", &regex);
     hashtable_remove (options, "regex");
     hashtable_set (options, "regex_replace", "[ ${re:0} ]");
-    WEE_CHECK_EVAL("test: [ http://weechat.org ]",
-                   "test: http://weechat.org");
+    WEE_CHECK_EVAL("test: [ https://weechat.org ]",
+                   "test: https://weechat.org");
     regfree (&regex);
 
     /* hide passwords (regex as string) */

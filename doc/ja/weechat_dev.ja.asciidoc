@@ -9,7 +9,7 @@
 このマニュアルは WeeChat チャットクライアントについての文書で、これは WeeChat の一部です。
 
 この文書の最新版は以下のページにあります:
-http://weechat.org/doc
+https://weechat.org/doc
 
 
 [[introduction]]

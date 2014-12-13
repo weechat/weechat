@@ -29,7 +29,7 @@ protocol.name: Protokoll und Name relay:
                  - Protokoll "weechat" (es wird kein Name verwendet)
 
 Das "irc" Protokoll dient dazu eine Verbindung zu einem anderen IRC Client (oder zu einem zweiten WeeChat) herzustellen.
-Das "weechat" Protokoll wird von einem Remote-Interface genutzt um eine Verbindung herzustellen. Siehe http://weechat.org/download/
+Das "weechat" Protokoll wird von einem Remote-Interface genutzt um eine Verbindung herzustellen. Siehe https://weechat.org/download/
 
 Ohne Angabe von Argumenten werden alle Relay-Clients in einem neuen Buffer dargestellt.
 

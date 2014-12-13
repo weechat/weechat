@@ -326,7 +326,7 @@ Many commands in option 'command' can be separated by ';' (semi-colon).
 документацию о загрузке и выгрузке плагинов или скиптов).
 
 Для WeeChat доступно много внешних скриптов (от разработчиков клиента):
-http://weechat.org/scripts
+https://weechat.org/scripts
 
 Управлять скриптами в WeeChat можно с помощью команды `/script` (см. `/help
 script` для дополнительной информации).
@@ -336,6 +336,6 @@ script` для дополнительной информации).
 
 Теперь вы можете пользоваться WeeChat и консультироваться с FAQ/documentation
 по возникающим вопросам:
-http://weechat.org/doc
+https://weechat.org/doc
 
 Приятной работы с WeeChat!

@@ -27,7 +27,7 @@ apply to WeeChat!).
 
 Because WeeChat is very light and brings innovating features.
 
-More info on this page: http://weechat.org/about/features
+More info on this page: https://weechat.org/about/features
 
 [[compilation_install]]
 == Compilation / install
@@ -36,7 +36,7 @@ More info on this page: http://weechat.org/about/features
 === I heard about many GUIs for WeeChat. How can I compile/use them?
 
 Some remote GUIs are available, see the links on features page:
-http://weechat.org/about/features
+https://weechat.org/about/features
 
 [[compile_git]]
 === I can't compile WeeChat after cloning git repository, why?
@@ -73,7 +73,7 @@ For help you can type `/help`. For help about a command, type `/help command`.
 Keys and commands are listed in documentation.
 
 It's recommended for new users to read the quickstart guide:
-http://weechat.org/doc
+https://weechat.org/doc
 
 [[display]]
 == Display
@@ -752,7 +752,7 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
 [[bug_task_patch]]
 === How should I report bugs, ask for new features or send patches?
 
-See: http://weechat.org/dev/support
+See: https://weechat.org/dev/support
 
 [[gdb_error_threads]]
 === When I run WeeChat under gdb, there is error about threads, what can I do?
@@ -777,7 +777,7 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 [[supported_os]]
 === What is the list of supported platforms for WeeChat? Will it be ported to other operating systems?
 
-The full list is on this page: http://weechat.org/download
+The full list is on this page: https://weechat.org/download
 
 We do our best to run on as many platforms as possible. Help is welcome for
 some OS' we don't have, to test WeeChat.
@@ -788,10 +788,10 @@ some OS' we don't have, to test WeeChat.
 There's many tasks to do (testing, code, documentation, ...)
 
 Please contact us via IRC or mail, look at support page:
-http://weechat.org/dev/support
+https://weechat.org/dev/support
 
 [[donate]]
 === Can I give money or other things to WeeChat developers?
 
 You can give us money to help development.
-Details on http://weechat.org/about/donate
+Details on https://weechat.org/about/donate

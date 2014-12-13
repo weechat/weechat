@@ -11,7 +11,7 @@
  * ##                                                                      ##
  * ##             By Sébastien Helleu <flashcode@flashtux.org>             ##
  * ##                                                                      ##
- * ##                        http://weechat.org/                           ##
+ * ##                         https://weechat.org/                         ##
  * ##                                                                      ##
  * ##########################################################################
  *

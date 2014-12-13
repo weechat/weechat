@@ -10,7 +10,7 @@ Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.
 
 La dernière version de ce document peut être téléchargée sur cette page :
-http://weechat.org/doc
+https://weechat.org/doc
 
 
 [[introduction]]
@@ -36,7 +36,7 @@ Ses principales fonctionnalités sont les suivantes :
 * multi plates-formes (GNU/Linux, *BSD, MacOS X, Windows et d'autres systèmes)
 * 100% GPL, logiciel libre
 
-La page d'accueil de WeeChat est ici : http://weechat.org/
+La page d'accueil de WeeChat est ici : https://weechat.org/
 
 [[prerequisites]]
 === Prérequis
@@ -951,9 +951,9 @@ Si WeeChat ressemble à ceci :
 │12:52:27    -- | Canal #test: 4 pseudos (2 ops, 1 voice, 1 normal) │+weebot│
 │12:52:27    -- | Canal créé le Tue Jan 27 06:30:17 2009            │peter  │
 │12:54:15 peter | bonjour !                                         │       │
-│12:55:01  @joe | peter: hook_process: http://weechat.org/files/doc │       │
-│               | /devel/weechat_plugin_api.en.html#_weechat_hook_p │       │
-│               | rocess                                            │       │
+│12:55:01  @joe | peter: hook_process: https://weechat.org/files/do │       │
+│               | c/devel/weechat_plugin_api.en.html#_weechat_hook_ │       │
+│               | process                                           │       │
 │                                                                   │       │
 │                                                                   │       │
 │                                                                   │       │
@@ -990,8 +990,8 @@ L'écran ressemblera à ça en mode dépouillé :
 │12:52 -- Canal #test: 4 pseudos (2 ops, 1 voice, 1 normal)                 │
 │12:52 -- Canal créé le Tue Jan 27 06:30:17 2009                            │
 │12:54 <peter> bonjour !                                                    │
-│12:55 <@joe> peter: hook_process: http://weechat.org/files/doc/devel/weecha│
-│t_plugin_api.en.html#_weechat_hook_process                                 │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weech│
+│at_plugin_api.en.html#_weechat_hook_process                                │
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -2406,8 +2406,8 @@ automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 | $git         | Version git ^(1)^                      | `v0.3.9-104-g7eb5cc4`
 | $compilation | Date de compilation WeeChat            | `Dec 16 2012`
 | $osinfo      | Information sur l'OS                   | `Linux 2.6.32-5-amd64 / x86_64`
-| $site        | Site WeeChat                           | `http://weechat.org/`
-| $download    | Site WeeChat, page téléchargement      | `http://weechat.org/download`
+| $site        | Site WeeChat                           | `https://weechat.org/`
+| $download    | Site WeeChat, page téléchargement      | `https://weechat.org/download`
 | $time        | Date/heure courante                    | `Sun, 16 Dec 2012 10:40:48 +0100`
 | $username    | Nom d'utilisateur sur le serveur       | `nom`
 | $realname    | Nom réel sur le serveur                | `John Doe`
@@ -2425,7 +2425,7 @@ Si les options CTCP ne sont pas définies (par défaut), les réponses CTCP sont
 | CTCP       | Format de réponse                    | Exemple
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
 | FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
-| SOURCE     | `$download`                          | `http://weechat.org/download`
+| SOURCE     | `$download`                          | `https://weechat.org/download`
 | TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
 | USERINFO   | `$username ($realname)`              | `nom (John Doe)`
 | VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`
@@ -2829,7 +2829,7 @@ L'extension Relay peut envoyer les données à une interface distante en
 utilisant le protocole WeeChat.
 
 Vous pouvez vous connecter avec une interface distante, voir la liste sur la
-page de téléchargement : http://weechat.org/download
+page de téléchargement : https://weechat.org/download
 
 [IMPORTANT]
 WeeChat lui-même ne peut PAS se connecter sur un autre WeeChat avec ce
@@ -2878,7 +2878,7 @@ langages.
 Une autre extension appelée "script" est un gestionnaire de scripts et est
 utilisé pour charger/décharger des scripts pour n'importe quel langage, et
 installer/supprimer des scripts du dépôt WeeChat, qui sont visibles à cette URL:
-http://weechat.org/scripts
+https://weechat.org/scripts
 
 Pour plus d'informations sur comment écrire des scripts, ou sur l'API
 WeeChat pour les scripts, merci de lire le 'Le Guide pour Scripts WeeChat'.
@@ -3512,4 +3512,4 @@ Pour le support via IRC, sur le serveur 'chat.freenode.net' :
 * canaux non officiels :
 ** '#weechat-de' (Allemand)
 
-Pour les autres formes de support, voir : http://weechat.org/dev/support
+Pour les autres formes de support, voir : https://weechat.org/dev/support

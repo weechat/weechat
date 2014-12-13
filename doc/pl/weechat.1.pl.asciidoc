@@ -28,7 +28,7 @@ include::cmdline_options.pl.asciidoc[]
 == OPCJE WTYCZEK
 
 Kompletna dokumentacja na temat opcji wtyczek dostępna jest
-w http://weechat.org/doc[WeeChat user's guide].
+w https://weechat.org/doc[WeeChat user's guide].
 
 Dzięki wtyczce irc możliwe jest połączenie z serwerami tymczasowymi za pomocą
 URLi jak:
@@ -102,8 +102,8 @@ the Free Software Foundation; either version 3 of the License, or
 
 Pełna licencja znajduje się w pliku COPYING.
 
-Strona www: <http://weechat.org/>
+Strona www: <https://weechat.org/>
 
 == WSPARCIE / ZGŁASZANIE BŁĘDÓW
 
-W celu uzyskania pomocy, lub zgłoszenia błędu zajrzyj na: <http://weechat.org/dev/support>
+W celu uzyskania pomocy, lub zgłoszenia błędu zajrzyj na: <https://weechat.org/dev/support>

@@ -1,7 +1,7 @@
 Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=174
 Upstream-Name: weechat
 Upstream-Contact: Sébastien Helleu <flashcode@flashtux.org>
-Source: http://weechat.org/
+Source: https://weechat.org/
 
 Files: *
 Copyright: 2003-2014, Sébastien Helleu <flashcode@flashtux.org>

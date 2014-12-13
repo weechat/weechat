@@ -90,5 +90,5 @@ Alphabetically:
 
 == Contact
 
-See http://weechat.org/files/doc/devel/weechat_user.en.html#support[user's guide]
-or http://weechat.org/dev/support
+See https://weechat.org/files/doc/devel/weechat_user.en.html#support[user's guide]
+or https://weechat.org/dev/support

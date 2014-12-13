@@ -29,7 +29,7 @@ protocole.nom : protocole et nom à relayer :
                   - protocole "weechat" (le nom n'est pas utilisé)
 
 Le protocole "irc" permet à n'importe quel client IRC (incluant WeeChat lui-même) de se connecter sur le port.
-Le protocole "weechat" permet à une interface distante de se connecter sur le port, voir la liste ici : http://weechat.org/download/
+Le protocole "weechat" permet à une interface distante de se connecter sur le port, voir la liste ici : https://weechat.org/download/
 
 Sans paramètre, cette commande ouvre le tampon avec la liste des clients pour le relai.
 

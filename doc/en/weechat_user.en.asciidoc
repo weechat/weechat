@@ -9,7 +9,7 @@
 This manual documents WeeChat chat client, it is part of WeeChat.
 
 Latest version of this document can be found on this page:
-http://weechat.org/doc
+https://weechat.org/doc
 
 
 [[introduction]]
@@ -35,7 +35,7 @@ Main features are:
 * multi-platform (GNU/Linux, *BSD, MacOS X, Windows and other)
 * 100% GPL, free software
 
-WeeChat homepage is here: http://weechat.org/
+WeeChat homepage is here: https://weechat.org/
 
 [[prerequisites]]
 === Prerequisites
@@ -924,9 +924,9 @@ If WeeChat looks like that:
 │12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal) │+weebot│
 │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
 │12:54:15 peter | hey!                                              │       │
-│12:55:01  @joe | peter: hook_process: http://weechat.org/files/doc │       │
-│               | /devel/weechat_plugin_api.en.html#_weechat_hook_p │       │
-│               | rocess                                            │       │
+│12:55:01  @joe | peter: hook_process: https://weechat.org/files/do │       │
+│               | c/devel/weechat_plugin_api.en.html#_weechat_hook_ │       │
+│               | process                                           │       │
 │                                                                   │       │
 │                                                                   │       │
 │                                                                   │       │
@@ -963,8 +963,8 @@ The screen will look like that in bare display:
 │12:52 -- Channel #test: 4 nicks (2 ops, 1 voice, 1 normal)                 │
 │12:52 -- Channel created on Tue Jan 27 06:30:17 2009                       │
 │12:54 <peter> hey!                                                         │
-│12:55 <@joe> peter: hook_process: http://weechat.org/files/doc/devel/weecha│
-│t_plugin_api.en.html#_weechat_hook_process                                 │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weech│
+│at_plugin_api.en.html#_weechat_hook_process                                │
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -2328,8 +2328,8 @@ when replying to CTCP:
 | $git         | Git version ^(1)^                   | `v0.3.9-104-g7eb5cc4`
 | $compilation | WeeChat compilation date            | `Dec 16 2012`
 | $osinfo      | Info about OS                       | `Linux 2.6.32-5-amd64 / x86_64`
-| $site        | WeeChat site                        | `http://weechat.org/`
-| $download    | WeeChat site, download page         | `http://weechat.org/download`
+| $site        | WeeChat site                        | `https://weechat.org/`
+| $download    | WeeChat site, download page         | `https://weechat.org/download`
 | $time        | Current date/time                   | `Sun, 16 Dec 2012 10:40:48 +0100`
 | $username    | User name on IRC server             | `name`
 | $realname    | Real name on IRC server             | `John Doe`
@@ -2346,7 +2346,7 @@ If CTCP options are not defined (by default), CTCP replies are:
 | CTCP       | Reply format                         | Example
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
 | FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
-| SOURCE     | `$download`                          | `http://weechat.org/download`
+| SOURCE     | `$download`                          | `https://weechat.org/download`
 | TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
 | USERINFO   | `$username ($realname)`              | `name (John Doe)`
 | VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`
@@ -2740,7 +2740,7 @@ Now you can connect on port 8000 with any IRC client using server password
 The Relay plugin can send data to remote interface using WeeChat protocol.
 
 You can connect with a remote interface, see the list on download page:
-http://weechat.org/download
+https://weechat.org/download
 
 [IMPORTANT]
 WeeChat itself can NOT connect to another WeeChat with this protocol.
@@ -2784,7 +2784,7 @@ These plugins can load, execute and unload scripts for these languages.
 
 Another plugin called "script" is a scripts manager and is used to load/unload
 scripts of any language, and install/remove scripts of WeeChat scripts
-repository, which are visible at this URL: http://weechat.org/scripts
+repository, which are visible at this URL: https://weechat.org/scripts
 
 For more information about how to write scripts, or WeeChat API for
 scripts, please read 'WeeChat Scripting Guide'.
@@ -3404,4 +3404,4 @@ For support with IRC, on server 'chat.freenode.net':
 * non-official channels:
 ** '#weechat-de' (German)
 
-For other ways of support, see: http://weechat.org/dev/support
+For other ways of support, see: https://weechat.org/dev/support

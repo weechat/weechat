@@ -76,7 +76,7 @@ $ cd weechat
 他の方法として 'devel' パッケージをダウンロードして展開する方法があります:
 
 ----
-$ wget http://weechat.org/files/src/weechat-devel.tar.bz2
+$ wget https://weechat.org/files/src/weechat-devel.tar.bz2
 $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
 ----
@@ -106,7 +106,7 @@ $ make install
 Linux ディストリビューション別に:
 
 * Debian: http://debian.flashtux.org/
-* Gentoo: http://weechat.org/download
+* Gentoo: https://weechat.org/download
 * ArchLinux: http://aur.archlinux.org/ から PKGBUILD
 * その他: 知らないよ!
 

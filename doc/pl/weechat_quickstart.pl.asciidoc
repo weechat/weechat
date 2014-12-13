@@ -320,7 +320,7 @@ dokumentacji WeeChat, aby się dowiedzieć jak ładować/wyładowywać wtyczki l
 skrypty).
 
 Wiele zewnętrznych skryptów (od społeczności) jest dostępnych dla WeeChat:
-http://weechat.org/scripts
+https://weechat.org/scripts
 
 Możesz zarządzać skryptami w WeeChat dzięki komendzie `/script` (zobacz `/help script`
 po więcej informacji).
@@ -329,6 +329,6 @@ po więcej informacji).
 == Więcej dokumentacji
 
 Możesz teraz używać WeeChat oraz przeczytać FAQ/dokumentację w razie innych pytań:
-http://weechat.org/doc
+https://weechat.org/doc
 
 Miłej pracy z WeeChat!

@@ -8,7 +8,7 @@ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat
 environment for many operating systems. Everything can be done with a keyboard.
 It is customizable and extensible with scripts.
 
-Homepage: http://weechat.org/
+Homepage: https://weechat.org/
 
 image:https://travis-ci.org/weechat/weechat.svg?branch=master["Build Status", link="https://travis-ci.org/weechat/weechat"]
 
@@ -49,7 +49,7 @@ Following packages are optional:
 * for building tests: C++ compiler, CppUTest
 
 For a complete list of dependencies and versions recommended, please look at
-http://weechat.org/files/doc/devel/weechat_user.en.html#dependencies[user's guide].
+https://weechat.org/files/doc/devel/weechat_user.en.html#dependencies[user's guide].
 
 === Compile
 
@@ -69,7 +69,7 @@ $ make install     (as root for installation in system directories)
 ----
 
 For more information or installation with autotools, please look at
-http://weechat.org/files/doc/devel/weechat_user.en.html#compile_with_autotools[user's guide].
+https://weechat.org/files/doc/devel/weechat_user.en.html#compile_with_autotools[user's guide].
 
 == Copyright
 

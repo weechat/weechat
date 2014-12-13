@@ -554,7 +554,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
-** Beschreibung: `action to perform if SASL authentication fails: "continue" to ignore the authentication problem, "reconnect" to schedule a reconnection to the server, "disconnect" to disconnect from server`
+** Beschreibung: `auszuführende Aktion falls die SASL Authentifizierung fehlschlägt:  "continue" ignoriert das Problem, das bei der Authentifizierung aufgetreten ist, "reconnect" versucht erneut eine Verbindung herzustellen, "disconnect" trennt die Verbindung zum Server`
 ** Typ: integer
 ** Werte: continue, reconnect, disconnect (Standardwert: `continue`)
 

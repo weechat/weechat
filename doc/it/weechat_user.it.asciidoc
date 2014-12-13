@@ -10,7 +10,7 @@ Questo manuale documenta il client di chat WeeChat, ed è parte
 del programma stesso.
 
 È possibile trovare l'ultima versione di questo documento qui:
-http://weechat.org/doc
+https://weechat.org/doc
 
 
 [[introduction]]
@@ -37,7 +37,7 @@ Le principali caratteristiche:
 * multi-piattaforma (GNU/Linux, *BSD, MacOS X, Windows ed altre)
 * 100% GPL, software libero
 
-La home page di WeeChat si trova qui: http://weechat.org/
+La home page di WeeChat si trova qui: https://weechat.org/
 
 [[prerequisites]]
 === Requisiti
@@ -966,9 +966,9 @@ If WeeChat looks like that:
 │12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal) │+weebot│
 │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
 │12:54:15 peter | hey!                                              │       │
-│12:55:01  @joe | peter: hook_process: http://weechat.org/files/doc │       │
-│               | /devel/weechat_plugin_api.en.html#_weechat_hook_p │       │
-│               | rocess                                            │       │
+│12:55:01  @joe | peter: hook_process: https://weechat.org/files/do │       │
+│               | c/devel/weechat_plugin_api.en.html#_weechat_hook_ │       │
+│               | process                                           │       │
 │                                                                   │       │
 │                                                                   │       │
 │                                                                   │       │
@@ -1005,8 +1005,8 @@ The screen will look like that in bare display:
 │12:52 -- Channel #test: 4 nicks (2 ops, 1 voice, 1 normal)                 │
 │12:52 -- Channel created on Tue Jan 27 06:30:17 2009                       │
 │12:54 <peter> hey!                                                         │
-│12:55 <@joe> peter: hook_process: http://weechat.org/files/doc/devel/weecha│
-│t_plugin_api.en.html#_weechat_hook_process                                 │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weech│
+│at_plugin_api.en.html#_weechat_hook_process                                │
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
@@ -2439,8 +2439,8 @@ automaticamente da WeeChat quando si risponde alle CTCP
 | $git         | Git version ^(1)^                       | `v0.3.9-104-g7eb5cc4`
 | $compilation | Data di compilazione di WeeChat         | `Dec 16 2012`
 | $osinfo      | Informazioni sull'OS                    | `Linux 2.6.32-5-amd64 / x86_64`
-| $site        | Sito di WeeChat                         | `http://weechat.org/`
-| $download    | Sito di WeeChat, pagina di download     | `http://weechat.org/download`
+| $site        | Sito di WeeChat                         | `https://weechat.org/`
+| $download    | Sito di WeeChat, pagina di download     | `https://weechat.org/download`
 | $time        | Data/ora correnti                       | `Sun, 16 Dec 2012 10:40:48 +0100`
 | $username    | Nome utente sul server IRC              | `name`
 | $realname    | Nome reale sul server IRC               | `John Doe`
@@ -2460,7 +2460,7 @@ le risposte CTCP sono:
 | CTCP       | Formato risposta                     | Esempio
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
 | FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
-| SOURCE     | `$download`                          | `http://weechat.org/download`
+| SOURCE     | `$download`                          | `https://weechat.org/download`
 | TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
 | USERINFO   | `$username ($realname)`              | `name (John Doe)`
 | VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`
@@ -2876,7 +2876,7 @@ WeeChat.
 
 // TRANSLATION MISSING
 You can connect with a remote interface, see the list on download page:
-http://weechat.org/download
+https://weechat.org/download
 
 [IMPORTANT]
 // TRANSLATION MISSING
@@ -2924,7 +2924,7 @@ linguaggi.
 // TRANSLATION MISSING
 Another plugin called "script" is a scripts manager and is used to load/unload
 scripts of any language, and install/remove scripts of WeeChat scripts
-repository, which are visible at this URL: http://weechat.org/scripts
+repository, which are visible at this URL: https://weechat.org/scripts
 
 Per maggiori informazioni su come scrivere gli script, o le API WeeChat
 per gli script, consultare la 'Guida allo Scripting di WeeChat'.
@@ -3556,4 +3556,4 @@ For support with IRC, on server 'chat.freenode.net':
 ** '#weechat-de' (German)
 
 // TRANSLATION MISSING
-For other ways of support, see: http://weechat.org/dev/support
+For other ways of support, see: https://weechat.org/dev/support

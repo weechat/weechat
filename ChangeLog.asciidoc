@@ -6,10 +6,10 @@
 
 This document lists all changes for each version
 (the latest formatted version of this document can be found
-http://weechat.org/files/changelog/ChangeLog-devel.html[here]).
+https://weechat.org/files/changelog/ChangeLog-devel.html[here]).
 
 For a list of important changes that require manual action, please look at
-http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
+https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'ReleaseNotes.asciidoc' in sources).
 
 

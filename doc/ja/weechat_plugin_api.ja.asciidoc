@@ -9,7 +9,7 @@
 このマニュアルは WeeChat チャットクライアントについての文書で、WeeChat の一部です。
 
 この文書の最新版を見るには以下のページを確認して下さい:
-http://weechat.org/doc
+https://weechat.org/doc
 
 
 [[introduction]]
@@ -1966,7 +1966,7 @@ struct t_hashtable *options2 = weechat_hashtable_new (8,
 /* URL に関するブラックリストを追加 */
 weechat_hashtable_set (options2, "regex", "\\w+://\\S+");
 weechat_hashtable_set (options2, "regex_replace", "[ ${re:0} ]");
-char *str4 = weechat_string_eval_expression ("test: http://weechat.org", NULL, NULL, NULL);  /* "test: [ http://weechat.org ]" */
+char *str4 = weechat_string_eval_expression ("test: https://weechat.org", NULL, NULL, NULL);  /* "test: [ https://weechat.org ]" */
 
 /* パスワードを隠す */
 weechat_hashtable_set (options2, "regex", "(password=)(\\S+)");
@@ -1995,7 +1995,7 @@ options = {
     "regex": "\\w+://\\S+",
     "regex_replace": "[ ${re:0} ]",
 }
-str4 = weechat.string_eval_expression("test: http://weechat.org", {}, {}, options)  # "test: [ http://weechat.org ]"
+str4 = weechat.string_eval_expression("test: https://weechat.org", {}, {}, options)  # "test: [ https://weechat.org ]"
 
 # 正規表現を用いた置換: パスワードを隠す
 options = {
@@ -7235,7 +7235,7 @@ struct t_hook *weechat_hook_process (const char *command,
 
 [TIP]
 WeeChat に関する情報 (例えば現在の安定版、最新の git コミット、...)
-が欲しい場合、http://weechat.org/dev/info に書かれている URL を使ってください
+が欲しい場合、https://weechat.org/dev/info に書かれている URL を使ってください
 
 [NOTE]
 コールバックにデータを送信するバッファのサイズは 64KB (バッファは 2
@@ -7428,7 +7428,7 @@ struct t_hashtable *options = weechat_hashtable_new (8,
 if (options)
 {
     weechat_hashtable_set (options, "file_out", "/tmp/weechat.org.html");
-    struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:http://weechat.org/",
+    struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:https://weechat.org/",
                                                                      options,
                                                                      20000,
                                                                      &my_process_cb, NULL);
@@ -7493,7 +7493,7 @@ def my_process_cb(data, command, return_code, out, err):
     return weechat.WEECHAT_RC_OK
 
 # 例 1: URL をダウンロード
-hook1 = weechat.hook_process_hashtable("url:http://weechat.org/",
+hook1 = weechat.hook_process_hashtable("url:https://weechat.org/",
                                        {"file_out": "/tmp/weechat.org.html"},
                                        20000, "my_process_cb", "")
 

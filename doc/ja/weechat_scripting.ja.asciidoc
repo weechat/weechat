@@ -9,7 +9,7 @@
 このマニュアルは WeeChat チャットクライアントについて説明しており、WeeChat の一部です。
 
 このマニュアルの最新版は以下のページを参照してください:
-http://weechat.org/doc
+https://weechat.org/doc
 
 
 [[introduction]]
@@ -715,12 +715,12 @@ def weechat_process_cb(data, command, rc, out, err):
         weechat.prnt("", "Current WeeChat stable is: %s" % weechat_version)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process("url:http://weechat.org/dev/info/stable/",
+weechat.hook_process("url:https://weechat.org/dev/info/stable/",
                      30 * 1000, "weechat_process_cb", "")
 ----
 
 [TIP]
-WeeChat に関して利用できる情報は全て http://weechat.org/dev/info にあります
+WeeChat に関して利用できる情報は全て https://weechat.org/dev/info にあります
 
 オプション有りの URL 転送の例: 最新の WeeChat 開発パッケージをファイル
 '/tmp/weechat-devel.tar.gz' にダウンロード:
@@ -732,7 +732,7 @@ def my_process_cb(data, command, rc, out, err):
         weechat.prnt("", "End of transfer (rc=%s)" % rc)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process_hashtable("url:http://weechat.org/files/src/weechat-devel.tar.gz",
+weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.tar.gz",
                                {"file_out": "/tmp/weechat-devel.tar.gz"},
                                30 * 1000, "my_process_cb", "")
 ----

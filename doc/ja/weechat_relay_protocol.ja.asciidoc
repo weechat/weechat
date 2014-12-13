@@ -851,7 +851,7 @@ hda:
     __path: ['0x4a715d0']
     number: 3
     full_name: 'irc.freenode.#weechat'
-    title: 'Welcome on #weechat!  http://weechat.org/'
+    title: 'Welcome on #weechat!  https://weechat.org/'
 ----
 
 [[message_buffer_cleared]]

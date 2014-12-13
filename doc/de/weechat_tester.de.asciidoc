@@ -82,7 +82,7 @@ diesem Ordner.
 Ansonsten kannst Du das 'Entwickler-Paket' herunterladen und entpacken:
 
 ----
-$ wget http://weechat.org/files/src/weechat-devel.tar.bz2
+$ wget https://weechat.org/files/src/weechat-devel.tar.bz2
 $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
 ----
@@ -112,7 +112,7 @@ $ make install
 Abhängig Deiner Linux Distribution:
 
 * Debian: http://debian.flashtux.org/
-* Gentoo: http://weechat.org/download
+* Gentoo: https://weechat.org/download
 * ArchLinux: PKGBUILD von http://aur.archlinux.org/
 * andere: Wissen wir nicht! Eheh.
 

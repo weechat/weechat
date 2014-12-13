@@ -27,7 +27,7 @@
 
 WeeChat は非常に軽く、革新的な機能を備えているからです。
 
-こののページに関するより詳しい情報: http://weechat.org/about/features
+こののページに関するより詳しい情報: https://weechat.org/about/features
 
 [[compilation_install]]
 == コンパイル / インストール
@@ -36,7 +36,7 @@ WeeChat は非常に軽く、革新的な機能を備えているからです。
 === WeeChat には多くの GUI があると聞きました。コンパイル/利用方法を教えてください。
 
 いくつかのリモート GUI が利用可能です、機能のページに載っているリンクをご覧ください:
-http://weechat.org/about/features
+https://weechat.org/about/features
 
 [[compile_git]]
 === git リポジトリをクローンした後に WeeChat をコンパイルできません。
@@ -73,7 +73,7 @@ brew install weechat --with-python --with-perl
 キーとコマンドはドキュメント内にリストアップされています。
 
 新しいユーザはクイックスタートガイドを読むことをお勧めします:
-http://weechat.org/doc
+https://weechat.org/doc
 
 [[display]]
 == 表示
@@ -750,7 +750,7 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 [[bug_task_patch]]
 === どのようにバグ報告、新機能のリクエスト、パッチ送信すればよいですか。
 
-以下のページを参照してください: http://weechat.org/dev/support
+以下のページを参照してください: https://weechat.org/dev/support
 
 [[gdb_error_threads]]
 === gdb で WeeChat を実行する場合、スレッドに関するエラーが発生します。
@@ -775,7 +775,7 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 [[supported_os]]
 === WeeChat をサポートするプラットフォームのリストを教えてください。他のオペレーティングシステムへの移植予定はありますか。
 
-完全なリストはこのページにあります: http://weechat.org/download
+完全なリストはこのページにあります: https://weechat.org/download
 
 我々は可能な限り多くのプラットフォームに移植することに最善を尽くしています。
 我々が持っていない OS で WeeChat をテストすることを歓迎します。
@@ -786,10 +786,10 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 多くの課題があります (テスト、コード、ドキュメント作成、...)。
 
 IRC かメールで連絡を取り、サポートページを確認してください:
-http://weechat.org/dev/support
+https://weechat.org/dev/support
 
 [[donate]]
 === WeeChat 開発者にお金か何かを贈りたいのですが。
 
 開発補助のためお金を贈ることができます。
-詳しいことは http://weechat.org/about/donate に載っています。
+詳しいことは https://weechat.org/about/donate に載っています。

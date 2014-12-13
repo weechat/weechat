@@ -30,7 +30,7 @@ include::cmdline_options.de.asciidoc[]
 == OPTIONEN von ERWEITERUNGEN
 
 Um eine vollständige Dokumentation der Optionen zu erhalten, siehe
-http://weechat.org/doc[WeeChat user's guide].
+https://weechat.org/doc[WeeChat user's guide].
 
 Mittels der IRC Erweiterung kann man sich zu einen temporären Server, mittels einer URL,
 verbinden lassen:
@@ -103,8 +103,8 @@ the Free Software Foundation; either version 3 of the License, or
 
 Please read the COPYING file for more information.
 
-Web: <http://weechat.org/>
+Web: <https://weechat.org/>
 
 == SUPPORT / FEHLER MELDEN
 
-für Hilfe oder um einen Fehler zu melden: <http://weechat.org/dev/support>
+für Hilfe oder um einen Fehler zu melden: <https://weechat.org/dev/support>

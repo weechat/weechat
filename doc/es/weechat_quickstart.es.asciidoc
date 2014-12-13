@@ -346,7 +346,7 @@ Los plugins se cargan de manera automática cuando son encontrados por WeeChat
 plugins y scripts).
 
 Muchos scripts externos (de contribuidores) están disponibles para WeeChat en:
-http://weechat.org/scripts
+https://weechat.org/scripts
 
 // TRANSLATION MISSING
 You can manage scripts in WeeChat with command `/script` (see `/help script`
@@ -356,6 +356,6 @@ for more info).
 == Más documentación
 
 Ahora puede usar WeeChat y leer las FAQ/documentación para cada pregunta
-en: http://weechat.org/doc
+en: https://weechat.org/doc
 
 Disfrute de WeeChat!
