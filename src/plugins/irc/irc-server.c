@@ -1622,7 +1622,7 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
  */
 
 int
-irc_server_rename (struct t_irc_server *server, const char *new_server_name)
+irc_server_rename (struct t_irc_server *server, const char *new_name)
 {
     int length;
     char *mask, *pos_option, *new_option_name, *buffer_name;
@@ -1633,7 +1633,7 @@ irc_server_rename (struct t_irc_server *server, const char *new_server_name)
     struct t_irc_channel *ptr_channel;
 
     /* check if another server exists with this name */
-    if (irc_server_casesearch (new_server_name))
+    if (irc_server_casesearch (new_name))
         return 0;
 
     /* rename options */
@@ -1659,12 +1659,12 @@ irc_server_rename (struct t_irc_server *server, const char *new_server_name)
                     if (pos_option)
                     {
                         pos_option++;
-                        length = strlen (new_server_name) + 1 + strlen (pos_option) + 1;
+                        length = strlen (new_name) + 1 + strlen (pos_option) + 1;
                         new_option_name = malloc (length);
                         if (new_option_name)
                         {
                             snprintf (new_option_name, length,
-                                      "%s.%s", new_server_name, pos_option);
+                                      "%s.%s", new_name, pos_option);
                             weechat_config_option_rename (ptr_option, new_option_name);
                             free (new_option_name);
                         }
@@ -1678,7 +1678,7 @@ irc_server_rename (struct t_irc_server *server, const char *new_server_name)
     /* rename server */
     if (server->name)
         free (server->name);
-    server->name = strdup (new_server_name);
+    server->name = strdup (new_name);
 
     /* change name and local variables on buffers */
     for (ptr_channel = server->channels; ptr_channel;
