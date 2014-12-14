@@ -48,6 +48,8 @@ struct t_config_section *irc_config_section_server = NULL;
 
 /* IRC config, look section */
 
+struct t_config_option *irc_config_look_buffer_open_before_autojoin;
+struct t_config_option *irc_config_look_buffer_open_before_join;
 struct t_config_option *irc_config_look_buffer_switch_autojoin;
 struct t_config_option *irc_config_look_buffer_switch_join;
 struct t_config_option *irc_config_look_color_nicks_in_names;
@@ -2325,6 +2327,22 @@ irc_config_init ()
         return 0;
     }
 
+    irc_config_look_buffer_open_before_autojoin = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "buffer_open_before_autojoin", "boolean",
+        N_("open channel buffer before the JOIN is received from server "
+           "when it is auto joined (with server option \"autojoin\"); "
+           "this is useful to open channels with always the same buffer "
+           "numbers on startup"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_look_buffer_open_before_join = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "buffer_open_before_join", "boolean",
+        N_("open channel buffer before the JOIN is received from server "
+           "when it is manually joined (with /join command)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_buffer_switch_autojoin = weechat_config_new_option (
         irc_config_file, ptr_section,
         "buffer_switch_autojoin", "boolean",

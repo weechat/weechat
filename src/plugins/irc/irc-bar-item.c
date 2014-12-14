@@ -99,7 +99,7 @@ irc_bar_item_buffer_plugin (void *data, struct t_gui_bar_item *item,
 {
     char buf[512];
     struct t_weechat_plugin *ptr_plugin;
-    const char *name;
+    const char *name, *localvar_server, *localvar_channel;
     struct t_irc_server *server;
     struct t_irc_channel *channel;
 
@@ -112,29 +112,50 @@ irc_bar_item_buffer_plugin (void *data, struct t_gui_bar_item *item,
     if (!buffer)
         return NULL;
 
+    buf[0] = '\0';
+
     ptr_plugin = weechat_buffer_get_pointer (buffer, "plugin");
     name = weechat_plugin_get_name (ptr_plugin);
     if (ptr_plugin == weechat_irc_plugin)
     {
         irc_buffer_get_server_and_channel (buffer, &server, &channel);
-        if (server && channel
-            && (weechat_config_integer (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_PLUGIN))
+        if (weechat_config_integer (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_PLUGIN)
         {
-            snprintf (buf, sizeof (buf), "%s%s/%s%s",
-                      name,
-                      IRC_COLOR_BAR_DELIM,
-                      IRC_COLOR_BAR_FG,
-                      server->name);
-        }
-        else
-        {
-            snprintf (buf, sizeof (buf), "%s", name);
+            if (server && channel)
+            {
+                snprintf (buf, sizeof (buf), "%s%s/%s%s",
+                          name,
+                          IRC_COLOR_BAR_DELIM,
+                          IRC_COLOR_BAR_FG,
+                          server->name);
+            }
+            else
+            {
+                localvar_server = weechat_buffer_get_string (buffer,
+                                                             "localvar_server");
+                localvar_channel = weechat_buffer_get_string (buffer,
+                                                              "localvar_channel");
+                if (localvar_server && localvar_channel)
+                {
+                    server = irc_server_search (localvar_server);
+                    if (server)
+                    {
+                        snprintf (buf, sizeof (buf), "%s%s/%s%s",
+                                  name,
+                                  IRC_COLOR_BAR_DELIM,
+                                  IRC_COLOR_BAR_FG,
+                                  server->name);
+                    }
+                }
+            }
         }
     }
-    else
+
+    if (!buf[0])
     {
         snprintf (buf, sizeof (buf), "%s", name);
     }
+
     return strdup (buf);
 }
 
@@ -146,8 +167,8 @@ char *
 irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
 {
     char buf[512], buf_name[256], modes[128];
-    const char *name;
-    int part_from_channel, display_server;
+    const char *name, *localvar_type;
+    int part_from_channel, display_server, is_channel;
     struct t_irc_server *server;
     struct t_irc_channel *channel;
 
@@ -197,7 +218,25 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
         name = weechat_buffer_get_string (buffer,
                                           (short_name) ? "short_name" : "name");
         if (name)
-            snprintf (buf_name, sizeof (buf_name), "%s", name);
+        {
+            localvar_type = weechat_buffer_get_string (buffer,
+                                                       "localvar_type");
+            is_channel = (localvar_type
+                          && (strcmp (localvar_type, "channel") == 0));
+            if (is_channel)
+            {
+                name = weechat_buffer_get_string (buffer,
+                                                  "localvar_channel");
+            }
+            snprintf (buf_name, sizeof (buf_name),
+                      "%s%s%s%s%s%s",
+                      (is_channel) ? IRC_COLOR_BAR_DELIM : "",
+                      (is_channel) ? "(" : "",
+                      IRC_COLOR_STATUS_NAME,
+                      name,
+                      (is_channel) ? IRC_COLOR_BAR_DELIM : "",
+                      (is_channel) ? ")" : "");
+        }
     }
 
     snprintf (buf, sizeof (buf), "%s%s%s",

@@ -68,6 +68,16 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
 
+* [[option_irc.look.buffer_open_before_autojoin]] *irc.look.buffer_open_before_autojoin*
+** description: `ouvrir le tampon du canal avant que le JOIN soit reçu du serveur lorsqu'il est automatiquement rejoint (avec l'option du serveur "autojoin")`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
+* [[option_irc.look.buffer_open_before_join]] *irc.look.buffer_open_before_join*
+** description: `ouvrir le tampon du canal avant que le JOIN soit reçu du serveur lorsqu'il est manuellement rejoint (avec la commande /join)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
 ** description: `basculer automatiquement vers le tampon du canal lorsqu'il est automatiquement rejoint (avec l'option du serveur "autojoin")`
 ** type: booléen

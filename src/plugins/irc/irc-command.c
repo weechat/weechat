@@ -2298,6 +2298,16 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                                                pos_channel, keys[i]);
                     }
                 }
+                if (manual_join
+                    && weechat_config_boolean (irc_config_look_buffer_open_before_join))
+                {
+                    /*
+                     * open the channel buffer immediately (do not wait for the
+                     * JOIN sent by server)
+                     */
+                    irc_channel_create_buffer (
+                        server, IRC_CHANNEL_TYPE_CHANNEL, pos_channel, 1, 1);
+                }
             }
             if (pos_space)
                 strcat (new_args, pos_space);

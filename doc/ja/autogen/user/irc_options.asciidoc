@@ -68,6 +68,16 @@
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
+* [[option_irc.look.buffer_open_before_autojoin]] *irc.look.buffer_open_before_autojoin*
+** 説明: `open channel buffer before the JOIN is received from server when it is auto joined (with server option "autojoin"); this is useful to open channels with always the same buffer numbers on startup`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.buffer_open_before_join]] *irc.look.buffer_open_before_join*
+** 説明: `open channel buffer before the JOIN is received from server when it is manually joined (with /join command)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
 * [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
 ** 説明: `自動で参加した場合に、自動的にチャンネルバッファを移動 (サーバオプション "autojoin" と共に使用)`
 ** タイプ: ブール
