@@ -18,20 +18,21 @@
 # You should have received a copy of the GNU General Public License
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
+# Nils Görs <weechatter@arcor.de>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-12-14 20:12+0100\n"
-"PO-Revision-Date: 2014-12-13 09:10+0100\n"
+"PO-Revision-Date: 2014-12-15 20:36+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
-"Language-Team: German <weechatter@arcor.de>\n"
+"Language-Team: German <>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Lokalize 1.5\n"
 "X-Poedit-Bookmarks: -1,-1,180,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -7824,14 +7825,17 @@ msgid ""
 "joined (with server option \"autojoin\"); this is useful to open channels "
 "with always the same buffer numbers on startup"
 msgstr ""
+"betritt man automatisch einen Channel-Buffer (mittels autojoin Option) wird "
+"dieser direkt geöffnet, ohne auf die JOIN Nachricht des Servers zu warten; "
+"dies ist sinnvoll um die Channels immer an der selben Position bei einem "
+"Neustart zu öffnen"
 
-#, fuzzy
 msgid ""
 "open channel buffer before the JOIN is received from server when it is "
 "manually joined (with /join command)"
 msgstr ""
-"wechselt automatisch zum Channel-Buffer falls dieser manuell betreten wurde "
-"(mittels dem /join Befehl)"
+"betritt man mittels dem /join Befehl einen Channel wird der Buffer direkt "
+"geöffnet, ohne auf die JOIN Nachricht des Servers zu warten"
 
 msgid ""
 "auto switch to channel buffer when it is auto joined (with server option "
@@ -12311,3 +12315,4 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
