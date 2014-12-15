@@ -163,7 +163,6 @@ Sollte der Server SASL unterstützen, kann man sich damit automatisch Authentifi
 (dadurch identifiziert man sich beim Server, bevor man Channels (Chaträume) betritt):
 
 ----
-/set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.freenode.sasl_username "mynick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----

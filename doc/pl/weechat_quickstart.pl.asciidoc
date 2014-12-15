@@ -154,7 +154,6 @@ Jeśli SASL jest dostępny na serwerze, można użyć go do uwierzytelnienia (zo
 zidentyfikowany przed wejściem na kanał):
 
 ----
-/set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.freenode.sasl_username "mójnick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----

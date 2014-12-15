@@ -554,7 +554,6 @@ Jeśli serwer wspiera SASL, możesz użyć tego zamiast wysyłać komendę do ni
 na przykład:
 
 ----
-/set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.freenode.sasl_username "nick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----

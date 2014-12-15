@@ -577,7 +577,6 @@ Se il server supporta SASL, dovrebbe essere utilizzato invece di inviare il
 comando di autenticazione con nickserv, ad esempio:
 
 ----
-/set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.freenode.sasl_username "mynick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----

@@ -2212,10 +2212,14 @@ Für weiterreichende Informationen lesen Sie bitte: http://www.oftc.net/oftc/Nic
 
 WeeChat unterstützt eine SASL Authentifikation, mittels verschiedener Mechanismen:
 
-* 'plain': Passwort liegt in Klarschrift vor
+* 'plain': Passwort liegt in Klarschrift vor (Standard)
 * 'dh-blowfish': Passwort wird mittels blowfish verschlüsselt
 * 'dh-aes': Passwort wird mittels AES verschlüsselt
 * 'external': SSL Zertifikat welches auf Client Seite vorliegt
+
+[NOTE]
+Die "gcrypt" Bibliothek wird beim kompilieren von WeeChat benötigt um
+"dh-blowfish"nutzen zu können (siehe <<dependencies,Abhängigkeiten>>).
 
 Optionen für Server sind:
 
@@ -2224,26 +2228,12 @@ Optionen für Server sind:
 * 'sasl_username': Username (Nickname)
 * 'sasl_password': Passwort
 
-Soll "dh-blowfish" standardmäßig auf allen Servern angewandt werden:
-
-----
-/set irc.server_default.sasl_mechanism dh-blowfish
-----
-
-[NOTE]
-Die "gcrypt" Bibliothek wird beim kompilieren von WeeChat benötigt um
-"dh-blowfish"nutzen zu können (siehe <<dependencies,Abhängigkeiten>>).
-
 [[irc_tor_freenode]]
 ==== Verbindung zu Freenode mittels TOR/SASL herstellen
 
 Neben der Möglichkeit eine Verbindung zum Freenode Server mittels SSL aufzubauen,
 kann man außerdem eine Verbindung via TOR (https://www.torproject.org/) herstellen.
 Dies dient dazu die eigene Privatsphäre und Sicherheit im Internet zu erhöhen.
-
-Zuerst sollte man sicher gehen, dass WeeChat mit <<dependencies,libgcrypt11-dev>> kompiliert
-wurde (sofern WeeChat aus den Quellen erstellt wurde); es ist nicht verpflichtend, allerdings
-bietet "dh-blowfish" eine größere Sicherheit als eine "plain" Authentifikation mittels SASL.
 
 Im ersten Schritt muss TOR installiert werden. Für Debian (und Derivate):
 
@@ -2273,7 +2263,6 @@ Der Proxy muss für TOR angelegt werden:
 Die SASL Authentifikation einstellen:
 
 ----
-/set irc.server.freenode-tor.sasl_mechanism dh-blowfish
 /set irc.server.freenode-tor.sasl_username "your_nickname"
 /set irc.server.freenode-tor.sasl_password "your_password"
 ----
