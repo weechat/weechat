@@ -2241,10 +2241,14 @@ Pour plus d'informations, consulter http://www.oftc.net/oftc/NickServ/CertFP
 WeeChat supporte l'authentification avec SASL, en utilisant différents
 mécanismes :
 
-* 'plain' : mot de passe en clair
+* 'plain' : mot de passe en clair (par défaut)
 * 'dh-blowfish' : mot de passe chiffré avec blowfish
 * 'dh-aes' : mot de passe chiffré avec AES
 * 'external' : certificat SSL côté client
+
+[NOTE]
+La librairie "gcrypt" est requise lors de la compilation de WeeChat pour
+utiliser le mécanisme "dh-blowfish" (voir <<dependencies,les dépendances>>).
 
 Les options dans le serveur sont :
 
@@ -2253,27 +2257,12 @@ Les options dans le serveur sont :
 * 'sasl_username' : nom d'utilisateur (pseudo)
 * 'sasl_password' : mot de passe
 
-Si vous voulez utiliser "dh-blowfish" par défaut pour tous les serveurs :
-
-----
-/set irc.server_default.sasl_mechanism dh-blowfish
-----
-
-[NOTE]
-La librairie "gcrypt" est requise lors de la compilation de WeeChat pour
-utiliser le mécanisme "dh-blowfish" (voir <<dependencies,les dépendances>>).
-
 [[irc_tor_freenode]]
 ==== Connexion à Freenode avec TOR/SASL
 
 En plus du SSL, les serveurs Freenode supportent les connexions avec TOR
 (https://www.torproject.org/), un réseau de tunnels virtuels qui permet aux
 personnes et groupes d'améliorer leur vie privée et sécurité sur Internet.
-
-Premièrement, assurez-vous d'avoir compilé WeeChat avec
-<<dependencies,libgcrypt11-dev>> (si construit depuis les sources); ce n'est
-pas obligatoire, mais "dh-blowfish" assure une meilleure sécurité comparé à
-l'authentification "plain" avec SASL.
 
 En premier lieu, installez TOR. Pour Debian (et dérivés) :
 
@@ -2303,7 +2292,6 @@ Définissez le proxy pour TOR :
 Définissez l'authentification SASL :
 
 ----
-/set irc.server.freenode-tor.sasl_mechanism dh-blowfish
 /set irc.server.freenode-tor.sasl_username "votre_pseudo"
 /set irc.server.freenode-tor.sasl_password "votre_mot_de_passe"
 ----

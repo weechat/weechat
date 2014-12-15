@@ -576,7 +576,6 @@ Sollte der Server SASL unterstützen, ist es ratsam auf diese Funktion zurückzu
 und sich nicht mittels "nickserv" zu authentifizieren. Zum Beispiel:
 
 ----
-/set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.freenode.sasl_username "meinNick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----

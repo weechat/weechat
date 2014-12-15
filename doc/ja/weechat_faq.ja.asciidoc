@@ -547,7 +547,6 @@ oauth を使うにはパスワードを "oauth:XXXX" のように指定してく
 SASL を利用する方が良いです。例えば:
 
 ----
-/set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.freenode.sasl_username "mynick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----

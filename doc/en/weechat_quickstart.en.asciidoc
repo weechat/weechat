@@ -154,7 +154,6 @@ If SASL is available on server, you can use it for authentication (you will be
 identified before you join channels):
 
 ----
-/set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.freenode.sasl_username "mynick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----

@@ -2165,10 +2165,14 @@ $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick
 
 WeeChat は SASL 認証をサポートします、以下の認証メカニズムを利用できます:
 
-* 'plain': 平文パスワード
+* 'plain': 平文パスワード (デフォルト)
 * 'dh-blowfish': blowfish 暗号パスワード
 * 'dh-aes': AES 暗号パスワード
 * 'external': クライアント側 SSL 証明書
+
+[NOTE]
+"dh-blowfish" メカニズムを利用する場合、"gcrypt" ライブラリが
+WeeChat のコンパイル時に必要です (<<dependencies,依存関係>>を参照)。
 
 サーバオプション:
 
@@ -2177,26 +2181,12 @@ WeeChat は SASL 認証をサポートします、以下の認証メカニズム
 * 'sasl_username': ユーザ名 (ニックネーム)
 * 'sasl_password': パスワード
 
-"dh-blowfish" メカニズムをデフォルトで全てのサーバに対して利用する場合:
-
-----
-/set irc.server_default.sasl_mechanism dh-blowfish
-----
-
-[NOTE]
-"dh-blowfish" メカニズムを利用する場合、"gcrypt" ライブラリが
-WeeChat のコンパイル時に必要です (<<dependencies,依存関係>>を参照)。
-
 [[irc_tor_freenode]]
 ==== TOR/SASL を使って Freenode に接続する場合
 
 SSL に加えて、Freenode サーバは TOR (https://www.torproject.org/)
 経由の接続をサポートしています。TOR とはバーチャルトンネルのネットワークで、
 これを使うことで個人やグループがインターネット利用に伴うプライバシーとセキュリティを向上させることができます。
-
-最初に、WeeChat が <<dependencies,libgcrypt11-dev>> を有効化してコンパイルされていることを確認してください
-(ソースからビルドしている場合); これは必須ではありませんが、SASL を "plain" 認証メカニズムで利用するよりも
-"dh-blowfish" のほうが強固なセキュリティになります。
 
 最初に、TOR をインストールしてください。Debian (とその派生ディストリビューション) の場合:
 
@@ -2226,7 +2216,6 @@ TOR プロキシを設定:
 SASL 認証を設定:
 
 ----
-/set irc.server.freenode-tor.sasl_mechanism dh-blowfish
 /set irc.server.freenode-tor.sasl_username "your_nickname"
 /set irc.server.freenode-tor.sasl_password "your_password"
 ----

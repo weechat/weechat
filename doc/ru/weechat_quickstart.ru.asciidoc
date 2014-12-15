@@ -156,7 +156,6 @@ to 1024.
 (вы будете идентифицированы до того, как присоединиться к каналам):
 
 ----
-/set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.freenode.sasl_username "mynick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----

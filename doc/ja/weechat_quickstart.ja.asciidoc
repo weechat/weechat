@@ -154,7 +154,6 @@ Freenode はデフォルトの鍵サイズ 2048 をサポートしません、�
 (チャンネル参加前にニックネーム認証が行われるでしょう):
 
 ----
-/set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.freenode.sasl_username "mynick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----
