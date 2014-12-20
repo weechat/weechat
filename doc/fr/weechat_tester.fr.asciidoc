@@ -131,7 +131,7 @@ Si vous êtes encore éveillé, vous devriez voir une interface familière et
 pouvoir vous vanter d'utiliser la version la plus récente possible de WeeChat ;)
 
 Maintenant si vous obtenez un comportement étrange ou un plantage, n'hésitez
-pas à nous en avertir sur `#weechat`, serveur `irc.freenode.net`.
+pas à nous en avertir sur `#weechat`, serveur `chat.freenode.net`.
 
 S'il n'y a pas de plantage, dites-le nous aussi, nous avons besoin de votre
 retour et de vos impressions !

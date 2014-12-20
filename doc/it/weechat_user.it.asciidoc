@@ -2156,11 +2156,11 @@ trasferimento file (tramite plugin xfer, consultare <<xfer_plugin,plugin Xfer>>)
 irc[6][s]://[nick[:password]@]irc.esempio.org[:porta][/#canale][,#canale[...]]
 ----
 
-Esempio per entrare in '#weechat' e '#tizio' sul server 'irc.freenode.net',
+Esempio per entrare in '#weechat' e '#tizio' sul server 'chat.freenode.net',
 porta predefinita (6667), con il nick 'caio':
 
 ----
-$ weechat irc://caio@irc.freenode.net/#weechat,#tizio
+$ weechat irc://caio@chat.freenode.net/#weechat,#tizio
 ----
 
 [[irc_options]]

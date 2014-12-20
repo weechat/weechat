@@ -39,7 +39,7 @@ temporaire avec une URL, comme ceci :
 
 Pour rejoindre le canal IRC de support WeeChat avec le pseudo "monpseudo" :
 
-    irc://monpseudo@irc.freenode.net/#weechat
+    irc://monpseudo@chat.freenode.net/#weechat
 
 Les adresses IPv6 peuvent être entourées par des crochets pour ajouter un port
 après, par exemple :

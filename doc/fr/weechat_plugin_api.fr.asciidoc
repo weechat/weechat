@@ -12800,7 +12800,7 @@ Exemple en C :
 
 [source,C]
 ----
-if (weechat_network_pass_proxy ("mon_proxy", sock, "irc.freenode.net", 6667))
+if (weechat_network_pass_proxy ("mon_proxy", sock, "chat.freenode.net", 6667))
 {
     /* OK */
 }

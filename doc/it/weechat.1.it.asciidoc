@@ -38,7 +38,7 @@ With irc plugin, you can connect to temporary server with an URL like:
 
 To join WeeChat IRC channel support with nick "mynick":
 
-    irc://mynick@irc.freenode.net/#weechat
+    irc://mynick@chat.freenode.net/#weechat
 
 IPv6 address can be enclosed in brackets to add a port after address, for
 example:

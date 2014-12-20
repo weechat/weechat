@@ -2060,11 +2060,11 @@ IRC プラグインは IRC プロトコルに従って他の人と会話を行�
 irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 ----
 
-'nono' というニックネームを使って 'irc.freenode.net' ホストのデフォルトポート (6667)
+'nono' というニックネームを使って 'chat.freenode.net' ホストのデフォルトポート (6667)
 で稼働中の IRC サーバ上の '#weechat' と '#toto' チャンネルに参加する例:
 
 ----
-$ weechat irc://nono@irc.freenode.net/#weechat,#toto
+$ weechat irc://nono@chat.freenode.net/#weechat,#toto
 ----
 
 [[irc_options]]

@@ -2083,11 +2083,11 @@ Możliwe jest podanie adresu URL do jednego lub wielu serwerów IRC:
 irc[6][s]://[nick[:hasło]@]adres.serwera.irc[:port][/kanał][,kanał[...]]
 ----
 
-Przykład wejścia na kanały '#weechat' i '#toto' na serwerze 'irc.freenode.net',
+Przykład wejścia na kanały '#weechat' i '#toto' na serwerze 'chat.freenode.net',
 na domyślnym porcie (6667), z nickiem 'nono':
 
 ----
-$ weechat irc://nono@irc.freenode.net/#weechat,#toto
+$ weechat irc://nono@chat.freenode.net/#weechat,#toto
 ----
 
 [[irc_options]]

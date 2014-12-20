@@ -39,7 +39,7 @@ verbinden lassen:
 
 Um dem WeeChat IRC Support-Channel, mit dem Nick "mynick", beizutreten:
 
-    irc://mynick@irc.freenode.net/#weechat
+    irc://mynick@chat.freenode.net/#weechat
 
 Um eine IPv6 Adresse zu nutzen, muss diese in eckige Klammern gesetzt werden:
 
