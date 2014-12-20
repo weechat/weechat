@@ -2104,11 +2104,11 @@ Es ist möglich eine oder mehrere URL von IRC Servern zu übergeben:
 irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 ----
 
-Beispiel: Anmelden beim Server 'irc.freenode.net' mit dem Nick 'nono' und betreten
+Beispiel: Anmelden beim Server 'chat.freenode.net' mit dem Nick 'nono' und betreten
 der Channels '#weechat' und '#toto' (Standardport (6667) wird genutzt):
 
 ----
-$ weechat irc://nono@irc.freenode.net/#weechat,#toto
+$ weechat irc://nono@chat.freenode.net/#weechat,#toto
 ----
 
 [[irc_options]]
