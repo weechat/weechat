@@ -31,6 +31,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-eval.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
@@ -1029,7 +1030,7 @@ gui_key_focus_command (const char *key, int context,
                        struct t_hashtable **hashtable_focus)
 {
     struct t_gui_key *ptr_key;
-    int i, errors, matching, debug, rc;
+    int i, matching, debug, rc;
     long unsigned int value;
     char *command, **commands;
     const char *str_buffer;
@@ -1131,25 +1132,19 @@ gui_key_focus_command (const char *key, int context,
                     }
                     else
                     {
-                        command = string_replace_with_callback (commands[i],
-                                                                "${", "}",
-                                                                &gui_key_focus_command_replace_cb,
-                                                                hashtable,
-                                                                &errors);
+                        command = eval_expression (commands[i], NULL,
+                                                   hashtable, NULL);
                         if (command)
                         {
-                            if (errors == 0)
+                            if (debug)
                             {
-                                if (debug)
-                                {
-                                    gui_chat_printf (NULL,
-                                                     _("Executing command: \"%s\" "
-                                                       "on buffer \"%s\""),
-                                                     command,
-                                                     ptr_buffer->full_name);
-                                }
-                                (void) input_data (ptr_buffer, command);
+                                gui_chat_printf (NULL,
+                                                 _("Executing command: \"%s\" "
+                                                   "on buffer \"%s\""),
+                                                 command,
+                                                 ptr_buffer->full_name);
                             }
+                            (void) input_data (ptr_buffer, command);
                             free (command);
                         }
                     }
