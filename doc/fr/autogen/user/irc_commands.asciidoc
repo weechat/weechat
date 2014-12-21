@@ -675,6 +675,7 @@ raison : raison
 /server  list|listfull [<serveur>]
          add <serveur> <nom>[/<port>] [-temp] [-<option>[=<valeur>]] [-no<option>]
          copy|rename <serveur> <nouveau_nom>
+         reorder <serveur> [<serveur>...]
          del|keep <serveur>
          deloutq|jump|raw
 
@@ -688,6 +689,7 @@ listfull : afficher les serveurs avec de l'info détaillée pour chaque
 nooption : définir l'option booléenne à 'off' (par exemple : -nossl)
     copy : dupliquer un serveur
   rename : renommer un serveur
+ reorder : réordonner la liste des serveurs
     keep : garder le serveur dans le fichier de configuration (pour les serveurs temporaires seulement)
      del : supprimer un serveur
  deloutq : supprimer la file d'attente des messages sortants pour tous les serveurs (tous les messages que WeeChat est actuellement en train d'envoyer)
@@ -702,6 +704,7 @@ Exemples :
   /server add freenode3 chat.freenode.net -password=mypass
   /server copy oftc oftcbis
   /server rename oftc newoftc
+  /server reorder oftc freenode
   /server del freenode
   /server deloutq
 ----

@@ -69,12 +69,12 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_irc.look.buffer_open_before_autojoin]] *irc.look.buffer_open_before_autojoin*
-** 説明: `open channel buffer before the JOIN is received from server when it is auto joined (with server option "autojoin"); this is useful to open channels with always the same buffer numbers on startup`
+** 説明: `自動で参加した場合 ("autojoin" オプションで参加した場合) に、サーバから JOIN を受信する前にチャンネルバッファを開く; チャンネルとバッファ番号の対応を常に一致させたい場合に便利です`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.buffer_open_before_join]] *irc.look.buffer_open_before_join*
-** 説明: `open channel buffer before the JOIN is received from server when it is manually joined (with /join command)`
+** 説明: `手動で参加した場合 (/join コマンドを実行した場合) に、サーバから JOIN を受信する前にチャンネルバッファを開く`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
@@ -564,7 +564,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
-** 説明: `action to perform if SASL authentication fails: "continue" to ignore the authentication problem, "reconnect" to schedule a reconnection to the server, "disconnect" to disconnect from server`
+** 説明: `SASL 認証が失敗した場合の挙動: 認証の問題を無視する場合は "continue"、サーバへの再接続を予定する場合は "reconnect"、サーバから切断する場合は "disconnect"`
 ** タイプ: 整数
 ** 値: continue, reconnect, disconnect (デフォルト値: `continue`)
 

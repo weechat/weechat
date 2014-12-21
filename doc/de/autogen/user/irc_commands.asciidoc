@@ -675,6 +675,7 @@ reason: Grund der Abmeldung
 /server  list|listfull [<server>]
          add <server> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
          copy|rename <server> <new_name>
+         reorder <server> [<server>...]
          del|keep <server>
          deloutq|jump|raw
 
@@ -688,6 +689,7 @@ hostname: Name oder IP-Adresse des Servers. Optional kann noch der Port festgele
 nooption: stellt die Boolean Einstellung auf "off" (Beispiel: -nossl)
     copy: erstellt eine Kopie des Servers
   rename: benennt den Server um
+ reorder: Anordnung der Server ändern
     keep: behält den Server in der Konfigurationsdatei (ausschließlich für die Nutzung bei temporären Servern)
      del: entfernt einen Server
  deloutq: löscht bei allen Servern alle ausgehende Nachrichten, die in der Warteschlange stehen (dies betrifft alle Nachrichten die WeeChat gerade sendet)
@@ -702,6 +704,7 @@ Beispiele:
   /server add freenode3 chat.freenode.net -password=mypass
   /server copy oftc oftcbis
   /server rename oftc newoftc
+  /server reorder oftc freenode
   /server del freenode
   /server deloutq
 ----

@@ -69,12 +69,12 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_irc.look.buffer_open_before_autojoin]] *irc.look.buffer_open_before_autojoin*
-** Beschreibung: `open channel buffer before the JOIN is received from server when it is auto joined (with server option "autojoin"); this is useful to open channels with always the same buffer numbers on startup`
+** Beschreibung: `betritt man automatisch einen Channel-Buffer (mittels autojoin Option) wird dieser direkt geöffnet, ohne auf die JOIN Nachricht des Servers zu warten; dies ist sinnvoll um die Channels immer an der selben Position bei einem Neustart zu öffnen`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.buffer_open_before_join]] *irc.look.buffer_open_before_join*
-** Beschreibung: `open channel buffer before the JOIN is received from server when it is manually joined (with /join command)`
+** Beschreibung: `betritt man mittels dem /join Befehl einen Channel wird der Buffer direkt geöffnet, ohne auf die JOIN Nachricht des Servers zu warten`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
