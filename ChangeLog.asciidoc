@@ -33,6 +33,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add regex replace feature in function string_eval_expression()
 * api: use microseconds instead of milliseconds in functions
   util_timeval_diff() and util_timeval_add()
+* irc: add option "reorder" in command /server (closes #229)
 * irc: open channel buffers before the JOIN is received from server (autojoin
   and manual joins), new options irc.look.buffer_open_before_{autojoin|join}
   (closes #216)

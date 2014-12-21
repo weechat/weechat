@@ -4715,7 +4715,7 @@ int
 irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    int i, detailed_list, one_server_found, length;
+    int i, detailed_list, one_server_found, length, count;
     struct t_irc_server *ptr_server2, *server_found, *new_server;
     char *server_name, *message;
 
@@ -4923,6 +4923,18 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         }
 
         WEECHAT_COMMAND_ERROR;
+    }
+
+    if (weechat_strcasecmp (argv[1], "reorder") == 0)
+    {
+        WEECHAT_COMMAND_MIN_ARGS(3, "reorder");
+
+        count = irc_server_reorder (((const char **)argv) + 2, argc - 2);
+        weechat_printf (NULL,
+                        NG_("%d server moved", "%d servers moved", count),
+                        count);
+
+        return WEECHAT_RC_OK;
     }
 
     if (weechat_strcasecmp (argv[1], "keep") == 0)
@@ -6448,6 +6460,7 @@ irc_command_init ()
            " || add <server> <hostname>[/<port>] [-temp] [-<option>[=<value>]] "
            "[-no<option>]"
            " || copy|rename <server> <new_name>"
+           " || reorder <server> [<server>...]"
            " || del|keep <server>"
            " || deloutq|jump|raw"),
         N_("    list: list servers (without argument, this list is displayed)\n"
@@ -6462,6 +6475,7 @@ irc_command_init ()
            "nooption: set boolean option to 'off' (for example: -nossl)\n"
            "    copy: duplicate a server\n"
            "  rename: rename a server\n"
+           " reorder: reorder list of servers\n"
            "    keep: keep server in config file (for temporary servers only)\n"
            "     del: delete a server\n"
            " deloutq: delete messages out queue for all servers (all messages "
@@ -6478,6 +6492,7 @@ irc_command_init ()
            "  /server add freenode3 chat.freenode.net -password=mypass\n"
            "  /server copy oftc oftcbis\n"
            "  /server rename oftc newoftc\n"
+           "  /server reorder oftc freenode\n"
            "  /server del freenode\n"
            "  /server deloutq"),
         "list %(irc_servers)"
@@ -6486,6 +6501,7 @@ irc_command_init ()
         " || copy %(irc_servers) %(irc_servers)"
         " || rename %(irc_servers) %(irc_servers)"
         " || keep %(irc_servers)"
+        " || reorder %(irc_servers)|%*"
         " || del %(irc_servers)"
         " || deloutq"
         " || jump"
