@@ -853,7 +853,6 @@ irc_config_change_color_nick_prefixes (void *data,
     irc_nick_nicklist_set_prefix_color_all ();
 
     weechat_bar_item_update ("input_prompt");
-    weechat_bar_item_update ("nicklist");
 }
 
 /*
