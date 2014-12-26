@@ -51,19 +51,16 @@ zależności. Ten pakiet jest budowany prawie codziennie z użyciem repozytorium
 git. Ten pakiet może odpowiadać dokładnie wersji z gita i jest mniej wygodny
 przy aktualizowaniu jak klonowanie z gita.
 
-// TRANSLATION MISSING
 [[compile_osx]]
-=== How can I install WeeChat on OS X?
+=== Jak zainstalować WeeChat na OS X?
 
-// TRANSLATION MISSING
-It is recommended to use http://brew.sh/[Homebrew], you can get help with:
+Zaleca się użycie http://brew.sh/[Homebrew], pomoc uzyskasz za pomocą komendy:
 
 ----
 brew info weechat
 ----
 
-// TRANSLATION MISSING
-You can install WeeChat with this command:
+Możesz zainstalować WeeChat za pomocą komendy:
 
 ----
 brew install weechat --with-python --with-perl
@@ -668,21 +665,19 @@ Dla WeeChat ≤ 0.3.3, opcje te to 'irc.network.away_check' oraz
 [[highlight_notification]]
 === Jak mogę zostać powiadomiony, jeśli ktoś będzie chciał przyciągnąć moją uwagę na kanale?
 
-// TRANSLATION MISSING
-With WeeChat ≥ 1.0, there is a default trigger "beep" which sends a 'BEL' to
-the terminal on a highlight or private message. Thus you can configure your
-terminal (or multiplexer like screen/tmux) to run a command or play a sound
-when a 'BEL' occurs.
 
-// TRANSLATION MISSING
-Or you can add a command in "beep" trigger:
+W wersji WeeChat ≥ 1.0, domyślnie dodany jest trigger "beep" wysyłający 'BEL' do
+terminala przy podświetleniu lub prywatnej wiadomości. Dzięki temu możesz skonfigurować
+swój terminal (lub multiplekser jak screen/tmux) do wykonania komendy lub odtworzenia
+dźwięku, kiedy 'BEL' zostanie odebrany.
+
+Lub możesz dodać komendę w triggerze "beep":
 
 ----
 /set trigger.trigger.beep.command "/print -beep;/exec -bg /ścieżka/do/komendy argumenty"
 ----
 
-// TRANSLATION MISSING
-With an older WeeChat, you can use a script like 'beep.pl' or 'launcher.pl'.
+W starszych wersjach WeeChat, możesz użyć skryptu jak 'beep.pl' lub 'launcher.pl'.
 
 Dla 'launcher.pl', należ przeprowadzić konfigurację:
 

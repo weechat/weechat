@@ -45,8 +45,7 @@ Strona domowa WeeChat: https://weechat.org/
 * działający system GNU/Linux (z narzędziami kompilatora dla kompilacji ze
   źródeł), lub kompatybilny system
 * przywileje 'roota' (do instalacji w katalogu systemowym)
-// TRANSLATION MISSING
-* some libraries (see <<dependencies,dependencies>>).
+* niektóre biblioteki (zobacz <<dependencies,zależności>>).
 
 [[install]]
 == Instalacja
@@ -75,11 +74,10 @@ pakietów.
 
 WeeChat może być kompilowany za pomocą cmake lub autotools (cmake jest zalecany).
 
-// TRANSLATION MISSING
 [NOTE]
-On OS X, you can use http://brew.sh/[Homebrew]:
+Na OS X możesz użyć http://brew.sh/[Homebrew]:
 `brew install weechat --with-python --with-perl`
-(for help: `brew info weechat`).
+(pomoc można uzyskać za pomocą komendy: `brew info weechat`).
 
 [[dependencies]]
 ==== Zależności
@@ -91,8 +89,7 @@ WeeChat.
 |===
 | Pakiet ^(1)^                    | Wersja      | Wymagany | Opis
 | cmake                           |             | *tak*    | Kompilacja (możliwe jest użycie autotools, jednak cmake jest zalecany)
-// TRANSLATION MISSING
-| pkg-config                      |             | *tak*    | Detect installed libraries
+| pkg-config                      |             | *tak*    | Wykrywa zainstalowane biblioteki
 | libncursesw5-dev ^(2)^          |             | *tak*    | Interfejs ncurses
 | libcurl4-gnutls-dev             |             | *tak*    | Transfer URL
 | zlib1g-dev                      |             | *tak*    | Kompresja pakietów we wtyczce relay (protokół weechat), wtyczka script
@@ -516,8 +513,7 @@ Pasek 'status' posiada następujące domyślne elementy:
 |===
 | Element               | Przykład              | Opis
 | time                  | `[12:55]`             | Czas
-// TRANSLATION MISSING
-| buffer_last_number    | `[6]`                 | Number of last buffer in list
+| buffer_last_number    | `[6]`                 | Numer ostatniego buforu na liście
 | buffer_plugin         | `[irc/freenode]`      | Wtyczka dla obecnego bufora (wtyczka irc może dodać nazwę serwera IRC używanego przez bufor)
 | buffer_number         | `3`                   | Numer obecnego buforu
 | buffer_name           | `#test`               | Nazwa obecnego buforu
@@ -543,21 +539,19 @@ Pasek 'input' posiada następujące domyślne elementy:
 | input_text   | `hi peter!`                                    | Wprowadzony tekst
 |===
 
-// TRANSLATION MISSING
-Other items available (not used in bars by default):
+Inne dostępne elementy (nie używane domyślnie w paskach):
 
-// TRANSLATION MISSING
 [width="100%",cols="^3,^4,10",options="header"]
 |===
-| Item              | Example             | Description
-| aspell_dict       | `fr,en`             | Spelling dictionaries used on current buffer
-| aspell_suggest    | `print,prone,prune` | Spelling suggestions for word under cursor (if misspelled)
-| buffer_count      | `10`                | Total number of buffers opened
-| buffer_short_name | `#test`             | Current buffer short name
-| irc_channel       | `#test`             | Current IRC channel name
-| irc_nick_modes    | `@`                 | IRC modes for self nick
-| mouse_status      | `M`                 | Mouse status (empty if mouse is disabled)
-| window_number     | `2`                 | Current window number
+| Element           | Przykład            | Opis
+| aspell_dict       | `fr,en`             | Słowniki używane w obecnym buforze
+| aspell_suggest    | `print,prone,prune` | Sugestie dla słowa pod kursorem (jeśli zawiera błąd)
+| buffer_count      | `10`                | Liczba otwartych buforów
+| buffer_short_name | `#test`             | Skrócona nazwa obecnego buforu
+| irc_channel       | `#test`             | Nazwa bieżącego kanału IRC
+| irc_nick_modes    | `@`                 | Atrybuty IRC dla własnego nicka
+| mouse_status      | `M`                 | Status obsługi myszy (pusty jeśli obsługa myszy jest wyłączona)
+| window_number     | `2`                 | Numer obecnego okna
 |===
 
 [[buffers_and_windows]]
@@ -1411,10 +1405,10 @@ Kody kolorów dla key[ctrl-c,c]:
 
 include::autogen/user/irc_colors.asciidoc[]
 
-// TRANSLATION MISSING
 [NOTE]
-To show all available colors in your terminal, you can do `/color` then
-key[alt-c] in WeeChat or run this command in terminal: `weechat --colors`.
+W celu wyświetlenia wszystkich dostępnych kolorów dla terminala możesz wykonać
+komendę `/color` następnie key[alt-c] (w WeeChat) lub wywołać w terminalu:
+`weechat --colors`.
 
 Przykład: wyświetlenie "hello everybody!" z pogrubionym jasno niebieskim "hello"
 i podkreślonym jasno czerwonym "everybody":
