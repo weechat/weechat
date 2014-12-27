@@ -8,7 +8,7 @@
 
 | irc | irc_channel | lista kanałów IRC | wskaźnik kanału (opcjonalne) | serwer,kanał (kanał jest opcjonalny)
 
-| irc | irc_color_weechat | mapping between IRC color codes and WeeChat color names | - | -
+| irc | irc_color_weechat | mapowanie między kodami kolorów IRC i nazwami kolorów WeeChat | - | -
 
 | irc | irc_ignore | lista ignorów IRC | wskaźnik ignorowania (opcjonalne) | -
 

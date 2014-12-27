@@ -632,7 +632,7 @@ kanał: nazwa kanału
 [command]*`samode`* zmienia atrybuty kanału, bez posiadania statusu operatora::
 
 ----
-/samode  [<channel>] <mode>
+/samode  [<kanał>] <atrybuty>
 
 kanał: nazwa kanału
    atrybuty: atrybuty kanału
@@ -672,36 +672,35 @@ powód: powód
 [command]*`server`* wyświetla, dodaje lub usuwa serwery IRC::
 
 ----
-/server  list|listfull [<server>]
-         add <server> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
-         copy|rename <server> <new_name>
-         reorder <server> [<server>...]
-         del|keep <server>
+/server  list|listfull [<serwer>]
+         add <serwera> <host>[/<port>] [-temp] [-<opcja>[=<wartość>]] [-no<opcja>]|| copy|rename <serwer> <nowa_nazwa>
+         reorder <serwer> [<serwer>...]
+         del|keep <serwer>]
          deloutq|jump|raw
 
-    list: list servers (without argument, this list is displayed)
-listfull: list servers with detailed info for each server
-     add: create a new server
-  server: server name, for internal and display use
-hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
-    temp: create temporary server (not saved)
-  option: set option for server (for boolean option, value can be omitted)
-nooption: set boolean option to 'off' (for example: -nossl)
-    copy: duplicate a server
-  rename: rename a server
- reorder: reorder list of servers
-    keep: keep server in config file (for temporary servers only)
-     del: delete a server
- deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
-    jump: jump to server buffer
-     raw: open buffer with raw IRC data
+    list: wyświetla listę serwerów (bez argumentu wyświetlana jest ta lista)
+listfull: wyświetla listę serwerów ze szczegółowymi informacjami dla każdego serwera
+     add: tworzy nowy serwer
+  serwer: nazwa serwera, do użytku wewnętrznego i  wyświetlania
+host: nazwa albo adres IP serwera, z opcjonalnym numerem portu (domyślnie: 6667), wiele adresów należy rozdzielić przecinkiem
+    temp: tworzy serwer tymczasowy (nie zapisany)
+  opcja: ustawia opcję dla serwera (dla opcji boolowskich wartość może zostać pominięta)
+noopcja: ustawia opcje boolowskie na 'off' (na przykład: -nossl)
+    copy: duplikuje serwer
+  rename: zmienia nazwę serwera
+ reorder: zmienia kolejność na liście serwerów
+    keep: zachowuje serwer w pliku konfiguracyjnym (tylko dla serwerów tymczasowych)
+     del: usuwa serwer
+ deloutq: usuń wiadomości z kolejki dla wszystkich serwerów (wszystkie wiadomości jakie WeeChat obecnie wysyła)
+    jump: przechodzi do bufora serwera
+     raw: otwiera bufor z nieprzetworzonymi danymi IRC
 
-Examples:
+Przykłady:
   /server listfull
   /server add oftc irc.oftc.net/6697 -ssl -autoconnect
   /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl
   /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667
-  /server add freenode3 chat.freenode.net -password=mypass
+  /server add freenode3 chat.freenode.net -password=moje_hasło
   /server copy oftc oftcbis
   /server rename oftc newoftc
   /server reorder oftc freenode

@@ -69,17 +69,17 @@
 ** wartości: dowolny ciąg (domyślna wartość: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
 * [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
-** opis: `text color for offline nick (not in nicklist any more); this color is used only if option weechat.look.color_nick_offline is enabled`
+** opis: `kolor tekstu dla nieobecnego nicka (nie występuje już na liście nicków); ten kolor używany jest tylko jeśli włączona jest opcja weechat.look.color_nick_offline`
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
-** opis: `text color for offline nick with highlight; this color is used only if option weechat.look.color_nick_offline is enabled`
+** opis: `kolor tekstu dla podświetlenia nieobecnego nicka; ten kolor używany jest tylko jeśli włączona jest opcja weechat.look.color_nick_offline`
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
-** opis: `background color for offline nick with highlight; this color is used only if option weechat.look.color_nick_offline is enabled`
+** opis: `kolor tła dla podświetlenia nieobecnego nicka; ten kolor używany jest tylko jeśli włączona jest opcja weechat.look.color_nick_offline`
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `blue`)
 
@@ -284,7 +284,7 @@
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
 
 * [[option_weechat.color.status_mouse]] *weechat.color.status_mouse*
-** opis: `text color for mouse indicator in status bar`
+** opis: `kolor wskaźnika myszy w pasku statusu`
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `green`)
 
@@ -319,7 +319,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
-** opis: `if enabled, the commands inside command line are completed (the command at beginning of line has higher priority and is used first); note: when this option is enabled, there is no more automatic completion of paths beginning with '/' (outside commands arguments)`
+** opis: `jeśli włączone, komendy wewnątrz linii komend są dopełniane (komenda na początku linii ma wyższy priorytet i zostanie użyta pierwsza); uwaga: włączenie tej opcji wyłącza automatyczne dopełnianie ścieżek zaczynających się od '/' (poza argumentami komend)`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
 
@@ -679,7 +679,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `"!"`)
 
 * [[option_weechat.look.item_mouse_status]] *weechat.look.item_mouse_status*
-** opis: `string used to show if mouse is enabled (bar item "mouse_status")`
+** opis: `ciąg użyty do pokazania czy obsługa myszy jest włączona (element paska "mouse_status")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"M"`)
 

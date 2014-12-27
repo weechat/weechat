@@ -69,12 +69,12 @@
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
 
 * [[option_irc.look.buffer_open_before_autojoin]] *irc.look.buffer_open_before_autojoin*
-** opis: `open channel buffer before the JOIN is received from server when it is auto joined (with server option "autojoin"); this is useful to open channels with always the same buffer numbers on startup`
+** opis: `otwórz bufor kanału przed odebraniem JOIN od serwera, kiedy automatyczne wchodzenie na kanały jest włączone (opcja serwera "autojoin"); przydatne żeby bufory kanałów miały zawsze ten sam numer po uruchomieniu`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_irc.look.buffer_open_before_join]] *irc.look.buffer_open_before_join*
-** opis: `open channel buffer before the JOIN is received from server when it is manually joined (with /join command)`
+** opis: `otwórz bufor kanału przed otrzymaniem JOIN od serwera, przy manualnym wejściu (za pomocą komendy /join)`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 
@@ -494,7 +494,7 @@
 ** wartości: 0 .. 1000000 (domyślna wartość: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** opis: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: away-notify, extended-join, multi-prefix, server-time, userhost-in-names (example: "away-notify,multi-prefix")`
+** opis: `oddzielona przecinkami lista opcji klienta do włączenia dla serwera, jeśli są dostępne; opcje wspierane przez WeeChat: away-notify, extended-join, multi-prefix, server-time, userhost-in-names (przykład: "away-notify,multi-prefix")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -564,7 +564,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
-** opis: `action to perform if SASL authentication fails: "continue" to ignore the authentication problem, "reconnect" to schedule a reconnection to the server, "disconnect" to disconnect from server`
+** opis: `akcja do wykonania jeśli uwierzytelnianie SASL się nie powiedzie: "continue" dla zignorowania problemu, "reconnect" ponownie połącz się z serwerem, "disconnect" odłącz od serwera`
 ** typ: liczba
 ** wartości: continue, reconnect, disconnect (domyślna wartość: `continue`)
 
