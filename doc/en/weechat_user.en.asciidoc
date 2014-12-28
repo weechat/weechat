@@ -855,7 +855,7 @@ Some examples of filling for bar 'nicklist':
 ==== Conditions
 
 The option 'conditions' is a string evaluated to know if the bar is displayed
-or not in the window (it is used only for bars with type 'window').
+or not.
 
 The string can be:
 

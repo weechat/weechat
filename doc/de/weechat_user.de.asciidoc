@@ -861,9 +861,9 @@ Einige Beispiele, wie die Bar 'nicklist' dargestellt werden kann:
 [[bar_conditions]]
 ==== Bedingungen
 
-Die Option 'conditions' ist eine Zeichenkette die direkten Einfluss darauf
-nimmt, ob die Bar in einem Fenster dargestellt wird oder nicht (diese Option
-kann nur für Bars vom Typ 'window' genutzt werden).
+// TRANSLATION MISSING
+The option 'conditions' is a string evaluated to know if the bar is displayed
+or not.
 
 Folgende Zeichenketten sind möglich:
 

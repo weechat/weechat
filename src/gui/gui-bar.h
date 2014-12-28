@@ -116,8 +116,8 @@ extern int gui_bar_search_option (const char *option_name);
 extern int gui_bar_search_type (const char *type);
 extern int gui_bar_search_position (const char *position);
 extern enum t_gui_bar_filling gui_bar_get_filling (struct t_gui_bar *bar);
-extern int gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
-                                                struct t_gui_window *window);
+extern int gui_bar_check_conditions (struct t_gui_bar *bar,
+                                     struct t_gui_window *window);
 extern int gui_bar_root_get_size (struct t_gui_bar *bar,
                                   enum t_gui_bar_position position);
 extern struct t_gui_bar *gui_bar_search (const char *name);

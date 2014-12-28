@@ -1226,6 +1226,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     if (!weechat_upgrading && (old_buffer != buffer))
         gui_hotlist_remove_buffer (buffer, 0);
 
+    /* remove unused bars and add missing bars in window */
     gui_bar_window_remove_unused_bars (window);
     gui_bar_window_add_missing_bars (window);
 
@@ -1304,6 +1305,8 @@ gui_window_switch (struct t_gui_window *window)
     old_window = gui_current_window;
 
     gui_current_window = window;
+
+    /* remove unused bars and add missing bars in window */
     changes = gui_bar_window_remove_unused_bars (old_window)
         || gui_bar_window_add_missing_bars (old_window);
     if (changes)
@@ -1712,9 +1715,14 @@ gui_window_refresh_windows ()
 
     old_current_window = gui_current_window;
 
+    /* remove unused bars and add missing root bars */
+    gui_bar_window_remove_unused_bars (NULL);
+    gui_bar_window_add_missing_bars (NULL);
+
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+            && ptr_bar->bar_window
             && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
         {
             gui_bar_window_calculate_pos_size (ptr_bar->bar_window, NULL);

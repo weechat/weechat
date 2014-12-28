@@ -195,6 +195,9 @@ gui_bar_item_used_in_bar (struct t_gui_bar *bar, const char *item_name,
 {
     int i, j, length;
 
+    if (!bar || !item_name)
+        return 0;
+
     length = strlen (item_name);
 
     for (i = 0; i < bar->items_count; i++)
@@ -237,6 +240,9 @@ gui_bar_item_used_in_at_least_one_bar (const char *item_name, int partial_name,
 {
     struct t_gui_bar *ptr_bar;
     int i, j, length;
+
+    if (!item_name)
+        return 0;
 
     length = strlen (item_name);
 
@@ -371,7 +377,7 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
     struct t_gui_buffer *buffer;
     struct t_gui_bar_item *ptr_item;
 
-    if (!bar->items_array[item][subitem])
+    if (!bar || !bar->items_array[item][subitem])
         return NULL;
 
     buffer = (window) ?
@@ -569,10 +575,15 @@ gui_bar_item_update (const char *item_name)
     struct t_gui_bar *ptr_bar;
     struct t_gui_window *ptr_window;
     struct t_gui_bar_window *ptr_bar_window;
-    int i, j;
+    int i, j, check_bar_conditions, condition_ok;
+
+    if (!item_name)
+        return;
 
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
+        check_bar_conditions = 0;
+
         for (i = 0; i < ptr_bar->items_count; i++)
         {
             for (j = 0; j < ptr_bar->items_subcount[i]; j++)
@@ -580,9 +591,15 @@ gui_bar_item_update (const char *item_name)
                 if (ptr_bar->items_name[i][j]
                     && (strcmp (ptr_bar->items_name[i][j], item_name) == 0))
                 {
-                    if (ptr_bar->bar_window)
+                    if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
+                        check_bar_conditions = 1;
+
+                    if (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
                     {
-                        ptr_bar->bar_window->items_refresh_needed[i][j] = 1;
+                        if (ptr_bar->bar_window)
+                        {
+                            ptr_bar->bar_window->items_refresh_needed[i][j] = 1;
+                        }
                     }
                     else
                     {
@@ -604,6 +621,39 @@ gui_bar_item_update (const char *item_name)
                 }
             }
         }
+
+        /*
+         * evaluate bar conditions (if needed) to check if bar must be toggled
+         * (hidden if shown, or shown if hidden)
+         */
+        if (check_bar_conditions)
+        {
+            if (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+            {
+                condition_ok = gui_bar_check_conditions (ptr_bar, NULL);
+                if ((condition_ok && !ptr_bar->bar_window)
+                    || (!condition_ok && ptr_bar->bar_window))
+                {
+                    gui_window_ask_refresh (1);
+                }
+            }
+            else
+            {
+                for (ptr_window = gui_windows; ptr_window;
+                     ptr_window = ptr_window->next_window)
+                {
+                    condition_ok = gui_bar_check_conditions (ptr_bar,
+                                                             ptr_window);
+                    ptr_bar_window = gui_bar_window_search_bar (ptr_window,
+                                                                ptr_bar);
+                    if ((condition_ok && !ptr_bar_window)
+                        || (!condition_ok && ptr_bar_window))
+                    {
+                        gui_window_ask_refresh (1);
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -614,6 +664,9 @@ gui_bar_item_update (const char *item_name)
 void
 gui_bar_item_free (struct t_gui_bar_item *item)
 {
+    if (!item)
+        return;
+
     /* force refresh of bars displaying this bar item */
     gui_bar_item_update (item->name);
 

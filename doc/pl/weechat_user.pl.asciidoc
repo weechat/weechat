@@ -860,8 +860,9 @@ Przykłady wypełnień paska 'nicklist':
 [[bar_conditions]]
 ==== Warunki
 
-Opcja 'conditions' jest ciągiem przetwarzanym w celu ustalenia czy pasek ma
-zostać wyświetlony w oknie (jest używany tylko dla pasków z typem 'window').
+// TRANSLATION MISSING
+The option 'conditions' is a string evaluated to know if the bar is displayed
+or not.
 
 Ciąg może być:
 

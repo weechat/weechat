@@ -877,8 +877,7 @@ Quelques exemples de remplissage pour la barre 'nicklist' :
 ==== Conditions
 
 L'option 'conditions' est une chaîne évaluée pour savoir si la barre doit être
-affichée ou non dans la fenêtre (elle est utilisée seulement pour les barres
-avec type 'window').
+affichée ou non.
 
 La chaîne peut être :
 

@@ -853,8 +853,9 @@ WeeChat を起動したターミナルの例:
 [[bar_conditions]]
 ==== 状態
 
-'conditions' オプションはバーをウィンドウ内に表示するか否かを評価する文字列です
-(このオプションは 'window' 型のバーだけに有効です)。
+// TRANSLATION MISSING
+The option 'conditions' is a string evaluated to know if the bar is displayed
+or not.
 
 文字列は以下のいずれか:
 

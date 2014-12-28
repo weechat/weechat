@@ -44,12 +44,19 @@
 
 /*
  * Initializes Curses windows for bar window.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
 gui_bar_window_objects_init (struct t_gui_bar_window *bar_window)
 {
     struct t_gui_bar_window_curses_objects *new_objects;
+
+    if (!bar_window)
+        return 0;
 
     new_objects = malloc (sizeof (*new_objects));
     if (new_objects)
@@ -69,6 +76,9 @@ gui_bar_window_objects_init (struct t_gui_bar_window *bar_window)
 void
 gui_bar_window_objects_free (struct t_gui_bar_window *bar_window)
 {
+    if (!bar_window)
+        return;
+
     if (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar)
     {
         delwin (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
@@ -88,8 +98,11 @@ gui_bar_window_objects_free (struct t_gui_bar_window *bar_window)
 void
 gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
 {
-    if (CONFIG_BOOLEAN(bar_window->bar->options[GUI_BAR_OPTION_HIDDEN]))
+    if (!bar_window
+        || CONFIG_BOOLEAN(bar_window->bar->options[GUI_BAR_OPTION_HIDDEN]))
+    {
         return;
+    }
 
     if (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar)
     {
@@ -160,7 +173,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
     int x_with_hidden, size_on_screen, low_char, hidden;
     char utf_char[16], *next_char, *output;
 
-    if (!string || !string[0])
+    if (!bar_window || !string || !string[0])
         return 1;
 
     wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, *y, *x);
@@ -417,7 +430,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     if (gui_window_bare_display)
         return;
 
-    if ((bar_window->x < 0) || (bar_window->y < 0))
+    if (!bar_window || (bar_window->x < 0) || (bar_window->y < 0))
         return;
 
     if (!str_start_input[0])

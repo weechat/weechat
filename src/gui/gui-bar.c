@@ -369,19 +369,24 @@ gui_bar_insert (struct t_gui_bar *bar)
 /*
  * Checks if bar must be displayed in window according to conditions.
  *
+ * If window is NULL (case of root bars), the current window is used.
+ *
  * Returns:
  *   1: bar must be displayed
  *   0: bar must not be displayed
  */
 
 int
-gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
-                                     struct t_gui_window *window)
+gui_bar_check_conditions (struct t_gui_bar *bar,
+                          struct t_gui_window *window)
 {
     int rc;
     char str_modifier[256], str_window[128], *str_displayed, *result;
     const char *conditions;
     struct t_hashtable *pointers, *extra_vars, *options;
+
+    if (!window)
+        window = gui_current_window;
 
     /* check bar condition(s) */
     conditions = CONFIG_STRING(bar->options[GUI_BAR_OPTION_CONDITIONS]);
@@ -490,7 +495,8 @@ gui_bar_root_get_size (struct t_gui_bar *bar, enum t_gui_bar_position position)
         if (bar && (ptr_bar == bar))
             return total_size;
 
-        if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
+        if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])
+            && ptr_bar->bar_window)
         {
             if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
                 && (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_POSITION]) == (int)position))
@@ -858,7 +864,6 @@ gui_bar_config_change_hidden (void *data, struct t_config_option *option)
             if (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
             {
                 gui_bar_window_free (ptr_bar->bar_window, NULL);
-                ptr_bar->bar_window = NULL;
             }
             else
             {
@@ -1404,12 +1409,12 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
             ptr_option = config_file_new_option (
                 weechat_config_file, weechat_config_section_bar,
                 option_name, "string",
-                N_("condition(s) for displaying bar (for bars of type "
-                   "\"window\"): a simple condition: \"active\", \"inactive\", "
-                   "\"nicklist\" (window must be active/inactive, buffer must "
-                   "have a nicklist), or an expression with condition(s) (see "
-                   "/help eval), like: \"${nicklist} && ${window.win_width} > "
-                   "100\" (local variables for expression are ${active}, "
+                N_("conditions to display the bar: a simple condition: "
+                   "\"active\", \"inactive\", \"nicklist\" (window must be "
+                   "active/inactive, buffer must have a nicklist), or an "
+                   "expression with condition(s) (see /help eval), "
+                   "like: \"${nicklist} && ${window.win_width} > 100\" "
+                   "(local variables for expression are ${active}, "
                    "${inactive} and ${nicklist})"),
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, &gui_bar_config_change_conditions, NULL, NULL, NULL);
@@ -2231,7 +2236,6 @@ gui_bar_free_bar_windows (struct t_gui_bar *bar)
     if (bar->bar_window)
     {
         gui_bar_window_free (bar->bar_window, NULL);
-        bar->bar_window = NULL;
     }
     else
     {

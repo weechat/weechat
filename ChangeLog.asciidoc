@@ -17,6 +17,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: check bar conditions in root bars and on each update of a bar item
 * core: fully evaluate commands bound to keys in cursor and mouse contexts
 * core: add option weechat.completion.command_inline (task #12491)
 * core: add bar item "mouse_status", new options weechat.look.item_mouse_status

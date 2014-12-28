@@ -13,50 +13,50 @@ wiadomość: powód nieobecności (jeśli nie podano wiadomości status nieobecn
 
 ----
 /bar  list|listfull|listitems
-      add <nazwa> <typ>[,<warunek>] <pozycja> <rozmiar> <separator> <element1>[,<element2>...]
+      add <name> <type>[,<conditions>] <position> <size> <separator> <item1>[,<item2>...]
       default [input|title|status|nicklist]
-      del <nazwa>|-all
-      set <nazwa> <opcja> <wartość>
-      hide|show|toggle <nazwa>
-      scroll <nazwa> <okno> <wartość_przewinięcia>
+      del <name>|-all
+      set <name> <option> <value>
+      hide|show|toggle <name>
+      scroll <name> <window> <scroll_value>
 
-         list: lista wszystkich pasków
-     listfull: lista wszystkich pasków (z polami)
-    listitems: lista wszystkich elementów pasków
-          add: dodaj nowy pasek
-         nazwa: nazwa paska (musi być unikalna)
-         typ:   root: poza oknami,
-               window: wewnątrz okien, z opcjonalnymi warunkami (patrz niżej)
-    warunek: warunek(i) dla wyświetlenia paska (tylko dla typu "window"):
-                 active: w aktywnym oknie
-               inactive: w nieaktywnym oknie
-               nicklist: w oknach z listą nicków
-               inne warunki: zobacz /help weechat.bar.xxx.conditions oraz /help eval
-               bez warunku pasek jest zawsze wyświetlany
-     pozycja: dół (bottom), góra (top), lewo (left) lub prawo (right)
-         rozmiar: rozmiar paska (w znakach)
-    separator: 1 dla użycia separatora (linia), 0  - brak separatora
-    element1,...: elementy dla tego paska (elementy mogą być oddzielone przecinkiem (przerwa między elementami) lub "+" (sklejone elementy))
-      default: tworzy domyślne paski (wszystkie domyślne paski, jeśli nie podamy nazwy)
-          del: usuwa pasek (lub wszystkie z użyciem -all)
-          set: ustawia wartość dla właściwości paska
-       opcja: opcja do zmiany (listę opcji można zobaczyć dzięki /set weechat.bar.<nazwa paska>.*)
-        wartość: nowa wartość opcji
-         hide: ukrywa pasek
-         show: pokazuje ukryty pasek
-       toggle: ukrywa/pokazuje pasek
-       scroll: przewija pasek
-       okno: numer okna ('*' oznacza obecne okno lub pasek typu root)
- wartość_przewinięcia: wartość dla przewinięcia: 'x' lub 'y' (opcjonalne), następnie '+', '-', 'b' (początek) lub 'e' (koniec), wartość (dla +/-), oraz opcjonalnie % (w celu przesunięcia % szerokości/wysokości, w przeciwnym wypadku wartość jest ilością znaków)
+         list: list all bars
+     listfull: list all bars (verbose)
+    listitems: list all bar items
+          add: add a new bar
+         name: name of bar (must be unique)
+         type:   root: outside windows,
+               window: inside windows, with optional conditions (see below)
+   conditions: the conditions to display the bar:
+                 active: on active window
+               inactive: on inactive windows
+               nicklist: on windows with nicklist
+               other condition: see /help weechat.bar.xxx.conditions and /help eval
+               without conditions, the bar is always displayed
+     position: bottom, top, left or right
+         size: size of bar (in chars)
+    separator: 1 for using separator (line), 0 or nothing means no separator
+    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
+      default: create a default bar (all default bars if no bar name is given)
+          del: delete a bar (or all bars with -all)
+          set: set a value for a bar property
+       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
+        value: new value for option
+         hide: hide a bar
+         show: show an hidden bar
+       toggle: hide/show a bar
+       scroll: scroll bar
+       window: window number (use '*' for current window or for root bars)
+ scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to scroll by % of width/height, otherwise value is number of chars)
 
-Przykłady:
-  tworzy pasek z czasem, numerem  + nazwą bufora i dopełnianiem:
+Examples:
+  create a bar with time, buffer number + name, and completion:
     /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  ukrywa pasek:
+  hide a bar:
     /bar hide mybar
-  przewija listę nicków a obecnym buforze o 10 linii w dół :
+  scroll nicklist 10 lines down on current buffer:
     /bar scroll nicklist * y+10
-  przewija do końca listę nicków w obecnym buforze:
+  scroll to end of nicklist on current buffer:
     /bar scroll nicklist * ye
 ----
 

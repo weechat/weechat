@@ -96,6 +96,9 @@ gui_bar_window_search_bar (struct t_gui_window *window, struct t_gui_bar *bar)
 {
     struct t_gui_bar_window *ptr_bar_win;
 
+    if (!window)
+        return NULL;
+
     for (ptr_bar_win = window->bar_windows; ptr_bar_win;
          ptr_bar_win = ptr_bar_win->next_bar_window)
     {
@@ -283,6 +286,10 @@ gui_bar_window_get_size (struct t_gui_bar *bar, struct t_gui_window *window,
     int total_size;
 
     total_size = 0;
+
+    if (!window)
+        return total_size;
+
     for (ptr_bar_window = window->bar_windows; ptr_bar_window;
          ptr_bar_window = ptr_bar_window->next_bar_window)
     {
@@ -313,6 +320,7 @@ gui_bar_window_get_size (struct t_gui_bar *bar, struct t_gui_window *window,
             }
         }
     }
+
     return total_size;
 }
 
@@ -327,8 +335,11 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
     int x1, y1, x2, y2;
     int add_bottom, add_top, add_left, add_right;
 
-    if (CONFIG_BOOLEAN(bar_window->bar->options[GUI_BAR_OPTION_HIDDEN]))
+    if (!bar_window
+        || CONFIG_BOOLEAN(bar_window->bar->options[GUI_BAR_OPTION_HIDDEN]))
+    {
         return;
+    }
 
     if (window)
     {
@@ -405,6 +416,9 @@ gui_bar_window_find_pos (struct t_gui_bar *bar, struct t_gui_window *window)
 {
     struct t_gui_bar_window *ptr_bar_window;
 
+    if (!window)
+        return NULL;
+
     for (ptr_bar_window = window->bar_windows; ptr_bar_window;
          ptr_bar_window = ptr_bar_window->next_bar_window)
     {
@@ -425,6 +439,9 @@ void
 gui_bar_window_content_alloc (struct t_gui_bar_window *bar_window)
 {
     int i, j;
+
+    if (!bar_window)
+        return;
 
     bar_window->items_count = bar_window->bar->items_count;
     bar_window->items_subcount = NULL;
@@ -535,6 +552,9 @@ gui_bar_window_content_free (struct t_gui_bar_window *bar_window)
 {
     int i, j;
 
+    if (!bar_window)
+        return;
+
     if (bar_window->items_content)
     {
         for (i = 0; i < bar_window->items_count; i++)
@@ -571,6 +591,9 @@ gui_bar_window_content_build_item (struct t_gui_bar_window *bar_window,
                                    struct t_gui_window *window,
                                    int index_item, int index_subitem)
 {
+    if (!bar_window)
+        return;
+
     if (bar_window->items_content)
     {
         if (bar_window->items_content[index_item][index_subitem])
@@ -605,6 +628,9 @@ gui_bar_window_content_build (struct t_gui_bar_window *bar_window,
 {
     int i, j;
 
+    if (!bar_window)
+        return;
+
     gui_bar_window_content_free (bar_window);
     gui_bar_window_content_alloc (bar_window);
 
@@ -626,6 +652,9 @@ gui_bar_window_content_get (struct t_gui_bar_window *bar_window,
                             struct t_gui_window *window,
                             int index_item, int index_subitem)
 {
+    if (!bar_window)
+        return NULL;
+
     /* rebuild content if refresh is needed */
     if (bar_window->items_refresh_needed[index_item][index_subitem])
     {
@@ -1075,7 +1104,7 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
     if (window)
     {
         if ((CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_WINDOW)
-            && (!gui_bar_check_conditions_for_window (bar, window)))
+            && (!gui_bar_check_conditions (bar, window)))
             return;
     }
 
@@ -1268,6 +1297,11 @@ gui_bar_window_free (struct t_gui_bar_window *bar_window,
         if (window->last_bar_window == bar_window)
             window->last_bar_window = bar_window->prev_bar_window;
     }
+    else
+    {
+        if (bar_window->bar)
+            (bar_window->bar)->bar_window = NULL;
+    }
 
     /* free data */
     gui_bar_window_content_free (bar_window);
@@ -1281,7 +1315,10 @@ gui_bar_window_free (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Removes unused bars for a window.
+ * Removes unused bars, according to bars conditions.
+ *
+ * If window is NULL, unused root bars are removed.
+ * If window is not NULL, unused window bars in this window are removed.
  *
  * Returns:
  *   1: at least one bar was removed
@@ -1293,29 +1330,51 @@ gui_bar_window_remove_unused_bars (struct t_gui_window *window)
 {
     int rc;
     struct t_gui_bar_window *ptr_bar_win, *next_bar_win;
+    struct t_gui_bar *ptr_bar;
 
     rc = 0;
 
-    ptr_bar_win = window->bar_windows;
-    while (ptr_bar_win)
+    if (window)
     {
-        next_bar_win = ptr_bar_win->next_bar_window;
-
-        if ((CONFIG_INTEGER(ptr_bar_win->bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_WINDOW)
-            && (!gui_bar_check_conditions_for_window (ptr_bar_win->bar, window)))
+        /* remove unused window bars in window */
+        ptr_bar_win = window->bar_windows;
+        while (ptr_bar_win)
         {
-            gui_bar_window_free (ptr_bar_win, window);
-            rc = 1;
-        }
+            next_bar_win = ptr_bar_win->next_bar_window;
 
-        ptr_bar_win = next_bar_win;
+            if ((CONFIG_INTEGER(ptr_bar_win->bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_WINDOW)
+                && (!gui_bar_check_conditions (ptr_bar_win->bar, window)))
+            {
+                gui_bar_window_free (ptr_bar_win, window);
+                rc = 1;
+            }
+
+            ptr_bar_win = next_bar_win;
+        }
+    }
+    else
+    {
+        /* remove unused root bars */
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+        {
+            if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+                && ptr_bar->bar_window
+                && (!gui_bar_check_conditions (ptr_bar, NULL)))
+            {
+                gui_bar_window_free (ptr_bar->bar_window, NULL);
+                rc = 1;
+            }
+        }
     }
 
     return rc;
 }
 
 /*
- * Adds missing bars for a window.
+ * Adds missing bars, according to bars conditions.
+ *
+ * If window is NULL, missing root bars are added.
+ * If window is not NULL, missing window bars in this window are added.
  *
  * Returns:
  *   1: at least one bar was created
@@ -1330,14 +1389,30 @@ gui_bar_window_add_missing_bars (struct t_gui_window *window)
 
     rc = 0;
 
-    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    if (window)
     {
-        if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_WINDOW)
-            && gui_bar_check_conditions_for_window (ptr_bar, window))
+        /* add missing window bars in window */
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
-            if (!gui_bar_window_search_bar (window, ptr_bar))
+            if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_WINDOW)
+                && (!gui_bar_window_search_bar (window, ptr_bar))
+                && (gui_bar_check_conditions (ptr_bar, window)))
             {
                 gui_bar_window_new (ptr_bar, window);
+                rc = 1;
+            }
+        }
+    }
+    else
+    {
+        /* add missing root bars */
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+        {
+            if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+                && !ptr_bar->bar_window
+                && (gui_bar_check_conditions (ptr_bar, NULL)))
+            {
+                gui_bar_window_new (ptr_bar, NULL);
                 rc = 1;
             }
         }

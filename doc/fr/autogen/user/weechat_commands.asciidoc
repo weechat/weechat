@@ -27,7 +27,7 @@ message : message pour l'absence (si pas de message donné, le statut d'absence
           nom : nom de la barre (doit être unique)
          type :   root : en dehors des fenêtres
                 window : dans les fenêtres, avec condition(s) optionnelle(s) (voir ci-dessous)
-    condition : condition(s) pour afficher cette barre (seulement pour le type "window") :
+   conditions : les conditions pour afficher la barre :
                   active : sur la fenêtre active
                 inactive : sur les fenêtres inactives
                 nicklist : sur les fenêtres avec liste de pseudos
