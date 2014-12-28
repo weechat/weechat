@@ -854,8 +854,8 @@ WeeChat を起動したターミナルの例:
 ==== 状態
 
 // TRANSLATION MISSING
-The option 'conditions' is a string evaluated to know if the bar is displayed
-or not.
+The option 'conditions' is a string which is evaluated to know if the bar
+must be displayed or not.
 
 文字列は以下のいずれか:
 

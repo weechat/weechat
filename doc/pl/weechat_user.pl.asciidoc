@@ -861,8 +861,8 @@ Przykłady wypełnień paska 'nicklist':
 ==== Warunki
 
 // TRANSLATION MISSING
-The option 'conditions' is a string evaluated to know if the bar is displayed
-or not.
+The option 'conditions' is a string which is evaluated to know if the bar
+must be displayed or not.
 
 Ciąg może być:
 
