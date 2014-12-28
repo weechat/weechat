@@ -861,9 +861,8 @@ Einige Beispiele, wie die Bar 'nicklist' dargestellt werden kann:
 [[bar_conditions]]
 ==== Bedingungen
 
-// TRANSLATION MISSING
-The option 'conditions' is a string evaluated to know if the bar is displayed
-or not.
+Der Inhalt der Option 'conditions' ist evaluiert um festzulegen ob die entsprechende
+Bar angezeigt werden soll oder nicht.
 
 Folgende Zeichenketten sind möglich:
 
