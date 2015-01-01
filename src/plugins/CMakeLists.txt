@@ -32,7 +32,7 @@ plugin-script-callback.c plugin-script-callback.h)
 include_directories(${CMAKE_BINARY_DIR})
 add_library(weechat_plugins STATIC ${LIB_PLUGINS_SRC})
 
-add_definitions(${CMAKE_SHARED_LIBRARY_C_FLAGS})
+add_definitions(${CMAKE_SHARED_LIBRARY_C_FLAGS} -fPIC)
 add_library(weechat_plugins_scripts STATIC ${LIB_PLUGINS_SCRIPTS_SRC})
 
 include(CheckIncludeFiles)

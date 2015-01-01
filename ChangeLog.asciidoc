@@ -59,6 +59,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: fix compilation of plugins with cmake >= 3.1 (closes #287)
 * core: fix display bug when scrolling in buffer on a filtered line
   (closes #240)
 * core: send mouse code only one time to terminal with command
