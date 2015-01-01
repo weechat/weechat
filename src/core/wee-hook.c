@@ -1,7 +1,7 @@
 /*
  * wee-hook.c - WeeChat hooks management
  *
- * Copyright (C) 2003-2014 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2015 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.

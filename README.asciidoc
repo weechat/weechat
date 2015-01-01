@@ -73,7 +73,7 @@ https://weechat.org/files/doc/devel/weechat_user.en.html#compile_with_autotools[
 
 == Copyright
 
-Copyright (C) 2003-2014 Sébastien Helleu <flashcode@flashtux.org>
+Copyright (C) 2003-2015 Sébastien Helleu <flashcode@flashtux.org>
 
 This file is part of WeeChat, the extensible chat client.
 

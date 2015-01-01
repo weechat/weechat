@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (C) 2014 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2014-2015 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #

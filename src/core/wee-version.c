@@ -1,7 +1,7 @@
 /*
  * wee-version.c - functions for WeeChat version
  *
- * Copyright (C) 2003-2014 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2015 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

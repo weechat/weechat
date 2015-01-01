@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2008 Julien Louis <ptitlouis@sysif.net>
-# Copyright (C) 2008-2014 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2008-2015 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #

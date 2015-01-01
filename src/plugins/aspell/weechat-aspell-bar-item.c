@@ -2,7 +2,7 @@
  * weechat-aspell-bar-item.c - bar items for aspell plugin
  *
  * Copyright (C) 2012 Nils Görs <weechatter@arcor.de>
- * Copyright (C) 2012-2014 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012-2015 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
