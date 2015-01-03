@@ -69,6 +69,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: display time in bare display only if option
   weechat.look.buffer_time_format is not an empty string
 * core: fix translation of message displayed after /upgrade
+* doc: fix compilation of man pages with autotools in source directory
 * api: fix truncated process output in hook_process() (closes #266)
 * api: fix crash when reading config options with NULL value (closes #238)
 * tests: fix compilation of tests with clang (closes #275)

@@ -50,9 +50,12 @@ all-local: $(man_targets) $(doc_targets)
 
 # man page
 weechat.1: weechat.1.it.asciidoc cmdline_options.it.asciidoc
-	cp -f $(abs_top_srcdir)/doc/it/weechat.1.it.asciidoc .
-	cp -f $(abs_top_srcdir)/doc/it/cmdline_options.it.asciidoc .
-	$(A2X) -a revision="WeeChat $(VERSION)" -d manpage -f manpage -L weechat.1.it.asciidoc
+	-mkdir tmp_man
+	cp -f $(abs_top_srcdir)/doc/it/weechat.1.it.asciidoc ./tmp_man/
+	cp -f $(abs_top_srcdir)/doc/it/cmdline_options.it.asciidoc ./tmp_man/
+	(cd tmp_man && $(A2X) -a revision="WeeChat $(VERSION)" -d manpage -f manpage -L weechat.1.it.asciidoc)
+	mv -f tmp_man/weechat.1 .
+	rm -rf tmp_man
 
 # user's guide
 weechat_user.it.html: weechat_user.it.asciidoc cmdline_options.it.asciidoc $(wildcard autogen/user/*.asciidoc)
