@@ -863,11 +863,13 @@ gui_bar_config_change_hidden (void *data, struct t_config_option *option)
         {
             if (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
             {
-                gui_bar_window_free (ptr_bar->bar_window, NULL);
+                if (ptr_bar->bar_window)
+                    gui_bar_window_free (ptr_bar->bar_window, NULL);
             }
             else
             {
-                gui_bar_window_new (ptr_bar, NULL);
+                if (!ptr_bar->bar_window)
+                    gui_bar_window_new (ptr_bar, NULL);
             }
         }
         else

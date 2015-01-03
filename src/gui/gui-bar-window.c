@@ -686,9 +686,12 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
     int max_length, max_length_screen;
     int total_items, columns, lines;
 
-    if (!bar_window->items_subcount || !bar_window->items_content
+    if (!bar_window
+        || !bar_window->items_subcount || !bar_window->items_content
         || !bar_window->items_num_lines || !bar_window->items_refresh_needed)
+    {
         return NULL;
+    }
 
     snprintf (str_reinit_color, sizeof (str_reinit_color),
               "%c",
@@ -993,6 +996,9 @@ gui_bar_window_coords_add (struct t_gui_bar_window *bar_window,
 {
     struct t_gui_bar_window_coords **coords2;
 
+    if (!bar_window)
+        return;
+
     if (!bar_window->coords)
     {
         bar_window->coords_count = 1;
@@ -1032,6 +1038,9 @@ gui_bar_window_coords_free (struct t_gui_bar_window *bar_window)
 {
     int i;
 
+    if (!bar_window)
+        return;
+
     if (bar_window->coords)
     {
         for (i = 0; i < bar_window->coords_count; i++)
@@ -1054,6 +1063,9 @@ gui_bar_window_insert (struct t_gui_bar_window *bar_window,
                        struct t_gui_window *window)
 {
     struct t_gui_bar_window *pos_bar_window;
+
+    if (!bar_window || !window)
+        return;
 
     if (window->bar_windows)
     {
@@ -1164,7 +1176,7 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
 int
 gui_bar_window_get_current_size (struct t_gui_bar_window *bar_window)
 {
-    return bar_window->current_size;
+    return (bar_window) ? bar_window->current_size : 0;
 }
 
 /*
@@ -1243,6 +1255,9 @@ gui_bar_window_set_current_size (struct t_gui_bar_window *bar_window,
 {
     int new_size, max_size;
 
+    if (!bar_window)
+        return;
+
     if (size == 0)
         new_size = 1;
     else
@@ -1285,6 +1300,9 @@ void
 gui_bar_window_free (struct t_gui_bar_window *bar_window,
                      struct t_gui_window *window)
 {
+    if (!bar_window)
+        return;
+
     /* remove window bar from list */
     if (window)
     {
@@ -1436,6 +1454,9 @@ gui_bar_window_scroll (struct t_gui_bar_window *bar_window,
                        int add, int percent, int value)
 {
     int old_scroll_x, old_scroll_y;
+
+    if (!bar_window)
+        return;
 
     old_scroll_x = bar_window->scroll_x;
     old_scroll_y = bar_window->scroll_y;
