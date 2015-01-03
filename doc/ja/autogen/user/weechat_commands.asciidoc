@@ -20,43 +20,43 @@ message: 離席メッセージ (メッセージが無い場合は、離席状態
       hide|show|toggle <name>
       scroll <name> <window> <scroll_value>
 
-         list: list all bars
-     listfull: list all bars (verbose)
-    listitems: list all bar items
-          add: add a new bar
-         name: name of bar (must be unique)
-         type:   root: outside windows,
-               window: inside windows, with optional conditions (see below)
-   conditions: the conditions to display the bar:
-                 active: on active window
-               inactive: on inactive windows
-               nicklist: on windows with nicklist
-               other condition: see /help weechat.bar.xxx.conditions and /help eval
-               without conditions, the bar is always displayed
-     position: bottom, top, left or right
-         size: size of bar (in chars)
-    separator: 1 for using separator (line), 0 or nothing means no separator
-    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
-      default: create a default bar (all default bars if no bar name is given)
-          del: delete a bar (or all bars with -all)
-          set: set a value for a bar property
-       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
-        value: new value for option
-         hide: hide a bar
-         show: show an hidden bar
-       toggle: hide/show a bar
-       scroll: scroll bar
-       window: window number (use '*' for current window or for root bars)
- scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to scroll by % of width/height, otherwise value is number of chars)
+         list: 全てのバーをリストアップ
+     listfull: 全てのバーをリストアップ (詳細)
+    listitems: 全てのバーアイテムをリストアップ
+          add: 新しいバーを追加
+         name: バーの名称 (ユニークな)
+         type:   root: 外側のウィンドウ、
+               window: 内側のウィンドウ、任意の状態を取れる (以下を参照)
+   conditions: バーを表示する条件:
+                 active: アクティブウィンドウの場合に表示
+               inactive: 非アクティブウィンドウの場合に表示
+               nicklist: ニックネームリストを持つウィンドウの場合に表示
+               その他の条件: /help weechat.bar.xxx.conditions と /help eval を参照してください
+               表示条件の指定が無ければ、バーは常に表示されます。
+     position: bottom、top、left、right
+         size: バーのサイズ (文字数で指定)
+    separator: 1 はセパレータ (線) を使用、0 または指定無しはセパレータ無し
+    item1,...: バーのアイテム (アイテムはコンマ (アイテム間にスペース) または "+" (アイテム間にスペース無し) で区切ります)
+      default: デフォルトバーを作成 (バーの名前が無ければ全てのデフォルトバーが作成されます)
+          del: バーを削除 (-all を付ければ全てのバーを削除)
+          set: バー属性に値を設定
+       option: 変更するオプション (オプション一覧は /set weechat.bar.<barname>.* を参照)
+        value: オプションの新しい値
+         hide: バーを隠す
+         show: 隠されたバーを表示
+       toggle: バーの非表示/表示を切り替え
+       scroll: バーをスクロール
+       window: ウィンドウ番号 (現在のウィンドウかルートバーを指定するには '*' を使う)
+ scroll_value: スクロールする量: 'x' または 'y' (任意)の後に、'+' か '-' か 'b' (最初) か 'e' (最後)の後に、値 (+/- を付けて)、任意で % (スクロールする幅/高さの割合、% が無ければ値は文字数と解釈されます)
 
-Examples:
-  create a bar with time, buffer number + name, and completion:
+例:
+  時間、バー番号 + 名前、補完候補からなるバーを作成:
     /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  hide a bar:
+  バーを隠す:
     /bar hide mybar
-  scroll nicklist 10 lines down on current buffer:
+  現在のバッファに対応したニックネームリストを 10 行分、下方向にスクロール:
     /bar scroll nicklist * y+10
-  scroll to end of nicklist on current buffer:
+  現在のバッファに対応したニックネームリストを最後までスクロール:
     /bar scroll nicklist * ye
 ----
 
