@@ -152,12 +152,7 @@ Um eine SSL Verbindung herzustellen:
 ----
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
 /set irc.server.freenode.ssl on
-/set irc.server.freenode.ssl_dhkey_size 1024
 ----
-
-[NOTE]
-Freenode unterstützt nicht die standardmäßige Schlüsselgröße von 2048 Bytes.
-Deshalb muss die Schlüsselgröße auf 1024 Bytes angepasst werden.
 
 Sollte der Server SASL unterstützen, kann man sich damit automatisch Authentifizieren
 (dadurch identifiziert man sich beim Server, bevor man Channels (Chaträume) betritt):

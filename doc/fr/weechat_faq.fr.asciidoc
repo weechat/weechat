@@ -541,12 +541,11 @@ certificats :
 Vérifiez que vous avez bien ce fichier (fourni généralement par le paquet
 "ca-certificates").
 
-Configurez le port du serveur, SSL, dhkey_size, puis connectez-vous :
+Configurez le port du serveur, SSL, puis connectez-vous :
 
 ----
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
 /set irc.server.freenode.ssl on
-/set irc.server.freenode.ssl_dhkey_size 1024
 /connect freenode
 ----
 

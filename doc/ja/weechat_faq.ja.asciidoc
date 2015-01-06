@@ -516,12 +516,11 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 設定したファイルが自分のシステムに存在することを確認してください
 (一般に "ca-certificates" パッケージで提供されます)。
 
-サーバポート、SSL、dhkey_size を設定の後に接続してください:
+サーバポート、SSL を設定の後に接続してください:
 
 ----
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
 /set irc.server.freenode.ssl on
-/set irc.server.freenode.ssl_dhkey_size 1024
 /connect freenode
 ----
 

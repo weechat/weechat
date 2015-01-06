@@ -156,13 +156,7 @@ To connect with SSL:
 ----
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
 /set irc.server.freenode.ssl on
-/set irc.server.freenode.ssl_dhkey_size 1024
 ----
-
-// TRANSLATION MISSING
-[NOTE]
-Freenode does not support the default dhkey size of 2048, so it has to be set
-to 1024.
 
 // TRANSLATION MISSING
 If SASL is available on server, you can use it for authentication (you will be

@@ -544,13 +544,11 @@ Die Option 'weechat.network.gnutls_ca_file' sollte auf die Zertifikationsdatei z
 Überprüfe, ob die Zertifikationsdatei auf Deinem System installiert wurde (üblicherweise wird
 diese Datei durch das Paket "ca-certificates" bereitgestellt)
 
-Konfiguration des Servers, Port, SSL, dhkey_size und dann einen
-Connect durchführen:
+Konfiguration des Servers, Port, SSL und dann einen Connect durchführen:
 
 ----
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
 /set irc.server.freenode.ssl on
-/set irc.server.freenode.ssl_dhkey_size 1024
 /connect freenode
 ----
 

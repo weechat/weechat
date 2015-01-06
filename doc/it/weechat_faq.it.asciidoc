@@ -545,12 +545,11 @@ Impostare l'opzione 'weechat.network.gnutls_ca_file' con il file dei certificati
 Verificare la presenza di questo file sul sistema (solitamente installato dal
 pacchetto "ca-certificates").
 
-Impostare la porta del server, SSL, dhkey_size, poi riconnettersi:
+Impostare la porta del server, SSL, poi riconnettersi:
 
 ----
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
 /set irc.server.freenode.ssl on
-/set irc.server.freenode.ssl_dhkey_size 1024
 /connect freenode
 ----
 

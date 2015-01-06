@@ -143,12 +143,7 @@ SSL を使って接続する場合:
 ----
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
 /set irc.server.freenode.ssl on
-/set irc.server.freenode.ssl_dhkey_size 1024
 ----
-
-[NOTE]
-Freenode はデフォルトの鍵サイズ 2048 をサポートしません、鍵サイズを
-1024 にしてください。
 
 サーバで SASL を利用可能な場合、SASL を利用してニックネーム認証することができます
 (チャンネル参加前にニックネーム認証が行われるでしょう):
