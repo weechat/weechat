@@ -4415,16 +4415,19 @@ irc_server_reconnect (struct t_irc_server *server)
 }
 
 /*
- * Auto-connects to servers (called at startup).
- *
- * If auto_connect == 1, auto-connects to all servers with flag "autoconnect".
- * If auto_connect == 0, auto-connect to temporary servers only.
+ * Callback for auto-connect to servers (called at startup).
  */
 
-void
-irc_server_auto_connect (int auto_connect)
+int
+irc_server_auto_connect_timer_cb (void *data, int remaining_calls)
 {
     struct t_irc_server *ptr_server;
+    int auto_connect;
+
+    /* make C compiler happy */
+    (void) remaining_calls;
+
+    auto_connect = (int)data;
 
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
@@ -4436,6 +4439,22 @@ irc_server_auto_connect (int auto_connect)
                 irc_server_reconnect_schedule (ptr_server);
         }
     }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Auto-connects to servers (called at startup).
+ *
+ * If auto_connect == 1, auto-connects to all servers with flag "autoconnect".
+ * If auto_connect == 0, auto-connect to temporary servers only.
+ */
+
+void
+irc_server_auto_connect (int auto_connect)
+{
+    weechat_hook_timer (1, 0, 1, &irc_server_auto_connect_timer_cb,
+                        (auto_connect) ? (void *)1 : (void *)0);
 }
 
 /*
