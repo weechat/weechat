@@ -860,16 +860,15 @@ Przykłady wypełnień paska 'nicklist':
 [[bar_conditions]]
 ==== Warunki
 
-// TRANSLATION MISSING
-The option 'conditions' is a string which is evaluated to know if the bar
-must be displayed or not.
+Opcja 'conditions' jest jest przetwarzana w celu sprawdzenia czy pasek ma być
+wyświetlony czy nie.
 
-Ciąg może być:
+Dostępne opcje:
 
 * 'active': okno musi być aktywne
 * 'inactive': okno musi być nieaktywne
 * 'nicklist': bufor wyświetlany w oknie musi mieć listę nicków
-* wyrażenie: jest wykonywane jako logiczne (zobacz komendę
+* wyrażenie: jest wykonywane jako wyrażenie logiczne (zobacz komendę
   <<command_weechat_eval,/eval>>)
 
 Dla wyrażeń dostępne są następujące zmienne:
