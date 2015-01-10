@@ -4422,12 +4422,12 @@ int
 irc_server_auto_connect_timer_cb (void *data, int remaining_calls)
 {
     struct t_irc_server *ptr_server;
-    int auto_connect;
+    void *auto_connect;
 
     /* make C compiler happy */
     (void) remaining_calls;
 
-    auto_connect = (int)data;
+    auto_connect = data;
 
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
