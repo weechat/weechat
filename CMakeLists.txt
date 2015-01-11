@@ -158,6 +158,7 @@ endif()
 find_package(GCRYPT REQUIRED)
 add_definitions(-DHAVE_GCRYPT)
 list(APPEND EXTRA_LIBS ${GCRYPT_LDFLAGS})
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${GCRYPT_CFLAGS}")
 
 # Check for GnuTLS
 if(ENABLE_GNUTLS)
