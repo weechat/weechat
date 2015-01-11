@@ -34,7 +34,7 @@ endif()
 
 # version
 set(VERSION_MAJOR "1")
-set(VERSION_MINOR "1")
+set(VERSION_MINOR "2-dev")
 set(VERSION_PATCH "")
 if(VERSION_PATCH STREQUAL "")
   set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
