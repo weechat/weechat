@@ -2,8 +2,9 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr
-:toc:
-:toclevels: 4
+:toc2:
+:toclevels: 3
+:max-width: 100%
 
 
 Ce manuel documente le client de messagerie instantanée WeeChat, il fait

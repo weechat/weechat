@@ -1,3 +1,5 @@
+/* custom asciidoc styles */
+
 body {
   margin: 1em 2em;
   font-family: verdana, sans-serif;
@@ -24,15 +26,18 @@ tt {
 }
 #toc {
   line-height: 1.4em;
+  padding-bottom: 3em;
 }
 #toctitle {
   margin-bottom: .6em;
   color: #555;
 }
-div.toclevel0, div.toclevel1 {
-  font-size: 1.1em;
+#toc .toclevel0, #toc .toclevel1 {
+  display: block;
+  font-size: 1em;
 }
-div.toclevel2, div.toclevel3, div.toclevel4 {
+#toc .toclevel2, #toc .toclevel3, #toc .toclevel4 {
+  display: block;
   font-size: 1em;
 }
 h1, h2, h3, h4, h5, h6 {
@@ -40,7 +45,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 h1 {
   padding: 1.2em;
-  border: solid 1px #c0d0ff;
+  border: 1px solid #c0d0ff;
   border-radius: 8px;
   box-shadow: 1px 1px 3px #aac;
   background: #ddeaee;
@@ -53,7 +58,7 @@ h1 {
 }
 h2 {
   padding: .5em;
-  border: solid 1px #d0d0d0;
+  border: 1px solid #d0d0d0;
   border-radius: 6px;
   box-shadow: 1px 1px 2px #bbb;
   background: #f2f2f2;
@@ -79,7 +84,7 @@ h5 {
 }
 span.command {
   padding: .2em .5em;
-  border: solid 1px #ccc;
+  border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: 1px 1px 2px #ccc;
   margin-right: 12px;
@@ -91,12 +96,9 @@ p.table {
   margin-bottom: 0;
 }
 div.listingblock > div.content {
-  border: solid 1px #e2e2e2;
+  border: 1px solid #e2e2e2;
   border-radius: 4px;
   background: #fbfbfb;
-}
-div.tableblock > table {
-  border: 2px solid #888;
 }
 .listingblock pre {
   white-space: pre-wrap;
@@ -107,8 +109,11 @@ table th {
   color: #000;
   font-size: 1.1em;
 }
-.tableblock table th, .tableblock table td {
-  border: solid 1px #bbb;
+table.tableblock, th.tableblock, td.tableblock, .tableblock table th, .tableblock table td {
+  border: 1px solid #bbb;
+}
+table.tableblock {
+  border: 2px solid #888;
 }
 div.title {
   color: #525252;
@@ -125,10 +130,10 @@ dt.hdlist1 {
 }
 .key {
   padding: .1em .4em;
-  border-top: solid 1px #d5d5e5;
-  border-left: solid 1px #d5d5e5;
-  border-bottom: solid 1px #a5a5b5;
-  border-right: solid 1px #a5a5b5;
+  border-top: 1px solid #d5d5e5;
+  border-left: 1px solid #d5d5e5;
+  border-bottom: 1px solid #a5a5b5;
+  border-right: 1px solid #a5a5b5;
   border-radius: 3px;
   box-shadow: 1px 1px 3px #d5d5e5;
   margin: 0 2px;
@@ -138,40 +143,40 @@ dt.hdlist1 {
   line-height: 1.6em;
 }
 .key.ctrl {
-  border-top: solid 1px #dfd0d0;
-  border-left: solid 1px #dfd0d0;
-  border-bottom: solid 1px #afa0a0;
-  border-right: solid 1px #afa0a0;
+  border-top: 1px solid #dfd0d0;
+  border-left: 1px solid #dfd0d0;
+  border-bottom: 1px solid #afa0a0;
+  border-right: 1px solid #afa0a0;
   border-radius: 3px;
   box-shadow: 1px 1px 3px #dfd0d0;
   background: #fff0f0;
   text-transform: capitalize;
 }
 .key.alt {
-  border-top: solid 1px #dfc5b4;
-  border-left: solid 1px #dfc5b4;
-  border-bottom: solid 1px #af9484;
-  border-right: solid 1px #af9484;
+  border-top: 1px solid #dfc5b4;
+  border-left: 1px solid #dfc5b4;
+  border-bottom: 1px solid #af9484;
+  border-right: 1px solid #af9484;
   border-radius: 3px;
   box-shadow: 1px 1px 3px #dfc5b4;
   background: #ffe4d4;
   text-transform: capitalize;
 }
 .key.shift {
-  border-top: solid 1px #d5d5d5;
-  border-left: solid 1px #d5d5d5;
-  border-bottom: solid 1px #a5a5a5;
-  border-right: solid 1px #a5a5a5;
+  border-top: 1px solid #d5d5d5;
+  border-left: 1px solid #d5d5d5;
+  border-bottom: 1px solid #a5a5a5;
+  border-right: 1px solid #a5a5a5;
   border-radius: 3px;
   box-shadow: 1px 1px 3px #d5d5d5;
   background: #f5f5f5;
   text-transform: capitalize;
 }
 .key.other {
-  border-top: solid 1px #d0e0d0;
-  border-left: solid 1px #d0e0d0;
-  border-bottom: solid 1px #a0b0a0;
-  border-right: solid 1px #a0b0a0;
+  border-top: 1px solid #d0e0d0;
+  border-left: 1px solid #d0e0d0;
+  border-bottom: 1px solid #a0b0a0;
+  border-right: 1px solid #a0b0a0;
   border-radius: 3px;
   box-shadow: 1px 1px 3px #d0e0d0;
   background: #eafaea;
@@ -181,12 +186,12 @@ dt.hdlist1 {
 }
 .hexa {
   padding: 0 .2em;
-  border: solid 1px #88b;
+  border: 1px solid #88b;
   margin: 0 .2em;
   color: #007;
   font-family: monospace;
   font-size: .85em;
 }
 #footer {
-  border-top: 1px solid silver;
+  border-top: solid 1px silver;
 }

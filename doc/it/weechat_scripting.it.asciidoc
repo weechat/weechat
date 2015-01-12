@@ -2,8 +2,15 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: it
-:toc:
+:toc2:
 :toclevels: 3
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Marco Paolone <marcopaolone@gmail.com>, 2010-2013
 
 
 Questo manuale documenta il client di chat WeeChat, ed è parte

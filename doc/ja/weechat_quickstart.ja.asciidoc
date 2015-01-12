@@ -1,8 +1,15 @@
 = WeeChat クイックスタートガイド
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:toc:
+:toc2:
 :toc-title: 目次
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2009-2014
 
 
 [[start]]

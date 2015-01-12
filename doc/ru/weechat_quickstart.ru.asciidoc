@@ -2,7 +2,16 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ru
-:toc:
+:toc2:
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Stalwart <stlwrt@gmail.com>, 2006
+* Алексей Бортник <thebosha@gmail.com>, 2009
+* Alexander Turenko Totktonada <totktonada.ru@gmail.com>, 2014
 
 
 [[start]]

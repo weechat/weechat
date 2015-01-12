@@ -1,8 +1,15 @@
 = Poradnik testera WeeChat
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:toc:
+:toc2:
 :toc-title: Spis treści
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Krzysztof Korościk <soltys@szluug.org>, 2009-2014
 
 
 [[purpose]]

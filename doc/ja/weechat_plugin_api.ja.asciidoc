@@ -1,9 +1,16 @@
 = WeeChat プラグイン API リファレンス
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:toc:
+:toc2:
 :toclevels: 4
 :toc-title: 目次
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2014
 
 
 このマニュアルは WeeChat チャットクライアントについての文書で、WeeChat の一部です。
@@ -221,7 +228,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
 プラグインに関する情報を取得する関数。
 
-==== weechat_plugin_get_name
+==== plugin_get_name
 
 プラグインの名前を取得。
 
@@ -266,7 +273,7 @@ name = weechat.plugin_get_name(plugin)
 API 関数を使うことを推奨します。なぜなら、これらの関数は文字列を
 UTF-8 とロケールに準じて取り扱うようになっているからです。
 
-==== weechat_charset_set
+==== charset_set
 
 新しいプラグインの文字セットを設定する (デフォルトの文字セットは 'UTF-8'
 です、このためプラグインで 'UTF-8' を使う場合は、この関数を呼び出す必要はありません。
@@ -300,7 +307,7 @@ weechat.charset_set(charset)
 weechat.charset_set("iso-8859-1")
 ----
 
-==== weechat_iconv_to_internal
+==== iconv_to_internal
 
 文字列の文字セットを WeeChat の内部文字セット (UTF-8) に変換。
 
@@ -340,7 +347,7 @@ str = weechat.iconv_to_internal(charset, string)
 str = weechat.iconv_to_internal("iso-8859-1", "iso string: é à")
 ----
 
-==== weechat_iconv_from_internal
+==== iconv_from_internal
 
 文字列の文字セットを WeeChat の内部文字セット (UTF-8) から別の文字セットに変換。
 
@@ -380,7 +387,7 @@ str = weechat.iconv_from_internal(charset, string)
 str = weechat.iconv_from_internal("iso-8859-1", "utf-8 string: é à")
 ----
 
-==== weechat_gettext
+==== gettext
 
 翻訳済み文字列を返す (設定言語に依存)。
 
@@ -417,7 +424,7 @@ str = weechat.gettext(string)
 str = weechat.gettext("hello")
 ----
 
-==== weechat_ngettext
+==== ngettext
 
 'count'
 引数を元に単数形または複数形で、翻訳済み文字列を返す。
@@ -460,7 +467,7 @@ num_files = 2
 str = weechat.ngettext("file", "files", num_files)
 ----
 
-==== weechat_strndup
+==== strndup
 
 複製した文字列を最大で 'length' 文字分返す。
 
@@ -492,7 +499,7 @@ free (str);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_tolower
+==== string_tolower
 
 UTF-8 文字列を小文字に変換。
 
@@ -518,7 +525,7 @@ weechat_string_tolower (str);  /* str is now: "abcdé" */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_toupper
+==== string_toupper
 
 UTF-8 文字列を大文字に変換。
 
@@ -544,7 +551,7 @@ weechat_string_toupper (str);  /* str is now: "ABCDé" */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_strcasecmp
+==== strcasecmp
 
 _バージョン 1.0 で更新。_
 
@@ -578,7 +585,7 @@ int diff = weechat_strcasecmp ("aaa", "CCC");  /* == -2 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_strcasecmp_range
+==== strcasecmp_range
 
 _WeeChat バージョン 0.3.7 以上で利用可。バージョン 1.0 で更新。_
 
@@ -619,7 +626,7 @@ int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29);  /* == 0 *
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_strncasecmp
+==== strncasecmp
 
 _バージョン 1.0 で更新。_
 
@@ -654,7 +661,7 @@ int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_strncasecmp_range
+==== strncasecmp_range
 
 _WeeChat バージョン 0.3.7 以上で利用可。バージョン 1.0 で更新。_
 
@@ -697,7 +704,7 @@ int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29);  /* ==
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_strcmp_ignore_chars
+==== strcmp_ignore_chars
 
 _バージョン 1.0 で更新。_
 
@@ -736,7 +743,7 @@ int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_strcasestr
+==== strcasestr
 
 ロケールと大文字小文字を区別して文字列を検索。
 
@@ -766,7 +773,7 @@ char *pos = weechat_strcasestr ("aBcDeF", "de");  /* result: pointer to "DeF" */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_strlen_screen
+==== strlen_screen
 
 _WeeChat バージョン 0.4.2 以上で利用可。_
 
@@ -807,7 +814,7 @@ length = weechat.strlen_screen(string)
 length = weechat.strlen_screen("é")  # 1
 ----
 
-==== weechat_string_match
+==== string_match
 
 _バージョン 1.0 で更新。_
 
@@ -862,7 +869,7 @@ match4 = weechat.string_match("abcdef", "*de*", 0)   # 1
 match5 = weechat.string_match("abcdef", "*b*d*", 0)  # 1
 ----
 
-==== weechat_string_expand_home
+==== string_expand_home
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
 
@@ -898,7 +905,7 @@ free (str);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_remove_quotes
+==== string_remove_quotes
 
 文字列の最初と最後から引用符号を削除
 (最初の引用符号の前と最後の引用符号の後にある空白文字は無視)。
@@ -933,7 +940,7 @@ free (str);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_strip
+==== string_strip
 
 文字列の最初と最後から文字を削除する。
 
@@ -968,7 +975,7 @@ free (str);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_convert_escaped_chars
+==== string_convert_escaped_chars
 
 _WeeChat バージョン 1.0 以上で利用可。_
 
@@ -1018,7 +1025,7 @@ free (str);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_mask_to_regex
+==== string_mask_to_regex
 
 マスクから正規表現を作りこれを返す、マスク用の特殊文字は
 "`*`" のみ。これ以外の文字はすべてエスケープされます。
@@ -1059,7 +1066,7 @@ regex = weechat.string_mask_to_regex(mask)
 regex = weechat.string_mask_to_regex("test*mask")  # "test.*mask"
 ----
 
-==== weechat_string_regex_flags
+==== string_regex_flags
 
 _WeeChat バージョン 0.3.7 以上で利用可。_
 
@@ -1110,7 +1117,7 @@ const char *ptr_regex = weechat_string_regex_flags (regex, REG_EXTENDED, &flags)
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_regcomp
+==== string_regcomp
 
 _WeeChat バージョン 0.3.7 以上で利用可。_
 
@@ -1154,7 +1161,7 @@ if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) != 0)
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_has_highlight
+==== string_has_highlight
 
 ハイライトしたい単語のリストを元に、1 箇所以上マッチする部分があるか調べる。
 
@@ -1193,7 +1200,7 @@ highlight = weechat.string_has_highlight(string, highlight_words)
 highlight = weechat.string_has_highlight("my test string", "test,word2")  # 1
 ----
 
-==== weechat_string_has_highlight_regex
+==== string_has_highlight_regex
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -1236,7 +1243,7 @@ highlight = weechat.string_has_highlight_regex(string, regex)
 highlight = weechat.string_has_highlight_regex("my test string", "test|word2")  # 1
 ----
 
-==== weechat_string_replace
+==== string_replace
 
 マッチした全ての文字列を別の文字列で置換。
 
@@ -1271,7 +1278,7 @@ free (str);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_replace_regex
+==== string_replace_regex
 
 _WeeChat バージョン 1.0 以上で利用可。_
 
@@ -1334,7 +1341,7 @@ if (weechat_string_regcomp (&my_regex, "([0-9]{4})-([0-9]{2})-([0-9]{2})",
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_split
+==== string_split
 
 1 つ以上の区切り文字に従って文字列を分割。
 
@@ -1392,7 +1399,7 @@ weechat_string_free_split (argv);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_split_shell
+==== string_split_shell
 
 _WeeChat バージョン 1.0 以上で利用可。_
 
@@ -1437,7 +1444,7 @@ weechat_string_free_split (argv);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_free_split
+==== string_free_split
 
 文字列分割に使用したメモリを開放。
 
@@ -1467,7 +1474,7 @@ weechat_string_free_split (argv);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_build_with_split_string
+==== string_build_with_split_string
 
 分割文字列から文字列を作る。
 
@@ -1505,7 +1512,7 @@ free (str);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_split_command
+==== string_split_command
 
 'separator' でコマンドのリストを分割
 (コマンドに区切り文字を使う場合は "\" でエスケープ)。
@@ -1541,7 +1548,7 @@ weechat_free_split_command (argv);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_free_split_command
+==== string_free_split_command
 
 コマンド分割で使用したメモリを開放。
 
@@ -1569,7 +1576,7 @@ weechat_free_split_command (argv);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_format_size
+==== string_format_size
 
 ファイルサイズと設定言語に翻訳された単位を書式に当てはめて文字列を作る
 
@@ -1618,7 +1625,7 @@ free (str);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_remove_color
+==== string_remove_color
 
 文字列から WeeChat 色コードを削除。
 
@@ -1667,7 +1674,7 @@ str = weechat.string_remove_color(string, replacement)
 str = weechat.string_remove_color(my_string, "?")
 ----
 
-==== weechat_string_encode_base64
+==== string_encode_base64
 
 _WeeChat バージョン 0.3.2 以上で利用可。_
 
@@ -1699,7 +1706,7 @@ weechat_string_encode_base64 (string, strlen (string), result);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_decode_base64
+==== string_decode_base64
 
 _WeeChat バージョン 0.3.2 以上で利用可。_
 
@@ -1735,7 +1742,7 @@ length = weechat_string_decode_base64 (string, result);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_string_is_command_char
+==== string_is_command_char
 
 _WeeChat バージョン 0.3.2 以上で利用可。_
 
@@ -1776,7 +1783,7 @@ command_char1 = weechat.string_is_command_char("/test")  # == 1
 command_char2 = weechat.string_is_command_char("test")   # == 0
 ----
 
-==== weechat_string_input_for_buffer
+==== string_input_for_buffer
 
 _WeeChat バージョン 0.3.2 以上で利用可。_
 
@@ -1820,7 +1827,7 @@ str2 = weechat.string_input_for_buffer("/test")   # ""
 str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ----
 
-==== weechat_string_eval_expression
+==== string_eval_expression
 
 _WeeChat バージョン 0.4.0 以上で利用可、バージョン 0.4.2 と 1.1 で更新。_
 
@@ -2010,7 +2017,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 UTF-8 文字列関数。
 
-==== weechat_utf8_has_8bits
+==== utf8_has_8bits
 
 文字列に 8 ビット文字が含まれているか確認。
 
@@ -2042,7 +2049,7 @@ if (weechat_utf8_has_8bits (string))
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_is_valid
+==== utf8_is_valid
 
 文字列が妥当な UTF-8 表現か確認。
 
@@ -2081,7 +2088,7 @@ else
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_normalize
+==== utf8_normalize
 
 UTF-8 文字列を正規化: 非 UTF-8 文字を削除し、これらを文字で置換。
 
@@ -2107,7 +2114,7 @@ weechat_utf8_normalize (string, '?');
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_prev_char
+==== utf8_prev_char
 
 文字列中の 1 つ前の UTF-8 文字へのポインタを返す。
 
@@ -2138,7 +2145,7 @@ char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_next_char
+==== utf8_next_char
 
 文字列中の 1 つ後の UTF-8 文字へのポインタを返す。
 
@@ -2167,7 +2174,7 @@ char *next_char = weechat_utf8_next_char (string);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_char_int
+==== utf8_char_int
 
 UTF-8 文字を整数で返す。
 
@@ -2196,7 +2203,7 @@ int char_int = weechat_utf8_char_int ("être");  /* "ê" as integer */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_char_size
+==== utf8_char_size
 
 UTF-8 文字のサイズを返す (バイト単位)。
 
@@ -2225,7 +2232,7 @@ int char_size = weechat_utf8_char_size ("être");  /* == 2 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_strlen
+==== utf8_strlen
 
 UTF-8 文字の長さを返す (UTF-8 文字の個数)。
 
@@ -2254,7 +2261,7 @@ int length = weechat_utf8_strlen ("chêne");  /* == 5 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_strnlen
+==== utf8_strnlen
 
 文字列の 'bytes' バイト目までに含まれる UTF-8 文字列の長さを返す (UTF-8 文字の個数)。
 
@@ -2284,7 +2291,7 @@ int length = weechat_utf8_strnlen ("chêne", 4);  /* == 3 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_strlen_screen
+==== utf8_strlen_screen
 
 UTF-8 文字列をスクリーン上に表示するために必要なスクリーン幅を返す。
 
@@ -2313,7 +2320,7 @@ int length_on_screen = weechat_utf8_strlen_screen ("é");  /* == 1 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_charcmp
+==== utf8_charcmp
 
 _バージョン 1.0 で更新。_
 
@@ -2347,7 +2354,7 @@ int diff = weechat_utf8_charcmp ("aaa", "ccc");  /* == -2 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_charcasecmp
+==== utf8_charcasecmp
 
 _バージョン 1.0 で更新。_
 
@@ -2381,7 +2388,7 @@ int diff = weechat_utf8_charcasecmp ("aaa", "CCC");  /* == -2 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_char_size_screen
+==== utf8_char_size_screen
 
 UTF-8 文字をスクリーン上に表示するために必要なスクリーン幅を返す。
 
@@ -2410,7 +2417,7 @@ int length_on_screen = weechat_utf8_char_size_screen ("é");  /* == 1 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_add_offset
+==== utf8_add_offset
 
 UTF-8 文字列で N 文字前に進む。
 
@@ -2441,7 +2448,7 @@ char *str2 = weechat_utf8_add_offset (str, 3);  /* points to "ne" */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_real_pos
+==== utf8_real_pos
 
 UTF-8 文字列中の真の位置を返す。
 
@@ -2471,7 +2478,7 @@ int pos = weechat_utf8_real_pos ("chêne", 3);  /* == 4 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_pos
+==== utf8_pos
 
 UTF-8 文字列中の位置を返す。
 
@@ -2501,7 +2508,7 @@ int pos = weechat_utf8_pos ("chêne", 4);  /* == 3 */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_utf8_strndup
+==== utf8_strndup
 
 最長 'length' 文字の複製された文字列を返す。
 
@@ -2538,7 +2545,7 @@ free (string);
 
 ディレクトリに関する関数。
 
-==== weechat_mkdir_home
+==== mkdir_home
 
 WeeChat ホームディレクトリの下にディレクトリを作成。
 
@@ -2579,7 +2586,7 @@ weechat.mkdir_home(directory, mode)
 weechat.mkdir_home("temp", 0755)
 ----
 
-==== weechat_mkdir
+==== mkdir
 
 ディレクトリを作成。
 
@@ -2620,7 +2627,7 @@ weechat.mkdir(directory, mode)
 weechat.mkdir("/tmp/mydir", 0755)
 ----
 
-==== weechat_mkdir_parents
+==== mkdir_parents
 
 ディレクトリの作成と必要に応じて親ディレクトリの作成を行う。
 
@@ -2661,7 +2668,7 @@ weechat.mkdir_parents(directory, mode)
 weechat.mkdir_parents("/tmp/my/dir", 0755)
 ----
 
-==== weechat_exec_on_files
+==== exec_on_files
 
 ディレクトリ中のファイルを探し、各ファイルに対してコールバックを実行。
 
@@ -2700,7 +2707,7 @@ weechat_exec_on_files ("/tmp", 0, NULL, &callback);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_file_get_content
+==== file_get_content
 
 _WeeChat バージョン 0.3.1 以上で利用可。_
 
@@ -2740,7 +2747,7 @@ free (content);
 
 便利な関数。
 
-==== weechat_util_timeval_cmp
+==== util_timeval_cmp
 
 2 つの "timeval" 構造体を比較。
 
@@ -2775,7 +2782,7 @@ if (weechat_util_timeval_cmp (&tv1, &tv2) > 0)
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_util_timeval_diff
+==== util_timeval_diff
 
 _バージョン 1.1 で更新。_
 
@@ -2810,7 +2817,7 @@ long long diff = weechat_util_timeval_diff (&tv1, &tv2);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_util_timeval_add
+==== util_timeval_add
 
 _バージョン 1.1 で更新。_
 
@@ -2841,7 +2848,7 @@ weechat_util_timeval_add (&tv, 2000000);  /* add 2 seconds */
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_util_get_time_string
+==== util_get_time_string
 
 _WeeChat バージョン 0.3.2 以上で利用可。_
 
@@ -2870,7 +2877,7 @@ weechat_printf (NULL, "date: %s",
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_util_version_number
+==== util_version_number
 
 _WeeChat バージョン 0.3.9 以上で利用可。_
 
@@ -2905,7 +2912,7 @@ version_number = weechat_util_version_number ("0.3.9");      /* == 0x00030900 */
 
 ソート済みリスト関数。
 
-==== weechat_list_new
+==== list_new
 
 新しいリストを作成。
 
@@ -2938,7 +2945,7 @@ list = weechat.list_new()
 list = weechat.list_new()
 ----
 
-==== weechat_list_add
+==== list_add
 
 リストに要素を追加。
 
@@ -2985,7 +2992,7 @@ item = weechat.list_add(list, data, where, user_data)
 item = weechat.list_add(list, "my data", weechat.WEECHAT_LIST_POS_SORT, "")
 ----
 
-==== weechat_list_search
+==== list_search
 
 リストから要素を検索。
 
@@ -3024,7 +3031,7 @@ item = weechat.list_search(list, data)
 item = weechat.list_search(list, "my data")
 ----
 
-==== weechat_list_search_pos
+==== list_search_pos
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -3065,7 +3072,7 @@ pos_item = weechat.list_search_pos(list, data)
 pos_item = weechat.list_search_pos(list, "my data")
 ----
 
-==== weechat_list_casesearch
+==== list_casesearch
 
 大文字小文字を無視してリストから要素を検索。
 
@@ -3104,7 +3111,7 @@ item = weechat.list_casesearch(list, data)
 item = weechat.list_casesearch(list, "my data")
 ----
 
-==== weechat_list_casesearch_pos
+==== list_casesearch_pos
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -3145,7 +3152,7 @@ pos_item = weechat.list_casesearch_pos(list, data)
 pos_item = weechat.list_casesearch_pos(list, "my data")
 ----
 
-==== weechat_list_get
+==== list_get
 
 リスト中の位置を指定して要素を返す。
 
@@ -3184,7 +3191,7 @@ item = weechat.list_get(list, position)
 item = weechat.list_get(list, 0)
 ----
 
-==== weechat_list_set
+==== list_set
 
 ある要素に新しい値をセット。
 
@@ -3218,7 +3225,7 @@ weechat.list_set(item, value)
 weechat.list_set(item, "new data")
 ----
 
-==== weechat_list_next
+==== list_next
 
 リストから 1 つ後の要素を返す。
 
@@ -3255,7 +3262,7 @@ item = weechat.list_next(item)
 item = weechat.list_next(item)
 ----
 
-==== weechat_list_prev
+==== list_prev
 
 リストから 1 つ前の要素を返す。
 
@@ -3292,7 +3299,7 @@ item = weechat.list_prev(item)
 item = weechat.list_prev(item)
 ----
 
-==== weechat_list_string
+==== list_string
 
 ある要素の文字列値を返す。
 
@@ -3329,7 +3336,7 @@ value = weechat.list_string(item)
 weechat.prnt("", "value of item: %s" % weechat.list_string(item))
 ----
 
-==== weechat_list_size
+==== list_size
 
 リストのサイズ (要素の個数) を返す。
 
@@ -3366,7 +3373,7 @@ size = weechat.list_size(list)
 weechat.prnt("", "size of list: %d" % weechat.list_size(list))
 ----
 
-==== weechat_list_remove
+==== list_remove
 
 ある要素をリストから削除。
 
@@ -3401,7 +3408,7 @@ weechat.list_remove(list, item)
 weechat.list_remove(list, item)
 ----
 
-==== weechat_list_remove_all
+==== list_remove_all
 
 あるリストの要素をすべて削除。
 
@@ -3434,7 +3441,7 @@ weechat.list_remove_all(list)
 weechat.list_remove_all(list)
 ----
 
-==== weechat_list_free
+==== list_free
 
 リストを開放。
 
@@ -3472,7 +3479,7 @@ weechat.list_free(list)
 
 ハッシュテーブル関数。
 
-==== weechat_hashtable_new
+==== hashtable_new
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
 
@@ -3544,7 +3551,7 @@ struct t_hashtable *hashtable = weechat_hashtable_new (8,
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_set_with_size
+==== hashtable_set_with_size
 
 _WeeChat バージョン 0.3.3 以上で利用可、バージョン 0.4.2 で更新。_
 
@@ -3584,7 +3591,7 @@ weechat_hashtable_set_with_size (hashtable, "my_key", 0,
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_set
+==== hashtable_set
 
 _WeeChat バージョン 0.3.3 以上で利用可、バージョン 0.4.2 で更新。_
 
@@ -3618,7 +3625,7 @@ weechat_hashtable_set (hashtable, "my_key", "my_value");
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_get
+==== hashtable_get
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
 
@@ -3650,7 +3657,7 @@ void *value = weechat_hashtable_get (hashtable, "my_key");
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_has_key
+==== hashtable_has_key
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -3686,7 +3693,7 @@ if (weechat_hashtable_has_key (hashtable, "my_key"))
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_map
+==== hashtable_map
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
 
@@ -3730,7 +3737,7 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_map_string
+==== hashtable_map_string
 
 _WeeChat バージョン 0.3.7 以上で利用可。_
 
@@ -3777,7 +3784,7 @@ weechat_hashtable_map_string (hashtable, &map_cb, NULL);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_dup
+==== hashtable_dup
 
 _WeeChat バージョン 1.0 以上で利用可。_
 
@@ -3808,7 +3815,7 @@ struct t_hashtable *new_hashtable = weechat_hashtable_dup (hashtable);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_get_integer
+==== hashtable_get_integer
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
 
@@ -3843,7 +3850,7 @@ int items_count = weechat_hashtable_get_integer (hashtable, "items_count");
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_get_string
+==== hashtable_get_string
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -3898,7 +3905,7 @@ weechat_printf (NULL, "list of keys: %s",
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_set_pointer
+==== hashtable_set_pointer
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -3944,7 +3951,7 @@ weechat_hashtable_set_pointer (hashtable, "callback_free_key", &my_free_key_cb);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_add_to_infolist
+==== hashtable_add_to_infolist
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
 
@@ -3989,7 +3996,7 @@ weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_remove
+==== hashtable_remove
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
 
@@ -4017,7 +4024,7 @@ weechat_hashtable_remove (hashtable, "my_key");
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_remove_all
+==== hashtable_remove_all
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
 
@@ -4044,7 +4051,7 @@ weechat_hashtable_remove_all (hashtable);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hashtable_free
+==== hashtable_free
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
 
@@ -4076,7 +4083,7 @@ weechat_hashtable_free (hashtable);
 
 設定ファイルに関する関数。
 
-==== weechat_config_new
+==== config_new
 
 新しい設定ファイルを作成。
 
@@ -4147,7 +4154,7 @@ def my_config_reload_cb(data, config_file):
 config_file = weechat.config_new("test", "my_config_reload_cb", "")
 ----
 
-==== weechat_config_new_section
+==== config_new_section
 
 設定ファイルに新しいセクションを作成する。
 
@@ -4388,7 +4395,7 @@ section = weechat.config_new_section(config_file, "section1", 1, 1,
     "my_section_delete_option_cb", "")
 ----
 
-==== weechat_config_search_section
+==== config_search_section
 
 設定ファイルからセクションを検索。
 
@@ -4429,7 +4436,7 @@ section = weechat.config_search_section(config_file, section_name)
 section = weechat.config_search_section(config_file, "section")
 ----
 
-==== weechat_config_new_option
+==== config_new_option
 
 設定ファイルのあるセクションに新しいオプションを作成。
 
@@ -4642,7 +4649,7 @@ Ruby では、3 組のコールバックとデータ (合わせて 6 つの文�
 1 つ渡してください (これは Ruby が 関数に 15 個以上の引数を渡せないことが原因です)、より詳しい情報は
 'WeeChat スクリプト作成ガイド' を参照してください _(バージョン 0.4.1 で修正済み)_ 。
 
-==== weechat_config_search_option
+==== config_search_option
 
 設定ファイルのセクションからオプションを検索。
 
@@ -4685,7 +4692,7 @@ option = weechat.config_search_option(config_file, section, option_name)
 option = weechat.config_search_option(config_file, section, "option")
 ----
 
-==== weechat_config_search_section_option
+==== config_search_section_option
 
 設定ファイルまたはセクションからセクションやオプションを検索。
 
@@ -4735,7 +4742,7 @@ else
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_config_search_with_string
+==== config_search_with_string
 
 ファイル/セクション/オプションの情報をオプションを完全な名前で検索。
 
@@ -4789,7 +4796,7 @@ else
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_config_string_to_boolean
+==== config_string_to_boolean
 
 テキストがブール値としての "true" または "false" かをチェック。
 
@@ -4835,7 +4842,7 @@ if weechat.config_string_to_boolean(text):
     # ...
 ----
 
-==== weechat_config_option_reset
+==== config_option_reset
 
 オプションをデフォルト値にリセット。
 
@@ -4894,7 +4901,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
     # ...
 ----
 
-==== weechat_config_option_set
+==== config_option_set
 
 オプションに新しい値を設定。
 
@@ -4954,7 +4961,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
     # ...
 ----
 
-==== weechat_config_option_set_null
+==== config_option_set_null
 
 あるオプションに null (未定義値) を設定する。
 
@@ -5017,7 +5024,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
     # ...
 ----
 
-==== weechat_config_option_unset
+==== config_option_unset
 
 オプションをアンセット/リセットする。
 
@@ -5079,7 +5086,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
     # ...
 ----
 
-==== weechat_config_option_rename
+==== config_option_rename
 
 オプションをリネーム。
 
@@ -5114,7 +5121,7 @@ weechat.config_option_rename(option, new_name)
 weechat.config_option_rename(option, "new_name")
 ----
 
-==== weechat_config_option_get_pointer
+==== config_option_get_pointer
 
 あるオプションのプロパティへのポインタを返す。
 
@@ -5157,7 +5164,7 @@ char *description = weechat_config_option_get_pointer (option, "description");
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_config_option_is_null
+==== config_option_is_null
 
 オプションの値が "null" (未定義値) か否かを確認。
 
@@ -5203,7 +5210,7 @@ if weechat.config_option_is_null(option):
     # ...
 ----
 
-==== weechat_config_option_default_is_null
+==== config_option_default_is_null
 
 あるオプションのデフォルト値が "null" (未定義値) か否かを確認。
 
@@ -5249,7 +5256,7 @@ if weechat.config_option_default_is_null(option):
     # ...
 ----
 
-==== weechat_config_boolean
+==== config_boolean
 
 オプションのブール値を返す。
 
@@ -5296,7 +5303,7 @@ if weechat.config_boolean(option):
     # ...
 ----
 
-==== weechat_config_boolean_default
+==== config_boolean_default
 
 オプションのデフォルトブール値を返す。
 
@@ -5343,7 +5350,7 @@ if weechat.config_boolean_default(option):
     # ...
 ----
 
-==== weechat_config_integer
+==== config_integer
 
 オプションの整数値を返す。
 
@@ -5382,7 +5389,7 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_integer(option)
 ----
 
-==== weechat_config_integer_default
+==== config_integer_default
 
 オプションのデフォルト整数値を返す。
 
@@ -5421,7 +5428,7 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_integer_default(option)
 ----
 
-==== weechat_config_string
+==== config_string
 
 オプションの文字列値を返す。
 
@@ -5460,7 +5467,7 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_string(option)
 ----
 
-==== weechat_config_string_default
+==== config_string_default
 
 オプションのデフォルト文字列値を返す。
 
@@ -5499,7 +5506,7 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_string_default(option)
 ----
 
-==== weechat_config_color
+==== config_color
 
 オプションの色値を返す。
 
@@ -5538,7 +5545,7 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_color(option)
 ----
 
-==== weechat_config_color_default
+==== config_color_default
 
 オプションのデフォルト色値を返す。
 
@@ -5577,7 +5584,7 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_color_default(option)
 ----
 
-==== weechat_config_write_option
+==== config_write_option
 
 設定ファイルにオプションとその値を収めた行を書き込む (この関数をセクションの
 "write" および "write_default" コールバック以外で使わないでください)。
@@ -5625,7 +5632,7 @@ def my_section_write_cb(data, config_file, section_name):
     return weechat.WEECHAT_RC_OK
 ----
 
-==== weechat_config_write_line
+==== config_write_line
 
 設定ファイルに行を書き込む  (この関数をセクションの
 "write" および "write_default" コールバック以外で使わないでください)
@@ -5677,7 +5684,7 @@ def my_section_write_cb(data, config_file, section_name):
     return weechat.WEECHAT_RC_OK
 ----
 
-==== weechat_config_write
+==== config_write
 
 設定ファイルをディスクに書き込む。
 
@@ -5733,7 +5740,7 @@ elif rc == weechat.WEECHAT_CONFIG_WRITE_ERROR:
     # ...
 ----
 
-==== weechat_config_read
+==== config_read
 
 設定ファイルをディスクから読み込む。
 
@@ -5789,7 +5796,7 @@ elif rc == weechat.WEECHAT_CONFIG_READ_FILE_NOT_FOUND:
     # ...
 ----
 
-==== weechat_config_reload
+==== config_reload
 
 設定ファイルをディスクから再読み込みする。
 
@@ -5845,7 +5852,7 @@ elif rc == weechat.WEECHAT_CONFIG_READ_FILE_NOT_FOUND:
     # ...
 ----
 
-==== weechat_config_option_free
+==== config_option_free
 
 オプションを開放。
 
@@ -5878,7 +5885,7 @@ weechat.config_option_free(option)
 weechat.config_option_free(option)
 ----
 
-==== weechat_config_section_free_options
+==== config_section_free_options
 
 セクションの全てのオプションを開放。
 
@@ -5911,7 +5918,7 @@ weechat.config_section_free_options(section)
 weechat.config_section_free_options(section)
 ----
 
-==== weechat_config_section_free
+==== config_section_free
 
 セクションを開放。
 
@@ -5944,7 +5951,7 @@ weechat.config_section_free(section)
 weechat.config_section_free(section)
 ----
 
-==== weechat_config_free
+==== config_free
 
 設定ファイルを開放。
 
@@ -5977,7 +5984,7 @@ weechat.config_free(config_file)
 weechat.config_free(config_file)
 ----
 
-==== weechat_config_get
+==== config_get
 
 完全な名前でオプションを検索。
 
@@ -6014,7 +6021,7 @@ option = weechat.config_get(option_name)
 option = weechat.config_get("weechat.look.item_time_format")
 ----
 
-==== weechat_config_get_plugin
+==== config_get_plugin
 
 プラグインの設定ファイル (plugins.conf) からオプションを検索。
 
@@ -6054,7 +6061,7 @@ value = weechat.config_get_plugin(option_name)
 value = weechat.config_get_plugin("option")
 ----
 
-==== weechat_config_is_set_plugin
+==== config_is_set_plugin
 
 オプションがプラグインの設定ファイル (plugins.conf) で設定されているか否かを確認。
 
@@ -6104,7 +6111,7 @@ else:
     # ...
 ----
 
-==== weechat_config_set_plugin
+==== config_set_plugin
 
 プラグイン設定ファイル (plugins.conf) のオプションの新しい値を設定。
 
@@ -6168,7 +6175,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
     # ...
 ----
 
-==== weechat_config_set_desc_plugin
+==== config_set_desc_plugin
 
 _WeeChat バージョン 0.3.5 以上で利用可。_
 
@@ -6212,7 +6219,7 @@ if int(version) >= 0x00030500:
     weechat.config_set_desc_plugin("option", "description of option")
 ----
 
-==== weechat_config_unset_plugin
+==== config_unset_plugin
 
 プラグイン設定ファイル (plugins.conf) のオプションをアンセットする。
 
@@ -6280,7 +6287,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
 
 キー割り当てに関する関数。
 
-==== weechat_key_bind
+==== key_bind
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -6344,7 +6351,7 @@ keys = {"@chat(python.test):button1": "hsignal:test_mouse",
 weechat.key_bind("mouse", keys)
 ----
 
-==== weechat_key_unbind
+==== key_unbind
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -6402,7 +6409,7 @@ weechat.key_unbind("mouse", "area:chat(python.test)")
 
 バッファにテキストを表示する関数。
 
-==== weechat_prefix
+==== prefix
 
 プレフィックスを返す。
 
@@ -6455,7 +6462,7 @@ value = weechat.prefix(prefix)
 weechat.prnt("", "%sThis is an error..." % weechat.prefix("error"))
 ----
 
-==== weechat_color
+==== color
 
 表示する色コードを文字列で返す。
 
@@ -6535,7 +6542,7 @@ weechat.prnt("", "Color: %sblue %sdefault color %syellow on red"
     % (weechat.color("blue"), weechat.color("chat"), weechat.color("yellow,red")))
 ----
 
-==== weechat_printf
+==== printf
 
 バッファにメッセージを表示。
 
@@ -6593,7 +6600,7 @@ weechat.prnt(buffer, "\t\t")  # empty line (without time)
 [NOTE]
 この関数をスクリプトの中で実行するには "print" (Python の場合は "prnt") と綴ります。
 
-==== weechat_printf_date
+==== printf_date
 
 日付を指定してバッファにメッセージを表示。
 
@@ -6621,7 +6628,7 @@ weechat_printf_date (NULL, time (NULL) - 120, "Hello, 2 minutes ago");
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_printf_tags
+==== printf_tags
 
 タグを指定してバッファにメッセージを表示。
 
@@ -6650,7 +6657,7 @@ weechat_printf_tags (NULL, "notify_message",
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_printf_date_tags
+==== printf_date_tags
 
 日付とタグを指定してバッファにメッセージを表示。
 
@@ -6719,7 +6726,7 @@ weechat.prnt_date_tags("", time - 120, "notify_message",
 [NOTE]
 この関数をスクリプトの中で実行するには "print_date_tags" (Python の場合は "prnt_date_tags") と綴ります。
 
-==== weechat_printf_y
+==== printf_y
 
 自由内容のバッファのある行にメッセージを表示
 
@@ -6761,7 +6768,7 @@ weechat.prnt_y("", 2, "My message on third line")
 [NOTE]
 この関数をスクリプトの中で実行するには "print_y" (Python の場合は "prnt_y") と綴ります。
 
-==== weechat_log_printf
+==== log_printf
 
 WeeChat ログファイル (weechat.log) にメッセージを書き込む。
 
@@ -6826,7 +6833,7 @@ weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
 以下のフック型に対して優先度を設定できます:
 command、command_run、signal、hsignal、config、completion、modifier、info、info_hashtable、infolist、hdata、focus。
 
-==== weechat_hook_command
+==== hook_command
 
 コマンドをフックする。
 
@@ -6962,7 +6969,7 @@ hook = weechat.hook_command("myfilter", "description of myfilter",
     "my_command_cb", "")
 ----
 
-==== weechat_hook_command_run
+==== hook_command_run
 
 WeeChat がコマンドを実行する際にこれをフック。
 
@@ -7032,7 +7039,7 @@ def my_command_run_cb(data, buffer, command):
 hook = weechat.hook_command_run("/input complete*", "my_command_run_cb", "")
 ----
 
-==== weechat_hook_timer
+==== hook_timer
 
 タイマをフックする。
 
@@ -7099,7 +7106,7 @@ def my_timer_cb(data, remaining_calls):
 hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 ----
 
-==== weechat_hook_fd
+==== hook_fd
 
 ファイルディスクリプタ (ファイルやソケット) をフック。
 
@@ -7168,7 +7175,7 @@ sock = ...
 hook = weechat.hook_fd(sock, 1, 0, 0, "my_fd_cb", "")
 ----
 
-==== weechat_hook_process
+==== hook_process
 
 プロセスをフックして (フォークして実行)、出力を受け取る。
 
@@ -7307,7 +7314,7 @@ def my_process_cb(data, command, return_code, out, err):
 hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
 ----
 
-==== weechat_hook_process_hashtable
+==== hook_process_hashtable
 
 _WeeChat バージョン 0.3.7 以上で利用可。_
 
@@ -7512,7 +7519,7 @@ hook3 = weechat.hook_process_hashtable("sh",
                                        20000, "my_process_cb", "")
 ----
 
-==== weechat_hook_connect
+==== hook_connect
 
 接続をフックする (リモートホストへのバックグラウンド接続)。
 
@@ -7682,7 +7689,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
                             "my_connect_cb", "")
 ----
 
-==== weechat_hook_print
+==== hook_print
 
 _WeeChat バージョン 0.4.3 と 1.0 で更新_
 
@@ -7783,7 +7790,7 @@ def my_print_cb(data, buffer, date, tags, displayed, highlight, prefix, message)
 hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 ----
 
-==== weechat_hook_signal
+==== hook_signal
 
 シグナルをフックする。
 
@@ -8462,7 +8469,7 @@ def my_signal_cb(data, signal, signal_data):
 hook = weechat.hook_signal("quit", "my_signal_cb", "")
 ----
 
-==== weechat_hook_signal_send
+==== hook_signal_send
 
 _バージョン 1.0 で更新。_
 
@@ -8653,7 +8660,7 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
                          "freenode;;2;;/whois FlashCode")
 ----
 
-==== weechat_hook_hsignal
+==== hook_hsignal
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -8779,7 +8786,7 @@ def my_hsignal_cb(data, signal, hashtable):
 hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 ----
 
-==== weechat_hook_hsignal_send
+==== hook_hsignal_send
 
 _WeeChat バージョン 0.3.4 以上で利用可、バージョン 1.0 で更新。_
 
@@ -9010,7 +9017,7 @@ weechat.hook_hsignal_send("irc_redirect_pattern",
 # ...
 ----
 
-==== weechat_hook_config
+==== hook_config
 
 設定オプションをフック。
 
@@ -9076,7 +9083,7 @@ def my_config_cb(data, option, value):
 hook = weechat.hook_config("weechat.look.item_time_format", "my_config_cb", "")
 ----
 
-==== weechat_hook_completion
+==== hook_completion
 
 補完をフック。
 
@@ -9168,7 +9175,7 @@ hook = weechat.hook_completion("plugin_item", "my custom completion!",
                                "my_completion_cb", "")
 ----
 
-==== weechat_hook_completion_get_string
+==== hook_completion_get_string
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -9225,7 +9232,7 @@ def my_completion_cb(data, completion_item, buffer, completion):
     return weechat.WEECHAT_RC_OK
 ----
 
-==== weechat_hook_completion_list_add
+==== hook_completion_list_add
 
 補完用に単語を追加。
 
@@ -9261,7 +9268,7 @@ weechat.hook_completion_list_add(completion, word, nick_completion, where)
 # 例: 前の hook_completion 関数を参照
 ----
 
-==== weechat_hook_modifier
+==== hook_modifier
 
 修飾子をフック。
 
@@ -9452,7 +9459,7 @@ def my_modifier_cb(data, modifier, modifier_data, string):
 hook = weechat.hook_modifier("weechat_print", "my_modifier_cb", "")
 ----
 
-==== weechat_hook_modifier_exec
+==== hook_modifier_exec
 
 修飾子を実行。
 
@@ -9494,7 +9501,7 @@ weechat.hook_modifier_exec(modifier, modifier_data, string)
 weechat.hook_modifier_exec("my_modifier", my_data, my_string)
 ----
 
-==== weechat_hook_info
+==== hook_info
 
 情報をフック (コールバックを呼び出し、文字列を返す)。
 
@@ -9561,7 +9568,7 @@ hook = weechat.hook_info("my_info", "Some info", "Info about arguments",
                          "my_info_cb", "")
 ----
 
-==== weechat_hook_info_hashtable
+==== hook_info_hashtable
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -9637,7 +9644,7 @@ hook = weechat.hook_info_hashtable("my_info_hashtable", "Some info",
                                    "my_info_hashtable_cb", "")
 ----
 
-==== weechat_hook_infolist
+==== hook_infolist
 
 インフォリストをフック: コールバックは要求したインフォリストへのポインタを返す。
 
@@ -9720,7 +9727,7 @@ hook = weechat.hook_infolist("my_infolist", "Infolist with some data",
                              "my_infolist_cb", "")
 ----
 
-==== weechat_hook_hdata
+==== hook_hdata
 
 hdata をフック: コールバックは要求した hdata へのポインタを返す。
 
@@ -9775,7 +9782,7 @@ struct t_hook *my_hdata = weechat_hook_hdata ("my_hdata",
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hook_focus
+==== hook_focus
 
 フォーカス (マウスイベントやカーソルモード
 (カーソルが自由に移動出来る状態) でキーが押されたこと) をフック。
@@ -9911,7 +9918,7 @@ def my_focus_nicklist_cb(data, info):
 hook = weechat.hook_focus("buffer_nicklist", "my_focus_nicklist_cb", "")
 ----
 
-==== weechat_hook_set
+==== hook_set
 
 _WeeChat バージョン 0.3.9 以上で利用可 (スクリプト: WeeChat バージョン 0.4.3 以上で利用可)。_
 
@@ -9988,7 +9995,7 @@ weechat.hook_set(hook, "stdin", "data sent to stdin of child process")
 weechat.hook_set(hook, "stdin_close", "")  # optional
 ----
 
-==== weechat_unhook
+==== unhook
 
 フックを解除。
 
@@ -10023,7 +10030,7 @@ weechat.unhook(hook)
 weechat.unhook(my_hook)
 ----
 
-==== weechat_unhook_all
+==== unhook_all
 
 現在のプラグインで設定したフックをすべて解除。
 
@@ -10057,7 +10064,7 @@ weechat.unhook_all()
 
 バッファを作成/検索/閉じる関数
 
-==== weechat_buffer_new
+==== buffer_new
 
 新しいバッファを開く。
 
@@ -10144,7 +10151,7 @@ def my_close_cb(data, buffer):
 buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
 ----
 
-==== weechat_current_buffer
+==== current_buffer
 
 現在のバッファへのポインタを返す (現在のウィンドウに表示されているバッファ)。
 
@@ -10177,7 +10184,7 @@ buffer = weechat.current_buffer()
 weechat.prnt(weechat.current_buffer(), "Text on current buffer")
 ----
 
-==== weechat_buffer_search
+==== buffer_search
 
 _バージョン 1.0 で更新。_
 
@@ -10224,7 +10231,7 @@ buffer = weechat.buffer_search(plugin, name)
 buffer = weechat.buffer_search("my_plugin", "my_buffer")
 ----
 
-==== weechat_buffer_search_main
+==== buffer_search_main
 
 WeeChat メインバッファ ('core' バッファ、WeeChat
 を実行して最初に表示されるバッファ) を検索。
@@ -10258,7 +10265,7 @@ buffer = weechat.buffer_search_main()
 buffer = weechat.buffer_search_main()
 ----
 
-==== weechat_buffer_clear
+==== buffer_clear
 
 バッファの内容を消去。
 
@@ -10298,7 +10305,7 @@ if buffer != "":
     weechat.buffer_clear(buffer)
 ----
 
-==== weechat_buffer_close
+==== buffer_close
 
 バッファを閉じる。
 
@@ -10337,7 +10344,7 @@ buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
 weechat.buffer_close(buffer)
 ----
 
-==== weechat_buffer_merge
+==== buffer_merge
 
 バッファを他のバッファにマージする:
 両方のバッファは同じバッファ番号を持つ独立したバッファになり、WeeChat
@@ -10377,7 +10384,7 @@ weechat.buffer_merge(buffer, target_buffer)
 weechat.buffer_merge(weechat.current_buffer(), weechat.buffer_search_main())
 ----
 
-==== weechat_buffer_unmerge
+==== buffer_unmerge
 
 マージされたバッファからバッファのマージを解除する。
 
@@ -10413,7 +10420,7 @@ weechat.buffer_unmerge(buffer, number)
 weechat.buffer_unmerge(weechat.current_buffer(), 1)
 ----
 
-==== weechat_buffer_get_integer
+==== buffer_get_integer
 
 バッファプロパティの整数値を返す。
 
@@ -10500,7 +10507,7 @@ value = weechat.buffer_get_integer(buffer, property)
 weechat.prnt("", "my buffer number is: %d" % weechat.buffer_get_integer(my_buffer, "number"))
 ----
 
-==== weechat_buffer_get_string
+==== buffer_get_string
 
 バッファプロパティの文字列値を返す。
 
@@ -10560,7 +10567,7 @@ weechat.prnt("", "name / short name of buffer are: %s / %s"
     weechat.buffer_get_string(my_buffer, "short_name")))
 ----
 
-==== weechat_buffer_get_pointer
+==== buffer_get_pointer
 
 バッファプロパティのポインタ値を返す。
 
@@ -10603,7 +10610,7 @@ value = weechat.buffer_get_pointer(buffer, property)
 weechat.prnt("", "plugin pointer of my buffer: %s" % weechat.buffer_get_pointer(my_buffer, "plugin"))
 ----
 
-==== weechat_buffer_set
+==== buffer_set
 
 バッファプロパティに文字列値を設定。
 
@@ -10816,7 +10823,7 @@ weechat.buffer_set(my_buffer, "localvar_set_toto", "abc")
 weechat.buffer_set(my_buffer, "localvar_del_toto", "")
 ----
 
-==== weechat_buffer_set_pointer
+==== buffer_set_pointer
 
 バッファプロパティのポインタ値を設定。
 
@@ -10870,7 +10877,7 @@ weechat_buffer_set_pointer (my_buffer, "close_callback", &my_close_cb);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_buffer_string_replace_local_var
+==== buffer_string_replace_local_var
 
 文字列に含まれるバッファローカル変数をその値で展開する。
 
@@ -10915,7 +10922,7 @@ str = weechat.buffer_string_replace_local_var(my_buffer, "test with $toto")
 # str contains "test with abc"
 ----
 
-==== weechat_buffer_match_list
+==== buffer_match_list
 
 _WeeChat バージョン 0.3.5 以上で利用可。_
 
@@ -10975,7 +10982,7 @@ if buffer:
 
 ウィンドウを操作する関数。
 
-==== weechat_current_window
+==== current_window
 
 現在のウィンドウへのポインタを返す。
 
@@ -11008,7 +11015,7 @@ window = weechat.current_window()
 current_window = weechat.current_window()
 ----
 
-==== weechat_window_search_with_buffer
+==== window_search_with_buffer
 
 _WeeChat バージョン 0.3.5 以上で利用可。_
 
@@ -11050,7 +11057,7 @@ weechat.prnt("", "window displaying core buffer: %s"
     % weechat.window_search_with_buffer(weechat.buffer_search_main()))
 ----
 
-==== weechat_window_get_integer
+==== window_get_integer
 
 ウィンドウプロパティの整数値を返す。
 
@@ -11111,7 +11118,7 @@ weechat.prnt("", "current window is at position (x,y): (%d,%d)"
     weechat.window_get_integer(weechat.current_window(), "win_y")))
 ----
 
-==== weechat_window_get_string
+==== window_get_string
 
 ウィンドウプロパティの文字列値を返す。
 
@@ -11135,7 +11142,7 @@ int weechat_window_get_string (struct t_gui_window *window,
 
 * プロパティの文字列値
 
-==== weechat_window_get_pointer
+==== window_get_pointer
 
 ウィンドウプロパティのポインタ値を返す。
 
@@ -11179,7 +11186,7 @@ weechat.prnt("", "buffer displayed in current window: %s"
     % weechat.window_get_pointer(weechat.current_window(), "buffer"))
 ----
 
-==== weechat_window_set_title
+==== window_set_title
 
 ターミナルのタイトルを設定。
 
@@ -11217,7 +11224,7 @@ weechat.window_set_title("new title here")
 
 バッファのニックネームリストを操作する関数。
 
-==== weechat_nicklist_add_group
+==== nicklist_add_group
 
 ニックネームリストにグループを追加。
 
@@ -11283,7 +11290,7 @@ group = weechat.nicklist_add_group(my_buffer, my_parent_group, "test_group",
     "weechat.color.nicklist_group", 1)
 ----
 
-==== weechat_nicklist_search_group
+==== nicklist_search_group
 
 ニックネームリストからグループを検索。
 
@@ -11326,7 +11333,7 @@ group = weechat.nicklist_search_group(buffer, from_group, name)
 group = weechat.nicklist_search_group(my_buffer, "", "test_group")
 ----
 
-==== weechat_nicklist_add_nick
+==== nicklist_add_nick
 
 ニックネームをグループに追加。
 
@@ -11398,7 +11405,7 @@ else:
 nick = weechat.nicklist_add_nick(my_buffer, my_group, "test_nick", color, "@", "lightgreen", 1)
 ----
 
-==== weechat_nicklist_search_nick
+==== nicklist_search_nick
 
 ニックネームリストからニックネームを検索。
 
@@ -11441,7 +11448,7 @@ nick = weechat.nicklist_search_nick(buffer, from_group, name)
 nick = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
 ----
 
-==== weechat_nicklist_remove_group
+==== nicklist_remove_group
 
 ニックネームリストからグループを削除。
 
@@ -11476,7 +11483,7 @@ weechat.nicklist_remove_group(buffer, group)
 weechat.nicklist_remove_group(my_buffer, my_group)
 ----
 
-==== weechat_nicklist_remove_nick
+==== nicklist_remove_nick
 
 ニックネームリストからニックネームを削除。
 
@@ -11511,7 +11518,7 @@ weechat.nicklist_remove_nick(buffer, nick)
 weechat.nicklist_remove_nick(my_buffer, my_nick)
 ----
 
-==== weechat_nicklist_remove_all
+==== nicklist_remove_all
 
 ニックネームリストから全てのグループおよびニックネームを削除。
 
@@ -11544,7 +11551,7 @@ weechat.nicklist_remove_all(buffer)
 weechat.nicklist_remove_all(my_buffer)
 ----
 
-==== weechat_nicklist_get_next_item
+==== nicklist_get_next_item
 
 _WeeChat バージョン 0.3.7 以上で利用可。_
 
@@ -11594,7 +11601,7 @@ while (ptr_group || ptr_nick)
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_nicklist_group_get_integer
+==== nicklist_group_get_integer
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -11639,7 +11646,7 @@ value = weechat.nicklist_group_get_integer(buffer, group, property)
 visible = weechat.nicklist_group_get_integer(buffer, group, "visible")
 ----
 
-==== weechat_nicklist_group_get_string
+==== nicklist_group_get_string
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -11684,7 +11691,7 @@ value = weechat.nicklist_group_get_string(buffer, group, property)
 color = weechat.nicklist_group_get_string(buffer, group, "color")
 ----
 
-==== weechat_nicklist_group_get_pointer
+==== nicklist_group_get_pointer
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -11728,7 +11735,7 @@ value = weechat.nicklist_group_get_pointer(buffer, group, property)
 parent = weechat.nicklist_group_get_pointer(buffer, group, "parent")
 ----
 
-==== weechat_nicklist_group_set
+==== nicklist_group_set
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -11798,7 +11805,7 @@ weechat.nicklist_group_set(buffer, group, "color", "yellow")
 weechat.nicklist_group_set(buffer, group, "visible", "0")
 ----
 
-==== weechat_nicklist_nick_get_integer
+==== nicklist_nick_get_integer
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -11842,7 +11849,7 @@ value = weechat.nicklist_nick_get_integer(buffer, nick, property)
 visible = weechat.nicklist_nick_get_integer(buffer, nick, "visible")
 ----
 
-==== weechat_nicklist_nick_get_string
+==== nicklist_nick_get_string
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -11889,7 +11896,7 @@ value = weechat.nicklist_nick_get_string(buffer, nick, property)
 color = weechat.nicklist_nick_get_string(buffer, nick, "color")
 ----
 
-==== weechat_nicklist_nick_get_pointer
+==== nicklist_nick_get_pointer
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -11933,7 +11940,7 @@ value = weechat.nicklist_nick_get_pointer(buffer, nick, property)
 group = weechat.nicklist_nick_get_pointer(buffer, nick, "group")
 ----
 
-==== weechat_nicklist_nick_set
+==== nicklist_nick_set
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -12021,7 +12028,7 @@ weechat.nicklist_nick_set(buffer, nick, "visible", "0")
 
 バーを操作する関数。
 
-==== weechat_bar_item_search
+==== bar_item_search
 
 バー要素を検索。
 
@@ -12058,7 +12065,7 @@ bar_item = weechat.bar_item_search(name)
 bar_item = weechat.bar_item_search("myitem")
 ----
 
-==== weechat_bar_item_new
+==== bar_item_new
 
 _バージョン 0.4.2 で更新。_
 
@@ -12144,7 +12151,7 @@ def my_build_callback2(data, item, window, buffer, extra_info):
 bar_item2 = weechat.bar_item_new("(extra)myitem2", "my_build_callback2", "")  # WeeChat ≥ 0.4.2
 ----
 
-==== weechat_bar_item_update
+==== bar_item_update
 
 build コールバックを呼び出してバー要素の内容を更新。
 
@@ -12177,7 +12184,7 @@ weechat.bar_item_update(name)
 weechat.bar_item_update("myitem")
 ----
 
-==== weechat_bar_item_remove
+==== bar_item_remove
 
 バー要素を削除。
 
@@ -12210,7 +12217,7 @@ weechat.bar_item_remove(item)
 weechat.bar_item_remove(myitem)
 ----
 
-==== weechat_bar_search
+==== bar_search
 
 バーを検索。
 
@@ -12247,7 +12254,7 @@ bar = weechat.bar_search(name)
 bar = weechat.bar_search("mybar")
 ----
 
-==== weechat_bar_new
+==== bar_new
 
 新しいバーを作成。
 
@@ -12348,7 +12355,7 @@ bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", 
     "0", "5", "default", "cyan", "blue", "off", "time,buffer_number+buffer_name")
 ----
 
-==== weechat_bar_set
+==== bar_set
 
 バープロパティに新しい値を設定。
 
@@ -12390,7 +12397,7 @@ weechat.bar_set(bar, property, value)
 weechat.bar_set(my_bar, "position", "bottom")
 ----
 
-==== weechat_bar_update
+==== bar_update
 
 スクリーン上のバーの内容を更新。
 
@@ -12423,7 +12430,7 @@ weechat.bar_update(name)
 weechat.bar_update("mybar")
 ----
 
-==== weechat_bar_remove
+==== bar_remove
 
 バーを削除。
 
@@ -12461,7 +12468,7 @@ weechat.bar_remove(my_bar)
 
 WeeChat コマンドを実行する関数。
 
-==== weechat_command
+==== command
 
 _バージョン 1.1 で更新。_
 
@@ -12511,7 +12518,7 @@ rc = weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois 
 
 ネットワーク関数。
 
-==== weechat_network_pass_proxy
+==== network_pass_proxy
 
 プロキシへの接続および認証を確立する。
 
@@ -12557,7 +12564,7 @@ else
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_network_connect_to
+==== network_connect_to
 
 _バージョン 0.4.3 で更新。_
 
@@ -12616,7 +12623,7 @@ else
 
 情報を取得する関数。
 
-==== weechat_info_get
+==== info_get
 
 文字列型で WeeChat またはプラグインからの情報を返す。
 
@@ -12665,7 +12672,7 @@ weechat.prnt("", "Current WeeChat version is: %s (compiled on %s)"
 weechat.prnt("", "WeeChat home is: %s" % weechat.info_get("weechat_dir", ""))
 ----
 
-==== weechat_info_get_hashtable
+==== info_get_hashtable
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
@@ -12753,7 +12760,7 @@ weechat.prnt("", "message parsed: %s"
 * 'buffer': 任意のデータを含む固定長のバッファ
 * 'time': 時刻値
 
-==== weechat_infolist_new
+==== infolist_new
 
 新しいインフォリストを作成。
 
@@ -12786,7 +12793,7 @@ infolist = weechat.infolist_new()
 infolist = weechat.infolist_new()
 ----
 
-==== weechat_infolist_new_item
+==== infolist_new_item
 
 インフォリストに要素を追加。
 
@@ -12823,7 +12830,7 @@ item = weechat.infolist_new_item(infolist)
 item = weechat.infolist_new_item(infolist)
 ----
 
-==== weechat_infolist_new_var_integer
+==== infolist_new_var_integer
 
 インフォリストの要素に整数変数を追加。
 
@@ -12866,7 +12873,7 @@ var = weechat.infolist_new_var_integer(item, name, value)
 var = weechat.infolist_new_var_integer(item, "my_integer", 123)
 ----
 
-==== weechat_infolist_new_var_string
+==== infolist_new_var_string
 
 インフォリストの要素に文字列変数を追加。
 
@@ -12909,7 +12916,7 @@ var = weechat.infolist_new_var_string(item, name, value)
 var = weechat.infolist_new_var_string(item, "my_string", "value")
 ----
 
-==== weechat_infolist_new_var_pointer
+==== infolist_new_var_pointer
 
 インフォリストの要素にポインタ変数を追加。
 
@@ -12952,7 +12959,7 @@ var = weechat.infolist_new_var_pointer(item, name, pointer)
 var = weechat.infolist_new_var_pointer(item, "my_pointer", pointer)
 ----
 
-==== weechat_infolist_new_var_buffer
+==== infolist_new_var_buffer
 
 インフォリストの要素にバッファ変数を追加。
 
@@ -12992,7 +12999,7 @@ struct t_infolist_var *var = weechat_infolist_new_var_buffer (item,
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_infolist_new_var_time
+==== infolist_new_var_time
 
 インフォリストの要素に時刻変数を追加。
 
@@ -13035,7 +13042,7 @@ var = weechat.infolist_new_var_time(item, name, time)
 var = weechat.infolist_new_var_time(item, "my_time", int(time.time()))
 ----
 
-==== weechat_infolist_get
+==== infolist_get
 
 WeeChat またはプラグインからインフォリストを返す。
 
@@ -13089,7 +13096,7 @@ infolist = weechat.infolist_get(infolist_name, pointer, arguments)
 infolist = weechat.infolist_get("irc_server", "", "")
 ----
 
-==== weechat_infolist_next
+==== infolist_next
 
 "カーソル" をインフォリスト内の 1 つ後の要素に移動する。あるインフォリストに対するこの関数の呼び出し回数が
 1 回目のの場合は、カーソルをインフォリスト内の最初の要素に移動する。
@@ -13138,7 +13145,7 @@ else:
     # no more item available
 ----
 
-==== weechat_infolist_prev
+==== infolist_prev
 
 "カーソル" をインフォリスト内の 1 つ前の要素に移動する。あるインフォリストに対するこの関数の呼び出し回数が
 1 回目のの場合は、カーソルをインフォリスト内の最後の要素に移動する。
@@ -13188,7 +13195,7 @@ else:
     # no more item available
 ----
 
-==== weechat_infolist_reset_item_cursor
+==== infolist_reset_item_cursor
 
 インフォリストの"カーソル"をリセット。
 
@@ -13221,7 +13228,7 @@ weechat.infolist_reset_item_cursor(infolist)
 weechat.infolist_reset_item_cursor(infolist)
 ----
 
-==== weechat_infolist_search_var
+==== infolist_search_var
 
 _WeeChat バージョン 0.4.3 以上で利用可。_
 
@@ -13268,7 +13275,7 @@ if weechat.infolist_search_var(infolist, "name"):
     # ...
 ----
 
-==== weechat_infolist_fields
+==== infolist_fields
 
 現在のインフォリストの要素に対するフィールドのリストを返す。
 
@@ -13311,7 +13318,7 @@ fields = weechat.infolist_fields(infolist)
 # "i:my_integer,s:my_string,p:my_pointer,b:my_buffer,t:my_time"
 ----
 
-==== weechat_infolist_integer
+==== infolist_integer
 
 現在のインフォリストの要素に含まれる整数変数の値を返す。
 
@@ -13350,7 +13357,7 @@ value = weechat.infolist_integer(infolist, var)
 weechat.prnt("", "integer = %d" % weechat.infolist_integer(infolist, "my_integer"))
 ----
 
-==== weechat_infolist_string
+==== infolist_string
 
 現在のインフォリストの要素に含まれる文字列変数の値を返す。
 
@@ -13389,7 +13396,7 @@ value = weechat.infolist_string(infolist, var)
 weechat.prnt("", "string = %s" % weechat.infolist_string(infolist, "my_string"))
 ----
 
-==== weechat_infolist_pointer
+==== infolist_pointer
 
 現在のインフォリストの要素に含まれるポインタ変数の値を返す。
 
@@ -13428,7 +13435,7 @@ value = weechat.infolist_pointer(infolist, var)
 weechat.prnt("", "pointer = 0x%s" % weechat.infolist_pointer(infolist, "my_pointer"))
 ----
 
-==== weechat_infolist_buffer
+==== infolist_buffer
 
 現在のインフォリストの要素に含まれるバッファ変数の値を返す。
 
@@ -13463,7 +13470,7 @@ weechat_printf (NULL, "buffer = 0x%lx, size = %d",
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_infolist_time
+==== infolist_time
 
 現在のインフォリストの要素に含まれる時刻変数の値を返す。
 
@@ -13502,7 +13509,7 @@ value = weechat.infolist_time(infolist, var)
 weechat.prnt("", "time = %ld" % weechat.infolist_time(infolist, "my_time"))
 ----
 
-==== weechat_infolist_free
+==== infolist_free
 
 インフォリストの領域を開放。
 
@@ -13546,7 +13553,7 @@ hdata を使うことで読み取り専用でデータにアクセスできま�
 データを更新する場合は必ず関数
 <<_weechat_hdata_update,weechat_hdata_update>> を使ってください。
 
-==== weechat_hdata_new
+==== hdata_new
 
 _WeeChat バージョン 0.3.6 以上で利用可、バージョン 0.3.9 と 0.4.0 で更新。_
 
@@ -13611,7 +13618,7 @@ struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next", 0, 0
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hdata_new_var
+==== hdata_new_var
 
 _WeeChat バージョン 0.3.6 以上で利用可、バージョン 0.3.9 で更新。_
 
@@ -13694,7 +13701,7 @@ WEECHAT_HDATA_VAR(struct t_myplugin_list, next, POINTER, 0, NULL, "myplugin_list
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hdata_new_list
+==== hdata_new_list
 
 _WeeChat バージョン 0.3.6 以上で利用可、バージョン 1.0 で更新。_
 
@@ -13756,7 +13763,7 @@ WEECHAT_HDATA_LIST(last_buffer, 0);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hdata_get
+==== hdata_get
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -13804,7 +13811,7 @@ hdata = weechat.hdata_get(hdata_name)
 hdata = weechat.hdata_get("irc_server")
 ----
 
-==== weechat_hdata_get_var_offset
+==== hdata_get_var_offset
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -13844,7 +13851,7 @@ offset = weechat.hdata_get_var_offset(hdata, name)
 offset = weechat.hdata_get_var_offset(hdata, "name")
 ----
 
-==== weechat_hdata_get_var_type
+==== hdata_get_var_type
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -13909,7 +13916,7 @@ switch (type)
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hdata_get_var_type_string
+==== hdata_get_var_type_string
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -13949,7 +13956,7 @@ type = weechat.hdata_get_var_type_string(hdata, name)
 weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string("name"))
 ----
 
-==== weechat_hdata_get_var_array_size
+==== hdata_get_var_array_size
 
 _WeeChat バージョン 0.3.9 以上で利用可。_
 
@@ -13990,7 +13997,7 @@ array_size = weechat.hdata_get_var_array_size(hdata, pointer, name)
 array_size = weechat.hdata_get_var_array_size(hdata, pointer, "name")
 ----
 
-==== weechat_hdata_get_var_array_size_string
+==== hdata_get_var_array_size_string
 
 _WeeChat バージョン 0.3.9 以上で利用可。_
 
@@ -14033,7 +14040,7 @@ array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, name)
 array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, "name")
 ----
 
-==== weechat_hdata_get_var_hdata
+==== hdata_get_var_hdata
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -14073,7 +14080,7 @@ hdata_name = weechat.hdata_get_var_hdata(hdata, name)
 weechat.prnt("", "hdata = %s" % weechat.hdata_get_var_hdata(hdata, "name"))
 ----
 
-==== weechat_hdata_get_var
+==== hdata_get_var
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -14108,7 +14115,7 @@ void *pointer = weechat_hdata_get_var (hdata, buffer, "name");
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hdata_get_var_at_offset
+==== hdata_get_var_at_offset
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -14144,7 +14151,7 @@ void *pointer = weechat_hdata_get_var_at_offset (hdata, buffer, offset);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hdata_get_list
+==== hdata_get_list
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -14186,7 +14193,7 @@ hdata = weechat.hdata_get("buffer")
 buffers = weechat.hdata_get_list(hdata, "gui_buffers")
 ----
 
-==== weechat_hdata_check_pointer
+==== hdata_check_pointer
 
 _WeeChat バージョン 0.3.7 以上で利用可、バージョン 1.0 で更新。_
 
@@ -14247,7 +14254,7 @@ else:
     # ...
 ----
 
-==== weechat_hdata_move
+==== hdata_move
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -14305,7 +14312,7 @@ if buffer:
     buffer = weechat.hdata_move(hdata, buffer, -1)
 ----
 
-==== weechat_hdata_search
+==== hdata_search
 
 _WeeChat バージョン 0.4.1 以上で利用可。_
 
@@ -14365,7 +14372,7 @@ if server:
     # ...
 ----
 
-==== weechat_hdata_char
+==== hdata_char
 
 _WeeChat バージョン 0.3.7 以上で利用可。_
 
@@ -14407,7 +14414,7 @@ value = weechat.hdata_char(hdata, pointer, name)
 weechat.prnt("", "letter = %c" % weechat.hdata_char(hdata, pointer, "letter"))
 ----
 
-==== weechat_hdata_integer
+==== hdata_integer
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -14453,7 +14460,7 @@ buffer = weechat.buffer_search_main()
 weechat.prnt("", "number = %d" % weechat.hdata_integer(hdata, buffer, "number"))
 ----
 
-==== weechat_hdata_long
+==== hdata_long
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -14495,7 +14502,7 @@ value = weechat.hdata_long(hdata, pointer, name)
 weechat.prnt("", "longvar = %ld" % weechat.hdata_long(hdata, pointer, "longvar"))
 ----
 
-==== weechat_hdata_string
+==== hdata_string
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -14541,7 +14548,7 @@ buffer = weechat.buffer_search_main()
 weechat.prnt("", "name = %s" % weechat.hdata_string(hdata, buffer, "name"))
 ----
 
-==== weechat_hdata_pointer
+==== hdata_pointer
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -14587,7 +14594,7 @@ buffer = weechat.buffer_search_main()
 weechat.prnt("", "lines = %lx" % weechat.hdata_pointer(hdata, buffer, "lines"))
 ----
 
-==== weechat_hdata_time
+==== hdata_time
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -14655,7 +14662,7 @@ if ptr:
             weechat.prnt("", "time of first line displayed = %s" % time.strftime("%F %T", time.localtime(int(date))))
 ----
 
-==== weechat_hdata_hashtable
+==== hdata_hashtable
 
 _WeeChat バージョン 0.3.7 以上で利用可。_
 
@@ -14706,7 +14713,7 @@ for key in hash:
     weechat.prnt("", "  %s == %s" % (key, hash[key]))
 ----
 
-==== weechat_hdata_set
+==== hdata_set
 
 _WeeChat バージョン 0.3.9 以上で利用可。_
 
@@ -14746,7 +14753,7 @@ weechat_hdata_set (hdata, pointer, "message", "test");
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== weechat_hdata_update
+==== hdata_update
 
 _WeeChat バージョン 0.3.9 以上で利用可。_
 
@@ -14832,7 +14839,7 @@ if own_lines:
         weechat.hdata_update(hdata, line_data, {"date": str(weechat.hdata_time(hdata, line_data, "date") - 3600)})
 ----
 
-==== weechat_hdata_get_string
+==== hdata_get_string
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
@@ -14895,7 +14902,7 @@ weechat.prnt("", "lists in hdata: %s" % weechat.hdata_get_string(hdata, "list_ke
 
 WeeChat をアップグレードする (コマンド "/upgrade") 関数。
 
-==== weechat_upgrade_new
+==== upgrade_new
 
 アップグレード用のファイルを作成または読み込み。
 
@@ -14936,7 +14943,7 @@ upgrade_file = weechat.upgrade_new(filename, write)
 upgrade_file = weechat.upgrade_new("my_file", 1)
 ----
 
-==== weechat_upgrade_write_object
+==== upgrade_write_object
 
 アップグレードファイルにオブジェクトを書き込む。
 
@@ -14984,7 +14991,7 @@ rc = weechat.upgrade_write_object(upgrade_file, object_id, infolist)
 weechat.upgrade_write_object(upgrade_file, 1, infolist)
 ----
 
-==== weechat_upgrade_read
+==== upgrade_read
 
 アップグレードファイルを読み込む。
 
@@ -15050,7 +15057,7 @@ def my_upgrade_read_cb(upgrade_file, object_id, infolist):
 weechat.upgrade_read(upgrade_file, "my_upgrade_read_cb", ""))
 ----
 
-==== weechat_upgrade_close
+==== upgrade_close
 
 アップグレードファイルを閉じる。
 

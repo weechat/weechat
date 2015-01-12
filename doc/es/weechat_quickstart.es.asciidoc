@@ -2,7 +2,14 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: es
-:toc:
+:toc2:
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Lázaro A. <uranio-235@myopera.com>, 2012
 
 
 [[start]]

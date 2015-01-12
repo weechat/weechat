@@ -92,6 +92,10 @@ $HOME/.weechat/weechat.log::
 
 == AUTEURS
 
+Cette page de manuel a été écrite par Sébastien Helleu <flashcode@flashtux.org>.
+
+== COPYRIGHT
+
 WeeChat est écrit par Sébastien Helleu et des contributeurs (la liste complète
 est dans le fichier AUTHORS.asciidoc).
 

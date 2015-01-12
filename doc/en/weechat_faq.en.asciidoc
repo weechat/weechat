@@ -3,11 +3,14 @@
 :email: flashcode@flashtux.org
 :lang: en
 :toc:
+:toc-placement: manual
 
 
 [NOTE]
 This document is written for WeeChat versions ≥ 0.3.0 but should preferably be
 used with latest stable version of WeeChat.
+
+toc::[]
 
 
 [[general]]

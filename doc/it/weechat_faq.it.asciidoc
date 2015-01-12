@@ -3,11 +3,19 @@
 :email: flashcode@flashtux.org
 :lang: it
 :toc:
+:toc-placement: manual
 
+
+// TRANSLATION MISSING
+Translators:
+
+* Marco Paolone <marcopaolone@gmail.com>, 2009-2013
 
 [NOTE]
 Questo documento è stato scritto per le versioni di WeeChat ≥ 0.3.0, ma dovrebbe
 essere usato preferibilmente con l'ultima versione stabile di WeeChat.
+
+toc::[]
 
 
 [[general]]

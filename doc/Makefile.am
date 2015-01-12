@@ -18,9 +18,21 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+BUILT_SOURCES = build-asciidoc-css
+build-asciidoc-css:
+	cp $(abs_top_srcdir)/doc/asciidoc.css asciidoc_toc.css
+	cat $(abs_top_srcdir)/doc/asciidoc.css $(abs_top_srcdir)/doc/toc2.css > asciidoc_toc2.css
+
 SUBDIRS = . en fr it de pl es ru ja
 
-EXTRA_DIST = docgen.py CMakeLists.txt asciidoc.conf asciidoc.css
+EXTRA_DIST = docgen.py \
+             CMakeLists.txt \
+             asciidoc.conf \
+             asciidoc.css \
+             toc2.css
 
 uninstall-hook:
 	-rmdir $(DESTDIR)$(datadir)/doc/$(PACKAGE)
+
+clean-local:
+	-rm -f asciidoc_toc.css asciidoc_toc2.css

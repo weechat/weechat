@@ -57,23 +57,23 @@ weechat.1: weechat.1.de.asciidoc cmdline_options.de.asciidoc
 
 # user's guide
 weechat_user.de.html: weechat_user.de.asciidoc cmdline_options.de.asciidoc $(wildcard autogen/user/*.asciidoc)
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.de.html $(abs_top_srcdir)/doc/de/weechat_user.de.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_user.de.html $(abs_top_srcdir)/doc/de/weechat_user.de.asciidoc
 
 # scripting guide
 weechat_scripting.de.html: weechat_scripting.de.asciidoc
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_scripting.de.html $(abs_top_srcdir)/doc/de/weechat_scripting.de.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_scripting.de.html $(abs_top_srcdir)/doc/de/weechat_scripting.de.asciidoc
 
 # FAQ
 weechat_faq.de.html: weechat_faq.de.asciidoc
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.de.html $(abs_top_srcdir)/doc/de/weechat_faq.de.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.de.html $(abs_top_srcdir)/doc/de/weechat_faq.de.asciidoc
 
 # quickstart
 weechat_quickstart.de.html: weechat_quickstart.de.asciidoc
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_quickstart.de.html $(abs_top_srcdir)/doc/de/weechat_quickstart.de.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_quickstart.de.html $(abs_top_srcdir)/doc/de/weechat_quickstart.de.asciidoc
 
 # tester's guide
 weechat_tester.de.html: weechat_tester.de.asciidoc
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_tester.de.html $(abs_top_srcdir)/doc/de/weechat_tester.de.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_tester.de.html $(abs_top_srcdir)/doc/de/weechat_tester.de.asciidoc
 
 # install man/docs
 

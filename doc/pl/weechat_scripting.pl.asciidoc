@@ -1,9 +1,16 @@
 = Poradnik pisania skryptów WeeChat
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:toc:
+:toc2:
 :toclevels: 3
 :toc-title: Spis treści
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Krzysztof Korościk <soltys@szluug.org>, 2011-2014
 
 
 Ten dokument opisuje klienta rozmów WeeChat, który jest częścią WeeChat.

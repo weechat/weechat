@@ -63,35 +63,35 @@ weechat.1: weechat.1.ja.asciidoc cmdline_options.ja.asciidoc
 
 # user's guide
 weechat_user.ja.html: weechat_user.ja.asciidoc cmdline_options.ja.asciidoc $(wildcard autogen/user/*.asciidoc)
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.ja.html $(abs_top_srcdir)/doc/ja/weechat_user.ja.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_user.ja.html $(abs_top_srcdir)/doc/ja/weechat_user.ja.asciidoc
 
 # plugin API reference
 weechat_plugin_api.ja.html: weechat_plugin_api.ja.asciidoc $(wildcard autogen/plugin_api/*.asciidoc)
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_plugin_api.ja.html $(abs_top_srcdir)/doc/ja/weechat_plugin_api.ja.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_plugin_api.ja.html $(abs_top_srcdir)/doc/ja/weechat_plugin_api.ja.asciidoc
 
 # scripting guide
 weechat_scripting.ja.html: weechat_scripting.ja.asciidoc
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_scripting.ja.html $(abs_top_srcdir)/doc/ja/weechat_scripting.ja.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_scripting.ja.html $(abs_top_srcdir)/doc/ja/weechat_scripting.ja.asciidoc
 
 # FAQ
 weechat_faq.ja.html: weechat_faq.ja.asciidoc
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.ja.html $(abs_top_srcdir)/doc/ja/weechat_faq.ja.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.ja.html $(abs_top_srcdir)/doc/ja/weechat_faq.ja.asciidoc
 
 # quickstart
 weechat_quickstart.ja.html: weechat_quickstart.ja.asciidoc
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_quickstart.ja.html $(abs_top_srcdir)/doc/ja/weechat_quickstart.ja.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_quickstart.ja.html $(abs_top_srcdir)/doc/ja/weechat_quickstart.ja.asciidoc
 
 # tester's guide
 weechat_tester.ja.html: weechat_tester.ja.asciidoc
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_tester.ja.html $(abs_top_srcdir)/doc/ja/weechat_tester.ja.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_tester.ja.html $(abs_top_srcdir)/doc/ja/weechat_tester.ja.asciidoc
 
 # relay protocol
 weechat_relay_protocol.ja.html: weechat_relay_protocol.ja.asciidoc
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_relay_protocol.ja.html $(abs_top_srcdir)/doc/ja/weechat_relay_protocol.ja.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_relay_protocol.ja.html $(abs_top_srcdir)/doc/ja/weechat_relay_protocol.ja.asciidoc
 
 # developer's guide
 weechat_dev.ja.html: weechat_dev.ja.asciidoc
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_dev.ja.html $(abs_top_srcdir)/doc/ja/weechat_dev.ja.asciidoc
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_dev.ja.html $(abs_top_srcdir)/doc/ja/weechat_dev.ja.asciidoc
 
 # install man/docs
 

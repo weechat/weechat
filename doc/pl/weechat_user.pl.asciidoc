@@ -1,9 +1,16 @@
 = Poradnik użytkownika WeeChat
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:toc:
-:toclevels: 4
+:toc2:
+:toclevels: 3
 :toc-title: Spis treści
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Krzysztof Korościk <soltys@szluug.org>, 2013-2014
 
 
 Ten dokument opisuje klienta rozmów WeeChat, będącego częścią WeeChat.

@@ -2,7 +2,16 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: de
-:toc:
+:toc2:
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Frank Zacharias <frank_zacharias@web.de>, 2006
+* Juergen Descher <jhdl@gmx.net>, 2009
+* Nils Görs <weechatter@arcor.de>, 2009-2015
 
 
 [[start]]

@@ -90,6 +90,15 @@ $HOME/.weechat/weechat.log::
 
 == AUTORZY
 
+// TRANSLATION MISSING
+This manpage was written by Sébastien Helleu <flashcode@flashtux.org>.
+
+// TRANSLATION MISSING
+Translated by Krzysztof Korościk <soltys@szluug.org>.
+
+// TRANSLATION MISSING
+== COPYRIGHT
+
 WeeChat jest tworzony przez Sébastien Helleu i społeczność (pełna lista dostępna
 jest w pliku AUTHORS).
 

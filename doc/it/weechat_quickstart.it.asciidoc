@@ -2,7 +2,14 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: it
-:toc:
+:toc2:
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Marco Paolone <marcopaolone@gmail.com>, 2009-2013
 
 
 [[start]]

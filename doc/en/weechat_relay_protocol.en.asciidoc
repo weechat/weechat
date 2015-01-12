@@ -2,8 +2,9 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en
-:toc:
-:toclevels: 4
+:toc2:
+:toclevels: 3
+:max-width: 100%
 
 
 This document is the specification of WeeChat Relay protocol: the protocol used

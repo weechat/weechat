@@ -2,8 +2,15 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: de
-:toc:
-:toclevels: 4
+:toc2:
+:toclevels: 3
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Nils Görs <weechatter@arcor.de>, 2010-2015
 
 
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.

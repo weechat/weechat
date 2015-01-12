@@ -3,11 +3,20 @@
 :email: flashcode@flashtux.org
 :lang: de
 :toc:
+:toc-placement: manual
 
+
+// TRANSLATION MISSING
+Translators:
+
+* Juergen Descher <jhdl@gmx.net>, 2009
+* Nils Görs <weechatter@arcor.de>, 2009-2015
 
 [NOTE]
 Diese Dokumentation bezieht sich auf die WeeChat Version ≥ 0.3.0. Es sollte aber
 vorzugsweise immer die aktuell veröffentlichte Version von WeeChat genutzt werden.
+
+toc::[]
 
 
 [[general]]

@@ -89,6 +89,15 @@ $HOME/.weechat/weechat.log::
 
 == 著者
 
+// TRANSLATION MISSING
+This manpage was written by Sébastien Helleu <flashcode@flashtux.org>.
+
+// TRANSLATION MISSING
+Translated by Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>.
+
+// TRANSLATION MISSING
+== COPYRIGHT
+
 WeeChat は Sébastien Helleu さんと貢献者によって作成されています
 (完全なリストは AUTHORS.asciidoc ファイルを参照してください)。
 

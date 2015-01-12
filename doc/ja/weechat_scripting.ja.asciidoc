@@ -1,9 +1,16 @@
 = WeeChat スクリプト製作ガイド
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:toc:
+:toc2:
 :toclevels: 3
 :toc-title: 目次
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2012-2014
 
 
 このマニュアルは WeeChat チャットクライアントについて説明しており、WeeChat の一部です。

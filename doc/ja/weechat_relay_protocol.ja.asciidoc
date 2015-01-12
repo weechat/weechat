@@ -1,9 +1,16 @@
 = WeeChat リレープロトコル
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:toc:
-:toclevels: 4
+:toc2:
+:toclevels: 3
 :toc-title: 目次
+:max-width: 100%
+
+
+// TRANSLATION MISSING
+Translators:
+
+* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2014
 
 
 この文書は WeeChat リレープロトコルについて述べたものです: リレープロトコルとは、WeeChat

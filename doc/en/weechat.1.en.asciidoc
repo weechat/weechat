@@ -90,6 +90,10 @@ $HOME/.weechat/weechat.log::
 
 == AUTHORS
 
+This manpage was written by Sébastien Helleu <flashcode@flashtux.org>.
+
+== COPYRIGHT
+
 WeeChat is written by Sébastien Helleu and contributors (complete list is in
 the AUTHORS.asciidoc file).
 

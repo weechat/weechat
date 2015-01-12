@@ -3,11 +3,19 @@
 :email: flashcode@flashtux.org
 :toc:
 :toc-title: Spis treści
+:toc-placement: manual
 
+
+// TRANSLATION MISSING
+Translators:
+
+* Krzysztof Korościk <soltys@szluug.org>, 2009-2014
 
 [NOTE]
 Ten dokument jest napisany dla WeeChat w wersji ≥ 0.3.0, ale powinien być używany
 dla najnowszej stabilnej wersji.
+
+toc::[]
 
 
 [[general]]
