@@ -63,36 +63,36 @@ weechat.1: weechat.1.en.asciidoc cmdline_options.en.asciidoc
 	rm -rf tmp_man
 
 # user's guide
-weechat_user.en.html: weechat_user.en.asciidoc cmdline_options.en.asciidoc $(wildcard autogen/user/*.asciidoc)
-	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_user.en.html $(abs_top_srcdir)/doc/en/weechat_user.en.asciidoc
+weechat_user.en.html: weechat_user.en.asciidoc cmdline_options.en.asciidoc $(wildcard autogen/user/*.asciidoc) $(abs_top_srcdir)/doc/asciidoc_toc2.css
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_user.en.html $(abs_top_srcdir)/doc/en/weechat_user.en.asciidoc
 
 # plugin API reference
-weechat_plugin_api.en.html: weechat_plugin_api.en.asciidoc $(wildcard autogen/plugin_api/*.asciidoc)
-	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_plugin_api.en.html $(abs_top_srcdir)/doc/en/weechat_plugin_api.en.asciidoc
+weechat_plugin_api.en.html: weechat_plugin_api.en.asciidoc $(wildcard autogen/plugin_api/*.asciidoc) $(abs_top_srcdir)/doc/asciidoc_toc2.css
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_plugin_api.en.html $(abs_top_srcdir)/doc/en/weechat_plugin_api.en.asciidoc
 
 # scripting guide
-weechat_scripting.en.html: weechat_scripting.en.asciidoc
-	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_scripting.en.html $(abs_top_srcdir)/doc/en/weechat_scripting.en.asciidoc
+weechat_scripting.en.html: weechat_scripting.en.asciidoc $(abs_top_srcdir)/doc/asciidoc_toc2.css
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_scripting.en.html $(abs_top_srcdir)/doc/en/weechat_scripting.en.asciidoc
 
 # FAQ
-weechat_faq.en.html: weechat_faq.en.asciidoc
-	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.en.html $(abs_top_srcdir)/doc/en/weechat_faq.en.asciidoc
+weechat_faq.en.html: weechat_faq.en.asciidoc $(abs_top_srcdir)/doc/asciidoc_toc.css
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc_toc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.en.html $(abs_top_srcdir)/doc/en/weechat_faq.en.asciidoc
 
 # quickstart
-weechat_quickstart.en.html: weechat_quickstart.en.asciidoc
-	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_quickstart.en.html $(abs_top_srcdir)/doc/en/weechat_quickstart.en.asciidoc
+weechat_quickstart.en.html: weechat_quickstart.en.asciidoc $(abs_top_srcdir)/doc/asciidoc_toc2.css
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_quickstart.en.html $(abs_top_srcdir)/doc/en/weechat_quickstart.en.asciidoc
 
 # tester's guide
-weechat_tester.en.html: weechat_tester.en.asciidoc
-	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_tester.en.html $(abs_top_srcdir)/doc/en/weechat_tester.en.asciidoc
+weechat_tester.en.html: weechat_tester.en.asciidoc $(abs_top_srcdir)/doc/asciidoc_toc2.css
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_tester.en.html $(abs_top_srcdir)/doc/en/weechat_tester.en.asciidoc
 
 # relay protocol
-weechat_relay_protocol.en.html: weechat_relay_protocol.en.asciidoc
-	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_relay_protocol.en.html $(abs_top_srcdir)/doc/en/weechat_relay_protocol.en.asciidoc
+weechat_relay_protocol.en.html: weechat_relay_protocol.en.asciidoc $(abs_top_srcdir)/doc/asciidoc_toc2.css
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_relay_protocol.en.html $(abs_top_srcdir)/doc/en/weechat_relay_protocol.en.asciidoc
 
 # developer's guide
-weechat_dev.en.html: weechat_dev.en.asciidoc
-	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_builddir)/../asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_dev.en.html $(abs_top_srcdir)/doc/en/weechat_dev.en.asciidoc
+weechat_dev.en.html: weechat_dev.en.asciidoc $(abs_top_srcdir)/doc/asciidoc_toc2.css
+	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -o weechat_dev.en.html $(abs_top_srcdir)/doc/en/weechat_dev.en.asciidoc
 
 # install man/docs
 

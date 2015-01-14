@@ -41,7 +41,7 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.de.html
     COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_USER} -o weechat_user.de.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.de.asciidoc
     DEPENDS
-    asciidoc-toc2-css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc2.css
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.de.asciidoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.de.asciidoc
     ${CMAKE_CURRENT_SOURCE_DIR}/autogen/user/*.asciidoc
@@ -56,7 +56,7 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.de.html
     COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_SCRIPTING} -o weechat_scripting.de.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.de.asciidoc
     DEPENDS
-    asciidoc-toc2-css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc2.css
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.de.asciidoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_scripting.de.html"
@@ -69,7 +69,7 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.de.html
     COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_FAQ} -o weechat_faq.de.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.de.asciidoc
     DEPENDS
-    asciidoc-toc-css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc.css
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.de.asciidoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_faq.de.html"
@@ -82,7 +82,7 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.de.html
     COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_QUICKSTART} -o weechat_quickstart.de.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.de.asciidoc
     DEPENDS
-    asciidoc-toc2-css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc2.css
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.de.asciidoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_quickstart.de.html"
@@ -95,7 +95,7 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.de.html
     COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_TESTER} -o weechat_tester.de.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.de.asciidoc
     DEPENDS
-    asciidoc-toc2-css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc2.css
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.de.asciidoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_tester.de.html"

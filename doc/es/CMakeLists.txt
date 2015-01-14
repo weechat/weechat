@@ -24,7 +24,7 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html
     COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_QUICKSTART} -o weechat_quickstart.es.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.asciidoc
     DEPENDS
-    asciidoc-toc2-css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc2.css
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.asciidoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_quickstart.es.html"
