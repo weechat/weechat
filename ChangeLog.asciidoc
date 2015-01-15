@@ -20,6 +20,11 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add priority in plugins to initialize them in order
 * doc: add Russian man page
 
+=== Bugs fixed
+
+* irc: fix crash in buffer close when server name is the same as a channel name
+  (closes #305)
+
 == Version 1.1 (2015-01-11)
 
 === New features
