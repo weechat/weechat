@@ -13,6 +13,12 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'ReleaseNotes.asciidoc' in sources).
 
 
+== Version 1.2 (under dev)
+
+=== New features
+
+* core: add priority in plugins to initialize them in order
+
 == Version 1.1 (2015-01-11)
 
 === New features
