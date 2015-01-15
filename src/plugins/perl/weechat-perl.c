@@ -37,6 +37,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Support of perl scripts"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
+WEECHAT_PLUGIN_PRIORITY(3000);
 
 struct t_weechat_plugin *weechat_perl_plugin = NULL;
 

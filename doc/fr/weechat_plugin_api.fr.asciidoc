@@ -58,6 +58,9 @@ WEECHAT_PLUGIN_VERSION("1.0")::
 WEECHAT_PLUGIN_LICENSE("GPL3")::
     licence de l'extension
 
+WEECHAT_PLUGIN_PRIORITY(1000)::
+    priorité de l'extension (facultatif, voir ci-dessous)
+
 [[main_functions]]
 === Fonctions principales
 
@@ -89,6 +92,21 @@ Valeur de retour :
 
 * 'WEECHAT_RC_OK' si ok (l'extension sera chargée)
 * 'WEECHAT_RC_ERROR' si erreur (l'extension ne sera PAS chargée)
+
+[[plugin_priority]]
+===== Priorité de l'extension
+
+Lorsque les extensions sont automatiquement chargées (par exemple au
+démarrage), WeeChat charge d'abord toutes les extensions, puis appelle les
+fonctions 'init', en utilisant la priorité définie dans chaque extension.
+Une grande priorité signifie que la fonction 'init' est appelée en premier.
+
+La priorité par défaut est 1000 (avec une telle priorité, l'extension est
+chargée après toutes les extensions par défaut).
+
+Les extensions par défaut de WeeChat sont initialisées dans cet ordre :
+
+include::autogen/plugin_api/plugins_priority.asciidoc[]
 
 ==== weechat_plugin_end
 

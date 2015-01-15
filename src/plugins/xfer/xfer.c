@@ -50,6 +50,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("DCC file transfer and direct chat"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
+WEECHAT_PLUGIN_PRIORITY(6000);
 
 struct t_weechat_plugin *weechat_xfer_plugin = NULL;
 

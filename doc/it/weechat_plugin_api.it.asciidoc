@@ -63,6 +63,10 @@ WEECHAT_PLUGIN_VERSION("1.0")::
 WEECHAT_PLUGIN_LICENSE("GPL3")::
     licenza del plugin
 
+// TRANSLATION MISSING
+WEECHAT_PLUGIN_PRIORITY(1000)::
+    the plugin priority (optional, see below)
+
 [[main_functions]]
 === Funzioni principali
 
@@ -97,6 +101,22 @@ Valori restituiti:
   verrà caricato)
 * 'WEECHAT_RC_ERROR' se c'è un errore (il plugin NON
   verrà caricato)
+
+// TRANSLATION MISSING
+[[plugin_priority]]
+===== Plugin priority
+
+// TRANSLATION MISSING
+When plugins are auto-loaded (for example on startup), WeeChat first loads all
+plugins, and then calls the 'init' functions, using the priority defined in
+each plugin. A high priority means that the 'init' function is called first.
+
+Default priority is 1000 (with such priority, the plugin is loaded after all
+default plugins).
+
+The default WeeChat plugins are initialized in this order:
+
+include::autogen/plugin_api/plugins_priority.asciidoc[]
 
 ==== weechat_plugin_end
 

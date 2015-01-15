@@ -34,6 +34,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Alias commands"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
+WEECHAT_PLUGIN_PRIORITY(8000);
 
 #define ALIAS_IS_ARG_NUMBER(number) ((number >= '1') && (number <= '9'))
 

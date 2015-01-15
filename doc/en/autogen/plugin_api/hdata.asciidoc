@@ -843,6 +843,8 @@
 *** 'version' (string)
 *** 'license' (string)
 *** 'charset' (string)
+*** 'priority' (integer)
+*** 'initialized' (integer)
 *** 'debug' (integer)
 *** 'prev_plugin' (pointer, hdata: "plugin")
 *** 'next_plugin' (pointer, hdata: "plugin")

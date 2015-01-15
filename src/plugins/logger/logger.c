@@ -50,6 +50,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Log buffers to files"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
+WEECHAT_PLUGIN_PRIORITY(12000);
 
 struct t_weechat_plugin *weechat_logger_plugin = NULL;
 

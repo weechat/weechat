@@ -36,6 +36,7 @@
 #include <dlfcn.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-arraylist.h"
 #include "../core/wee-config.h"
 #include "../core/wee-eval.h"
 #include "../core/wee-hashtable.h"
@@ -281,38 +282,127 @@ plugin_check_autoload (const char *filename)
 }
 
 /*
- * Searches for position of plugin (to keep list sorted).
+ * Returns arguments for plugins (only the relevant arguments for plugins,
+ * arguments for WeeChat core not returned).
+ *
+ * Note: plugin_argv must be freed after use (with free()).
  */
 
-struct t_weechat_plugin *
-plugin_find_pos (struct t_weechat_plugin *plugin)
+void
+plugin_get_args (struct t_weechat_plugin *plugin,
+                 int argc, char **argv,
+                 int *plugin_argc, char ***plugin_argv)
 {
-    struct t_weechat_plugin *ptr_plugin;
+    int i, temp_argc;
+    char **temp_argv;
 
-    for (ptr_plugin = weechat_plugins; ptr_plugin;
-         ptr_plugin = ptr_plugin->next_plugin)
+    temp_argc = 0;
+    temp_argv = NULL;
+
+    if (argc > 0)
     {
-        if (string_strcasecmp (plugin->name, ptr_plugin->name) < 0)
-            return ptr_plugin;
+        temp_argv = malloc ((argc + 1) * sizeof (*temp_argv));
+        if (temp_argv)
+        {
+            for (i = 0; i < argc; i++)
+            {
+                if ((strcmp (argv[i], "-a") == 0)
+                    || (strcmp (argv[i], "--no-connect") == 0)
+                    || (strcmp (argv[i], "-s") == 0)
+                    || (strcmp (argv[i], "--no-script") == 0)
+                    || (strcmp (argv[i], "--upgrade") == 0)
+                    || (strncmp (argv[i], plugin->name,
+                                 strlen (plugin->name)) == 0))
+                {
+                    temp_argv[temp_argc++] = argv[i];
+                }
+            }
+            if (temp_argc == 0)
+            {
+                free (temp_argv);
+                temp_argv = NULL;
+            }
+            else
+                temp_argv[temp_argc] = NULL;
+        }
     }
-    return NULL;
+
+    *plugin_argc = temp_argc;
+    *plugin_argv = temp_argv;
+}
+
+/*
+ * Initializes a plugin by calling its init() function.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+plugin_call_init (struct t_weechat_plugin *plugin, int argc, char **argv)
+{
+    t_weechat_init_func *init_func;
+    int plugin_argc, rc;
+    char **plugin_argv;
+
+    if (plugin->initialized)
+        return 1;
+
+    /* look for plugin init function */
+    init_func = dlsym (plugin->handle, "weechat_plugin_init");
+    if (!init_func)
+        return 0;
+
+    /* get arguments for the plugin */
+    plugin_get_args (plugin, argc, argv, &plugin_argc, &plugin_argv);
+
+    /* init plugin */
+    if (weechat_debug_core >= 1)
+    {
+        gui_chat_printf (NULL,
+                         _("Initializing plugin \"%s\" (priority: %d)"),
+                         plugin->name,
+                         plugin->priority);
+    }
+    rc = ((t_weechat_init_func *)init_func) (plugin,
+                                             plugin_argc, plugin_argv);
+    if (rc == WEECHAT_RC_OK)
+    {
+        plugin->initialized = 1;
+    }
+    else
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: unable to initialize plugin "
+                           "\"%s\""),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         plugin->filename);
+    }
+
+    if (plugin_argv)
+        free (plugin_argv);
+
+    return (rc == WEECHAT_RC_OK) ? 1 : 0;
 }
 
 /*
  * Loads a WeeChat plugin (a dynamic library).
  *
+ * If init_plugin == 1, then the init() function in plugin is called
+ * (with argc/argv), otherwise the plugin is just loaded but not initialized.
+ *
  * Returns a pointer to new WeeChat plugin, NULL if error.
  */
 
 struct t_weechat_plugin *
-plugin_load (const char *filename, int argc, char **argv)
+plugin_load (const char *filename, int init_plugin, int argc, char **argv)
 {
     void *handle;
     char *name, *api_version, *author, *description, *version;
     char *license, *charset;
     t_weechat_init_func *init_func;
-    int rc, i, plugin_argc;
-    char **plugin_argv;
+    int *priority;
     struct t_weechat_plugin *new_plugin;
     struct t_config_option *ptr_option;
 
@@ -477,6 +567,13 @@ plugin_load (const char *filename, int argc, char **argv)
         return NULL;
     }
 
+    /*
+     * look for plugin priority: it is used to initialize plugins in
+     * appropriate order: the important plugins that don't depend on other
+     * plugins are initialized first
+     */
+    priority = dlsym (handle, "weechat_plugin_priority");
+
     /* create new plugin */
     new_plugin = malloc (sizeof (*new_plugin));
     if (new_plugin)
@@ -490,6 +587,9 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->version = strdup (version);
         new_plugin->license = strdup (license);
         new_plugin->charset = (charset) ? strdup (charset) : NULL;
+        new_plugin->priority = (priority) ?
+            *priority : PLUGIN_PRIORITY_DEFAULT;
+        new_plugin->initialized = 0;
         ptr_option = config_weechat_debug_get (name);
         new_plugin->debug = (ptr_option) ? CONFIG_INTEGER(ptr_option) : 0;
 
@@ -798,54 +898,13 @@ plugin_load (const char *filename, int argc, char **argv)
          */
         gui_buffer_set_plugin_for_upgrade (name, new_plugin);
 
-        /* build arguments for plugin */
-        plugin_argc = 0;
-        plugin_argv = NULL;
-        if (argc > 0)
+        if (init_plugin)
         {
-            plugin_argv = malloc ((argc + 1) * sizeof (*plugin_argv));
-            if (plugin_argv)
+            if (!plugin_call_init (new_plugin, argc, argv))
             {
-                plugin_argc = 0;
-                for (i = 0; i < argc; i++)
-                {
-                    if ((strcmp (argv[i], "-a") == 0)
-                        || (strcmp (argv[i], "--no-connect") == 0)
-                        || (strcmp (argv[i], "-s") == 0)
-                        || (strcmp (argv[i], "--no-script") == 0)
-                        || (strcmp (argv[i], "--upgrade") == 0)
-                        || (strncmp (argv[i], name, strlen (name)) == 0))
-                    {
-                        plugin_argv[plugin_argc] = argv[i];
-                        plugin_argc++;
-                    }
-                }
-                if (plugin_argc == 0)
-                {
-                    free (plugin_argv);
-                    plugin_argv = NULL;
-                }
-                else
-                    plugin_argv[plugin_argc] = NULL;
+                plugin_remove (new_plugin);
+                return NULL;
             }
-        }
-
-        /* init plugin */
-        rc = ((t_weechat_init_func *)init_func) (new_plugin,
-                                                 plugin_argc, plugin_argv);
-
-        if (plugin_argv)
-            free (plugin_argv);
-
-        if (rc != WEECHAT_RC_OK)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: unable to initialize plugin "
-                               "\"%s\""),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             filename);
-            plugin_remove (new_plugin);
-            return NULL;
         }
     }
     else
@@ -885,7 +944,28 @@ plugin_auto_load_file (void *args, const char *filename)
     plugin_args = (struct t_plugin_args *)args;
 
     if (plugin_check_extension_allowed (filename))
-        plugin_load (filename, plugin_args->argc, plugin_args->argv);
+        plugin_load (filename, 0, plugin_args->argc, plugin_args->argv);
+}
+
+/*
+ * Callback used to sort plugins arraylist by priority (high priority first).
+ */
+
+int
+plugin_arraylist_cmp_cb (void *data, struct t_arraylist *arraylist,
+                         void *pointer1, void *pointer2)
+{
+    struct t_weechat_plugin *plugin1, *plugin2;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    plugin1 = (struct t_weechat_plugin *)pointer1;
+    plugin2 = (struct t_weechat_plugin *)pointer2;
+
+    return (plugin1->priority > plugin2->priority) ?
+        -1 : ((plugin1->priority < plugin2->priority) ? 1 : 0);
 }
 
 /*
@@ -896,8 +976,10 @@ void
 plugin_auto_load (int argc, char **argv)
 {
     char *dir_name, *plugin_path, *plugin_path2;
+    struct t_weechat_plugin *ptr_plugin;
     struct t_plugin_args plugin_args;
-    int length;
+    struct t_arraylist *arraylist;
+    int length, i;
 
     plugin_args.argc = argc;
     plugin_args.argv = argv;
@@ -950,6 +1032,36 @@ plugin_auto_load (int argc, char **argv)
         plugin_autoload_array = NULL;
     }
     plugin_autoload_count = 0;
+
+    /* initialize all uninitialized plugins */
+    arraylist = arraylist_new (10, 1, 1,
+                               &plugin_arraylist_cmp_cb, NULL, NULL, NULL);
+    if (arraylist)
+    {
+        for (ptr_plugin = weechat_plugins; ptr_plugin;
+             ptr_plugin = ptr_plugin->next_plugin)
+        {
+            arraylist_add (arraylist, ptr_plugin);
+        }
+        i = 0;
+        while (i < arraylist_size (arraylist))
+        {
+            ptr_plugin = arraylist_get (arraylist, i);
+            if (!ptr_plugin->initialized)
+            {
+                if (!plugin_call_init (ptr_plugin, argc, argv))
+                {
+                    plugin_remove (ptr_plugin);
+                    arraylist_remove (arraylist, i);
+                }
+                else
+                    i++;
+            }
+            else
+                i++;
+        }
+        arraylist_free (arraylist);
+    }
 }
 
 /*
@@ -1038,9 +1150,12 @@ plugin_unload (struct t_weechat_plugin *plugin)
 
     name = (plugin->name) ? strdup (plugin->name) : NULL;
 
-    end_func = dlsym (plugin->handle, "weechat_plugin_end");
-    if (end_func)
-        (void) (end_func) (plugin);
+    if (plugin->initialized)
+    {
+        end_func = dlsym (plugin->handle, "weechat_plugin_end");
+        if (end_func)
+            (void) (end_func) (plugin);
+    }
 
     plugin_remove (plugin);
 
@@ -1118,7 +1233,7 @@ plugin_reload_name (const char *name, int argc, char **argv)
         if (filename)
         {
             plugin_unload (ptr_plugin);
-            plugin_load (filename, argc, argv);
+            plugin_load (filename, 1, argc, argv);
             free (filename);
         }
     }
@@ -1244,6 +1359,8 @@ plugin_hdata_plugin_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_weechat_plugin, version, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_weechat_plugin, license, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_weechat_plugin, charset, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_weechat_plugin, priority, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_weechat_plugin, initialized, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_weechat_plugin, debug, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_weechat_plugin, prev_plugin, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_weechat_plugin, next_plugin, POINTER, 0, NULL, hdata_name);
@@ -1296,6 +1413,10 @@ plugin_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_string (ptr_item, "charset", plugin->charset))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "priority", plugin->priority))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "initialized", plugin->initialized))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "debug", plugin->debug))
         return 0;
 
@@ -1322,6 +1443,8 @@ plugin_print_log ()
         log_printf ("  description. . . . . . : '%s'",  ptr_plugin->description);
         log_printf ("  version. . . . . . . . : '%s'",  ptr_plugin->version);
         log_printf ("  charset. . . . . . . . : '%s'",  ptr_plugin->charset);
+        log_printf ("  priority . . . . . . . : %d",    ptr_plugin->priority);
+        log_printf ("  initialized. . . . . . : %d",    ptr_plugin->initialized);
         log_printf ("  debug. . . . . . . . . : %d",    ptr_plugin->debug);
         log_printf ("  prev_plugin. . . . . . : 0x%lx", ptr_plugin->prev_plugin);
         log_printf ("  next_plugin. . . . . . : 0x%lx", ptr_plugin->next_plugin);

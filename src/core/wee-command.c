@@ -4395,7 +4395,7 @@ COMMAND_CALLBACK(plugin)
                                         &plugin_argc);
         }
         full_name = util_search_full_lib_name (argv[2], "plugins");
-        plugin_load (full_name, plugin_argc, plugin_argv);
+        plugin_load (full_name, 1, plugin_argc, plugin_argv);
         if (full_name)
             free (full_name);
         if (plugin_argv)

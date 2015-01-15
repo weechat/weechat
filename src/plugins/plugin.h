@@ -24,6 +24,8 @@
 
 #define PLUGIN_CORE "core"
 
+#define PLUGIN_PRIORITY_DEFAULT 1000
+
 typedef int (t_weechat_init_func) (struct t_weechat_plugin *plugin,
                                    int argc, char *argv[]);
 typedef int (t_weechat_end_func) (struct t_weechat_plugin *plugin);
@@ -35,6 +37,7 @@ extern int plugin_valid (struct t_weechat_plugin *plugin);
 extern struct t_weechat_plugin *plugin_search (const char *name);
 extern const char *plugin_get_name (struct t_weechat_plugin *plugin);
 extern struct t_weechat_plugin *plugin_load (const char *filename,
+                                             int init_plugin,
                                              int argc, char **argv);
 extern void plugin_auto_load (int argc, char **argv);
 extern void plugin_unload (struct t_weechat_plugin *plugin);

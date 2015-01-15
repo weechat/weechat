@@ -42,6 +42,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Relay WeeChat data to remote application "
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
+WEECHAT_PLUGIN_PRIORITY(4000);
 
 struct t_weechat_plugin *weechat_relay_plugin = NULL;
 

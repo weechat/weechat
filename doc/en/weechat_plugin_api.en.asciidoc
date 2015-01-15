@@ -45,16 +45,19 @@ This file defines structures and types used to communicate with WeeChat.
 The plugin must use some macros (to define some variables):
 
 WEECHAT_PLUGIN_NAME("name")::
-    plugin name
+    the plugin name
 
 WEECHAT_PLUGIN_DESCRIPTION("description")::
-    short description of plugin
+    a short description of plugin
 
 WEECHAT_PLUGIN_VERSION("1.0")::
-    plugin version
+    the plugin version
 
 WEECHAT_PLUGIN_LICENSE("GPL3")::
-    plugin license
+    the plugin license
+
+WEECHAT_PLUGIN_PRIORITY(1000)::
+    the plugin priority (optional, see below)
 
 [[main_functions]]
 === Main functions
@@ -86,6 +89,20 @@ Return value:
 
 * 'WEECHAT_RC_OK' if successful (plugin will be loaded)
 * 'WEECHAT_RC_ERROR' if error (plugin will NOT be loaded)
+
+[[plugin_priority]]
+===== Plugin priority
+
+When plugins are auto-loaded (for example on startup), WeeChat first loads all
+plugins, and then calls the 'init' functions, using the priority defined in
+each plugin. A high priority means that the 'init' function is called first.
+
+Default priority is 1000 (with such priority, the plugin is loaded after all
+default plugins).
+
+The default WeeChat plugins are initialized in this order:
+
+include::autogen/plugin_api/plugins_priority.asciidoc[]
 
 ==== weechat_plugin_end
 

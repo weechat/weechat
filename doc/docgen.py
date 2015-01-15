@@ -351,6 +351,23 @@ def get_irc_colors():
     return irc_colors
 
 
+def get_plugins_priority():
+    """
+    Get priority of default WeeChat plugins as a dictionary.
+    """
+    plugins_priority = {}
+    infolist = weechat.infolist_get('plugin', '', '')
+    while weechat.infolist_next(infolist):
+        name = weechat.infolist_string(infolist, 'name')
+        priority = weechat.infolist_integer(infolist, 'priority')
+        if priority in plugins_priority:
+            plugins_priority[priority].append(name)
+        else:
+            plugins_priority[priority] = [name]
+    weechat.infolist_free(infolist)
+    return plugins_priority
+
+
 def update_file(oldfile, newfile, num_files, num_files_updated, obj):
     """Update a doc file."""
     try:
@@ -394,6 +411,7 @@ def docgen_cmd_cb(data, buf, args):
     completions = get_completions()
     url_options = get_url_options()
     irc_colors = get_irc_colors()
+    plugins_priority = get_plugins_priority()
 
     # get path and replace ~ by home if needed
     path = weechat.config_get_plugin('path')
@@ -675,34 +693,23 @@ def docgen_cmd_cb(data, buf, args):
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'irc_colors')
 
+        # write plugins priority
+        filename = directory + '/plugin_api/plugins_priority.asciidoc'
+        tmpfilename = filename + '.tmp'
+        _file = open(tmpfilename, 'w')
+        for priority in sorted(plugins_priority, reverse=True):
+            plugins = ', '.join(sorted(plugins_priority[priority]))
+            _file.write('. {0} ({1})\n'.format(escape(plugins), priority))
+        _file.close()
+        update_file(filename, tmpfilename, num_files, num_files_updated,
+                    'plugins_priority')
+
         # write counters
         weechat.prnt('',
-                     'docgen: {0}: {1:3d} files   '
-                     '({2:2d} cmd, {3:2d} opt, {4:2d} infos, '
-                     '{5:2d} infos_hash, {6:2d} infolists, {7:2d} hdata, '
-                     '{8:2d} complt)'
+                     'docgen: {0}: {1} files, {2} updated'
                      ''.format(locale,
                                num_files['total1'],
-                               num_files['commands'],
-                               num_files['options'],
-                               num_files['infos'],
-                               num_files['infos_hashtable'],
-                               num_files['infolists'],
-                               num_files['hdata'],
-                               num_files['completions']))
-        weechat.prnt('',
-                     '               '
-                     '{0:3d} updated ({1:2d} cmd, {2:2d} opt, {3:2d} infos, '
-                     '{4:2d} infos_hash, {5:2d} infolists, {6:2d} hdata, '
-                     '{7:2d} complt)'
-                     ''.format(num_files_updated['total1'],
-                               num_files_updated['commands'],
-                               num_files_updated['options'],
-                               num_files_updated['infos'],
-                               num_files_updated['infos_hashtable'],
-                               num_files_updated['infolists'],
-                               num_files_updated['hdata'],
-                               num_files_updated['completions']))
+                               num_files_updated['total1']))
     weechat.prnt('',
                  'docgen: total: {0} files, {1} updated'
                  ''.format(num_files['total2'], num_files_updated['total2']))
