@@ -1,0 +1,115 @@
+= WEECHAT(1)
+:doctype: manpage
+:lang: ru
+
+== НАЗВАНИЕ
+
+weechat - расширяемый чат-клиент
+
+== ОБЗОР
+
+[verse]
+'weechat' [-a|--no-connect] [-d|--dir <путь>] [-p|--no-plugin] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [<плагин>:<параметр>...]
+'weechat' [-c|--colors]
+'weechat' [-h|--help]
+'weechat' [-l|--license]
+'weechat' [-v|--version]
+
+== ОПИСАНИЕ
+
+WeeChat — это быстрый, легкий и расширяемый чат-клиент.
+
+Он модульный (легковесное ядро с плагинами), мультипротокольный (IRC и Jabber),
+расширяемый с помощью C и скриптов на нескольких языках.
+
+== ПАРАМЕТРЫ
+
+include::cmdline_options.ru.asciidoc[]
+
+== ПАРАМЕТРЫ ПЛАГИНОВ
+
+Полное описание параметров плагинов доступно в документации по плагинам в 
+https://weechat.org/doc[Руководстве пользователя WeeChat].
+
+С помощью плагина irc можно присоединиться ко временному серверу, используя URL вроде:
+
+    irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
+
+Присоединиться к IRC-каналу поддержки пользователей WeeChat с псевдонимом "mynick":
+
+    irc://mynick@chat.freenode.net/#weechat
+
+IPv6-адрес можно заключить в квадратные скобки, чтобы указать порт. Например:
+
+    irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
+
+== ФАЙЛЫ
+
+$HOME/.weechat/weechat.conf::
+    главный файл конфигурации WeeChat
+
+$HOME/.weechat/plugins.conf::
+    файл конфигурации плагинов
+
+$HOME/.weechat/sec.conf::
+    файл конфигурации с защищаемыми данными
+
+$HOME/.weechat/alias.conf::
+    файл конфигурации для плагина 'alias'
+
+$HOME/.weechat/aspell.conf::
+    файл конфигурации для плагина 'aspell'
+
+$HOME/.weechat/charset.conf::
+    файл конфигурации для плагина 'charset'
+
+$HOME/.weechat/exec.conf::
+    файл конфигурации для плагина 'exec'
+
+$HOME/.weechat/irc.conf::
+    файл конфигурации для плагина 'irc'
+
+$HOME/.weechat/logger.conf::
+    файл конфигурации для плагина 'logger'
+
+$HOME/.weechat/relay.conf::
+    файл конфигурации для плагина 'relay'
+
+$HOME/.weechat/script.conf::
+    файл конфигурации для плагина 'script'
+
+$HOME/.weechat/trigger.conf::
+    файл конфигурации для плагина 'trigger'
+
+$HOME/.weechat/xfer.conf::
+    файл конфигурации для плагина 'xref'
+
+$HOME/.weechat/weechat.log::
+    лог-файл WeeChat
+
+== АВТОРЫ
+
+Эта man-страница написана Sébastien Helleu <flashcode@flashtux.org>.
+
+// TRANSLATION MISSING
+Translated by Alexander Turenko <totktonada.ru@gmail.com>.
+
+== КОПИРАЙТ
+
+WeeChat написан Sébastien Helleu и другими участниками (полный список находится
+в файле AUTHORS.asciidoc).
+
+Copyright (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
+
+WeeChat is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+Подробную информацию можно найти в файле COPYING.
+
+Веб: <https://weechat.org/>
+
+== ПОДДЕРЖКА / СООБЩЕНИЯ ОБ ОШИБКАХ
+
+Получить помощь или сообщить об ошибке: <https://weechat.org/dev/support>

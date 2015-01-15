@@ -20,12 +20,14 @@
 docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
+             weechat.1.ru.asciidoc \
+             cmdline_options.ru.asciidoc \
              weechat_quickstart.ru.asciidoc
 
 if MAN
-  man_targets =
-  man_install =
-  man_uninstall =
+  man_targets = weechat.1
+  man_install = install-man
+  man_uninstall = uninstall-man
 endif
 if DOC
   doc_targets = weechat_quickstart.ru.html
@@ -33,6 +35,15 @@ if DOC
   doc_uninstall = uninstall-doc
 endif
 all-local: $(man_targets) $(doc_targets)
+
+# man page
+weechat.1: weechat.1.ru.asciidoc cmdline_options.ru.asciidoc
+	-mkdir tmp_man
+	cp -f $(abs_top_srcdir)/doc/ru/weechat.1.ru.asciidoc ./tmp_man/
+	cp -f $(abs_top_srcdir)/doc/ru/cmdline_options.ru.asciidoc ./tmp_man/
+	(cd tmp_man && $(A2X) -a revision="WeeChat $(VERSION)" -d manpage -f manpage -L weechat.1.ru.asciidoc)
+	mv -f tmp_man/weechat.1 .
+	rm -rf tmp_man
 
 # quickstart
 weechat_quickstart.ru.html: weechat_quickstart.ru.asciidoc $(abs_top_srcdir)/doc/asciidoc_toc2.css
@@ -65,4 +76,5 @@ uninstall-doc:
 # clean
 
 clean-local:
+	-rm -f weechat.1 weechat.1.ru.asciidoc cmdline_options.ru.asciidoc
 	-rm -f *.html
