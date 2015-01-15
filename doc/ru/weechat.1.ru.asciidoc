@@ -28,7 +28,7 @@ include::cmdline_options.ru.asciidoc[]
 
 == ПАРАМЕТРЫ ПЛАГИНОВ
 
-Полное описание параметров плагинов доступно в документации по плагинам в 
+Полное описание параметров плагинов доступно в документации по плагинам в
 https://weechat.org/doc[Руководстве пользователя WeeChat].
 
 С помощью плагина irc можно присоединиться ко временному серверу, используя URL вроде:
@@ -92,7 +92,7 @@ $HOME/.weechat/weechat.log::
 Эта man-страница написана Sébastien Helleu <flashcode@flashtux.org>.
 
 // TRANSLATION MISSING
-Translated by Alexander Turenko <totktonada.ru@gmail.com>.
+Перевод Александра Туренко <totktonada.ru@gmail.com>.
 
 == КОПИРАЙТ
 
