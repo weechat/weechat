@@ -91,8 +91,7 @@ $HOME/.weechat/weechat.log::
 
 Эта man-страница написана Sébastien Helleu <flashcode@flashtux.org>.
 
-// TRANSLATION MISSING
-Перевод Александра Туренко <totktonada.ru@gmail.com>.
+Перевод Alexander Turenko <totktonada.ru@gmail.com>.
 
 == КОПИРАЙТ
 
