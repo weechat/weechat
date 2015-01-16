@@ -22,6 +22,9 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* irc: fix order of channel buffers opened when option irc.look.server_buffer
+  is set to "independent", irc.look.buffer_open_before_autojoin to "on" and
+  irc.look.new_channel_position to "near_server" (closes #303)
 * irc: fix crash in buffer close when server name is the same as a channel name
   (closes #305)
 
