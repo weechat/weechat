@@ -174,7 +174,7 @@ irc_channel_search_buffer (struct t_irc_server *server,
 {
     struct t_hdata *hdata_buffer;
     struct t_gui_buffer *ptr_buffer;
-    const char *ptr_server_name, *ptr_channel_name;
+    const char *ptr_type, *ptr_server_name, *ptr_channel_name;
 
     hdata_buffer = weechat_hdata_get ("buffer");
     ptr_buffer = weechat_hdata_get_list (hdata_buffer, "gui_buffers");
@@ -184,12 +184,15 @@ irc_channel_search_buffer (struct t_irc_server *server,
         if (weechat_buffer_get_pointer (ptr_buffer,
                                         "plugin") == weechat_irc_plugin)
         {
+            ptr_type = weechat_buffer_get_string (ptr_buffer, "localvar_type");
             ptr_server_name = weechat_buffer_get_string (ptr_buffer,
                                                          "localvar_server");
             ptr_channel_name = weechat_buffer_get_string (ptr_buffer,
                                                           "localvar_channel");
-            if (ptr_server_name && ptr_server_name[0]
+            if (ptr_type && ptr_type[0]
+                && ptr_server_name && ptr_server_name[0]
                 && ptr_channel_name && ptr_channel_name[0]
+                && (strcmp (ptr_type, "channel") == 0)
                 && (strcmp (ptr_server_name, server->name) == 0)
                 && ((irc_server_strcasecmp (server, ptr_channel_name,
                                             channel_name) == 0)))
