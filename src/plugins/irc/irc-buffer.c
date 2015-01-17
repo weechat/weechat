@@ -141,16 +141,20 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
         {
             if (ptr_server)
             {
-                /* send PART on all channels for server, then disconnect from server */
+                if (!ptr_server->disconnected)
+                {
+                    /* send QUIT to server, then disconnect */
+                    irc_command_quit_server (ptr_server, NULL);
+                    irc_server_disconnect (ptr_server, 0, 0);
+                }
                 ptr_channel = ptr_server->channels;
                 while (ptr_channel)
                 {
                     next_channel = ptr_channel->next_channel;
-                    weechat_buffer_close (ptr_channel->buffer);
+                    if (ptr_channel->buffer != buffer)
+                        weechat_buffer_close (ptr_channel->buffer);
                     ptr_channel = next_channel;
                 }
-                if (!ptr_server->disconnected)
-                    irc_server_disconnect (ptr_server, 0, 0);
                 ptr_server->buffer = NULL;
             }
         }

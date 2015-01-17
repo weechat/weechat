@@ -22,6 +22,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* irc: send QUIT to server and no PART for channels when the server buffer
+  is closed (closes #294)
 * irc: fix order of channel buffers opened when option irc.look.server_buffer
   is set to "independent", irc.look.buffer_open_before_autojoin to "on" and
   irc.look.new_channel_position to "near_server" (closes #303)
