@@ -7,8 +7,7 @@
 :max-width: 100%
 
 
-// TRANSLATION MISSING
-Translators:
+翻訳者:
 
 * Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2014
 
@@ -62,9 +61,8 @@ WEECHAT_PLUGIN_VERSION("1.0")::
 WEECHAT_PLUGIN_LICENSE("GPL3")::
     プラグインのライセンス
 
-// TRANSLATION MISSING
 WEECHAT_PLUGIN_PRIORITY(1000)::
-    the plugin priority (optional, see below)
+    プラグインの優先度 (任意、下記参照)
 
 [[main_functions]]
 === 重要な関数
@@ -97,19 +95,17 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 * 'WEECHAT_RC_OK' 成功した場合 (プラグインを読み込みます)
 * 'WEECHAT_RC_ERROR' エラーが起きた場合 (プラグインを読み込みません)
 
-// TRANSLATION MISSING
 [[plugin_priority]]
-===== Plugin priority
+===== プラグインの優先度
 
-// TRANSLATION MISSING
-When plugins are auto-loaded (for example on startup), WeeChat first loads all
-plugins, and then calls the 'init' functions, using the priority defined in
-each plugin. A high priority means that the 'init' function is called first.
+複数のプラグインが自動ロードされた場合 (たとえば起動時)、WeeChat
+はまず全てのプラグインをロードし、各プラグインで定義された優先度に従って 'init'
+関数を呼び出します。優先度を大きな値にすれば 'init' 関数を呼び出す順番が早くなります
 
-Default priority is 1000 (with such priority, the plugin is loaded after all
-default plugins).
+デフォルトの優先度は 1000 です
+(この値を設定した場合、全てのデフォルトプラグインの後にプラグインをロードします)。
 
-The default WeeChat plugins are initialized in this order:
+WeeChat のデフォルトプラグインは以下の順番で初期化されます:
 
 include::autogen/plugin_api/plugins_priority.asciidoc[]
 
