@@ -659,6 +659,9 @@ util_file_get_content (const char *filename)
     FILE *f;
     size_t count, fp;
 
+    if (!filename)
+        return NULL;
+
     buffer = NULL;
     fp = 0;
 
