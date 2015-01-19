@@ -102,7 +102,7 @@ welche Pakete optional genutzt werden können.
 | libcurl4-gnutls-dev               |             | *ja*     | URL Transfer
 | zlib1g-dev                        |             | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden
 | libgcrypt20-dev                   |             | *ja*     | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES), Skript-Erweiterung
-| libgnutls28-dev                   | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung
+| libgnutls28-dev                   | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE)
 | gettext                           |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | ca-certificates                   |             |          | Zertifikate für SSL Verbindungen
 | libaspell-dev oder libenchant-dev |             |          | Aspell Erweiterung
@@ -2219,9 +2219,11 @@ Für weiterreichende Informationen lesen Sie bitte: http://www.oftc.net/oftc/Nic
 WeeChat unterstützt eine SASL Authentifikation, mittels verschiedener Mechanismen:
 
 * 'plain': Passwort liegt in Klarschrift vor (Standard)
+// TRANSLATION MISSING
+* 'ecdsa-nist256p-challenge': challenge with public/private key
+* 'external': SSL Zertifikat welches auf Client Seite vorliegt
 * 'dh-blowfish': Passwort wird mittels blowfish verschlüsselt
 * 'dh-aes': Passwort wird mittels AES verschlüsselt
-* 'external': SSL Zertifikat welches auf Client Seite vorliegt
 
 [NOTE]
 Die "gcrypt" Bibliothek wird beim kompilieren von WeeChat benötigt um
@@ -2231,8 +2233,12 @@ Optionen für Server sind:
 
 * 'sasl_mechanism': Mechanismus welcher genutzt werden soll (siehe oben)
 * 'sasl_timeout': Zeitüberschreitung für Authentifizierung (in Sekunden)
+// TRANSLATION MISSING
+* 'sasl_fail': action to perform if authentication fails
 * 'sasl_username': Username (Nickname)
 * 'sasl_password': Passwort
+// TRANSLATION MISSING
+* 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
 
 [[irc_tor_freenode]]
 ==== Verbindung zu Freenode mittels TOR/SASL herstellen

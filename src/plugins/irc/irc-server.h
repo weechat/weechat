@@ -57,6 +57,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_SASL_MECHANISM,/* mechanism for SASL authentication    */
     IRC_SERVER_OPTION_SASL_USERNAME, /* username for SASL authentication     */
     IRC_SERVER_OPTION_SASL_PASSWORD, /* password for SASL authentication     */
+    IRC_SERVER_OPTION_SASL_KEY,      /* key for ECDSA-NIST256P-CHALLENCE     */
     IRC_SERVER_OPTION_SASL_TIMEOUT,  /* timeout for SASL authentication      */
     IRC_SERVER_OPTION_SASL_FAIL,     /* action on SASL fail                  */
     IRC_SERVER_OPTION_AUTOCONNECT,   /* autoconnect to server at startup     */

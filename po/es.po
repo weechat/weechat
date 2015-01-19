@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-12-28 10:50+0100\n"
+"POT-Creation-Date: 2015-01-19 23:45+0100\n"
 "PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6937,21 +6937,40 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"mechanism for SASL authentication: \"plain\" for plain text password, \"dh-"
-"blowfish\" for blowfish crypted password, \"dh-aes\" for AES crypted "
-"password, \"external\" for authentication using client side SSL cert"
+"mechanism for SASL authentication: \"plain\" for plain text password, "
+"\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
+"\"external\" for authentication using client side SSL cert, \"dh-blowfish\" "
+"for blowfish crypted password (insecure, not recommended), \"dh-aes\" for "
+"AES crypted password (insecure, not recommended)"
 msgstr ""
 "mecanismo de autenticación SASL: \"plain\" para contraseñas en texto plano, "
 "\"dh-blowfish\" para contraseña encriptada, \"external\" para autentificar "
 "utilizando un certificado SSL del cliente"
 
+#, fuzzy
 msgid ""
-"username for SASL authentication (note: content is evaluated, see /help eval)"
+"username for SASL authentication; this option is not used for mechanism "
+"\"external\" (note: content is evaluated, see /help eval)"
 msgstr ""
+"los clientes requieren una clave para acceder este repetidor (sin valor "
+"significa que no se requiere clave)"
 
+#, fuzzy
 msgid ""
-"password for SASL authentication (note: content is evaluated, see /help eval)"
+"password for SASL authentication; this option is not used for mechanisms "
+"\"ecdsa-nist256p-challenge\" and \"external\" (note: content is evaluated, "
+"see /help eval)"
 msgstr ""
+"los clientes requieren una clave para acceder este repetidor (sin valor "
+"significa que no se requiere clave)"
+
+#, fuzzy
+msgid ""
+"file with ECC private key for mechanism \"ecdsa-nist256p-challenge\" (\"%h\" "
+"will be replaced by WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+"ruta para encontrar plugins (\"%h\" será reemplazado por el directorio raíz "
+"de WeeChat, \"~/.weechat\" por defecto)"
 
 msgid "timeout (in seconds) before giving up SASL authentication"
 msgstr ""
@@ -8266,6 +8285,26 @@ msgstr ""
 msgid "%s%s: server \"%s\" not found for redirect"
 msgstr "%s%s: servidor \"%s\" no encontrado para la redirección"
 
+#, fuzzy, c-format
+msgid "%s%s: unable to read private key in file \"%s\""
+msgstr "%s%s: no es posible leer el archivo \"%s\""
+
+#, fuzzy, c-format
+msgid "%sgnutls: invalid private key file: error %d %s"
+msgstr "%sgnutls: certificado \"%s\" inválido, error: %s"
+
+#, c-format
+msgid "%s%s: signing the challenge with ECC public key: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: unable to import the private key: error %d %s"
+msgstr "%s%s: no es posible crear la tubería"
+
+#, fuzzy, c-format
+msgid "%sgnutls: unable to sign the hashed data: error %d %s"
+msgstr "%s%s: no es posible crear la tubería"
+
 #, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s%s: no hay suficiente memoria para crear el nuevo servidor"
@@ -9115,6 +9154,14 @@ msgid "tree of windows"
 msgstr "árbol de ventanas"
 
 #, c-format
+msgid "Initializing plugin \"%s\" (priority: %d)"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to initialize plugin \"%s\""
+msgstr "%sError: no ha sido posible inicializar el plugin \"%s\""
+
+#, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
 msgstr "%sError: no ha sido posible cargar el plugin \"%s\": %s"
 
@@ -9154,10 +9201,6 @@ msgstr ""
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%sError: función \"%s\" no encontrada en el plugin \"%s\", no se puede cargar"
-
-#, c-format
-msgid "%sError: unable to initialize plugin \"%s\""
-msgstr "%sError: no ha sido posible inicializar el plugin \"%s\""
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\" (not enough memory)"

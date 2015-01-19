@@ -1723,11 +1723,18 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "integer",
-                N_("mechanism for SASL authentication: \"plain\" for plain text "
-                   "password, \"dh-blowfish\" for blowfish crypted password, "
-                   "\"dh-aes\" for AES crypted password, \"external\" "
-                   "for authentication using client side SSL cert"),
-                "plain|dh-blowfish|dh-aes|external", 0, 0,
+                N_("mechanism for SASL authentication: "
+                   "\"plain\" for plain text password, "
+                   "\"ecdsa-nist256p-challenge\" for key-based "
+                   "challenge authentication, "
+                   "\"external\" for authentication using client side SSL "
+                   "cert, "
+                   "\"dh-blowfish\" for blowfish crypted password "
+                   "(insecure, not recommended), "
+                   "\"dh-aes\" for AES crypted password "
+                   "(insecure, not recommended)"),
+                "plain|ecdsa-nist256p-challenge|external|dh-blowfish|dh-aes",
+                0, 0,
                 default_value, value,
                 null_value_allowed,
                 callback_check_value, callback_check_value_data,
@@ -1738,7 +1745,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("username for SASL authentication "
+                N_("username for SASL authentication; this option is not used "
+                   "for mechanism \"external\" "
                    "(note: content is evaluated, see /help eval)"),
                 NULL, 0, 0,
                 default_value, value,
@@ -1751,8 +1759,25 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("password for SASL authentication "
+                N_("password for SASL authentication; this option is not used "
+                   "for mechanisms \"ecdsa-nist256p-challenge\" and "
+                   "\"external\" "
                    "(note: content is evaluated, see /help eval)"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value, callback_check_value_data,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_SASL_KEY:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("file with ECC private key for mechanism "
+                   "\"ecdsa-nist256p-challenge\" "
+                   "(\"%h\" will be replaced by WeeChat home, "
+                   "\"~/.weechat\" by default)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,

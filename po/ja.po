@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-12-28 10:50+0100\n"
+"POT-Creation-Date: 2015-01-19 23:45+0100\n"
 "PO-Revision-Date: 2015-01-02 09:23+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -40,11 +40,11 @@ msgid "max chars"
 msgstr "最大文字数"
 
 msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)"
-"green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal "
-"color number or an alias; attributes are allowed before color (for text "
-"color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" for "
-"italic, \"_\" for underline"
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
+"for italic, \"_\" for underline"
 msgstr ""
 "WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、"
 "brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号ま"
@@ -5963,8 +5963,8 @@ msgstr ""
 "            - 内部サーバ名 (/server add で作成されたもの、利用推奨)\n"
 "            - ホスト名/ポート番号又は IP アドレス/ポート番号、デフォルトの"
 "ポート番号は 6667\n"
-"            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:password]@]"
-"irc.example.org[:port][/#channel1][,#channel2[...]]\n"
+"            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:"
+"password]@]irc.example.org[:port][/#channel1][,#channel2[...]]\n"
 "            注意: アドレス/IP/URL を指定した場合、サーバを一時的に作ります "
 "(保存しません)、/help irc.look.temporary_servers を参照してください。\n"
 "    option: サーバに関するオプション (ブール型オプションでは、value は無視さ"
@@ -7172,24 +7172,40 @@ msgstr ""
 "ト; WeeChat で利用できる機能: away-notify、extended-join、multi-prefix、"
 "server-time、userhost-in-names (例: \"away-notify,multi-prefix\")"
 
+#, fuzzy
 msgid ""
-"mechanism for SASL authentication: \"plain\" for plain text password, \"dh-"
-"blowfish\" for blowfish crypted password, \"dh-aes\" for AES crypted "
-"password, \"external\" for authentication using client side SSL cert"
+"mechanism for SASL authentication: \"plain\" for plain text password, "
+"\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
+"\"external\" for authentication using client side SSL cert, \"dh-blowfish\" "
+"for blowfish crypted password (insecure, not recommended), \"dh-aes\" for "
+"AES crypted password (insecure, not recommended)"
 msgstr ""
 "SASL 認証メカニズム: \"plain\" は平文パスワード、\"dh-blowfish\" は blowfish "
 "暗号化パスワード、\"dh-aes\" は AES 暗号化パスワード、\"external\" はクライア"
 "ント側の SSL 証明書を利用した認証"
 
+#, fuzzy
 msgid ""
-"username for SASL authentication (note: content is evaluated, see /help eval)"
-msgstr ""
-"SASL 認証のユーザ名 (注意: 値は評価されます、/help eval を参照してください)"
-
-msgid ""
-"password for SASL authentication (note: content is evaluated, see /help eval)"
+"username for SASL authentication; this option is not used for mechanism "
+"\"external\" (note: content is evaluated, see /help eval)"
 msgstr ""
 "SASL 認証のパスワード (注意: 値は評価されます、/help eval を参照してください)"
+
+#, fuzzy
+msgid ""
+"password for SASL authentication; this option is not used for mechanisms "
+"\"ecdsa-nist256p-challenge\" and \"external\" (note: content is evaluated, "
+"see /help eval)"
+msgstr ""
+"SASL 認証のパスワード (注意: 値は評価されます、/help eval を参照してください)"
+
+#, fuzzy
+msgid ""
+"file with ECC private key for mechanism \"ecdsa-nist256p-challenge\" (\"%h\" "
+"will be replaced by WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+"プラグイン検索パス (\"%h\" は WeeChat ホームに置換される、デフォルトでは "
+"\"~/.weechat\")"
 
 msgid "timeout (in seconds) before giving up SASL authentication"
 msgstr "SASL 認証を諦める前のタイムアウト (秒単位)"
@@ -8530,6 +8546,26 @@ msgstr ""
 msgid "%s%s: server \"%s\" not found for redirect"
 msgstr "%s%s: リダイレクトサーバ \"%s\" が見つかりません"
 
+#, fuzzy, c-format
+msgid "%s%s: unable to read private key in file \"%s\""
+msgstr "%s%s: ファイル \"%s\" を読み込めません"
+
+#, fuzzy, c-format
+msgid "%sgnutls: invalid private key file: error %d %s"
+msgstr "%sgnutls: 無効な証明書 \"%s\"、エラー: %s"
+
+#, c-format
+msgid "%s%s: signing the challenge with ECC public key: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: unable to import the private key: error %d %s"
+msgstr "%s%s: パイプを作成できません: エラー %d %s"
+
+#, fuzzy, c-format
+msgid "%sgnutls: unable to sign the hashed data: error %d %s"
+msgstr "%s%s: アドレスを解決できません: エラー %d %s"
+
 #, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s%s: 新しいサーバの割り当て中にエラー"
@@ -9333,6 +9369,14 @@ msgid "tree of windows"
 msgstr "ウィンドウツリー"
 
 #, c-format
+msgid "Initializing plugin \"%s\" (priority: %d)"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to initialize plugin \"%s\""
+msgstr "%sエラー: プラグイン \"%s\" の初期化に失敗"
+
+#, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
 msgstr "%sエラー: プラグイン \"%s\" のロードに失敗: %s"
 
@@ -9372,10 +9416,6 @@ msgstr ""
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%sエラー: 関数 \"%s\" がプラグイン \"%s\" の中に見つかりません、ロード失敗"
-
-#, c-format
-msgid "%sError: unable to initialize plugin \"%s\""
-msgstr "%sエラー: プラグイン \"%s\" の初期化に失敗"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
@@ -10950,8 +10990,8 @@ msgid ""
 "Examples (you can also look at default triggers with /trigger listdefault):\n"
 "  add text attributes *bold*, _underline_ and /italic/ (only in user "
 "messages):\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
-"(\\S+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_(\\S+)_==_${color:"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
+"\\*(\\S+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_(\\S+)_==_${color:"
 "underline}${re:1}${color:-underline}_== ==/(\\S+)/==/${color:"
 "italic}${re:1}${color:-italic}/\"\n"
 "  hide nicklist bar on small terminals:\n"
@@ -11027,8 +11067,8 @@ msgstr ""
 "\n"
 "例 (/trigger listdefault でデフォルトトリガを見ることができます):\n"
 "  テキスト属性 *太字*、_下線_、/イタリック/ を追加 (ユーザメッセージのみ):\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
-"(\\S+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_(\\S+)_==_${color:"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
+"\\*(\\S+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_(\\S+)_==_${color:"
 "underline}${re:1}${color:-underline}_== ==/(\\S+)/==/${color:"
 "italic}${re:1}${color:-italic}/\"\n"
 "  狭い端末ではニックネームリストバーを隠す:\n"
@@ -11598,3 +11638,10 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid ""
+#~ "username for SASL authentication (note: content is evaluated, see /help "
+#~ "eval)"
+#~ msgstr ""
+#~ "SASL 認証のユーザ名 (注意: 値は評価されます、/help eval を参照してくださ"
+#~ "い)"

@@ -95,7 +95,7 @@ compile WeeChat.
 | libcurl4-gnutls-dev             |             | *yes*    | URL transfer
 | zlib1g-dev                      |             | *yes*    | Compression of packets in relay plugin (weechat protocol), script plugin
 | libgcrypt20-dev                 |             | *yes*    | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
-| libgnutls28-dev                 | ≥ 2.2.0     |          | SSL connection to IRC server, support of SSL in relay plugin
+| libgnutls28-dev                 | ≥ 2.2.0     |          | SSL connection to IRC server, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE)
 | gettext                         |             |          | Internationalization (translation of messages; base language is English)
 | ca-certificates                 |             |          | Certificates for SSL connections
 | libaspell-dev or libenchant-dev |             |          | Aspell plugin
@@ -2168,9 +2168,10 @@ For more information, look at http://www.oftc.net/oftc/NickServ/CertFP
 WeeChat supports SASL authentication, using different mechanisms:
 
 * 'plain': plain text password (default)
+* 'ecdsa-nist256p-challenge': challenge with public/private key
+* 'external': client side SSL cert
 * 'dh-blowfish': blowfish encrypted password
 * 'dh-aes': AES encrypted password
-* 'external': client side SSL cert
 
 [NOTE]
 The "gcrypt" library is required when compiling WeeChat in order to use
@@ -2180,8 +2181,10 @@ Options in servers are:
 
 * 'sasl_mechanism': mechanism to use (see above)
 * 'sasl_timeout': timeout (in seconds) for authentication
+* 'sasl_fail': action to perform if authentication fails
 * 'sasl_username': username (nick)
 * 'sasl_password': password
+* 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
 
 [[irc_tor_freenode]]
 ==== Connect to Freenode with TOR/SASL

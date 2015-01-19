@@ -101,7 +101,7 @@ WeeChat.
 | libcurl4-gnutls-dev             |             | *tak*    | Transfer URL
 | zlib1g-dev                      |             | *tak*    | Kompresja pakietów we wtyczce relay (protokół weechat), wtyczka script
 | libgcrypt20-dev                 |             | *tak*    | Zabezpieczone dane, uwierzytelnianie IRC SASL (DH-BLOWFISH/DH-AES), wtyczka script
-| libgnutls28-dev                 | ≥ 2.2.0     |          | Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay
+| libgnutls28-dev                 | ≥ 2.2.0     |          | Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay, uwierzytelnianie IRC SASL (ECDSA-NIST256P-CHALLENGE)
 | gettext                         |             |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski)
 | ca-certificates                 |             |          | Certyfikaty dla połączeń SSL
 | libaspell-dev or libenchant-dev |             |          | Wtyczka aspell
@@ -2189,9 +2189,11 @@ Więcej informacji można znaleźć pod adresem: http://www.oftc.net/oftc/NickSe
 WeeChat wspiera uwierzytelnianie SASL, używając różnych mechanizmów:
 
 * 'plain': hasło w czystym tekście (domyślne)
+// TRANSLATION MISSING
+* 'ecdsa-nist256p-challenge': challenge with public/private key
+* 'external': certyfikat SSL po stronie klienta
 * 'dh-blowfish': hasło zaszyfrowane algorytmem blowfish
 * 'dh-aes': hasło zaszyfrowane algorytmem AES
-* 'external': certyfikat SSL po stronie klienta
 
 [NOTE]
 Biblioteka "gcrypt" jest wymagana podczas kompilacji WeeChat w celu dodania
@@ -2201,8 +2203,12 @@ Opcje dla serwerów to:
 
 * 'sasl_mechanism': mechanizm do użycia (zobacz wyżej)
 * 'sasl_timeout': limit czasu (w sekundach) na uwierzytelnienie
+// TRANSLATION MISSING
+* 'sasl_fail': action to perform if authentication fails
 * 'sasl_username': nazwa użytkownika (nick)
 * 'sasl_password': hasło
+// TRANSLATION MISSING
+* 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
 
 [[irc_tor_freenode]]
 ==== Połączenie z siecią Freenode za pomocą TOR/SASL

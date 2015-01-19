@@ -568,13 +568,18 @@
 ** type: integer
 ** values: continue, reconnect, disconnect (default value: `continue`)
 
+* [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
+** description: `file with ECC private key for mechanism "ecdsa-nist256p-challenge" ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** type: string
+** values: any string (default value: `""`)
+
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** description: `mechanism for SASL authentication: "plain" for plain text password, "dh-blowfish" for blowfish crypted password, "dh-aes" for AES crypted password, "external" for authentication using client side SSL cert`
+** description: `mechanism for SASL authentication: "plain" for plain text password, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL cert, "dh-blowfish" for blowfish crypted password (insecure, not recommended), "dh-aes" for AES crypted password (insecure, not recommended)`
 ** type: integer
-** values: plain, dh-blowfish, dh-aes, external (default value: `plain`)
+** values: plain, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes (default value: `plain`)
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** description: `password for SASL authentication (note: content is evaluated, see /help eval)`
+** description: `password for SASL authentication; this option is not used for mechanisms "ecdsa-nist256p-challenge" and "external" (note: content is evaluated, see /help eval)`
 ** type: string
 ** values: any string (default value: `""`)
 
@@ -584,7 +589,7 @@
 ** values: 1 .. 3600 (default value: `15`)
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** description: `username for SASL authentication (note: content is evaluated, see /help eval)`
+** description: `username for SASL authentication; this option is not used for mechanism "external" (note: content is evaluated, see /help eval)`
 ** type: string
 ** values: any string (default value: `""`)
 

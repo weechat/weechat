@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-12-28 10:50+0100\n"
+"POT-Creation-Date: 2015-01-19 23:45+0100\n"
 "PO-Revision-Date: 2014-12-28 13:06+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
@@ -7628,10 +7628,13 @@ msgstr ""
 "multi-prefix, server-time, userhost-in-name (Beispiel: \"away-notify,multi-"
 "prefix\")"
 
+#, fuzzy
 msgid ""
-"mechanism for SASL authentication: \"plain\" for plain text password, \"dh-"
-"blowfish\" for blowfish crypted password, \"dh-aes\" for AES crypted "
-"password, \"external\" for authentication using client side SSL cert"
+"mechanism for SASL authentication: \"plain\" for plain text password, "
+"\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
+"\"external\" for authentication using client side SSL cert, \"dh-blowfish\" "
+"for blowfish crypted password (insecure, not recommended), \"dh-aes\" for "
+"AES crypted password (insecure, not recommended)"
 msgstr ""
 "Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "
 "\"plain\" Passwort wird im Klartext gesendet, \"dh-blowfish\" Passwort wird "
@@ -7639,17 +7642,30 @@ msgstr ""
 "verschlüsselt, \"external\" SSL Zertifikat welches auf Client Seite "
 "vorliegt, wird verwendet"
 
+#, fuzzy
 msgid ""
-"username for SASL authentication (note: content is evaluated, see /help eval)"
-msgstr ""
-"Username für SASL Authentifikation (Hinweis: Inhalt wird evaluiert, siehe /"
-"help eval)"
-
-msgid ""
-"password for SASL authentication (note: content is evaluated, see /help eval)"
+"username for SASL authentication; this option is not used for mechanism "
+"\"external\" (note: content is evaluated, see /help eval)"
 msgstr ""
 "Passwort für SASL Authentifikation (Hinweis: Inhalt wird evaluiert, siehe /"
 "help eval)"
+
+#, fuzzy
+msgid ""
+"password for SASL authentication; this option is not used for mechanisms "
+"\"ecdsa-nist256p-challenge\" and \"external\" (note: content is evaluated, "
+"see /help eval)"
+msgstr ""
+"Passwort für SASL Authentifikation (Hinweis: Inhalt wird evaluiert, siehe /"
+"help eval)"
+
+#, fuzzy
+msgid ""
+"file with ECC private key for mechanism \"ecdsa-nist256p-challenge\" (\"%h\" "
+"will be replaced by WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+"Suchpfad für Erweiterungen (\"%h\"' wird durch das WeeChat-Basisverzeichnis "
+"ersetzt, voreingestellt ist \"~/.weechat\")"
 
 msgid "timeout (in seconds) before giving up SASL authentication"
 msgstr ""
@@ -9106,6 +9122,26 @@ msgstr ""
 msgid "%s%s: server \"%s\" not found for redirect"
 msgstr "%s%s: Server \"%s\" für eine Weiterleitung wurde nicht gefunden"
 
+#, fuzzy, c-format
+msgid "%s%s: unable to read private key in file \"%s\""
+msgstr "%s%s: Datei \"%s\" kann nicht gelesen werden"
+
+#, fuzzy, c-format
+msgid "%sgnutls: invalid private key file: error %d %s"
+msgstr "%sgnutls: ungültiges Zertifikat \"%s\". Fehler: %s"
+
+#, c-format
+msgid "%s%s: signing the challenge with ECC public key: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: unable to import the private key: error %d %s"
+msgstr "%s%s: Pipe kann nicht erstellt werden: Fehler %d %s"
+
+#, fuzzy, c-format
+msgid "%sgnutls: unable to sign the hashed data: error %d %s"
+msgstr "%s%s: Adresse kann nicht ausgewertet werden: Fehler %d %s"
+
 #, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s%s: Neuer Server konnte nicht alloziert werden"
@@ -9946,6 +9982,14 @@ msgid "tree of windows"
 msgstr "Baumstruktur der Fenster"
 
 #, c-format
+msgid "Initializing plugin \"%s\" (priority: %d)"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to initialize plugin \"%s\""
+msgstr "%sFehler: Erweiterung \"%s\" kann nicht initialisiert werden"
+
+#, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
 msgstr "%sFehler: kann Erweiterung \"%s\" nicht installieren: %s"
 
@@ -9990,10 +10034,6 @@ msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%sFehler: Funktion \"%s\" nicht in Erweiterung \"%s\" gefunden. Installation "
 "fehlgeschlagen"
-
-#, c-format
-msgid "%sError: unable to initialize plugin \"%s\""
-msgstr "%sFehler: Erweiterung \"%s\" kann nicht initialisiert werden"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
@@ -12324,3 +12364,10 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
+#~ msgid ""
+#~ "username for SASL authentication (note: content is evaluated, see /help "
+#~ "eval)"
+#~ msgstr ""
+#~ "Username für SASL Authentifikation (Hinweis: Inhalt wird evaluiert, "
+#~ "siehe /help eval)"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-12-28 10:50+0100\n"
+"POT-Creation-Date: 2015-01-19 23:45+0100\n"
 "PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6433,18 +6433,37 @@ msgid ""
 msgstr ""
 
 msgid ""
-"mechanism for SASL authentication: \"plain\" for plain text password, \"dh-"
-"blowfish\" for blowfish crypted password, \"dh-aes\" for AES crypted "
-"password, \"external\" for authentication using client side SSL cert"
+"mechanism for SASL authentication: \"plain\" for plain text password, "
+"\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
+"\"external\" for authentication using client side SSL cert, \"dh-blowfish\" "
+"for blowfish crypted password (insecure, not recommended), \"dh-aes\" for "
+"AES crypted password (insecure, not recommended)"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"username for SASL authentication (note: content is evaluated, see /help eval)"
+"username for SASL authentication; this option is not used for mechanism "
+"\"external\" (note: content is evaluated, see /help eval)"
 msgstr ""
+"senha necessária para clientes acessarem este relay (vazio significa que "
+"nenhuma senha é necessária)"
 
+#, fuzzy
 msgid ""
-"password for SASL authentication (note: content is evaluated, see /help eval)"
+"password for SASL authentication; this option is not used for mechanisms "
+"\"ecdsa-nist256p-challenge\" and \"external\" (note: content is evaluated, "
+"see /help eval)"
 msgstr ""
+"senha necessária para clientes acessarem este relay (vazio significa que "
+"nenhuma senha é necessária)"
+
+#, fuzzy
+msgid ""
+"file with ECC private key for mechanism \"ecdsa-nist256p-challenge\" (\"%h\" "
+"will be replaced by WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+"caminho para a busca por plugins (\"%h\" será substituído pelo diretório do "
+"WeeChat, \"~/.weechat/\" por padrão)"
 
 msgid "timeout (in seconds) before giving up SASL authentication"
 msgstr "limite de tempo (sem segundos) antes de desistir da autenticação SASL"
@@ -7674,6 +7693,26 @@ msgstr ""
 msgid "%s%s: server \"%s\" not found for redirect"
 msgstr "%s%s: servidor \"%s\" não encontrado para redirecionamento"
 
+#, fuzzy, c-format
+msgid "%s%s: unable to read private key in file \"%s\""
+msgstr "%s%s: não foi possível ler arquivo \"%s\""
+
+#, fuzzy, c-format
+msgid "%sgnutls: invalid private key file: error %d %s"
+msgstr "%sgnutls: certificado \"%s\" inválido, erro: %s"
+
+#, c-format
+msgid "%s%s: signing the challenge with ECC public key: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: unable to import the private key: error %d %s"
+msgstr "%s%s: não foi possível criar pipe"
+
+#, fuzzy, c-format
+msgid "%sgnutls: unable to sign the hashed data: error %d %s"
+msgstr "%s%s: não foi possível criar pipe"
+
 #, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s%s: erro ao alocar novo servidor"
@@ -8491,6 +8530,14 @@ msgid "tree of windows"
 msgstr "árvore de janelas"
 
 #, c-format
+msgid "Initializing plugin \"%s\" (priority: %d)"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to initialize plugin \"%s\""
+msgstr "%sErro: não foi possível inicializar plugin \"%s\""
+
+#, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
 msgstr "%sErro: não foi possível carregar plugin \"%s\": %s"
 
@@ -8530,10 +8577,6 @@ msgstr ""
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%sErro: função \"%s\" não encontrada no plugin \"%s\", falhou ao carregar"
-
-#, c-format
-msgid "%sError: unable to initialize plugin \"%s\""
-msgstr "%sErro: não foi possível inicializar plugin \"%s\""
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\" (not enough memory)"

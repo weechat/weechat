@@ -89,6 +89,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "sasl_mechanism",       "plain"               },
   { "sasl_username",        ""                    },
   { "sasl_password",        ""                    },
+  { "sasl_key",             "",                   },
   { "sasl_timeout",         "15"                  },
   { "sasl_fail",            "continue"            },
   { "autoconnect",          "off"                 },
@@ -335,6 +336,7 @@ irc_server_sasl_enabled (struct t_irc_server *server)
 {
     int sasl_mechanism, rc;
     char *sasl_username, *sasl_password;
+    const char *sasl_key;
 
     sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
         server, IRC_SERVER_OPTION_SASL_MECHANISM);
@@ -344,12 +346,18 @@ irc_server_sasl_enabled (struct t_irc_server *server)
     sasl_password = weechat_string_eval_expression (
         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD),
         NULL, NULL, NULL);
+    sasl_key = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY);
 
     /*
-     * SASL is enabled if using mechanism "external"
-     * or if both username AND password are set
+     * SASL is enabled if one of these conditions is true:
+     * - mechanism is "external"
+     * - mechanism is "ecdsa-nist256p-challenge" with username/key set
+     * - another mechanism with username/password set
      */
     rc = ((sasl_mechanism == IRC_SASL_MECHANISM_EXTERNAL)
+          || ((sasl_mechanism == IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE)
+              && sasl_username && sasl_username[0]
+              && sasl_key && sasl_key[0])
           || (sasl_username && sasl_username[0]
               && sasl_password && sasl_password[0])) ? 1 : 0;
 
@@ -5220,6 +5228,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "sasl_password",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD)))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "sasl_key",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY)))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "sasl_fail",
                                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL)))
         return 0;
@@ -5475,12 +5486,19 @@ irc_server_print_log ()
                                 IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SASL_USERNAME));
         else
             weechat_log_printf ("  sasl_username. . . . : '%s'",
-                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_USERNAME]));
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SASL_USERNAME]));
         /* sasl_password */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_PASSWORD]))
             weechat_log_printf ("  sasl_password. . . . : null");
         else
             weechat_log_printf ("  sasl_password. . . . : (hidden)");
+        /* sasl_key */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_KEY]))
+            weechat_log_printf ("  sasl_key. .  . . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SASL_KEY));
+        else
+            weechat_log_printf ("  sasl_key. .  . . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SASL_KEY]));
         /* sasl_fail */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_FAIL]))
             weechat_log_printf ("  sasl_fail. . . . . . : null ('%s')",

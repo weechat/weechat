@@ -568,13 +568,18 @@
 ** タイプ: 整数
 ** 値: continue, reconnect, disconnect (デフォルト値: `continue`)
 
+* [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
+** 説明: `file with ECC private key for mechanism "ecdsa-nist256p-challenge" ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** 説明: `SASL 認証メカニズム: "plain" は平文パスワード、"dh-blowfish" は blowfish 暗号化パスワード、"dh-aes" は AES 暗号化パスワード、"external" はクライアント側の SSL 証明書を利用した認証`
+** 説明: `mechanism for SASL authentication: "plain" for plain text password, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL cert, "dh-blowfish" for blowfish crypted password (insecure, not recommended), "dh-aes" for AES crypted password (insecure, not recommended)`
 ** タイプ: 整数
-** 値: plain, dh-blowfish, dh-aes, external (デフォルト値: `plain`)
+** 値: plain, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes (デフォルト値: `plain`)
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** 説明: `SASL 認証のパスワード (注意: 値は評価されます、/help eval を参照してください)`
+** 説明: `password for SASL authentication; this option is not used for mechanisms "ecdsa-nist256p-challenge" and "external" (note: content is evaluated, see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -584,7 +589,7 @@
 ** 値: 1 .. 3600 (デフォルト値: `15`)
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** 説明: `SASL 認証のユーザ名 (注意: 値は評価されます、/help eval を参照してください)`
+** 説明: `username for SASL authentication; this option is not used for mechanism "external" (note: content is evaluated, see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

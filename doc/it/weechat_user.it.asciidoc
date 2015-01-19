@@ -112,7 +112,7 @@ compilare WeeChat.
 // TRANSLATION MISSING
 | libgcrypt20-dev                |             | *sì*      | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
 // TRANSLATION MISSING
-| libgnutls28-dev                | ≥ 2.2.0     |           | Connessione SSL al server IRC, support of SSL in relay plugin
+| libgnutls28-dev                | ≥ 2.2.0     |           | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE)
 | gettext                        |             |           | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
 | ca-certificates                |             |           | Certificati per le connessioni SSL
 | libaspell-dev o libenchant-dev |             |           | Plugin aspell
@@ -2278,10 +2278,12 @@ WeeChat supports SASL authentication, using different mechanisms:
 // TRANSLATION MISSING
 * 'plain': password in chiaro (default)
 // TRANSLATION MISSING
+* 'ecdsa-nist256p-challenge': challenge with public/private key
+* 'external': certificato SSL da lato client
+// TRANSLATION MISSING
 * 'dh-blowfish': blowfish encrypted password
 // TRANSLATION MISSING
 * 'dh-aes': AES encrypted password
-* 'external': certificato SSL da lato client
 
 [NOTE]
 La libreria "gcrypt" è richiesta per compilare WeeChat al fine di usare il
@@ -2292,8 +2294,12 @@ Le opzioni nel server sono:
 // TRANSLATION MISSING
 * 'sasl_mechanism': meccanismo da usare (see above)
 * 'sasl_timeout': timeout (in secondi) per l'autenticazione
+// TRANSLATION MISSING
+* 'sasl_fail': action to perform if authentication fails
 * 'sasl_username': nome utente (nick)
 * 'sasl_password': password
+// TRANSLATION MISSING
+* 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
 
 [[irc_tor_freenode]]
 ==== Connessione a Freenode con TOR/SASL

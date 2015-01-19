@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-12-28 10:50+0100\n"
+"POT-Creation-Date: 2015-01-19 23:45+0100\n"
 "PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7077,27 +7077,43 @@ msgid ""
 "multi-prefix\")"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"mechanism for SASL authentication: \"plain\" for plain text password, \"dh-"
-"blowfish\" for blowfish crypted password, \"dh-aes\" for AES crypted "
-"password, \"external\" for authentication using client side SSL cert"
+"mechanism for SASL authentication: \"plain\" for plain text password, "
+"\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
+"\"external\" for authentication using client side SSL cert, \"dh-blowfish\" "
+"for blowfish crypted password (insecure, not recommended), \"dh-aes\" for "
+"AES crypted password (insecure, not recommended)"
 msgstr ""
 "meccanismo per l'autenticazione SASL: \"plain\" per le password in chiaro, "
 "\"dh-blowfish\" per le password cifrate in blowfish, \"dh-aes\" per le "
 "password cifrate in AES  \"external\" per l'autenticazione con certificati "
 "SSL lato client"
 
+#, fuzzy
 msgid ""
-"username for SASL authentication (note: content is evaluated, see /help eval)"
-msgstr ""
-"nome utente per l'autenticazione SASL (nota: il contenuto viene valutato, "
-"consultare /help eval)"
-
-msgid ""
-"password for SASL authentication (note: content is evaluated, see /help eval)"
+"username for SASL authentication; this option is not used for mechanism "
+"\"external\" (note: content is evaluated, see /help eval)"
 msgstr ""
 "password per l'autenticazione SASL (nota: il contenuto viene valutato, "
 "consultare /help eval)"
+
+#, fuzzy
+msgid ""
+"password for SASL authentication; this option is not used for mechanisms "
+"\"ecdsa-nist256p-challenge\" and \"external\" (note: content is evaluated, "
+"see /help eval)"
+msgstr ""
+"password per l'autenticazione SASL (nota: il contenuto viene valutato, "
+"consultare /help eval)"
+
+#, fuzzy
+msgid ""
+"file with ECC private key for mechanism \"ecdsa-nist256p-challenge\" (\"%h\" "
+"will be replaced by WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+"path per la ricerca dei plugin (\"%h\" sarà sostituito dalla home di "
+"WeeChat, \"~/.weechat come predefinita)"
 
 msgid "timeout (in seconds) before giving up SASL authentication"
 msgstr "timeout (in secondi) prima di annullare l'autenticazione SASL"
@@ -8423,6 +8439,26 @@ msgstr ""
 msgid "%s%s: server \"%s\" not found for redirect"
 msgstr "%s%s: server \"%s\" non trovato per la redirezione"
 
+#, fuzzy, c-format
+msgid "%s%s: unable to read private key in file \"%s\""
+msgstr "%s%s: impossibile leggere il file \"%s\""
+
+#, fuzzy, c-format
+msgid "%sgnutls: invalid private key file: error %d %s"
+msgstr "%sgnutls: certificato \"%s\" non valido, errore: %s"
+
+#, c-format
+msgid "%s%s: signing the challenge with ECC public key: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: unable to import the private key: error %d %s"
+msgstr "%s%s: impossibile creare la pipe: errore %d %s"
+
+#, fuzzy, c-format
+msgid "%sgnutls: unable to sign the hashed data: error %d %s"
+msgstr "%s%s: impossibile creare la pipe: errore %d %s"
+
 #, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s%s: errore durante l'allocazione del nuovo server"
@@ -9263,6 +9299,14 @@ msgid "tree of windows"
 msgstr "albero delle finestre"
 
 #, c-format
+msgid "Initializing plugin \"%s\" (priority: %d)"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to initialize plugin \"%s\""
+msgstr "%sErrore: impossibile inizializzare il plugin \"%s\""
+
+#, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
 msgstr "%sErrore: impossibile caricare il plugin \"%s\": %s"
 
@@ -9304,10 +9348,6 @@ msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%sErrore: funzione \"%s\" non trovata nel plugin \"%s\", impossibile "
 "caricarlo"
-
-#, c-format
-msgid "%sError: unable to initialize plugin \"%s\""
-msgstr "%sErrore: impossibile inizializzare il plugin \"%s\""
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
@@ -11356,3 +11396,10 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#~ msgid ""
+#~ "username for SASL authentication (note: content is evaluated, see /help "
+#~ "eval)"
+#~ msgstr ""
+#~ "nome utente per l'autenticazione SASL (nota: il contenuto viene valutato, "
+#~ "consultare /help eval)"

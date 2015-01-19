@@ -205,6 +205,7 @@ IRC_PROTOCOL_CALLBACK(authenticate)
 {
     int sasl_mechanism;
     char *sasl_username, *sasl_password, *answer;
+    const char *sasl_key;
 
     IRC_PROTOCOL_MIN_ARGS(2);
 
@@ -218,26 +219,28 @@ IRC_PROTOCOL_CALLBACK(authenticate)
         sasl_password = weechat_string_eval_expression (
             IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD),
             NULL, NULL, NULL);
+        sasl_key = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY);
         answer = NULL;
         switch (sasl_mechanism)
         {
-            case IRC_SASL_MECHANISM_DH_BLOWFISH:
-                answer = irc_sasl_mechanism_dh_blowfish (argv_eol[1],
-                                                         sasl_username,
-                                                         sasl_password);
+            case IRC_SASL_MECHANISM_PLAIN:
+                answer = irc_sasl_mechanism_plain (sasl_username,
+                                                   sasl_password);
                 break;
-            case IRC_SASL_MECHANISM_DH_AES:
-                answer = irc_sasl_mechanism_dh_aes (argv_eol[1],
-                                                    sasl_username,
-                                                    sasl_password);
+            case IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE:
+                answer = irc_sasl_mechanism_ecdsa_nist256p_challenge (
+                    server, argv[1], sasl_username, sasl_key);
                 break;
             case IRC_SASL_MECHANISM_EXTERNAL:
                 answer = strdup ("+");
                 break;
-            case IRC_SASL_MECHANISM_PLAIN:
-            default:
-                answer = irc_sasl_mechanism_plain (sasl_username,
-                                                   sasl_password);
+            case IRC_SASL_MECHANISM_DH_BLOWFISH:
+                answer = irc_sasl_mechanism_dh_blowfish (
+                    argv[1], sasl_username, sasl_password);
+                break;
+            case IRC_SASL_MECHANISM_DH_AES:
+                answer = irc_sasl_mechanism_dh_aes (
+                    argv[1], sasl_username, sasl_password);
                 break;
         }
         if (answer)
@@ -303,8 +306,10 @@ IRC_PROTOCOL_CALLBACK(away)
 IRC_PROTOCOL_CALLBACK(cap)
 {
     char *ptr_caps, **caps_supported, **caps_requested, *cap_option, *cap_req;
+    char str_msg_auth[512];
     const char *ptr_cap_option;
-    int num_caps_supported, num_caps_requested, sasl_requested, sasl_to_do;
+    int num_caps_supported, num_caps_requested;
+    int sasl_requested, sasl_to_do, sasl_mechanism;
     int i, j, timeout, length;
 
     IRC_PROTOCOL_MIN_ARGS(4);
@@ -437,35 +442,26 @@ IRC_PROTOCOL_CALLBACK(cap)
             }
             if (sasl_to_do)
             {
-                switch (IRC_SERVER_OPTION_INTEGER(server,
-                                                  IRC_SERVER_OPTION_SASL_MECHANISM))
+                sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
+                    server, IRC_SERVER_OPTION_SASL_MECHANISM);
+                if ((sasl_mechanism >= 0)
+                    && (sasl_mechanism < IRC_NUM_SASL_MECHANISMS))
                 {
-                    case IRC_SASL_MECHANISM_DH_BLOWFISH:
-                        irc_server_sendf (server, 0, NULL,
-                                          "AUTHENTICATE DH-BLOWFISH");
-                        break;
-                    case IRC_SASL_MECHANISM_DH_AES:
-                        irc_server_sendf (server, 0, NULL,
-                                          "AUTHENTICATE DH-AES");
-                        break;
-                    case IRC_SASL_MECHANISM_EXTERNAL:
-                        irc_server_sendf (server, 0, NULL,
-                                          "AUTHENTICATE EXTERNAL");
-                        break;
-                    case IRC_SASL_MECHANISM_PLAIN:
-                    default:
-                        irc_server_sendf (server, 0, NULL,
-                                          "AUTHENTICATE PLAIN");
-                        break;
+                    snprintf (str_msg_auth, sizeof (str_msg_auth),
+                              "AUTHENTICATE %s",
+                              irc_sasl_mechanism_string[sasl_mechanism]);
+                    weechat_string_toupper(str_msg_auth);
+                    irc_server_sendf (server, 0, NULL, str_msg_auth);
+                    if (server->hook_timer_sasl)
+                        weechat_unhook (server->hook_timer_sasl);
+                    timeout = IRC_SERVER_OPTION_INTEGER(
+                        server, IRC_SERVER_OPTION_SASL_TIMEOUT);
+                    server->hook_timer_sasl = weechat_hook_timer (
+                        timeout * 1000,
+                        0, 1,
+                        &irc_server_timer_sasl_cb,
+                        server);
                 }
-                if (server->hook_timer_sasl)
-                    weechat_unhook (server->hook_timer_sasl);
-                timeout = IRC_SERVER_OPTION_INTEGER(server,
-                                                    IRC_SERVER_OPTION_SASL_TIMEOUT);
-                server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
-                                                              0, 1,
-                                                              &irc_server_timer_sasl_cb,
-                                                              server);
             }
         }
     }

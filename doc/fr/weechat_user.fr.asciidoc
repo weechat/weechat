@@ -97,7 +97,7 @@ compiler WeeChat.
 | libcurl4-gnutls-dev             |             | *oui*  | Transfert d'URL
 | zlib1g-dev                      |             | *oui*  | Compression des paquets dans l'extension relay (protocole weechat), extension script
 | libgcrypt20-dev                 |             | *oui*  | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script
-| libgnutls28-dev                 | ≥ 2.2.0     |        | Connexion SSL au serveur IRC, support SSL dans l'extension relay
+| libgnutls28-dev                 | ≥ 2.2.0     |        | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE)
 | gettext                         |             |        | Internationalisation (traduction des messages; la langue de base est l'anglais)
 | ca-certificates                 |             |        | Certificats pour les connexions SSL
 | libaspell-dev ou libenchant-dev |             |        | Extension aspell
@@ -2242,9 +2242,11 @@ WeeChat supporte l'authentification avec SASL, en utilisant différents
 mécanismes :
 
 * 'plain' : mot de passe en clair (par défaut)
+// TRANSLATION MISSING
+* 'ecdsa-nist256p-challenge' : challenge avec clé publique/privée
+* 'external' : certificat SSL côté client
 * 'dh-blowfish' : mot de passe chiffré avec blowfish
 * 'dh-aes' : mot de passe chiffré avec AES
-* 'external' : certificat SSL côté client
 
 [NOTE]
 La librairie "gcrypt" est requise lors de la compilation de WeeChat pour
@@ -2254,8 +2256,11 @@ Les options dans le serveur sont :
 
 * 'sasl_mechanism' : mécanisme à utiliser (voir ci-dessus)
 * 'sasl_timeout' : délai d'attente maximum (en secondes) pour l'authentification
+* 'sasl_fail' : action à effectuer si l'authentification échoue
 * 'sasl_username' : nom d'utilisateur (pseudo)
 * 'sasl_password' : mot de passe
+* 'sasl_key' : chemin vers la clé privée (pour le mécanisme
+  'ecdsa-nist256p-challenge')
 
 [[irc_tor_freenode]]
 ==== Connexion à Freenode avec TOR/SASL

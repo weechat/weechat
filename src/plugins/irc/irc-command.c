@@ -4477,6 +4477,14 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  sasl_password. . . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
                             _("(hidden)"));
+        /* sasl_key */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SASL_KEY]))
+            weechat_printf (NULL, "  sasl_key. .  . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY));
+        else
+            weechat_printf (NULL, "  sasl_key. .  . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_SASL_KEY]));
         /* sasl_timeout */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SASL_TIMEOUT]))
             weechat_printf (NULL, "  sasl_timeout . . . . :   (%d %s)",

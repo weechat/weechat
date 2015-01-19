@@ -568,13 +568,18 @@
 ** typ: liczba
 ** wartości: continue, reconnect, disconnect (domyślna wartość: `continue`)
 
+* [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
+** opis: `file with ECC private key for mechanism "ecdsa-nist256p-challenge" ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `""`)
+
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** opis: `mechanizm autentykacji SASL: "plain" dla hasła w czystym tekście, "dh-blowfish" dla hasła szyfrowanego za pomocą blowfish, "dh-aes" dla hasła szyfrowanego za pomocą AES, "external" dla uwierzytelnienia za pomocą certyfikatu SSL po stronie klienta`
+** opis: `mechanism for SASL authentication: "plain" for plain text password, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL cert, "dh-blowfish" for blowfish crypted password (insecure, not recommended), "dh-aes" for AES crypted password (insecure, not recommended)`
 ** typ: liczba
-** wartości: plain, dh-blowfish, dh-aes, external (domyślna wartość: `plain`)
+** wartości: plain, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes (domyślna wartość: `plain`)
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** opis: `hasło dla uwierzytelniania SASL (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
+** opis: `password for SASL authentication; this option is not used for mechanisms "ecdsa-nist256p-challenge" and "external" (note: content is evaluated, see /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -584,7 +589,7 @@
 ** wartości: 1 .. 3600 (domyślna wartość: `15`)
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** opis: `nazwa użytkownika dla uwierzytelniania SASL (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
+** opis: `username for SASL authentication; this option is not used for mechanism "external" (note: content is evaluated, see /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 

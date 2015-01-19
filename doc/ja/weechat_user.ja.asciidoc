@@ -100,7 +100,8 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 | libcurl4-gnutls-dev                 |             | *必須* | URL 転送
 | zlib1g-dev                          |             | *必須* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
 | libgcrypt20-dev                     |             | *必須* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
-| libgnutls28-dev                     | ≥ 2.2.0     |       | IRC サーバへの SSL 接続
+// TRANSLATION MISSING
+| libgnutls28-dev                     | ≥ 2.2.0     |       | IRC サーバへの SSL 接続, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE)
 | gettext                             |             |       | 国際化 (メッセージの翻訳; ベース言語は英語です)
 | ca-certificates                     |             |       | SSL 接続に必要な証明書、relay プラグインで SSL サポート
 | libaspell-dev または libenchant-dev |             |       | aspell プラグイン
@@ -2172,9 +2173,11 @@ $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick
 WeeChat は SASL 認証をサポートします、以下の認証メカニズムを利用できます:
 
 * 'plain': 平文パスワード (デフォルト)
+// TRANSLATION MISSING
+* 'ecdsa-nist256p-challenge': challenge with public/private key
+* 'external': クライアント側 SSL 証明書
 * 'dh-blowfish': blowfish 暗号パスワード
 * 'dh-aes': AES 暗号パスワード
-* 'external': クライアント側 SSL 証明書
 
 [NOTE]
 "dh-blowfish" メカニズムを利用する場合、"gcrypt" ライブラリが
@@ -2184,8 +2187,12 @@ WeeChat のコンパイル時に必要です (<<dependencies,依存関係>>を�
 
 * 'sasl_mechanism': 利用する認証メカニズム (上記参照)
 * 'sasl_timeout': 認証時のタイムアウト (秒単位)
+// TRANSLATION MISSING
+* 'sasl_fail': action to perform if authentication fails
 * 'sasl_username': ユーザ名 (ニックネーム)
 * 'sasl_password': パスワード
+// TRANSLATION MISSING
+* 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
 
 [[irc_tor_freenode]]
 ==== TOR/SASL を使って Freenode に接続する場合

@@ -568,13 +568,18 @@
 ** Typ: integer
 ** Werte: continue, reconnect, disconnect (Standardwert: `continue`)
 
+* [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
+** Beschreibung: `file with ECC private key for mechanism "ecdsa-nist256p-challenge" ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
+
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** Beschreibung: `Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort wird im Klartext gesendet, "dh-blowfish" Passwort wird mittels blowfish verschlüsselt, "dh-aes" Passwort wird mittels AES verschlüsselt, "external" SSL Zertifikat welches auf Client Seite vorliegt, wird verwendet`
+** Beschreibung: `mechanism for SASL authentication: "plain" for plain text password, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL cert, "dh-blowfish" for blowfish crypted password (insecure, not recommended), "dh-aes" for AES crypted password (insecure, not recommended)`
 ** Typ: integer
-** Werte: plain, dh-blowfish, dh-aes, external (Standardwert: `plain`)
+** Werte: plain, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes (Standardwert: `plain`)
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** Beschreibung: `Passwort für SASL Authentifikation (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
+** Beschreibung: `password for SASL authentication; this option is not used for mechanisms "ecdsa-nist256p-challenge" and "external" (note: content is evaluated, see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -584,7 +589,7 @@
 ** Werte: 1 .. 3600 (Standardwert: `15`)
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** Beschreibung: `Username für SASL Authentifikation (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
+** Beschreibung: `username for SASL authentication; this option is not used for mechanism "external" (note: content is evaluated, see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
