@@ -2330,6 +2330,7 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
     int i, arg_channels, noswitch;
+    const char *ptr_type, *ptr_server_name, *ptr_channel_name;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -2363,6 +2364,18 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
         }
     }
 
+    if (!ptr_server)
+    {
+        if ((weechat_buffer_get_pointer (buffer,
+                                         "plugin") == weechat_irc_plugin))
+        {
+            ptr_server_name = weechat_buffer_get_string (buffer,
+                                                         "localvar_server");
+            if (ptr_server_name)
+                ptr_server = irc_server_search (ptr_server_name);
+        }
+    }
+
     IRC_COMMAND_CHECK_SERVER("join", 1);
 
     if (arg_channels < argc)
@@ -2379,7 +2392,21 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
                                      1, noswitch);
         }
         else
-            WEECHAT_COMMAND_ERROR;
+        {
+            ptr_type = weechat_buffer_get_string (buffer, "localvar_type");
+            ptr_channel_name = weechat_buffer_get_string (buffer,
+                                                          "localvar_channel");
+            if ((weechat_buffer_get_pointer (buffer,
+                                             "plugin") == weechat_irc_plugin)
+                && ptr_type && ptr_channel_name
+                && (strcmp (ptr_type, "channel") == 0))
+            {
+                irc_command_join_server (ptr_server, ptr_channel_name,
+                                         1, noswitch);
+            }
+            else
+                WEECHAT_COMMAND_ERROR;
+        }
     }
 
     return WEECHAT_RC_OK;
