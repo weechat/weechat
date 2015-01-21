@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-01-19 23:45+0100\n"
+"POT-Creation-Date: 2015-01-21 07:41+0100\n"
 "PO-Revision-Date: 2015-01-02 09:23+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -8565,6 +8565,11 @@ msgstr "%s%s: パイプを作成できません: エラー %d %s"
 #, fuzzy, c-format
 msgid "%sgnutls: unable to sign the hashed data: error %d %s"
 msgstr "%s%s: アドレスを解決できません: エラー %d %s"
+
+#, c-format
+msgid ""
+"%sgnutls: version >= 3.0.21 is required for SASL \"ecdsa-nist256p-challenge\""
+msgstr ""
 
 #, c-format
 msgid "%s%s: error when allocating new server"
