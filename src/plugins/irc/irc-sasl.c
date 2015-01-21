@@ -27,7 +27,9 @@
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020a01 /* 2.10.1 */
 #include <gnutls/abstract.h>
+#endif
 #endif
 
 #include "../weechat-plugin.h"
@@ -133,13 +135,18 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
                                              const char *sasl_username,
                                              const char *sasl_key)
 {
+#if defined(HAVE_GNUTLS) && (LIBGNUTLS_VERSION_NUMBER >= 0x030015) /* 3.0.21 */
     char *data, *string, *answer_base64;
     int length_data, length_username, length, ret;
-    char *str_privkey, *pubkey, *pubkey_base64;
+    char *str_privkey;
     gnutls_x509_privkey_t x509_privkey;
     gnutls_privkey_t privkey;
+    gnutls_datum_t filedatum, decoded_data, signature;
+#if LIBGNUTLS_VERSION_NUMBER >= 0x030300 /* 3.3.0 */
     gnutls_ecc_curve_t curve;
-    gnutls_datum_t filedatum, x, y, k, decoded_data, signature;
+    gnutls_datum_t x, y, k;
+    char *pubkey, *pubkey_base64;
+#endif
 
     answer_base64 = NULL;
     string = NULL;
@@ -198,6 +205,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
             return NULL;
         }
 
+#if LIBGNUTLS_VERSION_NUMBER >= 0x030300 /* 3.3.0 */
         /* read raw values in key, to display public key */
         ret = gnutls_x509_privkey_export_ecc_raw (x509_privkey,
                                                   &curve, &x, &y, &k);
@@ -228,9 +236,10 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
             gnutls_free (y.data);
             gnutls_free (k.data);
         }
+#endif
 
         /* import private key in an abstract key structure */
-        ret = gnutls_privkey_import_x509 (privkey, x509_privkey, 0);
+        ret = gnutls_privkey_import_x509 (privkey, x509_privkey, 0); /* gnutls >= 2.11.0 */
         if (ret != GNUTLS_E_SUCCESS)
         {
             weechat_printf (
@@ -247,7 +256,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
 
         decoded_data.data = (unsigned char *)data;
         decoded_data.size = length_data;
-        ret = gnutls_privkey_sign_hash (privkey, GNUTLS_DIG_SHA256, 0,
+        ret = gnutls_privkey_sign_hash (privkey, GNUTLS_DIG_SHA256, 0, /* gnutls >= 2.11.0 */
                                         &decoded_data, &signature);
         if (ret != GNUTLS_E_SUCCESS)
         {
@@ -285,6 +294,21 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
     }
 
     return answer_base64;
+
+#else /* no gnutls or gnutls < 3.0.21 */
+
+    /* make C compiler happy */
+    (void) data_base64;
+    (void) sasl_username;
+    (void) sasl_key;
+
+    weechat_printf (server->buffer,
+                    _("%sgnutls: version >= 3.0.21 is required for SASL "
+                      "\"ecdsa-nist256p-challenge\""),
+                    weechat_prefix ("error"));
+
+    return NULL;
+#endif
 }
 
 /*
