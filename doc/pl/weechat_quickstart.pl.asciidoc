@@ -320,11 +320,21 @@ Wtyczki są automatycznie ładowane, kiedy zostaną wykryte (proszę spojrzeć d
 dokumentacji WeeChat, aby się dowiedzieć jak ładować/wyładowywać wtyczki lub
 skrypty).
 
-Wiele zewnętrznych skryptów (od społeczności) jest dostępnych dla WeeChat:
-https://weechat.org/scripts
+// TRANSLATION MISSING
+Many external scripts (from contributors) are available for WeeChat, you can
+download and install scripts from the repository with the `/script` command,
+for example:
 
-Możesz zarządzać skryptami w WeeChat dzięki komendzie `/script` (zobacz `/help script`
-po więcej informacji).
+----
+/script install iset.pl
+----
+
+// TRANSLATION MISSING
+See `/help script` for more info.
+
+// TRANSLATION MISSING
+A list of scripts is available in WeeChat with `/script` or at this URL:
+https://weechat.org/scripts
 
 [[more_doc]]
 == Więcej dokumentacji

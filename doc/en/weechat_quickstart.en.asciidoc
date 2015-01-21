@@ -312,11 +312,18 @@ On some distros like Debian, plugins are available via a separate package
 Plugins are automatically loaded when found (please look at the WeeChat
 documentation to load/unload plugins or scripts).
 
-Many external scripts (from contributors) are available for WeeChat:
-https://weechat.org/scripts
+Many external scripts (from contributors) are available for WeeChat, you can
+download and install scripts from the repository with the `/script` command,
+for example:
 
-You can manage scripts in WeeChat with command `/script` (see `/help script`
-for more info).
+----
+/script install iset.pl
+----
+
+See `/help script` for more info.
+
+A list of scripts is available in WeeChat with `/script` or at this URL:
+https://weechat.org/scripts
 
 [[more_doc]]
 == More documentation

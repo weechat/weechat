@@ -335,11 +335,21 @@ I plugin vengono caricati automaticamente quando trovati
 (per favore consultare la documentazione per caricare/scaricare plugin
 o script).
 
-Sono disponibili molti script esterni (dai contributori) per WeeChat:
-https://weechat.org/scripts
+// TRANSLATION MISSING
+Many external scripts (from contributors) are available for WeeChat, you can
+download and install scripts from the repository with the `/script` command,
+for example:
 
-È possibile gestire gli script in WeeChat con il comando `/script` (consultare
-`/help script` per maggiori informazioni).
+----
+/script install iset.pl
+----
+
+// TRANSLATION MISSING
+See `/help script` for more info.
+
+// TRANSLATION MISSING
+A list of scripts is available in WeeChat with `/script` or at this URL:
+https://weechat.org/scripts
 
 [[more_doc]]
 == Ulteriore documentazione

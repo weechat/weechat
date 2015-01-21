@@ -327,11 +327,18 @@ Les extensions sont automatiquement chargées lorsqu'elles sont trouvées
 (merci de regarder la documentation WeeChat pour charger/décharger des
 extensions ou des scripts).
 
-De nombreux scripts externes (de contributeurs) sont disponibles pour WeeChat :
-https://weechat.org/scripts
+De nombreux scripts externes (de contributeurs) sont disponibles pour WeeChat,
+vous pouvez télécharger et installer les scripts avec la commande `/script`,
+par exemple :
 
-Vous pouvez gérer les scripts dans WeeChat avec la commande `/script` (voir
-`/help script` pour plus d'infos).
+----
+/script install iset.pl
+----
+
+Voir `/help script` pour plus d'infos.
+
+Une liste des scripts est disponible avec `/script` ou à cette URL :
+https://weechat.org/scripts
 
 [[more_doc]]
 == Plus de documentation
