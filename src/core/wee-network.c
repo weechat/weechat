@@ -127,17 +127,14 @@ network_init_gnutls ()
         gnutls_certificate_allocate_credentials (&gnutls_xcred);
 
         network_set_gnutls_ca_file ();
-#if LIBGNUTLS_VERSION_NUMBER >= 0x02090a
-        /* for gnutls >= 2.9.10 */
+#if LIBGNUTLS_VERSION_NUMBER >= 0x02090a /* 2.9.10 */
         gnutls_certificate_set_verify_function (gnutls_xcred,
                                                 &hook_connect_gnutls_verify_certificates);
 #endif
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00
-        /* for gnutls >= 2.11.0 */
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
         gnutls_certificate_set_retrieve_function (gnutls_xcred,
                                                   &hook_connect_gnutls_set_certificates);
 #else
-        /* for gnutls < 2.11.0 */
         gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
                                                          &hook_connect_gnutls_set_certificates);
 #endif
@@ -1299,7 +1296,7 @@ network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
     {
         fcntl (HOOK_CONNECT(hook_connect, sock), F_SETFL,
                HOOK_CONNECT(hook_connect, handshake_fd_flags));
-#if LIBGNUTLS_VERSION_NUMBER < 0x02090a
+#if LIBGNUTLS_VERSION_NUMBER < 0x02090a /* 2.9.10 */
         /*
          * gnutls only has the gnutls_certificate_set_verify_function()
          * function since version 2.9.10. We need to call our verify
@@ -1529,7 +1526,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                 }
                 fcntl (HOOK_CONNECT(hook_connect, sock), F_SETFL,
                        HOOK_CONNECT(hook_connect, handshake_fd_flags));
-#if LIBGNUTLS_VERSION_NUMBER < 0x02090a
+#if LIBGNUTLS_VERSION_NUMBER < 0x02090a /* 2.9.10 */
                 /*
                  * gnutls only has the gnutls_certificate_set_verify_function()
                  * function since version 2.9.10. We need to call our verify

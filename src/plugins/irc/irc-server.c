@@ -3807,7 +3807,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                             const gnutls_datum_t *req_ca, int nreq,
                             const gnutls_pk_algorithm_t *pk_algos,
                             int pk_algos_len,
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
                             gnutls_retr2_st *answer,
 #else
                             gnutls_retr_st *answer,
@@ -3815,7 +3815,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                             int action)
 {
     struct t_irc_server *server;
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
     gnutls_retr2_st tls_struct;
 #else
     gnutls_retr_st tls_struct;
@@ -3828,7 +3828,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
     char *cert_path0, *cert_path1, *cert_path2, *cert_str;
     const char *weechat_dir, *fingerprint;
     int rc, ret, fingerprint_match, hostname_match, cert_temp_init;
-#if LIBGNUTLS_VERSION_NUMBER >= 0x010706
+#if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
     gnutls_datum_t cinfo;
     int rinfo;
 #endif
@@ -3923,9 +3923,9 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                         hostname_match = 1;
                     }
                 }
-#if LIBGNUTLS_VERSION_NUMBER >= 0x010706
+#if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
                 /* display infos about certificate */
-#if LIBGNUTLS_VERSION_NUMBER < 0x020400
+#if LIBGNUTLS_VERSION_NUMBER < 0x020400 /* 2.4.0 */
                 rinfo = gnutls_x509_crt_print (cert_temp,
                                                GNUTLS_X509_CRT_ONELINE, &cinfo);
 #else
@@ -4113,7 +4113,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                     else
                     {
 
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
                         tls_struct.cert_type = GNUTLS_CRT_X509;
                         tls_struct.key_type = GNUTLS_PRIVKEY_X509;
 #else
@@ -4123,9 +4123,9 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                         tls_struct.deinit_all = 0;
                         tls_struct.cert.x509 = &server->tls_cert;
                         tls_struct.key.x509 = server->tls_cert_key;
-#if LIBGNUTLS_VERSION_NUMBER >= 0x010706
+#if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
                         /* client certificate info */
-#if LIBGNUTLS_VERSION_NUMBER < 0x020400
+#if LIBGNUTLS_VERSION_NUMBER < 0x020400 /* 2.4.0 */
                         rinfo = gnutls_x509_crt_print (server->tls_cert,
                                                        GNUTLS_X509_CRT_ONELINE,
                                                        &cinfo);

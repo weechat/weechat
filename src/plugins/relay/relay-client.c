@@ -1121,8 +1121,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                 if (relay_gnutls_dh_params)
                 {
                     gnutls_dh_params_init (relay_gnutls_dh_params);
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020c00
-                    /* for gnutls >= 2.12.0 */
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020c00 /* 2.12.0 */
                     bits = gnutls_sec_param_to_pk_bits (GNUTLS_PK_DH,
                                                         GNUTLS_SEC_PARAM_LOW);
 #else
