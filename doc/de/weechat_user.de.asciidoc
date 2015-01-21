@@ -90,42 +90,89 @@ Unter OS X kann http://brew.sh/[Homebrew] verwendet werden:
 [[dependencies]]
 ==== Abhängigkeiten
 
-folgende Tabelle beschreibt, welche Pakete zwingend notwendig sind um WeeChat zu kompilieren und
-welche Pakete optional genutzt werden können.
+folgende Tabelle beschreibt, welche Pakete zwingend notwendig sind um WeeChat
+zu kompilieren und welche Pakete optional genutzt werden können.
 
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
-| Paket ^(1)^                       | Version     | benötigt | Funktion
-| cmake                             |             | *ja*     | Zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
-| pkg-config                        |             | *ja*     | entdeckt installierte Bibliotheken
-| libncursesw5-dev ^(2)^            |             | *ja*     | Ncurses Oberfläche
-| libcurl4-gnutls-dev               |             | *ja*     | URL Transfer
-| zlib1g-dev                        |             | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden
-| libgcrypt20-dev                   |             | *ja*     | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES), Skript-Erweiterung
-| libgnutls28-dev                   | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE)
-| gettext                           |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
-| ca-certificates                   |             |          | Zertifikate für SSL Verbindungen
-| libaspell-dev oder libenchant-dev |             |          | Aspell Erweiterung
-| python-dev                        | ≥ 2.5 ^(3)^ |          | Python Erweiterung
-| libperl-dev                       |             |          | Perl Erweiterung
-| ruby2.1-dev                       | ≥ 1.8       |          | Ruby Erweiterung
-| liblua5.2-dev                     |             |          | Lua Erweiterung
-| tcl-dev                           | ≥ 8.5       |          | Tcl Erweiterung
-| guile-2.0-dev                     | ≥ 2.0       |          | Guile (scheme) Erweiterung
-| asciidoc                          | ≥ 8.5.0     |          | Zum Erstellen der man page und der Dokumentation
-| source-highlight                  |             |          | Syntax Highlight für Quelltext in Dokumentation
-| xsltproc,
-  docbook-xml, docbook-xsl          |             |          | Erstellt man page
-| libcpputest-dev                   | ≥ 3.4       |       .2+| Testlauf
-| C++ compiler                      |             |
+| Paket ^(1)^ | Version | benötigt | Funktion
+| cmake | | *ja* |
+  Zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
+
+| pkg-config | | *ja* |
+  entdeckt installierte Bibliotheken
+
+| libncursesw5-dev ^(2)^ | | *ja* |
+  Ncurses Oberfläche
+
+| libcurl4-gnutls-dev | | *ja* |
+  URL Transfer
+
+| zlib1g-dev | | *ja* |
+  Kompression für Pakete, die mittels Relay- (WeeChat Protokoll),
+  Script-Erweiterung übertragen werden
+
+| libgcrypt20-dev | | *ja* |
+  Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES),
+  Skript-Erweiterung
+
+| libgnutls28-dev | ≥ 2.2.0 ^(3)^ | |
+  SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der
+  Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE)
+
+| gettext | | |
+  Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist
+  englisch)
+
+| ca-certificates | | |
+  Zertifikate für SSL Verbindungen
+
+| libaspell-dev oder libenchant-dev | | |
+  Aspell Erweiterung
+
+| python-dev | ≥ 2.5 ^(4)^ | |
+  Python Erweiterung
+
+| libperl-dev | | |
+  Perl Erweiterung
+
+| ruby2.1-dev | ≥ 1.8 | |
+  Ruby Erweiterung
+
+| liblua5.2-dev | | |
+  Lua Erweiterung
+
+| tcl-dev | ≥ 8.5 | |
+  Tcl Erweiterung
+
+| guile-2.0-dev | ≥ 2.0 | |
+  Guile (scheme) Erweiterung
+
+| asciidoc | ≥ 8.5.0 | |
+  Zum Erstellen der man page und der Dokumentation
+
+| source-highlight | | |
+  Syntax Highlight für Quelltext in Dokumentation
+
+| xsltproc, docbook-xml, docbook-xsl | | |
+  Erstellt man page
+
+| libcpputest-dev | ≥ 3.4 | .2+|
+  Testlauf
+
+| C++ compiler | |
 |===
 
+// TRANSLATION MISSING (note 3)
 [NOTE]
-^(1)^ Paketnamen wurden von der Debian GNU/Linux Distribution übernommen. Versionen und Paketnamen
-können für andere Distributionen abweichend sein. +
-^(2)^ WeeChat kann auch mit libncurses5-dev kompiliert werden. Dies wird aber *NICHT* empfohlen (es
-treten dabei Darstellungsfehler mit breiten Zeichen auf). +
-^(3)^ Die empfohlene Version ist 2.7 (alle Skripten laufen mit der Version 2.7,
+^(1)^ Paketnamen wurden von der Debian GNU/Linux Distribution übernommen.
+Versionen und Paketnamen können für andere Distributionen abweichend sein. +
+^(2)^ WeeChat kann auch mit libncurses5-dev kompiliert werden. Dies wird aber
+*NICHT* empfohlen (es treten dabei Darstellungsfehler mit breiten Zeichen
+auf). +
+^(3)^ Gnutls ≥ 3.0.21 is required for IRC SASL authentication with mechanism
+ECDSA-NIST256P-CHALLENGE. +
+^(4)^ Die empfohlene Version ist 2.7 (alle Skripten laufen mit der Version 2.7,
 aber nicht mit Version ≤ 2.6 oder ≥ 3.0).
 
 [[compile_with_cmake]]
@@ -2239,6 +2286,49 @@ Optionen für Server sind:
 * 'sasl_password': Passwort
 // TRANSLATION MISSING
 * 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
+
+// TRANSLATION MISSING
+[[irc_sasl_ecdsa_nist256p_challenge]]
+===== SASL ECDSA-NIST256P-CHALLENGE
+
+You must generate a private key in order to authentify with the
+ECDSA-NIST256P-CHALLENGE mechanism (no password is required on connection).
+
+You can generate the key with this command:
+
+----
+$ openssl ecparam -genkey -name prime256v1 >~/.weechat/ecdsa.pem
+----
+
+Get the public key (encoded as base64) with this command:
+
+----
+$ openssl ec -noout -text -conv_form compressed -in ~/.weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
+----
+
+Connect to the server, identify (for example with "nickserv identify") and set
+your public key in your account, using nickserv (replace the base64 value with
+your public key):
+
+----
+/connect freenode
+/msg nickserv identify your_password
+/msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
+----
+
+Configure the SASL options in the server:
+
+----
+/set irc.server.freenode.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.freenode.sasl_username "your_nickname"
+/set irc.server.freenode.sasl_key "%h/ecdsa.pem"
+----
+
+Reconnect to the server:
+
+----
+/reconnect freenode
+----
 
 [[irc_tor_freenode]]
 ==== Verbindung zu Freenode mittels TOR/SASL herstellen

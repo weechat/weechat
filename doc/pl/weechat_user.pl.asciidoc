@@ -94,37 +94,82 @@ WeeChat.
 
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
-| Pakiet ^(1)^                    | Wersja      | Wymagany | Opis
-| cmake                           |             | *tak*    | Kompilacja (możliwe jest użycie autotools, jednak cmake jest zalecany)
-| pkg-config                      |             | *tak*    | Wykrywa zainstalowane biblioteki
-| libncursesw5-dev ^(2)^          |             | *tak*    | Interfejs ncurses
-| libcurl4-gnutls-dev             |             | *tak*    | Transfer URL
-| zlib1g-dev                      |             | *tak*    | Kompresja pakietów we wtyczce relay (protokół weechat), wtyczka script
-| libgcrypt20-dev                 |             | *tak*    | Zabezpieczone dane, uwierzytelnianie IRC SASL (DH-BLOWFISH/DH-AES), wtyczka script
-| libgnutls28-dev                 | ≥ 2.2.0     |          | Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay, uwierzytelnianie IRC SASL (ECDSA-NIST256P-CHALLENGE)
-| gettext                         |             |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski)
-| ca-certificates                 |             |          | Certyfikaty dla połączeń SSL
-| libaspell-dev or libenchant-dev |             |          | Wtyczka aspell
-| python-dev                      | ≥ 2.5 ^(3)^ |          | Wtyczka python
-| libperl-dev                     |             |          | Wtyczka perl
-| ruby2.1-dev                     | ≥ 1.8       |          | Wtyczka ruby
-| liblua5.2-dev                   |             |          | Wtyczka lua
-| tcl-dev                         | ≥ 8.5       |          | Wtyczka tcl
-| guile-2.0-dev                   | ≥ 2.0       |          | Wtyczka guile (scheme)
-| asciidoc                        | ≥ 8.5.0     |          | Tworzenie strony man i dokumentacji
-| source-highlight                |             |          | Podświetlanie składni dla kodów źródłowych w dokumentacji
-| xsltproc,
-  docbook-xml, docbook-xsl        |             |          | Tworzenie strony man
-| libcpputest-dev                 | ≥ 3.4       |       .2+| Uruchamianie testów
-| C++ compiler                    |             |
+| Pakiet ^(1)^ | Wersja | Wymagany | Opis
+
+| cmake | | *tak* |
+  Kompilacja (możliwe jest użycie autotools, jednak cmake jest zalecany)
+
+| pkg-config | | *tak* |
+  Wykrywa zainstalowane biblioteki
+
+| libncursesw5-dev ^(2)^ | | *tak* |
+  Interfejs ncurses
+
+| libcurl4-gnutls-dev | | *tak* |
+  Transfer URL
+
+| zlib1g-dev | | *tak* |
+  Kompresja pakietów we wtyczce relay (protokół weechat), wtyczka script
+
+| libgcrypt20-dev | | *tak* |
+  Zabezpieczone dane, uwierzytelnianie IRC SASL (DH-BLOWFISH/DH-AES), wtyczka
+  script
+
+| libgnutls28-dev | ≥ 2.2.0 ^(3)^ | |
+  Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay,
+  uwierzytelnianie IRC SASL (ECDSA-NIST256P-CHALLENGE)
+
+| gettext | | |
+  Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski)
+
+| ca-certificates | | |
+  Certyfikaty dla połączeń SSL
+
+| libaspell-dev or libenchant-dev | | |
+  Wtyczka aspell
+
+| python-dev | ≥ 2.5 ^(4)^ | |
+  Wtyczka python
+
+| libperl-dev | | |
+  Wtyczka perl
+
+| ruby2.1-dev | ≥ 1.8 | |
+  Wtyczka ruby
+
+| liblua5.2-dev | | |
+  Wtyczka lua
+
+| tcl-dev | ≥ 8.5 | |
+  Wtyczka tcl
+
+| guile-2.0-dev | ≥ 2.0 | |
+  Wtyczka guile (scheme)
+
+| asciidoc | ≥ 8.5.0 | |
+  Tworzenie strony man i dokumentacji
+
+| source-highlight | | |
+  Podświetlanie składni dla kodów źródłowych w dokumentacji
+
+| xsltproc, docbook-xml, docbook-xsl | | |
+  Tworzenie strony man
+
+| libcpputest-dev | ≥ 3.4 | .2+|
+  Uruchamianie testów
+
+| C++ compiler | |
 |===
 
+// TRANSLATION MISSING (note 3)
 [NOTE]
 ^(1)^ Nazwy pochodzą z dystrybucji Debian GNU/Linux, wersje i nazwy pakietów
 mogą być inne w innych dystrybucjach. +
 ^(2)^ WeeChat może być skompilowany z libncurses5-dev, ale jest to *NIE*
 zalecane (spowoduje to błędy w wyświetlaniu szerokich znaków). +
-^(3)^ Zalecana wersja Pythona to 2.7 (wszystkie skrypty działają z wersją 2.7,
+^(3)^ Gnutls ≥ 3.0.21 is required for IRC SASL authentication with mechanism
+ECDSA-NIST256P-CHALLENGE. +
+^(4)^ Zalecana wersja Pythona to 2.7 (wszystkie skrypty działają z wersją 2.7,
 ale nie w wersjami ≤ 2.6 lub ≥ 3.0).
 
 [[compile_with_cmake]]
@@ -2209,6 +2254,49 @@ Opcje dla serwerów to:
 * 'sasl_password': hasło
 // TRANSLATION MISSING
 * 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
+
+// TRANSLATION MISSING
+[[irc_sasl_ecdsa_nist256p_challenge]]
+===== SASL ECDSA-NIST256P-CHALLENGE
+
+You must generate a private key in order to authentify with the
+ECDSA-NIST256P-CHALLENGE mechanism (no password is required on connection).
+
+You can generate the key with this command:
+
+----
+$ openssl ecparam -genkey -name prime256v1 >~/.weechat/ecdsa.pem
+----
+
+Get the public key (encoded as base64) with this command:
+
+----
+$ openssl ec -noout -text -conv_form compressed -in ~/.weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
+----
+
+Connect to the server, identify (for example with "nickserv identify") and set
+your public key in your account, using nickserv (replace the base64 value with
+your public key):
+
+----
+/connect freenode
+/msg nickserv identify your_password
+/msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
+----
+
+Configure the SASL options in the server:
+
+----
+/set irc.server.freenode.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.freenode.sasl_username "your_nickname"
+/set irc.server.freenode.sasl_key "%h/ecdsa.pem"
+----
+
+Reconnect to the server:
+
+----
+/reconnect freenode
+----
 
 [[irc_tor_freenode]]
 ==== Połączenie z siecią Freenode za pomocą TOR/SASL

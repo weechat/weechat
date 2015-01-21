@@ -88,29 +88,70 @@ compile WeeChat.
 
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
-| Package ^(1)^                   | Version     | Required | Feature
-| cmake                           |             | *yes*    | Build (autotools still possible, but cmake is recommended)
-| pkg-config                      |             | *yes*    | Detect installed libraries
-| libncursesw5-dev ^(2)^          |             | *yes*    | Ncurses interface
-| libcurl4-gnutls-dev             |             | *yes*    | URL transfer
-| zlib1g-dev                      |             | *yes*    | Compression of packets in relay plugin (weechat protocol), script plugin
-| libgcrypt20-dev                 |             | *yes*    | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
-| libgnutls28-dev                 | ≥ 2.2.0     |          | SSL connection to IRC server, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE)
-| gettext                         |             |          | Internationalization (translation of messages; base language is English)
-| ca-certificates                 |             |          | Certificates for SSL connections
-| libaspell-dev or libenchant-dev |             |          | Aspell plugin
-| python-dev                      | ≥ 2.5 ^(3)^ |          | Python plugin
-| libperl-dev                     |             |          | Perl plugin
-| ruby2.1-dev                     | ≥ 1.8       |          | Ruby plugin
-| liblua5.2-dev                   |             |          | Lua plugin
-| tcl-dev                         | ≥ 8.5       |          | Tcl plugin
-| guile-2.0-dev                   | ≥ 2.0       |          | Guile (scheme) plugin
-| asciidoc                        | ≥ 8.5.0     |          | Build man page and documentation
-| source-highlight                |             |          | Syntax highlight for sources in documentation
-| xsltproc,
-  docbook-xml, docbook-xsl        |             |          | Build of man page
-| libcpputest-dev                 | ≥ 3.4       |       .2+| Run tests
-| C++ compiler                    |             |
+| Package ^(1)^ | Version | Required | Feature
+
+| cmake | | *yes* |
+  Build (autotools still possible, but cmake is recommended)
+
+| pkg-config | | *yes* |
+  Detect installed libraries
+
+| libncursesw5-dev ^(2)^ | | *yes* |
+  Ncurses interface
+
+| libcurl4-gnutls-dev | | *yes* |
+  URL transfer
+
+| zlib1g-dev | | *yes* |
+  Compression of packets in relay plugin (weechat protocol), script plugin
+
+| libgcrypt20-dev | | *yes* |
+  Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
+
+| libgnutls28-dev | ≥ 2.2.0 ^(3)^ | |
+  SSL connection to IRC server, support of SSL in relay plugin,
+  IRC SASL authentication (ECDSA-NIST256P-CHALLENGE)
+
+| gettext | | |
+  Internationalization (translation of messages; base language is English)
+
+| ca-certificates | | |
+  Certificates for SSL connections
+
+| libaspell-dev or libenchant-dev | | |
+  Aspell plugin
+
+| python-dev | ≥ 2.5 ^(4)^ | |
+  Python plugin
+
+| libperl-dev | | |
+  Perl plugin
+
+| ruby2.1-dev | ≥ 1.8 | |
+  Ruby plugin
+
+| liblua5.2-dev | | |
+  Lua plugin
+
+| tcl-dev | ≥ 8.5 | |
+  Tcl plugin
+
+| guile-2.0-dev | ≥ 2.0 | |
+  Guile (scheme) plugin
+
+| asciidoc | ≥ 8.5.0 | |
+  Build man page and documentation
+
+| source-highlight | | |
+  Syntax highlight for sources in documentation
+
+| xsltproc, docbook-xml, docbook-xsl | | |
+  Build of man page
+
+| libcpputest-dev | ≥ 3.4 | .2+|
+  Run tests
+
+| C++ compiler | |
 |===
 
 [NOTE]
@@ -118,7 +159,9 @@ compile WeeChat.
 names may be different in different distributions and versions. +
 ^(2)^ WeeChat can compile with libncurses5-dev, but it is *NOT* recommended (you
 will have display bugs with wide chars). +
-^(3)^ Recommended Python version is 2.7 (all scripts run fine with version 2.7,
+^(3)^ Gnutls ≥ 3.0.21 is required for IRC SASL authentication with mechanism
+ECDSA-NIST256P-CHALLENGE. +
+^(4)^ Recommended Python version is 2.7 (all scripts run fine with version 2.7,
 but not with versions ≤ 2.6 or ≥ 3.0).
 
 [[compile_with_cmake]]
@@ -2185,6 +2228,48 @@ Options in servers are:
 * 'sasl_username': username (nick)
 * 'sasl_password': password
 * 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
+
+[[irc_sasl_ecdsa_nist256p_challenge]]
+===== SASL ECDSA-NIST256P-CHALLENGE
+
+You must generate a private key in order to authentify with the
+ECDSA-NIST256P-CHALLENGE mechanism (no password is required on connection).
+
+You can generate the key with this command:
+
+----
+$ openssl ecparam -genkey -name prime256v1 >~/.weechat/ecdsa.pem
+----
+
+Get the public key (encoded as base64) with this command:
+
+----
+$ openssl ec -noout -text -conv_form compressed -in ~/.weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
+----
+
+Connect to the server, identify (for example with "nickserv identify") and set
+your public key in your account, using nickserv (replace the base64 value with
+your public key):
+
+----
+/connect freenode
+/msg nickserv identify your_password
+/msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
+----
+
+Configure the SASL options in the server:
+
+----
+/set irc.server.freenode.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.freenode.sasl_username "your_nickname"
+/set irc.server.freenode.sasl_key "%h/ecdsa.pem"
+----
+
+Reconnect to the server:
+
+----
+/reconnect freenode
+----
 
 [[irc_tor_freenode]]
 ==== Connect to Freenode with TOR/SASL

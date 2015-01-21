@@ -101,44 +101,88 @@ compilare WeeChat.
 
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
-| Pacchetto ^(1)^                | Versione    | Richiesto | Caratteristica
-| cmake                          |             | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake)
+| Pacchetto ^(1)^ | Versione | Richiesto | Caratteristica
+
+| cmake | | *sì* |
+  Compilazione (ancora possibile con autotools, ma si raccomanda cmake)
+
 // TRANSLATION MISSING
-| pkg-config                     |             | *sì*      | Detect installed libraries
-| libncursesw5-dev ^(2)^         |             | *sì*      | Interfaccia ncurses
-| libcurl4-gnutls-dev            |             | *sì*      | Trasferimento URL
+| pkg-config | | *sì* |
+  Detect installed libraries
+
+| libncursesw5-dev ^(2)^ | | *sì* |
+  Interfaccia ncurses
+
+| libcurl4-gnutls-dev | | *sì* |
+  Trasferimento URL
+
 // TRANSLATION MISSING
-| zlib1g-dev                     |             | *sì*      | Compression of packets in relay plugin (weechat protocol), script plugin
+| zlib1g-dev | | *sì* |
+  Compression of packets in relay plugin (weechat protocol), script plugin
+
 // TRANSLATION MISSING
-| libgcrypt20-dev                |             | *sì*      | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
+| libgcrypt20-dev | | *sì* |
+  Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
+
 // TRANSLATION MISSING
-| libgnutls28-dev                | ≥ 2.2.0     |           | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE)
-| gettext                        |             |           | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
-| ca-certificates                |             |           | Certificati per le connessioni SSL
-| libaspell-dev o libenchant-dev |             |           | Plugin aspell
-| python-dev                     | ≥ 2.5 ^(3)^ |           | Plugin python
-| libperl-dev                    |             |           | Plugin perl
-| ruby2.1-dev                    | ≥ 1.8       |           | Plugin ruby
-| liblua5.2-dev                  |             |           | Plugin lua
-| tcl-dev                        | ≥ 8.5       |           | Plugin tcl
-| guile-2.0-dev                  | ≥ 2.0       |           | Plugin guile (scheme)
+| libgnutls28-dev | ≥ 2.2.0 ^(3)^ | |
+  Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL
+  authentication (ECDSA-NIST256P-CHALLENGE)
+
+| gettext | | |
+  Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
+
+| ca-certificates | | |
+  Certificati per le connessioni SSL
+
+| libaspell-dev o libenchant-dev | | |
+  Plugin aspell
+
+| python-dev | ≥ 2.5 ^(4)^ | |
+  Plugin python
+
+| libperl-dev | | |
+  Plugin perl
+
+| ruby2.1-dev | ≥ 1.8 | |
+  Plugin ruby
+
+| liblua5.2-dev | | |
+  Plugin lua
+
+| tcl-dev | ≥ 8.5 | |
+  Plugin tcl
+
+| guile-2.0-dev | ≥ 2.0 | |
+  Plugin guile (scheme)
+
 // TRANSLATION MISSING
-| asciidoc                       | ≥ 8.5.0     |           | Build man page and documentation
-| source-highlight               |             |           | Evidenziazione della sintassi per i sorgenti nella documentazione
+| asciidoc | ≥ 8.5.0 | |
+  Build man page and documentation
+
+| source-highlight | | |
+  Evidenziazione della sintassi per i sorgenti nella documentazione
+
 // TRANSLATION MISSING
-| xsltproc,
-  docbook-xml, docbook-xsl       |             |           | Build of man page
+| xsltproc, docbook-xml, docbook-xsl | | |
+  Build of man page
+
 // TRANSLATION MISSING
-| libcpputest-dev                | ≥ 3.4       |        .2+| Run tests
-| C++ compiler                   |             |
+| libcpputest-dev | ≥ 3.4 | .2+|
+  Run tests
+
+| C++ compiler | |
 |===
 
+// TRANSLATION MISSING (note 3)
 [NOTE]
 ^(1)^ Il nome viene dalla distribuzione Debian GNU/Linux, nomi e versioni dei pacchetti
 potrebbero essere differenti in versioni e distribuzioni differenti. +
 ^(2)^ WeeChat può essere compilato con libncurses5-dev, ma *NON* è raccomandato
 (potrebbero verificarsi bug di visualizzazione). +
-^(3)^ La versione raccomandata di Python è la 2.7 (tutti gli script funzionano
+^(3)^ Gnutls ≥ 3.0.21 is required for IRC SASL authentication with mechanism
+ECDSA-NIST256P-CHALLENGE. +
+^(4)^ La versione raccomandata di Python è la 2.7 (tutti gli script funzionano
 correttamente con la versione 2.7, ma non con le versioni ≤ 2.6 o ≥ 3.0).
 
 [[compile_with_cmake]]
@@ -2300,6 +2344,49 @@ Le opzioni nel server sono:
 * 'sasl_password': password
 // TRANSLATION MISSING
 * 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
+
+// TRANSLATION MISSING
+[[irc_sasl_ecdsa_nist256p_challenge]]
+===== SASL ECDSA-NIST256P-CHALLENGE
+
+You must generate a private key in order to authentify with the
+ECDSA-NIST256P-CHALLENGE mechanism (no password is required on connection).
+
+You can generate the key with this command:
+
+----
+$ openssl ecparam -genkey -name prime256v1 >~/.weechat/ecdsa.pem
+----
+
+Get the public key (encoded as base64) with this command:
+
+----
+$ openssl ec -noout -text -conv_form compressed -in ~/.weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
+----
+
+Connect to the server, identify (for example with "nickserv identify") and set
+your public key in your account, using nickserv (replace the base64 value with
+your public key):
+
+----
+/connect freenode
+/msg nickserv identify your_password
+/msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
+----
+
+Configure the SASL options in the server:
+
+----
+/set irc.server.freenode.sasl_mechanism ecdsa-nist256p-challenge
+/set irc.server.freenode.sasl_username "your_nickname"
+/set irc.server.freenode.sasl_key "%h/ecdsa.pem"
+----
+
+Reconnect to the server:
+
+----
+/reconnect freenode
+----
 
 [[irc_tor_freenode]]
 ==== Connessione a Freenode con TOR/SASL
