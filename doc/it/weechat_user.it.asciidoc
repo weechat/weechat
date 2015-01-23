@@ -2343,7 +2343,8 @@ Le opzioni nel server sono:
 * 'sasl_username': nome utente (nick)
 * 'sasl_password': password
 // TRANSLATION MISSING
-* 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
+* 'sasl_key': file with ECc private key (for mechanism
+  'ecdsa-nist256p-challenge')
 
 // TRANSLATION MISSING
 [[irc_sasl_ecdsa_nist256p_challenge]]

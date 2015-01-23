@@ -2227,7 +2227,8 @@ Options in servers are:
 * 'sasl_fail': action to perform if authentication fails
 * 'sasl_username': username (nick)
 * 'sasl_password': password
-* 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
+* 'sasl_key': file with ECC private key (for mechanism
+  'ecdsa-nist256p-challenge')
 
 [[irc_sasl_ecdsa_nist256p_challenge]]
 ===== SASL ECDSA-NIST256P-CHALLENGE

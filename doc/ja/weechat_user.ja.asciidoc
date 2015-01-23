@@ -2235,7 +2235,8 @@ WeeChat のコンパイル時に必要です (<<dependencies,依存関係>>を�
 * 'sasl_username': ユーザ名 (ニックネーム)
 * 'sasl_password': パスワード
 // TRANSLATION MISSING
-* 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
+* 'sasl_key': file with ECC private key (for mechanism
+  'ecdsa-nist256p-challenge')
 
 // TRANSLATION MISSING
 [[irc_sasl_ecdsa_nist256p_challenge]]

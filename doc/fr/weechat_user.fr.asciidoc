@@ -2304,7 +2304,7 @@ Les options dans le serveur sont :
 * 'sasl_fail' : action à effectuer si l'authentification échoue
 * 'sasl_username' : nom d'utilisateur (pseudo)
 * 'sasl_password' : mot de passe
-* 'sasl_key' : chemin vers la clé privée (pour le mécanisme
+* 'sasl_key' : fichier avec la clé privée ECC (pour le mécanisme
   'ecdsa-nist256p-challenge')
 
 [[irc_sasl_ecdsa_nist256p_challenge]]
