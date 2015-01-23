@@ -7,8 +7,7 @@
 :max-width: 100%
 
 
-// TRANSLATION MISSING
-Translators:
+Übersetzer:
 
 * Nils Görs <weechatter@arcor.de>, 2010-2015
 
@@ -163,15 +162,14 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | C++ compiler | |
 |===
 
-// TRANSLATION MISSING (note 3)
 [NOTE]
 ^(1)^ Paketnamen wurden von der Debian GNU/Linux Distribution übernommen.
 Versionen und Paketnamen können für andere Distributionen abweichend sein. +
 ^(2)^ WeeChat kann auch mit libncurses5-dev kompiliert werden. Dies wird aber
 *NICHT* empfohlen (es treten dabei Darstellungsfehler mit breiten Zeichen
 auf). +
-^(3)^ Gnutls ≥ 3.0.21 is required for IRC SASL authentication with mechanism
-ECDSA-NIST256P-CHALLENGE. +
+^(3)^ Gnutls ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels 
+ECDSA-NIST256P-CHALLENGE durchzuführen. +
 ^(4)^ Die empfohlene Version ist 2.7 (alle Skripten laufen mit der Version 2.7,
 aber nicht mit Version ≤ 2.6 oder ≥ 3.0).
 
@@ -2266,8 +2264,7 @@ Für weiterreichende Informationen lesen Sie bitte: http://www.oftc.net/oftc/Nic
 WeeChat unterstützt eine SASL Authentifikation, mittels verschiedener Mechanismen:
 
 * 'plain': Passwort liegt in Klarschrift vor (Standard)
-// TRANSLATION MISSING
-* 'ecdsa-nist256p-challenge': challenge with public/private key
+* 'ecdsa-nist256p-challenge': Abgleich von öffentlichem/privatem Schlüssel
 * 'external': SSL Zertifikat welches auf Client Seite vorliegt
 * 'dh-blowfish': Passwort wird mittels blowfish verschlüsselt
 * 'dh-aes': Passwort wird mittels AES verschlüsselt
@@ -2280,35 +2277,35 @@ Optionen für Server sind:
 
 * 'sasl_mechanism': Mechanismus welcher genutzt werden soll (siehe oben)
 * 'sasl_timeout': Zeitüberschreitung für Authentifizierung (in Sekunden)
-// TRANSLATION MISSING
-* 'sasl_fail': action to perform if authentication fails
+* 'sasl_fail': auszuführende Aktion falls die SASL Authentifizierung fehlschlägt
 * 'sasl_username': Username (Nickname)
 * 'sasl_password': Passwort
-// TRANSLATION MISSING
-* 'sasl_key': path to private key (for mechanism 'ecdsa-nist256p-challenge')
+* 'sasl_key': Datei mit privatem ECC Schlüssel (für den
+  'ecdsa-nist256p-challenge' Mechanismus)
 
-// TRANSLATION MISSING
 [[irc_sasl_ecdsa_nist256p_challenge]]
 ===== SASL ECDSA-NIST256P-CHALLENGE
 
-You must generate a private key in order to authentify with the
-ECDSA-NIST256P-CHALLENGE mechanism (no password is required on connection).
+Es muss ein privater Schlüssel erstellt werden um sich mittels des
+ECDSA-NIST256P-CHALLENGE Mechanismus authentifizieren zu können (es wird
+dadurch kein Passwort während des Verbindungsaufbaus benötigt).
 
-You can generate the key with this command:
+Ein Schlüssel kann mit folgendem Befehl erzeugt werden:
 
 ----
 $ openssl ecparam -genkey -name prime256v1 >~/.weechat/ecdsa.pem
 ----
 
-Get the public key (encoded as base64) with this command:
+Um den öffentlichen Schlüssel zu erhalten (base64 enkodiert) muss
+folgender Befehl ausgeführt werden:
 
 ----
 $ openssl ec -noout -text -conv_form compressed -in ~/.weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
 ----
 
-Connect to the server, identify (for example with "nickserv identify") and set
-your public key in your account, using nickserv (replace the base64 value with
-your public key):
+Nun Verbindung zum Server herstellen, identifizieren (z.B. mittels "nickserv identify")
+und den öffentlichen Schlüssel für den eigenen Zugang festlegen (der base64 Schlüssel
+im Beispiel muss durch den eigenen öffentlichen Schlüssel ersetzt werden:
 
 ----
 /connect freenode
@@ -2316,7 +2313,7 @@ your public key):
 /msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
 ----
 
-Configure the SASL options in the server:
+Konfiguration der SASL Optionen des Servers:
 
 ----
 /set irc.server.freenode.sasl_mechanism ecdsa-nist256p-challenge
@@ -2324,7 +2321,7 @@ Configure the SASL options in the server:
 /set irc.server.freenode.sasl_key "%h/ecdsa.pem"
 ----
 
-Reconnect to the server:
+Erneut mit dem Server verbinden:
 
 ----
 /reconnect freenode

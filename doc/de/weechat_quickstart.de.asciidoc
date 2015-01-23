@@ -6,8 +6,7 @@
 :max-width: 100%
 
 
-// TRANSLATION MISSING
-Translators:
+Übersetzer:
 
 * Frank Zacharias <frank_zacharias@web.de>, 2006
 * Juergen Descher <jhdl@gmx.net>, 2009
@@ -340,20 +339,17 @@ erhältlich (z.B. weechat-plugins).
 Erweiterungen werden -sofern welche gefunden worden sind- automatisch geladen (Bitte beachte
 die Dokumentation zum installieren/entfernen von Erweiterungen und/oder Skripten).
 
-// TRANSLATION MISSING
-Many external scripts (from contributors) are available for WeeChat, you can
-download and install scripts from the repository with the `/script` command,
-for example:
+Viele externe Skripten (von Drittprogrammierern) sind für WeeChat verfügbar. Diese
+Skripten können mittels des `/script` Befehls heruntergeladen und installiert werden:
 
 ----
 /script install iset.pl
 ----
 
-// TRANSLATION MISSING
-See `/help script` for more info.
+siehe `/help script` für weitere Informationen.
 
-// TRANSLATION MISSING
-A list of scripts is available in WeeChat with `/script` or at this URL:
+Eine Liste aller verfügbaren Skripten kann man sich in WeeChat mittels
+`/script` anzeigen lassen oder man besucht folgende Webseite:
 https://weechat.org/scripts
 
 [[more_doc]]

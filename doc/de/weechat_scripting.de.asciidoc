@@ -7,8 +7,7 @@
 :max-width: 100%
 
 
-// TRANSLATION MISSING
-Translators:
+Übersetzer:
 
 * Nils Görs <weechatter@arcor.de>, 2010-2015
 
@@ -23,7 +22,7 @@ https://weechat.org/doc
 == Einleitung
 
 WeeChat (Wee Enhanced Environment for Chat) ist ein freier, schneller und
-schlanker Chat-Client der für viele Betriebssysteme entwickelt wird.
+schlanker Chat-Client der für verschiedene Betriebssysteme entwickelt wird.
 
 Dieses Handbuch beschreibt wie man Skripten für WeeChat schreiben kann. Dabei
 werden folgende Programmiersprachen unterstützt:

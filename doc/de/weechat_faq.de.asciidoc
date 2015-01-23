@@ -6,8 +6,7 @@
 :toc-placement: manual
 
 
-// TRANSLATION MISSING
-Translators:
+Übersetzer:
 
 * Juergen Descher <jhdl@gmx.net>, 2009
 * Nils Görs <weechatter@arcor.de>, 2009-2015
@@ -29,7 +28,7 @@ toc::[]
 Somit lautet der vollständige Name "Wee Enhanced Environment for Chat".
 
 "Wee" bedeutet außerdem "sehr klein" (und ja, es gibt noch eine andere Bedeutung des Wortes.
-Aber dieses trifft nicht auf WeeChat zu!)
+Aber diese Bedeutung trifft nicht auf WeeChat zu!)
 
 [[why_choose_weechat]]
 === Weshalb sollte man WeeChat nutzen? - X-Chat und Irssi sind doch auch sehr gut...
@@ -45,7 +44,7 @@ https://weechat.org/about/features
 [[gui]]
 === Ich habe gehört es gibt verschiedene GUIs für WeeChat. Wie kann ich diese kompilieren bzw. nutzen?
 
-Die grafischen Oberflächen findet man auf folgender Seite:
+Die verschiedenen grafischen Oberflächen findet man auf folgender Seite:
 https://weechat.org/about/features
 
 [[compile_git]]

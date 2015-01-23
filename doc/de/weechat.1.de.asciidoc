@@ -91,13 +91,10 @@ $HOME/.weechat/weechat.log::
 
 == AUTOREN
 
-// TRANSLATION MISSING
-This manpage was written by Sébastien Helleu <flashcode@flashtux.org>.
+Diese manpage wurde von Sébastien Helleu <flashcode@flashtux.org> geschrieben.
 
-// TRANSLATION MISSING
-Translated by Nils Görs <weechatter@arcor.de>.
+Übersetzt von Nils Görs <weechatter@arcor.de>.
 
-// TRANSLATION MISSING
 == COPYRIGHT
 
 WeeChat ist programmiert von Sébastien Helleu und Beitragenden (eine vollständige Auflistung

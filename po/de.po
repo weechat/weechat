@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2005 Rudolf Polzer <weechat-te@durchnull.de>
 # Copyright (C) 2006-2007 Thomas Schuetz <i18n@internet-villa.de>
-# Copyright (C) 2009-2014 Nils Görs <weechatter@arcor.de>
+# Copyright (C) 2009-2015 Nils Görs <weechatter@arcor.de>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-01-21 07:41+0100\n"
-"PO-Revision-Date: 2014-12-28 13:06+0100\n"
+"PO-Revision-Date: 2015-01-23 00:10+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de_DE\n"
@@ -7628,7 +7628,6 @@ msgstr ""
 "multi-prefix, server-time, userhost-in-name (Beispiel: \"away-notify,multi-"
 "prefix\")"
 
-#, fuzzy
 msgid ""
 "mechanism for SASL authentication: \"plain\" for plain text password, "
 "\"ecdsa-nist256p-challenge\" for key-based challenge authentication, "
@@ -7637,35 +7636,37 @@ msgid ""
 "AES crypted password (insecure, not recommended)"
 msgstr ""
 "Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "
-"\"plain\" Passwort wird im Klartext gesendet, \"dh-blowfish\" Passwort wird "
-"mittels blowfish verschlüsselt, \"dh-aes\" Passwort wird mittels AES "
-"verschlüsselt, \"external\" SSL Zertifikat welches auf Client Seite "
-"vorliegt, wird verwendet"
+"\"plain\" Passwort wird im Klartext gesendet, \"ecdsa-nist256p-challenge\" "
+"für öffentlich/private Schlüsselmethode, \"external\"  SSL Zertifikat "
+"welches auf Client Seite vorliegt wird verwendet, \"dh-blowfish\" Passwort "
+"wird mittels blowfish verschlüsselt (unsicher, wird nicht empfohlen), \"dh-"
+"aes\" Passwort wird mittels AES verschlüsselt (unsicher, wird nicht "
+"empfohlen)"
 
-#, fuzzy
 msgid ""
 "username for SASL authentication; this option is not used for mechanism "
 "\"external\" (note: content is evaluated, see /help eval)"
 msgstr ""
-"Passwort für SASL Authentifikation (Hinweis: Inhalt wird evaluiert, siehe /"
+"Username für SASL Authentifikation; diese Option wird nicht für den "
+"Mechanismus \"external\" verwendet (Hinweis: Inhalt wird evaluiert, siehe /"
 "help eval)"
 
-#, fuzzy
 msgid ""
 "password for SASL authentication; this option is not used for mechanisms "
 "\"ecdsa-nist256p-challenge\" and \"external\" (note: content is evaluated, "
 "see /help eval)"
 msgstr ""
-"Passwort für SASL Authentifikation (Hinweis: Inhalt wird evaluiert, siehe /"
-"help eval)"
+"Passwort für SASL Authentifikation; diese Option findet keine Anwendung "
+"falls der Mechanismus \"ecdsa-nist256p-challenge\" und \"external\" "
+"verwendet wird (Hinweis: Inhalt wird evaluiert, siehe /help eval)"
 
-#, fuzzy
 msgid ""
 "file with ECC private key for mechanism \"ecdsa-nist256p-challenge\" (\"%h\" "
 "will be replaced by WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
-"Suchpfad für Erweiterungen (\"%h\"' wird durch das WeeChat-Basisverzeichnis "
-"ersetzt, voreingestellt ist \"~/.weechat\")"
+"Datei mit privatem ECC Schlüssel für den \"ecdsa-nist256p-challenge\" "
+"Mechanismus (\"%h\" wird durch das WeeChat Verzeichnis ersetzt, "
+"standardmäßig \"~/.weechat\")"
 
 msgid "timeout (in seconds) before giving up SASL authentication"
 msgstr ""
@@ -9122,30 +9123,34 @@ msgstr ""
 msgid "%s%s: server \"%s\" not found for redirect"
 msgstr "%s%s: Server \"%s\" für eine Weiterleitung wurde nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to read private key in file \"%s\""
-msgstr "%s%s: Datei \"%s\" kann nicht gelesen werden"
+msgstr "%s%s: privater Schlüssel kann nicht aus Datei gelesen werden \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: invalid private key file: error %d %s"
-msgstr "%sgnutls: ungültiges Zertifikat \"%s\". Fehler: %s"
+msgstr "%sgnutls: ungültige private Schlüsseldatei: Fehler %d %s"
 
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
-msgstr ""
+msgstr "%s%s: signiere mittels ECC öffentlichem Schlüssel: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: unable to import the private key: error %d %s"
-msgstr "%s%s: Pipe kann nicht erstellt werden: Fehler %d %s"
+msgstr ""
+"%sgnutls: privater Schlüssel kann nicht importiert werden: Fehler %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: unable to sign the hashed data: error %d %s"
-msgstr "%s%s: Adresse kann nicht ausgewertet werden: Fehler %d %s"
+msgstr ""
+"%sgnutls: die gehashten Daten können nicht signiert werden : Fehler %d %s"
 
 #, c-format
 msgid ""
 "%sgnutls: version >= 3.0.21 is required for SASL \"ecdsa-nist256p-challenge\""
 msgstr ""
+"%sgnutls: Version >= 3.0.21 wird für SASL \"ecdsa-nist256p-challenge\" "
+"benötigt"
 
 #, c-format
 msgid "%s%s: error when allocating new server"
@@ -9988,7 +9993,7 @@ msgstr "Baumstruktur der Fenster"
 
 #, c-format
 msgid "Initializing plugin \"%s\" (priority: %d)"
-msgstr ""
+msgstr "Initialisiere Erweiterung \"%s\" (Priorität: %d)"
 
 #, c-format
 msgid "%sError: unable to initialize plugin \"%s\""
@@ -12369,10 +12374,3 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
-
-#~ msgid ""
-#~ "username for SASL authentication (note: content is evaluated, see /help "
-#~ "eval)"
-#~ msgstr ""
-#~ "Username für SASL Authentifikation (Hinweis: Inhalt wird evaluiert, "
-#~ "siehe /help eval)"

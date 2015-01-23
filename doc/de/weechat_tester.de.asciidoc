@@ -6,8 +6,7 @@
 :max-width: 100%
 
 
-// TRANSLATION MISSING
-Translators:
+Übersetzer:
 
 * Juergen Descher <jhdl@gmx.net>, 2009
 * Nils Görs <weechatter@arcor.de>, 2009-2015
