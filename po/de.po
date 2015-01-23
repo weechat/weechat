@@ -118,10 +118,10 @@ msgid "Constants"
 msgstr "Konstanten"
 
 msgid "IRC color"
-msgstr "IRC Farbe"
+msgstr "IRC-Farbe"
 
 msgid "WeeChat color"
-msgstr "WeeChat Farbe"
+msgstr "WeeChat-Farbe"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -152,20 +152,20 @@ msgid ""
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
 "  -a, --no-connect         deaktiviert das automatische Verbinden mit den "
-"Servern, beim Start von WeeChat\n"
+"Servern beim Start von WeeChat\n"
 "  -c, --colors             zeigt die Standardfarben des Terminals an\n"
 "  -d, --dir <Pfad>         legt den Konfigurationsordner für WeeChat fest "
 "(Voreinstellung: ~/.weechat)\n"
 "  -h, --help               zeigt diese Hilfe an\n"
 "  -l, --license            zeigt die Lizenz von WeeChat an\n"
-"  -p, --no-plugin          unterbindet, beim Programmstart, das Laden von "
+"  -p, --no-plugin          unterbindet beim Programmstart das Laden von "
 "Erweiterungen\n"
 "  -r, --run-command <cmd>  führt einen oder mehrere Befehle nach dem Start "
 "aus\n"
 "                           (mehrere Befehle werden durch ein Semikolon "
 "getrennt)\n"
 "  -s, --no-script          Skripten werden beim Programmstart nicht geladen\n"
-"      --upgrade            führt ein WeeChat Upgrade mittels "
+"      --upgrade            führt ein WeeChat-Upgrade mittels "
 "Sitzungsdateien, die mit dem Befehl `/upgrade -quit` erstellt wurden, durch\n"
 "  -v, --version            zeigt die Version von WeeChat an\n"
 "  plugin:option            Einstellungen für Erweiterungen (siehe man "
@@ -177,7 +177,7 @@ msgstr "Fehler: fehlendes Argument für die Einstellung \"%s\"\n"
 
 msgid "Error: WEECHAT_HOME is undefined, check build options\n"
 msgstr ""
-"Fehler: WEECHAT_HOME ist nicht definiert, bitte überprüfen Sie die build "
+"Fehler: WEECHAT_HOME ist nicht definiert, bitte überprüfen Sie die build-"
 "Einstellungen\n"
 
 msgid "Error: unable to get HOME directory\n"
@@ -200,7 +200,7 @@ msgid ""
 "%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
 "display bugs; $TERM should be set to \"screen-256color\" or \"screen\""
 msgstr ""
-"%sWarnung: WeeChat läuft in einer %s Session und die Umgebungsvariable $TERM "
+"%sWarnung: WeeChat läuft in einer %s-Sitzung und die Umgebungsvariable $TERM "
 "lautet \"%s\". Diese Einstellung kann zu Darstellungsfehlern führen; $TERM "
 "sollte entweder \"screen-256color\" oder \"screen\" lauten"
 
@@ -242,7 +242,7 @@ msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
 msgstr "    Priorität: %d, fg: %s, bg: %s, Objekte: %s%s"
 
 msgid ", with separator"
-msgstr ", mit Separator"
+msgstr ", mit Trenner"
 
 msgid "No bar defined"
 msgstr "Keine Infobar definiert"
@@ -308,7 +308,7 @@ msgstr "%sFehler: Infobar \"%s\" kann nicht gescrollt werden"
 #, c-format
 msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
 msgstr ""
-"%sFehler: Buffernummer %d ist außerhalb des gültigen Bereiches (es muss ein "
+"%sFehler: Buffernummer %d ist außerhalb des gültigen Bereiches (es muss eine "
 "Zahl zwischen 1 und %d sein)"
 
 msgid "Buffers list:"
@@ -377,7 +377,7 @@ msgstr "Fehler"
 
 #, c-format
 msgid "%sError in expression to evaluate"
-msgstr "%sFehler im Ausdruck der verarbeitet werden soll"
+msgstr "%sFehler im Ausdruck, der verarbeitet werden soll"
 
 #, c-format
 msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
@@ -480,23 +480,23 @@ msgstr "Standardbefehl:"
 #, c-format
 msgid "%d key bindings added or redefined for context \"%s\":"
 msgstr ""
-"%d Tastenbelegungen die für den Kontext \"%s\" hinzugefügt oder verändert "
+"%d Tastenbelegungen, die für den Kontext \"%s\" hinzugefügt oder verändert "
 "wurden:"
 
 #. TRANSLATORS: first "%d" is number of keys
 #, c-format
 msgid "%d key bindings deleted for context \"%s\":"
-msgstr "%d Tastenbelegungen die für Kontext \"%s\" entfernt wurden:"
+msgstr "%d Tastenbelegungen, die für Kontext \"%s\" entfernt wurden:"
 
 #, c-format
 msgid "No key binding added, redefined or removed for context \"%s\""
 msgstr ""
 "Es sind für Kontext \"%s\" weder Tastenbelegungen hinzugefügt, verändert "
-"oder gelöscht worden"
+"noch gelöscht worden"
 
 #, c-format
 msgid "%sError: unable to bind key \"%s\""
-msgstr "%sFehler: Tastenbelegung, \"%s\", kann nicht zuordnet werden"
+msgstr "%sFehler: Tastenbelegung \"%s\" kann nicht zugeordnet werden"
 
 #, c-format
 msgid "Key \"%s\" has already default value"
@@ -504,11 +504,11 @@ msgstr "Die Taste \"%s\" ist schon mit einem Standardbefehl belegt"
 
 #, c-format
 msgid "%sError: unable to unbind key \"%s\""
-msgstr "%sFehler: Tastenbelegung, \"%s\", kann nicht entfernt werden"
+msgstr "%sFehler: Tastenbelegung \"%s\" kann nicht entfernt werden"
 
 #, c-format
 msgid "%sKey \"%s\" not found"
-msgstr "%sTastenbelegung, \"%s\", nicht gefunden"
+msgstr "%sTastenbelegung \"%s\" nicht gefunden"
 
 #, c-format
 msgid "No key binding defined for context \"%s\""
@@ -540,10 +540,10 @@ msgid ""
 "ctrl or meta code (tip: use alt-k to find key codes); if you want to bind "
 "this key anyway, turn off option weechat.look.key_bind_safe"
 msgstr ""
-"%sFehler: Es ist nicht ratsam die \"%s\"-Taste mit einer Funktion zu "
-"belegen, da diese Taste weder mit ctrl noch meta zusammen genutzt wird "
-"(Tipp: nutze alt+k um einen Tastencode anzeigen zu lassen); Soll diese Taste "
-"wirklich genutzt werden, muss die Einstellung weechat.look.key_bind_safe "
+"%sFehler: Es ist nicht ratsam, die \"%s\"-Taste mit einer Funktion zu "
+"belegen, da diese Taste weder mit Strg noch Meta zusammen genutzt wird "
+"(Tipp: nutze Alt+k, um einen Tastencode anzeigen zu lassen); soll diese Taste "
+"wirklich genutzt werden, so muss die Einstellung weechat.look.key_bind_safe "
 "deaktiviert werden"
 
 #, c-format
@@ -558,7 +558,7 @@ msgstr "Standardtastenbelegungen für Kontext \"%s\" wiederhergestellt"
 msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
 msgstr ""
 "%sFehler: Das Argument \"-yes\" ist, aus Sicherheitsgründen, zum "
-"zurücksetzen der Tastenbelegung notwendig"
+"Zurücksetzen der Tastenbelegung notwendig"
 
 #, c-format
 msgid "%d new key added"
@@ -587,7 +587,7 @@ msgid "windows"
 msgstr "Fenster"
 
 msgid "Layout of buffers+windows reset (current layout: -)"
-msgstr "Buffer+Fenster Layout zurückgesetzt (aktuelles Layout: -)"
+msgstr "Buffer- und Fensterlayout zurückgesetzt (aktuelles Layout: -)"
 
 #, c-format
 msgid "Layout \"%s\" deleted (current layout: %s)"
@@ -764,7 +764,7 @@ msgstr ""
 msgid ""
 "%sYou must confirm quit command with extra argument \"-yes\" (see /help quit)"
 msgstr ""
-"%sUm WeeChat zu beenden muss der \"/quit\" Befehl mit dem Argument \"-yes\" "
+"%sUm WeeChat zu beenden, muss der \"/quit\" Befehl mit dem Argument \"-yes\" "
 "ausgeführt werden (siehe /help quit)"
 
 #, c-format
@@ -809,7 +809,7 @@ msgid ""
 "%sYou must decrypt data still encrypted before doing any operation on "
 "secured data or passphrase"
 msgstr ""
-"%sDie Daten müssen zuerst entschlüsselt werden bevor man diese Nutzen kann"
+"%sDie Daten müssen zuerst entschlüsselt werden, bevor man diese nutzen kann"
 
 msgid "Passphrase deleted"
 msgstr "Passphrase gelöscht"
@@ -847,7 +847,7 @@ msgid ""
 "a sublist)"
 msgstr ""
 "%sEinstellung \"%s\" nicht gefunden (Tipp: Der Platzhalter \"*\" kann "
-"verwendet werden um sich eine Teilliste anzeigen zu lassen)"
+"verwendet werden, um sich eine Teilliste anzeigen zu lassen)"
 
 msgid "No option found"
 msgstr "Keine Einstellungen gefunden"
@@ -924,7 +924,7 @@ msgstr "Einstellung gelöscht: %s"
 
 #, c-format
 msgid "%sReset of all options is not allowed"
-msgstr "%sDas zurücksetzen aller Einstellung ist nicht zulässig"
+msgstr "%sDas Zurücksetzen aller Einstellungen ist nicht zulässig"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
@@ -940,13 +940,13 @@ msgstr ""
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
-msgstr "%sUpgrade nicht möglich: WeeChat Binärcode \"%s\" existiert nicht"
+msgstr "%sUpgrade nicht möglich: WeeChat-Binärcode \"%s\" existiert nicht"
 
 #, c-format
 msgid ""
 "%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
 msgstr ""
-"%sUpgrade nicht möglich: WeeChat Binärcode \"%s\" besitzt nicht die "
+"%sUpgrade nicht möglich: WeeChat-Binärcode \"%s\" besitzt nicht die "
 "notwendigen Rechte"
 
 #, c-format
@@ -969,7 +969,7 @@ msgstr ""
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr "Laufzeit von WeeChat: %d %s %02d:%02d:%02d, gestartet am %s"
+msgstr "WeeChat-Laufzeut: %d %s %02d:%02d:%02d, gestartet am %s"
 
 msgid "day"
 msgid_plural "days"
@@ -980,7 +980,7 @@ msgstr[1] "Tage"
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
-"WeeChat Uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, gestartet am %s%s"
+"WeeChat-Laufzeit: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, gestartet am %s%s"
 
 msgid "compiled on"
 msgstr "kompiliert am"
@@ -1008,8 +1008,8 @@ msgid ""
 "%sError: can not merge windows, there's no other window with same size near "
 "current one"
 msgstr ""
-"%sFehler: Fenster können nicht nicht zusammenfügt werden. Es existiert kein "
-"Fenster mit der selben Größe neben dem aktuellen Fenster"
+"%sFehler: Fenster können nicht nicht zusammengefügt werden. Es existiert kein "
+"Fenster mit derselben Größe neben dem aktuellen Fenster"
 
 msgid "set or remove away status"
 msgstr "Abwesenheitsstatus setzen oder entfernen"
@@ -1114,8 +1114,8 @@ msgstr ""
 "          del: entfernt eine Infobar (alle Infobars können mit dem Argument "
 "\"-all\" entfernt werden).\n"
 "          set: setzt einen Wert für Infobar\n"
-"       option: Option die verändert werden soll (für eine Liste aller "
-"möglichen Optionen, bitte folgenden Befehl nutzen: /set weechat.bar."
+"       option: Option, die verändert werden soll (für eine Liste aller "
+"möglichen Optionen bitte folgenden Befehl nutzen: /set weechat.bar."
 "<barname>.*)\n"
 "        value: neuer Wert für Option\n"
 "         hide: Infobar wird ausgeblendet\n"
@@ -8738,32 +8738,32 @@ msgstr "%snotify: %s%s%s ist weiterhin abwesend: \"%s\""
 msgid ""
 "%s%s: error building answer for SASL authentication, using mechanism \"%s\""
 msgstr ""
-"%s%s: Fehler beim Erstellen der Antwort für die SASL Authentifizierung. \"%s"
+"%s%s: Fehler beim Erstellen der Antwort für die SASL-Authentifizierung. \"%s"
 "\" Mechanismus wurde verwendet"
 
 #, c-format
 msgid "%s%s: client capability, server supports: %s"
-msgstr "%s%s: Client Fähigkeit, Server unterstützt: %s"
+msgstr "%s%s: Clientfähigkeit, Server unterstützt: %s"
 
 #, c-format
 msgid "%s%s: client capability, requesting: %s"
-msgstr "%s%s: Client Fähigkeit, Anfrage: %s"
+msgstr "%s%s: Clientfähigkeit, Anfrage: %s"
 
 #, c-format
 msgid "%s%s: client capability: sasl not supported"
-msgstr "%s%s: Client Fähigkeit: SASL wird nicht unterstützt"
+msgstr "%s%s: Clientfähigkeit: SASL wird nicht unterstützt"
 
 #, c-format
 msgid "%s%s: client capability, currently enabled: %s"
-msgstr "%s%s: Client Fähigkeit (CAP), aktuell aktiviert: %s"
+msgstr "%s%s: Clientfähigkeit (CAP), aktuell aktiviert: %s"
 
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
-msgstr "%s%s: Client Fähigkeit, aktiviert: %s"
+msgstr "%s%s: Clientfähigkeit, aktiviert: %s"
 
 #, c-format
 msgid "%s%s: client capability, refused: %s"
-msgstr "%s%s: Client Fähigkeit, abgewiesen: %s"
+msgstr "%s%s: Clientfähigkeit, abgewiesen: %s"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
@@ -8775,7 +8775,7 @@ msgstr "%s%s: der neue Channel \"%s\" konnte nicht erstellt werden"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
-msgstr "%s%s%s%s%s%s%s%s%s%s%s%s ist in den Channel %s%s%s eingetreten"
+msgstr "%s%s%s%s%s%s%s%s%s%s%s%s hat den Channel %s%s%s betreten"
 
 #, c-format
 msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
@@ -8862,7 +8862,7 @@ msgstr "%s%s[%s%s%s]%s ist abwesend: %s"
 
 #, c-format
 msgid "%sUsers online: %s%s"
-msgstr "%sUser online: %s%s"
+msgstr "%sBenutzer online: %s%s"
 
 #, c-format
 msgid "%s%s[%s%s%s] (%s%s@%s%s)%s was %s"
@@ -8958,15 +8958,15 @@ msgstr "%s%s[%s%s%s] %s%s%s eingeladen"
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
-msgstr "%s%s[%s%s%s]%s Ausnahmesituation %s%s%s von %s auf %s"
+msgstr "%s%s[%s%s%s]%s Ausnahmefehler %s%s%s von %s am %s"
 
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
-msgstr "%s%s[%s%s%s]%s Ausnahmesituation %s%s%s von %s"
+msgstr "%s%s[%s%s%s]%s Ausnahmefehler %s%s%s von %s"
 
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s"
-msgstr "%s%s[%s%s%s]%s Exception %s%s"
+msgstr "%s%s[%s%s%s]%s Ausnahmefehler %s%s"
 
 #, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -9088,7 +9088,7 @@ msgid "%s%s: \"%s\" command received without host"
 msgstr "%s%s: \"%s\"-Befehl empfangen ohne Host"
 
 msgid "IRC raw messages"
-msgstr "IRC Roh-Nachricht"
+msgstr "IRC-Rohnachricht"
 
 #, c-format
 msgid "%s%s: missing argument \"%s\" for redirect pattern"
@@ -9302,7 +9302,7 @@ msgstr "%sgnutls: Fingerprint-Zertifikat konnte nicht berechnet werden"
 #, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr ""
-"%sgnutls: Verbindung mittels geheimen %d-Bit Diffie-Hellman Schlüssels "
+"%sgnutls: Verbindung mittels geheimen %d-Bit-Diffie-Hellman-Schlüssels "
 "hergestellt"
 
 #, c-format
@@ -9321,7 +9321,7 @@ msgstr "%sgnutls: Zertifikat[%d] konnte nicht importiert werden"
 
 #, c-format
 msgid "%s - certificate[%d] info:"
-msgstr "%s - Zertifikat [%d] Information:"
+msgstr "%s - Zertifikat[%d]-Information:"
 
 #, c-format
 msgid "%sgnutls: certificate has expired"
@@ -9333,14 +9333,14 @@ msgstr "%sgnutls: Zertifikat ist noch nicht freigeschaltet"
 
 #, c-format
 msgid "%sgnutls: certificate fingerprint matches"
-msgstr "%sgnutls: Fingerprint Zertifikat stimmt überein"
+msgstr "%sgnutls: Zertifikatsfingerabdruck stimmt überein"
 
 #, c-format
 msgid ""
 "%sgnutls: certificate fingerprint does NOT match (check value of option irc."
 "server.%s.ssl_fingerprint)"
 msgstr ""
-"%sgnutls: certificate fingerprint does NOT match (check value of option irc."
+"%sgnutls: Zertifikatsfingerabdruck stimmt NICHT überein (prüfe Wert der Option irc."
 "server.%s.ssl_fingerprint)"
 
 #, c-format
@@ -9353,11 +9353,11 @@ msgstr "%sgnutls: Fehler bei der Überprüfung des Peer-Zertifikates"
 
 #, c-format
 msgid "%sgnutls: peer's certificate is NOT trusted"
-msgstr "%sgnutls: Peer Zertifikat ist NICHT vertrauenswürdig"
+msgstr "%sgnutls: Peer-Zertifikat ist NICHT vertrauenswürdig"
 
 #, c-format
 msgid "%sgnutls: peer's certificate is trusted"
-msgstr "%sgnutls: Peer Zertifikat ist vertrauenswürdig"
+msgstr "%sgnutls: Peer-Zertifikat ist vertrauenswürdig"
 
 #, c-format
 msgid "%sgnutls: peer's certificate issuer is unknown"
@@ -9377,7 +9377,7 @@ msgstr "%sgnutls: ungültiges Zertifikat \"%s\". Fehler: %s"
 
 #, c-format
 msgid "%s - client certificate info (%s):"
-msgstr "%s - Client Zertifikate-Information (%s):"
+msgstr "%s - Clientzertifikats-Information (%s):"
 
 #, c-format
 msgid "%sgnutls: unable to read certificate \"%s\""
@@ -9624,10 +9624,10 @@ msgid "use only lower case for log filenames"
 msgstr "Protokolldateien werden ausschließlich in Kleinschreibung erstellt"
 
 msgid "text to write before nick in prefix of message, example: \"<\""
-msgstr "Zeichenkette die dem Nick vorangestellt werden soll. Beispiel: \"<\""
+msgstr "Zeichenkette, die dem Nick vorangestellt werden soll. Beispiel: \"<\""
 
 msgid "text to write after nick in prefix of message, example: \">\""
-msgstr "Zeichenkette die nach dem Nick eingefügt werden soll. Beispiel: \">\""
+msgstr "Zeichenkette, die nach dem Nick eingefügt werden soll. Beispiel: \">\""
 
 msgid ""
 "path for WeeChat log files; \"%h\" at beginning of string is replaced by "
@@ -9654,7 +9654,7 @@ msgid "list of logger buffers"
 msgstr "Auflistung der protokollierten Buffer"
 
 msgid "logger pointer (optional)"
-msgstr "Logger Pointer (optional)"
+msgstr "Logger-Pointer (optional)"
 
 msgid "Support of lua scripts"
 msgstr "Unterstützung von Lua-Skripten"
@@ -9707,10 +9707,10 @@ msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: %s kann nicht initialisiert werden"
 
 msgid "WeeChat version"
-msgstr "WeeChat Version"
+msgstr "WeeChat-Version"
 
 msgid "WeeChat version (as number)"
-msgstr "WeeChat Version (als Nummer)"
+msgstr "WeeChat-Version (als Zahl)"
 
 msgid ""
 "WeeChat git version (output of command \"git describe\" for a development "
