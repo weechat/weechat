@@ -402,7 +402,7 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
     }
     else if (string_strcasecmp (conditions, "nicklist") == 0)
     {
-        if (window->buffer && !window->buffer->nicklist)
+        if (window && window->buffer && !window->buffer->nicklist)
             return 0;
     }
     else if (conditions[0])
@@ -415,7 +415,8 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
         if (pointers)
         {
             hashtable_set (pointers, "window", window);
-            hashtable_set (pointers, "buffer", window->buffer);
+            if (window)
+                hashtable_set (pointers, "buffer", window->buffer);
         }
         extra_vars = hashtable_new (32,
                                     WEECHAT_HASHTABLE_STRING,
@@ -429,7 +430,7 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
             hashtable_set (extra_vars, "inactive",
                            (gui_current_window && (gui_current_window != window)) ? "1" : "0");
             hashtable_set (extra_vars, "nicklist",
-                           (window->buffer && window->buffer->nicklist) ? "1" : "0");
+                           (window && window->buffer && window->buffer->nicklist) ? "1" : "0");
         }
         options = hashtable_new (32,
                                  WEECHAT_HASHTABLE_STRING,

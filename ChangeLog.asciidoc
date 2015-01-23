@@ -23,6 +23,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: fix crash when a root bar has conditions different from
+  active/inactive/nicklist (closes #317)
 * irc: fix /join on a channel buffer opened with autojoin but which failed to
   join
 * irc: send QUIT to server and no PART for channels when the server buffer
