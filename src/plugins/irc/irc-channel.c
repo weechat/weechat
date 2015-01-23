@@ -179,7 +179,7 @@ irc_channel_search (struct t_irc_server *server, const char *channel_name)
  */
 
 struct t_gui_buffer *
-irc_channel_search_buffer (struct t_irc_server *server,
+irc_channel_search_buffer (struct t_irc_server *server, int channel_type,
                            const char *channel_name)
 {
     struct t_hdata *hdata_buffer;
@@ -202,7 +202,10 @@ irc_channel_search_buffer (struct t_irc_server *server,
             if (ptr_type && ptr_type[0]
                 && ptr_server_name && ptr_server_name[0]
                 && ptr_channel_name && ptr_channel_name[0]
-                && (strcmp (ptr_type, "channel") == 0)
+                && (((channel_type == IRC_CHANNEL_TYPE_CHANNEL)
+                     && (strcmp (ptr_type, "channel") == 0))
+                    || ((channel_type == IRC_CHANNEL_TYPE_PRIVATE)
+                        && (strcmp (ptr_type, "private") == 0)))
                 && (strcmp (ptr_server_name, server->name) == 0)
                 && ((irc_server_strcasecmp (server, ptr_channel_name,
                                             channel_name) == 0)))
@@ -240,9 +243,12 @@ irc_channel_create_buffer (struct t_irc_server *server,
 
     buffer_name = irc_buffer_build_name (server->name, channel_name);
 
-    ptr_buffer = irc_channel_search_buffer (server, channel_name);
+    ptr_buffer = irc_channel_search_buffer (server, channel_type,
+                                            channel_name);
     if (ptr_buffer)
+    {
         weechat_nicklist_remove_all (ptr_buffer);
+    }
     else
     {
         ptr_buffer_for_merge = NULL;
