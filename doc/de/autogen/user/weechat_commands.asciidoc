@@ -40,7 +40,7 @@ message: Abwesenheitsnachricht (ohne Angabe einer Nachricht wird der Abwesenheit
       default: erstellt standardisierte Infobars
           del: entfernt eine Infobar (alle Infobars können mit dem Argument "-all" entfernt werden).
           set: setzt einen Wert für Infobar
-       option: Option die verändert werden soll (für eine Liste aller möglichen Optionen, bitte folgenden Befehl nutzen: /set weechat.bar.<barname>.*)
+       option: Option, die verändert werden soll (für eine Liste aller möglichen Optionen bitte folgenden Befehl nutzen: /set weechat.bar.<barname>.*)
         value: neuer Wert für Option
          hide: Infobar wird ausgeblendet
          show: zeigt eine ausgeblendete Infobar an

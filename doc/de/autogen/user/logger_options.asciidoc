@@ -34,12 +34,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_logger.file.nick_prefix]] *logger.file.nick_prefix*
-** Beschreibung: `Zeichenkette die dem Nick vorangestellt werden soll. Beispiel: "<"`
+** Beschreibung: `Zeichenkette, die dem Nick vorangestellt werden soll. Beispiel: "<"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_logger.file.nick_suffix]] *logger.file.nick_suffix*
-** Beschreibung: `Zeichenkette die nach dem Nick eingefügt werden soll. Beispiel: ">"`
+** Beschreibung: `Zeichenkette, die nach dem Nick eingefügt werden soll. Beispiel: ">"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

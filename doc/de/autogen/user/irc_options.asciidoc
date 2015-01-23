@@ -569,17 +569,17 @@
 ** Werte: continue, reconnect, disconnect (Standardwert: `continue`)
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
-** Beschreibung: `file with ECC private key for mechanism "ecdsa-nist256p-challenge" ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** Beschreibung: `Datei mit privatem ECC Schlüssel für den "ecdsa-nist256p-challenge" Mechanismus ("%h" wird durch das WeeChat Verzeichnis ersetzt, standardmäßig "~/.weechat")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** Beschreibung: `mechanism for SASL authentication: "plain" for plain text password, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL cert, "dh-blowfish" for blowfish crypted password (insecure, not recommended), "dh-aes" for AES crypted password (insecure, not recommended)`
+** Beschreibung: `Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort wird im Klartext gesendet, "ecdsa-nist256p-challenge" für öffentlich/private Schlüsselmethode, "external"  SSL Zertifikat welches auf Client Seite vorliegt wird verwendet, "dh-blowfish" Passwort wird mittels blowfish verschlüsselt (unsicher, wird nicht empfohlen), "dh-aes" Passwort wird mittels AES verschlüsselt (unsicher, wird nicht empfohlen)`
 ** Typ: integer
 ** Werte: plain, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes (Standardwert: `plain`)
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** Beschreibung: `password for SASL authentication; this option is not used for mechanisms "ecdsa-nist256p-challenge" and "external" (note: content is evaluated, see /help eval)`
+** Beschreibung: `Passwort für SASL Authentifikation; diese Option findet keine Anwendung falls der Mechanismus "ecdsa-nist256p-challenge" und "external" verwendet wird (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -589,7 +589,7 @@
 ** Werte: 1 .. 3600 (Standardwert: `15`)
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** Beschreibung: `username for SASL authentication; this option is not used for mechanism "external" (note: content is evaluated, see /help eval)`
+** Beschreibung: `Username für SASL Authentifikation; diese Option wird nicht für den Mechanismus "external" verwendet (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
