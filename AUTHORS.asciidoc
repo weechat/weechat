@@ -81,6 +81,7 @@ Alphabetically:
 * Simon Kuhnle
 * Stefano Pigozzi
 * Stfn
+* Sven Knurr (Cthulhux)
 * Tim D. Smith
 * Tom Alsberg
 * Tor Hveem (xt)
