@@ -24,6 +24,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: fix random error when creating symbolic link weechat-curses on
+  make install with cmake (bug #40313)
 * core: fix crash when a root bar has conditions different from
   active/inactive/nicklist (closes #317)
 * irc: don't close channel buffer on second /part when option
