@@ -679,6 +679,25 @@ irc_channel_get_auto_chantype (struct t_irc_server *server,
 }
 
 /*
+ * Removes account for all nicks on a channel.
+ */
+
+void
+irc_channel_remove_account (struct t_irc_server *server,
+                            struct t_irc_channel *channel)
+{
+    struct t_irc_nick *ptr_nick;
+
+    if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+    {
+        for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+        {
+            ptr_nick->account = strdup ("*");
+        }
+    }
+}
+
+/*
  * Removes away for all nicks on a channel.
  */
 
@@ -698,7 +717,7 @@ irc_channel_remove_away (struct t_irc_server *server,
 }
 
 /*
- * Checks for away on a channel.
+ * Checks for WHOX information on a channel.
  */
 
 void
@@ -718,7 +737,10 @@ irc_channel_check_whox (struct t_irc_server *server,
                               "WHO %s %%cuhsnfdar", channel->name);
         }
         else
+        {
+            irc_channel_remove_account(server, channel);
             irc_channel_remove_away(server, channel);
+        }
     }
 }
 
