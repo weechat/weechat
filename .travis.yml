@@ -27,6 +27,7 @@ script:
 
 after_success:
     - weechat --help
+    - weechat-curses --help
     - weechat -r "/debug libs;/quit"
 
 matrix:
