@@ -19,6 +19,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * core: fix crash when a root bar has conditions different from
   active/inactive/nicklist (closes #317)
+* irc: don't close channel buffer on second /part when option
+  irc.look.part_closes_buffer is off (closes #313)
 * irc: fix /join on a channel buffer opened with autojoin but which failed to
   join
 * irc: send QUIT to server and no PART for channels when the server buffer

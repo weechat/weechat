@@ -3650,6 +3650,7 @@ irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
     {
         if (irc_channel_is_channel (ptr_server, argv[1]))
         {
+            ptr_channel = irc_channel_search (ptr_server, argv[1]);
             channel_name = argv[1];
             pos_args = argv_eol[2];
         }
@@ -3679,13 +3680,18 @@ irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "part");
             return WEECHAT_RC_OK;
         }
-        if (!ptr_channel->nicks)
-        {
-            weechat_buffer_close (ptr_channel->buffer);
-            return WEECHAT_RC_OK;
-        }
         channel_name = ptr_channel->name;
         pos_args = NULL;
+    }
+
+    if (ptr_channel && !ptr_channel->nicks)
+    {
+        if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
+            || weechat_config_boolean (irc_config_look_part_closes_buffer))
+        {
+            weechat_buffer_close (ptr_channel->buffer);
+        }
+        return WEECHAT_RC_OK;
     }
 
     irc_command_part_channel (ptr_server, channel_name, pos_args);
