@@ -84,15 +84,23 @@ add_dependencies(${EXECUTABLE} weechat_gui_curses)
 # Due to circular references, we must link two times with libweechat_core.a
 target_link_libraries(${EXECUTABLE} ${STATIC_LIBS} weechat_gui_curses ${EXTRA_LIBS} ${STATIC_LIBS})
 
-install(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)
-
 # Create a symbolic link weechat-curses -> weechat
 # This link is created for compatibility with old versions on /upgrade.
 # It may be removed in future.
-install(CODE "
-  EXECUTE_PROCESS(
-    COMMAND ${CMAKE_COMMAND} -E remove -f \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/weechat-curses${CMAKE_EXECUTABLE_SUFFIX}\"
-    COMMAND ${CMAKE_COMMAND} -E create_symlink weechat${CMAKE_EXECUTABLE_SUFFIX} \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/weechat-curses${CMAKE_EXECUTABLE_SUFFIX}\"
+add_custom_command(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE}-curses${CMAKE_EXECUTABLE_SUFFIX}
+  COMMAND ${CMAKE_COMMAND} -E remove -f "weechat-curses${CMAKE_EXECUTABLE_SUFFIX}"
+  COMMAND ${CMAKE_COMMAND} -E create_symlink "weechat${CMAKE_EXECUTABLE_SUFFIX}" "weechat-curses${CMAKE_EXECUTABLE_SUFFIX}"
+  DEPENDS ${EXECUTABLE}
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  COMMENT "Creating symbolic link ${EXECUTABLE}-curses${CMAKE_EXECUTABLE_SUFFIX}"
   )
-  LIST(APPEND CMAKE_INSTALL_MANIFEST_FILES \"${CMAKE_INSTALL_PREFIX}/bin/weechat-curses${CMAKE_EXECUTABLE_SUFFIX}\")
-")
+add_custom_target(${EXECUTABLE}-curses${CMAKE_EXECUTABLE_SUFFIX} ALL
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE}-curses${CMAKE_EXECUTABLE_SUFFIX}
+)
+add_dependencies(${EXECUTABLE}-curses${CMAKE_EXECUTABLE_SUFFIX} ${EXECUTABLE})
+list(APPEND CMAKE_INSTALL_MANIFEST_FILES "${CMAKE_INSTALL_PREFIX}/bin/weechat-curses${CMAKE_EXECUTABLE_SUFFIX}")
+
+# Install executable and symbolic link
+install(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE}-curses${CMAKE_EXECUTABLE_SUFFIX} DESTINATION bin)
