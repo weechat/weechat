@@ -75,7 +75,8 @@ brew info weechat
 WeeChat kann durch folgenden Befehl installiert werden:
 
 ----
-brew install weechat --with-python --with-perl
+brew install aspell
+brew install weechat --with-aspell --with-curl --with-python --with-perl --with-ruby --with-lua --with-guile
 ----
 
 [[lost]]
