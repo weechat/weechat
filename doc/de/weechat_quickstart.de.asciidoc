@@ -108,12 +108,11 @@ Erweiterungen sollten aufgelistet werden.
 [[create_irc_server]]
 == Einen IRC-Server erstellen
 
-Der Server 'freenode' wird standardmäßig beim ersten Programmstart erstellt.
-
-Ein weiterer IRC Server kann mit dem `/server` Befehl erstellt werden. Zum Beispiel:
+// TRANSLATION MISSING
+You can add an IRC server with `/server` command, for example:
 
 ----
-/server add oftc irc.oftc.net/6667
+/server add freenode chat.freenode.net
 ----
 
 Falls man nicht mehr weiter weiß, einfach die Hilfe verwenden:

@@ -17,6 +17,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* irc: remove server "freenode" from default config file (closes #309)
 * irc: add support of "ecdsa-nist256p-challenge" SASL mechanism (closes #251)
 * core: add priority in plugins to initialize them in order
 * doc: add Russian man page

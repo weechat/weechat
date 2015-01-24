@@ -679,32 +679,31 @@ reason: Grund der Abmeldung
          del|keep <server>
          deloutq|jump|raw
 
-    list: listet Server auf (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
-listfull: listet Server mit detaillierten Informationen über jeden einzelnen Server auf
-     add: erstellt einen neuen Server
-  server: Servername, dient der internen Nutzung und zur Darstellung
-hostname: Name oder IP-Adresse des Servers. Optional kann noch der Port festgelegt werden (Standard-Port: 6667). Verschiedene Ports können durch Kommata getrennt werden
-    temp: erstellt temporären Server (wird nicht gespeichert)
-  option: legt die Optionen für den Server fest (die Boolean-Optionen können weggelassen werden)
-nooption: stellt die Boolean Einstellung auf "off" (Beispiel: -nossl)
-    copy: erstellt eine Kopie des Servers
-  rename: benennt den Server um
- reorder: Anordnung der Server ändern
-    keep: behält den Server in der Konfigurationsdatei (ausschließlich für die Nutzung bei temporären Servern)
-     del: entfernt einen Server
- deloutq: löscht bei allen Servern alle ausgehende Nachrichten, die in der Warteschlange stehen (dies betrifft alle Nachrichten die WeeChat gerade sendet)
-    jump: springt zum Server-Buffer
-     raw: öffnet Buffer mit Roh-IRC-Daten
+    list: list servers (without argument, this list is displayed)
+listfull: list servers with detailed info for each server
+     add: create a new server
+  server: server name, for internal and display use
+hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
+    temp: create temporary server (not saved)
+  option: set option for server (for boolean option, value can be omitted)
+nooption: set boolean option to 'off' (for example: -nossl)
+    copy: duplicate a server
+  rename: rename a server
+ reorder: reorder list of servers
+    keep: keep server in config file (for temporary servers only)
+     del: delete a server
+ deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
+    jump: jump to server buffer
+     raw: open buffer with raw IRC data
 
-Beispiele:
+Examples:
   /server listfull
-  /server add oftc irc.oftc.net/6697 -ssl -autoconnect
-  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl
-  /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667
-  /server add freenode3 chat.freenode.net -password=mypass
-  /server copy oftc oftcbis
-  /server rename oftc newoftc
-  /server reorder oftc freenode
+  /server add freenode chat.freenode.net
+  /server add freenode chat.freenode.net/6697 -ssl -autoconnect
+  /server add freenode chat.eu.freenode.net/6667,chat.us.freenode.net/6667
+  /server copy freenode freenode-test
+  /server rename freenode-test freenode2
+  /server reorder freenode2 freenode
   /server del freenode
   /server deloutq
 ----

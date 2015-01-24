@@ -100,13 +100,10 @@ devriez voir "irc" et d'autres extensions dans cette liste.
 [[create_irc_server]]
 == Créer un serveur IRC
 
-Le serveur 'freenode' est créé par défaut au premier démarrage.
-
-Vous pouvez ajouter un autre serveur IRC avec la commande `/server`, par
-exemple :
+Vous pouvez ajouter un serveur IRC avec la commande `/server`, par exemple :
 
 ----
-/server add oftc irc.oftc.net/6667
+/server add freenode chat.freenode.net
 ----
 
 Comme d'habitude, de l'aide est disponible si vous êtes perdus :

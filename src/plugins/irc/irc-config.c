@@ -1497,49 +1497,6 @@ irc_config_ignore_write_cb (void *data, struct t_config_file *config_file,
 }
 
 /*
- * Writes default server section in IRC configuration file.
- */
-
-int
-irc_config_server_write_default_cb (void *data,
-                                    struct t_config_file *config_file,
-                                    const char *section_name)
-{
-    int i;
-    char option_name[128];
-
-    /* make C compiler happy */
-    (void) data;
-
-    if (!weechat_config_write_line (config_file, section_name, NULL))
-        return WEECHAT_CONFIG_WRITE_ERROR;
-
-    for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
-    {
-        snprintf (option_name, sizeof (option_name),
-                  "freenode.%s",
-                  irc_server_options[i][0]);
-        switch (i)
-        {
-            case IRC_SERVER_OPTION_ADDRESSES:
-                if (!weechat_config_write_line (config_file,
-                                                option_name,
-                                                "%s", "\"chat.freenode.net/6667\""))
-                    return WEECHAT_CONFIG_WRITE_ERROR;
-                break;
-            default:
-                if (!weechat_config_write_line (config_file,
-                                                option_name,
-                                                WEECHAT_CONFIG_OPTION_NULL))
-                    return WEECHAT_CONFIG_WRITE_ERROR;
-                break;
-        }
-    }
-
-    return WEECHAT_CONFIG_WRITE_OK;
-}
-
-/*
  * Creates a new option for a server.
  *
  * Returns pointer to new option, NULL if error.
@@ -3076,7 +3033,7 @@ irc_config_init ()
                                               0, 0,
                                               &irc_config_server_read_cb, NULL,
                                               &irc_config_server_write_cb, NULL,
-                                              &irc_config_server_write_default_cb, NULL,
+                                              NULL, NULL,
                                               NULL, NULL,
                                               NULL, NULL);
     if (!ptr_section)

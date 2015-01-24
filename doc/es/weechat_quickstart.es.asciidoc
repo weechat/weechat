@@ -109,13 +109,10 @@ seguramente vera irc y otros.
 == Crear un servidor IRC
 
 // TRANSLATION MISSING
-The server 'freenode' is created by default on first startup.
-
-// TRANSLATION MISSING
-You can add another IRC server with `/server` command, for example:
+You can add an IRC server with `/server` command, for example:
 
 ----
-/server add oftc irc.oftc.net/6667
+/server add freenode chat.freenode.net
 ----
 
 La ayuda está disponible; si te pierdes:

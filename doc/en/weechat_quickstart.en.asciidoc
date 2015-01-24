@@ -95,12 +95,10 @@ other plugins in the list.
 [[create_irc_server]]
 == Create an IRC server
 
-The server 'freenode' is created by default on first startup.
-
-You can add another IRC server with `/server` command, for example:
+You can add an IRC server with `/server` command, for example:
 
 ----
-/server add oftc irc.oftc.net/6667
+/server add freenode chat.freenode.net
 ----
 
 As usual, help is available if you're lost:

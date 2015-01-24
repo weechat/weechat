@@ -101,12 +101,11 @@ na liście "irc" oraz inne wtyczki.
 [[create_irc_server]]
 == Tworzenie serwera IRC
 
-Serwer 'freenode' jest tworzony domyślnie przy pierwszym uruchomieniu.
-
-Możesz dodać inne serwery IRC za pomocą komendy '/server', na przykład:
+// TRANSLATION MISSING
+You can add an IRC server with `/server` command, for example:
 
 ----
-/server add oftc irc.oftc.net/6667
+/server add freenode chat.freenode.net
 ----
 
 Jak zawsze w razie wątpliwości dostępna jest pomoc:
