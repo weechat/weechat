@@ -318,10 +318,8 @@ IRC_PROTOCOL_CALLBACK(account)
         {
             if (ptr_nick->account)
                 free (ptr_nick->account);
-            if (server->cap_account_notify)
-                ptr_nick->account = strdup (argv[2]);
-            else
-                ptr_nick->account = strdup ("*");
+            ptr_nick->account = (server->cap_account_notify) ?
+                strdup (argv[2]) : strdup ("*");
         }
     }
 
