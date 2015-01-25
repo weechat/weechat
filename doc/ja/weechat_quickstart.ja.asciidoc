@@ -100,8 +100,7 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 [[create_irc_server]]
 == サーバ情報を作成する
 
-// TRANSLATION MISSING
-You can add an IRC server with `/server` command, for example:
+IRC サーバを追加するには `/server` コマンドを使ってください、例:
 
 ----
 /server add freenode chat.freenode.net
@@ -316,20 +315,17 @@ Debian のようにいくつかのディストリビューションでは、プ�
 見つかったプラグインは自動的に読み込まれます (プラグイン /
 スクリプトの読み込み、有効 / 無効は WeeChat のドキュメントを参照してください)。
 
-// TRANSLATION MISSING
-Many external scripts (from contributors) are available for WeeChat, you can
-download and install scripts from the repository with the `/script` command,
-for example:
+WeeChat では多くの外部スクリプト (貢献者の作った)
+を利用できます、スクリプトをリポジトリからダウンロードしてインストールするには、`/script`
+コマンドを使ってください、例:
 
 ----
 /script install iset.pl
 ----
 
-// TRANSLATION MISSING
-See `/help script` for more info.
+より詳しい情報を参照するには `/help script` を使ってください。
 
-// TRANSLATION MISSING
-A list of scripts is available in WeeChat with `/script` or at this URL:
+スクリプトの一覧を参照するには WeeChat から `/script` を実行するか、以下の URL にアクセスしてください:
 https://weechat.org/scripts
 
 [[more_doc]]

@@ -113,9 +113,8 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 | libgcrypt20-dev | | *必須* |
   保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
 
-// TRANSLATION MISSING
 | libgnutls28-dev | ≥ 2.2.0 ^(3)^ | |
-  IRC サーバへの SSL 接続, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE)
+  IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
 
 | gettext | | |
   国際化 (メッセージの翻訳; ベース言語は英語です)
@@ -159,14 +158,13 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 | C++ コンパイラ | |
 |===
 
-// TRANSLATION MISSING (note 3)
 [NOTE]
 ^(1)^ Debian GNU/Linux ディストリビューションにおけるパッケージ名です。
 他のディストリビューションではバージョンとパッケージ名が異なるかもしれません。 +
 ^(2)^ WeeChat は libncurses5-dev でもコンパイル可能ですが、これは推奨*されません*
 (ワイドキャラクタの表示にバグを生じるでしょう)。 +
-^(3)^ Gnutls ≥ 3.0.21 is required for IRC SASL authentication with mechanism
-ECDSA-NIST256P-CHALLENGE. +
+^(3)^ IRC SASL 認証で ECDSA-NIST256P-CHALLENGE を使うには、Gnutls
+バージョン 3.0.21 以上が必要です。 +
 ^(4)^ Python はバージョン 2.7 をお勧めします (全てのスクリプトはバージョン 2.7
 で正しく動きますが、バージョン 2.6 以下または 3.0 以上では正しく動きません)。
 
@@ -2216,8 +2214,7 @@ $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick
 WeeChat は SASL 認証をサポートします、以下の認証メカニズムを利用できます:
 
 * 'plain': 平文パスワード (デフォルト)
-// TRANSLATION MISSING
-* 'ecdsa-nist256p-challenge': challenge with public/private key
+* 'ecdsa-nist256p-challenge': 公開鍵/秘密鍵を使うチャレンジ認証
 * 'external': クライアント側 SSL 証明書
 * 'dh-blowfish': blowfish 暗号パスワード
 * 'dh-aes': AES 暗号パスワード
@@ -2230,36 +2227,33 @@ WeeChat のコンパイル時に必要です (<<dependencies,依存関係>>を�
 
 * 'sasl_mechanism': 利用する認証メカニズム (上記参照)
 * 'sasl_timeout': 認証時のタイムアウト (秒単位)
-// TRANSLATION MISSING
-* 'sasl_fail': action to perform if authentication fails
+* 'sasl_fail': 認証に失敗した場合の挙動
 * 'sasl_username': ユーザ名 (ニックネーム)
 * 'sasl_password': パスワード
-// TRANSLATION MISSING
-* 'sasl_key': file with ECC private key (for mechanism
-  'ecdsa-nist256p-challenge')
+* 'sasl_key': ECC 秘密鍵を含むファイル
+  ('ecdsa-nist256p-challenge' 用)
 
-// TRANSLATION MISSING
 [[irc_sasl_ecdsa_nist256p_challenge]]
-===== SASL ECDSA-NIST256P-CHALLENGE
+===== SASL ECDSA-NIST256P-CHALLENGE 認証
 
-You must generate a private key in order to authentify with the
-ECDSA-NIST256P-CHALLENGE mechanism (no password is required on connection).
+ECDSA-NIST256P-CHALLENGE を使って認証を行うためには、秘密鍵を作成してください
+(接続の際にパスワードは不要です)。
 
-You can generate the key with this command:
+鍵を作成するには、以下のコマンドを使ってください:
 
 ----
 $ openssl ecparam -genkey -name prime256v1 >~/.weechat/ecdsa.pem
 ----
 
-Get the public key (encoded as base64) with this command:
+公開鍵を (base64 エンコード形式で) 作成するには、以下のコマンドを使ってください:
 
 ----
 $ openssl ec -noout -text -conv_form compressed -in ~/.weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
 ----
 
-Connect to the server, identify (for example with "nickserv identify") and set
-your public key in your account, using nickserv (replace the base64 value with
-your public key):
+サーバに接続、本人確認 (例えば "nickserv identify" を使って)、nickserv
+を使ってアカウントに公開鍵を設定 (アカウントの公開鍵に base64
+文字列を指定する):
 
 ----
 /connect freenode
@@ -2267,7 +2261,7 @@ your public key):
 /msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
 ----
 
-Configure the SASL options in the server:
+サーバの SASL オプションを設定:
 
 ----
 /set irc.server.freenode.sasl_mechanism ecdsa-nist256p-challenge
@@ -2275,7 +2269,7 @@ Configure the SASL options in the server:
 /set irc.server.freenode.sasl_key "%h/ecdsa.pem"
 ----
 
-Reconnect to the server:
+サーバに再接続:
 
 ----
 /reconnect freenode
