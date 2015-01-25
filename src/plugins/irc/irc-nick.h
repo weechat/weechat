@@ -38,6 +38,7 @@ struct t_irc_nick
     char prefix[2];                 /* current prefix (higher prefix set in  */
                                     /* prefixes)                             */
     int away;                       /* 1 if nick is away                     */
+    char *account;                  /* account name of the user              */
     char *color;                    /* color for nickname                    */
     struct t_irc_nick *prev_nick;   /* link to previous nick on channel      */
     struct t_irc_nick *next_nick;   /* link to next nick on channel          */
@@ -64,7 +65,8 @@ extern struct t_irc_nick *irc_nick_new (struct t_irc_server *server,
                                         const char *nickname,
                                         const char *host,
                                         const char *prefixes,
-                                        int away);
+                                        int away,
+                                        char *account);
 extern void irc_nick_change (struct t_irc_server *server,
                              struct t_irc_channel *channel,
                              struct t_irc_nick *nick, const char *new_nick);

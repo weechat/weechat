@@ -463,7 +463,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         WEECHAT_HASHTABLE_STRING,
         NULL,
         NULL);
-    new_channel->checking_away = 0;
+    new_channel->checking_whox = 0;
     new_channel->away_message = NULL;
     new_channel->has_quit_server = 0;
     new_channel->cycle = 0;
@@ -679,6 +679,25 @@ irc_channel_get_auto_chantype (struct t_irc_server *server,
 }
 
 /*
+ * Removes account for all nicks on a channel.
+ */
+
+void
+irc_channel_remove_account (struct t_irc_server *server,
+                            struct t_irc_channel *channel)
+{
+    struct t_irc_nick *ptr_nick;
+
+    if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+    {
+        for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+        {
+            ptr_nick->account = strdup ("*");
+        }
+    }
+}
+
+/*
  * Removes away for all nicks on a channel.
  */
 
@@ -698,26 +717,30 @@ irc_channel_remove_away (struct t_irc_server *server,
 }
 
 /*
- * Checks for away on a channel.
+ * Checks for WHOX information on a channel.
  */
 
 void
-irc_channel_check_away (struct t_irc_server *server,
+irc_channel_check_whox (struct t_irc_server *server,
                         struct t_irc_channel *channel)
 {
     if ((channel->type == IRC_CHANNEL_TYPE_CHANNEL) && channel->nicks)
     {
         if (server->cap_away_notify
+            || server->cap_account_notify
             || ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
                 && ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS) == 0)
                     || (channel->nicks_count <= IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS)))))
         {
-            channel->checking_away++;
+            channel->checking_whox++;
             irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
-                              "WHO %s", channel->name);
+                              "WHO %s %%cuhsnfdar", channel->name);
         }
         else
-            irc_channel_remove_away (server, channel);
+        {
+            irc_channel_remove_account(server, channel);
+            irc_channel_remove_away(server, channel);
+        }
     }
 }
 
@@ -1456,7 +1479,7 @@ irc_channel_hdata_channel_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_channel, limit, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, key, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, join_msg_received, HASHTABLE, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_channel, checking_away, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, checking_whox, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, away_message, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, has_quit_server, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, cycle, INTEGER, 0, NULL, NULL);
@@ -1553,7 +1576,7 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "join_msg_received",
                                           weechat_hashtable_get_string (channel->join_msg_received, "keys")))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "checking_away", channel->checking_away))
+    if (!weechat_infolist_new_var_integer (ptr_item, "checking_whox", channel->checking_whox))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "away_message", channel->away_message))
         return 0;
@@ -1637,7 +1660,7 @@ irc_channel_print_log (struct t_irc_channel *channel)
                         channel->join_msg_received,
                         weechat_hashtable_get_string (channel->join_msg_received,
                                                       "keys_values"));
-    weechat_log_printf ("       checking_away. . . . . . : %d",    channel->checking_away);
+    weechat_log_printf ("       checking_whox. . . . . . : %d",    channel->checking_whox);
     weechat_log_printf ("       away_message . . . . . . : '%s'",  channel->away_message);
     weechat_log_printf ("       has_quit_server. . . . . : %d",    channel->has_quit_server);
     weechat_log_printf ("       cycle. . . . . . . . . . : %d",    channel->cycle);

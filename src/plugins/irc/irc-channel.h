@@ -50,7 +50,7 @@ struct t_irc_channel
     struct t_hashtable *join_msg_received; /* messages received after join: */
                                        /* 353=names, 366=names count,       */
                                        /* 332/333=topic, 329=creation date  */
-    int checking_away;                 /* = 1 if checking away with WHO cmd */
+    int checking_whox;                 /* = 1 if checking WHOX              */
     char *away_message;                /* to display away only once in pv   */
     int has_quit_server;               /* =1 if nick has quit (pv only), to */
                                        /* display message when he's back    */
@@ -107,9 +107,11 @@ extern int irc_channel_is_channel (struct t_irc_server *server,
                                    const char *string);
 extern const char *irc_channel_get_auto_chantype (struct t_irc_server *server,
                                                   const char *channel_name);
+extern void irc_channel_remove_account (struct t_irc_server *server,
+                                        struct t_irc_channel *channel);
 extern void irc_channel_remove_away (struct t_irc_server *server,
                                      struct t_irc_channel *channel);
-extern void irc_channel_check_away (struct t_irc_server *server,
+extern void irc_channel_check_whox (struct t_irc_server *server,
                                     struct t_irc_channel *channel);
 extern void irc_channel_set_away (struct t_irc_server *server,
                                   struct t_irc_channel *channel,
