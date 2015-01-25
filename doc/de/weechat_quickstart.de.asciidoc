@@ -108,8 +108,8 @@ Erweiterungen sollten aufgelistet werden.
 [[create_irc_server]]
 == Einen IRC-Server erstellen
 
-// TRANSLATION MISSING
-You can add an IRC server with `/server` command, for example:
+Um eine Verbindung zu einem IRC Server herzustellen wird der
+`/server` Befehl verwendet. Beispiel:
 
 ----
 /server add freenode chat.freenode.net
