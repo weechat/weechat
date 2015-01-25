@@ -4282,18 +4282,24 @@ IRC_PROTOCOL_CALLBACK(354)
     }
 
     /* update away flag for nick */
-    if (ptr_channel && ptr_nick && pos_attr
-        && (server->cap_away_notify
-            || ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
-                && ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS) == 0)
-                    || (ptr_channel->nicks_count <= IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS))))))
+    if (ptr_channel && ptr_nick)
     {
-        irc_nick_set_away (server, ptr_channel, ptr_nick,
-                           (pos_attr[0] == 'G') ? 1 : 0);
-    }
-    else
-    {
-        irc_nick_set_away (server, ptr_channel, ptr_nick, 0);
+        if (pos_attr
+            && (server->cap_away_notify
+                || ((IRC_SERVER_OPTION_INTEGER(
+                         server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
+                    && ((IRC_SERVER_OPTION_INTEGER(
+                             server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS) == 0)
+                        || (ptr_channel->nicks_count <= IRC_SERVER_OPTION_INTEGER(
+                                server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS))))))
+        {
+            irc_nick_set_away (server, ptr_channel, ptr_nick,
+                               (pos_attr[0] == 'G') ? 1 : 0);
+        }
+        else
+        {
+            irc_nick_set_away (server, ptr_channel, ptr_nick, 0);
+        }
     }
 
     /* update account flag for nick */
