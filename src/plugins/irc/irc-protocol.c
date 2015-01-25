@@ -4256,12 +4256,9 @@ IRC_PROTOCOL_CALLBACK(354)
 
     pos_attr = argv[8];
     pos_hopcount = argv[9];
-    pos_account = NULL;
+    pos_account = (strcmp (argv[10], "0") != 0) ? argv[10] : NULL;
     pos_realname = (argc > 11) ?
         ((argv_eol[11][0] == ':') ? argv_eol[11] + 1 : argv_eol[11]) : NULL;
-
-    if (argv[10][0] != '0')
-        pos_account = argv[10];
 
     ptr_channel = irc_channel_search (server, argv[3]);
     ptr_nick = (ptr_channel) ?
