@@ -688,6 +688,9 @@ irc_channel_remove_account (struct t_irc_server *server,
 {
     struct t_irc_nick *ptr_nick;
 
+    /* make C compiler happy */
+    (void) server;
+
     if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
         for (ptr_nick = channel->nicks; ptr_nick;
