@@ -914,7 +914,7 @@
 ** 値: 1 .. 2147483647 (デフォルト値: `60`)
 
 * [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
-** 説明: `認証局を含むファイル ("%h" は WeeChat ホームに置換される、デフォルトでは "~/.weechat")`
+** 説明: `認証局を含むファイル ("%h" は WeeChat ホームに置換されます、デフォルトでは "~/.weechat")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"/etc/ssl/certs/ca-certificates.crt"`)
 
@@ -944,7 +944,7 @@
 ** 値: 未制約文字列 (デフォルト値: `".so,.dll"`)
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
-** 説明: `プラグイン検索パス ("%h" は WeeChat ホームに置換される、デフォルトでは "~/.weechat")`
+** 説明: `プラグイン検索パス ("%h" は WeeChat ホームに置換されます、デフォルトでは "~/.weechat")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%h/plugins"`)
 
