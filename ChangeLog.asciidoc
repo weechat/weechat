@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* irc: add support of "account-notify" capability (closes #11, closes #246)
 * irc: remove server "freenode" from default config file (closes #309)
 * irc: add support of "ecdsa-nist256p-challenge" SASL mechanism (closes #251)
 * core: add priority in plugins to initialize them in order
