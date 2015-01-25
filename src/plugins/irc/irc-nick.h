@@ -66,7 +66,7 @@ extern struct t_irc_nick *irc_nick_new (struct t_irc_server *server,
                                         const char *host,
                                         const char *prefixes,
                                         int away,
-                                        char *account);
+                                        const char *account);
 extern void irc_nick_change (struct t_irc_server *server,
                              struct t_irc_channel *channel,
                              struct t_irc_nick *nick, const char *new_nick);

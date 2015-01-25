@@ -624,7 +624,7 @@ irc_nick_nicklist_set_color_all ()
 struct t_irc_nick *
 irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
               const char *nickname, const char *host, const char *prefixes,
-              int away, char *account)
+              int away, const char *account)
 {
     struct t_irc_nick *new_nick, *ptr_nick;
     int length;
