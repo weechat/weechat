@@ -2,6 +2,8 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en
+:toc2:
+:max-width: 100%
 
 
 This document lists important changes for each version, that require manual
