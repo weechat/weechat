@@ -690,8 +690,11 @@ irc_channel_remove_account (struct t_irc_server *server,
 
     if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
-        for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+        for (ptr_nick = channel->nicks; ptr_nick;
+             ptr_nick = ptr_nick->next_nick)
         {
+            if (ptr_nick->account)
+                free (ptr_nick->account);
             ptr_nick->account = strdup ("*");
         }
     }
@@ -709,7 +712,8 @@ irc_channel_remove_away (struct t_irc_server *server,
 
     if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
-        for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+        for (ptr_nick = channel->nicks; ptr_nick;
+             ptr_nick = ptr_nick->next_nick)
         {
             irc_nick_set_away (server, channel, ptr_nick, 0);
         }
