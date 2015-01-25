@@ -1134,6 +1134,7 @@ irc_nick_hdata_nick_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_nick, prefixes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, prefix, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, away, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, account, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, color, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, prev_nick, POINTER, 0, NULL, hdata_name);
         WEECHAT_HDATA_VAR(struct t_irc_nick, next_nick, POINTER, 0, NULL, hdata_name);
