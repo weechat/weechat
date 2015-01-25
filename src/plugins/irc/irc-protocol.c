@@ -194,6 +194,38 @@ irc_protocol_nick_address (struct t_irc_server *server,
 }
 
 /*
+ * Callback for the IRC message "ACCOUNT": account info about a nick
+ * (with capability "account-notify").
+ *
+ * Message looks like:
+ *   :nick!user@host ACCOUNT *
+ *   :nick!user@host ACCOUNT accountname
+ */
+
+IRC_PROTOCOL_CALLBACK(account)
+{
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    IRC_PROTOCOL_MIN_ARGS(3);
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        ptr_nick = irc_nick_search (server, ptr_channel, nick);
+        if (ptr_nick)
+        {
+            if (ptr_nick->account)
+                free (ptr_nick->account);
+            ptr_nick->account = (server->cap_account_notify) ?
+                strdup (argv[2]) : strdup ("*");
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC message "AUTHENTICATE".
  *
  * Message looks like:
@@ -289,38 +321,6 @@ IRC_PROTOCOL_CALLBACK(away)
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
         if (ptr_nick)
             irc_nick_set_away (server, ptr_channel, ptr_nick, (argc > 2));
-    }
-
-    return WEECHAT_RC_OK;
-}
-
-/*
- * Callback for the IRC message "ACCOUNT": account info about a nick
- * (with capability "account-notify").
- *
- * Message looks like:
- *   :nick!user@host ACCOUNT *
- *   :nick!user@host ACCOUNT accountname
- */
-
-IRC_PROTOCOL_CALLBACK(account)
-{
-    struct t_irc_channel *ptr_channel;
-    struct t_irc_nick *ptr_nick;
-
-    IRC_PROTOCOL_MIN_ARGS(3);
-
-    for (ptr_channel = server->channels; ptr_channel;
-         ptr_channel = ptr_channel->next_channel)
-    {
-        ptr_nick = irc_nick_search (server, ptr_channel, nick);
-        if (ptr_nick)
-        {
-            if (ptr_nick->account)
-                free (ptr_nick->account);
-            ptr_nick->account = (server->cap_account_notify) ?
-                strdup (argv[2]) : strdup ("*");
-        }
     }
 
     return WEECHAT_RC_OK;
@@ -5395,9 +5395,9 @@ irc_protocol_recv_command (struct t_irc_server *server,
     char **argv, **argv_eol;
     struct t_hashtable *hash_tags;
     struct t_irc_protocol_msg irc_protocol_messages[] =
-        { { "authenticate", /* authenticate */ 1, 0, &irc_protocol_cb_authenticate },
+        { { "account", /* account (cap account-notify) */ 1, 0, &irc_protocol_cb_account },
+          { "authenticate", /* authenticate */ 1, 0, &irc_protocol_cb_authenticate },
           { "away", /* away (cap away-notify) */ 1, 0, &irc_protocol_cb_away },
-          { "account", /* account (cap account-notify) */ 1, 0, &irc_protocol_cb_account },
           { "cap", /* client capability */ 1, 0, &irc_protocol_cb_cap },
           { "error", /* error received from IRC server */ 1, 0, &irc_protocol_cb_error },
           { "invite", /* invite a nick on a channel */ 1, 0, &irc_protocol_cb_invite },
