@@ -740,8 +740,18 @@ irc_channel_check_whox (struct t_irc_server *server,
                     || (channel->nicks_count <= IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS)))))
         {
             channel->checking_whox++;
-            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
-                              "WHO %s %%cuhsnfdar", channel->name);
+            if (irc_server_get_isupport_value (server, "WHOX"))
+            {
+                /* WHOX is supported */
+                irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                                  "WHO %s %%cuhsnfdar", channel->name);
+            }
+            else
+            {
+                /* WHOX is NOT supported */
+                irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                                  "WHO %s", channel->name);
+            }
         }
         else
         {
