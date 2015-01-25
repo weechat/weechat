@@ -4271,7 +4271,10 @@ IRC_PROTOCOL_CALLBACK(354)
     if (ptr_nick)
     {
         if (ptr_nick->host)
+        {
             free (ptr_nick->host);
+            ptr_nick->host = NULL;
+        }
         length = strlen (argv[4]) + 1 + strlen (argv[5]) + 1;
         ptr_nick->host = malloc (length);
         if (ptr_nick->host)
