@@ -15,6 +15,10 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file 'ChangeLog.asciidoc' in sources).
 
 
+== Version 1.1.1 (2015-01-25)
+
+Bug fix and maintenance release.
+
 == Version 1.1 (2015-01-11)
 
 === New format for regex replacement in triggers
