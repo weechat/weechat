@@ -639,19 +639,15 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     ptr_nick = irc_nick_search (server, channel, nickname);
     if (ptr_nick)
     {
-        /* save away status from existing nick (before removing it) */
-        away = ptr_nick->away;
-
-        /* save account from existing nick (before removing it) */
-        account = ptr_nick->account;
-
         /* remove old nick from nicklist */
         irc_nick_nicklist_remove (server, channel, ptr_nick);
 
         /* update nick */
         irc_nick_set_prefixes (server, ptr_nick, prefixes);
         ptr_nick->away = away;
-        ptr_nick->account = account;
+        if (ptr_nick->account)
+            free (ptr_nick->account);
+        ptr_nick->account = (account) ? strdup (account) : NULL;
 
         /* add new nick in nicklist */
         irc_nick_nicklist_add (server, channel, ptr_nick);
