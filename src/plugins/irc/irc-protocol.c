@@ -746,10 +746,8 @@ IRC_PROTOCOL_CALLBACK(join)
     }
 
     /* add nick in channel */
-    if (pos_account)
-        ptr_nick = irc_nick_new (server, ptr_channel, nick, address, NULL, 0, pos_account);
-    else
-        ptr_nick = irc_nick_new (server, ptr_channel, nick, address, NULL, 0, "*");
+    ptr_nick = irc_nick_new (server, ptr_channel, nick, address, NULL, 0,
+                             (pos_account) ? pos_account : "*");
 
     /* rename the nick if it was in list with a different case */
     irc_channel_nick_speaking_rename_if_present (server, ptr_channel, nick);
