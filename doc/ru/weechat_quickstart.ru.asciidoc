@@ -10,7 +10,7 @@
 
 * Stalwart <stlwrt@gmail.com>, 2006
 * Алексей Бортник <thebosha@gmail.com>, 2009
-* Alexander Turenko <totktonada.ru@gmail.com>, 2014
+* Alexander Turenko <totktonada.ru@gmail.com>, 2014-2015
 
 
 [[start]]
