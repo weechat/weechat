@@ -12868,7 +12868,8 @@ Funzioni per eseguire comandi di WeeChat.
 // TRANSLATION MISSING
 _Updated in 1.1._
 
-Esegue un comando.
+// TRANSLATION MISSING
+Execute a command or send text to buffer.
 
 Prototipo:
 

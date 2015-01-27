@@ -12492,7 +12492,7 @@ Functions for executing WeeChat commands.
 
 _Updated in 1.1._
 
-Execute a command.
+Execute a command or send text to buffer.
 
 Prototype:
 

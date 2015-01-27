@@ -12740,7 +12740,7 @@ Fonctions pour exécuter des commandes WeeChat.
 
 _Mis à jour dans la 1.1._
 
-Exécuter une commande.
+Exécuter une commande ou envoyer du texte au tampon.
 
 Prototype :
 
