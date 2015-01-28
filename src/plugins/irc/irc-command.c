@@ -5938,7 +5938,7 @@ irc_command_init ()
            "  say 'hello' everywhere but not on #weechat and channels beginning "
            "with #linux:\n"
            "    /allchan -exclude=#weechat,#linux* msg * hello"),
-        NULL, &irc_command_allchan, NULL);
+        "-current", &irc_command_allchan, NULL);
     weechat_hook_command (
         "allpv",
         N_("execute a command on all private buffers of all connected servers"),
@@ -5961,7 +5961,7 @@ irc_command_init ()
            "    /allpv -exclude=foo,bar* msg * hello\n"
            "  close all private buffers:\n"
            "    /allpv close"),
-        NULL, &irc_command_allpv, NULL);
+        "-current", &irc_command_allpv, NULL);
     weechat_hook_command (
         "allserv",
         N_("execute a command on all connected servers"),

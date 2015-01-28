@@ -25,6 +25,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add priority in plugins to initialize them in order
 * doc: add Russian man page
 
+=== Bugs fixed
+
+* irc: fix completion of commands /allchan and /allpv
+
 == Version 1.1.1 (2015-01-25)
 
 === Bugs fixed
