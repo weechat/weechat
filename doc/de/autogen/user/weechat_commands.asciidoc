@@ -858,8 +858,10 @@ Es ist möglich die WeeChat-Sitzung auf einem anderen Rechner wiederherzustellen
 ----
 /version  [-o | -ol]
 
- -o: die Version von WeeChat wird in den aktuellen Buffer geschrieben (in englischer Sprache)
--ol: die Version von WeeChat wird in den aktuellen Buffer geschrieben (in der voreingestellten Landessprache)
+ -o: send version to current buffer as input (English string)
+-ol: send version to current buffer as input (translated string)
+
+The default alias /v can be used to execute this command on all buffers (otherwise the irc command /version is used on irc buffers).
 ----
 
 [[command_weechat_wait]]

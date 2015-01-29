@@ -858,8 +858,10 @@ Jest możliwe przywrócenie sesji WeeChat na innej maszynie, jeśli skopiujemy z
 ----
 /version  [-o | -ol]
 
- -o: wysyła wersje jako wejście do obecnego bufora (po angielsku)
--ol: wysyła wersje jako wejście do obecnego bufora (przetłumaczony)
+ -o: send version to current buffer as input (English string)
+-ol: send version to current buffer as input (translated string)
+
+The default alias /v can be used to execute this command on all buffers (otherwise the irc command /version is used on irc buffers).
 ----
 
 [[command_weechat_wait]]

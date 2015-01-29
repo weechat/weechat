@@ -7835,7 +7835,11 @@ command_init ()
         N_("show WeeChat version and compilation date"),
         "[-o | -ol]",
         N_(" -o: send version to current buffer as input (English string)\n"
-           "-ol: send version to current buffer as input (translated string)"),
+           "-ol: send version to current buffer as input (translated string)\n"
+           "\n"
+           "The default alias /v can be used to execute this command on "
+           "all buffers (otherwise the irc command /version is used on irc "
+           "buffers)."),
         "-o|-ol",
         &command_version, NULL);
     hook_command (
