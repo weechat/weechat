@@ -232,10 +232,11 @@ infolists : afficher des infos sur les infolists
 [command]*`eval`* évaluer une expression::
 
 ----
-/eval  [-n] <expression>
+/eval  [-n|-s] <expression>
        [-n] -c <expression1> <opérateur> <expression2>
 
         -n : afficher le résultat sans envoyer au tampon (mode debug)
+        -s : découper l'expression (plusieurs commandes peuvent être séparées par des points-virgules)
         -c : évaluer comme une condition : utiliser les opérateurs et les parenthèses, retourner une valeur booléenne ("0" ou "1")
 expression : expression à évaluer, les variables avec le format ${variable} sont remplacées (voir ci-dessous) ; plusieurs commandes peuvent être séparées par des points-virgules
  opérateur : un opérateur logique ou de comparaison :
