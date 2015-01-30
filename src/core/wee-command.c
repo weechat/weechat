@@ -1815,7 +1815,7 @@ COMMAND_CALLBACK(debug)
 
 COMMAND_CALLBACK(eval)
 {
-    int i, print_only, condition;
+    int i, print_only, split_command, condition;
     char *result, *ptr_args, *expr, **commands;
     struct t_hashtable *pointers, *options;
 
@@ -1824,6 +1824,7 @@ COMMAND_CALLBACK(eval)
     (void) argv;
 
     print_only = 0;
+    split_command = 0;
     condition = 0;
 
     COMMAND_MIN_ARGS(2, "");
@@ -1834,6 +1835,11 @@ COMMAND_CALLBACK(eval)
         if (string_strcasecmp (argv[i], "-n") == 0)
         {
             print_only = 1;
+            ptr_args = argv_eol[i + 1];
+        }
+        else if (string_strcasecmp (argv[i], "-s") == 0)
+        {
+            split_command = 1;
             ptr_args = argv_eol[i + 1];
         }
         else if (string_strcasecmp (argv[i], "-c") == 0)
@@ -1906,14 +1912,21 @@ COMMAND_CALLBACK(eval)
             result = eval_expression (ptr_args, pointers, NULL, options);
             if (result)
             {
-                commands = string_split_command (result, ';');
-                if (commands)
+                if (split_command)
                 {
-                    for (i = 0; commands[i]; i++)
+                    commands = string_split_command (result, ';');
+                    if (commands)
                     {
-                        (void) input_data (buffer, commands[i]);
+                        for (i = 0; commands[i]; i++)
+                        {
+                            (void) input_data (buffer, commands[i]);
+                        }
+                        string_free_split_command (commands);
                     }
-                    string_free_split_command (commands);
+                }
+                else
+                {
+                    (void) input_data (buffer, result);
                 }
             }
             else
@@ -7105,8 +7118,12 @@ command_init ()
     hook_command (
         NULL, "eval",
         N_("evaluate expression"),
-        N_("[-n] <expression> || [-n] -c <expression1> <operator> <expression2>"),
-        N_("        -n: display result without sending it to buffer (debug mode)\n"
+        N_("[-n|-s] <expression>"
+           " || [-n] -c <expression1> <operator> <expression2>"),
+        N_("        -n: display result without sending it to buffer "
+           "(debug mode)\n"
+           "        -s: split expression (many commands can be separated by "
+           "semicolons)\n"
            "        -c: evaluate as condition: use operators and parentheses, "
            "return a boolean value (\"0\" or \"1\")\n"
            "expression: expression to evaluate, variables with format "
@@ -7178,7 +7195,7 @@ command_init ()
            "  /eval -n -c abcd =~ (?-i)^ABC           ==> 0\n"
            "  /eval -n -c abcd =~ (?-i)^abc           ==> 1\n"
            "  /eval -n -c abcd !~ abc                 ==> 0"),
-        "-n|-c -n|-c",
+        "-n|-s|-c -n|-s|-c",
         &command_eval, NULL);
     hook_command (
         NULL, "filter",
