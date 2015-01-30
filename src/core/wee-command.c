@@ -1815,7 +1815,7 @@ COMMAND_CALLBACK(debug)
 
 COMMAND_CALLBACK(eval)
 {
-    int i, print_only, split_command, condition;
+    int i, print_only, split_command, condition, error;
     char *result, *ptr_args, *expr, **commands;
     struct t_hashtable *pointers, *options;
 
@@ -1826,6 +1826,7 @@ COMMAND_CALLBACK(eval)
     print_only = 0;
     split_command = 0;
     condition = 0;
+    error = 0;
 
     COMMAND_MIN_ARGS(2, "");
 
@@ -1880,7 +1881,6 @@ COMMAND_CALLBACK(eval)
                 hashtable_set (options, "type", "condition");
         }
 
-        result = NULL;
         if (print_only)
         {
             expr = string_remove_quotes (ptr_args, "\"");
@@ -1895,6 +1895,7 @@ COMMAND_CALLBACK(eval)
                                                GUI_COLOR(GUI_COLOR_CHAT),
                                                result,
                                                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                    free (result);
                 }
                 else
                 {
@@ -1909,35 +1910,50 @@ COMMAND_CALLBACK(eval)
         }
         else
         {
-            result = eval_expression (ptr_args, pointers, NULL, options);
-            if (result)
+            if (split_command)
             {
-                if (split_command)
+                commands = string_split_command (ptr_args, ';');
+                if (commands)
                 {
-                    commands = string_split_command (result, ';');
-                    if (commands)
+                    for (i = 0; commands[i]; i++)
                     {
-                        for (i = 0; commands[i]; i++)
+                        result = eval_expression (commands[i], pointers, NULL,
+                                                  options);
+                        if (result)
                         {
-                            (void) input_data (buffer, commands[i]);
+                            (void) input_data (buffer, result);
+                            free (result);
                         }
-                        string_free_split_command (commands);
+                        else
+                        {
+                            error = 1;
+                        }
                     }
-                }
-                else
-                {
-                    (void) input_data (buffer, result);
+                    string_free_split_command (commands);
                 }
             }
             else
             {
-                gui_chat_printf (NULL,
-                                 _("%sError in expression to evaluate"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                result = eval_expression (ptr_args, pointers, NULL, options);
+                if (result)
+                {
+                    (void) input_data (buffer, result);
+                    free (result);
+                }
+                else
+                {
+                    error = 1;
+                }
             }
         }
-        if (result)
-            free (result);
+
+        if (error)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError in expression to evaluate"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        }
+
         if (pointers)
             hashtable_free (pointers);
         if (options)
@@ -7122,8 +7138,8 @@ command_init ()
            " || [-n] -c <expression1> <operator> <expression2>"),
         N_("        -n: display result without sending it to buffer "
            "(debug mode)\n"
-           "        -s: split expression (many commands can be separated by "
-           "semicolons)\n"
+           "        -s: split expression before evaluating it "
+           "(many commands can be separated by semicolons)\n"
            "        -c: evaluate as condition: use operators and parentheses, "
            "return a boolean value (\"0\" or \"1\")\n"
            "expression: expression to evaluate, variables with format "

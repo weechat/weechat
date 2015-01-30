@@ -19,8 +19,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
-* core: add option "-s" in command /eval to split commands (no more split by
-  default) (closes #324)
+* core: add option "-s" in command /eval to split expression before evaluating
+  it (no more split by default) (closes #324)
 * core: add priority in plugins to initialize them in order
 * irc: add support of "account-notify" capability (closes #11, closes #246)
 * irc: remove server "freenode" from default config file (closes #309)

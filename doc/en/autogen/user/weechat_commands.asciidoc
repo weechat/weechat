@@ -236,7 +236,7 @@ infolists: display infos about infolists
        [-n] -c <expression1> <operator> <expression2>
 
         -n: display result without sending it to buffer (debug mode)
-        -s: split expression (many commands can be separated by semicolons)
+        -s: split expression before evaluating it (many commands can be separated by semicolons)
         -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
 expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
   operator: a logical or comparison operator:
