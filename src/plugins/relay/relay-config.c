@@ -709,10 +709,8 @@ relay_config_init ()
         "allowed_ips", "string",
         N_("POSIX extended regular expression with IPs allowed to use relay "
            "(case insensitive, use \"(?-i)\" at beginning to make it case "
-           "sensitive); if IPv6 is enabled and that connection is made using "
-           "IPv4, it will be IPv4-mapped IPv6 address (like: "
-           "\"::ffff:127.0.0.1\"), example: "
-           "\"^((::ffff:)?123.45.67.89|192.160.*)$\""),
+           "sensitive), example: "
+           "\"^(123.45.67.89|192.160.*)$\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL,
         &relay_config_change_network_allowed_ips, NULL, NULL, NULL);
     relay_config_network_bind_address = weechat_config_new_option (
