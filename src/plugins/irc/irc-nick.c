@@ -84,8 +84,6 @@ irc_nick_is_nick (const char *string)
 
     while (ptr && ptr[0])
     {
-        if (!strchr (IRC_NICK_VALID_CHARS, *ptr))
-            return 0;
         ptr++;
     }
 
