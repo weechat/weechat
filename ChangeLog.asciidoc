@@ -30,6 +30,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 === Bugs fixed
 
 * irc: fix completion of commands /allchan and /allpv
+* relay: remove v4-mapped addresses in /help relay.network.allowed_ips
+  (closes #325)
 
 == Version 1.1.1 (2015-01-25)
 
