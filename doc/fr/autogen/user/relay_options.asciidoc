@@ -79,7 +79,7 @@
 ** valeurs: 0 .. 65535 (valeur par défaut: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** description: `expression régulière POSIX étendue avec les IPs autorisées pour le relai (insensible à la casse, utilisez "(?-i)" en début de chaîne pour la rendre sensible à la casse) ; si l'IPv6 est activé et qu'une connexion est faite en IPv4, il y aura une adresse IPv4 encapsulée dans une IPv6 (comme : "::ffff:127.0.0.1"), exemple : "^((::ffff:)?123.45.67.89|192.160.*)$"`
+** description: `expression régulière POSIX étendue avec les IPs autorisées pour le relai (insensible à la casse, utilisez "(?-i)" en début de chaîne pour la rendre insensible à la casse), exemple : "^(123.45.67.89|192.160.*)$"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
