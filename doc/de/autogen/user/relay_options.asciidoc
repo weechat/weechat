@@ -79,7 +79,7 @@
 ** Werte: 0 .. 65535 (Standardwert: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** Beschreibung: `POSIX extended regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^(123.45.67.89|192.160.*)$"`
+** Beschreibung: `erweiterter regulärer POSIX Ausdruck für IPs die von relay akzeptiert werden (Groß- und Kleinschreibung wird ignoriert. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss die Zeichenkette mit "(?-i)" eingeleitet werden), Beispiele: "^(123.45.67.89|192.160.*)$"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -124,7 +124,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"NORMAL:-VERS-SSL3.0"`)
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
-** Beschreibung: `erweiterter regulärer POSIX Ausdruck für Origins in WebSockets (Groß- und Kleinschreibung wird ignoriert, um Groß- und Kleinschreibung zu nutzen muss "(?-i)" dem Origin vorangestellt werden), Beispiele: "^http://(www\.)?example\.(com|org)"`
+** Beschreibung: `erweiterter regulärer POSIX Ausdruck für Origins in WebSockets (Groß- und Kleinschreibung wird ignoriert. Um Groß- und Kleinschreibung zu unterscheiden muss "(?-i)" dem Origin vorangestellt werden), Beispiele: "^http://(www\.)?example\.(com|org)"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
