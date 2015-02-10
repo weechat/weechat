@@ -19,7 +19,7 @@
    -nobg: gibt Prozessausgabe und Rückgabewert aus (Standardverhalten)
   -stdin: erstellt eine PIPE um Daten zu dem Prozess zu senden (mittels /exec -in/-inclose)
 -nostdin: es wird keine PIPE für stdin erstellt (Standardverhalten)
- -buffer: zeigt/sendet Ausgabe des Befehls an diesen Buffer (wird der angegebene Buffer nicht gefunden wird ein neuer Bufger mit dem Namen "exec.exec.xxx" erstellt)
+ -buffer: zeigt/sendet Ausgabe des Befehls an diesen Buffer (wird der angegebene Buffer nicht gefunden wird ein neuer Buffer mit dem Namen "exec.exec.xxx" erstellt)
       -l: gibt die Ausgabe des Befehls lokal im Buffer aus (Standardverhalten)
       -o: gibt die Ausgabe des Befehls im Buffer aus (nicht kompatibel mit Argument -bg)
       -n: gibt die Ausgabe des Befehls in einem neuen Buffer aus (nicht kompatibel mit Argument -bg)
