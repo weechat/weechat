@@ -4300,11 +4300,14 @@ IRC_PROTOCOL_CALLBACK(354)
     }
 
     /* update account flag for nick */
-    if (ptr_nick->account)
-        free (ptr_nick->account);
-    ptr_nick->account = (ptr_channel && ptr_nick && pos_account
-                         && server->cap_account_notify) ?
-        strdup (pos_account) : strdup ("*");
+    if (ptr_nick)
+    {
+        if (ptr_nick->account)
+            free (ptr_nick->account);
+        ptr_nick->account = (ptr_channel && pos_account
+                             && server->cap_account_notify) ?
+            strdup (pos_account) : strdup ("*");
+    }
 
     /* display output of who (manual who from user) */
     if (!ptr_channel || (ptr_channel->checking_whox <= 0))
