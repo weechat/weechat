@@ -48,6 +48,7 @@ weelist_new ()
     if (new_weelist)
     {
         new_weelist->items = NULL;
+        new_weelist->last_item = NULL;
         new_weelist->size = 0;
     }
     return new_weelist;
