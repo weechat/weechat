@@ -435,15 +435,22 @@ void
 weelist_print_log (struct t_weelist *weelist, const char *name)
 {
     struct t_weelist_item *ptr_item;
+    int i;
 
     log_printf ("[weelist %s (addr:0x%lx)]", name, weelist);
+    log_printf ("  items. . . . . . . . . : 0x%lx", weelist->items);
+    log_printf ("  last_item. . . . . . . : 0x%lx", weelist->last_item);
+    log_printf ("  size . . . . . . . . . : %d", weelist->size);
 
+    i = 0;
     for (ptr_item = weelist->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {
-        log_printf ("  data . . . . . . . . . : '%s'",  ptr_item->data);
-        log_printf ("  user_data. . . . . . . : 0x%lx", ptr_item->user_data);
-        log_printf ("  prev_item. . . . . . . : 0x%lx", ptr_item->prev_item);
-        log_printf ("  next_item. . . . . . . : 0x%lx", ptr_item->next_item);
+        log_printf ("  [item %d (addr:0x%lx)]", i, ptr_item);
+        log_printf ("    data . . . . . . . . : '%s'",  ptr_item->data);
+        log_printf ("    user_data. . . . . . : 0x%lx", ptr_item->user_data);
+        log_printf ("    prev_item. . . . . . : 0x%lx", ptr_item->prev_item);
+        log_printf ("    next_item. . . . . . : 0x%lx", ptr_item->next_item);
+        i++;
     }
 }
