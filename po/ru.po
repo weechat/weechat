@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-02-04 07:48+0100\n"
+"POT-Creation-Date: 2015-02-15 15:37+0100\n"
 "PO-Revision-Date: 2014-11-09 16:23+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7199,6 +7199,10 @@ msgstr "%s%s%s удалил тему канала для %s%s\n"
 #, fuzzy, c-format
 msgid "%sWallops from %s: %s"
 msgstr "%s%s %s(%s%s@%s%s)%s был %s\n"
+
+#, fuzzy, c-format
+msgid "%sServer notice mask for %s%s%s is %s[%s%s%s]"
+msgstr "Режим пользователя %s%s%s - %s[%s%s%s]\n"
 
 #, fuzzy, c-format
 msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
