@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-02-15 15:37+0100\n"
-"PO-Revision-Date: 2015-02-15 15:42+0100\n"
+"PO-Revision-Date: 2015-02-15 20:04+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de_DE\n"
@@ -8862,9 +8862,9 @@ msgstr "%s%s%s%s hat das Thema von %s%s%s entfernt"
 msgid "%sWallops from %s: %s"
 msgstr "%sWallops von %s: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sServer notice mask for %s%s%s is %s[%s%s%s]"
-msgstr "%sUsermodus für %s%s%s ist %s[%s%s%s]"
+msgstr "%sServer notice Maske für %s%s%s is %s[%s%s%s]"
 
 #, c-format
 msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
