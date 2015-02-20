@@ -31,6 +31,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 === Bugs fixed
 
 * irc: fix completion of commands /allchan and /allpv
+* relay: fix up/down keys on relay buffer (closes #335)
 * relay: remove v4-mapped addresses in /help relay.network.allowed_ips
   (closes #325)
 

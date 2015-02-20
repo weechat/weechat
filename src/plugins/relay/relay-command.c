@@ -311,6 +311,27 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
             return WEECHAT_RC_OK;
         }
 
+        if (weechat_strcasecmp (argv[1], "up") == 0)
+        {
+            if (relay_buffer && (relay_buffer_selected_line > 0))
+            {
+                relay_buffer_selected_line--;
+                relay_buffer_refresh (NULL);
+            }
+            return WEECHAT_RC_OK;
+        }
+
+        if (weechat_strcasecmp (argv[1], "down") == 0)
+        {
+            if (relay_buffer
+                && relay_buffer_selected_line < relay_client_count - 1)
+            {
+                relay_buffer_selected_line++;
+                relay_buffer_refresh (NULL);
+            }
+            return WEECHAT_RC_OK;
+        }
+
         WEECHAT_COMMAND_ERROR;
     }
 
@@ -320,23 +341,8 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
     if (relay_buffer)
     {
         weechat_buffer_set (relay_buffer, "display", "1");
-
-        if (argc > 1)
-        {
-            if (strcmp (argv[1], "up") == 0)
-            {
-                if (relay_buffer_selected_line > 0)
-                    relay_buffer_selected_line--;
-            }
-            else if (strcmp (argv[1], "down") == 0)
-            {
-                if (relay_buffer_selected_line < relay_client_count - 1)
-                    relay_buffer_selected_line++;
-            }
-        }
+        relay_buffer_refresh (NULL);
     }
-
-    relay_buffer_refresh (NULL);
 
     return WEECHAT_RC_OK;
 }
