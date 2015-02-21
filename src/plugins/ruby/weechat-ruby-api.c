@@ -33,7 +33,10 @@
 #include "weechat-ruby.h"
 
 
-#define API_FUNC(__init, __name, __ret)                                 \
+#define API_DEF_FUNC(__name, __argc)                                    \
+    rb_define_module_function (ruby_mWeechat, #__name,                  \
+                               &weechat_ruby_api_##__name, __argc);
+#define API_INIT_FUNC(__init, __name, __ret)                            \
     char *ruby_function_name = __name;                                  \
     (void) class;                                                       \
     if (__init                                                          \
@@ -55,9 +58,9 @@
     plugin_script_str2ptr (weechat_ruby_plugin,                         \
                            RUBY_CURRENT_SCRIPT_NAME,                    \
                            ruby_function_name, __string)
-#define API_RETURN_OK return INT2FIX (1);
-#define API_RETURN_ERROR return INT2FIX (0);
-#define API_RETURN_EMPTY return Qnil;
+#define API_RETURN_OK return INT2FIX (1)
+#define API_RETURN_ERROR return INT2FIX (0)
+#define API_RETURN_EMPTY return Qnil
 #define API_RETURN_STRING(__string)                                     \
     if (__string)                                                       \
         return rb_str_new2 (__string);                                  \
@@ -71,13 +74,9 @@
     }                                                                   \
     return rb_str_new2 ("")
 #define API_RETURN_INT(__int)                                           \
-    return INT2FIX (__int);
+    return INT2FIX (__int)
 #define API_RETURN_LONG(__long)                                         \
-    return LONG2FIX (__long);
-
-#define API_DEF_FUNC(__name, __argc)                                    \
-    rb_define_module_function (ruby_mWeechat, #__name,                  \
-                               &weechat_ruby_api_##__name, __argc);
+    return LONG2FIX (__long)
 
 
 /*
@@ -92,7 +91,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
     char *c_name, *c_author, *c_version, *c_license, *c_description;
     char *c_shutdown_func, *c_charset;
 
-    API_FUNC(0, "register", API_RETURN_ERROR);
+    API_INIT_FUNC(0, "register", API_RETURN_ERROR);
     if (ruby_registered_script)
     {
         /* script already registered */
@@ -179,7 +178,7 @@ weechat_ruby_api_plugin_get_name (VALUE class, VALUE plugin)
     char *c_plugin;
     const char *result;
 
-    API_FUNC(1, "plugin_get_name", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "plugin_get_name", API_RETURN_EMPTY);
     if (NIL_P (plugin))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -197,7 +196,7 @@ weechat_ruby_api_charset_set (VALUE class, VALUE charset)
 {
     char *c_charset;
 
-    API_FUNC(1, "charset_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "charset_set", API_RETURN_ERROR);
     if (NIL_P (charset))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -216,7 +215,7 @@ weechat_ruby_api_iconv_to_internal (VALUE class, VALUE charset, VALUE string)
     char *c_charset, *c_string, *result;
     VALUE return_value;
 
-    API_FUNC(1, "iconv_to_internal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "iconv_to_internal", API_RETURN_EMPTY);
     if (NIL_P (charset) || NIL_P (string))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -237,7 +236,7 @@ weechat_ruby_api_iconv_from_internal (VALUE class, VALUE charset, VALUE string)
     char *c_charset, *c_string, *result;
     VALUE return_value;
 
-    API_FUNC(1, "iconv_from_internal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "iconv_from_internal", API_RETURN_EMPTY);
     if (NIL_P (charset) || NIL_P (string))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -258,7 +257,7 @@ weechat_ruby_api_gettext (VALUE class, VALUE string)
     char *c_string;
     const char *result;
 
-    API_FUNC(1, "gettext", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "gettext", API_RETURN_EMPTY);
     if (NIL_P (string))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -279,7 +278,7 @@ weechat_ruby_api_ngettext (VALUE class, VALUE single, VALUE plural,
     const char *result;
     int c_count;
 
-    API_FUNC(1, "ngettext", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "ngettext", API_RETURN_EMPTY);
     if (NIL_P (single) || NIL_P (plural) || NIL_P (count))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -302,7 +301,7 @@ weechat_ruby_api_strlen_screen (VALUE class, VALUE string)
     char *c_string;
     int value;
 
-    API_FUNC(1, "strlen_screen", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "strlen_screen", API_RETURN_INT(0));
     if (NIL_P (string))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -322,7 +321,7 @@ weechat_ruby_api_string_match (VALUE class, VALUE string, VALUE mask,
     char *c_string, *c_mask;
     int c_case_sensitive, value;
 
-    API_FUNC(1, "string_match", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_match", API_RETURN_INT(0));
     if (NIL_P (string) || NIL_P (mask) || NIL_P (case_sensitive))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -346,7 +345,7 @@ weechat_ruby_api_string_has_highlight (VALUE class, VALUE string,
     char *c_string, *c_highlight_words;
     int value;
 
-    API_FUNC(1, "string_has_highlight", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_has_highlight", API_RETURN_INT(0));
     if (NIL_P (string) || NIL_P (highlight_words))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -368,7 +367,7 @@ weechat_ruby_api_string_has_highlight_regex (VALUE class, VALUE string,
     char *c_string, *c_regex;
     int value;
 
-    API_FUNC(1, "string_has_highlight_regex", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_has_highlight_regex", API_RETURN_INT(0));
     if (NIL_P (string) || NIL_P (regex))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -389,7 +388,7 @@ weechat_ruby_api_string_mask_to_regex (VALUE class, VALUE mask)
     char *c_mask, *result;
     VALUE return_value;
 
-    API_FUNC(1, "string_mask_to_regex", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_mask_to_regex", API_RETURN_EMPTY);
     if (NIL_P (mask))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -409,7 +408,7 @@ weechat_ruby_api_string_remove_color (VALUE class, VALUE string,
     char *c_string, *c_replacement, *result;
     VALUE return_value;
 
-    API_FUNC(1, "string_remove_color", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_remove_color", API_RETURN_EMPTY);
     if (NIL_P (string) || NIL_P (replacement))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -430,7 +429,7 @@ weechat_ruby_api_string_is_command_char (VALUE class, VALUE string)
     char *c_string;
     int value;
 
-    API_FUNC(1, "string_is_command_char", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_is_command_char", API_RETURN_INT(0));
     if (NIL_P (string))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -449,7 +448,7 @@ weechat_ruby_api_string_input_for_buffer (VALUE class, VALUE string)
     char *c_string;
     const char *result;
 
-    API_FUNC(1, "string_input_for_buffer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_input_for_buffer", API_RETURN_EMPTY);
     if (NIL_P (string))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -471,7 +470,7 @@ weechat_ruby_api_string_eval_expression (VALUE class, VALUE expr,
     struct t_hashtable *c_pointers, *c_extra_vars, *c_options;
     VALUE return_value;
 
-    API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
     if (NIL_P (expr) || NIL_P (pointers) || NIL_P (extra_vars)
         || NIL_P (options))
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -514,7 +513,7 @@ weechat_ruby_api_mkdir_home (VALUE class, VALUE directory, VALUE mode)
     char *c_directory;
     int c_mode;
 
-    API_FUNC(1, "mkdir_home", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "mkdir_home", API_RETURN_ERROR);
     if (NIL_P (directory) || NIL_P (mode))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -536,7 +535,7 @@ weechat_ruby_api_mkdir (VALUE class, VALUE directory, VALUE mode)
     char *c_directory;
     int c_mode;
 
-    API_FUNC(1, "mkdir", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "mkdir", API_RETURN_ERROR);
     if (NIL_P (directory) || NIL_P (mode))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -558,7 +557,7 @@ weechat_ruby_api_mkdir_parents (VALUE class, VALUE directory, VALUE mode)
     char *c_directory;
     int c_mode;
 
-    API_FUNC(1, "mkdir_parents", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "mkdir_parents", API_RETURN_ERROR);
     if (NIL_P (directory) || NIL_P (mode))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -579,7 +578,7 @@ weechat_ruby_api_list_new (VALUE class)
 {
     char *result;
 
-    API_FUNC(1, "list_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_new", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_list_new ());
 
@@ -592,7 +591,7 @@ weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where,
 {
     char *c_weelist, *c_data, *c_where, *c_user_data, *result;
 
-    API_FUNC(1, "list_add", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_add", API_RETURN_EMPTY);
     if (NIL_P (weelist) || NIL_P (data) || NIL_P (where) || NIL_P (user_data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -619,7 +618,7 @@ weechat_ruby_api_list_search (VALUE class, VALUE weelist, VALUE data)
 {
     char *c_weelist, *c_data, *result;
 
-    API_FUNC(1, "list_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_search", API_RETURN_EMPTY);
     if (NIL_P (weelist) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -641,7 +640,7 @@ weechat_ruby_api_list_search_pos (VALUE class, VALUE weelist, VALUE data)
     char *c_weelist, *c_data;
     int pos;
 
-    API_FUNC(1, "list_search_pos", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "list_search_pos", API_RETURN_INT(-1));
     if (NIL_P (weelist) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -661,7 +660,7 @@ weechat_ruby_api_list_casesearch (VALUE class, VALUE weelist, VALUE data)
 {
     char *c_weelist, *c_data, *result;
 
-    API_FUNC(1, "list_casesearch", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_casesearch", API_RETURN_EMPTY);
     if (NIL_P (weelist) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -683,7 +682,7 @@ weechat_ruby_api_list_casesearch_pos (VALUE class, VALUE weelist, VALUE data)
     char *c_weelist, *c_data;
     int pos;
 
-    API_FUNC(1, "list_casesearch_pos", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "list_casesearch_pos", API_RETURN_INT(-1));
     if (NIL_P (weelist) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -704,7 +703,7 @@ weechat_ruby_api_list_get (VALUE class, VALUE weelist, VALUE position)
     char *c_weelist, *result;
     int c_position;
 
-    API_FUNC(1, "list_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_get", API_RETURN_EMPTY);
     if (NIL_P (weelist) || NIL_P (position))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -725,7 +724,7 @@ weechat_ruby_api_list_set (VALUE class, VALUE item, VALUE new_value)
 {
     char *c_item, *c_new_value;
 
-    API_FUNC(1, "list_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_set", API_RETURN_ERROR);
     if (NIL_P (item) || NIL_P (new_value))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -746,7 +745,7 @@ weechat_ruby_api_list_next (VALUE class, VALUE item)
 {
     char *c_item, *result;
 
-    API_FUNC(1, "list_next", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_next", API_RETURN_EMPTY);
     if (NIL_P (item))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -764,7 +763,7 @@ weechat_ruby_api_list_prev (VALUE class, VALUE item)
 {
     char *c_item, *result;
 
-    API_FUNC(1, "list_prev", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_prev", API_RETURN_EMPTY);
     if (NIL_P (item))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -783,7 +782,7 @@ weechat_ruby_api_list_string (VALUE class, VALUE item)
     char *c_item;
     const char *result;
 
-    API_FUNC(1, "list_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_string", API_RETURN_EMPTY);
     if (NIL_P (item))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -802,7 +801,7 @@ weechat_ruby_api_list_size (VALUE class, VALUE weelist)
     char *c_weelist;
     int size;
 
-    API_FUNC(1, "list_size", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "list_size", API_RETURN_INT(0));
     if (NIL_P (weelist))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -820,7 +819,7 @@ weechat_ruby_api_list_remove (VALUE class, VALUE weelist, VALUE item)
 {
     char *c_weelist, *c_item;
 
-    API_FUNC(1, "list_remove", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_remove", API_RETURN_ERROR);
     if (NIL_P (weelist) || NIL_P (item))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -841,7 +840,7 @@ weechat_ruby_api_list_remove_all (VALUE class, VALUE weelist)
 {
     char *c_weelist;
 
-    API_FUNC(1, "list_remove_all", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_remove_all", API_RETURN_ERROR);
     if (NIL_P (weelist))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -859,7 +858,7 @@ weechat_ruby_api_list_free (VALUE class, VALUE weelist)
 {
     char *c_weelist;
 
-    API_FUNC(1, "list_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_free", API_RETURN_ERROR);
     if (NIL_P (weelist))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -916,7 +915,7 @@ weechat_ruby_api_config_new (VALUE class, VALUE name, VALUE function,
     char *c_name, *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "config_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new", API_RETURN_EMPTY);
     if (NIL_P (name) || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1173,7 +1172,7 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
     int c_user_can_add_options, c_user_can_delete_options;
     VALUE return_value;
 
-    API_FUNC(1, "config_new_section", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new_section", API_RETURN_EMPTY);
     if (NIL_P (config_file) || NIL_P (name) || NIL_P (user_can_add_options)
         || NIL_P (user_can_delete_options) || NIL_P (function_read)
         || NIL_P (data_read) || NIL_P (function_write) || NIL_P (data_write)
@@ -1244,7 +1243,7 @@ weechat_ruby_api_config_search_section (VALUE class, VALUE config_file,
     char *c_config_file, *c_section_name, *result;
     VALUE return_value;
 
-    API_FUNC(1, "config_search_section", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_search_section", API_RETURN_EMPTY);
     if (NIL_P (config_file) || NIL_P (section_name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1373,7 +1372,7 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     VALUE function_check_value, data_check_value, function_change, data_change;
     VALUE function_delete, data_delete, return_value;
 
-    API_FUNC(1, "config_new_option", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new_option", API_RETURN_EMPTY);
     if (NIL_P (config_file) || NIL_P (section) || NIL_P (name) || NIL_P (type)
         || NIL_P (description) || NIL_P (string_values) || NIL_P (min)
         || NIL_P (max) || NIL_P (default_value) || NIL_P (value)
@@ -1458,7 +1457,7 @@ weechat_ruby_api_config_search_option (VALUE class, VALUE config_file,
     char *c_config_file, *c_section, *c_option_name, *result;
     VALUE return_value;
 
-    API_FUNC(1, "config_search_option", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_search_option", API_RETURN_EMPTY);
     if (NIL_P (config_file) || NIL_P (section) || NIL_P (option_name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1483,7 +1482,7 @@ weechat_ruby_api_config_string_to_boolean (VALUE class, VALUE text)
     char *c_text;
     int value;
 
-    API_FUNC(1, "config_string_to_boolean", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_string_to_boolean", API_RETURN_INT(0));
     if (NIL_P (text))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1503,7 +1502,7 @@ weechat_ruby_api_config_option_reset (VALUE class, VALUE option,
     char *c_option;
     int c_run_callback, rc;
 
-    API_FUNC(1, "config_option_reset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(0));
     if (NIL_P (option) || NIL_P (run_callback))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1526,7 +1525,7 @@ weechat_ruby_api_config_option_set (VALUE class, VALUE option, VALUE new_value,
     char *c_option, *c_new_value;
     int c_run_callback, rc;
 
-    API_FUNC(1, "config_option_set", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+    API_INIT_FUNC(1, "config_option_set", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (NIL_P (option) || NIL_P (new_value) || NIL_P (run_callback))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -1552,7 +1551,7 @@ weechat_ruby_api_config_option_set_null (VALUE class, VALUE option,
     char *c_option;
     int c_run_callback, rc;
 
-    API_FUNC(1, "config_option_set_null", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+    API_INIT_FUNC(1, "config_option_set_null", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (NIL_P (option) || NIL_P (run_callback))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -1574,7 +1573,7 @@ weechat_ruby_api_config_option_unset (VALUE class, VALUE option)
     char *c_option;
     int rc;
 
-    API_FUNC(1, "config_option_unset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
+    API_INIT_FUNC(1, "config_option_unset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
 
@@ -1593,7 +1592,7 @@ weechat_ruby_api_config_option_rename (VALUE class, VALUE option,
 {
     char *c_option, *c_new_name;
 
-    API_FUNC(1, "config_option_rename", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_option_rename", API_RETURN_ERROR);
     if (NIL_P (option) || NIL_P (new_name))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1615,7 +1614,7 @@ weechat_ruby_api_config_option_is_null (VALUE class, VALUE option)
     char *c_option;
     int value;
 
-    API_FUNC(1, "config_option_is_null", API_RETURN_INT(1));
+    API_INIT_FUNC(1, "config_option_is_null", API_RETURN_INT(1));
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_INT(1));
 
@@ -1634,7 +1633,7 @@ weechat_ruby_api_config_option_default_is_null (VALUE class, VALUE option)
     char *c_option;
     int value;
 
-    API_FUNC(1, "config_option_default_is_null", API_RETURN_INT(1));
+    API_INIT_FUNC(1, "config_option_default_is_null", API_RETURN_INT(1));
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_INT(1));
 
@@ -1653,7 +1652,7 @@ weechat_ruby_api_config_boolean (VALUE class, VALUE option)
     char *c_option;
     int value;
 
-    API_FUNC(1, "config_boolean", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_boolean", API_RETURN_INT(0));
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1672,7 +1671,7 @@ weechat_ruby_api_config_boolean_default (VALUE class, VALUE option)
     char *c_option;
     int value;
 
-    API_FUNC(1, "config_boolean_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_boolean_default", API_RETURN_INT(0));
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1691,7 +1690,7 @@ weechat_ruby_api_config_integer (VALUE class, VALUE option)
     char *c_option;
     int value;
 
-    API_FUNC(1, "config_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_integer", API_RETURN_INT(0));
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1710,7 +1709,7 @@ weechat_ruby_api_config_integer_default (VALUE class, VALUE option)
     char *c_option;
     int value;
 
-    API_FUNC(1, "config_integer_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_integer_default", API_RETURN_INT(0));
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1729,7 +1728,7 @@ weechat_ruby_api_config_string (VALUE class, VALUE option)
     char *c_option;
     const char *result;
 
-    API_FUNC(1, "config_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_string", API_RETURN_EMPTY);
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1748,7 +1747,7 @@ weechat_ruby_api_config_string_default (VALUE class, VALUE option)
     char *c_option;
     const char *result;
 
-    API_FUNC(1, "config_string_default", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_string_default", API_RETURN_EMPTY);
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1767,7 +1766,7 @@ weechat_ruby_api_config_color (VALUE class, VALUE option)
     char *c_option;
     const char *result;
 
-    API_FUNC(1, "config_color", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color", API_RETURN_INT(0));
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1786,7 +1785,7 @@ weechat_ruby_api_config_color_default (VALUE class, VALUE option)
     char *c_option;
     const char *result;
 
-    API_FUNC(1, "config_color_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color_default", API_RETURN_INT(0));
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1805,7 +1804,7 @@ weechat_ruby_api_config_write_option (VALUE class, VALUE config_file,
 {
     char *c_config_file, *c_option;
 
-    API_FUNC(1, "config_write_option", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_write_option", API_RETURN_ERROR);
     if (NIL_P (config_file) || NIL_P (option))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1827,7 +1826,7 @@ weechat_ruby_api_config_write_line (VALUE class, VALUE config_file,
 {
     char *c_config_file, *c_option_name, *c_value;
 
-    API_FUNC(1, "config_write_line", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_write_line", API_RETURN_ERROR);
     if (NIL_P (config_file) || NIL_P (option_name) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1853,7 +1852,7 @@ weechat_ruby_api_config_write (VALUE class, VALUE config_file)
     char *c_config_file;
     int rc;
 
-    API_FUNC(1, "config_write", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_write", API_RETURN_INT(-1));
     if (NIL_P (config_file))
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -1872,7 +1871,7 @@ weechat_ruby_api_config_read (VALUE class, VALUE config_file)
     char *c_config_file;
     int rc;
 
-    API_FUNC(1, "config_read", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_read", API_RETURN_INT(-1));
     if (NIL_P (config_file))
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -1891,7 +1890,7 @@ weechat_ruby_api_config_reload (VALUE class, VALUE config_file)
     char *c_config_file;
     int rc;
 
-    API_FUNC(1, "config_reload", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(-1));
     if (NIL_P (config_file))
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -1909,7 +1908,7 @@ weechat_ruby_api_config_option_free (VALUE class, VALUE option)
 {
     char *c_option;
 
-    API_FUNC(1, "config_option_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_option_free", API_RETURN_ERROR);
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1929,7 +1928,7 @@ weechat_ruby_api_config_section_free_options (VALUE class, VALUE section)
 {
     char *c_section;
 
-    API_FUNC(1, "config_section_free_options", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_section_free_options", API_RETURN_ERROR);
     if (NIL_P (section))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1949,7 +1948,7 @@ weechat_ruby_api_config_section_free (VALUE class, VALUE section)
 {
     char *c_section;
 
-    API_FUNC(1, "config_section_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_section_free", API_RETURN_ERROR);
     if (NIL_P (section))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1969,7 +1968,7 @@ weechat_ruby_api_config_free (VALUE class, VALUE config_file)
 {
     char *c_config_file;
 
-    API_FUNC(1, "config_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_free", API_RETURN_ERROR);
     if (NIL_P (config_file))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1990,7 +1989,7 @@ weechat_ruby_api_config_get (VALUE class, VALUE option)
     char *c_option, *result;
     VALUE return_value;
 
-    API_FUNC(1, "config_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_get", API_RETURN_EMPTY);
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2009,7 +2008,7 @@ weechat_ruby_api_config_get_plugin (VALUE class, VALUE option)
     char *c_option;
     const char *result;
 
-    API_FUNC(1, "config_get_plugin", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_get_plugin", API_RETURN_EMPTY);
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2030,7 +2029,7 @@ weechat_ruby_api_config_is_set_plugin (VALUE class, VALUE option)
     char *c_option;
     int rc;
 
-    API_FUNC(1, "config_is_set_plugin", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_is_set_plugin", API_RETURN_INT(0));
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -2051,7 +2050,7 @@ weechat_ruby_api_config_set_plugin (VALUE class, VALUE option, VALUE value)
     char *c_option, *c_value;
     int rc;
 
-    API_FUNC(1, "config_set_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+    API_INIT_FUNC(1, "config_set_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (NIL_P (option) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -2075,7 +2074,7 @@ weechat_ruby_api_config_set_desc_plugin (VALUE class, VALUE option,
 {
     char *c_option, *c_description;
 
-    API_FUNC(1, "config_set_desc_plugin", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_set_desc_plugin", API_RETURN_ERROR);
     if (NIL_P (option) || NIL_P (description))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2099,7 +2098,7 @@ weechat_ruby_api_config_unset_plugin (VALUE class, VALUE option)
     char *c_option;
     int rc;
 
-    API_FUNC(1, "config_unset_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
+    API_INIT_FUNC(1, "config_unset_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
     if (NIL_P (option))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
 
@@ -2121,7 +2120,7 @@ weechat_ruby_api_key_bind (VALUE class, VALUE context, VALUE keys)
     struct t_hashtable *c_keys;
     int num_keys;
 
-    API_FUNC(1, "key_bind", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "key_bind", API_RETURN_INT(0));
     if (NIL_P (context) || NIL_P (keys))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -2148,7 +2147,7 @@ weechat_ruby_api_key_unbind (VALUE class, VALUE context, VALUE key)
     char *c_context, *c_key;
     int num_keys;
 
-    API_FUNC(1, "key_unbind", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "key_unbind", API_RETURN_INT(0));
     if (NIL_P (context) || NIL_P (key))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -2169,7 +2168,7 @@ weechat_ruby_api_prefix (VALUE class, VALUE prefix)
     char *c_prefix;
     const char *result;
 
-    API_FUNC(0, "prefix", API_RETURN_EMPTY);
+    API_INIT_FUNC(0, "prefix", API_RETURN_EMPTY);
     if (NIL_P (prefix))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2188,7 +2187,7 @@ weechat_ruby_api_color (VALUE class, VALUE color)
     char *c_color;
     const char *result;
 
-    API_FUNC(0, "color", API_RETURN_EMPTY);
+    API_INIT_FUNC(0, "color", API_RETURN_EMPTY);
     if (NIL_P (color))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2206,7 +2205,7 @@ weechat_ruby_api_print (VALUE class, VALUE buffer, VALUE message)
 {
     char *c_buffer, *c_message;
 
-    API_FUNC(0, "print", API_RETURN_ERROR);
+    API_INIT_FUNC(0, "print", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (message))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2231,7 +2230,7 @@ weechat_ruby_api_print_date_tags (VALUE class, VALUE buffer, VALUE date,
     char *c_buffer, *c_tags, *c_message;
     int c_date;
 
-    API_FUNC(1, "print_date_tags", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "print_date_tags", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (date) || NIL_P (tags) || NIL_P (message))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2261,7 +2260,7 @@ weechat_ruby_api_print_y (VALUE class, VALUE buffer, VALUE y, VALUE message)
     char *c_buffer, *c_message;
     int c_y;
 
-    API_FUNC(1, "print_y", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "print_y", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (y) || NIL_P (message))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2287,7 +2286,7 @@ weechat_ruby_api_log_print (VALUE class, VALUE message)
 {
     char *c_message;
 
-    API_FUNC(1, "log_print", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "log_print", API_RETURN_ERROR);
     if (NIL_P (message))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2352,7 +2351,7 @@ weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
     char *c_completion, *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_command", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_command", API_RETURN_EMPTY);
     if (NIL_P (command) || NIL_P (description) || NIL_P (args)
         || NIL_P (args_description) || NIL_P (completion) || NIL_P (function)
         || NIL_P (data))
@@ -2433,7 +2432,7 @@ weechat_ruby_api_hook_command_run (VALUE class, VALUE command, VALUE function,
     char *c_command, *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_command_run", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_command_run", API_RETURN_EMPTY);
     if (NIL_P (command) || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2500,7 +2499,7 @@ weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
     char *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_timer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_timer", API_RETURN_EMPTY);
     if (NIL_P (interval) || NIL_P (align_second) || NIL_P (max_calls)
         || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -2573,7 +2572,7 @@ weechat_ruby_api_hook_fd (VALUE class, VALUE fd, VALUE read, VALUE write,
     char *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_fd", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_fd", API_RETURN_EMPTY);
     if (NIL_P (fd) || NIL_P (read) || NIL_P (write) || NIL_P (exception)
         || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -2652,7 +2651,7 @@ weechat_ruby_api_hook_process (VALUE class, VALUE command, VALUE timeout,
     int c_timeout;
     VALUE return_value;
 
-    API_FUNC(1, "hook_process", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_process", API_RETURN_EMPTY);
     if (NIL_P (command) || NIL_P (timeout) || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2687,7 +2686,7 @@ weechat_ruby_api_hook_process_hashtable (VALUE class, VALUE command,
     int c_timeout;
     VALUE return_value;
 
-    API_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
     if (NIL_P (command) || NIL_P (options) || NIL_P (timeout)
         || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -2777,7 +2776,7 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
     int c_port, c_ipv6, c_retry;
     VALUE return_value;
 
-    API_FUNC(1, "hook_connect", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_connect", API_RETURN_EMPTY);
     if (NIL_P (proxy) || NIL_P (address) || NIL_P (port) || NIL_P (ipv6)
         || NIL_P (retry) || NIL_P (local_hostname) || NIL_P (function)
         || NIL_P (data))
@@ -2885,7 +2884,7 @@ weechat_ruby_api_hook_print (VALUE class, VALUE buffer, VALUE tags,
     int c_strip_colors;
     VALUE return_value;
 
-    API_FUNC(1, "hook_print", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_print", API_RETURN_EMPTY);
     if (NIL_P (buffer) || NIL_P (tags) || NIL_P (message)
         || NIL_P (strip_colors) || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -2984,7 +2983,7 @@ weechat_ruby_api_hook_signal (VALUE class, VALUE signal, VALUE function,
     char *c_signal, *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_signal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_signal", API_RETURN_EMPTY);
     if (NIL_P (signal) || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3013,7 +3012,7 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
     char *c_signal, *c_type_data, *c_signal_data;
     int number, rc;
 
-    API_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
+    API_INIT_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (NIL_P (signal) || NIL_P (type_data) || NIL_P (signal_data))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
@@ -3092,7 +3091,7 @@ weechat_ruby_api_hook_hsignal (VALUE class, VALUE signal, VALUE function,
     char *c_signal, *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_hsignal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_hsignal", API_RETURN_EMPTY);
     if (NIL_P (signal) || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3121,7 +3120,7 @@ weechat_ruby_api_hook_hsignal_send (VALUE class, VALUE signal, VALUE hashtable)
     struct t_hashtable *c_hashtable;
     int rc;
 
-    API_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
+    API_INIT_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (NIL_P (signal) || NIL_P (hashtable))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
@@ -3184,7 +3183,7 @@ weechat_ruby_api_hook_config (VALUE class, VALUE option, VALUE function,
     char *c_option, *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_config", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_config", API_RETURN_EMPTY);
     if (NIL_P (option) || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3256,7 +3255,7 @@ weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
     char *c_completion, *c_description, *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_completion", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
     if (NIL_P (completion) || NIL_P (description) || NIL_P (function)
         || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -3290,7 +3289,7 @@ weechat_ruby_api_hook_completion_list_add (VALUE class, VALUE completion,
     char *c_completion, *c_word, *c_where;
     int c_nick_completion;
 
-    API_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
     if (NIL_P (completion) || NIL_P (word) || NIL_P (nick_completion)
         || NIL_P (where))
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -3346,7 +3345,7 @@ weechat_ruby_api_hook_modifier (VALUE class, VALUE modifier, VALUE function,
     char *c_modifier, *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_modifier", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_modifier", API_RETURN_EMPTY);
     if (NIL_P (modifier) || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3375,7 +3374,7 @@ weechat_ruby_api_hook_modifier_exec (VALUE class, VALUE modifier,
     char *c_modifier, *c_modifier_data, *c_string, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_modifier_exec", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_modifier_exec", API_RETURN_EMPTY);
     if (NIL_P (modifier) || NIL_P (modifier_data) || NIL_P (string))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3425,7 +3424,7 @@ weechat_ruby_api_hook_info (VALUE class, VALUE info_name, VALUE description,
     char *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_info", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_info", API_RETURN_EMPTY);
     if (NIL_P (info_name) || NIL_P (description) || NIL_P (args_description)
         || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -3491,7 +3490,7 @@ weechat_ruby_api_hook_info_hashtable (VALUE class, VALUE info_name,
     char *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_info_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_info_hashtable", API_RETURN_EMPTY);
     if (NIL_P (info_name) || NIL_P (description) || NIL_P (args_description)
         || NIL_P (output_description) || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -3565,7 +3564,7 @@ weechat_ruby_api_hook_infolist (VALUE class, VALUE infolist_name,
     char *c_args_description, *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_infolist", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_infolist", API_RETURN_EMPTY);
     if (NIL_P (infolist_name) || NIL_P (description)
         || NIL_P (pointer_description) || NIL_P (args_description)
         || NIL_P (function) || NIL_P (data))
@@ -3628,7 +3627,7 @@ weechat_ruby_api_hook_focus (VALUE class, VALUE area, VALUE function,
     char *c_area, *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hook_focus", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_focus", API_RETURN_EMPTY);
     if (NIL_P (area) || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3656,7 +3655,7 @@ weechat_ruby_api_hook_set (VALUE class, VALUE hook, VALUE property,
 {
     char *c_hook, *c_property, *c_value;
 
-    API_FUNC(1, "hook_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "hook_set", API_RETURN_ERROR);
     if (NIL_P (hook) || NIL_P (property) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3680,7 +3679,7 @@ weechat_ruby_api_unhook (VALUE class, VALUE hook)
 {
     char *c_hook;
 
-    API_FUNC(1, "unhook", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "unhook", API_RETURN_ERROR);
     if (NIL_P (hook))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3698,7 +3697,7 @@ weechat_ruby_api_unhook (VALUE class, VALUE hook)
 static VALUE
 weechat_ruby_api_unhook_all (VALUE class)
 {
-    API_FUNC(1, "unhook_all", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
     plugin_script_api_unhook_all (weechat_ruby_plugin, ruby_current_script);
 
@@ -3788,7 +3787,7 @@ weechat_ruby_api_buffer_new (VALUE class, VALUE name, VALUE function_input,
     char *c_data_close, *result;
     VALUE return_value;
 
-    API_FUNC(1, "buffer_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_new", API_RETURN_EMPTY);
     if (NIL_P (name) || NIL_P (function_input) || NIL_P (data_input)
         || NIL_P (function_close) || NIL_P (data_close))
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -3824,7 +3823,7 @@ weechat_ruby_api_buffer_search (VALUE class, VALUE plugin, VALUE name)
     char *c_plugin, *c_name, *result;
     VALUE return_value;
 
-    API_FUNC(1, "buffer_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_search", API_RETURN_EMPTY);
     if (NIL_P (plugin) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3845,7 +3844,7 @@ weechat_ruby_api_buffer_search_main (VALUE class)
     char *result;
     VALUE return_value;
 
-    API_FUNC(1, "buffer_search_main", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_search_main", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_buffer_search_main ());
 
@@ -3858,7 +3857,7 @@ weechat_ruby_api_current_buffer (VALUE class)
     char *result;
     VALUE return_value;
 
-    API_FUNC(1, "current_buffer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "current_buffer", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_current_buffer ());
 
@@ -3870,7 +3869,7 @@ weechat_ruby_api_buffer_clear (VALUE class, VALUE buffer)
 {
     char *c_buffer;
 
-    API_FUNC(1, "buffer_clear", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_clear", API_RETURN_ERROR);
     if (NIL_P (buffer))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3888,7 +3887,7 @@ weechat_ruby_api_buffer_close (VALUE class, VALUE buffer)
 {
     char *c_buffer;
 
-    API_FUNC(1, "buffer_close", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_close", API_RETURN_ERROR);
     if (NIL_P (buffer))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3908,7 +3907,7 @@ weechat_ruby_api_buffer_merge (VALUE class, VALUE buffer, VALUE target_buffer)
 {
     char *c_buffer, *c_target_buffer;
 
-    API_FUNC(1, "buffer_merge", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_merge", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (target_buffer))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3930,7 +3929,7 @@ weechat_ruby_api_buffer_unmerge (VALUE class, VALUE buffer, VALUE number)
     char *c_buffer;
     int c_number;
 
-    API_FUNC(1, "buffer_unmerge", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_unmerge", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (number))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3951,7 +3950,7 @@ weechat_ruby_api_buffer_get_integer (VALUE class, VALUE buffer, VALUE property)
     char *c_buffer, *c_property;
     int value;
 
-    API_FUNC(1, "buffer_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "buffer_get_integer", API_RETURN_INT(-1));
     if (NIL_P (buffer) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3973,7 +3972,7 @@ weechat_ruby_api_buffer_get_string (VALUE class, VALUE buffer, VALUE property)
     char *c_buffer, *c_property;
     const char *result;
 
-    API_FUNC(1, "buffer_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_get_string", API_RETURN_EMPTY);
     if (NIL_P (buffer) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3995,7 +3994,7 @@ weechat_ruby_api_buffer_get_pointer (VALUE class, VALUE buffer, VALUE property)
     char *c_buffer, *c_property, *result;
     VALUE return_value;
 
-    API_FUNC(1, "buffer_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_get_pointer", API_RETURN_EMPTY);
     if (NIL_P (buffer) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4017,7 +4016,7 @@ weechat_ruby_api_buffer_set (VALUE class, VALUE buffer, VALUE property,
 {
     char *c_buffer, *c_property, *c_value;
 
-    API_FUNC(1, "buffer_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_set", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (property) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4042,7 +4041,7 @@ weechat_ruby_api_buffer_string_replace_local_var (VALUE class, VALUE buffer, VAL
     char *c_buffer, *c_string, *result;
     VALUE return_value;
 
-    API_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (string))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4063,7 +4062,7 @@ weechat_ruby_api_buffer_match_list (VALUE class, VALUE buffer, VALUE string)
     char *c_buffer, *c_string;
     int value;
 
-    API_FUNC(1, "buffer_match_list", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "buffer_match_list", API_RETURN_INT(0));
     if (NIL_P (buffer) || NIL_P (string))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4085,7 +4084,7 @@ weechat_ruby_api_current_window (VALUE class)
     char *result;
     VALUE return_value;
 
-    API_FUNC(1, "current_window", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "current_window", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_current_window ());
 
@@ -4098,7 +4097,7 @@ weechat_ruby_api_window_search_with_buffer (VALUE class, VALUE buffer)
     char *c_buffer, *result;
     VALUE return_value;
 
-    API_FUNC(1, "window_search_with_buffer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "window_search_with_buffer", API_RETURN_EMPTY);
     if (NIL_P (buffer))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4117,7 +4116,7 @@ weechat_ruby_api_window_get_integer (VALUE class, VALUE window, VALUE property)
     char *c_window, *c_property;
     int value;
 
-    API_FUNC(1, "window_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "window_get_integer", API_RETURN_INT(-1));
     if (NIL_P (window) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -4139,7 +4138,7 @@ weechat_ruby_api_window_get_string (VALUE class, VALUE window, VALUE property)
     char *c_window, *c_property;
     const char *result;
 
-    API_FUNC(1, "window_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "window_get_string", API_RETURN_EMPTY);
     if (NIL_P (window) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4161,7 +4160,7 @@ weechat_ruby_api_window_get_pointer (VALUE class, VALUE window, VALUE property)
     char *c_window, *c_property, *result;
     VALUE return_value;
 
-    API_FUNC(1, "window_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "window_get_pointer", API_RETURN_EMPTY);
     if (NIL_P (window) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4182,7 +4181,7 @@ weechat_ruby_api_window_set_title (VALUE class, VALUE title)
 {
     char *c_title;
 
-    API_FUNC(1, "window_set_title", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "window_set_title", API_RETURN_ERROR);
     if (NIL_P (title))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4204,7 +4203,7 @@ weechat_ruby_api_nicklist_add_group (VALUE class, VALUE buffer,
     int c_visible;
     VALUE return_value;
 
-    API_FUNC(1, "nicklist_add_group", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_add_group", API_RETURN_EMPTY);
     if (NIL_P (buffer) || NIL_P (parent_group) || NIL_P (name) || NIL_P (color)
         || NIL_P (visible))
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -4237,7 +4236,7 @@ weechat_ruby_api_nicklist_search_group (VALUE class, VALUE buffer,
     char *c_buffer, *c_from_group, *c_name, *result;
     VALUE return_value;
 
-    API_FUNC(1, "nicklist_search_group", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_search_group", API_RETURN_EMPTY);
     if (NIL_P (buffer) || NIL_P (from_group) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4266,7 +4265,7 @@ weechat_ruby_api_nicklist_add_nick (VALUE class, VALUE buffer, VALUE group,
     int c_visible;
     VALUE return_value;
 
-    API_FUNC(1, "nicklist_add_nick", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_add_nick", API_RETURN_EMPTY);
     if (NIL_P (buffer) || NIL_P (group) || NIL_P (name) || NIL_P (color)
         || NIL_P (prefix) || NIL_P (prefix_color) || NIL_P (visible))
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -4305,7 +4304,7 @@ weechat_ruby_api_nicklist_search_nick (VALUE class, VALUE buffer,
     char *c_buffer, *c_from_group, *c_name, *result;
     VALUE return_value;
 
-    API_FUNC(1, "nicklist_search_nick", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_search_nick", API_RETURN_EMPTY);
     if (NIL_P (buffer) || NIL_P (from_group) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4329,7 +4328,7 @@ weechat_ruby_api_nicklist_remove_group (VALUE class, VALUE buffer, VALUE group)
 {
     char *c_buffer, *c_group;
 
-    API_FUNC(1, "nicklist_remove_group", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_remove_group", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (group))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4350,7 +4349,7 @@ weechat_ruby_api_nicklist_remove_nick (VALUE class, VALUE buffer, VALUE nick)
 {
     char *c_buffer, *c_nick;
 
-    API_FUNC(1, "nicklist_remove_nick", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_remove_nick", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (nick))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4371,7 +4370,7 @@ weechat_ruby_api_nicklist_remove_all (VALUE class, VALUE buffer)
 {
     char *c_buffer;
 
-    API_FUNC(1, "nicklist_remove_all", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_remove_all", API_RETURN_ERROR);
     if (NIL_P (buffer))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4391,7 +4390,7 @@ weechat_ruby_api_nicklist_group_get_integer (VALUE class, VALUE buffer,
     char *c_buffer, *c_group, *c_property;
     int value;
 
-    API_FUNC(1, "nicklist_group_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "nicklist_group_get_integer", API_RETURN_INT(-1));
     if (NIL_P (buffer) || NIL_P (group) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -4417,7 +4416,7 @@ weechat_ruby_api_nicklist_group_get_string (VALUE class, VALUE buffer,
     char *c_buffer, *c_group, *c_property;
     const char *result;
 
-    API_FUNC(1, "nicklist_group_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_group_get_string", API_RETURN_EMPTY);
     if (NIL_P (buffer) || NIL_P (group) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4443,7 +4442,7 @@ weechat_ruby_api_nicklist_group_get_pointer (VALUE class, VALUE buffer,
     char *c_buffer, *c_group, *c_property, *result;
     VALUE return_value;
 
-    API_FUNC(1, "nicklist_group_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_group_get_pointer", API_RETURN_EMPTY);
     if (NIL_P (buffer) || NIL_P (group) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4468,7 +4467,7 @@ weechat_ruby_api_nicklist_group_set (VALUE class, VALUE buffer, VALUE group,
 {
     char *c_buffer, *c_group, *c_property, *c_value;
 
-    API_FUNC(1, "nicklist_group_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_group_set", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (group) || NIL_P (property) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4497,7 +4496,7 @@ weechat_ruby_api_nicklist_nick_get_integer (VALUE class, VALUE buffer,
     char *c_buffer, *c_nick, *c_property;
     int value;
 
-    API_FUNC(1, "nicklist_nick_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "nicklist_nick_get_integer", API_RETURN_INT(-1));
     if (NIL_P (buffer) || NIL_P (nick) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -4523,7 +4522,7 @@ weechat_ruby_api_nicklist_nick_get_string (VALUE class, VALUE buffer,
     char *c_buffer, *c_nick, *c_property;
     const char *result;
 
-    API_FUNC(1, "nicklist_nick_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_nick_get_string", API_RETURN_EMPTY);
     if (NIL_P (buffer) || NIL_P (nick) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4549,7 +4548,7 @@ weechat_ruby_api_nicklist_nick_get_pointer (VALUE class, VALUE buffer,
     char *c_buffer, *c_nick, *c_property, *result;
     VALUE return_value;
 
-    API_FUNC(1, "nicklist_nick_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_nick_get_pointer", API_RETURN_EMPTY);
     if (NIL_P (buffer) || NIL_P (nick) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4574,7 +4573,7 @@ weechat_ruby_api_nicklist_nick_set (VALUE class, VALUE buffer, VALUE nick,
 {
     char *c_buffer, *c_nick, *c_property, *c_value;
 
-    API_FUNC(1, "nicklist_nick_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_nick_set", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (nick) || NIL_P (property) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4602,7 +4601,7 @@ weechat_ruby_api_bar_item_search (VALUE class, VALUE name)
     char *c_name, *result;
     VALUE return_value;
 
-    API_FUNC(1, "bar_item_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_item_search", API_RETURN_EMPTY);
     if (NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4681,7 +4680,7 @@ weechat_ruby_api_bar_item_new (VALUE class, VALUE name, VALUE function,
     char *c_name, *c_function, *c_data, *result;
     VALUE return_value;
 
-    API_FUNC(1, "bar_item_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_item_new", API_RETURN_EMPTY);
     if (NIL_P (name) || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4708,7 +4707,7 @@ weechat_ruby_api_bar_item_update (VALUE class, VALUE name)
 {
     char *c_name;
 
-    API_FUNC(1, "bar_item_update", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_item_update", API_RETURN_ERROR);
     if (NIL_P (name))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4726,7 +4725,7 @@ weechat_ruby_api_bar_item_remove (VALUE class, VALUE item)
 {
     char *c_item;
 
-    API_FUNC(1, "bar_item_remove", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_item_remove", API_RETURN_ERROR);
     if (NIL_P (item))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4747,7 +4746,7 @@ weechat_ruby_api_bar_search (VALUE class, VALUE name)
     char *c_name, *result;
     VALUE return_value;
 
-    API_FUNC(1, "bar_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_search", API_RETURN_EMPTY);
     if (NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4774,7 +4773,7 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE hidden,
     char *result;
     VALUE return_value;
 
-    API_FUNC(1, "bar_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_new", API_RETURN_EMPTY);
     if (NIL_P (name) || NIL_P (hidden) || NIL_P (priority) || NIL_P (type)
         || NIL_P (conditions) || NIL_P (position) || NIL_P (filling_top_bottom)
         || NIL_P (filling_left_right) || NIL_P (size) || NIL_P (size_max)
@@ -4838,7 +4837,7 @@ weechat_ruby_api_bar_set (VALUE class, VALUE bar, VALUE property, VALUE value)
 {
     char *c_bar, *c_property, *c_value;
 
-    API_FUNC(1, "bar_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_set", API_RETURN_ERROR);
     if (NIL_P (bar) || NIL_P (property) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4862,7 +4861,7 @@ weechat_ruby_api_bar_update (VALUE class, VALUE name)
 {
     char *c_name;
 
-    API_FUNC(1, "bar_update", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_update", API_RETURN_ERROR);
     if (NIL_P (name))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4880,7 +4879,7 @@ weechat_ruby_api_bar_remove (VALUE class, VALUE bar)
 {
     char *c_bar;
 
-    API_FUNC(1, "bar_remove", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_remove", API_RETURN_ERROR);
     if (NIL_P (bar))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4899,7 +4898,7 @@ weechat_ruby_api_command (VALUE class, VALUE buffer, VALUE command)
     char *c_buffer, *c_command;
     int rc;
 
-    API_FUNC(1, "command", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "command", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (command))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4923,7 +4922,7 @@ weechat_ruby_api_info_get (VALUE class, VALUE info_name, VALUE arguments)
     char *c_info_name, *c_arguments;
     const char *result;
 
-    API_FUNC(1, "info_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "info_get", API_RETURN_EMPTY);
     if (NIL_P (info_name) || NIL_P (arguments))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4946,7 +4945,7 @@ weechat_ruby_api_info_get_hashtable (VALUE class, VALUE info_name,
     struct t_hashtable *c_hashtable, *result_hashtable;
     VALUE result_hash;
 
-    API_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
     if (NIL_P (info_name) || NIL_P (hash))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4976,7 +4975,7 @@ weechat_ruby_api_infolist_new (VALUE class)
     char *result;
     VALUE return_value;
 
-    API_FUNC(1, "infolist_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_infolist_new ());
 
@@ -4989,7 +4988,7 @@ weechat_ruby_api_infolist_new_item (VALUE class, VALUE infolist)
     char *c_infolist, *result;
     VALUE return_value;
 
-    API_FUNC(1, "infolist_new_item", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_item", API_RETURN_EMPTY);
     if (NIL_P (infolist))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5010,7 +5009,7 @@ weechat_ruby_api_infolist_new_var_integer (VALUE class, VALUE infolist,
     int c_value;
     VALUE return_value;
 
-    API_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
     if (NIL_P (infolist) || NIL_P (name) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5036,7 +5035,7 @@ weechat_ruby_api_infolist_new_var_string (VALUE class, VALUE infolist,
     char *c_infolist, *c_name, *c_value, *result;
     VALUE return_value;
 
-    API_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
     if (NIL_P (infolist) || NIL_P (name) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5062,7 +5061,7 @@ weechat_ruby_api_infolist_new_var_pointer (VALUE class, VALUE infolist,
     char *c_infolist, *c_name, *c_value, *result;
     VALUE return_value;
 
-    API_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
     if (NIL_P (infolist) || NIL_P (name) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5089,7 +5088,7 @@ weechat_ruby_api_infolist_new_var_time (VALUE class, VALUE infolist,
     int c_value;
     VALUE return_value;
 
-    API_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     if (NIL_P (infolist) || NIL_P (name) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5115,7 +5114,7 @@ weechat_ruby_api_infolist_get (VALUE class, VALUE name, VALUE pointer,
     char *c_name, *c_pointer, *c_arguments, *result;
     VALUE return_value;
 
-    API_FUNC(1, "infolist_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_get", API_RETURN_EMPTY);
     if (NIL_P (name) || NIL_P (pointer) || NIL_P (arguments))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5140,7 +5139,7 @@ weechat_ruby_api_infolist_next (VALUE class, VALUE infolist)
     char *c_infolist;
     int value;
 
-    API_FUNC(1, "infolist_next", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_next", API_RETURN_INT(0));
     if (NIL_P (infolist))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5159,7 +5158,7 @@ weechat_ruby_api_infolist_prev (VALUE class, VALUE infolist)
     char *c_infolist;
     int value;
 
-    API_FUNC(1, "infolist_prev", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_prev", API_RETURN_INT(0));
     if (NIL_P (infolist))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5177,7 +5176,7 @@ weechat_ruby_api_infolist_reset_item_cursor (VALUE class, VALUE infolist)
 {
     char *c_infolist;
 
-    API_FUNC(1, "infolist_reset_item_cursor", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "infolist_reset_item_cursor", API_RETURN_ERROR);
     if (NIL_P (infolist))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -5196,7 +5195,7 @@ weechat_ruby_api_infolist_fields (VALUE class, VALUE infolist)
     char *c_infolist;
     const char *result;
 
-    API_FUNC(1, "infolist_fields", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_fields", API_RETURN_EMPTY);
     if (NIL_P (infolist))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5215,7 +5214,7 @@ weechat_ruby_api_infolist_integer (VALUE class, VALUE infolist, VALUE variable)
     char *c_infolist, *c_variable;
     int value;
 
-    API_FUNC(1, "infolist_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_integer", API_RETURN_INT(0));
     if (NIL_P (infolist) || NIL_P (variable))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5236,7 +5235,7 @@ weechat_ruby_api_infolist_string (VALUE class, VALUE infolist, VALUE variable)
     char *c_infolist, *c_variable;
     const char *result;
 
-    API_FUNC(1, "infolist_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_string", API_RETURN_EMPTY);
     if (NIL_P (infolist) || NIL_P (variable))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5257,7 +5256,7 @@ weechat_ruby_api_infolist_pointer (VALUE class, VALUE infolist, VALUE variable)
     char *c_infolist, *c_variable, *result;
     VALUE return_value;
 
-    API_FUNC(1, "infolist_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_pointer", API_RETURN_EMPTY);
     if (NIL_P (infolist) || NIL_P (variable))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5280,7 +5279,7 @@ weechat_ruby_api_infolist_time (VALUE class, VALUE infolist, VALUE variable)
     struct tm *date_tmp;
     VALUE return_value;
 
-    API_FUNC(1, "infolist_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_time", API_RETURN_EMPTY);
     if (NIL_P (infolist) || NIL_P (variable))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5305,7 +5304,7 @@ weechat_ruby_api_infolist_free (VALUE class, VALUE infolist)
 {
     char *c_infolist;
 
-    API_FUNC(1, "infolist_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "infolist_free", API_RETURN_ERROR);
     if (NIL_P (infolist))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -5324,7 +5323,7 @@ weechat_ruby_api_hdata_get (VALUE class, VALUE name)
     char *c_name, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hdata_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get", API_RETURN_EMPTY);
     if (NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5343,7 +5342,7 @@ weechat_ruby_api_hdata_get_var_offset (VALUE class, VALUE hdata, VALUE name)
     char *c_hdata, *c_name;
     int value;
 
-    API_FUNC(1, "hdata_get_var_offset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_get_var_offset", API_RETURN_INT(0));
     if (NIL_P (hdata) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5365,7 +5364,7 @@ weechat_ruby_api_hdata_get_var_type_string (VALUE class, VALUE hdata,
     char *c_hdata, *c_name;
     const char *result;
 
-    API_FUNC(1, "hdata_get_var_type_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_var_type_string", API_RETURN_EMPTY);
     if (NIL_P (hdata) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5387,7 +5386,7 @@ weechat_ruby_api_hdata_get_var_array_size (VALUE class, VALUE hdata, VALUE point
     char *c_hdata, *c_pointer, *c_name;
     int value;
 
-    API_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -5413,7 +5412,7 @@ weechat_ruby_api_hdata_get_var_array_size_string (VALUE class, VALUE hdata,
     char *c_hdata, *c_pointer, *c_name;
     const char *result;
 
-    API_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5438,7 +5437,7 @@ weechat_ruby_api_hdata_get_var_hdata (VALUE class, VALUE hdata, VALUE name)
     char *c_hdata, *c_name;
     const char *result;
 
-    API_FUNC(1, "hdata_get_var_hdata", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_var_hdata", API_RETURN_EMPTY);
     if (NIL_P (hdata) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5459,7 +5458,7 @@ weechat_ruby_api_hdata_get_list (VALUE class, VALUE hdata, VALUE name)
     char *c_hdata, *c_name, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hdata_get_list", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_list", API_RETURN_EMPTY);
     if (NIL_P (hdata) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5482,7 +5481,7 @@ weechat_ruby_api_hdata_check_pointer (VALUE class, VALUE hdata, VALUE list,
     char *c_hdata, *c_list, *c_pointer;
     int value;
 
-    API_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
     if (NIL_P (hdata) || NIL_P (list) || NIL_P (pointer))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5509,7 +5508,7 @@ weechat_ruby_api_hdata_move (VALUE class, VALUE hdata, VALUE pointer,
     int c_count;
     VALUE return_value;
 
-    API_FUNC(1, "hdata_move", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_move", API_RETURN_EMPTY);
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (count))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5536,7 +5535,7 @@ weechat_ruby_api_hdata_search (VALUE class, VALUE hdata, VALUE pointer,
     int c_move;
     VALUE return_value;
 
-    API_FUNC(1, "hdata_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_search", API_RETURN_EMPTY);
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (search) || NIL_P (move))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5565,7 +5564,7 @@ weechat_ruby_api_hdata_char (VALUE class, VALUE hdata, VALUE pointer,
     char *c_hdata, *c_pointer, *c_name;
     int value;
 
-    API_FUNC(1, "hdata_char", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_char", API_RETURN_INT(0));
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5591,7 +5590,7 @@ weechat_ruby_api_hdata_integer (VALUE class, VALUE hdata, VALUE pointer,
     char *c_hdata, *c_pointer, *c_name;
     int value;
 
-    API_FUNC(1, "hdata_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_integer", API_RETURN_INT(0));
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5617,7 +5616,7 @@ weechat_ruby_api_hdata_long (VALUE class, VALUE hdata, VALUE pointer,
     char *c_hdata, *c_pointer, *c_name;
     long value;
 
-    API_FUNC(1, "hdata_long", API_RETURN_LONG(0));
+    API_INIT_FUNC(1, "hdata_long", API_RETURN_LONG(0));
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_LONG(0));
 
@@ -5643,7 +5642,7 @@ weechat_ruby_api_hdata_string (VALUE class, VALUE hdata, VALUE pointer,
     char *c_hdata, *c_pointer, *c_name;
     const char *result;
 
-    API_FUNC(1, "hdata_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_string", API_RETURN_EMPTY);
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5669,7 +5668,7 @@ weechat_ruby_api_hdata_pointer (VALUE class, VALUE hdata, VALUE pointer,
     char *c_hdata, *c_pointer, *c_name, *result;
     VALUE return_value;
 
-    API_FUNC(1, "hdata_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_pointer", API_RETURN_EMPTY);
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5696,7 +5695,7 @@ weechat_ruby_api_hdata_time (VALUE class, VALUE hdata, VALUE pointer,
     time_t time;
     VALUE return_value;
 
-    API_FUNC(1, "hdata_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_time", API_RETURN_EMPTY);
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5725,7 +5724,7 @@ weechat_ruby_api_hdata_hashtable (VALUE class, VALUE hdata, VALUE pointer,
     char *c_hdata, *c_pointer, *c_name;
     VALUE result_hash;
 
-    API_FUNC(1, "hdata_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_hashtable", API_RETURN_EMPTY);
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5753,7 +5752,7 @@ weechat_ruby_api_hdata_update (VALUE class, VALUE hdata, VALUE pointer,
     struct t_hashtable *c_hashtable;
     int value;
 
-    API_FUNC(1, "hdata_update", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_update", API_RETURN_INT(0));
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (hashtable))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5784,7 +5783,7 @@ weechat_ruby_api_hdata_get_string (VALUE class, VALUE hdata, VALUE property)
     char *c_hdata, *c_property;
     const char *result;
 
-    API_FUNC(1, "hdata_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_string", API_RETURN_EMPTY);
     if (NIL_P (hdata) || NIL_P (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5807,7 +5806,7 @@ weechat_ruby_api_upgrade_new (VALUE class, VALUE filename, VALUE write)
     int c_write;
     VALUE return_value;
 
-    API_FUNC(1, "upgrade_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "upgrade_new", API_RETURN_EMPTY);
     if (NIL_P (filename) || NIL_P (write))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5830,7 +5829,7 @@ weechat_ruby_api_upgrade_write_object (VALUE class, VALUE upgrade_file,
     char *c_upgrade_file, *c_infolist;
     int c_object_id, rc;
 
-    API_FUNC(1, "upgrade_write_object", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "upgrade_write_object", API_RETURN_INT(0));
     if (NIL_P (upgrade_file) || NIL_P (object_id) || NIL_P (infolist))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5901,7 +5900,7 @@ weechat_ruby_api_upgrade_read (VALUE class, VALUE upgrade_file,
     char *c_upgrade_file, *c_function, *c_data;
     int rc;
 
-    API_FUNC(1, "upgrade_read", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "upgrade_read", API_RETURN_INT(0));
     if (NIL_P (upgrade_file) || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5928,7 +5927,7 @@ weechat_ruby_api_upgrade_close (VALUE class, VALUE upgrade_file)
 {
     char *c_upgrade_file;
 
-    API_FUNC(1, "upgrade_close", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "upgrade_close", API_RETURN_ERROR);
     if (NIL_P (upgrade_file))
         API_WRONG_ARGS(API_RETURN_ERROR);
 

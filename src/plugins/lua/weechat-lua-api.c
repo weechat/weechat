@@ -37,7 +37,16 @@
 #include "weechat-lua.h"
 
 
-#define API_FUNC(__init, __name, __ret)                                 \
+#define API_DEF_CONST_INT(__name)                                       \
+    { #__name, __name, NULL }
+#define API_DEF_CONST_STR(__name)                                       \
+    { #__name, 0, __name }
+#define API_DEF_FUNC(__name)                                            \
+    { #__name, &weechat_lua_api_##__name }
+#define API_FUNC(__name)                                                \
+    static int                                                          \
+    weechat_lua_api_##__name (lua_State *L)
+#define API_INIT_FUNC(__init, __name, __ret)                            \
     char *lua_function_name = __name;                                   \
     (void) L;                                                           \
     if (__init                                                          \
@@ -67,39 +76,31 @@
 #define API_RETURN_STRING(__string)                                     \
     lua_pushstring (L,                                                  \
                     (__string) ? __string : "");                        \
-    return 1;
+    return 1
 #define API_RETURN_STRING_FREE(__string)                                \
     lua_pushstring (L,                                                  \
                     (__string) ? __string : "");                        \
     if (__string)                                                       \
         free (__string);                                                \
-    return 1;
+    return 1
 #define API_RETURN_INT(__int)                                           \
     lua_pushnumber (L, __int);                                          \
-    return 1;
+    return 1
 #define API_RETURN_LONG(__long)                                         \
     lua_pushnumber (L, __long);                                         \
-    return 1;
-
-#define API_DEF_FUNC(__name)                                            \
-    { #__name, &weechat_lua_api_##__name }
-#define API_DEF_CONST_INT(__name)                                       \
-    { #__name, __name, NULL }
-#define API_DEF_CONST_STR(__name)                                       \
-    { #__name, 0, __name }
+    return 1
 
 
 /*
  * Registers a lua script.
  */
 
-static int
-weechat_lua_api_register (lua_State *L)
+API_FUNC(register)
 {
     const char *name, *author, *version, *license, *description;
     const char *shutdown_func, *charset;
 
-    API_FUNC(0, "register", API_RETURN_ERROR);
+    API_INIT_FUNC(0, "register", API_RETURN_ERROR);
     if (lua_registered_script)
     {
         /* script already registered */
@@ -173,12 +174,11 @@ weechat_lua_api_register (lua_State *L)
  * core.
  */
 
-static int
-weechat_lua_api_plugin_get_name (lua_State *L)
+API_FUNC(plugin_get_name)
 {
     const char *plugin, *result;
 
-    API_FUNC(1, "plugin_get_name", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "plugin_get_name", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -189,12 +189,11 @@ weechat_lua_api_plugin_get_name (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_charset_set (lua_State *L)
+API_FUNC(charset_set)
 {
     const char *charset;
 
-    API_FUNC(1, "charset_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "charset_set", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -206,13 +205,12 @@ weechat_lua_api_charset_set (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_iconv_to_internal (lua_State *L)
+API_FUNC(iconv_to_internal)
 {
     const char *charset, *string;
     char *result;
 
-    API_FUNC(1, "iconv_to_internal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "iconv_to_internal", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -224,13 +222,12 @@ weechat_lua_api_iconv_to_internal (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_iconv_from_internal (lua_State *L)
+API_FUNC(iconv_from_internal)
 {
     const char *charset, *string;
     char *result;
 
-    API_FUNC(1, "iconv_from_internal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "iconv_from_internal", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -242,12 +239,11 @@ weechat_lua_api_iconv_from_internal (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_gettext (lua_State *L)
+API_FUNC(gettext)
 {
     const char *string, *result;
 
-    API_FUNC(1, "gettext", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "gettext", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -258,13 +254,12 @@ weechat_lua_api_gettext (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_ngettext (lua_State *L)
+API_FUNC(ngettext)
 {
     const char *single, *plural, *result;
     int count;
 
-    API_FUNC(1, "ngettext", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "ngettext", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -277,13 +272,12 @@ weechat_lua_api_ngettext (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_strlen_screen (lua_State *L)
+API_FUNC(strlen_screen)
 {
     const char *string;
     int value;
 
-    API_FUNC(1, "strlen_screen", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "strlen_screen", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -294,13 +288,12 @@ weechat_lua_api_strlen_screen (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_string_match (lua_State *L)
+API_FUNC(string_match)
 {
     const char *string, *mask;
     int case_sensitive, value;
 
-    API_FUNC(1, "string_match", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_match", API_RETURN_INT(0));
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -313,13 +306,12 @@ weechat_lua_api_string_match (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_string_has_highlight (lua_State *L)
+API_FUNC(string_has_highlight)
 {
     const char *string, *highlight_words;
     int value;
 
-    API_FUNC(1, "string_has_highlight", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_has_highlight", API_RETURN_INT(0));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -331,13 +323,12 @@ weechat_lua_api_string_has_highlight (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_string_has_highlight_regex (lua_State *L)
+API_FUNC(string_has_highlight_regex)
 {
     const char *string, *regex;
     int value;
 
-    API_FUNC(1, "string_has_highlight_regex", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_has_highlight_regex", API_RETURN_INT(0));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -349,13 +340,12 @@ weechat_lua_api_string_has_highlight_regex (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_string_mask_to_regex (lua_State *L)
+API_FUNC(string_mask_to_regex)
 {
     const char *mask;
     char *result;
 
-    API_FUNC(1, "string_mask_to_regex", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_mask_to_regex", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -366,13 +356,12 @@ weechat_lua_api_string_mask_to_regex (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_string_remove_color (lua_State *L)
+API_FUNC(string_remove_color)
 {
     const char *string, *replacement;
     char *result;
 
-    API_FUNC(1, "string_remove_color", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_remove_color", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -384,13 +373,12 @@ weechat_lua_api_string_remove_color (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_string_is_command_char (lua_State *L)
+API_FUNC(string_is_command_char)
 {
     const char *string;
     int value;
 
-    API_FUNC(1, "string_is_command_char", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_is_command_char", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -401,12 +389,11 @@ weechat_lua_api_string_is_command_char (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_string_input_for_buffer (lua_State *L)
+API_FUNC(string_input_for_buffer)
 {
     const char *string, *result;
 
-    API_FUNC(1, "string_input_for_buffer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_input_for_buffer", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -417,14 +404,13 @@ weechat_lua_api_string_input_for_buffer (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_string_eval_expression (lua_State *L)
+API_FUNC(string_eval_expression)
 {
     const char *expr;
     struct t_hashtable *pointers, *extra_vars, *options;
     char *result;
 
-    API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
     if (lua_gettop (L) < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -455,13 +441,12 @@ weechat_lua_api_string_eval_expression (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_mkdir_home (lua_State *L)
+API_FUNC(mkdir_home)
 {
     const char *directory;
     int mode;
 
-    API_FUNC(1, "mkdir_home", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "mkdir_home", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -474,13 +459,12 @@ weechat_lua_api_mkdir_home (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_mkdir (lua_State *L)
+API_FUNC(mkdir)
 {
     const char *directory;
     int mode;
 
-    API_FUNC(1, "mkdir", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "mkdir", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -493,13 +477,12 @@ weechat_lua_api_mkdir (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_mkdir_parents (lua_State *L)
+API_FUNC(mkdir_parents)
 {
     const char *directory;
     int mode;
 
-    API_FUNC(1, "mkdir_parents", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "mkdir_parents", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -512,25 +495,23 @@ weechat_lua_api_mkdir_parents (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_list_new (lua_State *L)
+API_FUNC(list_new)
 {
     char *result;
 
-    API_FUNC(1, "list_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_new", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_list_new ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_list_add (lua_State *L)
+API_FUNC(list_add)
 {
     const char *weelist, *data, *where, *user_data;
     char *result;
 
-    API_FUNC(1, "list_add", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_add", API_RETURN_EMPTY);
     if (lua_gettop (L) < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -547,13 +528,12 @@ weechat_lua_api_list_add (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_list_search (lua_State *L)
+API_FUNC(list_search)
 {
     const char *weelist, *data;
     char *result;
 
-    API_FUNC(1, "list_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_search", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -566,13 +546,12 @@ weechat_lua_api_list_search (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_list_search_pos (lua_State *L)
+API_FUNC(list_search_pos)
 {
     const char *weelist, *data;
     int pos;
 
-    API_FUNC(1, "list_search_pos", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "list_search_pos", API_RETURN_INT(-1));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -584,13 +563,12 @@ weechat_lua_api_list_search_pos (lua_State *L)
     API_RETURN_INT(pos);
 }
 
-static int
-weechat_lua_api_list_casesearch (lua_State *L)
+API_FUNC(list_casesearch)
 {
     const char *weelist, *data;
     char *result;
 
-    API_FUNC(1, "list_casesearch", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_casesearch", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -603,13 +581,12 @@ weechat_lua_api_list_casesearch (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_list_casesearch_pos (lua_State *L)
+API_FUNC(list_casesearch_pos)
 {
     const char *weelist, *data;
     int pos;
 
-    API_FUNC(1, "list_casesearch_pos", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "list_casesearch_pos", API_RETURN_INT(-1));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -621,14 +598,13 @@ weechat_lua_api_list_casesearch_pos (lua_State *L)
     API_RETURN_INT(pos);
 }
 
-static int
-weechat_lua_api_list_get (lua_State *L)
+API_FUNC(list_get)
 {
     const char *weelist;
     char *result;
     int position;
 
-    API_FUNC(1, "list_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_get", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -641,12 +617,11 @@ weechat_lua_api_list_get (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_list_set (lua_State *L)
+API_FUNC(list_set)
 {
     const char *item, *new_value;
 
-    API_FUNC(1, "list_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_set", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -659,13 +634,12 @@ weechat_lua_api_list_set (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_list_next (lua_State *L)
+API_FUNC(list_next)
 {
     const char *item;
     char *result;
 
-    API_FUNC(1, "list_next", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_next", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -676,13 +650,12 @@ weechat_lua_api_list_next (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_list_prev (lua_State *L)
+API_FUNC(list_prev)
 {
     const char *item;
     char *result;
 
-    API_FUNC(1, "list_prev", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_prev", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -693,12 +666,11 @@ weechat_lua_api_list_prev (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_list_string (lua_State *L)
+API_FUNC(list_string)
 {
     const char *item, *result;
 
-    API_FUNC(1, "list_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -709,13 +681,12 @@ weechat_lua_api_list_string (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_list_size (lua_State *L)
+API_FUNC(list_size)
 {
     const char *weelist;
     int size;
 
-    API_FUNC(1, "list_size", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "list_size", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -726,12 +697,11 @@ weechat_lua_api_list_size (lua_State *L)
     API_RETURN_INT(size);
 }
 
-static int
-weechat_lua_api_list_remove (lua_State *L)
+API_FUNC(list_remove)
 {
     const char *weelist, *item;
 
-    API_FUNC(1, "list_remove", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_remove", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -744,12 +714,11 @@ weechat_lua_api_list_remove (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_list_remove_all (lua_State *L)
+API_FUNC(list_remove_all)
 {
     const char *weelist;
 
-    API_FUNC(1, "list_remove_all", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_remove_all", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -760,12 +729,11 @@ weechat_lua_api_list_remove_all (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_list_free (lua_State *L)
+API_FUNC(list_free)
 {
     const char *weelist;
 
-    API_FUNC(1, "list_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_free", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -813,13 +781,12 @@ weechat_lua_api_config_reload_cb (void *data,
     return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
 }
 
-static int
-weechat_lua_api_config_new (lua_State *L)
+API_FUNC(config_new)
 {
     const char *name, *function, *data;
     char *result;
 
-    API_FUNC(1, "config_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1049,8 +1016,7 @@ weechat_lua_api_config_section_delete_option_cb (void *data,
     return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
 }
 
-static int
-weechat_lua_api_config_new_section (lua_State *L)
+API_FUNC(config_new_section)
 {
     const char *config_file, *name, *function_read, *data_read;
     const char *function_write, *data_write, *function_write_default;
@@ -1060,7 +1026,7 @@ weechat_lua_api_config_new_section (lua_State *L)
     char *result;
     int user_can_add_options, user_can_delete_options;
 
-    API_FUNC(1, "config_new_section", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new_section", API_RETURN_EMPTY);
     if (lua_gettop (L) < 14)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1104,13 +1070,12 @@ weechat_lua_api_config_new_section (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_config_search_section (lua_State *L)
+API_FUNC(config_search_section)
 {
     const char *config_file, *section_name;
     char *result;
 
-    API_FUNC(1, "config_search_section", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_search_section", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1220,8 +1185,7 @@ weechat_lua_api_config_option_delete_cb (void *data,
     }
 }
 
-static int
-weechat_lua_api_config_new_option (lua_State *L)
+API_FUNC(config_new_option)
 {
     const char *config_file, *section, *name, *type, *description;
     const char *string_values, *default_value, *value;
@@ -1230,7 +1194,7 @@ weechat_lua_api_config_new_option (lua_State *L)
     char *result;
     int min, max, null_value_allowed;
 
-    API_FUNC(1, "config_new_option", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new_option", API_RETURN_EMPTY);
     if (lua_gettop (L) < 17)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1278,13 +1242,12 @@ weechat_lua_api_config_new_option (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_config_search_option (lua_State *L)
+API_FUNC(config_search_option)
 {
     const char *config_file, *section, *option_name;
     char *result;
 
-    API_FUNC(1, "config_search_option", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_search_option", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1299,13 +1262,12 @@ weechat_lua_api_config_search_option (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_config_string_to_boolean (lua_State *L)
+API_FUNC(config_string_to_boolean)
 {
     const char *text;
     int value;
 
-    API_FUNC(1, "config_string_to_boolean", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_string_to_boolean", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1316,13 +1278,12 @@ weechat_lua_api_config_string_to_boolean (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_config_option_reset (lua_State *L)
+API_FUNC(config_option_reset)
 {
     const char *option;
     int run_callback, rc;
 
-    API_FUNC(1, "config_option_reset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(0));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1335,13 +1296,12 @@ weechat_lua_api_config_option_reset (lua_State *L)
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_lua_api_config_option_set (lua_State *L)
+API_FUNC(config_option_set)
 {
     const char *option, *new_value;
     int run_callback, rc;
 
-    API_FUNC(1, "config_option_set", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+    API_INIT_FUNC(1, "config_option_set", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -1356,13 +1316,12 @@ weechat_lua_api_config_option_set (lua_State *L)
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_lua_api_config_option_set_null (lua_State *L)
+API_FUNC(config_option_set_null)
 {
     const char *option;
     int run_callback, rc;
 
-    API_FUNC(1, "config_option_set_null", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+    API_INIT_FUNC(1, "config_option_set_null", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -1375,13 +1334,12 @@ weechat_lua_api_config_option_set_null (lua_State *L)
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_lua_api_config_option_unset (lua_State *L)
+API_FUNC(config_option_unset)
 {
     const char *option;
     int rc;
 
-    API_FUNC(1, "config_option_unset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
+    API_INIT_FUNC(1, "config_option_unset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
 
@@ -1392,12 +1350,11 @@ weechat_lua_api_config_option_unset (lua_State *L)
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_lua_api_config_option_rename (lua_State *L)
+API_FUNC(config_option_rename)
 {
     const char *option, *new_name;
 
-    API_FUNC(1, "config_option_rename", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_option_rename", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1410,13 +1367,12 @@ weechat_lua_api_config_option_rename (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_config_option_is_null (lua_State *L)
+API_FUNC(config_option_is_null)
 {
     const char *option;
     int value;
 
-    API_FUNC(1, "config_option_is_null", API_RETURN_INT(1));
+    API_INIT_FUNC(1, "config_option_is_null", API_RETURN_INT(1));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(1));
 
@@ -1427,13 +1383,12 @@ weechat_lua_api_config_option_is_null (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_config_option_default_is_null (lua_State *L)
+API_FUNC(config_option_default_is_null)
 {
     const char *option;
     int value;
 
-    API_FUNC(1, "config_option_default_is_null", API_RETURN_INT(1));
+    API_INIT_FUNC(1, "config_option_default_is_null", API_RETURN_INT(1));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(1));
 
@@ -1444,13 +1399,12 @@ weechat_lua_api_config_option_default_is_null (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_config_boolean (lua_State *L)
+API_FUNC(config_boolean)
 {
     const char *option;
     int value;
 
-    API_FUNC(1, "config_boolean", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_boolean", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1461,13 +1415,12 @@ weechat_lua_api_config_boolean (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_config_boolean_default (lua_State *L)
+API_FUNC(config_boolean_default)
 {
     const char *option;
     int value;
 
-    API_FUNC(1, "config_boolean_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_boolean_default", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1478,13 +1431,12 @@ weechat_lua_api_config_boolean_default (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_config_integer (lua_State *L)
+API_FUNC(config_integer)
 {
     const char *option;
     int value;
 
-    API_FUNC(1, "config_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_integer", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1495,13 +1447,12 @@ weechat_lua_api_config_integer (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_config_integer_default (lua_State *L)
+API_FUNC(config_integer_default)
 {
     const char *option;
     int value;
 
-    API_FUNC(1, "config_integer_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_integer_default", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1512,12 +1463,11 @@ weechat_lua_api_config_integer_default (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_config_string (lua_State *L)
+API_FUNC(config_string)
 {
     const char *option, *result;
 
-    API_FUNC(1, "config_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1528,12 +1478,11 @@ weechat_lua_api_config_string (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_config_string_default (lua_State *L)
+API_FUNC(config_string_default)
 {
     const char *option, *result;
 
-    API_FUNC(1, "config_string_default", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_string_default", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1544,12 +1493,11 @@ weechat_lua_api_config_string_default (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_config_color (lua_State *L)
+API_FUNC(config_color)
 {
     const char *option, *result;
 
-    API_FUNC(1, "config_color", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1560,12 +1508,11 @@ weechat_lua_api_config_color (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_config_color_default (lua_State *L)
+API_FUNC(config_color_default)
 {
     const char *option, *result;
 
-    API_FUNC(1, "config_color_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color_default", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1576,12 +1523,11 @@ weechat_lua_api_config_color_default (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_config_write_option (lua_State *L)
+API_FUNC(config_write_option)
 {
     const char *config_file, *option;
 
-    API_FUNC(1, "config_write_option", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_write_option", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1594,12 +1540,11 @@ weechat_lua_api_config_write_option (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_config_write_line (lua_State *L)
+API_FUNC(config_write_line)
 {
     const char *config_file, *option_name, *value;
 
-    API_FUNC(1, "config_write_line", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_write_line", API_RETURN_ERROR);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1615,13 +1560,12 @@ weechat_lua_api_config_write_line (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_config_write (lua_State *L)
+API_FUNC(config_write)
 {
     const char *config_file;
     int rc;
 
-    API_FUNC(1, "config_write", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_write", API_RETURN_INT(-1));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -1632,13 +1576,12 @@ weechat_lua_api_config_write (lua_State *L)
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_lua_api_config_read (lua_State *L)
+API_FUNC(config_read)
 {
     const char *config_file;
     int rc;
 
-    API_FUNC(1, "config_read", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_read", API_RETURN_INT(-1));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -1649,13 +1592,12 @@ weechat_lua_api_config_read (lua_State *L)
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_lua_api_config_reload (lua_State *L)
+API_FUNC(config_reload)
 {
     const char *config_file;
     int rc;
 
-    API_FUNC(1, "config_reload", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(-1));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -1666,12 +1608,11 @@ weechat_lua_api_config_reload (lua_State *L)
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_lua_api_config_option_free (lua_State *L)
+API_FUNC(config_option_free)
 {
     const char *option;
 
-    API_FUNC(1, "config_option_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_option_free", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1684,12 +1625,11 @@ weechat_lua_api_config_option_free (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_config_section_free_options (lua_State *L)
+API_FUNC(config_section_free_options)
 {
     const char *section;
 
-    API_FUNC(1, "config_section_free_options", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_section_free_options", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1702,12 +1642,11 @@ weechat_lua_api_config_section_free_options (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_config_section_free (lua_State *L)
+API_FUNC(config_section_free)
 {
     const char *section;
 
-    API_FUNC(1, "config_section_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_section_free", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1720,12 +1659,11 @@ weechat_lua_api_config_section_free (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_config_free (lua_State *L)
+API_FUNC(config_free)
 {
     const char *config_file;
 
-    API_FUNC(1, "config_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_free", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1738,13 +1676,12 @@ weechat_lua_api_config_free (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_config_get (lua_State *L)
+API_FUNC(config_get)
 {
     const char *option;
     char *result;
 
-    API_FUNC(1, "config_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_get", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1755,12 +1692,11 @@ weechat_lua_api_config_get (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_config_get_plugin (lua_State *L)
+API_FUNC(config_get_plugin)
 {
     const char *option, *result;
 
-    API_FUNC(1, "config_get_plugin", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_get_plugin", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1773,13 +1709,12 @@ weechat_lua_api_config_get_plugin (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_config_is_set_plugin (lua_State *L)
+API_FUNC(config_is_set_plugin)
 {
     const char *option;
     int rc;
 
-    API_FUNC(1, "config_is_set_plugin", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_is_set_plugin", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1792,13 +1727,12 @@ weechat_lua_api_config_is_set_plugin (lua_State *L)
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_lua_api_config_set_plugin (lua_State *L)
+API_FUNC(config_set_plugin)
 {
     const char *option, *value;
     int rc;
 
-    API_FUNC(1, "config_set_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+    API_INIT_FUNC(1, "config_set_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -1813,12 +1747,11 @@ weechat_lua_api_config_set_plugin (lua_State *L)
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_lua_api_config_set_desc_plugin (lua_State *L)
+API_FUNC(config_set_desc_plugin)
 {
     const char *option, *description;
 
-    API_FUNC(1, "config_set_desc_plugin", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_set_desc_plugin", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1833,13 +1766,12 @@ weechat_lua_api_config_set_desc_plugin (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_config_unset_plugin (lua_State *L)
+API_FUNC(config_unset_plugin)
 {
     const char *option;
     int rc;
 
-    API_FUNC(1, "config_unset_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
+    API_INIT_FUNC(1, "config_unset_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
 
@@ -1852,14 +1784,13 @@ weechat_lua_api_config_unset_plugin (lua_State *L)
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_lua_api_key_bind (lua_State *L)
+API_FUNC(key_bind)
 {
     const char *context;
     struct t_hashtable *hashtable;
     int num_keys;
 
-    API_FUNC(1, "key_bind", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "key_bind", API_RETURN_INT(0));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1877,13 +1808,12 @@ weechat_lua_api_key_bind (lua_State *L)
     API_RETURN_INT(num_keys);
 }
 
-static int
-weechat_lua_api_key_unbind (lua_State *L)
+API_FUNC(key_unbind)
 {
     const char *context, *key;
     int num_keys;
 
-    API_FUNC(1, "key_unbind", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "key_unbind", API_RETURN_INT(0));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1895,12 +1825,11 @@ weechat_lua_api_key_unbind (lua_State *L)
     API_RETURN_INT(num_keys);
 }
 
-static int
-weechat_lua_api_prefix (lua_State *L)
+API_FUNC(prefix)
 {
     const char *prefix, *result;
 
-    API_FUNC(0, "prefix", API_RETURN_EMPTY);
+    API_INIT_FUNC(0, "prefix", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1911,12 +1840,11 @@ weechat_lua_api_prefix (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_color (lua_State *L)
+API_FUNC(color)
 {
     const char *color, *result;
 
-    API_FUNC(0, "color", API_RETURN_EMPTY);
+    API_INIT_FUNC(0, "color", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1927,12 +1855,11 @@ weechat_lua_api_color (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_print (lua_State *L)
+API_FUNC(print)
 {
     const char *buffer, *message;
 
-    API_FUNC(0, "print", API_RETURN_ERROR);
+    API_INIT_FUNC(0, "print", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1947,13 +1874,12 @@ weechat_lua_api_print (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_print_date_tags (lua_State *L)
+API_FUNC(print_date_tags)
 {
     const char *buffer, *tags, *message;
     int date;
 
-    API_FUNC(1, "print_date_tags", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "print_date_tags", API_RETURN_ERROR);
     if (lua_gettop (L) < 4)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1972,13 +1898,12 @@ weechat_lua_api_print_date_tags (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_print_y (lua_State *L)
+API_FUNC(print_y)
 {
     const char *buffer, *message;
     int y;
 
-    API_FUNC(1, "print_y", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "print_y", API_RETURN_ERROR);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1995,12 +1920,11 @@ weechat_lua_api_print_y (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_log_print (lua_State *L)
+API_FUNC(log_print)
 {
     const char *message;
 
-    API_FUNC(1, "log_print", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "log_print", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2054,14 +1978,13 @@ weechat_lua_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_hook_command (lua_State *L)
+API_FUNC(hook_command)
 {
     const char *command, *description, *args, *args_description, *completion;
     const char *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_command", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_command", API_RETURN_EMPTY);
     if (lua_gettop (L) < 7)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2125,13 +2048,12 @@ weechat_lua_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_hook_command_run (lua_State *L)
+API_FUNC(hook_command_run)
 {
     const char *command, *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_command_run", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_command_run", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2186,14 +2108,13 @@ weechat_lua_api_hook_timer_cb (void *data, int remaining_calls)
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_hook_timer (lua_State *L)
+API_FUNC(hook_timer)
 {
     int interval, align_second, max_calls;
     const char *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_timer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_timer", API_RETURN_EMPTY);
     if (lua_gettop (L) < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2251,14 +2172,13 @@ weechat_lua_api_hook_fd_cb (void *data, int fd)
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_hook_fd (lua_State *L)
+API_FUNC(hook_fd)
 {
     int fd, read, write, exception;
     const char *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_fd", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_fd", API_RETURN_EMPTY);
     if (lua_gettop (L) < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2321,14 +2241,13 @@ weechat_lua_api_hook_process_cb (void *data,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_hook_process (lua_State *L)
+API_FUNC(hook_process)
 {
     const char *command, *function, *data;
     int timeout;
     char *result;
 
-    API_FUNC(1, "hook_process", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_process", API_RETURN_EMPTY);
     if (lua_gettop (L) < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2348,15 +2267,14 @@ weechat_lua_api_hook_process (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_hook_process_hashtable (lua_State *L)
+API_FUNC(hook_process_hashtable)
 {
     const char *command, *function, *data;
     struct t_hashtable *options;
     int timeout;
     char *result;
 
-    API_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
     if (lua_gettop (L) < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2429,14 +2347,13 @@ weechat_lua_api_hook_connect_cb (void *data, int status, int gnutls_rc,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_hook_connect (lua_State *L)
+API_FUNC(hook_connect)
 {
     const char *proxy, *address, *local_hostname, *function, *data;
     int port, ipv6, retry;
     char *result;
 
-    API_FUNC(1, "hook_connect", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_connect", API_RETURN_EMPTY);
     if (lua_gettop (L) < 8)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2524,14 +2441,13 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_hook_print (lua_State *L)
+API_FUNC(hook_print)
 {
     const char *buffer, *tags, *message, *function, *data;
     char *result;
     int strip_colors;
 
-    API_FUNC(1, "hook_print", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_print", API_RETURN_EMPTY);
     if (lua_gettop (L) < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2615,13 +2531,12 @@ weechat_lua_api_hook_signal_cb (void *data, const char *signal,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_hook_signal (lua_State *L)
+API_FUNC(hook_signal)
 {
     const char *signal, *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_signal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_signal", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2639,13 +2554,12 @@ weechat_lua_api_hook_signal (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_hook_signal_send (lua_State *L)
+API_FUNC(hook_signal_send)
 {
     const char *signal, *type_data, *signal_data;
     int number, rc;
 
-    API_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
+    API_INIT_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     signal_data = NULL;
 
     if (lua_gettop (L) < 3)
@@ -2713,13 +2627,12 @@ weechat_lua_api_hook_hsignal_cb (void *data, const char *signal,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_hook_hsignal (lua_State *L)
+API_FUNC(hook_hsignal)
 {
     const char *signal, *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_hsignal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_hsignal", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2737,14 +2650,13 @@ weechat_lua_api_hook_hsignal (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_hook_hsignal_send (lua_State *L)
+API_FUNC(hook_hsignal_send)
 {
     const char *signal;
     struct t_hashtable *hashtable;
     int rc;
 
-    API_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
+    API_INIT_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
@@ -2798,13 +2710,12 @@ weechat_lua_api_hook_config_cb (void *data, const char *option,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_hook_config (lua_State *L)
+API_FUNC(hook_config)
 {
     const char *option, *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_config", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_config", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2864,13 +2775,12 @@ weechat_lua_api_hook_completion_cb (void *data, const char *completion_item,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_hook_completion (lua_State *L)
+API_FUNC(hook_completion)
 {
     const char *completion, *description, *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_completion", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
     if (lua_gettop (L) < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2890,13 +2800,12 @@ weechat_lua_api_hook_completion (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_hook_completion_list_add (lua_State *L)
+API_FUNC(hook_completion_list_add)
 {
     const char *completion, *word, *where;
     int nick_completion;
 
-    API_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
     if (lua_gettop (L) < 4)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2940,13 +2849,12 @@ weechat_lua_api_hook_modifier_cb (void *data, const char *modifier,
     return NULL;
 }
 
-static int
-weechat_lua_api_hook_modifier (lua_State *L)
+API_FUNC(hook_modifier)
 {
     const char *modifier, *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_modifier", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_modifier", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2964,13 +2872,12 @@ weechat_lua_api_hook_modifier (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_hook_modifier_exec (lua_State *L)
+API_FUNC(hook_modifier_exec)
 {
     const char *modifier, *modifier_data, *string;
     char *result;
 
-    API_FUNC(1, "hook_modifier_exec", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_modifier_exec", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3008,13 +2915,12 @@ weechat_lua_api_hook_info_cb (void *data, const char *info_name,
     return NULL;
 }
 
-static int
-weechat_lua_api_hook_info (lua_State *L)
+API_FUNC(hook_info)
 {
     const char *info_name, *description, *args_description, *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_info", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_info", API_RETURN_EMPTY);
     if (lua_gettop (L) < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3061,14 +2967,13 @@ weechat_lua_api_hook_info_hashtable_cb (void *data, const char *info_name,
     return NULL;
 }
 
-static int
-weechat_lua_api_hook_info_hashtable (lua_State *L)
+API_FUNC(hook_info_hashtable)
 {
     const char *info_name, *description, *args_description;
     const char *output_description, *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_info_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_info_hashtable", API_RETURN_EMPTY);
     if (lua_gettop (L) < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3124,14 +3029,13 @@ weechat_lua_api_hook_infolist_cb (void *data, const char *info_name,
     return NULL;
 }
 
-static int
-weechat_lua_api_hook_infolist (lua_State *L)
+API_FUNC(hook_infolist)
 {
     const char *infolist_name, *description, *pointer_description;
     const char *args_description, *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_infolist", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_infolist", API_RETURN_EMPTY);
     if (lua_gettop (L) < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3179,13 +3083,12 @@ weechat_lua_api_hook_focus_cb (void *data,
     return NULL;
 }
 
-static int
-weechat_lua_api_hook_focus (lua_State *L)
+API_FUNC(hook_focus)
 {
     const char *area, *function, *data;
     char *result;
 
-    API_FUNC(1, "hook_focus", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_focus", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3203,12 +3106,11 @@ weechat_lua_api_hook_focus (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_hook_set (lua_State *L)
+API_FUNC(hook_set)
 {
     const char *hook, *property, *value;
 
-    API_FUNC(1, "hook_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "hook_set", API_RETURN_ERROR);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3221,12 +3123,11 @@ weechat_lua_api_hook_set (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_unhook (lua_State *L)
+API_FUNC(unhook)
 {
     const char *hook;
 
-    API_FUNC(1, "unhook", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "unhook", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3239,10 +3140,9 @@ weechat_lua_api_unhook (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_unhook_all (lua_State *L)
+API_FUNC(unhook_all)
 {
-    API_FUNC(1, "unhook_all", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
     plugin_script_api_unhook_all (weechat_lua_plugin, lua_current_script);
 
@@ -3323,14 +3223,13 @@ weechat_lua_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_buffer_new (lua_State *L)
+API_FUNC(buffer_new)
 {
     const char *name, *function_input, *data_input, *function_close;
     const char *data_close;
     char *result;
 
-    API_FUNC(1, "buffer_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_new", API_RETURN_EMPTY);
     if (lua_gettop (L) < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3353,13 +3252,12 @@ weechat_lua_api_buffer_new (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_buffer_search (lua_State *L)
+API_FUNC(buffer_search)
 {
     const char *plugin, *name;
     char *result;
 
-    API_FUNC(1, "buffer_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_search", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3371,36 +3269,33 @@ weechat_lua_api_buffer_search (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_buffer_search_main (lua_State *L)
+API_FUNC(buffer_search_main)
 {
     char *result;
 
-    API_FUNC(1, "buffer_search_main", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_search_main", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_buffer_search_main ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_current_buffer (lua_State *L)
+API_FUNC(current_buffer)
 {
     char *result;
 
-    API_FUNC(1, "current_buffer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "current_buffer", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_current_buffer ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_buffer_clear (lua_State *L)
+API_FUNC(buffer_clear)
 {
     const char *buffer;
 
-    API_FUNC(1, "buffer_clear", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_clear", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3411,12 +3306,11 @@ weechat_lua_api_buffer_clear (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_buffer_close (lua_State *L)
+API_FUNC(buffer_close)
 {
     const char *buffer;
 
-    API_FUNC(1, "buffer_close", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_close", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3429,12 +3323,11 @@ weechat_lua_api_buffer_close (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_buffer_merge (lua_State *L)
+API_FUNC(buffer_merge)
 {
     const char *buffer, *target_buffer;
 
-    API_FUNC(1, "buffer_merge", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_merge", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3447,13 +3340,12 @@ weechat_lua_api_buffer_merge (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_buffer_unmerge (lua_State *L)
+API_FUNC(buffer_unmerge)
 {
     const char *buffer;
     int number;
 
-    API_FUNC(1, "buffer_unmerge", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_unmerge", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3465,13 +3357,12 @@ weechat_lua_api_buffer_unmerge (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_buffer_get_integer (lua_State *L)
+API_FUNC(buffer_get_integer)
 {
     const char *buffer, *property;
     int value;
 
-    API_FUNC(1, "buffer_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "buffer_get_integer", API_RETURN_INT(-1));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3484,12 +3375,11 @@ weechat_lua_api_buffer_get_integer (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_buffer_get_string (lua_State *L)
+API_FUNC(buffer_get_string)
 {
     const char *buffer, *property, *result;
 
-    API_FUNC(1, "buffer_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_get_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3502,13 +3392,12 @@ weechat_lua_api_buffer_get_string (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_buffer_get_pointer (lua_State *L)
+API_FUNC(buffer_get_pointer)
 {
     const char *buffer, *property;
     char *result;
 
-    API_FUNC(1, "buffer_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_get_pointer", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3521,12 +3410,11 @@ weechat_lua_api_buffer_get_pointer (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_buffer_set (lua_State *L)
+API_FUNC(buffer_set)
 {
     const char *buffer, *property, *value;
 
-    API_FUNC(1, "buffer_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_set", API_RETURN_ERROR);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3539,13 +3427,12 @@ weechat_lua_api_buffer_set (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_buffer_string_replace_local_var (lua_State *L)
+API_FUNC(buffer_string_replace_local_var)
 {
     const char *buffer, *string;
     char *result;
 
-    API_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3557,13 +3444,12 @@ weechat_lua_api_buffer_string_replace_local_var (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_buffer_match_list (lua_State *L)
+API_FUNC(buffer_match_list)
 {
     const char *buffer, *string;
     int value;
 
-    API_FUNC(1, "buffer_match_list", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "buffer_match_list", API_RETURN_INT(0));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -3576,25 +3462,23 @@ weechat_lua_api_buffer_match_list (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_current_window (lua_State *L)
+API_FUNC(current_window)
 {
     char *result;
 
-    API_FUNC(1, "current_window", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "current_window", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_current_window ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_window_search_with_buffer (lua_State *L)
+API_FUNC(window_search_with_buffer)
 {
     const char *buffer;
     char *result;
 
-    API_FUNC(1, "window_search_with_buffer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "window_search_with_buffer", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3605,13 +3489,12 @@ weechat_lua_api_window_search_with_buffer (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_window_get_integer (lua_State *L)
+API_FUNC(window_get_integer)
 {
     const char *window, *property;
     int value;
 
-    API_FUNC(1, "window_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "window_get_integer", API_RETURN_INT(-1));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3624,12 +3507,11 @@ weechat_lua_api_window_get_integer (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_window_get_string (lua_State *L)
+API_FUNC(window_get_string)
 {
     const char *window, *property, *result;
 
-    API_FUNC(1, "window_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "window_get_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3642,13 +3524,12 @@ weechat_lua_api_window_get_string (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_window_get_pointer (lua_State *L)
+API_FUNC(window_get_pointer)
 {
     const char *window, *property;
     char *result;
 
-    API_FUNC(1, "window_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "window_get_pointer", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3661,12 +3542,11 @@ weechat_lua_api_window_get_pointer (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_window_set_title (lua_State *L)
+API_FUNC(window_set_title)
 {
     const char *title;
 
-    API_FUNC(1, "window_set_title", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "window_set_title", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3677,14 +3557,13 @@ weechat_lua_api_window_set_title (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_nicklist_add_group (lua_State *L)
+API_FUNC(nicklist_add_group)
 {
     const char *buffer, *parent_group, *name, *color;
     char *result;
     int visible;
 
-    API_FUNC(1, "nicklist_add_group", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_add_group", API_RETURN_EMPTY);
     if (lua_gettop (L) < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3703,13 +3582,12 @@ weechat_lua_api_nicklist_add_group (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_nicklist_search_group (lua_State *L)
+API_FUNC(nicklist_search_group)
 {
     const char *buffer, *from_group, *name;
     char *result;
 
-    API_FUNC(1, "nicklist_search_group", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_search_group", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3724,14 +3602,13 @@ weechat_lua_api_nicklist_search_group (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_nicklist_add_nick (lua_State *L)
+API_FUNC(nicklist_add_nick)
 {
     const char *buffer, *group, *name, *color, *prefix, *prefix_color;
     char *result;
     int visible;
 
-    API_FUNC(1, "nicklist_add_nick", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_add_nick", API_RETURN_EMPTY);
     if (lua_gettop (L) < 7)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3754,13 +3631,12 @@ weechat_lua_api_nicklist_add_nick (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_nicklist_search_nick (lua_State *L)
+API_FUNC(nicklist_search_nick)
 {
     const char *buffer, *from_group, *name;
     char *result;
 
-    API_FUNC(1, "nicklist_search_nick", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_search_nick", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3775,12 +3651,11 @@ weechat_lua_api_nicklist_search_nick (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_nicklist_remove_group (lua_State *L)
+API_FUNC(nicklist_remove_group)
 {
     const char *buffer, *group;
 
-    API_FUNC(1, "nicklist_remove_group", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_remove_group", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3793,12 +3668,11 @@ weechat_lua_api_nicklist_remove_group (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_nicklist_remove_nick (lua_State *L)
+API_FUNC(nicklist_remove_nick)
 {
     const char *buffer, *nick;
 
-    API_FUNC(1, "nicklist_remove_nick", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_remove_nick", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3811,12 +3685,11 @@ weechat_lua_api_nicklist_remove_nick (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_nicklist_remove_all (lua_State *L)
+API_FUNC(nicklist_remove_all)
 {
     const char *buffer;
 
-    API_FUNC(1, "nicklist_remove_all", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_remove_all", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3827,13 +3700,12 @@ weechat_lua_api_nicklist_remove_all (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_nicklist_group_get_integer (lua_State *L)
+API_FUNC(nicklist_group_get_integer)
 {
     const char *buffer, *group, *property;
     int value;
 
-    API_FUNC(1, "nicklist_group_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "nicklist_group_get_integer", API_RETURN_INT(-1));
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3848,12 +3720,11 @@ weechat_lua_api_nicklist_group_get_integer (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_nicklist_group_get_string (lua_State *L)
+API_FUNC(nicklist_group_get_string)
 {
     const char *buffer, *group, *property, *result;
 
-    API_FUNC(1, "nicklist_group_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_group_get_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3868,13 +3739,12 @@ weechat_lua_api_nicklist_group_get_string (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_nicklist_group_get_pointer (lua_State *L)
+API_FUNC(nicklist_group_get_pointer)
 {
     const char *buffer, *group, *property;
     char *result;
 
-    API_FUNC(1, "nicklist_group_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_group_get_pointer", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3889,12 +3759,11 @@ weechat_lua_api_nicklist_group_get_pointer (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_nicklist_group_set (lua_State *L)
+API_FUNC(nicklist_group_set)
 {
     const char *buffer, *group, *property, *value;
 
-    API_FUNC(1, "nicklist_group_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_group_set", API_RETURN_ERROR);
     if (lua_gettop (L) < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3911,13 +3780,12 @@ weechat_lua_api_nicklist_group_set (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_nicklist_nick_get_integer (lua_State *L)
+API_FUNC(nicklist_nick_get_integer)
 {
     const char *buffer, *nick, *property;
     int value;
 
-    API_FUNC(1, "nicklist_nick_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "nicklist_nick_get_integer", API_RETURN_INT(-1));
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3932,12 +3800,11 @@ weechat_lua_api_nicklist_nick_get_integer (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_nicklist_nick_get_string (lua_State *L)
+API_FUNC(nicklist_nick_get_string)
 {
     const char *buffer, *nick, *property, *result;
 
-    API_FUNC(1, "nicklist_nick_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_nick_get_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3952,13 +3819,12 @@ weechat_lua_api_nicklist_nick_get_string (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_nicklist_nick_get_pointer (lua_State *L)
+API_FUNC(nicklist_nick_get_pointer)
 {
     const char *buffer, *nick, *property;
     char *result;
 
-    API_FUNC(1, "nicklist_nick_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_nick_get_pointer", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3973,12 +3839,11 @@ weechat_lua_api_nicklist_nick_get_pointer (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_nicklist_nick_set (lua_State *L)
+API_FUNC(nicklist_nick_set)
 {
     const char *buffer, *nick, *property, *value;
 
-    API_FUNC(1, "nicklist_nick_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_nick_set", API_RETURN_ERROR);
     if (lua_gettop (L) < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3995,13 +3860,12 @@ weechat_lua_api_nicklist_nick_set (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_bar_item_search (lua_State *L)
+API_FUNC(bar_item_search)
 {
     const char *name;
     char *result;
 
-    API_FUNC(1, "bar_item_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_item_search", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4071,13 +3935,12 @@ weechat_lua_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
     return NULL;
 }
 
-static int
-weechat_lua_api_bar_item_new (lua_State *L)
+API_FUNC(bar_item_new)
 {
     const char *name, *function, *data;
     char *result;
 
-    API_FUNC(1, "bar_item_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_item_new", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4095,12 +3958,11 @@ weechat_lua_api_bar_item_new (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_bar_item_update (lua_State *L)
+API_FUNC(bar_item_update)
 {
     const char *name;
 
-    API_FUNC(1, "bar_item_update", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_item_update", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4111,12 +3973,11 @@ weechat_lua_api_bar_item_update (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_bar_item_remove (lua_State *L)
+API_FUNC(bar_item_remove)
 {
     const char *item;
 
-    API_FUNC(1, "bar_item_remove", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_item_remove", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4129,13 +3990,12 @@ weechat_lua_api_bar_item_remove (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_bar_search (lua_State *L)
+API_FUNC(bar_search)
 {
     const char *name;
     char *result;
 
-    API_FUNC(1, "bar_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_search", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4146,15 +4006,14 @@ weechat_lua_api_bar_search (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_bar_new (lua_State *L)
+API_FUNC(bar_new)
 {
     const char *name, *hidden, *priority, *type, *conditions, *position;
     const char *filling_top_bottom, *filling_left_right, *size, *size_max;
     const char *color_fg, *color_delim, *color_bg, *separator, *items;
     char *result;
 
-    API_FUNC(1, "bar_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_new", API_RETURN_EMPTY);
     if (lua_gettop (L) < 15)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4193,12 +4052,11 @@ weechat_lua_api_bar_new (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_bar_set (lua_State *L)
+API_FUNC(bar_set)
 {
     const char *bar, *property, *value;
 
-    API_FUNC(1, "bar_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_set", API_RETURN_ERROR);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4213,12 +4071,11 @@ weechat_lua_api_bar_set (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_bar_update (lua_State *L)
+API_FUNC(bar_update)
 {
     const char *name;
 
-    API_FUNC(1, "bar_update", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_update", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4229,12 +4086,11 @@ weechat_lua_api_bar_update (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_bar_remove (lua_State *L)
+API_FUNC(bar_remove)
 {
     const char *bar;
 
-    API_FUNC(1, "bar_remove", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_remove", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4245,13 +4101,12 @@ weechat_lua_api_bar_remove (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_command (lua_State *L)
+API_FUNC(command)
 {
     const char *buffer, *command;
     int rc;
 
-    API_FUNC(1, "command", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "command", API_RETURN_ERROR);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4266,12 +4121,11 @@ weechat_lua_api_command (lua_State *L)
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_lua_api_info_get (lua_State *L)
+API_FUNC(info_get)
 {
     const char *info_name, *arguments, *result;
 
-    API_FUNC(1, "info_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "info_get", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4283,13 +4137,12 @@ weechat_lua_api_info_get (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_info_get_hashtable (lua_State *L)
+API_FUNC(info_get_hashtable)
 {
     const char *info_name;
     struct t_hashtable *table, *result_hashtable;
 
-    API_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4311,25 +4164,23 @@ weechat_lua_api_info_get_hashtable (lua_State *L)
     return 1;
 }
 
-static int
-weechat_lua_api_infolist_new (lua_State *L)
+API_FUNC(infolist_new)
 {
     char *result;
 
-    API_FUNC(1, "infolist_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_infolist_new ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_infolist_new_item (lua_State *L)
+API_FUNC(infolist_new_item)
 {
     const char *infolist;
     char *result;
 
-    API_FUNC(1, "infolist_new_item", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_item", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4340,14 +4191,13 @@ weechat_lua_api_infolist_new_item (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_infolist_new_var_integer (lua_State *L)
+API_FUNC(infolist_new_var_integer)
 {
     const char *infolist, *name;
     char *result;
     int value;
 
-    API_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4362,13 +4212,12 @@ weechat_lua_api_infolist_new_var_integer (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_infolist_new_var_string (lua_State *L)
+API_FUNC(infolist_new_var_string)
 {
     const char *infolist, *name, *value;
     char *result;
 
-    API_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4383,13 +4232,12 @@ weechat_lua_api_infolist_new_var_string (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_infolist_new_var_pointer (lua_State *L)
+API_FUNC(infolist_new_var_pointer)
 {
     const char *infolist, *name, *value;
     char *result;
 
-    API_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4404,14 +4252,13 @@ weechat_lua_api_infolist_new_var_pointer (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_infolist_new_var_time (lua_State *L)
+API_FUNC(infolist_new_var_time)
 {
     const char *infolist, *name;
     char *result;
     int value;
 
-    API_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4426,13 +4273,12 @@ weechat_lua_api_infolist_new_var_time (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_infolist_get (lua_State *L)
+API_FUNC(infolist_get)
 {
     const char *name, *pointer, *arguments;
     char *result;
 
-    API_FUNC(1, "infolist_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_get", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4447,13 +4293,12 @@ weechat_lua_api_infolist_get (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_infolist_next (lua_State *L)
+API_FUNC(infolist_next)
 {
     const char *infolist;
     int value;
 
-    API_FUNC(1, "infolist_next", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_next", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4464,13 +4309,12 @@ weechat_lua_api_infolist_next (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_infolist_prev (lua_State *L)
+API_FUNC(infolist_prev)
 {
     const char *infolist;
     int value;
 
-    API_FUNC(1, "infolist_prev", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_prev", API_RETURN_INT(0));
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4481,12 +4325,11 @@ weechat_lua_api_infolist_prev (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_infolist_reset_item_cursor (lua_State *L)
+API_FUNC(infolist_reset_item_cursor)
 {
     const char *infolist;
 
-    API_FUNC(1, "infolist_reset_item_cursor", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "infolist_reset_item_cursor", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4497,12 +4340,11 @@ weechat_lua_api_infolist_reset_item_cursor (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_infolist_fields (lua_State *L)
+API_FUNC(infolist_fields)
 {
     const char *infolist, *result;
 
-    API_FUNC(1, "infolist_fields", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_fields", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4513,13 +4355,12 @@ weechat_lua_api_infolist_fields (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_infolist_integer (lua_State *L)
+API_FUNC(infolist_integer)
 {
     const char *infolist, *variable;
     int value;
 
-    API_FUNC(1, "infolist_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_integer", API_RETURN_INT(0));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4532,12 +4373,11 @@ weechat_lua_api_infolist_integer (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_infolist_string (lua_State *L)
+API_FUNC(infolist_string)
 {
     const char *infolist, *variable, *result;
 
-    API_FUNC(1, "infolist_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4550,13 +4390,12 @@ weechat_lua_api_infolist_string (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_infolist_pointer (lua_State *L)
+API_FUNC(infolist_pointer)
 {
     const char *infolist, *variable;
     char *result;
 
-    API_FUNC(1, "infolist_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_pointer", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4569,15 +4408,14 @@ weechat_lua_api_infolist_pointer (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_infolist_time (lua_State *L)
+API_FUNC(infolist_time)
 {
     const char *infolist, *variable;
     time_t time;
     struct tm *date_tmp;
     char timebuffer[64], *result;
 
-    API_FUNC(1, "infolist_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_time", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4595,12 +4433,11 @@ weechat_lua_api_infolist_time (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_infolist_free (lua_State *L)
+API_FUNC(infolist_free)
 {
     const char *infolist;
 
-    API_FUNC(1, "infolist_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "infolist_free", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4611,13 +4448,12 @@ weechat_lua_api_infolist_free (lua_State *L)
     API_RETURN_OK;
 }
 
-static int
-weechat_lua_api_hdata_get (lua_State *L)
+API_FUNC(hdata_get)
 {
     const char *name;
     char *result;
 
-    API_FUNC(1, "hdata_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4628,13 +4464,12 @@ weechat_lua_api_hdata_get (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_hdata_get_var_offset (lua_State *L)
+API_FUNC(hdata_get_var_offset)
 {
     const char *hdata, *name;
     int value;
 
-    API_FUNC(1, "hdata_get_var_offset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_get_var_offset", API_RETURN_INT(0));
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4646,12 +4481,11 @@ weechat_lua_api_hdata_get_var_offset (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_hdata_get_var_type_string (lua_State *L)
+API_FUNC(hdata_get_var_type_string)
 {
     const char *hdata, *name, *result;
 
-    API_FUNC(1, "hdata_get_var_type_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_var_type_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4663,13 +4497,12 @@ weechat_lua_api_hdata_get_var_type_string (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_hdata_get_var_array_size (lua_State *L)
+API_FUNC(hdata_get_var_array_size)
 {
     const char *hdata, *pointer, *name;
     int value;
 
-    API_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -4684,12 +4517,11 @@ weechat_lua_api_hdata_get_var_array_size (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_hdata_get_var_array_size_string (lua_State *L)
+API_FUNC(hdata_get_var_array_size_string)
 {
     const char *hdata, *pointer, *name, *result;
 
-    API_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4704,12 +4536,11 @@ weechat_lua_api_hdata_get_var_array_size_string (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_hdata_get_var_hdata (lua_State *L)
+API_FUNC(hdata_get_var_hdata)
 {
     const char *hdata, *name, *result;
 
-    API_FUNC(1, "hdata_get_var_hdata", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_var_hdata", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4721,13 +4552,12 @@ weechat_lua_api_hdata_get_var_hdata (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_hdata_get_list (lua_State *L)
+API_FUNC(hdata_get_list)
 {
     const char *hdata, *name;
     char *result;
 
-    API_FUNC(1, "hdata_get_list", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_list", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4740,13 +4570,12 @@ weechat_lua_api_hdata_get_list (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_hdata_check_pointer (lua_State *L)
+API_FUNC(hdata_check_pointer)
 {
     const char *hdata, *list, *pointer;
     int value;
 
-    API_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4761,14 +4590,13 @@ weechat_lua_api_hdata_check_pointer (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_hdata_move (lua_State *L)
+API_FUNC(hdata_move)
 {
     const char *hdata, *pointer;
     char *result;
     int count;
 
-    API_FUNC(1, "hdata_move", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_move", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4783,14 +4611,13 @@ weechat_lua_api_hdata_move (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_hdata_search (lua_State *L)
+API_FUNC(hdata_search)
 {
     const char *hdata, *pointer, *search;
     char *result;
     int move;
 
-    API_FUNC(1, "hdata_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_search", API_RETURN_EMPTY);
     if (lua_gettop (L) < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4807,13 +4634,12 @@ weechat_lua_api_hdata_search (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_hdata_char (lua_State *L)
+API_FUNC(hdata_char)
 {
     const char *hdata, *pointer, *name;
     int value;
 
-    API_FUNC(1, "hdata_char", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_char", API_RETURN_INT(0));
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4828,13 +4654,12 @@ weechat_lua_api_hdata_char (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_hdata_integer (lua_State *L)
+API_FUNC(hdata_integer)
 {
     const char *hdata, *pointer, *name;
     int value;
 
-    API_FUNC(1, "hdata_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_integer", API_RETURN_INT(0));
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4849,13 +4674,12 @@ weechat_lua_api_hdata_integer (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_hdata_long (lua_State *L)
+API_FUNC(hdata_long)
 {
     const char *hdata, *pointer, *name;
     long value;
 
-    API_FUNC(1, "hdata_long", API_RETURN_LONG(0));
+    API_INIT_FUNC(1, "hdata_long", API_RETURN_LONG(0));
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_LONG(0));
 
@@ -4870,12 +4694,11 @@ weechat_lua_api_hdata_long (lua_State *L)
     API_RETURN_LONG(value);
 }
 
-static int
-weechat_lua_api_hdata_string (lua_State *L)
+API_FUNC(hdata_string)
 {
     const char *hdata, *pointer, *name, *result;
 
-    API_FUNC(1, "hdata_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4890,13 +4713,12 @@ weechat_lua_api_hdata_string (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_hdata_pointer (lua_State *L)
+API_FUNC(hdata_pointer)
 {
     const char *hdata, *pointer, *name;
     char *result;
 
-    API_FUNC(1, "hdata_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_pointer", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4911,14 +4733,13 @@ weechat_lua_api_hdata_pointer (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_hdata_time (lua_State *L)
+API_FUNC(hdata_time)
 {
     const char *hdata, *pointer, *name;
     time_t time;
     char timebuffer[64], *result;
 
-    API_FUNC(1, "hdata_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_time", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4936,12 +4757,11 @@ weechat_lua_api_hdata_time (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_hdata_hashtable (lua_State *L)
+API_FUNC(hdata_hashtable)
 {
     const char *hdata, *pointer, *name;
 
-    API_FUNC(1, "hdata_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_hashtable", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4957,14 +4777,13 @@ weechat_lua_api_hdata_hashtable (lua_State *L)
     return 1;
 }
 
-static int
-weechat_lua_api_hdata_update (lua_State *L)
+API_FUNC(hdata_update)
 {
     const char *hdata, *pointer;
     struct t_hashtable *hashtable;
     int value;
 
-    API_FUNC(1, "hdata_update", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_update", API_RETURN_INT(0));
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4985,12 +4804,11 @@ weechat_lua_api_hdata_update (lua_State *L)
     API_RETURN_INT(value);
 }
 
-static int
-weechat_lua_api_hdata_get_string (lua_State *L)
+API_FUNC(hdata_get_string)
 {
     const char *hdata, *property, *result;
 
-    API_FUNC(1, "hdata_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5002,14 +4820,13 @@ weechat_lua_api_hdata_get_string (lua_State *L)
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_lua_api_upgrade_new (lua_State *L)
+API_FUNC(upgrade_new)
 {
     const char *filename;
     char *result;
     int write;
 
-    API_FUNC(1, "upgrade_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "upgrade_new", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5021,13 +4838,12 @@ weechat_lua_api_upgrade_new (lua_State *L)
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_lua_api_upgrade_write_object (lua_State *L)
+API_FUNC(upgrade_write_object)
 {
     const char *upgrade_file, *infolist;
     int object_id, rc;
 
-    API_FUNC(1, "upgrade_write_object", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "upgrade_write_object", API_RETURN_INT(0));
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5087,13 +4903,12 @@ weechat_lua_api_upgrade_read_cb (void *data,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_lua_api_upgrade_read (lua_State *L)
+API_FUNC(upgrade_read)
 {
     const char *upgrade_file, *function, *data;
     int rc;
 
-    API_FUNC(1, "upgrade_read", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "upgrade_read", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5111,12 +4926,11 @@ weechat_lua_api_upgrade_read (lua_State *L)
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_lua_api_upgrade_close (lua_State *L)
+API_FUNC(upgrade_close)
 {
     const char *upgrade_file;
 
-    API_FUNC(1, "upgrade_close", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "upgrade_close", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 

@@ -36,7 +36,18 @@
 #include "weechat-tcl.h"
 
 
-#define API_FUNC(__init, __name, __ret)                                 \
+#define API_DEF_FUNC(__name)                                            \
+    Tcl_CreateObjCommand (interp, "weechat::" #__name,                  \
+                          weechat_tcl_api_##__name,                     \
+                          (ClientData) NULL,                            \
+                          (Tcl_CmdDeleteProc*)NULL);
+#define API_FUNC(__name)                                                \
+    static int                                                          \
+    weechat_tcl_api_##__name (ClientData clientData,                    \
+                              Tcl_Interp *interp,                       \
+                              int objc,                                 \
+                              Tcl_Obj *CONST objv[])
+#define API_INIT_FUNC(__init, __name, __ret)                            \
     char *tcl_function_name = __name;                                   \
     (void) clientData;                                                  \
     if (__init                                                          \
@@ -199,27 +210,19 @@
         return TCL_OK;                                                  \
     }
 
-#define API_DEF_FUNC(__name)                                            \
-    Tcl_CreateObjCommand (interp, "weechat::" #__name,                  \
-                          weechat_tcl_api_##__name,                     \
-                          (ClientData) NULL,                            \
-                          (Tcl_CmdDeleteProc*)NULL);
-
 
 /*
  * Registers a tcl script.
  */
 
-static int
-weechat_tcl_api_register (ClientData clientData, Tcl_Interp *interp, int objc,
-                          Tcl_Obj *CONST objv[])
+API_FUNC(register)
 {
     Tcl_Obj *objp;
     char *name, *author, *version, *license, *description, *shutdown_func;
     char *charset;
     int i;
 
-    API_FUNC(0, "register", API_RETURN_ERROR);
+    API_INIT_FUNC(0, "register", API_RETURN_ERROR);
     if (tcl_registered_script)
     {
         /* script already registered */
@@ -289,16 +292,14 @@ weechat_tcl_api_register (ClientData clientData, Tcl_Interp *interp, int objc,
  * core.
  */
 
-static int
-weechat_tcl_api_plugin_get_name (ClientData clientData, Tcl_Interp *interp,
-                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(plugin_get_name)
 {
     Tcl_Obj *objp;
     char *plugin;
     const char *result;
     int i;
 
-    API_FUNC(1, "plugin_get_name", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "plugin_get_name", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -309,14 +310,12 @@ weechat_tcl_api_plugin_get_name (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_charset_set (ClientData clientData, Tcl_Interp *interp,
-                             int objc, Tcl_Obj *CONST objv[])
+API_FUNC(charset_set)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "charset_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "charset_set", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -326,15 +325,13 @@ weechat_tcl_api_charset_set (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_iconv_to_internal (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(iconv_to_internal)
 {
     Tcl_Obj *objp;
     char *result, *charset, *string;
     int i;
 
-    API_FUNC(1, "iconv_to_internal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "iconv_to_internal", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -346,15 +343,13 @@ weechat_tcl_api_iconv_to_internal (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_iconv_from_internal (ClientData clientData, Tcl_Interp *interp,
-                                     int objc, Tcl_Obj *CONST objv[])
+API_FUNC(iconv_from_internal)
 {
     Tcl_Obj *objp;
     char *result, *charset, *string;
     int i;
 
-    API_FUNC(1, "iconv_from_internal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "iconv_from_internal", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -366,15 +361,13 @@ weechat_tcl_api_iconv_from_internal (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_gettext (ClientData clientData, Tcl_Interp *interp,
-                         int objc, Tcl_Obj *CONST objv[])
+API_FUNC(gettext)
 {
     Tcl_Obj *objp;
     const char *result;
     int i;
 
-    API_FUNC(1, "gettext", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "gettext", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -383,16 +376,14 @@ weechat_tcl_api_gettext (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_ngettext (ClientData clientData, Tcl_Interp *interp,
-                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(ngettext)
 {
     Tcl_Obj *objp;
     char *single, *plural;
     const char *result;
     int i, count;
 
-    API_FUNC(1, "ngettext", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "ngettext", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -407,15 +398,13 @@ weechat_tcl_api_ngettext (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_strlen_screen (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(strlen_screen)
 {
     Tcl_Obj *objp;
     char *string;
     int result, i;
 
-    API_FUNC(1, "strlen_screen", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "strlen_screen", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -426,15 +415,13 @@ weechat_tcl_api_strlen_screen (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_string_match (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(string_match)
 {
     Tcl_Obj *objp;
     char *string, *mask;
     int case_sensitive, result, i;
 
-    API_FUNC(1, "string_match", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_match", API_RETURN_INT(0));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -449,16 +436,13 @@ weechat_tcl_api_string_match (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_string_has_highlight (ClientData clientData,
-                                      Tcl_Interp *interp,
-                                      int objc, Tcl_Obj *CONST objv[])
+API_FUNC(string_has_highlight)
 {
     Tcl_Obj *objp;
     char *string, *highlight_words;
     int result, i;
 
-    API_FUNC(1, "string_has_highlight", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_has_highlight", API_RETURN_INT(0));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -470,16 +454,13 @@ weechat_tcl_api_string_has_highlight (ClientData clientData,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_string_has_highlight_regex (ClientData clientData,
-                                            Tcl_Interp *interp,
-                                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(string_has_highlight_regex)
 {
     Tcl_Obj *objp;
     char *string, *regex;
     int result, i;
 
-    API_FUNC(1, "string_has_highlight_regex", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_has_highlight_regex", API_RETURN_INT(0));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -491,16 +472,13 @@ weechat_tcl_api_string_has_highlight_regex (ClientData clientData,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_string_mask_to_regex (ClientData clientData,
-                                      Tcl_Interp *interp,
-                                      int objc, Tcl_Obj *CONST objv[])
+API_FUNC(string_mask_to_regex)
 {
     Tcl_Obj *objp;
     char *result, *mask;
     int i;
 
-    API_FUNC(1, "string_mask_to_regex", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_mask_to_regex", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -511,15 +489,13 @@ weechat_tcl_api_string_mask_to_regex (ClientData clientData,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_string_remove_color (ClientData clientData, Tcl_Interp *interp,
-                                     int objc, Tcl_Obj *CONST objv[])
+API_FUNC(string_remove_color)
 {
     Tcl_Obj *objp;
     char *result, *replacement, *string;
     int i;
 
-    API_FUNC(1, "string_remove_color", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_remove_color", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -531,14 +507,12 @@ weechat_tcl_api_string_remove_color (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_string_is_command_char (ClientData clientData, Tcl_Interp *interp,
-                                        int objc, Tcl_Obj *CONST objv[])
+API_FUNC(string_is_command_char)
 {
     Tcl_Obj *objp;
     int result, i;
 
-    API_FUNC(1, "string_is_command_char", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_is_command_char", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -547,15 +521,13 @@ weechat_tcl_api_string_is_command_char (ClientData clientData, Tcl_Interp *inter
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_string_input_for_buffer (ClientData clientData, Tcl_Interp *interp,
-                                         int objc, Tcl_Obj *CONST objv[])
+API_FUNC(string_input_for_buffer)
 {
     Tcl_Obj *objp;
     const char *result;
     int i;
 
-    API_FUNC(1, "string_input_for_buffer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_input_for_buffer", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -564,17 +536,14 @@ weechat_tcl_api_string_input_for_buffer (ClientData clientData, Tcl_Interp *inte
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_string_eval_expression (ClientData clientData,
-                                        Tcl_Interp *interp,
-                                        int objc, Tcl_Obj *CONST objv[])
+API_FUNC(string_eval_expression)
 {
     Tcl_Obj *objp;
     char *expr, *result;
     struct t_hashtable *pointers, *extra_vars, *options;
     int i;
 
-    API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
     if (objc < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -605,14 +574,12 @@ weechat_tcl_api_string_eval_expression (ClientData clientData,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_mkdir_home (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(mkdir_home)
 {
     Tcl_Obj *objp;
     int i, mode;
 
-    API_FUNC(1, "mkdir_home", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "mkdir_home", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -626,14 +593,12 @@ weechat_tcl_api_mkdir_home (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_ERROR;
 }
 
-static int
-weechat_tcl_api_mkdir (ClientData clientData, Tcl_Interp *interp,
-                       int objc, Tcl_Obj *CONST objv[])
+API_FUNC(mkdir)
 {
     Tcl_Obj *objp;
     int i, mode;
 
-    API_FUNC(1, "mkdir", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "mkdir", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -647,14 +612,12 @@ weechat_tcl_api_mkdir (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_ERROR;
 }
 
-static int
-weechat_tcl_api_mkdir_parents (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(mkdir_parents)
 {
     Tcl_Obj *objp;
     int i, mode;
 
-    API_FUNC(1, "mkdir_parents", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "mkdir_parents", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -668,9 +631,7 @@ weechat_tcl_api_mkdir_parents (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_ERROR;
 }
 
-static int
-weechat_tcl_api_list_new (ClientData clientData, Tcl_Interp *interp,
-                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_new)
 {
     Tcl_Obj *objp;
     char *result;
@@ -680,23 +641,21 @@ weechat_tcl_api_list_new (ClientData clientData, Tcl_Interp *interp,
     (void) objc;
     (void) objv;
 
-    API_FUNC(1, "list_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_new", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_list_new ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_list_add (ClientData clientData, Tcl_Interp *interp,
-                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_add)
 {
     Tcl_Obj *objp;
     char *result, *weelist, *data, *where, *user_data;
     int i;
 
 
-    API_FUNC(1, "list_add", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_add", API_RETURN_EMPTY);
     if (objc < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -713,15 +672,13 @@ weechat_tcl_api_list_add (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_list_search (ClientData clientData, Tcl_Interp *interp,
-                             int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_search)
 {
     Tcl_Obj *objp;
     char *result, *weelist, *data;
     int i;
 
-    API_FUNC(1, "list_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_search", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -734,15 +691,13 @@ weechat_tcl_api_list_search (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_list_search_pos (ClientData clientData, Tcl_Interp *interp,
-                             int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_search_pos)
 {
     Tcl_Obj *objp;
     char *weelist, *data;
     int i, pos;
 
-    API_FUNC(1, "list_search_pos", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "list_search_pos", API_RETURN_INT(-1));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -754,15 +709,13 @@ weechat_tcl_api_list_search_pos (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(pos);
 }
 
-static int
-weechat_tcl_api_list_casesearch (ClientData clientData, Tcl_Interp *interp,
-                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_casesearch)
 {
     Tcl_Obj *objp;
     char *result, *weelist, *data;
     int i;
 
-    API_FUNC(1, "list_casesearch", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_casesearch", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -775,15 +728,13 @@ weechat_tcl_api_list_casesearch (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_list_casesearch_pos (ClientData clientData, Tcl_Interp *interp,
-                                     int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_casesearch_pos)
 {
     Tcl_Obj *objp;
     char *weelist, *data;
     int i, pos;
 
-    API_FUNC(1, "list_casesearch_pos", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "list_casesearch_pos", API_RETURN_INT(-1));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -795,15 +746,13 @@ weechat_tcl_api_list_casesearch_pos (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(pos);
 }
 
-static int
-weechat_tcl_api_list_get (ClientData clientData, Tcl_Interp *interp,
-                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_get)
 {
     Tcl_Obj *objp;
     char *result;
     int i, position;
 
-    API_FUNC(1, "list_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_get", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -816,15 +765,13 @@ weechat_tcl_api_list_get (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_list_set (ClientData clientData, Tcl_Interp *interp,
-                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_set)
 {
     Tcl_Obj *objp;
     char *item, *new_value;
     int i;
 
-    API_FUNC(1, "list_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_set", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -836,15 +783,13 @@ weechat_tcl_api_list_set (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_list_next (ClientData clientData, Tcl_Interp *interp,
-                           int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_next)
 {
     Tcl_Obj *objp;
     char *result;
     int i;
 
-    API_FUNC(1, "list_next", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_next", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -853,15 +798,13 @@ weechat_tcl_api_list_next (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_list_prev (ClientData clientData, Tcl_Interp *interp,
-                           int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_prev)
 {
     Tcl_Obj *objp;
     char *result;
     int i;
 
-    API_FUNC(1, "list_prev", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_prev", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -870,15 +813,13 @@ weechat_tcl_api_list_prev (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_list_string (ClientData clientData, Tcl_Interp *interp,
-                             int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_string)
 {
     Tcl_Obj *objp;
     const char *result;
     int i;
 
-    API_FUNC(1, "list_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_string", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -887,15 +828,13 @@ weechat_tcl_api_list_string (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_list_size (ClientData clientData, Tcl_Interp *interp,
-                           int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_size)
 {
     Tcl_Obj *objp;
     int size;
     int i;
 
-    API_FUNC(1, "list_size", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "list_size", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -904,15 +843,13 @@ weechat_tcl_api_list_size (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(size);
 }
 
-static int
-weechat_tcl_api_list_remove (ClientData clientData, Tcl_Interp *interp,
-                             int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_remove)
 {
     Tcl_Obj *objp;
     char *weelist, *item;
     int i;
 
-    API_FUNC(1, "list_remove", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_remove", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -925,16 +862,14 @@ weechat_tcl_api_list_remove (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_list_remove_all (ClientData clientData, Tcl_Interp *interp,
-                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_remove_all)
 {
     Tcl_Obj *objp;
     int i;
 
     (void) clientData;
 
-    API_FUNC(1, "list_remove_all", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_remove_all", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -943,14 +878,12 @@ weechat_tcl_api_list_remove_all (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_list_free (ClientData clientData, Tcl_Interp *interp,
-                           int objc, Tcl_Obj *CONST objv[])
+API_FUNC(list_free)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "list_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_free", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -997,15 +930,13 @@ weechat_tcl_api_config_reload_cb (void *data,
     return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
 }
 
-static int
-weechat_tcl_api_config_new (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_new)
 {
     Tcl_Obj *objp;
     char *result, *name, *function, *data;
     int i;
 
-    API_FUNC(1, "config_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1235,9 +1166,7 @@ weechat_tcl_api_config_section_delete_option_cb (void *data,
     return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
 }
 
-static int
-weechat_tcl_api_config_new_section (ClientData clientData, Tcl_Interp *interp,
-                                    int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_new_section)
 {
     Tcl_Obj *objp;
     char *result, *cfg_file, *name, *function_read, *data_read;
@@ -1249,7 +1178,7 @@ weechat_tcl_api_config_new_section (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
 
-    API_FUNC(1, "config_new_section", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new_section", API_RETURN_EMPTY);
     if (objc < 15)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1295,15 +1224,13 @@ weechat_tcl_api_config_new_section (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_config_search_section (ClientData clientData, Tcl_Interp *interp,
-                                       int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_search_section)
 {
     Tcl_Obj *objp;
     char *result, *config_file, *section_name;
     int i;
 
-    API_FUNC(1, "config_search_section", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_search_section", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1414,9 +1341,7 @@ weechat_tcl_api_config_option_delete_cb (void *data,
     }
 }
 
-static int
-weechat_tcl_api_config_new_option (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_new_option)
 {
     Tcl_Obj *objp;
     char *result, *config_file, *section, *name, *type;
@@ -1425,7 +1350,7 @@ weechat_tcl_api_config_new_option (ClientData clientData, Tcl_Interp *interp,
     char *data_change, *function_delete, *data_delete;
     int i, min, max, null_value_allowed;
 
-    API_FUNC(1, "config_new_option", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new_option", API_RETURN_EMPTY);
     if (objc < 18)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1475,15 +1400,13 @@ weechat_tcl_api_config_new_option (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_config_search_option (ClientData clientData, Tcl_Interp *interp,
-                                      int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_search_option)
 {
     Tcl_Obj *objp;
     char *result, *config_file, *section, *option_name;
     int i;
 
-    API_FUNC(1, "config_search_option", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_search_option", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1498,14 +1421,12 @@ weechat_tcl_api_config_search_option (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_config_string_to_boolean (ClientData clientData, Tcl_Interp *interp,
-                                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_string_to_boolean)
 {
     Tcl_Obj *objp;
     int result, i;
 
-    API_FUNC(1, "config_string_to_boolean", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_string_to_boolean", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1514,16 +1435,14 @@ weechat_tcl_api_config_string_to_boolean (ClientData clientData, Tcl_Interp *int
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_config_option_reset (ClientData clientData, Tcl_Interp *interp,
-                                     int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_option_reset)
 {
     Tcl_Obj *objp;
     int rc;
     char *option;
     int i, run_callback;
 
-    API_FUNC(1, "config_option_reset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(0));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1538,16 +1457,14 @@ weechat_tcl_api_config_option_reset (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_tcl_api_config_option_set (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_option_set)
 {
     Tcl_Obj *objp;
     int rc;
     char *option, *new_value;
     int i, run_callback;
 
-    API_FUNC(1, "config_option_set", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+    API_INIT_FUNC(1, "config_option_set", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -1564,16 +1481,14 @@ weechat_tcl_api_config_option_set (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_tcl_api_config_option_set_null (ClientData clientData, Tcl_Interp *interp,
-                                        int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_option_set_null)
 {
     Tcl_Obj *objp;
     int rc;
     char *option;
     int i, run_callback;
 
-    API_FUNC(1, "config_option_set_null", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+    API_INIT_FUNC(1, "config_option_set_null", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -1588,16 +1503,14 @@ weechat_tcl_api_config_option_set_null (ClientData clientData, Tcl_Interp *inter
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_tcl_api_config_option_unset (ClientData clientData, Tcl_Interp *interp,
-                                     int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_option_unset)
 {
     Tcl_Obj *objp;
     int rc;
     char *option;
     int i;
 
-    API_FUNC(1, "config_option_unset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
+    API_INIT_FUNC(1, "config_option_unset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
 
@@ -1608,15 +1521,13 @@ weechat_tcl_api_config_option_unset (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_tcl_api_config_option_rename (ClientData clientData, Tcl_Interp *interp,
-                                      int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_option_rename)
 {
     Tcl_Obj *objp;
     char *option, *new_name;
     int i;
 
-    API_FUNC(1, "config_option_rename", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_option_rename", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1629,14 +1540,12 @@ weechat_tcl_api_config_option_rename (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_config_option_is_null (ClientData clientData, Tcl_Interp *interp,
-                                       int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_option_is_null)
 {
     Tcl_Obj *objp;
     int result, i;
 
-    API_FUNC(1, "config_option_is_null", API_RETURN_INT(1));
+    API_INIT_FUNC(1, "config_option_is_null", API_RETURN_INT(1));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(1));
 
@@ -1645,15 +1554,12 @@ weechat_tcl_api_config_option_is_null (ClientData clientData, Tcl_Interp *interp
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_config_option_default_is_null (ClientData clientData,
-                                               Tcl_Interp *interp,
-                                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_option_default_is_null)
 {
     Tcl_Obj *objp;
     int result, i;
 
-    API_FUNC(1, "config_option_default_is_null", API_RETURN_INT(1));
+    API_INIT_FUNC(1, "config_option_default_is_null", API_RETURN_INT(1));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(1));
 
@@ -1662,14 +1568,12 @@ weechat_tcl_api_config_option_default_is_null (ClientData clientData,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_config_boolean (ClientData clientData, Tcl_Interp *interp,
-                                int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_boolean)
 {
     Tcl_Obj *objp;
     int result, i;
 
-    API_FUNC(1, "config_boolean", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_boolean", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1678,14 +1582,12 @@ weechat_tcl_api_config_boolean (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_config_boolean_default (ClientData clientData, Tcl_Interp *interp,
-                                        int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_boolean_default)
 {
     Tcl_Obj *objp;
     int result, i;
 
-    API_FUNC(1, "config_boolean_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_boolean_default", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1694,14 +1596,12 @@ weechat_tcl_api_config_boolean_default (ClientData clientData, Tcl_Interp *inter
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_config_integer (ClientData clientData, Tcl_Interp *interp,
-                                int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_integer)
 {
     Tcl_Obj *objp;
     int result, i;
 
-    API_FUNC(1, "config_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_integer", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1710,14 +1610,12 @@ weechat_tcl_api_config_integer (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_config_integer_default (ClientData clientData, Tcl_Interp *interp,
-                                        int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_integer_default)
 {
     Tcl_Obj *objp;
     int result, i;
 
-    API_FUNC(1, "config_integer_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_integer_default", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1726,15 +1624,13 @@ weechat_tcl_api_config_integer_default (ClientData clientData, Tcl_Interp *inter
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_config_string (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_string)
 {
     Tcl_Obj *objp;
     const char *result;
     int i;
 
-    API_FUNC(1, "config_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_string", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1743,15 +1639,13 @@ weechat_tcl_api_config_string (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_config_string_default (ClientData clientData, Tcl_Interp *interp,
-                                       int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_string_default)
 {
     Tcl_Obj *objp;
     const char *result;
     int i;
 
-    API_FUNC(1, "config_string_default", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_string_default", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1760,15 +1654,13 @@ weechat_tcl_api_config_string_default (ClientData clientData, Tcl_Interp *interp
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_config_color (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_color)
 {
     Tcl_Obj *objp;
     const char *result;
     int i;
 
-    API_FUNC(1, "config_color", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1777,15 +1669,13 @@ weechat_tcl_api_config_color (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_config_color_default (ClientData clientData, Tcl_Interp *interp,
-                                      int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_color_default)
 {
     Tcl_Obj *objp;
     const char *result;
     int i;
 
-    API_FUNC(1, "config_color_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color_default", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1794,15 +1684,13 @@ weechat_tcl_api_config_color_default (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_config_write_option (ClientData clientData, Tcl_Interp *interp,
-                                     int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_write_option)
 {
     Tcl_Obj *objp;
     char *config_file, *option;
     int i;
 
-    API_FUNC(1, "config_write_option", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_write_option", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1815,15 +1703,13 @@ weechat_tcl_api_config_write_option (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_config_write_line (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_write_line)
 {
     Tcl_Obj *objp;
     char *config_file, *option_name, *value;
     int i;
 
-    API_FUNC(1, "config_write_line", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_write_line", API_RETURN_ERROR);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1837,15 +1723,13 @@ weechat_tcl_api_config_write_line (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_config_write (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_write)
 {
     Tcl_Obj *objp;
     int rc;
     int i;
 
-    API_FUNC(1, "config_write", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_write", API_RETURN_INT(-1));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -1854,15 +1738,13 @@ weechat_tcl_api_config_write (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_tcl_api_config_read (ClientData clientData, Tcl_Interp *interp,
-                             int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_read)
 {
     Tcl_Obj *objp;
     int rc;
     int i;
 
-    API_FUNC(1, "config_read", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_read", API_RETURN_INT(-1));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -1871,15 +1753,13 @@ weechat_tcl_api_config_read (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_tcl_api_config_reload (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_reload)
 {
     Tcl_Obj *objp;
     int rc;
     int i;
 
-    API_FUNC(1, "config_reload", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(-1));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -1888,14 +1768,12 @@ weechat_tcl_api_config_reload (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_tcl_api_config_option_free (ClientData clientData, Tcl_Interp *interp,
-                                    int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_option_free)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "config_option_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_option_free", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1906,14 +1784,12 @@ weechat_tcl_api_config_option_free (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_config_section_free_options (ClientData clientData, Tcl_Interp *interp,
-                                             int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_section_free_options)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "config_section_free_options", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_section_free_options", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1924,14 +1800,12 @@ weechat_tcl_api_config_section_free_options (ClientData clientData, Tcl_Interp *
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_config_section_free (ClientData clientData, Tcl_Interp *interp,
-                                     int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_section_free)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "config_section_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_section_free", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1942,14 +1816,12 @@ weechat_tcl_api_config_section_free (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_config_free (ClientData clientData, Tcl_Interp *interp,
-                             int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_free)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "config_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_free", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1960,15 +1832,13 @@ weechat_tcl_api_config_free (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_config_get (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_get)
 {
     Tcl_Obj *objp;
     char *result;
     int i;
 
-    API_FUNC(1, "config_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_get", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1977,15 +1847,13 @@ weechat_tcl_api_config_get (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_config_get_plugin (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_get_plugin)
 {
     Tcl_Obj *objp;
     const char *result;
     int i;
 
-    API_FUNC(1, "config_get_plugin", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_get_plugin", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1996,15 +1864,13 @@ weechat_tcl_api_config_get_plugin (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_config_is_set_plugin (ClientData clientData, Tcl_Interp *interp,
-                                      int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_is_set_plugin)
 {
     Tcl_Obj *objp;
     char *option;
     int i, rc;
 
-    API_FUNC(1, "config_is_set_plugin", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_is_set_plugin", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -2017,15 +1883,13 @@ weechat_tcl_api_config_is_set_plugin (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_tcl_api_config_set_plugin (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_set_plugin)
 {
     Tcl_Obj *objp;
     char *option, *value;
     int i, rc;
 
-    API_FUNC(1, "config_set_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+    API_INIT_FUNC(1, "config_set_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -2040,15 +1904,13 @@ weechat_tcl_api_config_set_plugin (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_tcl_api_config_set_desc_plugin (ClientData clientData, Tcl_Interp *interp,
-                                        int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_set_desc_plugin)
 {
     Tcl_Obj *objp;
     char *option, *description;
     int i;
 
-    API_FUNC(1, "config_set_desc_plugin", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_set_desc_plugin", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2063,15 +1925,13 @@ weechat_tcl_api_config_set_desc_plugin (ClientData clientData, Tcl_Interp *inter
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_config_unset_plugin (ClientData clientData, Tcl_Interp *interp,
-                                     int objc, Tcl_Obj *CONST objv[])
+API_FUNC(config_unset_plugin)
 {
     Tcl_Obj *objp;
     char *option;
     int i, rc;
 
-    API_FUNC(1, "config_unset_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
+    API_INIT_FUNC(1, "config_unset_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
 
@@ -2084,16 +1944,14 @@ weechat_tcl_api_config_unset_plugin (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_tcl_api_key_bind (ClientData clientData, Tcl_Interp *interp,
-                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(key_bind)
 {
     Tcl_Obj *objp;
     char *context;
     struct t_hashtable *hashtable;
     int i, num_keys;
 
-    API_FUNC(1, "key_bind", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "key_bind", API_RETURN_INT(0));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -2111,15 +1969,13 @@ weechat_tcl_api_key_bind (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(num_keys);
 }
 
-static int
-weechat_tcl_api_key_unbind (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(key_unbind)
 {
     Tcl_Obj *objp;
     char *context, *key;
     int i, num_keys;
 
-    API_FUNC(1, "key_unbind", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "key_unbind", API_RETURN_INT(0));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -2131,15 +1987,13 @@ weechat_tcl_api_key_unbind (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(num_keys);
 }
 
-static int
-weechat_tcl_api_prefix (ClientData clientData, Tcl_Interp *interp,
-                        int objc, Tcl_Obj *CONST objv[])
+API_FUNC(prefix)
 {
     Tcl_Obj *objp;
     const char *result;
     int i;
 
-    API_FUNC(0, "prefix", API_RETURN_EMPTY);
+    API_INIT_FUNC(0, "prefix", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2148,15 +2002,13 @@ weechat_tcl_api_prefix (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_color (ClientData clientData, Tcl_Interp *interp,
-                       int objc, Tcl_Obj *CONST objv[])
+API_FUNC(color)
 {
     Tcl_Obj *objp;
     const char *result;
     int i;
 
-    API_FUNC(0, "color", API_RETURN_EMPTY);
+    API_INIT_FUNC(0, "color", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2165,15 +2017,13 @@ weechat_tcl_api_color (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_print (ClientData clientData, Tcl_Interp *interp,
-                       int objc, Tcl_Obj *CONST objv[])
+API_FUNC(print)
 {
     Tcl_Obj *objp;
     char *buffer, *message;
     int i;
 
-    API_FUNC(0, "print", API_RETURN_ERROR);
+    API_INIT_FUNC(0, "print", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2188,15 +2038,13 @@ weechat_tcl_api_print (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_print_date_tags (ClientData clientData, Tcl_Interp *interp,
-                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(print_date_tags)
 {
     Tcl_Obj *objp;
     char *buffer, *tags, *message;
     int i, tdate;
 
-    API_FUNC(1, "print_date_tags", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "print_date_tags", API_RETURN_ERROR);
     if (objc < 5)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2217,15 +2065,13 @@ weechat_tcl_api_print_date_tags (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_print_y (ClientData clientData, Tcl_Interp *interp,
-                         int objc, Tcl_Obj *CONST objv[])
+API_FUNC(print_y)
 {
     Tcl_Obj *objp;
     char *buffer, *message;
     int i, y;
 
-    API_FUNC(1, "print_y", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "print_y", API_RETURN_ERROR);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2244,9 +2090,7 @@ weechat_tcl_api_print_y (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_log_print (ClientData clientData, Tcl_Interp *interp,
-                           int objc, Tcl_Obj *CONST objv[])
+API_FUNC(log_print)
 {
     Tcl_Obj *objp;
     int i;
@@ -2254,7 +2098,7 @@ weechat_tcl_api_log_print (ClientData clientData, Tcl_Interp *interp,
     /* make C compiler happy */
     (void) clientData;
 
-    API_FUNC(1, "log_print", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "log_print", API_RETURN_ERROR);
 
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -2307,16 +2151,14 @@ weechat_tcl_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_hook_command (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_command)
 {
     Tcl_Obj *objp;
     char *result, *command, *description, *args, *args_description;
     char *completion, *function, *data;
     int i;
 
-    API_FUNC(1, "hook_command", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_command", API_RETURN_EMPTY);
     if (objc < 8)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2380,15 +2222,13 @@ weechat_tcl_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_hook_command_run (ClientData clientData, Tcl_Interp *interp,
-                                  int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_command_run)
 {
     Tcl_Obj *objp;
     char *result, *command, *function, *data;
     int i;
 
-    API_FUNC(1, "hook_command_run", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_command_run", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2443,15 +2283,13 @@ weechat_tcl_api_hook_timer_cb (void *data, int remaining_calls)
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_hook_timer (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_timer)
 {
     Tcl_Obj *objp;
     char *result;
     int i, interval, align_second, max_calls;
 
-    API_FUNC(1, "hook_timer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_timer", API_RETURN_EMPTY);
     if (objc < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2509,15 +2347,13 @@ weechat_tcl_api_hook_fd_cb (void *data, int fd)
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_hook_fd (ClientData clientData, Tcl_Interp *interp,
-                         int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_fd)
 {
     Tcl_Obj *objp;
     char *result;
     int i, fd, read, write, exception;
 
-    API_FUNC(1, "hook_fd", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_fd", API_RETURN_EMPTY);
     if (objc < 7)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2579,15 +2415,13 @@ weechat_tcl_api_hook_process_cb (void *data,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_hook_process (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_process)
 {
     Tcl_Obj *objp;
     char *command, *function, *data, *result;
     int i, timeout;
 
-    API_FUNC(1, "hook_process", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_process", API_RETURN_EMPTY);
     if (objc < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2609,17 +2443,14 @@ weechat_tcl_api_hook_process (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_hook_process_hashtable (ClientData clientData,
-                                        Tcl_Interp *interp,
-                                        int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_process_hashtable)
 {
     Tcl_Obj *objp;
     char *command, *function, *data, *result;
     struct t_hashtable *options;
     int i, timeout;
 
-    API_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
     if (objc < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2694,15 +2525,13 @@ weechat_tcl_api_hook_connect_cb (void *data, int status, int gnutls_rc,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_connect)
 {
     Tcl_Obj *objp;
     char *proxy, *address, *local_hostname, *function, *data, *result;
     int i, port, ipv6, retry;
 
-    API_FUNC(1, "hook_connect", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_connect", API_RETURN_EMPTY);
     if (objc < 9)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2792,15 +2621,13 @@ weechat_tcl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_hook_print (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_print)
 {
     Tcl_Obj *objp;
     char *result, *buffer, *tags, *message, *function, *data;
     int i, strip_colors;
 
-    API_FUNC(1, "hook_print", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_print", API_RETURN_EMPTY);
     if (objc < 7)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2886,15 +2713,13 @@ weechat_tcl_api_hook_signal_cb (void *data, const char *signal, const char *type
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_hook_signal (ClientData clientData, Tcl_Interp *interp,
-                             int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_signal)
 {
     Tcl_Obj *objp;
     char *result, *signal, *function, *data;
     int i;
 
-    API_FUNC(1, "hook_signal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_signal", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2912,15 +2737,13 @@ weechat_tcl_api_hook_signal (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_hook_signal_send (ClientData clientData, Tcl_Interp *interp,
-                                  int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_signal_send)
 {
     Tcl_Obj *objp;
     char *signal, *type_data;
     int number, i, rc;
 
-    API_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
+    API_INIT_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
@@ -2991,15 +2814,13 @@ weechat_tcl_api_hook_hsignal_cb (void *data, const char *signal,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_hook_hsignal (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_hsignal)
 {
     Tcl_Obj *objp;
     char *result, *signal, *function, *data;
     int i;
 
-    API_FUNC(1, "hook_hsignal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_hsignal", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3017,16 +2838,14 @@ weechat_tcl_api_hook_hsignal (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_hook_hsignal_send (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_hsignal_send)
 {
     Tcl_Obj *objp;
     char *signal;
     struct t_hashtable *hashtable;
     int i, rc;
 
-    API_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
+    API_INIT_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
@@ -3079,15 +2898,13 @@ weechat_tcl_api_hook_config_cb (void *data, const char *option, const char *valu
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_hook_config (ClientData clientData, Tcl_Interp *interp,
-                             int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_config)
 {
     Tcl_Obj *objp;
     char *result, *option, *function, *data;
     int i;
 
-    API_FUNC(1, "hook_config", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_config", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3147,15 +2964,13 @@ weechat_tcl_api_hook_completion_cb (void *data, const char *completion_item,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_hook_completion (ClientData clientData, Tcl_Interp *interp,
-                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_completion)
 {
     Tcl_Obj *objp;
     char *result, *completion, *description, *function, *data;
     int i;
 
-    API_FUNC(1, "hook_completion", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
     if (objc < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3175,15 +2990,13 @@ weechat_tcl_api_hook_completion (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_hook_completion_list_add (ClientData clientData, Tcl_Interp *interp,
-                                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_completion_list_add)
 {
     Tcl_Obj *objp;
     char *completion, *word, *where;
     int i, nick_completion;
 
-    API_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
     if (objc < 5)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3228,15 +3041,13 @@ weechat_tcl_api_hook_modifier_cb (void *data, const char *modifier,
     return NULL;
 }
 
-static int
-weechat_tcl_api_hook_modifier (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_modifier)
 {
     Tcl_Obj *objp;
     char *result, *modifier, *function, *data;
     int i;
 
-    API_FUNC(1, "hook_modifier", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_modifier", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3254,15 +3065,13 @@ weechat_tcl_api_hook_modifier (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_hook_modifier_exec (ClientData clientData, Tcl_Interp *interp,
-                                    int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_modifier_exec)
 {
     Tcl_Obj *objp;
     char *result, *modifier, *modifier_data, *string;
     int i;
 
-    API_FUNC(1, "hook_modifier_exec", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_modifier_exec", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3300,15 +3109,13 @@ weechat_tcl_api_hook_info_cb (void *data, const char *info_name,
     return NULL;
 }
 
-static int
-weechat_tcl_api_hook_info (ClientData clientData, Tcl_Interp *interp,
-                           int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_info)
 {
     Tcl_Obj *objp;
     char *result, *info_name, *description, *args_description, *function, *data;
     int i;
 
-    API_FUNC(1, "hook_info", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_info", API_RETURN_EMPTY);
     if (objc < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3355,16 +3162,14 @@ weechat_tcl_api_hook_info_hashtable_cb (void *data, const char *info_name,
     return NULL;
 }
 
-static int
-weechat_tcl_api_hook_info_hashtable (ClientData clientData, Tcl_Interp *interp,
-                                     int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_info_hashtable)
 {
     Tcl_Obj *objp;
     char *result, *info_name, *description, *args_description;
     char *output_description, *function, *data;
     int i;
 
-    API_FUNC(1, "hook_info_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_info_hashtable", API_RETURN_EMPTY);
     if (objc < 7)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3420,16 +3225,14 @@ weechat_tcl_api_hook_infolist_cb (void *data, const char *infolist_name,
     return NULL;
 }
 
-static int
-weechat_tcl_api_hook_infolist (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_infolist)
 {
     Tcl_Obj *objp;
     char *result, *infolist_name, *description, *pointer_description;
     char *args_description, *function, *data;
     int i;
 
-    API_FUNC(1, "hook_infolist", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_infolist", API_RETURN_EMPTY);
     if (objc < 7)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3477,15 +3280,13 @@ weechat_tcl_api_hook_focus_cb (void *data,
     return NULL;
 }
 
-static int
-weechat_tcl_api_hook_focus (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_focus)
 {
     Tcl_Obj *objp;
     char *result, *area, *function, *data;
     int i;
 
-    API_FUNC(1, "hook_focus", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_focus", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3503,15 +3304,13 @@ weechat_tcl_api_hook_focus (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_hook_set (ClientData clientData, Tcl_Interp *interp,
-                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hook_set)
 {
     Tcl_Obj *objp;
     char *hook, *property, *value;
     int i;
 
-    API_FUNC(1, "hook_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "hook_set", API_RETURN_ERROR);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3524,14 +3323,12 @@ weechat_tcl_api_hook_set (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_unhook (ClientData clientData, Tcl_Interp *interp,
-                        int objc, Tcl_Obj *CONST objv[])
+API_FUNC(unhook)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "unhook", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "unhook", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3542,9 +3339,7 @@ weechat_tcl_api_unhook (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_unhook_all (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(unhook_all)
 {
     Tcl_Obj *objp;
 
@@ -3553,7 +3348,7 @@ weechat_tcl_api_unhook_all (ClientData clientData, Tcl_Interp *interp,
     (void) objc;
     (void) objv;
 
-    API_FUNC(1, "unhook_all", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
     plugin_script_api_unhook_all (weechat_tcl_plugin, tcl_current_script);
 
@@ -3632,16 +3427,14 @@ weechat_tcl_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_buffer_new (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_new)
 {
     Tcl_Obj *objp;
     char *result, *name, *function_input, *data_input, *function_close;
     char *data_close;
     int i;
 
-    API_FUNC(1, "buffer_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_new", API_RETURN_EMPTY);
     if (objc < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3664,15 +3457,13 @@ weechat_tcl_api_buffer_new (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_buffer_search (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_search)
 {
     Tcl_Obj *objp;
     char *result, *plugin, *name;
     int i;
 
-    API_FUNC(1, "buffer_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_search", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3684,9 +3475,7 @@ weechat_tcl_api_buffer_search (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_buffer_search_main (ClientData clientData, Tcl_Interp *interp,
-                                    int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_search_main)
 {
     Tcl_Obj *objp;
     char *result;
@@ -3696,16 +3485,14 @@ weechat_tcl_api_buffer_search_main (ClientData clientData, Tcl_Interp *interp,
     (void) objc;
     (void) objv;
 
-    API_FUNC(1, "buffer_search_main", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_search_main", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_buffer_search_main ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_current_buffer (ClientData clientData, Tcl_Interp *interp,
-                                int objc, Tcl_Obj *CONST objv[])
+API_FUNC(current_buffer)
 {
     Tcl_Obj *objp;
     char *result;
@@ -3715,21 +3502,19 @@ weechat_tcl_api_current_buffer (ClientData clientData, Tcl_Interp *interp,
     (void) objc;
     (void) objv;
 
-    API_FUNC(1, "current_buffer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "current_buffer", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_current_buffer ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_buffer_clear (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_clear)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "buffer_clear", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_clear", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3738,14 +3523,12 @@ weechat_tcl_api_buffer_clear (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_buffer_close (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_close)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "buffer_close", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_close", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3756,14 +3539,12 @@ weechat_tcl_api_buffer_close (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_buffer_merge (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_merge)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "buffer_merge", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_merge", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3773,14 +3554,12 @@ weechat_tcl_api_buffer_merge (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_buffer_unmerge (ClientData clientData, Tcl_Interp *interp,
-                                int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_unmerge)
 {
     Tcl_Obj *objp;
     int i, number;
 
-    API_FUNC(1, "buffer_unmerge", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_unmerge", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3793,16 +3572,14 @@ weechat_tcl_api_buffer_unmerge (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_buffer_get_integer (ClientData clientData, Tcl_Interp *interp,
-                                    int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_get_integer)
 {
     Tcl_Obj *objp;
     char *buffer, *property;
     int result;
     int i;
 
-    API_FUNC(1, "buffer_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "buffer_get_integer", API_RETURN_INT(-1));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3814,16 +3591,14 @@ weechat_tcl_api_buffer_get_integer (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_buffer_get_string (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_get_string)
 {
     Tcl_Obj *objp;
     char *buffer, *property;
     const char *result;
     int i;
 
-    API_FUNC(1, "buffer_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_get_string", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3835,15 +3610,13 @@ weechat_tcl_api_buffer_get_string (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_buffer_get_pointer (ClientData clientData, Tcl_Interp *interp,
-                                    int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_get_pointer)
 {
     Tcl_Obj *objp;
     char *buffer, *property, *result;
     int i;
 
-    API_FUNC(1, "buffer_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_get_pointer", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3856,15 +3629,13 @@ weechat_tcl_api_buffer_get_pointer (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_buffer_set (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_set)
 {
     Tcl_Obj *objp;
     char *buffer, *property, *value;
     int i;
 
-    API_FUNC(1, "buffer_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_set", API_RETURN_ERROR);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3877,15 +3648,13 @@ weechat_tcl_api_buffer_set (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_buffer_string_replace_local_var (ClientData clientData, Tcl_Interp *interp,
-                                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_string_replace_local_var)
 {
     Tcl_Obj *objp;
     char *buffer, *string, *result;
     int i;
 
-    API_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3897,16 +3666,14 @@ weechat_tcl_api_buffer_string_replace_local_var (ClientData clientData, Tcl_Inte
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_buffer_match_list (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(buffer_match_list)
 {
     Tcl_Obj *objp;
     char *buffer, *string;
     int result;
     int i;
 
-    API_FUNC(1, "buffer_match_list", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "buffer_match_list", API_RETURN_INT(0));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -3918,9 +3685,7 @@ weechat_tcl_api_buffer_match_list (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_current_window (ClientData clientData, Tcl_Interp *interp,
-                                int objc, Tcl_Obj *CONST objv[])
+API_FUNC(current_window)
 {
     Tcl_Obj *objp;
     char *result;
@@ -3930,22 +3695,20 @@ weechat_tcl_api_current_window (ClientData clientData, Tcl_Interp *interp,
     (void) objc;
     (void) objv;
 
-    API_FUNC(1, "current_window", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "current_window", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_current_window ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_window_search_with_buffer (ClientData clientData, Tcl_Interp *interp,
-                                           int objc, Tcl_Obj *CONST objv[])
+API_FUNC(window_search_with_buffer)
 {
     Tcl_Obj *objp;
     char *buffer, *result;
     int i;
 
-    API_FUNC(1, "window_search_with_buffer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "window_search_with_buffer", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3956,16 +3719,14 @@ weechat_tcl_api_window_search_with_buffer (ClientData clientData, Tcl_Interp *in
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_window_get_integer (ClientData clientData, Tcl_Interp *interp,
-                                    int objc, Tcl_Obj *CONST objv[])
+API_FUNC(window_get_integer)
 {
     Tcl_Obj *objp;
     char *window, *property;
     int result;
     int i;
 
-    API_FUNC(1, "window_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "window_get_integer", API_RETURN_INT(-1));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3977,16 +3738,14 @@ weechat_tcl_api_window_get_integer (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_window_get_string (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(window_get_string)
 {
     Tcl_Obj *objp;
     char *window, *property;
     const char *result;
     int i;
 
-    API_FUNC(1, "window_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "window_get_string", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3998,15 +3757,13 @@ weechat_tcl_api_window_get_string (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_window_get_pointer (ClientData clientData, Tcl_Interp *interp,
-                                    int objc, Tcl_Obj *CONST objv[])
+API_FUNC(window_get_pointer)
 {
     Tcl_Obj *objp;
     char *window, *property, *result;
     int i;
 
-    API_FUNC(1, "window_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "window_get_pointer", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4019,15 +3776,13 @@ weechat_tcl_api_window_get_pointer (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_window_set_title (ClientData clientData, Tcl_Interp *interp,
-                                  int objc, Tcl_Obj *CONST objv[])
+API_FUNC(window_set_title)
 {
     Tcl_Obj *objp;
     char *title;
     int i;
 
-    API_FUNC(1, "window_set_title", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "window_set_title", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4038,15 +3793,13 @@ weechat_tcl_api_window_set_title (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_nicklist_add_group (ClientData clientData, Tcl_Interp *interp,
-                                    int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_add_group)
 {
     Tcl_Obj *objp;
     char *result, *buffer, *parent_group, *name, *color;
     int i, visible;
 
-    API_FUNC(1, "nicklist_add_group", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_add_group", API_RETURN_EMPTY);
     if (objc < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4067,15 +3820,13 @@ weechat_tcl_api_nicklist_add_group (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_nicklist_search_group (ClientData clientData, Tcl_Interp *interp,
-                                       int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_search_group)
 {
     Tcl_Obj *objp;
     char *result, *buffer, *from_group, *name;
     int i;
 
-    API_FUNC(1, "nicklist_search_group", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_search_group", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4090,15 +3841,13 @@ weechat_tcl_api_nicklist_search_group (ClientData clientData, Tcl_Interp *interp
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_nicklist_add_nick (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_add_nick)
 {
     Tcl_Obj *objp;
     char *result, *buffer, *group, *name, *color, *prefix, *prefix_color;
     int i, visible;
 
-    API_FUNC(1, "nicklist_add_nick", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_add_nick", API_RETURN_EMPTY);
     if (objc < 8)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4123,15 +3872,13 @@ weechat_tcl_api_nicklist_add_nick (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_nicklist_search_nick (ClientData clientData, Tcl_Interp *interp,
-                                      int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_search_nick)
 {
     Tcl_Obj *objp;
     char *result, *buffer, *from_group, *name;
     int i;
 
-    API_FUNC(1, "nicklist_search_nick", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_search_nick", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4146,15 +3893,13 @@ weechat_tcl_api_nicklist_search_nick (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_nicklist_remove_group (ClientData clientData, Tcl_Interp *interp,
-                                       int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_remove_group)
 {
     Tcl_Obj *objp;
     char *buffer, *group;
     int i;
 
-    API_FUNC(1, "nicklist_remove_group", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_remove_group", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4167,15 +3912,13 @@ weechat_tcl_api_nicklist_remove_group (ClientData clientData, Tcl_Interp *interp
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_nicklist_remove_nick (ClientData clientData, Tcl_Interp *interp,
-                                      int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_remove_nick)
 {
     Tcl_Obj *objp;
     char *buffer, *nick;
     int i;
 
-    API_FUNC(1, "nicklist_remove_nick", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_remove_nick", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4188,14 +3931,12 @@ weechat_tcl_api_nicklist_remove_nick (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_nicklist_remove_all (ClientData clientData, Tcl_Interp *interp,
-                                     int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_remove_all)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "nicklist_remove_all", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_remove_all", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4204,17 +3945,14 @@ weechat_tcl_api_nicklist_remove_all (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_nicklist_group_get_integer (ClientData clientData,
-                                            Tcl_Interp *interp,
-                                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_group_get_integer)
 {
     Tcl_Obj *objp;
     char *buffer, *group, *property;
     int result;
     int i;
 
-    API_FUNC(1, "nicklist_group_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "nicklist_group_get_integer", API_RETURN_INT(-1));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -4229,17 +3967,14 @@ weechat_tcl_api_nicklist_group_get_integer (ClientData clientData,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_nicklist_group_get_string (ClientData clientData,
-                                           Tcl_Interp *interp,
-                                           int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_group_get_string)
 {
     Tcl_Obj *objp;
     char *buffer, *group, *property;
     const char *result;
     int i;
 
-    API_FUNC(1, "nicklist_group_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_group_get_string", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4254,16 +3989,13 @@ weechat_tcl_api_nicklist_group_get_string (ClientData clientData,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_nicklist_group_get_pointer (ClientData clientData,
-                                            Tcl_Interp *interp,
-                                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_group_get_pointer)
 {
     Tcl_Obj *objp;
     char *buffer, *group, *property, *result;
     int i;
 
-    API_FUNC(1, "nicklist_group_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_group_get_pointer", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4278,15 +4010,13 @@ weechat_tcl_api_nicklist_group_get_pointer (ClientData clientData,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_nicklist_group_set (ClientData clientData, Tcl_Interp *interp,
-                                    int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_group_set)
 {
     Tcl_Obj *objp;
     char *buffer, *group, *property, *value;
     int i;
 
-    API_FUNC(1, "nicklist_group_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_group_set", API_RETURN_ERROR);
     if (objc < 5)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4303,17 +4033,14 @@ weechat_tcl_api_nicklist_group_set (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_nicklist_nick_get_integer (ClientData clientData,
-                                           Tcl_Interp *interp,
-                                           int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_nick_get_integer)
 {
     Tcl_Obj *objp;
     char *buffer, *nick, *property;
     int result;
     int i;
 
-    API_FUNC(1, "nicklist_nick_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "nicklist_nick_get_integer", API_RETURN_INT(-1));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -4328,17 +4055,14 @@ weechat_tcl_api_nicklist_nick_get_integer (ClientData clientData,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_nicklist_nick_get_string (ClientData clientData,
-                                          Tcl_Interp *interp,
-                                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_nick_get_string)
 {
     Tcl_Obj *objp;
     char *buffer, *nick, *property;
     const char *result;
     int i;
 
-    API_FUNC(1, "nicklist_nick_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_nick_get_string", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4353,16 +4077,13 @@ weechat_tcl_api_nicklist_nick_get_string (ClientData clientData,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_nicklist_nick_get_pointer (ClientData clientData,
-                                           Tcl_Interp *interp,
-                                           int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_nick_get_pointer)
 {
     Tcl_Obj *objp;
     char *buffer, *nick, *property, *result;
     int i;
 
-    API_FUNC(1, "nicklist_nick_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_nick_get_pointer", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4377,15 +4098,13 @@ weechat_tcl_api_nicklist_nick_get_pointer (ClientData clientData,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_nicklist_nick_set (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(nicklist_nick_set)
 {
     Tcl_Obj *objp;
     char *buffer, *nick, *property, *value;
     int i;
 
-    API_FUNC(1, "nicklist_nick_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_nick_set", API_RETURN_ERROR);
     if (objc < 5)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4402,15 +4121,13 @@ weechat_tcl_api_nicklist_nick_set (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_bar_item_search (ClientData clientData, Tcl_Interp *interp,
-                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(bar_item_search)
 {
     Tcl_Obj *objp;
     char *result;
     int i;
 
-    API_FUNC(1, "bar_item_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_item_search", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4478,15 +4195,13 @@ weechat_tcl_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
     return NULL;
 }
 
-static int
-weechat_tcl_api_bar_item_new (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(bar_item_new)
 {
     Tcl_Obj *objp;
     char *result, *name, *function, *data;
     int i;
 
-    API_FUNC(1, "bar_item_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_item_new", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4504,14 +4219,12 @@ weechat_tcl_api_bar_item_new (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_bar_item_update (ClientData clientData, Tcl_Interp *interp,
-                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(bar_item_update)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "bar_item_update", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_item_update", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4520,14 +4233,12 @@ weechat_tcl_api_bar_item_update (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_bar_item_remove (ClientData clientData, Tcl_Interp *interp,
-                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(bar_item_remove)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "bar_item_remove", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_item_remove", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4538,15 +4249,13 @@ weechat_tcl_api_bar_item_remove (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_bar_search (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(bar_search)
 {
     Tcl_Obj *objp;
     char *result;
     int i;
 
-    API_FUNC(1, "bar_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_search", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4555,9 +4264,7 @@ weechat_tcl_api_bar_search (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_bar_new (ClientData clientData, Tcl_Interp *interp,
-                         int objc, Tcl_Obj *CONST objv[])
+API_FUNC(bar_new)
 {
     Tcl_Obj *objp;
     char *result, *name, *hidden, *priority, *type, *conditions, *position;
@@ -4565,7 +4272,7 @@ weechat_tcl_api_bar_new (ClientData clientData, Tcl_Interp *interp,
     char *color_delim, *color_bg, *separator, *bar_items;
     int i;
 
-    API_FUNC(1, "bar_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_new", API_RETURN_EMPTY);
     if (objc < 16)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4604,15 +4311,13 @@ weechat_tcl_api_bar_new (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_bar_set (ClientData clientData, Tcl_Interp *interp,
-                         int objc, Tcl_Obj *CONST objv[])
+API_FUNC(bar_set)
 {
     Tcl_Obj *objp;
     char *bar, *property, *value;
     int i;
 
-    API_FUNC(1, "bar_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_set", API_RETURN_ERROR);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4625,14 +4330,12 @@ weechat_tcl_api_bar_set (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_bar_update (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(bar_update)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "bar_update", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_update", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4641,14 +4344,12 @@ weechat_tcl_api_bar_update (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_bar_remove (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(bar_remove)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "bar_remove", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_remove", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4657,15 +4358,13 @@ weechat_tcl_api_bar_remove (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_command (ClientData clientData, Tcl_Interp *interp,
-                         int objc, Tcl_Obj *CONST objv[])
+API_FUNC(command)
 {
     Tcl_Obj *objp;
     char *buffer, *command;
     int i, rc;
 
-    API_FUNC(1, "command", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "command", API_RETURN_ERROR);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4680,15 +4379,13 @@ weechat_tcl_api_command (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_tcl_api_info_get (ClientData clientData, Tcl_Interp *interp,
-                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(info_get)
 {
     Tcl_Obj *objp;
     const char *result;
     int i;
 
-    API_FUNC(1, "info_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "info_get", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4698,15 +4395,13 @@ weechat_tcl_api_info_get (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_info_get_hashtable (ClientData clientData, Tcl_Interp *interp,
-                                    int objc, Tcl_Obj *CONST objv[])
+API_FUNC(info_get_hashtable)
 {
     Tcl_Obj *objp, *result_dict;
     struct t_hashtable *hashtable, *result_hashtable;
     int i;
 
-    API_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4727,9 +4422,7 @@ weechat_tcl_api_info_get_hashtable (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OBJ(result_dict);
 }
 
-static int
-weechat_tcl_api_infolist_new (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_new)
 {
     Tcl_Obj *objp;
     char *result;
@@ -4739,22 +4432,20 @@ weechat_tcl_api_infolist_new (ClientData clientData, Tcl_Interp *interp,
     (void) objc;
     (void) objv;
 
-    API_FUNC(1, "infolist_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_infolist_new ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_infolist_new_item (ClientData clientData, Tcl_Interp *interp,
-                                   int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_new_item)
 {
     Tcl_Obj *objp;
     char *result;
     int i;
 
-    API_FUNC(1, "infolist_new_item", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_new_item", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4763,15 +4454,13 @@ weechat_tcl_api_infolist_new_item (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_infolist_new_var_integer (ClientData clientData, Tcl_Interp *interp,
-                                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_new_var_integer)
 {
     Tcl_Obj *objp;
     char *result;
     int i, value;
 
-    API_FUNC(1, "infolist_new_var_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_new_var_integer", API_RETURN_INT(0));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4785,15 +4474,13 @@ weechat_tcl_api_infolist_new_var_integer (ClientData clientData, Tcl_Interp *int
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_infolist_new_var_string (ClientData clientData, Tcl_Interp *interp,
-                                         int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_new_var_string)
 {
     Tcl_Obj *objp;
     char *result;
     int i;
 
-    API_FUNC(1, "infolist_new_var_string", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_INT(0));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4804,15 +4491,13 @@ weechat_tcl_api_infolist_new_var_string (ClientData clientData, Tcl_Interp *inte
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_infolist_new_var_pointer (ClientData clientData, Tcl_Interp *interp,
-                                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_new_var_pointer)
 {
     Tcl_Obj *objp;
     char *result;
     int i;
 
-    API_FUNC(1, "infolist_new_var_pointer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_INT(0));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4823,15 +4508,13 @@ weechat_tcl_api_infolist_new_var_pointer (ClientData clientData, Tcl_Interp *int
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_infolist_new_var_time (ClientData clientData, Tcl_Interp *interp,
-                                       int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_new_var_time)
 {
     Tcl_Obj *objp;
     char *result;
     int i, value;
 
-    API_FUNC(1, "infolist_new_var_time", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_INT(0));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4845,15 +4528,13 @@ weechat_tcl_api_infolist_new_var_time (ClientData clientData, Tcl_Interp *interp
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_infolist_get (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_get)
 {
     Tcl_Obj *objp;
     char *result, *name, *pointer, *arguments;
     int i;
 
-    API_FUNC(1, "infolist_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_get", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4868,14 +4549,12 @@ weechat_tcl_api_infolist_get (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_infolist_next (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_next)
 {
     Tcl_Obj *objp;
     int result, i;
 
-    API_FUNC(1, "infolist_next", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_next", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4884,14 +4563,12 @@ weechat_tcl_api_infolist_next (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_infolist_prev (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_prev)
 {
     Tcl_Obj *objp;
     int result, i;
 
-    API_FUNC(1, "infolist_prev", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_prev", API_RETURN_INT(0));
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4900,15 +4577,12 @@ weechat_tcl_api_infolist_prev (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_infolist_reset_item_cursor (ClientData clientData,
-                                            Tcl_Interp *interp,
-                                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_reset_item_cursor)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "infolist_reset_item_cursor", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "infolist_reset_item_cursor", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4917,15 +4591,13 @@ weechat_tcl_api_infolist_reset_item_cursor (ClientData clientData,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_infolist_fields (ClientData clientData, Tcl_Interp *interp,
-                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_fields)
 {
     Tcl_Obj *objp;
     const char *result;
     int i;
 
-    API_FUNC(1, "infolist_fields", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_fields", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4934,15 +4606,13 @@ weechat_tcl_api_infolist_fields (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_infolist_integer (ClientData clientData, Tcl_Interp *interp,
-                                  int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_integer)
 {
     Tcl_Obj *objp;
     char *infolist, *variable;
     int result, i;
 
-    API_FUNC(1, "infolist_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_integer", API_RETURN_INT(0));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4954,16 +4624,14 @@ weechat_tcl_api_infolist_integer (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_infolist_string (ClientData clientData, Tcl_Interp *interp,
-                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_string)
 {
     Tcl_Obj *objp;
     char *infolist, *variable;
     const char *result;
     int i;
 
-    API_FUNC(1, "infolist_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_string", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4975,15 +4643,13 @@ weechat_tcl_api_infolist_string (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_infolist_pointer (ClientData clientData, Tcl_Interp *interp,
-                                  int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_pointer)
 {
     Tcl_Obj *objp;
     char *infolist, *variable, *result;
     int i;
 
-    API_FUNC(1, "infolist_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_pointer", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4995,9 +4661,7 @@ weechat_tcl_api_infolist_pointer (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_infolist_time (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_time)
 {
     Tcl_Obj *objp;
     time_t time;
@@ -5005,7 +4669,7 @@ weechat_tcl_api_infolist_time (ClientData clientData, Tcl_Interp *interp,
     char timebuffer[64], *result, *infolist, *variable;
     int i;
 
-    API_FUNC(1, "infolist_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_time", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5022,14 +4686,12 @@ weechat_tcl_api_infolist_time (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_infolist_free (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(infolist_free)
 {
     Tcl_Obj *objp;
     int i;
 
-    API_FUNC(1, "infolist_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "infolist_free", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -5038,15 +4700,13 @@ weechat_tcl_api_infolist_free (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OK;
 }
 
-static int
-weechat_tcl_api_hdata_get (ClientData clientData, Tcl_Interp *interp,
-                           int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_get)
 {
     Tcl_Obj *objp;
     char *result, *name;
     int i;
 
-    API_FUNC(1, "hdata_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get", API_RETURN_EMPTY);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5057,15 +4717,13 @@ weechat_tcl_api_hdata_get (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_hdata_get_var_offset (ClientData clientData, Tcl_Interp *interp,
-                                      int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_get_var_offset)
 {
     Tcl_Obj *objp;
     char *hdata, *name;
     int result, i;
 
-    API_FUNC(1, "hdata_get_var_offset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_get_var_offset", API_RETURN_INT(0));
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5077,17 +4735,14 @@ weechat_tcl_api_hdata_get_var_offset (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_hdata_get_var_type_string (ClientData clientData,
-                                           Tcl_Interp *interp,
-                                           int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_get_var_type_string)
 {
     Tcl_Obj *objp;
     char *hdata, *name;
     const char *result;
     int i;
 
-    API_FUNC(1, "hdata_get_var_type_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_var_type_string", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5099,16 +4754,13 @@ weechat_tcl_api_hdata_get_var_type_string (ClientData clientData,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_hdata_get_var_array_size (ClientData clientData,
-                                          Tcl_Interp *interp,
-                                          int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_get_var_array_size)
 {
     Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     int result, i;
 
-    API_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -5123,17 +4775,14 @@ weechat_tcl_api_hdata_get_var_array_size (ClientData clientData,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_hdata_get_var_array_size_string (ClientData clientData,
-                                                 Tcl_Interp *interp,
-                                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_get_var_array_size_string)
 {
     Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     const char *result;
     int i;
 
-    API_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5148,16 +4797,14 @@ weechat_tcl_api_hdata_get_var_array_size_string (ClientData clientData,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_hdata_get_var_hdata (ClientData clientData, Tcl_Interp *interp,
-                                     int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_get_var_hdata)
 {
     Tcl_Obj *objp;
     char *hdata, *name;
     const char *result;
     int i;
 
-    API_FUNC(1, "hdata_get_var_hdata", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_var_hdata", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5169,15 +4816,13 @@ weechat_tcl_api_hdata_get_var_hdata (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_hdata_get_list (ClientData clientData, Tcl_Interp *interp,
-                                int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_get_list)
 {
     Tcl_Obj *objp;
     char *hdata, *name, *result;
     int i;
 
-    API_FUNC(1, "hdata_get_list", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_list", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5190,15 +4835,13 @@ weechat_tcl_api_hdata_get_list (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_hdata_check_pointer (ClientData clientData, Tcl_Interp *interp,
-                                     int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_check_pointer)
 {
     Tcl_Obj *objp;
     char *hdata, *list, *pointer;
     int result, i;
 
-    API_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5213,15 +4856,13 @@ weechat_tcl_api_hdata_check_pointer (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_hdata_move (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_move)
 {
     Tcl_Obj *objp;
     char *hdata, *pointer, *result;
     int i, count;
 
-    API_FUNC(1, "hdata_move", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_move", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5238,15 +4879,13 @@ weechat_tcl_api_hdata_move (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_hdata_search (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_search)
 {
     Tcl_Obj *objp;
     char *hdata, *pointer, *search, *result;
     int i, move;
 
-    API_FUNC(1, "hdata_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_search", API_RETURN_EMPTY);
     if (objc < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5265,15 +4904,13 @@ weechat_tcl_api_hdata_search (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_hdata_char (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_char)
 {
     Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     int result, i;
 
-    API_FUNC(1, "hdata_char", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_char", API_RETURN_INT(0));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5288,15 +4925,13 @@ weechat_tcl_api_hdata_char (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_hdata_integer (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_integer)
 {
     Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     int result, i;
 
-    API_FUNC(1, "hdata_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_integer", API_RETURN_INT(0));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5311,15 +4946,13 @@ weechat_tcl_api_hdata_integer (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(result);
 }
 
-static int
-weechat_tcl_api_hdata_long (ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_long)
 {
     Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     int result, i;
 
-    API_FUNC(1, "hdata_long", API_RETURN_LONG(0));
+    API_INIT_FUNC(1, "hdata_long", API_RETURN_LONG(0));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_LONG(0));
 
@@ -5334,16 +4967,14 @@ weechat_tcl_api_hdata_long (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_LONG(result);
 }
 
-static int
-weechat_tcl_api_hdata_string (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_string)
 {
     Tcl_Obj *objp;
     char *hdata, *pointer, *name;
     const char *result;
     int i;
 
-    API_FUNC(1, "hdata_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_string", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5358,15 +4989,13 @@ weechat_tcl_api_hdata_string (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_hdata_pointer (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_pointer)
 {
     Tcl_Obj *objp;
     char *hdata, *pointer, *name, *result;
     int i;
 
-    API_FUNC(1, "hdata_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_pointer", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5381,16 +5010,14 @@ weechat_tcl_api_hdata_pointer (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_hdata_time (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_time)
 {
     Tcl_Obj *objp;
     time_t time;
     char timebuffer[64], *result, *hdata, *pointer, *name;
     int i;
 
-    API_FUNC(1, "hdata_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_time", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5408,15 +5035,13 @@ weechat_tcl_api_hdata_time (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_hdata_hashtable (ClientData clientData, Tcl_Interp *interp,
-                                 int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_hashtable)
 {
     Tcl_Obj *objp, *result_dict;
     char *hdata, *pointer, *name;
     int i;
 
-    API_FUNC(1, "hdata_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_hashtable", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5433,16 +5058,14 @@ weechat_tcl_api_hdata_hashtable (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_OBJ(result_dict);
 }
 
-static int
-weechat_tcl_api_hdata_update (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_update)
 {
     Tcl_Obj *objp;
     char *hdata, *pointer;
     struct t_hashtable *hashtable;
     int i, value;
 
-    API_FUNC(1, "hdata_update", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_update", API_RETURN_INT(0));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5463,16 +5086,14 @@ weechat_tcl_api_hdata_update (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(value);
 }
 
-static int
-weechat_tcl_api_hdata_get_string (ClientData clientData, Tcl_Interp *interp,
-                                  int objc, Tcl_Obj *CONST objv[])
+API_FUNC(hdata_get_string)
 {
     Tcl_Obj *objp;
     char *hdata, *property;
     const char *result;
     int i;
 
-    API_FUNC(1, "hdata_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_string", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5484,15 +5105,13 @@ weechat_tcl_api_hdata_get_string (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING(result);
 }
 
-static int
-weechat_tcl_api_upgrade_new (ClientData clientData, Tcl_Interp *interp,
-                             int objc, Tcl_Obj *CONST objv[])
+API_FUNC(upgrade_new)
 {
     Tcl_Obj *objp;
     char *result, *filename;
     int i, write;
 
-    API_FUNC(1, "upgrade_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "upgrade_new", API_RETURN_EMPTY);
     if (objc < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5506,15 +5125,13 @@ weechat_tcl_api_upgrade_new (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_STRING_FREE(result);
 }
 
-static int
-weechat_tcl_api_upgrade_write_object (ClientData clientData, Tcl_Interp *interp,
-                                      int objc, Tcl_Obj *CONST objv[])
+API_FUNC(upgrade_write_object)
 {
     Tcl_Obj *objp;
     char *upgrade_file, *infolist;
     int rc, i, object_id;
 
-    API_FUNC(1, "upgrade_write_object", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "upgrade_write_object", API_RETURN_INT(0));
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -5576,15 +5193,13 @@ weechat_tcl_api_upgrade_read_cb (void *data,
     return WEECHAT_RC_ERROR;
 }
 
-static int
-weechat_tcl_api_upgrade_read (ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[])
+API_FUNC(upgrade_read)
 {
     Tcl_Obj *objp;
     char *upgrade_file, *function, *data;
     int i, rc;
 
-    API_FUNC(1, "upgrade_read", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "upgrade_read", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -5602,15 +5217,13 @@ weechat_tcl_api_upgrade_read (ClientData clientData, Tcl_Interp *interp,
     API_RETURN_INT(rc);
 }
 
-static int
-weechat_tcl_api_upgrade_close (ClientData clientData, Tcl_Interp *interp,
-                               int objc, Tcl_Obj *CONST objv[])
+API_FUNC(upgrade_close)
 {
     Tcl_Obj *objp;
     char *upgrade_file;
     int i;
 
-    API_FUNC(1, "upgrade_close", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "upgrade_close", API_RETURN_ERROR);
     if (objc < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 

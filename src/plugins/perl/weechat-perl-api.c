@@ -35,7 +35,11 @@
 #include "weechat-perl.h"
 
 
-#define API_FUNC(__init, __name, __ret)                                 \
+#define API_DEF_FUNC(__name)                                           \
+    newXS ("weechat::" #__name, XS_weechat_api_##__name, "weechat");
+#define API_FUNC(__name)                                                \
+    XS (XS_weechat_api_##__name)
+#define API_INIT_FUNC(__init, __name, __ret)                            \
     char *perl_function_name = __name;                                  \
     (void) cv;                                                          \
     if (__init                                                          \
@@ -79,17 +83,14 @@
     XSRETURN (1)
 #define API_RETURN_INT(__int)                                           \
     XST_mIV (0, __int);                                                 \
-    XSRETURN (1);
+    XSRETURN (1)
 #define API_RETURN_LONG(__long)                                         \
     XST_mIV (0, __long);                                                \
-    XSRETURN (1);
+    XSRETURN (1)
 #define API_RETURN_OBJ(__obj)                                           \
     ST (0) = newRV_inc((SV *)__obj);                                    \
     if (SvREFCNT(ST(0))) sv_2mortal(ST(0));                             \
-    XSRETURN (1);
-
-#define API_DEF_FUNC(__name)                                           \
-    newXS ("weechat::" #__name, XS_weechat_api_##__name, "weechat");
+    XSRETURN (1)
 
 #ifdef NO_PERL_MULTIPLICITY
 #undef MULTIPLICITY
@@ -102,7 +103,7 @@ extern void boot_DynaLoader (pTHX_ CV* cv);
  * Registers a perl script.
  */
 
-XS (XS_weechat_api_register)
+API_FUNC(register)
 {
     char *name, *author, *version, *license, *description, *shutdown_func;
     char *charset;
@@ -111,7 +112,7 @@ XS (XS_weechat_api_register)
     /* make C compiler happy */
     (void) items;
 
-    API_FUNC(0, "register", API_RETURN_ERROR);
+    API_INIT_FUNC(0, "register", API_RETURN_ERROR);
     if (perl_registered_script)
     {
         /* script already registered */
@@ -185,12 +186,12 @@ XS (XS_weechat_api_register)
  * core.
  */
 
-XS (XS_weechat_api_plugin_get_name)
+API_FUNC(plugin_get_name)
 {
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "plugin_get_name", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "plugin_get_name", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -199,11 +200,11 @@ XS (XS_weechat_api_plugin_get_name)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_charset_set)
+API_FUNC(charset_set)
 {
     dXSARGS;
 
-    API_FUNC(1, "charset_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "charset_set", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -213,12 +214,12 @@ XS (XS_weechat_api_charset_set)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_iconv_to_internal)
+API_FUNC(iconv_to_internal)
 {
     char *result, *charset, *string;
     dXSARGS;
 
-    API_FUNC(1, "iconv_to_internal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "iconv_to_internal", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -230,12 +231,12 @@ XS (XS_weechat_api_iconv_to_internal)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_iconv_from_internal)
+API_FUNC(iconv_from_internal)
 {
     char *result, *charset, *string;
     dXSARGS;
 
-    API_FUNC(1, "iconv_from_internal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "iconv_from_internal", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -247,12 +248,12 @@ XS (XS_weechat_api_iconv_from_internal)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_gettext)
+API_FUNC(gettext)
 {
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "gettext", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "gettext", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -261,13 +262,13 @@ XS (XS_weechat_api_gettext)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_ngettext)
+API_FUNC(ngettext)
 {
     char *single, *plural;
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "ngettext", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "ngettext", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -280,12 +281,12 @@ XS (XS_weechat_api_ngettext)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_strlen_screen)
+API_FUNC(strlen_screen)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "strlen_screen", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "strlen_screen", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -294,12 +295,12 @@ XS (XS_weechat_api_strlen_screen)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_string_match)
+API_FUNC(string_match)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "string_match", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_match", API_RETURN_INT(0));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -310,12 +311,12 @@ XS (XS_weechat_api_string_match)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_string_has_highlight)
+API_FUNC(string_has_highlight)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "string_has_highlight", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_has_highlight", API_RETURN_INT(0));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -325,12 +326,12 @@ XS (XS_weechat_api_string_has_highlight)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_string_has_highlight_regex)
+API_FUNC(string_has_highlight_regex)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "string_has_highlight_regex", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_has_highlight_regex", API_RETURN_INT(0));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -340,12 +341,12 @@ XS (XS_weechat_api_string_has_highlight_regex)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_string_mask_to_regex)
+API_FUNC(string_mask_to_regex)
 {
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "string_mask_to_regex", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_mask_to_regex", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -354,12 +355,12 @@ XS (XS_weechat_api_string_mask_to_regex)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_string_remove_color)
+API_FUNC(string_remove_color)
 {
     char *result, *string, *replacement;
     dXSARGS;
 
-    API_FUNC(1, "string_remove_color", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_remove_color", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -371,12 +372,12 @@ XS (XS_weechat_api_string_remove_color)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_string_is_command_char)
+API_FUNC(string_is_command_char)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "string_is_command_char", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "string_is_command_char", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -385,12 +386,12 @@ XS (XS_weechat_api_string_is_command_char)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_string_input_for_buffer)
+API_FUNC(string_input_for_buffer)
 {
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "string_input_for_buffer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_input_for_buffer", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -399,13 +400,13 @@ XS (XS_weechat_api_string_input_for_buffer)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_string_eval_expression)
+API_FUNC(string_eval_expression)
 {
     char *expr, *result;
     struct t_hashtable *pointers, *extra_vars, *options;
     dXSARGS;
 
-    API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
     if (items < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -436,11 +437,11 @@ XS (XS_weechat_api_string_eval_expression)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_mkdir_home)
+API_FUNC(mkdir_home)
 {
     dXSARGS;
 
-    API_FUNC(1, "mkdir_home", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "mkdir_home", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -451,11 +452,11 @@ XS (XS_weechat_api_mkdir_home)
     API_RETURN_ERROR;
 }
 
-XS (XS_weechat_api_mkdir)
+API_FUNC(mkdir)
 {
     dXSARGS;
 
-    API_FUNC(1, "mkdir", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "mkdir", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -466,11 +467,11 @@ XS (XS_weechat_api_mkdir)
     API_RETURN_ERROR;
 }
 
-XS (XS_weechat_api_mkdir_parents)
+API_FUNC(mkdir_parents)
 {
     dXSARGS;
 
-    API_FUNC(1, "mkdir_parents", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "mkdir_parents", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -481,7 +482,7 @@ XS (XS_weechat_api_mkdir_parents)
     API_RETURN_ERROR;
 }
 
-XS (XS_weechat_api_list_new)
+API_FUNC(list_new)
 {
     char *result;
     dXSARGS;
@@ -490,19 +491,19 @@ XS (XS_weechat_api_list_new)
     (void) items;
     (void) cv;
 
-    API_FUNC(1, "list_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_new", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_list_new ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_list_add)
+API_FUNC(list_add)
 {
     char *result, *weelist, *data, *where, *user_data;
     dXSARGS;
 
-    API_FUNC(1, "list_add", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_add", API_RETURN_EMPTY);
     if (items < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -519,12 +520,12 @@ XS (XS_weechat_api_list_add)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_list_search)
+API_FUNC(list_search)
 {
     char *result, *weelist, *data;
     dXSARGS;
 
-    API_FUNC(1, "list_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_search", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -537,13 +538,13 @@ XS (XS_weechat_api_list_search)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_list_search_pos)
+API_FUNC(list_search_pos)
 {
     char *weelist, *data;
     int pos;
     dXSARGS;
 
-    API_FUNC(1, "list_search_pos", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "list_search_pos", API_RETURN_INT(-1));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -555,12 +556,12 @@ XS (XS_weechat_api_list_search_pos)
     API_RETURN_INT(pos);
 }
 
-XS (XS_weechat_api_list_casesearch)
+API_FUNC(list_casesearch)
 {
     char *result, *weelist, *data;
     dXSARGS;
 
-    API_FUNC(1, "list_casesearch", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_casesearch", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -573,13 +574,13 @@ XS (XS_weechat_api_list_casesearch)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_list_casesearch_pos)
+API_FUNC(list_casesearch_pos)
 {
     char *weelist, *data;
     int pos;
     dXSARGS;
 
-    API_FUNC(1, "list_casesearch_pos", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "list_casesearch_pos", API_RETURN_INT(-1));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -591,12 +592,12 @@ XS (XS_weechat_api_list_casesearch_pos)
     API_RETURN_INT(pos);
 }
 
-XS (XS_weechat_api_list_get)
+API_FUNC(list_get)
 {
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "list_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_get", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -606,12 +607,12 @@ XS (XS_weechat_api_list_get)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_list_set)
+API_FUNC(list_set)
 {
     char *item, *new_value;
     dXSARGS;
 
-    API_FUNC(1, "list_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_set", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -623,12 +624,12 @@ XS (XS_weechat_api_list_set)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_list_next)
+API_FUNC(list_next)
 {
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "list_next", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_next", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -637,12 +638,12 @@ XS (XS_weechat_api_list_next)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_list_prev)
+API_FUNC(list_prev)
 {
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "list_prev", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_prev", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -651,12 +652,12 @@ XS (XS_weechat_api_list_prev)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_list_string)
+API_FUNC(list_string)
 {
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "list_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "list_string", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -665,12 +666,12 @@ XS (XS_weechat_api_list_string)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_list_size)
+API_FUNC(list_size)
 {
     int size;
     dXSARGS;
 
-    API_FUNC(1, "list_size", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "list_size", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -679,12 +680,12 @@ XS (XS_weechat_api_list_size)
     API_RETURN_INT(size);
 }
 
-XS (XS_weechat_api_list_remove)
+API_FUNC(list_remove)
 {
     char *weelist, *item;
     dXSARGS;
 
-    API_FUNC(1, "list_remove", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_remove", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -697,11 +698,11 @@ XS (XS_weechat_api_list_remove)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_list_remove_all)
+API_FUNC(list_remove_all)
 {
     dXSARGS;
 
-    API_FUNC(1, "list_remove_all", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_remove_all", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -710,11 +711,11 @@ XS (XS_weechat_api_list_remove_all)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_list_free)
+API_FUNC(list_free)
 {
     dXSARGS;
 
-    API_FUNC(1, "list_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "list_free", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -760,12 +761,12 @@ weechat_perl_api_config_reload_cb (void *data,
     return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
 }
 
-XS (XS_weechat_api_config_new)
+API_FUNC(config_new)
 {
     char *result, *name, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "config_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -996,7 +997,7 @@ weechat_perl_api_config_section_delete_option_cb (void *data,
     return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
 }
 
-XS (XS_weechat_api_config_new_section)
+API_FUNC(config_new_section)
 {
     char *result, *cfg_file, *name, *function_read, *data_read;
     char *function_write, *data_write, *function_write_default;
@@ -1005,7 +1006,7 @@ XS (XS_weechat_api_config_new_section)
 
     dXSARGS;
 
-    API_FUNC(1, "config_new_section", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new_section", API_RETURN_EMPTY);
     if (items < 14)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1047,12 +1048,12 @@ XS (XS_weechat_api_config_new_section)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_config_search_section)
+API_FUNC(config_search_section)
 {
     char *result, *config_file, *section_name;
     dXSARGS;
 
-    API_FUNC(1, "config_search_section", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_search_section", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1162,7 +1163,7 @@ weechat_perl_api_config_option_delete_cb (void *data,
     }
 }
 
-XS (XS_weechat_api_config_new_option)
+API_FUNC(config_new_option)
 {
     char *result, *config_file, *section, *name, *type;
     char *description, *string_values, *default_value, *value;
@@ -1170,7 +1171,7 @@ XS (XS_weechat_api_config_new_option)
     char *data_change, *function_delete, *data_delete;
     dXSARGS;
 
-    API_FUNC(1, "config_new_option", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_new_option", API_RETURN_EMPTY);
     if (items < 17)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1215,12 +1216,12 @@ XS (XS_weechat_api_config_new_option)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_config_search_option)
+API_FUNC(config_search_option)
 {
     char *result, *config_file, *section, *option_name;
     dXSARGS;
 
-    API_FUNC(1, "config_search_option", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_search_option", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1235,12 +1236,12 @@ XS (XS_weechat_api_config_search_option)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_config_string_to_boolean)
+API_FUNC(config_string_to_boolean)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "config_string_to_boolean", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_string_to_boolean", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1249,13 +1250,13 @@ XS (XS_weechat_api_config_string_to_boolean)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_config_option_reset)
+API_FUNC(config_option_reset)
 {
     int rc;
     char *option;
     dXSARGS;
 
-    API_FUNC(1, "config_option_reset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(0));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1267,13 +1268,13 @@ XS (XS_weechat_api_config_option_reset)
     API_RETURN_INT(rc);
 }
 
-XS (XS_weechat_api_config_option_set)
+API_FUNC(config_option_set)
 {
     int rc;
     char *option, *new_value;
     dXSARGS;
 
-    API_FUNC(1, "config_option_set", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+    API_INIT_FUNC(1, "config_option_set", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -1287,13 +1288,13 @@ XS (XS_weechat_api_config_option_set)
     API_RETURN_INT(rc);
 }
 
-XS (XS_weechat_api_config_option_set_null)
+API_FUNC(config_option_set_null)
 {
     int rc;
     char *option;
     dXSARGS;
 
-    API_FUNC(1, "config_option_set_null", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+    API_INIT_FUNC(1, "config_option_set_null", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -1305,13 +1306,13 @@ XS (XS_weechat_api_config_option_set_null)
     API_RETURN_INT(rc);
 }
 
-XS (XS_weechat_api_config_option_unset)
+API_FUNC(config_option_unset)
 {
     int rc;
     char *option;
     dXSARGS;
 
-    API_FUNC(1, "config_option_unset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
+    API_INIT_FUNC(1, "config_option_unset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
 
@@ -1322,12 +1323,12 @@ XS (XS_weechat_api_config_option_unset)
     API_RETURN_INT(rc);
 }
 
-XS (XS_weechat_api_config_option_rename)
+API_FUNC(config_option_rename)
 {
     char *option, *new_name;
     dXSARGS;
 
-    API_FUNC(1, "config_option_rename", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_option_rename", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1340,12 +1341,12 @@ XS (XS_weechat_api_config_option_rename)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_config_option_is_null)
+API_FUNC(config_option_is_null)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "config_option_is_null", API_RETURN_INT(1));
+    API_INIT_FUNC(1, "config_option_is_null", API_RETURN_INT(1));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(1));
 
@@ -1354,12 +1355,12 @@ XS (XS_weechat_api_config_option_is_null)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_config_option_default_is_null)
+API_FUNC(config_option_default_is_null)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "config_option_default_is_null", API_RETURN_INT(1));
+    API_INIT_FUNC(1, "config_option_default_is_null", API_RETURN_INT(1));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(1));
 
@@ -1368,12 +1369,12 @@ XS (XS_weechat_api_config_option_default_is_null)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_config_boolean)
+API_FUNC(config_boolean)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "config_boolean", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_boolean", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1382,12 +1383,12 @@ XS (XS_weechat_api_config_boolean)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_config_boolean_default)
+API_FUNC(config_boolean_default)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "config_boolean_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_boolean_default", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1396,12 +1397,12 @@ XS (XS_weechat_api_config_boolean_default)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_config_integer)
+API_FUNC(config_integer)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "config_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_integer", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1410,12 +1411,12 @@ XS (XS_weechat_api_config_integer)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_config_integer_default)
+API_FUNC(config_integer_default)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "config_integer_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_integer_default", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1424,12 +1425,12 @@ XS (XS_weechat_api_config_integer_default)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_config_string)
+API_FUNC(config_string)
 {
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "config_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_string", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1438,12 +1439,12 @@ XS (XS_weechat_api_config_string)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_config_string_default)
+API_FUNC(config_string_default)
 {
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "config_string_default", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_string_default", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1452,12 +1453,12 @@ XS (XS_weechat_api_config_string_default)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_config_color)
+API_FUNC(config_color)
 {
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "config_color", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1466,12 +1467,12 @@ XS (XS_weechat_api_config_color)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_config_color_default)
+API_FUNC(config_color_default)
 {
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "config_color_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color_default", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1480,12 +1481,12 @@ XS (XS_weechat_api_config_color_default)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_config_write_option)
+API_FUNC(config_write_option)
 {
     char *config_file, *option;
     dXSARGS;
 
-    API_FUNC(1, "config_write_option", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_write_option", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1498,12 +1499,12 @@ XS (XS_weechat_api_config_write_option)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_config_write_line)
+API_FUNC(config_write_line)
 {
     char *config_file, *option_name, *value;
     dXSARGS;
 
-    API_FUNC(1, "config_write_line", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_write_line", API_RETURN_ERROR);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1517,12 +1518,12 @@ XS (XS_weechat_api_config_write_line)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_config_write)
+API_FUNC(config_write)
 {
     int rc;
     dXSARGS;
 
-    API_FUNC(1, "config_write", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_write", API_RETURN_INT(-1));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -1531,12 +1532,12 @@ XS (XS_weechat_api_config_write)
     API_RETURN_INT(rc);
 }
 
-XS (XS_weechat_api_config_read)
+API_FUNC(config_read)
 {
     int rc;
     dXSARGS;
 
-    API_FUNC(1, "config_read", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_read", API_RETURN_INT(-1));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -1545,12 +1546,12 @@ XS (XS_weechat_api_config_read)
     API_RETURN_INT(rc);
 }
 
-XS (XS_weechat_api_config_reload)
+API_FUNC(config_reload)
 {
     int rc;
     dXSARGS;
 
-    API_FUNC(1, "config_reload", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(-1));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -1559,11 +1560,11 @@ XS (XS_weechat_api_config_reload)
     API_RETURN_INT(rc);
 }
 
-XS (XS_weechat_api_config_option_free)
+API_FUNC(config_option_free)
 {
     dXSARGS;
 
-    API_FUNC(1, "config_option_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_option_free", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1574,11 +1575,11 @@ XS (XS_weechat_api_config_option_free)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_config_section_free_options)
+API_FUNC(config_section_free_options)
 {
     dXSARGS;
 
-    API_FUNC(1, "config_section_free_options", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_section_free_options", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1589,11 +1590,11 @@ XS (XS_weechat_api_config_section_free_options)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_config_section_free)
+API_FUNC(config_section_free)
 {
     dXSARGS;
 
-    API_FUNC(1, "config_section_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_section_free", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1604,11 +1605,11 @@ XS (XS_weechat_api_config_section_free)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_config_free)
+API_FUNC(config_free)
 {
     dXSARGS;
 
-    API_FUNC(1, "config_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_free", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1619,12 +1620,12 @@ XS (XS_weechat_api_config_free)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_config_get)
+API_FUNC(config_get)
 {
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "config_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_get", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1633,12 +1634,12 @@ XS (XS_weechat_api_config_get)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_config_get_plugin)
+API_FUNC(config_get_plugin)
 {
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "config_get_plugin", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "config_get_plugin", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1649,13 +1650,13 @@ XS (XS_weechat_api_config_get_plugin)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_config_is_set_plugin)
+API_FUNC(config_is_set_plugin)
 {
     char *option;
     int rc;
     dXSARGS;
 
-    API_FUNC(1, "config_is_set_plugin", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_is_set_plugin", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1668,13 +1669,13 @@ XS (XS_weechat_api_config_is_set_plugin)
     API_RETURN_INT(rc);
 }
 
-XS (XS_weechat_api_config_set_plugin)
+API_FUNC(config_set_plugin)
 {
     char *option, *value;
     int rc;
     dXSARGS;
 
-    API_FUNC(1, "config_set_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+    API_INIT_FUNC(1, "config_set_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -1689,12 +1690,12 @@ XS (XS_weechat_api_config_set_plugin)
     API_RETURN_INT(rc);
 }
 
-XS (XS_weechat_api_config_set_desc_plugin)
+API_FUNC(config_set_desc_plugin)
 {
     char *option, *description;
     dXSARGS;
 
-    API_FUNC(1, "config_set_desc_plugin", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "config_set_desc_plugin", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1709,13 +1710,13 @@ XS (XS_weechat_api_config_set_desc_plugin)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_config_unset_plugin)
+API_FUNC(config_unset_plugin)
 {
     char *option;
     int rc;
     dXSARGS;
 
-    API_FUNC(1, "config_unset_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
+    API_INIT_FUNC(1, "config_unset_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
 
@@ -1728,14 +1729,14 @@ XS (XS_weechat_api_config_unset_plugin)
     API_RETURN_INT(rc);
 }
 
-XS (XS_weechat_api_key_bind)
+API_FUNC(key_bind)
 {
     char *context;
     struct t_hashtable *hashtable;
     int num_keys;
     dXSARGS;
 
-    API_FUNC(1, "key_bind", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "key_bind", API_RETURN_INT(0));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1753,13 +1754,13 @@ XS (XS_weechat_api_key_bind)
     API_RETURN_INT(num_keys);
 }
 
-XS (XS_weechat_api_key_unbind)
+API_FUNC(key_unbind)
 {
     char *context, *key;
     int num_keys;
     dXSARGS;
 
-    API_FUNC(1, "key_unbind", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "key_unbind", API_RETURN_INT(0));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -1771,12 +1772,12 @@ XS (XS_weechat_api_key_unbind)
     API_RETURN_INT(num_keys);
 }
 
-XS (XS_weechat_api_prefix)
+API_FUNC(prefix)
 {
     const char *result;
     dXSARGS;
 
-    API_FUNC(0, "prefix", API_RETURN_EMPTY);
+    API_INIT_FUNC(0, "prefix", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1785,12 +1786,12 @@ XS (XS_weechat_api_prefix)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_color)
+API_FUNC(color)
 {
     const char *result;
     dXSARGS;
 
-    API_FUNC(0, "color", API_RETURN_EMPTY);
+    API_INIT_FUNC(0, "color", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1799,12 +1800,12 @@ XS (XS_weechat_api_color)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_print)
+API_FUNC(print)
 {
     char *buffer, *message;
     dXSARGS;
 
-    API_FUNC(0, "print", API_RETURN_ERROR);
+    API_INIT_FUNC(0, "print", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1819,12 +1820,12 @@ XS (XS_weechat_api_print)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_print_date_tags)
+API_FUNC(print_date_tags)
 {
     char *buffer, *tags, *message;
     dXSARGS;
 
-    API_FUNC(1, "print_date_tags", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "print_date_tags", API_RETURN_ERROR);
     if (items < 4)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1842,12 +1843,12 @@ XS (XS_weechat_api_print_date_tags)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_print_y)
+API_FUNC(print_y)
 {
     char *buffer, *message;
     dXSARGS;
 
-    API_FUNC(1, "print_y", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "print_y", API_RETURN_ERROR);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -1863,11 +1864,11 @@ XS (XS_weechat_api_print_y)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_log_print)
+API_FUNC(log_print)
 {
     dXSARGS;
 
-    API_FUNC(1, "log_print", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "log_print", API_RETURN_ERROR);
 
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
@@ -1920,13 +1921,13 @@ weechat_perl_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_hook_command)
+API_FUNC(hook_command)
 {
     char *result, *command, *description, *args, *args_description;
     char *completion, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "hook_command", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_command", API_RETURN_EMPTY);
     if (items < 7)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1990,12 +1991,12 @@ weechat_perl_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_hook_command_run)
+API_FUNC(hook_command_run)
 {
     char *result, *command, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "hook_command_run", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_command_run", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2050,12 +2051,12 @@ weechat_perl_api_hook_timer_cb (void *data, int remaining_calls)
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_hook_timer)
+API_FUNC(hook_timer)
 {
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "hook_timer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_timer", API_RETURN_EMPTY);
     if (items < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2107,12 +2108,12 @@ weechat_perl_api_hook_fd_cb (void *data, int fd)
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_hook_fd)
+API_FUNC(hook_fd)
 {
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "hook_fd", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_fd", API_RETURN_EMPTY);
     if (items < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2168,12 +2169,12 @@ weechat_perl_api_hook_process_cb (void *data,
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_hook_process)
+API_FUNC(hook_process)
 {
     char *command, *function, *data, *result;
     dXSARGS;
 
-    API_FUNC(1, "hook_process", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_process", API_RETURN_EMPTY);
     if (items < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2192,13 +2193,13 @@ XS (XS_weechat_api_hook_process)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_hook_process_hashtable)
+API_FUNC(hook_process_hashtable)
 {
     char *command, *function, *data, *result;
     struct t_hashtable *options;
     dXSARGS;
 
-    API_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
     if (items < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2270,12 +2271,12 @@ weechat_perl_api_hook_connect_cb (void *data, int status, int gnutls_rc,
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_hook_connect)
+API_FUNC(hook_connect)
 {
     char *proxy, *address, *local_hostname, *function, *data, *result;
     dXSARGS;
 
-    API_FUNC(1, "hook_connect", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_connect", API_RETURN_EMPTY);
     if (items < 8)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2360,12 +2361,12 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_hook_print)
+API_FUNC(hook_print)
 {
     char *result, *buffer, *tags, *message, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "hook_print", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_print", API_RETURN_EMPTY);
     if (items < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2448,12 +2449,12 @@ weechat_perl_api_hook_signal_cb (void *data, const char *signal, const char *typ
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_hook_signal)
+API_FUNC(hook_signal)
 {
     char *result, *signal, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "hook_signal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_signal", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2471,13 +2472,13 @@ XS (XS_weechat_api_hook_signal)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_hook_signal_send)
+API_FUNC(hook_signal_send)
 {
     char *signal, *type_data;
     int number, rc;
     dXSARGS;
 
-    API_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
+    API_INIT_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
@@ -2545,12 +2546,12 @@ weechat_perl_api_hook_hsignal_cb (void *data, const char *signal,
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_hook_hsignal)
+API_FUNC(hook_hsignal)
 {
     char *result, *signal, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "hook_hsignal", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_hsignal", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2568,14 +2569,14 @@ XS (XS_weechat_api_hook_hsignal)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_hook_hsignal_send)
+API_FUNC(hook_hsignal_send)
 {
     char *signal;
     struct t_hashtable *hashtable;
     int rc;
     dXSARGS;
 
-    API_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
+    API_INIT_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
@@ -2628,12 +2629,12 @@ weechat_perl_api_hook_config_cb (void *data, const char *option, const char *val
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_hook_config)
+API_FUNC(hook_config)
 {
     char *result, *option, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "hook_config", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_config", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2693,12 +2694,12 @@ weechat_perl_api_hook_completion_cb (void *data, const char *completion_item,
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_hook_completion)
+API_FUNC(hook_completion)
 {
     char *result, *completion, *description, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "hook_completion", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
     if (items < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2718,12 +2719,12 @@ XS (XS_weechat_api_hook_completion)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_hook_completion_list_add)
+API_FUNC(hook_completion_list_add)
 {
     char *completion, *word, *where;
     dXSARGS;
 
-    API_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
     if (items < 4)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2765,12 +2766,12 @@ weechat_perl_api_hook_modifier_cb (void *data, const char *modifier,
     return NULL;
 }
 
-XS (XS_weechat_api_hook_modifier)
+API_FUNC(hook_modifier)
 {
     char *result, *modifier, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "hook_modifier", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_modifier", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2788,12 +2789,12 @@ XS (XS_weechat_api_hook_modifier)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_hook_modifier_exec)
+API_FUNC(hook_modifier_exec)
 {
     char *result, *modifier, *modifier_data, *string;
     dXSARGS;
 
-    API_FUNC(1, "hook_modifier_exec", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_modifier_exec", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2831,12 +2832,12 @@ weechat_perl_api_hook_info_cb (void *data, const char *info_name,
     return NULL;
 }
 
-XS (XS_weechat_api_hook_info)
+API_FUNC(hook_info)
 {
     char *result, *info_name, *description, *args_description, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "hook_info", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_info", API_RETURN_EMPTY);
     if (items < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2883,13 +2884,13 @@ weechat_perl_api_hook_info_hashtable_cb (void *data, const char *info_name,
     return NULL;
 }
 
-XS (XS_weechat_api_hook_info_hashtable)
+API_FUNC(hook_info_hashtable)
 {
     char *result, *info_name, *description, *args_description;
     char *output_description, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "hook_info_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_info_hashtable", API_RETURN_EMPTY);
     if (items < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2945,13 +2946,13 @@ weechat_perl_api_hook_infolist_cb (void *data, const char *infolist_name,
     return NULL;
 }
 
-XS (XS_weechat_api_hook_infolist)
+API_FUNC(hook_infolist)
 {
     char *result, *infolist_name, *description, *pointer_description;
     char *args_description, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "hook_infolist", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_infolist", API_RETURN_EMPTY);
     if (items < 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2999,12 +3000,12 @@ weechat_perl_api_hook_focus_cb (void *data,
     return NULL;
 }
 
-XS (XS_weechat_api_hook_focus)
+API_FUNC(hook_focus)
 {
     char *result, *area, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "hook_focus", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hook_focus", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3022,12 +3023,12 @@ XS (XS_weechat_api_hook_focus)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_hook_set)
+API_FUNC(hook_set)
 {
     char *hook, *property, *value;
     dXSARGS;
 
-    API_FUNC(1, "hook_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "hook_set", API_RETURN_ERROR);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3040,11 +3041,11 @@ XS (XS_weechat_api_hook_set)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_unhook)
+API_FUNC(unhook)
 {
     dXSARGS;
 
-    API_FUNC(1, "unhook", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "unhook", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3055,7 +3056,7 @@ XS (XS_weechat_api_unhook)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_unhook_all)
+API_FUNC(unhook_all)
 {
     dXSARGS;
 
@@ -3063,7 +3064,7 @@ XS (XS_weechat_api_unhook_all)
     (void) cv;
     (void) items;
 
-    API_FUNC(1, "unhook_all", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
     plugin_script_api_unhook_all (weechat_perl_plugin, perl_current_script);
 
@@ -3142,13 +3143,13 @@ weechat_perl_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_buffer_new)
+API_FUNC(buffer_new)
 {
     char *result, *name, *function_input, *data_input, *function_close;
     char *data_close;
     dXSARGS;
 
-    API_FUNC(1, "buffer_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_new", API_RETURN_EMPTY);
     if (items < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3171,12 +3172,12 @@ XS (XS_weechat_api_buffer_new)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_buffer_search)
+API_FUNC(buffer_search)
 {
     char *result, *plugin, *name;
     dXSARGS;
 
-    API_FUNC(1, "buffer_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_search", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3188,7 +3189,7 @@ XS (XS_weechat_api_buffer_search)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_buffer_search_main)
+API_FUNC(buffer_search_main)
 {
     char *result;
     dXSARGS;
@@ -3197,14 +3198,14 @@ XS (XS_weechat_api_buffer_search_main)
     (void) items;
     (void) cv;
 
-    API_FUNC(1, "buffer_search_main", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_search_main", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_buffer_search_main ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_current_buffer)
+API_FUNC(current_buffer)
 {
     char *result;
     dXSARGS;
@@ -3213,18 +3214,18 @@ XS (XS_weechat_api_current_buffer)
     (void) items;
     (void) cv;
 
-    API_FUNC(1, "current_buffer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "current_buffer", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_current_buffer ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_buffer_clear)
+API_FUNC(buffer_clear)
 {
     dXSARGS;
 
-    API_FUNC(1, "buffer_clear", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_clear", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3233,11 +3234,11 @@ XS (XS_weechat_api_buffer_clear)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_buffer_close)
+API_FUNC(buffer_close)
 {
     dXSARGS;
 
-    API_FUNC(1, "buffer_close", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_close", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3248,11 +3249,11 @@ XS (XS_weechat_api_buffer_close)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_buffer_merge)
+API_FUNC(buffer_merge)
 {
     dXSARGS;
 
-    API_FUNC(1, "buffer_merge", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_merge", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3262,11 +3263,11 @@ XS (XS_weechat_api_buffer_merge)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_buffer_unmerge)
+API_FUNC(buffer_unmerge)
 {
     dXSARGS;
 
-    API_FUNC(1, "buffer_unmerge", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_unmerge", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3276,13 +3277,13 @@ XS (XS_weechat_api_buffer_unmerge)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_buffer_get_integer)
+API_FUNC(buffer_get_integer)
 {
     char *buffer, *property;
     int value;
     dXSARGS;
 
-    API_FUNC(1, "buffer_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "buffer_get_integer", API_RETURN_INT(-1));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3294,13 +3295,13 @@ XS (XS_weechat_api_buffer_get_integer)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_buffer_get_string)
+API_FUNC(buffer_get_string)
 {
     char *buffer, *property;
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "buffer_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_get_string", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3312,12 +3313,12 @@ XS (XS_weechat_api_buffer_get_string)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_buffer_get_pointer)
+API_FUNC(buffer_get_pointer)
 {
     char *result, *buffer, *property;
     dXSARGS;
 
-    API_FUNC(1, "buffer_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "buffer_get_pointer", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3330,12 +3331,12 @@ XS (XS_weechat_api_buffer_get_pointer)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_buffer_set)
+API_FUNC(buffer_set)
 {
     char *buffer, *property, *value;
     dXSARGS;
 
-    API_FUNC(1, "buffer_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_set", API_RETURN_ERROR);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3348,12 +3349,12 @@ XS (XS_weechat_api_buffer_set)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_buffer_string_replace_local_var)
+API_FUNC(buffer_string_replace_local_var)
 {
     char *buffer, *string, *result;
     dXSARGS;
 
-    API_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3365,13 +3366,13 @@ XS (XS_weechat_api_buffer_string_replace_local_var)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_buffer_match_list)
+API_FUNC(buffer_match_list)
 {
     char *buffer, *string;
     int value;
     dXSARGS;
 
-    API_FUNC(1, "buffer_match_list", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "buffer_match_list", API_RETURN_INT(0));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -3383,7 +3384,7 @@ XS (XS_weechat_api_buffer_match_list)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_current_window)
+API_FUNC(current_window)
 {
     char *result;
     dXSARGS;
@@ -3392,19 +3393,19 @@ XS (XS_weechat_api_current_window)
     (void) items;
     (void) cv;
 
-    API_FUNC(1, "current_window", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "current_window", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_current_window ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_window_search_with_buffer)
+API_FUNC(window_search_with_buffer)
 {
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "window_search_with_buffer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "window_search_with_buffer", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3414,13 +3415,13 @@ XS (XS_weechat_api_window_search_with_buffer)
 }
 
 
-XS (XS_weechat_api_window_get_integer)
+API_FUNC(window_get_integer)
 {
     char *window, *property;
     int value;
     dXSARGS;
 
-    API_FUNC(1, "window_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "window_get_integer", API_RETURN_INT(-1));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3432,13 +3433,13 @@ XS (XS_weechat_api_window_get_integer)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_window_get_string)
+API_FUNC(window_get_string)
 {
     char *window, *property;
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "window_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "window_get_string", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3450,12 +3451,12 @@ XS (XS_weechat_api_window_get_string)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_window_get_pointer)
+API_FUNC(window_get_pointer)
 {
     char *result, *window, *property;
     dXSARGS;
 
-    API_FUNC(1, "window_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "window_get_pointer", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3468,11 +3469,11 @@ XS (XS_weechat_api_window_get_pointer)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_window_set_title)
+API_FUNC(window_set_title)
 {
     dXSARGS;
 
-    API_FUNC(1, "window_set_title", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "window_set_title", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3481,12 +3482,12 @@ XS (XS_weechat_api_window_set_title)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_nicklist_add_group)
+API_FUNC(nicklist_add_group)
 {
     char *result, *buffer, *parent_group, *name, *color;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_add_group", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_add_group", API_RETURN_EMPTY);
     if (items < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3504,12 +3505,12 @@ XS (XS_weechat_api_nicklist_add_group)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_nicklist_search_group)
+API_FUNC(nicklist_search_group)
 {
     char *result, *buffer, *from_group, *name;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_search_group", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_search_group", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3524,12 +3525,12 @@ XS (XS_weechat_api_nicklist_search_group)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_nicklist_add_nick)
+API_FUNC(nicklist_add_nick)
 {
     char *result, *buffer, *group, *name, *color, *prefix, *prefix_color;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_add_nick", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_add_nick", API_RETURN_EMPTY);
     if (items < 7)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3551,12 +3552,12 @@ XS (XS_weechat_api_nicklist_add_nick)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_nicklist_search_nick)
+API_FUNC(nicklist_search_nick)
 {
     char *result, *buffer, *from_group, *name;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_search_nick", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_search_nick", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3571,12 +3572,12 @@ XS (XS_weechat_api_nicklist_search_nick)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_nicklist_remove_group)
+API_FUNC(nicklist_remove_group)
 {
     char *buffer, *group;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_remove_group", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_remove_group", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3589,12 +3590,12 @@ XS (XS_weechat_api_nicklist_remove_group)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_nicklist_remove_nick)
+API_FUNC(nicklist_remove_nick)
 {
     char *buffer, *nick;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_remove_nick", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_remove_nick", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3607,11 +3608,11 @@ XS (XS_weechat_api_nicklist_remove_nick)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_nicklist_remove_all)
+API_FUNC(nicklist_remove_all)
 {
     dXSARGS;
 
-    API_FUNC(1, "nicklist_remove_all", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_remove_all", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3620,13 +3621,13 @@ XS (XS_weechat_api_nicklist_remove_all)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_nicklist_group_get_integer)
+API_FUNC(nicklist_group_get_integer)
 {
     char *buffer, *group, *property;
     int value;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_group_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "nicklist_group_get_integer", API_RETURN_INT(-1));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3641,13 +3642,13 @@ XS (XS_weechat_api_nicklist_group_get_integer)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_nicklist_group_get_string)
+API_FUNC(nicklist_group_get_string)
 {
     char *buffer, *group, *property;
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_group_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_group_get_string", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3662,12 +3663,12 @@ XS (XS_weechat_api_nicklist_group_get_string)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_nicklist_group_get_pointer)
+API_FUNC(nicklist_group_get_pointer)
 {
     char *result, *buffer, *group, *property;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_group_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_group_get_pointer", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3682,12 +3683,12 @@ XS (XS_weechat_api_nicklist_group_get_pointer)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_nicklist_group_set)
+API_FUNC(nicklist_group_set)
 {
     char *buffer, *group, *property, *value;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_group_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_group_set", API_RETURN_ERROR);
     if (items < 4)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3704,13 +3705,13 @@ XS (XS_weechat_api_nicklist_group_set)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_nicklist_nick_get_integer)
+API_FUNC(nicklist_nick_get_integer)
 {
     char *buffer, *nick, *property;
     int value;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_nick_get_integer", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "nicklist_nick_get_integer", API_RETURN_INT(-1));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3725,13 +3726,13 @@ XS (XS_weechat_api_nicklist_nick_get_integer)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_nicklist_nick_get_string)
+API_FUNC(nicklist_nick_get_string)
 {
     char *buffer, *nick, *property;
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_nick_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_nick_get_string", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3746,12 +3747,12 @@ XS (XS_weechat_api_nicklist_nick_get_string)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_nicklist_nick_get_pointer)
+API_FUNC(nicklist_nick_get_pointer)
 {
     char *result, *buffer, *nick, *property;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_nick_get_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "nicklist_nick_get_pointer", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3766,12 +3767,12 @@ XS (XS_weechat_api_nicklist_nick_get_pointer)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_nicklist_nick_set)
+API_FUNC(nicklist_nick_set)
 {
     char *buffer, *nick, *property, *value;
     dXSARGS;
 
-    API_FUNC(1, "nicklist_nick_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_nick_set", API_RETURN_ERROR);
     if (items < 4)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3788,12 +3789,12 @@ XS (XS_weechat_api_nicklist_nick_set)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_bar_item_search)
+API_FUNC(bar_item_search)
 {
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "bar_item_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_item_search", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3861,12 +3862,12 @@ weechat_perl_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
     return NULL;
 }
 
-XS (XS_weechat_api_bar_item_new)
+API_FUNC(bar_item_new)
 {
     char *result, *name, *function, *data;
     dXSARGS;
 
-    API_FUNC(1, "bar_item_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_item_new", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3884,11 +3885,11 @@ XS (XS_weechat_api_bar_item_new)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_bar_item_update)
+API_FUNC(bar_item_update)
 {
     dXSARGS;
 
-    API_FUNC(1, "bar_item_update", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_item_update", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3897,11 +3898,11 @@ XS (XS_weechat_api_bar_item_update)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_bar_item_remove)
+API_FUNC(bar_item_remove)
 {
     dXSARGS;
 
-    API_FUNC(1, "bar_item_remove", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_item_remove", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3912,12 +3913,12 @@ XS (XS_weechat_api_bar_item_remove)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_bar_search)
+API_FUNC(bar_search)
 {
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "bar_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_search", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3926,14 +3927,14 @@ XS (XS_weechat_api_bar_search)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_bar_new)
+API_FUNC(bar_new)
 {
     char *result, *name, *hidden, *priority, *type, *conditions, *position;
     char *filling_top_bottom, *filling_left_right, *size, *size_max, *color_fg;
     char *color_delim, *color_bg, *separator, *bar_items;
     dXSARGS;
 
-    API_FUNC(1, "bar_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_new", API_RETURN_EMPTY);
     if (items < 15)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3972,12 +3973,12 @@ XS (XS_weechat_api_bar_new)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_bar_set)
+API_FUNC(bar_set)
 {
     char *bar, *property, *value;
     dXSARGS;
 
-    API_FUNC(1, "bar_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_set", API_RETURN_ERROR);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3990,11 +3991,11 @@ XS (XS_weechat_api_bar_set)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_bar_update)
+API_FUNC(bar_update)
 {
     dXSARGS;
 
-    API_FUNC(1, "bar_update", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_update", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4003,11 +4004,11 @@ XS (XS_weechat_api_bar_update)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_bar_remove)
+API_FUNC(bar_remove)
 {
     dXSARGS;
 
-    API_FUNC(1, "bar_remove", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_remove", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4016,13 +4017,13 @@ XS (XS_weechat_api_bar_remove)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_command)
+API_FUNC(command)
 {
     char *buffer, *command;
     int rc;
     dXSARGS;
 
-    API_FUNC(1, "command", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "command", API_RETURN_ERROR);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4037,13 +4038,13 @@ XS (XS_weechat_api_command)
     API_RETURN_INT(rc);
 }
 
-XS (XS_weechat_api_info_get)
+API_FUNC(info_get)
 {
     char *info_name, *arguments;
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "info_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "info_get", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4055,14 +4056,14 @@ XS (XS_weechat_api_info_get)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_info_get_hashtable)
+API_FUNC(info_get_hashtable)
 {
     char *info_name;
     struct t_hashtable *hashtable, *result_hashtable;
     HV *result_hash;
     dXSARGS;
 
-    API_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4083,7 +4084,7 @@ XS (XS_weechat_api_info_get_hashtable)
     API_RETURN_OBJ(result_hash);
 }
 
-XS (XS_weechat_api_infolist_new)
+API_FUNC(infolist_new)
 {
     char *result;
     dXSARGS;
@@ -4092,19 +4093,19 @@ XS (XS_weechat_api_infolist_new)
     (void) items;
     (void) cv;
 
-    API_FUNC(1, "infolist_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_infolist_new ());
 
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_infolist_new_item)
+API_FUNC(infolist_new_item)
 {
     char *infolist, *result;
     dXSARGS;
 
-    API_FUNC(1, "infolist_new_item", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_item", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4115,12 +4116,12 @@ XS (XS_weechat_api_infolist_new_item)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_infolist_new_var_integer)
+API_FUNC(infolist_new_var_integer)
 {
     char *infolist, *name, *result;
     dXSARGS;
 
-    API_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4134,12 +4135,12 @@ XS (XS_weechat_api_infolist_new_var_integer)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_infolist_new_var_string)
+API_FUNC(infolist_new_var_string)
 {
     char *infolist, *name, *value, *result;
     dXSARGS;
 
-    API_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4154,12 +4155,12 @@ XS (XS_weechat_api_infolist_new_var_string)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_infolist_new_var_pointer)
+API_FUNC(infolist_new_var_pointer)
 {
     char *infolist, *name, *value, *result;
     dXSARGS;
 
-    API_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4174,12 +4175,12 @@ XS (XS_weechat_api_infolist_new_var_pointer)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_infolist_new_var_time)
+API_FUNC(infolist_new_var_time)
 {
     char *infolist, *name, *result;
     dXSARGS;
 
-    API_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4193,12 +4194,12 @@ XS (XS_weechat_api_infolist_new_var_time)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_infolist_get)
+API_FUNC(infolist_get)
 {
     char *result, *name, *pointer, *arguments;
     dXSARGS;
 
-    API_FUNC(1, "infolist_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_get", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4213,12 +4214,12 @@ XS (XS_weechat_api_infolist_get)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_infolist_next)
+API_FUNC(infolist_next)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "infolist_next", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_next", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4227,12 +4228,12 @@ XS (XS_weechat_api_infolist_next)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_infolist_prev)
+API_FUNC(infolist_prev)
 {
     int value;
     dXSARGS;
 
-    API_FUNC(1, "infolist_prev", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_prev", API_RETURN_INT(0));
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4241,11 +4242,11 @@ XS (XS_weechat_api_infolist_prev)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_infolist_reset_item_cursor)
+API_FUNC(infolist_reset_item_cursor)
 {
     dXSARGS;
 
-    API_FUNC(1, "infolist_reset_item_cursor", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "infolist_reset_item_cursor", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4254,12 +4255,12 @@ XS (XS_weechat_api_infolist_reset_item_cursor)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_infolist_fields)
+API_FUNC(infolist_fields)
 {
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "infolist_fields", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_fields", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4268,13 +4269,13 @@ XS (XS_weechat_api_infolist_fields)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_infolist_integer)
+API_FUNC(infolist_integer)
 {
     char *infolist, *variable;
     int value;
     dXSARGS;
 
-    API_FUNC(1, "infolist_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_integer", API_RETURN_INT(0));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4286,13 +4287,13 @@ XS (XS_weechat_api_infolist_integer)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_infolist_string)
+API_FUNC(infolist_string)
 {
     char *infolist, *variable;
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "infolist_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_string", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4304,13 +4305,13 @@ XS (XS_weechat_api_infolist_string)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_infolist_pointer)
+API_FUNC(infolist_pointer)
 {
     char *infolist, *variable;
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "infolist_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_pointer", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4322,14 +4323,14 @@ XS (XS_weechat_api_infolist_pointer)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_infolist_time)
+API_FUNC(infolist_time)
 {
     time_t time;
     struct tm *date_tmp;
     char timebuffer[64], *result, *infolist, *variable;
     dXSARGS;
 
-    API_FUNC(1, "infolist_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_time", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4346,11 +4347,11 @@ XS (XS_weechat_api_infolist_time)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_infolist_free)
+API_FUNC(infolist_free)
 {
     dXSARGS;
 
-    API_FUNC(1, "infolist_free", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "infolist_free", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4359,12 +4360,12 @@ XS (XS_weechat_api_infolist_free)
     API_RETURN_OK;
 }
 
-XS (XS_weechat_api_hdata_get)
+API_FUNC(hdata_get)
 {
     char *result, *name;
     dXSARGS;
 
-    API_FUNC(1, "hdata_get", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get", API_RETURN_EMPTY);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4375,13 +4376,13 @@ XS (XS_weechat_api_hdata_get)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_hdata_get_var_offset)
+API_FUNC(hdata_get_var_offset)
 {
     char *hdata, *name;
     int value;
     dXSARGS;
 
-    API_FUNC(1, "hdata_get_var_offset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_get_var_offset", API_RETURN_INT(0));
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4393,13 +4394,13 @@ XS (XS_weechat_api_hdata_get_var_offset)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_hdata_get_var_type_string)
+API_FUNC(hdata_get_var_type_string)
 {
     const char *result;
     char *hdata, *name;
     dXSARGS;
 
-    API_FUNC(1, "hdata_get_var_type_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_var_type_string", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4411,13 +4412,13 @@ XS (XS_weechat_api_hdata_get_var_type_string)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_hdata_get_var_array_size)
+API_FUNC(hdata_get_var_array_size)
 {
     char *hdata, *pointer, *name;
     int value;
     dXSARGS;
 
-    API_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -4432,13 +4433,13 @@ XS (XS_weechat_api_hdata_get_var_array_size)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_hdata_get_var_array_size_string)
+API_FUNC(hdata_get_var_array_size_string)
 {
     const char *result;
     char *hdata, *pointer, *name;
     dXSARGS;
 
-    API_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4453,13 +4454,13 @@ XS (XS_weechat_api_hdata_get_var_array_size_string)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_hdata_get_var_hdata)
+API_FUNC(hdata_get_var_hdata)
 {
     const char *result;
     char *hdata, *name;
     dXSARGS;
 
-    API_FUNC(1, "hdata_get_var_hdata", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_var_hdata", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4471,13 +4472,13 @@ XS (XS_weechat_api_hdata_get_var_hdata)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_hdata_get_list)
+API_FUNC(hdata_get_list)
 {
     char *hdata, *name;
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "hdata_get_list", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_list", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4490,13 +4491,13 @@ XS (XS_weechat_api_hdata_get_list)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_hdata_check_pointer)
+API_FUNC(hdata_check_pointer)
 {
     char *hdata, *list, *pointer;
     int value;
     dXSARGS;
 
-    API_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4511,13 +4512,13 @@ XS (XS_weechat_api_hdata_check_pointer)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_hdata_move)
+API_FUNC(hdata_move)
 {
     char *result, *hdata, *pointer;
     int count;
     dXSARGS;
 
-    API_FUNC(1, "hdata_move", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_move", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4532,13 +4533,13 @@ XS (XS_weechat_api_hdata_move)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_hdata_search)
+API_FUNC(hdata_search)
 {
     char *result, *hdata, *pointer, *search;
     int move;
     dXSARGS;
 
-    API_FUNC(1, "hdata_search", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_search", API_RETURN_EMPTY);
     if (items < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4555,13 +4556,13 @@ XS (XS_weechat_api_hdata_search)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_hdata_char)
+API_FUNC(hdata_char)
 {
     char *hdata, *pointer, *name;
     int value;
     dXSARGS;
 
-    API_FUNC(1, "hdata_char", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_char", API_RETURN_INT(0));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4576,13 +4577,13 @@ XS (XS_weechat_api_hdata_char)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_hdata_integer)
+API_FUNC(hdata_integer)
 {
     char *hdata, *pointer, *name;
     int value;
     dXSARGS;
 
-    API_FUNC(1, "hdata_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_integer", API_RETURN_INT(0));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4597,13 +4598,13 @@ XS (XS_weechat_api_hdata_integer)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_hdata_long)
+API_FUNC(hdata_long)
 {
     char *hdata, *pointer, *name;
     long value;
     dXSARGS;
 
-    API_FUNC(1, "hdata_long", API_RETURN_LONG(0));
+    API_INIT_FUNC(1, "hdata_long", API_RETURN_LONG(0));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_LONG(0));
 
@@ -4618,13 +4619,13 @@ XS (XS_weechat_api_hdata_long)
     API_RETURN_LONG(value);
 }
 
-XS (XS_weechat_api_hdata_string)
+API_FUNC(hdata_string)
 {
     char *hdata, *pointer, *name;
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "hdata_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_string", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4639,13 +4640,13 @@ XS (XS_weechat_api_hdata_string)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_hdata_pointer)
+API_FUNC(hdata_pointer)
 {
     char *hdata, *pointer, *name;
     char *result;
     dXSARGS;
 
-    API_FUNC(1, "hdata_pointer", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_pointer", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4660,13 +4661,13 @@ XS (XS_weechat_api_hdata_pointer)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_hdata_time)
+API_FUNC(hdata_time)
 {
     time_t time;
     char timebuffer[64], *result, *hdata, *pointer, *name;
     dXSARGS;
 
-    API_FUNC(1, "hdata_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_time", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4684,13 +4685,13 @@ XS (XS_weechat_api_hdata_time)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_hdata_hashtable)
+API_FUNC(hdata_hashtable)
 {
     char *hdata, *pointer, *name;
     HV *result_hash;
     dXSARGS;
 
-    API_FUNC(1, "hdata_hashtable", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_hashtable", API_RETURN_EMPTY);
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4706,14 +4707,14 @@ XS (XS_weechat_api_hdata_hashtable)
     API_RETURN_OBJ(result_hash);
 }
 
-XS (XS_weechat_api_hdata_update)
+API_FUNC(hdata_update)
 {
     char *hdata, *pointer;
     struct t_hashtable *hashtable;
     int value;
     dXSARGS;
 
-    API_FUNC(1, "hdata_update", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "hdata_update", API_RETURN_INT(0));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4734,13 +4735,13 @@ XS (XS_weechat_api_hdata_update)
     API_RETURN_INT(value);
 }
 
-XS (XS_weechat_api_hdata_get_string)
+API_FUNC(hdata_get_string)
 {
     char *hdata, *property;
     const char *result;
     dXSARGS;
 
-    API_FUNC(1, "hdata_get_string", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_get_string", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4752,12 +4753,12 @@ XS (XS_weechat_api_hdata_get_string)
     API_RETURN_STRING(result);
 }
 
-XS (XS_weechat_api_upgrade_new)
+API_FUNC(upgrade_new)
 {
     char *result, *filename;
     dXSARGS;
 
-    API_FUNC(1, "upgrade_new", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "upgrade_new", API_RETURN_EMPTY);
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -4769,13 +4770,13 @@ XS (XS_weechat_api_upgrade_new)
     API_RETURN_STRING_FREE(result);
 }
 
-XS (XS_weechat_api_upgrade_write_object)
+API_FUNC(upgrade_write_object)
 {
     char *upgrade_file, *infolist;
     int rc;
     dXSARGS;
 
-    API_FUNC(1, "upgrade_write_object", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "upgrade_write_object", API_RETURN_INT(0));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4834,13 +4835,13 @@ weechat_perl_api_upgrade_read_cb (void *data,
     return WEECHAT_RC_ERROR;
 }
 
-XS (XS_weechat_api_upgrade_read)
+API_FUNC(upgrade_read)
 {
     char *upgrade_file, *function, *data;
     int rc;
     dXSARGS;
 
-    API_FUNC(1, "upgrade_read", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "upgrade_read", API_RETURN_INT(0));
     if (items < 3)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4858,12 +4859,12 @@ XS (XS_weechat_api_upgrade_read)
     API_RETURN_INT(rc);
 }
 
-XS (XS_weechat_api_upgrade_close)
+API_FUNC(upgrade_close)
 {
     char *upgrade_file;
     dXSARGS;
 
-    API_FUNC(1, "upgrade_close", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "upgrade_close", API_RETURN_ERROR);
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
