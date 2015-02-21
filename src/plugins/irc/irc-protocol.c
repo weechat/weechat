@@ -697,8 +697,6 @@ IRC_PROTOCOL_CALLBACK(join)
     if (ptr_channel)
     {
         ptr_channel->part = 0;
-        if (strcmp (ptr_channel->name, pos_channel) != 0)
-            irc_channel_rename (server, ptr_channel, pos_channel);
     }
     else
     {

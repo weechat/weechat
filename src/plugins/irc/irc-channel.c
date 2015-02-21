@@ -501,51 +501,6 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 }
 
 /*
- * Renames a channel.
- */
-
-void
-irc_channel_rename (struct t_irc_server *server,
-                    struct t_irc_channel *channel,
-                    const char *new_name)
-{
-    struct t_irc_channel *ptr_channel;
-    char *buffer_name;
-    const char *short_name;
-
-    /* check if another channel exists with this exact name */
-    for (ptr_channel = server->channels; ptr_channel;
-         ptr_channel = ptr_channel->next_channel)
-    {
-        if ((ptr_channel != channel)
-            && (strcmp (ptr_channel->name, new_name) == 0))
-        {
-            return;
-        }
-    }
-
-    /* rename the channel in buffer */
-    if (channel->buffer)
-    {
-        short_name = weechat_buffer_get_string (channel->buffer, "short_name");
-        if (!short_name || (strcmp (short_name, channel->name) == 0))
-        {
-            /* update the short_name only if it was not changed by the user */
-            weechat_buffer_set (channel->buffer, "short_name", new_name);
-        }
-        buffer_name = irc_buffer_build_name (server->name,
-                                             new_name);
-        weechat_buffer_set (channel->buffer, "name", buffer_name);
-        weechat_buffer_set (channel->buffer, "localvar_set_channel", new_name);
-    }
-
-    /* rename the irc channel */
-    if (channel->name)
-        free (channel->name);
-    channel->name = strdup (new_name);
-}
-
-/*
  * Adds groups in nicklist for a channel.
  */
 
