@@ -134,7 +134,7 @@ weechat_ruby_hashtable_map_cb (void *data,
 }
 
 /*
- * Gets ruby hash with a WeeChat hashtable.
+ * Converts a WeeChat hashtable to a ruby hash.
  */
 
 VALUE
@@ -184,7 +184,7 @@ weechat_ruby_hash_foreach_cb (VALUE key, VALUE value, void *arg)
 }
 
 /*
- * Gets WeeChat hashtable with ruby hashtable.
+ * Converts a ruby hash to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */

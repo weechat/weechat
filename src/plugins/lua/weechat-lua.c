@@ -99,7 +99,7 @@ weechat_lua_hashtable_map_cb (void *data,
 }
 
 /*
- * Puts a WeeChat hashtable on lua stack, as lua table.
+ * Converts a WeeChat hashtable to a lua hash (as lua table on the stack).
  */
 
 void
@@ -113,7 +113,7 @@ weechat_lua_pushhashtable (lua_State *interpreter, struct t_hashtable *hashtable
 }
 
 /*
- * Gets WeeChat hashtable with lua hash (on stack).
+ * Converts a lua hash (on stack) to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */

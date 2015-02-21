@@ -120,7 +120,7 @@ weechat_perl_hashtable_map_cb (void *data,
 }
 
 /*
- * Gets perl hash with a WeeChat hashtable.
+ * Converts a WeeChat hashtable to a perl hash.
  */
 
 HV *
@@ -140,7 +140,7 @@ weechat_perl_hashtable_to_hash (struct t_hashtable *hashtable)
 }
 
 /*
- * Gets WeeChat hashtable with perl hash.
+ * Converts a perl hash to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */

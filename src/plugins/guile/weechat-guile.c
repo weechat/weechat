@@ -190,7 +190,7 @@ weechat_guile_hashtable_map_cb (void *data,
 }
 
 /*
- * Gets guile alist with a WeeChat hashtable.
+ * Converts a WeeChat hashtable to a guile alist.
  */
 
 SCM
@@ -208,7 +208,7 @@ weechat_guile_hashtable_to_alist (struct t_hashtable *hashtable)
 }
 
 /*
- * Gets WeeChat hashtable with guile alist.
+ * Converts a guile alist to a WeeChat hashtable.
  *
  * Note: hashtable must be free after use.
  */

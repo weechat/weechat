@@ -213,7 +213,7 @@ weechat_python_hashtable_map_cb (void *data,
 }
 
 /*
- * Gets python dictionary with a WeeChat hashtable.
+ * Converts a WeeChat hashtable to a python dictionary.
  */
 
 PyObject *
@@ -236,7 +236,7 @@ weechat_python_hashtable_to_dict (struct t_hashtable *hashtable)
 }
 
 /*
- * Gets WeeChat hashtable with python dictionary.
+ * Converts a python dictionary to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */

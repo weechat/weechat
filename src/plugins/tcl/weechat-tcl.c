@@ -105,7 +105,7 @@ weechat_tcl_hashtable_map_cb (void *data,
 }
 
 /*
- * Gets tcl dict with a WeeChat hashtable.
+ * Converts a WeeChat hashtable to a tcl dict.
  */
 
 Tcl_Obj *
@@ -130,7 +130,7 @@ weechat_tcl_hashtable_to_dict (Tcl_Interp *interp,
 }
 
 /*
- * Gets WeeChat hashtable with tcl dict.
+ * Converts a tcl dict to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */
