@@ -155,28 +155,30 @@ weechat_perl_hash_to_hashtable (SV *hash, int size, const char *type_keys,
     char *str_key;
     I32 retlen;
 
-    hashtable = weechat_hashtable_new (size,
-                                       type_keys,
-                                       type_values,
-                                       NULL,
-                                       NULL);
+    hashtable = weechat_hashtable_new (size, type_keys, type_values,
+                                       NULL, NULL);
     if (!hashtable)
         return NULL;
 
-    if ((hash) && SvROK(hash) && SvRV(hash) && (SvTYPE(SvRV(hash)) == SVt_PVHV))
+    if ((hash) && SvROK(hash) && SvRV(hash)
+        && (SvTYPE(SvRV(hash)) == SVt_PVHV))
     {
-        hash2 = (HV *) SvRV(hash);
+        hash2 = (HV *)SvRV(hash);
         hv_iterinit (hash2);
         while ((value = hv_iternextsv (hash2, &str_key, &retlen)))
         {
             if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
-                weechat_hashtable_set (hashtable, str_key, SvPV (value, PL_na));
+            {
+                weechat_hashtable_set (hashtable, str_key,
+                                       SvPV (value, PL_na));
+            }
             else if (strcmp (type_values, WEECHAT_HASHTABLE_POINTER) == 0)
             {
                 weechat_hashtable_set (hashtable, str_key,
-                                       plugin_script_str2ptr (weechat_perl_plugin,
-                                                              NULL, NULL,
-                                                              SvPV (value, PL_na)));
+                                       plugin_script_str2ptr (
+                                           weechat_perl_plugin,
+                                           NULL, NULL,
+                                           SvPV (value, PL_na)));
             }
         }
     }

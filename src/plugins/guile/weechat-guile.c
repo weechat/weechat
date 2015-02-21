@@ -222,11 +222,8 @@ weechat_guile_alist_to_hashtable (SCM alist, int size, const char *type_keys,
     SCM pair;
     char *str, *str2;
 
-    hashtable = weechat_hashtable_new (size,
-                                       type_keys,
-                                       type_values,
-                                       NULL,
-                                       NULL);
+    hashtable = weechat_hashtable_new (size, type_keys, type_values,
+                                       NULL, NULL);
     if (!hashtable)
         return NULL;
 

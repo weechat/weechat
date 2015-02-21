@@ -251,11 +251,8 @@ weechat_python_dict_to_hashtable (PyObject *dict, int size,
     Py_ssize_t pos;
     char *str_key, *str_value;
 
-    hashtable = weechat_hashtable_new (size,
-                                       type_keys,
-                                       type_values,
-                                       NULL,
-                                       NULL);
+    hashtable = weechat_hashtable_new (size, type_keys, type_values,
+                                       NULL, NULL);
     if (!hashtable)
         return NULL;
 
@@ -270,19 +267,25 @@ weechat_python_dict_to_hashtable (PyObject *dict, int size,
                 str_key = strdup (PyBytes_AsString (key));
         }
         else
+        {
             str_key = weechat_python_unicode_to_string (key);
+        }
         if (PyBytes_Check (value))
         {
             if (PyBytes_AsString (value))
                 str_value = strdup (PyBytes_AsString (value));
         }
         else
+        {
             str_value = weechat_python_unicode_to_string (value);
+        }
 
         if (str_key)
         {
             if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
+            {
                 weechat_hashtable_set (hashtable, str_key, str_value);
+            }
             else if (strcmp (type_values, WEECHAT_HASHTABLE_POINTER) == 0)
             {
                 weechat_hashtable_set (hashtable, str_key,

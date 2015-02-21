@@ -164,6 +164,7 @@ weechat_ruby_hash_foreach_cb (VALUE key, VALUE value, void *arg)
     const char *type_values;
 
     hashtable = (struct t_hashtable *)arg;
+
     if ((TYPE(key) == T_STRING) && (TYPE(value) == T_STRING))
     {
         type_values = weechat_hashtable_get_string (hashtable, "type_values");
@@ -175,11 +176,13 @@ weechat_ruby_hash_foreach_cb (VALUE key, VALUE value, void *arg)
         else if (strcmp (type_values, WEECHAT_HASHTABLE_POINTER) == 0)
         {
             weechat_hashtable_set (hashtable, StringValuePtr(key),
-                                   plugin_script_str2ptr (weechat_ruby_plugin,
-                                                          NULL, NULL,
-                                                          StringValuePtr(value)));
+                                   plugin_script_str2ptr (
+                                       weechat_ruby_plugin,
+                                       NULL, NULL,
+                                       StringValuePtr(value)));
         }
     }
+
     return 0;
 }
 
@@ -195,11 +198,8 @@ weechat_ruby_hash_to_hashtable (VALUE hash, int size, const char *type_keys,
 {
     struct t_hashtable *hashtable;
 
-    hashtable = weechat_hashtable_new (size,
-                                       type_keys,
-                                       type_values,
-                                       NULL,
-                                       NULL);
+    hashtable = weechat_hashtable_new (size, type_keys, type_values,
+                                       NULL, NULL);
     if (!hashtable)
         return NULL;
 

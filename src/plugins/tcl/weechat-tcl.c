@@ -145,11 +145,8 @@ weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
     Tcl_Obj *key, *value;
     int done;
 
-    hashtable = weechat_hashtable_new (size,
-                                       type_keys,
-                                       type_values,
-                                       NULL,
-                                       NULL);
+    hashtable = weechat_hashtable_new (size, type_keys, type_values,
+                                       NULL, NULL);
     if (!hashtable)
         return NULL;
 
@@ -167,13 +164,15 @@ weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
             {
                 weechat_hashtable_set (hashtable,
                                        Tcl_GetString (key),
-                                       plugin_script_str2ptr (weechat_tcl_plugin,
-                                                              NULL, NULL,
-                                                              Tcl_GetString (value)));
+                                       plugin_script_str2ptr (
+                                           weechat_tcl_plugin,
+                                           NULL, NULL,
+                                           Tcl_GetString (value)));
             }
         }
     }
-    Tcl_DictObjDone(&search);
+
+    Tcl_DictObjDone (&search);
 
     return hashtable;
 }
