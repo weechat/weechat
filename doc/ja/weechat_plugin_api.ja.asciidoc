@@ -12488,8 +12488,7 @@ WeeChat コマンドを実行する関数。
 
 _バージョン 1.1 で更新。_
 
-// TRANSLATION MISSING
-Execute a command or send text to buffer.
+コマンドを実行するか、バッファにテキストを送信。
 
 プロトタイプ:
 
