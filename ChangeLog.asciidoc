@@ -33,6 +33,11 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: remove useless rename of channel buffer on JOIN received with different
   case (closes #336)
 * irc: fix completion of commands /allchan and /allpv
+* lua: fix value returned in case of error in functions:
+  config_option_reset, config_string, config_string_default, config_color,
+  config_color_default, config_write, config_read, config_reload,
+  hook_modifier_exec, buffer_string_replace_local_var, nicklist_group_set,
+  nicklist_nick_set, command, upgrade_read, upgrade_close
 * relay: fix up/down keys on relay buffer (closes #335)
 * relay: remove v4-mapped addresses in /help relay.network.allowed_ips
   (closes #325)

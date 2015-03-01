@@ -1283,9 +1283,9 @@ API_FUNC(config_option_reset)
     const char *option;
     int run_callback, rc;
 
-    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (lua_gettop (L) < 2)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
     option = lua_tostring (L, -2);
     run_callback = lua_tonumber (L, -1);
@@ -1469,7 +1469,7 @@ API_FUNC(config_string)
 
     API_INIT_FUNC(1, "config_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     option = lua_tostring (L, -1);
 
@@ -1484,7 +1484,7 @@ API_FUNC(config_string_default)
 
     API_INIT_FUNC(1, "config_string_default", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     option = lua_tostring (L, -1);
 
@@ -1497,9 +1497,9 @@ API_FUNC(config_color)
 {
     const char *option, *result;
 
-    API_INIT_FUNC(1, "config_color", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     option = lua_tostring (L, -1);
 
@@ -1512,9 +1512,9 @@ API_FUNC(config_color_default)
 {
     const char *option, *result;
 
-    API_INIT_FUNC(1, "config_color_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color_default", API_RETURN_EMPTY);
     if (lua_gettop (L) < 1)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     option = lua_tostring (L, -1);
 
@@ -1565,9 +1565,9 @@ API_FUNC(config_write)
     const char *config_file;
     int rc;
 
-    API_INIT_FUNC(1, "config_write", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_write", API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
     if (lua_gettop (L) < 1)
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
 
     config_file = lua_tostring (L, -1);
 
@@ -1581,9 +1581,9 @@ API_FUNC(config_read)
     const char *config_file;
     int rc;
 
-    API_INIT_FUNC(1, "config_read", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_read", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
     if (lua_gettop (L) < 1)
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     config_file = lua_tostring (L, -1);
 
@@ -1597,9 +1597,9 @@ API_FUNC(config_reload)
     const char *config_file;
     int rc;
 
-    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
     if (lua_gettop (L) < 1)
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     config_file = lua_tostring (L, -1);
 
@@ -2879,7 +2879,7 @@ API_FUNC(hook_modifier_exec)
 
     API_INIT_FUNC(1, "hook_modifier_exec", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     modifier = lua_tostring (L, -3);
     modifier_data = lua_tostring (L, -2);
@@ -3432,9 +3432,9 @@ API_FUNC(buffer_string_replace_local_var)
     const char *buffer, *string;
     char *result;
 
-    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = lua_tostring (L, -2);
     string = lua_tostring (L, -1);
@@ -3765,7 +3765,7 @@ API_FUNC(nicklist_group_set)
 
     API_INIT_FUNC(1, "nicklist_group_set", API_RETURN_ERROR);
     if (lua_gettop (L) < 4)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = lua_tostring (L, -4);
     group = lua_tostring (L, -3);
@@ -3845,7 +3845,7 @@ API_FUNC(nicklist_nick_set)
 
     API_INIT_FUNC(1, "nicklist_nick_set", API_RETURN_ERROR);
     if (lua_gettop (L) < 4)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = lua_tostring (L, -4);
     nick = lua_tostring (L, -3);
@@ -4105,9 +4105,9 @@ API_FUNC(command)
     const char *buffer, *command;
     int rc;
 
-    API_INIT_FUNC(1, "command", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "command", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (lua_gettop (L) < 2)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     buffer = lua_tostring (L, -2);
     command = lua_tostring (L, -1);
@@ -4903,9 +4903,9 @@ API_FUNC(upgrade_read)
     const char *upgrade_file, *function, *data;
     int rc;
 
-    API_INIT_FUNC(1, "upgrade_read", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "upgrade_read", API_RETURN_INT(0));
     if (lua_gettop (L) < 3)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     upgrade_file = lua_tostring (L, -3);
     function = lua_tostring (L, -2);
@@ -4927,7 +4927,7 @@ API_FUNC(upgrade_close)
 
     API_INIT_FUNC(1, "upgrade_close", API_RETURN_ERROR);
     if (lua_gettop (L) < 1)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_ERROR);
 
     upgrade_file = lua_tostring (L, -1);
 
