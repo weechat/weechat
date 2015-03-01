@@ -36,6 +36,9 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * relay: fix up/down keys on relay buffer (closes #335)
 * relay: remove v4-mapped addresses in /help relay.network.allowed_ips
   (closes #325)
+* perl: fix value returned in case of error in functions:
+  config_option_reset, config_color, config_color_default, config_write,
+  config_read, config_reload, buffer_string_replace_local_var, command
 * python: fix value returned in case of error in functions:
   config_option_reset, config_color, config_color_default, config_write,
   config_read, config_reload, config_is_set_plugin, buffer_get_string,

@@ -1256,9 +1256,9 @@ API_FUNC(config_option_reset)
     char *option;
     dXSARGS;
 
-    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (items < 2)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
     option = SvPV_nolen (ST (0));
 
@@ -1458,9 +1458,9 @@ API_FUNC(config_color)
     const char *result;
     dXSARGS;
 
-    API_INIT_FUNC(1, "config_color", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color", API_RETURN_EMPTY);
     if (items < 1)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = weechat_config_color (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
@@ -1472,9 +1472,9 @@ API_FUNC(config_color_default)
     const char *result;
     dXSARGS;
 
-    API_INIT_FUNC(1, "config_color_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color_default", API_RETURN_EMPTY);
     if (items < 1)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = weechat_config_color_default (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
@@ -1523,9 +1523,9 @@ API_FUNC(config_write)
     int rc;
     dXSARGS;
 
-    API_INIT_FUNC(1, "config_write", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_write", API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
     if (items < 1)
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
 
     rc = weechat_config_write (API_STR2PTR(SvPV_nolen (ST (0)))); /* config_file */
 
@@ -1537,9 +1537,9 @@ API_FUNC(config_read)
     int rc;
     dXSARGS;
 
-    API_INIT_FUNC(1, "config_read", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_read", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
     if (items < 1)
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     rc = weechat_config_read (API_STR2PTR(SvPV_nolen (ST (0)))); /* config_file */
 
@@ -1551,9 +1551,9 @@ API_FUNC(config_reload)
     int rc;
     dXSARGS;
 
-    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
     if (items < 1)
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     rc = weechat_config_reload (API_STR2PTR(SvPV_nolen (ST (0)))); /* config_file */
 
@@ -3354,9 +3354,9 @@ API_FUNC(buffer_string_replace_local_var)
     char *buffer, *string, *result;
     dXSARGS;
 
-    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_EMPTY);
     if (items < 2)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = SvPV_nolen (ST (0));
     string = SvPV_nolen (ST (1));
@@ -4024,9 +4024,9 @@ API_FUNC(command)
     int rc;
     dXSARGS;
 
-    API_INIT_FUNC(1, "command", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "command", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (items < 2)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     buffer = SvPV_nolen (ST (0));
     command = SvPV_nolen (ST (1));
