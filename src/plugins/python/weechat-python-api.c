@@ -1249,11 +1249,11 @@ API_FUNC(config_option_reset)
     char *option;
     int run_callback, rc;
 
-    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     option = NULL;
     run_callback = 0;
     if (!PyArg_ParseTuple (args, "si", &option, &run_callback))
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
     rc = weechat_config_option_reset (API_STR2PTR(option),
                                       run_callback);
@@ -1453,10 +1453,10 @@ API_FUNC(config_color)
     char *option;
     const char *result;
 
-    API_INIT_FUNC(1, "config_color", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color", API_RETURN_EMPTY);
     option = NULL;
     if (!PyArg_ParseTuple (args, "s", &option))
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = weechat_config_color (API_STR2PTR(option));
 
@@ -1468,10 +1468,10 @@ API_FUNC(config_color_default)
     char *option;
     const char *result;
 
-    API_INIT_FUNC(1, "config_color_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color_default", API_RETURN_EMPTY);
     option = NULL;
     if (!PyArg_ParseTuple (args, "s", &option))
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = weechat_config_color_default (API_STR2PTR(option));
 
@@ -1518,10 +1518,10 @@ API_FUNC(config_write)
     char *config_file;
     int rc;
 
-    API_INIT_FUNC(1, "config_write", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_write", API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
     config_file = NULL;
     if (!PyArg_ParseTuple (args, "s", &config_file))
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
 
     rc = weechat_config_write (API_STR2PTR(config_file));
 
@@ -1533,10 +1533,10 @@ API_FUNC(config_read)
     char *config_file;
     int rc;
 
-    API_INIT_FUNC(1, "config_read", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_read", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
     config_file = NULL;
     if (!PyArg_ParseTuple (args, "s", &config_file))
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     rc = weechat_config_read (API_STR2PTR(config_file));
 
@@ -1548,10 +1548,10 @@ API_FUNC(config_reload)
     char *config_file;
     int rc;
 
-    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
     config_file = NULL;
     if (!PyArg_ParseTuple (args, "s", &config_file))
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     rc = weechat_config_reload (API_STR2PTR(config_file));
 
@@ -1662,7 +1662,7 @@ API_FUNC(config_is_set_plugin)
     API_INIT_FUNC(1, "config_is_set_plugin", API_RETURN_INT(0));
     option = NULL;
     if (!PyArg_ParseTuple (args, "s", &option))
-        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     rc = plugin_script_api_config_is_set_plugin (weechat_python_plugin,
                                                  python_current_script,
@@ -3347,7 +3347,7 @@ API_FUNC(buffer_get_string)
     char *buffer, *property;
     const char *result;
 
-    API_INIT_FUNC(1, "buffer_get_string", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_get_string", API_RETURN_EMPTY);
     buffer = NULL;
     property = NULL;
     if (!PyArg_ParseTuple (args, "ss", &buffer, &property))
@@ -3398,11 +3398,11 @@ API_FUNC(buffer_string_replace_local_var)
     char *buffer, *string, *result;
     PyObject *return_value;
 
-    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_EMPTY);
     buffer = NULL;
     string = NULL;
     if (!PyArg_ParseTuple (args, "ss", &buffer, &string))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = weechat_buffer_string_replace_local_var (API_STR2PTR(buffer), string);
 
@@ -3680,7 +3680,7 @@ API_FUNC(nicklist_group_get_string)
     char *buffer, *group, *property;
     const char *result;
 
-    API_INIT_FUNC(1, "nicklist_group_get_string", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_group_get_string", API_RETURN_EMPTY);
     buffer = NULL;
     group = NULL;
     property = NULL;
@@ -3757,7 +3757,7 @@ API_FUNC(nicklist_nick_get_string)
     char *buffer, *nick, *property;
     const char *result;
 
-    API_INIT_FUNC(1, "nicklist_nick_get_string", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "nicklist_nick_get_string", API_RETURN_EMPTY);
     buffer = NULL;
     nick = NULL;
     property = NULL;
@@ -4053,11 +4053,11 @@ API_FUNC(command)
     char *buffer, *command;
     int rc;
 
-    API_INIT_FUNC(1, "command", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "command", API_RETURN_INT(WEECHAT_RC_ERROR));
     buffer = NULL;
     command = NULL;
     if (!PyArg_ParseTuple (args, "ss", &buffer, &command))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     rc = plugin_script_api_command (weechat_python_plugin,
                                     python_current_script,
@@ -4663,12 +4663,12 @@ API_FUNC(hdata_time)
     char *hdata, *pointer, *name;
     time_t time;
 
-    API_INIT_FUNC(1, "hdata_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_time", API_RETURN_LONG(0));
     hdata = NULL;
     pointer = NULL;
     name = NULL;
     if (!PyArg_ParseTuple (args, "sss", &hdata, &pointer, &name))
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_LONG(0));
 
     time = weechat_hdata_time (API_STR2PTR(hdata),
                                API_STR2PTR(pointer),
