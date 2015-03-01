@@ -1283,9 +1283,9 @@ weechat_guile_api_config_option_reset (SCM option, SCM run_callback)
 {
     int rc;
 
-    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (!scm_is_string (option) || !scm_is_integer (run_callback))
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
     rc = weechat_config_option_reset (API_STR2PTR(API_SCM_TO_STRING(option)),
                                       scm_to_int (run_callback));
@@ -1470,9 +1470,9 @@ weechat_guile_api_config_color (SCM option)
 {
     const char *result;
 
-    API_INIT_FUNC(1, "config_color", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color", API_RETURN_EMPTY);
     if (!scm_is_string (option))
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = weechat_config_color (API_STR2PTR(API_SCM_TO_STRING(option)));
 
@@ -1484,9 +1484,9 @@ weechat_guile_api_config_color_default (SCM option)
 {
     const char *result;
 
-    API_INIT_FUNC(1, "config_color_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color_default", API_RETURN_EMPTY);
     if (!scm_is_string (option))
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = weechat_config_color_default (API_STR2PTR(API_SCM_TO_STRING(option)));
 
@@ -1527,9 +1527,9 @@ weechat_guile_api_config_write (SCM config_file)
 {
     int rc;
 
-    API_INIT_FUNC(1, "config_write", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_write", API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
     if (!scm_is_string (config_file))
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
 
     rc = weechat_config_write (API_STR2PTR(API_SCM_TO_STRING(config_file)));
 
@@ -1541,9 +1541,9 @@ weechat_guile_api_config_read (SCM config_file)
 {
     int rc;
 
-    API_INIT_FUNC(1, "config_read", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_read", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
     if (!scm_is_string (config_file))
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     rc = weechat_config_read (API_STR2PTR(API_SCM_TO_STRING(config_file)));
 
@@ -1555,9 +1555,9 @@ weechat_guile_api_config_reload (SCM config_file)
 {
     int rc;
 
-    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
     if (!scm_is_string (config_file))
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     rc = weechat_config_reload (API_STR2PTR(API_SCM_TO_STRING(config_file)));
 
@@ -1899,7 +1899,7 @@ weechat_guile_api_hook_command (SCM command, SCM description, SCM args,
         || !scm_is_string (args) || !scm_is_string (args_description)
         || !scm_is_string (completion) || !scm_is_string (function)
         || !scm_is_string (data))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(plugin_script_api_hook_command (weechat_guile_plugin,
                                                          guile_current_script,
@@ -3267,9 +3267,9 @@ weechat_guile_api_buffer_string_replace_local_var (SCM buffer, SCM string)
     char *result;
     SCM return_value;
 
-    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_EMPTY);
     if (!scm_is_string (buffer) || !scm_is_string (string))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = weechat_buffer_string_replace_local_var (API_STR2PTR(API_SCM_TO_STRING(buffer)),
                                                       API_SCM_TO_STRING(string));
@@ -3880,9 +3880,9 @@ weechat_guile_api_command (SCM buffer, SCM command)
 {
     int rc;
 
-    API_INIT_FUNC(1, "command", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "command", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (!scm_is_string (buffer) || !scm_is_string (command))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     rc = plugin_script_api_command (weechat_guile_plugin,
                                     guile_current_script,
