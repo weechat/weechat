@@ -1502,9 +1502,9 @@ weechat_ruby_api_config_option_reset (VALUE class, VALUE option,
     char *c_option;
     int c_run_callback, rc;
 
-    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (NIL_P (option) || NIL_P (run_callback))
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
     Check_Type (option, T_STRING);
     Check_Type (run_callback, T_FIXNUM);
@@ -1766,9 +1766,9 @@ weechat_ruby_api_config_color (VALUE class, VALUE option)
     char *c_option;
     const char *result;
 
-    API_INIT_FUNC(1, "config_color", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color", API_RETURN_EMPTY);
     if (NIL_P (option))
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     Check_Type (option, T_STRING);
 
@@ -1785,9 +1785,9 @@ weechat_ruby_api_config_color_default (VALUE class, VALUE option)
     char *c_option;
     const char *result;
 
-    API_INIT_FUNC(1, "config_color_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color_default", API_RETURN_EMPTY);
     if (NIL_P (option))
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     Check_Type (option, T_STRING);
 
@@ -1852,9 +1852,9 @@ weechat_ruby_api_config_write (VALUE class, VALUE config_file)
     char *c_config_file;
     int rc;
 
-    API_INIT_FUNC(1, "config_write", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_write", API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
     if (NIL_P (config_file))
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
 
     Check_Type (config_file, T_STRING);
 
@@ -1871,9 +1871,9 @@ weechat_ruby_api_config_read (VALUE class, VALUE config_file)
     char *c_config_file;
     int rc;
 
-    API_INIT_FUNC(1, "config_read", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_read", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
     if (NIL_P (config_file))
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     Check_Type (config_file, T_STRING);
 
@@ -1890,9 +1890,9 @@ weechat_ruby_api_config_reload (VALUE class, VALUE config_file)
     char *c_config_file;
     int rc;
 
-    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
     if (NIL_P (config_file))
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     Check_Type (config_file, T_STRING);
 
@@ -4041,9 +4041,9 @@ weechat_ruby_api_buffer_string_replace_local_var (VALUE class, VALUE buffer, VAL
     char *c_buffer, *c_string, *result;
     VALUE return_value;
 
-    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_EMPTY);
     if (NIL_P (buffer) || NIL_P (string))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     Check_Type (buffer, T_STRING);
     Check_Type (string, T_STRING);
@@ -4897,9 +4897,9 @@ weechat_ruby_api_command (VALUE class, VALUE buffer, VALUE command)
     char *c_buffer, *c_command;
     int rc;
 
-    API_INIT_FUNC(1, "command", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "command", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (NIL_P (buffer) || NIL_P (command))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     Check_Type (buffer, T_STRING);
     Check_Type (command, T_STRING);
