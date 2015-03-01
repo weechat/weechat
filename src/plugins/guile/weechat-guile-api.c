@@ -3837,16 +3837,18 @@ weechat_guile_api_bar_new (SCM args)
 SCM
 weechat_guile_api_bar_set (SCM bar, SCM property, SCM value)
 {
-    API_INIT_FUNC(1, "bar_set", API_RETURN_ERROR);
+    int rc;
+
+    API_INIT_FUNC(1, "bar_set", API_RETURN_INT(0));
     if (!scm_is_string (bar) || !scm_is_string (property)
         || !scm_is_string (value))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
-    weechat_bar_set (API_STR2PTR(API_SCM_TO_STRING(bar)),
-                     API_SCM_TO_STRING(property),
-                     API_SCM_TO_STRING(value));
+    rc = weechat_bar_set (API_STR2PTR(API_SCM_TO_STRING(bar)),
+                          API_SCM_TO_STRING(property),
+                          API_SCM_TO_STRING(value));
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 SCM

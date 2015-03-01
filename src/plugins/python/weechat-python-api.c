@@ -4006,19 +4006,18 @@ API_FUNC(bar_new)
 API_FUNC(bar_set)
 {
     char *bar, *property, *value;
+    int rc;
 
-    API_INIT_FUNC(1, "bar_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_set", API_RETURN_INT(0));
     bar = NULL;
     property = NULL;
     value = NULL;
     if (!PyArg_ParseTuple (args, "sss", &bar, &property, &value))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
-    weechat_bar_set (API_STR2PTR(bar),
-                     property,
-                     value);
+    rc = weechat_bar_set (API_STR2PTR(bar), property, value);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 API_FUNC(bar_update)

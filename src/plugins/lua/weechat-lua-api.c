@@ -4055,20 +4055,19 @@ API_FUNC(bar_new)
 API_FUNC(bar_set)
 {
     const char *bar, *property, *value;
+    int rc;
 
-    API_INIT_FUNC(1, "bar_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_set", API_RETURN_INT(0));
     if (lua_gettop (L) < 3)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     bar = lua_tostring (L, -3);
     property = lua_tostring (L, -2);
     value = lua_tostring (L, -1);
 
-    weechat_bar_set (API_STR2PTR(bar),
-                     property,
-                     value);
+    rc = weechat_bar_set (API_STR2PTR(bar), property, value);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 API_FUNC(bar_update)

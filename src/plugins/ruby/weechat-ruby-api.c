@@ -4836,10 +4836,11 @@ static VALUE
 weechat_ruby_api_bar_set (VALUE class, VALUE bar, VALUE property, VALUE value)
 {
     char *c_bar, *c_property, *c_value;
+    int rc;
 
-    API_INIT_FUNC(1, "bar_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_set", API_RETURN_INT(0));
     if (NIL_P (bar) || NIL_P (property) || NIL_P (value))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     Check_Type (bar, T_STRING);
     Check_Type (property, T_STRING);
@@ -4849,11 +4850,9 @@ weechat_ruby_api_bar_set (VALUE class, VALUE bar, VALUE property, VALUE value)
     c_property = StringValuePtr (property);
     c_value = StringValuePtr (value);
 
-    weechat_bar_set (API_STR2PTR(c_bar),
-                     c_property,
-                     c_value);
+    rc = weechat_bar_set (API_STR2PTR(c_bar), c_property, c_value);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 static VALUE

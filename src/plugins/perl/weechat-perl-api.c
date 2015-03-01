@@ -3976,19 +3976,20 @@ API_FUNC(bar_new)
 API_FUNC(bar_set)
 {
     char *bar, *property, *value;
+    int rc;
     dXSARGS;
 
-    API_INIT_FUNC(1, "bar_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_set", API_RETURN_INT(0));
     if (items < 3)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     bar = SvPV_nolen (ST (0));
     property = SvPV_nolen (ST (1));
     value = SvPV_nolen (ST (2));
 
-    weechat_bar_set (API_STR2PTR(bar), property, value);
+    rc = weechat_bar_set (API_STR2PTR(bar), property, value);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 API_FUNC(bar_update)

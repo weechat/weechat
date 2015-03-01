@@ -4315,19 +4315,19 @@ API_FUNC(bar_set)
 {
     Tcl_Obj *objp;
     char *bar, *property, *value;
-    int i;
+    int i, rc;
 
-    API_INIT_FUNC(1, "bar_set", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_set", API_RETURN_INT(0));
     if (objc < 4)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     bar = Tcl_GetStringFromObj (objv[1], &i);
     property = Tcl_GetStringFromObj (objv[2], &i);
     value = Tcl_GetStringFromObj (objv[3], &i);
 
-    weechat_bar_set (API_STR2PTR(bar), property, value);
+    rc = weechat_bar_set (API_STR2PTR(bar), property, value);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 API_FUNC(bar_update)
