@@ -5691,13 +5691,12 @@ static VALUE
 weechat_ruby_api_hdata_time (VALUE class, VALUE hdata, VALUE pointer,
                              VALUE name)
 {
-    char *c_hdata, *c_pointer, *c_name, timebuffer[64], *result;
+    char *c_hdata, *c_pointer, *c_name;
     time_t time;
-    VALUE return_value;
 
-    API_INIT_FUNC(1, "hdata_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_time", API_RETURN_LONG(0));
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_LONG(0));
 
     Check_Type (hdata, T_STRING);
     Check_Type (pointer, T_STRING);
@@ -5707,14 +5706,11 @@ weechat_ruby_api_hdata_time (VALUE class, VALUE hdata, VALUE pointer,
     c_pointer = StringValuePtr (pointer);
     c_name = StringValuePtr (name);
 
-    timebuffer[0] = '\0';
     time = weechat_hdata_time (API_STR2PTR(c_hdata),
                                API_STR2PTR(c_pointer),
                                c_name);
-    snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)time);
-    result = strdup (timebuffer);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_LONG(time);
 }
 
 static VALUE

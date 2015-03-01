@@ -4737,24 +4737,20 @@ API_FUNC(hdata_time)
 {
     const char *hdata, *pointer, *name;
     time_t time;
-    char timebuffer[64], *result;
 
-    API_INIT_FUNC(1, "hdata_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_time", API_RETURN_LONG(0));
     if (lua_gettop (L) < 3)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_LONG(0));
 
     hdata = lua_tostring (L, -3);
     pointer = lua_tostring (L, -2);
     name = lua_tostring (L, -1);
 
-    timebuffer[0] = '\0';
     time = weechat_hdata_time (API_STR2PTR(hdata),
                                API_STR2PTR(pointer),
                                name);
-    snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)time);
-    result = strdup (timebuffer);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_LONG(time);
 }
 
 API_FUNC(hdata_hashtable)

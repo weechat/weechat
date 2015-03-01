@@ -4664,25 +4664,20 @@ API_FUNC(hdata_pointer)
 API_FUNC(hdata_time)
 {
     time_t time;
-    char timebuffer[64], *result, *hdata, *pointer, *name;
+    char *hdata, *pointer, *name;
     dXSARGS;
 
-    API_INIT_FUNC(1, "hdata_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_time", API_RETURN_LONG(0));
     if (items < 3)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_LONG(0));
 
     hdata = SvPV_nolen (ST (0));
     pointer = SvPV_nolen (ST (1));
     name = SvPV_nolen (ST (2));
 
-    timebuffer[0] = '\0';
-    time = weechat_hdata_time (API_STR2PTR(hdata),
-                               API_STR2PTR(pointer),
-                               name);
-    snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)time);
-    result = strdup (timebuffer);
+    time = weechat_hdata_time (API_STR2PTR(hdata), API_STR2PTR(pointer), name);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_LONG(time);
 }
 
 API_FUNC(hdata_hashtable)

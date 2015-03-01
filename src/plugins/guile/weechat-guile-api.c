@@ -4439,22 +4439,17 @@ weechat_guile_api_hdata_pointer (SCM hdata, SCM pointer, SCM name)
 SCM
 weechat_guile_api_hdata_time (SCM hdata, SCM pointer, SCM name)
 {
-    char timebuffer[64], *result;
     time_t time;
-    SCM return_value;
 
-    API_INIT_FUNC(1, "hdata_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_time", API_RETURN_LONG(0));
     if (!scm_is_string (hdata) || !scm_is_string (pointer) || !scm_is_string (name))
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_LONG(0));
 
-    timebuffer[0] = '\0';
     time = weechat_hdata_time (API_STR2PTR(API_SCM_TO_STRING(hdata)),
                                API_STR2PTR(API_SCM_TO_STRING(pointer)),
                                API_SCM_TO_STRING(name));
-    snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)time);
-    result = strdup (timebuffer);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_LONG(time);
 }
 
 SCM

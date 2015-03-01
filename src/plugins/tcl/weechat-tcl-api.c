@@ -5014,25 +5014,22 @@ API_FUNC(hdata_time)
 {
     Tcl_Obj *objp;
     time_t time;
-    char timebuffer[64], *result, *hdata, *pointer, *name;
+    char *hdata, *pointer, *name;
     int i;
 
-    API_INIT_FUNC(1, "hdata_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "hdata_time", API_RETURN_LONG(0));
     if (objc < 4)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_LONG(0));
 
     hdata = Tcl_GetStringFromObj (objv[1], &i);
     pointer = Tcl_GetStringFromObj (objv[2], &i);
     name = Tcl_GetStringFromObj (objv[3], &i);
 
-    timebuffer[0] = '\0';
     time = weechat_hdata_time (API_STR2PTR(hdata),
                                API_STR2PTR(pointer),
                                name);
-    snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)time);
-    result = strdup (timebuffer);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_LONG(time);
 }
 
 API_FUNC(hdata_hashtable)
