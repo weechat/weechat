@@ -59,6 +59,12 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   python/perl/ruby/lua/tcl/guile plugins
 * scripts: fix type of value returned by function hdata_time (from string to
   long integer) in perl/ruby/lua/tcl/guile plugins
+* tcl: fix value returned in case of error in functions:
+  mkdir_home, mkdir, mkdir_parents, config_option_reset, config_color,
+  config_color_default, config_write, config_read, config_reload,
+  print_date_tags, buffer_string_replace_local_var, command, infolist_new_item,
+  infolist_new_var_integer, infolist_new_var_string, infolist_new_var_pointer,
+  infolist_new_var_time, upgrade_write_object, upgrade_read, upgrade_close
 
 == Version 1.1.1 (2015-01-25)
 

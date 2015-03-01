@@ -584,7 +584,7 @@ API_FUNC(mkdir_home)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     if (Tcl_GetIntFromObj (interp, objv[2], &mode) != TCL_OK)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_ERROR);
 
     if (weechat_mkdir_home (Tcl_GetStringFromObj (objv[1], &i), /* directory */
                             mode))
@@ -603,7 +603,7 @@ API_FUNC(mkdir)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     if (Tcl_GetIntFromObj (interp, objv[2], &mode) != TCL_OK)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_ERROR);
 
     if (weechat_mkdir (Tcl_GetStringFromObj (objv[1], &i), /* directory */
                        mode))
@@ -622,7 +622,7 @@ API_FUNC(mkdir_parents)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     if (Tcl_GetIntFromObj (interp, objv[2], &mode) != TCL_OK)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_ERROR);
 
     if (weechat_mkdir_parents (Tcl_GetStringFromObj (objv[1], &i), /* directory */
                                mode))
@@ -1442,12 +1442,12 @@ API_FUNC(config_option_reset)
     char *option;
     int i, run_callback;
 
-    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (objc < 3)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
     if (Tcl_GetIntFromObj (interp, objv[2], &run_callback) != TCL_OK)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
     option = Tcl_GetStringFromObj (objv[1], &i);
 
@@ -1660,9 +1660,9 @@ API_FUNC(config_color)
     const char *result;
     int i;
 
-    API_INIT_FUNC(1, "config_color", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color", API_RETURN_EMPTY);
     if (objc < 2)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = weechat_config_color (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i))); /* option */
 
@@ -1675,9 +1675,9 @@ API_FUNC(config_color_default)
     const char *result;
     int i;
 
-    API_INIT_FUNC(1, "config_color_default", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "config_color_default", API_RETURN_EMPTY);
     if (objc < 2)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = weechat_config_color_default (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i))); /* option */
 
@@ -1729,9 +1729,9 @@ API_FUNC(config_write)
     int rc;
     int i;
 
-    API_INIT_FUNC(1, "config_write", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_write", API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
     if (objc < 2)
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
 
     rc = weechat_config_write (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i))); /* config_file */
 
@@ -1744,9 +1744,9 @@ API_FUNC(config_read)
     int rc;
     int i;
 
-    API_INIT_FUNC(1, "config_read", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_read", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
     if (objc < 2)
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     rc = weechat_config_read (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i))); /* config_file */
 
@@ -1759,9 +1759,9 @@ API_FUNC(config_reload)
     int rc;
     int i;
 
-    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(-1));
+    API_INIT_FUNC(1, "config_reload", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
     if (objc < 2)
-        API_WRONG_ARGS(API_RETURN_INT(-1));
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     rc = weechat_config_reload (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i))); /* config_file */
 
@@ -2049,7 +2049,7 @@ API_FUNC(print_date_tags)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     if (Tcl_GetIntFromObj (interp, objv[2], &tdate) != TCL_OK)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = Tcl_GetStringFromObj (objv[1], &i);
     tags = Tcl_GetStringFromObj (objv[3], &i);
@@ -3654,9 +3654,9 @@ API_FUNC(buffer_string_replace_local_var)
     char *buffer, *string, *result;
     int i;
 
-    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_EMPTY);
     if (objc < 3)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = Tcl_GetStringFromObj (objv[1], &i);
     string = Tcl_GetStringFromObj (objv[2], &i);
@@ -4364,9 +4364,9 @@ API_FUNC(command)
     char *buffer, *command;
     int i, rc;
 
-    API_INIT_FUNC(1, "command", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "command", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (objc < 3)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     buffer = Tcl_GetStringFromObj (objv[1], &i);
     command = Tcl_GetStringFromObj (objv[2], &i);
@@ -4445,9 +4445,9 @@ API_FUNC(infolist_new_item)
     char *result;
     int i;
 
-    API_INIT_FUNC(1, "infolist_new_item", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_new_item", API_RETURN_EMPTY);
     if (objc < 2)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_infolist_new_item (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)))); /* infolist */
 
@@ -4460,9 +4460,9 @@ API_FUNC(infolist_new_var_integer)
     char *result;
     int i, value;
 
-    API_INIT_FUNC(1, "infolist_new_var_integer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
     if (objc < 4)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     if (Tcl_GetIntFromObj (interp, objv[3], &value) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -4480,9 +4480,9 @@ API_FUNC(infolist_new_var_string)
     char *result;
     int i;
 
-    API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
     if (objc < 4)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_infolist_new_var_string (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)), /* infolist */
                                                           Tcl_GetStringFromObj (objv[2], &i), /* name */
@@ -4497,9 +4497,9 @@ API_FUNC(infolist_new_var_pointer)
     char *result;
     int i;
 
-    API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
     if (objc < 4)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_infolist_new_var_pointer (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)), /* infolist */
                                                            Tcl_GetStringFromObj (objv[2], &i), /* name */
@@ -4514,9 +4514,9 @@ API_FUNC(infolist_new_var_time)
     char *result;
     int i, value;
 
-    API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_INT(0));
+    API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     if (objc < 4)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_EMPTY);
 
     if (Tcl_GetIntFromObj (interp, objv[3], &value) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_EMPTY);
@@ -5133,7 +5133,7 @@ API_FUNC(upgrade_write_object)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     if (Tcl_GetIntFromObj (interp, objv[2], &object_id) != TCL_OK)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     upgrade_file = Tcl_GetStringFromObj (objv[1], &i);
     infolist = Tcl_GetStringFromObj (objv[3], &i);
@@ -5196,9 +5196,9 @@ API_FUNC(upgrade_read)
     char *upgrade_file, *function, *data;
     int i, rc;
 
-    API_INIT_FUNC(1, "upgrade_read", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "upgrade_read", API_RETURN_INT(0));
     if (objc < 4)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     upgrade_file = Tcl_GetStringFromObj (objv[1], &i);
     function = Tcl_GetStringFromObj (objv[2], &i);
@@ -5222,7 +5222,7 @@ API_FUNC(upgrade_close)
 
     API_INIT_FUNC(1, "upgrade_close", API_RETURN_ERROR);
     if (objc < 2)
-        API_WRONG_ARGS(API_RETURN_INT(0));
+        API_WRONG_ARGS(API_RETURN_ERROR);
 
     upgrade_file = Tcl_GetStringFromObj (objv[1], &i);
 
