@@ -319,9 +319,12 @@ weechat_python_exec (struct t_plugin_script *script,
     void *argv2[16], *ret_value;
     int i, argc, *ret_int;
 
+    ret_value = NULL;
+
     /* PyEval_AcquireLock (); */
 
     old_python_current_script = python_current_script;
+    python_current_script = script;
     old_interpreter = NULL;
     if (script->interpreter)
     {
@@ -339,12 +342,8 @@ weechat_python_exec (struct t_plugin_script *script,
                         weechat_gettext ("%s%s: unable to run function \"%s\""),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
         /* PyEval_ReleaseThread (python_current_script->interpreter); */
-        if (old_interpreter)
-            PyThreadState_Swap (old_interpreter);
-        return NULL;
+        goto end;
     }
-
-    python_current_script = script;
 
     if (argv && argv[0])
     {
@@ -367,8 +366,6 @@ weechat_python_exec (struct t_plugin_script *script,
     {
         rc = PyObject_CallFunction (evFunc, NULL);
     }
-
-    ret_value = NULL;
 
     /*
      * ugly hack : rc = NULL while 'return weechat.WEECHAT_RC_OK ....
@@ -428,6 +425,7 @@ weechat_python_exec (struct t_plugin_script *script,
 
     /* PyEval_ReleaseThread (python_current_script->interpreter); */
 
+end:
     python_current_script = old_python_current_script;
 
     if (old_interpreter)
