@@ -4025,7 +4025,7 @@ API_FUNC(bar_update)
 {
     char *name;
 
-    API_INIT_FUNC(1, "bar_item", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "bar_update", API_RETURN_ERROR);
     name = NULL;
     if (!PyArg_ParseTuple (args, "s", &name))
         API_WRONG_ARGS(API_RETURN_ERROR);

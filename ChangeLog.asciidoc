@@ -36,6 +36,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * relay: fix up/down keys on relay buffer (closes #335)
 * relay: remove v4-mapped addresses in /help relay.network.allowed_ips
   (closes #325)
+* python: fix name of function "bar_update" in case of error
 * python: fix restore of old interpreter when a function is not found in the
   script
 * scripts: fix type of value returned by function hdata_time (from string to
