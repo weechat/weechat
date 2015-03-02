@@ -172,7 +172,6 @@ TEST(Eval, EvalExpression)
 {
     struct t_hashtable *pointers, *extra_vars, *options;
     char *value, str_value[256];
-    void *toto;
 
     pointers = NULL;
 
