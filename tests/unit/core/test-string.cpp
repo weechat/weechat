@@ -461,7 +461,7 @@ TEST(String, MaskToRegex)
 
 TEST(String, Regex)
 {
-    int flags, rc;
+    int flags;
     const char *ptr;
     regex_t regex;
 
@@ -630,7 +630,6 @@ TEST(String, ReplaceRegex)
 
 TEST(String, ReplaceWithCallback)
 {
-    regex_t regex;
     char *result;
     int errors;
 
@@ -685,7 +684,7 @@ TEST(String, ReplaceWithCallback)
 
 TEST(String, Split)
 {
-    char **argv, *str;
+    char **argv;
     int argc;
 
     POINTERS_EQUAL(NULL, string_split (NULL, NULL, 0, 0, NULL));
@@ -756,7 +755,7 @@ TEST(String, Split)
 
 TEST(String, SplitShared)
 {
-    char **argv, *str;
+    char **argv;
     int argc;
 
     POINTERS_EQUAL(NULL, string_split_shared (NULL, NULL, 0, 0, NULL));
@@ -789,7 +788,7 @@ TEST(String, SplitShared)
 
 TEST(String, SplitShell)
 {
-    char **argv, *str;
+    char **argv;
     int argc;
 
     POINTERS_EQUAL(NULL, string_split_shell (NULL, NULL));
@@ -826,8 +825,7 @@ TEST(String, SplitShell)
 
 TEST(String, SplitCommand)
 {
-    char **argv, *str;
-    int argc;
+    char **argv;
 
     POINTERS_EQUAL(NULL, string_split_command (NULL, ';'));
     POINTERS_EQUAL(NULL, string_split_command ("", ';'));
@@ -966,8 +964,6 @@ TEST(String, FormatSize)
 TEST(String, BaseN)
 {
     char str[1024];
-    const char *str_abc = "abc";
-    const char *str_abc_base64 = "YWJj";
     const char *str_base64[][2] =
         { { "", "" },
           { "A", "QQ==" },

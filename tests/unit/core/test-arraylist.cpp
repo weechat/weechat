@@ -75,7 +75,7 @@ void
 test_arraylist (int initial_size, int sorted, int allow_duplicates)
 {
     struct t_arraylist *arraylist;
-    int i, index, index_insert, expected_pos;
+    int i, index, index_insert;
     void *pointer;
     const char *item_aaa = "aaa";
     const char *item_abc = "abc";

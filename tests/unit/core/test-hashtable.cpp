@@ -140,7 +140,7 @@ TEST(Hashtable, SetGetRemove)
     const char *str_value = HASHTABLE_TEST_VALUE;
     const char *ptr_value;
     unsigned long long hash;
-    int i, j;
+    int i;
 
     hashtable = hashtable_new (32,
                                WEECHAT_HASHTABLE_STRING,
