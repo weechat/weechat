@@ -4192,7 +4192,7 @@ API_FUNC(infolist_new_item)
 
 API_FUNC(infolist_new_var_integer)
 {
-    const char *infolist, *name;
+    const char *item, *name;
     char *result;
     int value;
 
@@ -4200,11 +4200,11 @@ API_FUNC(infolist_new_var_integer)
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    infolist = lua_tostring (L, -3);
+    item = lua_tostring (L, -3);
     name = lua_tostring (L, -2);
     value = lua_tonumber (L, -1);
 
-    result = API_PTR2STR(weechat_infolist_new_var_integer (API_STR2PTR(infolist),
+    result = API_PTR2STR(weechat_infolist_new_var_integer (API_STR2PTR(item),
                                                            name,
                                                            value));
 
@@ -4213,18 +4213,18 @@ API_FUNC(infolist_new_var_integer)
 
 API_FUNC(infolist_new_var_string)
 {
-    const char *infolist, *name, *value;
+    const char *item, *name, *value;
     char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    infolist = lua_tostring (L, -3);
+    item = lua_tostring (L, -3);
     name = lua_tostring (L, -2);
     value = lua_tostring (L, -1);
 
-    result = API_PTR2STR(weechat_infolist_new_var_string (API_STR2PTR(infolist),
+    result = API_PTR2STR(weechat_infolist_new_var_string (API_STR2PTR(item),
                                                           name,
                                                           value));
 
@@ -4233,18 +4233,18 @@ API_FUNC(infolist_new_var_string)
 
 API_FUNC(infolist_new_var_pointer)
 {
-    const char *infolist, *name, *value;
+    const char *item, *name, *value;
     char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    infolist = lua_tostring (L, -3);
+    item = lua_tostring (L, -3);
     name = lua_tostring (L, -2);
     value = lua_tostring (L, -1);
 
-    result = API_PTR2STR(weechat_infolist_new_var_pointer (API_STR2PTR(infolist),
+    result = API_PTR2STR(weechat_infolist_new_var_pointer (API_STR2PTR(item),
                                                            name,
                                                            API_STR2PTR(value)));
 
@@ -4253,7 +4253,7 @@ API_FUNC(infolist_new_var_pointer)
 
 API_FUNC(infolist_new_var_time)
 {
-    const char *infolist, *name;
+    const char *item, *name;
     char *result;
     int value;
 
@@ -4261,11 +4261,11 @@ API_FUNC(infolist_new_var_time)
     if (lua_gettop (L) < 3)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    infolist = lua_tostring (L, -3);
+    item = lua_tostring (L, -3);
     name = lua_tostring (L, -2);
     value = lua_tonumber (L, -1);
 
-    result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(infolist),
+    result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(item),
                                                         name,
                                                         value));
 

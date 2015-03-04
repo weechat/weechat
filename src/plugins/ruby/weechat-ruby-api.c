@@ -5001,26 +5001,26 @@ weechat_ruby_api_infolist_new_item (VALUE class, VALUE infolist)
 }
 
 static VALUE
-weechat_ruby_api_infolist_new_var_integer (VALUE class, VALUE infolist,
+weechat_ruby_api_infolist_new_var_integer (VALUE class, VALUE item,
                                            VALUE name, VALUE value)
 {
-    char *c_infolist, *c_name, *result;
+    char *c_item, *c_name, *result;
     int c_value;
     VALUE return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
-    if (NIL_P (infolist) || NIL_P (name) || NIL_P (value))
+    if (NIL_P (item) || NIL_P (name) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    Check_Type (infolist, T_STRING);
+    Check_Type (item, T_STRING);
     Check_Type (name, T_STRING);
     Check_Type (value, T_FIXNUM);
 
-    c_infolist = StringValuePtr (infolist);
+    c_item = StringValuePtr (item);
     c_name = StringValuePtr (name);
     c_value = FIX2INT (value);
 
-    result = API_PTR2STR(weechat_infolist_new_var_integer (API_STR2PTR(c_infolist),
+    result = API_PTR2STR(weechat_infolist_new_var_integer (API_STR2PTR(c_item),
                                                            c_name,
                                                            c_value));
 
@@ -5028,25 +5028,25 @@ weechat_ruby_api_infolist_new_var_integer (VALUE class, VALUE infolist,
 }
 
 static VALUE
-weechat_ruby_api_infolist_new_var_string (VALUE class, VALUE infolist,
+weechat_ruby_api_infolist_new_var_string (VALUE class, VALUE item,
                                           VALUE name, VALUE value)
 {
-    char *c_infolist, *c_name, *c_value, *result;
+    char *c_item, *c_name, *c_value, *result;
     VALUE return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
-    if (NIL_P (infolist) || NIL_P (name) || NIL_P (value))
+    if (NIL_P (item) || NIL_P (name) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    Check_Type (infolist, T_STRING);
+    Check_Type (item, T_STRING);
     Check_Type (name, T_STRING);
     Check_Type (value, T_STRING);
 
-    c_infolist = StringValuePtr (infolist);
+    c_item = StringValuePtr (item);
     c_name = StringValuePtr (name);
     c_value = StringValuePtr (value);
 
-    result = API_PTR2STR(weechat_infolist_new_var_string (API_STR2PTR(c_infolist),
+    result = API_PTR2STR(weechat_infolist_new_var_string (API_STR2PTR(c_item),
                                                           c_name,
                                                           c_value));
 
@@ -5054,25 +5054,25 @@ weechat_ruby_api_infolist_new_var_string (VALUE class, VALUE infolist,
 }
 
 static VALUE
-weechat_ruby_api_infolist_new_var_pointer (VALUE class, VALUE infolist,
+weechat_ruby_api_infolist_new_var_pointer (VALUE class, VALUE item,
                                            VALUE name, VALUE value)
 {
-    char *c_infolist, *c_name, *c_value, *result;
+    char *c_item, *c_name, *c_value, *result;
     VALUE return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
-    if (NIL_P (infolist) || NIL_P (name) || NIL_P (value))
+    if (NIL_P (item) || NIL_P (name) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    Check_Type (infolist, T_STRING);
+    Check_Type (item, T_STRING);
     Check_Type (name, T_STRING);
     Check_Type (value, T_STRING);
 
-    c_infolist = StringValuePtr (infolist);
+    c_item = StringValuePtr (item);
     c_name = StringValuePtr (name);
     c_value = StringValuePtr (value);
 
-    result = API_PTR2STR(weechat_infolist_new_var_pointer (API_STR2PTR(c_infolist),
+    result = API_PTR2STR(weechat_infolist_new_var_pointer (API_STR2PTR(c_item),
                                                            c_name,
                                                            API_STR2PTR(c_value)));
 
@@ -5080,26 +5080,26 @@ weechat_ruby_api_infolist_new_var_pointer (VALUE class, VALUE infolist,
 }
 
 static VALUE
-weechat_ruby_api_infolist_new_var_time (VALUE class, VALUE infolist,
+weechat_ruby_api_infolist_new_var_time (VALUE class, VALUE item,
                                         VALUE name, VALUE value)
 {
-    char *c_infolist, *c_name, *result;
+    char *c_item, *c_name, *result;
     int c_value;
     VALUE return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
-    if (NIL_P (infolist) || NIL_P (name) || NIL_P (value))
+    if (NIL_P (item) || NIL_P (name) || NIL_P (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    Check_Type (infolist, T_STRING);
+    Check_Type (item, T_STRING);
     Check_Type (name, T_STRING);
     Check_Type (value, T_FIXNUM);
 
-    c_infolist = StringValuePtr (infolist);
+    c_item = StringValuePtr (item);
     c_name = StringValuePtr (name);
     c_value = FIX2INT (value);
 
-    result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(c_infolist),
+    result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(c_item),
                                                         c_name,
                                                         c_value));
 

@@ -4467,7 +4467,7 @@ API_FUNC(infolist_new_var_integer)
     if (Tcl_GetIntFromObj (interp, objv[3], &value) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_infolist_new_var_integer (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)), /* infolist */
+    result = API_PTR2STR(weechat_infolist_new_var_integer (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)), /* item */
                                                            Tcl_GetStringFromObj (objv[2], &i), /* name */
                                                            value));
 
@@ -4484,7 +4484,7 @@ API_FUNC(infolist_new_var_string)
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_infolist_new_var_string (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)), /* infolist */
+    result = API_PTR2STR(weechat_infolist_new_var_string (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)), /* item */
                                                           Tcl_GetStringFromObj (objv[2], &i), /* name */
                                                           Tcl_GetStringFromObj (objv[3], &i))); /* value */
 
@@ -4501,7 +4501,7 @@ API_FUNC(infolist_new_var_pointer)
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_infolist_new_var_pointer (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)), /* infolist */
+    result = API_PTR2STR(weechat_infolist_new_var_pointer (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)), /* item */
                                                            Tcl_GetStringFromObj (objv[2], &i), /* name */
                                                            API_STR2PTR(Tcl_GetStringFromObj (objv[3], &i)))); /* value */
 
@@ -4521,7 +4521,7 @@ API_FUNC(infolist_new_var_time)
     if (Tcl_GetIntFromObj (interp, objv[3], &value) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)), /* infolist */
+    result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)), /* item */
                                                         Tcl_GetStringFromObj (objv[2], &i), /* name */
                                                         value));
 

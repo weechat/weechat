@@ -4141,18 +4141,18 @@ API_FUNC(infolist_new_item)
 
 API_FUNC(infolist_new_var_integer)
 {
-    char *infolist, *name, *result;
+    char *item, *name, *result;
     int value;
     PyObject *return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
-    infolist = NULL;
+    item = NULL;
     name = NULL;
     value = 0;
-    if (!PyArg_ParseTuple (args, "ssi", &infolist, &name, &value))
+    if (!PyArg_ParseTuple (args, "ssi", &item, &name, &value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_infolist_new_var_integer (API_STR2PTR(infolist),
+    result = API_PTR2STR(weechat_infolist_new_var_integer (API_STR2PTR(item),
                                                            name,
                                                            value));
 
@@ -4161,17 +4161,17 @@ API_FUNC(infolist_new_var_integer)
 
 API_FUNC(infolist_new_var_string)
 {
-    char *infolist, *name, *value, *result;
+    char *item, *name, *value, *result;
     PyObject *return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
-    infolist = NULL;
+    item = NULL;
     name = NULL;
     value = NULL;
-    if (!PyArg_ParseTuple (args, "sss", &infolist, &name, &value))
+    if (!PyArg_ParseTuple (args, "sss", &item, &name, &value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_infolist_new_var_string (API_STR2PTR(infolist),
+    result = API_PTR2STR(weechat_infolist_new_var_string (API_STR2PTR(item),
                                                           name,
                                                           value));
 
@@ -4180,17 +4180,17 @@ API_FUNC(infolist_new_var_string)
 
 API_FUNC(infolist_new_var_pointer)
 {
-    char *infolist, *name, *value, *result;
+    char *item, *name, *value, *result;
     PyObject *return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
-    infolist = NULL;
+    item = NULL;
     name = NULL;
     value = NULL;
-    if (!PyArg_ParseTuple (args, "sss", &infolist, &name, &value))
+    if (!PyArg_ParseTuple (args, "sss", &item, &name, &value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_infolist_new_var_pointer (API_STR2PTR(infolist),
+    result = API_PTR2STR(weechat_infolist_new_var_pointer (API_STR2PTR(item),
                                                            name,
                                                            API_STR2PTR(value)));
 
@@ -4199,18 +4199,18 @@ API_FUNC(infolist_new_var_pointer)
 
 API_FUNC(infolist_new_var_time)
 {
-    char *infolist, *name, *result;
+    char *item, *name, *result;
     int value;
     PyObject *return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
-    infolist = NULL;
+    item = NULL;
     name = NULL;
     value = 0;
-    if (!PyArg_ParseTuple (args, "ssi", &infolist, &name, &value))
+    if (!PyArg_ParseTuple (args, "ssi", &item, &name, &value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(infolist),
+    result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(item),
                                                         name,
                                                         value));
 

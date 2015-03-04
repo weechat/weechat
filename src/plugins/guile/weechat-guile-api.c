@@ -3963,17 +3963,17 @@ weechat_guile_api_infolist_new_item (SCM infolist)
 }
 
 SCM
-weechat_guile_api_infolist_new_var_integer (SCM infolist, SCM name, SCM value)
+weechat_guile_api_infolist_new_var_integer (SCM item, SCM name, SCM value)
 {
     char *result;
     SCM return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
-    if (!scm_is_string (infolist) || !scm_is_string (name)
+    if (!scm_is_string (item) || !scm_is_string (name)
         || !scm_is_integer (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_infolist_new_var_integer (API_STR2PTR(API_SCM_TO_STRING(infolist)),
+    result = API_PTR2STR(weechat_infolist_new_var_integer (API_STR2PTR(API_SCM_TO_STRING(item)),
                                                            API_SCM_TO_STRING(name),
                                                            scm_to_int (value)));
 
@@ -3981,17 +3981,17 @@ weechat_guile_api_infolist_new_var_integer (SCM infolist, SCM name, SCM value)
 }
 
 SCM
-weechat_guile_api_infolist_new_var_string (SCM infolist, SCM name, SCM value)
+weechat_guile_api_infolist_new_var_string (SCM item, SCM name, SCM value)
 {
     char *result;
     SCM return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
-    if (!scm_is_string (infolist) || !scm_is_string (name)
+    if (!scm_is_string (item) || !scm_is_string (name)
         || !scm_is_string (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_infolist_new_var_string (API_STR2PTR(API_SCM_TO_STRING(infolist)),
+    result = API_PTR2STR(weechat_infolist_new_var_string (API_STR2PTR(API_SCM_TO_STRING(item)),
                                                           API_SCM_TO_STRING(name),
                                                           API_SCM_TO_STRING(value)));
 
@@ -3999,17 +3999,17 @@ weechat_guile_api_infolist_new_var_string (SCM infolist, SCM name, SCM value)
 }
 
 SCM
-weechat_guile_api_infolist_new_var_pointer (SCM infolist, SCM name, SCM value)
+weechat_guile_api_infolist_new_var_pointer (SCM item, SCM name, SCM value)
 {
     char *result;
     SCM return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
-    if (!scm_is_string (infolist) || !scm_is_string (name)
+    if (!scm_is_string (item) || !scm_is_string (name)
         || !scm_is_string (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_infolist_new_var_pointer (API_STR2PTR(API_SCM_TO_STRING(infolist)),
+    result = API_PTR2STR(weechat_infolist_new_var_pointer (API_STR2PTR(API_SCM_TO_STRING(item)),
                                                            API_SCM_TO_STRING(name),
                                                            API_STR2PTR(API_SCM_TO_STRING(value))));
 
@@ -4017,17 +4017,17 @@ weechat_guile_api_infolist_new_var_pointer (SCM infolist, SCM name, SCM value)
 }
 
 SCM
-weechat_guile_api_infolist_new_var_time (SCM infolist, SCM name, SCM value)
+weechat_guile_api_infolist_new_var_time (SCM item, SCM name, SCM value)
 {
     char *result;
     SCM return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
-    if (!scm_is_string (infolist) || !scm_is_string (name)
+    if (!scm_is_string (item) || !scm_is_string (name)
         || !scm_is_integer (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(API_SCM_TO_STRING(infolist)),
+    result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(API_SCM_TO_STRING(item)),
                                                         API_SCM_TO_STRING(name),
                                                         scm_to_int (value)));
 
