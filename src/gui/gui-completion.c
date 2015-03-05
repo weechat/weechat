@@ -709,6 +709,9 @@ gui_completion_find_context (struct t_gui_completion *completion,
     const char *ptr_command, *ptr_data;
     char *prev_char;
 
+    /* to prevent a bunch of repeated computation */
+    int prefix_chars_option_disabled;
+
     /* look for context */
     gui_completion_free_data (completion);
     gui_completion_buffer_init (completion, completion->buffer);
@@ -798,12 +801,20 @@ gui_completion_find_context (struct t_gui_completion *completion,
     {
         i = pos;
         pos_start = i;
-        if (data[i] == ' ')
+        prefix_chars_option_disabled = !CONFIG_STRING(config_completion_ignore_prefix_chars)
+            || !CONFIG_STRING(config_completion_ignore_prefix_chars)[0];
+        /* allow completion of word even after a space, and skip the null character ending the line */
+        /* searching backwards is okay because partial UTF-8 bytes will never match an ASCII character */
+        if (data[i] == ' ' || data[i] == '\0')
         {
-            if ((i > 0) && (data[i-1] != ' '))
+            if ((i > 0) && (data[i-1] != ' ') && (prefix_chars_option_disabled
+                || (!strchr (CONFIG_STRING(config_completion_ignore_prefix_chars),
+                             data[i-1]))))
             {
                 i--;
-                while ((i >= 0) && (data[i] != ' '))
+                while ((i >= 0) && (data[i] != ' ') && (prefix_chars_option_disabled
+                    || (!strchr (CONFIG_STRING(config_completion_ignore_prefix_chars),
+                                 data[i]))))
                 {
                     i--;
                 }
@@ -812,7 +823,9 @@ gui_completion_find_context (struct t_gui_completion *completion,
         }
         else
         {
-            while ((i >= 0) && (data[i] != ' '))
+            while ((i >= 0) && (data[i] != ' ') && (prefix_chars_option_disabled
+                || (!strchr (CONFIG_STRING(config_completion_ignore_prefix_chars),
+                             data[i]))))
             {
                 i--;
             }

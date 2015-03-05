@@ -279,6 +279,7 @@ extern struct t_config_option *config_color_nicklist_offline;
 extern struct t_config_option *config_completion_base_word_until_cursor;
 extern struct t_config_option *config_completion_command_inline;
 extern struct t_config_option *config_completion_default_template;
+extern struct t_config_option *config_completion_ignore_prefix_chars;
 extern struct t_config_option *config_completion_nick_add_space;
 extern struct t_config_option *config_completion_nick_completer;
 extern struct t_config_option *config_completion_nick_first_only;
