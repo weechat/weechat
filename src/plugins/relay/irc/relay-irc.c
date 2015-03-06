@@ -833,8 +833,9 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
                 break;
 
             if ( localvar_nick && localvar_nick[0]
-                    && ptr_nick && (strcmp (ptr_nick, localvar_nick) == 0)) 
-            {
+                    && ptr_nick && (strcmp (ptr_nick, localvar_nick) == 0))
+            {   /* stop when you find a line sent by your current nick */
+                /* include the line that you last sent */
                 ptr_line = weechat_hdata_move (ptr_hdata_line, ptr_line, -1);
                 break;
             }
