@@ -819,7 +819,7 @@ relay_config_init ()
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_irc_backlog_since_last_message = weechat_config_new_option (
         relay_config_file, ptr_section,
-        "backlog_since_last_disconnect", "boolean",
+        "backlog_since_last_message", "boolean",
         N_("display backlog starting from your last message"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_irc_backlog_tags = weechat_config_new_option (
