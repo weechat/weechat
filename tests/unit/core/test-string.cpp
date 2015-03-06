@@ -567,6 +567,9 @@ TEST(String, Highlight)
 char *
 test_replace_cb (void *data, const char *text)
 {
+    /* make C++ compiler happy */
+    (void) data;
+
     if (strcmp (text, "abc") == 0)
         return strdup ("def");
 

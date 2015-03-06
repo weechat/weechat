@@ -65,6 +65,10 @@ int
 test_cmp_cb (void *data, struct t_arraylist *arraylist,
              void *pointer1, void *pointer2)
 {
+    /* make C++ compiler happy */
+    (void) data;
+    (void) arraylist;
+
     if (!pointer1 || !pointer2)
         return (pointer1) ? 1 : ((pointer2) ? -1 : 0);
 

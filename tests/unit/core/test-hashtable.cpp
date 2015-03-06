@@ -58,6 +58,9 @@ TEST(Hashtable, HashDbj2)
 unsigned long long
 test_hashtable_hash_key_cb (struct t_hashtable *hashtable, const void *key)
 {
+    /* make C++ compiler happy */
+    (void) hashtable;
+
     return hashtable_hash_key_djb2 ((const char *)key) + 1;
 }
 
@@ -71,6 +74,9 @@ int
 test_hashtable_keycmp_cb (struct t_hashtable *hashtable,
                           const void *key1, const void *key2)
 {
+    /* make C++ compiler happy */
+    (void) hashtable;
+
     return strcmp ((const char *)key1, (const char *)key2);
 }
 
