@@ -37,6 +37,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: remove useless rename of channel buffer on JOIN received with different
   case (closes #336)
 * irc: fix completion of commands /allchan and /allpv
+* lua: fix wrong argument usage in functions niclist_remove_group,
+  nicklist_remove_nick and nicklist_remove_all (closes #346)
 * lua: fix value returned in case of error in functions:
   config_option_reset, config_string, config_string_default, config_color,
   config_color_default, config_write, config_read, config_reload,
