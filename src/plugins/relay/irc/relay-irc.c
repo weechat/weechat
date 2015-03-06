@@ -755,6 +755,7 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
     void *ptr_hdata_line, *ptr_hdata_line_data;
     char *tags, *message;
     const char *ptr_nick, *ptr_nick1, *ptr_nick2, *ptr_host;
+    const char *localvar_nick;
     int irc_command, irc_action, count, max_number, max_minutes;
     time_t date_min, date_min2, date;
 
@@ -779,6 +780,10 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
     ptr_hdata_line_data = weechat_hdata_get ("line_data");
     if (!ptr_hdata_line_data)
         return;
+
+    localvar_nick = NULL;
+    if (weechat_config_boolean (relay_config_irc_backlog_since_last_message))
+        localvar_nick = weechat_buffer_get_string (buffer, "localvar_nick");
 
     max_number = weechat_config_integer (relay_config_irc_backlog_max_number);
     max_minutes = weechat_config_integer (relay_config_irc_backlog_max_minutes);
@@ -810,7 +815,7 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
                                      &irc_command,
                                      NULL, /* irc_action */
                                      &date,
-                                     NULL, /* nick */
+                                     &ptr_nick, 
                                      NULL, /* nick1 */
                                      NULL, /* nick2 */
                                      NULL, /* host */
@@ -826,6 +831,14 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
             /* if we have reached max number of messages, exit loop */
             if ((max_number > 0) && (count > max_number))
                 break;
+
+            if ( localvar_nick && localvar_nick[0]
+                    && ptr_nick && (strcmp (ptr_nick, localvar_nick) == 0))
+            {   /* stop when you find a line sent by your current nick */
+                /* include the line that you last sent */
+                ptr_line = weechat_hdata_move (ptr_hdata_line, ptr_line, -1);
+                break;
+            }
         }
         ptr_line = weechat_hdata_move (ptr_hdata_line, ptr_line, -1);
     }
