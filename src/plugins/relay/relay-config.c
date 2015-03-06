@@ -68,6 +68,7 @@ struct t_config_option *relay_config_network_websocket_allowed_origins;
 struct t_config_option *relay_config_irc_backlog_max_minutes;
 struct t_config_option *relay_config_irc_backlog_max_number;
 struct t_config_option *relay_config_irc_backlog_since_last_disconnect;
+struct t_config_option *relay_config_irc_backlog_since_last_message;
 struct t_config_option *relay_config_irc_backlog_tags;
 struct t_config_option *relay_config_irc_backlog_time_format;
 
@@ -816,6 +817,11 @@ relay_config_init ()
         "backlog_since_last_disconnect", "boolean",
         N_("display backlog starting from last client disconnect"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    relay_config_irc_backlog_since_last_message = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "backlog_since_last_disconnect", "boolean",
+        N_("display backlog starting from your last message"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_irc_backlog_tags = weechat_config_new_option (
         relay_config_file, ptr_section,
         "backlog_tags", "string",

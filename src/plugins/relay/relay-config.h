@@ -50,6 +50,7 @@ extern struct t_config_option *relay_config_network_websocket_allowed_origins;
 extern struct t_config_option *relay_config_irc_backlog_max_minutes;
 extern struct t_config_option *relay_config_irc_backlog_max_number;
 extern struct t_config_option *relay_config_irc_backlog_since_last_disconnect;
+extern struct t_config_option *relay_config_irc_backlog_since_last_message;
 extern struct t_config_option *relay_config_irc_backlog_tags;
 extern struct t_config_option *relay_config_irc_backlog_time_format;
 
