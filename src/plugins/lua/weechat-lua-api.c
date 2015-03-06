@@ -3659,8 +3659,8 @@ API_FUNC(nicklist_remove_group)
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    buffer = lua_tostring (L, -3);
-    group = lua_tostring (L, -2);
+    buffer = lua_tostring (L, -2);
+    group = lua_tostring (L, -1);
 
     weechat_nicklist_remove_group (API_STR2PTR(buffer),
                                    API_STR2PTR(group));
@@ -3676,8 +3676,8 @@ API_FUNC(nicklist_remove_nick)
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    buffer = lua_tostring (L, -3);
-    nick = lua_tostring (L, -2);
+    buffer = lua_tostring (L, -2);
+    nick = lua_tostring (L, -1);
 
     weechat_nicklist_remove_nick (API_STR2PTR(buffer),
                                   API_STR2PTR(nick));
@@ -3693,7 +3693,7 @@ API_FUNC(nicklist_remove_all)
     if (lua_gettop (L) < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    buffer = lua_tostring (L, -3);
+    buffer = lua_tostring (L, -1);
 
     weechat_nicklist_remove_all (API_STR2PTR(buffer));
 
