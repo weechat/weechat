@@ -6827,6 +6827,7 @@ COMMAND_CALLBACK(window)
 void
 command_init ()
 {
+#if ENABLE_GENERIC_CORE == 0
     hook_command (
         NULL, "away",
         N_("set or remove away status"),
@@ -6835,6 +6836,7 @@ command_init ()
            "message: message for away (if no message is given, away status is "
            "removed)"),
         "-all", &command_away, NULL);
+#endif
     hook_command (
         NULL, "bar",
         N_("manage bars"),
@@ -7004,6 +7006,8 @@ command_init ()
         " || %(buffers_plugins_names)|%(buffers_names)|%(irc_channels)|"
         "%(irc_privates)|%(buffers_numbers)|-|-1|+|+1",
         &command_buffer, NULL);
+
+#if ENABLE_GENERIC_CORE == 0
     hook_command (
         NULL, "color",
         N_("define color aliases and display palette of colors"),
@@ -7041,6 +7045,8 @@ command_init ()
         " || rgb2term"
         " || -o",
         &command_color, NULL);
+#endif
+
     /*
      * give high priority (50000) so that an alias will not take precedence
      * over this command
@@ -7624,6 +7630,8 @@ command_init ()
         " || -stderr"
         " || -beep",
         &command_print, NULL);
+
+#if ENABLE_GENERIC_CORE == 0
     hook_command (
         NULL, "proxy",
         N_("manage proxies"),
@@ -7660,6 +7668,8 @@ command_init ()
         " || del %(proxies_names)"
         " || set %(proxies_names) %(proxies_options)",
         &command_proxy, NULL);
+#endif
+
     hook_command (
         NULL, "quit",
         N_("quit WeeChat"),

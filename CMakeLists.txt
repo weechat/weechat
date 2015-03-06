@@ -98,9 +98,16 @@ option(ENABLE_TCL       "Enable Tcl scripting language"             ON)
 option(ENABLE_GUILE     "Enable Scheme (guile) scripting language"  ON)
 option(ENABLE_TRIGGER   "Enable Trigger plugin"                     ON)
 option(ENABLE_XFER      "Enable Xfer plugin"                        ON)
+option(ENABLE_GENERIC   "Enable generic core (no chat)"             OFF)
 option(ENABLE_MAN       "Enable build of man page"                  OFF)
 option(ENABLE_DOC       "Enable build of documentation"             OFF)
 option(ENABLE_TESTS     "Enable tests"                              OFF)
+
+# Check for generic core (no chat)
+set(ENABLE_GENERIC_CORE 0)
+if(ENABLE_GENERIC)
+  set(ENABLE_GENERIC_CORE 1)
+endif()
 
 # option WEECHAT_HOME
 if(NOT DEFINED WEECHAT_HOME OR "${WEECHAT_HOME}" STREQUAL "")
