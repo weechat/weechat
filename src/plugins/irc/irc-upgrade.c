@@ -363,6 +363,7 @@ irc_upgrade_read_cb (void *data,
                         irc_upgrade_current_server->nick_modes = strdup (str);
                     irc_upgrade_current_server->cap_away_notify = weechat_infolist_integer (infolist, "cap_away_notify");
                     irc_upgrade_current_server->cap_account_notify = weechat_infolist_integer (infolist, "cap_account_notify");
+                    irc_upgrade_current_server->cap_extended_join = weechat_infolist_integer (infolist, "cap_extended_join");
                     str = weechat_infolist_string (infolist, "isupport");
                     if (str)
                         irc_upgrade_current_server->isupport = strdup (str);
@@ -563,7 +564,8 @@ irc_upgrade_read_cb (void *data,
                                              weechat_infolist_string (infolist, "host"),
                                              weechat_infolist_string (infolist, "prefixes"),
                                              weechat_infolist_integer (infolist, "away"),
-                                             weechat_infolist_string (infolist, "account"));
+                                             weechat_infolist_string (infolist, "account"),
+                                             weechat_infolist_string (infolist, "realname"));
                     if (ptr_nick)
                     {
                         /*
