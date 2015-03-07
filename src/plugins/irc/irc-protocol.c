@@ -337,10 +337,10 @@ IRC_PROTOCOL_CALLBACK(away)
 
 IRC_PROTOCOL_CALLBACK(cap)
 {
-    char *ptr_caps, **caps_supported, **caps_requested, *cap_option, *cap_req;
+    char *ptr_caps, **caps_supported, **caps_requested, **caps_added, **caps_removed, *cap_option, *cap_req;
     char str_msg_auth[512];
     const char *ptr_cap_option;
-    int num_caps_supported, num_caps_requested;
+    int num_caps_supported, num_caps_requested, num_caps_added, num_caps_removed;
     int sasl_requested, sasl_to_do, sasl_mechanism;
     int i, j, timeout, length;
 
@@ -512,6 +512,98 @@ IRC_PROTOCOL_CALLBACK(cap)
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, ptr_caps);
             if (!server->is_connected)
                 irc_server_sendf (server, 0, NULL, "CAP END");
+        }
+    }
+    else if (strcmp (argv[3], "NEW") == 0)
+    {
+        if (argc > 4)
+        {
+            ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+            weechat_printf_date_tags (
+                server->buffer, date, NULL,
+                _("%s%s: client capability, now available: %s"),
+                weechat_prefix ("network"), IRC_PLUGIN_NAME, ptr_caps);
+
+            /* Assume that we're not requesting any already-enabled capabilities
+             * TODO SASL Reauthentication */
+            ptr_cap_option = IRC_SERVER_OPTION_STRING(server,
+                                                      IRC_SERVER_OPTION_CAPABILITIES);
+            length = ((ptr_cap_option && ptr_cap_option[0]) ? strlen (ptr_cap_option) : 0) + 16;
+            cap_option = malloc (length);
+            cap_req = malloc (length);
+            if (cap_option && cap_req)
+            {
+                cap_option[0] = '\0';
+                if (ptr_cap_option && ptr_cap_option[0])
+                    strcat (cap_option, ptr_cap_option);
+                cap_req[0] = '\0';
+                caps_requested = weechat_string_split (cap_option, ",", 0, 0,
+                                                       &num_caps_requested);
+                caps_added = weechat_string_split (ptr_caps, " ", 0, 0,
+                                                       &num_caps_added);
+                if (caps_requested && caps_added)
+                {
+                    for (i = 0; i < num_caps_requested; i++)
+                    {
+                        for (j = 0; j < num_caps_added; j++)
+                        {
+                            if (weechat_strcasecmp (caps_requested[i],
+                                                    caps_added[j]) == 0)
+                            {
+                                if (cap_req[0])
+                                    strcat (cap_req, " ");
+                                strcat (cap_req, caps_added[j]);
+                            }
+                        }
+                    }
+                }
+                if (caps_requested)
+                    weechat_string_free_split (caps_requested);
+                if (caps_added)
+                    weechat_string_free_split (caps_added);
+                if (cap_req[0])
+                {
+                    weechat_printf (
+                        server->buffer,
+                        _("%s%s: client capability, requesting: %s"),
+                        weechat_prefix ("network"), IRC_PLUGIN_NAME,
+                        cap_req);
+                    irc_server_sendf (server, 0, NULL,
+                                      "CAP REQ :%s", cap_req);
+                }
+            }
+            if (cap_option)
+                free (cap_option);
+            if (cap_req)
+                free (cap_req);
+        }
+    }
+    else if (strcmp (argv[3], "DEL") == 0)
+    {
+        if (argc > 4)
+        {
+            ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+            weechat_printf_date_tags (
+                server->buffer, date, NULL,
+                _("%s%s: client capability, removed: %s"),
+                weechat_prefix ("network"), IRC_PLUGIN_NAME, ptr_caps);
+            caps_removed = weechat_string_split (ptr_caps, " ", 0, 0,
+                                                   &num_caps_removed);
+
+            if (caps_removed)
+            {
+                for (i = 0; i < num_caps_removed; i++) {
+                    if (strcmp (caps_removed[i], "away-notify") == 0)
+                    {
+                        server->cap_away_notify = 0;
+                    }
+                    else if (strcmp (caps_removed[i], "account-notify") == 0)
+                    {
+                        server->cap_account_notify = 0;
+                    }
+                }
+                weechat_string_free_split (caps_removed);
+            }
         }
     }
 
