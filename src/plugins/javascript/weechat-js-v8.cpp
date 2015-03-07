@@ -32,6 +32,14 @@ extern "C"
 #include "weechat-js.h"
 #include "weechat-js-v8.h"
 
+#define PRINT_EXCEPTION                                                 \
+    Local<Value> exception = trycatch.Exception();                      \
+    String::Utf8Value str_exception(exception);                         \
+    weechat_printf (NULL,                                               \
+                    weechat_gettext ("%s%s: exception: %s"),            \
+                    weechat_prefix ("error"), JS_PLUGIN_NAME,           \
+                    *str_exception);
+
 using namespace v8;
 
 
@@ -84,11 +92,26 @@ WeechatJsV8::load(const char *source)
 bool
 WeechatJsV8::execScript()
 {
+    v8::TryCatch trycatch;
+
     this->context = Context::New(NULL, this->global);
     Context::Scope context_scope(this->context);
     Handle<Script> script = Script::Compile(this->source);
 
-    script->Run();
+    if (script.IsEmpty())
+    {
+        PRINT_EXCEPTION;
+        return false;
+    }
+    else
+    {
+        Local<Value> value = script->Run();
+        if (value.IsEmpty())
+        {
+            PRINT_EXCEPTION;
+            return false;
+        }
+    }
 
     return true;
 }
@@ -114,12 +137,20 @@ WeechatJsV8::functionExists(const char *function)
 Handle<Value>
 WeechatJsV8::execFunction(const char *function, int argc, Handle<Value> *argv)
 {
+    v8::TryCatch trycatch;
+
     Context::Scope context_scope(this->context);
 
     Handle<Object> global = this->context->Global();
     Handle<Value> value = global->Get(String::New(function));
     Handle<Function> func = Handle<Function>::Cast(value);
-    return func->Call(global, argc, argv);
+
+    Handle<Value> res = func->Call(global, argc, argv);
+    if (res.IsEmpty())
+    {
+        PRINT_EXCEPTION;
+    }
+    return res;
 }
 
 /*

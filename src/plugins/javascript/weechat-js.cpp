@@ -210,33 +210,37 @@ weechat_js_exec (struct t_plugin_script *script,
                                  argc,
                                  (argc > 0) ? argv2 : NULL);
 
-    if ((ret_type == WEECHAT_SCRIPT_EXEC_STRING) && (ret_js->IsString()))
+    if (!ret_js.IsEmpty())
     {
-        String::Utf8Value temp_str(ret_js);
-        ret_value = *temp_str;
-    }
-    else if ((ret_type == WEECHAT_SCRIPT_EXEC_INT) && (ret_js->IsInt32()))
-    {
-        ret_int = (int *)malloc (sizeof (*ret_int));
-        if (ret_int)
-            *ret_int = (int)(ret_js->IntegerValue());
-        ret_value = ret_int;
-    }
-    else if ((ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
-             && (ret_js->IsObject()))
-    {
-        ret_value = (struct t_hashtable *)weechat_js_object_to_hashtable (
-            ret_js->ToObject(),
-            WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
-            WEECHAT_HASHTABLE_STRING,
-            WEECHAT_HASHTABLE_STRING);
-    }
-    else
-    {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s%s: function \"%s\" must return "
-                                         "a valid value"),
-                        weechat_prefix ("error"), JS_PLUGIN_NAME, function);
+        if ((ret_type == WEECHAT_SCRIPT_EXEC_STRING) && (ret_js->IsString()))
+        {
+            String::Utf8Value temp_str(ret_js);
+            ret_value = *temp_str;
+        }
+        else if ((ret_type == WEECHAT_SCRIPT_EXEC_INT) && (ret_js->IsInt32()))
+        {
+            ret_int = (int *)malloc (sizeof (*ret_int));
+            if (ret_int)
+                *ret_int = (int)(ret_js->IntegerValue());
+            ret_value = ret_int;
+        }
+        else if ((ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
+                 && (ret_js->IsObject()))
+        {
+            ret_value = (struct t_hashtable *)weechat_js_object_to_hashtable (
+                ret_js->ToObject(),
+                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                WEECHAT_HASHTABLE_STRING,
+                WEECHAT_HASHTABLE_STRING);
+        }
+        else
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: function \"%s\" must "
+                                             "return a valid value"),
+                            weechat_prefix ("error"), JS_PLUGIN_NAME,
+                            function);
+        }
     }
 
     if (!ret_value)
@@ -315,6 +319,7 @@ weechat_js_load (const char *filename)
             plugin_script_remove (weechat_js_plugin,
                                   &js_scripts, &last_js_script,
                                   js_current_script);
+            js_current_script = NULL;
         }
 
         return 0;
@@ -329,6 +334,15 @@ weechat_js_load (const char *filename)
                                          "\"%s\""),
                         weechat_prefix ("error"), JS_PLUGIN_NAME, filename);
         delete js_current_interpreter;
+
+        /* if script was registered, remove it from list */
+        if (js_current_script)
+        {
+            plugin_script_remove (weechat_js_plugin,
+                                  &js_scripts, &last_js_script,
+                                  js_current_script);
+            js_current_script = NULL;
+        }
         return 0;
     }
 
