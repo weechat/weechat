@@ -339,8 +339,17 @@ weechat_tcl_load (const char *filename)
                                          "parsing file \"%s\": %s"),
                         weechat_prefix ("error"), TCL_PLUGIN_NAME, filename,
                         Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i));
-        /* this OK, maybe "register" was called, so not return */
-        /* return 0; */
+
+        /* if script was registered, remove it from list */
+        if (tcl_current_script)
+        {
+            plugin_script_remove (weechat_tcl_plugin,
+                                  &tcl_scripts, &last_tcl_script,
+                                  tcl_current_script);
+            tcl_current_script = NULL;
+        }
+
+        return 0;
     }
 
     if (!tcl_registered_script)

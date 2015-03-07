@@ -61,6 +61,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * ruby: fix value returned in case of error in functions:
   config_option_reset, config_color, config_color_default, config_write,
   config_read, config_reload, buffer_string_replace_local_var, command
+* scripts: reset current script pointer when load of script fails in
+  python/perl/ruby/lua/tcl plugins
 * scripts: fix return code of function bar_set in
   python/perl/ruby/lua/tcl/guile plugins
 * scripts: fix type of value returned by function hdata_time (from string to

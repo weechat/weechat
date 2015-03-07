@@ -425,8 +425,10 @@ weechat_lua_load (const char *filename)
         /* if script was registered, remove it from list */
         if (lua_current_script)
         {
-            plugin_script_remove (weechat_lua_plugin, &lua_scripts, &last_lua_script,
+            plugin_script_remove (weechat_lua_plugin,
+                                  &lua_scripts, &last_lua_script,
                                   lua_current_script);
+            lua_current_script = NULL;
         }
 
         return 0;

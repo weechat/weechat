@@ -595,11 +595,12 @@ weechat_ruby_load (const char *filename)
         err = rb_gv_get("$!");
         weechat_ruby_print_exception(err);
 
-        if (ruby_current_script != NULL)
+        if (ruby_current_script)
         {
             plugin_script_remove (weechat_ruby_plugin,
                                   &ruby_scripts, &last_ruby_script,
                                   ruby_current_script);
+            ruby_current_script = NULL;
         }
 
         return 0;

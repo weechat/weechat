@@ -722,11 +722,12 @@ weechat_python_load (const char *filename)
             PyErr_Print ();
 
         /* if script was registered, remove it from list */
-        if (python_current_script != NULL)
+        if (python_current_script)
         {
             plugin_script_remove (weechat_python_plugin,
                                   &python_scripts, &last_python_script,
                                   python_current_script);
+            python_current_script = NULL;
         }
 
         Py_EndInterpreter (python_current_interpreter);

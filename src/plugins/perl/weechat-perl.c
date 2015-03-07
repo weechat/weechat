@@ -438,6 +438,7 @@ weechat_perl_load (const char *filename)
             plugin_script_remove (weechat_perl_plugin,
                                   &perl_scripts, &last_perl_script,
                                   perl_current_script);
+            perl_current_script = NULL;
         }
 
         return 0;
