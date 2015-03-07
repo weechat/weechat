@@ -652,7 +652,7 @@ IRC_PROTOCOL_CALLBACK(invite)
  *
  * With extended-join capability:
  *   :nick!user@host JOIN :#channel * :real name
- *   *nick!user@host JOIN :#channel account :real name
+ *   :nick!user@host JOIN :#channel account :real name
  */
 
 IRC_PROTOCOL_CALLBACK(join)
