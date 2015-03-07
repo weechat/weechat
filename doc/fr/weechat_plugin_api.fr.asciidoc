@@ -8132,6 +8132,26 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Un pseudo dans la liste de notifications est de retour (statut d'absence
   supprimé)
 
+| javascript | javascript_script_loaded +
+  _(WeeChat ≥ 1.2)_ |
+  Chaîne : chemin vers le script |
+  Script javascript chargé
+
+| javascript | javascript_script_unloaded +
+  _(WeeChat ≥ 1.2)_ |
+  Chaîne : chemin vers le script |
+  Script javascript déchargé
+
+| javascript | javascript_script_installed +
+  _(WeeChat ≥ 1.2)_ |
+  Chaîne : liste de chemins vers scripts installés (séparés par des virgules) |
+  Script(s) javascript installé(s)
+
+| javascript | javascript_script_removed +
+  _(WeeChat ≥ 1.2)_ |
+  Chaîne : liste de scripts supprimés (séparés par des virgules) |
+  Script(s) javascript supprimé(s)
+
 | logger | logger_start |
   Pointeur : tampon |
   Démarrage de l'enregistrement sur disque pour le tampon
@@ -8713,6 +8733,8 @@ Cinq signaux peuvent être envoyés pour installer un script, selon le langage :
 * 'ruby_script_install'
 * 'lua_script_install'
 * 'tcl_script_install'
+* 'guile_script_install'
+* 'javascript_script_install'
 
 Le "callback" effectuera les actions suivantes lorsqu'il recevra le signal :
 
@@ -8754,6 +8776,8 @@ langage :
 * 'ruby_script_remove'
 * 'lua_script_remove'
 * 'tcl_script_remove'
+* 'guile_script_remove'
+* 'javascript_script_remove'
 
 Pour chaque script dans la liste, le "callback" déchargera et supprimera le
 script.

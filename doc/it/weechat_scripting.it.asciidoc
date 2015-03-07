@@ -35,6 +35,7 @@ linguaggi di scripting supportati:
 * lua
 * tcl
 * guile (scheme)
+* javascript
 
 [NOTE]
 Quasi tutti gli esempi in questo manuale sono scritti in Python, ma l'API
@@ -89,6 +90,10 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 ** config_new_section
 ** config_new_option
 ** bar_new
+
+==== Javascript
+
+* Le funzioni sono chiamate con `weechat.xxx(arg1, arg2, ...);`
 
 [[register_function]]
 === Registrare una funzione
@@ -170,6 +175,14 @@ weechat::print "" "Hello, from tcl script!"
 (weechat:print "" "Hello, from scheme script!")
 ----
 
+* javascript:
+
+[source,javascript]
+----
+weechat.register("test_js", "FlashCode", "1.0", "GPL3", "Test script", "", "");
+weechat.print("", "Hello, from javascript script!");
+----
+
 [[load_script]]
 === Caricare uno script
 
@@ -182,17 +195,19 @@ Si raccomanda di usare il plugin "script" per caricare gli script, ad esempio:
 /script load script.lua
 /script load script.tcl
 /script load script.scm
+/script load script.js
 ----
 
 Ogni linguaggio ha anche il suo comando specifico:
 
 ----
-/python load python/script.py
-/perl load perl/script.pl
-/ruby load ruby/script.rb
-/lua load lua/script.lua
-/tcl load tcl/script.tcl
-/guile load guile/script.scm
+/python load script.py
+/perl load script.pl
+/ruby load script.rb
+/lua load script.lua
+/tcl load script.tcl
+/guile load script.scm
+/javascript load script.js
 ----
 
 È possibile creare un link nella directory 'linguaggio/autoload' per caricare
@@ -355,6 +370,18 @@ weechat::hook_timer 1000 0 1 timer_cb test
 )
 
 (weechat:hook_timer 1000 0 1 "timer_cb" "test")
+----
+
+* javascript:
+
+[source,javascript]
+----
+function timer_cb(data, remaining_calls) {
+    weechat.print("", "timer! data=" + data);
+    return weechat.WEECHAT_RC_OK;
+}
+
+weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 ----
 
 [[script_api]]
@@ -536,7 +563,8 @@ weechat.prnt(buffer, "message on #weechat channel")
 ----
 
 [NOTE]
-La funzione print si chiama `print` in Perl/Ruby/Lua/Tcl e `prnt` in Python.
+La funzione print si chiama `print` in Perl/Ruby/Lua/Tcl/Guile/Javascript e
+`prnt` in Python.
 
 [[buffers_send_text]]
 ==== Invia testo al buffer
@@ -808,7 +836,7 @@ def config_cb(data, option, value):
 # ...
 
 weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
-# for other languages, change "python" with your language ("perl", "ruby", "lua" or "tcl")
+# for other languages, change "python" with your language (perl/ruby/lua/tcl/guile/javascript)
 ----
 
 [[config_options_weechat]]

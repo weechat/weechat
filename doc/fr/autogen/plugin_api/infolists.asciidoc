@@ -18,6 +18,8 @@
 
 | irc | irc_server | liste des serveurs IRC | pointeur vers le serveur (optionnel) | nom de serveur (le caractère joker "*" est autorisé) (optionnel)
 
+| javascript | javascript_script | liste des scripts | pointeur vers le script (optionnel) | nom de script (le caractère joker "*" est autorisé) (optionnel)
+
 | logger | logger_buffer | liste des enregistreurs de tampons (loggers) | pointeur vers le logger (optionnel) | -
 
 | lua | lua_script | liste des scripts | pointeur vers le script (optionnel) | nom de script (le caractère joker "*" est autorisé) (optionnel)

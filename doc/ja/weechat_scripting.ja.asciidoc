@@ -33,6 +33,7 @@ WeeChat (Wee Enhanced Environment for Chat) はフリー、高速、軽量な
 * lua
 * tcl
 * guile (scheme)
+* javascript
 
 [NOTE]
 この文書に含まれるほぼすべての例は Python
@@ -168,6 +169,14 @@ weechat::print "" "Hello, from tcl script!"
 (weechat:print "" "Hello, from scheme script!")
 ----
 
+* javascript:
+
+[source,javascript]
+----
+weechat.register("test_js", "FlashCode", "1.0", "GPL3", "Test script", "", "");
+weechat.print("", "Hello, from javascript script!");
+----
+
 [[load_script]]
 === スクリプトのロード
 
@@ -180,17 +189,19 @@ weechat::print "" "Hello, from tcl script!"
 /script load script.lua
 /script load script.tcl
 /script load script.scm
+/script load script.js
 ----
 
 プログラミング言語ごとの固有コマンドを利用することもできます:
 
 ----
-/python load python/script.py
-/perl load perl/script.pl
-/ruby load ruby/script.rb
-/lua load lua/script.lua
-/tcl load tcl/script.tcl
-/guile load guile/script.scm
+/python load script.py
+/perl load script.pl
+/ruby load script.rb
+/lua load script.lua
+/tcl load script.tcl
+/guile load script.scm
+/javascript load script.js
 ----
 
 WeeChat の開始時にスクリプトを自動ロードするには
@@ -349,6 +360,18 @@ weechat::hook_timer 1000 0 1 timer_cb test
 )
 
 (weechat:hook_timer 1000 0 1 "timer_cb" "test")
+----
+
+* javascript:
+
+[source,javascript]
+----
+function timer_cb(data, remaining_calls) {
+    weechat.print("", "timer! data=" + data);
+    return weechat.WEECHAT_RC_OK;
+}
+
+weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 ----
 
 [[script_api]]
@@ -528,7 +551,7 @@ weechat.prnt(buffer, "message on #weechat channel")
 ----
 
 [NOTE]
-Print 関数は Perl/Ruby/Lua/Tcl では `print` で、Python では `prnt` です。
+Print 関数は Perl/Ruby/Lua/Tcl/Guile/Javascript では `print` で、Python では `prnt` です。
 
 [[buffers_send_text]]
 ==== バッファにテキストを送信
@@ -791,7 +814,7 @@ def config_cb(data, option, value):
 # ...
 
 weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
-# 他のスクリプト言語の場合は "python" を適当なもの ("perl"、"ruby"、"lua"、"tcl") に変更してください。
+# 他のスクリプト言語の場合は "python" を適当なもの (perl/ruby/lua/tcl/guile/javascript) に変更してください。
 ----
 
 [[config_options_weechat]]

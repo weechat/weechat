@@ -7984,6 +7984,26 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: サーバ名 + "," + ニックネーム |
   通知リストに入っているニックネームが着席状態に (離席状態を解除)
 
+| javascript | javascript_script_loaded +
+  _(WeeChat バージョン 1.2 以上で利用可)_ |
+  String: スクリプトへのパス |
+  Javascript スクリプトを読み込み
+
+| javascript | javascript_script_unloaded +
+  _(WeeChat バージョン 1.2 以上で利用可)_ |
+  String: スクリプトへのパス |
+  Javascript スクリプトを再読み込み
+
+| javascript | javascript_script_installed +
+  _(WeeChat バージョン 1.2 以上で利用可)_ |
+  String: インストールされたスクリプトへのパスのコンマ区切りリスト |
+  Javascript スクリプトをインストール
+
+| javascript | javascript_script_removed +
+  _(WeeChat バージョン 1.2 以上で利用可)_ |
+  String: 削除されたスクリプトへのパスのコンマ区切りリスト |
+  Javascript スクリプトを削除
+
 | logger | logger_start |
   Pointer: バッファ |
   バッファのログ保存を開始
@@ -8564,6 +8584,8 @@ weechat.hook_signal_send("logger_backlog", weechat.WEECHAT_HOOK_SIGNAL_POINTER, 
 * 'ruby_script_install'
 * 'lua_script_install'
 * 'tcl_script_install'
+* 'guile_script_install'
+* 'javascript_script_install'
 
 シグナルを受け取ったらコールバックは以下のように働きます:
 
@@ -8602,6 +8624,8 @@ weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
 * 'ruby_script_remove'
 * 'lua_script_remove'
 * 'tcl_script_remove'
+* 'guile_script_remove'
+* 'javascript_script_remove'
 
 リスト文字列に含まれるそれぞれのスクリプトについて、コールバックはスクリプトを再読み込みして削除します。
 

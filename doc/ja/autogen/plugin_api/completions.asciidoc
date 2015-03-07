@@ -46,6 +46,8 @@
 
 | irc | nick | 現在の IRC チャンネルにいるニックネーム
 
+| javascript | javascript_script | スクリプトのリスト
+
 | lua | lua_script | スクリプトのリスト
 
 | perl | perl_script | スクリプトのリスト

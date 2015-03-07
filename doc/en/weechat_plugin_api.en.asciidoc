@@ -7985,6 +7985,26 @@ List of signals sent by WeeChat and plugins:
   String: server name + "," + nick |
   A nick in notify list is back (away status removed)
 
+| javascript | javascript_script_loaded +
+  _(WeeChat ≥ 1.2)_ |
+  String: path to script |
+  Javascript script loaded
+
+| javascript | javascript_script_unloaded +
+  _(WeeChat ≥ 1.2)_ |
+  String: path to script |
+  Javascript script unloaded
+
+| javascript | javascript_script_installed +
+  _(WeeChat ≥ 1.2)_ |
+  String: comma-separated list of paths to scripts installed |
+  Javascript script(s) installed
+
+| javascript | javascript_script_removed +
+  _(WeeChat ≥ 1.2)_ |
+  String: comma-separated list of scripts removed |
+  Javascript script(s) removed
+
 | logger | logger_start |
   Pointer: buffer |
   Start logging for buffer
@@ -8565,6 +8585,8 @@ Five signals can be sent to install a script, according to language:
 * 'ruby_script_install'
 * 'lua_script_install'
 * 'tcl_script_install'
+* 'guile_script_install'
+* 'javascript_script_install'
 
 The callback will do following actions when receiving signal:
 
@@ -8603,6 +8625,8 @@ Five signals can be sent to remove list of scripts, according to language:
 * 'ruby_script_remove'
 * 'lua_script_remove'
 * 'tcl_script_remove'
+* 'guile_script_remove'
+* 'javascript_script_remove'
 
 For each script in list, the callback will unload then remove script.
 

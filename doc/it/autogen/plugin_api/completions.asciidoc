@@ -46,6 +46,8 @@
 
 | irc | nick | nick del canale IRC corrente
 
+| javascript | javascript_script | elenco degli script
+
 | lua | lua_script | elenco degli script
 
 | perl | perl_script | elenco degli script

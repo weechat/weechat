@@ -8165,6 +8165,30 @@ List of signals sent by WeeChat and plugins:
   String: nome server + "," + nick |
   Un nick nella lista notifiche è tornato (messaggio di assenza rimosso)
 
+// TRANSLATION MISSING
+| javascript | javascript_script_loaded +
+  _(WeeChat ≥ 1.2)_ |
+  String: path to script |
+  Javascript script loaded
+
+// TRANSLATION MISSING
+| javascript | javascript_script_unloaded +
+  _(WeeChat ≥ 1.2)_ |
+  String: path to script |
+  Javascript script unloaded
+
+// TRANSLATION MISSING
+| javascript | javascript_script_installed +
+  _(WeeChat ≥ 1.2)_ |
+  String: comma-separated list of paths to scripts installed |
+  Javascript script(s) installed
+
+// TRANSLATION MISSING
+| javascript | javascript_script_removed +
+  _(WeeChat ≥ 1.2)_ |
+  String: comma-separated list of scripts removed |
+  Javascript script(s) removed
+
 | logger | logger_start |
   Puntatore: buffer |
   Avvia il logging per il buffer
@@ -8808,6 +8832,8 @@ del linguaggio:
 * 'ruby_script_install'
 * 'lua_script_install'
 * 'tcl_script_install'
+* 'guile_script_install'
+* 'javascript_script_install'
 
 La callback compirà le seguenti azioni alla ricezione del segnale:
 
@@ -8849,6 +8875,8 @@ seconda del linguaggio:
 * 'ruby_script_remove'
 * 'lua_script_remove'
 * 'tcl_script_remove'
+* 'guile_script_remove'
+* 'javascript_script_remove'
 
 Per ogni script nella lista, la callback scaricherà e rimuoverà lo script.
 

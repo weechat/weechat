@@ -139,6 +139,9 @@ compile WeeChat.
 | guile-2.0-dev | ≥ 2.0 | |
   Guile (scheme) plugin
 
+| libv8-dev | | |
+  Javascript plugin
+
 | asciidoc | ≥ 8.5.0 | |
   Build man page and documentation
 
@@ -245,6 +248,9 @@ List of commonly used options:
 | ENABLE_IRC | `ON`, `OFF` | ON |
   Compile <<irc_plugin,IRC plugin>>.
 
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
+  Compile <<scripts_plugins,Javascript plugin>>.
+
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   Support of large files.
 
@@ -281,7 +287,7 @@ List of commonly used options:
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
-  Guile).
+  Guile, Javascript).
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Tcl plugin>>.
@@ -1773,26 +1779,27 @@ Examples to load, unload or list plugins:
 
 Default plugins are:
 
-[width="50%",cols="^1,5",options="header"]
+[width="100%",cols="^1,5",options="header"]
 |===
-| Plugin  | Description
-| alias   | Define alias for commands
-| aspell  | Spell checking for command line
-| charset | Charset decoding/encoding for buffers
-| exec    | Execution of external commands in WeeChat
-| fifo    | FIFO pipe used to remotely send commands to WeeChat
-| irc     | IRC chat protocol
-| logger  | Log buffers to files
-| relay   | Relay data via network
-| script  | Scripts manager
-| python  | Python scripting API
-| perl    | Perl scripting API
-| ruby    | Ruby scripting API
-| lua     | Lua scripting API
-| tcl     | Tcl scripting API
-| guile   | Guile (scheme) scripting API
-| trigger | Text replacement and command execution on events triggered by WeeChat/plugins
-| xfer    | File transfer and direct chat
+| Plugin     | Description
+| alias      | Define alias for commands
+| aspell     | Spell checking for command line
+| charset    | Charset decoding/encoding for buffers
+| exec       | Execution of external commands in WeeChat
+| fifo       | FIFO pipe used to remotely send commands to WeeChat
+| irc        | IRC chat protocol
+| logger     | Log buffers to files
+| relay      | Relay data via network
+| script     | Scripts manager
+| python     | Python scripting API
+| perl       | Perl scripting API
+| ruby       | Ruby scripting API
+| lua        | Lua scripting API
+| tcl        | Tcl scripting API
+| guile      | Guile (scheme) scripting API
+| javascript | Javascript scripting API
+| trigger    | Text replacement and command execution on events triggered by WeeChat/plugins
+| xfer       | File transfer and direct chat
 |===
 
 To learn more about plugin or script development (through API), please read
@@ -2857,8 +2864,8 @@ The URI must always end with "/weechat" (for 'irc' and 'weechat' protocols).
 [[scripts_plugins]]
 === Scripts plugins
 
-WeeChat provides 6 scripting plugins: Python, Perl, Ruby, Lua, Tcl and Guile
-(scheme).
+WeeChat provides 7 scripting plugins: Python, Perl, Ruby, Lua, Tcl, Guile
+(scheme) and Javascript.
 These plugins can load, execute and unload scripts for these languages.
 
 Another plugin called "script" is a scripts manager and is used to load/unload
@@ -2919,6 +2926,11 @@ include::autogen/user/tcl_commands.asciidoc[]
 ==== Guile commands
 
 include::autogen/user/guile_commands.asciidoc[]
+
+[[javascript_commands]]
+==== Javascript commands
+
+include::autogen/user/javascript_commands.asciidoc[]
 
 [[trigger_plugin]]
 === Trigger plugin

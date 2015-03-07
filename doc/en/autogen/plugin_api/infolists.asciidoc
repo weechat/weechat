@@ -18,6 +18,8 @@
 
 | irc | irc_server | list of IRC servers | server pointer (optional) | server name (wildcard "*" is allowed) (optional)
 
+| javascript | javascript_script | list of scripts | script pointer (optional) | script name (wildcard "*" is allowed) (optional)
+
 | logger | logger_buffer | list of logger buffers | logger pointer (optional) | -
 
 | lua | lua_script | list of scripts | script pointer (optional) | script name (wildcard "*" is allowed) (optional)

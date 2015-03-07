@@ -144,6 +144,9 @@ compiler WeeChat.
 | guile-2.0-dev | ≥ 2.0 | |
   Extension guile (scheme)
 
+| libv8-dev | | |
+  Extension javascript
+
 | asciidoc | ≥ 8.5.0 | |
   Construction de la page man et de la documentation
 
@@ -250,6 +253,9 @@ Liste des options couramment utilisées :
 | ENABLE_IRC | `ON`, `OFF` | ON |
   Compiler <<irc_plugin,l'extension IRC>>.
 
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
+  Compiler <<scripts_plugins,l'extension Javascript>>.
+
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   Support des gros fichiers.
 
@@ -286,7 +292,7 @@ Liste des options couramment utilisées :
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,les extensions de script>> (Python, Perl, Ruby,
-  Lua, Tcl, Guile).
+  Lua, Tcl, Guile, Javascript).
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,l'extension Tcl>>.
@@ -1829,26 +1835,27 @@ Exemples pour charger, décharger et afficher les extensions :
 
 Les extensions par défaut sont :
 
-[width="50%",cols="^1,5",options="header"]
+[width="100%",cols="^1,5",options="header"]
 |===
-| Extension | Description
-| alias     | Définir des alias pour les commandes
-| aspell    | Vérification orthographique de la ligne de commande
-| charset   | Encodage/encodage avec jeu de caractère sur les tampons
-| exec      | Exécution de commandes externes dans WeeChat
-| fifo      | Tube FIFO pour envoyer des commandes à distance vers WeeChat
-| irc       | Discussion avec le protocole IRC
-| logger    | Enregistrement des tampons dans des fichiers
-| relay     | Relai de données via le réseau
-| script    | Gestionnaire de scripts
-| python    | Interface (API) pour scripts Python
-| perl      | Interface (API) pour scripts Perl
-| ruby      | Interface (API) pour scripts Ruby
-| lua       | Interface (API) pour scripts Lua
-| tcl       | Interface (API) pour scripts Tcl
-| guile     | Interface (API) pour scripts Guile (scheme)
-| trigger   | Remplacement de texte et exécution de commande sur des évènements de WeeChat ou des extensions
-| xfer      | Transfert de fichier et discussion directe
+| Extension  | Description
+| alias      | Définir des alias pour les commandes
+| aspell     | Vérification orthographique de la ligne de commande
+| charset    | Encodage/encodage avec jeu de caractère sur les tampons
+| exec       | Exécution de commandes externes dans WeeChat
+| fifo       | Tube FIFO pour envoyer des commandes à distance vers WeeChat
+| irc        | Discussion avec le protocole IRC
+| logger     | Enregistrement des tampons dans des fichiers
+| relay      | Relai de données via le réseau
+| script     | Gestionnaire de scripts
+| python     | Interface (API) pour scripts Python
+| perl       | Interface (API) pour scripts Perl
+| ruby       | Interface (API) pour scripts Ruby
+| lua        | Interface (API) pour scripts Lua
+| tcl        | Interface (API) pour scripts Tcl
+| guile      | Interface (API) pour scripts Guile (scheme)
+| javascript | Interface (API) pour scripts Javascript
+| trigger    | Remplacement de texte et exécution de commande sur des évènements de WeeChat ou des extensions
+| xfer       | Transfert de fichier et discussion directe
 |===
 
 Pour en apprendre plus sur le développement d'extension ou de script (via
@@ -2951,8 +2958,8 @@ L'URI doit toujours se terminer par "/weechat" (pour les protocoles 'irc' et
 [[scripts_plugins]]
 === Extensions Scripts
 
-WeeChat fournit 6 extensions pour scripts : Python, Perl, Ruby, Lua, Tcl et
-Guile (scheme).
+WeeChat fournit 7 extensions pour scripts : Python, Perl, Ruby, Lua, Tcl,
+Guile (scheme) et Javascript.
 Ces extensions peuvent charger, exécuter et décharger des scripts pour ces
 langages.
 
@@ -3015,6 +3022,11 @@ include::autogen/user/tcl_commands.asciidoc[]
 ==== Commandes Guile
 
 include::autogen/user/guile_commands.asciidoc[]
+
+[[javascript_commands]]
+==== Commandes Javascript
+
+include::autogen/user/javascript_commands.asciidoc[]
 
 [[trigger_plugin]]
 === Extension Trigger
