@@ -17,19 +17,19 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(JAVASCRIPT_CFLAGS)
+AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(V8_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 
 lib_LTLIBRARIES = javascript.la
 
-javascript_la_SOURCES = weechat-js.c \
+javascript_la_SOURCES = weechat-js.cpp \
                         weechat-js.h \
-                        weechat-js-v8.c \
+                        weechat-js-v8.cpp \
                         weechat-js-v8.h \
-                        weechat-js-api.c \
+                        weechat-js-api.cpp \
                         weechat-js-api.h
 javascript_la_LDFLAGS = -module -no-undefined
-javascript_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(JAVASCRIPT_LFLAGS)
+javascript_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(V8_LFLAGS)
 
 EXTRA_DIST = CMakeLists.txt
