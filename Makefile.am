@@ -59,6 +59,7 @@ EXTRA_DIST = AUTHORS.asciidoc \
              cmake/FindRuby.cmake \
              cmake/FindSourcehighlight.cmake \
              cmake/FindTCL.cmake \
+             cmake/FindV8.cmake \
              cmake/FindZLIB.cmake \
              cmake/cmake_uninstall.cmake.in \
              po/CMakeLists.txt \
