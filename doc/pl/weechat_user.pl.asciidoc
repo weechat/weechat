@@ -146,6 +146,9 @@ WeeChat.
 | guile-2.0-dev | ≥ 2.0 | |
   Wtyczka guile (scheme)
 
+| libv8-dev | | |
+  Wtyczka javascript
+
 | asciidoc | ≥ 8.5.0 | |
   Tworzenie strony man i dokumentacji
 
@@ -253,6 +256,9 @@ Lista popularnych opcji:
 | ENABLE_IRC | `ON`, `OFF` | ON |
   Kompilacja <<irc_plugin,wtyczki IRC>>.
 
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
+  Kompilacja <<scripts_plugins,wtyczki javascript>>.
+
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   Wsparcie dla dużych plików.
 
@@ -289,7 +295,7 @@ Lista popularnych opcji:
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczek skryptowych>> (Python, Perl, Ruby, Lua,
-  Tcl, Guile).
+  Tcl, Guile, Javascript).
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczki tcl>>.
@@ -1792,26 +1798,27 @@ Przykłady ładowania, wyładowywania i wyświetlania załadowanych wtyczek:
 
 Domyślne wtyczki:
 
-[width="50%",cols="^1,5",options="header"]
+[width="100%",cols="^1,5",options="header"]
 |===
-| Wtyczka | Opis
-| alias   | Definiuje aliasy dla komend
-| aspell  | Sprawdzanie pisowni w linii poleceń
-| charset | Ustawianie kodowania dla buforów
-| exec    | Wykonuje zewnętrzną komendę z poziomu WeeChat
-| fifo    | Kolejka FIFO używana do zdalnego wysyłania poleceń dla WeeChat
-| irc     | Protokół IRC
-| logger  | Logowanie zawartości buforów do plików
-| relay   | Przekazuje dane przez sieć
-| script  | Zarządzanie skryptami
-| python  | Wsparcie dla skryptów napisanych w Pythonie
-| perl    | Wsparcie dla skryptów napisanych w Perlu
-| ruby    | Wsparcie dla skryptów napisanych w Ruby
-| lua     | Wsparcie dla skryptów napisanych w Lua
-| tcl     | Wsparcie dla skryptów napisanych w Tcl
-| guile   | Wsparcie dla skryptów napisanych w Guile (scheme)
-| trigger | Zamiana tekstu i wykonywanie komend dla zdarzeń wywołanych przez WeeChat/wtyczki
-| xfer    | Przesyłanie plików i bezpośredni chat
+| Wtyczka    | Opis
+| alias      | Definiuje aliasy dla komend
+| aspell     | Sprawdzanie pisowni w linii poleceń
+| charset    | Ustawianie kodowania dla buforów
+| exec       | Wykonuje zewnętrzną komendę z poziomu WeeChat
+| fifo       | Kolejka FIFO używana do zdalnego wysyłania poleceń dla WeeChat
+| irc        | Protokół IRC
+| logger     | Logowanie zawartości buforów do plików
+| relay      | Przekazuje dane przez sieć
+| script     | Zarządzanie skryptami
+| python     | Wsparcie dla skryptów napisanych w Pythonie
+| perl       | Wsparcie dla skryptów napisanych w Perlu
+| ruby       | Wsparcie dla skryptów napisanych w Ruby
+| lua        | Wsparcie dla skryptów napisanych w Lua
+| tcl        | Wsparcie dla skryptów napisanych w Tcl
+| guile      | Wsparcie dla skryptów napisanych w Guile (scheme)
+| javascript | Wsparcie dla skryptów napisanych w Javascript
+| trigger    | Zamiana tekstu i wykonywanie komend dla zdarzeń wywołanych przez WeeChat/wtyczki
+| xfer       | Przesyłanie plików i bezpośredni chat
 |===
 
 Więcej informacji o wtyczkach i tworzeniu skryptów (przez API), można znaleźć w
@@ -2891,8 +2898,8 @@ Adres URL musi się zawsze kończyć "/weechat" (dla protokołów 'irc' i 'weech
 [[scripts_plugins]]
 === Wtyczki skryptowe
 
-WeeChat posiada 6 wtyczek skryptowych: Python, Perl, Ruby, Lua, Tcl i Guile
-(scheme).
+WeeChat posiada 7 wtyczek skryptowych: Python, Perl, Ruby, Lua, Tcl, Guile
+(scheme) i Javascript.
 Wtyczki te potrafią ładować, wykonywać i wyładowywać skrypty w tych językach.
 
 Inna wtyczka nazwana "script" jest managerem skryptów i jest używana do
@@ -2954,6 +2961,11 @@ include::autogen/user/tcl_commands.asciidoc[]
 ==== Komendy wtyczki guile
 
 include::autogen/user/guile_commands.asciidoc[]
+
+[[javascript_commands]]
+==== Komendy wtyczki javascript
+
+include::autogen/user/javascript_commands.asciidoc[]
 
 [[trigger_plugin]]
 === Wtyczka trigger

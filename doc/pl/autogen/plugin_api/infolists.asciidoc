@@ -18,6 +18,8 @@
 
 | irc | irc_server | lista serwerów IRC | wskaźnik serwera (opcjonalny) | nazwa serwera (wildcard "*" jest dozwolony) (opcjonalne)
 
+| javascript | javascript_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)
+
 | logger | logger_buffer | lista logowanych buforów | wskaźnik logger (opcjonalny) | -
 
 | lua | lua_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)

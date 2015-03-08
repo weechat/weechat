@@ -46,35 +46,36 @@ The main WeeChat directories are:
 
 [width="100%",cols="1v,5",options="header"]
 |===
-| Directory      | Description
-| src/           | Root of sources
-|    core/       | Core functions: entry point, internal structures
-|    gui/        | Functions for buffers, windows, ... (used by all interfaces)
-|       curses/  | Curses interface
-|    plugins/    | Plugin and scripting API
-|       alias/   | Alias plugin
-|       aspell/  | Aspell plugin
-|       charset/ | Charset plugin
-|       exec/    | Exec plugin
-|       fifo/    | Fifo plugin (FIFO pipe used to remotely send commands to WeeChat)
-|       irc/     | IRC (Internet Relay Chat) plugin
-|       logger/  | Logger plugin (write messages displayed to files)
-|       relay/   | Relay plugin (irc proxy + relay for remote interfaces)
-|       script/  | Scripts manager
-|       python/  | Python scripting API
-|       perl/    | Perl scripting API
-|       ruby/    | Ruby scripting API
-|       lua/     | Lua scripting API
-|       tcl/     | Tcl scripting API
-|       guile/   | Guile (scheme) scripting API
-|       trigger/ | Trigger plugin
-|       xfer/    | Xfer plugin (IRC DCC file/chat)
-| tests/         | Tests
-|    unit/       | Unit tests
-|       core/    | Unit tests for core functions
-| doc/           | Documentation
-| po/            | Translations files (gettext)
-| debian/        | Debian packaging
+| Directory         | Description
+| src/              | Root of sources
+|    core/          | Core functions: entry point, internal structures
+|    gui/           | Functions for buffers, windows, ... (used by all interfaces)
+|       curses/     | Curses interface
+|    plugins/       | Plugin and scripting API
+|       alias/      | Alias plugin
+|       aspell/     | Aspell plugin
+|       charset/    | Charset plugin
+|       exec/       | Exec plugin
+|       fifo/       | Fifo plugin (FIFO pipe used to remotely send commands to WeeChat)
+|       irc/        | IRC (Internet Relay Chat) plugin
+|       logger/     | Logger plugin (write messages displayed to files)
+|       relay/      | Relay plugin (irc proxy + relay for remote interfaces)
+|       script/     | Scripts manager
+|       python/     | Python scripting API
+|       perl/       | Perl scripting API
+|       ruby/       | Ruby scripting API
+|       lua/        | Lua scripting API
+|       tcl/        | Tcl scripting API
+|       guile/      | Guile (scheme) scripting API
+|       javascript/ | Javascript scripting API
+|       trigger/    | Trigger plugin
+|       xfer/       | Xfer plugin (IRC DCC file/chat)
+| tests/            | Tests
+|    unit/          | Unit tests
+|       core/       | Unit tests for core functions
+| doc/              | Documentation
+| po/               | Translations files (gettext)
+| debian/           | Debian packaging
 |===
 
 [[sources]]
@@ -215,6 +216,10 @@ WeeChat "core" is located in following directories:
 |       irc-sasl.c                  | SASL authentication with IRC server
 |       irc-server.c                | I/O communication with IRC server
 |       irc-upgrade.c               | Save/restore of IRC data when upgrading WeeChat
+|    javascript/                    | Javascript plugin
+|       weechat-js.cpp              | Main javascript functions (load/unload scripts, execute javascript code)
+|       weechat-js-api.cpp          | Javascript scripting API functions
+|       weechat-js-v8.cpp           | Javascript v8 functions
 |    logger/                        | Logger plugin
 |       logger.c                    | Main logger functions
 |       logger-buffer.c             | Logger buffer list management
@@ -1031,7 +1036,7 @@ Then you can load this script in your WeeChat, and setup path to your '/doc' dir
 Then create this alias to build files:
 
 ----
-/alias doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /python load docgen.py; /wait 1ms /docgen
+/alias doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /javascript unload; /python load docgen.py; /wait 1ms /docgen
 ----
 
 And use command `/doc` to build all files, for all languages.

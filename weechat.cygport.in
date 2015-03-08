@@ -56,9 +56,10 @@ lua perl pkg-config python ruby source-highlight tcl zlib-devel"
 #   2. enable build of man pages and documentation
 #   3. disable Guile plugin because WeeChat requires Guile >= 2.0,
 #      which is not yet available in Cygwin
+#   4. disable Javascript plugin because libv8 is not available in Cygwin
 #
 CYGCMAKE_ARGS="-DPREFIX=/usr -DENABLE_MAN=ON -DENABLE_DOC=ON \
--DENABLE_GUILE=OFF"
+-DENABLE_GUILE=OFF -DENABLE_JAVASCRIPT=OFF"
 
 #
 # Build 8 Cygwin packages:

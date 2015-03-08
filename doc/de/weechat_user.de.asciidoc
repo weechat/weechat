@@ -147,6 +147,9 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | guile-2.0-dev | ≥ 2.0 | |
   Guile (scheme) Erweiterung
 
+| libv8-dev | | |
+  Javascript Erweiterung
+
 | asciidoc | ≥ 8.5.0 | |
   Zum Erstellen der man page und der Dokumentation
 
@@ -254,6 +257,9 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_IRC | `ON`, `OFF` | ON |
   kompiliert <<irc_plugin,IRC Erweiterung>>.
 
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
+  kompiliert <<scripts_plugins,Javascript Erweiterung>>.
+
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   Unterstützung großer Dateien.
 
@@ -289,8 +295,8 @@ Liste von häufig verwendeten Optionen:
   kompiliert <<scripts_plugins,Script Erweiterung>>.
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
-  kompiliert <<scripts_plugins,Skripten-Erweiterungen>> (Python, Perl, Ruby, Lua, Tcl,
-  Guile).
+  kompiliert <<scripts_plugins,Skripten-Erweiterungen>> (Python, Perl, Ruby,
+  Lua, Tcl, Guile, Javascript).
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Tcl Erweiterung>>.
@@ -1816,7 +1822,7 @@ Beispiele wie man Erweiterungen lädt, entfernt und auflistet:
 
 Standarderweiterungen:
 
-[width="50%",cols="^1,5",options="header"]
+[width="100%",cols="^1,5",options="header"]
 |===
 | Erweiterung | Beschreibung
 | alias       | definiert Alias für Befehle
@@ -1834,6 +1840,7 @@ Standarderweiterungen:
 | lua         | Lua-Skript API
 | tcl         | Tcl-Skript API
 | guile       | Guile(scheme)-Skript API
+| javascript  | Javascript-Skript API
 | trigger     | Veränderung von Text und Ausführen von Befehlen bei einem Ereignis, welche durch WeeChat oder eine Erweiterung ausgelöst werden
 | xfer        | Datentransfer und Direktchat
 |===
@@ -2931,8 +2938,8 @@ Die URI muss immer auf "/weechat" enden ('irc' und 'weechat' Protokoll).
 [[scripts_plugins]]
 === Erweiterungen für Skripten
 
-WeeChat unterstützt sechs Skript-Erweiterungen: Python, Perl, Ruby, Lua, Tcl und Guile
-(scheme).
+WeeChat unterstützt sechs Skript-Erweiterungen: Python, Perl, Ruby, Lua, Tcl,
+Guile (scheme) und Javascript.
 Mit diesen Erweiterungen kann für die jeweilige Skript-Sprache, Skripten geladen, ausgeführt
 und entfernt werden.
 
@@ -2995,6 +3002,11 @@ include::autogen/user/tcl_commands.asciidoc[]
 ==== Guile Befehle
 
 include::autogen/user/guile_commands.asciidoc[]
+
+[[javascript_commands]]
+==== Javascript Befehle
+
+include::autogen/user/javascript_commands.asciidoc[]
 
 [[trigger_plugin]]
 === Trigger Erweiterung

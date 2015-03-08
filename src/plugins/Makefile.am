@@ -99,6 +99,10 @@ if PLUGIN_GUILE
 guile_dir = guile
 endif
 
+if PLUGIN_JAVASCRIPT
+javascript_dir = javascript
+endif
+
 if PLUGIN_TRIGGER
 trigger_dir = trigger
 endif
@@ -110,7 +114,7 @@ endif
 SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(exec_dir) $(fifo_dir) \
             $(irc_dir) $(logger_dir) $(relay_dir) $(script_dir) $(perl_dir) \
             $(python_dir) $(ruby_dir) $(lua_dir) $(tcl_dir) $(guile_dir) \
-            $(trigger_dir) $(xfer_dir)
+            $(javascript_dir) $(trigger_dir) $(xfer_dir)
 
 EXTRA_DIST = CMakeLists.txt
 

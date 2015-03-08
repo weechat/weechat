@@ -18,6 +18,8 @@
 
 | irc | irc_server | Liste der IRC-Server | Server Pointer (optional) | Servername (Platzhalter "*" kann verwendet werden) (optional)
 
+| javascript | javascript_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
+
 | logger | logger_buffer | Auflistung der protokollierten Buffer | Logger-Pointer (optional) | -
 
 | lua | lua_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)

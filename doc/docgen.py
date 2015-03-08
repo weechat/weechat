@@ -98,6 +98,7 @@ PLUGIN_LIST = {
     'script': 'o',
     'perl': '',
     'python': '',
+    'javascript': '',
     'ruby': '',
     'lua': '',
     'tcl': '',

@@ -46,6 +46,8 @@
 
 | irc | nick | pseudos du canal IRC courant
 
+| javascript | javascript_script | liste des scripts
+
 | lua | lua_script | liste des scripts
 
 | perl | perl_script | liste des scripts

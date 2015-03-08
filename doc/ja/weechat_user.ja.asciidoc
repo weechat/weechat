@@ -143,6 +143,9 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 | guile-2.0-dev | ≥ 2.0 | |
   guile (scheme) プラグイン
 
+| libv8-dev | | |
+  javascript プラグイン
+
 | asciidoc | ≥ 8.5.0 | |
   man ページと文書のビルド
 
@@ -248,6 +251,9 @@ cmake に対するオプションを指定するには、以下のフォーマ�
 | ENABLE_IRC | `ON`, `OFF` | ON |
   <<irc_plugin,IRC プラグイン>>のコンパイル
 
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
+  <<scripts_plugins,Javascript プラグイン>>のコンパイル。
+
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   巨大ファイルのサポート。
 
@@ -284,7 +290,7 @@ cmake に対するオプションを指定するには、以下のフォーマ�
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   すべての<<scripts_plugins,スクリプトプラグイン>>
-  (Python、Perl、Ruby、Lua、Tcl、Guile) のコンパイル
+  (Python、Perl、Ruby、Lua、Tcl、Guile、Javascript) のコンパイル
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   <<scripts_plugins,Tcl プラグイン>>のコンパイル
@@ -1776,7 +1782,7 @@ GNU/Linux の場合、プラグインファイルは ".so" という拡張子を
 
 デフォルトプラグインのリスト:
 
-[width="50%",cols="^1,5",options="header"]
+[width="100%",cols="^1,5",options="header"]
 |===
 | プラグイン | 説明
 | alias      | コマンドの別名を定義
@@ -1794,6 +1800,7 @@ GNU/Linux の場合、プラグインファイルは ".so" という拡張子を
 | lua        | Lua スクリプト API
 | tcl        | Tcl スクリプト API
 | guile      | Guile (scheme) スクリプト API
+| javascript | Javascript スクリプト API
 | trigger    | WeeChat およびプラグインが発生させたイベントに対するテキスト置換とコマンド実行
 | xfer       | ファイル転送とダイレクトチャット
 |===
@@ -2860,8 +2867,8 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 [[scripts_plugins]]
 === スクリプトプラグイン
 
-WeeChat は 6 種類のスクリプトプラグインを備えています: Python、Perl、Ruby、Lua、Tcl、Guile
-(scheme)。
+WeeChat は 7 種類のスクリプトプラグインを備えています: Python、Perl、Ruby、Lua、Tcl、Guile
+(scheme)、Javascript。
 これらのプラグインでそれぞれの言語で書かれたスクリプトのロード、実行、アンロードができます。
 
 "スクリプト" と呼ばれるほかのプラグインはスクリプトマネージャで、任意の言語で書かれたスクリプトをロード
@@ -2922,6 +2929,11 @@ include::autogen/user/tcl_commands.asciidoc[]
 ==== Guile コマンド
 
 include::autogen/user/guile_commands.asciidoc[]
+
+[[javascript_commands]]
+==== Javascript コマンド
+
+include::autogen/user/javascript_commands.asciidoc[]
 
 [[trigger_plugin]]
 === トリガプラグイン

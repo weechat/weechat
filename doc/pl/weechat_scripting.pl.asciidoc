@@ -34,6 +34,7 @@ wspieranych języków skryptowych:
 * lua
 * tcl
 * guile (scheme)
+* javascript
 
 [NOTE]
 Prawie wszystkie przykłady umieszczone w tym dokumencie są napisane w Pythonie,
@@ -87,6 +88,10 @@ Weechat.config_new_option(config, section, "nazwa", "ciąg", "opis opcji", "", 0
 ** config_new_section
 ** config_new_option
 ** bar_new
+
+==== Javascript
+
+* Funkcje są wywoływane za pomocą `weechat.xxx(arg1, arg2, ...);`
 
 [[register_function]]
 === Funkcja rejestrująca
@@ -168,6 +173,14 @@ weechat::print "" "Witaj ze skryptu tcl!"
 (weechat:print "" "Witaj ze skryptu scheme!")
 ----
 
+* javascript:
+
+[source,javascript]
+----
+weechat.register("test_js", "FlashCode", "1.0", "GPL3", "Test script", "", "");
+weechat.print("", "Witaj ze skryptu javascript!");
+----
+
 [[load_script]]
 === Ładowanie skryptu
 
@@ -180,17 +193,19 @@ Zaleca się używanie wtyczki "script" do ładowania skryptów, na przykład:
 /script load script.lua
 /script load script.tcl
 /script load script.scm
+/script load script.js
 ----
 
 Każdy język posiada również swoją własną komendę:
 
 ----
-/python load python/skrypt.py
-/perl load perl/skrypt.pl
-/ruby load ruby/skrypt.rb
-/lua load lua/skrypt.lua
-/tcl load tcl/skrypt.tcl
-/guile load guile/skrypt.scm
+/python load skrypt.py
+/perl load skrypt.pl
+/ruby load skrypt.rb
+/lua load skrypt.lua
+/tcl load skrypt.tcl
+/guile load skrypt.scm
+/javascript load skrypt.js
 ----
 
 Możesz zrobić dowiązanie w katalogu 'język/autoload' jeśli chcesz automatycznie
@@ -346,6 +361,18 @@ weechat::hook_timer 1000 0 1 timer_cb test
 )
 
 (weechat:hook_timer 1000 0 1 "timer_cb" "test")
+----
+
+* javascript:
+
+[source,javascript]
+----
+function timer_cb(data, remaining_calls) {
+    weechat.print("", "timer! data=" + data);
+    return weechat.WEECHAT_RC_OK;
+}
+
+weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 ----
 
 [[script_api]]
@@ -524,7 +551,8 @@ weechat.prnt(buffer, "wiadomość na kanale #weechat")
 ----
 
 [NOTE]
-Funkcja drukująca nazywa się `print` w Perl/Ruby/Lua/Tcl i `prnt` w Pythonie.
+Funkcja drukująca nazywa się `print` w Perl/Ruby/Lua/Tcl/Guile/Javascript i
+`prnt` w Pythonie.
 
 [[buffers_send_text]]
 ==== Wysyłanie tekstu do bufora
@@ -787,7 +815,7 @@ def config_cb(data, option, value):
 # ...
 
 weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
-# dla innych języków, zmień "python" na swój język ("perl", "ruby", "lua" or "tcl")
+# dla innych języków, zmień "python" na swój język (perl/ruby/lua/tcl/guile/javascript)
 ----
 
 [[config_options_weechat]]

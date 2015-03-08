@@ -119,6 +119,7 @@ AH_VERBATIM([PLUGIN_RUBY], [#undef PLUGIN_RUBY])
 AH_VERBATIM([PLUGIN_LUA], [#undef PLUGIN_LUA])
 AH_VERBATIM([PLUGIN_TCL], [#undef PLUGIN_TCL])
 AH_VERBATIM([PLUGIN_GUILE], [#undef PLUGIN_GUILE])
+AH_VERBATIM([PLUGIN_JAVASCRIPT], [#undef PLUGIN_JAVASCRIPT])
 AH_VERBATIM([PLUGIN_TRIGGER], [#undef PLUGIN_TRIGGER])
 AH_VERBATIM([PLUGIN_XFER], [#undef PLUGIN_XFER])
 AH_VERBATIM([TESTS], [#undef TESTS])
@@ -150,6 +151,7 @@ AC_ARG_ENABLE(ruby,         [  --disable-ruby          turn off Ruby script plug
 AC_ARG_ENABLE(lua,          [  --disable-lua           turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
 AC_ARG_ENABLE(tcl,          [  --disable-tcl           turn off Tcl script plugin (default=compiled if found)],enable_tcl=$enableval,enable_tcl=yes)
 AC_ARG_ENABLE(guile,        [  --disable-guile         turn off Guile (scheme) script plugin (default=compiled if found)],enable_guile=$enableval,enable_guile=yes)
+AC_ARG_ENABLE(javascript,   [  --disable-javascript    turn off Javascript script plugin (default=compiled if found)],enable_javascript=$enableval,enable_javascript=yes)
 AC_ARG_ENABLE(trigger,      [  --disable-trigger       turn off Trigger plugin (default=compiled)],enable_trigger=$enableval,enable_trigger=yes)
 AC_ARG_ENABLE(xfer,         [  --disable-xfer          turn off Xfer (file transfer) plugin (default=compiled if found)],enable_xfer=$enableval,enable_xfer=yes)
 AC_ARG_WITH(tclconfig,      [  --with-tclconfig=DIR    directory containing tcl configuration (tclConfig.sh)],tclconfig=$withval,tclconfig='')
@@ -282,6 +284,7 @@ if test "x$enable_scripts" = "xno" ; then
     enable_lua="no"
     enable_tcl="no"
     enable_guile="no"
+    enable_javascript="no"
 fi
 
 # ---------------------------------- alias -------------------------------------
@@ -783,6 +786,8 @@ if test "x$enable_tcl" = "xyes" ; then
         enable_tcl="no"
         not_found="$not_found tcl"
     fi
+else
+    not_asked="$not_asked tcl"
 fi
 
 if test "x$enable_tcl" = "xyes" ; then
@@ -836,6 +841,8 @@ if test "x$enable_guile" = "xyes" ; then
         enable_guile="no"
         not_found="$not_found guile"
     fi
+else
+    not_asked="$not_asked guile"
 fi
 
 if test "x$enable_guile" = "xyes" ; then
@@ -843,6 +850,60 @@ if test "x$enable_guile" = "xyes" ; then
     AC_SUBST(GUILE_LFLAGS)
     AC_DEFINE(PLUGIN_GUILE)
 fi
+
+# ------------------------------ javascript -----------------------------------
+
+AC_LANG_PUSH([C++])
+
+if test "x$enable_javascript" = "xyes" ; then
+    enable_plugins="yes"
+
+    v8_found="no"
+    AC_CHECK_HEADER(v8.h,ac_found_v8_header="yes",ac_found_v8_header="no")
+    if test "x$ac_found_v8_header" = "xyes" ; then
+        #AC_CHECK_LIB(v8,v8,ac_found_v8_lib="yes",ac_found_v8_lib="no")
+        ac_save_LDFLAGS="$LDFLAGS"
+        LDFLAGS="$LDFLAGS -lv8"
+        AC_MSG_CHECKING(for v8 usability in programs)
+        AC_TRY_RUN([
+            #include <v8.h>
+            using namespace v8;
+            int main(int argc, char **argv) {
+                const char *version = V8::GetVersion();
+                return 0;
+            }],ac_found_v8_lib="yes", ac_found_v8_lib="no", ac_found_v8_lib="assume-yes")
+        LDFLAGS="$ac_save_LDFLAGS"
+        if test "x$ac_found_v8_lib" = "xyes" ; then
+            AC_MSG_RESULT(yes)
+            v8_found="yes"
+            V8_CFLAGS=""
+            V8_LFLAGS="-lv8"
+        else
+            AC_MSG_RESULT(no)
+            AC_MSG_WARN([
+*** V8 library couldn't be found on your system.
+*** WeeChat will be built without Javascript support.])
+            enable_javascript="no"
+            not_found="$not_found javascript/v8"
+        fi
+    else
+        AC_MSG_WARN([
+*** V8 header files couldn't be found on your system.
+*** WeeChat will be built without Javascript support.])
+        enable_javascript="no"
+        not_found="$not_found javascript/v8"
+    fi
+else
+    not_asked="$not_asked javascript"
+fi
+
+if test "x$enable_javascript" = "xyes" ; then
+    AC_SUBST(V8_CFLAGS)
+    AC_SUBST(V8_LFLAGS)
+    AC_DEFINE(PLUGIN_JAVASCRIPT)
+fi
+
+AC_LANG_POP
 
 # --------------------------------- trigger ------------------------------------
 
@@ -1188,6 +1249,7 @@ gnu*)
 esac
 
 CFLAGS="$CFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\" -DWEECHAT_LICENSE=\\\"$LICENSE\\\""
+CPPFLAGS="$CPPFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\" -DWEECHAT_LICENSE=\\\"$LICENSE\\\""
 
 # ------------------------------------------------------------------------------
 #                                output Makefiles
@@ -1212,6 +1274,7 @@ AM_CONDITIONAL(PLUGIN_RUBY,             test "$enable_ruby" = "yes")
 AM_CONDITIONAL(PLUGIN_LUA,              test "$enable_lua" = "yes")
 AM_CONDITIONAL(PLUGIN_TCL,              test "$enable_tcl" = "yes")
 AM_CONDITIONAL(PLUGIN_GUILE,            test "$enable_guile" = "yes")
+AM_CONDITIONAL(PLUGIN_JAVASCRIPT,       test "$enable_javascript" = "yes")
 AM_CONDITIONAL(PLUGIN_TRIGGER,          test "$enable_trigger" = "yes")
 AM_CONDITIONAL(PLUGIN_XFER,             test "$enable_xfer" = "yes")
 AM_CONDITIONAL(TESTS,                   test "$enable_tests" = "yes")
@@ -1246,6 +1309,7 @@ AC_OUTPUT([Makefile
            src/plugins/lua/Makefile
            src/plugins/tcl/Makefile
            src/plugins/guile/Makefile
+           src/plugins/javascript/Makefile
            src/plugins/trigger/Makefile
            src/plugins/xfer/Makefile
            src/gui/Makefile
@@ -1314,6 +1378,9 @@ if test "x$enable_tcl" = "xyes"; then
 fi
 if test "x$enable_guile" = "xyes"; then
     listplugins="$listplugins guile($GUILE_VERSION)"
+fi
+if test "x$enable_javascript" = "xyes"; then
+    listplugins="$listplugins javascript/v8"
 fi
 if test "x$enable_trigger" = "xyes"; then
     listplugins="$listplugins trigger"

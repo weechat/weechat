@@ -222,6 +222,40 @@
 ** リスト:
 *** 'irc_servers'
 *** 'last_irc_server'
+* 'javascript_callback': スクリプトのコールバック
+** プラグイン: javascript
+** 変数:
+*** 'script' (pointer, hdata: "javascript_script")
+*** 'function' (string)
+*** 'data' (string)
+*** 'config_file' (pointer, hdata: "config_file")
+*** 'config_section' (pointer, hdata: "config_section")
+*** 'config_option' (pointer, hdata: "config_option")
+*** 'hook' (pointer)
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'bar_item' (pointer, hdata: "bar_item")
+*** 'upgrade_file' (pointer)
+*** 'prev_callback' (pointer, hdata: "javascript_callback")
+*** 'next_callback' (pointer, hdata: "javascript_callback")
+* 'javascript_script': スクリプトのリスト
+** プラグイン: javascript
+** 変数:
+*** 'filename' (string)
+*** 'interpreter' (pointer)
+*** 'name' (string)
+*** 'author' (string)
+*** 'version' (string)
+*** 'license' (string)
+*** 'description' (string)
+*** 'shutdown_func' (string)
+*** 'charset' (string)
+*** 'callbacks' (pointer, hdata: "javascript_callback")
+*** 'unloading' (integer)
+*** 'prev_script' (pointer, hdata: "javascript_script")
+*** 'next_script' (pointer, hdata: "javascript_script")
+** リスト:
+*** 'last_script'
+*** 'scripts'
 * 'lua_callback': スクリプトのコールバック
 ** プラグイン: lua
 ** 変数:

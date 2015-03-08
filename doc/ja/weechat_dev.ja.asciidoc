@@ -51,35 +51,36 @@ WeeChat の主要なリポジトリは 2 つあります:
 
 [width="100%",cols="1v,5",options="header"]
 |===
-| ディレクトリ   | 説明
-| src/           | ソースコードのルートディレクトリ
-|    core/       | コア関数: エントリポイント、内部構造体
-|    gui/        | バッファ、ウィンドウ、... を操作する関数 (全てのインターフェイスで使う)
-|       curses/  | curses インターフェイス
-|    plugins/    | プラグインとスクリプト向け API
-|       alias/   | alias プラグイン
-|       aspell/  | aspell プラグイン
-|       charset/ | charset プラグイン
-|       exec/    | exec プラグイン
-|       fifo/    | fifo プラグイン (WeeChat にコマンドを送信する FIFO パイプ)
-|       irc/     | IRC (Internet Relay Chat) プラグイン
-|       logger/  | logger プラグイン (表示されたメッセージをファイルに書き込む)
-|       relay/   | relay プラグイン (irc プロキシ + リモートインターフェイス用の中継)
-|       script/  | スクリプトマネージャ
-|       python/  | python スクリプト用 API
-|       perl/    | perl スクリプト用 API
-|       ruby/    | ruby スクリプト用 API
-|       lua/     | lua スクリプト用 API
-|       tcl/     | tcl スクリプト用 API
-|       guile/   | guile (scheme) スクリプト用 API
-|       trigger/ | trigger プラグイン
-|       xfer/    | xfer (IRC DCC ファイル/チャット)
-| tests/         | テスト
-|    unit/       | 単体テスト
-|       core/    | コア関数の単体テスト
-| doc/           | 文書
-| po/            | 翻訳ファイル (gettext)
-| debian/        | Debian パッケージ用
+| ディレクトリ      | 説明
+| src/              | ソースコードのルートディレクトリ
+|    core/          | コア関数: エントリポイント、内部構造体
+|    gui/           | バッファ、ウィンドウ、... を操作する関数 (全てのインターフェイスで使う)
+|       curses/     | curses インターフェイス
+|    plugins/       | プラグインとスクリプト向け API
+|       alias/      | alias プラグイン
+|       aspell/     | aspell プラグイン
+|       charset/    | charset プラグイン
+|       exec/       | exec プラグイン
+|       fifo/       | fifo プラグイン (WeeChat にコマンドを送信する FIFO パイプ)
+|       irc/        | IRC (Internet Relay Chat) プラグイン
+|       logger/     | logger プラグイン (表示されたメッセージをファイルに書き込む)
+|       relay/      | relay プラグイン (irc プロキシ + リモートインターフェイス用の中継)
+|       script/     | スクリプトマネージャ
+|       python/     | python スクリプト用 API
+|       perl/       | perl スクリプト用 API
+|       ruby/       | ruby スクリプト用 API
+|       lua/        | lua スクリプト用 API
+|       tcl/        | tcl スクリプト用 API
+|       guile/      | guile (scheme) スクリプト用 API
+|       javascript/ | javascript スクリプト用 API
+|       trigger/    | trigger プラグイン
+|       xfer/       | xfer (IRC DCC ファイル/チャット)
+| tests/            | テスト
+|    unit/          | 単体テスト
+|       core/       | コア関数の単体テスト
+| doc/              | 文書
+| po/               | 翻訳ファイル (gettext)
+| debian/           | Debian パッケージ用
 |===
 
 [[sources]]
@@ -220,6 +221,11 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       irc-sasl.c                  | IRC サーバに対する SASL 認証
 |       irc-server.c                | IRC サーバとの入出力通信
 |       irc-upgrade.c               | WeeChat をアップグレードする際の IRC データの保存および読み込み
+|    javascript/                    | javascript プラグイン
+|       weechat-js.cpp              | javascript の主要関数 (スクリプトのロード/アンロード、javascript コードの実行)
+|       weechat-js-api.cpp          | javascript スクリプト作成 API 関数
+// TRANSLATION MISSING
+|       weechat-js-v8.cpp           | javascript v8 functions
 |    logger/                        | logger プラグイン
 |       logger.c                    | logger の主要関数
 |       logger-buffer.c             | logger バッファリスト管理
@@ -1028,7 +1034,7 @@ $ msgcheck.py xx.po
 ファイルを生成するエイリアスを作ってください:
 
 ----
-/alias doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /python load docgen.py; /wait 1ms /docgen
+/alias doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /javascript unload; /python load docgen.py; /wait 1ms /docgen
 ----
 
 コマンド `/doc` を使って全ての (全てのプログラミング言語について) 自動生成するファイルを作成してください。

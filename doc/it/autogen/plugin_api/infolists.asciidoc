@@ -18,6 +18,8 @@
 
 | irc | irc_server | elenco di server IRC | puntatore al server (opzionale) | server name (wildcard "*" is allowed) (optional)
 
+| javascript | javascript_script | elenco degli script | puntatore allo script (opzionale) | script name (wildcard "*" is allowed) (optional)
+
 | logger | logger_buffer | elenco dei buffer logger | puntatore al logger (opzionale) | -
 
 | lua | lua_script | elenco degli script | puntatore allo script (opzionale) | script name (wildcard "*" is allowed) (optional)

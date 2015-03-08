@@ -141,6 +141,13 @@ if(ENABLE_SCRIPTS AND ENABLE_GUILE)
   endif()
 endif()
 
+if(ENABLE_SCRIPTS AND ENABLE_JAVASCRIPT)
+  find_package(V8)
+  if(V8_FOUND)
+    add_subdirectory(javascript)
+  endif()
+endif()
+
 if(ENABLE_TRIGGER)
   add_subdirectory(trigger)
 endif()

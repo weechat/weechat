@@ -33,6 +33,7 @@ werden folgende Programmiersprachen unterstützt:
 * lua
 * tcl
 * guile (scheme)
+* javascript
 
 [NOTE]
 Beinahe alle Beispiele in dieser Dokumentation beziehen sich auf Python.
@@ -86,6 +87,10 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 ** config_new_section
 ** config_new_option
 ** bar_new
+
+==== Javascript
+
+* Funktionen werden im Format `weechat.xxx(arg1, arg2, ...);` ausgeführt
 
 [[register_function]]
 === Die "Register" Funktion
@@ -164,7 +169,15 @@ weechat::print "" "Hallo, von einem tcl Skript!"
 [source,lisp]
 ----
 (weechat:register "test_scheme" "FlashCode" "1.0" "GPL3" "Test script" "" "")
-(weechat:print "" "Hello, from scheme script!")
+(weechat:print "" "Hallo, von einem scheme Skript!")
+----
+
+* javascript:
+
+[source,javascript]
+----
+weechat.register("test_js", "FlashCode", "1.0", "GPL3", "Test Skript", "", "");
+weechat.print("", "Hallo, von einem javascript Skript!");
 ----
 
 [[load_script]]
@@ -180,18 +193,20 @@ nutzen, zum Beispiel:
 /script load script.lua
 /script load script.tcl
 /script load script.scm
+/script load script.js
 ----
 
 Es besteht natürlich weiterhin die Möglichkeit, individuell für jede
 Skriptsprache, den entsprechenden Befehl zu nutzen:
 
 ----
-/python load python/skript.py
-/perl load perl/skript.pl
-/ruby load ruby/skript.rb
-/lua load lua/skript.lua
-/tcl load tcl/skript.tcl
-/guile load guile/skript.scm
+/python load script.py
+/perl load script.pl
+/ruby load script.rb
+/lua load script.lua
+/tcl load script.tcl
+/guile load script.scm
+/javascript load script.js
 ----
 
 Um Skripten automatisch beim Start von WeeChat zu laden sollte man einen Link
@@ -353,6 +368,18 @@ weechat::hook_timer 1000 0 1 timer_cb test
 )
 
 (weechat:hook_timer 1000 0 1 "timer_cb" "test")
+----
+
+* javascript:
+
+[source,javascript]
+----
+function timer_cb(data, remaining_calls) {
+    weechat.print("", "timer! data=" + data);
+    return weechat.WEECHAT_RC_OK;
+}
+
+weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 ----
 
 [[script_api]]
@@ -533,7 +560,8 @@ weechat.prnt(buffer, "Nachricht im #weechat Channel")
 ----
 
 [NOTE]
-Die print Funktion heißt in Perl/Ruby/Lua/Tcl `print`. In Python lautet die Funktion `prnt`.
+Die print Funktion heißt in Perl/Ruby/Lua/Tcl/Guile/Javascript `print`.
+In Python lautet die Funktion `prnt`.
 
 [[buffers_send_text]]
 ==== Text in einen Buffer senden
@@ -804,7 +832,7 @@ def config_cb(data, option, value):
 # ...
 
 weechat.hook_config("plugins.var.python." + SKRIPT_NAME + ".*", "config_cb", "")
-# für die jeweilige Programmiersprache muss "python" durch "perl", "ruby", "lua" oder "tcl" ersetzt werden.
+# für die jeweilige Programmiersprache muss "python" durch perl/ruby/lua/tcl/guile/javascript ersetzt werden.
 ----
 
 [[config_options_weechat]]

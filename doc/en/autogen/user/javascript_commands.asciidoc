@@ -1,0 +1,22 @@
+[[command_javascript_javascript]]
+[command]*`javascript`* list/load/unload scripts::
+
+----
+/javascript  list|listfull [<name>]
+             load [-q] <filename>
+             autoload
+             reload|unload [-q] [<name>]
+
+    list: list loaded scripts
+listfull: list loaded scripts (verbose)
+    load: load a script
+autoload: load all scripts in "autoload" directory
+  reload: reload a script (if no name given, unload all scripts, then load all scripts in "autoload" directory)
+  unload: unload a script (if no name given, unload all scripts)
+filename: script (file) to load
+    name: a script name (name used in call to "register" function)
+      -q: quiet mode: do not display messages
+
+Without argument, this command lists all loaded scripts.
+----
+

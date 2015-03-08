@@ -46,6 +46,8 @@
 
 | irc | nick | użytkownicy obecnego kanału IRC
 
+| javascript | javascript_script | lista skryptów
+
 | lua | lua_script | lista skryptów
 
 | perl | perl_script | lista skryptów
