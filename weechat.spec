@@ -34,7 +34,7 @@ Source:    https://weechat.org/files/src/%{name}-%{version}.tar.gz
 URL:       https://weechat.org/
 Group:     Productivity/Networking/IRC
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
-Requires:  perl, python, ruby, lua, tcl, guile, gcrypt, gnutls, ncurses, libcurl
+Requires:  perl, python, ruby, lua, tcl, guile, libv8, gcrypt, gnutls, ncurses, libcurl
 License:   GPL
 Vendor:    Sébastien Helleu <flashcode@flashtux.org>
 Packager:  [Odin] <odin@dtdm.org>
