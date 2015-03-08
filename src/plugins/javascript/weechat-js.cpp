@@ -132,7 +132,7 @@ weechat_js_object_to_hashtable (Handle<Object> obj,
     if (!hashtable)
         return NULL;
 
-    keys = obj->GetOwnPropertyNames();
+    keys = obj->GetPropertyNames();
     for (i = 0; i < keys->Length(); i++)
     {
         key = keys->Get(i);
