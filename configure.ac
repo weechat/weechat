@@ -783,6 +783,8 @@ if test "x$enable_tcl" = "xyes" ; then
         enable_tcl="no"
         not_found="$not_found tcl"
     fi
+else
+    not_asked="$not_asked tcl"
 fi
 
 if test "x$enable_tcl" = "xyes" ; then
@@ -836,6 +838,8 @@ if test "x$enable_guile" = "xyes" ; then
         enable_guile="no"
         not_found="$not_found guile"
     fi
+else
+    not_asked="$not_asked guile"
 fi
 
 if test "x$enable_guile" = "xyes" ; then
