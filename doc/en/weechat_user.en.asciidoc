@@ -151,10 +151,11 @@ compile WeeChat.
 | xsltproc, docbook-xml, docbook-xsl | | |
   Build of man page
 
-| libcpputest-dev | ≥ 3.4 | .2+|
+| libcpputest-dev | ≥ 3.4 | |
   Run tests
 
-| C++ compiler | |
+| C++ compiler | | |
+  Run tests, javascript plugin
 |===
 
 [NOTE]

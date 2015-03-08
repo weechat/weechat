@@ -158,10 +158,11 @@ WeeChat.
 | xsltproc, docbook-xml, docbook-xsl | | |
   Tworzenie strony man
 
-| libcpputest-dev | ≥ 3.4 | .2+|
+| libcpputest-dev | ≥ 3.4 | |
   Uruchamianie testów
 
-| C++ compiler | |
+| C++ compiler | | |
+  Uruchamianie testów, wtyczka javascript
 |===
 
 // TRANSLATION MISSING (note 3)

@@ -156,10 +156,11 @@ compiler WeeChat.
 | xsltproc, docbook-xml, docbook-xsl | | |
   Construction de la page de manuel
 
-| libcpputest-dev | ≥ 3.4 | .2+|
+| libcpputest-dev | ≥ 3.4 | |
   Lancement des tests
 
-| C++ compiler | |
+| C++ compiler | | |
+  Lancement des tests, extension javascript
 |===
 
 [NOTE]

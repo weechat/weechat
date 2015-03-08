@@ -159,10 +159,11 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | xsltproc, docbook-xml, docbook-xsl | | |
   Erstellt man page
 
-| libcpputest-dev | ≥ 3.4 | .2+|
+| libcpputest-dev | ≥ 3.4 | |
   Testlauf
 
-| C++ compiler | |
+| C++ compiler | | |
+  Testlauf, javascript Erweiterung
 |===
 
 [NOTE]

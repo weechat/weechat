@@ -155,10 +155,12 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 | xsltproc, docbook-xml, docbook-xsl | | |
   man ページのビルド
 
-| libcpputest-dev | ≥ 3.4 | .2+|
+| libcpputest-dev | ≥ 3.4 | |
   テストの実行
 
-| C++ コンパイラ | |
+// TRANSLATION MISSING
+| C++ コンパイラ | | |
+  Run tests, javascript plugin
 |===
 
 [NOTE]

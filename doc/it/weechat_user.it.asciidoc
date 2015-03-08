@@ -171,10 +171,12 @@ compilare WeeChat.
   Build of man page
 
 // TRANSLATION MISSING
-| libcpputest-dev | ≥ 3.4 | .2+|
+| libcpputest-dev | ≥ 3.4 | |
   Run tests
 
-| C++ compiler | |
+// TRANSLATION MISSING
+| C++ compiler | | |
+  Run tests, plugin Javascript
 |===
 
 // TRANSLATION MISSING (note 3)
