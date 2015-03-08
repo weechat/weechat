@@ -19,7 +19,8 @@ image:https://travis-ci.org/weechat/weechat.svg?branch=master["Build Status", li
 * Multi-protocols architecture (mainly IRC).
 * Compliant with IRC RFCs 1459, 2810, 2811, 2812 and 2813.
 * Small, fast and very light.
-* Customizable and extensible with plugins (C, Perl, Python, Ruby, Lua, Tcl, Guile).
+* Customizable and extensible with plugins (C, Perl, Python, Ruby, Lua, Tcl,
+  Guile, Javascript).
 * Fully documented and translated into several languages.
 * Developed from scratch.
 * Free software, released under GPLv3.
@@ -43,7 +44,7 @@ Following packages are optional:
 * for i18n: gettext
 * for SSL: gnutls, ca-certificates
 * for spell checking: aspell
-* for scripting: python, perl, ruby, lua, tcl, guile
+* for scripting: python, perl, ruby, lua, tcl, guile, libv8 (javascript)
 * for building doc: asciidoc, source-highlight
   (for man page: xsltproc, docbook-xml, docbook-xsl)
 * for building tests: C++ compiler, CppUTest
