@@ -704,8 +704,7 @@ weechat_js_signal_debug_libs_cb (void *data, const char *signal,
     (void) type_data;
     (void) signal_data;
 
-    /* TODO: display v8 version */
-    weechat_printf (NULL, "  %s: %s", JS_PLUGIN_NAME, "version");
+    weechat_printf (NULL, "  %s (v8): %s", JS_PLUGIN_NAME, V8::GetVersion());
 
     return WEECHAT_RC_OK;
 }
