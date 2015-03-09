@@ -122,7 +122,7 @@ Argomenti:
 
 Esempio di script, per ogni linguaggio:
 
-* python:
+* Python:
 
 [source,python]
 ----
@@ -132,7 +132,7 @@ weechat.register("test_python", "FlashCode", "1.0", "GPL3", "Test script", "", "
 weechat.prnt("", "Hello, from python script!")
 ----
 
-* perl:
+* Perl:
 
 [source,perl]
 ----
@@ -140,7 +140,7 @@ weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Test script", "", ""
 weechat::print("", "Hello, from perl script!");
 ----
 
-* ruby:
+* Ruby:
 
 [source,ruby]
 ----
@@ -151,7 +151,7 @@ def weechat_init
 end
 ----
 
-* lua:
+* Lua:
 
 [source,lua]
 ----
@@ -159,7 +159,7 @@ weechat.register("test_lua", "FlashCode", "1.0", "GPL3", "Test script", "", "")
 weechat.print("", "Hello, from lua script!")
 ----
 
-* tcl:
+* Tcl:
 
 [source,tcl]
 ----
@@ -167,7 +167,7 @@ weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Test script" "" ""
 weechat::print "" "Hello, from tcl script!"
 ----
 
-* guile (scheme):
+* Guile (scheme):
 
 [source,lisp]
 ----
@@ -175,7 +175,7 @@ weechat::print "" "Hello, from tcl script!"
 (weechat:print "" "Hello, from scheme script!")
 ----
 
-* javascript:
+* Javascript:
 
 [source,javascript]
 ----
@@ -300,7 +300,7 @@ valore (non è un puntatore).
 
 Esempio di callback, per ogni linguaggio:
 
-* python:
+* Python:
 
 [source,python]
 ----
@@ -311,7 +311,7 @@ def timer_cb(data, remaining_calls):
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
 ----
 
-* perl:
+* Perl:
 
 [source,perl]
 ----
@@ -324,7 +324,7 @@ sub timer_cb {
 weechat::hook_timer(1000, 0, 1, "timer_cb", "test");
 ----
 
-* ruby:
+* Ruby:
 
 [source,ruby]
 ----
@@ -336,7 +336,7 @@ end
 Weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 ----
 
-* lua:
+* Lua:
 
 [source,lua]
 ----
@@ -348,7 +348,7 @@ end
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
 ----
 
-* tcl:
+* Tcl:
 
 [source,tcl]
 ----
@@ -360,7 +360,7 @@ proc timer_cb { data remaining_calls } {
 weechat::hook_timer 1000 0 1 timer_cb test
 ----
 
-* guile (scheme):
+* Guile (scheme):
 
 [source,lisp]
 ----
@@ -372,7 +372,7 @@ weechat::hook_timer 1000 0 1 timer_cb test
 (weechat:hook_timer 1000 0 1 "timer_cb" "test")
 ----
 
-* javascript:
+* Javascript:
 
 [source,javascript]
 ----

@@ -120,7 +120,7 @@ Argumenty:
 
 Przykład dla skryptu w każdym z języków:
 
-* python:
+* Python:
 
 [source,python]
 ----
@@ -130,7 +130,7 @@ weechat.register("test_python", "FlashCode", "1.0", "GPL3", "Skrypt testowy", ""
 weechat.prnt("", "Witaj z pythonowego skryptu!")
 ----
 
-* perl:
+* Perl:
 
 [source,perl]
 ----
@@ -138,7 +138,7 @@ weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Skrypt testowy", "",
 weechat::print("", "Witaj z perlowego skryptu!");
 ----
 
-* ruby:
+* Ruby:
 
 [source,ruby]
 ----
@@ -149,7 +149,7 @@ def weechat_init
 end
 ----
 
-* lua:
+* Lua:
 
 [source,lua]
 ----
@@ -157,7 +157,7 @@ weechat.register("test_lua", "FlashCode", "1.0", "GPL3", "Skrypt testowy", "", "
 weechat.print("", "Witaj ze skryptu lua!")
 ----
 
-* tcl:
+* Tcl:
 
 [source,tcl]
 ----
@@ -165,7 +165,7 @@ weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Skrypt testowy" "" ""
 weechat::print "" "Witaj ze skryptu tcl!"
 ----
 
-* guile (scheme):
+* Guile (scheme):
 
 [source,lisp]
 ----
@@ -173,7 +173,7 @@ weechat::print "" "Witaj ze skryptu tcl!"
 (weechat:print "" "Witaj ze skryptu scheme!")
 ----
 
-* javascript:
+* Javascript:
 
 [source,javascript]
 ----
@@ -291,7 +291,7 @@ Callbacki C używają argumentu "data", który jest wskaźnikiem. W API skryptó
 
 Przykłady callbacków dla każdego języka:
 
-* python:
+* Python:
 
 [source,python]
 ----
@@ -302,7 +302,7 @@ def timer_cb(data, remaining_calls):
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
 ----
 
-* perl:
+* Perl:
 
 [source,perl]
 ----
@@ -315,7 +315,7 @@ sub timer_cb {
 weechat::hook_timer(1000, 0, 1, "timer_cb", "test");
 ----
 
-* ruby:
+* Ruby:
 
 [source,ruby]
 ----
@@ -327,7 +327,7 @@ end
 Weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 ----
 
-* lua:
+* Lua:
 
 [source,lua]
 ----
@@ -339,7 +339,7 @@ end
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
 ----
 
-* tcl:
+* Tcl:
 
 [source,tcl]
 ----
@@ -351,7 +351,7 @@ proc timer_cb { data remaining_calls } {
 weechat::hook_timer 1000 0 1 timer_cb test
 ----
 
-* guile (scheme):
+* Guile (scheme):
 
 [source,lisp]
 ----
@@ -363,7 +363,7 @@ weechat::hook_timer 1000 0 1 timer_cb test
 (weechat:hook_timer 1000 0 1 "timer_cb" "test")
 ----
 
-* javascript:
+* Javascript:
 
 [source,javascript]
 ----
