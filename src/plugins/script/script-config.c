@@ -704,7 +704,7 @@ script_config_init ()
         script_config_file, ptr_section,
         "url", "string",
         N_("URL for file with list of scripts"),
-        NULL, 0, 0, "http://weechat.org/files/plugins.xml.gz", NULL, 0, NULL, NULL,
+        NULL, 0, 0, "https://weechat.org/files/plugins.xml.gz", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     script_config_scripts_url_force_https = weechat_config_new_option (
         script_config_file, ptr_section,
