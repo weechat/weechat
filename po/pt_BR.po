@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"POT-Creation-Date: 2015-03-10 21:43+0100\n"
 "PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -75,6 +75,14 @@ msgstr "valor padrão"
 msgid "undefined value allowed (null)"
 msgstr "valor indefinido permitido (null)"
 
+#, fuzzy
+msgid "IRC color"
+msgstr "cor"
+
+#, fuzzy
+msgid "WeeChat color"
+msgstr "Cores básicas do WeeChat:"
+
 msgid "Plugin"
 msgstr "Plugin"
 
@@ -119,14 +127,6 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-msgid "IRC color"
-msgstr "cor"
-
-#, fuzzy
-msgid "WeeChat color"
-msgstr "Cores básicas do WeeChat:"
 
 # Common conventions used here:
 # hotlist -> lista de atividade
@@ -9689,9 +9689,10 @@ msgid ""
 "upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
 msgstr ""
 
-#, fuzzy
-msgid "URL for file with list of scripts"
-msgstr "list de scripts"
+msgid ""
+"URL for file with list of scripts; by default HTTPS is forced, see option "
+"script.scripts.url_force_https"
+msgstr ""
 
 msgid ""
 "force use of HTTPS for downloads (index and scripts); you should disable "
@@ -10600,3 +10601,7 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
+
+#, fuzzy
+#~ msgid "URL for file with list of scripts"
+#~ msgstr "list de scripts"

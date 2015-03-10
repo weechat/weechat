@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-03-10 21:33+0100\n"
-"PO-Revision-Date: 2015-03-10 21:33+0100\n"
+"POT-Creation-Date: 2015-03-10 21:43+0100\n"
+"PO-Revision-Date: 2015-03-10 21:58+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -70,6 +70,12 @@ msgstr "valeur par défaut"
 msgid "undefined value allowed (null)"
 msgstr "valeur non définie autorisée (null)"
 
+msgid "IRC color"
+msgstr "Couleur IRC"
+
+msgid "WeeChat color"
+msgstr "Couleur WeeChat"
+
 msgid "Plugin"
 msgstr "Extension"
 
@@ -111,12 +117,6 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
-
-msgid "IRC color"
-msgstr "Couleur IRC"
-
-msgid "WeeChat color"
-msgstr "Couleur WeeChat"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -11086,8 +11086,12 @@ msgstr ""
 "seront jamais mis à jour et ne peuvent pas être supprimés, par exemple : "
 "\"buffers.pl,iset.pl\""
 
-msgid "URL for file with list of scripts"
-msgstr "URL pour le fichier avec la liste des scripts"
+msgid ""
+"URL for file with list of scripts; by default HTTPS is forced, see option "
+"script.scripts.url_force_https"
+msgstr ""
+"URL pour le fichier avec la liste des scripts ; par défaut HTTPS est forcé, "
+"voir l'option script.scripts.url_force_https"
 
 msgid ""
 "force use of HTTPS for downloads (index and scripts); you should disable "
@@ -12124,3 +12128,6 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#~ msgid "URL for file with list of scripts"
+#~ msgstr "URL pour le fichier avec la liste des scripts"

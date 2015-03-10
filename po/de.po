@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"POT-Creation-Date: 2015-03-10 21:43+0100\n"
 "PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
@@ -76,6 +76,12 @@ msgstr "Standardwert"
 msgid "undefined value allowed (null)"
 msgstr "undefinierter Wert erlaubt (NULL)"
 
+msgid "IRC color"
+msgstr "IRC-Farbe"
+
+msgid "WeeChat color"
+msgstr "WeeChat-Farbe"
+
 msgid "Plugin"
 msgstr "Erweiterung"
 
@@ -117,12 +123,6 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
-
-msgid "IRC color"
-msgstr "IRC-Farbe"
-
-msgid "WeeChat color"
-msgstr "WeeChat-Farbe"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -11349,8 +11349,10 @@ msgstr ""
 "getrennte Liste von Skripten die weder aktualisiert noch entfernt werden "
 "können. Zum Beispiel: \"buffers.pl,iset.pl\""
 
-msgid "URL for file with list of scripts"
-msgstr "URL für Datei mit Inhalt der unterstützten Skripten"
+msgid ""
+"URL for file with list of scripts; by default HTTPS is forced, see option "
+"script.scripts.url_force_https"
+msgstr ""
 
 msgid ""
 "force use of HTTPS for downloads (index and scripts); you should disable "
@@ -12387,3 +12389,6 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
+#~ msgid "URL for file with list of scripts"
+#~ msgstr "URL für Datei mit Inhalt der unterstützten Skripten"

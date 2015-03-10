@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"POT-Creation-Date: 2015-03-10 21:43+0100\n"
 "PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -70,6 +70,14 @@ msgid "undefined value allowed (null)"
 msgstr ""
 
 #, fuzzy
+msgid "IRC color"
+msgstr "üzenetek színe"
+
+#, fuzzy
+msgid "WeeChat color"
+msgstr "WeeChat Hiba:"
+
+#, fuzzy
 msgid "Plugin"
 msgstr "  (nem található bővítőmodul)\n"
 
@@ -117,14 +125,6 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-msgid "IRC color"
-msgstr "üzenetek színe"
-
-#, fuzzy
-msgid "WeeChat color"
-msgstr "WeeChat Hiba:"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, fuzzy, c-format
@@ -9402,9 +9402,10 @@ msgid ""
 "upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
 msgstr ""
 
-#, fuzzy
-msgid "URL for file with list of scripts"
-msgstr "Aliaszok listája:\n"
+msgid ""
+"URL for file with list of scripts; by default HTTPS is forced, see option "
+"script.scripts.url_force_https"
+msgstr ""
 
 msgid ""
 "force use of HTTPS for downloads (index and scripts); you should disable "
@@ -10318,3 +10319,7 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid "URL for file with list of scripts"
+#~ msgstr "Aliaszok listája:\n"

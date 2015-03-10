@@ -189,7 +189,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** description: `URL pour le fichier avec la liste des scripts`
+** description: `URL pour le fichier avec la liste des scripts ; par défaut HTTPS est forcé, voir l'option script.scripts.url_force_https`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"http://weechat.org/files/plugins.xml.gz"`)
 

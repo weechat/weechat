@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"POT-Creation-Date: 2015-03-10 21:43+0100\n"
 "PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -64,6 +64,14 @@ msgstr "varsayılan değer"
 msgid "undefined value allowed (null)"
 msgstr ""
 
+#, fuzzy
+msgid "IRC color"
+msgstr "renk"
+
+#, fuzzy
+msgid "WeeChat color"
+msgstr "Weechat temel renkler:"
+
 msgid "Plugin"
 msgstr "Eklenti"
 
@@ -105,14 +113,6 @@ msgstr "Tür"
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-msgid "IRC color"
-msgstr "renk"
-
-#, fuzzy
-msgid "WeeChat color"
-msgstr "Weechat temel renkler:"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -8499,7 +8499,9 @@ msgid ""
 "upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
 msgstr ""
 
-msgid "URL for file with list of scripts"
+msgid ""
+"URL for file with list of scripts; by default HTTPS is forced, see option "
+"script.scripts.url_force_https"
 msgstr ""
 
 msgid ""

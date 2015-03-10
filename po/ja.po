@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"POT-Creation-Date: 2015-03-10 21:43+0100\n"
 "PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -67,6 +67,12 @@ msgstr "デフォルト値"
 msgid "undefined value allowed (null)"
 msgstr "(null) は設定できません"
 
+msgid "IRC color"
+msgstr "IRC 色"
+
+msgid "WeeChat color"
+msgstr "WeeChat 色"
+
 msgid "Plugin"
 msgstr "プラグイン"
 
@@ -108,12 +114,6 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
-
-msgid "IRC color"
-msgstr "IRC 色"
-
-msgid "WeeChat color"
-msgstr "WeeChat 色"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -10674,8 +10674,10 @@ msgstr ""
 "れるスクリプトはアップグレードされませんし、削除もされません、例: \"buffers."
 "pl,iset.pl\""
 
-msgid "URL for file with list of scripts"
-msgstr "ファイルの URL とスクリプトのリスト"
+msgid ""
+"URL for file with list of scripts; by default HTTPS is forced, see option "
+"script.scripts.url_force_https"
+msgstr ""
 
 msgid ""
 "force use of HTTPS for downloads (index and scripts); you should disable "
@@ -11660,3 +11662,6 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "URL for file with list of scripts"
+#~ msgstr "ファイルの URL とスクリプトのリスト"

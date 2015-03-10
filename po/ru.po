@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"POT-Creation-Date: 2015-03-10 21:43+0100\n"
 "PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -78,6 +78,14 @@ msgid "undefined value allowed (null)"
 msgstr "разрешено неопределённое значение (null)"
 
 #, fuzzy
+msgid "IRC color"
+msgstr "цвет чата"
+
+#, fuzzy
+msgid "WeeChat color"
+msgstr "Ошибка WeeChat:"
+
+#, fuzzy
 msgid "Plugin"
 msgstr "  (нет pluginа)\n"
 
@@ -125,14 +133,6 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-msgid "IRC color"
-msgstr "цвет чата"
-
-#, fuzzy
-msgid "WeeChat color"
-msgstr "Ошибка WeeChat:"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, fuzzy, c-format
@@ -9429,9 +9429,10 @@ msgid ""
 "upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
 msgstr ""
 
-#, fuzzy
-msgid "URL for file with list of scripts"
-msgstr "Список сокращений:\n"
+msgid ""
+"URL for file with list of scripts; by default HTTPS is forced, see option "
+"script.scripts.url_force_https"
+msgstr ""
 
 msgid ""
 "force use of HTTPS for downloads (index and scripts); you should disable "
@@ -10341,3 +10342,7 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+#~ msgid "URL for file with list of scripts"
+#~ msgstr "Список сокращений:\n"

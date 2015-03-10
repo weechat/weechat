@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"POT-Creation-Date: 2015-03-10 21:43+0100\n"
 "PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -71,6 +71,12 @@ msgstr "domyślna wartość"
 msgid "undefined value allowed (null)"
 msgstr "nieokreślona wartość dozwolona (null)"
 
+msgid "IRC color"
+msgstr "Kolory IRC"
+
+msgid "WeeChat color"
+msgstr "Kolory WeeChat"
+
 msgid "Plugin"
 msgstr "Wtyczka"
 
@@ -112,12 +118,6 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
-
-msgid "IRC color"
-msgstr "Kolory IRC"
-
-msgid "WeeChat color"
-msgstr "Kolory WeeChat"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -10874,8 +10874,10 @@ msgstr ""
 "nigdy nie zostaną zaktualizowane i nie mogą być usunięte, na przykład: "
 "\"buffers.pl,iset.pl\""
 
-msgid "URL for file with list of scripts"
-msgstr "adres URL pliku z lista skryptów"
+msgid ""
+"URL for file with list of scripts; by default HTTPS is forced, see option "
+"script.scripts.url_force_https"
+msgstr ""
 
 msgid ""
 "force use of HTTPS for downloads (index and scripts); you should disable "
@@ -11878,3 +11880,6 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid "URL for file with list of scripts"
+#~ msgstr "adres URL pliku z lista skryptów"

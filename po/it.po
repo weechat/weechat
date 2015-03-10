@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"POT-Creation-Date: 2015-03-10 21:43+0100\n"
 "PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -69,6 +69,14 @@ msgstr "valore predefinito"
 msgid "undefined value allowed (null)"
 msgstr "valore non definito consentito (null)"
 
+#, fuzzy
+msgid "IRC color"
+msgstr "colore"
+
+#, fuzzy
+msgid "WeeChat color"
+msgstr "Colori base di WeeChat:"
+
 msgid "Plugin"
 msgstr "Plugin"
 
@@ -113,14 +121,6 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Costanti"
-
-#, fuzzy
-msgid "IRC color"
-msgstr "colore"
-
-#, fuzzy
-msgid "WeeChat color"
-msgstr "Colori base di WeeChat:"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -10504,8 +10504,10 @@ msgid ""
 "upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
 msgstr ""
 
-msgid "URL for file with list of scripts"
-msgstr "URL per il file con l'elenco degli script"
+msgid ""
+"URL for file with list of scripts; by default HTTPS is forced, see option "
+"script.scripts.url_force_https"
+msgstr ""
 
 msgid ""
 "force use of HTTPS for downloads (index and scripts); you should disable "
@@ -11413,3 +11415,6 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#~ msgid "URL for file with list of scripts"
+#~ msgstr "URL per il file con l'elenco degli script"
