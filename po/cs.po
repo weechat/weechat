@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-02-15 15:37+0100\n"
-"PO-Revision-Date: 2014-11-09 16:23+0100\n"
+"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -8298,6 +8298,30 @@ msgstr "%s: připojuji se znovu k serveru..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: odpojen od serveru"
 
+#, fuzzy, c-format
+msgid "%s%s: exception: %s"
+msgstr "%s%s[%s%s%s]%s vyjímka %s%s"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: nemůžu spustit funkci \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: skript \"%s\" nenalezen"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: nemohu vytvořit nový pod-interpreter"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: nemůžu načíst soubor \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: nemůžu spustit soubor \"%s\""
+
 #, fuzzy
 msgid "Log buffers to files"
 msgstr "konfigurační soubory"
@@ -8515,28 +8539,8 @@ msgid "Support of lua scripts"
 msgstr "seznam skriptů"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: nemůžu spustit funkci \"%s\""
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: skript \"%s\" nenalezen"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: nemohu vytvořit nový pod-interpreter"
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: nemohu přesměrovat stdout a stderr"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: nemůžu načíst soubor \"%s\""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: nemůžu spustit soubor \"%s\""
 
 #, fuzzy
 msgid "Support of perl scripts"

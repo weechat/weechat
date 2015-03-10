@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-02-15 15:37+0100\n"
-"PO-Revision-Date: 2014-11-09 16:23+0100\n"
+"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -8596,6 +8596,30 @@ msgstr "%s%s: reconectando al servidor..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: desconectado del servidor"
 
+#, fuzzy, c-format
+msgid "%s%s: exception: %s"
+msgstr "%s%s[%s%s%s]%s excepción %s%s"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: no es posible ejecutar la función \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: script \"%s\" no encontrado"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: no es posible crear un sub-interprete nuevo"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: no es posible cargar el archivo \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: no es posible ejecutar el archivo \"%s\""
+
 msgid "Log buffers to files"
 msgstr "Guardar registro de buffers"
 
@@ -8816,28 +8840,8 @@ msgid "Support of lua scripts"
 msgstr "Soporte para scripts en lua"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: no es posible ejecutar la función \"%s\""
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: script \"%s\" no encontrado"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: no es posible crear un sub-interprete nuevo"
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: no es posible redirigir stdout y stderr"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: no es posible cargar el archivo \"%s\""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: no es posible ejecutar el archivo \"%s\""
 
 msgid "Support of perl scripts"
 msgstr "Soporte para scripts en perl"

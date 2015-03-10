@@ -293,7 +293,7 @@ weechat_js_load (const char *filename)
     if (!js_current_interpreter)
     {
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s: unable to create new"
+                        weechat_gettext ("%s%s: unable to create new "
                                          "sub-interpreter"),
                         weechat_prefix ("error"), JS_PLUGIN_NAME);
         free (source);

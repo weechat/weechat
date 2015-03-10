@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-02-15 15:37+0100\n"
-"PO-Revision-Date: 2014-11-09 16:23+0100\n"
+"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -7721,6 +7721,30 @@ msgstr "%s: Újracsatlakozás a szerverhez...\n"
 msgid "%s%s: disconnected from server"
 msgstr "Lekapcsolódott a szerverről!\n"
 
+#, fuzzy, c-format
+msgid "%s%s: exception: %s"
+msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
 #, fuzzy
 msgid "Log buffers to files"
 msgstr "szerver konfigurációs fájljának újraolvastatása"
@@ -7894,28 +7918,8 @@ msgid "Support of lua scripts"
 msgstr "Aliaszok listája:\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s a \"%s\" szerver nem található\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy
 msgid "Support of perl scripts"

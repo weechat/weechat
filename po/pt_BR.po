@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-02-15 15:37+0100\n"
-"PO-Revision-Date: 2014-11-09 16:23+0100\n"
+"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -8002,6 +8002,30 @@ msgstr "%s: reconectando ao servidor..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: desconectado do servidor"
 
+#, fuzzy, c-format
+msgid "%s%s: exception: %s"
+msgstr "%s%s[%s%s%s]%s exceção %s%s"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: não foi possível executar função \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: script \"%s\" não encontrado"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: não foi possível criar novo sub-interpretador"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: não foi possível carregar arquivo \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: não foi possível executar arquivo \"%s\""
+
 #, fuzzy
 msgid "Log buffers to files"
 msgstr "arquivos de configuração"
@@ -8193,29 +8217,9 @@ msgid "Support of lua scripts"
 msgstr "list de scripts"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: não foi possível executar função \"%s\""
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: script \"%s\" não encontrado"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: não foi possível criar novo sub-interpretador"
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr ""
 "%s%s: não foi possível redirecionar saídas padrão (stdout) e de erro (stderr)"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: não foi possível carregar arquivo \"%s\""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: não foi possível executar arquivo \"%s\""
 
 #, fuzzy
 msgid "Support of perl scripts"

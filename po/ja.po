@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-02-15 15:37+0100\n"
-"PO-Revision-Date: 2015-02-23 04:11+0900\n"
+"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -40,11 +40,11 @@ msgid "max chars"
 msgstr "最大文字数"
 
 msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)"
-"green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal "
-"color number or an alias; attributes are allowed before color (for text "
-"color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" for "
-"italic, \"_\" for underline"
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
+"for italic, \"_\" for underline"
 msgstr ""
 "WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、"
 "brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号ま"
@@ -5974,8 +5974,8 @@ msgstr ""
 "            - 内部サーバ名 (/server add で作成されたもの、利用推奨)\n"
 "            - ホスト名/ポート番号又は IP アドレス/ポート番号、デフォルトの"
 "ポート番号は 6667\n"
-"            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:password]@]"
-"irc.example.org[:port][/#channel1][,#channel2[...]]\n"
+"            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:"
+"password]@]irc.example.org[:port][/#channel1][,#channel2[...]]\n"
 "            注意: アドレス/IP/URL を指定した場合、サーバを一時的に作ります "
 "(保存しません)、/help irc.look.temporary_servers を参照してください。\n"
 "    option: サーバに関するオプション (ブール型オプションでは、value は無視さ"
@@ -8857,6 +8857,30 @@ msgstr "%s%s: サーバに再接続中..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: サーバから切断"
 
+#, fuzzy, c-format
+msgid "%s%s: exception: %s"
+msgstr "%s%s[%s%s%s]%s 除外 %s%s を設定しました"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: 関数 \"%s\" を実行できません"
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: スクリプト \"%s\" が見つかりません"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: 新しい sub-interpreter を作成できません"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: ファイル \"%s\" をロードできません"
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: ファイル \"%s\" を実行できません"
+
 msgid "Log buffers to files"
 msgstr "ファイルにバッファログを保存"
 
@@ -9065,28 +9089,8 @@ msgid "Support of lua scripts"
 msgstr "lua スクリプトサポート"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: 関数 \"%s\" を実行できません"
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: スクリプト \"%s\" が見つかりません"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: 新しい sub-interpreter を作成できません"
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: 標準出力と標準エラーをリダイレクトできません"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: ファイル \"%s\" をロードできません"
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: ファイル \"%s\" を実行できません"
 
 msgid "Support of perl scripts"
 msgstr "perl スクリプトサポート"
@@ -11008,8 +11012,8 @@ msgid ""
 "Examples (you can also look at default triggers with /trigger listdefault):\n"
 "  add text attributes *bold*, _underline_ and /italic/ (only in user "
 "messages):\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
-"(\\S+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_(\\S+)_==_${color:"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
+"\\*(\\S+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_(\\S+)_==_${color:"
 "underline}${re:1}${color:-underline}_== ==/(\\S+)/==/${color:"
 "italic}${re:1}${color:-italic}/\"\n"
 "  hide nicklist bar on small terminals:\n"
@@ -11085,8 +11089,8 @@ msgstr ""
 "\n"
 "例 (/trigger listdefault でデフォルトトリガを見ることができます):\n"
 "  テキスト属性 *太字*、_下線_、/イタリック/ を追加 (ユーザメッセージのみ):\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
-"(\\S+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_(\\S+)_==_${color:"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
+"\\*(\\S+)\\*==*${color:bold}${re:1}${color:-bold}*== ==_(\\S+)_==_${color:"
 "underline}${re:1}${color:-underline}_== ==/(\\S+)/==/${color:"
 "italic}${re:1}${color:-italic}/\"\n"
 "  狭い端末ではニックネームリストバーを隠す:\n"

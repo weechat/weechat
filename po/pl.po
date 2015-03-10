@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-02-15 15:37+0100\n"
-"PO-Revision-Date: 2015-02-15 15:42+0100\n"
+"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -9033,6 +9033,30 @@ msgstr "%s%s: ponownie łączę się z serwerem..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: rozłączono z serwerem"
 
+#, fuzzy, c-format
+msgid "%s%s: exception: %s"
+msgstr "%s%s[%s%s%s]%s wyjątek %s%s"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: nie można wykonać funkcji \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: nie znaleziono skryptu \"%s\""
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: nie można stworzyć nowego pod-interpretatora"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: nie można wczytać pliku \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: nie można wykonać pliku \"%s\""
+
 msgid "Log buffers to files"
 msgstr "Zapisuj bufory do plików"
 
@@ -9248,28 +9272,8 @@ msgid "Support of lua scripts"
 msgstr "Wsparcie dla skryptów lua"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: nie można wykonać funkcji \"%s\""
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: nie znaleziono skryptu \"%s\""
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: nie można stworzyć nowego pod-interpretatora"
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: nie można przekierować standardowego wyjścia i wyjścia błędu"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: nie można wczytać pliku \"%s\""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: nie można wykonać pliku \"%s\""
 
 msgid "Support of perl scripts"
 msgstr "Wsparcie dla skryptów perla"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-02-15 15:37+0100\n"
+"POT-Creation-Date: 2015-03-10 21:33+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6903,6 +6903,30 @@ msgstr ""
 msgid "%s%s: disconnected from server"
 msgstr ""
 
+#, c-format
+msgid "%s%s: exception: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr ""
+
 msgid "Log buffers to files"
 msgstr ""
 
@@ -7063,27 +7087,7 @@ msgid "Support of lua scripts"
 msgstr ""
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr ""
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
 msgstr ""
 
 msgid "Support of perl scripts"

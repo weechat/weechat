@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-02-15 15:37+0100\n"
-"PO-Revision-Date: 2015-02-15 20:04+0100\n"
+"POT-Creation-Date: 2015-03-10 21:33+0100\n"
+"PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de_DE\n"
@@ -9448,6 +9448,30 @@ msgstr "%s%s: Neu verbinden zum Server..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: Vom Server getrennt!"
 
+#, fuzzy, c-format
+msgid "%s%s: exception: %s"
+msgstr "%s%s[%s%s%s]%s Ausnahmefehler %s%s"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: Kann die Funktion \"%s\" nicht ausführen"
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: Skript \"%s\" wurde nicht gefunden"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: Kann sub-Interpreter nicht erstellen"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: Kann die Datei \"%s\" nicht laden"
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
+
 msgid "Log buffers to files"
 msgstr "sichert Buffer in eine Datei"
 
@@ -9674,28 +9698,8 @@ msgid "Support of lua scripts"
 msgstr "Unterstützung von Lua-Skripten"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: Kann die Funktion \"%s\" nicht ausführen"
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: Skript \"%s\" wurde nicht gefunden"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: Kann sub-Interpreter nicht erstellen"
-
-#, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: Weiterleitung von stdout und stderr nicht möglich"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: Kann die Datei \"%s\" nicht laden"
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
 
 msgid "Support of perl scripts"
 msgstr "Unterstützung von Perl-Skripten"
