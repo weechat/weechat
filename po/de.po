@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-03-10 21:43+0100\n"
-"PO-Revision-Date: 2015-03-10 21:33+0100\n"
+"PO-Revision-Date: 2015-03-12 18:23+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de_DE\n"
@@ -9448,9 +9448,9 @@ msgstr "%s%s: Neu verbinden zum Server..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: Vom Server getrennt!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: exception: %s"
-msgstr "%s%s[%s%s%s]%s Ausnahmefehler %s%s"
+msgstr "%s%s: Ausnahmefehler: %s"
 
 #, c-format
 msgid "%s%s: unable to run function \"%s\""
@@ -11353,6 +11353,8 @@ msgid ""
 "URL for file with list of scripts; by default HTTPS is forced, see option "
 "script.scripts.url_force_https"
 msgstr ""
+"URL mit dem Dateinamen, welches die Liste der Skripten enthält; "
+"standardmäßig wird HTTPS genutzt, siehe Option script.scripts.url_force_https"
 
 msgid ""
 "force use of HTTPS for downloads (index and scripts); you should disable "
