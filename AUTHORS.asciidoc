@@ -30,6 +30,7 @@ Alphabetically:
 * David Flatz
 * Dmitry Kobylin
 * Dominik Honnef
+* Eduardo Elias
 * Elián Hanisch (m4v)
 * Elizabeth Myers (Elizacat)
 * Emanuele Giaquinta
