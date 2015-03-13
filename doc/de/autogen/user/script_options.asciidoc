@@ -193,7 +193,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** Beschreibung: `URL for file with list of scripts; by default HTTPS is forced, see option script.scripts.url_force_https`
+** Beschreibung: `URL mit dem Dateinamen, welches die Liste der Skripten enthält; standardmäßig wird HTTPS genutzt, siehe Option script.scripts.url_force_https`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"http://weechat.org/files/plugins.xml.gz"`)
 
