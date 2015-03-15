@@ -89,19 +89,19 @@ weechat_js_hashtable_map_cb (void *data,
     /* make C++ compiler happy */
     (void) hashtable;
 
-    Handle<Object> *obj = (Handle<Object> *)data;
+    v8::Handle<v8::Object> *obj = (v8::Handle<v8::Object> *)data;
 
-    (*obj)->Set(String::New(key), String::New(value));
+    (*obj)->Set(v8::String::New(key), v8::String::New(value));
 }
 
 /*
  * Converts a WeeChat hashtable to a javascript hashtable.
  */
 
-Handle<Object>
+v8::Handle<v8::Object>
 weechat_js_hashtable_to_object (struct t_hashtable *hashtable)
 {
-    Handle<Object> obj = Object::New();
+    v8::Handle<v8::Object> obj = v8::Object::New();
 
     weechat_hashtable_map_string (hashtable,
                                   &weechat_js_hashtable_map_cb,
@@ -116,15 +116,15 @@ weechat_js_hashtable_to_object (struct t_hashtable *hashtable)
  */
 
 struct t_hashtable *
-weechat_js_object_to_hashtable (Handle<Object> obj,
+weechat_js_object_to_hashtable (v8::Handle<v8::Object> obj,
                                 int size,
                                 const char *type_keys,
                                 const char *type_values)
 {
     struct t_hashtable *hashtable;
     unsigned int i;
-    Handle<Array> keys;
-    Handle<Value> key, value;
+    v8::Handle<v8::Array> keys;
+    v8::Handle<v8::Value> key, value;
 
     hashtable = weechat_hashtable_new (size, type_keys, type_values,
                                        NULL, NULL);
@@ -137,8 +137,8 @@ weechat_js_object_to_hashtable (Handle<Object> obj,
     {
         key = keys->Get(i);
         value = obj->Get(key);
-        String::Utf8Value str_key(key);
-        String::Utf8Value str_value(value);
+        v8::String::Utf8Value str_key(key);
+        v8::String::Utf8Value str_value(value);
         if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
         {
             weechat_hashtable_set (hashtable, *str_key, *str_value);
@@ -167,7 +167,7 @@ weechat_js_exec (struct t_plugin_script *script,
     struct t_plugin_script *old_js_current_script;
     WeechatJsV8 *js_v8;
     void *ret_value;
-    Handle<Value> argv2[16], ret_js;
+    v8::Handle<v8::Value> argv2[16], ret_js;
     int i, argc, *ret_int;
 
     ret_value = NULL;
@@ -214,7 +214,7 @@ weechat_js_exec (struct t_plugin_script *script,
     {
         if ((ret_type == WEECHAT_SCRIPT_EXEC_STRING) && (ret_js->IsString()))
         {
-            String::Utf8Value temp_str(ret_js);
+            v8::String::Utf8Value temp_str(ret_js);
             ret_value = *temp_str;
         }
         else if ((ret_type == WEECHAT_SCRIPT_EXEC_INT) && (ret_js->IsInt32()))
@@ -704,7 +704,8 @@ weechat_js_signal_debug_libs_cb (void *data, const char *signal,
     (void) type_data;
     (void) signal_data;
 
-    weechat_printf (NULL, "  %s (v8): %s", JS_PLUGIN_NAME, V8::GetVersion());
+    weechat_printf (NULL, "  %s (v8): %s",
+                    JS_PLUGIN_NAME, v8::V8::GetVersion());
 
     return WEECHAT_RC_OK;
 }

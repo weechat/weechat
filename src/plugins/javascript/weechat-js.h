@@ -38,8 +38,6 @@
 
 #define JS_CURRENT_SCRIPT_NAME ((js_current_script) ? js_current_script->name : "-")
 
-using namespace v8;
-
 class WeechatJsV8;
 
 extern struct t_weechat_plugin *weechat_js_plugin;
@@ -52,8 +50,8 @@ extern struct t_plugin_script *js_registered_script;
 extern const char *js_current_script_filename;
 extern WeechatJsV8 *js_current_interpreter;
 
-extern Handle<Object> weechat_js_hashtable_to_object (struct t_hashtable *hashtable);
-extern struct t_hashtable *weechat_js_object_to_hashtable (Handle<Object> obj,
+extern v8::Handle<v8::Object> weechat_js_hashtable_to_object (struct t_hashtable *hashtable);
+extern struct t_hashtable *weechat_js_object_to_hashtable (v8::Handle<v8::Object> obj,
                                                            int size,
                                                            const char *type_keys,
                                                            const char *type_values);

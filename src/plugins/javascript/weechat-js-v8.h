@@ -46,7 +46,7 @@ public:
 private:
     v8::HandleScope handle_scope;
     v8::Handle<v8::ObjectTemplate> global;
-    v8::Persistent<Context> context;
+    v8::Persistent<v8::Context> context;
 
     v8::Handle<v8::String> source;
 };
