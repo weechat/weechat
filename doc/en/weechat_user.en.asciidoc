@@ -86,75 +86,75 @@ On OS X, you can use http://brew.sh/[Homebrew]:
 Following table shows list of packages that are required or optional to
 compile WeeChat.
 
-[width="100%",cols="5,^3,^3,.^13",options="header"]
+[width="100%",cols="5,^3,^3,^3,.^13",options="header"]
 |===
-| Package ^(1)^ | Version | Required | Feature
+| Package ^(1)^ | Min version | Max version | Required | Feature
 
-| cmake | | *yes* |
+| cmake | | | *yes* |
   Build (autotools still possible, but cmake is recommended)
 
-| pkg-config | | *yes* |
+| pkg-config | | | *yes* |
   Detect installed libraries
 
-| libncursesw5-dev ^(2)^ | | *yes* |
+| libncursesw5-dev ^(2)^ | | | *yes* |
   Ncurses interface
 
-| libcurl4-gnutls-dev | | *yes* |
+| libcurl4-gnutls-dev | | | *yes* |
   URL transfer
 
-| zlib1g-dev | | *yes* |
+| zlib1g-dev | | | *yes* |
   Compression of packets in relay plugin (weechat protocol), script plugin
 
-| libgcrypt20-dev | | *yes* |
+| libgcrypt20-dev | | | *yes* |
   Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
 
-| libgnutls28-dev | ≥ 2.2.0 ^(3)^ | |
+| libgnutls28-dev | 2.2.0 ^(3)^ | | |
   SSL connection to IRC server, support of SSL in relay plugin,
   IRC SASL authentication (ECDSA-NIST256P-CHALLENGE)
 
-| gettext | | |
+| gettext | | | |
   Internationalization (translation of messages; base language is English)
 
-| ca-certificates | | |
+| ca-certificates | | | |
   Certificates for SSL connections
 
-| libaspell-dev or libenchant-dev | | |
+| libaspell-dev or libenchant-dev | | | |
   Aspell plugin
 
-| python-dev | ≥ 2.5 ^(4)^ | |
+| python-dev | 2.5 ^(4)^ | | |
   Python plugin
 
-| libperl-dev | | |
+| libperl-dev | | | |
   Perl plugin
 
-| ruby2.1-dev | ≥ 1.8 | |
+| ruby2.1-dev | 1.8 | | |
   Ruby plugin
 
-| liblua5.2-dev | | |
+| liblua5.2-dev | | | |
   Lua plugin
 
-| tcl-dev | ≥ 8.5 | |
+| tcl-dev | 8.5 | | |
   Tcl plugin
 
-| guile-2.0-dev | ≥ 2.0 | |
+| guile-2.0-dev | 2.0 | | |
   Guile (scheme) plugin
 
-| libv8-dev | | |
+| libv8-dev | | 3.24.3 | |
   Javascript plugin
 
-| asciidoc | ≥ 8.5.0 | |
+| asciidoc | 8.5.0 | | |
   Build man page and documentation
 
-| source-highlight | | |
+| source-highlight | | | |
   Syntax highlight for sources in documentation
 
-| xsltproc, docbook-xml, docbook-xsl | | |
+| xsltproc, docbook-xml, docbook-xsl | | | |
   Build of man page
 
-| libcpputest-dev | ≥ 3.4 | |
+| libcpputest-dev | 3.4 | | |
   Run tests
 
-| C++ compiler | | |
+| C++ compiler | | | |
   Run tests, javascript plugin
 |===
 

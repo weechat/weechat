@@ -92,76 +92,77 @@ Na OS X możesz użyć http://brew.sh/[Homebrew]:
 Poniższa tabela przedstawia pakiety wymagane i opcjonalne do skompilowania
 WeeChat.
 
-[width="100%",cols="5,^3,^3,.^13",options="header"]
+// TRANSLATION MISSING
+[width="100%",cols="5,^3,^3,^3,.^13",options="header"]
 |===
-| Pakiet ^(1)^ | Wersja | Wymagany | Opis
+| Pakiet ^(1)^ | Min version | Max version | Wymagany | Opis
 
-| cmake | | *tak* |
+| cmake | | | *tak* |
   Kompilacja (możliwe jest użycie autotools, jednak cmake jest zalecany)
 
-| pkg-config | | *tak* |
+| pkg-config | | | *tak* |
   Wykrywa zainstalowane biblioteki
 
-| libncursesw5-dev ^(2)^ | | *tak* |
+| libncursesw5-dev ^(2)^ | | | *tak* |
   Interfejs ncurses
 
-| libcurl4-gnutls-dev | | *tak* |
+| libcurl4-gnutls-dev | | | *tak* |
   Transfer URL
 
-| zlib1g-dev | | *tak* |
+| zlib1g-dev | | | *tak* |
   Kompresja pakietów we wtyczce relay (protokół weechat), wtyczka script
 
-| libgcrypt20-dev | | *tak* |
+| libgcrypt20-dev | | | *tak* |
   Zabezpieczone dane, uwierzytelnianie IRC SASL (DH-BLOWFISH/DH-AES), wtyczka
   script
 
-| libgnutls28-dev | ≥ 2.2.0 ^(3)^ | |
+| libgnutls28-dev | 2.2.0 ^(3)^ | | |
   Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay,
   uwierzytelnianie IRC SASL (ECDSA-NIST256P-CHALLENGE)
 
-| gettext | | |
+| gettext | | | |
   Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski)
 
-| ca-certificates | | |
+| ca-certificates | | | |
   Certyfikaty dla połączeń SSL
 
-| libaspell-dev or libenchant-dev | | |
+| libaspell-dev or libenchant-dev | | | |
   Wtyczka aspell
 
-| python-dev | ≥ 2.5 ^(4)^ | |
+| python-dev | 2.5 ^(4)^ | | |
   Wtyczka python
 
-| libperl-dev | | |
+| libperl-dev | | | |
   Wtyczka perl
 
-| ruby2.1-dev | ≥ 1.8 | |
+| ruby2.1-dev | 1.8 | | |
   Wtyczka ruby
 
-| liblua5.2-dev | | |
+| liblua5.2-dev | | | |
   Wtyczka lua
 
-| tcl-dev | ≥ 8.5 | |
+| tcl-dev | 8.5 | | |
   Wtyczka tcl
 
-| guile-2.0-dev | ≥ 2.0 | |
+| guile-2.0-dev | 2.0 | | |
   Wtyczka guile (scheme)
 
-| libv8-dev | | |
+| libv8-dev | | 3.24.3 | |
   Wtyczka javascript
 
-| asciidoc | ≥ 8.5.0 | |
+| asciidoc | 8.5.0 | | |
   Tworzenie strony man i dokumentacji
 
-| source-highlight | | |
+| source-highlight | | | |
   Podświetlanie składni dla kodów źródłowych w dokumentacji
 
-| xsltproc, docbook-xml, docbook-xsl | | |
+| xsltproc, docbook-xml, docbook-xsl | | | |
   Tworzenie strony man
 
-| libcpputest-dev | ≥ 3.4 | |
+| libcpputest-dev | 3.4 | | |
   Uruchamianie testów
 
-| C++ compiler | | |
+| C++ compiler | | | |
   Uruchamianie testów, wtyczka javascript
 |===
 

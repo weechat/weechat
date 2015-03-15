@@ -88,78 +88,78 @@ Sous OS X, vous pouvez utiliser http://brew.sh/[Homebrew] :
 Le tableau suivant liste les paquets qui sont requis ou optionnels pour
 compiler WeeChat.
 
-[width="100%",cols="5,^3,^3,.^13",options="header"]
+[width="100%",cols="5,^3,^3,^3,.^13",options="header"]
 |===
-| Paquet ^(1)^ | Version | Requis | Fonctionnalité
+| Paquet ^(1)^ | Version min | Version max | Requis | Fonctionnalité
 
-| cmake | | *oui* |
+| cmake | | | *oui* |
   Construction (autotools toujours possible, mais cmake est recommandé)
 
-| pkg-config | | *oui* |
+| pkg-config | | | *oui* |
   Détection des bibliothèques installées
 
-| libncursesw5-dev ^(2)^ | | *oui* |
+| libncursesw5-dev ^(2)^ | | | *oui* |
   Interface ncurses
 
-| libcurl4-gnutls-dev | | *oui* |
+| libcurl4-gnutls-dev | | | *oui* |
   Transfert d'URL
 
-| zlib1g-dev | | *oui* |
+| zlib1g-dev | | | *oui* |
   Compression des paquets dans l'extension relay (protocole weechat),
   extension script
 
-| libgcrypt20-dev | | *oui* |
+| libgcrypt20-dev | | | *oui* |
   Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES),
   extension script
 
-| libgnutls28-dev | ≥ 2.2.0 ^(3)^ | |
+| libgnutls28-dev | 2.2.0 ^(3)^ | | |
   Connexion SSL au serveur IRC, support SSL dans l'extension relay,
   authentification IRC SASL (ECDSA-NIST256P-CHALLENGE)
 
-| gettext | | |
+| gettext | | | |
   Internationalisation (traduction des messages; la langue de base est
   l'anglais)
 
-| ca-certificates | | |
+| ca-certificates | | | |
   Certificats pour les connexions SSL
 
-| libaspell-dev ou libenchant-dev | | |
+| libaspell-dev ou libenchant-dev | | | |
   Extension aspell
 
-| python-dev | ≥ 2.5 ^(4)^ | |
+| python-dev | 2.5 ^(4)^ | | |
   Extension python
 
-| libperl-dev | | |
+| libperl-dev | | | |
   Extension perl
 
-| ruby2.1-dev | ≥ 1.8 | |
+| ruby2.1-dev | 1.8 | | |
   Extension ruby
 
-| liblua5.2-dev | | |
+| liblua5.2-dev | | | |
   Extension lua
 
-| tcl-dev | ≥ 8.5 | |
+| tcl-dev | 8.5 | | |
   Extension tcl
 
-| guile-2.0-dev | ≥ 2.0 | |
+| guile-2.0-dev | 2.0 | | |
   Extension guile (scheme)
 
-| libv8-dev | | |
+| libv8-dev | | 3.24.3 | |
   Extension javascript
 
-| asciidoc | ≥ 8.5.0 | |
+| asciidoc | 8.5.0 | | |
   Construction de la page man et de la documentation
 
-| source-highlight | | |
+| source-highlight | | | |
   Coloration des sources dans la documentation
 
-| xsltproc, docbook-xml, docbook-xsl | | |
+| xsltproc, docbook-xml, docbook-xsl | | | |
   Construction de la page de manuel
 
-| libcpputest-dev | ≥ 3.4 | |
+| libcpputest-dev | 3.4 | | |
   Lancement des tests
 
-| C++ compiler | | |
+| C++ compiler | | | |
   Lancement des tests, extension javascript
 |===
 
