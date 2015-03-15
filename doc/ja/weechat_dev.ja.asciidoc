@@ -224,8 +224,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    javascript/                    | javascript プラグイン
 |       weechat-js.cpp              | javascript の主要関数 (スクリプトのロード/アンロード、javascript コードの実行)
 |       weechat-js-api.cpp          | javascript スクリプト作成 API 関数
-// TRANSLATION MISSING
-|       weechat-js-v8.cpp           | javascript v8 functions
+|       weechat-js-v8.cpp           | javascript v8 関数
 |    logger/                        | logger プラグイン
 |       logger.c                    | logger の主要関数
 |       logger-buffer.c             | logger バッファリスト管理
