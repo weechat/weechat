@@ -91,10 +91,9 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 以下の表は WeeChat
 のコンパイルに必須または任意で必要なパッケージのリストです。
 
-// TRANSLATION MISSING
 [width="100%",cols="5,^3,^3,3^,.^13",options="header"]
 |===
-| パッケージ ^(1)^ | Min version | Max version | 要件 | 機能
+| パッケージ ^(1)^ | 最小バージョン | 最大バージョン | 要件 | 機能
 
 | cmake | | | *必須* |
   ビルド (autotools でも可能ですが、cmake を推奨します)
@@ -159,9 +158,8 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 | libcpputest-dev | 3.4 | | |
   テストの実行
 
-// TRANSLATION MISSING
 | C++ コンパイラ | | | |
-  Run tests, javascript plugin
+  テスト実行、javascript プラグイン
 |===
 
 [NOTE]
