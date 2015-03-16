@@ -193,7 +193,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** 説明: `URL for file with list of scripts; by default HTTPS is forced, see option script.scripts.url_force_https`
+** 説明: `スクリプトのリストを含むファイルの URL; デフォルトは強制的に HTTPS を使用、オプション script.scripts.url_force_https を参照`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"http://weechat.org/files/plugins.xml.gz"`)
 
