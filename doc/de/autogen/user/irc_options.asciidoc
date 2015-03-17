@@ -368,7 +368,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
-** Beschreibung: `bezieht einen alternativen Nick, sofern alle voreingestellten Nicks am Server schon genutzt werden. Dazu wird das Zeichen "_" an den Nick an gehangen, sofern der Nick nicht mehr als neun Zeichen besitzt. Andernfalls wird das letzte bzw. vorletzte Zeichen durch eine Zahl zwischen 1 und 99 ersetzt, bis ein freier Nick für den Server gefunden wird`
+** Beschreibung: `bezieht einen alternativen Nick, sofern alle voreingestellten Nicks am Server schon genutzt werden. Dazu wird das Zeichen "_" an den Nick angehängt, sofern der Nick nicht mehr als neun Zeichen besitzt. Andernfalls wird das letzte bzw. vorletzte Zeichen durch eine Zahl zwischen 1 und 99 ersetzt, bis ein freier Nick für den Server gefunden wird`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

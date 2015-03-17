@@ -448,7 +448,7 @@
 ** Werte: none, highlight, message, all (Standardwert: `all`)
 
 * [[option_weechat.look.buffer_position]] *weechat.look.buffer_position*
-** Beschreibung: `Position auf der ein neuer Buffer geöffnet werden soll: end = am Ende der Liste (Nummer = letzter Buffer + 1) (Standard), first_gap = erste mögliche Nummer die frei ist (wird das Ende der Liste erreicht, wird der Buffer hinten an gehangen); diese Einstellung wird nur angewendet sofern dem Buffer keine Position, durch Layout, zugeordnet wurde`
+** Beschreibung: `Position auf der ein neuer Buffer geöffnet werden soll: end = am Ende der Liste (Nummer = letzter Buffer + 1) (Standard), first_gap = erste mögliche Nummer die frei ist (wird das Ende der Liste erreicht, wird der Buffer hinten angehängt); diese Einstellung wird nur angewendet sofern dem Buffer keine Position, durch Layout, zugeordnet wurde`
 ** Typ: integer
 ** Werte: end, first_gap (Standardwert: `end`)
 
@@ -558,7 +558,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"-- %%a, %%d %%b %%Y (%a, %d %b %Y) --"`)
 
 * [[option_weechat.look.eat_newline_glitch]] *weechat.look.eat_newline_glitch*
-** Beschreibung: `aktiviert man diese Einstellung, dann wird "eat_newline_glitch" auf 0 gesetzt; dies bedeutet, dass am Ende einer Zeile kein Zeilenumbruch an gehangen wird und somit der Text beim kopieren aus WeeChat und beim einfügen in einer anderen Applikation nicht umgebrochen wird (diese Einstellung ist standardmäßig deaktiviert, da es zu schwerwiegenden Grafikfehlern kommen kann)`
+** Beschreibung: `aktiviert man diese Einstellung, dann wird "eat_newline_glitch" auf 0 gesetzt; dies bedeutet, dass am Ende einer Zeile kein Zeilenumbruch angehängt wird und somit der Text beim kopieren aus WeeChat und beim einfügen in einer anderen Applikation nicht umgebrochen wird (diese Einstellung ist standardmäßig deaktiviert, da es zu schwerwiegenden Grafikfehlern kommen kann)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
