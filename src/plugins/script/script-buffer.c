@@ -977,7 +977,8 @@ script_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
         /* refresh buffer */
         if (strcmp (input_data, "$") == 0)
         {
-            script_get_loaded_plugins_and_scripts ();
+            script_get_loaded_plugins ();
+            script_get_scripts ();
             script_repo_remove_all ();
             script_repo_file_read (1);
             script_buffer_refresh (1);

@@ -1147,6 +1147,8 @@ script_action_run ()
     if (!script_actions)
         return 0;
 
+    script_get_loaded_plugins ();
+
     actions = weechat_string_split (script_actions, "\n", 0, 0, &num_actions);
     if (actions)
     {

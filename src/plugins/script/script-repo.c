@@ -1113,7 +1113,8 @@ script_repo_file_read (int quiet)
     struct tm tm_script;
     struct t_hashtable *descriptions;
 
-    script_get_loaded_plugins_and_scripts ();
+    script_get_loaded_plugins ();
+    script_get_scripts ();
 
     script_repo_remove_all ();
 

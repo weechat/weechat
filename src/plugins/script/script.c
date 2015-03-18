@@ -134,19 +134,16 @@ script_build_download_url (const char *url)
 }
 
 /*
- * Gets loaded plugins (in array of integers) and scripts (in hashtable).
+ * Gets loaded plugins (in array of integers).
  */
 
 void
-script_get_loaded_plugins_and_scripts ()
+script_get_loaded_plugins ()
 {
     int i, language;
-    char hdata_name[128], *filename, *ptr_base_name;
-    const char *ptr_filename;
     struct t_hdata *hdata;
-    void *ptr_plugin, *ptr_script;
+    void *ptr_plugin;
 
-    /* get loaded plugins */
     for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
     {
         script_plugin_loaded[i] = 0;
@@ -162,8 +159,21 @@ script_get_loaded_plugins_and_scripts ()
             script_plugin_loaded[language] = 1;
         ptr_plugin = weechat_hdata_move (hdata, ptr_plugin, 1);
     }
+}
 
-    /* get loaded scripts */
+/*
+ * Gets scripts (in hashtable).
+ */
+
+void
+script_get_scripts ()
+{
+    int i;
+    char hdata_name[128], *filename, *ptr_base_name;
+    const char *ptr_filename;
+    struct t_hdata *hdata;
+    void *ptr_script;
+
     if (!script_loaded)
     {
         script_loaded = weechat_hashtable_new (32,
@@ -242,7 +252,8 @@ script_timer_refresh_cb (void *data, int remaining_calls)
     /* make C compiler happy */
     (void) data;
 
-    script_get_loaded_plugins_and_scripts ();
+    script_get_loaded_plugins ();
+    script_get_scripts ();
     script_repo_update_status_all ();
     script_buffer_refresh (0);
 

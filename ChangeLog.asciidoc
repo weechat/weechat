@@ -62,6 +62,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * ruby: fix value returned in case of error in functions:
   config_option_reset, config_color, config_color_default, config_write,
   config_read, config_reload, buffer_string_replace_local_var, command
+* script: fix state of script plugins when list of scripts has not been
+  downloaded
 * scripts: reset current script pointer when load of script fails in
   python/perl/ruby/lua/tcl plugins
 * scripts: fix return code of function bar_set in
