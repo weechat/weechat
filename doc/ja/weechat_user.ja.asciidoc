@@ -433,10 +433,6 @@ WeeChat がインストールされているディレクトリでは*ありま�
 gdb /usr/bin/weechat /home/xxx/core
 ----
 
-[NOTE]
-バイナリパッケージ 'weechat-dbg' をインストールした場合 (例えば Debian で)、WeeChat
-バイナリへのパスは '/usr/lib/debug/usr/bin/weechat' のようになります。
-
 gdb の中で `bt full` コマンドを実行するとバックトレースが表示されます。
 以下のような出力が得られるはずです:
 

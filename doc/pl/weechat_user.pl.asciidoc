@@ -441,11 +441,6 @@ znajduje się w '/home/xxx/', uruchom gdb za pomocą tej komendy:
 gdb /usr/bin/weechat /home/xxx/core
 ----
 
-[NOTE]
-Jeśli zainstalowałeś pakiet binarny 'weechat-dbg' (na przykład pod Debianem),
-wtedy możesz użyć tej ścieżki dla pliku binarnego WeeChat:
-'/usr/lib/debug/usr/bin/weechat'
-
 Następnie pod gdb użyj komendy `bt full`, aby wyświetlić log.
 Zobaczysz coś podobnego do tego:
 

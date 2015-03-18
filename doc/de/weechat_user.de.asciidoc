@@ -441,10 +441,6 @@ in '/home/xxx/'. Nun wird gdb mit folgendem Befehl aufgerufen:
 gdb /usr/bin/weechat /home/xxx/core
 ----
 
-[NOTE]
-Ist das Binärpaket 'weechat-dbg' (z.B. Debian) installiert dann sollte dieser Pfad zum
-starten von WeeChat genutzt werden: '/usr/lib/debug/usr/bin/weechat'
-
 Nun startet man 'gdb' und führt den Befehl `bt full` innerhalb gdb aus um die Fehlermeldung
 auszugeben. Eine Fehlermeldung von gdb sieht z.B. wie folgt aus:
 

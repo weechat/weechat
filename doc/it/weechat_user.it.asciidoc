@@ -463,11 +463,6 @@ si trova in '/home/xxx/', allora eseguire gdb con questo comando:
 gdb /usr/bin/weechat /home/xxx/core
 ----
 
-[NOTE]
-Se è stato installato il pacchetto binario 'weechat-dbg' (ad esempio in Debian), è
-possibile usare questo path per il binario di WeeChat:
-'/usr/lib/debug/usr/bin/weechat'
-
 All'interno di gdb, usare il comando `bt full` per visualizzare
 il backtrace. Verrà mostrato qualcosa di simile a questo:
 
