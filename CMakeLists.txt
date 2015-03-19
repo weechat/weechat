@@ -46,6 +46,14 @@ endif()
 # license
 set(LICENSE "GPL3")
 
+# add definitions for version and license
+if(COMMAND cmake_policy)
+  cmake_policy(SET CMP0005 NEW)
+  add_definitions(-DWEECHAT_VERSION="${VERSION}" -DWEECHAT_LICENSE="${LICENSE}")
+else()
+  add_definitions(-DWEECHAT_VERSION='"${VERSION}"' -DWEECHAT_LICENSE='"${LICENSE}"')
+endif()
+
 # package string
 set(PKG_STRING "${PROJECT_NAME} ${VERSION}")
 string(REPLACE "\";\"" "\ " PKG_STRING ${PKG_STRING})

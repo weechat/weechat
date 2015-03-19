@@ -19,13 +19,6 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-if(COMMAND cmake_policy)
-  cmake_policy(SET CMP0005 NEW)
-  add_definitions(-DWEECHAT_VERSION="${VERSION}" -DWEECHAT_LICENSE="${LICENSE}")
-else()
-  add_definitions(-DWEECHAT_VERSION='"${VERSION}"' -DWEECHAT_LICENSE='"${LICENSE}"')
-endif()
-
 add_subdirectory(core)
 list(APPEND STATIC_LIBS weechat_core)
 
