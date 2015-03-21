@@ -575,7 +575,7 @@ Examples:
 /plugin  list|listfull [<nome>]
          load <nome_file> [<argomenti>]
          autoload [<argomenti>]
-         reload [<nome> [<argomenti>]]
+         reload [<nome>|* [<argomenti>]]
          unload [<nome>]
 
      list: elenca i plugin caricati

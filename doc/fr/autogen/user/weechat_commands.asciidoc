@@ -575,7 +575,7 @@ Exemples :
 /plugin  list|listfull [<nom>]
          load <fichier> [<paramètres>]
          autoload [<paramètres>]
-         reload [<nom> [<paramètres]]
+         reload [<nom>|* [<paramètres]]
          unload [<nom>]
 
       list : lister les extensions chargées

@@ -575,7 +575,7 @@ Beispiele:
 /plugin  list|listfull [<name>]
          load <filename> [<arguments>]
          autoload [<arguments>]
-         reload [<name> [<arguments>]]
+         reload [<name>|* [<arguments>]]
          unload [<name>]
 
      list: installierte Erweiterungen werden aufgelistet

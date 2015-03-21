@@ -4440,7 +4440,15 @@ COMMAND_CALLBACK(plugin)
             {
                 plugin_argv = string_split (argv_eol[3], " ", 0, 0,
                                             &plugin_argc);
-                plugin_reload_name (argv[2], plugin_argc, plugin_argv);
+                if (strcmp (argv[2], "*") == 0)
+                {
+                    plugin_unload_all ();
+                    plugin_auto_load (plugin_argc, plugin_argv);
+                }
+                else
+                {
+                    plugin_reload_name (argv[2], plugin_argc, plugin_argv);
+                }
                 if (plugin_argv)
                     string_free_split (plugin_argv);
             }
@@ -7549,7 +7557,7 @@ command_init ()
         N_("list|listfull [<name>]"
            " || load <filename> [<arguments>]"
            " || autoload [<arguments>]"
-           " || reload [<name> [<arguments>]]"
+           " || reload [<name>|* [<arguments>]]"
            " || unload [<name>]"),
         N_("     list: list loaded plugins\n"
            " listfull: list loaded plugins (verbose)\n"
@@ -7567,7 +7575,7 @@ command_init ()
         " || listfull %(plugins_names)"
         " || load %(plugins_installed)"
         " || autoload"
-        " || reload %(plugins_names)"
+        " || reload %(plugins_names)|* -a|-s"
         " || unload %(plugins_names)",
         &command_plugin, NULL);
     hook_command (

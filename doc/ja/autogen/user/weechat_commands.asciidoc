@@ -575,7 +575,7 @@ disable: マウスの無効化
 /plugin  list|listfull [<name>]
          load <filename> [<arguments>]
          autoload [<arguments>]
-         reload [<name> [<arguments>]]
+         reload [<name>|* [<arguments>]]
          unload [<name>]
 
      list: ロードされたプラグインをリストアップ

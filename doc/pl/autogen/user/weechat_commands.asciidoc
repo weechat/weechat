@@ -575,7 +575,7 @@ Przykłady:
 /plugin  list|listfull [<nazwa>]
          load <nazwapliku> [<argumenty>]
          autoload [<argumenty>]
-         reload [<nazwa> [<argumenty>]]
+         reload [<nazwa>|* [<argumenty>]]
          unload [<nazwa>]
 
     list: lista załadowanych wtyczek

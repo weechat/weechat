@@ -19,6 +19,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: allow "*" as plugin name in command /plugin reload to reload all
+  plugins with options
 * core: add option "-s" in command /eval to split expression before evaluating
   it (no more split by default) (closes #324)
 * core: add priority in plugins to initialize them in order
