@@ -436,13 +436,13 @@ weechat_ruby_exec (struct t_plugin_script *script,
 static VALUE
 weechat_ruby_output (VALUE self, VALUE str)
 {
-    if (ruby_hide_errors)
-        return Qnil;
-
     char *msg, *p, *m;
 
     /* make C compiler happy */
     (void) self;
+
+    if (ruby_hide_errors)
+        return Qnil;
 
     msg = strdup(StringValuePtr(str));
 
@@ -1153,37 +1153,37 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     RUBY_INIT_STACK;
 #endif
 
-    ruby_hide_errors = 1;
     ruby_init ();
-    ruby_init_loadpath ();
-    ruby_script ("__weechat_plugin__");
-
-    ruby_mWeechat = rb_define_module("Weechat");
-    weechat_ruby_api_init (ruby_mWeechat);
 
     /* redirect stdin and stdout */
-    ruby_mWeechatOutputs = rb_define_module("WeechatOutputs");
-    rb_define_singleton_method(ruby_mWeechatOutputs, "write",
-                               weechat_ruby_output, 1);
-    rb_define_singleton_method(ruby_mWeechatOutputs, "puts",
-                               weechat_ruby_output, 1);
-    rb_define_singleton_method(ruby_mWeechatOutputs, "p",
-                               weechat_ruby_output, 1);
-    rb_define_singleton_method(ruby_mWeechatOutputs, "flush",
-                               weechat_ruby_output_flush, 0);
-    ruby_hide_errors = 0;
+    ruby_mWeechatOutputs = rb_define_module ("WeechatOutputs");
+    rb_define_singleton_method (ruby_mWeechatOutputs, "write",
+                                weechat_ruby_output, 1);
+    rb_define_singleton_method (ruby_mWeechatOutputs, "puts",
+                                weechat_ruby_output, 1);
+    rb_define_singleton_method (ruby_mWeechatOutputs, "p",
+                                weechat_ruby_output, 1);
+    rb_define_singleton_method (ruby_mWeechatOutputs, "flush",
+                                weechat_ruby_output_flush, 0);
 
-    rb_eval_string_protect(weechat_ruby_code, &ruby_error);
+    ruby_script ("__weechat_plugin__");
+
+    ruby_mWeechat = rb_define_module ("Weechat");
+    weechat_ruby_api_init (ruby_mWeechat);
+
+    rb_eval_string_protect (weechat_ruby_code, &ruby_error);
     if (ruby_error)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to eval WeeChat ruby "
                                          "internal code"),
                         weechat_prefix ("error"), RUBY_PLUGIN_NAME);
-        VALUE err = rb_gv_get("$!");
-        weechat_ruby_print_exception(err);
+        VALUE err = rb_gv_get ("$!");
+        weechat_ruby_print_exception (err);
         return WEECHAT_RC_ERROR;
     }
+
+    ruby_init_loadpath ();
 
     init.callback_command = &weechat_ruby_command_cb;
     init.callback_completion = &weechat_ruby_completion_cb;
@@ -1218,12 +1218,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     plugin_script_end (plugin, &ruby_scripts, &weechat_ruby_unload_all);
     ruby_quiet = 0;
 
-    /*
-     * Do not cleanup ruby because this causes a crash when plugin is reloaded
-     * again. This causes a memory leak, but I don't know better solution to
-     * this problem :(
-     */
-    /*ruby_cleanup (0);*/
+    ruby_cleanup (0);
 
     /* free some data */
     if (ruby_action_install_list)
