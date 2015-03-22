@@ -79,6 +79,7 @@ Alphabetically:
 * Ryuunosuke Ayanokouzi
 * Sergio Durigan Junior
 * Shawn Smith
+* Simmo Saan
 * Simon Arlott
 * Simon Kuhnle
 * Stefano Pigozzi
