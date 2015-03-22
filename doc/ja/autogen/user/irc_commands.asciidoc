@@ -704,7 +704,7 @@ nooption: ブールオプションを 'off' に設定 (例: -nossl)
   /server listfull
   /server add freenode chat.freenode.net
   /server add freenode chat.freenode.net/6697 -ssl -autoconnect
-  /server add freenode chat.eu.freenode.net/6667,chat.us.freenode.net/6667
+  /server add freenode adams.freenode.net/6667,barjavel.freenode.net/6667
   /server copy freenode freenode-test
   /server rename freenode-test freenode2
   /server reorder freenode2 freenode
