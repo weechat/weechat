@@ -63,7 +63,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "5000|input_text_display;5000|history_add;5000|irc_command_auth",
       "",
       "==^("
-      "(/(msg|quote) +nickserv "
+      "(/(msg|m|quote) +nickserv "
       "+(id|identify|register|ghost +[^ ]+|release +[^ ]+|regain +[^ ]+) +)|"
       "/oper +[^ ]+ +|"
       "/quote +pass +|"
