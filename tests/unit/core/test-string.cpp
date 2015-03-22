@@ -111,7 +111,7 @@ TEST(String, Duplicate)
     const char *str_test = "test";
     char *str;
 
-    str = string_strndup (NULL, 0);
+    POINTERS_EQUAL(NULL, string_strndup (NULL, 0));
 
     str = string_strndup (str_test, 0);
     CHECK(str);
