@@ -21,8 +21,8 @@ Alphabetically:
 * Anders Bergh
 * Andrew Potter (talisein)
 * Antoine Pietri (seirl)
-* Asakura
 * Arvydas Sidorenko
+* Asakura
 * Bazerka
 * Benoit Papillault (benoit)
 * Christian Heinz
@@ -31,8 +31,8 @@ Alphabetically:
 * Dmitry Kobylin
 * Dominik Honnef
 * Eduardo Elias
-* Elián Hanisch (m4v)
 * Elizabeth Myers (Elizacat)
+* Elián Hanisch (m4v)
 * Emanuele Giaquinta
 * Esteban I. Ruiz Moreno (Exio)
 * Felix Eckhofer
@@ -50,13 +50,13 @@ Alphabetically:
 * Koka El Kiwi (KiwiDash)
 * Krzysztof Koroscik (soltys)
 * Kyle Fuller (kylef)
-* Lázaro A.
 * Leonid Evdokimov
+* Lázaro A.
 * Maarten de Vries
-* Marco Paolone
-* Matt Robinson
 * Mantas Mikulėnas (grawity)
+* Marco Paolone
 * Mateusz Poszwa
+* Matt Robinson
 * Max Anton Teufel
 * Murilo Opsfelder Araujo
 * Nicolas Cavigneaux
