@@ -1,7 +1,7 @@
 /*
  * weechat-js.cpp - javascript plugin for WeeChat
  *
- * Copyright (C) 2013 Koka El Kiwi <admin@kokabsolu.com>
+ * Copyright (C) 2013 Koka El Kiwi <kokakiwi@kokakiwi.net>
  * Copyright (C) 2015 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -36,7 +36,7 @@ extern "C"
 
 WEECHAT_PLUGIN_NAME(JS_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Support of javascript scripts");
-WEECHAT_PLUGIN_AUTHOR("Koka El Kiwi <admin@kokabsolu.com>");
+WEECHAT_PLUGIN_AUTHOR("Koka El Kiwi <kokakiwi@kokakiwi.net>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 WEECHAT_PLUGIN_PRIORITY(3000);
