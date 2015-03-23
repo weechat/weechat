@@ -1,7 +1,7 @@
 /*
  * weechat-js-api.cpp - javascript API functions
  *
- * Copyright (C) 2013 Koka El Kiwi <admin@kokabsolu.com>
+ * Copyright (C) 2013 Koka El Kiwi <kokakiwi@kokakiwi.net>
  * Copyright (C) 2015 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
