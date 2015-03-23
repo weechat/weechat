@@ -704,7 +704,7 @@ Exemples :
   /server listfull
   /server add freenode chat.freenode.net
   /server add freenode chat.freenode.net/6697 -ssl -autoconnect
-  /server add freenode adams.freenode.net/6667,barjavel.freenode.net/6667
+  /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667
   /server copy freenode freenode-test
   /server rename freenode-test freenode2
   /server reorder freenode2 freenode
