@@ -7292,7 +7292,10 @@ command_init ()
            "  filter IRC join/action messages from nick \"toto\":\n"
            "    /filter add toto * nick_toto+irc_join,nick_toto+irc_action *\n"
            "  filter lines containing \"weechat sucks\" on IRC channel #weechat:\n"
-           "    /filter add sucks irc.freenode.#weechat * weechat sucks"),
+           "    /filter add sucks irc.freenode.#weechat * weechat sucks\n"
+           "  filter lines that are strictly equal to \"WeeChat sucks\" on "
+           "all buffers:\n"
+           "    /filter add sucks2 * * (?-i)^WeeChat sucks$"),
         "list"
         " || enable %(filters_names)|@"
         " || disable %(filters_names)|@"

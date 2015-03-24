@@ -359,6 +359,8 @@ Exemples :
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
   filtrer les lignes contenant "weechat sucks" sur le canal IRC #weechat :
     /filter add sucks irc.freenode.#weechat * weechat sucks
+  filtrer les lignes qui sont strictement égales à "WeeChat sucks" sur tous les tampons :
+    /filter add sucks2 * * (?-i)^WeeChat sucks$
 ----
 
 [[command_weechat_help]]
