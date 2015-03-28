@@ -825,7 +825,7 @@ Restituisce il numero di caratteri necessari per visualizzare la stringa
 UTF-8 su schermo.
 // TRANSLATION MISSING
 Non-printable chars have a width of 1 (this is the difference with the function
-<<_weechat_utf8_strlen_screen,weechat_utf8_strlen_screen>>).
+<<_utf8_strlen_screen,weechat_utf8_strlen_screen>>).
 
 Prototipo:
 
@@ -1185,7 +1185,7 @@ _WeeChat ≥ 0.3.7._
 // TRANSLATION MISSING
 Compile a POSIX extended regular expression using optional flags at beginning
 of string (for format of flags, see
-<<_weechat_string_regex_flags,weechat_string_regex_flags>>).
+<<_string_regex_flags,weechat_string_regex_flags>>).
 
 Prototipo:
 
@@ -1368,7 +1368,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'string': string
 * 'regex': pointer to a regular expression ('regex_t' structure) compiled with
-  WeeChat function <<_weechat_string_regcomp,weechat_string_regcomp>> or regcomp
+  WeeChat function <<_string_regcomp,weechat_string_regcomp>> or regcomp
   (see `man regcomp`)
 * 'replace': replacement text, where following references are allowed:
 ** `$0` to `$99`: match 0 to 99 in regular expression (0 is the whole match,
@@ -1441,7 +1441,7 @@ Argomenti:
 Valore restituito:
 
 * array di stringhe, NULL se si verifica un problema (deve essere liberata chiamando
-  <<_weechat_string_free_split,weechat_string_free_split>> dopo l'uso)
+  <<_string_free_split,weechat_string_free_split>> dopo l'uso)
 
 Esempi:
 
@@ -1497,7 +1497,7 @@ Argomenti:
 Valore restituito:
 
 * array di stringhe, NULL se si verifica un problema (deve essere liberata chiamando
-  <<_weechat_string_free_split,weechat_string_free_split>> dopo l'uso)
+  <<_string_free_split,weechat_string_free_split>> dopo l'uso)
 
 Esempio in C:
 
@@ -1532,7 +1532,7 @@ void weechat_string_free_split (char **split_string);
 Argomenti:
 
 * 'split_string': stringa divisa dalla funzione
-  <<_weechat_string_split,weechat_string_split>>
+  <<_string_split,weechat_string_split>>
 
 Esempio in C:
 
@@ -1563,7 +1563,7 @@ char *weechat_string_build_with_split_string (char **split_string,
 Argomenti:
 
 * 'split_string': stringa divisa dalla funzione
-  <<_weechat_string_split,weechat_string_split>>
+  <<_string_split,weechat_string_split>>
 * 'separator': stringa usata per separare le stringhe
 
 Valore restituito:
@@ -1607,7 +1607,7 @@ Argomenti:
 Valore restituito:
 
 * array di stringhe, NULL in caso di problemi (deve essere liberata chiamando
-  <<_weechat_free_split_command,weechat_free_split_command>> dopo l'uso)
+  <<_free_split_command,weechat_free_split_command>> dopo l'uso)
 
 Esempio in C:
 
@@ -1637,7 +1637,7 @@ void weechat_string_free_split_command (char **split_command);
 Argomenti:
 
 * 'split_command': comando diviso da
-  <<_weechat_string_split_command,weechat_string_split_command>>
+  <<_string_split_command,weechat_string_split_command>>
 
 Esempio in C:
 
@@ -1935,7 +1935,7 @@ Argomenti:
   pointer); pointers "window" and "buffer" are automatically added if they are
   not in hashtable (with pointer to current window/buffer) (can be NULL):
 ** 'regex': pointer to a regular expression ('regex_t' structure) compiled with
-   WeeChat function <<_weechat_string_regcomp,weechat_string_regcomp>> or
+   WeeChat function <<_string_regcomp,weechat_string_regcomp>> or
    regcomp (see `man regcomp`); this option is similar to 'regex' in hashtable
    'options' (below), but is used for better performance
 * 'extra_vars': extra variables that will be expanded (can be NULL)
@@ -1999,7 +1999,7 @@ expanded to last):
 | `${info:name}` +
   `${indo:name,arguments}` |
   Info from WeeChat or a plugin, see function
-  <<_weechat_info_get,weechat_info_get>> |
+  <<_info_get,weechat_info_get>> |
   `${info:version}` +
   `${info:irc_nick_color_name,foo}` |
   `1.0` +
@@ -4237,10 +4237,10 @@ Valore restituito:
 
 [NOTE]
 Il file NON viene creato su disco da questa funzione. Verrà creato chiamando
-la funzione <<_weechat_config_write,weechat_config_write>>.
+la funzione <<_config_write,weechat_config_write>>.
 Si dovrebbe chiamare questa funzione solo dopo aver aggiunto alcune sezioni
-(con <<_weechat_config_new_section,weechat_config_new_section>>) e le
-opzioni (con <<_weechat_config_new_option,weechat_config_new_option>>).
+(con <<_config_new_section,weechat_config_new_section>>) e le
+opzioni (con <<_config_new_option,weechat_config_new_option>>).
 
 Esempio in C:
 
@@ -5107,7 +5107,7 @@ Argomenti:
 
 [NOTE]
 È possibile impostare il valore a null solo se è consentito per l'opzione
-(consultare <<_weechat_config_new_option,weechat_config_new_option>>).
+(consultare <<_config_new_option,weechat_config_new_option>>).
 
 Valore restituito:
 
@@ -6431,7 +6431,7 @@ Aggiunge una nuova combinazione tasto.
 [NOTE]
 A differenza del comando `/key bind`, questa funzione non cambia mai una
 combinazione tasti esistente, ma ne vengono create di nuove. Per rimuovere
-una combinazione tasti, usare <<_weechat_key_unbind,weechat_key_unbind>>.
+una combinazione tasti, usare <<_key_unbind,weechat_key_unbind>>.
 
 Prototipo:
 
@@ -6505,7 +6505,7 @@ int weechat_key_unbind (const char *context, const char *key);
 
 Argomenti:
 
-* 'context': contesto per i tasti (consultare <<_weechat_key_bind,weechat_key_bind>>)
+* 'context': contesto per i tasti (consultare <<_key_bind,weechat_key_bind>>)
 * 'key': tasto da rimuovere o un valore speciale "area:XXX" per rimuovere tutti
   i tasti che hanno 'XXX' come prima o seconda area
 
@@ -7347,7 +7347,7 @@ Since version 0.3.9.2, the shell is not used any more to execute the command.
 WeeChat makes an automatic split of command and arguments (like the shell does).
 If the split is not correct (according to quotes in your command), or if you
 want to use shell, you can use function
-<<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>> with
+<<_hook_process_hashtable,weechat_hook_process_hashtable>> with
 arguments in the hashtable 'options' _(WeeChat ≥ 0.4.0)_.
 
 Prototipo:
@@ -7403,7 +7403,7 @@ effettua automaticamente l'unhook (e termina il processo se ancora in esecuzione
 Il comando può essere un URL con il formato: "url:http://www.esempio.com", per
 scaricare il contenuto dell'URL _(WeeChat ≥ 0.3.7)_. Le opzioni per
 un URL sono disponibili con la funzione
-<<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>>.
+<<_hook_process_hashtable,weechat_hook_process_hashtable>>.
 
 // TRANSLATION MISSING
 [TIP]
@@ -7504,7 +7504,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 ----
 
 Gli argomenti sono gli stessi della funzione
-<<_weechat_hook_process,weechat_hook_process>>, con un argomento aggiuntivo:
+<<_hook_process,weechat_hook_process>>, con un argomento aggiuntivo:
 
 * 'options': le opzioni per il comando eseguito; la tabella hash è duplicata
   nella funzione, per cui è possibile liberarla dopo questa chiamata
@@ -7531,7 +7531,7 @@ available:
   _(WeeChat ≥ 0.4.3)_ |
   (not used) |
   Create a pipe for writing data on standard input (stdin) of child process
-  (see function <<_weechat_hook_set,weechat_hook_set>>)
+  (see function <<_hook_set,weechat_hook_set>>)
 
 // TRANSLATION MISSING
 | buffer_flush +
@@ -8767,7 +8767,7 @@ Argomenti:
 
 * 'signal': segnale da inviare
 * 'type_data': tipo di dati inviati con il segnale (consultare
-  <<_weechat_hook_signal,weechat_hook_signal>>)
+  <<_hook_signal,weechat_hook_signal>>)
 * 'signal_data': dati inviati con il segnale
 
 // TRANSLATION MISSING
@@ -9425,7 +9425,7 @@ Argomenti:
 ** 'struct t_gui_buffer *buffer': buffer dove viene eseguito il completamento
 ** 'struct t_gui_completion *completion': struttura usata per aggiungere
    parole per il completamento (consultare
-   <<_weechat_hook_completion_list_add,weechat_hook_completion_list_add>>)
+   <<_hook_completion_list_add,weechat_hook_completion_list_add>>)
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
@@ -9439,10 +9439,10 @@ raccomanda pertanto di scegliere un nome con un prefisso unico, come
 // TRANSLATION MISSING
 [IMPORTANT]
 The callback must only call function
-<<_weechat_hook_completion_list_add,weechat_hook_completion_list_add>>
+<<_hook_completion_list_add,weechat_hook_completion_list_add>>
 and must *NOT* update the command line. +
 To update the command line when key[Tab] is pressed, you can use the function
-<<_weechat_hook_command_run,weechat_hook_command_run>> with command:
+<<_hook_command_run,weechat_hook_command_run>> with command:
 "/input complete_next" (and you must return 'WEECHAT_RC_OK_EAT' if your callback
 has updated the command line, so that WeeChat will not perform the completion).
 
@@ -9570,7 +9570,7 @@ Argomenti:
 ** 'WEECHAT_LIST_POS_BEGINNING': inizio della lista
 ** 'WEECHAT_LIST_POS_END': fine della lista
 
-Esempio in C: consultare <<_weechat_hook_completion,weechat_hook_completion>>.
+Esempio in C: consultare <<_hook_completion,weechat_hook_completion>>.
 
 Script (Python):
 
@@ -11067,7 +11067,7 @@ Properties:
   "0" to prevent user from clearing buffer with the command `/buffer clear`,
   "1" to let user clear the buffer (default for a new buffer)
    (note: even when it is set to "0", the buffer can still be cleared with
-   the function <<_weechat_buffer_clear,weechat_buffer_clear>>)
+   the function <<_buffer_clear,weechat_buffer_clear>>)
 
 // TRANSLATION MISSING
 | filter +
@@ -12168,7 +12168,7 @@ Properties:
 
 | color | nome per l'opzione del colore per WeeChat |
   Consultare l'argomento "color" della funzione
-  <<_weechat_nicklist_add_group,weechat_nicklist_add_group>>
+  <<_nicklist_add_group,weechat_nicklist_add_group>>
 
 | visible | "0", "1" |
   "0" = gruppo nascosto, "1" = gruppo visibile
@@ -12376,14 +12376,14 @@ Properties:
 
 | color | nome per l'opzione del colore di WeeChat |
   Consultare l'argomento "color" della funzione
-  <<_weechat_nicklist_add_nick,weechat_nicklist_add_nick>>
+  <<_nicklist_add_nick,weechat_nicklist_add_nick>>
 
 | prefix | qualsiasi stringa |
   Prefisso del nick
 
 | prefix_color | nome per l'opzione del colore di WeeChat |
   Consultare l'argomento "prefix_color" della funzione
-  <<_weechat_nicklist_add_nick,weechat_nicklist_add_nick>>
+  <<_nicklist_add_nick,weechat_nicklist_add_nick>>
 
 | visible | "0", "1" |
   "0" = nick nascosto, "1" = nick visibile
@@ -12795,7 +12795,7 @@ Argomenti:
 * 'bar': puntatore alla barra
 * 'property': name, hidden, priority, conditions, position, filling_top_bottom,
   filling_left_right, size, size_max, color_fg, color_delim, color_bg,
-  separator, items (consultare <<_weechat_bar_new,weechat_bar_new>>)
+  separator, items (consultare <<_bar_new,weechat_bar_new>>)
 * 'value': nuovo valore per la proprietà
 
 Valore restituito:
@@ -14011,7 +14011,7 @@ Funzioni per hdata (accesso raw a WeeChat o ai dati dei plugin).
 Hdata fornisce un accesso in sola lettura ai dati. È *SEVERAMENTE VIETATO*
 scrivere qualcosa in memoria puntato dalle variabili in hdata. +
 The only way to update data is to call function
-<<_weechat_hdata_update,weechat_hdata_update>>.
+<<_hdata_update,weechat_hdata_update>>.
 
 ==== hdata_new
 
@@ -14064,7 +14064,7 @@ Argomenti:
 ** 'void *data': pointer
 ** 'struct t_hdata *hdata': pointer to hdata
 ** 'struct t_hashtable *hashtable': hashtable with variables to update
-   (see <<_weechat_hdata_update,weechat_hdata_update>>)
+   (see <<_hdata_update,weechat_hdata_update>>)
 ** return value: number of variables updated
 // TRANSLATION MISSING
 * 'callback_update_data': pointer given to update callback when it is called by
@@ -14690,7 +14690,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'list': puntatore alla lista; if NULL _(WeeChat ≥ 1.0)_, the pointer is
   checked with the lists in hdata that have flag "check pointers" (see
-  <<_weechat_hdata_new_list,weechat_hdata_new_list>>), and if no such list
+  <<_hdata_new_list,weechat_hdata_new_list>>), and if no such list
   exists, the pointer is considered as valid
 * 'pointer': puntatore da verificare
 
@@ -15221,8 +15221,8 @@ Set new value for variable in a hdata.
 
 [NOTE]
 This function can be called only in an update callback
-(see <<_weechat_hdata_new,weechat_hdata_new>> and
-<<_weechat_hdata_update,weechat_hdata_update>>), if the variable can be updated.
+(see <<_hdata_new,weechat_hdata_new>> and
+<<_hdata_update,weechat_hdata_update>>), if the variable can be updated.
 
 Prototipo:
 

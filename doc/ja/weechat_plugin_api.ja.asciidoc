@@ -795,7 +795,7 @@ _WeeChat バージョン 0.4.2 以上で利用可。_
 
 UTF-8 文字列をスクリーン上に表示するために必要なスクリーン幅を返す。非表示文字を
 1 文字として数えます (これが
-<<_weechat_utf8_strlen_screen,weechat_utf8_strlen_screen>> 関数との違いです)。
+<<_utf8_strlen_screen,weechat_utf8_strlen_screen>> 関数との違いです)。
 
 プロトタイプ:
 
@@ -1139,7 +1139,7 @@ _WeeChat バージョン 0.3.7 以上で利用可。_
 
 文字列の最初に含まれるオプションフラグを使って POSIX
 拡張正規表現をコンパイル (フラグのフォーマットについては
-<<_weechat_string_regex_flags,weechat_string_regex_flags>> を参照)。
+<<_string_regex_flags,weechat_string_regex_flags>> を参照)。
 
 プロトタイプ:
 
@@ -1313,7 +1313,7 @@ char *weechat_string_replace_regex (const char *string, void *regex,
 引数:
 
 * 'string': 文字列
-* 'regex': WeeChat 関数 <<_weechat_string_regcomp,weechat_string_regcomp>>
+* 'regex': WeeChat 関数 <<_string_regcomp,weechat_string_regcomp>>
   または regcomp (`man regcomp` を参照)
   でコンパイルした正規表現へのポインタ ('regex_t' 構造体)
 * 'replace': 置換先テキスト、以下のリファレンスを使うことができます:
@@ -1385,7 +1385,7 @@ char **weechat_string_split (const char *string, const char *separators,
 戻り値:
 
 * 文字列の配列、分割に失敗した場合は NULL (使用後には必ず
-  <<_weechat_string_free_split,weechat_string_free_split>> を呼び出して領域を開放してください)
+  <<_string_free_split,weechat_string_free_split>> を呼び出して領域を開放してください)
 
 C 言語での使用例:
 
@@ -1439,7 +1439,7 @@ char **weechat_string_split_shell (const char *string, int *num_items);
 戻り値:
 
 * 文字列の配列、分割に失敗した場合は NULL (使用後には必ず
-  <<_weechat_string_free_split,weechat_string_free_split>> を呼び出して領域を開放してください)
+  <<_string_free_split,weechat_string_free_split>> を呼び出して領域を開放してください)
 
 C 言語での使用例:
 
@@ -1473,7 +1473,7 @@ void weechat_string_free_split (char **split_string);
 
 引数:
 
-* 'split_string': 関数 <<_weechat_string_split,weechat_string_split>>
+* 'split_string': 関数 <<_string_split,weechat_string_split>>
   が返した分割文字列の配列
 
 C 言語での使用例:
@@ -1504,7 +1504,7 @@ char *weechat_string_build_with_split_string (char **split_string,
 
 引数:
 
-* 'split_string': 関数 <<_weechat_string_split,weechat_string_split>>
+* 'split_string': 関数 <<_string_split,weechat_string_split>>
   が返した分割文字列の配列
 * 'separator': 文字列を分割する区切り文字
 
@@ -1548,7 +1548,7 @@ char **weechat_string_split_command (const char *command, char separator);
 戻り値:
 
 * 文字列の配列、分割に失敗した場合は NULL (使用後には必ず
-  <<_weechat_free_split_command,weechat_free_split_command>> を呼び出して領域を開放してください)
+  <<_free_split_command,weechat_free_split_command>> を呼び出して領域を開放してください)
 
 C 言語での使用例:
 
@@ -1577,7 +1577,7 @@ void weechat_string_free_split_command (char **split_command);
 
 引数:
 
-* 'split_command': 関数 <<_weechat_string_split_command,weechat_string_split_command>>
+* 'split_command': 関数 <<_string_split_command,weechat_string_split_command>>
   が返す分割コマンドの配列
 
 C 言語での使用例:
@@ -1870,7 +1870,7 @@ char *weechat_string_eval_expression (const char *expr,
 * 'pointers': ポインタを含むハッシュテーブル (キーは文字列、値はポインタ);
   (現在のウィンドウやバッファへのポインタを持つ) ハッシュテーブルが "window" と
   "buffer" ポインタを持たない場合はこれらは自動的に追加される (NULL でも可):
-** 'regex': WeeChat 関数 <<_weechat_string_regcomp,weechat_string_regcomp>>
+** 'regex': WeeChat 関数 <<_string_regcomp,weechat_string_regcomp>>
    または regcomp (`man regcomp` を参照) でコンパイル済みの正規表現へのポインタ
    ('regex_t' 構造体); このオプションは (以下の) ハッシュテーブル構造体 'options'
    メンバの 'regex' とよく似ていますが、より高速に動作します
@@ -1931,7 +1931,7 @@ char *weechat_string_eval_expression (const char *expr,
 
 | `${info:name}` +
   `${indo:name,arguments}` |
-  WeeChat またはプラグインのインフォ、<<_weechat_info_get,weechat_info_get>>
+  WeeChat またはプラグインのインフォ、<<_info_get,weechat_info_get>>
   を参照 |
   `${info:version}` +
   `${info:irc_nick_color_name,foo}` |
@@ -4133,10 +4133,10 @@ struct t_config_file *weechat_config_new (const char *name,
 
 [NOTE]
 この関数はディスク上にファイルを作りません。ファイルを作るには
-<<_weechat_config_write,weechat_config_write>>
+<<_config_write,weechat_config_write>>
 関数を使ってください。この関数を呼び出す必要があるのは
-(<<_weechat_config_new_section,weechat_config_new_section>> を使って) セクションもしくは
-(<<_weechat_config_new_option,weechat_config_new_option>> を使って) オプションを追加した後だけです。
+(<<_config_new_section,weechat_config_new_section>> を使って) セクションもしくは
+(<<_config_new_option,weechat_config_new_option>> を使って) オプションを追加した後だけです。
 
 C 言語での使用例:
 
@@ -4997,7 +4997,7 @@ int weechat_config_option_set_null (struct t_config_option *option,
 
 [NOTE]
 オプションに null を設定することが許可されている場合にのみ null を設定できます
-(<<_weechat_config_new_option,weechat_config_new_option>> を参照)。
+(<<_config_new_option,weechat_config_new_option>> を参照)。
 
 戻り値:
 
@@ -6312,7 +6312,7 @@ _WeeChat バージョン 0.3.6 以上で利用可。_
 [NOTE]
 コマンド `/key bind`
 とは異なり、この関数がすでに存在しているキー割り当てを変更することはありません。新しいキー割り当てを作成するだけです。キー割り当てを削除するには
-<<_weechat_key_unbind,weechat_key_unbind>> を使ってください。
+<<_key_unbind,weechat_key_unbind>> を使ってください。
 
 プロトタイプ:
 
@@ -6385,7 +6385,7 @@ int weechat_key_unbind (const char *context, const char *key);
 
 引数:
 
-* 'context': キーのコンテキスト (<<_weechat_key_bind,weechat_key_bind>> を参照)
+* 'context': キーのコンテキスト (<<_key_bind,weechat_key_bind>> を参照)
 * 'key': 削除するキーまたは特殊値 "area:XXX" で1 番目または 2
   番目の領域から 'XXX' をもつすべてのキーを削除する
 
@@ -7201,7 +7201,7 @@ hook = weechat.hook_fd(sock, 1, 0, 0, "my_fd_cb", "")
 が自動的にコマンドと引数を分割します (シェルがやっているように)。 +
 (コマンドのクォートに従った)
 分割に失敗する場合、またはシェルを使いたい場合は、ハッシュテーブル
-'options' に引数を入れて <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>>
+'options' に引数を入れて <<_hook_process_hashtable,weechat_hook_process_hashtable>>
 関数を使ってください _(WeeChat バージョン 0.4.0 以上で利用可)_ 。
 
 プロトタイプ:
@@ -7253,7 +7253,7 @@ struct t_hook *weechat_hook_process (const char *command,
 (プロセスが実行中であればプロセスを kill します)。
 
 コマンドを "url:http://www.example.com" のフォーマットに従う URL にすることで、URL
-の内容がダウンロードされます _(WeeChat バージョン 0.3.7 以上で利用可)_ 。<<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>>
+の内容がダウンロードされます _(WeeChat バージョン 0.3.7 以上で利用可)_ 。<<_hook_process_hashtable,weechat_hook_process_hashtable>>
 関数を使えば URL に対してオプションを与えることもできます。
 
 [TIP]
@@ -7353,7 +7353,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 ----
 
 引数は以下の追加引数を除いて
-<<_weechat_hook_process,weechat_hook_process>> 関数と同じです:
+<<_hook_process,weechat_hook_process>> 関数と同じです:
 
 * 'options': 実行するコマンドのオプション;
   ハッシュテーブルは関数の中で複製されるため、この関数を呼び出した後にハッシュテーブルを安全に開放できます。
@@ -7376,7 +7376,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
   (非使用) |
   データを書き込むためのパイプを子プロセスの標準入力 (stdin)
-  に作成します (関数 <<_weechat_hook_set,weechat_hook_set>> を参照)
+  に作成します (関数 <<_hook_set,weechat_hook_set>> を参照)
 
 | buffer_flush +
   _(WeeChat バージョン 1.0 以上で利用可)_ |
@@ -8523,7 +8523,7 @@ int weechat_hook_signal_send (const char *signal, const char *type_data,
 
 * 'signal': 送信するシグナル
 * 'type_data': シグナルと一緒に送信するデータの型
-  (<<_weechat_hook_signal,weechat_hook_signal>> を参照)
+  (<<_hook_signal,weechat_hook_signal>> を参照)
 * 'signal_data': シグナルと一緒に送信するデータ
 
 戻り値 _(WeeChat バージョン 1.0 以上で利用可。)_:
@@ -9153,7 +9153,7 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 ** 'struct t_gui_buffer *buffer': 補完が行われたバッファ
 ** 'struct t_gui_completion *completion':
    補完に際して単語を追加するために使われる構造体
-   (<<_weechat_hook_completion_list_add,weechat_hook_completion_list_add>> を参照)
+   (<<_hook_completion_list_add,weechat_hook_completion_list_add>> を参照)
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
@@ -9166,10 +9166,10 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 
 [IMPORTANT]
 コールバックは
-<<_weechat_hook_completion_list_add,weechat_hook_completion_list_add>>
+<<_hook_completion_list_add,weechat_hook_completion_list_add>>
 関数を呼び出すだけで、コマンドラインをコールバックで絶対に*変更しない*でください。 +
 key[Tab] が押された時にコマンドラインを更新するためには、関数
-<<_weechat_hook_command_run,weechat_hook_command_run>> を使ってコマンド
+<<_hook_command_run,weechat_hook_command_run>> を使ってコマンド
 "/input complete_next" をフックしてください (コールバックがコマンドラインを更新する場合は必ず
 'WEECHAT_RC_OK_EAT' を返してください。そうすれば WeeChat は補完を行いません)。
 
@@ -9296,7 +9296,7 @@ void weechat_hook_completion_list_add (struct t_gui_completion *completion,
 ** 'WEECHAT_LIST_POS_BEGINNING': リストの最初
 ** 'WEECHAT_LIST_POS_END': リストの最後
 
-C 言語での使用例: <<_weechat_hook_completion,weechat_hook_completion>> を参照。
+C 言語での使用例: <<_hook_completion,weechat_hook_completion>> を参照。
 
 スクリプト (Python) での使用例:
 
@@ -10731,7 +10731,7 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   ユーザからのコマンド `/buffer clear` でバッファのクリアを禁止する場合は "0"、
   バッファのクリアを許可する場合は "1" (新規バッファに対するデフォルト)
    (注意: この値が "0" に設定されていたとしても、関数
-   <<_weechat_buffer_clear,weechat_buffer_clear>> を使えばバッファをクリアすることが可能です)
+   <<_buffer_clear,weechat_buffer_clear>> を使えばバッファをクリアすることが可能です)
 
 | filter +
   _(WeeChat バージョン 1.0 以上で利用可)_ | "0" または "1" |
@@ -11805,7 +11805,7 @@ void weechat_nicklist_group_set (struct t_gui_buffer *buffer,
 | 名前 | 値 | 説明
 
 | color | WeeChat 色オプション名 |
-  関数 <<_weechat_nicklist_add_group,weechat_nicklist_add_group>>
+  関数 <<_nicklist_add_group,weechat_nicklist_add_group>>
   の引数 "color" を参照
 
 | visible | "0"、"1" |
@@ -12010,14 +12010,14 @@ void weechat_nicklist_nick_set (struct t_gui_buffer *buffer,
 | 名前 | 値 | 説明
 
 | color | WeeChat 色オプション名 |
-  関数 <<_weechat_nicklist_add_nick,weechat_nicklist_add_nick>>
+  関数 <<_nicklist_add_nick,weechat_nicklist_add_nick>>
   の引数 "color" を参照
 
 | prefix | 任意の文字列 |
   指定したニックネームのプレフィックス
 
 | prefix_color | WeeChat color option name |
-  関数 <<_weechat_nicklist_add_nick,weechat_nicklist_add_nick>>
+  関数 <<_nicklist_add_nick,weechat_nicklist_add_nick>>
   の引数 "prefix_color" を参照
 
 | visible | "0", "1" |
@@ -12411,7 +12411,7 @@ int weechat_bar_set (struct t_gui_bar *bar, const char *property,
 
 * 'bar': バーへのポインタ
 * 'property': name、hidden、priority、conditions、position、filling_top_bottom、filling_left_right、size、size_max、color_fg、color_delim、color_bg、separator、items
-  (<<_weechat_bar_new,weechat_bar_new>>
+  (<<_bar_new,weechat_bar_new>>
   を参照)
 * 'value': プロパティの新しい値
 
@@ -13591,7 +13591,7 @@ hdata に対する関数 (WeeChat またはプラグインデータへの直ア�
 hdata を使うことで読み取り専用でデータにアクセスできます。hdata
 変数が示すメモリ領域に何かを書き込むことは*厳禁* です。 +
 データを更新する場合は必ず関数
-<<_weechat_hdata_update,weechat_hdata_update>> を使ってください。
+<<_hdata_update,weechat_hdata_update>> を使ってください。
 
 ==== hdata_new
 
@@ -13639,7 +13639,7 @@ struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev,
 ** 'void *data': ポインタ
 ** 'struct t_hdata *hdata': hdata へのポインタ
 ** 'struct t_hashtable *hashtable': 更新する変数を含むハッシュテーブル
-   (<<_weechat_hdata_update,weechat_hdata_update>> を参照)
+   (<<_hdata_update,weechat_hdata_update>> を参照)
 ** return value: 更新された変数の数
 * 'callback_update_data': WeeChat が update コールバックを呼び出す際にコールバックに渡すポインタ
   _(WeeChat バージョン 0.3.9 以上で利用可)_
@@ -14251,7 +14251,7 @@ int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointe
 * 'hdata': hdata へのポインタ
 * 'list': リストポインタ; NULL の場合 _(WeeChat バージョン 1.0 以上)_、ポインタは
    hdata に含まれる "check pointers" フラグを持つリストでチェックされます
-  (<<_weechat_hdata_new_list,weechat_hdata_new_list>>
+  (<<_hdata_new_list,weechat_hdata_new_list>>
   を参照)、このフラグを持つリストがない場合、ポインタは妥当とされます。
 * 'pointer': 確認するポインタ
 
@@ -14761,8 +14761,8 @@ hdata の変数に新しい値を設定。
 
 [NOTE]
 変数の更新を許可している場合に、この関数呼び出して良いのは update
-コールバックの中だけです (<<_weechat_hdata_new,weechat_hdata_new>>
-と <<_weechat_hdata_update,weechat_hdata_update>> を参照)
+コールバックの中だけです (<<_hdata_new,weechat_hdata_new>>
+と <<_hdata_update,weechat_hdata_update>> を参照)
 
 プロトタイプ:
 
