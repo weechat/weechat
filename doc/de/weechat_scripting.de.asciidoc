@@ -36,7 +36,7 @@ werden folgende Programmiersprachen unterstützt:
 * javascript
 
 [NOTE]
-Beinahe alle Beispiele in dieser Dokumentation beziehen sich auf Python.
+Fast alle Beispiele in dieser Dokumentation sind für Python erstellt.
 Allerdings ist die API für alle Skriptsprachen nahezu identisch.
 
 [[scripts_in_weechat]]
@@ -95,8 +95,8 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 [[register_function]]
 === Die "Register" Funktion
 
-Jedes WeeChat Skript muss sich bei WeeChat "registrieren". Die "register" Funktion
-muss deshalb der erste WeeChat Befehl sein der durch das Skript genutzt wird.
+Ein WeeChat-Skript muss sich bei WeeChat "registrieren". Dazu muss das Skript
+zuerst die "register" Funktion ausführen.
 
 Prototyp:
 
@@ -230,7 +230,7 @@ Die Skripten API ist nahezu identisch mit der API der C Erweiterung.
 Um einen Überblick über alle API Funktionen (Prototyp, Argumente,
 Rückgabe werte, Beispiele) zu erhalten werfen Sie einen Blick in
 die 'WeeChat Plugin API Reference'.
-Es ist wichtig dass man zwischen einer 'Erweiterung' und einem 'Skript'
+Es ist wichtig das man zwischen einer 'Erweiterung' und einem 'Skript'
 unterscheidet: Eine 'Erweiterung' ist eine Binärdatei die kompiliert wurde
 und mittels `/plugin` geladen wird. Ein 'Skript' ist eine Textdatei welche
 durch eine Erweiterung z.B. 'python' mittels dem Befehl `/python` geladen
@@ -246,7 +246,7 @@ test.py ─────► │ Skript API │  C API  │ ─────► ║
                └────────────┴─────────┘        ╚═════════╧════════╝
 ....
 
-Gibt WeeChat einen Rückgabewert an Ihr Skript 'test.py' zurück wird der
+Gibt WeeChat einen Rückgabewert an Ihr Skript 'test.py' zurück, dann wird der
 Aufruf in umgekehrter Reihenfolge abgearbeitet:
 
 ....
@@ -280,7 +280,7 @@ weechat.prnt("", "Hi!")
 ----
 
 [WARNING]
-Aus Gründen der Geschwindigkeit wird in vielen Funktionen darauf verzichtet
+In vielen Funktionen wird aus Gründen der Geschwindigkeit darauf verzichtet
 die Pointer auf ihre Korrektheit zu überprüfen. Es obliegt Ihrer Verantwortung
 einen gültigen Pointer zu übergeben. Sollten Sie dies nicht beachten dann werden
 Sie mit einem netten Crash-Report belohnt ;)
@@ -524,8 +524,8 @@ Die Skript API wird dabei nur sehr oberflächlich besprochen.Um eine vollständi
 ==== Nachrichten anzeigen
 
 Eine leere Zeichenkette wird häufig verwendet um den WeeChat Core Buffer zu nutzen.
-Möchten Sie einen anderen Buffer nutzen dann muss der Pointer dieses Buffers verwendet
-werden (Übergabe als String, siehe <<pointers,Pointer>>).
+Möchten Sie einen anderen Buffer nutzen dann muss der Pointer des entsprechenden Buffers
+verwendet werden (Übergabe als String, siehe <<pointers,Pointer>>).
 
 Beispiele:
 
@@ -895,10 +895,10 @@ weechat.hook_signal("*,irc_in2_join", "join_cb", "")
 ----
 
 [[irc_modify_messages]]
-==== Modify messages
+==== Nachrichten ändern
 
 Die IRC Erweiterung verschickt einen "modifier" mit Namen "irc_in_xxx" ("xxx" steht für den
-Namen des IRC Befehls) um eine Nachricht zu empfangen die dann modifiziert werden kann.
+Namen des IRC Befehls) falls eine Nachricht empfangen wurde die dann modifiziert werden kann.
 
 [source,python]
 ----
@@ -953,7 +953,7 @@ else:
 
 [NOTE]
 Versionen ≤ 0.3.1.1 geben einen leeren String zurück wenn man 'info_get("version_number")'
-aufruft. Deshalb müssen Sie prüfen ob der Rückgabe wert *nicht* leer ist.
+aufruft. Deshalb müssen Sie prüfen ob der Rückgabewert *nicht* leer ist.
 
 Um die Version als String zu erhalten:
 
@@ -998,6 +998,6 @@ if infolist:
 ----
 
 [IMPORTANT]
-Vergessen Sie bitte nicht `infolist_free` aufzurufen um den Speicher wieder
+Vergewissern Sie sich `infolist_free` aufzurufen um den Speicher wieder
 frei zu geben der durch die Infoliste belegt wurde. WeeChat gibt diesen Speicher
-nicht von sich aus frei.
+nicht automatisch frei.
