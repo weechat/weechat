@@ -89,6 +89,7 @@ struct timeval weechat_current_start_timeval; /* start time used to display */
 int weechat_quit = 0;                  /* = 1 if quit request from user     */
 int weechat_sigsegv = 0;               /* SIGSEGV received?                 */
 char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
+int weechat_locale_ok = 0;             /* is locale OK?                     */
 char *weechat_local_charset = NULL;    /* example: ISO-8859-1, UTF-8        */
 int weechat_server_cmd_line = 0;       /* at least 1 server on cmd line     */
 int weechat_auto_load_plugins = 1;     /* auto load plugins                 */
@@ -429,6 +430,24 @@ weechat_term_check ()
 }
 
 /*
+ * Displays warning about wrong locale ($LANG and $LC_*) if they are detected
+ * as wrong.
+ */
+
+void
+weechat_locale_check ()
+{
+    if (!weechat_locale_ok)
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sWarning: cannot set the locale; make sure $LANG and $LC_* "
+              "variables are correct"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+    }
+}
+
+/*
  * Callback for system signal SIGHUP: quits WeeChat.
  */
 
@@ -501,7 +520,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
     weechat_first_start_time = time (NULL); /* initialize start time        */
     gettimeofday (&weechat_current_start_timeval, NULL);
 
-    setlocale (LC_ALL, "");             /* initialize gettext               */
+    weechat_locale_ok = (setlocale (LC_ALL, "") != NULL);   /* init gettext */
 #ifdef ENABLE_NLS
     bindtextdomain (PACKAGE, LOCALEDIR);
     bind_textdomain_codeset (PACKAGE, "UTF-8");
@@ -556,6 +575,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
     weechat_welcome_message ();         /* display WeeChat welcome message  */
     gui_chat_print_lines_waiting_buffer (NULL); /* display lines waiting    */
     weechat_term_check ();              /* warnings about $TERM (if wrong)  */
+    weechat_locale_check ();            /* warning about wrong locale       */
     command_startup (0);                /* command executed before plugins  */
     plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */
                  argc, argv);

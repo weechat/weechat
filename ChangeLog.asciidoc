@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: display a warning on startup if the locale can not be set (closes #373)
 * core: allow "*" as plugin name in command /plugin reload to reload all
   plugins with options
 * core: add option "-s" in command /eval to split expression before evaluating

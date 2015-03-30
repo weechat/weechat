@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-03-24 06:54+0100\n"
-"PO-Revision-Date: 2015-03-24 06:54+0100\n"
+"POT-Creation-Date: 2015-03-30 19:14+0200\n"
+"PO-Revision-Date: 2015-03-30 19:14+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -199,6 +199,14 @@ msgstr ""
 #, c-format
 msgid "%sYou should add this line in the file %s:  %s"
 msgstr "%sVous devriez ajouter cette ligne dans le fichier %s:  %s"
+
+#, c-format
+msgid ""
+"%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
+"correct"
+msgstr ""
+"%sAttention : impossible de définir la locale ; vérifiez que les variables "
+"$LANG et $LC_* sont correctes"
 
 #, c-format
 msgid "Signal %s received, exiting WeeChat..."
