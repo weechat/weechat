@@ -501,7 +501,13 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
     weechat_first_start_time = time (NULL); /* initialize start time        */
     gettimeofday (&weechat_current_start_timeval, NULL);
 
-    setlocale (LC_ALL, "");             /* initialize gettext               */
+    if (setlocale (LC_ALL, "") == NULL)
+    {
+        string_iconv_fprintf (stderr,
+                              _("Error: cannot set up locale; make sure "
+                                "$LANG and $LC_* variables are correct\n"));
+        weechat_shutdown (EXIT_FAILURE, 0);
+    }
 #ifdef ENABLE_NLS
     bindtextdomain (PACKAGE, LOCALEDIR);
     bind_textdomain_codeset (PACKAGE, "UTF-8");
