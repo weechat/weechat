@@ -3475,7 +3475,7 @@ Das Hashtable enthält alle Schlüssel/Werte (Typ: string/string).
 Zeigt URLs in grün an:
 
 ----
-/trigger add url_color modifier weechat_print "${tg_notify}" "==\S+://\S+==${color:green}$0${color:reset}=="
+/trigger add url_color modifier weechat_print "${tg_notify}" "==\S+://\S+==${color:green}${re:0}${color:reset}=="
 ----
 
 [NOTE]

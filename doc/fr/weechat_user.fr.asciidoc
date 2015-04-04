@@ -3496,7 +3496,7 @@ reçue (type : chaîne/chaîne).
 Afficher les URLs en vert :
 
 ----
-/trigger add url_color modifier weechat_print "${tg_notify}" "==\S+://\S+==${color:green}$0${color:reset}=="
+/trigger add url_color modifier weechat_print "${tg_notify}" "==\S+://\S+==${color:green}${re:0}${color:reset}=="
 ----
 
 [NOTE]
