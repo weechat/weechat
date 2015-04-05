@@ -4,9 +4,9 @@
 :lang: en
 
 
-WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat
-environment for many operating systems. Everything can be done with a keyboard.
-It is customizable and extensible with scripts.
+WeeChat (Wee Enhanced Environment for Chat) is a free chat client, fast and
+light, designed for many operating systems.
+It is highly customizable and extensible with scripts.
 
 Homepage: https://weechat.org/
 

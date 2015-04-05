@@ -16,10 +16,10 @@ weechat - rozszerzalny klient rozmów
 
 == OPIS
 
-WeeChat to szybki, lekki i rozszerzalny klient rozmów.
-
-Jest modularny (lekkie jądro z wtyczkami), wielo protokołowy (IRC i Jabber),
-rozszerzalny za pomocą C i skryptów pisanych w kilku językach.
+// TRANSLATION MISSING
+WeeChat (Wee Enhanced Environment for Chat) to darmowy klient rozmów, szybki
+i lekki, przeznaczony dla wielu systemów operacyjnych.
+It is highly customizable and extensible with scripts.
 
 == OPCJE
 

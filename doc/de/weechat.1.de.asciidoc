@@ -17,11 +17,10 @@ weechat - der erweiterbare Chat Client
 
 == BESCHREIBUNG
 
-WeeChat ist ein schneller, leichter und erweiterbarer Chat Client.
-
-Der Client ist modular aufgebaut (ein kleiner Kern mit nachladbaren Erweiterungen),
-Multiprotokollfähig (IRC und Jabber),erweiterbar mittels C und durch Skripten, wobei
-verschiedenen Sprachen unterstützt werden.
+// TRANSLATION MISSING
+WeeChat (Wee Enhanced Environment for Chat) ist ein freier, schneller und
+schlanker Chat-Client der für unterschiedliche Betriebssysteme entwickelt wird.
+It is highly customizable and extensible with scripts.
 
 == OPTIONEN
 
