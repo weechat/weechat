@@ -96,6 +96,8 @@ struct t_gui_window_scroll
                                        /* (for horizontal scrolling)        */
     int lines_after;                   /* number of lines after last line   */
                                        /* displayed (with scrolling)        */
+    struct t_gui_line *text_search_start_line; /* starting line for search  */
+
     struct t_gui_window_scroll *prev_scroll; /* link to prev. buf. scrolled */
     struct t_gui_window_scroll *next_scroll; /* link to next buf. scrolled  */
 };
@@ -181,8 +183,10 @@ extern void gui_window_scroll_horiz (struct t_gui_window *window, char *scroll);
 extern void gui_window_scroll_previous_highlight (struct t_gui_window *window);
 extern void gui_window_scroll_next_highlight (struct t_gui_window *window);
 extern void gui_window_scroll_unread (struct t_gui_window *window);
+extern void gui_window_search_start_here (struct t_gui_window *window);
 extern void gui_window_search_start (struct t_gui_window *window);
 extern void gui_window_search_restart (struct t_gui_window *window);
+extern void gui_window_search_stop_here (struct t_gui_window *window);
 extern void gui_window_search_stop (struct t_gui_window *window);
 extern int gui_window_search_text (struct t_gui_window *window);
 extern void gui_window_zoom (struct t_gui_window *window);

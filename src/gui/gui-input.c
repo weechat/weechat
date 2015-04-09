@@ -571,7 +571,24 @@ gui_input_complete_previous (struct t_gui_buffer *buffer)
 }
 
 /*
- * Searches for text in buffer (default key: ctrl-R).
+ * Searches for text in buffer at current position (default key: ctrl-R).
+ */
+
+void
+gui_input_search_text_here (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *window;
+
+    window = gui_window_search_with_buffer (buffer);
+    if (window && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    {
+        gui_window_search_start_here (window);
+        gui_input_search_signal (buffer);
+    }
+}
+
+/*
+ * Searches for text in buffer.
  */
 
 void
@@ -722,7 +739,24 @@ gui_input_search_next (struct t_gui_buffer *buffer)
 }
 
 /*
- * Stops text search (default key: return during search).
+ * Stops text search at current position (default key: return during search).
+ */
+
+void
+gui_input_search_stop_here (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *window;
+
+    window = gui_window_search_with_buffer (buffer);
+    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    {
+        gui_window_search_stop_here (window);
+        gui_input_search_signal (buffer);
+    }
+}
+
+/*
+ * Stops text search (default key: ctrl-Q during search).
  */
 
 void

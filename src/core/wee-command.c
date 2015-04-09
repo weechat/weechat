@@ -2933,6 +2933,8 @@ COMMAND_CALLBACK(input)
         gui_input_complete_next (buffer);
     else if (string_strcasecmp (argv[1], "complete_previous") == 0)
         gui_input_complete_previous (buffer);
+    else if (string_strcasecmp (argv[1], "search_text_here") == 0)
+        gui_input_search_text_here (buffer);
     else if (string_strcasecmp (argv[1], "search_text") == 0)
         gui_input_search_text (buffer);
     else if (string_strcasecmp (argv[1], "search_previous") == 0)
@@ -2945,6 +2947,8 @@ COMMAND_CALLBACK(input)
         gui_input_search_switch_regex (buffer);
     else if (string_strcasecmp (argv[1], "search_switch_where") == 0)
         gui_input_search_switch_where (buffer);
+    else if (string_strcasecmp (argv[1], "search_stop_here") == 0)
+        gui_input_search_stop_here (buffer);
     else if (string_strcasecmp (argv[1], "search_stop") == 0)
         gui_input_search_stop (buffer);
     else if (string_strcasecmp (argv[1], "delete_previous_char") == 0)
@@ -7338,12 +7342,14 @@ command_init ()
            "  return: simulate key \"enter\"\n"
            "  complete_next: complete word with next completion\n"
            "  complete_previous: complete word with previous completion\n"
+           "  search_text_here: search text in buffer at current position\n"
            "  search_text: search text in buffer\n"
            "  search_switch_case: switch exact case for search\n"
            "  search_switch_regex: switch search type: string/regular expression\n"
            "  search_switch_where: switch search in messages/prefixes\n"
            "  search_previous: search previous line\n"
            "  search_next: search next line\n"
+           "  search_stop_here: stop search at current position\n"
            "  search_stop: stop search\n"
            "  delete_previous_char: delete previous char\n"
            "  delete_next_char: delete next char\n"
@@ -7392,18 +7398,19 @@ command_init ()
            "  paste_stop: stop paste (bracketed paste mode)\n"
            "\n"
            "This command is used by key bindings or plugins."),
-        "return|complete_next|complete_previous|search_text|search_switch_case|"
-        "search_previous|search_next|search_stop|delete_previous_char|"
-        "delete_next_char|delete_previous_word|delete_next_word|"
-        "delete_beginning_of_line|delete_end_of_line|delete_line|"
-        "clipboard_paste|transpose_chars|undo|redo|move_beginning_of_line|"
-        "move_end_of_line|move_previous_char|move_next_char|move_previous_word|"
-        "move_next_word|history_previous|history_next|history_global_previous|"
-        "history_global_next|jump_smart|jump_previously_visited_buffer|"
-        "jump_next_visited_buffer|hotlist_clear|grab_key|grab_key_command|"
-        "grab_mouse|grab_mouse_area|set_unread|set_unread_current_buffer|"
-        "switch_active_buffer|switch_active_buffer_previous|zoom_merged_buffer|"
-        "insert|send|paste_start|paste_stop",
+        "return|complete_next|complete_previous|search_text_here|search_text|"
+        "search_switch_case|search_previous|search_next|search_stop_here|"
+        "search_stop|delete_previous_char|delete_next_char|delete_previous_word|"
+        "delete_next_word|delete_beginning_of_line|delete_end_of_line|"
+        "delete_line|clipboard_paste|transpose_chars|undo|redo|"
+        "move_beginning_of_line|move_end_of_line|move_previous_char|"
+        "move_next_char|move_previous_word|move_next_word|history_previous|"
+        "history_next|history_global_previous|history_global_next|jump_smart|"
+        "jump_previously_visited_buffer|jump_next_visited_buffer|hotlist_clear|"
+        "grab_key|grab_key_command|grab_mouse|grab_mouse_area|set_unread|"
+        "set_unread_current_buffer|switch_active_buffer|"
+        "switch_active_buffer_previous|zoom_merged_buffer|insert|send|"
+        "paste_start|paste_stop",
         &command_input, NULL);
     hook_command (
         NULL, "key",

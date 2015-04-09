@@ -980,6 +980,9 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
                 ptr_scroll->start_line_pos = 0;
                 gui_buffer_ask_chat_refresh (buffer, 2);
             }
+
+            if (ptr_scroll->text_search_start_line == line)
+                ptr_scroll->text_search_start_line = NULL;
         }
         /* remove line from coords */
         gui_window_coords_remove_line (ptr_win, line);
