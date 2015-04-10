@@ -1463,6 +1463,7 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
     /* use the local interface, from the server socket */
     memset (&addr, 0, sizeof (addr));
     length = sizeof (addr);
+	// TODO
     getsockname (ptr_server->sock, (struct sockaddr *)&addr, &length);
     rc = getnameinfo ((struct sockaddr *)&addr, length, str_address,
                       sizeof (str_address), NULL, 0, NI_NUMERICHOST);
@@ -2194,7 +2195,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
     time_t time_now;
     struct t_irc_channel *ptr_channel;
 
-    if (server->sock < 0)
+    if (server->sock < 0 && !IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_ROBUSTIRC))
     {
         weechat_printf (
             NULL,
@@ -4711,6 +4712,16 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  notify . . . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[IRC_SERVER_OPTION_NOTIFY]));
+        /* robustirc */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ROBUSTIRC]))
+            weechat_printf (NULL, "  robustirc. . . . . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_ROBUSTIRC)) ?
+                            _("on") : _("off"));
+        else
+            weechat_printf (NULL, "  robustirc. . . . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_ROBUSTIRC]) ?
+                            _("on") : _("off"));
     }
     else
     {

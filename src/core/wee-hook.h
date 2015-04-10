@@ -69,6 +69,7 @@ enum t_hook_type
     HOOK_TYPE_INFOLIST,                /* get some info as infolist         */
     HOOK_TYPE_HDATA,                   /* get hdata pointer                 */
     HOOK_TYPE_FOCUS,                   /* focus event (mouse/key)           */
+	HOOK_TYPE_CONNECT_ROBUSTIRC,       /* connect to RobustIRC */
     /* number of hook types */
     HOOK_NUM_TYPES,
 };
@@ -240,6 +241,14 @@ typedef int (t_hook_callback_connect)(void *data, int status,
                                       const char *error,
                                       const char *ip_address);
 
+typedef int (t_hook_callback_connect_robustirc)(void *data,
+		                              int status,
+									  const char *sessionid,
+									  const char *sessionauth,
+                                      const char *error,
+                                      const char *ip_address);
+
+
 #ifdef HAVE_GNUTLS
 typedef int (gnutls_callback_t)(void *data, gnutls_session_t tls_session,
                                 const gnutls_datum_t *req_ca, int nreq,
@@ -252,6 +261,11 @@ typedef int (gnutls_callback_t)(void *data, gnutls_session_t tls_session,
 #endif
                                 int action);
 #endif
+
+struct t_hook_connect_robustirc
+{
+    t_hook_callback_connect *callback; /* connect callback                  */
+};
 
 struct t_hook_connect
 {
@@ -487,6 +501,8 @@ extern struct t_hook *hook_process_hashtable (struct t_weechat_plugin *plugin,
                                               int timeout,
                                               t_hook_callback_process *callback,
                                               void *callback_data);
+
+extern struct t_hook *hook_connect_robustirc (struct t_weechat_plugin *plugin, const char *address, t_hook_callback_connect_robustirc *callback, void *callback_data);
 extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
                                     const char *proxy, const char *address,
                                     int port, int ipv6, int retry,

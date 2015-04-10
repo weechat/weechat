@@ -41,6 +41,7 @@
 #include "irc-protocol.h"
 #include "irc-raw.h"
 #include "irc-redirect.h"
+#include "irc-robustirc.h"
 #include "irc-server.h"
 #include "irc-upgrade.h"
 
@@ -166,6 +167,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     if (!irc_config_init ())
         return WEECHAT_RC_ERROR;
+
+	if (irc_robustirc_init () == WEECHAT_RC_ERROR)
+		return WEECHAT_RC_ERROR;
 
     irc_config_read ();
 

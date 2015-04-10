@@ -616,6 +616,15 @@ struct t_weechat_plugin
                                                     const char *error,
                                                     const char *ip_address),
                                     void *callback_data);
+    struct t_hook *(*hook_connect_robustirc) (struct t_weechat_plugin *plugin,
+                                              const char *address,
+                                              int (*callback)(void *data,
+                                                              int status,
+                                                              const char *sessionid,
+                                                              const char *sessionauth,
+                                                              const char *error,
+                                                              const char *ip_address),
+                                              void *callback_data);
     struct t_hook *(*hook_print) (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
                                   const char *tags,
@@ -1442,6 +1451,11 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                    __gnutls_priorities,                 \
                                    __local_hostname,                    \
                                    __callback, __data)
+#define weechat_hook_connect_robustirc(__address,                       \
+                                       __callback, __data)              \
+       (weechat_plugin->hook_connect_robustirc)(weechat_plugin,         \
+			                                    __address,              \
+                                                __callback, __data)
 #define weechat_hook_print(__buffer, __tags, __msg, __strip__colors,    \
                            __callback, __data)                          \
     (weechat_plugin->hook_print)(weechat_plugin, __buffer, __tags,      \

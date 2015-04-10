@@ -63,6 +63,8 @@ irc_la_SOURCES = irc.c \
                  irc-protocol.h \
                  irc-raw.c \
                  irc-raw.h \
+                 irc-robustirc.c \
+                 irc-robustirc.h \
                  irc-redirect.c \
                  irc-redirect.h \
                  irc-sasl.c \
@@ -72,7 +74,7 @@ irc_la_SOURCES = irc.c \
                  irc-upgrade.c \
                  irc-upgrade.h
 
-irc_la_LDFLAGS = -module -no-undefined
+irc_la_LDFLAGS = -module -no-undefined -lyajl -lcurl
 irc_la_LIBADD  = $(IRC_LFLAGS) $(GCRYPT_LFLAGS) $(GNUTLS_LFLAGS)
 
 EXTRA_DIST = CMakeLists.txt

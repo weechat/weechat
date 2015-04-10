@@ -5677,7 +5677,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         else
         {
             weechat_printf (server->buffer,
-                            _("%s%s: command \"%s\" not found:"),
+                            "%s%s: command \"%s\" not found (lolwat):",
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
                             msg_command);
             weechat_printf (server->buffer,

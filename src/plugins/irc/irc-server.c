@@ -61,6 +61,7 @@
 #include "irc-notify.h"
 #include "irc-protocol.h"
 #include "irc-raw.h"
+#include "irc-robustirc.h"
 #include "irc-redirect.h"
 #include "irc-sasl.h"
 
@@ -113,6 +114,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "default_msg_part",     "WeeChat %v"          },
   { "default_msg_quit",     "WeeChat %v"          },
   { "notify",               ""                    },
+  { "robustirc",            ""                    },
 };
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
@@ -1050,6 +1052,8 @@ irc_server_alloc (const char *name)
     new_server->buffer_as_string = NULL;
     new_server->channels = NULL;
     new_server->last_channel = NULL;
+    new_server->robustirc_sessionid = NULL;
+    new_server->robustirc_sessionauth = NULL;
 
     /* create options with null value */
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
@@ -1853,6 +1857,9 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
         return 0;
     }
 
+    if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_ROBUSTIRC))
+        return irc_robustirc_send(server, buffer, size_buf);
+
 #ifdef HAVE_GNUTLS
     if (server->ssl_connected)
         rc = gnutls_record_send (server->gnutls_sess, buffer, size_buf);
@@ -2504,7 +2511,7 @@ irc_server_msgq_flush ()
         if (irc_recv_msgq->data)
         {
             /* read message only if connection was not lost */
-            if (irc_recv_msgq->server->sock != -1)
+            if (irc_recv_msgq->server->sock != -1 || IRC_SERVER_OPTION_BOOLEAN(irc_recv_msgq->server, IRC_SERVER_OPTION_ROBUSTIRC))
             {
                 ptr_data = irc_recv_msgq->data;
                 while (ptr_data[0] == ' ')
@@ -3360,6 +3367,51 @@ irc_server_switch_address (struct t_irc_server *server, int connection)
     }
 }
 
+int
+irc_server_connect_robustirc_cb (void *data, int status,
+		const char *sessionid, const char *sessionauth,
+                       const char *error, const char *ip_address)
+{
+    struct t_irc_server *server;
+    const char *proxy;
+
+    server = (struct t_irc_server *)data;
+
+    proxy = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY);
+
+    server->hook_connect = NULL;
+
+    switch (status)
+    {
+        case WEECHAT_HOOK_CONNECT_OK:
+            /* set socket and IP */
+            //server->sock = sock;
+			server->robustirc_sessionid = strdup(sessionid);
+			server->robustirc_sessionauth = strdup(sessionauth);
+            if (server->current_ip)
+                free (server->current_ip);
+            server->current_ip = (ip_address) ? strdup (ip_address) : NULL;
+            weechat_printf (
+                server->buffer,
+                "%s%s: connected to %s (%s)",
+                weechat_prefix ("network"),
+                IRC_PLUGIN_NAME,
+                server->current_address,
+                (server->current_ip) ? server->current_ip : "?");
+            //server->hook_fd = weechat_hook_fd (server->sock,
+            //                                   1, 0, 0,
+            //                                   &irc_server_recv_cb,
+            //                                   server);
+            /* login to server */
+            irc_server_login (server);
+            break;
+		// TODO: error handling
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+
 /*
  * Reads connection status.
  */
@@ -3387,7 +3439,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc, int sock,
             server->current_ip = (ip_address) ? strdup (ip_address) : NULL;
             weechat_printf (
                 server->buffer,
-                _("%s%s: connected to %s/%d (%s)"),
+                "%s%s: connected to %s/%d (%s) lolwat",
                 weechat_prefix ("network"),
                 IRC_PLUGIN_NAME,
                 server->current_address,
@@ -4365,36 +4417,46 @@ irc_server_connect (struct t_irc_server *server)
     if (weechat_config_boolean (irc_config_look_buffer_open_before_autojoin))
         irc_server_autojoin_create_buffers (server);
 
-    /* init SSL if asked and connect */
-    server->ssl_connected = 0;
+	if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_ROBUSTIRC))
+	{
+		// TODO: integrate this into the log messages above
+		weechat_log_printf (
+				_("(robustirc)"));
+		irc_robustirc_connect (server, server->current_address, &irc_server_connect_robustirc_cb, server);
+	}
+	else
+	{
+		/* init SSL if asked and connect */
+		server->ssl_connected = 0;
 #ifdef HAVE_GNUTLS
-    if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL))
-        server->ssl_connected = 1;
-    server->hook_connect = weechat_hook_connect (
-        proxy,
-        server->current_address,
-        server->current_port,
-        proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
-        server->current_retry,
-        (server->ssl_connected) ? &server->gnutls_sess : NULL,
-        (server->ssl_connected) ? irc_server_gnutls_callback : NULL,
-        IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES),
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
-        &irc_server_connect_cb,
-        server);
+		if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL))
+			server->ssl_connected = 1;
+		server->hook_connect = weechat_hook_connect (
+			proxy,
+			server->current_address,
+			server->current_port,
+			proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+			server->current_retry,
+			(server->ssl_connected) ? &server->gnutls_sess : NULL,
+			(server->ssl_connected) ? irc_server_gnutls_callback : NULL,
+			IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
+			IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES),
+			IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
+			&irc_server_connect_cb,
+			server);
 #else
-    server->hook_connect = weechat_hook_connect (
-        proxy,
-        server->current_address,
-        server->current_port,
-        proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
-        server->current_retry,
-        NULL, NULL, 0, NULL,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
-        &irc_server_connect_cb,
-        server);
+		server->hook_connect = weechat_hook_connect (
+			proxy,
+			server->current_address,
+			server->current_port,
+			proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+			server->current_retry,
+			NULL, NULL, 0, NULL,
+			IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
+			&irc_server_connect_cb,
+			server);
 #endif
+	}
 
     /* send signal "irc_server_connecting" with server name */
     (void) weechat_hook_signal_send ("irc_server_connecting",
@@ -5197,6 +5259,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ipv6",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6)))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "robustirc",
+                                           IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_ROBUSTIRC)))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ssl",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)))
