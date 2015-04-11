@@ -270,6 +270,53 @@ weechat_parse_args (int argc, char *argv[])
 }
 
 /*
+ * Helper function for weechat_create_home_dir.
+ * Expands and assigns given string to weechat_home
+ */
+
+void
+weechat_create_home_dir_set_path (char* local_weechat_home)
+{
+    char *ptr_home;
+    int dir_length;
+
+    if (local_weechat_home[0] == '~')
+    {
+        /* replace leading '~' by $HOME */
+        ptr_home = getenv ("HOME");
+        if (!ptr_home)
+        {
+            string_iconv_fprintf (stderr,
+                                  _("Error: unable to get HOME directory\n"));
+            weechat_shutdown (EXIT_FAILURE, 0);
+            /* make C static analyzer happy (never executed) */
+            return;
+        }
+        dir_length = strlen (ptr_home) + strlen (local_weechat_home + 1) + 1;
+        weechat_home = malloc (dir_length);
+        if (weechat_home)
+        {
+            snprintf (weechat_home, dir_length,
+                      "%s%s", ptr_home, local_weechat_home + 1);
+        }
+    }
+    else
+    {
+        weechat_home = strdup (local_weechat_home);
+    }
+
+    if (!weechat_home)
+    {
+        string_iconv_fprintf (stderr,
+                              _("Error: not enough memory for home "
+                                "directory\n"));
+        weechat_shutdown (EXIT_FAILURE, 0);
+        /* make C static analyzer happy (never executed) */
+        return;
+    }
+}
+
+/*
  * Creates WeeChat home directory (by default ~/.weechat).
  *
  * Any error in this function is fatal: WeeChat can not run without a home
@@ -279,12 +326,26 @@ weechat_parse_args (int argc, char *argv[])
 void
 weechat_create_home_dir ()
 {
-    char *ptr_home, *config_weechat_home = WEECHAT_HOME;
-    int dir_length;
+    char *ptr_weechat_home, *config_weechat_home;
     struct stat statinfo;
 
+    /* weechat home is not set yet. Look for environment variable WEECHAT_HOME */
     if (!weechat_home)
     {
+        ptr_weechat_home = getenv ("WEECHAT_HOME");
+
+        /* Proceed only if environment variable WEECHAT_HOME is set to some value */
+        if (ptr_weechat_home && strlen (ptr_weechat_home) != 0)
+        {
+            weechat_create_home_dir_set_path (ptr_weechat_home);
+        }
+    }
+
+    /* If weechat_home is still not set, try to use compile time default */
+    if (!weechat_home)
+    {
+        config_weechat_home = WEECHAT_HOME;
+
         if (strlen (config_weechat_home) == 0)
         {
             string_iconv_fprintf (stderr,
@@ -295,40 +356,7 @@ weechat_create_home_dir ()
             return;
         }
 
-        if (config_weechat_home[0] == '~')
-        {
-            /* replace leading '~' by $HOME */
-            ptr_home = getenv ("HOME");
-            if (!ptr_home)
-            {
-                string_iconv_fprintf (stderr,
-                                      _("Error: unable to get HOME directory\n"));
-                weechat_shutdown (EXIT_FAILURE, 0);
-                /* make C static analyzer happy (never executed) */
-                return;
-            }
-            dir_length = strlen (ptr_home) + strlen (config_weechat_home + 1) + 1;
-            weechat_home = malloc (dir_length);
-            if (weechat_home)
-            {
-                snprintf (weechat_home, dir_length,
-                          "%s%s", ptr_home, config_weechat_home + 1);
-            }
-        }
-        else
-        {
-            weechat_home = strdup (config_weechat_home);
-        }
-
-        if (!weechat_home)
-        {
-            string_iconv_fprintf (stderr,
-                                  _("Error: not enough memory for home "
-                                    "directory\n"));
-            weechat_shutdown (EXIT_FAILURE, 0);
-            /* make C static analyzer happy (never executed) */
-            return;
-        }
+        weechat_create_home_dir_set_path (config_weechat_home);
     }
 
     /* if home already exists, it has to be a directory */
