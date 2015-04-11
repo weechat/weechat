@@ -912,6 +912,16 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"WeeChat ${info:version}"`)
 
+* [[option_weechat.look.word_chars_highlight]] *weechat.look.word_chars_highlight*
+** Beschreibung: `comma-separated list of chars (or range of chars) that are considered part or words for highlights; each item can be a single char, a range of chars (format: a-z), a class of wide character (for example "alnum", see man wctype); a "!" before the item makes it negative (ie the char is NOT considered part of words); the value "*" matches any char; unicode chars are allowed with the format \u1234, for example \u00A0 for unbreakable space (see /help print for supported formats)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"!\u00A0,-,_,|,alnum"`)
+
+* [[option_weechat.look.word_chars_input]] *weechat.look.word_chars_input*
+** Beschreibung: `comma-separated list of chars (or range of chars) that are considered part or words for command line; each item can be a single char, a range of chars (format: a-z), a class of wide character (for example "alnum", see man wctype); a "!" before the item makes it negative (ie the char is NOT considered part of words); the value "*" matches any char; unicode chars are allowed with the format \u1234, for example \u00A0 for unbreakable space (see /help print for supported formats)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"!\u00A0,-,_,|,alnum"`)
+
 * [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
 ** Beschreibung: `Zeitüberschreitung (in Sekunden) für eine Verbindung zu einem entfernten Rechner (mittels einem Kindprozess)`
 ** Typ: integer

@@ -747,32 +747,89 @@ string_convert_escaped_chars (const char *string)
 /*
  * Checks if first char of string is a "word char".
  *
+ * The word chars are customizable with options "weechat.look.word_chars_*".
+ *
  * Returns:
  *   1: first char is a word char
  *   0: first char is not a word char
  */
 
 int
-string_is_word_char (const char *string)
+string_is_word_char (const char *string,
+                     struct t_config_look_word_char_item *word_chars,
+                     int word_chars_count)
 {
-    wint_t c = utf8_wide_char (string);
+    wint_t c;
+    int i, match;
+
+    c = utf8_wide_char (string);
 
     if (c == WEOF)
         return 0;
 
-    if (iswalnum (c))
-        return 1;
-
-    switch (c)
+    for (i = 0; i < word_chars_count; i++)
     {
-        case '-':
-        case '_':
-        case '|':
-            return 1;
+        if (word_chars[i].wc_class != (wctype_t)0)
+        {
+            match = iswctype (c, word_chars[i].wc_class);
+        }
+        else
+        {
+            if ((word_chars[i].char1 == 0)
+                && (word_chars[i].char2 == 0))
+            {
+                match = 1;
+            }
+            else
+            {
+                match = ((c >= word_chars[i].char1) &&
+                         (c <= word_chars[i].char2));
+            }
+        }
+        if (match)
+            return (word_chars[i].exclude) ? 0 : 1;
     }
 
-    /* not a 'word char' */
+    /* not a word char */
     return 0;
+}
+
+/*
+ * Checks if first char of string is a "word char" (for highlight).
+ *
+ * The word chars for highlights are customizable with option
+ * "weechat.look.word_chars_highlight".
+ *
+ * Returns:
+ *   1: first char is a word char
+ *   0: first char is not a word char
+ */
+
+int
+string_is_word_char_highlight (const char *string)
+{
+    return string_is_word_char (string,
+                                config_word_chars_highlight,
+                                config_word_chars_highlight_count);
+}
+
+/*
+ * Checks if first char of string is a "word char" (for input).
+ *
+ * The word chars for input are customizable with option
+ * "weechat.look.word_chars_input".
+ *
+ * Returns:
+ *   1: first char is a word char
+ *   0: first char is not a word char
+ */
+
+int
+string_is_word_char_input (const char *string)
+{
+    return string_is_word_char (string,
+                                config_word_chars_input,
+                                config_word_chars_input_count);
 }
 
 /*
@@ -1004,8 +1061,8 @@ string_has_highlight (const char *string, const char *highlight_words)
                 if (!match_pre)
                     match_pre = match - 1;
                 match_post = match + length;
-                startswith = ((match == msg) || (!string_is_word_char (match_pre)));
-                endswith = ((!match_post[0]) || (!string_is_word_char (match_post)));
+                startswith = ((match == msg) || (!string_is_word_char_highlight (match_pre)));
+                endswith = ((!match_post[0]) || (!string_is_word_char_highlight (match_post)));
                 if ((wildcard_start && wildcard_end) ||
                     (!wildcard_start && !wildcard_end &&
                      startswith && endswith) ||
@@ -1063,13 +1120,13 @@ string_has_highlight_regex_compiled (const char *string, regex_t *regex)
         if (!startswith)
         {
             match_pre = utf8_prev_char (string, string + regex_match.rm_so);
-            startswith = !string_is_word_char (match_pre);
+            startswith = !string_is_word_char_highlight (match_pre);
         }
         endswith = 0;
         if (startswith)
         {
             endswith = ((regex_match.rm_eo == (int)strlen (string))
-                        || !string_is_word_char (string + regex_match.rm_eo));
+                        || !string_is_word_char_highlight (string + regex_match.rm_eo));
         }
         if (startswith && endswith)
             return 1;

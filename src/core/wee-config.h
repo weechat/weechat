@@ -22,6 +22,7 @@
 #define WEECHAT_CONFIG_H 1
 
 #include <regex.h>
+#include <wctype.h>
 #include "wee-config-file.h"
 
 struct t_gui_buffer;
@@ -103,6 +104,14 @@ enum t_config_look_save_layout_on_exit
     CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_BUFFERS,
     CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_WINDOWS,
     CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_ALL,
+};
+
+struct t_config_look_word_char_item
+{
+    char exclude;                      /* 1 if char is NOT a word char      */
+    wctype_t wc_class;                 /* class of wide characters (wctype) */
+    wint_t char1;                      /* first char of range               */
+    wint_t char2;                      /* second char of range              */
 };
 
 extern struct t_config_file *weechat_config_file;
@@ -215,6 +224,8 @@ extern struct t_config_option *config_look_window_auto_zoom;
 extern struct t_config_option *config_look_window_separator_horizontal;
 extern struct t_config_option *config_look_window_separator_vertical;
 extern struct t_config_option *config_look_window_title;
+extern struct t_config_option *config_look_word_chars_highlight;
+extern struct t_config_option *config_look_word_chars_input;
 
 extern struct t_config_option *config_color_bar_more;
 extern struct t_config_option *config_color_chat;
@@ -315,6 +326,10 @@ extern int config_num_highlight_tags;
 extern char **config_plugin_extensions;
 extern int config_num_plugin_extensions;
 extern char config_tab_spaces[];
+extern struct t_config_look_word_char_item *config_word_chars_highlight;
+extern int config_word_chars_highlight_count;
+extern struct t_config_look_word_char_item *config_word_chars_input;
+extern int config_word_chars_input_count;
 
 extern struct t_config_option *config_weechat_debug_get (const char *plugin_name);
 extern int config_weechat_debug_set (const char *plugin_name,

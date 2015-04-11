@@ -17,6 +17,23 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file 'ChangeLog.asciidoc' in sources).
 
 
+== Version 1.2 (under dev)
+
+The word chars are now customizable with two options:
+
+* weechat.look.word_chars_highlight
+* weechat.look.word_chars_input
+
+The behavior has changed for command line: now any non-word char is used as
+delimiter for keys to move to previous/next word or delete previous/next word.
+
+You can restore the old behavior (only use spaces as delimiters) with this
+command:
+
+----
+/set weechat.look.word_chars_input "!\u00A0,!\x20,*"
+----
+
 == Version 1.1.1 (2015-01-25)
 
 Bug fix and maintenance release.

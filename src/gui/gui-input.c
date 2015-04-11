@@ -814,19 +814,19 @@ gui_input_delete_previous_word (struct t_gui_buffer *buffer)
         start = utf8_add_offset (buffer->input_buffer,
                                  buffer->input_buffer_pos - 1);
         string = start;
-        while (string && (string[0] == ' '))
+        while (string && !string_is_word_char_input (string))
         {
             string = utf8_prev_char (buffer->input_buffer, string);
         }
         if (string)
         {
-            while (string && (string[0] != ' '))
+            while (string && string_is_word_char_input (string))
             {
                 string = utf8_prev_char (buffer->input_buffer, string);
             }
             if (string)
             {
-                while (string && (string[0] == ' '))
+                while (string && !string_is_word_char_input (string))
                 {
                     string = utf8_prev_char (buffer->input_buffer, string);
                 }
@@ -875,7 +875,7 @@ gui_input_delete_next_word (struct t_gui_buffer *buffer)
         length_deleted = 0;
         while (string[0])
         {
-            if ((string[0] == ' ') && (string > start))
+            if (!string_is_word_char_input (string) && (string > start))
                 break;
             string = utf8_next_char (string);
             length_deleted++;
@@ -1087,13 +1087,13 @@ gui_input_move_previous_word (struct t_gui_buffer *buffer)
     {
         pos = utf8_add_offset (buffer->input_buffer,
                                buffer->input_buffer_pos - 1);
-        while (pos && (pos[0] == ' '))
+        while (pos && !string_is_word_char_input (pos))
         {
             pos = utf8_prev_char (buffer->input_buffer, pos);
         }
         if (pos)
         {
-            while (pos && (pos[0] != ' '))
+            while (pos && string_is_word_char_input (pos))
             {
                 pos = utf8_prev_char (buffer->input_buffer, pos);
             }
@@ -1126,13 +1126,13 @@ gui_input_move_next_word (struct t_gui_buffer *buffer)
     {
         pos = utf8_add_offset (buffer->input_buffer,
                                buffer->input_buffer_pos);
-        while (pos[0] && (pos[0] == ' '))
+        while (pos[0] && !string_is_word_char_input (pos))
         {
             pos = utf8_next_char (pos);
         }
         if (pos[0])
         {
-            while (pos[0] && (pos[0] != ' '))
+            while (pos[0] && string_is_word_char_input (pos))
             {
                 pos = utf8_next_char (pos);
             }

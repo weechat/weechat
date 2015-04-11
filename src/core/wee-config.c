@@ -178,6 +178,8 @@ struct t_config_option *config_look_window_auto_zoom;
 struct t_config_option *config_look_window_separator_horizontal;
 struct t_config_option *config_look_window_separator_vertical;
 struct t_config_option *config_look_window_title;
+struct t_config_option *config_look_word_chars_highlight;
+struct t_config_option *config_look_word_chars_input;
 
 /* config, colors section */
 
@@ -292,6 +294,10 @@ int config_num_highlight_tags = 0;
 char **config_plugin_extensions = NULL;
 int config_num_plugin_extensions = 0;
 char config_tab_spaces[TAB_MAX_WIDTH + 1];
+struct t_config_look_word_char_item *config_word_chars_highlight = NULL;
+int config_word_chars_highlight_count = 0;
+struct t_config_look_word_char_item *config_word_chars_input = NULL;
+int config_word_chars_input_count = 0;
 
 
 /*
@@ -379,6 +385,131 @@ config_change_window_title (void *data, struct t_config_option *option)
     {
         gui_window_set_title (CONFIG_STRING(config_look_window_title));
     }
+}
+
+/*
+ * Sets word chars array with a word chars option.
+ */
+
+void
+config_set_word_chars (const char *str_word_chars,
+                       struct t_config_look_word_char_item **word_chars,
+                       int *word_chars_count)
+{
+    char **items, *item, *item2, *ptr_item, *pos;
+    int i;
+
+    if (*word_chars)
+    {
+        free (*word_chars);
+        *word_chars = NULL;
+    }
+    *word_chars_count = 0;
+
+    if (!str_word_chars || !str_word_chars[0])
+        return;
+
+    items = string_split (str_word_chars, ",", 0, 0, word_chars_count);
+    if (!items)
+    {
+        *word_chars_count = 0;
+        return;
+    }
+    if (*word_chars_count == 0)
+        return;
+
+    *word_chars = malloc (
+        sizeof ((*word_chars)[0]) * (*word_chars_count));
+    if (!*word_chars)
+        return;
+
+    for (i = 0; i < *word_chars_count; i++)
+    {
+        /* init structure */
+        (*word_chars)[i].exclude = 0;
+        (*word_chars)[i].wc_class = (wctype_t)0;
+        (*word_chars)[i].char1 = 0;
+        (*word_chars)[i].char2 = 0;
+
+        ptr_item = items[i];
+        if ((ptr_item[0] == '!') && ptr_item[1])
+        {
+            (*word_chars)[i].exclude = 1;
+            ptr_item++;
+        }
+
+        if (strcmp (ptr_item, "*") != 0)
+        {
+            pos = strchr (ptr_item, '-');
+            if (pos && (pos > ptr_item) && pos[1])
+            {
+                /* range: char1 -> char2 */
+                /* char1 */
+                item = string_strndup (ptr_item, pos - ptr_item);
+                item2 = string_convert_escaped_chars (item);
+                (*word_chars)[i].char1 = utf8_wide_char (item2);
+                if (item)
+                    free (item);
+                if (item2)
+                    free (item2);
+                /* char2 */
+                item = strdup (pos + 1);
+                item2 = string_convert_escaped_chars (item);
+                (*word_chars)[i].char2 = utf8_wide_char (item2);
+                if (item)
+                    free (item);
+                if (item2)
+                    free (item2);
+            }
+            else
+            {
+                /* one char or wide character class */
+                (*word_chars)[i].wc_class = wctype (ptr_item);
+                if ((*word_chars)[i].wc_class == (wctype_t)0)
+                {
+                    item = string_convert_escaped_chars (ptr_item);
+                    (*word_chars)[i].char1 = utf8_wide_char (item);
+                    (*word_chars)[i].char2 = (*word_chars)[i].char1;
+                    if (item)
+                        free (item);
+                }
+            }
+        }
+    }
+
+    string_free_split (items);
+}
+
+/*
+ * Callback for changes on option "weechat.look.word_chars_highlight".
+ */
+
+void
+config_change_word_chars_highlight (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    config_set_word_chars (CONFIG_STRING(config_look_word_chars_highlight),
+                           &config_word_chars_highlight,
+                           &config_word_chars_highlight_count);
+}
+
+/*
+ * Callback for changes on option "weechat.look.word_chars_input".
+ */
+
+void
+config_change_word_chars_input (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    config_set_word_chars (CONFIG_STRING(config_look_word_chars_input),
+                           &config_word_chars_input,
+                           &config_word_chars_input_count);
 }
 
 /*
@@ -2742,6 +2873,34 @@ config_weechat_init_options ()
            "(note: content is evaluated, see /help eval)"),
         NULL, 0, 0, "WeeChat ${info:version}", NULL, 0, NULL, NULL,
         &config_change_window_title, NULL, NULL, NULL);
+    config_look_word_chars_highlight = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "word_chars_highlight", "string",
+        N_("comma-separated list of chars (or range of chars) that are "
+           "considered part or words for highlights; "
+           "each item can be a single char, a range of chars (format: a-z), "
+           "a class of wide character (for example \"alnum\", "
+           "see man wctype); a \"!\" before the item makes it negative "
+           "(ie the char is NOT considered part of words); the value \"*\" "
+           "matches any char; unicode chars are allowed with the format "
+           "\\u1234, for example \\u00A0 for unbreakable space "
+           "(see /help print for supported formats)"),
+        NULL, 0, 0, "!\\u00A0,-,_,|,alnum", NULL, 0, NULL, NULL,
+        &config_change_word_chars_highlight, NULL, NULL, NULL);
+    config_look_word_chars_input = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "word_chars_input", "string",
+        N_("comma-separated list of chars (or range of chars) that are "
+           "considered part or words for command line; "
+           "each item can be a single char, a range of chars (format: a-z), "
+           "a class of wide character (for example \"alnum\", "
+           "see man wctype); a \"!\" before the item makes it negative "
+           "(ie the char is NOT considered part of words); the value \"*\" "
+           "matches any char; unicode chars are allowed with the format "
+           "\\u1234, for example \\u00A0 for unbreakable space "
+           "(see /help print for supported formats)"),
+        NULL, 0, 0, "!\\u00A0,-,_,|,alnum", NULL, 0, NULL, NULL,
+        &config_change_word_chars_input, NULL, NULL, NULL);
 
     /* palette */
     ptr_section = config_file_new_section (weechat_config_file, "palette",
@@ -3525,6 +3684,10 @@ config_weechat_init ()
         config_change_highlight_tags (NULL, NULL);
     if (!config_plugin_extensions)
         config_change_plugin_extension (NULL, NULL);
+    if (!config_word_chars_highlight)
+        config_change_word_chars_highlight (NULL, NULL);
+    if (!config_word_chars_input)
+        config_change_word_chars_input (NULL, NULL);
 
     return rc;
 }
@@ -3599,5 +3762,19 @@ config_weechat_free ()
         string_free_split (config_plugin_extensions);
         config_plugin_extensions = NULL;
         config_num_plugin_extensions = 0;
+    }
+
+    if (config_word_chars_highlight)
+    {
+        free (config_word_chars_highlight);
+        config_word_chars_highlight = NULL;
+        config_word_chars_highlight_count = 0;
+    }
+
+    if (config_word_chars_input)
+    {
+        free (config_word_chars_input);
+        config_word_chars_input = NULL;
+        config_word_chars_input_count = 0;
     }
 }

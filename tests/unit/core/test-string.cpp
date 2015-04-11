@@ -36,6 +36,9 @@ extern "C"
 #define ONE_GB (ONE_MB * 1000ULL)
 #define ONE_TB (ONE_GB * 1000ULL)
 
+#define WEE_IS_WORD_CHAR(__result, __str)                               \
+    LONGS_EQUAL(__result, string_is_word_char_highlight (__str));       \
+    LONGS_EQUAL(__result, string_is_word_char_input (__str));
 #define WEE_HAS_HL_STR(__result, __str, __words)                        \
     LONGS_EQUAL(__result, string_has_highlight (__str, __words));
 
@@ -415,23 +418,28 @@ TEST(String, ConvertEscapedChars)
 
 /*
  * Tests functions:
- *   string_is_word_char
+ *   string_is_word_char_highlight
+ *   string_is_word_char_input
  */
 
 TEST(String, IsWordChar)
 {
-    LONGS_EQUAL(0, string_is_word_char (NULL));
-    LONGS_EQUAL(0, string_is_word_char (""));
-    LONGS_EQUAL(0, string_is_word_char ("&abc"));
-    LONGS_EQUAL(0, string_is_word_char ("+abc"));
-    LONGS_EQUAL(0, string_is_word_char ("$abc"));
-    LONGS_EQUAL(0, string_is_word_char ("*abc"));
-    LONGS_EQUAL(0, string_is_word_char ("/abc"));
+    WEE_IS_WORD_CHAR(0, NULL);
+    WEE_IS_WORD_CHAR(0, "");
+    WEE_IS_WORD_CHAR(0, " abc");       /* space */
+    WEE_IS_WORD_CHAR(0, "\u00A0abc");  /* unbreakable space */
+    WEE_IS_WORD_CHAR(0, "&abc");
+    WEE_IS_WORD_CHAR(0, "+abc");
+    WEE_IS_WORD_CHAR(0, "$abc");
+    WEE_IS_WORD_CHAR(0, "*abc");
+    WEE_IS_WORD_CHAR(0, "/abc");
+    WEE_IS_WORD_CHAR(0, "\\abc");
 
-    LONGS_EQUAL(1, string_is_word_char ("abc"));
-    LONGS_EQUAL(1, string_is_word_char ("-abc"));
-    LONGS_EQUAL(1, string_is_word_char ("_abc"));
-    LONGS_EQUAL(1, string_is_word_char ("|abc"));
+    WEE_IS_WORD_CHAR(1, "abc");
+    WEE_IS_WORD_CHAR(1, "1abc");
+    WEE_IS_WORD_CHAR(1, "-abc");
+    WEE_IS_WORD_CHAR(1, "_abc");
+    WEE_IS_WORD_CHAR(1, "|abc");
 }
 
 /*
@@ -531,11 +539,16 @@ TEST(String, Highlight)
     WEE_HAS_HL_STR(0, "", "");
     WEE_HAS_HL_STR(0, "test", "");
     WEE_HAS_HL_STR(0, "", "test");
+    WEE_HAS_HL_STR(0, "test-here", "test");
+    WEE_HAS_HL_STR(0, "this is a test here", "abc,def");
     WEE_HAS_HL_STR(1, "test", "test");
     WEE_HAS_HL_STR(1, "this is a test", "test");
     WEE_HAS_HL_STR(1, "test here", "test");
+    WEE_HAS_HL_STR(1, "test: here", "test");
+    WEE_HAS_HL_STR(1, "test : here", "test");
+    WEE_HAS_HL_STR(1, "test\u00A0here", "test");   /* unbreakable space */
+    WEE_HAS_HL_STR(1, "test\u00A0:here", "test");  /* unbreakable space */
     WEE_HAS_HL_STR(1, "this is a test here", "test");
-    WEE_HAS_HL_STR(0, "this is a test here", "abc,def");
     WEE_HAS_HL_STR(1, "this is a test here", "abc,test");
 
     /*
