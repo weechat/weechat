@@ -26,6 +26,8 @@ To enable aspell on all buffers, use option "default_dict", then enable aspell, 
   /set aspell.check.default_dict "en"
   /aspell enable
 
+To display a list of suggestions in a bar, use item "aspell_suggest".
+
 Default key to toggle aspell is alt-s.
 ----
 

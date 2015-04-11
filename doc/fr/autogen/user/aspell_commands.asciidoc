@@ -26,6 +26,8 @@ Pour activer aspell sur tous les tampons, utilisez l'option "default_dict", par 
   /set aspell.check.default_dict "en"
   /aspell enable
 
+Pour afficher une liste des suggestions dans une barre, utilisez l'objet "aspell_suggest".
+
 La touche par défaut pour activer/désactiver aspell est alt-s.
 ----
 

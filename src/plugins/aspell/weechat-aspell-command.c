@@ -488,6 +488,9 @@ weechat_aspell_command_init ()
            "  /set aspell.check.default_dict \"en\"\n"
            "  /aspell enable\n"
            "\n"
+           "To display a list of suggestions in a bar, use item "
+           "\"aspell_suggest\".\n"
+           "\n"
            "Default key to toggle aspell is alt-s."),
         "enable"
         " || disable"
