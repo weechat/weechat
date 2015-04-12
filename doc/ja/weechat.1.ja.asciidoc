@@ -16,10 +16,9 @@ weechat - 拡張可能なチャットクライアント
 
 == 説明
 
-// TRANSLATION MISSING
 WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライアントです。
 高速で軽量、多くのオペレーティングシステムで動くように設計されています。
-It is highly customizable and extensible with scripts.
+スクリプトを使って高度にカスタマイズと拡張可能です。
 
 == オプション
 
