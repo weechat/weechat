@@ -913,12 +913,12 @@
 ** valeurs: toute chaîne (valeur par défaut: `"WeeChat ${info:version}"`)
 
 * [[option_weechat.look.word_chars_highlight]] *weechat.look.word_chars_highlight*
-** description: `liste de caractères séparés pas des virgules (ou intervalle de caractères) qui sont considérés comme faisant partie des mots pour les highlights ; chaque élément peut être un simple caractère, un intervalle de caractères (format : a-z), une classe de caractère large (par exemple "alnum", voir man wctype) ; un "!" avant un élément le rend négatif (c'est-à-dire le caractère ne fait PAS partie des mots) ; la valeur "*" correspond à n'importe quel caractère ; les caractères unicode sont autorisés avec le format \u1234, par exemple \u00A0 pour l'espace insécable (voir /help print pour les formats supportés)`
+** description: `liste de caractères (ou intervalle de caractères) séparés pas des virgules qui sont considérés comme faisant partie des mots pour les highlights ; chaque élément peut être un simple caractère, un intervalle de caractères (format : a-z), une classe de caractère large (par exemple "alnum", voir man wctype) ; un "!" avant un élément le rend négatif (c'est-à-dire le caractère ne fait PAS partie des mots) ; la valeur "*" correspond à n'importe quel caractère ; les caractères unicode sont autorisés avec le format \u1234, par exemple \u00A0 pour l'espace insécable (voir /help print pour les formats supportés)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"!\u00A0,-,_,|,alnum"`)
 
 * [[option_weechat.look.word_chars_input]] *weechat.look.word_chars_input*
-** description: `liste de caractères séparés pas des virgules (ou intervalle de caractères) qui sont considérés comme faisant partie des mots pour la ligne de commande ; chaque élément peut être un simple caractère, un intervalle de caractères (format : a-z), une classe de caractère large (par exemple "alnum", voir man wctype) ; un "!" avant un élément le rend négatif (c'est-à-dire le caractère ne fait PAS partie des mots) ; la valeur "*" correspond à n'importe quel caractère ; les caractères unicode sont autorisés avec le format \u1234, par exemple \u00A0 pour l'espace insécable (voir /help print pour les formats supportés)`
+** description: `liste de caractères (ou intervalle de caractères) séparés pas des virgules qui sont considérés comme faisant partie des mots pour la ligne de commande ; chaque élément peut être un simple caractère, un intervalle de caractères (format : a-z), une classe de caractère large (par exemple "alnum", voir man wctype) ; un "!" avant un élément le rend négatif (c'est-à-dire le caractère ne fait PAS partie des mots) ; la valeur "*" correspond à n'importe quel caractère ; les caractères unicode sont autorisés avec le format \u1234, par exemple \u00A0 pour l'espace insécable (voir /help print pour les formats supportés)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"!\u00A0,-,_,|,alnum"`)
 
