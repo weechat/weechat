@@ -913,12 +913,12 @@
 ** 値: 未制約文字列 (デフォルト値: `"WeeChat ${info:version}"`)
 
 * [[option_weechat.look.word_chars_highlight]] *weechat.look.word_chars_highlight*
-** 説明: `comma-separated list of chars (or range of chars) that are considered part or words for highlights; each item can be a single char, a range of chars (format: a-z), a class of wide character (for example "alnum", see man wctype); a "!" before the item makes it negative (ie the char is NOT considered part of words); the value "*" matches any char; unicode chars are allowed with the format \u1234, for example \u00A0 for unbreakable space (see /help print for supported formats)`
+** 説明: `ハイライトする部分または文字と見なす文字 (または文字範囲) のカンマ区切りリスト; それぞれの要素は単一文字、文字範囲 (フォーマット: a-z)、全角文字のクラス (例えば "alnum"、wctype の man 参照); 要素の前の "!" は否定を意味します (この文字は単語の一部とみなされません); "*" は任意の文字にマッチします; unicode 文字はフォーマット \u1234 で使うことができます、例えば \u00A0 は固定スペースを意味します (サポートされるフォーマットは /help print を参照)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"!\u00A0,-,_,|,alnum"`)
 
 * [[option_weechat.look.word_chars_input]] *weechat.look.word_chars_input*
-** 説明: `comma-separated list of chars (or range of chars) that are considered part or words for command line; each item can be a single char, a range of chars (format: a-z), a class of wide character (for example "alnum", see man wctype); a "!" before the item makes it negative (ie the char is NOT considered part of words); the value "*" matches any char; unicode chars are allowed with the format \u1234, for example \u00A0 for unbreakable space (see /help print for supported formats)`
+** 説明: `コマンドラインの一部または単語と見なす文字 (または文字範囲) のカンマ区切りリスト; それぞれの要素は単一文字、文字範囲 (フォーマット: a-z)、全角文字のクラス (例えば "alnum"、wctype の man 参照); 要素の前の "!" は否定を意味します (この文字は単語の一部とみなされません); "*" は任意の文字にマッチします; unicode 文字はフォーマット \u1234 で使うことができます、例えば \u00A0 は固定スペースを意味します (サポートされるフォーマットは /help print を参照)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"!\u00A0,-,_,|,alnum"`)
 

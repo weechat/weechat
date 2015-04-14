@@ -3754,7 +3754,7 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
     char *string, **nicks;
-    int i, arg_nick, arg_text, num_nicks;
+    int i, arg_nick, arg_text, num_nicks, noswitch;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -3763,14 +3763,39 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
 
     WEECHAT_COMMAND_MIN_ARGS(2, "");
 
+    noswitch = 0;
     arg_nick = 1;
     arg_text = 2;
-    if ((argc >= 4) && (weechat_strcasecmp (argv[1], "-server") == 0))
+
+    for (i = 1; i < argc; i++)
     {
-        ptr_server = irc_server_search (argv[2]);
-        arg_nick = 3;
-        arg_text = 4;
+        if (weechat_strcasecmp (argv[i], "-server") == 0)
+        {
+            if (argc <= i + 1)
+                WEECHAT_COMMAND_ERROR;
+            ptr_server = irc_server_search (argv[i + 1]);
+            if (!ptr_server)
+                WEECHAT_COMMAND_ERROR;
+            arg_nick = i + 2;
+            arg_text = i + 3;
+            i++;
+        }
+        else if (weechat_strcasecmp (argv[i], "-noswitch") == 0)
+        {
+            noswitch = 1;
+            arg_nick = i + 1;
+            arg_text = i + 2;
+        }
+        else
+        {
+            arg_nick = i;
+            arg_text = i + 1;
+            break;
+        }
     }
+
+    if (arg_nick >= argc)
+        WEECHAT_COMMAND_ERROR;
 
     IRC_COMMAND_CHECK_SERVER("query", 1);
 
@@ -3786,7 +3811,9 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
         {
             ptr_channel = irc_channel_new (ptr_server,
                                            IRC_CHANNEL_TYPE_PRIVATE,
-                                           nicks[i], 1, 0);
+                                           nicks[i],
+                                           (noswitch) ? 0 : 1,
+                                           0);
             if (!ptr_channel)
             {
                 weechat_printf (
@@ -3799,7 +3826,8 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
         if (ptr_channel)
         {
             /* switch to buffer */
-            weechat_buffer_set (ptr_channel->buffer, "display", "1");
+            if (!noswitch)
+                weechat_buffer_set (ptr_channel->buffer, "display", "1");
 
             /* display text if given */
             if (argv_eol[arg_text])
@@ -6395,11 +6423,12 @@ irc_command_init ()
     weechat_hook_command (
         "query",
         N_("send a private message to a nick"),
-        N_("[-server <server>] <nick>[,<nick>...] [<text>]"),
-        N_("server: send to this server (internal name)\n"
-           "  nick: nick\n"
-           "  text: text to send"),
-        "-server %(irc_servers) %(nicks)"
+        N_("[-noswitch] [-server <server>] <nick>[,<nick>...] [<text>]"),
+        N_("-noswitch: do not switch to new buffer\n"
+           "   server: send to this server (internal name)\n"
+           "     nick: nick\n"
+           "     text: text to send"),
+        "-noswitch|-server %(irc_servers) %(nicks)"
         " || %(nicks)",
         &irc_command_query, NULL);
     weechat_hook_command (

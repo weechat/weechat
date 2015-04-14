@@ -551,11 +551,12 @@ démon2 : faire suivre le message à ce démon
 [command]*`query`* envoyer un message privé à un pseudo::
 
 ----
-/query  [-server <serveur>] <pseudo>[,<pseudo>...] [<texte>]
+/query  [-noswitch] [-server <serveur>] <pseudo>[,<pseudo>...] [<texte>]
 
-serveur : envoyer à ce serveur (nom interne)
- pseudo : pseudo
-  texte : texte à envoyer
+-noswitch : ne pas basculer sur le nouveau tampon
+  serveur : envoyer à ce serveur (nom interne)
+   pseudo : pseudo
+    texte : texte à envoyer
 ----
 
 [[command_irc_quiet]]
