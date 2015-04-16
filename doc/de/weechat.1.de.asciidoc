@@ -17,10 +17,9 @@ weechat - der erweiterbare Chat Client
 
 == BESCHREIBUNG
 
-// TRANSLATION MISSING
 WeeChat (Wee Enhanced Environment for Chat) ist ein freier, schneller und
 schlanker Chat-Client der für unterschiedliche Betriebssysteme entwickelt wird.
-It is highly customizable and extensible with scripts.
+Durch Skripten ist das Hauptprogramm äußerst flexibel und erweiterbar.
 
 == OPTIONEN
 
@@ -31,8 +30,8 @@ include::cmdline_options.de.asciidoc[]
 Um eine vollständige Dokumentation der Optionen zu erhalten, siehe
 https://weechat.org/doc[WeeChat user's guide].
 
-Mittels der IRC Erweiterung kann man sich zu einen temporären Server, mittels einer URL,
-verbinden lassen:
+Mittels der IRC Erweiterung kann man sich zu einen temporären Server verbinden lassen,
+indem man eine URL verwendet:
 
     irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
 
@@ -96,7 +95,7 @@ Diese manpage wurde von Sébastien Helleu <flashcode@flashtux.org> geschrieben.
 
 == COPYRIGHT
 
-WeeChat ist programmiert von Sébastien Helleu und Beitragenden (eine vollständige Auflistung
+WeeChat wird programmiert von Sébastien Helleu und weiteren Beitragenden (eine vollständige Auflistung
 findet man in der AUTHORS.asciidoc Datei).
 
 Copyright (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>

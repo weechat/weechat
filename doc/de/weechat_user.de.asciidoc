@@ -71,10 +71,10 @@ Binärpakete sind für folgende Distributionen erhältlich:
 * Fedora Core: `yum install weechat`
 * Sourcemage: `cast weechat`
 
-zusätzliche Pakete können/sollten installiert werden. Zum Beispiel: weechat-plugins.
+zusätzliche Pakete können bzw. sollten installiert werden. Zum Beispiel: weechat-plugins.
 
 Für andere Distributionen schauen Sie bitte in die jeweilige Anleitung,
-wie Pakete installiert werden können.
+wie man Pakete installiert.
 
 [[source_package]]
 === Quellpakete
@@ -92,10 +92,9 @@ Unter OS X kann http://brew.sh/[Homebrew] verwendet werden:
 folgende Tabelle beschreibt, welche Pakete zwingend notwendig sind um WeeChat
 zu kompilieren und welche Pakete optional genutzt werden können.
 
-// TRANSLATION MISSING
 [width="100%",cols="5,^3,^3,^3,.^13",options="header"]
 |===
-| Paket ^(1)^ | Min version | Max version | benötigt | Funktion
+| Paket ^(1)^ | Min Version | Max Version | benötigt | Funktion
 
 | cmake | | | *ja* |
   Zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
@@ -331,9 +330,9 @@ $ ccmake ..
 
 [WARNING]
 Ausschließlich das Kompilieren mittels cmake wird offiziell unterstützt. Autotools
-sollte nur verwendet werden, falls man keine Möglichkeit hat, cmake zu nutzen. +
-Das Erstellen mittels autotools benötigt zusätzliche Pakete und es ist langsamer
-als cmake.
+sollte nur verwendet werden falls man keine Möglichkeit hat cmake zu nutzen. +
+Für die Erstellung mittels autotools werden zusätzliche Pakete benötigt und es ist
+zeitintensiver als cmake.
 
 * Installation in das Systemverzeichnis (benötigt 'root' Privilegien):
 
@@ -368,7 +367,7 @@ $ ./configure --help
 === Git Quellen
 
 Warnung: Git Quellen sollten nur von erfahrenen Nutzern verwendet werden. Eventuell lassen
-sich die Quellen nicht kompilieren oder der Code ist nicht stabil. Sie sind gewarnt!
+sich die Quellen nicht kompilieren oder der Code ist nicht stabil. Sie sind hiermit gewarnt!
 
 Um die Git Quellen zu beziehen nutzen Sie folgende Befehle:
 
@@ -381,7 +380,7 @@ Folgen Sie bitte der Anleitung zur Erstellung aus Quellpaketen (siehe <<source_p
 [[report_crashes]]
 === Abstürze melden
 
-Falls es zu einem Absturz von WeeChat gekommen ist und Sie diesen Fehler melden möchten:
+Falls WeeChat abgestürzt sein sollte und Sie diesen Fehler melden möchten:
 
 * kompilieren Sie WeeChat mit Debug-Information (oder installieren Sie das Binärpaket mit Debug-Information)
 * aktivieren Sie 'core' Dateien auf Ihrem System
@@ -396,7 +395,7 @@ Bei der Kompilierung mit cmake muss folgende Option gesetzt werden:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-Bei der Kompilierung mit autotools, ist debug standardmäßig aktiviert (`--with-debug=1`).
+Bei der Kompilierung mit autotools ist debug standardmäßig aktiviert (`--with-debug=1`).
 
 Wird ein Binärpaket genutzt dann muss zusätzlich das Paket 'weechat-dbg' installiert werden.
 
@@ -429,7 +428,7 @@ ulimit -c 200000
 [[gdb_backtrace]]
 ==== Rückverfolgung mit gdb
 
-Falls WeeChat abstürzen sollte wird auf Ihrem System eine 'core' bzw. 'core.12345' Datei
+Falls WeeChat abstürzen sollte, dann wird auf Ihrem System eine 'core' bzw. 'core.12345' Datei
 ('12345' ist die Prozess-Id) erzeugt.
 Diese Datei wird in dem Verzeichnis erzeugt aus welchem Sie WeeChat gestartet haben (dies
 ist *nicht* das Verzeichnis in welchem sich WeeChat befindet!).
@@ -441,8 +440,8 @@ in '/home/xxx/'. Nun wird gdb mit folgendem Befehl aufgerufen:
 gdb /usr/bin/weechat /home/xxx/core
 ----
 
-Nun startet man 'gdb' und führt den Befehl `bt full` innerhalb gdb aus um die Fehlermeldung
-auszugeben. Eine Fehlermeldung von gdb sieht z.B. wie folgt aus:
+Nun startet man 'gdb' und führt den Befehl `bt full` innerhalb der gdb Umgebung aus, um die
+Fehlermeldung auszugeben. Eine Fehlermeldung von gdb sieht z.B. wie folgt aus:
 
 ----
 (gdb) set logging file /tmp/crash.txt
@@ -612,13 +611,13 @@ andere Items die man nutzen kann (die aber nicht standardmäßig in einer Bar ak
 [[buffers_and_windows]]
 === Buffer und Fenster
 
-Ein 'Buffer' besteht aus einer Nummer, besitzt einem Namen, hat Zeilen die angezeigt
+Ein 'Buffer' setzt sich zusammen aus einer Nummer, besitzt einem Namen, hat Zeilen die angezeigt
 werden (und noch anderen Daten).
 
 Beispiele von Buffern:
 
-* Core Buffer (wird durch WeeChat beim Starten erstellt und kann nicht geschlossen werden!)
-* IRC Server  (hier werden die Nachrichten ausgegeben, die der Server verschickt)
+* Core Buffer (wird durch WeeChat beim Programmstart erstellt und kann nicht geschlossen werden!)
+* IRC Server  (hier werden die Nachrichten ausgegeben die der Server verschickt)
 * IRC Channel
 * IRC Privat  (wird auch Query-Buffer genannt)
 
@@ -626,7 +625,7 @@ Ein 'Fenster' ist ein Bildschirmbereich der Buffer darstellt. Es ist möglich
 den Bildschirm in mehrere Fenster aufzuteilen.
 
 Jedes Fenster stellt einen Buffer dar. Ein Buffer kann unsichtbar sein (er wird
-in einem Fenster nicht angezeigt). Oder ein Buffer wird durch ein oder mehrere Fenster
+in einem Fenster nicht angezeigt) oder ein Buffer wird durch ein oder mehrere Fenster
 angezeigt.
 
 Beispiele für eine horizontal Fensteraufteilung (`/window splith`):
@@ -724,7 +723,7 @@ Beispiele für eine vertikale und horizontale Fensteraufteilung:
 [[bars]]
 === Bars
 
-Eine 'Bar' ist ein Bereich, der neben dem Chatfenster, jedwede Art von Text enthalten kann.
+Eine 'Bar' ist ein Bereich der parallel, zum Chatfenster, jedwede Art von Text enthalten kann.
 
 Eine Bar kann mittels `weechat.bar.name.option` konfiguriert werden. Dabei steht `name`,
 für den Namen der Bar und `option` für die Option für diese Bar.
@@ -802,9 +801,9 @@ Aufzählung von Bar-Optionen:
 ==== Items
 
 Die Option 'items' ist ein String, mit einer Anzahl von Bar-Items. Diese werden
-durch Komma voneinander getrennt (auf dem Bildschirm wird das Komma durch ein
+durch Kommata voneinander getrennt (auf dem Bildschirm wird das Komma durch ein
 Leerzeichen ersetzt). Möchte man die Items ohne Leerzeichen darstellen, nutzt
-man ein "+", zwischen den Items.
+man ein "+" um die Items zu trennen.
 
 Eine Liste von Bar-Items kann man sich mit dem Befehl `/bar listitems` anzeigen lassen.
 
@@ -959,8 +958,8 @@ Gleiche Bedingungen, aber die Benutzerliste wird im Buffer '&bitlbee' immer ange
 === einfacher Anzeigemodus
 
 Ein vereinfachter Anzeigemodus, mit Namen "bare", kann aktiviert werden um
-überlange URLs ganz einfach mit der Maus anzuklicken oder um Text, mit der
-Maus, zu markieren.
+überlange URLs ganz einfach mit der Maus anzuklicken oder um Text mit der
+Maus zu markieren.
 
 Der vereinfachte Anzeigemodus hat folgende Funktionen:
 
@@ -969,11 +968,11 @@ Der vereinfachte Anzeigemodus hat folgende Funktionen:
   Status, Input, ...)
 * die Mausunterstützung ist deaktiviert (sofern sie aktiviert war): die Maus kann
   wie in einem Terminal genutzt werden um URLs anzuklicken oder Text zu markieren
-* ncurses wird nicht genutzt, deshalb werden URLs nicht am Ende der Zeile angeschnitten.
+* ncurses wird nicht genutzt, deshalb werden URLs am Ende der Zeile nicht abgeschnitten.
 
 Der Standardtastenbefehl um den vereinfachten Textmodus zu aktivieren ist key[alt-l],
-mit dem selben Tastenbefehl wird dieser Modus wieder beendet (es kann auch mit jeder
-beliegen Tasteneingabe der Modus beendet werden, siehe Option
+mit dem selben Tastenbefehl wird dieser Modus wieder beendet (dieser Modus kann auch
+mit jeder beliegen Tasteneingabe beendet werden, siehe Option
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
 
 Das Format für die Zeitanzeige kann mit folgender Option angepasst werden
