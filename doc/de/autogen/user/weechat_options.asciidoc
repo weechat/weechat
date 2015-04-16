@@ -913,12 +913,12 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"WeeChat ${info:version}"`)
 
 * [[option_weechat.look.word_chars_highlight]] *weechat.look.word_chars_highlight*
-** Beschreibung: `comma-separated list of chars (or range of chars) that are considered part or words for highlights; each item can be a single char, a range of chars (format: a-z), a class of wide character (for example "alnum", see man wctype); a "!" before the item makes it negative (ie the char is NOT considered part of words); the value "*" matches any char; unicode chars are allowed with the format \u1234, for example \u00A0 for unbreakable space (see /help print for supported formats)`
+** Beschreibung: `durch Kommata getrennte Liste von Zeichen (oder eine Auswahl von Zeichen) bei denen bei einem Highlight keine Worttrennung erfolgt; jeder Eintrag kann ein einzelnes Zeichen oder eine Auswahl von Zeichen sein (Format: a-z), eine Auswahl von Breitzeichen (wide character; zum Beispiel "alnum", siehe man wctype); beginnt das Item mit einem "!" wird die Auswahl umgekehrt (bedeutet, das Zeichen ist NICHT Bestandteil eines Wortes); das Zeichen "*" wird als Platzhalter verwendet; Unicode Zeichen müssen folgendes Format nutzen \u1234, zum Beispiel \u00A0 für geschütztes Leerzeichen (siehe /help print für unterstützte Formate)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"!\u00A0,-,_,|,alnum"`)
 
 * [[option_weechat.look.word_chars_input]] *weechat.look.word_chars_input*
-** Beschreibung: `comma-separated list of chars (or range of chars) that are considered part or words for command line; each item can be a single char, a range of chars (format: a-z), a class of wide character (for example "alnum", see man wctype); a "!" before the item makes it negative (ie the char is NOT considered part of words); the value "*" matches any char; unicode chars are allowed with the format \u1234, for example \u00A0 for unbreakable space (see /help print for supported formats)`
+** Beschreibung: `durch Kommata getrennte Liste von Zeichen (oder eine Auswahl von Zeichen) bei denen in der Eingabezeile keine Worttrennung erfolgt; jeder Eintrag kann ein einzelnes Zeichen oder eine Auswahl von Zeichen sein (Format: a-z), eine Auswahl von Breitzeichen (wide character; zum Beispiel "alnum", siehe man wctype); beginnt das Item mit einem "!" wird die Auswahl umgekehrt (bedeutet, das Zeichen ist NICHT Bestandteil eines Wortes); das Zeichen "*" wird als Platzhalter verwendet; Unicode Zeichen müssen folgendes Format nutzen \u1234, zum Beispiel \u00A0 für geschütztes Leerzeichen (siehe /help print für unterstützte Formate)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"!\u00A0,-,_,|,alnum"`)
 
