@@ -35,6 +35,7 @@
 
 #include "weechat.h"
 #include "wee-config-file.h"
+#include "wee-config.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
 #include "wee-infolist.h"
@@ -2358,7 +2359,11 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
 
     /* create file with default options if it does not exist */
     if (access (filename, F_OK) != 0)
+    {
+        if (strcmp (config_file->name, WEECHAT_CONFIG_NAME) == 0)
+            weechat_first_start = 1;
         config_file_write_internal (config_file, 1);
+    }
 
     /* read config file */
     config_file->file = fopen (filename, "r");

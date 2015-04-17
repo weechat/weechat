@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: add a welcome message on first WeeChat run (closes #318)
 * core: add options weechat.look.word_chars_{highlight|input}
   (closes #55, task #9459)
 * core: display a warning on startup if the locale can not be set (closes #373)

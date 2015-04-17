@@ -82,6 +82,7 @@
 int weechat_debug_core = 0;            /* debug level for core              */
 char *weechat_argv0 = NULL;            /* WeeChat binary file name (argv[0])*/
 int weechat_upgrading = 0;             /* =1 if WeeChat is upgrading        */
+int weechat_first_start = 0;           /* first start of WeeChat?           */
 time_t weechat_first_start_time = 0;   /* start time (used by /uptime cmd)  */
 int weechat_upgrade_count = 0;         /* number of /upgrade done           */
 struct timeval weechat_current_start_timeval; /* start time used to display */
