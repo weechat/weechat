@@ -242,6 +242,9 @@ trigger_hook (struct t_trigger *trigger)
     int i, argc, strip_colors;
     long interval, align_second, max_calls;
 
+    if (!weechat_config_boolean (trigger->options[TRIGGER_OPTION_ENABLED]))
+        return;
+
     trigger_unhook (trigger);
 
     argv = weechat_string_split (weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
@@ -850,12 +853,12 @@ trigger_new_with_options (const char *name, struct t_config_option **options)
                         weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
                         name);
     }
+
     trigger_split_command (weechat_config_string (new_trigger->options[TRIGGER_OPTION_COMMAND]),
                            &new_trigger->commands_count,
                            &new_trigger->commands);
 
-    if (weechat_config_boolean (new_trigger->options[TRIGGER_OPTION_ENABLED]))
-        trigger_hook (new_trigger);
+    trigger_hook (new_trigger);
 
     return new_trigger;
 }

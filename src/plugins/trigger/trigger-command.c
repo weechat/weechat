@@ -353,7 +353,6 @@ trigger_command_set_enabled (struct t_trigger *trigger,
     {
         if (weechat_config_boolean (trigger->options[TRIGGER_OPTION_ENABLED]))
         {
-            trigger_unhook (trigger);
             trigger_hook (trigger);
             weechat_printf_tags (NULL, "no_trigger",
                                  _("Trigger \"%s\" restarted"),

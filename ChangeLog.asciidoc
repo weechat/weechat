@@ -86,6 +86,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   print_date_tags, buffer_string_replace_local_var, command, infolist_new_item,
   infolist_new_var_integer, infolist_new_var_string, infolist_new_var_pointer,
   infolist_new_var_time, upgrade_write_object, upgrade_read, upgrade_close
+* trigger: do not hook anything if the trigger is disabled (closes #405)
 
 == Version 1.1.1 (2015-01-25)
 
