@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <time.h>
 #include <limits.h>
 #include <pwd.h>
@@ -1060,10 +1061,13 @@ irc_config_server_check_value_cb (void *data,
                                   struct t_config_option *option,
                                   const char *value)
 {
-    int i, index_option, proxy_found, rc;
+    int index_option, proxy_found;
     const char *pos_error, *proxy_name;
-    char **fingerprints;
     struct t_infolist *infolist;
+    #ifdef HAVE_GNUTLS
+    char **fingerprints, *str_sizes;
+    int i, j, rc, algo, length;
+    #endif
 
     /* make C compiler happy */
     (void) option;
@@ -1115,33 +1119,63 @@ irc_config_server_check_value_cb (void *data,
                 }
                 break;
             case IRC_SERVER_OPTION_SSL_FINGERPRINT:
-                if (value && value[0] && (strlen (value) != 40))
+                #ifdef HAVE_GNUTLS
+                if (value && value[0])
                 {
                     fingerprints = weechat_string_split (value, ",", 0, 0,
                                                          NULL);
                     if (fingerprints)
                     {
-                        rc = 1;
+                        rc = 0;
                         for (i = 0; fingerprints[i]; i++)
                         {
-                            if (strlen (fingerprints[i]) != 40)
+                            length = strlen (fingerprints[i]);
+                            algo = irc_server_fingerprint_search_algo_with_size (
+                                length * 4);
+                            if (algo < 0)
                             {
-                                rc = 0;
+                                rc = -1;
                                 break;
                             }
+                            for (j = 0; j < length; j++)
+                            {
+                                if (!isxdigit (fingerprints[i][j]))
+                                {
+                                    rc = -2;
+                                    break;
+                                }
+                            }
+                            if (rc < 0)
+                                break;
                         }
                         weechat_string_free_split (fingerprints);
-                        if (!rc)
+                        switch (rc)
                         {
-                            weechat_printf (
-                                NULL,
-                                _("%s%s: fingerprint must have exactly 40 "
-                                  "hexadecimal digits"),
-                                weechat_prefix ("error"), IRC_PLUGIN_NAME);
-                            return 0;
+                            case -1:  /* invalid size */
+                                str_sizes = irc_server_fingerprint_str_sizes ();
+                                weechat_printf (
+                                    NULL,
+                                    _("%s%s: invalid fingerprint size, the "
+                                      "number of hexadecimal digits must be "
+                                      "one of: %s"),
+                                    weechat_prefix ("error"),
+                                    IRC_PLUGIN_NAME,
+                                    (str_sizes) ? str_sizes : "?");
+                                if (str_sizes)
+                                    free (str_sizes);
+                                return 0;
+                            case -2:  /* invalid content */
+                                weechat_printf (
+                                    NULL,
+                                    _("%s%s: invalid fingerprint, it must "
+                                      "contain only hexadecimal digits (0-9, "
+                                      "a-f)"),
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                                return 0;
                         }
                     }
                 }
+                #endif
                 break;
         }
     }
@@ -1621,12 +1655,13 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("SHA1 fingerprint of certificate which is trusted and "
-                   "accepted for the server (it must be exactly 40 hexadecimal "
-                   "digits without separators); many fingerprints can be "
-                   "separated by commas; if this option is set, the other "
-                   "checks on certificates are NOT performed (option "
-                   "\"ssl_verify\")"),
+                N_("fingerprint of certificate which is trusted and accepted "
+                   "for the server; only hexadecimal digits are allowed (0-9, "
+                   "a-f): 64 chars for SHA-512, 32 chars for SHA-256, "
+                   "20 chars for SHA-1 (insecure, not recommended); many "
+                   "fingerprints can be separated by commas; if this option "
+                   "is set, the other checks on certificates are NOT "
+                   "performed (option \"ssl_verify\")"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,

@@ -125,6 +125,15 @@ char *irc_server_chanmodes_default    = "beI,k,l";
 const char *irc_server_send_default_tags = NULL;  /* default tags when       */
                                                   /* sending a message       */
 
+#ifdef HAVE_GNUTLS
+gnutls_digest_algorithm_t irc_fingerprint_digest_algos[IRC_FINGERPRINT_NUM_ALGOS] =
+{ GNUTLS_DIG_SHA1, GNUTLS_DIG_SHA256, GNUTLS_DIG_SHA512 };
+char *irc_fingerprint_digest_algos_name[IRC_FINGERPRINT_NUM_ALGOS] =
+{ "SHA-1", "SHA-256", "SHA-512" };
+int irc_fingerprint_digest_algos_size[IRC_FINGERPRINT_NUM_ALGOS] =
+{ 160, 256, 512 };
+#endif
+
 
 void irc_server_reconnect (struct t_irc_server *server);
 void irc_server_free_data (struct t_irc_server *server);
@@ -3707,6 +3716,62 @@ irc_server_create_buffer (struct t_irc_server *server)
 }
 
 /*
+ * Searches for a fingerprint digest algorithm with the size (in bits).
+ *
+ * Returns index of algo in enum t_irc_fingerprint_digest_algo,
+ * -1 if not found.
+ */
+
+#ifdef HAVE_GNUTLS
+int
+irc_server_fingerprint_search_algo_with_size (int size)
+{
+    int i;
+
+    for (i = 0; i < IRC_FINGERPRINT_NUM_ALGOS; i++)
+    {
+        if (irc_fingerprint_digest_algos_size[i] == size)
+            return i;
+    }
+
+    /* digest algorithm not found */
+    return -1;
+}
+#endif
+
+/*
+ * Returns a string with sizes of allowed fingerprint,
+ * in number of hexadecimal digits (== bits / 4).
+ *
+ * Example of output: "64=SHA-512, 32=SHA-256, 20=SHA-1".
+ *
+ * Note: result must be freed after use.
+ */
+
+#ifdef HAVE_GNUTLS
+char *
+irc_server_fingerprint_str_sizes ()
+{
+    char str_sizes[1024], str_one_size[128];
+    int i;
+
+    str_sizes[0] = '\0';
+
+    for (i = IRC_FINGERPRINT_NUM_ALGOS - 1; i >= 0; i--)
+    {
+        snprintf (str_one_size, sizeof (str_one_size),
+                  "%d=%s%s",
+                  irc_fingerprint_digest_algos_size[i] / 8,
+                  irc_fingerprint_digest_algos_name[i],
+                  (i > 0) ? ", " : "");
+        strcat (str_sizes, str_one_size);
+    }
+
+    return strdup (str_sizes);
+}
+#endif
+
+/*
  * Compares two fingerprints: one hexadecimal (given by user), the second binary
  * (received from IRC server).
  *
@@ -3754,23 +3819,14 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
                                           gnutls_x509_crt_t certificate,
                                           const char *good_fingerprints)
 {
-    unsigned char fingerprint_server[20];
+    unsigned char *fingerprint_server[IRC_FINGERPRINT_NUM_ALGOS];
     char **fingerprints;
-    int i, rc;
-    size_t fingerprint_size;
+    int i, rc, algo;
+    size_t size_bits, size_bytes;
 
-    fingerprint_size = sizeof (fingerprint_server);
-
-    /* calculate the SHA1 fingerprint for the certificate */
-    if (gnutls_x509_crt_get_fingerprint (certificate, GNUTLS_DIG_SHA1,
-                                         fingerprint_server,
-                                         &fingerprint_size) != GNUTLS_E_SUCCESS)
+    for (i = 0; i < IRC_FINGERPRINT_NUM_ALGOS; i++)
     {
-        weechat_printf (
-            server->buffer,
-            _("%sgnutls: failed to calculate certificate fingerprint"),
-            weechat_prefix ("error"));
-        return 0;
+        fingerprint_server[i] = NULL;
     }
 
     /* split good_fingerprints */
@@ -3782,17 +3838,64 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
 
     for (i = 0; fingerprints[i]; i++)
     {
-        /* check if the fingerprint matches */
-        if (irc_server_compare_fingerprints (fingerprints[i],
-                                             fingerprint_server,
-                                             fingerprint_size) == 0)
+        size_bits = strlen (fingerprints[i]) * 4;
+        size_bytes = size_bits / 8;
+
+        algo = irc_server_fingerprint_search_algo_with_size (size_bits);
+        if (algo < 0)
+            continue;
+
+        if (!fingerprint_server[algo])
         {
-            rc = 1;
-            break;
+            fingerprint_server[algo] = malloc (size_bytes);
+            if (fingerprint_server[algo])
+            {
+                /* calculate the fingerprint for the certificate */
+                if (gnutls_x509_crt_get_fingerprint (
+                        certificate,
+                        irc_fingerprint_digest_algos[algo],
+                        fingerprint_server[algo],
+                        &size_bytes) != GNUTLS_E_SUCCESS)
+                {
+                    weechat_printf (
+                        server->buffer,
+                        _("%sgnutls: failed to calculate certificate "
+                          "fingerprint (%s)"),
+                        weechat_prefix ("error"),
+                        irc_fingerprint_digest_algos_name[algo]);
+                    free (fingerprint_server[algo]);
+                    fingerprint_server[algo] = NULL;
+                }
+            }
+            else
+            {
+                weechat_printf (
+                    server->buffer,
+                    _("%s%s: not enough memory"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            }
+        }
+
+        if (fingerprint_server[algo])
+        {
+            /* check if the fingerprint matches */
+            if (irc_server_compare_fingerprints (fingerprints[i],
+                                                 fingerprint_server[algo],
+                                                 size_bytes) == 0)
+            {
+                rc = 1;
+                break;
+            }
         }
     }
 
     weechat_string_free_split (fingerprints);
+
+    for (i = 0; i < IRC_FINGERPRINT_NUM_ALGOS; i++)
+    {
+        if (fingerprint_server[i])
+            free (fingerprint_server[i]);
+    }
 
     return rc;
 }

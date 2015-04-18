@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-04-17 07:43+0200\n"
+"POT-Creation-Date: 2015-04-18 17:36+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7278,8 +7278,15 @@ msgid ""
 "%s%s: invalid priorities string, error at this position in string: \"%s\""
 msgstr "%s%s: nieprawidłowy ciąg priorytetów, błąd na pozycji: \"%s\""
 
-#, c-format
-msgid "%s%s: fingerprint must have exactly 40 hexadecimal digits"
+#, fuzzy, c-format
+msgid ""
+"%s%s: invalid fingerprint size, the number of hexadecimal digits must be one "
+"of: %s"
+msgstr "%s%s: skrót musi mieć dokładnie 40 znaków heksadecymalnych"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: invalid fingerprint, it must contain only hexadecimal digits (0-9, a-f)"
 msgstr "%s%s: skrót musi mieć dokładnie 40 znaków heksadecymalnych"
 
 #, c-format
@@ -7355,9 +7362,11 @@ msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr ""
 "rozmiar klucza używanego podczas połączenia Wymiany Kluczy Diffie-Hellmana"
 
+#, fuzzy
 msgid ""
-"SHA1 fingerprint of certificate which is trusted and accepted for the server "
-"(it must be exactly 40 hexadecimal digits without separators); many "
+"fingerprint of certificate which is trusted and accepted for the server; "
+"only hexadecimal digits are allowed (0-9, a-f): 64 chars for SHA-512, 32 "
+"chars for SHA-256, 20 chars for SHA-1 (insecure, not recommended); many "
 "fingerprints can be separated by commas; if this option is set, the other "
 "checks on certificates are NOT performed (option \"ssl_verify\")"
 msgstr ""
@@ -8954,8 +8963,8 @@ msgstr "%s%s: timeout"
 msgid "%s%s: unable to create socket"
 msgstr "%s%s: nie można utworzyć gniazda"
 
-#, c-format
-msgid "%sgnutls: failed to calculate certificate fingerprint"
+#, fuzzy, c-format
+msgid "%sgnutls: failed to calculate certificate fingerprint (%s)"
 msgstr "%sgnutls: nie udało się wyliczyć odcisku certyfikatu"
 
 #, c-format

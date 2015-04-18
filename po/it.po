@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-04-17 07:43+0200\n"
+"POT-Creation-Date: 2015-04-18 17:36+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7034,7 +7034,14 @@ msgstr ""
 "%s%s: stringa delle proprietà non valida, errore in questa posizione: \"%s\""
 
 #, c-format
-msgid "%s%s: fingerprint must have exactly 40 hexadecimal digits"
+msgid ""
+"%s%s: invalid fingerprint size, the number of hexadecimal digits must be one "
+"of: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: invalid fingerprint, it must contain only hexadecimal digits (0-9, a-f)"
 msgstr ""
 
 #, c-format
@@ -7112,8 +7119,9 @@ msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr "dimensione della chiave usata durante lo Scambio Chiavi Diffie-Hellman"
 
 msgid ""
-"SHA1 fingerprint of certificate which is trusted and accepted for the server "
-"(it must be exactly 40 hexadecimal digits without separators); many "
+"fingerprint of certificate which is trusted and accepted for the server; "
+"only hexadecimal digits are allowed (0-9, a-f): 64 chars for SHA-512, 32 "
+"chars for SHA-256, 20 chars for SHA-1 (insecure, not recommended); many "
 "fingerprints can be separated by commas; if this option is set, the other "
 "checks on certificates are NOT performed (option \"ssl_verify\")"
 msgstr ""
@@ -8664,7 +8672,7 @@ msgid "%s%s: unable to create socket"
 msgstr "%s%s: impossibile creare il socket"
 
 #, fuzzy, c-format
-msgid "%sgnutls: failed to calculate certificate fingerprint"
+msgid "%sgnutls: failed to calculate certificate fingerprint (%s)"
 msgstr "%sgnutls: impossibile leggere il certificato \"%s\""
 
 #, c-format

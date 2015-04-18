@@ -28,6 +28,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add option "-s" in command /eval to split expression before evaluating
   it (no more split by default) (closes #324)
 * core: add priority in plugins to initialize them in order
+* irc: add support of SHA-256 and SHA-512 algorithms in server option
+  "ssl_fingerprint" (closes #281)
 * irc: add option "-noswitch" in command /query (closes #394)
 * irc: format message 008 (RPL_SNOMASK) (closes #144)
 * irc: add support of "account-notify" capability (closes #11, closes #246)

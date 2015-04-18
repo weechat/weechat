@@ -241,6 +241,19 @@ struct t_irc_message
     struct t_irc_message *next_message; /* link to next message              */
 };
 
+/* digest algorithms for fingerprint */
+
+#ifdef HAVE_GNUTLS
+enum t_irc_fingerprint_digest_algo
+{
+    IRC_FINGERPRINT_ALGO_SHA1 = 0,
+    IRC_FINGERPRINT_ALGO_SHA256,
+    IRC_FINGERPRINT_ALGO_SHA512,
+    /* number of digest algorithms */
+    IRC_FINGERPRINT_NUM_ALGOS,
+};
+#endif
+
 extern struct t_irc_server *irc_servers;
 #ifdef HAVE_GNUTLS
 extern const int gnutls_cert_type_prio[];
@@ -307,6 +320,10 @@ extern void irc_server_msgq_add_buffer (struct t_irc_server *server,
 extern void irc_server_msgq_flush ();
 extern void irc_server_set_buffer_title (struct t_irc_server *server);
 extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server);
+#ifdef HAVE_GNUTLS
+int irc_server_fingerprint_search_algo_with_size (int size);
+char *irc_server_fingerprint_str_sizes ();
+#endif
 extern int irc_server_connect (struct t_irc_server *server);
 extern void irc_server_auto_connect (int auto_connect);
 extern void irc_server_autojoin_channels ();
