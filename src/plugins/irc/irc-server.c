@@ -3706,7 +3706,6 @@ irc_server_create_buffer (struct t_irc_server *server)
     return server->buffer;
 }
 
-#ifdef HAVE_GNUTLS
 /*
  * Compares two fingerprints: one hexadecimal (given by user), the second binary
  * (received from IRC server).
@@ -3716,6 +3715,7 @@ irc_server_create_buffer (struct t_irc_server *server)
  *   -1: fingerprints are different
  */
 
+#ifdef HAVE_GNUTLS
 int
 irc_server_compare_fingerprints (const char *fingerprint,
                                  const unsigned char *fingerprint_server,
@@ -3738,6 +3738,7 @@ irc_server_compare_fingerprints (const char *fingerprint,
     /* fingerprints are the same */
     return 0;
 }
+#endif /* HAVE_GNUTLS */
 
 /*
  * Checks if a GnuTLS session uses the certificate with a given fingerprint.
@@ -3747,6 +3748,7 @@ irc_server_compare_fingerprints (const char *fingerprint,
  *   0: certificate does NOT have the good fingerprint
  */
 
+#ifdef HAVE_GNUTLS
 int
 irc_server_check_certificate_fingerprint (struct t_irc_server *server,
                                           gnutls_x509_crt_t certificate,
@@ -3794,6 +3796,7 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
 
     return rc;
 }
+#endif /* HAVE_GNUTLS */
 
 /*
  * GnuTLS callback called during handshake.
@@ -3803,6 +3806,7 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
  *   -1: error in certificate
  */
 
+#ifdef HAVE_GNUTLS
 int
 irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                             const gnutls_datum_t *req_ca, int nreq,
@@ -4180,7 +4184,7 @@ end:
 
     return rc;
 }
-#endif
+#endif /* HAVE_GNUTLS */
 
 /*
  * Connects to a server.
