@@ -1139,7 +1139,7 @@ irc_config_server_check_value_cb (void *data,
                             }
                             for (j = 0; j < length; j++)
                             {
-                                if (!isxdigit (fingerprints[i][j]))
+                                if (!isxdigit ((unsigned char)fingerprints[i][j]))
                                 {
                                     rc = -2;
                                     break;
