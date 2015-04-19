@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-04-19 09:05+0200\n"
+"POT-Creation-Date: 2015-04-19 11:28+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2899,6 +2899,17 @@ msgstr ""
 #, fuzzy
 msgid "string displayed after prefix"
 msgstr "строка, вставляемая после автодополнения ника"
+
+#, fuzzy
+msgid "text to display before nick when quoting a message (see /help cursor)"
+msgstr "текст, который отображать до ника в окне чата"
+
+#, fuzzy
+msgid "text to display after nick when quoting a message (see /help cursor)"
+msgstr "текст, который отображать после ника в окне чата"
+
+msgid "time format when quoting a message (see /help cursor)"
+msgstr ""
 
 #, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"

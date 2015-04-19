@@ -161,6 +161,9 @@ struct t_config_option *config_look_prefix_buffer_align_more;
 struct t_config_option *config_look_prefix_buffer_align_more_after;
 struct t_config_option *config_look_prefix_same_nick;
 struct t_config_option *config_look_prefix_suffix;
+struct t_config_option *config_look_quote_nick_prefix;
+struct t_config_option *config_look_quote_nick_suffix;
+struct t_config_option *config_look_quote_time_format;
 struct t_config_option *config_look_read_marker;
 struct t_config_option *config_look_read_marker_always_show;
 struct t_config_option *config_look_read_marker_string;
@@ -2767,6 +2770,23 @@ config_weechat_init_options ()
         "prefix_suffix", "string",
         N_("string displayed after prefix"),
         NULL, 0, 0, "|", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_quote_nick_prefix = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "quote_nick_prefix", "string",
+        N_("text to display before nick when quoting a message (see /help "
+           "cursor)"),
+        NULL, 0, 0, "<", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_quote_nick_suffix = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "quote_nick_suffix", "string",
+        N_("text to display after nick when quoting a message (see /help "
+           "cursor)"),
+        NULL, 0, 0, ">", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_quote_time_format = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "quote_time_format", "string",
+        N_("time format when quoting a message (see /help cursor)"),
+        NULL, 0, 0, "%H:%M:%S", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_read_marker = config_file_new_option (
         weechat_config_file, ptr_section,
         "read_marker", "integer",

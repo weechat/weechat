@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-04-19 09:05+0200\n"
+"POT-Creation-Date: 2015-04-19 11:28+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3261,6 +3261,17 @@ msgstr ""
 
 msgid "string displayed after prefix"
 msgstr "řetězec zobrazený za prefixem"
+
+#, fuzzy
+msgid "text to display before nick when quoting a message (see /help cursor)"
+msgstr "text pro zobrazení před přezdívkou v okně rozhovoru"
+
+#, fuzzy
+msgid "text to display after nick when quoting a message (see /help cursor)"
+msgstr "text pro zobrazení za přezdívkou v okně rozhovoru"
+
+msgid "time format when quoting a message (see /help cursor)"
+msgstr ""
 
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""

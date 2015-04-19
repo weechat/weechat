@@ -827,6 +827,21 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"|"`)
 
+* [[option_weechat.look.quote_nick_prefix]] *weechat.look.quote_nick_prefix*
+** Beschreibung: `text to display before nick when quoting a message (see /help cursor)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"<"`)
+
+* [[option_weechat.look.quote_nick_suffix]] *weechat.look.quote_nick_suffix*
+** Beschreibung: `text to display after nick when quoting a message (see /help cursor)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `">"`)
+
+* [[option_weechat.look.quote_time_format]] *weechat.look.quote_time_format*
+** Beschreibung: `time format when quoting a message (see /help cursor)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M:%S"`)
+
 * [[option_weechat.look.read_marker]] *weechat.look.read_marker*
 ** Beschreibung: `nutzt eine Linie oder ein Zeichen, als Lesezeichen, um die erste ungelesene Nachricht in einem Buffer hervorzuheben`
 ** Typ: integer

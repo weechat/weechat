@@ -19,6 +19,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: add options weechat.look.quote_{nick_prefix|nick_suffix|time_format} to
+  customize quoted messages in cursor mode (closes #403)
 * core: add a welcome message on first WeeChat run (closes #318)
 * core: add options weechat.look.word_chars_{highlight|input}
   (closes #55, task #9459)

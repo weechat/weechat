@@ -827,6 +827,21 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"|"`)
 
+* [[option_weechat.look.quote_nick_prefix]] *weechat.look.quote_nick_prefix*
+** description: `texte à afficher avant le pseudo dans la citation d'un message (voir /help cursor)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"<"`)
+
+* [[option_weechat.look.quote_nick_suffix]] *weechat.look.quote_nick_suffix*
+** description: `texte à afficher après le pseudo dans la citation d'un message (voir /help cursor)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `">"`)
+
+* [[option_weechat.look.quote_time_format]] *weechat.look.quote_time_format*
+** description: `format de date/heure dans la citation d'un message (voir /help cursor)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"%H:%M:%S"`)
+
 * [[option_weechat.look.read_marker]] *weechat.look.read_marker*
 ** description: `utiliser un marqueur (ligne ou caractère) sur les tampons pour montrer la première ligne non lue`
 ** type: entier

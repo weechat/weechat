@@ -827,6 +827,21 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"|"`)
 
+* [[option_weechat.look.quote_nick_prefix]] *weechat.look.quote_nick_prefix*
+** descrizione: `text to display before nick when quoting a message (see /help cursor)`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"<"`)
+
+* [[option_weechat.look.quote_nick_suffix]] *weechat.look.quote_nick_suffix*
+** descrizione: `text to display after nick when quoting a message (see /help cursor)`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `">"`)
+
+* [[option_weechat.look.quote_time_format]] *weechat.look.quote_time_format*
+** descrizione: `time format when quoting a message (see /help cursor)`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"%H:%M:%S"`)
+
 * [[option_weechat.look.read_marker]] *weechat.look.read_marker*
 ** descrizione: `usa segnalibro (riga o carattere) sui buffer per mostrare la prima riga non letta`
 ** tipo: intero

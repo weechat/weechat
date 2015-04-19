@@ -827,6 +827,21 @@
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"|"`)
 
+* [[option_weechat.look.quote_nick_prefix]] *weechat.look.quote_nick_prefix*
+** opis: `text to display before nick when quoting a message (see /help cursor)`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `"<"`)
+
+* [[option_weechat.look.quote_nick_suffix]] *weechat.look.quote_nick_suffix*
+** opis: `text to display after nick when quoting a message (see /help cursor)`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `">"`)
+
+* [[option_weechat.look.quote_time_format]] *weechat.look.quote_time_format*
+** opis: `time format when quoting a message (see /help cursor)`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `"%H:%M:%S"`)
+
 * [[option_weechat.look.read_marker]] *weechat.look.read_marker*
 ** opis: `używaj znacznika (linii albo znaku) do zaznaczania pierwszej nieprzeczytanej linii w buforze`
 ** typ: liczba

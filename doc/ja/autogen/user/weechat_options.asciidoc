@@ -827,6 +827,21 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"|"`)
 
+* [[option_weechat.look.quote_nick_prefix]] *weechat.look.quote_nick_prefix*
+** 説明: `text to display before nick when quoting a message (see /help cursor)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"<"`)
+
+* [[option_weechat.look.quote_nick_suffix]] *weechat.look.quote_nick_suffix*
+** 説明: `text to display after nick when quoting a message (see /help cursor)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `">"`)
+
+* [[option_weechat.look.quote_time_format]] *weechat.look.quote_time_format*
+** 説明: `time format when quoting a message (see /help cursor)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"%H:%M:%S"`)
+
 * [[option_weechat.look.read_marker]] *weechat.look.read_marker*
 ** 説明: `最初の未読行を表示するマーカー (line か char) をバッファ内で使用`
 ** タイプ: 整数

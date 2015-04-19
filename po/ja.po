@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-04-19 09:05+0200\n"
+"POT-Creation-Date: 2015-04-19 11:28+0200\n"
 "PO-Revision-Date: 2015-04-13 00:40+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -3628,6 +3628,19 @@ msgstr ""
 
 msgid "string displayed after prefix"
 msgstr "プレフィックスの後ろに表示される文字列"
+
+#, fuzzy
+msgid "text to display before nick when quoting a message (see /help cursor)"
+msgstr ""
+"メッセージプレフィックス中のニックネームの前に表示するテキスト、例: \"<\""
+
+#, fuzzy
+msgid "text to display after nick when quoting a message (see /help cursor)"
+msgstr ""
+"メッセージプレフィックス中のニックネームの後に表示するテキスト、例: \">\""
+
+msgid "time format when quoting a message (see /help cursor)"
+msgstr ""
 
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr "最初の未読行を表示するマーカー (line か char) をバッファ内で使用"

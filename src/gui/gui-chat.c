@@ -978,9 +978,15 @@ int
 gui_chat_hsignal_quote_line_cb (void *data, const char *signal,
                                 struct t_hashtable *hashtable)
 {
-    const char *time, *prefix, *message;
-    int length_time, length_prefix, length_message, length;
-    char *str;
+    const char *date, *line, *prefix, *ptr_prefix, *message;
+    long unsigned int value;
+    long number;
+    struct tm *local_time;
+    struct t_gui_line *ptr_line;
+    int is_nick, length_time, length_nick_prefix, length_prefix;
+    int length_nick_suffix, length_message, length, rc;
+    time_t line_date;
+    char str_time[128], *str, *error;
 
     /* make C compiler happy */
     (void) data;
@@ -988,33 +994,75 @@ gui_chat_hsignal_quote_line_cb (void *data, const char *signal,
     if (!gui_current_window->buffer->input)
         return WEECHAT_RC_OK;
 
-    time = (strstr (signal, "time")) ?
-        hashtable_get (hashtable, "_chat_line_time") : NULL;
+    /* get time */
+    str_time[0] = '\0';
+    date = (strstr (signal, "time")) ?
+        hashtable_get (hashtable, "_chat_line_date") : NULL;
+    if (date)
+    {
+        number = strtol (date, &error, 10);
+        if (error && !error[0])
+        {
+            line_date = (time_t)number;
+            local_time = localtime (&line_date);
+            if (local_time)
+            {
+                strftime (str_time, sizeof (str_time),
+                          CONFIG_STRING(config_look_quote_time_format),
+                          local_time);
+            }
+        }
+    }
+
+    /* check if the prefix is a nick */
+    is_nick = 0;
+    line = hashtable_get (hashtable, "_chat_line");
+    if (line && line[0])
+    {
+        rc = sscanf (line, "%lx", &value);
+        if ((rc != EOF) && (rc != 0))
+        {
+            ptr_line = (struct t_gui_line *)value;
+            if (gui_line_search_tag_starting_with (ptr_line, "prefix_nick"))
+                is_nick = 1;
+        }
+    }
+
+    /* get prefix + message */
     prefix = (strstr (signal, "prefix")) ?
         hashtable_get (hashtable, "_chat_line_prefix") : NULL;
+    ptr_prefix = prefix;
+    if (ptr_prefix)
+    {
+        while (ptr_prefix[0] == ' ')
+        {
+            ptr_prefix++;
+        }
+    }
     message = hashtable_get (hashtable, "_chat_line_message");
 
     if (!message)
         return WEECHAT_RC_OK;
 
-    length_time = (time) ? strlen (time) : 0;
-    length_prefix = (prefix) ? strlen (prefix) : 0;
+    length_time = strlen (str_time);
+    length_nick_prefix = strlen (CONFIG_STRING(config_look_quote_nick_prefix));
+    length_prefix = (ptr_prefix) ? strlen (ptr_prefix) : 0;
+    length_nick_suffix = strlen (CONFIG_STRING(config_look_quote_nick_suffix));
     length_message = strlen (message);
 
-    length = length_time + 1 + length_prefix + 1 +
-        strlen (CONFIG_STRING(config_look_prefix_suffix)) + 1 +
+    length = length_time + 1 +
+        length_nick_prefix + length_prefix + length_nick_suffix + 1 +
         length_message + 1 + 1;
     str = malloc (length);
     if (str)
     {
         snprintf (str, length, "%s%s%s%s%s%s%s ",
-                  (time) ? time : "",
-                  (time) ? " " : "",
-                  (prefix) ? prefix : "",
-                  (prefix) ? " " : "",
-                  (time || prefix) ? CONFIG_STRING(config_look_prefix_suffix) : "",
-                  ((time || prefix) && CONFIG_STRING(config_look_prefix_suffix)
-                   && CONFIG_STRING(config_look_prefix_suffix)[0]) ? " " : "",
+                  str_time,
+                  (str_time[0]) ? " " : "",
+                  (ptr_prefix && ptr_prefix[0] && is_nick) ? CONFIG_STRING(config_look_quote_nick_prefix) : "",
+                  (ptr_prefix) ? ptr_prefix : "",
+                  (ptr_prefix && ptr_prefix[0] && is_nick) ? CONFIG_STRING(config_look_quote_nick_suffix) : "",
+                  (ptr_prefix && ptr_prefix[0]) ? " " : "",
                   message);
         gui_input_insert_string (gui_current_window->buffer, str, -1);
         gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,
