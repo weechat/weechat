@@ -9866,36 +9866,98 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 
 [width="100%",cols="5m,5,8,3",options="header"]
 |===
-| Key ^(1)^                  | Description                 | Value examples                               | Value if N/A
-| _x                         | Column on screen          2+| "0" ... "n"
-| _y                         | Line on screen            2+| "0" ... "n"
-| _key                       | Key or mouse event        2+| "button1", "button2-gesture-left", ...
-| _window                    | Pointer to window           | "0x12345678"                                 | ""
-| _window_number             | Number of window            | "1" ... "n"                                  | "*"
-| _buffer                    | Pointer to buffer           | "0x12345678"                                 | ""
-| _buffer_number             | Number of buffer            | "1" ... "n"                                  | "-1"
-| _buffer_plugin             | Plugin name of buffer       | "core", "irc", ...                           | ""
-| _buffer_name               | Name of buffer              | "weechat", "freenode.#weechat", ...          | ""
-| _buffer_full_name          | Full name of buffer         | "core.weechat", "irc.freenode.#weechat", ... | ""
-| _buffer_localvar_XXX ^(2)^ | Local variables of buffer   | any value                                    | not set
-| _chat                      | Chat area indicator         | "0" or "1"                                   | "0"
-| _chat_line_x               | Column in line ^(3)^        | "0" ... "n"                                  | "-1"
-| _chat_line_y               | Line number ^(3)^           | "0" ... "n"                                  | "-1"
-| _chat_line_date            | Line date/time              | "1313237175"                                 | "0"
-| _chat_line_date_printed    | Line date/time ^(4)^        | "1313237175"                                 | "0"
-| _chat_line_time            | Time displayed              | "14:06:15"                                   | ""
-| _chat_line_tags            | Tags of line                | "irc_privmsg,nick_flashy,log1"               | ""
-| _chat_line_nick            | Nick of line                | "FlashCode"                                  | ""
-| _chat_line_prefix          | Prefix of line              | "@FlashCode"                                 | ""
-| _chat_line_message         | Message of line             | "Hello world!"                               | ""
-| _chat_word                 | Word at (x,y)               | "Hello"                                      | ""
-| _chat_bol                  | Beginning of line ⇒ (x-1,y) | "He"                                         | ""
-| _chat_eol                  | (x,y) ⇒ end of line         | "llo world!"                                 | ""
-| _bar_name                  | Name of bar                 | "title", "nicklist", ...                     | ""
-| _bar_filling               | Filling of bar              | "horizontal", "vertical", ...                | ""
-| _bar_item_name             | Name of bar item            | "buffer_nicklist", "hotlist", ...            | ""
-| _bar_item_line             | Line in bar item            | "0" ... "n"                                  | "-1"
-| _bar_item_col              | Column in bar item          | "0" ... "n"                                  | "-1"
+| Key ^(1)^ | Description | Value examples | Value if N/A
+
+| _x | Column on screen |
+  "0" ... "n" |
+
+| _y | Line on screen |
+  "0" ... "n" |
+
+| _key | Key or mouse event |
+  "button1", "button2-gesture-left", ... |
+
+| _window | Pointer to window |
+  "0x12345678" | ""
+
+| _window_number | Number of window  |
+  "1" ... "n" | "*"
+
+| _buffer | Pointer to buffer |
+  "0x12345678" | ""
+
+| _buffer_number | Number of buffer |
+  "1" ... "n" | "-1"
+
+| _buffer_plugin | Plugin name of buffer |
+  "core", "irc", ... | ""
+
+| _buffer_name | Name of buffer |
+  "weechat", "freenode.#weechat", ... | ""
+
+| _buffer_full_name  | Full name of buffer |
+  "core.weechat", "irc.freenode.#weechat", ... | ""
+
+| _buffer_localvar_XXX ^(2)^ | Local variables of buffer |
+  any value | not set
+
+| _chat | Chat area indicator |
+  "0" or "1" | "0"
+
+| _chat_line | Pointer to line +
+  _(WeeChat ≥ 1.2)_ |
+  "0x12345678" | ""
+
+| _chat_line_x | Column in line ^(3)^ |
+  "0" ... "n" | "-1"
+
+| _chat_line_y | Line number ^(3)^ |
+  "0" ... "n" | "-1"
+
+| _chat_line_date | Line date/time |
+  "1313237175" | "0"
+
+| _chat_line_date_printed | Line date/time ^(4)^ |
+  "1313237175" | "0"
+
+| _chat_line_time | Time displayed |
+  "14:06:15" | ""
+
+| _chat_line_tags | Tags of line |
+  "irc_privmsg,nick_flashy,log1" | ""
+
+| _chat_line_nick | Nick of line |
+  "FlashCode" | ""
+
+| _chat_line_prefix | Prefix of line |
+  "@FlashCode" | ""
+
+| _chat_line_message | Message of line |
+  "Hello world!" | ""
+
+| _chat_word | Word at (x,y) |
+  "Hello" | ""
+
+| _chat_bol | Beginning of line ⇒ (x-1,y) |
+  "He" | ""
+
+| _chat_eol | (x,y) ⇒ end of line |
+  "llo world!" | ""
+
+| _bar_name | Name of bar |
+  "title", "nicklist", ... | ""
+
+| _bar_filling | Filling of bar |
+  "horizontal", "vertical", ... | ""
+
+| _bar_item_name | Name of bar item |
+  "buffer_nicklist", "hotlist", ... | ""
+
+| _bar_item_line | Line in bar item |
+  "0" ... "n" | "-1"
+
+| _bar_item_col | Column in bar item |
+  "0" ... "n" | "-1"
 |===
 
 [NOTE]

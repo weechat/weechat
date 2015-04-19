@@ -10064,36 +10064,98 @@ de type "string") :
 
 [width="100%",cols="5m,5,8,3",options="header"]
 |===
-| Clé ^(1)^                  | Description                   | Exemples de valeur                           | Valeur si non applicable
-| _x                         | Colonne sur l'écran         2+| "0" ... "n"
-| _y                         | Ligne sur l'écran           2+| "0" ... "n"
-| _key                       | Touche ou évènement souris  2+| "button1", "button2-gesture-left", ...
-| _window                    | Pointeur vers la fenêtre      | "0x12345678"                                 | ""
-| _window_number             | Numéro de la fenêtre          | "1" ... "n"                                  | "*"
-| _buffer                    | Pointeur vers le tampon       | "0x12345678"                                 | ""
-| _buffer_number             | Numéro du tampon              | "1" ... "n"                                  | "-1"
-| _buffer_plugin             | Nom d'extension du tampon     | "core", "irc", ...                           | ""
-| _buffer_name               | Nom du tampon                 | "weechat", "freenode.#weechat", ...          | ""
-| _buffer_full_name          | Nom complet du tampon         | "core.weechat", "irc.freenode.#weechat", ... | ""
-| _buffer_localvar_XXX ^(2)^ | Variables locales du tampon   | toute chaîne                                 | non défini
-| _chat                      | Indicateur zone "chat"        | "0" ou "1"                                   | "0"
-| _chat_line_x               | Colonne de la ligne ^(3)^     | "0" ... "n"                                  | "-1"
-| _chat_line_y               | Numéro de ligne ^(3)^         | "0" ... "n"                                  | "-1"
-| _chat_line_date            | Date/heure de la ligne        | "1313237175"                                 | "0"
-| _chat_line_date_printed    | Date/heure de la ligne ^(4)^  | "1313237175"                                 | "0"
-| _chat_line_time            | Heure affichée                | "14:06:15"                                   | ""
-| _chat_line_tags            | Étiquettes de la ligne        | "irc_privmsg,nick_flashy,log1"               | ""
-| _chat_line_nick            | Pseudo de la ligne            | "FlashCode"                                  | ""
-| _chat_line_prefix          | Préfixe de la ligne           | "@FlashCode"                                 | ""
-| _chat_line_message         | Message de la ligne           | "Hello world!"                               | ""
-| _chat_word                 | Mot à la position (x,y)       | "Hello"                                      | ""
-| _chat_bol                  | Début de ligne ⇒ (x-1,y)      | "He"                                         | ""
-| _chat_eol                  | (x,y) ⇒ fin de ligne          | "llo world!"                                 | ""
-| _bar_name                  | Nom de la barre               | "title", "nicklist", ...                     | ""
-| _bar_filling               | Remplissage de la barre       | "horizontal", "vertical", ...                | ""
-| _bar_item_name             | Nom de l'objet de barre       | "buffer_nicklist", "hotlist", ...            | ""
-| _bar_item_line             | Ligne dans l'objet de barre   | "0" ... "n"                                  | "-1"
-| _bar_item_col              | Colonne dans l'objet de barre | "0" ... "n"                                  | "-1"
+| Clé ^(1)^ | Description | Exemples de valeur | Valeur si non applicable
+
+| _x | Colonne sur l'écran |
+  "0" ... "n" |
+
+| _y | Ligne sur l'écran |
+  "0" ... "n" |
+
+| _key | Touche ou évènement souris |
+  "button1", "button2-gesture-left", ... |
+
+| _window | Pointeur vers la fenêtre |
+  "0x12345678" | ""
+
+| _window_number | Numéro de la fenêtre |
+  "1" ... "n" | "*"
+
+| _buffer | Pointeur vers le tampon |
+  "0x12345678" | ""
+
+| _buffer_number | Numéro du tampon |
+  "1" ... "n" | "-1"
+
+| _buffer_plugin | Nom d'extension du tampon |
+  "core", "irc", ... | ""
+
+| _buffer_name | Nom du tampon |
+  "weechat", "freenode.#weechat", ... | ""
+
+| _buffer_full_name | Nom complet du tampon |
+  "core.weechat", "irc.freenode.#weechat", ... | ""
+
+| _buffer_localvar_XXX ^(2)^ | Variables locales du tampon |
+  toute chaîne | non défini
+
+| _chat | Indicateur zone "chat" |
+  "0" ou "1" | "0"
+
+| _chat_line | Pointeur vers la ligne +
+  _(WeeChat ≥ 1.2)_ |
+  "0x12345678" | ""
+
+| _chat_line_x | Colonne de la ligne ^(3)^ |
+  "0" ... "n" | "-1"
+
+| _chat_line_y | Numéro de ligne ^(3)^ |
+  "0" ... "n" | "-1"
+
+| _chat_line_date | Date/heure de la ligne |
+  "1313237175" | "0"
+
+| _chat_line_date_printed | Date/heure de la ligne ^(4)^ |
+  "1313237175" | "0"
+
+| _chat_line_time | Heure affichée |
+  "14:06:15" | ""
+
+| _chat_line_tags | Étiquettes de la ligne |
+  "irc_privmsg,nick_flashy,log1" | ""
+
+| _chat_line_nick | Pseudo de la ligne |
+  "FlashCode" | ""
+
+| _chat_line_prefix | Préfixe de la ligne |
+  "@FlashCode" | ""
+
+| _chat_line_message | Message de la ligne |
+  "Hello world!" | ""
+
+| _chat_word | Mot à la position (x,y) |
+  "Hello" | ""
+
+| _chat_bol | Début de ligne ⇒ (x-1,y) |
+  "He" | ""
+
+| _chat_eol | (x,y) ⇒ fin de ligne |
+  "llo world!" | ""
+
+| _bar_name | Nom de la barre |
+  "title", "nicklist", ... | ""
+
+| _bar_filling | Remplissage de la barre |
+  "horizontal", "vertical", ... | ""
+
+| _bar_item_name | Nom de l'objet de barre |
+  "buffer_nicklist", "hotlist", ... | ""
+
+| _bar_item_line | Ligne dans l'objet de barre |
+  "0" ... "n" | "-1"
+
+| _bar_item_col | Colonne dans l'objet de barre |
+  "0" ... "n" | "-1"
 |===
 
 [NOTE]

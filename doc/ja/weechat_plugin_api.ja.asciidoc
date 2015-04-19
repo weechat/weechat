@@ -9863,36 +9863,99 @@ info を使う前にエリアが一致していることを確認して下さい
 
 [width="100%",cols="5m,5,8,3",options="header"]
 |===
-| キー ^(1)^                 | 説明                        | 値の例                                       | 定義できない場合の値
-| _x                         | スクリーン上での列座標    2+| "0" ... "n"
-| _y                         | スクリーン上での行座標    2+| "0" ... "n"
-| _key                       | キーまたはマウスイベント  2+| "button1"、"button2-gesture-left"、...
-| _window                    | ウィンドウへのポインタ      | "0x12345678"                                 | ""
-| _window_number             | ウィンドウの番号            | "1" ... "n"                                  | "*"
-| _buffer                    | バッファへのポインタ        | "0x12345678"                                 | ""
-| _buffer_number             | バッファの番号              | "1" ... "n"                                  | "-1"
-| _buffer_plugin             | バッファのプラグイン名      | "core"、"irc"、...                           | ""
-| _buffer_name               | バッファの名前              | "weechat"、"freenode.#weechat"、...          | ""
-| _buffer_full_name          | バッファの完全な名前        | "core.weechat"、"irc.freenode.#weechat"、... | ""
-| _buffer_localvar_XXX ^(2)^ | バッファのローカル変数      | 任意の値                                     | 未定義
-| _chat                      | チャットエリアインジケータ  | "0" または "1"                               | "0"
-| _chat_line_x               | 行中の列番号 ^(3)^          | "0" ... "n"                                  | "-1"
-| _chat_line_y               | 行番号 ^(3)^                | "0" ... "n"                                  | "-1"
-| _chat_line_date            | 日付/時間の行               | "1313237175"                                 | "0"
-| _chat_line_date_printed    | 日付/時間の行 ^(4)^         | "1313237175"                                 | "0"
-| _chat_line_time            | 表示された時間              | "14:06:15"                                   | ""
-| _chat_line_tags            | 行に設定されたタグ          | "irc_privmsg,nick_flashy,log1"               | ""
-| _chat_line_nick            | 行を発言したニックネーム    | "FlashCode"                                  | ""
-| _chat_line_prefix          | 行のプレフィックス          | "@FlashCode"                                 | ""
-| _chat_line_message         | 行のメッセージ部分          | "Hello world!"                               | ""
-| _chat_word                 | (x,y) の位置にある単語      | "Hello"                                      | ""
-| _chat_bol                  | 行頭から (x-1,y) まで       | "He"                                         | ""
-| _chat_eol                  | (x,y) から行末まで          | "llo world!"                                 | ""
-| _bar_name                  | バーの名前                  | "title"、"nicklist"、...                     | ""
-| _bar_filling               | バーのフィリング            | "horizontal"、"vertical"、...                | ""
-| _bar_item_name             | バー要素の名前              | "buffer_nicklist"、"hotlist"、...            | ""
-| _bar_item_line             | バー要素中の行座標          | "0" ... "n"                                  | "-1"
-| _bar_item_col              | バー要素中の列座標          | "0" ... "n"                                  | "-1"
+| キー ^(1)^ | 説明 | 値の例 | 定義できない場合の値
+
+| _x | スクリーン上での列座標 |
+  "0" ... "n" |
+
+| _y | スクリーン上での行座標 |
+  "0" ... "n" |
+
+| _key | キーまたはマウスイベント |
+  "button1"、"button2-gesture-left"、... |
+
+| _window | ウィンドウへのポインタ |
+  "0x12345678" | ""
+
+| _window_number | ウィンドウの番号 |
+  "1" ... "n" | "*"
+
+| _buffer | バッファへのポインタ |
+  "0x12345678" | ""
+
+| _buffer_number | バッファの番号 |
+  "1" ... "n" | "-1"
+
+| _buffer_plugin | バッファのプラグイン名 |
+  "core"、"irc"、... | ""
+
+| _buffer_name | バッファの名前 |
+  "weechat"、"freenode.#weechat"、... | ""
+
+| _buffer_full_name | バッファの完全な名前 |
+  "core.weechat"、"irc.freenode.#weechat"、... | ""
+
+| _buffer_localvar_XXX ^(2)^ | バッファのローカル変数 |
+  任意の値 | 未定義
+
+| _chat | チャットエリアインジケータ |
+  "0" または "1" | "0"
+
+// TRANSLATION MISSING
+| _chat_line | Pointer to line +
+  _(WeeChat ≥ 1.2)_ |
+  "0x12345678" | ""
+
+| _chat_line_x | 行中の列番号 ^(3)^ |
+  "0" ... "n" | "-1"
+
+| _chat_line_y | 行番号 ^(3)^ |
+  "0" ... "n" | "-1"
+
+| _chat_line_date | 日付/時間の行 |
+  "1313237175" | "0"
+
+| _chat_line_date_printed | 日付/時間の行 ^(4)^ |
+  "1313237175" | "0"
+
+| _chat_line_time | 表示された時間 |
+  "14:06:15" | ""
+
+| _chat_line_tags | 行に設定されたタグ |
+  "irc_privmsg,nick_flashy,log1" | ""
+
+| _chat_line_nick | 行を発言したニックネーム |
+  "FlashCode" | ""
+
+| _chat_line_prefix | 行のプレフィックス |
+  "@FlashCode" | ""
+
+| _chat_line_message | 行のメッセージ部分 |
+  "Hello world!" | ""
+
+| _chat_word | (x,y) の位置にある単語 |
+  "Hello" | ""
+
+| _chat_bol | 行頭から (x-1,y) まで |
+  "He" | ""
+
+| _chat_eol | (x,y) から行末まで |
+  "llo world!" | ""
+
+| _bar_name | バーの名前 |
+  "title"、"nicklist"、... | ""
+
+| _bar_filling | バーのフィリング |
+  "horizontal"、"vertical"、... | ""
+
+| _bar_item_name | バー要素の名前 |
+  "buffer_nicklist"、"hotlist"、... | ""
+
+| _bar_item_line | バー要素中の行座標 |
+  "0" ... "n" | "-1"
+
+| _bar_item_col | バー要素中の列座標 |
+  "0" ... "n" | "-1"
 |===
 
 [NOTE]

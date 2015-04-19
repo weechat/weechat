@@ -10153,36 +10153,99 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 
 [width="100%",cols="5m,5,8,3",options="header"]
 |===
-| Key ^(1)^                  | Descrizione                 | Valori di esempio                            | Valore se N/D
-| _x                         | Colonna sullo schermo     2+| "0" ... "n"
-| _y                         | Riga sullo schermo        2+| "0" ... "n"
-| _key                       | Evento tasto o mouse      2+| "button1", "button2-gesture-left", ...
-| _window                    | Puntatore alla finestra     | "0x12345678"                                 | ""
-| _window_number             | Numero della finestra       | "1" ... "n"                                  | "*"
-| _buffer                    | Puntatore al buffer         | "0x12345678"                                 | ""
-| _buffer_number             | Numero del buffer           | "1" ... "n"                                  | "-1"
-| _buffer_plugin             | Nome plugin del buffer      | "core", "irc", ...                           | ""
-| _buffer_name               | Nome del buffer             | "weechat", "freenode.#weechat", ...          | ""
-| _buffer_full_name          | Nome completo del buffer    | "core.weechat", "irc.freenode.#weechat", ... | ""
-| _buffer_localvar_XXX ^(2)^ | Variabili locali del buffer | qualsiasi valore                             | non impostato
-| _chat                      | Indicatore area di chat     | "0" o  "1"                                   | "0"
-| _chat_line_x               | Colonna nella riga ^(3)^    | "0" ... "n"                                  | "-1"
-| _chat_line_y               | Numero della riga ^(3)^     | "0" ... "n"                                  | "-1"
-| _chat_line_date            | Riga con data/ora           | "1313237175"                                 | "0"
-| _chat_line_date_printed    | Riga con data/ora ^(4)^     | "1313237175"                                 | "0"
-| _chat_line_time            | Ora visualizzata            | "14:06:15"                                   | ""
-| _chat_line_tags            | Tag della riga              | "irc_privmsg,nick_flashy,log1"               | ""
-| _chat_line_nick            | Nick della riga             | "FlashCode"                                  | ""
-| _chat_line_prefix          | Prefisso della riga         | "@FlashCode"                                 | ""
-| _chat_line_message         | Messaggio della riga        | "Hello world!"                               | ""
-| _chat_word                 | Parola a (x,y)              | "Hello"                                      | ""
-| _chat_bol                  | Inizio della riga ⇒ (x-1,y) | "He"                                         | ""
-| _chat_eol                  | (x,y) ⇒ fine della riga     | "llo world!"                                 | ""
-| _bar_name                  | Nome della barra            | "title", "nicklist", ...                     | ""
-| _bar_filling               | Riempimento della barra     | "horizontal", "vertical", ...                | ""
-| _bar_item_name             | Nome dell'elemento barra    | "buffer_nicklist", "hotlist", ...            | ""
-| _bar_item_line             | Riga nell'elemento barra    | "0" ... "n"                                  | "-1"
-| _bar_item_col              | Colonna nell'elemento barra | "0" ... "n"                                  | "-1"
+| Key ^(1)^ | Descrizione | Valori di esempio | Valore se N/D
+
+| _x | Colonna sullo schermo |
+  "0" ... "n" |
+
+| _y | Riga sullo schermo |
+  "0" ... "n" |
+
+| _key | Evento tasto o mouse |
+  "button1", "button2-gesture-left", ... |
+
+| _window | Puntatore alla finestra |
+  "0x12345678" | ""
+
+| _window_number | Numero della finestra |
+  "1" ... "n" | "*"
+
+| _buffer | Puntatore al buffer |
+  "0x12345678" | ""
+
+| _buffer_number | Numero del buffer |
+  "1" ... "n" | "-1"
+
+| _buffer_plugin | Nome plugin del buffer |
+  "core", "irc", ... | ""
+
+| _buffer_name | Nome del buffer |
+  "weechat", "freenode.#weechat", ... | ""
+
+| _buffer_full_name | Nome completo del buffer |
+  "core.weechat", "irc.freenode.#weechat", ... | ""
+
+| _buffer_localvar_XXX ^(2)^ | Variabili locali del buffer |
+  qualsiasi valore | non impostato
+
+| _chat | Indicatore area di chat |
+  "0" o "1" | "0"
+
+// TRANSLATION MISSING
+| _chat_line | Pointer to line +
+  _(WeeChat ≥ 1.2)_ |
+  "0x12345678" | ""
+
+| _chat_line_x | Colonna nella riga ^(3)^ |
+  "0" ... "n" | "-1"
+
+| _chat_line_y | Numero della riga ^(3)^ |
+  "0" ... "n" | "-1"
+
+| _chat_line_date | Riga con data/ora |
+  "1313237175" | "0"
+
+| _chat_line_date_printed | Riga con data/ora ^(4)^ |
+  "1313237175" | "0"
+
+| _chat_line_time | Ora visualizzata |
+  "14:06:15" | ""
+
+| _chat_line_tags | Tag della riga |
+  "irc_privmsg,nick_flashy,log1" | ""
+
+| _chat_line_nick | Nick della riga |
+  "FlashCode" | ""
+
+| _chat_line_prefix | Prefisso della riga |
+  "@FlashCode" | ""
+
+| _chat_line_message | Messaggio della riga |
+  "Hello world!" | ""
+
+| _chat_word | Parola a (x,y) |
+  "Hello" | ""
+
+| _chat_bol | Inizio della riga ⇒ (x-1,y) |
+  "He" | ""
+
+| _chat_eol | (x,y) ⇒ fine della riga |
+  "llo world!" | ""
+
+| _bar_name | Nome della barra |
+  "title", "nicklist", ... | ""
+
+| _bar_filling | Riempimento della barra |
+  "horizontal", "vertical", ... | ""
+
+| _bar_item_name | Nome dell'elemento barra |
+  "buffer_nicklist", "hotlist", ... | ""
+
+| _bar_item_line | Riga nell'elemento barra |
+  "0" ... "n" | "-1"
+
+| _bar_item_col | Colonna nell'elemento barra |
+  "0" ... "n" | "-1"
 |===
 
 [NOTE]

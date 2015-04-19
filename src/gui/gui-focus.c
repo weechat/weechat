@@ -225,6 +225,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         str_tags = string_build_with_split_string ((const char **)((focus_info->chat_line)->data)->tags_array, ",");
         str_message = gui_color_decode (((focus_info->chat_line)->data)->message, NULL);
         nick = gui_line_get_nick_tag (focus_info->chat_line);
+        FOCUS_PTR("_chat_line", focus_info->chat_line);
         FOCUS_INT("_chat_line_x", focus_info->chat_line_x);
         FOCUS_INT("_chat_line_y", ((focus_info->chat_line)->data)->y);
         FOCUS_TIME("_chat_line_date", ((focus_info->chat_line)->data)->date);
@@ -245,6 +246,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     }
     else
     {
+        FOCUS_PTR("_chat_line", NULL);
         FOCUS_STR("_chat_line_x", "-1");
         FOCUS_STR("_chat_line_y", "-1");
         FOCUS_STR("_chat_line_date", "-1");
