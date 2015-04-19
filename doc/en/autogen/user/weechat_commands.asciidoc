@@ -194,6 +194,18 @@ Without argument, this command toggles cursor mode.
 
 When mouse is enabled (see /help mouse), by default a middle click will start cursor mode at this point.
 
+Default keys in cursor mode on chat messages:
+  m  quote message
+  q  quote prefix + message
+  Q  quote time + prefix + message
+
+Default keys in cursor mode on nicklist:
+  b  ban nick (/ban)
+  k  kick nick (/kick)
+  K  kick and ban nick (/kickban)
+  q  open query with nick (/query)
+  w  query information about user (/whois)
+
 Examples:
   go to nicklist:
     /cursor go nicklist

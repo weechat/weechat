@@ -186,18 +186,30 @@ command: 実行するコマンド (コマンドの最初に '/' が無い場合�
          move up|down|left|right|area_up|area_down|area_left|area_right
          stop
 
-  go: チャットエリア、バー (バーの名前を使った場合)、座標 "x,y" にカーソルを移動
-move: 方向を指定してカーソルを移動
-stop: カーソルモードを終了
+  go: move cursor to chat area, a bar (using bar name) or coordinates "x,y"
+move: move cursor with direction
+stop: stop cursor mode
 
-引数が無ければ、カーソルモードを切り替えます。
+Without argument, this command toggles cursor mode.
 
-マウスが有効化されていた場合 (/help mouse を参照)、現在のところデフォルトではセンタークリックでカーソルモードが開始されます。
+When mouse is enabled (see /help mouse), by default a middle click will start cursor mode at this point.
 
-例:
-  ニックネームリストに移動:
+Default keys in cursor mode on chat messages:
+  m  quote message
+  q  quote prefix + message
+  Q  quote time + prefix + message
+
+Default keys in cursor mode on nicklist:
+  b  ban nick (/ban)
+  k  kick nick (/kick)
+  K  kick and ban nick (/kickban)
+  q  open query with nick (/query)
+  w  query information about user (/whois)
+
+Examples:
+  go to nicklist:
     /cursor go nicklist
-  x=10、y=5 の位置に移動:
+  go to coordinates x=10, y=5:
     /cursor go 10,5
 ----
 

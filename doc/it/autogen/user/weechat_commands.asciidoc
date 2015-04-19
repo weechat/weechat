@@ -186,18 +186,30 @@ command: command to execute (a '/' is automatically added if not found at beginn
          move up|down|left|right|area_up|area_down|area_left|area_right
          stop
 
-  go: sposta il cursore su un'area di chat, una barra (usando il nome della barra) o le coordinate "x.y"
-move: sposta il cursore con direzione
-stop: interrompe la modalità cursore
+  go: move cursor to chat area, a bar (using bar name) or coordinates "x,y"
+move: move cursor with direction
+stop: stop cursor mode
 
-Senza argomenti, il comando abilita/disabilita la modalità cursore
+Without argument, this command toggles cursor mode.
 
-Quando il mouse è abilitato (consultare /help mouse), per default il click con il tasto centrale avvia la modalità cursore in questa posizione.
+When mouse is enabled (see /help mouse), by default a middle click will start cursor mode at this point.
 
-Esempi:
-  vai alla lista nick:
+Default keys in cursor mode on chat messages:
+  m  quote message
+  q  quote prefix + message
+  Q  quote time + prefix + message
+
+Default keys in cursor mode on nicklist:
+  b  ban nick (/ban)
+  k  kick nick (/kick)
+  K  kick and ban nick (/kickban)
+  q  open query with nick (/query)
+  w  query information about user (/whois)
+
+Examples:
+  go to nicklist:
     /cursor go nicklist
-  vai alle coordinate x=10, y=5:
+  go to coordinates x=10, y=5:
     /cursor go 10,5
 ----
 

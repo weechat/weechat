@@ -194,6 +194,18 @@ Sans paramètre, cette commande active/désactive le mode curseur.
 
 Lorsque la souris est activée (voir /help mouse), par défaut un clic du milieu démarre le mode curseur à ce point.
 
+Touches par défaut dans le mode curseur sur les messages de la zone de discussion :
+  m  citer le message
+  q  citer le préfixe + le message
+  Q  citer l'heure + le préfixe + le message
+
+Touches par défaut dans le mode curseur sur la liste de pseudos :
+  b  bannir le pseudo (/ban)
+  k  éjecter le pseudo (/kick)
+  K  éjecter et bannir le pseudo (/kickban)
+  q  ouvrir une discussion privée avec le pseudo (/query)
+  w  demander les informations sur l'utilisateur (/whois)
+
 Exemples :
   aller dans la liste des pseudos :
     /cursor go nicklist
