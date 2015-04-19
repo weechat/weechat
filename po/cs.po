@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-04-18 17:36+0200\n"
+"POT-Creation-Date: 2015-04-19 08:48+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2750,6 +2750,11 @@ msgstr ""
 "(time, buffer, prefix, suffix, message (výchozí))"
 
 msgid ""
+"string displayed when bar can be scrolled down (for bars with filling "
+"different from \"horizontal\")"
+msgstr ""
+
+msgid ""
 "string displayed when bar can be scrolled to the left (for bars with filling "
 "\"horizontal\")"
 msgstr ""
@@ -2764,10 +2769,15 @@ msgid ""
 "different from \"horizontal\")"
 msgstr ""
 
-msgid ""
-"string displayed when bar can be scrolled down (for bars with filling "
-"different from \"horizontal\")"
+msgid "exit the bare display mode on any changes in input"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"time format in bare display mode (see man strftime for date/time specifiers)"
+msgstr ""
+"časový formát pro \"time\" položku panelu (viz. man strftime pro specifikaci "
+"data/času)"
 
 msgid ""
 "automatically renumber buffers to have only consecutive numbers and start "
@@ -2830,14 +2840,6 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"use a different color for lines in inactive window (when window is not "
-"current window)"
-msgstr ""
-"barva textu pro jméno bufferu (před prefixem, při spojení vice bufferů se "
-"stejným číslem)"
-
-#, fuzzy
-msgid ""
 "use a different color for lines in inactive buffer (when line is from a "
 "merged buffer not selected)"
 msgstr ""
@@ -2845,8 +2847,13 @@ msgstr ""
 "stejným číslem)"
 
 msgid ""
-"use a different color for inactive time (when window is not current window, "
-"or if line is from a merged buffer not selected)"
+"use a different color for inactive message (when window is not current "
+"window, or if line is from a merged buffer not selected)"
+msgstr ""
+
+msgid ""
+"use a different color for inactive prefix (when window is not current "
+"window, or if line is from a merged buffer not selected)"
 msgstr ""
 
 #, fuzzy
@@ -2858,14 +2865,17 @@ msgstr ""
 "stejným číslem)"
 
 msgid ""
-"use a different color for inactive prefix (when window is not current "
-"window, or if line is from a merged buffer not selected)"
+"use a different color for inactive time (when window is not current window, "
+"or if line is from a merged buffer not selected)"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"use a different color for inactive message (when window is not current "
-"window, or if line is from a merged buffer not selected)"
+"use a different color for lines in inactive window (when window is not "
+"current window)"
 msgstr ""
+"barva textu pro jméno bufferu (před prefixem, při spojení vice bufferů se "
+"stejným číslem)"
 
 #, fuzzy
 msgid "use a different color for offline nicks (not in nicklist any more)"
@@ -3086,12 +3096,6 @@ msgstr ""
 "maximální počet \"undo\" pro příkazovou řádku pro bufferu (0 = vypnuto)"
 
 msgid ""
-"time format for \"time\" bar item (see man strftime for date/time specifiers)"
-msgstr ""
-"časový formát pro \"time\" položku panelu (viz. man strftime pro specifikaci "
-"data/času)"
-
-msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
 msgstr ""
@@ -3101,6 +3105,12 @@ msgstr ""
 
 msgid "string used to show if mouse is enabled (bar item \"mouse_status\")"
 msgstr ""
+
+msgid ""
+"time format for \"time\" bar item (see man strftime for date/time specifiers)"
+msgstr ""
+"časový formát pro \"time\" položku panelu (viz. man strftime pro specifikaci "
+"data/času)"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -3125,14 +3135,6 @@ msgid ""
 "allow only binding of \"safe\" keys (beginning with a ctrl or meta code)"
 msgstr ""
 
-#, fuzzy
-msgid "text to display before nick in prefix of message, example: \"<\""
-msgstr "text pro zobrazení před přezdívkou v okně rozhovoru"
-
-#, fuzzy
-msgid "text to display after nick in prefix of message, example: \">\""
-msgstr "text pro zobrazení za přezdívkou v okně rozhovoru"
-
 msgid "enable mouse support"
 msgstr ""
 
@@ -3140,6 +3142,14 @@ msgid ""
 "delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay "
 "before processing event"
 msgstr ""
+
+#, fuzzy
+msgid "text to display before nick in prefix of message, example: \"<\""
+msgstr "text pro zobrazení před přezdívkou v okně rozhovoru"
+
+#, fuzzy
+msgid "text to display after nick in prefix of message, example: \">\""
+msgstr "text pro zobrazení za přezdívkou v okně rozhovoru"
 
 msgid ""
 "enable terminal \"bracketed paste mode\" (not supported in all terminals/"
@@ -3239,16 +3249,6 @@ msgstr ""
 
 msgid "string displayed after prefix"
 msgstr "řetězec zobrazený za prefixem"
-
-msgid "exit the bare display mode on any changes in input"
-msgstr ""
-
-#, fuzzy
-msgid ""
-"time format in bare display mode (see man strftime for date/time specifiers)"
-msgstr ""
-"časový formát pro \"time\" položku panelu (viz. man strftime pro specifikaci "
-"data/času)"
 
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
@@ -3381,6 +3381,15 @@ msgstr "barva textu pro počet ostatních zpráv v hostlistu (stavový řádek)"
 msgid "text color for delimiters"
 msgstr "barva textu pro děliče v infobaru"
 
+msgid "text color for highlighted prefix"
+msgstr "barva textu pro zvýrazněný prefix"
+
+msgid "background color for highlighted prefix"
+msgstr "barva pozadí pro zvýrazněný prefix"
+
+msgid "text color for hostnames"
+msgstr "barva textu jména hosta"
+
 msgid ""
 "text color for chat when line is inactive (buffer is merged with other "
 "buffers and is not selected)"
@@ -3401,11 +3410,6 @@ msgstr ""
 "barva textu pro přezdívky (čárkou oddělený seznam barev, pozadí je povoleno "
 "ve formátu: \"fg:bg\", například: \"lightred:blue\")"
 
-#, fuzzy
-msgid "color for nick prefix (string displayed before nick in prefix)"
-msgstr ""
-"barva prefixu přezdívky (prefix je uživatelský řetězec před přezdívkou)"
-
 msgid ""
 "text color for offline nick (not in nicklist any more); this color is used "
 "only if option weechat.look.color_nick_offline is enabled"
@@ -3424,6 +3428,11 @@ msgstr ""
 msgid "text color for other nick in private buffer"
 msgstr "barva textu pro jiné přezdívky v soukromém bufferu"
 
+#, fuzzy
+msgid "color for nick prefix (string displayed before nick in prefix)"
+msgstr ""
+"barva prefixu přezdívky (prefix je uživatelský řetězec před přezdívkou)"
+
 msgid "text color for local nick in chat window"
 msgstr "barva textu pro lokální přezdívku v okně rozhovoru"
 
@@ -3431,14 +3440,8 @@ msgstr "barva textu pro lokální přezdívku v okně rozhovoru"
 msgid "color for nick suffix (string displayed after nick in prefix)"
 msgstr "barva přípony přezdívky (přípona je uživatelský řetězec za přezdívkou)"
 
-msgid "text color for highlighted prefix"
-msgstr "barva textu pro zvýrazněný prefix"
-
-msgid "background color for highlighted prefix"
-msgstr "barva pozadí pro zvýrazněný prefix"
-
-msgid "text color for hostnames"
-msgstr "barva textu jména hosta"
+msgid "text color for error prefix"
+msgstr "barva textu pro prefix chyby"
 
 msgid ""
 "text color for buffer name (before prefix, when many buffers are merged with "
@@ -3454,9 +3457,6 @@ msgid ""
 msgstr ""
 "barva textu pro jméno bufferu (před prefixem, při spojení vice bufferů se "
 "stejným číslem)"
-
-msgid "text color for error prefix"
-msgstr "barva textu pro prefix chyby"
 
 msgid "text color for network prefix"
 msgstr "barva textu pro prefix sítě"
@@ -3522,6 +3522,15 @@ msgstr "barva textu pro akce ve vstupní řádce"
 msgid "text color for unsuccessful text search in input line"
 msgstr "barva textu pro nepovedené hledání textu ve vstupní rádce"
 
+msgid "text color for away nicknames"
+msgstr "barva textu pro nepřítomné přezdíveky"
+
+msgid "text color for groups in nicklist"
+msgstr "barva textu pro skupiny v seznamu přezdívek"
+
+msgid "text color for offline nicknames"
+msgstr "barva textu pro nepřipojené přezdíveky"
+
 #, fuzzy
 msgid ""
 "color for window separators (when split) and separators beside bars (like "
@@ -3555,6 +3564,9 @@ msgstr "barva textu pro buffer se soukromou zprávou (status bar)"
 msgid "text color for filter indicator in status bar"
 msgstr "barva textu pro indikátor filtru ve stavovém řádku"
 
+msgid "text color for buffer with new data (status bar)"
+msgstr "barva textu pro buffer s novými daty (status bar)"
+
 #, fuzzy
 msgid "text color for mouse indicator in status bar"
 msgstr "barva textu pro indikátor filtru ve stavovém řádku"
@@ -3576,20 +3588,8 @@ msgstr "barva textu pro počet zpráv v hotlistu (stavový řádek)"
 msgid "text color for current buffer number in status bar"
 msgstr "barva textu pro aktuální číslo bufferu ve stavovém řádku"
 
-msgid "text color for buffer with new data (status bar)"
-msgstr "barva textu pro buffer s novými daty (status bar)"
-
 msgid "text color for time (status bar)"
 msgstr "barva textu pro čas (stavový řádek)"
-
-msgid "text color for away nicknames"
-msgstr "barva textu pro nepřítomné přezdíveky"
-
-msgid "text color for groups in nicklist"
-msgstr "barva textu pro skupiny v seznamu přezdívek"
-
-msgid "text color for offline nicknames"
-msgstr "barva textu pro nepřipojené přezdíveky"
 
 msgid ""
 "if enabled, the base word to complete ends at char before cursor; otherwise "
@@ -7020,16 +7020,6 @@ msgstr ""
 "serveru)"
 
 msgid ""
-"comma separated list of words to highlight in server buffers (case "
-"insensitive, use \"(?-i)\" at beginning of words to make them case "
-"sensitive; special variables $nick, $channel and $server are replaced by "
-"their value), these words are added to buffer property \"highlight_words\" "
-"only when buffer is created (it does not affect current buffers), an empty "
-"string disables default highlight on nick, examples: \"$nick\", \"(?-i)$nick"
-"\""
-msgstr ""
-
-msgid ""
 "comma separated list of words to highlight in channel buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
 "sensitive; special variables $nick, $channel and $server are replaced by "
@@ -7041,6 +7031,16 @@ msgstr ""
 
 msgid ""
 "comma separated list of words to highlight in private buffers (case "
+"insensitive, use \"(?-i)\" at beginning of words to make them case "
+"sensitive; special variables $nick, $channel and $server are replaced by "
+"their value), these words are added to buffer property \"highlight_words\" "
+"only when buffer is created (it does not affect current buffers), an empty "
+"string disables default highlight on nick, examples: \"$nick\", \"(?-i)$nick"
+"\""
+msgstr ""
+
+msgid ""
+"comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
 "sensitive; special variables $nick, $channel and $server are replaced by "
 "their value), these words are added to buffer property \"highlight_words\" "
@@ -7108,12 +7108,6 @@ msgstr ""
 "pozice (měl by být poslední buffer), next = aktuální buffer + 1, near_server "
 "= za posledním kanálem/pv serveru)"
 
-msgid ""
-"comma separated list of nicks for which passwords will be hidden when a "
-"message is sent, for example to hide password in message displayed by \"/msg "
-"nickserv identify password\", example: \"nickserv,nickbot\""
-msgstr ""
-
 #, fuzzy
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
@@ -7158,6 +7152,12 @@ msgid ""
 "display a space if nick mode is enabled but nick has no mode (not op, "
 "voice, ...)"
 msgstr "zobrazit mezeru pokud mód přezdívkz není (částečný)op/voice"
+
+msgid ""
+"comma separated list of nicks for which passwords will be hidden when a "
+"message is sent, for example to hide password in message displayed by \"/msg "
+"nickserv identify password\", example: \"nickserv,nickbot\""
+msgstr ""
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"

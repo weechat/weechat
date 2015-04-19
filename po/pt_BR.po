@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-04-18 17:36+0200\n"
+"POT-Creation-Date: 2015-04-19 08:48+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2943,6 +2943,11 @@ msgstr ""
 "under this data (time, buffer, prefix, suffix, message (default))"
 
 msgid ""
+"string displayed when bar can be scrolled down (for bars with filling "
+"different from \"horizontal\")"
+msgstr ""
+
+msgid ""
 "string displayed when bar can be scrolled to the left (for bars with filling "
 "\"horizontal\")"
 msgstr ""
@@ -2957,10 +2962,15 @@ msgid ""
 "different from \"horizontal\")"
 msgstr ""
 
-msgid ""
-"string displayed when bar can be scrolled down (for bars with filling "
-"different from \"horizontal\")"
+msgid "exit the bare display mode on any changes in input"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"time format in bare display mode (see man strftime for date/time specifiers)"
+msgstr ""
+"formato de tempo para o item de barra \"time\" (veja man strftime para "
+"especificadores de data/tempo)"
 
 msgid ""
 "automatically renumber buffers to have only consecutive numbers and start "
@@ -3025,23 +3035,13 @@ msgid ""
 msgstr ""
 
 msgid ""
-"use a different color for lines in inactive window (when window is not "
-"current window)"
-msgstr ""
-
-msgid ""
 "use a different color for lines in inactive buffer (when line is from a "
 "merged buffer not selected)"
 msgstr ""
 
 msgid ""
-"use a different color for inactive time (when window is not current window, "
-"or if line is from a merged buffer not selected)"
-msgstr ""
-
-msgid ""
-"use a different color for inactive buffer name in prefix (when window is not "
-"current window, or if line is from a merged buffer not selected)"
+"use a different color for inactive message (when window is not current "
+"window, or if line is from a merged buffer not selected)"
 msgstr ""
 
 msgid ""
@@ -3050,8 +3050,18 @@ msgid ""
 msgstr ""
 
 msgid ""
-"use a different color for inactive message (when window is not current "
-"window, or if line is from a merged buffer not selected)"
+"use a different color for inactive buffer name in prefix (when window is not "
+"current window, or if line is from a merged buffer not selected)"
+msgstr ""
+
+msgid ""
+"use a different color for inactive time (when window is not current window, "
+"or if line is from a merged buffer not selected)"
+msgstr ""
+
+msgid ""
+"use a different color for lines in inactive window (when window is not "
+"current window)"
 msgstr ""
 
 msgid "use a different color for offline nicks (not in nicklist any more)"
@@ -3280,12 +3290,6 @@ msgstr ""
 "desabilitado)"
 
 msgid ""
-"time format for \"time\" bar item (see man strftime for date/time specifiers)"
-msgstr ""
-"formato de tempo para o item de barra \"time\" (veja man strftime para "
-"especificadores de data/tempo)"
-
-msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
 msgstr ""
@@ -3295,6 +3299,12 @@ msgstr ""
 
 msgid "string used to show if mouse is enabled (bar item \"mouse_status\")"
 msgstr ""
+
+msgid ""
+"time format for \"time\" bar item (see man strftime for date/time specifiers)"
+msgstr ""
+"formato de tempo para o item de barra \"time\" (veja man strftime para "
+"especificadores de data/tempo)"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -3319,14 +3329,6 @@ msgid ""
 "allow only binding of \"safe\" keys (beginning with a ctrl or meta code)"
 msgstr ""
 
-msgid "text to display before nick in prefix of message, example: \"<\""
-msgstr ""
-"texto a ser exibido antes do apelido no prefixo da mensagem, exemplo: \"<\""
-
-msgid "text to display after nick in prefix of message, example: \">\""
-msgstr ""
-"texto a ser exibido depois do apelido no prefixo da mensage, examplo: \">\""
-
 msgid "enable mouse support"
 msgstr "habilita suporte à mouse"
 
@@ -3334,6 +3336,14 @@ msgid ""
 "delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay "
 "before processing event"
 msgstr ""
+
+msgid "text to display before nick in prefix of message, example: \"<\""
+msgstr ""
+"texto a ser exibido antes do apelido no prefixo da mensagem, exemplo: \"<\""
+
+msgid "text to display after nick in prefix of message, example: \">\""
+msgstr ""
+"texto a ser exibido depois do apelido no prefixo da mensage, examplo: \">\""
 
 msgid ""
 "enable terminal \"bracketed paste mode\" (not supported in all terminals/"
@@ -3432,16 +3442,6 @@ msgstr ""
 
 msgid "string displayed after prefix"
 msgstr "cadeia de caracteres mostrada após prefixo"
-
-msgid "exit the bare display mode on any changes in input"
-msgstr ""
-
-#, fuzzy
-msgid ""
-"time format in bare display mode (see man strftime for date/time specifiers)"
-msgstr ""
-"formato de tempo para o item de barra \"time\" (veja man strftime para "
-"especificadores de data/tempo)"
 
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
@@ -3578,6 +3578,15 @@ msgstr "cor de texto para mensagem exibida quando o dia muda"
 msgid "text color for delimiters"
 msgstr "cor de texto para delimitadores"
 
+msgid "text color for highlighted prefix"
+msgstr "cor de texto para prefixo de destacado"
+
+msgid "background color for highlighted prefix"
+msgstr "cor de fundo para prefixo de destacado"
+
+msgid "text color for hostnames"
+msgstr "cor de texto para hostnames"
+
 msgid ""
 "text color for chat when line is inactive (buffer is merged with other "
 "buffers and is not selected)"
@@ -3602,10 +3611,6 @@ msgstr ""
 "cor do texto para apelidos (lista de cores separada por vírgulas, fundo é "
 "permitido com o formato: \"fg:bg\", por exemplo: \"lightred:blue\")"
 
-msgid "color for nick prefix (string displayed before nick in prefix)"
-msgstr ""
-"cor para o prefixo do apelido (string exibida antes de um apelido no prefixo)"
-
 msgid ""
 "text color for offline nick (not in nicklist any more); this color is used "
 "only if option weechat.look.color_nick_offline is enabled"
@@ -3624,6 +3629,10 @@ msgstr ""
 msgid "text color for other nick in private buffer"
 msgstr "cor de texto para outros apelidos em buffers privados"
 
+msgid "color for nick prefix (string displayed before nick in prefix)"
+msgstr ""
+"cor para o prefixo do apelido (string exibida antes de um apelido no prefixo)"
+
 msgid "text color for local nick in chat window"
 msgstr "cor de texto para apelido local na janela de conversa"
 
@@ -3631,14 +3640,8 @@ msgid "color for nick suffix (string displayed after nick in prefix)"
 msgstr ""
 "cor para o sufixo do apelido (string exibida depois do apelido no prefixo)"
 
-msgid "text color for highlighted prefix"
-msgstr "cor de texto para prefixo de destacado"
-
-msgid "background color for highlighted prefix"
-msgstr "cor de fundo para prefixo de destacado"
-
-msgid "text color for hostnames"
-msgstr "cor de texto para hostnames"
+msgid "text color for error prefix"
+msgstr "cor do texto para o prefixo de erro"
 
 msgid ""
 "text color for buffer name (before prefix, when many buffers are merged with "
@@ -3651,9 +3654,6 @@ msgid ""
 "text color for inactive buffer name (before prefix, when many buffers are "
 "merged with same number and if buffer is not selected)"
 msgstr ""
-
-msgid "text color for error prefix"
-msgstr "cor do texto para o prefixo de erro"
 
 msgid "text color for network prefix"
 msgstr "cor do texto para prefixo de rede"
@@ -3721,6 +3721,15 @@ msgstr "cor de texto para ações de linha de entrada"
 msgid "text color for unsuccessful text search in input line"
 msgstr "cor de texto para busca mal sucedida na linha de entrada"
 
+msgid "text color for away nicknames"
+msgstr "cor de texto para apelidos ausentes"
+
+msgid "text color for groups in nicklist"
+msgstr "cor de texto para gropos na lista de apelidos"
+
+msgid "text color for offline nicknames"
+msgstr "cor de texto para apelidos desconectados"
+
 #, fuzzy
 msgid ""
 "color for window separators (when split) and separators beside bars (like "
@@ -3762,6 +3771,9 @@ msgstr "cor de texto para buffer com mensagens privadas (barra de status)"
 msgid "text color for filter indicator in status bar"
 msgstr "cor de texto para indicador de filtro na barra de status"
 
+msgid "text color for buffer with new data (status bar)"
+msgstr "cor de texto para buffer com novos dados (barra de status)"
+
 #, fuzzy
 msgid "text color for mouse indicator in status bar"
 msgstr "cor de texto para indicador de filtro na barra de status"
@@ -3785,20 +3797,8 @@ msgstr ""
 msgid "text color for current buffer number in status bar"
 msgstr "cor de texto para o número do buffer atual na barra de status"
 
-msgid "text color for buffer with new data (status bar)"
-msgstr "cor de texto para buffer com novos dados (barra de status)"
-
 msgid "text color for time (status bar)"
 msgstr "cor de texto para o tempo (barra de status)"
-
-msgid "text color for away nicknames"
-msgstr "cor de texto para apelidos ausentes"
-
-msgid "text color for groups in nicklist"
-msgstr "cor de texto para gropos na lista de apelidos"
-
-msgid "text color for offline nicknames"
-msgstr "cor de texto para apelidos desconectados"
 
 msgid ""
 "if enabled, the base word to complete ends at char before cursor; otherwise "
@@ -6881,16 +6881,6 @@ msgid "display a message in private when user is back (after quit on server)"
 msgstr ""
 
 msgid ""
-"comma separated list of words to highlight in server buffers (case "
-"insensitive, use \"(?-i)\" at beginning of words to make them case "
-"sensitive; special variables $nick, $channel and $server are replaced by "
-"their value), these words are added to buffer property \"highlight_words\" "
-"only when buffer is created (it does not affect current buffers), an empty "
-"string disables default highlight on nick, examples: \"$nick\", \"(?-i)$nick"
-"\""
-msgstr ""
-
-msgid ""
 "comma separated list of words to highlight in channel buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
 "sensitive; special variables $nick, $channel and $server are replaced by "
@@ -6902,6 +6892,16 @@ msgstr ""
 
 msgid ""
 "comma separated list of words to highlight in private buffers (case "
+"insensitive, use \"(?-i)\" at beginning of words to make them case "
+"sensitive; special variables $nick, $channel and $server are replaced by "
+"their value), these words are added to buffer property \"highlight_words\" "
+"only when buffer is created (it does not affect current buffers), an empty "
+"string disables default highlight on nick, examples: \"$nick\", \"(?-i)$nick"
+"\""
+msgstr ""
+
+msgid ""
+"comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
 "sensitive; special variables $nick, $channel and $server are replaced by "
 "their value), these words are added to buffer property \"highlight_words\" "
@@ -6966,12 +6966,6 @@ msgid ""
 "channel/pv of server)"
 msgstr ""
 
-msgid ""
-"comma separated list of nicks for which passwords will be hidden when a "
-"message is sent, for example to hide password in message displayed by \"/msg "
-"nickserv identify password\", example: \"nickserv,nickbot\""
-msgstr ""
-
 #, fuzzy
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
@@ -7017,6 +7011,12 @@ msgid ""
 "display a space if nick mode is enabled but nick has no mode (not op, "
 "voice, ...)"
 msgstr "mostra espaço se o modo do apelido não é (half)op/voice"
+
+msgid ""
+"comma separated list of nicks for which passwords will be hidden when a "
+"message is sent, for example to hide password in message displayed by \"/msg "
+"nickserv identify password\", example: \"nickserv,nickbot\""
+msgstr ""
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"

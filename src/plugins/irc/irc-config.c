@@ -69,9 +69,9 @@ struct t_config_option *irc_config_look_display_join_message;
 struct t_config_option *irc_config_look_display_old_topic;
 struct t_config_option *irc_config_look_display_pv_away_once;
 struct t_config_option *irc_config_look_display_pv_back;
-struct t_config_option *irc_config_look_highlight_server;
 struct t_config_option *irc_config_look_highlight_channel;
 struct t_config_option *irc_config_look_highlight_pv;
+struct t_config_option *irc_config_look_highlight_server;
 struct t_config_option *irc_config_look_highlight_tags_restrict;
 struct t_config_option *irc_config_look_item_away_message;
 struct t_config_option *irc_config_look_item_channel_modes_hide_args;
@@ -82,13 +82,13 @@ struct t_config_option *irc_config_look_join_auto_add_chantype;
 struct t_config_option *irc_config_look_msgbuffer_fallback;
 struct t_config_option *irc_config_look_new_channel_position;
 struct t_config_option *irc_config_look_new_pv_position;
-struct t_config_option *irc_config_look_nicks_hide_password;
 struct t_config_option *irc_config_look_nick_color_force;
 struct t_config_option *irc_config_look_nick_color_hash;
 struct t_config_option *irc_config_look_nick_color_stop_chars;
 struct t_config_option *irc_config_look_nick_completion_smart;
 struct t_config_option *irc_config_look_nick_mode;
 struct t_config_option *irc_config_look_nick_mode_empty;
+struct t_config_option *irc_config_look_nicks_hide_password;
 struct t_config_option *irc_config_look_notice_as_pv;
 struct t_config_option *irc_config_look_notice_welcome_redirect;
 struct t_config_option *irc_config_look_notice_welcome_tags;
@@ -2473,17 +2473,6 @@ irc_config_init ()
         N_("display a message in private when user is back (after quit on "
            "server)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_look_highlight_server = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "highlight_server", "string",
-        N_("comma separated list of words to highlight in server buffers "
-           "(case insensitive, use \"(?-i)\" at beginning of words to "
-           "make them case sensitive; special variables $nick, $channel and "
-           "$server are replaced by their value), these words are added to "
-           "buffer property \"highlight_words\" only when buffer is created "
-           "(it does not affect current buffers), an empty string disables "
-           "default highlight on nick, examples: \"$nick\", \"(?-i)$nick\""),
-        NULL, 0, 0, "$nick", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_highlight_channel = weechat_config_new_option (
         irc_config_file, ptr_section,
         "highlight_channel", "string",
@@ -2505,6 +2494,17 @@ irc_config_init ()
            "buffer property \"highlight_words\" only when buffer is created "
            "(it does not affect current buffers), an empty string disables "
             "default highlight on nick, examples: \"$nick\", \"(?-i)$nick\""),
+        NULL, 0, 0, "$nick", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_highlight_server = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "highlight_server", "string",
+        N_("comma separated list of words to highlight in server buffers "
+           "(case insensitive, use \"(?-i)\" at beginning of words to "
+           "make them case sensitive; special variables $nick, $channel and "
+           "$server are replaced by their value), these words are added to "
+           "buffer property \"highlight_words\" only when buffer is created "
+           "(it does not affect current buffers), an empty string disables "
+           "default highlight on nick, examples: \"$nick\", \"(?-i)$nick\""),
         NULL, 0, 0, "$nick", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_highlight_tags_restrict = weechat_config_new_option (
         irc_config_file, ptr_section,
@@ -2583,15 +2583,6 @@ irc_config_init ()
            "of server)"),
         "none|next|near_server", 0, 0, "none",
         NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_look_nicks_hide_password = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "nicks_hide_password", "string",
-        N_("comma separated list of nicks for which passwords will be hidden "
-           "when a message is sent, for example to hide password in message "
-           "displayed by \"/msg nickserv identify password\", example: "
-           "\"nickserv,nickbot\""),
-        NULL, 0, 0, "nickserv", NULL, 0, NULL, NULL,
-        &irc_config_change_look_nicks_hide_password, NULL, NULL, NULL);
     irc_config_look_nick_color_force = weechat_config_new_option (
         irc_config_file, ptr_section,
         "nick_color_force", "string",
@@ -2642,6 +2633,15 @@ irc_config_init ()
            "op, voice, ...)"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL,
         &irc_config_change_bar_item_input_prompt, NULL, NULL, NULL);
+    irc_config_look_nicks_hide_password = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "nicks_hide_password", "string",
+        N_("comma separated list of nicks for which passwords will be hidden "
+           "when a message is sent, for example to hide password in message "
+           "displayed by \"/msg nickserv identify password\", example: "
+           "\"nickserv,nickbot\""),
+        NULL, 0, 0, "nickserv", NULL, 0, NULL, NULL,
+        &irc_config_change_look_nicks_hide_password, NULL, NULL, NULL);
     irc_config_look_notice_as_pv = weechat_config_new_option (
         irc_config_file, ptr_section,
         "notice_as_pv", "integer",

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-04-18 17:36+0200\n"
+"POT-Creation-Date: 2015-04-19 08:48+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2422,6 +2422,11 @@ msgid ""
 msgstr ""
 
 msgid ""
+"string displayed when bar can be scrolled down (for bars with filling "
+"different from \"horizontal\")"
+msgstr ""
+
+msgid ""
 "string displayed when bar can be scrolled to the left (for bars with filling "
 "\"horizontal\")"
 msgstr ""
@@ -2436,10 +2441,13 @@ msgid ""
 "different from \"horizontal\")"
 msgstr ""
 
-msgid ""
-"string displayed when bar can be scrolled down (for bars with filling "
-"different from \"horizontal\")"
+msgid "exit the bare display mode on any changes in input"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"time format in bare display mode (see man strftime for date/time specifiers)"
+msgstr "új nap kezdetével megjelenő időbélyeg"
 
 msgid ""
 "automatically renumber buffers to have only consecutive numbers and start "
@@ -2494,23 +2502,13 @@ msgid ""
 msgstr ""
 
 msgid ""
-"use a different color for lines in inactive window (when window is not "
-"current window)"
-msgstr ""
-
-msgid ""
 "use a different color for lines in inactive buffer (when line is from a "
 "merged buffer not selected)"
 msgstr ""
 
 msgid ""
-"use a different color for inactive time (when window is not current window, "
-"or if line is from a merged buffer not selected)"
-msgstr ""
-
-msgid ""
-"use a different color for inactive buffer name in prefix (when window is not "
-"current window, or if line is from a merged buffer not selected)"
+"use a different color for inactive message (when window is not current "
+"window, or if line is from a merged buffer not selected)"
 msgstr ""
 
 msgid ""
@@ -2519,8 +2517,18 @@ msgid ""
 msgstr ""
 
 msgid ""
-"use a different color for inactive message (when window is not current "
-"window, or if line is from a merged buffer not selected)"
+"use a different color for inactive buffer name in prefix (when window is not "
+"current window, or if line is from a merged buffer not selected)"
+msgstr ""
+
+msgid ""
+"use a different color for inactive time (when window is not current window, "
+"or if line is from a merged buffer not selected)"
+msgstr ""
+
+msgid ""
+"use a different color for lines in inactive window (when window is not "
+"current window)"
 msgstr ""
 
 #, fuzzy
@@ -2707,10 +2715,6 @@ msgstr ""
 "felhasználói parancsok maximális száma az előzményekben (0 = korlátlan)"
 
 msgid ""
-"time format for \"time\" bar item (see man strftime for date/time specifiers)"
-msgstr ""
-
-msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
 msgstr ""
@@ -2719,6 +2723,10 @@ msgid "string used to show zoom on merged buffer (bar item \"buffer_zoom\")"
 msgstr ""
 
 msgid "string used to show if mouse is enabled (bar item \"mouse_status\")"
+msgstr ""
+
+msgid ""
+"time format for \"time\" bar item (see man strftime for date/time specifiers)"
 msgstr ""
 
 msgid ""
@@ -2739,14 +2747,6 @@ msgid ""
 "allow only binding of \"safe\" keys (beginning with a ctrl or meta code)"
 msgstr ""
 
-#, fuzzy
-msgid "text to display before nick in prefix of message, example: \"<\""
-msgstr "a név előtt megjelenítendő szöveg a beszédablakban"
-
-#, fuzzy
-msgid "text to display after nick in prefix of message, example: \">\""
-msgstr "a név után megjelenítendő szöveg a beszédablakban"
-
 msgid "enable mouse support"
 msgstr ""
 
@@ -2754,6 +2754,14 @@ msgid ""
 "delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay "
 "before processing event"
 msgstr ""
+
+#, fuzzy
+msgid "text to display before nick in prefix of message, example: \"<\""
+msgstr "a név előtt megjelenítendő szöveg a beszédablakban"
+
+#, fuzzy
+msgid "text to display after nick in prefix of message, example: \">\""
+msgstr "a név után megjelenítendő szöveg a beszédablakban"
 
 msgid ""
 "enable terminal \"bracketed paste mode\" (not supported in all terminals/"
@@ -2849,14 +2857,6 @@ msgstr ""
 #, fuzzy
 msgid "string displayed after prefix"
 msgstr "névkiegészítés után beszúrt szöveg"
-
-msgid "exit the bare display mode on any changes in input"
-msgstr ""
-
-#, fuzzy
-msgid ""
-"time format in bare display mode (see man strftime for date/time specifiers)"
-msgstr "új nap kezdetével megjelenő időbélyeg"
 
 #, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
@@ -2982,6 +2982,18 @@ msgstr "kiemelt üzenetet tartalmazó ablak színe (státuszsor)"
 msgid "text color for delimiters"
 msgstr "információs pult határolóinak színe"
 
+#, fuzzy
+msgid "text color for highlighted prefix"
+msgstr "kiemelt név színe"
+
+#, fuzzy
+msgid "background color for highlighted prefix"
+msgstr "címsor háttere"
+
+#, fuzzy
+msgid "text color for hostnames"
+msgstr "gépnevek színe"
+
 msgid ""
 "text color for chat when line is inactive (buffer is merged with other "
 "buffers and is not selected)"
@@ -3002,9 +3014,6 @@ msgid ""
 "with format: \"fg:bg\", for example: \"lightred:blue\")"
 msgstr "idő színe a beszédablakban"
 
-msgid "color for nick prefix (string displayed before nick in prefix)"
-msgstr ""
-
 msgid ""
 "text color for offline nick (not in nicklist any more); this color is used "
 "only if option weechat.look.color_nick_offline is enabled"
@@ -3024,6 +3033,9 @@ msgstr ""
 msgid "text color for other nick in private buffer"
 msgstr "másik fél nevének színe privát beszélgetésben"
 
+msgid "color for nick prefix (string displayed before nick in prefix)"
+msgstr ""
+
 #, fuzzy
 msgid "text color for local nick in chat window"
 msgstr "a név előtt megjelenítendő szöveg a beszédablakban"
@@ -3033,16 +3045,8 @@ msgid "color for nick suffix (string displayed after nick in prefix)"
 msgstr "névkiegészítés után beszúrt szöveg"
 
 #, fuzzy
-msgid "text color for highlighted prefix"
-msgstr "kiemelt név színe"
-
-#, fuzzy
-msgid "background color for highlighted prefix"
-msgstr "címsor háttere"
-
-#, fuzzy
-msgid "text color for hostnames"
-msgstr "gépnevek színe"
+msgid "text color for error prefix"
+msgstr "belépési nyíl színe"
 
 msgid ""
 "text color for buffer name (before prefix, when many buffers are merged with "
@@ -3053,10 +3057,6 @@ msgid ""
 "text color for inactive buffer name (before prefix, when many buffers are "
 "merged with same number and if buffer is not selected)"
 msgstr ""
-
-#, fuzzy
-msgid "text color for error prefix"
-msgstr "belépési nyíl színe"
 
 #, fuzzy
 msgid "text color for network prefix"
@@ -3139,6 +3139,18 @@ msgid "text color for unsuccessful text search in input line"
 msgstr "információs pult határolóinak színe"
 
 #, fuzzy
+msgid "text color for away nicknames"
+msgstr "távollevő felhasználók nevének színe"
+
+#, fuzzy
+msgid "text color for groups in nicklist"
+msgstr "név színe"
+
+#, fuzzy
+msgid "text color for offline nicknames"
+msgstr "távollevő felhasználók nevének színe"
+
+#, fuzzy
 msgid ""
 "color for window separators (when split) and separators beside bars (like "
 "nicklist)"
@@ -3181,6 +3193,10 @@ msgid "text color for filter indicator in status bar"
 msgstr "aktuális szoba színe a státuszsorban"
 
 #, fuzzy
+msgid "text color for buffer with new data (status bar)"
+msgstr "új adatot tartalmazó ablak színe (státuszsor)"
+
+#, fuzzy
 msgid "text color for mouse indicator in status bar"
 msgstr "aktuális szoba színe a státuszsorban"
 
@@ -3203,24 +3219,8 @@ msgid "text color for current buffer number in status bar"
 msgstr "aktuális szoba színe a státuszsorban"
 
 #, fuzzy
-msgid "text color for buffer with new data (status bar)"
-msgstr "új adatot tartalmazó ablak színe (státuszsor)"
-
-#, fuzzy
 msgid "text color for time (status bar)"
 msgstr "státuszsor színe"
-
-#, fuzzy
-msgid "text color for away nicknames"
-msgstr "távollevő felhasználók nevének színe"
-
-#, fuzzy
-msgid "text color for groups in nicklist"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color for offline nicknames"
-msgstr "távollevő felhasználók nevének színe"
 
 msgid ""
 "if enabled, the base word to complete ends at char before cursor; otherwise "
@@ -6492,16 +6492,6 @@ msgid "display a message in private when user is back (after quit on server)"
 msgstr ""
 
 msgid ""
-"comma separated list of words to highlight in server buffers (case "
-"insensitive, use \"(?-i)\" at beginning of words to make them case "
-"sensitive; special variables $nick, $channel and $server are replaced by "
-"their value), these words are added to buffer property \"highlight_words\" "
-"only when buffer is created (it does not affect current buffers), an empty "
-"string disables default highlight on nick, examples: \"$nick\", \"(?-i)$nick"
-"\""
-msgstr ""
-
-msgid ""
 "comma separated list of words to highlight in channel buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
 "sensitive; special variables $nick, $channel and $server are replaced by "
@@ -6513,6 +6503,16 @@ msgstr ""
 
 msgid ""
 "comma separated list of words to highlight in private buffers (case "
+"insensitive, use \"(?-i)\" at beginning of words to make them case "
+"sensitive; special variables $nick, $channel and $server are replaced by "
+"their value), these words are added to buffer property \"highlight_words\" "
+"only when buffer is created (it does not affect current buffers), an empty "
+"string disables default highlight on nick, examples: \"$nick\", \"(?-i)$nick"
+"\""
+msgstr ""
+
+msgid ""
+"comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
 "sensitive; special variables $nick, $channel and $server are replaced by "
 "their value), these words are added to buffer property \"highlight_words\" "
@@ -6574,12 +6574,6 @@ msgid ""
 msgstr ""
 
 msgid ""
-"comma separated list of nicks for which passwords will be hidden when a "
-"message is sent, for example to hide password in message displayed by \"/msg "
-"nickserv identify password\", example: \"nickserv,nickbot\""
-msgstr ""
-
-msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
 "not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); look "
 "up for nicks is with exact case then lower case, so it's possible to use "
@@ -6616,6 +6610,12 @@ msgid ""
 "display a space if nick mode is enabled but nick has no mode (not op, "
 "voice, ...)"
 msgstr "szóköz megjelenítése, ha a mód nem (fél)operátor/voice"
+
+msgid ""
+"comma separated list of nicks for which passwords will be hidden when a "
+"message is sent, for example to hide password in message displayed by \"/msg "
+"nickserv identify password\", example: \"nickserv,nickbot\""
+msgstr ""
 
 #, fuzzy
 msgid ""
