@@ -613,7 +613,7 @@
 ** Werte: 0 .. 2147483647 (Standardwert: `2048`)
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** Beschreibung: `fingerprint of certificate which is trusted and accepted for the server; only hexadecimal digits are allowed (0-9, a-f): 64 chars for SHA-512, 32 chars for SHA-256, 20 chars for SHA-1 (insecure, not recommended); many fingerprints can be separated by commas; if this option is set, the other checks on certificates are NOT performed (option "ssl_verify")`
+** Beschreibung: `Fingerprint des Zertifikates welches als vertrauenswürdig eingestuft und für diesen Server akzeptiert wird; es sind nur hexadezimale Zeichen erlaubt (0-9, a-f): bei SHA-512 ist das Zertifikat 64 Zeichen lang, bei SHA-256 sind es 32 Zeichen, bei SHA-1 sind es 20 Zeichen (nicht empfohlen, da unsicher); verschiedene Fingerprints können durch Kommata voneinander getrennt werden; wird diese Option genutzt, findet KEINE weitere Überprüfung der Zertifikate statt (Option "ssl_verify")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
