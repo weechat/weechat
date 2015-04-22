@@ -2233,10 +2233,9 @@ config_file_write_internal (struct t_config_file *config_file,
     if (!string_iconv_fprintf (config_file->file, "#\n"))
         goto error;
     if (!string_iconv_fprintf (config_file->file,
-                               "# %s -- %s v%s\n#\n",
-                               config_file->filename,
+                               "# %s -- %s\n#\n",
                                version_get_name (),
-                               version_get_version ()))
+                               config_file->filename))
         goto error;
 
     /* write all sections */
