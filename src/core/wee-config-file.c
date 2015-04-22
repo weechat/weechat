@@ -2229,16 +2229,6 @@ config_file_write_internal (struct t_config_file *config_file,
         goto error;
     }
 
-    /* write header with name of config file and WeeChat version */
-    if (!string_iconv_fprintf (config_file->file, "#\n"))
-        goto error;
-    if (!string_iconv_fprintf (config_file->file,
-                               "# %s -- %s v%s\n#\n",
-                               config_file->filename,
-                               version_get_name (),
-                               version_get_version ()))
-        goto error;
-
     /* write all sections */
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
