@@ -9901,9 +9901,8 @@ info を使う前にエリアが一致していることを確認して下さい
 | _chat | チャットエリアインジケータ |
   "0" または "1" | "0"
 
-// TRANSLATION MISSING
-| _chat_line | Pointer to line +
-  _(WeeChat ≥ 1.2)_ |
+| _chat_line | 行へのポインタ +
+  _(WeeChat バージョン 1.2 以上で利用可)_ |
   "0x12345678" | ""
 
 | _chat_line_x | 行中の列番号 ^(3)^ |
