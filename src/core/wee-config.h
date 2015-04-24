@@ -207,6 +207,7 @@ extern struct t_config_option *config_look_prefix_buffer_align_more;
 extern struct t_config_option *config_look_prefix_buffer_align_more_after;
 extern struct t_config_option *config_look_prefix_same_nick;
 extern struct t_config_option *config_look_prefix_suffix;
+extern struct t_config_option *config_look_prefix_unalign_multiline_words;
 extern struct t_config_option *config_look_quote_nick_prefix;
 extern struct t_config_option *config_look_quote_nick_suffix;
 extern struct t_config_option *config_look_quote_time_format;

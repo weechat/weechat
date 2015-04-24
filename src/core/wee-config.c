@@ -161,6 +161,7 @@ struct t_config_option *config_look_prefix_buffer_align_more;
 struct t_config_option *config_look_prefix_buffer_align_more_after;
 struct t_config_option *config_look_prefix_same_nick;
 struct t_config_option *config_look_prefix_suffix;
+struct t_config_option *config_look_prefix_unalign_multiline_words;
 struct t_config_option *config_look_quote_nick_prefix;
 struct t_config_option *config_look_quote_nick_suffix;
 struct t_config_option *config_look_quote_time_format;
@@ -2770,6 +2771,13 @@ config_weechat_init_options ()
         "prefix_suffix", "string",
         N_("string displayed after prefix"),
         NULL, 0, 0, "|", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_prefix_unalign_multiline_words = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "prefix_unalign_multiline_words", "boolean",
+        N_("continue words longer than a single line directly at the "
+           "beginning of the next line (default off)"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_quote_nick_prefix = config_file_new_option (
         weechat_config_file, ptr_section,
         "quote_nick_prefix", "string",
