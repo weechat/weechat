@@ -6,11 +6,11 @@
 
 // TRANSLATION MISSING
 *-d*, *--dir* '<path>'::
-    legt den Konfigurationsordner für WeeChat fest (Voreinstellung: ~/.weechat) in
-    dem die Erweiterungen, Skripten, Protokolldateien etc.pp. gesichert werden.
+    legt den Konfigurationsordner für WeeChat fest in welchem die Erweiterungen,
+    Skripten, Protokolldateien etc.pp. gesichert werden (Voreinstellung: ~/.weechat).
     Sollte das Verzeichnis nicht existieren wird es beim Start angelegt.
-    If this option is not given, the environment variable WEECHAT_HOME is used
-    (if not empty).
+    Wird diese Option nicht genutzt, wird die Umgebungsvariable WEECHAT_HOME genutzt
+    (sofern diese vorhanden ist).
 
 *-h*, *--help*::
     zeigt einen Hilfstext an.
@@ -29,7 +29,7 @@
     Skripten werden beim Programmstart nicht geladen.
 
 *--upgrade*::
-    führt ein WeeChat Upgrade mittels Sitzungsdateien, die mit dem Befehl `/upgrade -quit` erstellt wurden, durch.
+    führt ein WeeChat Upgrade mittels Sitzungsdateien die mit dem Befehl `/upgrade -quit` erstellt wurden durch.
 
 *-v*, *--version*::
     zeigt die Version von WeeChat an.
