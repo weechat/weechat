@@ -2722,6 +2722,8 @@ irc_command_list (void *data, struct t_gui_buffer *buffer, int argc,
                               "(%s)"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
                             argv_eol[1], buf);
+                        free (ptr_server->cmd_list_regexp);
+                        ptr_server->cmd_list_regexp = NULL;
                         return WEECHAT_RC_OK;
                     }
                 }
