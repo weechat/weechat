@@ -1231,7 +1231,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                                 old_color : IRC_COLOR_CHAT_NICK,
                                 nick,
                                 IRC_COLOR_RESET,
-                                irc_nick_color_for_msg (server, 0, ptr_nick,
+                                irc_nick_color_for_msg (server, 1, ptr_nick,
                                                         new_nick),
                                 new_nick,
                                 IRC_COLOR_RESET);

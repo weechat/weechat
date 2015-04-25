@@ -49,6 +49,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   config_option_reset, config_color, config_color_default, config_write,
   config_read, config_reload, hook_command, buffer_string_replace_local_var,
   command
+* irc: fix color of new nick in nick changes messages when option
+  irc.look.color_nicks_in_server_messages is off
 * irc: fix crash when setting an invalid regex with "/list -re" during a /list
   server response (closes #412)
 * irc: fix display of PART messages on channels with +a (anonymous flag)
