@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-04-25 08:09+0200\n"
+"POT-Creation-Date: 2015-04-25 12:59+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -132,10 +132,13 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Użycie: %s [argumenty...] [wtyczka:opcje...]\n"
 
+#, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal\n"
 "  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
+"                           (environment variable WEECHAT_HOME is read if "
+"this option is not given)\n"
 "  -h, --help               display this help\n"
 "  -l, --license            display WeeChat license\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
@@ -167,15 +170,15 @@ msgstr ""
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "Błąd: brak argumentu dla opcji \"%s\"\n"
 
-msgid "Error: WEECHAT_HOME is undefined, check build options\n"
-msgstr ""
-"Błąd: WEECHAT_HOME nie ma zdefiniowanej wartości , sprawdź opcje kompilacji\n"
-
 msgid "Error: unable to get HOME directory\n"
 msgstr "Błąd: nie można pozyskać katalogu domowego\n"
 
 msgid "Error: not enough memory for home directory\n"
 msgstr "Błąd: za mało miejsca dla katalogu domowego\n"
+
+msgid "Error: WEECHAT_HOME is undefined, check build options\n"
+msgstr ""
+"Błąd: WEECHAT_HOME nie ma zdefiniowanej wartości , sprawdź opcje kompilacji\n"
 
 #, c-format
 msgid "Error: home (%s) is not a directory\n"

@@ -137,19 +137,21 @@ weechat_display_usage (char *exec_name)
                           _("Usage: %s [option...] [plugin:option...]\n"),
                           exec_name, exec_name);
     string_iconv_fprintf (stdout, "\n");
-    string_iconv_fprintf (stdout,
-                          _("  -a, --no-connect         disable auto-connect to servers at startup\n"
-                            "  -c, --colors             display default colors in terminal\n"
-                            "  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
-                            "  -h, --help               display this help\n"
-                            "  -l, --license            display WeeChat license\n"
-                            "  -p, --no-plugin          don't load any plugin at startup\n"
-                            "  -r, --run-command <cmd>  run command(s) after startup\n"
-                            "                           (many commands can be separated by semicolons)\n"
-                            "  -s, --no-script          don't load any script at startup\n"
-                            "      --upgrade            upgrade WeeChat using session files (see /help upgrade in WeeChat)\n"
-                            "  -v, --version            display WeeChat version\n"
-                            "  plugin:option            option for plugin (see man weechat)\n"));
+    string_iconv_fprintf (
+        stdout,
+        _("  -a, --no-connect         disable auto-connect to servers at startup\n"
+          "  -c, --colors             display default colors in terminal\n"
+          "  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
+          "                           (environment variable WEECHAT_HOME is read if this option is not given)\n"
+          "  -h, --help               display this help\n"
+          "  -l, --license            display WeeChat license\n"
+          "  -p, --no-plugin          don't load any plugin at startup\n"
+          "  -r, --run-command <cmd>  run command(s) after startup\n"
+          "                           (many commands can be separated by semicolons)\n"
+          "  -s, --no-script          don't load any script at startup\n"
+          "      --upgrade            upgrade WeeChat using session files (see /help upgrade in WeeChat)\n"
+          "  -v, --version            display WeeChat version\n"
+          "  plugin:option            option for plugin (see man weechat)\n"));
     string_iconv_fprintf(stdout, "\n");
 }
 

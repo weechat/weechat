@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-04-25 08:09+0200\n"
+"POT-Creation-Date: 2015-04-25 12:59+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -152,6 +152,8 @@ msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal\n"
 "  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
+"                           (environment variable WEECHAT_HOME is read if "
+"this option is not given)\n"
 "  -h, --help               display this help\n"
 "  -l, --license            display WeeChat license\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
@@ -181,9 +183,6 @@ msgstr ""
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
-msgid "Error: WEECHAT_HOME is undefined, check build options\n"
-msgstr "Ошибка: WEECHAT_HOME не определена, проверьте опции сборки\n"
-
 #, fuzzy
 msgid "Error: unable to get HOME directory\n"
 msgstr "%s не могу получить домашний каталог\n"
@@ -191,6 +190,9 @@ msgstr "%s не могу получить домашний каталог\n"
 #, fuzzy
 msgid "Error: not enough memory for home directory\n"
 msgstr "%s недостаточно памяти для домашней директории\n"
+
+msgid "Error: WEECHAT_HOME is undefined, check build options\n"
+msgstr "Ошибка: WEECHAT_HOME не определена, проверьте опции сборки\n"
 
 #, fuzzy, c-format
 msgid "Error: home (%s) is not a directory\n"
