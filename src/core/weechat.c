@@ -355,11 +355,11 @@ weechat_create_home_dir ()
 }
 
 /*
- * Displays WeeChat welcome message.
+ * Displays WeeChat startup message.
  */
 
 void
-weechat_welcome_message ()
+weechat_startup_message ()
 {
     if (CONFIG_BOOLEAN(config_startup_display_logo))
     {
@@ -384,6 +384,30 @@ weechat_welcome_message ()
     {
         gui_chat_printf (NULL,
                          "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+    }
+
+    if (weechat_first_start)
+    {
+        /* message on first run (when weechat.conf is created) */
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (
+            NULL,
+            _("Welcome to WeeChat!\n"
+              "\n"
+              "If you are discovering WeeChat, it is recommended to read at "
+              "least the quickstart guide, and the user's guide if you have "
+              "some time; they explain main WeeChat concepts.\n"
+              "All WeeChat docs are available at: https://weechat.org/doc\n"
+              "\n"
+              "Moreover, there is inline help with /help on all commands and "
+              "options (use Tab key to complete the name).\n"
+              "The command /iset (script iset.pl) can help to customize "
+              "WeeChat: /script install iset.pl\n"
+              "\n"
+              "You can create and connect to an IRC server with /server and "
+              "/connect commands (see /help server)."));
+        gui_chat_printf (NULL, "---");
+        gui_chat_printf (NULL, "");
     }
 }
 
@@ -573,7 +597,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
         upgrade_weechat_load ();        /* upgrade with session file        */
         weechat_upgrade_count++;        /* increase /upgrade count          */
     }
-    weechat_welcome_message ();         /* display WeeChat welcome message  */
+    weechat_startup_message ();         /* display WeeChat startup message  */
     gui_chat_print_lines_waiting_buffer (NULL); /* display lines waiting    */
     weechat_term_check ();              /* warnings about $TERM (if wrong)  */
     weechat_locale_check ();            /* warning about wrong locale       */

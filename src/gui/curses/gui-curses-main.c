@@ -229,32 +229,6 @@ gui_main_init ()
 }
 
 /*
- * Displays a message on first WeeChat run (when weechat.conf is created).
- */
-
-void
-gui_main_welcome_message ()
-{
-    gui_chat_printf (
-        NULL,
-        _("\n"
-          "Welcome to WeeChat!\n"
-          "\n"
-          "If you are discovering WeeChat, it is recommended to read at least "
-          "the quickstart guide, and the user's guide if you have some time; "
-          "they explain main WeeChat concepts.\n"
-          "All WeeChat docs are available at: https://weechat.org/doc\n"
-          "\n"
-          "Moreover, there is inline help with /help on all commands and "
-          "options (use Tab key to complete the name).\n"
-          "The command /iset (script iset.pl) can help to customize WeeChat: "
-          "/script install iset.pl\n"
-          "\n"
-          "You can create and connect to an IRC server with /server and "
-          "/connect commands (see /help server)."));
-}
-
-/*
  * Callback for system signal SIGWINCH: refreshes screen.
  */
 
@@ -400,10 +374,6 @@ gui_main_loop ()
     fd_set read_fds, write_fds, except_fds;
     int max_fd;
     int ready;
-
-    /* message on first run of WeeChat */
-    if (weechat_first_start)
-        gui_main_welcome_message ();
 
     /* catch SIGWINCH signal: redraw screen */
     util_catch_signal (SIGWINCH, &gui_main_signal_sigwinch);
