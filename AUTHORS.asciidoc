@@ -47,6 +47,7 @@ Alphabetically:
 * Jim Ramsay (lack)
 * Jiri Golembiovsky (GolemJ)
 * Julien Louis (ptitlouis)
+* Karthik K
 * Koka El Kiwi (KiwiDash)
 * Krzysztof Koroscik (soltys)
 * Kyle Fuller (kylef)
