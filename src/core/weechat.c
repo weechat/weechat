@@ -271,17 +271,16 @@ weechat_parse_args (int argc, char *argv[])
 }
 
 /*
- * Helper function for weechat_create_home_dir.
- * Expands and assigns given string to weechat_home
+ * Expands and assigns given path to "weechat_home".
  */
 
 void
-weechat_create_home_dir_set_path (char* local_weechat_home)
+weechat_set_home_path (char *home_path)
 {
     char *ptr_home;
     int dir_length;
 
-    if (local_weechat_home[0] == '~')
+    if (home_path[0] == '~')
     {
         /* replace leading '~' by $HOME */
         ptr_home = getenv ("HOME");
@@ -293,17 +292,17 @@ weechat_create_home_dir_set_path (char* local_weechat_home)
             /* make C static analyzer happy (never executed) */
             return;
         }
-        dir_length = strlen (ptr_home) + strlen (local_weechat_home + 1) + 1;
+        dir_length = strlen (ptr_home) + strlen (home_path + 1) + 1;
         weechat_home = malloc (dir_length);
         if (weechat_home)
         {
             snprintf (weechat_home, dir_length,
-                      "%s%s", ptr_home, local_weechat_home + 1);
+                      "%s%s", ptr_home, home_path + 1);
         }
     }
     else
     {
-        weechat_home = strdup (local_weechat_home);
+        weechat_home = strdup (home_path);
     }
 
     if (!weechat_home)
@@ -330,24 +329,22 @@ weechat_create_home_dir ()
     char *ptr_weechat_home, *config_weechat_home;
     struct stat statinfo;
 
-    /* weechat home is not set yet. Look for environment variable WEECHAT_HOME */
+    /*
+     * weechat_home is not set yet: look for environment variable
+     * "WEECHAT_HOME"
+     */
     if (!weechat_home)
     {
         ptr_weechat_home = getenv ("WEECHAT_HOME");
-
-        /* Proceed only if environment variable WEECHAT_HOME is set to some value */
-        if (ptr_weechat_home && strlen (ptr_weechat_home) != 0)
-        {
-            weechat_create_home_dir_set_path (ptr_weechat_home);
-        }
+        if (ptr_weechat_home && ptr_weechat_home[0])
+            weechat_set_home_path (ptr_weechat_home);
     }
 
-    /* If weechat_home is still not set, try to use compile time default */
+    /* weechat_home is still not set: try to use compile time default */
     if (!weechat_home)
     {
         config_weechat_home = WEECHAT_HOME;
-
-        if (strlen (config_weechat_home) == 0)
+        if (!config_weechat_home[0])
         {
             string_iconv_fprintf (stderr,
                                   _("Error: WEECHAT_HOME is undefined, check "
@@ -356,8 +353,7 @@ weechat_create_home_dir ()
             /* make C static analyzer happy (never executed) */
             return;
         }
-
-        weechat_create_home_dir_set_path (config_weechat_home);
+        weechat_set_home_path (config_weechat_home);
     }
 
     /* if home already exists, it has to be a directory */
@@ -369,6 +365,8 @@ weechat_create_home_dir ()
                                   _("Error: home (%s) is not a directory\n"),
                                   weechat_home);
             weechat_shutdown (EXIT_FAILURE, 0);
+            /* make C static analyzer happy (never executed) */
+            return;
         }
     }
 
@@ -379,6 +377,8 @@ weechat_create_home_dir ()
                               _("Error: cannot create directory \"%s\"\n"),
                               weechat_home);
         weechat_shutdown (EXIT_FAILURE, 0);
+        /* make C static analyzer happy (never executed) */
+        return;
     }
 }
 
