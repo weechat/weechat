@@ -4,10 +4,13 @@
 *-c*, *--colors*::
     Wyświetla domślne kolory w terminalu.
 
+// TRANSLATION MISSING
 *-d*, *--dir* '<ścieżka>'::
     Ustawia ścieżkę jako katalog domowy WeeChat (używany dla plików
     konfiguracyjnych, logów, wtyczek użytkownika i skryptów), domyślna wartość
     to '~/.weechat' (katalog zostanie utworzony jeśli nie istnieje).
+    If this option is not given, the environment variable WEECHAT_HOME is used
+    (if not empty).
 
 *-h*, *--help*::
     Wyświetla pomoc.

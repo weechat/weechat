@@ -9,6 +9,8 @@
     (utilisé pour les fichiers de configuration, logs, extensions
     et scripts de l'utilisateur), la valeur par défaut est '~/.weechat' (note :
     le répertoire est créé s'il n'est pas trouvé par WeeChat).
+    Si cette option n'est pas donnée, la variable d'environnement WEECHAT_HOME
+    est utilisée (si non vide).
 
 *-h*, *--help*::
     Afficher l'aide.

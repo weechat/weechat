@@ -4,10 +4,13 @@
 *-c*, *--colors*::
     ターミナルにデフォルトカラーを表示
 
+// TRANSLATION MISSING
 *-d*, *--dir* '<path>'::
     WeeChat のホームディレクトリを path に設定 (設定ファイル、ログ、
     ユーザプラグイン、スクリプトに利用される)、初期値は '~/.weechat' 。
     (注意: パスが存在しない場合は WeeChat がディレクトリを作成します)
+    If this option is not given, the environment variable WEECHAT_HOME is used
+    (if not empty).
 
 *-h*, *--help*::
     ヘルプを表示

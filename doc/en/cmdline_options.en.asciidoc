@@ -8,6 +8,8 @@
     Set path as home for WeeChat (used for configuration files, logs, user
     plugins and scripts), default value is '~/.weechat' (note: directory is
     created if not found by WeeChat).
+    If this option is not given, the environment variable WEECHAT_HOME is used
+    (if not empty).
 
 *-h*, *--help*::
     Display help.
