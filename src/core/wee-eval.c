@@ -352,7 +352,15 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 7. option: if found, return this value */
+    /* 7. environment variable */
+    if (strncmp (text, "env:", 4) == 0)
+    {
+        ptr_value = getenv (text + 4);
+        if (ptr_value)
+            return strdup (ptr_value);
+    }
+
+    /* 8. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -385,7 +393,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 8. local variable in buffer */
+    /* 9. local variable in buffer */
     ptr_buffer = hashtable_get (pointers, "buffer");
     if (ptr_buffer)
     {
@@ -394,7 +402,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 9. hdata */
+    /* 10. hdata */
     value = NULL;
     hdata_name = NULL;
     list_name = NULL;

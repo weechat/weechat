@@ -280,9 +280,10 @@ Some variables are replaced in expression, using the format ${variable}, variabl
   2. a string with chars to hide (format: "hide:char,string")
   3. a color (format: "color:xxx")
   4. an info (format: "info:name,arguments", arguments are optional)
-  5. an option (format: "file.section.option")
-  6. a local variable in buffer
-  7. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  5. an environment variable (format: "env:XXX")
+  6. an option (format: "file.section.option")
+  7. a local variable in buffer
+  8. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list, for example:
@@ -292,6 +293,7 @@ For name of hdata and variables, please look at "Plugin API reference", function
 
 Examples (simple strings):
   /eval -n ${info:version}                     ==> 0.4.3
+  /eval -n ${env:HOME}                         ==> /home/user
   /eval -n ${weechat.look.scroll_amount}       ==> 3
   /eval -n ${window}                           ==> 0x2549aa0
   /eval -n ${window.buffer}                    ==> 0x2549320

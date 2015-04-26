@@ -2006,6 +2006,12 @@ expanded to last):
   `1.0` +
   `lightblue`
 
+| `${env:NAME}` +
+  (_WeeChat ≥ 1.2_) |
+  Value of the environment variable `NAME` |
+  `${env:HOME}` |
+  `/home/user`
+
 | `${sec.data.name}` |
   Value of the secured data `name` |
   `${sec.data.freenode_pass}` |

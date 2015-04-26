@@ -280,9 +280,10 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   2. une chaîne avec des caractères à cacher (format : "hide:caractère,chaîne")
   3. une couleur (format : "color:xxx")
   4. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
-  5. une option (format : "fichier.section.option")
-  6. une variable locale du tampon
-  7. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  5. une variable d'environnement (format : "env:XXX")
+  6. une option (format : "fichier.section.option")
+  7. une variable locale du tampon
+  8. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[list].var1.var2... : démarrer avec un hdata en utilisant une liste, par exemple :
@@ -292,6 +293,7 @@ Pour le nom du hdata et des variables, voir la "Référence API extension", fonc
 
 Exemples (chaînes simples) :
   /eval -n ${info:version}                     ==> 0.4.3
+  /eval -n ${env:HOME}                         ==> /home/user
   /eval -n ${weechat.look.scroll_amount}       ==> 3
   /eval -n ${window}                           ==> 0x2549aa0
   /eval -n ${window.buffer}                    ==> 0x2549320

@@ -1940,6 +1940,13 @@ char *weechat_string_eval_expression (const char *expr,
   `1.0` +
   `lightblue`
 
+// TRANSLATION MISSING
+| `${env:NAME}` +
+  (_WeeChat ≥ 1.2_) |
+  Value of the environment variable `NAME` |
+  `${env:HOME}` |
+  `/home/user`
+
 | `${sec.data.name}` |
   セキュアデータ `name` の値 |
   `${sec.data.freenode_pass}` |

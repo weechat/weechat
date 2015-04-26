@@ -1978,6 +1978,12 @@ première étendue à la dernière) :
   `1.0` +
   `lightblue`
 
+| `${env:NOM}` +
+  (_WeeChat ≥ 1.2_) |
+  Valeur de la variable d'environnement `NOM` |
+  `${env:HOME}` |
+  `/home/user`
+
 | `${sec.data.nom}` |
   Valeur de la donnée sécurisée `nom` |
   `${sec.data.freenode_pass}` |
