@@ -22,6 +22,8 @@
 
 #include <regex.h>
 
+struct t_config_option;
+
 /*
  * Color from configuration options.
  * When changing some colors below:
@@ -173,6 +175,7 @@ extern struct t_weelist *gui_color_list_with_alias;
 
 /* color functions */
 
+extern const char *gui_color_from_option (struct t_config_option *option);
 extern const char *gui_color_search_config (const char *color_name);
 extern int gui_color_attr_get_flag (char c);
 extern void gui_color_attr_build_string (int color, char *str_attr);

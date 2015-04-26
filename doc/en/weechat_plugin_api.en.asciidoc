@@ -1922,7 +1922,8 @@ expanded to last):
   `test`
 
 | `${color:name}` |
-  WeeChat color code (the name of color has optional attributes) |
+  WeeChat color code (the name of color has optional attributes),
+  see function <<_color,weechat_color>> for supported formats |
   `${color:red}red text` +
   `${color:*214}bold orange text` |
   `red text` (in red) +

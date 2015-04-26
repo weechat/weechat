@@ -27,6 +27,7 @@ extern "C"
 #include <regex.h>
 #include "src/core/wee-eval.h"
 #include "src/core/wee-config.h"
+#include "src/core/wee-config-file.h"
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-string.h"
 #include "src/core/wee-version.h"
@@ -38,6 +39,7 @@ extern "C"
     value = eval_expression (__expr, pointers, extra_vars, options);    \
     STRCMP_EQUAL(__result, value);                                      \
     free (value);
+
 TEST_GROUP(Eval)
 {
 };
@@ -171,6 +173,7 @@ TEST(Eval, EvalCondition)
 TEST(Eval, EvalExpression)
 {
     struct t_hashtable *pointers, *extra_vars, *options;
+    struct t_config_option *ptr_option;
     char *value, str_value[256];
 
     pointers = NULL;
@@ -209,6 +212,20 @@ TEST(Eval, EvalExpression)
     /* test color */
     WEE_CHECK_EVAL(gui_color_get_custom ("green"), "${color:green}");
     WEE_CHECK_EVAL(gui_color_get_custom ("*214"), "${color:*214}");
+    snprintf (str_value, sizeof (str_value),
+              "%s-test-",
+              gui_color_from_option (config_color_chat_delimiters));
+    WEE_CHECK_EVAL(str_value, "${color:chat_delimiters}-test-");
+    config_file_search_with_string ("irc.color.message_join", NULL, NULL,
+                                    &ptr_option, NULL);
+    if (!ptr_option)
+    {
+        FAIL("ERROR: option irc.color.message_join not found.");
+    }
+    snprintf (str_value, sizeof (str_value),
+              "%s-test-", gui_color_from_option (ptr_option));
+    WEE_CHECK_EVAL(str_value, "${color:irc.color.message_join}-test-");
+    WEE_CHECK_EVAL("test", "${option.not.found}test");
 
     /* test info */
     WEE_CHECK_EVAL(version_get_version (), "${info:version}");

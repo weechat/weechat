@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: add support of full color option name in command /eval
 * core: use environment variable WEECHAT_HOME on startup (closes #391)
 * core: remove WeeChat version from config files (closes #407)
 * core: add options weechat.look.quote_{nick_prefix|nick_suffix|time_format} to
@@ -32,7 +33,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add option "-s" in command /eval to split expression before evaluating
   it (no more split by default) (closes #324)
 * core: add priority in plugins to initialize them in order
-* api: add support of full option name in function color()
+* api: add support of full color option name in functions color() and
+  string_eval_expression()
 * api: add "_chat_line" (line pointer) in hashtable of hook_focus
 * irc: add support of SHA-256 and SHA-512 algorithms in server option
   "ssl_fingerprint" (closes #281)

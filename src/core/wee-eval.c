@@ -325,6 +325,9 @@ eval_replace_vars_cb (void *data, const char *text)
     /* 5. color code */
     if (strncmp (text, "color:", 6) == 0)
     {
+        ptr_value = gui_color_search_config (text + 6);
+        if (ptr_value)
+            return strdup (ptr_value);
         ptr_value = gui_color_get_custom (text + 6);
         return strdup ((ptr_value) ? ptr_value : "");
     }

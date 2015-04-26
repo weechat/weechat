@@ -1962,7 +1962,8 @@ première étendue à la dernière) :
   `test`
 
 | `${color:nom}` |
-  Code couleur WeeChat (le nom de couleur a des attributs facultatifs) |
+  Code couleur WeeChat (le nom de couleur a des attributs facultatifs),
+  voir la fonction <<_color,weechat_color>> pour les formats supportés |
   `${color:red}texte rouge` +
   `${color:*214}texte orange gras` |
   `texte rouge` (en rouge) +

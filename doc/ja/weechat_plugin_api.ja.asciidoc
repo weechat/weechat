@@ -1922,8 +1922,10 @@ char *weechat_string_eval_expression (const char *expr,
   `${re:1}` |
   `test`
 
+// TRANSLATION MISSING
 | `${color:name}` |
-  WeeChat 色コード (色名部分はオプション属性をとることも可能です) |
+  WeeChat 色コード (色名部分はオプション属性をとることも可能です),
+  see function <<_color,weechat_color>> for supported formats |
   `${color:red}red text` +
   `${color:*214}bold orange text` |
   `red text` (赤色で) +
