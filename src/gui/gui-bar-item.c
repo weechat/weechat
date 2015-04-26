@@ -1784,10 +1784,10 @@ gui_bar_item_default_window_number (void *data, struct t_gui_bar_item *item,
  */
 
 char *
-gui_bar_item_default_mouse_status   (void *data, struct t_gui_bar_item *item,
-                                    struct t_gui_window *window,
-                                    struct t_gui_buffer *buffer,
-                                    struct t_hashtable *extra_info)
+gui_bar_item_default_mouse_status (void *data, struct t_gui_bar_item *item,
+                                   struct t_gui_window *window,
+                                   struct t_gui_buffer *buffer,
+                                   struct t_hashtable *extra_info)
 {
     char str_mouse[512];
 
