@@ -1930,7 +1930,7 @@ expanded to last):
   `bold orange text` (in bold orange)
 
 | `${info:name}` +
-  `${indo:name,arguments}` |
+  `${info:name,arguments}` |
   Info from WeeChat or a plugin, see function
   <<_info_get,weechat_info_get>> |
   `${info:version}` +

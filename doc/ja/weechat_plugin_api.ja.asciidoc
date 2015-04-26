@@ -1932,7 +1932,7 @@ char *weechat_string_eval_expression (const char *expr,
   `bold orange text` (太字オレンジ色で)
 
 | `${info:name}` +
-  `${indo:name,arguments}` |
+  `${info:name,arguments}` |
   WeeChat またはプラグインのインフォ、<<_info_get,weechat_info_get>>
   を参照 |
   `${info:version}` +

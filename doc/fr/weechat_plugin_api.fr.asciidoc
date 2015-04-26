@@ -1970,7 +1970,7 @@ première étendue à la dernière) :
   `texte orange gras` (en orange gras)
 
 | `${info:name}` +
-  `${indo:name,arguments}` |
+  `${info:name,arguments}` |
   Info de WeeChat ou d'une extension, voir la fonction
   <<_info_get,weechat_info_get>> |
   `${info:version}` +
