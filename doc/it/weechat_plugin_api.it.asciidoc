@@ -6614,7 +6614,12 @@ const char *weechat_color (const char *color_name);
 Argomenti:
 
 * 'color_name': nome del colore, uno di:
-** nome opzione di WeeChat (da weechat.color.xxx), ad esempio 'chat_delimiters'
+// TRANSLATION MISSING
+** WeeChat color option name (from weechat.color.xxx), for example
+   'chat_delimiters'
+// TRANSLATION MISSING
+** option name (format: file.section.option), for example
+   'irc.color.message_quit' (_WeeChat ≥ 1.2_)
 ** colore con attributi/sfondo opzionali (vedi sotto)
 ** attributo:
 *** 'bold': imposta grassetto

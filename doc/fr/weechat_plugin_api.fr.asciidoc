@@ -6587,7 +6587,10 @@ const char *weechat_color (const char *color_name);
 Paramètres :
 
 * 'color_name' : nom de la couleur, parmi :
-** une option WeeChat (de weechat.color.xxx), par exemple 'chat_delimiters'
+** le nom d'une option de couleur WeeChat (de weechat.color.xxx), par exemple
+  'chat_delimiters'
+** le nom d'une option (format: fichier.section.option), par exemple
+   'irc.color.message_quit' (_WeeChat ≥ 1.2_)
 ** une couleur avec des attributs/fond optionnels (voir ci-dessous)
 ** un attribut :
 *** 'bold' : activer le gras

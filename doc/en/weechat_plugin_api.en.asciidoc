@@ -6491,7 +6491,10 @@ const char *weechat_color (const char *color_name);
 Arguments:
 
 * 'color_name': name of color, one of:
-** WeeChat option name (from weechat.color.xxx), for example 'chat_delimiters'
+** WeeChat color option name (from weechat.color.xxx), for example
+   'chat_delimiters'
+** option name (format: file.section.option), for example
+   'irc.color.message_quit' (_WeeChat ≥ 1.2_)
 ** color with optional attributes/background (see below)
 ** attribute:
 *** 'bold': set bold

@@ -113,6 +113,37 @@ char *gui_color_ansi[16] =
 
 
 /*
+ * Returns a color code from an option, which can be a color or a string.
+ *
+ * Returns NULL if the option has a wrong type.
+ */
+
+const char *
+gui_color_from_option (struct t_config_option *option)
+{
+    if (!option)
+        return NULL;
+
+    switch (option->type)
+    {
+        case CONFIG_OPTION_TYPE_COLOR:
+            if (option->min < 0)
+            {
+                return gui_color_get_custom (
+                    gui_color_get_name (CONFIG_COLOR(option)));
+            }
+            return GUI_COLOR(option->min);
+        case CONFIG_OPTION_TYPE_STRING:
+            return gui_color_get_custom (CONFIG_STRING(option));
+        default:
+            return NULL;
+    }
+
+    /* never executed */
+    return NULL;
+}
+
+/*
  * Searches for a color with configuration option name.
  *
  * Returns color string, NULL if not found.
@@ -123,21 +154,24 @@ gui_color_search_config (const char *color_name)
 {
     struct t_config_option *ptr_option;
 
-    if (color_name)
+    if (!color_name)
+        return NULL;
+
+    /* search in weechat.conf colors (example: "chat_delimiters") */
+    for (ptr_option = weechat_config_section_color->options;
+         ptr_option; ptr_option = ptr_option->next_option)
     {
-        for (ptr_option = weechat_config_section_color->options;
-             ptr_option; ptr_option = ptr_option->next_option)
-        {
-            if (string_strcasecmp (ptr_option->name, color_name) == 0)
-            {
-                if (ptr_option->min < 0)
-                {
-                    return gui_color_get_custom (
-                        gui_color_get_name (CONFIG_COLOR(ptr_option)));
-                }
-                return GUI_COLOR(ptr_option->min);
-            }
-        }
+        if (string_strcasecmp (ptr_option->name, color_name) == 0)
+            return gui_color_from_option (ptr_option);
+    }
+
+    /* search in any configuration file (example: "irc.color.message_quit") */
+    if (strchr (color_name, '.'))
+    {
+        config_file_search_with_string (color_name, NULL, NULL, &ptr_option,
+                                        NULL);
+        if (ptr_option)
+            return gui_color_from_option (ptr_option);
     }
 
     /* color not found */

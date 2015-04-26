@@ -6492,7 +6492,12 @@ const char *weechat_color (const char *color_name);
 引数:
 
 * 'color_name': 色の名前、以下の中から 1 つ:
-** WeeChat オプション名 (weechat.color.xxx の xxx)、例えば 'chat_delimiters'
+// TRANSLATION MISSING
+** WeeChat color option name (from weechat.color.xxx), for example
+   'chat_delimiters'
+// TRANSLATION MISSING
+** option name (format: file.section.option), for example
+   'irc.color.message_quit' (_WeeChat ≥ 1.2_)
 ** 任意で属性や背景色を指定した色 (以下を参照)
 ** 属性:
 *** 'bold': 太字を有効
