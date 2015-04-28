@@ -2,9 +2,8 @@
     deaktiviert das automatische Verbinden mit den Servern beim Start von WeeChat.
 
 *-c*, *--colors*::
-    Zeigt die Standardfarben im Terminal an.
+    zeigt die Standardfarben im Terminal an.
 
-// TRANSLATION MISSING
 *-d*, *--dir* '<path>'::
     legt den Konfigurationsordner für WeeChat fest in welchem die Erweiterungen,
     Skripten, Protokolldateien etc.pp. gesichert werden (Voreinstellung: ~/.weechat).
@@ -22,14 +21,14 @@
     unterbindet das Laden der Erweiterungen beim Programmstart.
 
 *-r*, *--run-command* '<command>'::
-    startet einen oder mehrere Befehle, nachdem WeeChat gestartet wurde
+    führt einen oder mehrere Befehle aus, nachdem WeeChat gestartet wurde
     (mehrere Befehle müssen durch Kommata voneinander getrennt werden).
 
 *-s*, *--no-script*::
     Skripten werden beim Programmstart nicht geladen.
 
 *--upgrade*::
-    führt ein WeeChat Upgrade mittels Sitzungsdateien die mit dem Befehl `/upgrade -quit` erstellt wurden durch.
+    führt ein WeeChat Upgrade mit Sitzungsdateien durch, die mittels dem Befehl `/upgrade -quit` erstellt wurden.
 
 *-v*, *--version*::
     zeigt die Version von WeeChat an.
