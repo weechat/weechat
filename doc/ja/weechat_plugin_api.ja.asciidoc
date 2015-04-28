@@ -1922,10 +1922,9 @@ char *weechat_string_eval_expression (const char *expr,
   `${re:1}` |
   `test`
 
-// TRANSLATION MISSING
 | `${color:name}` |
   WeeChat 色コード (色名部分はオプション属性をとることも可能です),
-  see function <<_color,weechat_color>> for supported formats |
+  フォーマットを確認するには関数 <<_color,weechat_color>> をご確認ください |
   `${color:red}red text` +
   `${color:*214}bold orange text` |
   `red text` (赤色で) +
@@ -1940,9 +1939,8 @@ char *weechat_string_eval_expression (const char *expr,
   `1.0` +
   `lightblue`
 
-// TRANSLATION MISSING
 | `${env:NAME}` +
-  (_WeeChat ≥ 1.2_) |
+  (_WeeChat バージョン 1.2 以上で利用可_) |
   Value of the environment variable `NAME` |
   `${env:HOME}` |
   `/home/user`
@@ -6501,12 +6499,10 @@ const char *weechat_color (const char *color_name);
 引数:
 
 * 'color_name': 色の名前、以下の中から 1 つ:
-// TRANSLATION MISSING
-** WeeChat color option name (from weechat.color.xxx), for example
+** WeeChat 色オプション名 (weechat.color.xxx の xxx)、例えば
    'chat_delimiters'
-// TRANSLATION MISSING
-** option name (format: file.section.option), for example
-   'irc.color.message_quit' (_WeeChat ≥ 1.2_)
+** オプション名 (フォーマット: file.section.option)、例えば
+   'irc.color.message_quit' (_WeeChat バージョン 1.2 以上で利用可_)
 ** 任意で属性や背景色を指定した色 (以下を参照)
 ** 属性:
 *** 'bold': 太字を有効
