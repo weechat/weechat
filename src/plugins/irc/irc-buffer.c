@@ -180,12 +180,22 @@ irc_buffer_nickcmp_cb (void *data,
                        const char *nick1,
                        const char *nick2)
 {
-    IRC_BUFFER_GET_SERVER(buffer);
+    struct t_irc_server *server;
 
-    /* make C compiler happy */
-    (void) data;
+    if (data)
+        server = (struct t_irc_server *)data;
+    else
+        irc_buffer_get_server_and_channel (buffer, &server, NULL);
 
-    return irc_server_strcasecmp (ptr_server, nick1, nick2);
+    if (server)
+    {
+        return irc_server_strcasecmp (server, nick1, nick2);
+    }
+    else
+    {
+        /* default is RFC 1459 casemapping comparison */
+        return weechat_strcasecmp_range (nick1, nick2, 29);
+    }
 }
 
 /*
