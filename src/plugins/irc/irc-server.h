@@ -81,6 +81,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_DEFAULT_MSG_PART,     /* default part message          */
     IRC_SERVER_OPTION_DEFAULT_MSG_QUIT,     /* default quit message          */
     IRC_SERVER_OPTION_NOTIFY,               /* notify list                   */
+	IRC_SERVER_OPTION_ROBUSTIRC,     /* connect to a RobustIRC network       */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };
@@ -230,6 +231,8 @@ struct t_irc_server
     struct t_irc_channel *last_channel;   /* last opened channel on server   */
     struct t_irc_server *prev_server;     /* link to previous server         */
     struct t_irc_server *next_server;     /* link to next server             */
+	char *robustirc_sessionid;       /* RobustSession session id             */
+	char *robustirc_sessionauth;     /* RobustSession session auth key       */
 };
 
 /* IRC messages */

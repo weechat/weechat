@@ -755,6 +755,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hook_process = &hook_process;
         new_plugin->hook_process_hashtable = &hook_process_hashtable;
         new_plugin->hook_connect = &hook_connect;
+        new_plugin->hook_connect_robustirc = &hook_connect_robustirc;
         new_plugin->hook_print = &hook_print;
         new_plugin->hook_signal = &hook_signal;
         new_plugin->hook_signal_send = &hook_signal_send;

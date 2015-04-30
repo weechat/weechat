@@ -64,7 +64,8 @@
 char *hook_type_string[HOOK_NUM_TYPES] =
 { "command", "command_run", "timer", "fd", "process", "connect", "print",
   "signal", "hsignal", "config", "completion", "modifier",
-  "info", "info_hashtable", "infolist", "hdata", "focus" };
+  "info", "info_hashtable", "infolist", "hdata", "focus",
+  "connect_robustirc" };
 struct t_hook *weechat_hooks[HOOK_NUM_TYPES];     /* list of hooks          */
 struct t_hook *last_weechat_hook[HOOK_NUM_TYPES]; /* last hook              */
 int hook_exec_recursion = 0;           /* 1 when a hook is executed         */
@@ -2036,6 +2037,31 @@ error:
          WEECHAT_HOOK_PROCESS_ERROR,
          NULL, NULL);
     unhook (hook_process);
+}
+
+struct t_hook *
+hook_connect_robustirc (struct t_weechat_plugin *plugin, const char *address, t_hook_callback_connect_robustirc *callback, void *callback_data)
+{
+	struct t_hook *new_hook;
+    struct t_hook_connect_robustirc *new_hook_connect;
+    new_hook = malloc (sizeof (*new_hook));
+    if (!new_hook)
+        return NULL;
+    new_hook_connect = malloc (sizeof (*new_hook_connect));
+    if (!new_hook_connect)
+    {
+        free (new_hook);
+        return NULL;
+    }
+
+    hook_init_data (new_hook, plugin, HOOK_TYPE_CONNECT_ROBUSTIRC,
+			        HOOK_PRIORITY_DEFAULT, callback_data);
+
+    new_hook->hook_data = new_hook_connect;
+    new_hook_connect->callback = callback;
+
+    hook_add_to_list (new_hook);
+	return new_hook;
 }
 
 /*
