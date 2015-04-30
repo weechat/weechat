@@ -28,10 +28,10 @@
 #include <ncurses/term.h>
 #else
 #include <ncursesw/term.h>
-#endif
+#endif /* __sun */
 #else
 #include <term.h>
-#endif
+#endif /* HAVE_NCURSESW_CURSES_H */
 
 
 /*
@@ -50,5 +50,5 @@ gui_term_set_eat_newline_glitch (int value)
 #else
     /* make C compiler happy */
     (void) value;
-#endif
+#endif /* HAVE_EAT_NEWLINE_GLITCH */
 }

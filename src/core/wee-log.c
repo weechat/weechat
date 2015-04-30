@@ -98,7 +98,7 @@ log_open (const char *filename, const char *mode)
             return 0;
         }
     }
-#endif
+#endif /* HAVE_FLOCK */
 
     return 1;
 }
@@ -224,7 +224,7 @@ log_close ()
     {
 #ifdef HAVE_FLOCK
         flock (fileno (weechat_log_file), LOCK_UN);
-#endif
+#endif /* HAVE_FLOCK */
         fclose (weechat_log_file);
         weechat_log_file = NULL;
     }

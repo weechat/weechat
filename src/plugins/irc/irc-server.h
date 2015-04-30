@@ -26,11 +26,11 @@
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif
+#endif /* HAVE_GNUTLS */
 
 #ifndef NI_MAXHOST
 #define NI_MAXHOST 256
-#endif
+#endif /* NI_MAXHOST */
 
 enum t_irc_server_sasl_fail
 {
@@ -174,7 +174,7 @@ struct t_irc_server
     gnutls_session_t gnutls_sess;   /* gnutls session (only if SSL is used)  */
     gnutls_x509_crt_t tls_cert;     /* certificate used if ssl_cert is set   */
     gnutls_x509_privkey_t tls_cert_key; /* key used if ssl_cert is set       */
-#endif
+#endif /* HAVE_GNUTLS */
     char *unterminated_message;     /* beginning of a message in input buf   */
     int nicks_count;                /* number of nicknames                   */
     char **nicks_array;             /* nicknames (after split)               */
@@ -252,13 +252,13 @@ enum t_irc_fingerprint_digest_algo
     /* number of digest algorithms */
     IRC_FINGERPRINT_NUM_ALGOS,
 };
-#endif
+#endif /* HAVE_GNUTLS */
 
 extern struct t_irc_server *irc_servers;
 #ifdef HAVE_GNUTLS
 extern const int gnutls_cert_type_prio[];
 extern const int gnutls_prot_prio[];
-#endif
+#endif /* HAVE_GNUTLS */
 extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
 extern char *irc_server_sasl_fail_string[];
 extern char *irc_server_options[][2];
@@ -323,7 +323,7 @@ extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *serve
 #ifdef HAVE_GNUTLS
 int irc_server_fingerprint_search_algo_with_size (int size);
 char *irc_server_fingerprint_str_sizes ();
-#endif
+#endif /* HAVE_GNUTLS */
 extern int irc_server_connect (struct t_irc_server *server);
 extern void irc_server_auto_connect (int auto_connect);
 extern void irc_server_autojoin_channels ();

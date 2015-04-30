@@ -54,7 +54,7 @@ int aspell_enabled = 0;
 
 #ifdef USE_ENCHANT
 EnchantBroker *broker = NULL;
-#endif
+#endif /* USE_ENCHANT */
 
 /*
  * aspell supported languages, updated on 2012-07-05
@@ -483,7 +483,7 @@ weechat_aspell_check_word (struct t_aspell_speller_buffer *speller_buffer,
             if (enchant_dict_check (speller_buffer->spellers[i], word, strlen (word)) == 0)
 #else
             if (aspell_speller_check (speller_buffer->spellers[i], word, -1) == 1)
-#endif
+#endif /* USE_ENCHANT */
                 return 1;
         }
     }
@@ -513,7 +513,7 @@ weechat_aspell_get_suggestions (struct t_aspell_speller_buffer *speller_buffer,
 #else
     const AspellWordList *list;
     AspellStringEnumeration *elements;
-#endif
+#endif /* USE_ENCHANT */
 
     max_suggestions = weechat_config_integer (weechat_aspell_config_check_suggestions);
     if (max_suggestions < 0)
@@ -585,7 +585,7 @@ weechat_aspell_get_suggestions (struct t_aspell_speller_buffer *speller_buffer,
                 }
                 delete_aspell_string_enumeration (elements);
             }
-#endif
+#endif /* USE_ENCHANT */
         }
     }
 
@@ -1039,7 +1039,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     broker = enchant_broker_init ();
     if (!broker)
         return WEECHAT_RC_ERROR;
-#endif
+#endif /* USE_ENCHANT */
 
     if (!weechat_aspell_speller_init ())
         return WEECHAT_RC_ERROR;
@@ -1095,7 +1095,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 #ifdef USE_ENCHANT
     /* release enchant broker */
     enchant_broker_free (broker);
-#endif
+#endif /* USE_ENCHANT */
 
     return WEECHAT_RC_OK;
 }

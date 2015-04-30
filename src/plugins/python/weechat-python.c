@@ -84,7 +84,7 @@ static struct PyModuleDef moduleDefOutputs = {
     NULL,
     NULL
 };
-#endif
+#endif /* PY_MAJOR_VERSION >= 3 */
 
 /*
  * string used to execute action "install":
@@ -498,7 +498,7 @@ weechat_python_output (PyObject *self, PyObject *args)
 static PyObject *weechat_python_init_module_weechat ()
 #else
 void weechat_python_init_module_weechat ()
-#endif
+#endif /* PY_MAJOR_VERSION >= 3 */
 {
     PyObject *weechat_module, *weechat_dict;
 
@@ -508,7 +508,7 @@ void weechat_python_init_module_weechat ()
 #else
     /* python <= 2.x */
     weechat_module = Py_InitModule ("weechat", weechat_python_funcs);
-#endif
+#endif /* PY_MAJOR_VERSION >= 3 */
 
     if (!weechat_module)
     {
@@ -520,7 +520,7 @@ void weechat_python_init_module_weechat ()
         return NULL;
 #else
         return;
-#endif
+#endif /* PY_MAJOR_VERSION >= 3 */
     }
 
     /* define some constants */
@@ -574,7 +574,7 @@ void weechat_python_init_module_weechat ()
 
 #if PY_MAJOR_VERSION >= 3
     return weechat_module;
-#endif
+#endif /* PY_MAJOR_VERSION >= 3 */
 }
 
 /*
@@ -591,7 +591,7 @@ weechat_python_load (const char *filename)
     char *argv[] = { "__weechat_plugin__" , NULL };
 #if PY_MAJOR_VERSION >= 3
     wchar_t *wargv[] = { NULL, NULL };
-#endif
+#endif /* PY_MAJOR_VERSION >= 3 */
     FILE *fp;
     PyObject *weechat_outputs, *python_path, *path;
     const char *weechat_home;
@@ -636,7 +636,7 @@ weechat_python_load (const char *filename)
 #else
     /* python <= 2.x */
     PySys_SetArgv(1, argv);
-#endif
+#endif /* PY_MAJOR_VERSION >= 3 */
 
     if (!python_current_interpreter)
     {
@@ -667,7 +667,7 @@ weechat_python_load (const char *filename)
 #else
             /* python <= 2.x */
             path = PyBytes_FromString (str_home);
-#endif
+#endif /* PY_MAJOR_VERSION >= 3 */
             if (path != NULL)
             {
                 PyList_Insert (python_path, 0, path);
@@ -684,7 +684,7 @@ weechat_python_load (const char *filename)
     /* python <= 2.x */
     weechat_outputs = Py_InitModule("weechatOutputs",
                                     weechat_python_output_funcs);
-#endif
+#endif /* PY_MAJOR_VERSION >= 3 */
 
     if (!weechat_outputs)
     {
@@ -1149,7 +1149,7 @@ weechat_python_signal_debug_libs_cb (void *data, const char *signal,
     weechat_printf (NULL, "  %s: %s", PYTHON_PLUGIN_NAME, PY_VERSION);
 #else
     weechat_printf (NULL, "  %s: (?)", PYTHON_PLUGIN_NAME);
-#endif
+#endif /* PY_VERSION */
 
     return WEECHAT_RC_OK;
 }

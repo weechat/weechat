@@ -28,10 +28,10 @@
 #define EXPORT extern "C" __declspec (dllexport)
 #else
 #define EXPORT extern "C"
-#endif
+#endif /* _WIN32 */
 #else
 #define EXPORT
-#endif
+#endif /* __cplusplus */
 
 #define weechat_plugin weechat_js_plugin
 #define JS_PLUGIN_NAME "javascript"

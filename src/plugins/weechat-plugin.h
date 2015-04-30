@@ -24,7 +24,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif /* __cplusplus */
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -32,7 +32,7 @@ extern "C" {
 /* some systems like GNU/Hurd do not define PATH_MAX */
 #ifndef PATH_MAX
     #define PATH_MAX 4096
-#endif
+#endif /* PATH_MAX */
 
 struct t_config_option;
 struct t_gui_window;
@@ -1816,6 +1816,6 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 
 #ifdef __cplusplus
 }
-#endif
+#endif /* __cplusplus */
 
 #endif /* WEECHAT_WEECHAT_PLUGIN_H */

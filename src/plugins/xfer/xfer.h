@@ -110,7 +110,7 @@ enum t_xfer_hash_status
 #else
     #define DIR_SEPARATOR       "/"
     #define DIR_SEPARATOR_CHAR  '/'
-#endif
+#endif /* _WIN32 */
 
 /* macros for type/status */
 

@@ -180,7 +180,7 @@ util_setrlimit_resource (const char *resource_name, long limit)
                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                      resource_name);
 }
-#endif
+#endif /* HAVE_SYS_RESOURCE_H */
 
 /*
  * Sets resource limits using value of option "weechat.startup.sys_rlimit".
@@ -222,7 +222,7 @@ util_setrlimit ()
         }
         string_free_split (items);
     }
-#endif
+#endif /* HAVE_SYS_RESOURCE_H */
 }
 
 /*

@@ -359,7 +359,7 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
                                             weechat_config_string (logger_config_file_replacement_char));
 #else
     mask_decoded3 = strdup (mask_decoded2);
-#endif
+#endif /* __CYGWIN__ */
     if (!mask_decoded3)
         goto end;
 

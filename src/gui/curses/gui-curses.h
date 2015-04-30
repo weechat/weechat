@@ -28,7 +28,7 @@
 #include <ncurses.h>
 #else
 #include <curses.h>
-#endif
+#endif /* HAVE_NCURSESW_CURSES_H */
 
 struct t_gui_buffer;
 struct t_gui_line;
@@ -39,7 +39,7 @@ struct t_gui_bar_window;
 
 #ifndef A_ITALIC /* A_ITALIC is defined in ncurses >= 5.9 patch 20130831 */
 #define A_ITALIC 0
-#endif
+#endif /* A_ITALIC */
 
 #define A_ALL_ATTR A_BOLD | A_UNDERLINE | A_REVERSE | A_ITALIC
 

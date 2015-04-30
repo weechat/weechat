@@ -81,7 +81,7 @@ weechat_aspell_speller_dict_supported (const char *lang)
     delete_aspell_config (config);
 
     return rc;
-#endif
+#endif /* USE_ENCHANT */
 }
 
 /*
@@ -127,7 +127,7 @@ weechat_aspell_speller_check_dictionaries (const char *dict_list)
 EnchantDict *
 #else
 AspellSpeller *
-#endif
+#endif /* USE_ENCHANT */
 weechat_aspell_speller_new (const char *lang)
 {
 #ifdef USE_ENCHANT
@@ -136,7 +136,7 @@ weechat_aspell_speller_new (const char *lang)
     AspellConfig *config;
     AspellCanHaveError *ret;
     AspellSpeller *new_speller;
-#endif
+#endif /* USE_ENCHANT */
     struct t_infolist *infolist;
 
     if (!lang)
@@ -163,7 +163,7 @@ weechat_aspell_speller_new (const char *lang)
     /* create a speller instance for the newly created cell */
     config = new_aspell_config();
     aspell_config_replace (config, "lang", lang);
-#endif
+#endif /* USE_ENCHANT */
 
     /* apply all options */
     infolist = weechat_infolist_get ("option", NULL, "aspell.option.*");
@@ -177,7 +177,7 @@ weechat_aspell_speller_new (const char *lang)
             aspell_config_replace (config,
                                    weechat_infolist_string (infolist, "option_name"),
                                    weechat_infolist_string (infolist, "value"));
-#endif
+#endif /* USE_ENCHANT */
         }
         weechat_infolist_free (infolist);
     }
@@ -197,14 +197,14 @@ weechat_aspell_speller_new (const char *lang)
     }
 
     new_speller = to_aspell_speller (ret);
-#endif
+#endif /* USE_ENCHANT */
 
     weechat_hashtable_set (weechat_aspell_spellers, lang, new_speller);
 
 #ifndef USE_ENCHANT
     /* free configuration */
     delete_aspell_config (config);
-#endif
+#endif /* USE_ENCHANT */
 
     return new_speller;
 }
@@ -314,7 +314,7 @@ weechat_aspell_speller_free_value_cb (struct t_hashtable *hashtable,
     EnchantDict *ptr_speller;
 #else
     AspellSpeller *ptr_speller;
-#endif
+#endif /* USE_ENCHANT */
 
     /* make C compiler happy */
     (void) hashtable;
@@ -334,7 +334,7 @@ weechat_aspell_speller_free_value_cb (struct t_hashtable *hashtable,
     ptr_speller = (AspellSpeller *)value;
     aspell_speller_save_all_word_lists (ptr_speller);
     delete_aspell_speller (ptr_speller);
-#endif
+#endif /* USE_ENCHANT */
 }
 
 /*
@@ -353,7 +353,7 @@ weechat_aspell_speller_buffer_new (struct t_gui_buffer *buffer)
     EnchantDict *ptr_speller;
 #else
     AspellSpeller *ptr_speller;
-#endif
+#endif /* USE_ENCHANT */
 
     if (!buffer)
         return NULL;
@@ -380,7 +380,7 @@ weechat_aspell_speller_buffer_new (struct t_gui_buffer *buffer)
                 malloc ((num_dicts + 1) * sizeof (EnchantDict *));
 #else
                 malloc ((num_dicts + 1) * sizeof (AspellSpeller *));
-#endif
+#endif /* USE_ENCHANT */
             if (new_speller_buffer->spellers)
             {
                 for (i = 0; i < num_dicts; i++)

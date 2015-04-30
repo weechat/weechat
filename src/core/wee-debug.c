@@ -267,7 +267,7 @@ debug_memory ()
     gui_chat_printf (NULL,
                      _("Memory usage not available (function \"mallinfo\" not "
                        "found)"));
-#endif
+#endif /* HAVE_MALLINFO */
 }
 
 /*
@@ -533,7 +533,7 @@ debug_libs_cb (void *data, const char *signal, const char *type_data,
 #else
     gui_chat_printf (NULL, "    gcrypt: (?)%s",
                      (weechat_no_gcrypt) ? " (not initialized)" : "");
-#endif
+#endif /* GCRYPT_VERSION */
 
     /* display gnutls version */
 #ifdef HAVE_GNUTLS
@@ -544,24 +544,24 @@ debug_libs_cb (void *data, const char *signal, const char *type_data,
 #else
     gui_chat_printf (NULL, "    gnutls: (?)%s",
                      (weechat_no_gnutls) ? " (not initialized)" : "");
-#endif
+#endif /* GNUTLS_VERSION */
 #else
     gui_chat_printf (NULL, "    gnutls: (not available)");
-#endif
+#endif /* HAVE_GNUTLS */
 
     /* display curl version */
 #ifdef LIBCURL_VERSION
     gui_chat_printf (NULL, "    curl: %s", LIBCURL_VERSION);
 #else
     gui_chat_printf (NULL, "    curl: (?)");
-#endif
+#endif /* LIBCURL_VERSION */
 
     /* display zlib version */
 #ifdef ZLIB_VERSION
     gui_chat_printf (NULL, "    zlib: %s", ZLIB_VERSION);
 #else
     gui_chat_printf (NULL, "    zlib: (?)");
-#endif
+#endif /* ZLIB_VERSION */
 
     return WEECHAT_RC_OK;
 }

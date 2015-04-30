@@ -429,7 +429,7 @@ relay_server_create_socket (struct t_relay_server *server)
             return 0;
         }
     }
-#endif
+#endif /* IPV6_V6ONLY */
 
     /* set option SO_REUSEADDR to 1 */
     set = 1;

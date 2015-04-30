@@ -252,7 +252,7 @@ gui_main_debug_libs ()
                      NCURSES_VERSION, NCURSES_VERSION_PATCH);
 #else
     gui_chat_printf (NULL, "    ncurses: (?)");
-#endif
+#endif /* defined(NCURSES_VERSION) && defined(NCURSES_VERSION_PATCH) */
 }
 
 /*

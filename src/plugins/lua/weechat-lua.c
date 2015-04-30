@@ -294,7 +294,7 @@ weechat_lua_register_lib (lua_State *L, const char *libname,
         luaL_setfuncs (L, lua_api_funcs, 0);
 #else
     luaL_register (L, libname, lua_api_funcs);
-#endif
+#endif /* LUA_VERSION_NUM >= 502 */
 
     luaL_newmetatable (L, "weechat");
     lua_pushliteral (L, "__index");
@@ -375,7 +375,7 @@ weechat_lua_load (const char *filename)
     luaopen_math (lua_current_interpreter);
     luaopen_io (lua_current_interpreter);
     luaopen_debug (lua_current_interpreter);
-#endif
+#endif /* LUA_VERSION_NUM */
 
     weechat_lua_register_lib (lua_current_interpreter, "weechat",
                               weechat_lua_api_funcs,
@@ -385,7 +385,7 @@ weechat_lua_load (const char *filename)
     if (luaL_dostring (lua_current_interpreter, weechat_lua_code) != 0)
 #else
     if (lua_dostring (lua_current_interpreter, weechat_lua_code) != 0)
-#endif
+#endif /* LUA_VERSION_NUM */
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to redirect stdout "
@@ -800,7 +800,7 @@ weechat_lua_signal_debug_libs_cb (void *data, const char *signal,
     weechat_printf (NULL, "  %s: %s", LUA_PLUGIN_NAME, LUA_VERSION);
 #else
     weechat_printf (NULL, "  %s: (?)", LUA_PLUGIN_NAME);
-#endif
+#endif /* LUA_VERSION */
 
     return WEECHAT_RC_OK;
 }

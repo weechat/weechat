@@ -22,7 +22,7 @@
 
 #ifdef HAVE_GNUTLS
 #define RELAY_SERVER_GNUTLS_DH_BITS 1024
-#endif
+#endif /* HAVE_GNUTLS */
 
 struct t_relay_server
 {

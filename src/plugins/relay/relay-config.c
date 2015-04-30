@@ -237,7 +237,7 @@ relay_config_check_network_ssl_priorities (void *data,
     (void) value;
 
     return 1;
-#endif
+#endif /* HAVE_GNUTLS */
 }
 
 /*
@@ -258,7 +258,7 @@ relay_config_change_network_ssl_priorities (void *data,
         gnutls_priority_deinit (*relay_gnutls_priority_cache);
         relay_network_set_priority ();
     }
-#endif
+#endif /* HAVE_GNUTLS */
 }
 
 /*
@@ -490,7 +490,7 @@ relay_config_create_option_port (void *data,
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME);
         rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
-#endif
+#endif /* HAVE_GNUTLS */
 
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {

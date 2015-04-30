@@ -938,23 +938,23 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
             curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
             break;
         case PROXY_TYPE_SOCKS4:
-#if LIBCURL_VERSION_NUM < 0x070A00
+#if LIBCURL_VERSION_NUM < 0x070A00 /* 7.10.0 */
             /* proxy socks4 not supported in Curl < 7.10 */
             return;
-#endif
+#endif /* LIBCURL_VERSION_NUM < 0x070A00 */
             curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
             break;
         case PROXY_TYPE_SOCKS5:
-#if LIBCURL_VERSION_NUM < 0x070A00
+#if LIBCURL_VERSION_NUM < 0x070A00 /* 7.10.0 */
             /* proxy socks5 not supported in Curl < 7.10 */
             return;
-#endif
+#endif /* LIBCURL_VERSION_NUM < 0x070A00 */
 #if LIBCURL_VERSION_NUM >= 0x071200 /* 7.18.0 */
             curl_easy_setopt (curl, CURLOPT_PROXYTYPE,
                               CURLPROXY_SOCKS5_HOSTNAME);
 #else
             curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
-#endif
+#endif /* LIBCURL_VERSION_NUM >= 0x071200 */
             break;
     }
 
@@ -980,7 +980,7 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
         curl_easy_setopt (curl, CURLOPT_PROXYPASSWORD,
                           CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD]));
     }
-#endif
+#endif /* LIBCURL_VERSION_NUM >= 0x071301 */
 }
 
 /*

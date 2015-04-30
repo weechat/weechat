@@ -35,20 +35,20 @@
         #include <libintl.h>
     #else
         #include "../../intl/libintl.h"
-    #endif
+    #endif /* HAVE_LIBINTL_H */
     #define _(string) gettext(string)
     #define NG_(single,plural,number) ngettext(single,plural,number)
     #ifdef gettext_noop
         #define N_(string) gettext_noop(string)
     #else
         #define N_(string) (string)
-    #endif
-#endif
+    #endif /* gettext_noop */
+#endif /* defined(ENABLE_NLS) && !defined(_) */
 #if !defined(_)
     #define _(string) (string)
     #define NG_(single,plural,number) (plural)
     #define N_(string) (string)
-#endif
+#endif /* !defined(_) */
 
 
 #define WEECHAT_COPYRIGHT_DATE   "(C) 2003-2015"
@@ -81,12 +81,12 @@
 #else
     #define DIR_SEPARATOR       "/"
     #define DIR_SEPARATOR_CHAR  '/'
-#endif
+#endif /* _WIN32 */
 
 /* some systems like GNU/Hurd do not define PATH_MAX */
 #ifndef PATH_MAX
     #define PATH_MAX 4096
-#endif
+#endif /* PATH_MAX */
 
 /* internal charset */
 #define WEECHAT_INTERNAL_CHARSET "UTF-8"

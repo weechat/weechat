@@ -1140,7 +1140,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
             free (dir1);
             free (dir2);
         }
-#endif
+#endif /* _WIN32 */
         /* check if file exists */
         if (stat (filename2, &st) == -1)
         {

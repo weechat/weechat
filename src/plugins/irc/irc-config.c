@@ -1049,7 +1049,7 @@ irc_config_check_gnutls_priorities (const char *priorities)
     (void) priorities;
 
     return NULL;
-#endif
+#endif /* HAVE_GNUTLS */
 }
 
 /*
@@ -1064,10 +1064,10 @@ irc_config_server_check_value_cb (void *data,
     int index_option, proxy_found;
     const char *pos_error, *proxy_name;
     struct t_infolist *infolist;
-    #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
     char **fingerprints, *str_sizes;
     int i, j, rc, algo, length;
-    #endif
+#endif /* HAVE_GNUTLS */
 
     /* make C compiler happy */
     (void) option;
@@ -1119,7 +1119,7 @@ irc_config_server_check_value_cb (void *data,
                 }
                 break;
             case IRC_SERVER_OPTION_SSL_FINGERPRINT:
-                #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
                 if (value && value[0])
                 {
                     fingerprints = weechat_string_split (value, ",", 0, 0,
@@ -1175,7 +1175,7 @@ irc_config_server_check_value_cb (void *data,
                         }
                     }
                 }
-                #endif
+#endif /* HAVE_GNUTLS */
                 break;
         }
     }

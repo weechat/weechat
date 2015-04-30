@@ -23,7 +23,7 @@
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif
+#endif /* HAVE_GNUTLS */
 
 #include "../weechat-plugin.h"
 #include "relay.h"
@@ -38,7 +38,7 @@ int relay_network_init_ssl_cert_key_ok = 0;
 gnutls_certificate_credentials_t relay_gnutls_x509_cred;
 gnutls_priority_t *relay_gnutls_priority_cache = NULL;
 gnutls_dh_params_t *relay_gnutls_dh_params = NULL;
-#endif
+#endif /* HAVE_GNUTLS */
 
 
 /*
@@ -100,7 +100,7 @@ relay_network_set_ssl_cert_key (int verbose)
 #else
     /* make C compiler happy */
     (void) verbose;
-#endif
+#endif /* HAVE_GNUTLS */
 }
 
 /*
@@ -122,7 +122,7 @@ relay_network_set_priority ()
         free (relay_gnutls_priority_cache);
         relay_gnutls_priority_cache = NULL;
     }
-#endif
+#endif /* HAVE_GNUTLS */
 }
 
 /*
@@ -142,7 +142,7 @@ relay_network_init ()
     relay_gnutls_priority_cache = malloc (sizeof (*relay_gnutls_priority_cache));
     if (relay_gnutls_priority_cache)
         relay_network_set_priority ();
-#endif
+#endif /* HAVE_GNUTLS */
     relay_network_init_ok = 1;
 }
 
@@ -169,7 +169,7 @@ relay_network_end ()
             relay_gnutls_dh_params = NULL;
         }
         gnutls_certificate_free_credentials (relay_gnutls_x509_cred);
-#endif
+#endif /* HAVE_GNUTLS */
         relay_network_init_ok = 0;
     }
 }

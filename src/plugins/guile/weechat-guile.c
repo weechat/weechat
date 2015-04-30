@@ -797,7 +797,7 @@ weechat_guile_signal_debug_libs_cb (void *data, const char *signal,
                     SCM_MICRO_VERSION);
 #else
     weechat_printf (NULL, "  %s: (?)", GUILE_PLUGIN_NAME);
-#endif
+#endif /* defined(SCM_MAJOR_VERSION) && defined(SCM_MINOR_VERSION) && defined(SCM_MICRO_VERSION) */
 
     return WEECHAT_RC_OK;
 }
@@ -980,7 +980,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
      * on unload (or exit)
      */
     scm_install_gmp_memory_functions = 0;
-#endif
+#endif /* HAVE_GUILE_GMP_MEMORY_FUNCTIONS */
 
     scm_init_guile ();
 

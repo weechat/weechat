@@ -22,7 +22,7 @@
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif
+#endif /* HAVE_GNUTLS */
 
 struct t_relay_server;
 
@@ -80,7 +80,7 @@ struct t_relay_client
     gnutls_session_t gnutls_sess;      /* gnutls session (only if SSL used) */
     struct t_hook *hook_timer_handshake; /* timer for doing gnutls handshake*/
     int gnutls_handshake_ok;           /* 1 if handshake was done and OK    */
-#endif
+#endif /* HAVE_GNUTLS */
     int websocket;                     /* 0=not a ws, 1=init ws, 2=ws ready */
     struct t_hashtable *http_headers;  /* HTTP headers for websocket        */
     char *address;                     /* string with IP address            */

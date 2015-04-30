@@ -713,7 +713,7 @@ weechat_tcl_signal_debug_libs_cb (void *data, const char *signal,
     weechat_printf (NULL, "  %s: %s", TCL_PLUGIN_NAME, TCL_VERSION);
 #else
     weechat_printf (NULL, "  %s: (?)", TCL_PLUGIN_NAME);
-#endif
+#endif /* TCL_VERSION */
 
     return WEECHAT_RC_OK;
 }

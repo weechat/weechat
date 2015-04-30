@@ -94,7 +94,7 @@
 
 #ifdef NO_PERL_MULTIPLICITY
 #undef MULTIPLICITY
-#endif
+#endif /* NO_PERL_MULTIPLICITY */
 
 extern void boot_DynaLoader (pTHX_ CV* cv);
 
@@ -169,7 +169,7 @@ API_FUNC(register)
         perl_current_script->interpreter = perl_current_interpreter;
 #else
         perl_current_script->interpreter = SvPV_nolen (eval_pv ("__PACKAGE__", TRUE));
-#endif
+#endif /* MULTIPLICITY */
     }
     else
     {

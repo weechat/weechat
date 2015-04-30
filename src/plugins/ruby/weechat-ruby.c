@@ -970,7 +970,7 @@ weechat_ruby_signal_debug_libs_cb (void *data, const char *signal,
     weechat_printf (NULL, "  %s: %s", RUBY_PLUGIN_NAME, ruby_version);
 #else
     weechat_printf (NULL, "  %s: (?)", RUBY_PLUGIN_NAME);
-#endif
+#endif /* HAVE_RUBY_VERSION_H */
 
     return WEECHAT_RC_OK;
 }

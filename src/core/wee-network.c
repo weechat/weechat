@@ -67,7 +67,7 @@ int network_init_gnutls_ok = 0;
 
 #ifdef HAVE_GNUTLS
 gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
-#endif
+#endif /* HAVE_GNUTLS */
 
 
 /*
@@ -110,7 +110,7 @@ network_set_gnutls_ca_file ()
         }
         free (ca_path);
     }
-#endif
+#endif /* HAVE_GNUTLS */
 }
 
 /*
@@ -130,14 +130,14 @@ network_init_gnutls ()
 #if LIBGNUTLS_VERSION_NUMBER >= 0x02090a /* 2.9.10 */
         gnutls_certificate_set_verify_function (gnutls_xcred,
                                                 &hook_connect_gnutls_verify_certificates);
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x02090a */
 #if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
         gnutls_certificate_set_retrieve_function (gnutls_xcred,
                                                   &hook_connect_gnutls_set_certificates);
 #else
         gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
                                                          &hook_connect_gnutls_set_certificates);
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
     }
 #endif /* HAVE_GNUTLS */
 
@@ -159,7 +159,7 @@ network_end ()
             gnutls_certificate_free_credentials (gnutls_xcred);
             gnutls_global_deinit();
         }
-#endif
+#endif /* HAVE_GNUTLS */
         network_init_gnutls_ok = 0;
     }
 }
@@ -753,7 +753,7 @@ network_connect_child (struct t_hook *hook_connect)
     char msg_buf[CMSG_SPACE(sizeof (sock))];
     struct iovec iov[1];
     char iov_data[1] = { 0 };
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
     /*
      * indicates that something is wrong with whichever group of
      * servers is being tried first after connecting, so start at
@@ -800,7 +800,7 @@ network_connect_child (struct t_hook *hook_connect)
     hints.ai_socktype = SOCK_STREAM;
 #ifdef AI_ADDRCONFIG
     hints.ai_flags = AI_ADDRCONFIG;
-#endif
+#endif /* AI_ADDRCONFIG */
     if (ptr_proxy)
     {
         hints.ai_family = (CONFIG_BOOLEAN(ptr_proxy->options[PROXY_OPTION_IPV6])) ?
@@ -868,7 +868,7 @@ network_connect_child (struct t_hook *hook_connect)
         hints.ai_socktype = SOCK_STREAM;
 #ifdef AI_ADDRCONFIG
         hints.ai_flags = AI_ADDRCONFIG;
-#endif
+#endif /* AI_ADDRCONFIG */
         rc = getaddrinfo (HOOK_CONNECT(hook_connect, local_hostname),
                           NULL, &hints, &res_local);
         if (rc != 0)
@@ -1070,7 +1070,7 @@ network_connect_child (struct t_hook *hook_connect)
         sock = socket (ptr_res->ai_family,
                        ptr_res->ai_socktype,
                        ptr_res->ai_protocol);
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
         if (sock < 0)
         {
             status_str[0] = '0' + WEECHAT_HOOK_CONNECT_SOCKET_ERROR;
@@ -1201,7 +1201,7 @@ network_connect_child (struct t_hook *hook_connect)
 #else
         num_written = write (HOOK_CONNECT(hook_connect, child_write), &sock, sizeof (sock));
         (void) num_written;
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
     }
     else
     {
@@ -1313,7 +1313,7 @@ network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
             unhook (hook_connect);
             return WEECHAT_RC_OK;
         }
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER < 0x02090a */
         unhook (HOOK_CONNECT(hook_connect, handshake_hook_fd));
         (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_data,
@@ -1325,7 +1325,7 @@ network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
 
     return WEECHAT_RC_OK;
 }
-#endif
+#endif /* HAVE_GNUTLS */
 
 /*
  * Timer callback for timeout of handshake.
@@ -1356,7 +1356,7 @@ network_connect_gnutls_handshake_timer_cb (void *arg_hook_connect,
 
     return WEECHAT_RC_OK;
 }
-#endif
+#endif /* HAVE_GNUTLS */
 
 /*
  * Reads connection progress from child process.
@@ -1371,7 +1371,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
     long size_msg;
 #ifdef HAVE_GNUTLS
     int rc, direction;
-#endif
+#endif /* HAVE_GNUTLS */
     int sock;
 #ifdef HOOK_CONNECT_MAX_SOCKETS
     int i;
@@ -1381,7 +1381,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
     char msg_buf[CMSG_SPACE(sizeof (sock))];
     struct iovec iov[1];
     char iov_data[1];
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
 
     /* make C compiler happy */
     (void) fd;
@@ -1461,7 +1461,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                 if (HOOK_CONNECT(hook_connect, sock_v6[i]) == sock)
                     HOOK_CONNECT(hook_connect, sock_v6[i]) = -1;
             }
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
 
             HOOK_CONNECT(hook_connect, sock) = sock;
 
@@ -1545,9 +1545,9 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                         free (cb_ip_address);
                     return WEECHAT_RC_OK;
                 }
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER < 0x02090a */
             }
-#endif
+#endif /* HAVE_GNUTLS */
         }
         else
         {
@@ -1610,10 +1610,10 @@ network_connect_with_fork (struct t_hook *hook_connect)
     int i;
 #else
     int child_socket[2];
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
 #ifdef HAVE_GNUTLS
     const char *pos_error;
-#endif
+#endif /* HAVE_GNUTLS */
     pid_t pid;
 
 #ifdef HAVE_GNUTLS
@@ -1647,7 +1647,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
         gnutls_transport_set_ptr (*HOOK_CONNECT(hook_connect, gnutls_sess),
                                   (gnutls_transport_ptr_t) ((unsigned long) HOOK_CONNECT(hook_connect, sock)));
     }
-#endif
+#endif /* HAVE_GNUTLS */
 
     /* create pipe for child process */
     if (pipe (child_pipe) < 0)
@@ -1681,7 +1681,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
         HOOK_CONNECT(hook_connect, sock_v4[i]) = socket (AF_INET, SOCK_STREAM, 0);
         HOOK_CONNECT(hook_connect, sock_v6[i]) = socket (AF_INET6, SOCK_STREAM, 0);
     }
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
 
     switch (pid = fork ())
     {
@@ -1700,7 +1700,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
             close (HOOK_CONNECT(hook_connect, child_read));
 #ifndef HOOK_CONNECT_MAX_SOCKETS
             close (HOOK_CONNECT(hook_connect, child_recv));
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
             network_connect_child (hook_connect);
             _exit (EXIT_SUCCESS);
     }
@@ -1711,7 +1711,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
 #ifndef HOOK_CONNECT_MAX_SOCKETS
     close (HOOK_CONNECT(hook_connect, child_send));
     HOOK_CONNECT(hook_connect, child_send) = -1;
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
     HOOK_CONNECT(hook_connect, hook_child_timer) = hook_timer (hook_connect->plugin,
                                                                CONFIG_INTEGER(config_network_connection_timeout) * 1000,
                                                                0, 1,

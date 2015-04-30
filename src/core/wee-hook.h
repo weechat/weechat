@@ -249,9 +249,9 @@ typedef int (gnutls_callback_t)(void *data, gnutls_session_t tls_session,
                                 gnutls_retr2_st *answer,
 #else
                                 gnutls_retr_st *answer,
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
                                 int action);
-#endif
+#endif /* HAVE_GNUTLS */
 
 struct t_hook_connect
 {
@@ -267,7 +267,7 @@ struct t_hook_connect
     gnutls_callback_t *gnutls_cb;      /* GnuTLS callback during handshake  */
     int gnutls_dhkey_size;             /* Diffie Hellman Key Exchange size  */
     char *gnutls_priorities;           /* GnuTLS priorities                 */
-#endif
+#endif /* HAVE_GNUTLS */
     char *local_hostname;              /* force local hostname (optional)   */
     int child_read;                    /* to read data in pipe from child   */
     int child_write;                   /* to write data in pipe for child   */
@@ -283,7 +283,7 @@ struct t_hook_connect
 #ifdef HOOK_CONNECT_MAX_SOCKETS
     int sock_v4[HOOK_CONNECT_MAX_SOCKETS];  /* IPv4 sockets for connecting  */
     int sock_v6[HOOK_CONNECT_MAX_SOCKETS];  /* IPv6 sockets for connecting  */
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
 };
 
 /* hook print */
@@ -506,8 +506,8 @@ extern int hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
                                                  gnutls_retr2_st *answer);
 #else
                                                  gnutls_retr_st *answer);
-#endif
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
+#endif /* HAVE_GNUTLS */
 extern struct t_hook *hook_print (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
                                   const char *tags, const char *message,

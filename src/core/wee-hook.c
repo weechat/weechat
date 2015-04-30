@@ -2055,7 +2055,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     struct t_hook_connect *new_hook_connect;
 #ifdef HOOK_CONNECT_MAX_SOCKETS
     int i;
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
 
 #ifndef HAVE_GNUTLS
     /* make C compiler happy */
@@ -2063,7 +2063,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     (void) gnutls_cb;
     (void) gnutls_dhkey_size;
     (void) gnutls_priorities;
-#endif
+#endif /* HAVE_GNUTLS */
 
     if (!address || (port <= 0) || !callback)
         return NULL;
@@ -2095,7 +2095,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     new_hook_connect->gnutls_dhkey_size = gnutls_dhkey_size;
     new_hook_connect->gnutls_priorities = (gnutls_priorities) ?
         strdup (gnutls_priorities) : NULL;
-#endif
+#endif /* HAVE_GNUTLS */
     new_hook_connect->local_hostname = (local_hostname) ?
         strdup (local_hostname) : NULL;
     new_hook_connect->child_read = -1;
@@ -2115,7 +2115,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
         new_hook_connect->sock_v4[i] = -1;
         new_hook_connect->sock_v6[i] = -1;
     }
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
 
     hook_add_to_list (new_hook);
 
@@ -2155,7 +2155,7 @@ hook_connect_gnutls_verify_certificates (gnutls_session_t tls_session)
 
     return rc;
 }
-#endif
+#endif /* HAVE_GNUTLS */
 
 /*
  * Sets certificates.
@@ -2171,7 +2171,7 @@ hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
                                       gnutls_retr2_st *answer)
 #else
                                       gnutls_retr_st *answer)
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
 {
     struct t_hook *ptr_hook;
     int rc;
@@ -2196,7 +2196,7 @@ hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
 
     return rc;
 }
-#endif
+#endif /* HAVE_GNUTLS */
 
 /*
  * Hooks a message printed by WeeChat.
@@ -3579,7 +3579,7 @@ unhook (struct t_hook *hook)
 #ifdef HAVE_GNUTLS
                 if (HOOK_CONNECT(hook, gnutls_priorities))
                     free (HOOK_CONNECT(hook, gnutls_priorities));
-#endif
+#endif /* HAVE_GNUTLS */
                 if (HOOK_CONNECT(hook, local_hostname))
                     free (HOOK_CONNECT(hook, local_hostname));
                 if (HOOK_CONNECT(hook, hook_child_timer))
@@ -3613,7 +3613,7 @@ unhook (struct t_hook *hook)
                     if (HOOK_CONNECT(hook, sock_v6[i]) != -1)
                         close (HOOK_CONNECT(hook, sock_v6[i]));
                 }
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
                 break;
             case HOOK_TYPE_PRINT:
                 if (HOOK_PRINT(hook, tags_array))
@@ -3932,7 +3932,7 @@ hook_add_to_infolist_pointer (struct t_infolist *infolist, struct t_hook *hook)
                     return 0;
                 if (!infolist_new_var_integer (ptr_item, "gnutls_dhkey_size", HOOK_CONNECT(hook, gnutls_dhkey_size)))
                     return 0;
-#endif
+#endif /* HAVE_GNUTLS */
                 if (!infolist_new_var_string (ptr_item, "local_hostname", HOOK_CONNECT(hook, local_hostname)))
                     return 0;
                 if (!infolist_new_var_integer (ptr_item, "child_read", HOOK_CONNECT(hook, child_read)))
@@ -4396,7 +4396,7 @@ hook_print_log ()
                         log_printf ("    gnutls_cb . . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, gnutls_cb));
                         log_printf ("    gnutls_dhkey_size . . : %d",    HOOK_CONNECT(ptr_hook, gnutls_dhkey_size));
                         log_printf ("    gnutls_priorities . . : '%s'",  HOOK_CONNECT(ptr_hook, gnutls_priorities));
-#endif
+#endif /* HAVE_GNUTLS */
                         log_printf ("    local_hostname. . . . : '%s'",  HOOK_CONNECT(ptr_hook, local_hostname));
                         log_printf ("    child_read. . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_read));
                         log_printf ("    child_write . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_write));
@@ -4415,7 +4415,7 @@ hook_print_log ()
                             log_printf ("    sock_v4[%d]. . . . . . : '%d'", HOOK_CONNECT(ptr_hook, sock_v4[i]));
                             log_printf ("    sock_v6[%d]. . . . . . : '%d'", HOOK_CONNECT(ptr_hook, sock_v6[i]));
                         }
-#endif
+#endif /* HOOK_CONNECT_MAX_SOCKETS */
                     }
                     break;
                 case HOOK_TYPE_PRINT:

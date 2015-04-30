@@ -25,7 +25,7 @@
 #include <enchant.h>
 #else
 #include <aspell.h>
-#endif
+#endif /* USE_ENCHANT */
 
 #define weechat_plugin weechat_aspell_plugin
 #define ASPELL_PLUGIN_NAME "aspell"
@@ -38,7 +38,7 @@ struct t_aspell_code
 
 #ifdef USE_ENCHANT
 extern EnchantBroker *broker;
-#endif
+#endif /* USE_ENCHANT */
 
 extern struct t_weechat_plugin *weechat_aspell_plugin;
 extern int aspell_enabled;

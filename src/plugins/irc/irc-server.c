@@ -35,7 +35,7 @@
 #else
 #include <sys/socket.h>
 #include <sys/time.h>
-#endif
+#endif /* _WIN32 */
 #include <sys/types.h>
 #include <netdb.h>
 #include <arpa/inet.h>
@@ -44,7 +44,7 @@
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
-#endif
+#endif /* HAVE_GNUTLS */
 
 #include "../weechat-plugin.h"
 #include "irc.h"
@@ -132,7 +132,7 @@ char *irc_fingerprint_digest_algos_name[IRC_FINGERPRINT_NUM_ALGOS] =
 { "SHA-1", "SHA-256", "SHA-512" };
 int irc_fingerprint_digest_algos_size[IRC_FINGERPRINT_NUM_ALGOS] =
 { 160, 256, 512 };
-#endif
+#endif /* HAVE_GNUTLS */
 
 
 void irc_server_reconnect (struct t_irc_server *server);
@@ -1866,7 +1866,7 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
     if (server->ssl_connected)
         rc = gnutls_record_send (server->gnutls_sess, buffer, size_buf);
     else
-#endif
+#endif /* HAVE_GNUTLS */
         rc = send (server->sock, buffer, size_buf, 0);
 
     if (rc < 0)
@@ -1881,7 +1881,7 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
                 rc, gnutls_strerror (rc));
         }
         else
-#endif
+#endif /* HAVE_GNUTLS */
         {
             weechat_printf (
                 server->buffer,
@@ -2744,7 +2744,7 @@ irc_server_recv_cb (void *data, int fd)
             num_read = gnutls_record_recv (server->gnutls_sess, buffer,
                                            sizeof (buffer) - 2);
         else
-#endif
+#endif /* HAVE_GNUTLS */
             num_read = recv (server->sock, buffer, sizeof (buffer) - 2, 0);
 
         if (num_read > 0)
@@ -2762,7 +2762,7 @@ irc_server_recv_cb (void *data, int fd)
                  */
                 end_recv = 0;
             }
-#endif
+#endif /* HAVE_GNUTLS */
         }
         else
         {
@@ -2788,7 +2788,7 @@ irc_server_recv_cb (void *data, int fd)
                 }
             }
             else
-#endif
+#endif /* HAVE_GNUTLS */
             {
                 if ((num_read == 0)
                     || ((errno != EAGAIN) && (errno != EWOULDBLOCK)))
@@ -3159,7 +3159,7 @@ irc_server_close_connection (struct t_irc_server *server)
                 gnutls_bye (server->gnutls_sess, GNUTLS_SHUT_WR);
             gnutls_deinit (server->gnutls_sess);
         }
-#endif
+#endif /* HAVE_GNUTLS */
     }
     if (server->sock != -1)
     {
@@ -3167,7 +3167,7 @@ irc_server_close_connection (struct t_irc_server *server)
         closesocket (server->sock);
 #else
         close (server->sock);
-#endif
+#endif /* _WIN32 */
         server->sock = -1;
     }
 
@@ -3542,7 +3542,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc, int sock,
             }
 #else
             (void) gnutls_rc;
-#endif
+#endif /* HAVE_GNUTLS */
             irc_server_close_connection (server);
             server->current_retry++;
             irc_server_switch_address (server, 1);
@@ -3737,7 +3737,7 @@ irc_server_fingerprint_search_algo_with_size (int size)
     /* digest algorithm not found */
     return -1;
 }
-#endif
+#endif /* HAVE_GNUTLS */
 
 /*
  * Returns a string with sizes of allowed fingerprint,
@@ -3769,7 +3769,7 @@ irc_server_fingerprint_str_sizes ()
 
     return strdup (str_sizes);
 }
-#endif
+#endif /* HAVE_GNUTLS */
 
 /*
  * Compares two fingerprints: one hexadecimal (given by user), the second binary
@@ -3919,7 +3919,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                             gnutls_retr2_st *answer,
 #else
                             gnutls_retr_st *answer,
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
                             int action)
 {
     struct t_irc_server *server;
@@ -3927,7 +3927,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
     gnutls_retr2_st tls_struct;
 #else
     gnutls_retr_st tls_struct;
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
     gnutls_x509_crt_t cert_temp;
     const gnutls_datum_t *cert_list;
     gnutls_datum_t filedatum;
@@ -3939,7 +3939,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
     gnutls_datum_t cinfo;
     int rinfo;
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x010706 */
 
     /* make C compiler happy */
     (void) req_ca;
@@ -4039,7 +4039,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
 #else
                 rinfo = gnutls_x509_crt_print (cert_temp,
                                                GNUTLS_CRT_PRINT_ONELINE, &cinfo);
-#endif
+#endif /*  LIBGNUTLS_VERSION_NUMBER < 0x020400 */
                 if (rinfo == 0)
                 {
                     weechat_printf (
@@ -4052,7 +4052,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                         weechat_prefix ("network"), cinfo.data);
                     gnutls_free (cinfo.data);
                 }
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x010706 */
                 /* check dates, only if fingerprint is not set */
                 if (!fingerprint || !fingerprint[0])
                 {
@@ -4226,7 +4226,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                         tls_struct.key_type = GNUTLS_PRIVKEY_X509;
 #else
                         tls_struct.type = GNUTLS_CRT_X509;
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
                         tls_struct.ncerts = 1;
                         tls_struct.deinit_all = 0;
                         tls_struct.cert.x509 = &server->tls_cert;
@@ -4241,7 +4241,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                         rinfo = gnutls_x509_crt_print (server->tls_cert,
                                                        GNUTLS_CRT_PRINT_ONELINE,
                                                        &cinfo);
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER < 0x020400 */
                         if (rinfo == 0)
                         {
                             weechat_printf (
@@ -4253,7 +4253,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                                 weechat_prefix ("network"), cinfo.data);
                             gnutls_free (cinfo.data);
                         }
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x010706 */
                         memcpy (answer, &tls_struct, sizeof (tls_struct));
                         free (cert_str);
                     }
@@ -4417,7 +4417,7 @@ irc_server_connect (struct t_irc_server *server)
             weechat_prefix ("error"), IRC_PLUGIN_NAME);
         return 0;
     }
-#endif
+#endif /* HAVE_GNUTLS */
     if (proxy_type)
     {
         weechat_printf (
@@ -4501,7 +4501,7 @@ irc_server_connect (struct t_irc_server *server)
         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
         &irc_server_connect_cb,
         server);
-#endif
+#endif /* HAVE_GNUTLS */
 
     /* send signal "irc_server_connecting" with server name */
     (void) weechat_hook_signal_send ("irc_server_connecting",
@@ -5206,7 +5206,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, gnutls_sess, OTHER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, tls_cert, OTHER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, tls_cert_key, OTHER, 0, NULL, NULL);
-#endif
+#endif /* HAVE_GNUTLS */
         WEECHAT_HDATA_VAR(struct t_irc_server, unterminated_message, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nicks_count, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nicks_array, STRING, 0, "nicks_count", NULL);
@@ -5785,7 +5785,7 @@ irc_server_print_log ()
         weechat_log_printf ("  disconnected . . . . : %d",    ptr_server->disconnected);
 #ifdef HAVE_GNUTLS
         weechat_log_printf ("  gnutls_sess. . . . . : 0x%lx", ptr_server->gnutls_sess);
-#endif
+#endif /* HAVE_GNUTLS */
         weechat_log_printf ("  unterminated_message : '%s'",  ptr_server->unterminated_message);
         weechat_log_printf ("  nicks_count. . . . . : %d",    ptr_server->nicks_count);
         weechat_log_printf ("  nicks_array. . . . . : 0x%lx", ptr_server->nicks_array);

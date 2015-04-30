@@ -29,8 +29,8 @@
 #include <gnutls/gnutls.h>
 #if LIBGNUTLS_VERSION_NUMBER >= 0x020a01 /* 2.10.1 */
 #include <gnutls/abstract.h>
-#endif
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020a01 */
+#endif /* HAVE_GNUTLS */
 
 #include "../weechat-plugin.h"
 #include "irc.h"
@@ -146,7 +146,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
     gnutls_ecc_curve_t curve;
     gnutls_datum_t x, y, k;
     char *pubkey, *pubkey_base64;
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x030300 */
 
     answer_base64 = NULL;
     string = NULL;
@@ -236,7 +236,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
             gnutls_free (y.data);
             gnutls_free (k.data);
         }
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x030300 */
 
         /* import private key in an abstract key structure */
         ret = gnutls_privkey_import_x509 (privkey, x509_privkey, 0); /* gnutls >= 2.11.0 */
@@ -308,7 +308,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
                     weechat_prefix ("error"));
 
     return NULL;
-#endif
+#endif /* defined(HAVE_GNUTLS) && (LIBGNUTLS_VERSION_NUMBER >= 0x030015) */
 }
 
 /*

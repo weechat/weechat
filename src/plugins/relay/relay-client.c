@@ -260,7 +260,7 @@ relay_client_handshake_timer_cb (void *data, int remaining_calls)
     /* handshake in progress, we will try again on next call to timer */
     return WEECHAT_RC_OK;
 }
-#endif
+#endif /* HAVE_GNUTLS */
 
 /*
  * Reads text data from a client: splits data on '\n' and keep a partial message
@@ -451,7 +451,7 @@ relay_client_recv_cb (void *arg_client, int fd)
         num_read = gnutls_record_recv (client->gnutls_sess, buffer,
                                        sizeof (buffer) - 1);
     else
-#endif
+#endif /* HAVE_GNUTLS */
         num_read = recv (client->sock, buffer, sizeof (buffer) - 1, 0);
 
     if (num_read > 0)
@@ -555,7 +555,7 @@ relay_client_recv_cb (void *arg_client, int fd)
             }
         }
         else
-#endif
+#endif /* HAVE_GNUTLS */
         {
             if ((num_read == 0)
                 || ((errno != EAGAIN) && (errno != EWOULDBLOCK)))
@@ -785,7 +785,7 @@ relay_client_send (struct t_relay_client *client, const char *data,
         if (client->ssl)
             num_sent = gnutls_record_send (client->gnutls_sess, ptr_data, data_size);
         else
-#endif
+#endif /* HAVE_GNUTLS */
             num_sent = send (client->sock, ptr_data, data_size, 0);
 
         if (num_sent >= 0)
@@ -839,7 +839,7 @@ relay_client_send (struct t_relay_client *client, const char *data,
                 }
             }
             else
-#endif
+#endif /* HAVE_GNUTLS */
             {
                 if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
                 {
@@ -917,7 +917,7 @@ relay_client_timer_cb (void *data, int remaining_calls)
                                                    ptr_client->outqueue->data_size);
                 }
                 else
-#endif
+#endif /* HAVE_GNUTLS */
                 {
                     num_sent = send (ptr_client->sock,
                                      ptr_client->outqueue->data,
@@ -1006,7 +1006,7 @@ relay_client_timer_cb (void *data, int remaining_calls)
                         }
                     }
                     else
-#endif
+#endif /* HAVE_GNUTLS */
                     {
                         if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
                         {
@@ -1052,7 +1052,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
 #ifdef HAVE_GNUTLS
     int bits;
     struct t_config_option *ptr_option;
-#endif
+#endif /* HAVE_GNUTLS */
 
     new_client = malloc (sizeof (*new_client));
     if (new_client)
@@ -1064,7 +1064,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
 #ifdef HAVE_GNUTLS
         new_client->hook_timer_handshake = NULL;
         new_client->gnutls_handshake_ok = 0;
-#endif
+#endif /* HAVE_GNUTLS */
         new_client->websocket = 0;
         new_client->http_headers = NULL;
         new_client->address = strdup ((address) ? address : "?");
@@ -1127,7 +1127,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
 #else
                     /* default for old gnutls */
                     bits = 1024;
-#endif
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020c00 */
                     gnutls_dh_params_generate2 (*relay_gnutls_dh_params, bits);
                     gnutls_certificate_set_dh_params (relay_gnutls_x509_cred,
                                                       *relay_gnutls_dh_params);
@@ -1148,7 +1148,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                                                                    &relay_client_handshake_timer_cb,
                                                                    new_client);
         }
-#endif
+#endif /* HAVE_GNUTLS */
 
         new_client->protocol_data = NULL;
         switch (new_client->protocol)
@@ -1232,7 +1232,7 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->gnutls_sess = NULL;
         new_client->hook_timer_handshake = NULL;
         new_client->gnutls_handshake_ok = 0;
-#endif
+#endif /* HAVE_GNUTLS */
         new_client->websocket = weechat_infolist_integer (infolist, "websocket");
         new_client->http_headers = NULL;
         new_client->address = strdup (weechat_infolist_string (infolist, "address"));
@@ -1330,7 +1330,7 @@ relay_client_set_status (struct t_relay_client *client,
             client->hook_timer_handshake = NULL;
         }
         client->gnutls_handshake_ok = 0;
-#endif
+#endif /* HAVE_GNUTLS */
         if (client->hook_fd)
         {
             weechat_unhook (client->hook_fd);
@@ -1376,13 +1376,13 @@ relay_client_set_status (struct t_relay_client *client,
 #ifdef HAVE_GNUTLS
             if (client->ssl && client->gnutls_handshake_ok)
                 gnutls_bye (client->gnutls_sess, GNUTLS_SHUT_WR);
-#endif
+#endif /* HAVE_GNUTLS */
             close (client->sock);
             client->sock = -1;
 #ifdef HAVE_GNUTLS
             if (client->ssl)
                 gnutls_deinit (client->gnutls_sess);
-#endif
+#endif /* HAVE_GNUTLS */
         }
     }
 
@@ -1428,7 +1428,7 @@ relay_client_free (struct t_relay_client *client)
 #ifdef HAVE_GNUTLS
     if (client->hook_timer_handshake)
         weechat_unhook (client->hook_timer_handshake);
-#endif
+#endif /* HAVE_GNUTLS */
     if (client->http_headers)
         weechat_hashtable_free (client->http_headers);
     if (client->hook_fd)
@@ -1540,7 +1540,7 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "gnutls_handshake_ok", client->gnutls_handshake_ok))
         return 0;
-#endif
+#endif /* HAVE_GNUTLS */
     if (!weechat_infolist_new_var_integer (ptr_item, "websocket", client->websocket))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "address", client->address))
@@ -1617,7 +1617,7 @@ relay_client_print_log ()
         weechat_log_printf ("  gnutls_sess . . . . . : 0x%lx", ptr_client->gnutls_sess);
         weechat_log_printf ("  hook_timer_handshake. : 0x%lx", ptr_client->hook_timer_handshake);
         weechat_log_printf ("  gnutls_handshake_ok . : 0x%lx", ptr_client->gnutls_handshake_ok);
-#endif
+#endif /* HAVE_GNUTLS */
         weechat_log_printf ("  websocket . . . . . . : %d",   ptr_client->websocket);
         weechat_log_printf ("  http_headers. . . . . : 0x%lx (hashtable: '%s')",
                             ptr_client->http_headers,

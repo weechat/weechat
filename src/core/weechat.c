@@ -580,13 +580,13 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
     bindtextdomain (PACKAGE, LOCALEDIR);
     bind_textdomain_codeset (PACKAGE, "UTF-8");
     textdomain (PACKAGE);
-#endif
+#endif /* ENABLE_NLS */
 
 #ifdef HAVE_LANGINFO_CODESET
     weechat_local_charset = strdup (nl_langinfo (CODESET));
 #else
     weechat_local_charset = strdup ("");
-#endif
+#endif /* HAVE_LANGINFO_CODESET */
     utf8_init ();
 
     /* catch signals */

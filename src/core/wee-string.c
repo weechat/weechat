@@ -43,7 +43,7 @@
   #else
     #define ICONV_CONST
   #endif
-#endif
+#endif /* ICONV_CONST */
 
 #include "weechat.h"
 #include "wee-string.h"
@@ -2123,7 +2123,7 @@ string_iconv (int from_utf8, const char *from_code, const char *to_code,
     char *ptr_inbuf_shift;
     int done;
     size_t err, inbytesleft, outbytesleft;
-#endif
+#endif /* HAVE_ICONV */
 
     if (!string)
         return NULL;

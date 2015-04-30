@@ -130,7 +130,7 @@ weechat_aspell_enchant_dict_describe_cb (const char *lang_tag,
     if (country)
         free (country);
 }
-#endif
+#endif /* USE_ENCHANT */
 
 /*
  * Displays list of aspell dictionaries installed on system.
@@ -146,7 +146,7 @@ weechat_aspell_command_speller_list_dicts ()
     AspellDictInfoList *list;
     AspellDictInfoEnumeration *elements;
     const AspellDictInfo *dict;
-#endif
+#endif /* USE_ENCHANT */
 
     weechat_printf (NULL, "");
     weechat_printf (NULL,
@@ -203,7 +203,7 @@ weechat_aspell_command_speller_list_dicts ()
 
     delete_aspell_dict_info_enumeration (elements);
     delete_aspell_config (config);
-#endif
+#endif /* USE_ENCHANT */
 }
 
 /*
@@ -245,7 +245,7 @@ weechat_aspell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
     EnchantDict *new_speller, *ptr_speller;
 #else
     AspellSpeller *new_speller, *ptr_speller;
-#endif
+#endif /* USE_ENCHANT */
 
     new_speller = NULL;
 
@@ -310,7 +310,7 @@ weechat_aspell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
     }
     else
         goto error;
-#endif
+#endif /* USE_ENCHANT */
 
     goto end;
 
@@ -353,7 +353,7 @@ weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
                         "enchant"
 #else
                         "aspell"
-#endif
+#endif /* USE_ENCHANT */
             );
         default_dict = weechat_config_string (weechat_aspell_config_check_default_dict);
         weechat_printf (NULL,

@@ -140,7 +140,7 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
     (void) symbol;
 
     /* no backtrace possible, we display nothing */
-#endif
+#endif /* HAVE_BACKTRACE */
 }
 
 /*
@@ -154,7 +154,7 @@ weechat_backtrace ()
     void *trace[BACKTRACE_MAX];
     int trace_size, i;
     char **symbols;
-#endif
+#endif /* HAVE_BACKTRACE */
 
     weechat_backtrace_printf ("======= WeeChat backtrace =======");
     weechat_backtrace_printf ("(written by WeeChat %s, compiled on %s %s)",
@@ -173,7 +173,7 @@ weechat_backtrace ()
 #else
     weechat_backtrace_printf ("  No backtrace info (no debug info available "
                               "or no backtrace possible on your system).");
-#endif
+#endif /* HAVE_BACKTRACE */
 
     weechat_backtrace_printf ("======= End of  backtrace =======");
 }
