@@ -521,9 +521,16 @@ weechat_sighup ()
 void
 weechat_sigquit ()
 {
-    log_printf (_("Signal %s received, exiting WeeChat..."), "SIGQUIT");
-    (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-    weechat_quit = 1;
+    int rc;
+
+    rc = hook_signal_send ("signal_sigquit",
+                           WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    if (rc != WEECHAT_RC_OK_EAT)
+    {
+        log_printf (_("Signal %s received, exiting WeeChat..."), "SIGQUIT");
+        (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        weechat_quit = 1;
+    }
 }
 
 /*
@@ -533,9 +540,16 @@ weechat_sigquit ()
 void
 weechat_sigterm ()
 {
-    log_printf (_("Signal %s received, exiting WeeChat..."), "SIGTERM");
-    (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-    weechat_quit = 1;
+    int rc;
+
+    rc = hook_signal_send ("signal_sigterm",
+                           WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    if (rc != WEECHAT_RC_OK_EAT)
+    {
+        log_printf (_("Signal %s received, exiting WeeChat..."), "SIGTERM");
+        (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        weechat_quit = 1;
+    }
 }
 
 /*

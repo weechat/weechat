@@ -8388,6 +8388,16 @@ List of signals sent by WeeChat and plugins:
   String: arguments for /quit |
   Command `/quit` issued by user
 
+| weechat | signal_sigquit +
+  _(WeeChat ≥ 1.2)_ |
+  - |
+  Signal SIGQUIT received (quit request with core dump)
+
+| weechat | signal_sigterm +
+  _(WeeChat ≥ 1.2)_ |
+  - |
+  Signal SIGTERM received (graceful termination of WeeChat process)
+
 | weechat | signal_sigwinch +
   _(WeeChat ≥ 0.4.3)_ |
   - |

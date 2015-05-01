@@ -8535,6 +8535,16 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Chaîne : paramètres pour le /quit |
   La commande `/quit` a été exécutée par l'utilisateur
 
+| weechat | signal_sigquit +
+  _(WeeChat ≥ 1.2)_ |
+  - |
+  Signal SIGQUIT reçu (requête pour quitter avec une copie de la mémoire)
+
+| weechat | signal_sigterm +
+  _(WeeChat ≥ 1.2)_ |
+  - |
+  Signal SIGTERM reçu (arrêt propre du processus WeeChat)
+
 | weechat | signal_sigwinch +
   _(WeeChat ≥ 0.4.3)_ |
   - |
