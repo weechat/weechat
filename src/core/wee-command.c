@@ -7406,18 +7406,20 @@ command_init ()
            "  paste_stop: stop paste (bracketed paste mode)\n"
            "\n"
            "This command is used by key bindings or plugins."),
-        "return|complete_next|complete_previous|search_text|search_switch_case|"
+        "return|complete_next|complete_previous|search_text|"
+        "search_switch_case|search_switch_regex|search_switch_where|"
         "search_previous|search_next|search_stop|delete_previous_char|"
         "delete_next_char|delete_previous_word|delete_next_word|"
         "delete_beginning_of_line|delete_end_of_line|delete_line|"
         "clipboard_paste|transpose_chars|undo|redo|move_beginning_of_line|"
-        "move_end_of_line|move_previous_char|move_next_char|move_previous_word|"
-        "move_next_word|history_previous|history_next|history_global_previous|"
-        "history_global_next|jump_smart|jump_previously_visited_buffer|"
+        "move_end_of_line|move_previous_char|move_next_char|"
+        "move_previous_word|move_next_word|history_previous|history_next|"
+        "history_global_previous|history_global_next|jump_smart|"
+        "jump_last_buffer_displayed|jump_previously_visited_buffer|"
         "jump_next_visited_buffer|hotlist_clear|grab_key|grab_key_command|"
         "grab_mouse|grab_mouse_area|set_unread|set_unread_current_buffer|"
-        "switch_active_buffer|switch_active_buffer_previous|zoom_merged_buffer|"
-        "insert|send|paste_start|paste_stop",
+        "switch_active_buffer|switch_active_buffer_previous|"
+        "zoom_merged_buffer|insert|send|paste_start|paste_stop",
         &command_input, NULL);
     hook_command (
         NULL, "key",

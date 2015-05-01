@@ -51,6 +51,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: add missing completions in command /input
 * guile: fix value returned in case of error in functions:
   config_option_reset, config_color, config_color_default, config_write,
   config_read, config_reload, hook_command, buffer_string_replace_local_var,
