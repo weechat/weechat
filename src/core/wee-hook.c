@@ -32,6 +32,7 @@
 #include <time.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/select.h>
 #include <signal.h>
 #include <fcntl.h>
 #include <errno.h>

@@ -29,6 +29,7 @@
 #include <string.h>
 #include <signal.h>
 #include <time.h>
+#include <sys/select.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-command.h"
