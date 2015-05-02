@@ -8387,17 +8387,15 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: /quit の引数 |
   ユーザがコマンド `/quit` を実行
 
-// TRANSLATION MISSING
 | weechat | signal_sigquit +
-  _(WeeChat ≥ 1.2)_ |
+  _(WeeChat バージョン 1.2 以上で利用可)_ |
   - |
-  Signal SIGQUIT received (quit request with core dump)
+  SIGQUIT シグナルを受信 (コアダンプ付きで終了要求)
 
-// TRANSLATION MISSING
 | weechat | signal_sigterm +
-  _(WeeChat ≥ 1.2)_ |
+  _(WeeChat バージョン 1.2 以上で利用可)_ |
   - |
-  Signal SIGTERM received (graceful termination of WeeChat process)
+  SIGTERM シグナルを受信 (WeeChat プロセスを正常に終了させる)
 
 | weechat | signal_sigwinch +
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
