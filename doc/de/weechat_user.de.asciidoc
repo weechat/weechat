@@ -857,45 +857,45 @@ Darstellung und die Standard-Bar 'nicklist' nutzt eine 'vertical' Darstellung.
 Einige Beispiele, wie die Bar 'nicklist' dargestellt werden kann:
 
 ....
-┌──────────────────────────────────────────────────┐
-│Welcome to #test, this is a test channel          │
-│12:54:15 peter | hey!                    │@carl   │
-│12:55:01  +Max | hello                   │@jessika│
-│                                         │@maddy  │
-│                                         │%Diego  │
-│                                         │%Melody │
-│                                         │+Max    │
-│                                         │ celia  │
-│                                         │ Eva    │
-│                                         │ freddy │
-│                                         │ Harold^│
-│                                         │ henry4 │
-│                                         │ jimmy17│
-│                                         │ jodie ▼│
-│[12:55] [6] [irc/freenode] 3:#test(+n){24}        │
-│[@carl] █                                         │
-└──────────────────────────────────────────────────┘
-                filling_left_right = vertical ▲
+┌───────────────────────────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel                               │
+│12:54:15 peter | hey!                                         │@carl   │
+│12:55:01  +Max | hello                                        │@jessika│
+│                                                              │@maddy  │
+│                                                              │%Diego  │
+│                                                              │%Melody │
+│                                                              │+Max    │
+│                                                              │ celia  │
+│                                                              │ Eva    │
+│                                                              │ freddy │
+│                                                              │ Harold^│
+│                                                              │ henry4 │
+│                                                              │ jimmy17│
+│                                                              │ jodie ▼│
+│[12:55] [6] [irc/freenode] 3:#test(+n){24}                             │
+│[@carl] █                                                              │
+└───────────────────────────────────────────────────────────────────────┘
+                                     filling_left_right = vertical ▲
 
-┌──────────────────────────────────────────────────┐
-│Welcome to #test, this is a test channel          │
-│12:54:15 peter | hey!           │@carl     lee    │
-│12:55:01  +Max | hello          │@jessika  louise │
-│                                │@maddy    mario  │
-│                                │%Diego    mark   │
-│                                │%Melody   peter  │
-│                                │+Max      Rachel │
-│                                │ celia    richard│
-│                                │ Eva      sheryl │
-│                                │ freddy   Vince  │
-│                                │ Harold^  warren │
-│                                │ henry4   zack   │
-│                                │ jimmy17         │
-│                                │ jodie           │
-│[12:55] [6] [irc/freenode] 3:#test(+n){24}        │
-│[@carl] █                                         │
-└──────────────────────────────────────────────────┘
-        filling_left_right = columns_vertical ▲
+┌───────────────────────────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel                               │
+│12:54:15 peter | hey!                                │@carl     lee    │
+│12:55:01  +Max | hello                               │@jessika  louise │
+│                                                     │@maddy    mario  │
+│                                                     │%Diego    mark   │
+│                                                     │%Melody   peter  │
+│                                                     │+Max      Rachel │
+│                                                     │ celia    richard│
+│                                                     │ Eva      sheryl │
+│                                                     │ freddy   Vince  │
+│                                                     │ Harold^  warren │
+│                                                     │ henry4   zack   │
+│                                                     │ jimmy17         │
+│                                                     │ jodie           │
+│[12:55] [6] [irc/freenode] 3:#test(+n){24}                             │
+│[@carl] █                                                              │
+└───────────────────────────────────────────────────────────────────────┘
+                             filling_left_right = columns_vertical ▲
 
 ┌───────────────────────────────────────────────────────────────────────┐
 │@carl    %Diego    celia    Harold^  jodie    mario    Rachel   Vince  │
