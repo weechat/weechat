@@ -38,6 +38,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add support of full color option name in functions color() and
   string_eval_expression() and in command /eval
 * api: add "_chat_line" (line pointer) in hashtable of hook_focus
+* irc: display a warning when the option irc.look.display_away is set to
+  "channel"
 * irc: optimize search of a nick in nicklist (up to 3x faster)
 * irc: add support of SHA-256 and SHA-512 algorithms in server option
   "ssl_fingerprint" (closes #281)

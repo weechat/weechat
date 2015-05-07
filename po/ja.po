@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-04-26 10:44+0200\n"
+"POT-Creation-Date: 2015-05-07 07:02+0200\n"
 "PO-Revision-Date: 2015-04-29 02:38+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -7187,6 +7187,13 @@ msgstr "無視エントリの数"
 
 msgid "nicks in notify list"
 msgstr "通知エントリのニックネーム"
+
+#, c-format
+msgid ""
+"%sWARNING: the value \"channel\" for option \"irc.look.display_away\" will "
+"send all your away changes to the channels, which is often considered as "
+"spam; therefore you could be banned from channels, you are warned!"
+msgstr ""
 
 #, c-format
 msgid ""

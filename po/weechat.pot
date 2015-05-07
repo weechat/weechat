@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-04-26 10:44+0200\n"
+"POT-Creation-Date: 2015-05-07 07:02+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5452,6 +5452,13 @@ msgid "numbers for defined ignores"
 msgstr ""
 
 msgid "nicks in notify list"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sWARNING: the value \"channel\" for option \"irc.look.display_away\" will "
+"send all your away changes to the channels, which is often considered as "
+"spam; therefore you could be banned from channels, you are warned!"
 msgstr ""
 
 #, c-format

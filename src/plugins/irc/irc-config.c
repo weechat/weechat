@@ -47,6 +47,8 @@ struct t_config_section *irc_config_section_ctcp = NULL;
 struct t_config_section *irc_config_section_server_default = NULL;
 struct t_config_section *irc_config_section_server = NULL;
 
+int irc_config_loading = 0;
+
 /* IRC config, look section */
 
 struct t_config_option *irc_config_look_buffer_open_before_autojoin;
@@ -324,6 +326,31 @@ irc_config_change_look_color_nicks_in_nicklist (void *data,
     (void) option;
 
     irc_nick_nicklist_set_color_all ();
+}
+
+/*
+ * Callback for changes on option "irc.look.display_away".
+ */
+
+void
+irc_config_change_look_display_away (void *data,
+                                     struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (!irc_config_loading
+        && (weechat_config_integer (irc_config_look_display_away) == IRC_CONFIG_DISPLAY_AWAY_CHANNEL))
+    {
+        weechat_printf (
+            NULL,
+            _("%sWARNING: the value \"channel\" for option "
+              "\"irc.look.display_away\" will send all your away changes to "
+              "the channels, which is often considered as spam; therefore you "
+              "could be banned from channels, you are warned!"),
+            weechat_prefix ("error"));
+    }
 }
 
 /*
@@ -1279,7 +1306,9 @@ irc_config_reload (void *data, struct t_config_file *config_file)
 
     irc_ignore_free_all ();
 
+    irc_config_loading = 1;
     rc = weechat_config_reload (config_file);
+    irc_config_loading = 0;
 
     ptr_server = irc_servers;
     while (ptr_server)
@@ -2409,7 +2438,8 @@ irc_config_init ()
         "display_away", "integer",
         N_("display message when (un)marking as away (off: do not display/send "
            "anything, local: display locally, channel: send action to channels)"),
-        "off|local|channel", 0, 0, "local", NULL, 0, NULL, NULL, NULL, NULL,
+        "off|local|channel", 0, 0, "local", NULL, 0, NULL, NULL,
+        &irc_config_change_look_display_away, NULL,
         NULL, NULL);
     irc_config_look_display_ctcp_blocked = weechat_config_new_option (
         irc_config_file, ptr_section,
@@ -3094,7 +3124,10 @@ irc_config_read ()
 {
     int rc;
 
+    irc_config_loading = 1;
     rc = weechat_config_read (irc_config_file);
+    irc_config_loading = 0;
+
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
         irc_notify_new_for_all_servers ();
@@ -3106,6 +3139,7 @@ irc_config_read ()
         irc_config_change_network_notify_check_ison (NULL, NULL);
         irc_config_change_network_notify_check_whois (NULL, NULL);
     }
+
     return rc;
 }
 
