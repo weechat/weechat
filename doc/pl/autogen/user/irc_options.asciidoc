@@ -498,7 +498,7 @@
 ** wartości: 0 .. 1000000 (domyślna wartość: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** opis: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: account-notify, away-notify, extended-join, multi-prefix, server-time, userhost-in-names (example: "away-notify,multi-prefix")`
+** opis: `oddzielona przecinkami lista opcji klienta do włączenia dla serwera, jeśli są dostępne; opcje wspierane przez WeeChat: account-notify, away-notify, extended-join, multi-prefix, server-time, userhost-in-names (przykład: "away-notify,multi-prefix")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -573,17 +573,17 @@
 ** wartości: continue, reconnect, disconnect (domyślna wartość: `continue`)
 
 * [[option_irc.server_default.sasl_key]] *irc.server_default.sasl_key*
-** opis: `file with ECC private key for mechanism "ecdsa-nist256p-challenge" ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** opis: `plik z kluczem prywatnym ECC dla mechanizmu "ecdsa-nist256p-challenge" ("%h" zostanie zastąpione katalogiem domowym WeeChat, domyślnie "~/.weechat")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** opis: `mechanism for SASL authentication: "plain" for plain text password, "ecdsa-nist256p-challenge" for key-based challenge authentication, "external" for authentication using client side SSL cert, "dh-blowfish" for blowfish crypted password (insecure, not recommended), "dh-aes" for AES crypted password (insecure, not recommended)`
+** opis: `mechanizm autentykacji SASL: "plain" dla hasła w czystym tekście, "ecdsa-nist256p-challenge" uwierzytelnianie na podstawie pary kluczy, "external" dla uwierzytelnienia za pomocą certyfikatu SSL po stronie klienta",  "dh-blowfish" dla hasła szyfrowanego za pomocą blowfish (mało bezpieczne, niepolecane), "dh-aes" dla hasła szyfrowanego za pomocą AES (mało bezpieczne, niepolecane)`
 ** typ: liczba
 ** wartości: plain, ecdsa-nist256p-challenge, external, dh-blowfish, dh-aes (domyślna wartość: `plain`)
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** opis: `password for SASL authentication; this option is not used for mechanisms "ecdsa-nist256p-challenge" and "external" (note: content is evaluated, see /help eval)`
+** opis: `hasło dla uwierzytelniania SASL; ta opcja nie jest używana dla mechanizmów "ecdsa-nist256p-challenge" oraz "external"  (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -593,7 +593,7 @@
 ** wartości: 1 .. 3600 (domyślna wartość: `15`)
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** opis: `username for SASL authentication; this option is not used for mechanism "external" (note: content is evaluated, see /help eval)`
+** opis: `nazwa użytkownika dla uwierzytelniania SASL; ta opcja nie jest używana dla mechanizmów "ecdsa-nist256p-challenge" oraz "external"  (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -613,7 +613,7 @@
 ** wartości: 0 .. 2147483647 (domyślna wartość: `2048`)
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** opis: `fingerprint of certificate which is trusted and accepted for the server; only hexadecimal digits are allowed (0-9, a-f): 64 chars for SHA-512, 32 chars for SHA-256, 20 chars for SHA-1 (insecure, not recommended); many fingerprints can be separated by commas; if this option is set, the other checks on certificates are NOT performed (option "ssl_verify")`
+** opis: `skrót certyfikatu, który jest zaufany i akceptowany dla serwera; tylko cyfry heksadecymalne są dozwolone (0-9, a-f): 64 znaki dla SHA-512, 32 znaki dla SHA-256, 20 znaków dla SHA-1 (mało bezpieczne, nie zalecane); wiele skrótów można oddzielić przecinkami; jeśli ta opcja jest ustawiona, certyfikat NIE jest dalej sprawdzany (opcja "ssl_verify")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 

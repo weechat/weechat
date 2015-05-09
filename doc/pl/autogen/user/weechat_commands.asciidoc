@@ -17,50 +17,50 @@ wiadomość: powód nieobecności (jeśli nie podano wiadomości status nieobecn
 
 ----
 /bar  list|listfull|listitems
-      add <name> <type>[,<conditions>] <position> <size> <separator> <item1>[,<item2>...]
+      add <nazwa> <typ>[,<warunek>] <pozycja> <rozmiar> <separator> <element1>[,<element2>...]
       default [input|title|status|nicklist]
-      del <name>|-all
-      set <name> <option> <value>
-      hide|show|toggle <name>
-      scroll <name> <window> <scroll_value>
+      del <nazwa>|-all
+      set <nazwa> <opcja> <wartość>
+      hide|show|toggle <nazwa>
+      scroll <nazwa> <okno> <wartość_przewinięcia>
 
-         list: list all bars
-     listfull: list all bars (verbose)
-    listitems: list all bar items
-          add: add a new bar
-         name: name of bar (must be unique)
-         type:   root: outside windows,
-               window: inside windows, with optional conditions (see below)
-   conditions: the conditions to display the bar:
-                 active: on active window
-               inactive: on inactive windows
-               nicklist: on windows with nicklist
-               other condition: see /help weechat.bar.xxx.conditions and /help eval
-               without conditions, the bar is always displayed
-     position: bottom, top, left or right
-         size: size of bar (in chars)
-    separator: 1 for using separator (line), 0 or nothing means no separator
-    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
-      default: create a default bar (all default bars if no bar name is given)
-          del: delete a bar (or all bars with -all)
-          set: set a value for a bar property
-       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
-        value: new value for option
-         hide: hide a bar
-         show: show an hidden bar
-       toggle: hide/show a bar
-       scroll: scroll bar
-       window: window number (use '*' for current window or for root bars)
- scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to scroll by % of width/height, otherwise value is number of chars)
+         list: lista wszystkich pasków
+     listfull: lista wszystkich pasków (z polami)
+    listitems: lista wszystkich elementów pasków
+          add: dodaj nowy pasek
+         nazwa: nazwa paska (musi być unikalna)
+         typ:   root: poza oknami,
+               window: wewnątrz okien, z opcjonalnymi warunkami (patrz niżej)
+    warunek: warunek(i) dla wyświetlenia paska (tylko dla typu "window"):
+                 active: w aktywnym oknie
+               inactive: w nieaktywnym oknie
+               nicklist: w oknach z listą nicków
+               inne warunki: zobacz /help weechat.bar.xxx.conditions oraz /help eval
+               bez warunku pasek jest zawsze wyświetlany
+     pozycja: dół (bottom), góra (top), lewo (left) lub prawo (right)
+         rozmiar: rozmiar paska (w znakach)
+    separator: 1 dla użycia separatora (linia), 0  - brak separatora
+    element1,...: elementy dla tego paska (elementy mogą być oddzielone przecinkiem (przerwa między elementami) lub "+" (sklejone elementy))
+      default: tworzy domyślne paski (wszystkie domyślne paski, jeśli nie podamy nazwy)
+          del: usuwa pasek (lub wszystkie z użyciem -all)
+          set: ustawia wartość dla właściwości paska
+       opcja: opcja do zmiany (listę opcji można zobaczyć dzięki /set weechat.bar.<nazwa paska>.*)
+        wartość: nowa wartość opcji
+         hide: ukrywa pasek
+         show: pokazuje ukryty pasek
+       toggle: ukrywa/pokazuje pasek
+       scroll: przewija pasek
+       okno: numer okna ('*' oznacza obecne okno lub pasek typu root)
+ wartość_przewinięcia: wartość dla przewinięcia: 'x' lub 'y' (opcjonalne), następnie '+', '-', 'b' (początek) lub 'e' (koniec), wartość (dla +/-), oraz opcjonalnie % (w celu przesunięcia % szerokości/wysokości, w przeciwnym wypadku wartość jest ilością znaków)
 
-Examples:
-  create a bar with time, buffer number + name, and completion:
+Przykłady:
+  tworzy pasek z czasem, numerem  + nazwą bufora i dopełnianiem:
     /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  hide a bar:
+  ukrywa pasek:
     /bar hide mybar
-  scroll nicklist 10 lines down on current buffer:
+  przewija listę nicków a obecnym buforze o 10 linii w dół :
     /bar scroll nicklist * y+10
-  scroll to end of nicklist on current buffer:
+  przewija do końca listę nicków w obecnym buforze:
     /bar scroll nicklist * ye
 ----
 
@@ -186,30 +186,30 @@ komenda: komenda do wywołania ( '/' jest automatycznie dodawane jeśli nie wyst
          move up|down|left|right|area_up|area_down|area_left|area_right
          stop
 
-  go: move cursor to chat area, a bar (using bar name) or coordinates "x,y"
-move: move cursor with direction
-stop: stop cursor mode
+  go: przesuwa kursor do obszaru rozmowy, paska (używając nazwy paska) lub położenia "x,y"
+move: przesuwa kursor w kierunku
+stop: wyłącza tryb kursora
 
-Without argument, this command toggles cursor mode.
+Bez argumentu komenda przełącza obsługę kursora.
 
-When mouse is enabled (see /help mouse), by default a middle click will start cursor mode at this point.
+Kiedy obsługa myszy jest włączona (zobacz /help mouse), domyślnie wciśnięcie środkowego przycisku włącza tryb kursora we wskazanym punkcie.
 
-Default keys in cursor mode on chat messages:
-  m  quote message
-  q  quote prefix + message
-  Q  quote time + prefix + message
+Domyślne skróty dla trybu kursora w oknie rozmowy:
+  m  cytuj wiadomość
+  q  cytuj prefiks + wiadomość
+  Q  cytuj czas + prefiks + wiadomość
 
-Default keys in cursor mode on nicklist:
-  b  ban nick (/ban)
-  k  kick nick (/kick)
-  K  kick and ban nick (/kickban)
-  q  open query with nick (/query)
-  w  query information about user (/whois)
+Domyślne skróty dla trybu kursora na liście nicków:
+  b  zbanuj nick (/ban)
+  k  wykop nick (/kick)
+  K  wykop i zbanuj nick (/kickban)
+  q  otworz okno prywatnej rozmowy (/query)
+  w  zapytaj o informacje o użytkowniku (/whois)
 
-Examples:
-  go to nicklist:
+Przykłady:
+  przejdź do listy nicków:
     /cursor go nicklist
-  go to coordinates x=10, y=5:
+  przejdź do współrzędnych x=10, y=5:
     /cursor go 10,5
 ----
 
@@ -248,50 +248,50 @@ infolists: wyświetla informacje o infolistach
 [command]*`eval`* przetwórz wyrażenie::
 
 ----
-/eval  [-n|-s] <expression>
-       [-n] -c <expression1> <operator> <expression2>
+/eval  [-n|-s] <wyrażenie>
+       [-n] -c <wyrażenie1> <operator> <wyrażenie2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -s: split expression before evaluating it (many commands can be separated by semicolons)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching POSIX extended regex
-                !~  is NOT matching POSIX extended regex
+        -n: wyświetla wynik bez wysyłania go do buforu (tryb debugowania)
+        -s: podziel wyażenie przed przetworzeniem go (wiele komend może być oddzielonych średnikami)
+        -c: przetwarza jako warunek: użyj operatorów i nawiasów, zwraca wartość logiczną ("0" lub "1")
+wyrażenie: wyrażenie do przetworzenia, zmienne o formacie ${zmienna} są zastępowane (zobacz niżej); wiele komend można oddzielić średnikami
+  operator: operator logiczny lub porównania:
+            - operatory logiczne:
+                &&  boolowskie "i"
+                ||  boolowskie "lub"
+            - operatory porównania:
+                ==  równy
+                !=  różny
+                <=  mniejszy lub równy
+                <   mniejszy
+                >=  większy lub równy
+                >   większy
+                =~  pasuje do rozszerzonego wyrażenia regularnego POSIX
+                !~  NIE pasuje do rozszerzonego wyrażenia regularnego POSIX
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using integers if the two expressions are valid integers.
-To force a string comparison, add double quotes around each expression, for example:
+Wyrażenie jest uznawane za "prawdziwe" jeśli nie jest NULL, nie jest puste, oraz różni się od "0".
+Porównania dokonuje się z użyciem liczb całkowitych jeśli oba wyrażenia są liczbami całkowitymi.
+W celu wymuszenia porównywania ciągów, należy umieścić każde wyrażenie w cudzysłowie, na przykład:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  2. a string with chars to hide (format: "hide:char,string")
-  3. a color (format: "color:xxx")
-  4. an info (format: "info:name,arguments", arguments are optional)
-  5. an environment variable (format: "env:XXX")
-  6. an option (format: "file.section.option")
-  7. a local variable in buffer
-  8. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Niektóre zmienne w wyrażeniach są zamieniane, poprzez zastosowanie formatu ${zmienna}, według priorytetu zmienną może być:
+  1. ciąg z wyescapowanymi znakami (format: "esc:xxx" lub "\xxx")
+  2. ciąg ze znakami do ukrycia (format: "hide:char,string")
+  3. kolor (format color:xxx)
+  4. informacja (format: "info:nazwa,argumenty", argumenty są opcjonalne)
+  5. zmienna środowiskowa (format: "env:XXX")
+  6. opcja (format: plik.sekcja.opcja)
+  7. zmienna lokalna w buforze
+  8. nazwa hdatay/zmiennej (wartość jest automatycznie konwertowana na ciąg znaków), domyślnie "window" i "buffer" wskazują na aktualne okno/bufor.
+Format dla hdata może być jednym z poniższych:
+  hdata.zmienna1.zmienna2...: inicjuje hdata (wskaźnik musi być znany), następnie wypytuje zmienne jedna po drugiej (inne hdata mogą być następne)
+  hdata[list].zmienna1.zmienna2...: inicjuje hdata z wykorzystaniem listy, na przykład:
+    ${buffer[gui_buffers].full_name}: pełna nazwa buforu w połączonej liście buforów
+    ${plugin[weechat_plugins].name}: nazwa pierwszej wtyczki w połączonej liście wtyczek
+Nazwy hdata i zmiennych, można znaleźć w  "Opisie API wtyczek", fukcja "weechat_hdata_get".
 
-Examples (simple strings):
+Przykłady (proste ciągi):
   /eval -n ${info:version}                     ==> 0.4.3
   /eval -n ${env:HOME}                         ==> /home/user
   /eval -n ${weechat.look.scroll_amount}       ==> 3
@@ -302,7 +302,7 @@ Examples (simple strings):
   /eval -n ${\t}                               ==> <tab>
   /eval -n ${hide:-,${relay.network.password}} ==> --------
 
-Examples (conditions):
+Przykłady (warunki):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
   /eval -n -c ${window.win_width} > 100   ==> 1
   /eval -n -c (8 > 12) || (5 > 2)         ==> 1
@@ -323,57 +323,57 @@ Examples (conditions):
          rename <nazwa> <nowa_nazwa>
          del <nazwa>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name ("@" = enable/disable all filters in current buffer)
-    add: add a filter
- rename: rename a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat" or "irc.server.freenode")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - wildcard "*" is allowed
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - wildcard "*" is allowed
-         - if tag starts with '!', then it is excluded and must NOT be in message
-  regex: POSIX extended regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: wyświetla wszystkie filtry
+ enable: włącza filtry (filtry są domyślnie włączone)
+disable: wyłącza filtry
+ toggle: przełącza filtry
+  nazwa: nazwa filtru ("@" = włącza/wyłącza wszystkie filtry w obecnym buforze)
+    add: dodaje filtr
+ rename: zmienia nazwę filtru
+    del: usuwa filtr
+   -all: usuwa wszystkie filtry
+ bufor: oddzielona przecinkami lisa buforów, dla których filtr jest aktywny:
+         - jest to pełna nazwa zawierająca wtyczkę (przykład: "irc.freenode.#weechat" lub "irc.server.freenode")
+         - "*" oznacza wszystkie bufory
+         - nazwa zaczynająca się od '!' jest wykluczana
+         - dozwolony jest znak "*"
+   tagi: lista tagów oddzielona przecinkiem, np: "irc_join,irc_part,irc_quit"
+         - logiczne "i": użyj "+" pomiędzy tagami (na przykład: "nick_toto+irc_action")
+         - dozwolony jest znak "*"
+         - jeśli tag zaczyna się od '!', wtedy jest on wykluczony i NIE może znajdować się w wiadomości
+  regex: rozszerzone wyrażenie regularne POSIX do wyszukania w linii
+         - użyj '\t' do oddzielenia prefiksu od wiadomości, znaki specjalne jak '|' muszą zostać poprzedzone '\' np: '\|'
+         - jeśli wyrażenie zaczyna się od '!', wtedy pasujący wynik jest odwracany (użyj '\!', aby zacząć od '!')
+         - dwa wyrażenia są tworzone: jedno dla prefiksu, drugie dla wiadomości
+         - wielkość znaków nie ma znaczenia dla wyrażeń, jeśli zaczynają się od "(?-i)" wielkość znaków ma znaczenie
 
-The default key alt+'=' toggles filtering on/off.
+Domyślny skrót klawiszowy alt+'=' włącza/wyłącza filtrowanie.
 
-Tags most commonly used:
+Najczęściej używane tagi:
   no_filter, no_highlight, no_log, log0..log9 (log level),
   notify_none, notify_message, notify_private, notify_highlight,
   nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
   host_xxx (xxx is username + host in message),
   irc_xxx (xxx is command name or number, see /server raw or /debug tags),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+Aby zobaczyć listę tagów w liniach buforów wykonaj: /debug tags
 
-Examples:
-  use IRC smart filter on all buffers:
+Przykłady:
+  użyj inteligentnego filtru we wszystkich buforach IRC:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  użyj inteligentnego filtru we wszystkich buforach IRC poza tymi zawierającymi "#weechat" w nazwie:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  filtruj wszystkie wiadomości IRC o join/part/quit:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  filtruj nicki wyświetlane przy wejściu na kanał albo za pomocą /names:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  filtruj nick "toto" na kanale IRC #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  filtruj wejścia/akcje IRC od użytkownika "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  filtruj linie zawierające fraze "weechat sucks" na kanale IRC #weechat:
     /filter add sucks irc.freenode.#weechat * weechat sucks
-  filter lines that are strictly equal to "WeeChat sucks" on all buffers:
+  filtruj linie "WeeChat sucks" we wszystkich buforach:
     /filter add sucks2 * * (?-i)^WeeChat sucks$
 ----
 
@@ -879,10 +879,10 @@ Jest możliwe przywrócenie sesji WeeChat na innej maszynie, jeśli skopiujemy z
 ----
 /version  [-o | -ol]
 
- -o: send version to current buffer as input (English string)
--ol: send version to current buffer as input (translated string)
+ -o: wysyła wersje jako wejście do obecnego bufora (po angielsku)
+-ol: wysyła wersje jako wejście do obecnego bufora (przetłumaczony)
 
-The default alias /v can be used to execute this command on all buffers (otherwise the irc command /version is used on irc buffers).
+Domyślny alias /v może zostać użyty do wykonania tej komendy we wszystkich buforach (w przeciwnym wypadku wykonywana jest komenda /version w buforach irc).
 ----
 
 [[command_weechat_wait]]

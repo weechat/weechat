@@ -193,7 +193,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** opis: `URL for file with list of scripts; by default HTTPS is forced, see option script.scripts.url_force_https`
+** opis: `adres pliku z listą skryptów; domyśłnie wymuszany jest protokół HTTPS, zobacz opcje script.scripts.url_force_https`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"http://weechat.org/files/plugins.xml.gz"`)
 

@@ -83,7 +83,7 @@
 ** wartości: 0 .. 65535 (domyślna wartość: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** opis: `POSIX extended regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^(123.45.67.89|192.160.*)$"`
+** opis: `rozszerzone wyrażenia regularne POSIX z adresami IP dozwolonymi dla pośrednika (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^(123.45.67.89|192.160.*)$"`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 

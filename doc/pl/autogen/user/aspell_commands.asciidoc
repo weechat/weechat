@@ -12,22 +12,22 @@
          deldict
          addword [<język>] <słowo>
 
-  enable: enable aspell
- disable: disable aspell
-  toggle: toggle aspell
-listdict: show installed dictionaries
- setdict: set dictionary for current buffer (multiple dictionaries can be separated by a comma)
- deldict: delete dictionary used on current buffer
- addword: add a word in personal aspell dictionary
+  enable: włącza aspell
+ disable: wyłącza aspell
+  toggle: przełącza aspell
+listdict: pokazuje zainstalowane słowniki
+ setdict: ustawia słownik dla obecnego buforu (kilka słowników może być podanych po przecinku)
+ deldict: usuwa słownik używany w obecnym buforze
+ addword: dodaje słowo do osobistego słownika aspell
 
-Input line beginning with a '/' is not checked, except for some commands (see /set aspell.check.commands).
+Jeśli wprowadzany tekst zaczyna się od '/' nie będzie on sprawdzany, za wyjątkiem kilku komend (zobacz /set aspell.check.commands).
 
-To enable aspell on all buffers, use option "default_dict", then enable aspell, for example:
+W celu włączenia aspell dla wszystkich buforów, należy użyć opcji "default_dict", następnie włączyć aspell, na przykład:
   /set aspell.check.default_dict "en"
   /aspell enable
 
-To display a list of suggestions in a bar, use item "aspell_suggest".
+W celu wyświetlenia listy sugestii na pasku, użyj elementu "aspell_suggest".
 
-Default key to toggle aspell is alt-s.
+Domyślny skrót klawiszowy przełączający aspell to alt-s.
 ----
 
