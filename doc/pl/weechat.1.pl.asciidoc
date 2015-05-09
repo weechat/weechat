@@ -16,10 +16,9 @@ weechat - rozszerzalny klient rozmów
 
 == OPIS
 
-// TRANSLATION MISSING
 WeeChat (Wee Enhanced Environment for Chat) to darmowy klient rozmów, szybki
 i lekki, przeznaczony dla wielu systemów operacyjnych.
-It is highly customizable and extensible with scripts.
+Posiada dużo opcji konfiguracyjnych i dodatkowych wtyczek.
 
 == OPCJE
 
@@ -90,14 +89,11 @@ $HOME/.weechat/weechat.log::
 
 == AUTORZY
 
-// TRANSLATION MISSING
-This manpage was written by Sébastien Helleu <flashcode@flashtux.org>.
+Autorem tej strony pomocy Sébastien Helleu <flashcode@flashtux.org>.
 
-// TRANSLATION MISSING
-Translated by Krzysztof Korościk <soltys@szluug.org>.
+Tłumaczenie Krzysztof Korościk <soltys@szluug.org>.
 
-// TRANSLATION MISSING
-== COPYRIGHT
+== PRAWA AUTORSKIE
 
 WeeChat jest tworzony przez Sébastien Helleu i społeczność (pełna lista dostępna
 jest w pliku AUTHORS).

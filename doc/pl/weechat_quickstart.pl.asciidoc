@@ -6,10 +6,9 @@
 :max-width: 100%
 
 
-// TRANSLATION MISSING
-Translators:
+Tłumaczenie:
 
-* Krzysztof Korościk <soltys@szluug.org>, 2009-2014
+* Krzysztof Korościk <soltys@szluug.org>, 2009-2015
 
 
 [[start]]
@@ -101,8 +100,7 @@ na liście "irc" oraz inne wtyczki.
 [[create_irc_server]]
 == Tworzenie serwera IRC
 
-// TRANSLATION MISSING
-You can add an IRC server with `/server` command, for example:
+Możesz dodać serwer IRC za pomocą komendy `/server`, na przykład:
 
 ----
 /server add freenode chat.freenode.net
@@ -319,21 +317,17 @@ Wtyczki są automatycznie ładowane, kiedy zostaną wykryte (proszę spojrzeć d
 dokumentacji WeeChat, aby się dowiedzieć jak ładować/wyładowywać wtyczki lub
 skrypty).
 
-// TRANSLATION MISSING
-Many external scripts (from contributors) are available for WeeChat, you can
-download and install scripts from the repository with the `/script` command,
-for example:
+Dostępne jest wiele zewnętrznych skryptów (od społeczności), możesz je pobrać
+i zainstalować za pomocą komendy `/script`, na przykład:
 
 ----
 /script install iset.pl
 ----
 
-// TRANSLATION MISSING
-See `/help script` for more info.
+Więcej informacji można uzyskać wykonując komendę `/help script`.
 
-// TRANSLATION MISSING
-A list of scripts is available in WeeChat with `/script` or at this URL:
-https://weechat.org/scripts
+Listę skryptów dostepnych dla WeeChat można uzyskać wywołując komendę `/script`
+lub pod adresem https://weechat.org/scripts
 
 [[more_doc]]
 == Więcej dokumentacji

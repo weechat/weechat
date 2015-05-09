@@ -6,10 +6,9 @@
 :toc-placement: manual
 
 
-// TRANSLATION MISSING
-Translators:
+Tłumaczenie:
 
-* Krzysztof Korościk <soltys@szluug.org>, 2009-2014
+* Krzysztof Korościk <soltys@szluug.org>, 2009-2015
 
 [NOTE]
 Ten dokument jest napisany dla WeeChat w wersji ≥ 0.3.0, ale powinien być używany

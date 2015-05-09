@@ -6,10 +6,9 @@
 :max-width: 100%
 
 
-// TRANSLATION MISSING
-Translators:
+Tłumaczenie:
 
-* Krzysztof Korościk <soltys@szluug.org>, 2009-2014
+* Krzysztof Korościk <soltys@szluug.org>, 2009-2015
 
 
 [[purpose]]

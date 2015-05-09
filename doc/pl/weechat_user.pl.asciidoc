@@ -7,10 +7,9 @@
 :max-width: 100%
 
 
-// TRANSLATION MISSING
-Translators:
+Tłumaczenie:
 
-* Krzysztof Korościk <soltys@szluug.org>, 2013-2014
+* Krzysztof Korościk <soltys@szluug.org>, 2009-2015
 
 
 Ten dokument opisuje klienta rozmów WeeChat, będącego częścią WeeChat.
@@ -165,14 +164,13 @@ WeeChat.
   Uruchamianie testów, wtyczka javascript
 |===
 
-// TRANSLATION MISSING (note 3)
 [NOTE]
 ^(1)^ Nazwy pochodzą z dystrybucji Debian GNU/Linux, wersje i nazwy pakietów
 mogą być inne w innych dystrybucjach. +
 ^(2)^ WeeChat może być skompilowany z libncurses5-dev, ale jest to *NIE*
 zalecane (spowoduje to błędy w wyświetlaniu szerokich znaków). +
-^(3)^ Gnutls ≥ 3.0.21 is required for IRC SASL authentication with mechanism
-ECDSA-NIST256P-CHALLENGE. +
+^(3)^ Gnutls ≥ 3.0.21 jest wymagany dla uwierzytelnienia IRC SASL za pomocą
+mechanizmu ECDSA-NIST256P-CHALLENGE. +
 ^(4)^ Zalecana wersja Pythona to 2.7 (wszystkie skrypty działają z wersją 2.7,
 ale nie w wersjami ≤ 2.6 lub ≥ 3.0).
 
@@ -2237,8 +2235,7 @@ Więcej informacji można znaleźć pod adresem: http://www.oftc.net/oftc/NickSe
 WeeChat wspiera uwierzytelnianie SASL, używając różnych mechanizmów:
 
 * 'plain': hasło w czystym tekście (domyślne)
-// TRANSLATION MISSING
-* 'ecdsa-nist256p-challenge': challenge with public/private key
+* 'ecdsa-nist256p-challenge': klucz prywatny/publiczny
 * 'external': certyfikat SSL po stronie klienta
 * 'dh-blowfish': hasło zaszyfrowane algorytmem blowfish
 * 'dh-aes': hasło zaszyfrowane algorytmem AES
@@ -2251,36 +2248,33 @@ Opcje dla serwerów to:
 
 * 'sasl_mechanism': mechanizm do użycia (zobacz wyżej)
 * 'sasl_timeout': limit czasu (w sekundach) na uwierzytelnienie
-// TRANSLATION MISSING
-* 'sasl_fail': action to perform if authentication fails
+* 'sasl_fail': akcja wykonywana jeśli uwierzytelnienie się nie powiedzie
 * 'sasl_username': nazwa użytkownika (nick)
 * 'sasl_password': hasło
-// TRANSLATION MISSING
-* 'sasl_key': file with ECc private key (for mechanism
+* 'sasl_key': plik z kluczem prywatnym ECc (dla mechanizmu
   'ecdsa-nist256p-challenge')
 
-// TRANSLATION MISSING
 [[irc_sasl_ecdsa_nist256p_challenge]]
 ===== SASL ECDSA-NIST256P-CHALLENGE
 
-You must generate a private key in order to authentify with the
-ECDSA-NIST256P-CHALLENGE mechanism (no password is required on connection).
+Musisz wygenerować klucz prywatny w celu uwierzytelnienia za pomocą mechanizmu
+ECDSA-NIST256P-CHALLENGE (hasło nie potrzebne do połączenia).
 
-You can generate the key with this command:
+Klucz można wygenerować za pomocą komendy:
 
 ----
 $ openssl ecparam -genkey -name prime256v1 >~/.weechat/ecdsa.pem
 ----
 
-Get the public key (encoded as base64) with this command:
+Klucz publiczny (zakodowany za pomocą base64) uzyskujemy wywołując komendę:
 
 ----
 $ openssl ec -noout -text -conv_form compressed -in ~/.weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
 ----
 
-Connect to the server, identify (for example with "nickserv identify") and set
-your public key in your account, using nickserv (replace the base64 value with
-your public key):
+Połącz się do serwera, zidentyfikuj (na przykład za pomocą "nickserv identify")
+i ustaw swój klucz publiczny dla swojego konta, za pomocą nickserva (zamień
+wartość base64 wartościa dla swojego klucza):
 
 ----
 /connect freenode
@@ -2288,15 +2282,15 @@ your public key):
 /msg nickserv set pubkey Av8k1FOGetUDq7sPMBfufSIZ5c2I/QYWgiwHtNXkVe/q
 ----
 
-Configure the SASL options in the server:
+Konfiguracja opcji SASL dla serwera:
 
 ----
 /set irc.server.freenode.sasl_mechanism ecdsa-nist256p-challenge
-/set irc.server.freenode.sasl_username "your_nickname"
+/set irc.server.freenode.sasl_username "twój_nick"
 /set irc.server.freenode.sasl_key "%h/ecdsa.pem"
 ----
 
-Reconnect to the server:
+Ponowne połączenie z serwerem:
 
 ----
 /reconnect freenode
