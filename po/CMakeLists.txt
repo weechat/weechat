@@ -18,16 +18,16 @@
 #
 
 set(PO_FILES
-  fr.po
-  es.po
   cs.po
-  hu.po
   de.po
-  ru.po
-  pl.po
+  es.po
+  fr.po
+  hu.po
   it.po
   ja.po
+  pl.po
   pt_BR.po
+  ru.po
   tr.po
   )
 
