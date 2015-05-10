@@ -17,7 +17,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file 'ChangeLog.asciidoc' in sources).
 
 
-== Version 1.2 (under dev)
+== Version 1.2 (2015-05-10)
 
 The word chars are now customizable with two options:
 
