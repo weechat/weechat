@@ -296,20 +296,21 @@ WeeChat "core" is located in following directories:
 
 [width="100%",cols="1v,5",options="header"]
 |===
-| Path/file                         | Description
-| tests/                            | Root of tests
-|    tests.cpp                      | Program used to run tests
-|    unit/                          | Root of unit tests
-|       core/                       | Root of unit tests for core
-|          test-eval.cpp            | Tests: evaluation of expressions
-|          test-hashtble.cpp        | Tests: hashtables
-|          test-hdata.cpp           | Tests: hdata
-|          test-infolist.cpp        | Tests: infolists
-|          test-list.cpp            | Tests: lists
-|          test-string.cpp          | Tests: strings
-|          test-url.cpp             | Tests: URLs
-|          test-utf8.cpp            | Tests: UTF-8
-|          test-util.cpp            | Tests: utility functions
+| Path/file                   | Description
+| tests/                      | Root of tests
+|    tests.cpp                | Program used to run tests
+|    unit/                    | Root of unit tests
+|       core/                 | Root of unit tests for core
+|          test-arraylist.cpp | Tests: arraylists
+|          test-eval.cpp      | Tests: evaluation of expressions
+|          test-hashtble.cpp  | Tests: hashtables
+|          test-hdata.cpp     | Tests: hdata
+|          test-infolist.cpp  | Tests: infolists
+|          test-list.cpp      | Tests: lists
+|          test-string.cpp    | Tests: strings
+|          test-url.cpp       | Tests: URLs
+|          test-utf8.cpp      | Tests: UTF-8
+|          test-util.cpp      | Tests: utility functions
 |===
 
 [[documentation_translations]]

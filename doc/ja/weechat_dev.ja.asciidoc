@@ -301,20 +301,21 @@ WeeChat "core" は以下のディレクトリに配置されています:
 
 [width="100%",cols="1v,5",options="header"]
 |===
-| パス/ファイル名                   | 説明
-| tests/                            | テスト用のルートディレクトリ
-|    tests.cpp                      | テスト実行に使うプログラム
-|    unit/                          | 単体テスト用のルートディレクトリ
-|       core/                       | core 向け単体テスト用のルートディレクトリ
-|          test-eval.cpp            | テスト: 式の評価
-|          test-hashtble.cpp        | テスト: ハッシュテーブル
-|          test-hdata.cpp           | テスト: hdata
-|          test-infolist.cpp        | テスト: インフォリスト
-|          test-list.cpp            | テスト: リスト
-|          test-string.cpp          | テスト: 文字列
-|          test-url.cpp             | テスト: URL
-|          test-utf8.cpp            | テスト: UTF-8
-|          test-util.cpp            | テスト: ユーティリティ関数
+| パス/ファイル名             | 説明
+| tests/                      | テスト用のルートディレクトリ
+|    tests.cpp                | テスト実行に使うプログラム
+|    unit/                    | 単体テスト用のルートディレクトリ
+|       core/                 | core 向け単体テスト用のルートディレクトリ
+|          test-arraylist.cpp | テスト: 配列リスト
+|          test-eval.cpp      | テスト: 式の評価
+|          test-hashtble.cpp  | テスト: ハッシュテーブル
+|          test-hdata.cpp     | テスト: hdata
+|          test-infolist.cpp  | テスト: インフォリスト
+|          test-list.cpp      | テスト: リスト
+|          test-string.cpp    | テスト: 文字列
+|          test-url.cpp       | テスト: URL
+|          test-utf8.cpp      | テスト: UTF-8
+|          test-util.cpp      | テスト: ユーティリティ関数
 |===
 
 [[documentation_translations]]
