@@ -71,17 +71,17 @@ Les répertoires principaux de WeeChat sont :
 |       charset/    | Extension Charset
 |       exec/       | Extension Exec
 |       fifo/       | Extension Fifo (tube FIFO utilisé pour envoyer des commandes à WeeChat)
-|       irc/        | Extension IRC (Internet Relay Chat)
-|       logger/     | Extension Logger (enregistrer les messages affichés dans des fichiers)
-|       relay/      | Extension Relay (proxy IRC + relai pour interfaces distantes)
-|       script/     | Gestionnaire de scripts
-|       python/     | API script Python
-|       perl/       | API script Perl
-|       ruby/       | API script Ruby
-|       lua/        | API script Lua
-|       tcl/        | API script Tcl
 |       guile/      | API script Guile (scheme)
+|       irc/        | Extension IRC (Internet Relay Chat)
 |       javascript/ | API script Javascript
+|       logger/     | Extension Logger (enregistrer les messages affichés dans des fichiers)
+|       lua/        | API script Lua
+|       perl/       | API script Perl
+|       python/     | API script Python
+|       relay/      | Extension Relay (proxy IRC + relai pour interfaces distantes)
+|       ruby/       | API script Ruby
+|       script/     | Gestionnaire de scripts
+|       tcl/        | API script Tcl
 |       trigger/    | Extension Trigger
 |       xfer/       | Extension Xfer (IRC DCC fichier/discussion)
 | tests/            | Tests
@@ -107,7 +107,6 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |===
 | Chemin/fichier                | Description
 | core/                         | Fonctions du cœur : point d'entrée, structures internes
-|    weechat.c                  | Fonctions principales : options de ligne de commande, démarrage
 |    wee-arraylist.c            | Listes avec tableau (« arraylists »)
 |    wee-backtrace.c            | Afficher une trace après un plantage
 |    wee-command.c              | Commandes du cœur de WeeChat
@@ -133,6 +132,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    wee-utf8.c                 | Fonctions UTF-8
 |    wee-util.c                 | Quelques autres fonctions utilitaires
 |    wee-version.c              | Fonctions pour la version de WeeChat
+|    weechat.c                  | Fonctions principales : options de ligne de commande, démarrage
 | gui/                          | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces)
 |    gui-bar-item.c             | Objets de barre
 |    gui-bar-window.c           | Fenêtres de barre
@@ -340,16 +340,16 @@ Fichiers de documentation :
 |    asciidoc.css                          | Style Asciidoc
 |    docgen.py                             | Script Python pour construire les fichiers dans le répertoire 'autogen/' (voir ci-dessous)
 |    XX/                                   | Documentation pour la langue XX (langues : en, fr, de, it, ...)
+|       cmdline_options.XX.asciidoc        | Options de ligne de commande (fichier inclus dans la page de manuel et le guide utilisateur)
 |       weechat.1.XX.asciidoc              | Page de manuel (`man weechat`)
-|       weechat_quickstart.XX.asciidoc     | Guide de démarrage
-|       weechat_user.XX.asciidoc           | Guide utilisateur
+|       weechat_dev.XX.asciidoc            | Guide du développeur (ce document)
 |       weechat_faq.XX.asciidoc            | FAQ (questions fréquemment posées)
 |       weechat_plugin_api.XX.asciidoc     | Référence API extension
+|       weechat_quickstart.XX.asciidoc     | Guide de démarrage
+|       weechat_relay_protocol.XX.asciidoc | Protocole Relay (pour les interfaces distantes)
 |       weechat_scripting.XX.asciidoc      | Guide pour scripts
 |       weechat_tester.XX.asciidoc         | Guide du testeur
-|       weechat_dev.XX.asciidoc            | Guide du développeur (ce document)
-|       weechat_relay_protocol.XX.asciidoc | Protocole Relay (pour les interfaces distantes)
-|       cmdline_options.XX.asciidoc        | Options de ligne de commande (fichier inclus dans la page de manuel et le guide utilisateur)
+|       weechat_user.XX.asciidoc           | Guide utilisateur
 |       autogen/                           | Fichiers automatiquement générés avec le script docgen.py
 |          user/                           | Fichiers automatiquement générés pour le guide utilisateur (ne *JAMAIS* les mettre à jour manuellement !)
 |          plugin_api/                     | Fichiers automatiquement générés pour l'API extension (ne *JAMAIS* les mettre à jour manuellement !)
@@ -600,12 +600,13 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 
 [source,lisp]
 ----
-(add-hook 'c-mode-common-hook '(lambda ()
-                                 (c-toggle-hungry-state t)
-                                 (c-set-style "k&r")
-                                 (setq c-basic-offset 4
-                                       c-tab-always-indent t)
-                                 (c-set-offset 'case-label '+)))
+(add-hook 'c-mode-common-hook
+          '(lambda ()
+             (c-toggle-hungry-state t)
+             (c-set-style "k&r")
+             (setq c-basic-offset 4)
+             (c-tab-always-indent t)
+             (c-set-offset 'case-label '+)))
 ----
 
 [[coding_python_style]]

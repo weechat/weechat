@@ -70,17 +70,17 @@ The main WeeChat directories are:
 |       charset/    | Charset plugin
 |       exec/       | Exec plugin
 |       fifo/       | Fifo plugin (FIFO pipe used to remotely send commands to WeeChat)
-|       irc/        | IRC (Internet Relay Chat) plugin
-|       logger/     | Logger plugin (write messages displayed to files)
-|       relay/      | Relay plugin (irc proxy + relay for remote interfaces)
-|       script/     | Scripts manager
-|       python/     | Python scripting API
-|       perl/       | Perl scripting API
-|       ruby/       | Ruby scripting API
-|       lua/        | Lua scripting API
-|       tcl/        | Tcl scripting API
 |       guile/      | Guile (scheme) scripting API
+|       irc/        | IRC (Internet Relay Chat) plugin
 |       javascript/ | Javascript scripting API
+|       logger/     | Logger plugin (write messages displayed to files)
+|       lua/        | Lua scripting API
+|       perl/       | Perl scripting API
+|       python/     | Python scripting API
+|       relay/      | Relay plugin (irc proxy + relay for remote interfaces)
+|       ruby/       | Ruby scripting API
+|       script/     | Scripts manager
+|       tcl/        | Tcl scripting API
 |       trigger/    | Trigger plugin
 |       xfer/       | Xfer plugin (IRC DCC file/chat)
 | tests/            | Tests
@@ -106,7 +106,6 @@ WeeChat "core" is located in following directories:
 |===
 | Path/file                     | Description
 | core/                         | Core functions: entry point, internal structures
-|    weechat.c                  | Main functions: command line options, startup
 |    wee-arraylist.c            | Array lists
 |    wee-backtrace.c            | Display a backtrace after a crash
 |    wee-command.c              | WeeChat core commands
@@ -132,6 +131,7 @@ WeeChat "core" is located in following directories:
 |    wee-utf8.c                 | UTF-8 functions
 |    wee-util.c                 | Some other functions
 |    wee-version.c              | Functions for WeeChat version
+|    weechat.c                  | Main functions: command line options, startup
 | gui/                          | Functions for buffers, windows, ... (used by all interfaces)
 |    gui-bar-item.c             | Bar items
 |    gui-bar-window.c           | Bar windows
@@ -339,16 +339,16 @@ Documentation files:
 |    asciidoc.css                          | Asciidoc style
 |    docgen.py                             | Python script to build files in 'autogen/' directory (see below)
 |    XX/                                   | Documentation for language XX (languages: en, fr, de, it, ...)
+|       cmdline_options.XX.asciidoc        | Command-line options (file included in man page and user's guide)
 |       weechat.1.XX.asciidoc              | Man page (`man weechat`)
-|       weechat_quickstart.XX.asciidoc     | Quickstart guide
-|       weechat_user.XX.asciidoc           | User's guide
+|       weechat_dev.XX.asciidoc            | Developer's guide (this document)
 |       weechat_faq.XX.asciidoc            | FAQ
 |       weechat_plugin_api.XX.asciidoc     | Plugin API reference
+|       weechat_quickstart.XX.asciidoc     | Quickstart guide
+|       weechat_relay_protocol.XX.asciidoc | Relay protocol (for remote interfaces)
 |       weechat_scripting.XX.asciidoc      | Scripting guide
 |       weechat_tester.XX.asciidoc         | Tester's guide
-|       weechat_dev.XX.asciidoc            | Developer's guide (this document)
-|       weechat_relay_protocol.XX.asciidoc | Relay protocol (for remote interfaces)
-|       cmdline_options.XX.asciidoc        | Command-line options (file included in man page and user's guide)
+|       weechat_user.XX.asciidoc           | User's guide
 |       autogen/                           | Files auto-built with script docgen.py
 |          user/                           | Files auto-built for user's guide (do *NEVER* update manually!)
 |          plugin_api/                     | Files auto-built for plugin API (do *NEVER* update manually!)
@@ -590,12 +590,13 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 
 [source,lisp]
 ----
-(add-hook 'c-mode-common-hook '(lambda ()
-                                 (c-toggle-hungry-state t)
-                                 (c-set-style "k&r")
-                                 (setq c-basic-offset 4
-                                       c-tab-always-indent t)
-                                 (c-set-offset 'case-label '+)))
+(add-hook 'c-mode-common-hook
+          '(lambda ()
+             (c-toggle-hungry-state t)
+             (c-set-style "k&r")
+             (setq c-basic-offset 4)
+             (c-tab-always-indent t)
+             (c-set-offset 'case-label '+)))
 ----
 
 [[coding_python_style]]
@@ -964,9 +965,9 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 
 Git repository is at this URL: https://github.com/weechat/weechat
 
-Any patch for bug or new feature must be done on master branch, preferred way is
-a GitHub pull request. A patch can also be sent by e-mail (made with `git diff`
-or `git format-patch`).
+Any patch for bug or new feature must be done on master branch, preferred way
+is a GitHub pull request. A patch can also be sent by e-mail
+(made with `git diff` or `git format-patch`).
 
 Format of commit message is the following (to close a GitHub issue):
 
