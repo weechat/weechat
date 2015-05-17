@@ -29,9 +29,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 set(CMAKE_SKIP_RPATH ON)
 set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -Wall -Wextra -Werror-implicit-function-declaration")
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror-implicit-function-declaration")
-if(PREFIX)
-  set(CMAKE_INSTALL_PREFIX ${PREFIX} CACHE PATH "Install path prefix" FORCE)
-endif()
 
 # version
 set(VERSION_MAJOR "1")
