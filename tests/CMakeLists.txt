@@ -19,8 +19,6 @@
 
 enable_language(CXX)
 
-find_package(CppUTest REQUIRED)
-
 # fake ncurses lib (it does nothing)
 set(LIB_WEECHAT_NCURSES_FAKE_SRC ncurses-fake.c)
 add_library(weechat_ncurses_fake STATIC ${LIB_WEECHAT_NCURSES_FAKE_SRC})

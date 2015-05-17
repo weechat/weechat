@@ -33,5 +33,5 @@ endif()
 
 find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
-  pkg_search_module(CPPUTEST REQUIRED cpputest)
+  pkg_search_module(CPPUTEST cpputest)
 endif()
