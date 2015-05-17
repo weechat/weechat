@@ -192,7 +192,7 @@ $ make
 ----
 $ mkdir build
 $ cd build
-$ cmake .. -DPREFIX=/chemin/vers/répertoire
+$ cmake .. -DCMAKE_INSTALL_PREFIX=/chemin/vers/répertoire
 $ make
 $ make install
 ----

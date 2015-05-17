@@ -198,7 +198,7 @@ $ make
 ----
 $ mkdir build
 $ cd build
-$ cmake .. -DPREFIX=/Pfad/zum/Verzeichnis
+$ cmake .. -DCMAKE_INSTALL_PREFIX=/Pfad/zum/Verzeichnis
 $ make
 $ make install
 ----

@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'ReleaseNotes.asciidoc' in sources).
 
 
+== Version 1.3 (under dev)
+
+=== Bugs fixed
+
+* doc: replace PREFIX with CMAKE_INSTALL_PREFIX in cmake instructions
+  (closes #354)
+
 == Version 1.2 (2015-05-10)
 
 === New features

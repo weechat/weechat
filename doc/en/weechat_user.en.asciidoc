@@ -187,7 +187,7 @@ $ make
 ----
 $ mkdir build
 $ cd build
-$ cmake .. -DPREFIX=/path/to/directory
+$ cmake .. -DCMAKE_INSTALL_PREFIX=/path/to/directory
 $ make
 $ make install
 ----

@@ -64,7 +64,7 @@ Build with autotools requires more dependencies and is slower than with CMake.
 ----
 $ mkdir build
 $ cd build
-$ cmake .. -DPREFIX=/path/to/directory
+$ cmake .. -DCMAKE_INSTALL_PREFIX=/path/to/directory
 $ make
 $ make install     (as root for installation in system directories)
 ----

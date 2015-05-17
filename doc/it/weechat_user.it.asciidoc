@@ -210,7 +210,7 @@ $ make
 ----
 $ mkdir build
 $ cd build
-$ cmake .. -DPREFIX=/path/della/directory
+$ cmake .. -DCMAKE_INSTALL_PREFIX=/path/della/directory
 $ make
 $ make install
 ----

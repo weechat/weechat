@@ -92,7 +92,7 @@ $ cd weechat-devel
 ----
 $ mkdir build
 $ cd build
-$ cmake .. -DPREFIX=$HOME/weechat-git -DWEECHAT_HOME=~/.weechat-dev -DCMAKE_BUILD_TYPE=Debug
+$ cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/weechat-git -DWEECHAT_HOME=~/.weechat-dev -DCMAKE_BUILD_TYPE=Debug
 $ make
 $ make install
 ----
