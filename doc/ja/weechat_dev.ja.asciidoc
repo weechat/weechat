@@ -26,23 +26,41 @@ WeeChat (Wee Enhanced Environment for Chat)
 
 このマニュアルは WeeChat の内部構造について書かれています:
 
-* リポジトリ (ソースコード、文書、...)
+// TRANSLATION MISSING
+* repositories
 * コーディングルール
 * 中核部の内部構造
 * プラグインの内部構造
 * WeeChat に貢献する方法
 
-[[repository]]
+// TRANSLATION MISSING
+[[repositories]]
 == リポジトリ
 
-WeeChat の主要なリポジトリは 2 つあります:
+// TRANSLATION MISSING
+WeeChat repositories are on GitHub organization "weechat":
+https://github.com/weechat
 
-* コアリポジトリ: ソースコードと文書が含まれています、
-  URL は: https://github.com/weechat/weechat
-* スクリプト: weechat.org に投稿された '公式' スクリプト、
-  URL は: https://github.com/weechat/scripts
+// TRANSLATION MISSING
+List of repositories:
 
-このマニュアルはコアリポジトリの解説です。
+weechat::
+    core repository with source code and documentation
+
+scripts::
+    the 'official' scripts submitted on weechat.org
+
+weechat.org::
+    source code of WeeChat web site: https://weechat.org/
+
+weercd::
+    IRC testing server
+
+qweechat::
+    Qt remote GUI for WeeChat.
+
+// TRANSLATION MISSING
+This manual documents only 'weechat' repository.
 
 [[overview]]
 === 概要

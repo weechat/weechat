@@ -21,23 +21,36 @@ light, designed for many operating systems.
 
 This manual documents WeeChat internals:
 
-* repository (sources, doc, ...)
+* repositories
 * coding rules
 * core internals
 * plugin internals
 * how to contribute to WeeChat.
 
-[[repository]]
-== Repository
+[[repositories]]
+== Repositories
 
-WeeChat has two main repositories:
+WeeChat repositories are on GitHub organization "weechat":
+https://github.com/weechat
 
-* core repository: it contains source code and documentation,
-  URL is: https://github.com/weechat/weechat
-* scripts: the 'official' scripts submitted on weechat.org,
-  URL is: https://github.com/weechat/scripts
+List of repositories:
 
-This manual documents only core repository.
+weechat::
+    core repository with source code and documentation
+
+scripts::
+    the 'official' scripts submitted on weechat.org
+
+weechat.org::
+    source of WeeChat web site: https://weechat.org/
+
+weercd::
+    IRC testing server
+
+qweechat::
+    Qt remote GUI for WeeChat.
+
+This manual documents only 'weechat' repository.
 
 [[overview]]
 === Overview

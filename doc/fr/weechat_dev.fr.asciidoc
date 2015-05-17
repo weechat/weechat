@@ -22,23 +22,36 @@ rapide et léger, conçu pour différents systèmes d'exploitation.
 
 Ce manuel documente l'intérieur de WeeChat :
 
-* dépôt (sources, documentation, ...)
+* dépôts
 * règles de développement
 * le cœur
 * les extensions
 * comment contribuer à WeeChat.
 
-[[repository]]
-== Dépôt
+[[repositories]]
+== Dépôts
 
-WeeChat a deux dépôts principaux :
+Les dépôts de WeeChat sont dans l'organisation "weechat" de  GitHub :
+https://github.com/weechat
 
-* dépôt principal : il contient le code source et la documentation, l'URL est :
-  https://github.com/weechat/weechat
-* scripts : les scripts 'officiels' soumis sur weechat.org, l'URL est :
-  https://github.com/weechat/scripts
+Liste des dépôts :
 
-Ce manuel documente seulement le dépôt principal.
+weechat::
+    dépôt principal avec le code source et la documentation
+
+scripts::
+    les scripts 'officiels' soumis sur weechat.org
+
+weechat.org::
+    le code source du site de WeeChat : https://weechat.org/
+
+weercd::
+    serveur de test IRC
+
+qweechat::
+    interface Qt distante pour WeeChat.
+
+Ce manuel documente seulement le dépôt 'weechat'.
 
 [[overview]]
 === Vue d'ensemble
