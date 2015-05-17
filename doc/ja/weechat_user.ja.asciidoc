@@ -209,7 +209,7 @@ cmake に対するオプションを指定するには、以下のフォーマ�
   ビルド形式: WeeChat の開発版を使っている場合は
   `Debug` (または `RelWithDebInfo`) を推奨します。
 
-| PREFIX | directory | /usr/local |
+| CMAKE_INSTALL_PREFIX | directory | /usr/local |
   WeeChat をインストールするディレクトリ。
 
 | WEECHAT_HOME | directory | ~/.weechat |

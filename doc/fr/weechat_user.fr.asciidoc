@@ -209,7 +209,7 @@ Liste des options couramment utilisées :
   Type de construction: `Debug` (ou `RelWithDebInfo`) est recommandé si vous
   utilisez une version de développement de WeeChat.
 
-| PREFIX | répertoire | /usr/local |
+| CMAKE_INSTALL_PREFIX | répertoire | /usr/local |
   Le répertoire dans lequel WeeChat sera installé.
 
 | WEECHAT_HOME | répertoire | ~/.weechat |

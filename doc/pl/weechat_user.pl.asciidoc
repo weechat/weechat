@@ -211,7 +211,7 @@ Lista popularnych opcji:
   Typ budowania pakietu: `Debug` (lub `RelWithDebInfo`) jest zalecany dla
   wersjrozwojowej WeeChat.
 
-| PREFIX | katalog | /usr/local |
+| CMAKE_INSTALL_PREFIX | katalog | /usr/local |
   Katalog, do którego zostanie zainstalowany WeeChat.
 
 | WEECHAT_HOME | katalog | ~/.weechat |

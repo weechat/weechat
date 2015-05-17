@@ -230,7 +230,7 @@ List of commonly used options:
   The type of build: `Debug` (or `RelWithDebInfo`) is recommended if you are
   running development version of WeeChat.
 
-| PREFIX | directory | /usr/local |
+| CMAKE_INSTALL_PREFIX | directory | /usr/local |
   The directory where WeeChat will be installed.
 
 | WEECHAT_HOME | directory | ~/.weechat |

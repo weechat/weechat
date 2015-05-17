@@ -215,7 +215,7 @@ Liste von häufig verwendeten Optionen:
   Art des builds: `Debug` (oder `RelWithDebInfo`) sollte verwendet werden, wenn meine eine Entwicklerversion
   von WeeChat nutzt.
 
-| PREFIX | Verzeichnis | /usr/local |
+| CMAKE_INSTALL_PREFIX | Verzeichnis | /usr/local |
   Verzeichnis in welchem WeeChat installiert wird.
 
 | WEECHAT_HOME | Verzeichnis | ~/.weechat |
