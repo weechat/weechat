@@ -58,7 +58,7 @@ xfer_command_me (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (!XFER_HAS_ENDED(ptr_xfer->status))
     {
-        xfer_chat_sendf (ptr_xfer, "\01ACTION %s\01\n",
+        xfer_chat_sendf (ptr_xfer, "\01ACTION %s\01\r\n",
                          (argv_eol[1]) ? argv_eol[1] : "");
         weechat_printf_tags (buffer,
                              "no_highlight",
