@@ -23,7 +23,7 @@ Build-Depends:
     libgcrypt20-dev,
     libgnutls28-dev,
     zlib1g-dev
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Homepage: https://weechat.org/
 Vcs-Git: git://anonscm.debian.org/users/kolter/weechat.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=users/kolter/weechat.git

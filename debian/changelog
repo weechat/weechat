@@ -1,3 +1,22 @@
+weechat (1.2-1) unstable; urgency=medium
+
+  * New upstream release
+    - Enable build of javascript plugin (using v8 engine)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Mon, 11 May 2015 18:00:01 +0200
+
+weechat (1.1.1-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #776105)
+    - Add a new entry in News.Debian about new format for regex replacement
+      in triggers
+  * Update debian/{control,copyright,watch} to use https links with the
+    upstream project resources
+  * Bump Standards-Version to 3.9.6
+  * Update year in debian/copyright
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 25 Jan 2015 20:27:04 +0100
+
 weechat (1.0.1-1) unstable; urgency=medium
 
   * New upstream release
