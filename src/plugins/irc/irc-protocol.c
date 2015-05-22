@@ -4272,9 +4272,9 @@ IRC_PROTOCOL_CALLBACK(354)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
-    IRC_PROTOCOL_MIN_ARGS(5);
+    IRC_PROTOCOL_MIN_ARGS(4);
 
-    /* silently ignore malformed 354 message (missing infos) */
+    /* silently ignore 354 messages we don't parse (missing infos) */
     if (argc < 11)
         return WEECHAT_RC_OK;
 
