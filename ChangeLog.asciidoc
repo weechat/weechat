@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* irc: fix errors displayed on WHOX messages received (closes #376)
 * lua: add detection of Lua 5.3
 * doc: replace PREFIX with CMAKE_INSTALL_PREFIX in cmake instructions
   (closes #354)
