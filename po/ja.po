@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-05-07 07:02+0200\n"
+"POT-Creation-Date: 2015-06-04 16:03+0200\n"
 "PO-Revision-Date: 2015-05-18 00:59+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -187,6 +187,7 @@ msgstr "エラー: ホーム (%s) はディレクトリではありません\n"
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "エラー: ディレクトリ \"%s\" の作成に失敗しました\n"
 
+#, fuzzy
 msgid ""
 "Welcome to WeeChat!\n"
 "\n"
@@ -200,8 +201,8 @@ msgid ""
 "The command /iset (script iset.pl) can help to customize WeeChat: /script "
 "install iset.pl\n"
 "\n"
-"You can create and connect to an IRC server with /server and /connect "
-"commands (see /help server)."
+"You can add and connect to an IRC server with /server and /connect commands "
+"(see /help server)."
 msgstr ""
 "WeeChat にようこそ!\n"
 "\n"
@@ -753,12 +754,12 @@ msgstr "プロキシが定義されていません"
 msgid "%sError: wrong type \"%s\" for proxy \"%s\""
 msgstr "%1$sエラー: プロキシ \"%3$s\" に対するタイプ \"%2$s\" が間違っています"
 
-#, c-format
-msgid "Proxy \"%s\" created"
+#, fuzzy, c-format
+msgid "Proxy \"%s\" added"
 msgstr "プロキシ \"%s\" を作成しました"
 
-#, c-format
-msgid "%sError: failed to create proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sError: failed to add proxy \"%s\""
 msgstr "%sエラー: プロキシ \"%s\" の作成に失敗しました"
 
 #, c-format
@@ -2310,6 +2311,7 @@ msgstr ""
 "list || add <name> <type> <address> <port> [<username> [<password>]] || del "
 "<name>|-all || set <name> <option> <value>"
 
+#, fuzzy
 msgid ""
 "    list: list all proxies\n"
 "     add: add a new proxy\n"
@@ -2326,12 +2328,12 @@ msgid ""
 "   value: new value for option\n"
 "\n"
 "Examples:\n"
-"  create a http proxy, running on local host, port 8888:\n"
+"  add a http proxy, running on local host, port 8888:\n"
 "    /proxy add local http 127.0.0.1 8888\n"
-"  create a http proxy using IPv6 protocol:\n"
+"  add a http proxy using IPv6 protocol:\n"
 "    /proxy add local http ::1 8888\n"
 "    /proxy set local ipv6 on\n"
-"  create a socks5 proxy with username/password:\n"
+"  add a socks5 proxy with username/password:\n"
 "    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
 "  delete a proxy:\n"
 "    /proxy del myproxy"
@@ -3041,10 +3043,9 @@ msgstr ""
 "警告: このオプションは致命的な表示上のバグを引き起こします、そのような場合"
 "は、このオプションをオフにしてください。"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sWarning: proxy \"%s\" does not exist (you can create it with command /"
-"proxy)"
+"%sWarning: proxy \"%s\" does not exist (you can add it with command /proxy)"
 msgstr ""
 "%s警告: プロキシ \"%s\" が存在しません (作成するには /proxy コマンドを使って"
 "ください)"
@@ -5603,9 +5604,9 @@ msgid ""
 msgstr ""
 "%s%s: %d 個の %s との切断を完了 (SSL 接続は upgrade でサポートされていません)"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: unable to create temporary server \"%s\" (check if there is already a "
+"%s%s: unable to add temporary server \"%s\" (check if there is already a "
 "server with this name)"
 msgstr ""
 "%s%s: 一時的なサーバ \"%s\" を作成できません (同じ名前のサーバが登録済みでな"
@@ -5655,22 +5656,22 @@ msgstr "%s%s: サーバ \"%s\" には接続済み!"
 msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr "%s%s: サーバ \"%s\" に接続試行中!"
 
-#, c-format
-msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
+#, fuzzy, c-format
+msgid "%s: server %s%s%s added (temporary server, NOT SAVED!)"
 msgstr "%s: サーバ %s%s%s が作成されました (一時的な作成で、保存されません!)"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: unable to create temporary server \"%s\" because the creation of "
+"%s%s: unable to add temporary server \"%s\" because the addition of "
 "temporary servers with command /connect is currently disabled"
 msgstr ""
 "%s%s: 現在 /connect コマンドによる一時的なサーバの作成が無効化されているため"
 "一時的なサーバ \"%s\" を作成できません"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: if you want to create a standard server, use the command \"/server add"
-"\" (see /help server); if you really want to create a temporary server (NOT "
+"%s%s: if you want to add a standard server, use the command \"/server add"
+"\" (see /help server); if you really want to add a temporary server (NOT "
 "SAVED), turn on the option irc.look.temporary_servers"
 msgstr ""
 "%s%s: 標準的なサーバを作成したい場合は、\"/server add\" コマンドを使ってくだ"
@@ -5851,16 +5852,16 @@ msgstr "\"%s\" にマッチするサーバ:"
 msgid "No server found with \"%s\""
 msgstr "\"%s\" にマッチするサーバが見つかりません"
 
-#, c-format
-msgid "%s%s: server \"%s\" already exists, can't create it!"
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" already exists, can't add it!"
 msgstr "%s%s: サーバ \"%s\" は既に存在しており、作成できません"
 
-#, c-format
-msgid "%s%s: unable to create server"
+#, fuzzy, c-format
+msgid "%s%s: unable to add server"
 msgstr "%s%s: サーバの作成に失敗"
 
-#, c-format
-msgid "%s: server %s%s%s created"
+#, fuzzy, c-format
+msgid "%s: server %s%s%s added"
 msgstr "%s: サーバ %s%s%s を作成"
 
 #, c-format
@@ -6063,14 +6064,15 @@ msgstr ""
 "<server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-"
 "switch] || -all|-auto|-open [-nojoin] [-switch]"
 
+#, fuzzy
 msgid ""
 "    server: server name, which can be:\n"
-"            - internal server name (created by /server add, recommended "
+"            - internal server name (added by /server add, recommended "
 "usage)\n"
 "            - hostname/port or IP/port, port is 6667 by default\n"
 "            - URL with format: irc[6][s]://[nickname[:password]@]irc.example."
 "org[:port][/#channel1][,#channel2[...]]\n"
-"            Note: for an address/IP/URL, a temporary server is created (NOT "
+"            Note: for an address/IP/URL, a temporary server is added (NOT "
 "SAVED), see /help irc.look.temporary_servers\n"
 "    option: set option for server (for boolean option, value can be "
 "omitted)\n"
@@ -6851,14 +6853,15 @@ msgstr ""
 "<option>[=<value>]] [-no<option>] || copy|rename <server> <new_name> || "
 "reorder <server> [<server>...] || del|keep <server> || deloutq|jump|raw"
 
+#, fuzzy
 msgid ""
 "    list: list servers (without argument, this list is displayed)\n"
 "listfull: list servers with detailed info for each server\n"
-"     add: create a new server\n"
+"     add: add a new server\n"
 "  server: server name, for internal and display use\n"
 "hostname: name or IP address of server, with optional port (default: 6667), "
 "many addresses can be separated by a comma\n"
-"    temp: create temporary server (not saved)\n"
+"    temp: add a temporary server (not saved)\n"
 "  option: set option for server (for boolean option, value can be omitted)\n"
 "nooption: set boolean option to 'off' (for example: -nossl)\n"
 "    copy: duplicate a server\n"
@@ -7198,9 +7201,9 @@ msgstr ""
 "態の変更を送信したいチャンネルです。これは通常スパム行為と見なされます; それ"
 "ゆえ、チャンネルへの参加禁止処分を受けるかもしれません。警告しましたよ!"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: warning: proxy \"%s\" does not exist (you can create it with command /"
+"%s%s: warning: proxy \"%s\" does not exist (you can add it with command /"
 "proxy)"
 msgstr ""
 "%s%s: 警告: プロキシ \"%s\" は存在しません (作成するには /proxy コマンドを"
@@ -7507,8 +7510,8 @@ msgid ""
 "command instead)"
 msgstr "サーバの通知リスト (これを変更する場合は、/notify コマンドを使うこと)"
 
-#, c-format
-msgid "%s%s: error creating server \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: error adding server \"%s\""
 msgstr "%s%s: サーバ \"%s\" 作成中のエラー"
 
 #, c-format
@@ -7916,7 +7919,8 @@ msgstr ""
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "\"part\" と \"quit\" メッセージのスマートフィルタを有効化"
 
-msgid "enable creation of temporary servers with command /connect"
+#, fuzzy
+msgid "enable automatic addition of temporary servers with command /connect"
 msgstr "/connect コマンドによるサーバの一時的な作成を有効化する"
 
 msgid "strip colors in topic (used only when displaying buffer title)"

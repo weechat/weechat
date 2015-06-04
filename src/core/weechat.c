@@ -434,7 +434,7 @@ weechat_startup_message ()
               "The command /iset (script iset.pl) can help to customize "
               "WeeChat: /script install iset.pl\n"
               "\n"
-              "You can create and connect to an IRC server with /server and "
+              "You can add and connect to an IRC server with /server and "
               "/connect commands (see /help server)."));
         gui_chat_printf (NULL, "---");
         gui_chat_printf (NULL, "");

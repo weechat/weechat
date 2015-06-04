@@ -358,7 +358,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_irc.look.temporary_servers]] *irc.look.temporary_servers*
-** opis: `włącza tworzenie tymczasowych serwerów za pomocą komendy /connect`
+** opis: `enable automatic addition of temporary servers with command /connect`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 

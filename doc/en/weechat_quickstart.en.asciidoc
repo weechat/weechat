@@ -92,8 +92,8 @@ All network protocols like IRC are provided in separate plugins.
 Use the `/plugin` command to list loaded plugins, you should see "irc" and
 other plugins in the list.
 
-[[create_irc_server]]
-== Create an IRC server
+[[add_irc_server]]
+== Add an IRC server
 
 You can add an IRC server with `/server` command, for example:
 

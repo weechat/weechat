@@ -105,8 +105,9 @@ Todos los protocolos de red como IRC, provienen en plugins separados.
 Use el comando `/plugin` para ver una lista de los plugins cargados,
 seguramente vera irc y otros.
 
-[[create_irc_server]]
-== Crear un servidor IRC
+// TRANSLATION MISSING
+[[add_irc_server]]
+== Add an IRC server
 
 // TRANSLATION MISSING
 You can add an IRC server with `/server` command, for example:

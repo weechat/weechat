@@ -2292,7 +2292,8 @@ $ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
 
 Nota: è possibile concatenare più certificati nel file CAs.pem.
 
-* In WeeChat, con il server "otfc" già creato:
+// TRANSLATION MISSING
+* In WeeChat, with "oftc" server already added:
 
 ----
 /connect oftc
@@ -2309,7 +2310,8 @@ $ cd ~/.weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
-* In WeeChat, con il server "otfc" già creato:
+// TRANSLATION MISSING
+* In WeeChat, with "oftc" server already added:
 
 ----
 /set irc.server.oftc.ssl_cert "%h/ssl/nick.pem"
@@ -2415,7 +2417,8 @@ host/IP e porta dipendono dalla propria configurazione di TOR):
 /proxy add tor socks5 127.0.0.1 9050
 ----
 
-Ora, bisogna creare un nuovo server, ad esempio:
+// TRANSLATION MISSING
+Now, add a new server, for example:
 
 ----
 /server add freenode-tor p4fsi4ockecnea7l.onion

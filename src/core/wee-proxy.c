@@ -406,7 +406,7 @@ proxy_alloc (const char *name)
 }
 
 /*
- * Creates a new proxy with options.
+ * Adds a new proxy with options.
  *
  * Returns pointer to new proxy, NULL if error.
  */
@@ -422,7 +422,7 @@ proxy_new_with_options (const char *name,
 {
     struct t_proxy *new_proxy;
 
-    /* create proxy */
+    /* add proxy */
     new_proxy = proxy_alloc (name);
     if (!new_proxy)
         return NULL;
@@ -447,7 +447,7 @@ proxy_new_with_options (const char *name,
 }
 
 /*
- * Creates a new proxy.
+ * Adds a new proxy.
  *
  * Returns pointer to new proxy, NULL if error.
  */
@@ -464,7 +464,7 @@ proxy_new (const char *name, const char *type, const char *ipv6,
     if (!name || !name[0])
         return NULL;
 
-    /* it's not possible to create 2 proxies with same name */
+    /* it's not possible to add 2 proxies with same name */
     if (proxy_search (name))
         return NULL;
 
@@ -508,7 +508,7 @@ proxy_new (const char *name, const char *type, const char *ipv6,
 }
 
 /*
- * Uses temporary proxies (created by reading configuration file).
+ * Uses temporary proxies (added by reading configuration file).
  */
 
 void

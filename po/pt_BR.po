@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-05-07 07:02+0200\n"
+"POT-Creation-Date: 2015-06-04 16:03+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -235,8 +235,8 @@ msgid ""
 "The command /iset (script iset.pl) can help to customize WeeChat: /script "
 "install iset.pl\n"
 "\n"
-"You can create and connect to an IRC server with /server and /connect "
-"commands (see /help server)."
+"You can add and connect to an IRC server with /server and /connect commands "
+"(see /help server)."
 msgstr ""
 
 #. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
@@ -769,12 +769,12 @@ msgstr "Nenhum proxy definido"
 msgid "%sError: wrong type \"%s\" for proxy \"%s\""
 msgstr "%sErro: tipo \"%s\" errado para o proxy \"%s\""
 
-#, c-format
-msgid "Proxy \"%s\" created"
+#, fuzzy, c-format
+msgid "Proxy \"%s\" added"
 msgstr "Proxy \"%s\" criado"
 
-#, c-format
-msgid "%sError: failed to create proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sError: failed to add proxy \"%s\""
 msgstr "%sErro: falhou ao criar proxy \"%s\""
 
 #, c-format
@@ -2258,12 +2258,12 @@ msgid ""
 "   value: new value for option\n"
 "\n"
 "Examples:\n"
-"  create a http proxy, running on local host, port 8888:\n"
+"  add a http proxy, running on local host, port 8888:\n"
 "    /proxy add local http 127.0.0.1 8888\n"
-"  create a http proxy using IPv6 protocol:\n"
+"  add a http proxy using IPv6 protocol:\n"
 "    /proxy add local http ::1 8888\n"
 "    /proxy set local ipv6 on\n"
-"  create a socks5 proxy with username/password:\n"
+"  add a socks5 proxy with username/password:\n"
 "    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
 "  delete a proxy:\n"
 "    /proxy del myproxy"
@@ -2917,11 +2917,11 @@ msgid ""
 "problems, you must turn off this option."
 msgstr ""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sWarning: proxy \"%s\" does not exist (you can create it with command /"
-"proxy)"
+"%sWarning: proxy \"%s\" does not exist (you can add it with command /proxy)"
 msgstr ""
+"%s%s: aviso: proxy \"%s\" não existe (você pode criar com o comando /proxy)"
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr ""
@@ -5226,7 +5226,7 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid ""
-"%s%s: unable to create temporary server \"%s\" (check if there is already a "
+"%s%s: unable to add temporary server \"%s\" (check if there is already a "
 "server with this name)"
 msgstr ""
 "%s%s: não foi possível registrar script \"%s\" (outro script já existe com "
@@ -5275,12 +5275,12 @@ msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr ""
 
 #, c-format
-msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
+msgid "%s: server %s%s%s added (temporary server, NOT SAVED!)"
 msgstr ""
 
 #, fuzzy, c-format
 msgid ""
-"%s%s: unable to create temporary server \"%s\" because the creation of "
+"%s%s: unable to add temporary server \"%s\" because the addition of "
 "temporary servers with command /connect is currently disabled"
 msgstr ""
 "%s%s: não foi possível registrar script \"%s\" (outro script já existe com "
@@ -5288,8 +5288,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: if you want to create a standard server, use the command \"/server add"
-"\" (see /help server); if you really want to create a temporary server (NOT "
+"%s%s: if you want to add a standard server, use the command \"/server add"
+"\" (see /help server); if you really want to add a temporary server (NOT "
 "SAVED), turn on the option irc.look.temporary_servers"
 msgstr ""
 
@@ -5466,17 +5466,17 @@ msgstr ""
 msgid "No server found with \"%s\""
 msgstr ""
 
-#, c-format
-msgid "%s%s: server \"%s\" already exists, can't create it!"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" already exists, can't add it!"
+msgstr "%sErro: filtro \"%s\" já existe"
 
-#, c-format
-msgid "%s%s: unable to create server"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: unable to add server"
+msgstr "%s%s: não foi possível redirecionar saída de erro (stderr)"
 
-#, c-format
-msgid "%s: server %s%s%s created"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s: server %s%s%s added"
+msgstr "Todos os filtros foram excluídos"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found for \"%s\" command"
@@ -5629,12 +5629,12 @@ msgstr ""
 
 msgid ""
 "    server: server name, which can be:\n"
-"            - internal server name (created by /server add, recommended "
+"            - internal server name (added by /server add, recommended "
 "usage)\n"
 "            - hostname/port or IP/port, port is 6667 by default\n"
 "            - URL with format: irc[6][s]://[nickname[:password]@]irc.example."
 "org[:port][/#channel1][,#channel2[...]]\n"
-"            Note: for an address/IP/URL, a temporary server is created (NOT "
+"            Note: for an address/IP/URL, a temporary server is added (NOT "
 "SAVED), see /help irc.look.temporary_servers\n"
 "    option: set option for server (for boolean option, value can be "
 "omitted)\n"
@@ -6246,11 +6246,11 @@ msgstr ""
 msgid ""
 "    list: list servers (without argument, this list is displayed)\n"
 "listfull: list servers with detailed info for each server\n"
-"     add: create a new server\n"
+"     add: add a new server\n"
 "  server: server name, for internal and display use\n"
 "hostname: name or IP address of server, with optional port (default: 6667), "
 "many addresses can be separated by a comma\n"
-"    temp: create temporary server (not saved)\n"
+"    temp: add a temporary server (not saved)\n"
 "  option: set option for server (for boolean option, value can be omitted)\n"
 "nooption: set boolean option to 'off' (for example: -nossl)\n"
 "    copy: duplicate a server\n"
@@ -6529,9 +6529,9 @@ msgid ""
 "spam; therefore you could be banned from channels, you are warned!"
 msgstr ""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: warning: proxy \"%s\" does not exist (you can create it with command /"
+"%s%s: warning: proxy \"%s\" does not exist (you can add it with command /"
 "proxy)"
 msgstr ""
 "%s%s: aviso: proxy \"%s\" não existe (você pode criar com o comando /proxy)"
@@ -6820,8 +6820,8 @@ msgstr ""
 "lista de notificação para o servidor (você não deve alterar esta opção, mas "
 "sim utilizar o comando /notify)"
 
-#, c-format
-msgid "%s%s: error creating server \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: error adding server \"%s\""
 msgstr "%s%s: erro ao criar servidor \"%s\""
 
 #, c-format
@@ -7143,7 +7143,7 @@ msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr ""
 
 #, fuzzy
-msgid "enable creation of temporary servers with command /connect"
+msgid "enable automatic addition of temporary servers with command /connect"
 msgstr ""
 "%s%s: não foi possível registrar script \"%s\" (outro script já existe com "
 "este nome)"

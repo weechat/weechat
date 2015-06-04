@@ -92,10 +92,10 @@ Without argument, this command display ban list for current channel.
           -all|-auto|-open [-nojoin] [-switch]
 
     server: server name, which can be:
-            - internal server name (created by /server add, recommended usage)
+            - internal server name (added by /server add, recommended usage)
             - hostname/port or IP/port, port is 6667 by default
             - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
-            Note: for an address/IP/URL, a temporary server is created (NOT SAVED), see /help irc.look.temporary_servers
+            Note: for an address/IP/URL, a temporary server is added (NOT SAVED), see /help irc.look.temporary_servers
     option: set option for server (for boolean option, value can be omitted)
   nooption: set boolean option to 'off' (for example: -nossl)
       -all: connect to all servers defined in configuration
@@ -686,10 +686,10 @@ reason: reason
 
     list: list servers (without argument, this list is displayed)
 listfull: list servers with detailed info for each server
-     add: create a new server
+     add: add a new server
   server: server name, for internal and display use
 hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
-    temp: create temporary server (not saved)
+    temp: add a temporary server (not saved)
   option: set option for server (for boolean option, value can be omitted)
 nooption: set boolean option to 'off' (for example: -nossl)
     copy: duplicate a server

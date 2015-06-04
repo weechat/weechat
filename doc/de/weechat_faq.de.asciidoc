@@ -567,8 +567,9 @@ Einige Server, wie z.B. 'twitch', verlangen oauth für eine Verbindung.
 
 Bei oauth handelt es sich lediglich um ein Passwort mit dem Format "oauth:XXXX".
 
-Mit folgenden Befehlen kann man einen Server erstellen und sich mit diesem
-verbinden (Name und Adresse muss durch entsprechende Werte ersetzt werden):
+// TRANSLATION MISSING
+You can add such server and connect with following commands (replace name
+and address by appropriate values):
 
 ----
 /server add name irc.server.org -password=oauth:XXXX

@@ -97,8 +97,8 @@ Tous les protocoles réseau comme IRC sont fournis sous forme d'extensions.
 Utilisez la commande `/plugin` pour voir les extensions chargées, vous
 devriez voir "irc" et d'autres extensions dans cette liste.
 
-[[create_irc_server]]
-== Créer un serveur IRC
+[[add_irc_server]]
+== Ajouter un serveur IRC
 
 Vous pouvez ajouter un serveur IRC avec la commande `/server`, par exemple :
 

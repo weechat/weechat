@@ -538,8 +538,9 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 
 oauth を使うにはパスワードを "oauth:XXXX" のように指定してください。
 
-以下のコマンドでサーバを作成し、接続することができます
-(名前とアドレスは適当な値に変更してください):
+// TRANSLATION MISSING
+You can add such server and connect with following commands (replace name
+and address by appropriate values):
 
 ----
 /server add name irc.server.org -password=oauth:XXXX

@@ -569,7 +569,7 @@ Some servers like 'twitch' require oauth to connect.
 
 The oauth is simply a password with the value "oauth:XXXX".
 
-You can create such server and connect with following commands (replace name
+You can add such server and connect with following commands (replace name
 and address by appropriate values):
 
 ----

@@ -1128,7 +1128,7 @@ irc_config_server_check_value_cb (void *data,
                         weechat_printf (
                             NULL,
                             _("%s%s: warning: proxy \"%s\" does not exist "
-                              "(you can create it with command /proxy)"),
+                              "(you can add it with command /proxy)"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME, value);
                     }
                 }
@@ -2184,7 +2184,7 @@ irc_config_server_read_cb (void *data, struct t_config_file *config_file,
                     {
                         weechat_printf (
                             NULL,
-                            _("%s%s: error creating server \"%s\""),
+                            _("%s%s: error adding server \"%s\""),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
                             server_name);
                     }
@@ -2797,7 +2797,7 @@ irc_config_init ()
     irc_config_look_temporary_servers = weechat_config_new_option (
         irc_config_file, ptr_section,
         "temporary_servers", "boolean",
-        N_("enable creation of temporary servers with command "
+        N_("enable automatic addition of temporary servers with command "
            "/connect"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_topic_strip_colors = weechat_config_new_option (

@@ -1186,7 +1186,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                     }
                     else
                     {
-                        /* create server with address */
+                        /* add server with address */
                         name = irc_server_get_name_without_port (argv[i]);
                         ptr_server = irc_server_alloc ((name) ? name : argv[i]);
                         if (name)
@@ -1199,7 +1199,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                                 argv[i], 1);
                             weechat_printf (
                                 NULL,
-                                _("%s: server %s%s%s created (temporary "
+                                _("%s: server %s%s%s added (temporary "
                                   "server, NOT SAVED!)"),
                                 IRC_PLUGIN_NAME,
                                 IRC_COLOR_CHAT_SERVER,
@@ -1215,7 +1215,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                     {
                         weechat_printf (
                             NULL,
-                            _("%s%s: unable to create temporary server \"%s\" "
+                            _("%s%s: unable to add temporary server \"%s\" "
                               "(check if there is already a server with this "
                               "name)"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[i]);
@@ -1225,15 +1225,15 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                 {
                     weechat_printf (
                         NULL,
-                        _("%s%s: unable to create temporary server \"%s\" "
-                          "because the creation of temporary servers with "
+                        _("%s%s: unable to add temporary server \"%s\" "
+                          "because the addition of temporary servers with "
                           "command /connect is currently disabled"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[i]);
                     weechat_printf (
                         NULL,
-                        _("%s%s: if you want to create a standard server, "
+                        _("%s%s: if you want to add a standard server, "
                           "use the command \"/server add\" (see /help "
-                          "server); if you really want to create a temporary "
+                          "server); if you really want to add a temporary "
                           "server (NOT SAVED), turn on the option "
                           "irc.look.temporary_servers"),
                         weechat_prefix ("error"),
@@ -4865,7 +4865,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         {
             weechat_printf (
                 NULL,
-                _("%s%s: server \"%s\" already exists, can't create it!"),
+                _("%s%s: server \"%s\" already exists, can't add it!"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, ptr_server2->name);
             return WEECHAT_RC_OK;
         }
@@ -4875,7 +4875,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         {
             weechat_printf (
                 NULL,
-                _("%s%s: unable to create server"),
+                _("%s%s: unable to add server"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
             return WEECHAT_RC_OK;
         }
@@ -4886,13 +4886,13 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
 
         weechat_printf (
             NULL,
-            _("%s: server %s%s%s created"),
+            _("%s: server %s%s%s added"),
             IRC_PLUGIN_NAME,
             IRC_COLOR_CHAT_SERVER,
             new_server->name,
             IRC_COLOR_RESET);
 
-        /* do not connect to server after creating it */
+        /* do not connect to server after adding it */
         /*
         if (IRC_SERVER_OPTION_BOOLEAN(new_server, IRC_SERVER_OPTION_AUTOCONNECT))
             irc_server_connect (new_server);
@@ -6027,13 +6027,13 @@ irc_command_init ()
            "[-nojoin] [-switch]"
            " || -all|-auto|-open [-nojoin] [-switch]"),
         N_("    server: server name, which can be:\n"
-           "            - internal server name (created by /server add, "
+           "            - internal server name (added by /server add, "
            "recommended usage)\n"
            "            - hostname/port or IP/port, port is 6667 by default\n"
            "            - URL with format: irc[6][s]://[nickname[:password]@]"
            "irc.example.org[:port][/#channel1][,#channel2[...]]\n"
            "            Note: for an address/IP/URL, a temporary server is "
-           "created (NOT SAVED), see /help irc.look.temporary_servers\n"
+           "added (NOT SAVED), see /help irc.look.temporary_servers\n"
            "    option: set option for server (for boolean option, value can be "
            "omitted)\n"
            "  nooption: set boolean option to 'off' (for example: -nossl)\n"
@@ -6537,11 +6537,11 @@ irc_command_init ()
            " || deloutq|jump|raw"),
         N_("    list: list servers (without argument, this list is displayed)\n"
            "listfull: list servers with detailed info for each server\n"
-           "     add: create a new server\n"
+           "     add: add a new server\n"
            "  server: server name, for internal and display use\n"
            "hostname: name or IP address of server, with optional port "
            "(default: 6667), many addresses can be separated by a comma\n"
-           "    temp: create temporary server (not saved)\n"
+           "    temp: add a temporary server (not saved)\n"
            "  option: set option for server (for boolean option, value can be "
            "omitted)\n"
            "nooption: set boolean option to 'off' (for example: -nossl)\n"

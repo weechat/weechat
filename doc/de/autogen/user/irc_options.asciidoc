@@ -358,7 +358,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.temporary_servers]] *irc.look.temporary_servers*
-** Beschreibung: `aktiviert die Erstellung von temporären Servern mit dem Befehl /connect`
+** Beschreibung: `enable automatic addition of temporary servers with command /connect`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

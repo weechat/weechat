@@ -98,8 +98,9 @@ WeeChat немедленно применяет все изменения (ва�
 Используйте команду `/plugin`, чтобы увидеть все загруженные плагины. В этом
 списке должен быть IRC-плагин и другие.
 
-[[create_irc_server]]
-== Добавление IRC-сервера
+// TRANSLATION MISSING
+[[add_irc_server]]
+== Add an IRC server
 
 // TRANSLATION MISSING
 You can add an IRC server with `/server` command, for example:

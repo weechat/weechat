@@ -660,29 +660,29 @@ Examples:
         del <nome>|-all
         set <nome> <opzione> <valore>
 
-    list: elenca tutti i proxy
-     add: aggiunge un nuovo proxy
-    nome: nome del proxy (deve essere unico)
-    tipo: http, socks4 o socks5
- address: IP o nome host
-    port: porta
-username: nome utente (opzionale)
-password: password (opzionale)
-     del: elimina un proxy (o tutti i proxy con -all)
-     set: imposta un valore per la proprietà di un proxy
-  option: opzione da modificare (per una lista di opzioni, consultare /set weechat.proxy.<nomeproxy>.*)
-   value: nuovo valore per l'opzione
+    list: list all proxies
+     add: add a new proxy
+    name: name of proxy (must be unique)
+    type: http, socks4 or socks5
+ address: IP or hostname
+    port: port
+username: username (optional)
+password: password (optional)
+     del: delete a proxy (or all proxies with -all)
+     set: set a value for a proxy property
+  option: option to change (for options list, look at /set weechat.proxy.<proxyname>.*)
+   value: new value for option
 
-Esempi:
-  crea un proxy http, in esecuzione sull'host locale, porta 8888:
+Examples:
+  add a http proxy, running on local host, port 8888:
     /proxy add local http 127.0.0.1 8888
-  crea un proxy http usando il protocollo IPv6:
+  add a http proxy using IPv6 protocol:
     /proxy add local http ::1 8888
     /proxy set local ipv6 on
-  crea un proxy socks5 con nomeutente/password:
+  add a socks5 proxy with username/password:
     /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
-  elimina un proxy:
-    /proxy del mioproxy
+  delete a proxy:
+    /proxy del myproxy
 ----
 
 [[command_weechat_quit]]

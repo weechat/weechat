@@ -674,12 +674,12 @@ mot_de_passe : mot de passe (optionnel)
       valeur : nouvelle valeur pour l'option
 
 Exemples :
-  créer un proxy http, tournant en local, port 8888 :
+  ajouter un proxy http, tournant en local, port 8888 :
     /proxy add local http 127.0.0.1 8888
-  créer un proxy http en utilisant le protocole IPv6 :
+  ajouter un proxy http en utilisant le protocole IPv6 :
     /proxy add local http ::1 8888
     /proxy set local ipv6 on
-  créer un proxy socks5 avec un utilisateur/mot de passe :
+  ajouter un proxy socks5 avec un utilisateur/mot de passe :
     /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
   supprimer un proxy :
     /proxy del myproxy

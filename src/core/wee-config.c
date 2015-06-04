@@ -1002,7 +1002,7 @@ config_check_proxy_curl (void *data, struct t_config_option *option,
     {
         gui_chat_printf (NULL,
                          _("%sWarning: proxy \"%s\" does not exist (you can "
-                           "create it with command /proxy)"),
+                           "add it with command /proxy)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR], value);
     }
 

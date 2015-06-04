@@ -4748,17 +4748,17 @@ COMMAND_CALLBACK(proxy)
         (void) value;
         if (error && !error[0])
         {
-            /* create proxy */
+            /* add proxy */
             if (proxy_new (argv[2], argv[3], "off", argv[4], argv[5],
                            (argc >= 7) ? argv[6] : NULL,
                            (argc >= 8) ? argv_eol[7] : NULL))
             {
-                gui_chat_printf (NULL, _("Proxy \"%s\" created"),
+                gui_chat_printf (NULL, _("Proxy \"%s\" added"),
                                  argv[2]);
             }
             else
             {
-                gui_chat_printf (NULL, _("%sError: failed to create proxy "
+                gui_chat_printf (NULL, _("%sError: failed to add proxy "
                                          "\"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2]);
@@ -7673,12 +7673,12 @@ command_init ()
            "   value: new value for option\n"
            "\n"
            "Examples:\n"
-           "  create a http proxy, running on local host, port 8888:\n"
+           "  add a http proxy, running on local host, port 8888:\n"
            "    /proxy add local http 127.0.0.1 8888\n"
-           "  create a http proxy using IPv6 protocol:\n"
+           "  add a http proxy using IPv6 protocol:\n"
            "    /proxy add local http ::1 8888\n"
            "    /proxy set local ipv6 on\n"
-           "  create a socks5 proxy with username/password:\n"
+           "  add a socks5 proxy with username/password:\n"
            "    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
            "  delete a proxy:\n"
            "    /proxy del myproxy"),

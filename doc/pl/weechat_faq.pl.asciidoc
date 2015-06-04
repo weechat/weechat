@@ -543,8 +543,9 @@ Niektóre serwery jak 'twitch' wymagają oauth do połączenia.
 
 Oauth to po prostu hasło w postaci "oauth:hasło".
 
-W celu dodania takiego serwera i połączenia się z nim należ wykonać następujące
-polecenia (należy zastąpić nazwę i adres odpowiednimi wartościami):
+// TRANSLATION MISSING
+You can add such server and connect with following commands (replace name
+and address by appropriate values):
 
 ----
 /server add nazwa irc.server.org -password=oauth:hasło

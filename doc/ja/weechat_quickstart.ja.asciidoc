@@ -97,8 +97,9 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 `/plugin` コマンドで読み込まれているプラグイン一覧を表示できます。"irc"
 やその他のプラグインはここから確認してください。
 
-[[create_irc_server]]
-== サーバ情報を作成する
+// TRANSLATION MISSING
+[[add_irc_server]]
+== Add an IRC server
 
 IRC サーバを追加するには `/server` コマンドを使ってください、例:
 

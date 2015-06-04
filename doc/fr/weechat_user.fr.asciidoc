@@ -2258,7 +2258,7 @@ $ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
 Note: il est possible de concaténer plusieurs certificats dans une le fichier
 CAs.pem.
 
-* Sous WeeChat, avec le serveur "oftc" déjà créé :
+* Sous WeeChat, avec le serveur "oftc" déjà ajouté :
 
 ----
 /connect oftc
@@ -2275,7 +2275,7 @@ $ cd ~/.weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
-* Sous WeeChat, avec le serveur "oftc" déjà créé :
+* Sous WeeChat, avec le serveur "oftc" déjà ajouté :
 
 ----
 /set irc.server.oftc.ssl_cert "%h/ssl/nick.pem"
@@ -2367,14 +2367,14 @@ En premier lieu, installez TOR. Pour Debian (et dérivés) :
 $ sudo apt-get install tor
 ----
 
-Sous WeeChat vous devez créer un proxy socks5 pour le service TOR (le nom/IP
+Sous WeeChat vous devez ajouter un proxy socks5 pour le service TOR (le nom/IP
 et port dépend de votre configuration de TOR) :
 
 ----
 /proxy add tor socks5 127.0.0.1 9050
 ----
 
-Maintenant, créez un nouveau serveur, par exemple :
+Maintenant, ajoutez un nouveau serveur, par exemple :
 
 ----
 /server add freenode-tor p4fsi4ockecnea7l.onion

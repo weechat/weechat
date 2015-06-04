@@ -660,28 +660,28 @@ arguments: ロードするプラグインに与える引数
         del <name>|-all
         set <name> <option> <value>
 
-    list: 全てのプロキシをリストアップ
-     add: 新しいプロキシを追加
-    name: プロキシの名前 (一意的な)
-    type: http、socks4、socks5
- address: IP アドレスまたはホスト名
-    port: ポート
-username: ユーザ名 (任意)
-password: パスワード (任意)
-     del: プロキシの削除 (-all を付ければ全てのプロキシを削除)
-     set: プロキシのプロパティを設定
-  option: 変更するオプション (オプションリストを見るには、/set weechat.proxy.<proxyname>.*)
-   value: オプションに設定する新しい値
+    list: list all proxies
+     add: add a new proxy
+    name: name of proxy (must be unique)
+    type: http, socks4 or socks5
+ address: IP or hostname
+    port: port
+username: username (optional)
+password: password (optional)
+     del: delete a proxy (or all proxies with -all)
+     set: set a value for a proxy property
+  option: option to change (for options list, look at /set weechat.proxy.<proxyname>.*)
+   value: new value for option
 
-例:
-  ローカルホストの 8888 番ポートで動いている http プロキシを作成:
+Examples:
+  add a http proxy, running on local host, port 8888:
     /proxy add local http 127.0.0.1 8888
-  IPv6 プロトコルを使う http プロキシを作成:
+  add a http proxy using IPv6 protocol:
     /proxy add local http ::1 8888
     /proxy set local ipv6 on
-  ユーザ名とパスワードが必要な socks5 プロキシを作成:
+  add a socks5 proxy with username/password:
     /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
-  プロキシを削除:
+  delete a proxy:
     /proxy del myproxy
 ----
 
