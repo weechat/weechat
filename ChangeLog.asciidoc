@@ -21,8 +21,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * irc: fix errors displayed on WHOX messages received (closes #376)
 * lua: add detection of Lua 5.3
-* xfer: fix parsing of DCC chat messages (send/receive of "\r\n" at the end
-  of messages) (closes #425, closes #426)
+* xfer: fix parsing of DCC chat messages (handle "\r\n" at the end of messages)
+  (closes #425, closes #426)
 * doc: replace PREFIX with CMAKE_INSTALL_PREFIX in cmake instructions
   (closes #354)
 
