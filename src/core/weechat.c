@@ -509,9 +509,16 @@ weechat_locale_check ()
 void
 weechat_sighup ()
 {
-    log_printf (_("Signal %s received, exiting WeeChat..."), "SIGHUP");
-    (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-    weechat_quit = 1;
+    int rc;
+
+    rc = hook_signal_send ("signal_sighup",
+                           WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    if (rc != WEECHAT_RC_OK_EAT)
+    {
+        log_printf (_("Signal %s received, exiting WeeChat..."), "SIGHUP");
+        (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        weechat_quit = 1;
+    }
 }
 
 /*

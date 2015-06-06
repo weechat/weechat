@@ -17,6 +17,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.3 (under dev)
 
+=== New features
+
+* core: add signal "signal_sighup"
+
 === Bugs fixed
 
 * irc: fix errors displayed on WHOX messages received (closes #376)
