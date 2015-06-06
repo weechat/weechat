@@ -160,6 +160,12 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
             {
                 ctcp_action = 0;
                 length = strlen (ptr_buf);
+                if (ptr_buf[length - 1] == '\r')
+                {
+                    ptr_buf[length - 1] = '\0';
+                    length--;
+                }
+
                 if ((ptr_buf[0] == '\01')
                     && (ptr_buf[length - 1] == '\01'))
                 {
@@ -268,7 +274,7 @@ xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
     {
         if (!XFER_HAS_ENDED(ptr_xfer->status))
         {
-            xfer_chat_sendf (ptr_xfer, "%s\n", input_data);
+            xfer_chat_sendf (ptr_xfer, "%s\r\n", input_data);
             if (!XFER_HAS_ENDED(ptr_xfer->status))
             {
                 str_color = xfer_chat_color_for_tags (weechat_config_color (weechat_config_get ("weechat.color.chat_nick_self")));
