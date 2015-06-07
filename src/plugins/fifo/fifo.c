@@ -357,7 +357,7 @@ fifo_read (void *data, int fd)
     {
         if (num_read < 0)
         {
-            if (errno == EAGAIN)
+            if ((errno == EAGAIN) || (errno == ECOMM))
                 return WEECHAT_RC_OK;
 
             weechat_printf (NULL,
