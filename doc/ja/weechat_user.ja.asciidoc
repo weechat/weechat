@@ -2186,8 +2186,7 @@ $ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
 
 注意: CAs.pem ファイル中で複数の証明書を連結することもできます。
 
-// TRANSLATION MISSING
-* In WeeChat, with "oftc" server already added:
+* WeeChat では、"oftc" サーバが既に追加されています:
 
 ----
 /connect oftc
@@ -2204,8 +2203,7 @@ $ cd ~/.weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
-// TRANSLATION MISSING
-* In WeeChat, with "oftc" server already added:
+* WeeChat では、"oftc" サーバが既に追加されています:
 
 ----
 /set irc.server.oftc.ssl_cert "%h/ssl/nick.pem"
@@ -2302,8 +2300,7 @@ WeeChat で TOR サービスを使った socks5 プロキシを作成してく�
 /proxy add tor socks5 127.0.0.1 9050
 ----
 
-// TRANSLATION MISSING
-Now, add a new server, for example:
+そして、新しいサーバを追加します。例えば:
 
 ----
 /server add freenode-tor p4fsi4ockecnea7l.onion

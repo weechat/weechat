@@ -8387,11 +8387,10 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: /quit の引数 |
   ユーザがコマンド `/quit` を実行
 
-// TRANSLATION MISSING
 | weechat | signal_sighup +
   _(WeeChat バージョン 1.3 以上で利用可)_ |
   - |
-  Signal SIGHUP received
+  SIGHUP シグナルを受信
 
 | weechat | signal_sigquit +
   _(WeeChat バージョン 1.2 以上で利用可)_ |
