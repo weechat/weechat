@@ -358,7 +358,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.temporary_servers]] *irc.look.temporary_servers*
-** 説明: `enable automatic addition of temporary servers with command /connect`
+** 説明: `/connect コマンドによる一時的なサーバの自動追加を有効化する`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
