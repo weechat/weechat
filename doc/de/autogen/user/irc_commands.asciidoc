@@ -91,22 +91,22 @@ Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel angezei
 /connect  <server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
           -all|-auto|-open [-nojoin] [-switch]
 
-    server: server name, which can be:
-            - internal server name (added by /server add, recommended usage)
-            - hostname/port or IP/port, port is 6667 by default
-            - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
-            Note: for an address/IP/URL, a temporary server is added (NOT SAVED), see /help irc.look.temporary_servers
-    option: set option for server (for boolean option, value can be omitted)
-  nooption: set boolean option to 'off' (for example: -nossl)
-      -all: connect to all servers defined in configuration
-     -auto: connect to servers with autoconnect enabled
-     -open: connect to all opened servers that are not currently connected
-   -nojoin: do not join any channel (even if autojoin is enabled on server)
-   -switch: switch to next server address
+    server: Name des Servers, folgende Möglichkeiten bestehen:
+            - intern genutzter Servername, zu dem eine Verbindung aufgebaut werden soll (Server muss zuerst mittels "/server add" angelegt werden (wird empfohlen!))
+            - Hostname/Port oder IP/Port, Port 6667 wird standardmäßig verwendet
+            - URL mit folgendem Format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
+            Hinweis: bei einer Adresse/IP/URL, wird ein temporärer Server erstellt (DIESER WIRD NICHT GESPEICHERT), siehe /help irc.look.temporary_servers
+    option: legt Einstellung für den Server fest (die Boolean-Einstellungen können weggelassen werden)
+  nooption: deaktiviert eine Boolean Einstellung (Beispiel: -nossl)
+      -all: Verbindung wird zu den Servern hergestellt, für die eine Konfiguration vorhanden ist
+     -auto: Verbindung zu den Servern herstellen, für die die Einstellung "autoconnect" aktiviert ist
+     -open: stellt eine Verbindung zu allen geöffneten Servern her, zu denen aktuell keine Verbindung besteht
+   -nojoin: Channel(s) werden nicht betreten (auch falls die Funktion "autojoin" aktiviert sein sollte)
+   -switch: wechselt zur nächsten Server-Adresse
 
-To disconnect from a server or stop any connection attempt, use command /disconnect.
+Um eine Verbindung zum Server zu beenden bzw. um Verbindungsversuche zu stoppen, wird der Befehl /disconnect verwendet.
 
-Examples:
+Beispiele:
   /connect freenode
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6
@@ -684,24 +684,24 @@ reason: Grund der Abmeldung
          del|keep <server>
          deloutq|jump|raw
 
-    list: list servers (without argument, this list is displayed)
-listfull: list servers with detailed info for each server
-     add: add a new server
-  server: server name, for internal and display use
-hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
-    temp: add a temporary server (not saved)
-  option: set option for server (for boolean option, value can be omitted)
-nooption: set boolean option to 'off' (for example: -nossl)
-    copy: duplicate a server
-  rename: rename a server
- reorder: reorder list of servers
-    keep: keep server in config file (for temporary servers only)
-     del: delete a server
- deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
-    jump: jump to server buffer
-     raw: open buffer with raw IRC data
+    list: listet Server auf (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
+listfull: listet alle Server auf, mit detaillierten Informationen zu jedem einzelnen Server
+     add: erstellt einen neuen Server
+  server: Servername, dient der internen Nutzung und zur Darstellung
+hostname: Name oder IP-Adresse des Servers. Optional kann zusätzlich der Port festgelegt werden (Standard-Port: 6667). Verschiedene Ports können durch Kommata getrennt werden
+    temp: erstellt temporären Server (wird nicht gespeichert)
+  option: legt die Optionen für den Server fest (die Boolean-Optionen können weggelassen werden)
+nooption: stellt die Boolean Einstellung auf 'off' (Beispiel: -nossl)
+    copy: erstellt eine Kopie des Servers
+  rename: benennt den Server um
+ reorder: Anordnung der Server ändern
+    keep: übernimmt den Server in die Konfigurationsdatei (nur sinnvoll bei temporär angelegten Servern)
+     del: entfernt einen Server
+ deloutq: löscht bei allen Servern alle ausgehende Nachrichten, die in der Warteschlange stehen (dies betrifft alle Nachrichten die WeeChat gerade sendet)
+    jump: springt zum Server-Buffer
+     raw: öffnet Buffer mit Roh-IRC-Daten
 
-Examples:
+Beispiele:
   /server listfull
   /server add freenode chat.freenode.net
   /server add freenode chat.freenode.net/6697 -ssl -autoconnect
