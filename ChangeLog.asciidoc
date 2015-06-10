@@ -27,6 +27,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (closes #436)
 * irc: fix errors displayed on WHOX messages received (closes #376)
 * lua: add detection of Lua 5.3
+* ruby: add detection of Ruby 2.2
 * xfer: fix parsing of DCC chat messages (handle "\r\n" at the end of messages)
   (closes #425, closes #426)
 * doc: replace PREFIX with CMAKE_INSTALL_PREFIX in cmake instructions
