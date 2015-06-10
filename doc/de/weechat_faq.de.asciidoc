@@ -565,11 +565,10 @@ Konfiguration des Servers, Port, SSL und dann einen Connect durchführen:
 
 Einige Server, wie z.B. 'twitch', verlangen oauth für eine Verbindung.
 
-Bei oauth handelt es sich lediglich um ein Passwort mit dem Format "oauth:XXXX".
+Bei oauth handelt es sich lediglich um ein Passwort in dem Format "oauth:XXXX".
 
-// TRANSLATION MISSING
-You can add such server and connect with following commands (replace name
-and address by appropriate values):
+Um einen solchen Server hinzuzufügen und sich mit diesem zu Verbinden (ersetze "name"
+und Adresse durch passende Werte):
 
 ----
 /server add name irc.server.org -password=oauth:XXXX

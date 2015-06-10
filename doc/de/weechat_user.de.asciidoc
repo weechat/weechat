@@ -37,10 +37,9 @@ wesentliche Merkmale:
 * IRC RFCs konform http://tools.ietf.org/html/rfc1459[1459],
   http://tools.ietf.org/html/rfc2810[2810],
   http://tools.ietf.org/html/rfc2811[2811],
-  http://tools.ietf.org/html/rfc2812[2812] and
+  http://tools.ietf.org/html/rfc2812[2812] und
   http://tools.ietf.org/html/rfc2813[2813]
-// TRANSLATION MISSING
-* IRC proxy and relay for remote interfaces
+* IRC proxy und relay für remote Schnittstellen
 * Betriebssystemunabhängig (GNU/Linux, *BSD, MacOS X, Windows und weitere)
 * 100% GPL, freie Software
 
@@ -2234,10 +2233,9 @@ $ mkdir -p ~/.weechat/ssl
 $ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
-Hinweis: es ist möglich mehrere Zertifikate in der Datei CAs.pem zu halten.
+Hinweis: es ist möglich mehrere Zertifikate in der Datei CAs.pem zu verwenden.
 
-// TRANSLATION MISSING
-* In WeeChat, with "oftc" server already added:
+* In WeeChat, sofern der Server "oftc" schon hinzufügt wurde:
 
 ----
 /connect oftc
@@ -2254,8 +2252,7 @@ $ cd ~/.weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
-// TRANSLATION MISSING
-* In WeeChat, with "oftc" server already added:
+* In WeeChat, sofern der Server "oftc" schon hinzufügt wurde:
 
 ----
 /set irc.server.oftc.ssl_cert "%h/ssl/nick.pem"
@@ -2354,14 +2351,13 @@ und Port müssen dabei an die eigene TOR Konfiguration angepasst werden):
 /proxy add tor socks5 127.0.0.1 9050
 ----
 
-// TRANSLATION MISSING
-Now, add a new server, for example:
+Jetzt muss der neue Server hinzufügt werden, zum Beispiel:
 
 ----
 /server add freenode-tor p4fsi4ockecnea7l.onion
 ----
 
-Der Proxy muss für TOR angelegt werden:
+Einen Proxy für TOR anlegen:
 
 ----
 /set irc.server.freenode-tor.proxy "tor"
