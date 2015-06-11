@@ -379,6 +379,17 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
                             relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
                         }
 
+                        if (weechat_hashtable_get (client->http_headers, "X-Real-IP")) {
+                            weechat_printf_tags (NULL, "relay_client",
+                                                 _("%s: websocket client %s%s%s has real IP \"%s\""),
+                                                 RELAY_PLUGIN_NAME,
+                                                 RELAY_COLOR_CHAT_CLIENT,
+                                                 client->desc,
+                                                 RELAY_COLOR_CHAT,
+                                                 weechat_hashtable_get (client->http_headers, "X-Real-IP")
+                                                 );
+                        }
+
                         /* remove HTTP headers */
                         weechat_hashtable_free (client->http_headers);
                         client->http_headers = NULL;
