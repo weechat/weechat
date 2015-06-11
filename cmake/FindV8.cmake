@@ -17,8 +17,8 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# - Find Aspell
-# This module finds if libaspell is installed and determines where
+# - Find V8 (Google's Javascript engine)
+# This module finds if libv8 is installed and determines where
 # the include files and libraries are.
 #
 # This code sets the following variables:
