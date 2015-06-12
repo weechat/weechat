@@ -18,9 +18,9 @@
 #
 
 # - Find CppUTest
-# This module finds if Guile is installed and determines where the include files
-# and libraries are. It also determines what the name of the library is. This
-# code sets the following variables:
+# This module finds if CppUTest is installed and determines where the include
+# files and libraries are. It also determines what the name of the library is.
+# This code sets the following variables:
 #
 # CPPUTEST_FOUND        = CppUTest is installed
 # CPPUTEST_INCLUDE_DIRS = CppUTest include directory
