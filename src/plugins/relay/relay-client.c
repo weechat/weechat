@@ -271,6 +271,7 @@ void
 relay_client_recv_text (struct t_relay_client *client, const char *data)
 {
     char *new_partial, *raw_msg, **lines, *pos, *tmp, *handshake;
+    const char *ptr_real_ip;
     int i, num_lines, length, rc;
 
     if (client->partial_message)
@@ -379,15 +380,19 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
                             relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
                         }
 
-                        if (weechat_hashtable_get (client->http_headers, "X-Real-IP")) {
-                            weechat_printf_tags (NULL, "relay_client",
-                                                 _("%s: websocket client %s%s%s has real IP \"%s\""),
-                                                 RELAY_PLUGIN_NAME,
-                                                 RELAY_COLOR_CHAT_CLIENT,
-                                                 client->desc,
-                                                 RELAY_COLOR_CHAT,
-                                                 weechat_hashtable_get (client->http_headers, "X-Real-IP")
-                                                 );
+                        ptr_real_ip = weechat_hashtable_get (
+                            client->http_headers, "X-Real-IP");
+                        if (ptr_real_ip)
+                        {
+                            weechat_printf_tags (
+                                NULL, "relay_client",
+                                _("%s: websocket client %s%s%s has real IP "
+                                  "address \"%s\""),
+                                RELAY_PLUGIN_NAME,
+                                RELAY_COLOR_CHAT_CLIENT,
+                                client->desc,
+                                RELAY_COLOR_CHAT,
+                                ptr_real_ip);
                         }
 
                         /* remove HTTP headers */
