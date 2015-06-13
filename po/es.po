@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-06-04 16:03+0200\n"
+"POT-Creation-Date: 2015-06-13 07:39+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9561,6 +9561,10 @@ msgstr "%s%s: agotado el tiempo de espera del saludo TLS del cliente %s%s%s"
 #, fuzzy, c-format
 msgid "%s%s: origin \"%s\" not allowed for websocket"
 msgstr "%s%s: dirección IP \"%s\" no permitida por el repetidor"
+
+#, c-format
+msgid "%s: websocket client %s%s%s has real IP address \"%s\""
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-06-04 16:03+0200\n"
+"POT-Creation-Date: 2015-06-13 07:39+0200\n"
 "PO-Revision-Date: 2015-06-09 22:28+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -9835,6 +9835,10 @@ msgstr ""
 #, c-format
 msgid "%s%s: origin \"%s\" not allowed for websocket"
 msgstr "%s%s: \"%s\" はウェブソケットの origin に使うことを許可されていません"
+
+#, c-format
+msgid "%s: websocket client %s%s%s has real IP address \"%s\""
+msgstr ""
 
 #, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"

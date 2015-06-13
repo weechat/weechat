@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-06-04 16:03+0200\n"
+"POT-Creation-Date: 2015-06-13 07:39+0200\n"
 "PO-Revision-Date: 2015-06-10 17:26+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
@@ -10475,6 +10475,10 @@ msgstr "%s%s: ungültigen WebSocket Handshake für Client %s%s%s empfangen"
 #, c-format
 msgid "%s%s: origin \"%s\" not allowed for websocket"
 msgstr "%s%s: Origin \"%s\" nicht erlaubt für WebSocket"
+
+#, c-format
+msgid "%s: websocket client %s%s%s has real IP address \"%s\""
+msgstr ""
 
 #, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"
