@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* relay: print value of HTTP Header X-Real-IP for websocket connections
 * core: add signal "signal_sighup"
 
 === Bugs fixed
