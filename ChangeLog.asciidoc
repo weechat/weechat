@@ -25,6 +25,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: fix display of time in bare display when option
+  weechat.look.buffer_time_format is set to empty string (closes #441)
 * fifo: fix send error on Cygwin when something is received in the pipe
   (closes #436)
 * irc: fix errors displayed on WHOX messages received (closes #376)
