@@ -4469,8 +4469,11 @@ irc_server_connect (struct t_irc_server *server)
     irc_server_close_connection (server);
 
     /* open auto-joined channels now (if needed) */
-    if (weechat_config_boolean (irc_config_look_buffer_open_before_autojoin))
+    if (weechat_config_boolean (irc_config_look_buffer_open_before_autojoin)
+        && !server->disable_autojoin)
+    {
         irc_server_autojoin_create_buffers (server);
+    }
 
     /* init SSL if asked and connect */
     server->ssl_connected = 0;
