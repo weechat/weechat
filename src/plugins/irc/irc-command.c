@@ -281,8 +281,11 @@ irc_command_exec_all_channels (struct t_irc_server *server,
 {
     struct t_irc_server *ptr_server, *next_server;
     struct t_irc_channel *ptr_channel, *next_channel;
+    struct t_weelist *list_buffers;
+    struct t_gui_buffer *ptr_buffer;
     char **channels, *str_command, *cmd_vars_replaced;
-    int num_channels, length, excluded, i;
+    const char *ptr_buffer_name;
+    int num_channels, length, excluded, i, list_size;
 
     if (!command || !command[0])
         return;
@@ -302,6 +305,8 @@ irc_command_exec_all_channels (struct t_irc_server *server,
     channels = (exclude_channels && exclude_channels[0]) ?
         weechat_string_split (exclude_channels, ",", 0, 0, &num_channels) : NULL;
 
+    /* build a list of buffer names where the command will be executed */
+    list_buffers = weechat_list_new ();
     ptr_server = irc_servers;
     while (ptr_server)
     {
@@ -333,13 +338,12 @@ irc_command_exec_all_channels (struct t_irc_server *server,
                         }
                         if (!excluded)
                         {
-                            cmd_vars_replaced = irc_message_replace_vars (
-                                ptr_server, ptr_channel->name, str_command);
-                            weechat_command (ptr_channel->buffer,
-                                             (cmd_vars_replaced) ?
-                                             cmd_vars_replaced : str_command);
-                            if (cmd_vars_replaced)
-                                free (cmd_vars_replaced);
+                            weechat_list_add (list_buffers,
+                                              weechat_buffer_get_string (
+                                                  ptr_channel->buffer,
+                                                  "full_name"),
+                                              WEECHAT_LIST_POS_END,
+                                              NULL);
                         }
                     }
 
@@ -351,6 +355,31 @@ irc_command_exec_all_channels (struct t_irc_server *server,
         ptr_server = next_server;
     }
 
+    /* execute the command on all buffers */
+    list_size = weechat_list_size (list_buffers);
+    for (i = 0; i < list_size; i++)
+    {
+        ptr_buffer_name = weechat_list_string (
+            weechat_list_get (list_buffers, i));
+        ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
+        if (ptr_buffer)
+        {
+            irc_buffer_get_server_and_channel (ptr_buffer,
+                                               &ptr_server, &ptr_channel);
+            if (ptr_server && ptr_channel)
+            {
+                cmd_vars_replaced = irc_message_replace_vars (
+                    ptr_server, ptr_channel->name, str_command);
+                weechat_command (ptr_channel->buffer,
+                                 (cmd_vars_replaced) ?
+                                 cmd_vars_replaced : str_command);
+                if (cmd_vars_replaced)
+                    free (cmd_vars_replaced);
+            }
+        }
+    }
+
+    weechat_list_free (list_buffers);
     free (str_command);
     if (channels)
         weechat_string_free_split (channels);
@@ -468,8 +497,12 @@ void
 irc_command_exec_all_servers (const char *exclude_servers, const char *command)
 {
     struct t_irc_server *ptr_server, *next_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_weelist *list_buffers;
+    struct t_gui_buffer *ptr_buffer;
     char **servers, *str_command, *cmd_vars_replaced;
-    int num_servers, length, excluded, i;
+    const char *ptr_buffer_name;
+    int num_servers, length, excluded, i, list_size;
 
     if (!command || !command[0])
         return;
@@ -489,6 +522,8 @@ irc_command_exec_all_servers (const char *exclude_servers, const char *command)
     servers = (exclude_servers && exclude_servers[0]) ?
         weechat_string_split (exclude_servers, ",", 0, 0, &num_servers) : NULL;
 
+    /* build a list of buffer names where the command will be executed */
+    list_buffers = weechat_list_new ();
     ptr_server = irc_servers;
     while (ptr_server)
     {
@@ -511,6 +546,31 @@ irc_command_exec_all_servers (const char *exclude_servers, const char *command)
             }
             if (!excluded)
             {
+                weechat_list_add (list_buffers,
+                                  weechat_buffer_get_string (
+                                      ptr_server->buffer,
+                                      "full_name"),
+                                  WEECHAT_LIST_POS_END,
+                                  NULL);
+            }
+        }
+
+        ptr_server = next_server;
+    }
+
+    /* execute the command on all buffers */
+    list_size = weechat_list_size (list_buffers);
+    for (i = 0; i < list_size; i++)
+    {
+        ptr_buffer_name = weechat_list_string (
+            weechat_list_get (list_buffers, i));
+        ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
+        if (ptr_buffer)
+        {
+            irc_buffer_get_server_and_channel (ptr_buffer,
+                                               &ptr_server, &ptr_channel);
+            if (ptr_server && !ptr_channel)
+            {
                 cmd_vars_replaced = irc_message_replace_vars (ptr_server,
                                                               NULL,
                                                               str_command);
@@ -521,10 +581,9 @@ irc_command_exec_all_servers (const char *exclude_servers, const char *command)
                     free (cmd_vars_replaced);
             }
         }
-
-        ptr_server = next_server;
     }
 
+    weechat_list_free (list_buffers);
     free (str_command);
     if (servers)
         weechat_string_free_split (servers);
