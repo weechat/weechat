@@ -4,3 +4,4 @@
 debian              export-ignore
 weechat.spec        export-ignore
 .mailmap            export-ignore
+tests/ubuntu/       export-ignore
