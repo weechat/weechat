@@ -152,26 +152,30 @@ char *
 script_config_get_dir ()
 {
     const char *weechat_home;
-    char *path, *path2;
+    char *path, *path2, *path3;
 
-    weechat_home = weechat_info_get ("weechat_dir", NULL);
+    path = NULL;
+    path2 = NULL;
+    path3 = NULL;
 
-    path = weechat_string_expand_home (weechat_config_string (script_config_scripts_dir));
-    path2 = weechat_string_replace ((path) ?
-                                    path : weechat_config_string (script_config_scripts_dir),
-                                    "%h", weechat_home);
-
-    if (path && path2)
+    path = weechat_string_eval_expression (
+        weechat_config_string (script_config_scripts_dir), NULL, NULL, NULL);
+    if (path)
     {
-        free (path);
-        path = NULL;
+        path2 = weechat_string_expand_home (path);
+        if (path2)
+        {
+            weechat_home = weechat_info_get ("weechat_dir", NULL);
+            path3 = weechat_string_replace (path2, "%h", weechat_home);
+        }
     }
 
-    if (path2)
-        return path2;
     if (path)
-        return path;
-    return strdup (weechat_config_string (script_config_scripts_dir));
+        free (path);
+    if (path2)
+        free (path2);
+
+    return path3;
 }
 
 /*
@@ -689,7 +693,9 @@ script_config_init ()
     script_config_scripts_dir = weechat_config_new_option (
         script_config_file, ptr_section,
         "dir", "string",
-        N_("local cache directory for scripts"),
+        N_("local cache directory for scripts; \"%h\" at beginning of string "
+           "is replaced by WeeChat home (\"~/.weechat\" by default) "
+           "(note: content is evaluated, see /help eval)"),
         NULL, 0, 0, "%h/script", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     script_config_scripts_hold = weechat_config_new_option (

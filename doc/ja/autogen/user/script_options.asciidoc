@@ -183,7 +183,7 @@
 ** 値: -1 .. 525600 (デフォルト値: `1440`)
 
 * [[option_script.scripts.dir]] *script.scripts.dir*
-** 説明: `スクリプトのローカルキャッシュディレクトリ`
+** 説明: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%h/script"`)
 

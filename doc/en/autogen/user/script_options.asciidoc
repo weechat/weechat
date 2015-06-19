@@ -183,7 +183,7 @@
 ** values: -1 .. 525600 (default value: `1440`)
 
 * [[option_script.scripts.dir]] *script.scripts.dir*
-** description: `local cache directory for scripts`
+** description: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
 ** type: string
 ** values: any string (default value: `"%h/script"`)
 

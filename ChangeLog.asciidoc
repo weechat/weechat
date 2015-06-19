@@ -22,6 +22,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add signal "signal_sighup"
 * relay: display value of HTTP header "X-Real-IP" for websocket connections
   (closes #440)
+* script: evaluate content of option script.scripts.dir (issue #388)
 
 === Bugs fixed
 
