@@ -470,7 +470,8 @@ logger_config_init ()
         "path", "string",
         N_("path for WeeChat log files; \"%h\" at beginning of string is "
            "replaced by WeeChat home (\"~/.weechat\" by default); date "
-           "specifiers are permitted (see man strftime)"),
+           "specifiers are permitted (see man strftime) "
+           "(note: content is evaluated, see /help eval)"),
         NULL, 0, 0, "%h/logs/", NULL, 0, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
     logger_config_file_replacement_char = weechat_config_new_option (

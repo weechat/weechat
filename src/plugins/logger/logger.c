@@ -71,7 +71,7 @@ struct t_hook *logger_timer = NULL;    /* timer to flush log files          */
 char *
 logger_get_file_path ()
 {
-    char *file_path, *file_path2, *file_path3;
+    char *file_path, *file_path2, *file_path3, *file_path4;
     const char *weechat_dir;
     int length;
     time_t seconds;
@@ -80,45 +80,52 @@ logger_get_file_path ()
     file_path = NULL;
     file_path2 = NULL;
     file_path3 = NULL;
+    file_path4 = NULL;
 
     weechat_dir = weechat_info_get ("weechat_dir", "");
     if (!weechat_dir)
         goto end;
 
-    /* replace "~" with user home */
-    file_path = weechat_string_expand_home (weechat_config_string (logger_config_file_path));
+    /* evaluate path */
+    file_path = weechat_string_eval_expression (
+        weechat_config_string (logger_config_file_path), NULL, NULL, NULL);
     if (!file_path)
         goto end;
 
-    /* replace "%h" with WeeChat home (at beginning of string only) */
-    if (strncmp (file_path, "%h", 2) == 0)
-    {
-        length = strlen (weechat_dir) + strlen (file_path + 2) + 1;
-        file_path2 = malloc (length);
-        if (file_path2)
-            snprintf (file_path2, length, "%s%s", weechat_dir, file_path + 2);
-    }
-    else
-        file_path2 = strdup (file_path);
+    /* replace "~" with user home */
+    file_path2 = weechat_string_expand_home (file_path);
     if (!file_path2)
         goto end;
 
-    /* replace date/time specifiers in path */
-    length = strlen (file_path2) + 256 + 1;
-    file_path3 = malloc (length);
+    /* replace "%h" with WeeChat home (at beginning of string only) */
+    if (strncmp (file_path2, "%h", 2) == 0)
+    {
+        length = strlen (weechat_dir) + strlen (file_path2 + 2) + 1;
+        file_path3 = malloc (length);
+        if (file_path3)
+            snprintf (file_path3, length, "%s%s", weechat_dir, file_path2 + 2);
+    }
+    else
+        file_path3 = strdup (file_path2);
     if (!file_path3)
+        goto end;
+
+    /* replace date/time specifiers in path */
+    length = strlen (file_path3) + 256 + 1;
+    file_path4 = malloc (length);
+    if (!file_path4)
         goto end;
     seconds = time (NULL);
     date_tmp = localtime (&seconds);
-    file_path3[0] = '\0';
-    strftime (file_path3, length - 1, file_path2, date_tmp);
+    file_path4[0] = '\0';
+    strftime (file_path4, length - 1, file_path3, date_tmp);
 
     if (weechat_logger_plugin->debug)
     {
         weechat_printf_tags (NULL,
                              "no_log",
                              "%s: file path = \"%s\"",
-                             LOGGER_PLUGIN_NAME, file_path3);
+                             LOGGER_PLUGIN_NAME, file_path4);
     }
 
 end:
@@ -126,8 +133,10 @@ end:
         free (file_path);
     if (file_path2)
         free (file_path2);
+    if (file_path3)
+        free (file_path3);
 
-    return file_path3;
+    return file_path4;
 }
 
 /*

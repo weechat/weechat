@@ -48,7 +48,7 @@
 ** values: any string (default value: `""`)
 
 * [[option_logger.file.path]] *logger.file.path*
-** description: `path for WeeChat log files; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default); date specifiers are permitted (see man strftime)`
+** description: `path for WeeChat log files; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default); date specifiers are permitted (see man strftime) (note: content is evaluated, see /help eval)`
 ** type: string
 ** values: any string (default value: `"%h/logs/"`)
 
