@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-06-20 08:05+0200\n"
-"PO-Revision-Date: 2015-06-09 22:28+0900\n"
+"PO-Revision-Date: 2015-06-21 22:54+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -9206,14 +9206,14 @@ msgstr "ニックネームの前に書くテキスト (メッセージプレフ�
 msgid "text to write after nick in prefix of message, example: \">\""
 msgstr "ニックネームの後に書くテキスト (メッセージプレフィックス)、例: \">\""
 
-#, fuzzy
 msgid ""
 "path for WeeChat log files; \"%h\" at beginning of string is replaced by "
 "WeeChat home (\"~/.weechat\" by default); date specifiers are permitted (see "
 "man strftime) (note: content is evaluated, see /help eval)"
 msgstr ""
 "WeeChat ログファイルのパス; 文字列最初の \"%h\" は WeeChat ホーム (デフォルト"
-"では \"~/.weechat\") に置換; 日付指定子を使える (strftime の man を参照)"
+"では \"~/.weechat\") に置換; 日付指定子を使える (strftime の man を参照) (注"
+"意: 内容は評価されます、/help eval 参照)"
 
 msgid ""
 "replacement char for special chars in filename built with mask (like "
@@ -9840,6 +9840,8 @@ msgstr "%s%s: \"%s\" はウェブソケットの origin に使うことを許可
 #, c-format
 msgid "%s: websocket client %s%s%s has real IP address \"%s\""
 msgstr ""
+"%s: ウェブソケットクライアント %s%s%s は真の IP アドレス \"%s\" を持っていま"
+"す"
 
 #, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"
@@ -10814,14 +10816,14 @@ msgstr ""
 "ローカルキャッシュが無効になる時間、分単位 (-1 = 再取得しない、0 = 常に再取"
 "得)"
 
-#, fuzzy
 msgid ""
 "local cache directory for scripts; \"%h\" at beginning of string is replaced "
 "by WeeChat home (\"~/.weechat\" by default) (note: content is evaluated, "
 "see /help eval)"
 msgstr ""
-"WeeChat ログファイルのパス; 文字列最初の \"%h\" は WeeChat ホーム (デフォルト"
-"では \"~/.weechat\") に置換; 日付指定子を使える (strftime の man を参照)"
+"スクリプト用のローカルキャッシュディレクトリ; 文字列最初の \"%h\" は WeeChat "
+"ホーム (デフォルトでは \"~/.weechat\") に置換されます (注意: 内容は評価されま"
+"す、/help eval 参照)"
 
 msgid ""
 "scripts to \"hold\": comma-separated list of scripts which will never been "
