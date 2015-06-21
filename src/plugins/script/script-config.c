@@ -82,7 +82,7 @@ struct t_config_option *script_config_color_text_version_selected;
 
 struct t_config_option *script_config_scripts_autoload;
 struct t_config_option *script_config_scripts_cache_expire;
-struct t_config_option *script_config_scripts_dir;
+struct t_config_option *script_config_scripts_path;
 struct t_config_option *script_config_scripts_hold;
 struct t_config_option *script_config_scripts_url;
 struct t_config_option *script_config_scripts_url_force_https;
@@ -149,7 +149,7 @@ script_config_get_diff_command ()
  */
 
 char *
-script_config_get_dir ()
+script_config_get_path ()
 {
     const char *weechat_home;
     char *path, *path2, *path3;
@@ -159,7 +159,7 @@ script_config_get_dir ()
     path3 = NULL;
 
     path = weechat_string_eval_expression (
-        weechat_config_string (script_config_scripts_dir), NULL, NULL, NULL);
+        weechat_config_string (script_config_scripts_path), NULL, NULL, NULL);
     if (path)
     {
         path2 = weechat_string_expand_home (path);
@@ -191,7 +191,7 @@ script_config_get_xml_filename ()
     char *path, *filename;
     int length;
 
-    path = script_config_get_dir ();
+    path = script_config_get_path ();
     length = strlen (path) + 64;
     filename = malloc (length);
     if (filename)
@@ -217,7 +217,7 @@ script_config_get_script_download_filename (struct t_script_repo *script,
     char *path, *filename;
     int length;
 
-    path = script_config_get_dir ();
+    path = script_config_get_path ();
     length = strlen (path) + 1 + strlen (script->name_with_extension)
         + ((suffix) ? strlen (suffix) : 0) + 1;
     filename = malloc (length);
@@ -690,9 +690,9 @@ script_config_init ()
            "0 = always expire)"),
         NULL, -1, 525600, "1440", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
-    script_config_scripts_dir = weechat_config_new_option (
+    script_config_scripts_path = weechat_config_new_option (
         script_config_file, ptr_section,
-        "dir", "string",
+        "path", "string",
         N_("local cache directory for scripts; \"%h\" at beginning of string "
            "is replaced by WeeChat home (\"~/.weechat\" by default) "
            "(note: content is evaluated, see /help eval)"),

@@ -182,15 +182,15 @@
 ** Typ: integer
 ** Werte: -1 .. 525600 (Standardwert: `1440`)
 
-* [[option_script.scripts.dir]] *script.scripts.dir*
-** Beschreibung: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
-** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"%h/script"`)
-
 * [[option_script.scripts.hold]] *script.scripts.hold*
 ** Beschreibung: `Skripten welche "gehalten" werden sollen. Dies ist eine durch Kommata getrennte Liste von Skripten die weder aktualisiert noch entfernt werden können. Zum Beispiel: "buffers.pl,iset.pl"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
+
+* [[option_script.scripts.path]] *script.scripts.path*
+** Beschreibung: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"%h/script"`)
 
 * [[option_script.scripts.url]] *script.scripts.url*
 ** Beschreibung: `URL mit dem Dateinamen, welches die Liste der Skripten enthält; standardmäßig wird HTTPS genutzt, siehe Option script.scripts.url_force_https`

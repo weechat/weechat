@@ -182,15 +182,15 @@
 ** type: entier
 ** valeurs: -1 .. 525600 (valeur par défaut: `1440`)
 
-* [[option_script.scripts.dir]] *script.scripts.dir*
-** description: `répertoire du cache local pour les scripts ; "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut : "~/.weechat") (note : le contenu est évalué, voir /help eval)`
-** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `"%h/script"`)
-
 * [[option_script.scripts.hold]] *script.scripts.hold*
 ** description: `scripts à "figer" : liste de scripts séparés par des virgules qui ne seront jamais mis à jour et ne peuvent pas être supprimés, par exemple : "buffers.pl,iset.pl"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
+
+* [[option_script.scripts.path]] *script.scripts.path*
+** description: `répertoire du cache local pour les scripts ; "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut : "~/.weechat") (note : le contenu est évalué, voir /help eval)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"%h/script"`)
 
 * [[option_script.scripts.url]] *script.scripts.url*
 ** description: `URL pour le fichier avec la liste des scripts ; par défaut HTTPS est forcé, voir l'option script.scripts.url_force_https`

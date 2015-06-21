@@ -182,15 +182,15 @@
 ** type: integer
 ** values: -1 .. 525600 (default value: `1440`)
 
-* [[option_script.scripts.dir]] *script.scripts.dir*
-** description: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
-** type: string
-** values: any string (default value: `"%h/script"`)
-
 * [[option_script.scripts.hold]] *script.scripts.hold*
 ** description: `scripts to "hold": comma-separated list of scripts which will never been upgraded and can not be removed, for example: "buffers.pl,iset.pl"`
 ** type: string
 ** values: any string (default value: `""`)
+
+* [[option_script.scripts.path]] *script.scripts.path*
+** description: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
+** type: string
+** values: any string (default value: `"%h/script"`)
 
 * [[option_script.scripts.url]] *script.scripts.url*
 ** description: `URL for file with list of scripts; by default HTTPS is forced, see option script.scripts.url_force_https`

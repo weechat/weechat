@@ -62,13 +62,12 @@ extern struct t_config_option *script_config_color_text_version_selected;
 
 extern struct t_config_option *script_config_scripts_autoload;
 extern struct t_config_option *script_config_scripts_cache_expire;
-extern struct t_config_option *script_config_scripts_dir;
+extern struct t_config_option *script_config_scripts_path;
 extern struct t_config_option *script_config_scripts_hold;
 extern struct t_config_option *script_config_scripts_url;
 extern struct t_config_option *script_config_scripts_url_force_https;
 
 extern const char *script_config_get_diff_command ();
-extern char *script_config_get_dir ();
 extern char *script_config_get_xml_filename ();
 extern char *script_config_get_script_download_filename (struct t_script_repo *script,
                                                          const char *suffix);

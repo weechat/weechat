@@ -182,15 +182,15 @@
 ** typ: liczba
 ** wartości: -1 .. 525600 (domyślna wartość: `1440`)
 
-* [[option_script.scripts.dir]] *script.scripts.dir*
-** opis: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
-** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"%h/script"`)
-
 * [[option_script.scripts.hold]] *script.scripts.hold*
 ** opis: `skrypty do "wstrzymania": oddzielona przecinkami lista skryptów, które nigdy nie zostaną zaktualizowane i nie mogą być usunięte, na przykład: "buffers.pl,iset.pl"`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
+
+* [[option_script.scripts.path]] *script.scripts.path*
+** opis: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `"%h/script"`)
 
 * [[option_script.scripts.url]] *script.scripts.url*
 ** opis: `adres pliku z listą skryptów; domyśłnie wymuszany jest protokół HTTPS, zobacz opcje script.scripts.url_force_https`

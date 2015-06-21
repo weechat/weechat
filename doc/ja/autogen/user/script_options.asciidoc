@@ -182,15 +182,15 @@
 ** タイプ: 整数
 ** 値: -1 .. 525600 (デフォルト値: `1440`)
 
-* [[option_script.scripts.dir]] *script.scripts.dir*
-** 説明: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
-** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `"%h/script"`)
-
 * [[option_script.scripts.hold]] *script.scripts.hold*
 ** 説明: `"ホールド" するスクリプト: コンマ区切りのスクリプトリスト、このリストに含まれるスクリプトはアップグレードされませんし、削除もされません、例: "buffers.pl,iset.pl"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_script.scripts.path]] *script.scripts.path*
+** 説明: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"%h/script"`)
 
 * [[option_script.scripts.url]] *script.scripts.url*
 ** 説明: `スクリプトのリストを含むファイルの URL; デフォルトは強制的に HTTPS を使用、オプション script.scripts.url_force_https を参照`

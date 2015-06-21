@@ -23,7 +23,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * logger: evaluate content of option logger.file.path (issue #388)
 * relay: display value of HTTP header "X-Real-IP" for websocket connections
   (closes #440)
-* script: evaluate content of option script.scripts.dir (issue #388)
+* script: rename option script.scripts.dir to script.scripts.path, evaluate
+  content of option (issue #388)
 
 === Bugs fixed
 
