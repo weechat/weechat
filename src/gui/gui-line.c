@@ -978,7 +978,17 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
             {
                 ptr_scroll->start_line = ptr_scroll->start_line->next_line;
                 ptr_scroll->start_line_pos = 0;
-                gui_buffer_ask_chat_refresh (buffer, 2);
+                if (ptr_scroll->start_line)
+                {
+                    gui_buffer_ask_chat_refresh (buffer, 2);
+                }
+                else
+                {
+                    ptr_scroll->first_line_displayed = 1;
+                    ptr_scroll->scrolling = 0;
+                    ptr_scroll->lines_after = 0;
+                    gui_window_ask_refresh (1);
+                }
             }
         }
         /* remove line from coords */

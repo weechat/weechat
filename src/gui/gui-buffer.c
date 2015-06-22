@@ -2461,24 +2461,11 @@ gui_buffer_is_scrolled (struct t_gui_buffer *buffer)
 void
 gui_buffer_clear (struct t_gui_buffer *buffer)
 {
-    struct t_gui_window *ptr_win;
-
     if (!buffer)
         return;
 
     /* remove all lines */
     gui_line_free_all (buffer);
-
-    /* remove any scroll for buffer */
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-    {
-        if (ptr_win->buffer == buffer)
-        {
-            ptr_win->scroll->first_line_displayed = 1;
-            ptr_win->scroll->start_line = NULL;
-            ptr_win->scroll->start_line_pos = 0;
-        }
-    }
 
     gui_hotlist_remove_buffer (buffer, 0);
 
