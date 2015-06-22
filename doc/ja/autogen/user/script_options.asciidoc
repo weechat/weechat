@@ -188,7 +188,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_script.scripts.path]] *script.scripts.path*
-** 説明: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
+** 説明: `スクリプト用のローカルキャッシュディレクトリ; 文字列最初の "%h" は WeeChat ホーム (デフォルトでは "~/.weechat") に置換されます (注意: 内容は評価されます、/help eval 参照)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%h/script"`)
 
