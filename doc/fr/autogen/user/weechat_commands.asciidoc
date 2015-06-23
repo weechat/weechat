@@ -286,10 +286,11 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   8. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
-  hdata[list].var1.var2... : démarrer avec un hdata en utilisant une liste/pointeur, par exemple :
+  hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste, par exemple :
     ${buffer[gui_buffers].full_name} : nom complet du premier tampon dans la liste chaînée des tampons
-    ${buffer[0x1234abcd].full_name} : nom complet du tampon avec ce pointeur (peut être utilisé dans les triggers)
     ${plugin[weechat_plugins].name} : nom de la première extension dans la liste chaînée des extensions
+  hdata[pointeur].var1.var2... : démarrer avec un hdata en utilisant un pointeur, par exemple :
+    ${buffer[0x1234abcd].full_name} : nom complet du tampon avec ce pointeur (peut être utilisé dans les triggers)
 Pour le nom du hdata et des variables, voir la "Référence API extension", fonction "weechat_hdata_get".
 
 Exemples (chaînes simples) :
