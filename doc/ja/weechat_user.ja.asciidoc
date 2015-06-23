@@ -3237,6 +3237,14 @@ ${tg_highlight} || ${tg_msg_pv}
 | arguments            | string | コマンドの引数 ('channel' の値を含みます)
 |===
 
+// TRANSLATION MISSING
+When the data is a pointer, the variable `tg_signal_data` can be used like this
+to read a hdata property (in this example this is a pointer on a buffer):
+
+----
+${buffer[${tg_signal_data}].full_name}
+----
+
 [[trigger_data_hsignal]]
 ===== Hsignal
 

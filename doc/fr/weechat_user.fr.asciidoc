@@ -3341,6 +3341,14 @@ suivantes sont ajoutées dans la table de hachage :
 | arguments            | chaîne | Paramètres de la commande (inclut la valeur de 'channel')
 |===
 
+Lorsque la donnée est un pointeur, la variable `tg_signal_data` peut être
+utilisée comme ceci pour lire une propriété hdata (dans cet exemple il s'agit
+d'un pointeur sur un tampon) :
+
+----
+${buffer[${tg_signal_data}].full_name}
+----
+
 [[trigger_data_hsignal]]
 ===== Hsignal
 

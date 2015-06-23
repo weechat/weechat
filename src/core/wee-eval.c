@@ -248,8 +248,9 @@ eval_replace_vars_cb (void *data, const char *text)
     const char *ptr_value, *ptr_arguments, *ptr_string;
     struct t_hdata *hdata;
     void *pointer;
-    int i, length_hide_char, length, index;
+    int i, length_hide_char, length, index, rc;
     long number;
+    long unsigned int ptr;
 
     pointers = (struct t_hashtable *)(((void **)data)[0]);
     extra_vars = (struct t_hashtable *)(((void **)data)[1]);
@@ -438,7 +439,23 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
 
     if (list_name)
-        pointer = hdata_get_list (hdata, list_name);
+    {
+        if (strncmp (list_name, "0x", 2) == 0)
+        {
+            rc = sscanf (list_name, "%lx", &ptr);
+            if ((rc != EOF) && (rc != 0))
+            {
+                pointer = (void *)ptr;
+                if (!hdata_check_pointer (hdata, NULL, pointer))
+                    goto end;
+            }
+            else
+                goto end;
+        }
+        else
+            pointer = hdata_get_list (hdata, list_name);
+    }
+
     if (!pointer)
     {
         pointer = hashtable_get (pointers, hdata_name);

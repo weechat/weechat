@@ -3238,6 +3238,13 @@ is added in hashtable:
 | arguments            | string | Arguments of command (includes value of 'channel')
 |===
 
+When the data is a pointer, the variable `tg_signal_data` can be used like this
+to read a hdata property (in this example this is a pointer on a buffer):
+
+----
+${buffer[${tg_signal_data}].full_name}
+----
+
 [[trigger_data_hsignal]]
 ===== Hsignal
 
