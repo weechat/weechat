@@ -508,6 +508,55 @@ weechat_ruby_api_string_eval_expression (VALUE class, VALUE expr,
 }
 
 static VALUE
+weechat_ruby_api_string_eval_path_home (VALUE class, VALUE path,
+                                        VALUE pointers, VALUE extra_vars,
+                                        VALUE options)
+{
+    char *c_path, *result;
+    struct t_hashtable *c_pointers, *c_extra_vars, *c_options;
+    VALUE return_value;
+
+    API_INIT_FUNC(1, "string_eval_path_home", API_RETURN_EMPTY);
+    if (NIL_P (path) || NIL_P (pointers) || NIL_P (extra_vars)
+        || NIL_P (options))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (path, T_STRING);
+    Check_Type (pointers, T_HASH);
+    Check_Type (extra_vars, T_HASH);
+    Check_Type (options, T_HASH);
+
+    c_path = StringValuePtr (path);
+    c_pointers = weechat_ruby_hash_to_hashtable (
+        pointers,
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER);
+    c_extra_vars = weechat_ruby_hash_to_hashtable (
+        extra_vars,
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+    c_options = weechat_ruby_hash_to_hashtable (
+        options,
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+
+    result = weechat_string_eval_path_home (c_path, c_pointers, c_extra_vars,
+                                            c_options);
+
+    if (c_pointers)
+        weechat_hashtable_free (c_pointers);
+    if (c_extra_vars)
+        weechat_hashtable_free (c_extra_vars);
+    if (c_options)
+        weechat_hashtable_free (c_options);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+static VALUE
 weechat_ruby_api_mkdir_home (VALUE class, VALUE directory, VALUE mode)
 {
     char *c_directory;
@@ -6005,6 +6054,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(string_is_command_char, 1);
     API_DEF_FUNC(string_input_for_buffer, 1);
     API_DEF_FUNC(string_eval_expression, 4);
+    API_DEF_FUNC(string_eval_path_home, 4);
     API_DEF_FUNC(mkdir_home, 2);
     API_DEF_FUNC(mkdir, 2);
     API_DEF_FUNC(mkdir_parents, 2);

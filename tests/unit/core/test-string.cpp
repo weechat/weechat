@@ -23,12 +23,18 @@
 
 extern "C"
 {
+#ifndef HAVE_CONFIG_H
+#define HAVE_CONFIG_H
+#endif
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <regex.h>
 #include "tests/tests.h"
+#include "src/core/weechat.h"
 #include "src/core/wee-string.h"
 #include "src/core/wee-hashtable.h"
+#include "src/plugins/plugin.h"
 }
 
 #define ONE_KB 1000ULL
@@ -331,11 +337,73 @@ TEST(String, ExpandHome)
     home = getenv ("HOME");
     length_home = strlen (home);
 
-    result = string_expand_home("~/abc.txt");
+    POINTERS_EQUAL(NULL, string_expand_home (NULL));
+
+    result = string_expand_home ("~/abc.txt");
     CHECK(strncmp (result, home, length_home) == 0);
     LONGS_EQUAL(length_home + 8, strlen (result));
     STRCMP_EQUAL(result + length_home, "/abc.txt");
     free (result);
+}
+
+/*
+ * Tests functions:
+ *   string_eval_path_home
+ */
+
+TEST(String, EvalPathHome)
+{
+    char *home, *result;
+    int length_home, length_weechat_home;
+    struct t_hashtable *extra_vars;
+
+    home = getenv ("HOME");
+    length_home = strlen (home);
+
+    length_weechat_home = strlen (weechat_home);
+
+    POINTERS_EQUAL(NULL, string_eval_path_home (NULL, NULL, NULL, NULL));
+
+    result = string_eval_path_home ("/tmp/test", NULL, NULL, NULL);
+    STRCMP_EQUAL(result, "/tmp/test");
+    free (result);
+
+    result = string_eval_path_home ("~/test", NULL, NULL, NULL);
+    CHECK(strncmp (result, home, length_home) == 0);
+    LONGS_EQUAL(length_home + 5, strlen (result));
+    STRCMP_EQUAL(result + length_home, "/test");
+    free (result);
+
+    result = string_eval_path_home ("%h/test", NULL, NULL, NULL);
+    CHECK(strncmp (result, weechat_home, length_weechat_home) == 0);
+    LONGS_EQUAL(length_weechat_home + 5, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_home, "/test");
+    free (result);
+
+    setenv ("WEECHAT_TEST_PATH", "path1", 1);
+
+    result = string_eval_path_home ("%h/${env:WEECHAT_TEST_PATH}/path2",
+                                    NULL, NULL, NULL);
+    CHECK(strncmp (result, weechat_home, length_weechat_home) == 0);
+    LONGS_EQUAL(length_weechat_home + 12, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_home, "/path1/path2");
+    free (result);
+
+    extra_vars = hashtable_new (32,
+                                WEECHAT_HASHTABLE_STRING,
+                                WEECHAT_HASHTABLE_STRING,
+                                NULL, NULL);
+    CHECK(extra_vars);
+    hashtable_set (extra_vars, "path2", "value");
+
+    result = string_eval_path_home ("%h/${env:WEECHAT_TEST_PATH}/${path2}",
+                                    NULL, extra_vars, NULL);
+    CHECK(strncmp (result, weechat_home, length_weechat_home) == 0);
+    LONGS_EQUAL(length_weechat_home + 12, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_home, "/path1/value");
+    free (result);
+
+    hashtable_free (extra_vars);
 }
 
 /*

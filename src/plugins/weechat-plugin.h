@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20150114-01"
+#define WEECHAT_PLUGIN_API_VERSION "20150624-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -276,6 +276,10 @@ struct t_weechat_plugin
     char *(*string_replace) (const char *string, const char *search,
                              const char *replace);
     char *(*string_expand_home) (const char *path);
+    char *(*string_eval_path_home) (const char *path,
+                                    struct t_hashtable *pointers,
+                                    struct t_hashtable *extra_vars,
+                                    struct t_hashtable *options);
     char *(*string_remove_quotes) (const char *string, const char *quotes);
     char *(*string_strip) (const char *string, int left, int right,
                            const char *chars);
@@ -1040,6 +1044,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->string_replace)(__string, __search, __replace)
 #define weechat_string_expand_home(__path)                              \
     (weechat_plugin->string_expand_home)(__path)
+#define weechat_string_eval_path_home(__path, __pointers,               \
+                                      __extra_vars, __options)          \
+    (weechat_plugin->string_eval_path_home)(__path, __pointers,         \
+                                            __extra_vars, __options)
 #define weechat_string_remove_quotes(__string, __quotes)                \
     (weechat_plugin->string_remove_quotes)(__string, __quotes)
 #define weechat_string_strip(__string, __left, __right, __chars)        \

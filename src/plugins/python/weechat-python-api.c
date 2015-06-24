@@ -419,6 +419,45 @@ API_FUNC(string_eval_expression)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(string_eval_path_home)
+{
+    char *path, *result;
+    struct t_hashtable *pointers, *extra_vars, *options;
+    PyObject *dict, *dict2, *dict3, *return_value;
+
+    API_INIT_FUNC(1, "string_eval_path_home", API_RETURN_EMPTY);
+    path = NULL;
+    pointers = NULL;
+    extra_vars = NULL;
+    options = NULL;
+    if (!PyArg_ParseTuple (args, "sOOO", &path, &dict, &dict2, &dict3))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+    pointers = weechat_python_dict_to_hashtable (dict,
+                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_POINTER);
+    extra_vars = weechat_python_dict_to_hashtable (dict2,
+                                                   WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING);
+    options = weechat_python_dict_to_hashtable (dict3,
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
+
+    result = weechat_string_eval_path_home (path, pointers, extra_vars,
+                                            options);
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_STRING_FREE(result);
+}
+
 API_FUNC(mkdir_home)
 {
     char *directory;
@@ -4880,6 +4919,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(string_is_command_char),
     API_DEF_FUNC(string_input_for_buffer),
     API_DEF_FUNC(string_eval_expression),
+    API_DEF_FUNC(string_eval_path_home),
     API_DEF_FUNC(mkdir_home),
     API_DEF_FUNC(mkdir),
     API_DEF_FUNC(mkdir_parents),

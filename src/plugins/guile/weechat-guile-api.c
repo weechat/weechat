@@ -480,6 +480,49 @@ weechat_guile_api_string_eval_expression (SCM expr, SCM pointers,
 }
 
 SCM
+weechat_guile_api_string_eval_path_home (SCM path, SCM pointers,
+                                         SCM extra_vars, SCM options)
+{
+    char *result;
+    SCM return_value;
+    struct t_hashtable *c_pointers, *c_extra_vars, *c_options;
+
+    API_INIT_FUNC(1, "string_eval_path_home", API_RETURN_EMPTY);
+    if (!scm_is_string (path) || !scm_list_p (pointers)
+        || !scm_list_p (extra_vars) || !scm_list_p (options))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    c_pointers = weechat_guile_alist_to_hashtable (
+        pointers,
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER);
+    c_extra_vars = weechat_guile_alist_to_hashtable (
+        extra_vars,
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+    c_options = weechat_guile_alist_to_hashtable (
+        options,
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+
+    result = weechat_string_eval_path_home (API_SCM_TO_STRING(path),
+                                            c_pointers, c_extra_vars,
+                                            c_options);
+
+    if (c_pointers)
+        weechat_hashtable_free (c_pointers);
+    if (c_extra_vars)
+        weechat_hashtable_free (c_extra_vars);
+    if (c_options)
+        weechat_hashtable_free (c_options);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+SCM
 weechat_guile_api_mkdir_home (SCM directory, SCM mode)
 {
     API_INIT_FUNC(1, "mkdir_home", API_RETURN_ERROR);
@@ -4660,6 +4703,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(string_is_command_char, 1);
     API_DEF_FUNC(string_input_for_buffer, 1);
     API_DEF_FUNC(string_eval_expression, 4);
+    API_DEF_FUNC(string_eval_path_home, 4);
     API_DEF_FUNC(mkdir_home, 2);
     API_DEF_FUNC(mkdir, 2);
     API_DEF_FUNC(mkdir_parents, 2);

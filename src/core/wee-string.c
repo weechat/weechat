@@ -48,6 +48,7 @@
 #include "weechat.h"
 #include "wee-string.h"
 #include "wee-config.h"
+#include "wee-eval.h"
 #include "wee-hashtable.h"
 #include "wee-utf8.h"
 #include "../gui/gui-color.h"
@@ -497,6 +498,63 @@ string_expand_home (const char *path)
     snprintf (str, length, "%s%s", ptr_home, path + 1);
 
     return str;
+}
+
+/*
+ * Evaluate a path by replacing (in this order):
+ *   1. "%h" (at beginning of string) by WeeChat home directory.
+ *   2. "~" by user home directory (call to string_expand_home)
+ *   3. evaluated variables (see /help eval)
+ *
+ * Returns the evaluated path, NULL if error.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_eval_path_home (const char *path,
+                       struct t_hashtable *pointers,
+                       struct t_hashtable *extra_vars,
+                       struct t_hashtable *options)
+{
+    char *path1, *path2, *path3;
+    int length;
+
+    if (!path)
+        return NULL;
+
+    path1 = NULL;
+    path2 = NULL;
+    path3 = NULL;
+
+    /* replace "%h" by Weechat home */
+    if (strncmp (path, "%h", 2) == 0)
+    {
+        length = strlen (weechat_home) + strlen (path + 2) + 1;
+        path1 = malloc (length);
+        if (path1)
+            snprintf (path1, length, "%s%s", weechat_home, path + 2);
+    }
+    else
+        path1 = strdup (path);
+    if (!path1)
+        goto end;
+
+    /* replace "~" by user home */
+    path2 = string_expand_home (path1);
+    if (!path2)
+        goto end;
+
+    /* evaluate content of path */
+    path3 = eval_expression (path2, pointers, extra_vars, options);
+
+end:
+    if (path1)
+        free (path1);
+    if (path2)
+        free (path2);
+
+    return path3;
 }
 
 /*

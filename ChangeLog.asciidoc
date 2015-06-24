@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * core: allow pointer as list name in evaluation of hdata (closes #450)
 * core: add signal "signal_sighup"
+* api: add function string_eval_path_home()
 * logger: evaluate content of option logger.file.path (issue #388)
 * relay: display value of HTTP header "X-Real-IP" for websocket connections
   (closes #440)

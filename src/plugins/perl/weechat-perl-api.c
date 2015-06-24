@@ -437,6 +437,43 @@ API_FUNC(string_eval_expression)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(string_eval_path_home)
+{
+    char *path, *result;
+    struct t_hashtable *pointers, *extra_vars, *options;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "string_eval_path_home", API_RETURN_EMPTY);
+    if (items < 4)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    path = SvPV_nolen (ST (0));
+    pointers = weechat_perl_hash_to_hashtable (ST (1),
+                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               WEECHAT_HASHTABLE_POINTER);
+    extra_vars = weechat_perl_hash_to_hashtable (ST (2),
+                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_STRING);
+    options = weechat_perl_hash_to_hashtable (ST (3),
+                                              WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                              WEECHAT_HASHTABLE_STRING,
+                                              WEECHAT_HASHTABLE_STRING);
+
+    result = weechat_string_eval_path_home (path, pointers, extra_vars,
+                                            options);
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_STRING_FREE(result);
+}
+
 API_FUNC(mkdir_home)
 {
     dXSARGS;
@@ -4899,6 +4936,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(string_is_command_char);
     API_DEF_FUNC(string_input_for_buffer);
     API_DEF_FUNC(string_eval_expression);
+    API_DEF_FUNC(string_eval_path_home);
     API_DEF_FUNC(mkdir_home);
     API_DEF_FUNC(mkdir);
     API_DEF_FUNC(mkdir_parents);

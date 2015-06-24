@@ -396,7 +396,7 @@ API に含まれる関数の詳しい情報は
   charset_set, iconv_to_internal, iconv_from_internal, gettext, ngettext, +
   strlen_screen, string_match, string_has_highlight, string_has_highlight_regex,
   string_mask_to_regex, string_remove_color, string_is_command_char,
-  string_input_for_buffer, string_eval_expression
+  string_input_for_buffer, string_eval_expression, string_eval_path_home
 | ディレクトリ操作    |
   mkdir_home, mkdir, mkdir_parents
 | ソート済みリスト    |

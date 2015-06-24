@@ -955,6 +955,67 @@ free (str);
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
+==== string_eval_path_home
+
+_WeeChat ≥ 1.3._
+
+// TRANSLATION MISSING
+Evaluate a path in 3 steps:
+
+. replace leading `%h` by WeeChat home directory,
+. replace leading `~` by user home directory (call to
+  <<_string_expand_home,weechat_string_expand_home>>),
+. evaluate variables
+  (see <<_string_eval_expression,weechat_string_eval_expression>>).
+
+Prototipo:
+
+[source,C]
+----
+char *weechat_string_eval_path_home (const char *path,
+                                     struct t_hashtable *pointers,
+                                     struct t_hashtable *extra_vars,
+                                     struct t_hashtable *options);
+----
+
+// TRANSLATION MISSING
+Argomenti:
+
+* 'path': path
+* 'pointers': hashtable for call to function
+  <<_string_eval_expression,weechat_string_eval_expression>>
+* 'extra_vars': hashtable for call to function
+  <<_string_eval_expression,weechat_string_eval_expression>>
+* 'options': hashtable for call to function
+  <<_string_eval_expression,weechat_string_eval_expression>>
+
+// TRANSLATION MISSING
+Valore restituito:
+
+* evaluated path (must be freed by calling "free" after use)
+
+Esempio in C:
+
+[source,C]
+----
+char *str = weechat_string_expand_home ("%h/test/file.txt");
+/* result: "/home/xxx/.weechat/test/file.txt" */
+/* ... */
+free (str);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+path = weechat.string_eval_path_home(path, pointers, extra_vars, options)
+
+# esempio
+path = weechat.string_eval_path_home("%h/test/file.txt", "", "", "")
+# path == "/home/xxx/.weechat/test/file.txt"
+----
+
 ==== string_remove_quotes
 
 Rimuove le virgolette all'inizio e alla fine della stringa (ignora gli

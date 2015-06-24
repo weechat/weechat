@@ -614,6 +614,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_match = &string_match;
         new_plugin->string_replace = &string_replace;
         new_plugin->string_expand_home = &string_expand_home;
+        new_plugin->string_eval_path_home = &string_eval_path_home;
         new_plugin->string_remove_quotes = &string_remove_quotes;
         new_plugin->string_strip = &string_strip;
         new_plugin->string_convert_escaped_chars = &string_convert_escaped_chars;

@@ -921,6 +921,67 @@ free (str);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
+==== string_eval_path_home
+
+_WeeChat バージョン 0.3.3 以上で利用可。_
+
+// TRANSLATION MISSING
+Evaluate a path in 3 steps:
+
+. replace leading `%h` by WeeChat home directory,
+. replace leading `~` by user home directory (call to
+  <<_string_expand_home,weechat_string_expand_home>>),
+. evaluate variables
+  (see <<_string_eval_expression,weechat_string_eval_expression>>).
+
+プロトタイプ:
+
+[source,C]
+----
+char *weechat_string_eval_path_home (const char *path,
+                                     struct t_hashtable *pointers,
+                                     struct t_hashtable *extra_vars,
+                                     struct t_hashtable *options);
+----
+
+// TRANSLATION MISSING
+引数:
+
+* 'path': path
+* 'pointers': hashtable for call to function
+  <<_string_eval_expression,weechat_string_eval_expression>>
+* 'extra_vars': hashtable for call to function
+  <<_string_eval_expression,weechat_string_eval_expression>>
+* 'options': hashtable for call to function
+  <<_string_eval_expression,weechat_string_eval_expression>>
+
+// TRANSLATION MISSING
+戻り値:
+
+* evaluated path (must be freed by calling "free" after use)
+
+C 言語での使用例:
+
+[source,C]
+----
+char *str = weechat_string_expand_home ("%h/test/file.txt");
+/* result: "/home/xxx/.weechat/test/file.txt" */
+/* ... */
+free (str);
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+path = weechat.string_eval_path_home(path, pointers, extra_vars, options)
+
+# 例
+path = weechat.string_eval_path_home("%h/test/file.txt", "", "", "")
+# path == "/home/xxx/.weechat/test/file.txt"
+----
+
 ==== string_remove_quotes
 
 文字列の最初と最後から引用符号を削除

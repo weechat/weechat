@@ -406,7 +406,7 @@ Elenco di funzioni nelle API per gli script:
   charset_set, iconv_to_internal, iconv_from_internal, gettext, ngettext, +
   strlen_screen, string_match, string_has_highlight, string_has_highlight_regex,
   string_mask_to_regex, string_remove_color, string_is_command_char,
-  string_input_for_buffer, string_eval_expression
+  string_input_for_buffer, string_eval_expression, string_eval_path_home
 | directory              |
   mkdir_home, mkdir, mkdir_parents
 | liste ordinate         |
