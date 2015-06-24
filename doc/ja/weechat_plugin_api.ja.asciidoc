@@ -964,8 +964,8 @@ C 言語での使用例:
 
 [source,C]
 ----
-char *str = weechat_string_expand_home ("%h/test/file.txt");
-/* result: "/home/xxx/.weechat/test/file.txt" */
+char *str = weechat_string_expand_home ("%h/test");
+/* result: "/home/xxx/.weechat/test" */
 /* ... */
 free (str);
 ----
@@ -978,8 +978,8 @@ free (str);
 path = weechat.string_eval_path_home(path, pointers, extra_vars, options)
 
 # 例
-path = weechat.string_eval_path_home("%h/test/file.txt", "", "", "")
-# path == "/home/xxx/.weechat/test/file.txt"
+path = weechat.string_eval_path_home("%h/test", "", "", "")
+# path == "/home/xxx/.weechat/test"
 ----
 
 ==== string_remove_quotes

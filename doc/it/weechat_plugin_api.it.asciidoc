@@ -998,8 +998,8 @@ Esempio in C:
 
 [source,C]
 ----
-char *str = weechat_string_expand_home ("%h/test/file.txt");
-/* result: "/home/xxx/.weechat/test/file.txt" */
+char *str = weechat_string_expand_home ("%h/test");
+/* result: "/home/xxx/.weechat/test" */
 /* ... */
 free (str);
 ----
@@ -1012,8 +1012,8 @@ Script (Python):
 path = weechat.string_eval_path_home(path, pointers, extra_vars, options)
 
 # esempio
-path = weechat.string_eval_path_home("%h/test/file.txt", "", "", "")
-# path == "/home/xxx/.weechat/test/file.txt"
+path = weechat.string_eval_path_home("%h/test", "", "", "")
+# path == "/home/xxx/.weechat/test"
 ----
 
 ==== string_remove_quotes
