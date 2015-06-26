@@ -143,42 +143,6 @@ script_config_get_diff_command ()
 }
 
 /*
- * Gets local directory for script.
- *
- * Note: result must be freed after use.
- */
-
-char *
-script_config_get_path ()
-{
-    const char *weechat_home;
-    char *path, *path2, *path3;
-
-    path = NULL;
-    path2 = NULL;
-    path3 = NULL;
-
-    path = weechat_string_eval_expression (
-        weechat_config_string (script_config_scripts_path), NULL, NULL, NULL);
-    if (path)
-    {
-        path2 = weechat_string_expand_home (path);
-        if (path2)
-        {
-            weechat_home = weechat_info_get ("weechat_dir", NULL);
-            path3 = weechat_string_replace (path2, "%h", weechat_home);
-        }
-    }
-
-    if (path)
-        free (path);
-    if (path2)
-        free (path2);
-
-    return path3;
-}
-
-/*
  * Gets filename with script
  * (by default "/home/xxx/.weechat/script/plugins.xml.gz").
  *
@@ -191,7 +155,8 @@ script_config_get_xml_filename ()
     char *path, *filename;
     int length;
 
-    path = script_config_get_path ();
+    path = weechat_string_eval_path_home (
+        weechat_config_string (script_config_scripts_path), NULL, NULL, NULL);
     length = strlen (path) + 64;
     filename = malloc (length);
     if (filename)
@@ -217,7 +182,8 @@ script_config_get_script_download_filename (struct t_script_repo *script,
     char *path, *filename;
     int length;
 
-    path = script_config_get_path ();
+    path = weechat_string_eval_path_home (
+        weechat_config_string (script_config_scripts_path), NULL, NULL, NULL);
     length = strlen (path) + 1 + strlen (script->name_with_extension)
         + ((suffix) ? strlen (suffix) : 0) + 1;
     filename = malloc (length);
