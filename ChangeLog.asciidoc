@@ -19,7 +19,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
-* core: fix display of invalid UTF-8 chars in bars
 * core: allow pointer as list name in evaluation of hdata (closes #450)
 * core: add signal "signal_sighup"
 * api: add function string_eval_path_home()
@@ -33,6 +32,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: fix display of invalid UTF-8 chars in bars
 * core: fix bar item "scroll" after /buffer clear (closes #448)
 * core: fix display of time in bare display when option
   weechat.look.buffer_time_format is set to empty string (closes #441)
