@@ -846,7 +846,9 @@ irc_info_init ()
         /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
         N_("\"tags\": tags, \"message_without_tags\": message without the "
            "tags, \"nick\": nick, \"host\": host, \"command\": command, "
-           "\"channel\": channel, \"arguments\": arguments (includes channel)"),
+           "\"channel\": channel, \"arguments\": arguments (includes channel), "
+           "\"text\": text (for example user message), \"pos_text\": index of "
+           "text in message (\"-1\" if no text found)"),
         &irc_info_info_hashtable_irc_message_parse_cb, NULL);
     weechat_hook_info_hashtable (
         "irc_message_split",

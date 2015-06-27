@@ -30,21 +30,37 @@
 
 
 /*
- * Parses an IRC message and returns pointers to:
- *   - tags
- *   - message without tags
- *   - host
- *   - command
- *   - channel
- *   - target nick
- *   - arguments (if any)
+ * Parses an IRC message and returns:
+ *   - tags (string)
+ *   - message without tags (string)
+ *   - nick (string)
+ *   - host (string)
+ *   - command (string)
+ *   - channel (string)
+ *   - arguments (string)
+ *   - text (string)
+ *   - pos_text (integer: text index in message)
+ *
+ * Example:
+ *   @time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!
+ *
+ * Result:
+ *               tags: "time=2015-06-27T16:40:35.000Z"
+ *   msg_without_tags: ":nick!user@host PRIVMSG #weechat :hello!"
+ *               nick: "nick"
+ *               host: "nick!user@host"
+ *            command: "PRIVMSG"
+ *            channel: "#weechat"
+ *          arguments: "#weechat :hello!"
+ *               text: "hello!"
+ *           pos_text: 65
  */
 
 void
 irc_message_parse (struct t_irc_server *server, const char *message,
                    char **tags, char **message_without_tags, char **nick,
                    char **host, char **command, char **channel,
-                   char **arguments)
+                   char **arguments, char **text, int *pos_text)
 {
     const char *ptr_message, *pos, *pos2, *pos3, *pos4;
 
@@ -62,6 +78,10 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         *channel = NULL;
     if (arguments)
         *arguments = NULL;
+    if (text)
+        *text = NULL;
+    if (pos_text)
+        *pos_text = -1;
 
     if (!message)
         return;
@@ -71,7 +91,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
     /*
      * we will use this message as example:
      *
-     *   @tags :FlashCode!n=flash@host.com PRIVMSG #channel :hello!
+     *   @time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!
      */
 
     if (ptr_message[0] == '@')
@@ -85,7 +105,10 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         if (pos)
         {
             if (tags)
-                *tags = weechat_strndup (message + 1, pos - (message + 1));
+            {
+                *tags = weechat_strndup (ptr_message + 1,
+                                         pos - (ptr_message + 1));
+            }
             ptr_message = pos + 1;
             while (ptr_message[0] == ' ')
             {
@@ -97,7 +120,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
     if (message_without_tags)
         *message_without_tags = strdup (ptr_message);
 
-    /* now we have: ptr_message --> ":FlashCode!n=flash@host.com PRIVMSG #channel :hello!" */
+    /* now we have: ptr_message --> ":nick!user@host PRIVMSG #weechat :hello!" */
     if (ptr_message[0] == ':')
     {
         /* read host/nick */
@@ -135,7 +158,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         }
     }
 
-    /* now we have: ptr_message --> "PRIVMSG #channel :hello!" */
+    /* now we have: ptr_message --> "PRIVMSG #weechat :hello!" */
     if (ptr_message[0])
     {
         pos = strchr (ptr_message, ' ');
@@ -148,7 +171,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
             {
                 pos++;
             }
-            /* now we have: pos --> "#channel :hello!" */
+            /* now we have: pos --> "#weechat :hello!" */
             if (arguments)
                 *arguments = strdup (pos);
             if ((pos[0] == ':')
@@ -157,7 +180,14 @@ irc_message_parse (struct t_irc_server *server, const char *message,
             {
                 pos++;
             }
-            if (pos[0] != ':')
+            if (pos[0] == ':')
+            {
+                if (text)
+                    *text = strdup (pos + 1);
+                if (pos_text)
+                    *pos_text = pos - message + 1;
+            }
+            else
             {
                 if (irc_channel_is_channel (server, pos))
                 {
@@ -168,6 +198,19 @@ irc_message_parse (struct t_irc_server *server, const char *message,
                             *channel = weechat_strndup (pos, pos2 - pos);
                         else
                             *channel = strdup (pos);
+                    }
+                    if (pos2)
+                    {
+                        while (pos2[0] == ' ')
+                        {
+                            pos2++;
+                        }
+                        if (pos2[0] == ':')
+                            pos2++;
+                        if (text)
+                            *text = strdup (pos2);
+                        if (pos_text)
+                            *pos_text = pos2 - message;
                     }
                 }
                 else
@@ -198,6 +241,19 @@ irc_message_parse (struct t_irc_server *server, const char *message,
                                 else
                                     *channel = strdup (pos2);
                             }
+                            if (pos4)
+                            {
+                                while (pos4[0] == ' ')
+                                {
+                                    pos4++;
+                                }
+                                if (pos4[0] == ':')
+                                    pos4++;
+                                if (text)
+                                    *text = strdup (pos4);
+                                if (pos_text)
+                                    *pos_text = pos4 - message;
+                            }
                         }
                         else if (channel && !*channel)
                         {
@@ -224,6 +280,8 @@ irc_message_parse (struct t_irc_server *server, const char *message,
  *   - command
  *   - channel
  *   - arguments
+ *   - text
+ *   - pos_text
  *
  * Note: hashtable must be freed after use.
  */
@@ -233,12 +291,14 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
                                 const char *message)
 {
     char *tags,*message_without_tags, *nick, *host, *command, *channel;
-    char *arguments;
+    char *arguments, *text, str_pos_text[32];
     char empty_str[1] = { '\0' };
+    int pos_text;
     struct t_hashtable *hashtable;
 
     irc_message_parse (server, message, &tags, &message_without_tags, &nick,
-                       &host, &command, &channel, &arguments);
+                       &host, &command, &channel, &arguments, &text,
+                       &pos_text);
 
     hashtable = weechat_hashtable_new (32,
                                        WEECHAT_HASHTABLE_STRING,
@@ -262,6 +322,10 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
                            (channel) ? channel : empty_str);
     weechat_hashtable_set (hashtable, "arguments",
                            (arguments) ? arguments : empty_str);
+    weechat_hashtable_set (hashtable, "text",
+                           (text) ? text : empty_str);
+    snprintf (str_pos_text, sizeof (str_pos_text), "%d", pos_text);
+    weechat_hashtable_set (hashtable, "pos_text", str_pos_text);
 
     if (tags)
         free (tags);
@@ -277,9 +341,46 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
         free (channel);
     if (arguments)
         free (arguments);
+    if (text)
+        free (text);
 
     return hashtable;
 }
+
+/*
+ * Encodes/decodes an IRC message using a charset.
+ */
+
+char *
+irc_message_convert_charset (const char *message, int pos_start,
+                             const char *modifier, const char *modifier_data)
+{
+    char *text, *msg_result;
+    int length;
+
+    text = weechat_hook_modifier_exec (modifier, modifier_data,
+                                       message + pos_start);
+    if (!text)
+        return NULL;
+
+    length = pos_start + strlen (text) + 1;
+    msg_result = malloc (length);
+    if (msg_result)
+    {
+        msg_result[0] = '\0';
+        if (pos_start > 0)
+        {
+            memcpy (msg_result, message, pos_start);
+            msg_result[pos_start] = '\0';
+        }
+        strcat (msg_result, text);
+    }
+
+    free (text);
+
+    return msg_result;
+}
+
 
 /*
  * Gets nick from host in an IRC message.

@@ -3236,6 +3236,8 @@ is added in hashtable:
 | command              | string | IRC command (example: "PRIVMSG", "NOTICE", ...)
 | channel              | string | IRC channel
 | arguments            | string | Arguments of command (includes value of 'channel')
+| text                 | string | Text (for example user message)
+| pos_text             | string | The index of text in message ("-1" if text was not found)
 |===
 
 When the data is a pointer, the variable `tg_signal_data` can be used like this

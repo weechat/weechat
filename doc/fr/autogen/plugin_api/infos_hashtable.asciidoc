@@ -6,7 +6,7 @@
 |===
 | Extension | Nom | Description | Table de hachage (entrée) | Table de hachage (sortie)
 
-| irc | irc_message_parse | analyse un message IRC | "message" : message IRC, "server" : nom du serveur (optionnel) | "tags" : étiquettes, "message_without_tags" : message sans les étiquettes, "nick" : pseudo, "host" : nom d'hôte, "command" : commande, "channel" : canal, "arguments" : paramètres (inclut le canal)
+| irc | irc_message_parse | analyse un message IRC | "message" : message IRC, "server" : nom du serveur (optionnel) | "tags" : étiquettes, "message_without_tags" : message sans les étiquettes, "nick" : pseudo, "host" : nom d'hôte, "command" : commande, "channel" : canal, "arguments" : paramètres (inclut le canal), "text" : texte (par exemple message utilisateur), "pos_text" : index du texte dans le message ("-1" si aucun texte n'a été trouvé)
 
 | irc | irc_message_split | découper un message IRC (pour tenir dans les 512 octets) | "message" : message IRC, "server" : nom du serveur (optionnel) | "msg1" ... "msgN" : messages à envoyer (sans le "\r\n" final), "args1" ... "argsN" : paramètres des messages, "count" : nombre de messages
 

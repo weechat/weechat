@@ -3235,6 +3235,10 @@ ${tg_highlight} || ${tg_msg_pv}
 | command              | string | IRC コマンド (例: "PRIVMSG"、"NOTICE"、...)
 | channel              | string | IRC チャンネル
 | arguments            | string | コマンドの引数 ('channel' の値を含みます)
+// TRANSLATION MISSING
+| text                 | string | Text (for example user message)
+// TRANSLATION MISSING
+| pos_text             | string | The index of text in message ("-1" if text was not found)
 |===
 
 // TRANSLATION MISSING

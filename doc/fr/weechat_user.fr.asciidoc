@@ -3339,6 +3339,8 @@ suivantes sont ajoutées dans la table de hachage :
 | command              | chaîne | Commande IRC (exemple : "PRIVMSG", "NOTICE", ...)
 | channel              | chaîne | Canal IRC
 | arguments            | chaîne | Paramètres de la commande (inclut la valeur de 'channel')
+| text                 | string | Texte (par exemple message utilisateur)
+| pos_text             | string | L'index du texte dans le message ("-1" si le texte n'a pas été trouvé)
 |===
 
 Lorsque la donnée est un pointeur, la variable `tg_signal_data` peut être

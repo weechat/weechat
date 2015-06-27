@@ -37,6 +37,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   weechat.look.buffer_time_format is set to empty string (closes #441)
 * fifo: fix send error on Cygwin when something is received in the pipe
   (closes #436)
+* irc: decode/encode only text in IRC messages and not the headers
+  (bug #29886, closes #218, closes #451)
 * irc: fix crash with commands /allchan, /allpv and /allserv if the executed
   command closes buffers (closes #445)
 * irc: do not open auto-joined channels buffers when option "-nojoin" is used

@@ -13151,22 +13151,32 @@ hashtable_in = weechat_hashtable_new (8,
                                       NULL);
 if (hashtable_in)
 {
-    weechat_hashtable_set (hashtable_in, "message",
-                           ":nick!user@host PRIVMSG #weechat :message ici");
+    weechat_hashtable_set (
+        hashtable_in,
+        "message",
+        "@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!");
     hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
                                                 hashtable_in);
     /*
      * maintenant hashtable_out a les clés/valeurs suivantes :
-     *   "nick"     : "nick"
-     *   "host"     : "nick!user@host"
-     *   "command"  : "PRIVMSG"
-     *   "channel"  : "#weechat"
-     *   "arguments": "#weechat :message ici"
+     *   "tags"                : "time=2015-06-27T16:40:35.000Z"
+     *   "message_without_tags": ":nick!user@host PRIVMSG #weechat :hello!"
+     *   "nick"                : "nick"
+     *   "host"                : "nick!user@host"
+     *   "command"             : "PRIVMSG"
+     *   "channel"             : "#weechat"
+     *   "arguments"           : "#weechat :hello!"
+     *   "text"                : "hello!"
+     *   "pos_text"            : "65"
      */
     weechat_hashtable_free (hashtable_in);
     weechat_hashtable_free (hashtable_out);
 }
 ----
+
+[NOTE]
+Voir le 'Guide pour Scripts WeeChat' pour plus d'infos sur la sortie de
+"irc_message_parse".
 
 Script (Python) :
 

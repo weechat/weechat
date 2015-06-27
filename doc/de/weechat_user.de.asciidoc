@@ -3320,6 +3320,10 @@ und die Daten in einer Hashtable gesichert:
 | command              | string | IRC Befehl (Beispiel: "PRIVMSG", "NOTICE", ...)
 | channel              | string | IRC Channel
 | arguments            | string | Argumente des Befehls (Beinhaltet Wert von 'channel')
+// TRANSLATION MISSING
+| text                 | string | Text (for example user message)
+// TRANSLATION MISSING
+| pos_text             | string | The index of text in message ("-1" if text was not found)
 |===
 
 // TRANSLATION MISSING

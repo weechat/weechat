@@ -6,7 +6,7 @@
 |===
 | Wtyczka | Nazwa | Opis | Hashtable (wejście) | Hashtable (wyjście)
 
-| irc | irc_message_parse | przetwarza wiadomość IRC | "message": wiadomość IRC, "server": nazwa serwera (opcjonalne) | "tags": tagi, "message_without_tags": wiadomość bez tagów, "nick": nick, "host": host, "command": komenda, "channel": kanał, "arguments": argumenty (razem z kanałem)
+| irc | irc_message_parse | przetwarza wiadomość IRC | "message": wiadomość IRC, "server": nazwa serwera (opcjonalne) | "tags": tags, "message_without_tags": message without the tags, "nick": nick, "host": host, "command": command, "channel": channel, "arguments": arguments (includes channel), "text": text (for example user message), "pos_text": index of text in message ("-1" if no text found)
 
 | irc | irc_message_split | dziel wiadomość IRC (aby zmieściła się w 512 bajtach) | "message": wiadomość IRC, "server": nazwa serwera (opcjonalne) | "msg1" ... "msgN": wiadomości do wysłania (bez kończącego "\r\n"), "args1" ... "argsN": argumenty wiadomości, "count": ilość wiadomości
 

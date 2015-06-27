@@ -3265,6 +3265,10 @@ są dodawane do tablicy hashy:
 | command              | ciąg | Komendy IRC (na przykład: "PRIVMSG", "NOTICE", ...)
 | channel              | ciąg | Kanał IRC
 | arguments            | ciąg | Argumenty komendy (razem z wartością 'channel')
+// TRANSLATION MISSING
+| text                 | ciąg | Text (for example user message)
+// TRANSLATION MISSING
+| pos_text             | ciąg | The index of text in message ("-1" if text was not found)
 |===
 
 // TRANSLATION MISSING
