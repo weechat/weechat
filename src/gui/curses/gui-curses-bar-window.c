@@ -473,6 +473,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     content = gui_bar_window_content_get_with_filling (bar_window, window);
     if (content)
     {
+        utf8_normalize (content, '?');
         if ((filling == GUI_BAR_FILLING_HORIZONTAL)
             && (bar_window->scroll_x > 0))
         {

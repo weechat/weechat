@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: fix display of invalid UTF-8 chars in bars
 * core: allow pointer as list name in evaluation of hdata (closes #450)
 * core: add signal "signal_sighup"
 * api: add function string_eval_path_home()
