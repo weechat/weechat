@@ -48,7 +48,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_logger.file.path]] *logger.file.path*
-** Beschreibung: `path for WeeChat log files; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default); date specifiers are permitted (see man strftime) (note: content is evaluated, see /help eval)`
+** Beschreibung: `Pfad für WeeChat Protokolldateien; "%h" wird durch das WeeChat Verzeichnis ersetzt (Standardpfad: "~/.weechat"); eine Datumsspezifikation ist zulässig (siehe: man strftime) (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/logs/"`)
 

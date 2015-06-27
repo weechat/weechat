@@ -188,7 +188,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_script.scripts.path]] *script.scripts.path*
-** Beschreibung: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
+** Beschreibung: `lokales Cache-Verzeichnis für die Script-Erweiterung; "%h" wird durch das WeeChat Verzeichnis ersetzt (Standardpfad: "~/.weechat") (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/script"`)
 
