@@ -83,12 +83,12 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_xfer.file.download_path]] *xfer.file.download_path*
-** descrizione: `path per il salvataggio dei file in arrivo ("%h" sarà sostituito dalla home di WeeChat, "~/.weechat come predefinita)`
+** descrizione: `path for writing incoming files: "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%h/xfer"`)
 
 * [[option_xfer.file.upload_path]] *xfer.file.upload_path*
-** descrizione: `path per la lettura dei file da inviare (quando non specificato dall'utente) ("%h" sarà sostituito dalla home di WeeChat, "~/.weechat come predefinita)`
+** descrizione: `path for reading files when sending (when no path is specified by user): "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"~"`)
 

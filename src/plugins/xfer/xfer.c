@@ -140,21 +140,26 @@ xfer_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
 void
 xfer_create_directories ()
 {
-    const char *weechat_dir;
-    char *dir1, *dir2;
+    char *path;
 
     /* create download directory */
-    weechat_dir = weechat_info_get ("weechat_dir", "");
-    if (weechat_dir)
+    path = weechat_string_eval_path_home (
+        weechat_config_string (xfer_config_file_download_path),
+        NULL, NULL, NULL);
+    if (path)
     {
-        dir1 = weechat_string_expand_home (weechat_config_string (xfer_config_file_download_path));
-        dir2 = weechat_string_replace (dir1, "%h", weechat_dir);
-        if (dir2)
-            (void) weechat_mkdir (dir2, 0700);
-        if (dir1)
-            free (dir1);
-        if (dir2)
-            free (dir2);
+        (void) weechat_mkdir_parents (path, 0700);
+        free (path);
+    }
+
+    /* create upload directory */
+    path = weechat_string_eval_path_home (
+        weechat_config_string (xfer_config_file_upload_path),
+        NULL, NULL, NULL);
+    if (path)
+    {
+        (void) weechat_mkdir_parents (path, 0700);
+        free (path);
     }
 }
 
@@ -998,9 +1003,9 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     struct t_infolist *infolist;
     const char *plugin_name, *plugin_id, *str_type, *str_protocol;
     const char *remote_nick, *local_nick, *charset_modifier, *filename, *proxy;
-    const char *weechat_dir, *str_address, *str_port;
+    const char *str_address, *str_port;
     int type, protocol, args, port_start, port_end, sock, port;
-    char *dir1, *dir2, *filename2, *short_filename, *pos, str_port_temp[16];
+    char *path, *filename2, *short_filename, *pos, str_port_temp[16];
     struct stat st;
     struct sockaddr_storage addr, own_ip_addr, bind_addr;
     struct sockaddr *out_addr = (struct sockaddr*)&addr;
@@ -1104,41 +1109,30 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
             filename2 = weechat_string_expand_home (filename);
         else
         {
-            dir1 = weechat_string_expand_home (weechat_config_string (xfer_config_file_upload_path));
-            if (!dir1)
+            path = weechat_string_eval_path_home (
+                weechat_config_string (xfer_config_file_upload_path),
+                NULL, NULL, NULL);
+            if (!path)
             {
                 weechat_printf (NULL,
                                 _("%s%s: not enough memory"),
                                 weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 goto error;
             }
-
-            weechat_dir = weechat_info_get ("weechat_dir", "");
-            dir2 = weechat_string_replace (dir1, "%h", weechat_dir);
-            if (!dir2)
-            {
-                weechat_printf (NULL,
-                                _("%s%s: not enough memory"),
-                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
-                free (dir1);
-                goto error;
-            }
-            filename2 = malloc (strlen (dir2) + strlen (filename) + 4);
+            filename2 = malloc (strlen (path) + strlen (filename) + 4);
             if (!filename2)
             {
                 weechat_printf (NULL,
                                 _("%s%s: not enough memory"),
                                 weechat_prefix ("error"), XFER_PLUGIN_NAME);
-                free (dir1);
-                free (dir2);
+                free (path);
                 goto error;
             }
-            strcpy (filename2, dir2);
+            strcpy (filename2, path);
             if (filename2[strlen (filename2) - 1] != DIR_SEPARATOR_CHAR)
                 strcat (filename2, DIR_SEPARATOR);
             strcat (filename2, filename);
-            free (dir1);
-            free (dir2);
+            free (path);
         }
 #endif /* _WIN32 */
         /* check if file exists */

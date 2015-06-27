@@ -83,12 +83,12 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_xfer.file.download_path]] *xfer.file.download_path*
-** 説明: `受信ファイルを書き込むパス ("%h" は WeeChat ホームに置換されます、デフォルトは "~/.weechat")`
+** 説明: `path for writing incoming files: "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%h/xfer"`)
 
 * [[option_xfer.file.upload_path]] *xfer.file.upload_path*
-** 説明: `ファイル送信の際に読み込むファイルのパス (ユーザがパスを指定しなかった場合) ("%h" は WeeChat ホームに置換されます、デフォルトは "~/.weechat")`
+** 説明: `path for reading files when sending (when no path is specified by user): "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"~"`)
 

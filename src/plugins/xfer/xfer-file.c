@@ -80,37 +80,29 @@ xfer_file_resume (struct t_xfer *xfer, const char *filename)
 void
 xfer_file_find_filename (struct t_xfer *xfer)
 {
-    const char *weechat_home, *dir_separator;
-    char *dir1, *dir2, *filename2;
+    const char *dir_separator;
+    char *path, *filename2;
     int length;
 
     if (!XFER_IS_FILE(xfer->type))
         return;
 
-    dir1 = weechat_string_expand_home (weechat_config_string (xfer_config_file_download_path));
-    if (!dir1)
+    path = weechat_string_eval_path_home (
+        weechat_config_string (xfer_config_file_download_path),
+        NULL, NULL, NULL);
+    if (!path)
         return;
 
-    weechat_home = weechat_info_get ("weechat_dir", "");
-    if (!weechat_home)
-    {
-        free (dir1);
-        return;
-    }
-    dir2 = weechat_string_replace (dir1, "%h", weechat_home);
-    if (!dir2)
-    {
-        free (dir1);
-        return;
-    }
-
-    xfer->local_filename = malloc (strlen (dir2) +
+    xfer->local_filename = malloc (strlen (path) +
                                    strlen (xfer->remote_nick) +
                                    strlen (xfer->filename) + 4);
     if (!xfer->local_filename)
+    {
+        free (path);
         return;
+    }
 
-    strcpy (xfer->local_filename, dir2);
+    strcpy (xfer->local_filename, path);
     dir_separator = weechat_info_get("dir_separator", "");
     if (dir_separator
         && (xfer->local_filename[strlen (xfer->local_filename) - 1] != dir_separator[0]))
@@ -122,10 +114,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
     }
     strcat (xfer->local_filename, xfer->filename);
 
-    if (dir1)
-        free (dir1);
-    if (dir2 )
-        free (dir2);
+    free (path);
 
     /* file already exists? */
     if (access (xfer->local_filename, F_OK) == 0)

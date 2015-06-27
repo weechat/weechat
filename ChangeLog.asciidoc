@@ -27,6 +27,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (closes #440)
 * script: rename option script.scripts.dir to script.scripts.path, evaluate
   content of option (issue #388)
+* xfer: evaluate content of options xfer.file.download_path and
+  xfer.file.upload_path (issue #388)
 
 === Bugs fixed
 
