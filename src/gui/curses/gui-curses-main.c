@@ -74,22 +74,26 @@ int gui_term_lines = 0;                /* number of lines in terminal       */
  */
 
 void
-gui_main_get_password (const char *prompt1, const char *prompt2,
-                       const char *prompt3,
-                       char *password, int size)
+gui_main_get_password (const char **prompt, char *password, int size)
 {
-    int i, ch;
+    int line, i, ch;
 
     initscr ();
     cbreak ();
     noecho ();
+    raw ();
 
     clear();
 
-    mvaddstr (0, 0, prompt1);
-    mvaddstr (1, 0, prompt2);
-    mvaddstr (2, 0, prompt3);
-    mvaddstr (3, 0, "=> ");
+    line = 0;
+
+    while (prompt[line])
+    {
+        mvaddstr (line, 0, prompt[line]);
+        line++;
+    }
+
+    mvaddstr (line, 0, "=> ");
     refresh ();
 
     memset (password, '\0', size);
@@ -97,22 +101,30 @@ gui_main_get_password (const char *prompt1, const char *prompt2,
     while (i < size - 1)
     {
         ch = getch ();
+        /* enter */
         if (ch == '\n')
             break;
+        /* ctrl-C */
+        if (ch == 3)
+        {
+            password[0] = 3;
+            i = 1;
+            break;
+        }
         if (ch == 127)
         {
             if (i > 0)
             {
                 i--;
                 password[i] = '\0';
-                mvaddstr (3, 3 + i, " ");
-                move (3, 3 + i);
+                mvaddstr (line, 3 + i, " ");
+                move (line, 3 + i);
             }
         }
         else
         {
             password[i] = ch;
-            mvaddstr (3, 3 + i, "*");
+            mvaddstr (line, 3 + i, "*");
             i++;
         }
         refresh ();

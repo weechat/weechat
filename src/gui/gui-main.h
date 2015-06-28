@@ -22,8 +22,7 @@
 
 /* main functions (GUI dependent) */
 
-extern void gui_main_get_password (const char *prompt1, const char *prompt2,
-                                   const char *prompt3,
+extern void gui_main_get_password (const char **prompt,
                                    char *password, int size);
 extern void gui_main_debug_libs ();
 extern void gui_main_end (int clean_exit);

@@ -566,16 +566,20 @@ secure_decrypt_data_not_decrypted (const char *passphrase)
 void
 secure_get_passphrase_from_user (const char *error)
 {
+    const char *prompt[5];
     char passphrase[1024];
+
+    prompt[0] = _("Please enter your passphrase to decrypt the data secured "
+                  "by WeeChat:");
+    prompt[1] = _("(enter just one space to skip the passphrase, but this "
+                  "will DISABLE all secured data!)");
+    prompt[2] = _("(press ctrl-C to exit WeeChat now)");
+    prompt[3] = error;
+    prompt[4] = NULL;
 
     while (1)
     {
-        gui_main_get_password (_("Please enter your passphrase to decrypt the "
-                                 "data secured by WeeChat:"),
-                               _("(enter just one space to skip the passphrase, "
-                                 "but this will DISABLE all secured data!)"),
-                               error,
-                               passphrase, sizeof (passphrase));
+        gui_main_get_password (prompt, passphrase, sizeof (passphrase));
         if (secure_passphrase)
         {
             free (secure_passphrase);
@@ -589,6 +593,11 @@ secure_get_passphrase_from_user (const char *error)
                 gui_chat_printf (NULL,
                                  _("To recover your secured data, you can "
                                    "use /secure decrypt (see /help secure)"));
+            }
+            else if (strcmp (passphrase, "\x03") == 0)
+            {
+                /* ctrl-C pressed, just exit now */
+                exit (1);
             }
             else
                 secure_passphrase = strdup (passphrase);
