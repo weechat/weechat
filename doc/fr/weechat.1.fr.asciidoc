@@ -17,7 +17,6 @@ weechat - le client de discussion extensible
 
 == DESCRIPTION
 
-// TRANSLATION MISSING
 WeeChat (Wee Enhanced Environment for Chat) est un client de discussion libre,
 rapide et léger, conçu pour différents systèmes d'exploitation.
 Il est hautement paramétrable et extensible avec des scripts.
