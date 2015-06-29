@@ -122,6 +122,19 @@ Si raccomanda il locale UTF-8 per WeeChat. Se si utilizza ISO o un altro
 locale, per favore verificare che *tutte* le impostazioni (terminale, screen)
 siano ISO e *non* UTF-8.
 
+// TRANSLATION MISSING
+[[unicode_chars]]
+=== Some unicode chars are displayed in terminal but not in WeeChat, why?
+
+This may be caused by a libc bug in function 'wcwidth', which should be fixed
+in glibc 2.22 (maybe not yet available in your distribution).
+
+There is a workaround to use the fixed 'wcwidth' function:
+https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
+
+See this bug report for more information:
+https://github.com/weechat/weechat/issues/79
+
 [[bars_background]]
 === Barre come quella del titolo e di stato non sono complete, il colore di sfondo si ferma dopo il testo, perché?
 
