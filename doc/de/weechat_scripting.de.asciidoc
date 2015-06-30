@@ -921,49 +921,48 @@ _Neu seit Version 0.3.4._
 Man kann IRC Nachrichten mittels einer info_hashtable mit dem Namen
 "irc_message_parse" parsen.
 
-// TRANSLATION MISSING
-The result is a hashtable with following keys
-(the example values are built with this message:
+Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
+(das Beispiel bezieht sich auf folgende IRC Nachricht:
 `@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!`):
 
 [width="100%",cols="1,^2,10,8",options="header"]
 |===
-| Key | WeeChat version | Description | Example
+| Schlüssel | WeeChat version | Beschreibung | Beispiel
 
-| tags | ≥ 0.4.0 |
-  The tags in message (can be empty) |
+| Tags | ≥ 0.4.0 |
+  Tags in der Nachricht (kann leer sein) |
   `time=2015-06-27T16:40:35.000Z`
 
 | message_without_tags | ≥ 0.4.0 |
-  The message without the tags (the same as message if there are no tags) |
+  Die IRC Nachricht ohne Tags (wie eine Nachricht ohne Tags) |
   `:nick!user@host PRIVMSG #weechat :hello!`
 
 | nick | ≥ 0.3.4 |
-  The origin nick |
+  der ursprüngliche Nick |
   `nick`
 
 | host | ≥ 0.3.4 |
-  The origin host (includes the nick) |
+  der ursprüngliche Host (beinhaltet den Nick) |
   `nick!user@host`
 
 | command | ≥ 0.3.4 |
-  The command ('PRIVMSG', 'NOTICE', ...) |
+  der Befehl ('PRIVMSG', 'NOTICE', ...) |
   `PRIVMSG`
 
 | channel | ≥ 0.3.4 |
-  The target channel |
+  der Zielchannel|
   `#weechat`
 
 | arguments | ≥ 0.3.4 |
-  The command arguments (includes the channel) |
+  das Argument des Befehls (beinhaltet den Channel) |
   `#weechat :hello!`
 
 | text | ≥ 1.3 |
-  The text (for example user message) |
+  der Text (zum Beispiel eine Nachricht eines Users) |
   `hello!`
 
 | pos_text | ≥ 1.3 |
-  The index of text in message ("-1" if text was not found) |
+  der Index des Textes innerhalb der Nachricht ("-1" falls der Text nicht gefunden wurde) |
   `65`
 |===
 

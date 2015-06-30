@@ -3320,15 +3320,13 @@ und die Daten in einer Hashtable gesichert:
 | command              | string | IRC Befehl (Beispiel: "PRIVMSG", "NOTICE", ...)
 | channel              | string | IRC Channel
 | arguments            | string | Argumente des Befehls (Beinhaltet Wert von 'channel')
-// TRANSLATION MISSING
-| text                 | string | Text (for example user message)
-// TRANSLATION MISSING
-| pos_text             | string | The index of text in message ("-1" if text was not found)
+| text                 | string | Text (zum Beipiel eine Nachricht eines Users)
+| pos_text             | string | Der Index des Textes in einer Nachricht ("-1" falls Text nicht gefunden wurde)
 |===
 
-// TRANSLATION MISSING
-When the data is a pointer, the variable `tg_signal_data` can be used like this
-to read a hdata property (in this example this is a pointer on a buffer):
+Sofern es sich bei den Daten um einen Pointer handelt, kann die Variable `tg_signal_data`
+wie im folgenden Beispiel genutzt werden um den Inhalt von hdata zu lesen (im Beispiel
+wird der Pointer eines Buffer verwendet):
 
 ----
 ${buffer[${tg_signal_data}].full_name}
