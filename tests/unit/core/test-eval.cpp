@@ -24,6 +24,7 @@
 extern "C"
 {
 #include <stdio.h>
+#include <string.h>
 #include <regex.h>
 #include "src/core/wee-eval.h"
 #include "src/core/wee-config.h"
@@ -198,6 +199,9 @@ TEST(Eval, EvalExpression)
     WEE_CHECK_EVAL("", "${}");
     WEE_CHECK_EVAL("", "${xyz}");
 
+    /* test eval of substring */
+    WEE_CHECK_EVAL("\t", "${eval:${\\t}}");
+
     /* test value from extra_vars */
     WEE_CHECK_EVAL("value", "${test}");
 
@@ -229,6 +233,15 @@ TEST(Eval, EvalExpression)
 
     /* test info */
     WEE_CHECK_EVAL(version_get_version (), "${info:version}");
+
+    /* test date */
+    value = eval_expression ("${date}", pointers, extra_vars, options);
+    LONGS_EQUAL(19, strlen (value));
+    free (value);
+    value = eval_expression ("${date:%H:%M:%S}",
+                             pointers, extra_vars, options);
+    LONGS_EQUAL(8, strlen (value));
+    free (value);
 
     /* test option */
     snprintf (str_value, sizeof (str_value),

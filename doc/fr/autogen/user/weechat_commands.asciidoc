@@ -276,14 +276,16 @@ Pour forcer une comparaison de chaînes, ajoutez des guillemets autour de chaque
   "50" > "100"  ==> 1
 
 Des variables sont remplacées dans l'expression, en utilisant le format ${variable}, la variable pouvant être, par ordre de priorité :
-  1. une chaîne avec les caractères échappés (format : "esc:xxx" ou "\xxx")
-  2. une chaîne avec des caractères à cacher (format : "hide:caractère,chaîne")
-  3. une couleur (format : "color:xxx")
-  4. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
-  5. une variable d'environnement (format : "env:XXX")
-  6. une option (format : "fichier.section.option")
-  7. une variable locale du tampon
-  8. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  1. une sous-chaîne évaluée (format : "eval:xxx")
+  2. une chaîne avec les caractères échappés (format : "esc:xxx" ou "\xxx")
+  3. une chaîne avec des caractères à cacher (format : "hide:caractère,chaîne")
+  4. une couleur (format : "color:xxx")
+  5. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
+  6. la date/heure courante (format : "date" ou "date:format")
+  7. une variable d'environnement (format : "env:XXX")
+  8. une option (format : "fichier.section.option")
+  9. une variable locale du tampon
+  10. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste, par exemple :
@@ -303,6 +305,7 @@ Exemples (chaînes simples) :
   /eval -n ${window.buffer.number}             ==> 1
   /eval -n ${\t}                               ==> <tab>
   /eval -n ${hide:-,${relay.network.password}} ==> --------
+  /eval -n ${date:%H:%M:%S}                    ==> 07:46:40
 
 Exemples (conditions) :
   /eval -n -c ${window.buffer.number} > 2 ==> 0

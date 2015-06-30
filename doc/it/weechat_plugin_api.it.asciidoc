@@ -1967,7 +1967,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 // TRANSLATION MISSING
-_WeeChat ≥ 0.4.0, updated in 0.4.2 and 1.1._
+_WeeChat ≥ 0.4.0, updated in 0.4.2, 1.0, 1.1, 1.2 and 1.3._
 
 // TRANSLATION MISSING
 Evaluate an expression and return result as a string.
@@ -2025,12 +2025,20 @@ List of variables expanded in expression (by order of priority, from first
 expanded to last):
 
 // TRANSLATION MISSING
-[width="100%",cols="2,8,3,3",options="header"]
+[width="100%",cols="2,8,4,4",options="header"]
 |===
 | Format | Description | Examples | Results
 
 | `${name}` | Variable `name` from hashtable 'extra_vars' |
   `${name}` | `value`
+
+// TRANSLATION MISSING
+| `${eval:xxx}` +
+  (_WeeChat ≥ 1.3_) |
+  String to evaluate |
+  `${eval:${date:${weechat.look.buffer_time_format}}}` |
+ `19:02:45` (with colors if there are color codes in the option
+ weechat.look.buffer_time_format)
 
 | `${esc:xxx}` +
   `${\xxx}` | String with escaped chars |
@@ -2066,6 +2074,17 @@ expanded to last):
   `${info:irc_nick_color_name,foo}` |
   `1.0` +
   `lightblue`
+
+// TRANSLATION MISSING
+| `${date}` +
+  `${date:xxx}` +
+  (_WeeChat ≥ 1.3_) |
+  Current date/time, with custom format (see `man strftime`),
+  default format is `%F %T` |
+  `${date}` +
+  `${date:%H:%M:%S}` |
+  `2015-06-30 19:02:45` +
+  `19:02:45`
 
 | `${env:NAME}` +
   (_WeeChat ≥ 1.2_) |

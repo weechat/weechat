@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <regex.h>
+#include <time.h>
 
 #include "weechat.h"
 #include "wee-eval.h"
@@ -48,7 +49,10 @@ char *logical_ops[EVAL_NUM_LOGICAL_OPS] =
 char *comparisons[EVAL_NUM_COMPARISONS] =
 { "=~", "!~", "==", "!=", "<=", "<", ">=", ">" };
 
-struct t_hashtable *eval_hashtable_pointers = NULL;
+char *eval_replace_vars (const char *expr, struct t_hashtable *pointers,
+                         struct t_hashtable *extra_vars,
+                         const char *prefix, const char *suffix,
+                         struct t_eval_regex *eval_regex);
 
 
 /*
@@ -221,19 +225,20 @@ end:
 /*
  * Replaces variables, which can be, by order of priority:
  *   1. an extra variable from hashtable "extra_vars"
- *   2. a string with escaped chars (format: esc:xxx or \xxx)
- *   3. a string with chars to hide (format: hide:char,string)
- *   4. a regex group captured (format: re:N (0.99) or re:+)
- *   5. a color (format: color:xxx)
- *   6. an info (format: info:name,arguments)
- *   7. an option (format: file.section.option)
- *   8. a buffer local variable
- *   9. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2)
+ *   2. a string to evaluate (format: eval:xxx)
+ *   3. a string with escaped chars (format: esc:xxx or \xxx)
+ *   4. a string with chars to hide (format: hide:char,string)
+ *   5. a regex group captured (format: re:N (0.99) or re:+)
+ *   6. a color (format: color:xxx)
+ *   7. an info (format: info:name,arguments)
+ *   8. current date/time (format: date or date:xxx)
+ *   9. an environment variable (format: env:XXX)
+ *  10. an option (format: file.section.option)
+ *  11. a buffer local variable
+ *  12. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *                        or hdata[ptr].var1.var2)
  *
- * Examples:
- *   option: ${weechat.look.scroll_amount}
- *   hdata : ${window.buffer.full_name}
- *           ${window.buffer.local_variables.type}
+ * See /help in WeeChat for examples.
  */
 
 char *
@@ -243,18 +248,22 @@ eval_replace_vars_cb (void *data, const char *text)
     struct t_eval_regex *eval_regex;
     struct t_config_option *ptr_option;
     struct t_gui_buffer *ptr_buffer;
-    char str_value[64], *value, *pos, *pos1, *pos2, *hdata_name, *list_name;
+    char str_value[512], *value, *pos, *pos1, *pos2, *hdata_name, *list_name;
     char *tmp, *info_name, *hide_char, *hidden_string, *error;
-    const char *ptr_value, *ptr_arguments, *ptr_string;
+    const char *prefix, *suffix, *ptr_value, *ptr_arguments, *ptr_string;
     struct t_hdata *hdata;
     void *pointer;
     int i, length_hide_char, length, index, rc;
     long number;
     long unsigned int ptr;
+    time_t date;
+    struct tm *date_tmp;
 
     pointers = (struct t_hashtable *)(((void **)data)[0]);
     extra_vars = (struct t_hashtable *)(((void **)data)[1]);
-    eval_regex = (struct t_eval_regex *)(((void **)data)[2]);
+    prefix = (const char *)(((void **)data)[2]);
+    suffix = (const char *)(((void **)data)[3]);
+    eval_regex = (struct t_eval_regex *)(((void **)data)[4]);
 
     /* 1. variable in hashtable "extra_vars" */
     if (extra_vars)
@@ -264,13 +273,23 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 2. convert escaped chars */
+    /*
+     * 2. force evaluation of string (recursive call)
+     *    --> use with caution: the text must be safe!
+     */
+    if (strncmp (text, "eval:", 5) == 0)
+    {
+        return eval_replace_vars (text + 5, pointers, extra_vars,
+                                  prefix, suffix, eval_regex);
+    }
+
+    /* 3. convert escaped chars */
     if (strncmp (text, "esc:", 4) == 0)
         return string_convert_escaped_chars (text + 4);
     if ((text[0] == '\\') && text[1] && (text[1] != '\\'))
         return string_convert_escaped_chars (text);
 
-    /* 3. hide chars: replace all chars by a given char/string */
+    /* 4. hide chars: replace all chars by a given char/string */
     if (strncmp (text, "hide:", 5) == 0)
     {
         hidden_string = NULL;
@@ -300,7 +319,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return (hidden_string) ? hidden_string : strdup ("");
     }
 
-    /* 4. regex group captured */
+    /* 5. regex group captured */
     if (strncmp (text, "re:", 3) == 0)
     {
         if (eval_regex && eval_regex->result)
@@ -323,7 +342,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ("");
     }
 
-    /* 5. color code */
+    /* 6. color code */
     if (strncmp (text, "color:", 6) == 0)
     {
         ptr_value = gui_color_search_config (text + 6);
@@ -333,7 +352,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 6. info */
+    /* 7. info */
     if (strncmp (text, "info:", 5) == 0)
     {
         ptr_value = NULL;
@@ -353,7 +372,20 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 7. environment variable */
+    /* 8. current date/time */
+    if ((strncmp (text, "date", 4) == 0) && (!text[4] || (text[4] == ':')))
+    {
+        date = time (NULL);
+        date_tmp = localtime (&date);
+        if (!date_tmp)
+            return strdup ("");
+        rc = (int) strftime (str_value, sizeof (str_value),
+                             (text[4] == ':') ? text + 5 : "%F %T",
+                             date_tmp);
+        return strdup ((rc > 0) ? str_value : "");
+    }
+
+    /* 9. environment variable */
     if (strncmp (text, "env:", 4) == 0)
     {
         ptr_value = getenv (text + 4);
@@ -361,7 +393,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 8. option: if found, return this value */
+    /* 10. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -394,7 +426,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 9. local variable in buffer */
+    /* 11. local variable in buffer */
     ptr_buffer = hashtable_get (pointers, "buffer");
     if (ptr_buffer)
     {
@@ -403,7 +435,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 10. hdata */
+    /* 12. hdata */
     value = NULL;
     hdata_name = NULL;
     list_name = NULL;
@@ -486,11 +518,13 @@ eval_replace_vars (const char *expr, struct t_hashtable *pointers,
                    const char *prefix, const char *suffix,
                    struct t_eval_regex *eval_regex)
 {
-    void *ptr[3];
+    const void *ptr[5];
 
     ptr[0] = pointers;
     ptr[1] = extra_vars;
-    ptr[2] = eval_regex;
+    ptr[2] = prefix;
+    ptr[3] = suffix;
+    ptr[4] = eval_regex;
 
     return string_replace_with_callback (expr, prefix, suffix,
                                          &eval_replace_vars_cb, ptr, NULL);
