@@ -341,7 +341,7 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
  * Returns pointer to string found, or NULL if not found.
  */
 
-char *
+const char *
 string_strcasestr (const char *string, const char *search)
 {
     int length_search;
@@ -1051,8 +1051,8 @@ string_regcomp (void *preg, const char *regex, int default_flags)
 int
 string_has_highlight (const char *string, const char *highlight_words)
 {
-    char *msg, *highlight, *match, *match_pre, *match_post, *msg_pos;
-    char *pos, *pos_end;
+    const char *match, *match_pre, *match_post, *msg_pos;
+    char *msg, *highlight, *pos, *pos_end;
     int end, length, startswith, endswith, wildcard_start, wildcard_end, flags;
 
     if (!string || !string[0] || !highlight_words || !highlight_words[0])

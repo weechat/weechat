@@ -767,7 +767,7 @@ int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 
 [source,C]
 ----
-char *weechat_strcasestr (const char *string, const char *search);
+const char *weechat_strcasestr (const char *string, const char *search);
 ----
 
 引数:
@@ -783,7 +783,7 @@ C 言語での使用例:
 
 [source,C]
 ----
-char *pos = weechat_strcasestr ("aBcDeF", "de");  /* result: pointer to "DeF" */
+const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* result: pointer to "DeF" */
 ----
 
 [NOTE]

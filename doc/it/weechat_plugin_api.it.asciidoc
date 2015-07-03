@@ -795,7 +795,7 @@ Prototipo:
 
 [source,C]
 ----
-char *weechat_strcasestr (const char *string, const char *search);
+const char *weechat_strcasestr (const char *string, const char *search);
 ----
 
 Argomenti:
@@ -811,7 +811,7 @@ Esempio in C:
 
 [source,C]
 ----
-char *pos = weechat_strcasestr ("aBcDeF", "de");  /* risultato: puntatore a "DeF" */
+const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* risultato: puntatore a "DeF" */
 ----
 
 [NOTE]

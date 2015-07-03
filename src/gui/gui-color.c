@@ -1001,8 +1001,8 @@ gui_color_emphasize (const char *string,
                      regex_t *regex)
 {
     regmatch_t regex_match;
-    char *result, *result2, *string_no_color, *pos;
-    const char *ptr_string, *ptr_no_color, *color_emphasis;
+    char *result, *result2, *string_no_color;
+    const char *ptr_string, *ptr_no_color, *color_emphasis, *pos;
     int rc, length_search, length_emphasis, length_result;
     int pos1, pos2, real_pos1, real_pos2, count_emphasis;
 

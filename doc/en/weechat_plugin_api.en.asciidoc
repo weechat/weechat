@@ -763,7 +763,7 @@ Prototype:
 
 [source,C]
 ----
-char *weechat_strcasestr (const char *string, const char *search);
+const char *weechat_strcasestr (const char *string, const char *search);
 ----
 
 Arguments:
@@ -779,7 +779,7 @@ C example:
 
 [source,C]
 ----
-char *pos = weechat_strcasestr ("aBcDeF", "de");  /* result: pointer to "DeF" */
+const char *pos = weechat_strcasestr ("aBcDeF", "de");  /* result: pointer to "DeF" */
 ----
 
 [NOTE]
