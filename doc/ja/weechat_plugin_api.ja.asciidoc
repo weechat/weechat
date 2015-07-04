@@ -761,6 +761,8 @@ int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 
 ==== strcasestr
 
+_バージョン 1.3 で更新。_
+
 ロケールと大文字小文字を区別して文字列を検索。
 
 プロトタイプ:
@@ -777,7 +779,9 @@ const char *weechat_strcasestr (const char *string, const char *search);
 
 戻り値:
 
+// TRANSLATION MISSING
 * 見つかった文字列へのポインタ、見つからない場合は NULL
+  (_WeeChat ≥ 1.3_: pointer returned is a 'const char *' instead of 'char *')
 
 C 言語での使用例:
 
@@ -2220,6 +2224,8 @@ weechat_utf8_normalize (string, '?');
 
 ==== utf8_prev_char
 
+_バージョン 1.3 で更新。_
+
 文字列中の 1 つ前の UTF-8 文字へのポインタを返す。
 
 プロトタイプ:
@@ -2238,7 +2244,9 @@ const char *weechat_utf8_prev_char (const char *string_start,
 
 戻り値:
 
+// TRANSLATION MISSING
 * 1 つ前の UTF-8 文字へのポインタ、見つからなければ (文字列の開始位置に到達した場合は) NULL
+  (_WeeChat ≥ 1.3_: pointer returned is a 'const char *' instead of 'char *')
 
 C 言語での使用例:
 
@@ -2251,6 +2259,8 @@ const char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 スクリプト API ではこの関数を利用できません。
 
 ==== utf8_next_char
+
+_バージョン 1.3 で更新。_
 
 文字列中の 1 つ後の UTF-8 文字へのポインタを返す。
 
@@ -2267,7 +2277,9 @@ const char *weechat_utf8_next_char (const char *string);
 
 戻り値:
 
+// TRANSLATION MISSING
 * 1 つ後の UTF-8 文字へのポインタ、見つからなければ (文字列の最後に到達した場合は) NULL
+  (_WeeChat ≥ 1.3_: pointer returned is a 'const char *' instead of 'char *')
 
 C 言語での使用例:
 
@@ -2524,6 +2536,8 @@ int length_on_screen = weechat_utf8_char_size_screen ("é");  /* == 1 */
 
 ==== utf8_add_offset
 
+_バージョン 1.3 で更新。_
+
 UTF-8 文字列で N 文字前に進む。
 
 プロトタイプ:
@@ -2540,7 +2554,9 @@ const char *weechat_utf8_add_offset (const char *string, int offset);
 
 戻り値:
 
+// TRANSLATION MISSING
 * 文字列の N 文字後に進んだ位置へのポインタ (元文字列の最後より後の位置を指す場合は NULL)
+  (_WeeChat ≥ 1.3_: pointer returned is a 'const char *' instead of 'char *')
 
 C 言語での使用例:
 

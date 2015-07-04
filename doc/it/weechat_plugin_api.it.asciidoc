@@ -788,6 +788,9 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== strcasestr
 
+// TRANSLATION MISSING
+_Updated in 1.3._
+
 Cerca una stringa non sensibile alle maiuscole e indipendente dalla
 localizzazione.
 
@@ -805,7 +808,9 @@ Argomenti:
 
 Valore restituito:
 
+// TRANSLATION MISSING
 * puntatore alla stringa trovata, o NULL se non trovata
+  (_WeeChat ≥ 1.3_: pointer returned is a 'const char *' instead of 'char *')
 
 Esempio in C:
 
@@ -2287,6 +2292,9 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== utf8_prev_char
 
+// TRANSLATION MISSING
+_Updated in 1.3._
+
 Restituisce il puntatore al carattere UTF-8 precedente in una stringa.
 
 Prototipo:
@@ -2305,8 +2313,10 @@ Argomenti:
 
 Valore restituito:
 
+// TRANSLATION MISSING
 * puntatore al precedente carattere UTF-8, NULL se non trovata (raggiunta
   l'inizio della stringa)
+  (_WeeChat ≥ 1.3_: pointer returned is a 'const char *' instead of 'char *')
 
 Esempio in C:
 
@@ -2319,6 +2329,9 @@ const char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== utf8_next_char
+
+// TRANSLATION MISSING
+_Updated in 1.3._
 
 Restituisce il puntatore al successivo carattere UTF-8 in una stringa.
 
@@ -2335,8 +2348,10 @@ Argomenti:
 
 Valore restituito:
 
+// TRANSLATION MISSING
 * puntatore al carattere UTF-8 successivo, NULL se non trovato
   (raggiunta la fine della stringa)
+  (_WeeChat ≥ 1.3_: pointer returned is a 'const char *' instead of 'char *')
 
 Esempio in C:
 
@@ -2600,6 +2615,9 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== utf8_add_offset
 
+// TRANSLATION MISSING
+_Updated in 1.3._
+
 Si sposta in avanti di N caratteri in una stringa UTF-8.
 
 Prototipo:
@@ -2616,7 +2634,9 @@ Argomenti:
 
 Valore restituito:
 
+// TRANSLATION MISSING
 * puntatore alla stringa, N caratteri dopo (NULL se non raggiungibile)
+  (_WeeChat ≥ 1.3_: pointer returned is a 'const char *' instead of 'char *')
 
 Esempio in C:
 

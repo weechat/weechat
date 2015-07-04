@@ -757,6 +757,8 @@ This function is not available in scripting API.
 
 ==== strcasestr
 
+_Updated in 1.3._
+
 Locale and case independent string search.
 
 Prototype:
@@ -774,6 +776,7 @@ Arguments:
 Return value:
 
 * pointer to string found, or NULL if not found
+  (_WeeChat ≥ 1.3_: pointer returned is a 'const char *' instead of 'char *')
 
 C example:
 
@@ -2213,6 +2216,8 @@ This function is not available in scripting API.
 
 ==== utf8_prev_char
 
+_Updated in 1.3._
+
 Return pointer to previous UTF-8 char in a string.
 
 Prototype:
@@ -2232,6 +2237,7 @@ Arguments:
 Return value:
 
 * pointer to previous UTF-8 char, NULL if not found (start of string reached)
+  (_WeeChat ≥ 1.3_: pointer returned is a 'const char *' instead of 'char *')
 
 C example:
 
@@ -2244,6 +2250,8 @@ const char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 This function is not available in scripting API.
 
 ==== utf8_next_char
+
+_Updated in 1.3._
 
 Return pointer to next UTF-8 char in a string.
 
@@ -2261,6 +2269,7 @@ Arguments:
 Return value:
 
 * pointer to next UTF-8 char, NULL if not found (end of string reached)
+  (_WeeChat ≥ 1.3_: pointer returned is a 'const char *' instead of 'char *')
 
 C example:
 
@@ -2517,6 +2526,8 @@ This function is not available in scripting API.
 
 ==== utf8_add_offset
 
+_Updated in 1.3._
+
 Move forward N chars in an UTF-8 string.
 
 Prototype:
@@ -2534,6 +2545,7 @@ Arguments:
 Return value:
 
 * pointer to string, N chars after (NULL if it's not reachable)
+  (_WeeChat ≥ 1.3_: pointer returned is a 'const char *' instead of 'char *')
 
 C example:
 

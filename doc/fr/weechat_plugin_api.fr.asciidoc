@@ -766,6 +766,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== strcasestr
 
+_Mis à jour dans la 1.3._
+
 Rechercher une chaîne indépendemment de la locale et de la casse.
 
 Prototype :
@@ -783,6 +785,8 @@ Paramètres :
 Valeur de retour :
 
 * pointeur vers la chaîne trouvée, ou NULL si non trouvée
+  (_WeeChat ≥ 1.3_ : le pointeur retourné est un 'const char *' au lieu d'un
+  'char *')
 
 Exemple en C :
 
@@ -2255,6 +2259,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== utf8_prev_char
 
+_Mis à jour dans la 1.3._
+
 Retourner un pointeur vers le caractère UTF-8 précédent dans une chaîne.
 
 Prototype :
@@ -2275,6 +2281,8 @@ Valeur de retour :
 
 * pointeur vers le caractère UTF-8 précédent, NULL si non trouvé (début de
   chaîne atteint)
+  (_WeeChat ≥ 1.3_ : le pointeur retourné est un 'const char *' au lieu d'un
+  'char *')
 
 Exemple en C :
 
@@ -2287,6 +2295,8 @@ const char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 Cette fonction n'est pas disponible dans l'API script.
 
 ==== utf8_next_char
+
+_Mis à jour dans la 1.3._
 
 Retourner un pointeur vers le caractère UTF-8 suivant dans une chaîne.
 
@@ -2305,6 +2315,8 @@ Valeur de retour :
 
 * pointeur vers le caractère UTF-8 suivant, NULL si non trouvé (fin de la
   chaîne atteinte)
+  (_WeeChat ≥ 1.3_ : le pointeur retourné est un 'const char *' au lieu d'un
+  'char *')
 
 Exemple en C :
 
@@ -2564,6 +2576,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== utf8_add_offset
 
+_Mis à jour dans la 1.3._
+
 Avancer de N caractères dans une chaîne UTF-8.
 
 Prototype :
@@ -2582,6 +2596,8 @@ Valeur de retour :
 
 * pointeur vers la chaîne, N caractères après (NULL s'il est impossible
   d'atteindre cette position dans la chaîne)
+  (_WeeChat ≥ 1.3_ : le pointeur retourné est un 'const char *' au lieu d'un
+  'char *')
 
 Exemple en C :
 
