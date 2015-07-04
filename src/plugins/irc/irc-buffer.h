@@ -51,7 +51,8 @@ struct t_irc_channel;
 extern void irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
                                                struct t_irc_server **server,
                                                struct t_irc_channel **channel);
-extern char *irc_buffer_build_name (const char *server, const char *channel);
+extern const char *irc_buffer_build_name (const char *server,
+                                          const char *channel);
 extern int irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer);
 extern int irc_buffer_nickcmp_cb (void *data,
                                   struct t_gui_buffer *buffer,

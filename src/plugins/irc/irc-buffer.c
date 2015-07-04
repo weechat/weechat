@@ -87,7 +87,7 @@ irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
  * Builds buffer name with a server and a channel.
  */
 
-char *
+const char *
 irc_buffer_build_name (const char *server, const char *channel)
 {
     static char buffer[128];

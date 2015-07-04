@@ -1100,7 +1100,8 @@ IRC_PROTOCOL_CALLBACK(nick)
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_found;
-    char *new_nick, *old_color, *buffer_name, str_tags[512];
+    char *new_nick, *old_color, str_tags[512];
+    const char *buffer_name;
     int local_nick, smart_filter;
     struct t_irc_channel_speaking *ptr_nick_speaking;
 

@@ -236,8 +236,8 @@ irc_channel_create_buffer (struct t_irc_server *server,
     struct t_gui_buffer *ptr_buffer, *ptr_buffer_for_merge;
     int buffer_created, current_buffer_number, buffer_position;
     int manual_join, noswitch;
-    char *buffer_name, str_number[32], *channel_name_lower;
-    const char *short_name, *localvar_channel;
+    char str_number[32], *channel_name_lower;
+    const char *buffer_name, *short_name, *localvar_channel;
 
     buffer_created = 0;
 

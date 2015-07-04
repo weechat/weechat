@@ -1644,9 +1644,8 @@ int
 irc_server_rename (struct t_irc_server *server, const char *new_name)
 {
     int length;
-    char *mask, *pos_option, *new_option_name, *buffer_name;
-    char charset_modifier[256];
-    const char *option_name;
+    char *mask, *pos_option, *new_option_name, charset_modifier[256];
+    const char *buffer_name, *option_name;
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
     struct t_irc_channel *ptr_channel;
