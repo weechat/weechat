@@ -139,7 +139,7 @@ gui_mouse_grab_init (int area)
  *              @*
  */
 
-char *
+const char *
 gui_mouse_grab_event2input ()
 {
     struct t_gui_focus_info *focus_info;
