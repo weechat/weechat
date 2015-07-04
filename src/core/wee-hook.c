@@ -422,7 +422,8 @@ hook_command_build_completion (struct t_hook_command *hook_command)
     int i, j, k, length, num_items;
     struct t_weelist *list;
     char *pos_completion, *pos_double_pipe, *pos_start, *pos_end;
-    char **items, *last_space, *ptr_template;
+    char **items;
+    const char *last_space, *ptr_template;
 
     /* split templates using "||" as separator */
     hook_command->cplt_num_templates = 1;
@@ -673,7 +674,8 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     struct t_hook *ptr_hook, *next_hook;
     struct t_hook *hook_plugin, *hook_other_plugin, *hook_other_plugin2;
     struct t_hook *hook_incomplete_command;
-    char **argv, **argv_eol, *ptr_command_name;
+    char **argv, **argv_eol;
+    const char *ptr_command_name;
     int argc, rc, length_command_name, allow_incomplete_commands;
     int count_other_plugin, count_incomplete_commands;
 

@@ -718,7 +718,8 @@ util_file_get_content (const char *filename)
 int
 util_version_number (const char *version)
 {
-    char **items, buf[64], *ptr_item, *error;
+    char **items, buf[64], *error;
+    const char *ptr_item;
     int num_items, i, version_int[4], index_buf;
     long number;
 

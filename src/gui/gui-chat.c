@@ -326,8 +326,8 @@ gui_chat_get_word_info (struct t_gui_window *window,
                         int *word_start_offset, int *word_end_offset,
                         int *word_length_with_spaces, int *word_length)
 {
-    const char *start_data;
-    char *next_char, *next_char2;
+    char *next_char;
+    const char *start_data, *next_char2;
     int leading_spaces, char_size_screen;
 
     *word_start_offset = 0;

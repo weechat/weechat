@@ -2219,7 +2219,8 @@ Prototype:
 
 [source,C]
 ----
-char *weechat_utf8_prev_char (const char *string_start, const char *string);
+const char *weechat_utf8_prev_char (const char *string_start,
+                                    const char *string);
 ----
 
 Arguments:
@@ -2236,7 +2237,7 @@ C example:
 
 [source,C]
 ----
-char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
+const char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 ----
 
 [NOTE]
@@ -2250,7 +2251,7 @@ Prototype:
 
 [source,C]
 ----
-char *weechat_utf8_next_char (const char *string);
+const char *weechat_utf8_next_char (const char *string);
 ----
 
 Arguments:
@@ -2265,7 +2266,7 @@ C example:
 
 [source,C]
 ----
-char *next_char = weechat_utf8_next_char (string);
+const char *next_char = weechat_utf8_next_char (string);
 ----
 
 [NOTE]
@@ -2522,7 +2523,7 @@ Prototype:
 
 [source,C]
 ----
-char *weechat_utf8_add_offset (const char *string, int offset);
+const char *weechat_utf8_add_offset (const char *string, int offset);
 ----
 
 Arguments:
@@ -2538,8 +2539,8 @@ C example:
 
 [source,C]
 ----
-char *str = "chêne";
-char *str2 = weechat_utf8_add_offset (str, 3);  /* points to "ne" */
+const char *str = "chêne";
+const char *str2 = weechat_utf8_add_offset (str, 3);  /* points to "ne" */
 ----
 
 [NOTE]

@@ -179,7 +179,7 @@ utf8_normalize (char *string, char replacement)
  * "string_start" was reached).
  */
 
-char *
+const char *
 utf8_prev_char (const char *string_start, const char *string)
 {
     if (!string || (string <= string_start))
@@ -222,7 +222,7 @@ utf8_prev_char (const char *string_start, const char *string)
  * Returns pointer to next UTF-8 char, NULL if string was NULL.
  */
 
-char *
+const char *
 utf8_next_char (const char *string)
 {
     if (!string)
@@ -673,7 +673,7 @@ utf8_char_size_screen (const char *string)
  * Returns pointer to the new position in string.
  */
 
-char *
+const char *
 utf8_add_offset (const char *string, int offset)
 {
     if (!string)
@@ -684,7 +684,7 @@ utf8_add_offset (const char *string, int offset)
         string = utf8_next_char (string);
         offset--;
     }
-    return (char *)string;
+    return string;
 }
 
 /*
@@ -701,7 +701,7 @@ int
 utf8_real_pos (const char *string, int pos)
 {
     int count, real_pos;
-    char *next_char;
+    const char *next_char;
 
     if (!string)
         return pos;

@@ -32,8 +32,9 @@ extern void utf8_init ();
 extern int utf8_has_8bits (const char *string);
 extern int utf8_is_valid (const char *string, char **error);
 extern void utf8_normalize (char *string, char replacement);
-extern char *utf8_prev_char (const char *string_start, const char *string);
-extern char *utf8_next_char (const char *string);
+extern const char *utf8_prev_char (const char *string_start,
+                                   const char *string);
+extern const char *utf8_next_char (const char *string);
 extern int utf8_char_int (const char *string);
 extern void utf8_int_string (unsigned int unicode_value, char *string);
 extern wint_t utf8_wide_char (const char *string);
@@ -46,7 +47,7 @@ extern int utf8_charcasecmp (const char *string1, const char *string2);
 extern int utf8_charcasecmp_range (const char *string1, const char *string2,
                                    int range);
 extern int utf8_char_size_screen (const char *string);
-extern char *utf8_add_offset (const char *string, int offset);
+extern const char *utf8_add_offset (const char *string, int offset);
 extern int utf8_real_pos (const char *string, int pos);
 extern int utf8_pos (const char *string, int real_pos);
 extern char *utf8_strndup (const char *string, int length);

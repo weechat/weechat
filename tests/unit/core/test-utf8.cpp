@@ -125,7 +125,7 @@ TEST(Utf8, Normalize)
 
 TEST(Utf8, Move)
 {
-    char *ptr;
+    const char *ptr;
 
     /* previous/next char */
     POINTERS_EQUAL(NULL, utf8_prev_char (NULL, NULL));

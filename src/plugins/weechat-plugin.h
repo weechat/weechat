@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20150703-01"
+#define WEECHAT_PLUGIN_API_VERSION "20150704-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -319,8 +319,9 @@ struct t_weechat_plugin
     int (*utf8_has_8bits) (const char *string);
     int (*utf8_is_valid) (const char *string, char **error);
     void (*utf8_normalize) (char *string, char replacement);
-    char *(*utf8_prev_char) (const char *string_start, const char *string);
-    char *(*utf8_next_char) (const char *string);
+    const char *(*utf8_prev_char) (const char *string_start,
+                                   const char *string);
+    const char *(*utf8_next_char) (const char *string);
     int (*utf8_char_int) (const char *string);
     int (*utf8_char_size) (const char *string);
     int (*utf8_strlen) (const char *string);
@@ -329,7 +330,7 @@ struct t_weechat_plugin
     int (*utf8_charcmp) (const char *string1, const char *string2);
     int (*utf8_charcasecmp) (const char *string1, const char *string2);
     int (*utf8_char_size_screen) (const char *string);
-    char *(*utf8_add_offset) (const char *string, int offset);
+    const char *(*utf8_add_offset) (const char *string, int offset);
     int (*utf8_real_pos) (const char *string, int pos);
     int (*utf8_pos) (const char *string, int real_pos);
     char *(*utf8_strndup) (const char *string, int length);

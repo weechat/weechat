@@ -380,7 +380,7 @@ gui_key_flush (int paste)
                     (void) utf8_is_valid (ptr_char, &ptr_error);
                     if (!ptr_error)
                         break;
-                    next_char = utf8_next_char (ptr_error);
+                    next_char = (char *)utf8_next_char (ptr_error);
                     if (next_char && next_char[0])
                     {
                         ptr_char = ptr_error;

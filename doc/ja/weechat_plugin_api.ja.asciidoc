@@ -2226,7 +2226,8 @@ weechat_utf8_normalize (string, '?');
 
 [source,C]
 ----
-char *weechat_utf8_prev_char (const char *string_start, const char *string);
+const char *weechat_utf8_prev_char (const char *string_start,
+                                    const char *string);
 ----
 
 引数:
@@ -2243,7 +2244,7 @@ C 言語での使用例:
 
 [source,C]
 ----
-char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
+const char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 ----
 
 [NOTE]
@@ -2257,7 +2258,7 @@ char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);
 
 [source,C]
 ----
-char *weechat_utf8_next_char (const char *string);
+const char *weechat_utf8_next_char (const char *string);
 ----
 
 引数:
@@ -2272,7 +2273,7 @@ C 言語での使用例:
 
 [source,C]
 ----
-char *next_char = weechat_utf8_next_char (string);
+const char *next_char = weechat_utf8_next_char (string);
 ----
 
 [NOTE]
@@ -2529,7 +2530,7 @@ UTF-8 文字列で N 文字前に進む。
 
 [source,C]
 ----
-char *weechat_utf8_add_offset (const char *string, int offset);
+const char *weechat_utf8_add_offset (const char *string, int offset);
 ----
 
 引数:
@@ -2545,8 +2546,8 @@ C 言語での使用例:
 
 [source,C]
 ----
-char *str = "chêne";
-char *str2 = weechat_utf8_add_offset (str, 3);  /* points to "ne" */
+const char *str = "chêne";
+const char *str2 = weechat_utf8_add_offset (str, 3);  /* points to "ne" */
 ----
 
 [NOTE]

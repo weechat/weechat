@@ -255,7 +255,7 @@ gui_mouse_event_code2key (const char *code)
     int i, x, y, code_utf8, length;
     double diff_x, diff_y, distance, angle, pi4;
     static char key[128];
-    char *ptr_code;
+    const char *ptr_code;
 
     key[0] = '\0';
 

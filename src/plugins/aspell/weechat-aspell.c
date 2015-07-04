@@ -708,7 +708,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
             pos_space = ptr_string;
             while (pos_space && pos_space[0] && (pos_space[0] != ' '))
             {
-                pos_space = weechat_utf8_next_char (pos_space);
+                pos_space = (char *)weechat_utf8_next_char (pos_space);
             }
             if (!pos_space || !pos_space[0])
             {
@@ -766,7 +766,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
 
             /* find end of word: ' and - allowed in word, but not at the end */
             ptr_end_valid = ptr_string;
-            ptr_end = weechat_utf8_next_char (ptr_string);
+            ptr_end = (char *)weechat_utf8_next_char (ptr_string);
             code_point = weechat_utf8_char_int (ptr_end);
             while (iswalnum (code_point) || (code_point == '\'')
                    || (code_point == '-'))
@@ -778,12 +778,12 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
                     ptr_end_valid = ptr_end;
                     word_end_pos_valid = word_end_pos;
                 }
-                ptr_end = weechat_utf8_next_char (ptr_end);
+                ptr_end = (char *)weechat_utf8_next_char (ptr_end);
                 if (!ptr_end[0])
                     break;
                 code_point = weechat_utf8_char_int (ptr_end);
             }
-            ptr_end = weechat_utf8_next_char (ptr_end_valid);
+            ptr_end = (char *)weechat_utf8_next_char (ptr_end_valid);
             word_end_pos = word_end_pos_valid;
             word_ok = 0;
             if (weechat_aspell_string_is_url (ptr_string)
@@ -799,7 +799,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
                     code_point = weechat_utf8_char_int (ptr_end);
                     while (!iswspace (code_point))
                     {
-                        ptr_end = weechat_utf8_next_char (ptr_end);
+                        ptr_end = (char *)weechat_utf8_next_char (ptr_end);
                         if (!ptr_end[0])
                             break;
                         code_point = weechat_utf8_char_int (ptr_end);

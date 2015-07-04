@@ -706,8 +706,7 @@ gui_completion_find_context (struct t_gui_completion *completion,
                              const char *data, int size, int pos)
 {
     int i, command_arg, pos_start, pos_end;
-    const char *ptr_command, *ptr_data;
-    char *prev_char;
+    const char *ptr_command, *ptr_data, *prev_char;
 
     /* look for context */
     gui_completion_free_data (completion);
@@ -913,7 +912,7 @@ int
 gui_completion_common_prefix_size (struct t_arraylist *list,
                                    const char *utf_char)
 {
-    char *ptr_first_item, *ptr_char, *next_char;
+    const char *ptr_first_item, *ptr_char, *next_char;
     struct t_gui_completion_word *ptr_completion_word;
     int i;
 

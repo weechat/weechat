@@ -270,11 +270,11 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
         buffer->input_buffer[buffer->input_buffer_size] = '\0';
 
         /* move end of string to the right */
-        ptr_start = utf8_add_offset (buffer->input_buffer, pos);
+        ptr_start = (char *)utf8_add_offset (buffer->input_buffer, pos);
         memmove (ptr_start + size, ptr_start, strlen (ptr_start));
 
         /* insert new string */
-        ptr_start = utf8_add_offset (buffer->input_buffer, pos);
+        ptr_start = (char *)utf8_add_offset (buffer->input_buffer, pos);
         strncpy (ptr_start, string_utf8, size);
 
         buffer->input_buffer_pos += length;
@@ -751,9 +751,9 @@ gui_input_delete_previous_char (struct t_gui_buffer *buffer)
     if (buffer->input && (buffer->input_buffer_pos > 0))
     {
         gui_buffer_undo_snap (buffer);
-        pos = utf8_add_offset (buffer->input_buffer,
-                               buffer->input_buffer_pos);
-        pos_last = utf8_prev_char (buffer->input_buffer, pos);
+        pos = (char *)utf8_add_offset (buffer->input_buffer,
+                                       buffer->input_buffer_pos);
+        pos_last = (char *)utf8_prev_char (buffer->input_buffer, pos);
         char_size = pos - pos_last;
         size_to_move = strlen (pos);
         memmove (pos_last, pos, size_to_move);
@@ -782,9 +782,9 @@ gui_input_delete_next_char (struct t_gui_buffer *buffer)
         && (buffer->input_buffer_pos < buffer->input_buffer_length))
     {
         gui_buffer_undo_snap (buffer);
-        pos = utf8_add_offset (buffer->input_buffer,
-                               buffer->input_buffer_pos);
-        pos_next = utf8_next_char (pos);
+        pos = (char *)utf8_add_offset (buffer->input_buffer,
+                                       buffer->input_buffer_pos);
+        pos_next = (char *)utf8_next_char (pos);
         char_size = pos_next - pos;
         size_to_move = strlen (pos_next);
         memmove (pos, pos_next, size_to_move);
@@ -811,30 +811,30 @@ gui_input_delete_previous_word (struct t_gui_buffer *buffer)
     if (buffer->input && (buffer->input_buffer_pos > 0))
     {
         gui_buffer_undo_snap (buffer);
-        start = utf8_add_offset (buffer->input_buffer,
-                                 buffer->input_buffer_pos - 1);
+        start = (char *)utf8_add_offset (buffer->input_buffer,
+                                         buffer->input_buffer_pos - 1);
         string = start;
         while (string && !string_is_word_char_input (string))
         {
-            string = utf8_prev_char (buffer->input_buffer, string);
+            string = (char *)utf8_prev_char (buffer->input_buffer, string);
         }
         if (string)
         {
             while (string && string_is_word_char_input (string))
             {
-                string = utf8_prev_char (buffer->input_buffer, string);
+                string = (char *)utf8_prev_char (buffer->input_buffer, string);
             }
             if (string)
             {
                 while (string && !string_is_word_char_input (string))
                 {
-                    string = utf8_prev_char (buffer->input_buffer, string);
+                    string = (char *)utf8_prev_char (buffer->input_buffer, string);
                 }
             }
         }
 
         if (string)
-            string = utf8_next_char (utf8_next_char (string));
+            string = (char *)utf8_next_char (utf8_next_char (string));
         else
             string = buffer->input_buffer;
 
@@ -869,15 +869,15 @@ gui_input_delete_next_word (struct t_gui_buffer *buffer)
     if (buffer->input)
     {
         gui_buffer_undo_snap (buffer);
-        start = utf8_add_offset (buffer->input_buffer,
-                                 buffer->input_buffer_pos);
+        start = (char *)utf8_add_offset (buffer->input_buffer,
+                                         buffer->input_buffer_pos);
         string = start;
         length_deleted = 0;
         while (string[0])
         {
             if (!string_is_word_char_input (string) && (string > start))
                 break;
-            string = utf8_next_char (string);
+            string = (char *)utf8_next_char (string);
             length_deleted++;
         }
         size_deleted = string - start;
@@ -910,8 +910,8 @@ gui_input_delete_beginning_of_line (struct t_gui_buffer *buffer)
     if (buffer->input && (buffer->input_buffer_pos > 0))
     {
         gui_buffer_undo_snap (buffer);
-        start = utf8_add_offset (buffer->input_buffer,
-                                 buffer->input_buffer_pos);
+        start = (char *)utf8_add_offset (buffer->input_buffer,
+                                         buffer->input_buffer_pos);
         size_deleted = start - buffer->input_buffer;
         length_deleted = utf8_strnlen (buffer->input_buffer, size_deleted);
         gui_input_clipboard_copy (buffer->input_buffer,
@@ -943,8 +943,8 @@ gui_input_delete_end_of_line (struct t_gui_buffer *buffer)
     if (buffer->input)
     {
         gui_buffer_undo_snap (buffer);
-        start = utf8_add_offset (buffer->input_buffer,
-                                 buffer->input_buffer_pos);
+        start = (char *)utf8_add_offset (buffer->input_buffer,
+                                         buffer->input_buffer_pos);
         size_deleted = strlen (start);
         gui_input_clipboard_copy (start, size_deleted);
         start[0] = '\0';
@@ -996,9 +996,9 @@ gui_input_transpose_chars (struct t_gui_buffer *buffer)
         if (buffer->input_buffer_pos == buffer->input_buffer_length)
             buffer->input_buffer_pos--;
 
-        start = utf8_add_offset (buffer->input_buffer,
-                                 buffer->input_buffer_pos);
-        prev_char = utf8_prev_char (buffer->input_buffer, start);
+        start = (char *)utf8_add_offset (buffer->input_buffer,
+                                         buffer->input_buffer_pos);
+        prev_char = (char *)utf8_prev_char (buffer->input_buffer, start);
         size_prev_char = start - prev_char;
         size_start_char = utf8_char_size (start);
 
@@ -1085,20 +1085,20 @@ gui_input_move_previous_word (struct t_gui_buffer *buffer)
     if (buffer->input
         && (buffer->input_buffer_pos > 0))
     {
-        pos = utf8_add_offset (buffer->input_buffer,
-                               buffer->input_buffer_pos - 1);
+        pos = (char *)utf8_add_offset (buffer->input_buffer,
+                                       buffer->input_buffer_pos - 1);
         while (pos && !string_is_word_char_input (pos))
         {
-            pos = utf8_prev_char (buffer->input_buffer, pos);
+            pos = (char *)utf8_prev_char (buffer->input_buffer, pos);
         }
         if (pos)
         {
             while (pos && string_is_word_char_input (pos))
             {
-                pos = utf8_prev_char (buffer->input_buffer, pos);
+                pos = (char *)utf8_prev_char (buffer->input_buffer, pos);
             }
             if (pos)
-                pos = utf8_next_char (pos);
+                pos = (char *)utf8_next_char (pos);
             else
                 pos = buffer->input_buffer;
             buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
@@ -1124,17 +1124,17 @@ gui_input_move_next_word (struct t_gui_buffer *buffer)
     if (buffer->input
         && (buffer->input_buffer_pos < buffer->input_buffer_length))
     {
-        pos = utf8_add_offset (buffer->input_buffer,
-                               buffer->input_buffer_pos);
+        pos = (char *)utf8_add_offset (buffer->input_buffer,
+                                       buffer->input_buffer_pos);
         while (pos[0] && !string_is_word_char_input (pos))
         {
-            pos = utf8_next_char (pos);
+            pos = (char *)utf8_next_char (pos);
         }
         if (pos[0])
         {
             while (pos[0] && string_is_word_char_input (pos))
             {
-                pos = utf8_next_char (pos);
+                pos = (char *)utf8_next_char (pos);
             }
             if (pos[0])
             {

@@ -394,7 +394,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
         if (!string)
             return chars_displayed;
 
-        next_char = utf8_next_char (string);
+        next_char = (char *)utf8_next_char (string);
         if (next_char)
         {
             ptr_char = utf_char;
@@ -1231,8 +1231,9 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     int read_marker_x, read_marker_y;
     int word_start_offset, word_end_offset;
     int word_length_with_spaces, word_length;
-    char *ptr_data, *ptr_end_offset, *next_char;
-    char *ptr_style, *message_with_tags, *message_with_search;
+    char *ptr_data, *ptr_end_offset;
+    char *message_with_tags, *message_with_search;
+    const char *ptr_style, *next_char;
     struct t_gui_line *ptr_prev_line, *ptr_next_line;
     struct tm local_time, local_time2;
     struct timeval tv_time;

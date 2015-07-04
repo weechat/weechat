@@ -104,7 +104,7 @@ string_tolower (char *string)
     {
         if ((string[0] >= 'A') && (string[0] <= 'Z'))
             string[0] += ('a' - 'A');
-        string = utf8_next_char (string);
+        string = (char *)utf8_next_char (string);
     }
 }
 
@@ -119,7 +119,7 @@ string_toupper (char *string)
     {
         if ((string[0] >= 'a') && (string[0] <= 'z'))
             string[0] -= ('a' - 'A');
-        string = utf8_next_char (string);
+        string = (char *)utf8_next_char (string);
     }
 }
 
@@ -1851,7 +1851,7 @@ string_split_shell (const char *string, int *num_items)
     {
         add_char_to_temp = 0;
         add_temp_to_args = 0;
-        ptr_next = utf8_next_char (ptr_string);
+        ptr_next = (char *)utf8_next_char (ptr_string);
         saved_char = ptr_next[0];
         ptr_next[0] = '\0';
         if (state == ' ')
@@ -2180,8 +2180,8 @@ string_iconv (int from_utf8, const char *from_code, const char *to_code,
 
 #ifdef HAVE_ICONV
     iconv_t cd;
-    char *inbuf, *ptr_inbuf, *ptr_outbuf, *next_char;
-    char *ptr_inbuf_shift;
+    char *inbuf, *ptr_outbuf;
+    const char *ptr_inbuf, *ptr_inbuf_shift, *next_char;
     int done;
     size_t err, inbytesleft, outbytesleft;
 #endif /* HAVE_ICONV */
@@ -2711,7 +2711,8 @@ string_is_command_char (const char *string)
 const char *
 string_input_for_buffer (const char *string)
 {
-    char *pos_slash, *pos_space, *next_char;
+    char *pos_slash, *pos_space;
+    const char *next_char;
 
     if (!string)
         return NULL;

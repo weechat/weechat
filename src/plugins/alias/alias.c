@@ -688,13 +688,13 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         {
             ptr_completion = argv[2];
             ptr_alias_name = (weechat_string_is_command_char (argv[3])) ?
-                weechat_utf8_next_char (argv[3]) : argv[3];
+                (char *)weechat_utf8_next_char (argv[3]) : argv[3];
             ptr_command = argv_eol[4];
         }
         else
         {
             ptr_alias_name = (weechat_string_is_command_char (argv[1])) ?
-                weechat_utf8_next_char (argv[1]) : argv[1];
+                (char *)weechat_utf8_next_char (argv[1]) : argv[1];
             ptr_command = argv_eol[2];
         }
 
@@ -735,7 +735,7 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     {
         /* get pointer to alias name */
         ptr_alias_name = (weechat_string_is_command_char (argv[1])) ?
-            weechat_utf8_next_char (argv[1]) : argv[1];
+            (char *)weechat_utf8_next_char (argv[1]) : argv[1];
 
         /* display list of aliases */
         alias_found = 0;
@@ -790,7 +790,7 @@ unalias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     for (i = 1; i < argc; i++)
     {
         alias_name = (weechat_string_is_command_char (argv[i])) ?
-            weechat_utf8_next_char (argv[i]) : argv[i];
+            (char *)weechat_utf8_next_char (argv[i]) : argv[i];
         ptr_alias = alias_search (alias_name);
         if (!ptr_alias)
         {

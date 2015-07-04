@@ -332,7 +332,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                                    1);
                 break;
             default:
-                next_char = utf8_next_char (string);
+                next_char = (char *)utf8_next_char (string);
                 if (!next_char)
                     break;
 
