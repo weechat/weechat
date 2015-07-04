@@ -41,13 +41,13 @@
  * Searches for last EOL in a string.
  */
 
-char *
+const char *
 logger_tail_last_eol (const char *string_start, const char *string_ptr)
 {
     while (string_ptr >= string_start)
     {
         if ((string_ptr[0] == '\n') || (string_ptr[0] == '\r'))
-            return (char *)string_ptr;
+            return string_ptr;
         string_ptr--;
     }
 
@@ -111,7 +111,7 @@ logger_tail_file (const char *filename, int n_lines)
         ptr_buf = buf + bytes_read - 1;
         while (ptr_buf && (ptr_buf >= buf))
         {
-            pos_eol = logger_tail_last_eol (buf, ptr_buf);
+            pos_eol = (char *)logger_tail_last_eol (buf, ptr_buf);
             if ((pos_eol && (pos_eol[1] || part_of_line)) || (file_pos == 0))
             {
                 /* use data and part_of_line (if existing) to build a new line */
