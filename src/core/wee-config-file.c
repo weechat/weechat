@@ -398,6 +398,8 @@ config_file_search_section (struct t_config_file *config_file,
 
 /*
  * Builds full name for an option, using format: "file.section.option".
+ *
+ * Note: result must be freed after use.
  */
 
 char *

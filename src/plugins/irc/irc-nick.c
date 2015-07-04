@@ -95,6 +95,8 @@ irc_nick_is_nick (const char *string)
 /*
  * Duplicates a nick and stops at first char in list (using option
  * irc.look.nick_color_stop_chars).
+ *
+ * Note: result must be freed after use.
  */
 
 char *

@@ -1879,6 +1879,8 @@ gui_chat_draw_free_buffer (struct t_gui_window *window, int clear_chat)
 
 /*
  * Gets line content in bare display.
+ *
+ * Note: result must be freed after use.
  */
 
 char *

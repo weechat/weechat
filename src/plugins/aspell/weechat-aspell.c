@@ -497,7 +497,7 @@ weechat_aspell_check_word (struct t_aspell_speller_buffer *speller_buffer,
  *
  * Returns a string with format: "suggest1,suggest2,suggest3".
  *
- * Note: result (if not NULL) must be freed after use.
+ * Note: result must be freed after use (if not NULL).
  */
 
 char *

@@ -411,6 +411,8 @@ plugin_script_search_by_full_name (struct t_plugin_script *scripts,
 
 /*
  * Searches for path name of a script.
+ *
+ * Note: result must be freed after use.
  */
 
 char *

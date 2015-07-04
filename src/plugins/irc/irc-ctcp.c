@@ -319,6 +319,8 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
 
 /*
  * Replaces variables in CTCP format.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -497,6 +499,8 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
 
 /*
  * Returns filename for DCC, without double quotes.
+ *
+ * Note: result must be freed after use.
  */
 
 char *

@@ -68,6 +68,8 @@ struct t_hashtable *string_hashtable_shared = NULL;
 /*
  * Defines a "strndup" function for systems where this function does not exist
  * (FreeBSD and maybe others).
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -1797,7 +1799,7 @@ string_split_shared (const char *string, const char *separators, int keep_eol,
  *   Posix compliance, split(), string arguments, and
  *   iterator interface by Gustavo Niemeyer, April 2003.
  *
- * Note: result must be freed with string_free_split.
+ * Note: result must be freed after use with function string_free_split().
  */
 
 char **
@@ -2059,7 +2061,8 @@ string_build_with_split_string (const char **split_string,
  * Splits a list of commands separated by 'separator' and escaped with '\'.
  * Empty commands are removed, spaces on the left of each commands are stripped.
  *
- * Note: result must be freed with free_multi_command.
+ * Note: result must be freed after use with function
+ * string_free_split_command().
  */
 
 char **

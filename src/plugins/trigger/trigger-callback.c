@@ -42,7 +42,7 @@ struct t_hashtable *trigger_callback_hashtable_options_regex = NULL;
  *
  * Returns a hashtable with the parsed message, or NULL if error.
  *
- * Note: the hashtable must be freed after use.
+ * Note: hashtable must be freed after use.
  */
 
 struct t_hashtable *

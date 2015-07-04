@@ -349,6 +349,8 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
 
 /*
  * Encodes/decodes an IRC message using a charset.
+ *
+ * Note: result must be freed after use.
  */
 
 char *

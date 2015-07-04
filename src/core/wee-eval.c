@@ -239,6 +239,8 @@ end:
  *                        or hdata[ptr].var1.var2)
  *
  * See /help in WeeChat for examples.
+ *
+ * Note: result must be freed after use.
  */
 
 char *

@@ -285,7 +285,7 @@ plugin_check_autoload (const char *filename)
  * Returns arguments for plugins (only the relevant arguments for plugins,
  * arguments for WeeChat core not returned).
  *
- * Note: plugin_argv must be freed after use (with free()).
+ * Note: plugin_argv must be freed after use.
  */
 
 void

@@ -611,6 +611,8 @@ secure_get_passphrase_from_user (const char *error)
  *
  * Returns passphrase read in file (only the first line with max length of
  * 1024 chars), or NULL if error.
+ *
+ * Note: result must be freed after use.
  */
 
 char *

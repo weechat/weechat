@@ -2722,6 +2722,8 @@ hook_modifier (struct t_weechat_plugin *plugin, const char *modifier,
 
 /*
  * Executes a modifier hook.
+ *
+ * Note: result must be freed after use.
  */
 
 char *

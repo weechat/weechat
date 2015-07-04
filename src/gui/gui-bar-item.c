@@ -365,6 +365,8 @@ gui_bar_item_get_vars (const char *item_name,
  * For example:  if item == "[time]"
  *               returns: color(delimiter) + "[" +
  *                        (value of item "time") + color(delimiter) + "]"
+ *
+ * Note: result must be freed after use.
  */
 
 char *

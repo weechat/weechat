@@ -741,7 +741,7 @@ plugin_api_info_color_rgb2term_cb (void *data, const char *info_name,
 /*
  * Returns WeeChat infolist "bar".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -797,7 +797,7 @@ plugin_api_infolist_bar_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "bar_item".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -854,7 +854,7 @@ plugin_api_infolist_bar_item_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "bar_window".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -926,7 +926,7 @@ plugin_api_infolist_bar_window_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "buffer".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -983,7 +983,7 @@ plugin_api_infolist_buffer_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "buffer_lines".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -1028,7 +1028,7 @@ plugin_api_infolist_buffer_lines_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "filter".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -1066,7 +1066,7 @@ plugin_api_infolist_filter_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "history".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -1105,7 +1105,7 @@ plugin_api_infolist_history_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "hook".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -1137,7 +1137,7 @@ plugin_api_infolist_hook_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "hotlist".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -1172,7 +1172,7 @@ plugin_api_infolist_hotlist_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "key".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -1214,7 +1214,7 @@ plugin_api_infolist_key_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "layout".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -1249,7 +1249,7 @@ plugin_api_infolist_layout_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "nicklist".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -1281,7 +1281,7 @@ plugin_api_infolist_nicklist_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "option".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -1310,7 +1310,7 @@ plugin_api_infolist_option_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "plugin".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -1367,7 +1367,7 @@ plugin_api_infolist_plugin_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "proxy".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -1424,7 +1424,7 @@ plugin_api_infolist_proxy_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "url_options".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *
@@ -1458,7 +1458,7 @@ plugin_api_infolist_url_options_cb (void *data, const char *infolist_name,
 /*
  * Returns WeeChat infolist "window".
  *
- * Note: result must be freed with function "weechat_infolist_free".
+ * Note: result must be freed after use with function weechat_infolist_free().
  */
 
 struct t_infolist *

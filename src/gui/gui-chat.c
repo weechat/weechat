@@ -548,6 +548,8 @@ gui_chat_change_time_format ()
 
 /*
  * Builds a string with prefix and message.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -590,6 +592,8 @@ gui_chat_build_string_prefix_message (struct t_gui_line *line)
 
 /*
  * Builds a string with message and tags.
+ *
+ * Note: result must be freed after use.
  */
 
 

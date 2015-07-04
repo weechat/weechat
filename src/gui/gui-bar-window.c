@@ -667,8 +667,10 @@ gui_bar_window_content_get (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Gets content of a bar window, formatted for display, according to filling for
- * bar position.
+ * Gets content of a bar window, formatted for display, according to filling
+ * for bar position.
+ *
+ * Note: result must be freed after use.
  */
 
 char *

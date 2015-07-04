@@ -58,7 +58,7 @@ logger_tail_last_eol (const char *string_start, const char *string_ptr)
 /*
  * Returns last lines of a file.
  *
- * Note: result must be freed with function "logger_tail_free".
+ * Note: result must be freed after use with function logger_tail_free().
  */
 
 struct t_logger_line *

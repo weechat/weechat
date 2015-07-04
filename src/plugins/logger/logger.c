@@ -65,7 +65,7 @@ struct t_hook *logger_timer = NULL;    /* timer to flush log files          */
  *   - "~": user home
  *   - date/time specifiers (see man strftime)
  *
- * Note: returned value must freed after use.
+ * Note: result must be freed after use.
  */
 
 char *
@@ -141,7 +141,7 @@ logger_create_directory ()
 /*
  * Builds full name of buffer.
  *
- * Note: value must be freed after use.
+ * Note: result must be freed after use.
  */
 
 char *
@@ -390,6 +390,8 @@ end:
 
 /*
  * Builds log filename for a buffer.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
