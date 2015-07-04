@@ -637,39 +637,6 @@ alias_new (const char *name, const char *command, const char *completion)
 }
 
 /*
- * Gets final command pointer by an alias.
- */
-
-char *
-alias_get_final_command (struct t_alias *alias)
-{
-    struct t_alias *ptr_alias;
-    char *result;
-
-    if (alias->running)
-    {
-        weechat_printf (NULL,
-                        _("%s%s: error, circular reference when calling "
-                          "alias \"%s\""),
-                        weechat_prefix ("error"), ALIAS_PLUGIN_NAME,
-                        alias->name);
-        return NULL;
-    }
-
-    ptr_alias = alias_search ((weechat_string_is_command_char (alias->command)) ?
-                              weechat_utf8_next_char (alias->command) : alias->command);
-    if (ptr_alias)
-    {
-        alias->running = 1;
-        result = alias_get_final_command (ptr_alias);
-        alias->running = 0;
-        return result;
-    }
-    return (weechat_string_is_command_char (alias->command)) ?
-        weechat_utf8_next_char (alias->command) : alias->command;
-}
-
-/*
  * Callback for command "/alias": displays or creates alias.
  */
 
