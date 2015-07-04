@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20150704-01"
+#define WEECHAT_PLUGIN_API_VERSION "20150704-02"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -347,7 +347,7 @@ struct t_weechat_plugin
     int (*util_timeval_cmp) (struct timeval *tv1, struct timeval *tv2);
     long long (*util_timeval_diff) (struct timeval *tv1, struct timeval *tv2);
     void (*util_timeval_add) (struct timeval *tv, long long interval);
-    char *(*util_get_time_string) (const time_t *date);
+    const char *(*util_get_time_string) (const time_t *date);
     int (*util_version_number) (const char *version);
 
     /* sorted lists */

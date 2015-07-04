@@ -3015,20 +3015,25 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== util_get_time_string
 
-_WeeChat ≥ 0.3.2._
+_WeeChat ≥ 0.3.2, mise à jour dans la 1.3._
 
-Retourner la date/heure sous forme de chaîne construite avec "strftime".
+Retourner la date/heure sous forme de chaîne construite avec "strftime" et le
+format défini dans l'option 'weechat.look.time_format'.
 
 Prototype :
 
 [source,C]
 ----
-char *weechat_util_get_time_string (const time_t *date);
+const char *weechat_util_get_time_string (const time_t *date);
 ----
 
 Paramètres :
 
 * 'date' : pointeur vers la date
+
+Valeur de retour :
+
+* pointeur vers une chaîne contenant la date/heure
 
 Exemple en C :
 

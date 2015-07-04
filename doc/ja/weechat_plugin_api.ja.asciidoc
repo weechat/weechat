@@ -2971,20 +2971,28 @@ weechat_util_timeval_add (&tv, 2000000);  /* add 2 seconds */
 
 ==== util_get_time_string
 
-_WeeChat バージョン 0.3.2 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.2, updated in 1.3._
 
-日付や時間を "strftime" で作った文字列で取得。
+// TRANSLATION MISSING
+Get date/time as a string built with "strftime" and the format defined in
+option 'weechat.look.time_format'.
 
 プロトタイプ:
 
 [source,C]
 ----
-char *weechat_util_get_time_string (const time_t *date);
+const char *weechat_util_get_time_string (const time_t *date);
 ----
 
 引数:
 
 * 'date': 日付へのポインタ
+
+戻り値:
+
+// TRANSLATION MISSING
+* pointer to a string with date/time
 
 C 言語での使用例:
 

@@ -41,7 +41,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: fix display of time in bare display when option
   weechat.look.buffer_time_format is set to empty string (closes #441)
 * api: fix type of value returned by functions strcasestr, utf8_prev_char,
-  utf8_next_char and utf8_add_offset
+  utf8_next_char, utf8_add_offset and util_get_time_string
 * api: fix type of value returned by function strcasestr
 * fifo: fix send error on Cygwin when something is received in the pipe
   (closes #436)

@@ -305,7 +305,7 @@ util_timeval_add (struct timeval *tv, long long interval)
  * (can be localized).
  */
 
-char *
+const char *
 util_get_time_string (const time_t *date)
 {
     struct tm *local_time;

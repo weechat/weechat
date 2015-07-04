@@ -38,7 +38,7 @@ extern void util_setrlimit ();
 extern int util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 extern long long util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 extern void util_timeval_add (struct timeval *tv, long long interval);
-extern char *util_get_time_string (const time_t *date);
+extern const char *util_get_time_string (const time_t *date);
 extern int util_signal_search (const char *name);
 extern void util_catch_signal (int signum, void (*handler)(int));
 extern int util_mkdir_home (const char *directory, int mode);

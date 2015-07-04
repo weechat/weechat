@@ -3060,20 +3060,28 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== util_get_time_string
 
-_WeeChat ≥ 0.3.2._
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.2, updated in 1.3._
 
-Riceve data/ora come stringa compilata con "strftime".
+// TRANSLATION MISSING
+Get date/time as a string built with "strftime" and the format defined in
+option 'weechat.look.time_format'.
 
 Prototipo:
 
 [source,C]
 ----
-char *weechat_util_get_time_string (const time_t *date);
+const char *weechat_util_get_time_string (const time_t *date);
 ----
 
 Argomenti:
 
 * 'date': puntatore alla data
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* pointer to a string with date/time
 
 Esempio in C:
 
