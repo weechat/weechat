@@ -67,9 +67,9 @@ extern void gui_chat_init ();
 extern void gui_chat_prefix_build ();
 extern int gui_chat_utf_char_valid (const char *utf_char);
 extern int gui_chat_strlen_screen (const char *string);
-extern char *gui_chat_string_add_offset (const char *string, int offset);
-extern char *gui_chat_string_add_offset_screen (const char *string,
-                                                int offset_screen);
+extern const char *gui_chat_string_add_offset (const char *string, int offset);
+extern const char *gui_chat_string_add_offset_screen (const char *string,
+                                                      int offset_screen);
 extern int gui_chat_string_real_pos (const char *string, int pos,
                                      int use_screen_size);
 extern int gui_chat_string_pos (const char *string, int real_pos);
@@ -95,12 +95,12 @@ extern void gui_chat_end ();
 
 /* chat functions (GUI dependent) */
 
-extern char *gui_chat_string_next_char (struct t_gui_window *window,
-                                        struct t_gui_line *line,
-                                        const unsigned char *string,
-                                        int apply_style,
-                                        int apply_style_inactive,
-                                        int nick_offline);
+extern const char *gui_chat_string_next_char (struct t_gui_window *window,
+                                              struct t_gui_line *line,
+                                              const unsigned char *string,
+                                              int apply_style,
+                                              int apply_style_inactive,
+                                              int nick_offline);
 extern void gui_chat_draw (struct t_gui_buffer *buffer, int clear_chat);
 extern void gui_chat_draw_line (struct t_gui_buffer *buffer,
                                 struct t_gui_line *line);

@@ -140,8 +140,8 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                               char **end)
 {
     int win_x, win_y;
-    char *ptr_data, *data_next_line, *str_temp;
-    const char *word_start, *word_end, *last_space;
+    char *data_next_line, *str_temp;
+    const char *ptr_data, *word_start, *word_end, *last_space;
 
     *chat = 0;
     *line = NULL;

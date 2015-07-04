@@ -223,7 +223,7 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
  * colors/attributes are skipped and optionally applied.
  */
 
-char *
+const char *
 gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
                            const unsigned char *string, int apply_style,
                            int apply_style_inactive,
@@ -1231,9 +1231,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     int read_marker_x, read_marker_y;
     int word_start_offset, word_end_offset;
     int word_length_with_spaces, word_length;
-    char *ptr_data, *ptr_end_offset;
     char *message_with_tags, *message_with_search;
-    const char *ptr_style, *next_char;
+    const char *ptr_data, *ptr_end_offset, *ptr_style, *next_char;
     struct t_gui_line *ptr_prev_line, *ptr_next_line;
     struct tm local_time, local_time2;
     struct timeval tv_time;

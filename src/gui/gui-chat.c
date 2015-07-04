@@ -197,7 +197,7 @@ gui_chat_strlen_screen (const char *string)
  * colors/attributes).
  */
 
-char *
+const char *
 gui_chat_string_add_offset (const char *string, int offset)
 {
     while (string && string[0] && (offset > 0))
@@ -211,7 +211,7 @@ gui_chat_string_add_offset (const char *string, int offset)
             offset--;
         }
     }
-    return (char *)string;
+    return string;
 }
 
 /*
@@ -219,7 +219,7 @@ gui_chat_string_add_offset (const char *string, int offset)
  * formatting chars (like colors/attributes).
  */
 
-char *
+const char *
 gui_chat_string_add_offset_screen (const char *string, int offset_screen)
 {
     int size_on_screen;
@@ -236,7 +236,7 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
             string = utf8_next_char (string);
         }
     }
-    return (char *)string;
+    return string;
 }
 
 /*
@@ -326,8 +326,7 @@ gui_chat_get_word_info (struct t_gui_window *window,
                         int *word_start_offset, int *word_end_offset,
                         int *word_length_with_spaces, int *word_length)
 {
-    char *next_char;
-    const char *start_data, *next_char2;
+    const char *start_data, *next_char, *next_char2;
     int leading_spaces, char_size_screen;
 
     *word_start_offset = 0;
