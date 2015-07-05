@@ -647,7 +647,7 @@ gui_bar_window_content_build (struct t_gui_bar_window *bar_window,
  * Gets item or subitem content (first rebuilds content if refresh is needed).
  */
 
-char *
+const char *
 gui_bar_window_content_get (struct t_gui_bar_window *bar_window,
                             struct t_gui_window *window,
                             int index_item, int index_subitem)
@@ -678,7 +678,8 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                                          struct t_gui_window *window)
 {
     enum t_gui_bar_filling filling;
-    char *ptr_content, *content, *content2, str_reinit_color[32];
+    const char *ptr_content;
+    char *content, *content2, str_reinit_color[32];
     char str_reinit_color_space[32], str_reinit_color_space_start_line[32];
     char str_start_item[32];
     char *item_value, *item_value2, ****split_items, **linear_items;
