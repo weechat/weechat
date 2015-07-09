@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-06-30 07:49+0200\n"
+"POT-Creation-Date: 2015-07-09 20:32+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4421,6 +4421,10 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: notification not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: \"%s\" command can not be executed with a channel name (\"%s\")"
 msgstr ""
 
 #, c-format

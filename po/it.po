@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-06-30 07:49+0200\n"
+"POT-Creation-Date: 2015-07-09 20:32+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5656,6 +5656,11 @@ msgstr "%s: notifica aggiunta per %s%s"
 #, c-format
 msgid "%s%s: notification not found"
 msgstr "%s%s: notifica non trovata"
+
+#, fuzzy, c-format
+msgid "%s%s: \"%s\" command can not be executed with a channel name (\"%s\")"
+msgstr ""
+"%s%s: il comando \"%s\" può essere eseguito solamente sul buffer del canale"
 
 #, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""

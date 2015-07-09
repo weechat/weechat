@@ -3866,6 +3866,18 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
 
     for (i = 0; i < num_nicks; i++)
     {
+        /* ensure the name is not a channel name */
+        if (irc_channel_is_channel (ptr_server, nicks[i]))
+        {
+            weechat_printf (
+                    ptr_server->buffer,
+                    _("%s%s: \"%s\" command can not be executed with a "
+                      "channel name (\"%s\")"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, "query",
+                    nicks[i]);
+            continue;
+        }
+
         /* create private window if not already opened */
         ptr_channel = irc_channel_search (ptr_server, nicks[i]);
         if (!ptr_channel)

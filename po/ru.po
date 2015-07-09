@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-06-30 07:49+0200\n"
+"POT-Creation-Date: 2015-07-09 20:32+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4880,6 +4880,10 @@ msgstr "%s IP адрес не найден\n"
 #, fuzzy, c-format
 msgid "%s%s: notification not found"
 msgstr "подпись не найдена"
+
+#, fuzzy, c-format
+msgid "%s%s: \"%s\" command can not be executed with a channel name (\"%s\")"
+msgstr "%s \"%s\" команда может быть выполнена только в буфере канала\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
