@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-07-09 20:32+0200\n"
+"POT-Creation-Date: 2015-07-10 17:57+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6720,8 +6720,13 @@ msgstr ""
 "tempo de espera (em segundos) antes de tentar reconectar ao servidor "
 "novamente"
 
-msgid "nicknames to use on server (separated by comma)"
-msgstr "apelidos para utilizar no servidor (separados por vírgula)"
+#, fuzzy
+msgid ""
+"nicknames to use on server (separated by comma) (note: content is evaluated, "
+"see /help eval)"
+msgstr ""
+"comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
+"(nota: conteúdo é avaliado, veja /help eval)"
 
 #, fuzzy
 msgid "user name to use on server (note: content is evaluated, see /help eval)"
@@ -10855,6 +10860,9 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
+
+#~ msgid "nicknames to use on server (separated by comma)"
+#~ msgstr "apelidos para utilizar no servidor (separados por vírgula)"
 
 #~ msgid ""
 #~ "path for writing incoming files (\"%h\" will be replaced by WeeChat home, "

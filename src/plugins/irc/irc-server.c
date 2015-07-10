@@ -494,6 +494,8 @@ irc_server_set_index_current_address (struct t_irc_server *server, int index)
 void
 irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
 {
+    char *nicks2;
+
     /* free data */
     server->nicks_count = 0;
     if (server->nicks_array)
@@ -502,10 +504,16 @@ irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
         server->nicks_array = NULL;
     }
 
+    /* evaluate value */
+    nicks2 = weechat_string_eval_expression (nicks, NULL, NULL, NULL);
+
     /* set new nicks */
     server->nicks_array = weechat_string_split (
-        (nicks) ? nicks : IRC_SERVER_DEFAULT_NICKS,
+        (nicks2) ? nicks2 : IRC_SERVER_DEFAULT_NICKS,
         ",", 0, 0, &server->nicks_count);
+
+    if (nicks2)
+        free (nicks2);
 }
 
 /*

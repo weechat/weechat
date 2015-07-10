@@ -543,7 +543,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_irc.server_default.nicks]] *irc.server_default.nicks*
-** descrizione: `nick da usare sul server (separati da virgole)`
+** descrizione: `nicknames to use on server (separated by comma) (note: content is evaluated, see /help eval)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

@@ -543,7 +543,7 @@
 ** values: any string (default value: `""`)
 
 * [[option_irc.server_default.nicks]] *irc.server_default.nicks*
-** description: `nicknames to use on server (separated by comma)`
+** description: `nicknames to use on server (separated by comma) (note: content is evaluated, see /help eval)`
 ** type: string
 ** values: any string (default value: `""`)
 

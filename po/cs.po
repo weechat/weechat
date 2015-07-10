@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-07-09 20:32+0200\n"
+"POT-Creation-Date: 2015-07-10 17:57+0200\n"
 "PO-Revision-Date: 2015-03-21 08:41+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6852,8 +6852,11 @@ msgstr "automaticky znovu připojit server, když je odpojen"
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr "doba (v sekundách) před novým zkušením znovupřipojení na server"
 
-msgid "nicknames to use on server (separated by comma)"
-msgstr "přezdívky použité na serveru (oddělené čárkami)"
+#, fuzzy
+msgid ""
+"nicknames to use on server (separated by comma) (note: content is evaluated, "
+"see /help eval)"
+msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
 
 #, fuzzy
 msgid "user name to use on server (note: content is evaluated, see /help eval)"
@@ -11078,6 +11081,9 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit k odesílateli"
+
+#~ msgid "nicknames to use on server (separated by comma)"
+#~ msgstr "přezdívky použité na serveru (oddělené čárkami)"
 
 #~ msgid ""
 #~ "path for writing incoming files (\"%h\" will be replaced by WeeChat home, "

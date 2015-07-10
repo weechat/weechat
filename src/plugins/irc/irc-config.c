@@ -1875,7 +1875,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("nicknames to use on server (separated by comma)"),
+                N_("nicknames to use on server (separated by comma) "
+                   "(note: content is evaluated, see /help eval)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
