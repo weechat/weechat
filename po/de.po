@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-07-09 20:32+0200\n"
-"PO-Revision-Date: 2015-06-30 21:30+0100\n"
+"PO-Revision-Date: 2015-07-10 14:50+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de_DE\n"
@@ -6231,9 +6231,11 @@ msgstr "%s: Benachrichtigung für %s%s%s gelöscht"
 msgid "%s%s: notification not found"
 msgstr "%s%s: Benachrichtigung nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: \"%s\" command can not be executed with a channel name (\"%s\")"
-msgstr "%s%s: Der Befehl \"%s\" kann nur im Channel-Buffer ausgeführt werden"
+msgstr ""
+"%s%s: Der Befehl \"%s\" erlaubt bei der Ausführung keinen Channelnamen (\"%s"
+"\")"
 
 #, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
