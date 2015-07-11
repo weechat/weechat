@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-07-10 17:57+0200\n"
-"PO-Revision-Date: 2015-03-21 08:41+0100\n"
+"PO-Revision-Date: 2015-07-11 21:42+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -10439,19 +10439,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "path for writing incoming files (\"%h\" will be replaced by WeeChat home, "
-#~ "\"~/.weechat\" by default)"
-#~ msgstr ""
-#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
-
-#, fuzzy
-#~ msgid ""
-#~ "path for reading files when sending (when no path is specified by user) "
-#~ "(\"%h\" will be replaced by WeeChat home, \"~/.weechat\" by default)"
-#~ msgstr ""
-#~ "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-#~ "könyvtára, alapértelmezésben ~/.weechat, kerül)"
