@@ -70,6 +70,8 @@ WeeChat をインストールするには、以下のものが必要です:
 * Arch Linux: `pacman -S weechat`
 * Fedora Core: `yum install weechat`
 * Sourcemage: `cast weechat`
+// TRANSLATION MISSING
+* Cygwin (Windows): select WeeChat packages in setup.exe
 
 例えば weechat-plugins 等の追加パッケージを使うとより便利になるかもしれません。
 

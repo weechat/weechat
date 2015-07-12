@@ -65,6 +65,7 @@ Binary packages are available for many distributions, including:
 * Arch Linux: `pacman -S weechat`
 * Fedora Core: `yum install weechat`
 * Sourcemage: `cast weechat`
+* Cygwin (Windows): select WeeChat packages in setup.exe
 
 Some additional packages may be useful, like weechat-plugins.
 
