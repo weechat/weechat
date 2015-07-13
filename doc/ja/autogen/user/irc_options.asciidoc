@@ -543,7 +543,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_irc.server_default.nicks]] *irc.server_default.nicks*
-** 説明: `nicknames to use on server (separated by comma) (note: content is evaluated, see /help eval)`
+** 説明: `サーバで使用するニックネーム (コンマ区切り) (注意: 値は評価されます、/help eval を参照してください)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
