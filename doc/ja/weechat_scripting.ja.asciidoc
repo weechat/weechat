@@ -902,9 +902,8 @@ _バージョン 0.3.4 の新機能_
 
 "irc_message_parse" と呼ばれる info_hashtable を使って IRC メッセージを構文解析できます。
 
-// TRANSLATION MISSING
-The result is a hashtable with following keys
-(the example values are built with this message:
+結果は以下のキーを持つハッシュテーブルです
+(例の値は以下のメッセージから作られました:
 `@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!`):
 
 [width="100%",cols="1,^2,10,8",options="header"]

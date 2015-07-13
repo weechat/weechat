@@ -112,17 +112,16 @@ WeeChat は UTF-8 ロケールを推奨します。ISO 又はその他のロケ�
 *全ての* 設定 (ターミナル、screen、..) が ISO であり、
 UTF-8 *でない* ことを確認してください。
 
-// TRANSLATION MISSING
 [[unicode_chars]]
-=== Some unicode chars are displayed in terminal but not in WeeChat, why?
+=== ターミナルで表示されるユニコード文字が WeeChat では表示されない場合があります、なぜでしょうか?
 
-This may be caused by a libc bug in function 'wcwidth', which should be fixed
-in glibc 2.22 (maybe not yet available in your distribution).
+この問題は libc の 'wcwidth' 関数のバグによって引き起こされている可能性があります。これは glibc 2.22
+で修正されているはずです (使用中のディストリビューションではまだ提供されていないかもしれません)
 
-There is a workaround to use the fixed 'wcwidth' function:
+次の回避方法を使えば、修正済みの 'wcwidth' 関数を使う事が可能です:
 https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
 
-See this bug report for more information:
+より詳しい情報を得るにはバグ報告をご覧ください:
 https://github.com/weechat/weechat/issues/79
 
 [[bars_background]]
