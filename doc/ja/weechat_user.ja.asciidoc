@@ -70,8 +70,7 @@ WeeChat をインストールするには、以下のものが必要です:
 * Arch Linux: `pacman -S weechat`
 * Fedora Core: `yum install weechat`
 * Sourcemage: `cast weechat`
-// TRANSLATION MISSING
-* Cygwin (Windows): select WeeChat packages in setup.exe
+* Cygwin (Windows): setup.exe で WeeChat パッケージを選択してください
 
 例えば weechat-plugins 等の追加パッケージを使うとより便利になるかもしれません。
 
@@ -3237,15 +3236,12 @@ ${tg_highlight} || ${tg_msg_pv}
 | command              | string | IRC コマンド (例: "PRIVMSG"、"NOTICE"、...)
 | channel              | string | IRC チャンネル
 | arguments            | string | コマンドの引数 ('channel' の値を含みます)
-// TRANSLATION MISSING
-| text                 | string | Text (for example user message)
-// TRANSLATION MISSING
-| pos_text             | string | The index of text in message ("-1" if text was not found)
+| text                 | string | テキスト (例えばユーザメッセージ)
+| pos_text             | string | メッセージ内のテキストの位置 (テキストが見つからない場合 "-1")
 |===
 
-// TRANSLATION MISSING
-When the data is a pointer, the variable `tg_signal_data` can be used like this
-to read a hdata property (in this example this is a pointer on a buffer):
+データがポインタの場合、hdata の属性を読むために変数 `tg_signal_data`
+を以下のようにして使うことが可能です (以下の例では、バッファのポインタとして使っています):
 
 ----
 ${buffer[${tg_signal_data}].full_name}
