@@ -841,8 +841,9 @@ Exemples :
 [command]*`upgrade`* mettre à jour WeeChat sans se déconnecter des serveurs::
 
 ----
-/upgrade  [<chemin_vers_binaire>|-quit]
+/upgrade  [-yes] [<chemin_vers_binaire>|-quit]
 
+               -yes : requis si l'option weechat.look.confirm_upgrade est activée
 chemin_vers_binaire : chemin vers le binaire WeeChat (par défaut le binaire courant)
              -dummy : ne rien faire (option utilisée pour éviter une complétion accidentelle avec "-quit")
               -quit : fermer *TOUTES* les connexions, sauver la session et quitter, ce qui rend possible une restauration différée (voir ci-dessous)

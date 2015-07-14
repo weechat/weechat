@@ -542,6 +542,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
+* [[option_weechat.look.confirm_upgrade]] *weechat.look.confirm_upgrade*
+** Beschreibung: `if set, /upgrade command must be confirmed with extra argument "-yes" (see /help upgrade)`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
 * [[option_weechat.look.day_change]] *weechat.look.day_change*
 ** Beschreibung: `bei einem Datumswechsel wird eine entsprechende Nachricht angezeigt`
 ** Typ: boolesch

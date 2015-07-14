@@ -107,6 +107,7 @@ struct t_config_option *config_look_color_real_white;
 struct t_config_option *config_look_command_chars;
 struct t_config_option *config_look_command_incomplete;
 struct t_config_option *config_look_confirm_quit;
+struct t_config_option *config_look_confirm_upgrade;
 struct t_config_option *config_look_day_change;
 struct t_config_option *config_look_day_change_message_1date;
 struct t_config_option *config_look_day_change_message_2dates;
@@ -2379,6 +2380,12 @@ config_weechat_init_options ()
         "confirm_quit", "boolean",
         N_("if set, /quit command must be confirmed with extra argument "
            "\"-yes\" (see /help quit)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_confirm_upgrade = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "confirm_upgrade", "boolean",
+        N_("if set, /upgrade command must be confirmed with extra argument "
+           "\"-yes\" (see /help upgrade)"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_day_change = config_file_new_option (
         weechat_config_file, ptr_section,

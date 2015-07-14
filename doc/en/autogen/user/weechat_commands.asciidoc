@@ -841,8 +841,9 @@ Examples:
 [command]*`upgrade`* upgrade WeeChat without disconnecting from servers::
 
 ----
-/upgrade  [<path_to_binary>|-quit]
+/upgrade  [-yes] [<path_to_binary>|-quit]
 
+          -yes: required if option weechat.look.confirm_upgrade is enabled
 path_to_binary: path to WeeChat binary (default is current binary)
         -dummy: do nothing (option used to prevent accidental completion with "-quit")
          -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)

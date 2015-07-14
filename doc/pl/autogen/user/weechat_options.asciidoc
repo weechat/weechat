@@ -542,6 +542,11 @@
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 
+* [[option_weechat.look.confirm_upgrade]] *weechat.look.confirm_upgrade*
+** opis: `if set, /upgrade command must be confirmed with extra argument "-yes" (see /help upgrade)`
+** typ: bool
+** wartości: on, off (domyślna wartość: `off`)
+
 * [[option_weechat.look.day_change]] *weechat.look.day_change*
 ** opis: `wyświetlaj specjalną wiadomość, kiedy zmienia się dzień`
 ** typ: bool

@@ -841,31 +841,32 @@ Przykłady:
 [command]*`upgrade`* uaktualnia WeeChat bez rozłączania z serwerami::
 
 ----
-/upgrade  [<ścieżka_do_binarki>|-quit]
+/upgrade  [-yes] [<path_to_binary>|-quit]
 
-ścieżka_do_binarki: ścieżka do pliku binarnego WeeChat (domyślnie jest to obecny plik)
-        -dummy: nic nie rób (opcja użyta w celu zapobiegnięcia przypadkowego dopełnienia za pomocą"-quit")
-         -quit: zamyka *WSZYSTKIE* połączenia, zapisuje sesję i wyłącza WeeChat, umożliwia to późniejsze przywrócenie (zobacz niżej)
+          -yes: required if option weechat.look.confirm_upgrade is enabled
+path_to_binary: path to WeeChat binary (default is current binary)
+        -dummy: do nothing (option used to prevent accidental completion with "-quit")
+         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
 
-Ta komenda ponownie uruchamia plik binarny WeeChat, zatem powinna zostać skompilowana lub zainstalowana za pomocą managera pakietów przed uruchomieniem tej komendy.
+This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
 
-Uwaga: połączenia SSL są przerywane podczas uaktualniania, ponieważ przeładowanie sesji SSL nie jest obecnie możliwe za pomocą GnuTLS. Po uaktualnieniu nastąpi ponowne ich połączenie.
+Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
 
-Proces uaktualnienia składa się z 4 kroków:
-  1. zapisania sesji do plików dla rdzenia i wtyczek (bufory, historia, ..)
-  2. wyładowanie wszystkich wtyczek (zapisanie plików konfiguracyjnych *.conf)
-  3. zapisanie konfiguracji WeeChat (weechat.conf)
-  4. uruchomienie nowego pliku binarnego WeeChat i przeładowanie sesji.
+Upgrade process has 4 steps:
+  1. save session into files for core and plugins (buffers, history, ..)
+  2. unload all plugins (configuration files (*.conf) are written on disk)
+  3. save WeeChat configuration (weechat.conf)
+  4. execute new WeeChat binary and reload session.
 
-Z opcją "-quit", proces przebiega inaczej:
-  1. zamknięcie *WSZYSTKICH* połączeń (irc, xfer, relay, ...)
-  2. zapisanie sesji do pliku (*.upgrade)
-  3. wyładowanie wszystkich wtyczek
-  4. zapisanie konfiguracji WeeChat
-  5. wyłączenie WeeChat
-Następnie można przywrócić sesję za pomocą komendy: weechat --upgrade
-WAŻNE: należy przywracać sesję z identyczną konfiguracją (pliki *.conf).
-Jest możliwe przywrócenie sesji WeeChat na innej maszynie, jeśli skopiujemy zawartość katalogu "~/.weechat".
+With option "-quit", the process is slightly different:
+  1. close *ALL* connections (irc, xfer, relay, ...)
+  2. save session into files (*.upgrade)
+  3. unload all plugins
+  4. save WeeChat configuration
+  5. quit WeeChat
+Then later you can restore session with command: weechat --upgrade
+IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
+It is possible to restore WeeChat session on another machine if you copy the content of directory "~/.weechat".
 ----
 
 [[command_weechat_uptime]]

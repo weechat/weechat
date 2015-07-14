@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-07-10 17:57+0200\n"
+"POT-Creation-Date: 2015-07-14 07:44+0200\n"
 "PO-Revision-Date: 2015-07-11 21:42+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -806,7 +806,7 @@ msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, c-format
 msgid ""
-"%sYou must confirm quit command with extra argument \"-yes\" (see /help quit)"
+"%sYou must confirm /%s command with extra argument \"-yes\" (see /help %s)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -2073,11 +2073,12 @@ msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "WeeChat frissítése a szerverekről való lecsatlakozás nélkül"
 
 #, fuzzy
-msgid "[<path_to_binary>|-quit]"
+msgid "[-yes] [<path_to_binary>|-quit]"
 msgstr "[path_to_binary]"
 
 #, fuzzy
 msgid ""
+"          -yes: required if option weechat.look.confirm_upgrade is enabled\n"
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
 "        -dummy: do nothing (option used to prevent accidental completion "
 "with \"-quit\")\n"
@@ -2605,6 +2606,11 @@ msgstr ""
 msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
 "help quit)"
+msgstr ""
+
+msgid ""
+"if set, /upgrade command must be confirmed with extra argument \"-yes"
+"\" (see /help upgrade)"
 msgstr ""
 
 msgid "display special message when day changes"

@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: add option weechat.look.confirm_upgrade (closes #463)
 * core: allow ctrl-C to exit WeeChat when the passphrase is asked on startup
   (closes #452)
 * core: allow pointer as list name in evaluation of hdata (closes #450)

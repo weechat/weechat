@@ -542,6 +542,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
+* [[option_weechat.look.confirm_upgrade]] *weechat.look.confirm_upgrade*
+** 説明: `if set, /upgrade command must be confirmed with extra argument "-yes" (see /help upgrade)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
 * [[option_weechat.look.day_change]] *weechat.look.day_change*
 ** 説明: `日付が変わった際に特殊メッセージを表示`
 ** タイプ: ブール

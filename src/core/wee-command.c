@@ -4861,9 +4861,10 @@ COMMAND_CALLBACK(quit)
     if (CONFIG_BOOLEAN(config_look_confirm_quit) && !confirm_ok)
     {
         gui_chat_printf (NULL,
-                         _("%sYou must confirm quit command with extra "
-                           "argument \"-yes\" (see /help quit)"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                         _("%sYou must confirm /%s command with extra "
+                           "argument \"-yes\" (see /help %s)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         "quit", "quit");
         return WEECHAT_RC_OK;
     }
 
@@ -6013,14 +6014,37 @@ COMMAND_CALLBACK(upgrade)
     char *ptr_binary;
     char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--upgrade", NULL };
     struct stat stat_buf;
-    int rc, quit;
+    int confirm_ok, index_args, rc, quit;
 
     /* make C compiler happy */
     (void) data;
     (void) buffer;
 
-    if ((argc > 1) && (string_strcasecmp (argv[1], "-dummy") == 0))
+    confirm_ok = 0;
+    index_args = 1;
+
+    if ((argc > 1) && (string_strcasecmp (argv[1], "-yes") == 0))
+    {
+        confirm_ok = 1;
+        index_args = 2;
+    }
+
+    /* if confirmation is required, check that "-yes" is given */
+    if (CONFIG_BOOLEAN(config_look_confirm_upgrade) && !confirm_ok)
+    {
+        gui_chat_printf (NULL,
+                         _("%sYou must confirm /%s command with extra "
+                           "argument \"-yes\" (see /help %s)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         "upgrade", "upgrade");
         return WEECHAT_RC_OK;
+    }
+
+    if ((argc > index_args)
+        && (string_strcasecmp (argv[index_args], "-dummy") == 0))
+    {
+        return WEECHAT_RC_OK;
+    }
 
     /*
      * it is forbidden to upgrade while there are some background process
@@ -6038,13 +6062,13 @@ COMMAND_CALLBACK(upgrade)
     ptr_binary = NULL;
     quit = 0;
 
-    if (argc > 1)
+    if (argc > index_args)
     {
-        if (string_strcasecmp (argv[1], "-quit") == 0)
+        if (string_strcasecmp (argv[index_args], "-quit") == 0)
             quit = 1;
         else
         {
-            ptr_binary = string_expand_home (argv_eol[1]);
+            ptr_binary = string_expand_home (argv_eol[index_args]);
             if (ptr_binary)
             {
                 /* check if weechat binary is here and executable by user */
@@ -7853,8 +7877,10 @@ command_init ()
     hook_command (
         NULL, "upgrade",
         N_("upgrade WeeChat without disconnecting from servers"),
-        N_("[<path_to_binary>|-quit]"),
-        N_("path_to_binary: path to WeeChat binary (default is current binary)\n"
+        N_("[-yes] [<path_to_binary>|-quit]"),
+        N_("          -yes: required if option weechat.look.confirm_upgrade "
+           "is enabled\n"
+           "path_to_binary: path to WeeChat binary (default is current binary)\n"
            "        -dummy: do nothing (option used to prevent accidental "
            "completion with \"-quit\")\n"
            "         -quit: close *ALL* connections, save session and quit "
