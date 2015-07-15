@@ -391,26 +391,18 @@ debug_hdata ()
 void
 debug_hooks ()
 {
-    int i, num_hooks, num_hooks_total;
-    struct t_hook *ptr_hook;
+    int i;
 
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, "hooks in memory:");
 
-    num_hooks_total = 0;
     for (i = 0; i < HOOK_NUM_TYPES; i++)
     {
-        num_hooks = 0;
-        for (ptr_hook = weechat_hooks[i]; ptr_hook;
-             ptr_hook = ptr_hook->next_hook)
-        {
-            num_hooks++;
-        }
-        gui_chat_printf (NULL, "%17s:%5d", hook_type_string[i], num_hooks);
-        num_hooks_total += num_hooks;
+        gui_chat_printf (NULL, "%17s:%5d",
+                         hook_type_string[i], hooks_count[i]);
     }
     gui_chat_printf (NULL, "%17s------", "---------");
-    gui_chat_printf (NULL, "%17s:%5d", "total", num_hooks_total);
+    gui_chat_printf (NULL, "%17s:%5d", "total", hooks_count_total);
 }
 
 /*

@@ -68,6 +68,8 @@ char *hook_type_string[HOOK_NUM_TYPES] =
   "info", "info_hashtable", "infolist", "hdata", "focus" };
 struct t_hook *weechat_hooks[HOOK_NUM_TYPES];     /* list of hooks          */
 struct t_hook *last_weechat_hook[HOOK_NUM_TYPES]; /* last hook              */
+int hooks_count[HOOK_NUM_TYPES];                  /* number of hooks        */
+int hooks_count_total = 0;                        /* total number of hooks  */
 int hook_exec_recursion = 0;           /* 1 when a hook is executed         */
 time_t hook_last_system_time = 0;      /* used to detect system clock skew  */
 int real_delete_pending = 0;           /* 1 if some hooks must be deleted   */
@@ -89,7 +91,9 @@ hook_init ()
     {
         weechat_hooks[type] = NULL;
         last_weechat_hook[type] = NULL;
+        hooks_count[type] = 0;
     }
+    hooks_count_total = 0;
     hook_last_system_time = time (NULL);
 }
 
@@ -201,6 +205,9 @@ hook_add_to_list (struct t_hook *new_hook)
         weechat_hooks[new_hook->type] = new_hook;
         last_weechat_hook[new_hook->type] = new_hook;
     }
+
+    hooks_count[new_hook->type]++;
+    hooks_count_total++;
 }
 
 /*
@@ -231,6 +238,9 @@ hook_remove_from_list (struct t_hook *hook)
     free (hook);
 
     weechat_hooks[type] = new_hooks;
+
+    hooks_count[type]--;
+    hooks_count_total--;
 }
 
 /*
