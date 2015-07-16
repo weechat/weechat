@@ -136,7 +136,7 @@ hook_find_pos (struct t_hook *hook)
 
     if (hook->type == HOOK_TYPE_COMMAND)
     {
-        /* for command hook, sort on command name */
+        /* for command hook, sort on command name + priority */
         for (ptr_hook = weechat_hooks[hook->type]; ptr_hook;
              ptr_hook = ptr_hook->next_hook)
         {
