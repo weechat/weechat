@@ -621,7 +621,8 @@ network_connect (int sock, const struct sockaddr *addr, socklen_t addrlen)
     if (errno != EINPROGRESS)
         return 0;
 
-    /* for non-blocking sockets, the connect() may fail with EINPROGRESS,
+    /*
+     * for non-blocking sockets, the connect() may fail with EINPROGRESS,
      * if this happens, we wait for writability on socket and check
      * the option SO_ERROR, which is 0 if connect is OK (see man connect)
      */
