@@ -443,7 +443,8 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
         return NULL;
     res = temp;
 
-    /* $time: local date/time of user, example:
+    /*
+     * $time: local date/time of user, example:
      *   Sun, 16 Dec 2012 10:40:48 +0100
      */
     now = time (NULL);
