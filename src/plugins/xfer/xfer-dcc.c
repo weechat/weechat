@@ -26,7 +26,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/socket.h>
-#include <sys/select.h>
+#include <poll.h>
 #include <netinet/in.h>
 #include <fcntl.h>
 #include <time.h>
@@ -312,7 +312,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
     static char buffer[XFER_BLOCKSIZE_MAX];
     time_t last_sent, new_time;
     unsigned long long pos_last_ack;
-    fd_set read_fds, write_fds, except_fds;
+    struct pollfd poll_fd;
     ssize_t written, total_written;
     unsigned char *bin_hash;
     char hash[9];
@@ -362,12 +362,11 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
     while (1)
     {
         /* wait until there is something to read on socket (or error) */
-        FD_ZERO (&read_fds);
-        FD_ZERO (&write_fds);
-        FD_ZERO (&except_fds);
-        FD_SET (xfer->sock, &read_fds);
-        ready = select (xfer->sock + 1, &read_fds, &write_fds, &except_fds, NULL);
-        if (ready == 0)
+        poll_fd.fd = xfer->sock;
+        poll_fd.events = POLLIN;
+        poll_fd.revents = 0;
+        ready = poll (&poll_fd, 1, -1);
+        if (ready <= 0)
         {
             xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
                                      XFER_ERROR_RECV_BLOCK);
