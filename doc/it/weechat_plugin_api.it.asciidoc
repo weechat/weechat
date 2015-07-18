@@ -7391,6 +7391,9 @@ hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 
 ==== hook_fd
 
+// TRANSLATION MISSING
+_Updated in 1.3._
+
 Hook su un descrittore file (file oppure socket).
 
 Prototipo:
@@ -7411,7 +7414,9 @@ Argomenti:
 * 'fd': descrittore file
 * 'flag_read': 1 = cattura l'evento lettura (read), 0 = ignora
 * 'flag_write': 1 = cattura l'evento scrittura (write), 0 = ignora
+// TRANSLATION MISSING
 * 'flag_exception': 1 = cattura l'eccezione evento (event), 0 = ignora
+  (_WeeChat ≥ 1.3_: this argument is ignored and not used any more)
 * 'callback': funzione che chiama un evento selezionato che si verifica
   per un file (o un socket), argomenti e valore restituito:
 ** 'void *data': puntatore

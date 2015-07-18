@@ -7352,6 +7352,8 @@ hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 
 ==== hook_fd
 
+_Mis à jour dans la 1.3._
+
 Accrocher un descripteur de fichier (fichier ou socket).
 
 Prototype :
@@ -7373,6 +7375,7 @@ Paramètres :
 * 'flag_read' : 1 = intercepter un évènement de lecture, 0 = ignorer
 * 'flag_write' : 1 = intercepter un évènement d'écriture, 0 = ignorer
 * 'flag_exception' : 1 = intercepter un évènement d'exception, 0 = ignorer
+  (_WeeChat ≥ 1.3_ : ce paramètre est ignoré et n'est plus utilisé)
 * 'callback' : fonction appelée lorsqu'un des évènements sélectionnés se
   produit pour le fichier (ou le socket), paramètres et valeur de retour :
 ** 'void *data' : pointeur

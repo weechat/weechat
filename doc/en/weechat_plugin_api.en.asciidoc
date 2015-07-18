@@ -7228,6 +7228,8 @@ hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 
 ==== hook_fd
 
+_Updated in 1.3._
+
 Hook a file descriptor (file or socket).
 
 Prototype:
@@ -7249,6 +7251,7 @@ Arguments:
 * 'flag_read': 1 = catch read event, 0 = ignore
 * 'flag_write': 1 = catch write event, 0 = ignore
 * 'flag_exception': 1 = catch exception event, 0 = ignore
+  (_WeeChat ≥ 1.3_: this argument is ignored and not used any more)
 * 'callback': function called a selected event occurs for file (or socket),
   arguments and return value:
 ** 'void *data': pointer

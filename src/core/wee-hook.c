@@ -32,7 +32,7 @@
 #include <time.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <sys/select.h>
+#include <poll.h>
 #include <signal.h>
 #include <fcntl.h>
 #include <errno.h>
@@ -73,6 +73,9 @@ int hooks_count_total = 0;                        /* total number of hooks  */
 int hook_exec_recursion = 0;           /* 1 when a hook is executed         */
 time_t hook_last_system_time = 0;      /* used to detect system clock skew  */
 int real_delete_pending = 0;           /* 1 if some hooks must be deleted   */
+
+struct pollfd *hook_fd_pollfd = NULL;  /* file descriptors for poll()       */
+int hook_fd_pollfd_count = 0;          /* number of file descriptors        */
 
 
 void hook_process_run (struct t_hook *hook_process);
@@ -119,6 +122,41 @@ hook_search_type (const char *type)
 
     /* type not found */
     return -1;
+}
+
+/*
+ * Reallocates the "struct pollfd" array for poll().
+ */
+
+void
+hook_fd_realloc_pollfd ()
+{
+    struct pollfd *ptr_pollfd;
+    int count;
+
+    if (hooks_count[HOOK_TYPE_FD] == hook_fd_pollfd_count)
+        return;
+
+    count = hooks_count[HOOK_TYPE_FD];
+
+    if (count == 0)
+    {
+        if (hook_fd_pollfd)
+        {
+            free (hook_fd_pollfd);
+            hook_fd_pollfd = NULL;
+        }
+    }
+    else
+    {
+        ptr_pollfd = realloc (hook_fd_pollfd,
+                              count * sizeof (struct pollfd));
+        if (!ptr_pollfd)
+            return;
+        hook_fd_pollfd = ptr_pollfd;
+    }
+
+    hook_fd_pollfd_count = count;
 }
 
 /*
@@ -208,6 +246,9 @@ hook_add_to_list (struct t_hook *new_hook)
 
     hooks_count[new_hook->type]++;
     hooks_count_total++;
+
+    if (new_hook->type == HOOK_TYPE_FD)
+        hook_fd_realloc_pollfd ();
 }
 
 /*
@@ -241,6 +282,9 @@ hook_remove_from_list (struct t_hook *hook)
 
     hooks_count[type]--;
     hooks_count_total--;
+
+    if (type == HOOK_TYPE_FD)
+        hook_fd_realloc_pollfd ();
 }
 
 /*
@@ -1087,73 +1131,81 @@ hook_timer_check_system_clock ()
 }
 
 /*
- * Sets time until next timeout.
+ * Returns time until next timeout (in milliseconds).
  */
 
-void
-hook_timer_time_to_next (struct timeval *tv_timeout)
+int
+hook_timer_get_time_to_next ()
 {
     struct t_hook *ptr_hook;
-    int found;
-    struct timeval tv_now;
+    int found, timeout;
+    struct timeval tv_now, tv_timeout;
     long diff_usec;
 
     hook_timer_check_system_clock ();
 
     found = 0;
-    tv_timeout->tv_sec = 0;
-    tv_timeout->tv_usec = 0;
+    tv_timeout.tv_sec = 0;
+    tv_timeout.tv_usec = 0;
 
     for (ptr_hook = weechat_hooks[HOOK_TYPE_TIMER]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
         if (!ptr_hook->deleted
             && (!found
-                || (util_timeval_cmp (&HOOK_TIMER(ptr_hook, next_exec), tv_timeout) < 0)))
+                || (util_timeval_cmp (&HOOK_TIMER(ptr_hook, next_exec),
+                                      &tv_timeout) < 0)))
         {
             found = 1;
-            tv_timeout->tv_sec = HOOK_TIMER(ptr_hook, next_exec).tv_sec;
-            tv_timeout->tv_usec = HOOK_TIMER(ptr_hook, next_exec).tv_usec;
+            tv_timeout.tv_sec = HOOK_TIMER(ptr_hook, next_exec).tv_sec;
+            tv_timeout.tv_usec = HOOK_TIMER(ptr_hook, next_exec).tv_usec;
         }
     }
 
     /* no timeout found, return 2 seconds by default */
     if (!found)
     {
-        tv_timeout->tv_sec = 2;
-        tv_timeout->tv_usec = 0;
-        return;
+        tv_timeout.tv_sec = 2;
+        tv_timeout.tv_usec = 0;
+        goto end;
     }
 
     gettimeofday (&tv_now, NULL);
 
     /* next timeout is past date! */
-    if (util_timeval_cmp (tv_timeout, &tv_now) < 0)
+    if (util_timeval_cmp (&tv_timeout, &tv_now) < 0)
     {
-        tv_timeout->tv_sec = 0;
-        tv_timeout->tv_usec = 0;
-        return;
+        tv_timeout.tv_sec = 0;
+        tv_timeout.tv_usec = 0;
+        goto end;
     }
 
-    tv_timeout->tv_sec = tv_timeout->tv_sec - tv_now.tv_sec;
-    diff_usec = tv_timeout->tv_usec - tv_now.tv_usec;
+    tv_timeout.tv_sec = tv_timeout.tv_sec - tv_now.tv_sec;
+    diff_usec = tv_timeout.tv_usec - tv_now.tv_usec;
     if (diff_usec >= 0)
-        tv_timeout->tv_usec = diff_usec;
+    {
+        tv_timeout.tv_usec = diff_usec;
+    }
     else
     {
-        tv_timeout->tv_sec--;
-        tv_timeout->tv_usec = 1000000 + diff_usec;
+        tv_timeout.tv_sec--;
+        tv_timeout.tv_usec = 1000000 + diff_usec;
     }
 
     /*
      * to detect clock skew, we ensure there's a call to timers every
      * 2 seconds max
      */
-    if (tv_timeout->tv_sec > 2)
+    if (tv_timeout.tv_sec >= 2)
     {
-        tv_timeout->tv_sec = 2;
-        tv_timeout->tv_usec = 0;
+        tv_timeout.tv_sec = 2;
+        tv_timeout.tv_usec = 0;
     }
+
+end:
+    /* return a number of milliseconds */
+    timeout = (tv_timeout.tv_sec * 1000) + (tv_timeout.tv_usec / 1000);
+    return (timeout < 1) ? 1 : timeout;
 }
 
 /*
@@ -1282,18 +1334,19 @@ hook_fd (struct t_weechat_plugin *plugin, int fd, int flag_read,
 }
 
 /*
- * Fills sets according to fd hooked.
- *
- * Returns highest fd set.
+ * Executes fd hooks:
+ * - poll() on fie descriptors
+ * - call of hook fd callbacks if needed.
  */
 
-int
-hook_fd_set (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
+void
+hook_fd_exec ()
 {
-    struct t_hook *ptr_hook;
-    int max_fd;
+    int i, num_fd, timeout, ready, found;
+    struct t_hook *ptr_hook, *next_hook;
 
-    max_fd = 0;
+    /* build an array of "struct pollfd" for poll() */
+    num_fd = 0;
     for (ptr_hook = weechat_hooks[HOOK_TYPE_FD]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
@@ -1315,40 +1368,29 @@ hook_fd_set (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
             }
             else
             {
+                if (num_fd > hook_fd_pollfd_count)
+                    break;
+
+                hook_fd_pollfd[num_fd].fd = HOOK_FD(ptr_hook, fd);
+                hook_fd_pollfd[num_fd].events = 0;
+                hook_fd_pollfd[num_fd].revents = 0;
                 if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_READ)
-                {
-                    FD_SET (HOOK_FD(ptr_hook, fd), read_fds);
-                    if (HOOK_FD(ptr_hook, fd) > max_fd)
-                        max_fd = HOOK_FD(ptr_hook, fd);
-                }
+                    hook_fd_pollfd[num_fd].events |= POLLIN;
                 if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_WRITE)
-                {
-                    FD_SET (HOOK_FD(ptr_hook, fd), write_fds);
-                    if (HOOK_FD(ptr_hook, fd) > max_fd)
-                        max_fd = HOOK_FD(ptr_hook, fd);
-                }
-                if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_EXCEPTION)
-                {
-                    FD_SET (HOOK_FD(ptr_hook, fd), exception_fds);
-                    if (HOOK_FD(ptr_hook, fd) > max_fd)
-                        max_fd = HOOK_FD(ptr_hook, fd);
-                }
+                    hook_fd_pollfd[num_fd].events |= POLLOUT;
+
+                num_fd++;
             }
         }
     }
 
-    return max_fd;
-}
+    /* perform the poll() */
+    timeout = hook_timer_get_time_to_next ();
+    ready = poll (hook_fd_pollfd, num_fd, timeout);
+    if (ready <= 0)
+        return;
 
-/*
- * Executes fd callbacks with sets.
- */
-
-void
-hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
-{
-    struct t_hook *ptr_hook, *next_hook;
-
+    /* execute callbacks for file descriptors with activity */
     hook_exec_start ();
 
     ptr_hook = weechat_hooks[HOOK_TYPE_FD];
@@ -1357,18 +1399,25 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
         next_hook = ptr_hook->next_hook;
 
         if (!ptr_hook->deleted
-            && !ptr_hook->running
-            && (((HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_READ)
-                 && (FD_ISSET(HOOK_FD(ptr_hook, fd), read_fds)))
-                || ((HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_WRITE)
-                    && (FD_ISSET(HOOK_FD(ptr_hook, fd), write_fds)))
-                || ((HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_EXCEPTION)
-                    && (FD_ISSET(HOOK_FD(ptr_hook, fd), exception_fds)))))
+            && !ptr_hook->running)
         {
-            ptr_hook->running = 1;
-            (void) (HOOK_FD(ptr_hook, callback)) (ptr_hook->callback_data,
-                                                  HOOK_FD(ptr_hook, fd));
-            ptr_hook->running = 0;
+            found = 0;
+            for (i = 0; i < num_fd; i++)
+            {
+                if (hook_fd_pollfd[i].fd == HOOK_FD(ptr_hook, fd)
+                    && hook_fd_pollfd[i].revents)
+                {
+                    found = 1;
+                    break;
+                }
+            }
+            if (found)
+            {
+                ptr_hook->running = 1;
+                (void) (HOOK_FD(ptr_hook, callback)) (ptr_hook->callback_data,
+                                                      HOOK_FD(ptr_hook, fd));
+                ptr_hook->running = 0;
+            }
         }
 
         ptr_hook = next_hook;
@@ -1784,9 +1833,8 @@ hook_process_child_read_stderr_cb (void *arg_hook_process, int fd)
 void
 hook_process_child_read_until_eof (struct t_hook *hook_process)
 {
-    struct timeval tv_timeout;
-    fd_set read_fds, write_fds, except_fds;
-    int count, fd_stdout, fd_stderr, max_fd, ready;
+    struct pollfd poll_fd[2];
+    int count, fd_stdout, fd_stderr, num_fd, ready, i;
 
     fd_stdout = HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]);
     fd_stderr = HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDERR]);
@@ -1798,52 +1846,53 @@ hook_process_child_read_until_eof (struct t_hook *hook_process)
     count = 0;
     while (count < 1024)
     {
-        FD_ZERO (&read_fds);
-        FD_ZERO (&write_fds);
-        FD_ZERO (&except_fds);
+        num_fd = 0;
 
-        max_fd = -1;
         if (HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDOUT])
             && ((fcntl (fd_stdout, F_GETFD) != -1) || (errno != EBADF)))
         {
-            FD_SET (fd_stdout, &read_fds);
-            if (fd_stdout > max_fd)
-                max_fd = fd_stdout;
+            poll_fd[num_fd].fd = fd_stdout;
+            poll_fd[num_fd].events = POLLIN;
+            poll_fd[num_fd].revents = 0;
+            num_fd++;
         }
+
         if (HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDERR])
             && ((fcntl (fd_stderr, F_GETFD) != -1) || (errno != EBADF)))
         {
-            FD_SET (fd_stderr, &read_fds);
-            if (fd_stderr > max_fd)
-                max_fd = fd_stderr;
+            poll_fd[num_fd].fd = fd_stderr;
+            poll_fd[num_fd].events = POLLIN;
+            poll_fd[num_fd].revents = 0;
+            num_fd++;
         }
 
-        if (max_fd < 0)
+        if (num_fd == 0)
             break;
 
-        tv_timeout.tv_sec = 0;
-        tv_timeout.tv_usec = 0;
-
-        ready = select (max_fd + 1,
-                        &read_fds, &write_fds, &except_fds,
-                        &tv_timeout);
+        ready = poll (poll_fd, num_fd, 0);
 
         if (ready <= 0)
             break;
 
-        if (FD_ISSET(fd_stdout, &read_fds))
+        for (i = 0; i < num_fd; i++)
         {
-            (void) hook_process_child_read_stdout_cb (
-                hook_process,
-                HOOK_PROCESS(hook_process,
-                             child_read[HOOK_PROCESS_STDOUT]));
-        }
-        if (FD_ISSET(fd_stderr, &read_fds))
-        {
-            (void) hook_process_child_read_stderr_cb (
-                hook_process,
-                HOOK_PROCESS(hook_process,
-                             child_read[HOOK_PROCESS_STDERR]));
+            if (poll_fd[i].revents & POLLIN)
+            {
+                if (poll_fd[i].fd == fd_stdout)
+                {
+                    (void) hook_process_child_read_stdout_cb (
+                        hook_process,
+                        HOOK_PROCESS(hook_process,
+                                     child_read[HOOK_PROCESS_STDOUT]));
+                }
+                else
+                {
+                    (void) hook_process_child_read_stderr_cb (
+                        hook_process,
+                        HOOK_PROCESS(hook_process,
+                                     child_read[HOOK_PROCESS_STDERR]));
+                }
+            }
         }
 
         count++;

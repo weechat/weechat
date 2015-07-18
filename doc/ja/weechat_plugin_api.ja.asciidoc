@@ -7227,6 +7227,8 @@ hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 
 ==== hook_fd
 
+_バージョン 1.3 で更新。_
+
 ファイルディスクリプタ (ファイルやソケット) をフック。
 
 プロトタイプ:
@@ -7247,7 +7249,9 @@ struct t_hook *weechat_hook_fd (int fd,
 * 'fd': ファイルディスクリプタ
 * 'flag_read': 1 = 読み込みイベントをキャッチ、0 = 無視
 * 'flag_write': 1 = 書き込みイベントをキャッチ、0 = 無視
+// TRANSLATION MISSING
 * 'flag_exception': 1 = 例外イベントをキャッチ、0 = 無視
+  (_WeeChat ≥ 1.3_: this argument is ignored and not used any more)
 * 'callback': ファイル (またはソケット) に対してキャッチしたいイベントが発生した場合に実行する関数、
   引数と戻り値:
 ** 'void *data': ポインタ

@@ -467,17 +467,13 @@ extern struct t_hook *hook_timer (struct t_weechat_plugin *plugin,
                                   int max_calls,
                                   t_hook_callback_timer *callback,
                                   void *callback_data);
-extern void hook_timer_time_to_next (struct timeval *tv_timeout);
 extern void hook_timer_exec ();
 extern struct t_hook *hook_fd (struct t_weechat_plugin *plugin, int fd,
                                int flag_read, int flag_write,
                                int flag_exception,
                                t_hook_callback_fd *callback,
                                void *callback_data);
-extern int hook_fd_set (fd_set *read_fds, fd_set *write_fds,
-                        fd_set *exception_fds);
-extern void hook_fd_exec (fd_set *read_fds, fd_set *write_fds,
-                          fd_set *exception_fds);
+extern void hook_fd_exec ();
 extern struct t_hook *hook_process (struct t_weechat_plugin *plugin,
                                     const char *command,
                                     int timeout,

@@ -19,6 +19,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: fix crash if a file descriptor used in hook_fd() is too high
+  (> 1024 on Linux/BSD) (closes #465)
 * core: add option weechat.look.confirm_upgrade (closes #463)
 * core: allow ctrl-C to exit WeeChat when the passphrase is asked on startup
   (closes #452)

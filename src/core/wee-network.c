@@ -39,7 +39,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <sys/select.h>
+#include <poll.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -611,7 +611,7 @@ network_pass_proxy (const char *proxy, int sock, const char *address, int port)
 int
 network_connect (int sock, const struct sockaddr *addr, socklen_t addrlen)
 {
-    fd_set write_fds;
+    struct pollfd poll_fd;
     int ready, value;
     socklen_t len;
 
@@ -628,9 +628,12 @@ network_connect (int sock, const struct sockaddr *addr, socklen_t addrlen)
      */
     while (1)
     {
-        FD_ZERO (&write_fds);
-        FD_SET (sock, &write_fds);
-        ready = select (sock + 1, NULL, &write_fds, NULL, NULL);
+        poll_fd.fd = sock;
+        poll_fd.events = POLLOUT;
+        poll_fd.revents = 0;
+        ready = poll (&poll_fd, 1, -1);
+        if (ready < 0)
+            break;
         if (ready > 0)
         {
             len = sizeof (value);

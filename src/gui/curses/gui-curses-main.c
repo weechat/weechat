@@ -29,7 +29,6 @@
 #include <string.h>
 #include <signal.h>
 #include <time.h>
-#include <sys/select.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-command.h"
@@ -383,10 +382,6 @@ void
 gui_main_loop ()
 {
     struct t_hook *hook_fd_keyboard;
-    struct timeval tv_timeout;
-    fd_set read_fds, write_fds, except_fds;
-    int max_fd;
-    int ready;
 
     /* catch SIGWINCH signal: redraw screen */
     util_catch_signal (SIGWINCH, &gui_main_signal_sigwinch);
@@ -399,7 +394,7 @@ gui_main_loop ()
 
     while (!weechat_quit)
     {
-        /* execute hook timers */
+        /* execute timer hooks */
         hook_timer_exec ();
 
         /* auto reset of color pairs */
@@ -424,18 +419,8 @@ gui_main_loop ()
 
         gui_color_pairs_auto_reset_pending = 0;
 
-        /* wait for keyboard or network activity */
-        FD_ZERO (&read_fds);
-        FD_ZERO (&write_fds);
-        FD_ZERO (&except_fds);
-        max_fd = hook_fd_set (&read_fds, &write_fds, &except_fds);
-        hook_timer_time_to_next (&tv_timeout);
-        ready = select (max_fd + 1, &read_fds, &write_fds, &except_fds,
-                        &tv_timeout);
-        if (ready > 0)
-        {
-            hook_fd_exec (&read_fds, &write_fds, &except_fds);
-        }
+        /* execute fd hooks */
+        hook_fd_exec ();
     }
 
     /* remove keyboard hook */
