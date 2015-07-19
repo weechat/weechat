@@ -121,7 +121,7 @@ weechat_aspell_completion_dicts_cb (void *data,
 }
 
 /*
- * Hooks completion.
+ * Hooks completions.
  */
 
 void
