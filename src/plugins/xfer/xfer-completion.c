@@ -62,7 +62,7 @@ xfer_completion_nick_cb (void *data, const char *completion_item,
 }
 
 /*
- * Hooks completion.
+ * Hooks completions.
  */
 
 void
