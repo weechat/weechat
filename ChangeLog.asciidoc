@@ -29,6 +29,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add support of evaluated sub-strings and current date/time in function
   string_eval_expression() and command /eval
 * api: add function string_eval_path_home()
+* alias: add options "add", "addcompletion" and "del" in command /alias, remove
+  command /unalias (issue #458)
 * irc: evaluate content of server option "nicks"
 * logger: evaluate content of option logger.file.path (issue #388)
 * relay: display value of HTTP header "X-Real-IP" for websocket connections

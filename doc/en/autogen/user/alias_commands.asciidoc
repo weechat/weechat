@@ -3,17 +3,22 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_alias_alias]]
-[command]*`alias`* create an alias for a command::
+[command]*`alias`* list, add or remove command aliases::
 
 ----
-/alias  [-completion <completion>] <alias> [<command> [;<command>...]]
+/alias  list [<alias>]
+        add <alias> [<command>[;<command>...]]
+        addcompletion <completion> <alias> [<command>[;<command>...]]
+        del <alias> [<alias>...]
 
-completion: completion for alias (optional, by default completion is done with target command)
-            note: you can use %%command to use completion of an existing command
-     alias: name of alias (wildcard "*" is allowed)
-   command: command name with arguments (many commands can be separated by semicolons)
-
-Without argument, this command lists all defined alias.
+         list: list aliases (without argument, this list is displayed)
+          add: add an alias
+addcompletion: add an alias with a custom completion
+          del: delete an alias
+   completion: completion for alias: by default completion is done with target command
+               note: you can use %%command to use completion of an existing command
+        alias: name of alias
+      command: command name with arguments (many commands can be separated by semicolons)
 
 Note: in command, special variables are replaced:
         $n: argument 'n' (between 1 and 9)
@@ -25,14 +30,12 @@ Note: in command, special variables are replaced:
       $var: where "var" is a local variable of buffer (see /buffer localvar)
             examples: $nick, $channel, $server, $plugin, $name
 
-To remove an alias, use command /unalias.
-
 Examples:
   alias /split to split window horizontally:
-    /alias split /window splith
+    /alias add split /window splith
   alias /hello to say "hello" on all channels but not on #weechat:
-    /alias hello /allchan -exclude=#weechat msg * hello
+    /alias add hello /allchan -exclude=#weechat msg * hello
   alias /forcejoin to send IRC command "forcejoin" with completion of /sajoin:
-    /alias -completion %%sajoin forcejoin /quote forcejoin
+    /alias addcompletion %%sajoin forcejoin /quote forcejoin
 ----
 

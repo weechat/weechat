@@ -97,6 +97,10 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-window.c
 ./src/gui/gui-window.h
 ./src/plugins/alias/alias.c
+./src/plugins/alias/alias-command.c
+./src/plugins/alias/alias-command.h
+./src/plugins/alias/alias-completion.c
+./src/plugins/alias/alias-completion.h
 ./src/plugins/alias/alias-config.c
 ./src/plugins/alias/alias-config.h
 ./src/plugins/alias/alias.h

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-07-14 07:44+0200\n"
+"POT-Creation-Date: 2015-07-19 10:17+0200\n"
 "PO-Revision-Date: 2015-07-11 21:42+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4397,12 +4397,6 @@ msgstr "příkazy weechat"
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s%s: chyba, cyklický odkaz při volání aliasu \"%s\""
 
-msgid "List of aliases:"
-msgstr "Seznam aliasů:"
-
-msgid "No alias defined"
-msgstr "Žádné aliasy nejsou definovány"
-
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: chyba vytváření aliasu \"%s\" => \"%s\""
@@ -4411,9 +4405,20 @@ msgstr "%s%s: chyba vytváření aliasu \"%s\" => \"%s\""
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" vytvořen"
 
+#, fuzzy, c-format
+msgid "Aliases with \"%s\":"
+msgstr "Servery s \"%s\":"
+
+#, fuzzy
+msgid "All aliases:"
+msgstr "Aliasy barev:"
+
 #, c-format
 msgid "No alias found matching \"%s\""
 msgstr "Žádný alias odpovídající \"%s\" nenalezen"
+
+msgid "No alias defined"
+msgstr "Žádné aliasy nejsou definovány"
 
 #, c-format
 msgid "%sAlias \"%s\" not found"
@@ -4423,24 +4428,28 @@ msgstr "%sAlias \"%s\" nenalezen"
 msgid "Alias \"%s\" removed"
 msgstr "Alias \"%s\" odebrán"
 
-msgid "create an alias for a command"
-msgstr "vytvoří alias pro příkaz"
-
 #, fuzzy
-msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
-msgstr "[-completion <doplňování>] <jméno_aliasu> [<příkaz> [<argumenty>]]"
+msgid "list, add or remove command aliases"
+msgstr "vypíše, přídá nebo odebere IRC servery"
+
+msgid ""
+"list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
+"<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...]"
+msgstr ""
 
 #, fuzzy, c-format
 msgid ""
-"completion: completion for alias (optional, by default completion is done "
-"with target command)\n"
-"            note: you can use %%command to use completion of an existing "
+"         list: list aliases (without argument, this list is displayed)\n"
+"          add: add an alias\n"
+"addcompletion: add an alias with a custom completion\n"
+"          del: delete an alias\n"
+"   completion: completion for alias: by default completion is done with "
+"target command\n"
+"               note: you can use %%command to use completion of an existing "
 "command\n"
-"     alias: name of alias (wildcard \"*\" is allowed)\n"
-"   command: command name with arguments (many commands can be separated by "
-"semicolons)\n"
-"\n"
-"Without argument, this command lists all defined alias.\n"
+"        alias: name of alias\n"
+"      command: command name with arguments (many commands can be separated "
+"by semicolons)\n"
 "\n"
 "Note: in command, special variables are replaced:\n"
 "        $n: argument 'n' (between 1 and 9)\n"
@@ -4453,16 +4462,14 @@ msgid ""
 "localvar)\n"
 "            examples: $nick, $channel, $server, $plugin, $name\n"
 "\n"
-"To remove an alias, use command /unalias.\n"
-"\n"
 "Examples:\n"
 "  alias /split to split window horizontally:\n"
-"    /alias split /window splith\n"
+"    /alias add split /window splith\n"
 "  alias /hello to say \"hello\" on all channels but not on #weechat:\n"
-"    /alias hello /allchan -exclude=#weechat msg * hello\n"
+"    /alias add hello /allchan -exclude=#weechat msg * hello\n"
 "  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
 "sajoin:\n"
-"    /alias -completion %%sajoin forcejoin /quote forcejoin"
+"    /alias addcompletion %%sajoin forcejoin /quote forcejoin"
 msgstr ""
 "  doplňování: doplňování pro alias (nepovinné, jako výchozí doplňování je "
 "použito doplňování příkazu)\n"
@@ -4493,15 +4500,6 @@ msgstr ""
 "  alias /forcejoin pro poslání IRC příkazu \"forcejoin\" s doplňováním z /"
 "sajoin:\n"
 "    /alias -completion %%sajoin forcejoin /quote forcejoin"
-
-msgid "remove aliases"
-msgstr "odebere aliasy"
-
-msgid "<alias> [<alias>...]"
-msgstr "<jméno_aliasu> [<jméno_aliasu>...]"
-
-msgid "alias: name of alias to remove"
-msgstr "jméno_aliasu: jméno aliasu pro odebrání"
 
 msgid "list of aliases"
 msgstr "seznam aliasů"
@@ -11090,3 +11088,22 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit k odesílateli"
+
+#~ msgid "List of aliases:"
+#~ msgstr "Seznam aliasů:"
+
+#~ msgid "create an alias for a command"
+#~ msgstr "vytvoří alias pro příkaz"
+
+#, fuzzy
+#~ msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
+#~ msgstr "[-completion <doplňování>] <jméno_aliasu> [<příkaz> [<argumenty>]]"
+
+#~ msgid "remove aliases"
+#~ msgstr "odebere aliasy"
+
+#~ msgid "<alias> [<alias>...]"
+#~ msgstr "<jméno_aliasu> [<jméno_aliasu>...]"
+
+#~ msgid "alias: name of alias to remove"
+#~ msgstr "jméno_aliasu: jméno aliasu pro odebrání"

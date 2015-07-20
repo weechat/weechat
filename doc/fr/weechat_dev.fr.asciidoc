@@ -181,6 +181,8 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    weechat-plugin.h               | En-tête destiné à être distribué avec les extensions WeeChat, pour les compiler
 |    alias/                         | Extension Alias
 |       alias.c                     | Fonctions principales pour les alias
+|       alias-command.c             | Commandes Alias
+|       alias-completion.c          | Complétions pour Alias
 |       alias-config.c              | Options de configuration des alias (fichier alias.conf)
 |       alias-info.c                | Info/infolists/hdata pour les alias
 |    aspell/                        | Extension Aspell

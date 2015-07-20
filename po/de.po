@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-07-14 07:44+0200\n"
+"POT-Creation-Date: 2015-07-19 10:17+0200\n"
 "PO-Revision-Date: 2015-07-14 14:19+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
@@ -5189,12 +5189,6 @@ msgstr "Alias-Befehle"
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s%s: Fehler, Zirkelbezug beim Aufruf des Alias \"%s\""
 
-msgid "List of aliases:"
-msgstr "Liste der Alias:"
-
-msgid "No alias defined"
-msgstr "Keine Alias definiert"
-
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: Fehler beim Erstellen von Alias \"%s\" => \"%s\""
@@ -5203,9 +5197,20 @@ msgstr "%s%s: Fehler beim Erstellen von Alias \"%s\" => \"%s\""
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" angelegt"
 
+#, fuzzy, c-format
+msgid "Aliases with \"%s\":"
+msgstr "Server mit \"%s\":"
+
+#, fuzzy
+msgid "All aliases:"
+msgstr "Farbalias:"
+
 #, c-format
 msgid "No alias found matching \"%s\""
 msgstr "keinen passenden Alias zu \"%s\" gefunden"
+
+msgid "No alias defined"
+msgstr "Keine Alias definiert"
 
 #, c-format
 msgid "%sAlias \"%s\" not found"
@@ -5215,23 +5220,28 @@ msgstr "%sAlias \"%s\" nicht gefunden"
 msgid "Alias \"%s\" removed"
 msgstr "Alias \"%s\" entfernt"
 
-msgid "create an alias for a command"
-msgstr "Einem Befehl wird ein Alias zugewiesen"
+#, fuzzy
+msgid "list, add or remove command aliases"
+msgstr "auflisten, hinzufügen oder entfernen von IRC-Servern"
 
-msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
-msgstr "[-completion <completion>] <alias> [<command> [;<command>...]]"
-
-#, c-format
 msgid ""
-"completion: completion for alias (optional, by default completion is done "
-"with target command)\n"
-"            note: you can use %%command to use completion of an existing "
+"list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
+"<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...]"
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"         list: list aliases (without argument, this list is displayed)\n"
+"          add: add an alias\n"
+"addcompletion: add an alias with a custom completion\n"
+"          del: delete an alias\n"
+"   completion: completion for alias: by default completion is done with "
+"target command\n"
+"               note: you can use %%command to use completion of an existing "
 "command\n"
-"     alias: name of alias (wildcard \"*\" is allowed)\n"
-"   command: command name with arguments (many commands can be separated by "
-"semicolons)\n"
-"\n"
-"Without argument, this command lists all defined alias.\n"
+"        alias: name of alias\n"
+"      command: command name with arguments (many commands can be separated "
+"by semicolons)\n"
 "\n"
 "Note: in command, special variables are replaced:\n"
 "        $n: argument 'n' (between 1 and 9)\n"
@@ -5244,16 +5254,14 @@ msgid ""
 "localvar)\n"
 "            examples: $nick, $channel, $server, $plugin, $name\n"
 "\n"
-"To remove an alias, use command /unalias.\n"
-"\n"
 "Examples:\n"
 "  alias /split to split window horizontally:\n"
-"    /alias split /window splith\n"
+"    /alias add split /window splith\n"
 "  alias /hello to say \"hello\" on all channels but not on #weechat:\n"
-"    /alias hello /allchan -exclude=#weechat msg * hello\n"
+"    /alias add hello /allchan -exclude=#weechat msg * hello\n"
 "  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
 "sajoin:\n"
-"    /alias -completion %%sajoin forcejoin /quote forcejoin"
+"    /alias addcompletion %%sajoin forcejoin /quote forcejoin"
 msgstr ""
 "completion: optionale Vervollständigung für einen Alias-Befehl "
 "(Standardverhalten: Vervollständigung wird auf den Zielbefehl angewendet)\n"
@@ -5288,15 +5296,6 @@ msgstr ""
 "  Alias \"/forcejoin\" wird angelegt um den IRC Befehl \"forcejoin\" mit "
 "einer Vervollständigung von /sajoin auszuführen:\n"
 "    /alias -completion %%sajoin forcejoin /quote forcejoin"
-
-msgid "remove aliases"
-msgstr "entferne Alias"
-
-msgid "<alias> [<alias>...]"
-msgstr "<alias> [<alias>...]"
-
-msgid "alias: name of alias to remove"
-msgstr "alias: Name des zu löschenden Alias"
 
 msgid "list of aliases"
 msgstr "Liste der Alias"
@@ -12607,3 +12606,21 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
+#~ msgid "List of aliases:"
+#~ msgstr "Liste der Alias:"
+
+#~ msgid "create an alias for a command"
+#~ msgstr "Einem Befehl wird ein Alias zugewiesen"
+
+#~ msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
+#~ msgstr "[-completion <completion>] <alias> [<command> [;<command>...]]"
+
+#~ msgid "remove aliases"
+#~ msgstr "entferne Alias"
+
+#~ msgid "<alias> [<alias>...]"
+#~ msgstr "<alias> [<alias>...]"
+
+#~ msgid "alias: name of alias to remove"
+#~ msgstr "alias: Name des zu löschenden Alias"

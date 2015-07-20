@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-07-14 07:44+0200\n"
+"POT-Creation-Date: 2015-07-19 10:17+0200\n"
 "PO-Revision-Date: 2015-07-13 22:27+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -4853,12 +4853,6 @@ msgstr "エイリアスコマンド"
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s%s: エラー、別名 \"%s\" の呼び出し中に循環参照を検知"
 
-msgid "List of aliases:"
-msgstr "別名のリスト:"
-
-msgid "No alias defined"
-msgstr "別名が定義されていません"
-
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: 別名 \"%s\" => \"%s\" 作成中にエラー"
@@ -4867,9 +4861,20 @@ msgstr "%s%s: 別名 \"%s\" => \"%s\" 作成中にエラー"
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "別名 \"%s\" => \"%s\" を作成しました"
 
+#, fuzzy, c-format
+msgid "Aliases with \"%s\":"
+msgstr "\"%s\" にマッチするサーバ:"
+
+#, fuzzy
+msgid "All aliases:"
+msgstr "色別名:"
+
 #, c-format
 msgid "No alias found matching \"%s\""
 msgstr "\"%s\" にマッチする別名が見つかりません"
+
+msgid "No alias defined"
+msgstr "別名が定義されていません"
 
 #, c-format
 msgid "%sAlias \"%s\" not found"
@@ -4879,23 +4884,28 @@ msgstr "%s別名 \"%s\" が見つかりません"
 msgid "Alias \"%s\" removed"
 msgstr "別名 \"%s\" が削除されました"
 
-msgid "create an alias for a command"
-msgstr "コマンドの別名を作成"
+#, fuzzy
+msgid "list, add or remove command aliases"
+msgstr "IRC サーバのリストアップ、追加、削除"
 
-msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
-msgstr "[-completion <completion>] <alias> [<command> [;<command>...]]"
-
-#, c-format
 msgid ""
-"completion: completion for alias (optional, by default completion is done "
-"with target command)\n"
-"            note: you can use %%command to use completion of an existing "
+"list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
+"<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...]"
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"         list: list aliases (without argument, this list is displayed)\n"
+"          add: add an alias\n"
+"addcompletion: add an alias with a custom completion\n"
+"          del: delete an alias\n"
+"   completion: completion for alias: by default completion is done with "
+"target command\n"
+"               note: you can use %%command to use completion of an existing "
 "command\n"
-"     alias: name of alias (wildcard \"*\" is allowed)\n"
-"   command: command name with arguments (many commands can be separated by "
-"semicolons)\n"
-"\n"
-"Without argument, this command lists all defined alias.\n"
+"        alias: name of alias\n"
+"      command: command name with arguments (many commands can be separated "
+"by semicolons)\n"
 "\n"
 "Note: in command, special variables are replaced:\n"
 "        $n: argument 'n' (between 1 and 9)\n"
@@ -4908,16 +4918,14 @@ msgid ""
 "localvar)\n"
 "            examples: $nick, $channel, $server, $plugin, $name\n"
 "\n"
-"To remove an alias, use command /unalias.\n"
-"\n"
 "Examples:\n"
 "  alias /split to split window horizontally:\n"
-"    /alias split /window splith\n"
+"    /alias add split /window splith\n"
 "  alias /hello to say \"hello\" on all channels but not on #weechat:\n"
-"    /alias hello /allchan -exclude=#weechat msg * hello\n"
+"    /alias add hello /allchan -exclude=#weechat msg * hello\n"
 "  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
 "sajoin:\n"
-"    /alias -completion %%sajoin forcejoin /quote forcejoin"
+"    /alias addcompletion %%sajoin forcejoin /quote forcejoin"
 msgstr ""
 "completion: 別名の補完 (任意、デフォルトではターゲットコマンドを伴って補完さ"
 "れます)\n"
@@ -4949,15 +4957,6 @@ msgstr ""
 "  /forcejoin を /sajoin の補完候補を使い IRC コマンド \"forcejoin\" を送信す"
 "る別名と定義:\n"
 "    /alias -completion %%sajoin forcejoin /quote forcejoin"
-
-msgid "remove aliases"
-msgstr "別名の削除"
-
-msgid "<alias> [<alias>...]"
-msgstr "<alias> [<alias>...]"
-
-msgid "alias: name of alias to remove"
-msgstr "alias: 削除する別名の名前"
 
 msgid "list of aliases"
 msgstr "別名のリスト"
@@ -11867,3 +11866,21 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "List of aliases:"
+#~ msgstr "別名のリスト:"
+
+#~ msgid "create an alias for a command"
+#~ msgstr "コマンドの別名を作成"
+
+#~ msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
+#~ msgstr "[-completion <completion>] <alias> [<command> [;<command>...]]"
+
+#~ msgid "remove aliases"
+#~ msgstr "別名の削除"
+
+#~ msgid "<alias> [<alias>...]"
+#~ msgstr "<alias> [<alias>...]"
+
+#~ msgid "alias: name of alias to remove"
+#~ msgstr "alias: 削除する別名の名前"

@@ -180,6 +180,8 @@ WeeChat "core" is located in following directories:
 |    weechat-plugin.h               | Header designed to be distributed with WeeChat plugins, in order to compile them
 |    alias/                         | Alias plugin
 |       alias.c                     | Main alias functions
+|       alias-command.c             | Alias commands
+|       alias-completion.c          | Alias completions
 |       alias-config.c              | Alias config options (file alias.conf)
 |       alias-info.c                | Alias info/infolists/hdata
 |    aspell/                        | Aspell plugin

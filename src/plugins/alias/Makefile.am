@@ -25,6 +25,10 @@ lib_LTLIBRARIES = alias.la
 
 alias_la_SOURCES = alias.c \
                    alias.h \
+                   alias-command.c \
+                   alias-command.h \
+                   alias-completion.c \
+                   alias-completion.h \
                    alias-config.c \
                    alias-config.h \
                    alias-info.c \

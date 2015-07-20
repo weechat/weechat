@@ -543,7 +543,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.confirm_upgrade]] *weechat.look.confirm_upgrade*
-** Beschreibung: `if set, /upgrade command must be confirmed with extra argument "-yes" (see /help upgrade)`
+** Beschreibung: `ist diese Einstellung aktiviert, muss der "/upgrade" Befehl mit dem Argument "-yes" ausgeführt werden (siehe /help upgrade)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
