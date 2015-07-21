@@ -222,7 +222,7 @@ gui_key_default_bindings (int context)
         for (i = 1; i < 100; i++)
         {
             snprintf (key_str, sizeof (key_str), "meta-j%02d", i);
-            snprintf (command, sizeof (command), "/buffer %d", i);
+            snprintf (command, sizeof (command), "/buffer *%d", i);
             BIND(key_str, command);
         }
     }
