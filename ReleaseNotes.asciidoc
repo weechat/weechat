@@ -19,6 +19,24 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 1.3 (under dev)
 
+=== Alias command
+
+The command `/alias` has been updated to list, add and remove aliases.
+Therefore the command `/unalias` has been removed.
+
+To add an alias, the argument `add` must be used in command `/alias` before the
+name, for example:
+
+----
+/alias add split /window splith
+----
+
+And the alias is removed with this command:
+
+----
+/alias del split
+----
+
 === Script path
 
 The option 'script.scripts.dir' has been renamed to 'script.scripts.path'
