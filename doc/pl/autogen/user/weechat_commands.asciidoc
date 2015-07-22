@@ -921,20 +921,20 @@ Przykłady:
 
 ----
 /window  list
-         -1|+1|b#|up|down|left|right [-window <numer>]
-         <numer>
-         splith|splitv [-window <numer>] [<pct>]
-         resize [-window <numer>] [+/-]<pct>
+         -1|+1|b#|up|down|left|right [-window <number>]
+         <number>
+         splith|splitv [-window <number>] [<pct>]
+         resize [-window <number>] [+/-]<pct>
          balance
-         merge [-window <numer>] [all]
-         page_up|page_down [-window <numer>]
+         merge [-window <number>] [all]
+         page_up|page_down [-window <number>]
          refresh
-         scroll [-window <numer>] [+/-]<wartość>[s|m|h|d|M|y]
-         scroll_horiz [-window <numer>] [+/-]<wartość>[%]
-         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <numer>]
-         swap [-window <numer>] [up|down|left|right]
-         zoom[-window <numer>]
-         bare [<opóźnienie>]
+         scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]
+         scroll_horiz [-window <number>] [+/-]<value>[%]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
+         swap [-window <number>] [up|down|left|right]
+         zoom [-window <number>]
+         bare [<delay>]
 
          list: lista otwartych okien (bez argumentu wyświetlana jest ta lista)
            -1: skok do poprzedniego okna

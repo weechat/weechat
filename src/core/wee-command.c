@@ -7980,7 +7980,7 @@ command_init ()
            "scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|"
            "scroll_unread [-window <number>]"
            " || swap [-window <number>] [up|down|left|right]"
-           " || zoom[-window <number>]"
+           " || zoom [-window <number>]"
            " || bare [<delay>]"),
         N_("         list: list opened windows (without argument, this list is "
            "displayed)\n"

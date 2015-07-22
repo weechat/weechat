@@ -933,7 +933,7 @@ Beispiele:
          scroll_horiz [-window <number>] [+/-]<value>[%]
          scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
          swap [-window <number>] [up|down|left|right]
-         zoom[-window <number>]
+         zoom [-window <number>]
          bare [<delay>]
 
          list: listet die geöffneten Fenster (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
