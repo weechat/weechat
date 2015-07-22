@@ -1173,7 +1173,7 @@ Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buff
 | key[alt-j,alt-r]   | Przełącz na bufor IRC raw | `/server raw`
 | key[alt-j,alt-s]   | Przełącz na bufor serwera IRC | `/server jump`
 | key[alt-0...9]     | Przełącz na bufor za pomocą liczb (0 = 10) | `/buffer *N`
-| key[alt-j,01...99] | Przełącz na bufor za pomocą liczb | `/buffer NN`
+| key[alt-j,01...99] | Przełącz na bufor za pomocą liczb | `/buffer *NN`
 | key[alt-l]         | Przełącz tryb niesformatowanego wyświetlania | `/window bare`
 | key[alt-m]         | Przełącz obsługę myszy | `/mouse toggle`
 | key[alt-n]         | Przewiń do następnego powiadomienia | `/window scroll_next_highlight`

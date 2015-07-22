@@ -1158,7 +1158,7 @@ The notify level for a buffer can be set with command `/buffer`:
 | key[alt-j,alt-r]   | Switch to IRC raw buffer | `/server raw`
 | key[alt-j,alt-s]   | Switch to IRC server buffer | `/server jump`
 | key[alt-0...9]     | Switch to buffer by number (0 = 10) | `/buffer *N`
-| key[alt-j,01...99] | Switch to buffer by number | `/buffer NN`
+| key[alt-j,01...99] | Switch to buffer by number | `/buffer *NN`
 | key[alt-l]         | Toggle bare display on/off | `/window bare`
 | key[alt-m]         | Toggle mouse | `/mouse toggle`
 | key[alt-n]         | Scroll to next highlight | `/window scroll_next_highlight`
