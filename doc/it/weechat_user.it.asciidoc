@@ -1214,7 +1214,7 @@ Il livello di notifica per un buffer può essere impostato con il comando `/buff
 | key[alt-j,alt-r]   | Passa al buffer raw IRC | `/server raw`
 | key[alt-j,alt-s]   | Passa al buffer server IRC | `/server jump`
 | key[alt-0...9]     | Passa al buffer numero (0 = 10) | `/buffer *N`
-| key[alt-j,01...99] | Passa al buffer numero | `/buffer NN`
+| key[alt-j,01...99] | Passa al buffer numero | `/buffer *NN`
 // TRANSLATION MISSING
 | key[alt-l]         | Toggle bare display on/off | `/window bare`
 | key[alt-m]         | Abilita/disabilita | `/mouse toggle`

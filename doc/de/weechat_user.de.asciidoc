@@ -1182,7 +1182,7 @@ Befehl festgelegt werden:
 | key[alt-j,alt-r]   | wechselt zum IRC RAW Buffer | `/server raw`
 | key[alt-j,alt-s]   | wechselt zum IRC Server Buffer | `/server jump`
 | key[alt-0...9]     | wechselt zum Buffer mit der Nummer (0 = 10) | `/buffer *N`
-| key[alt-j,01...99] | wechselt zum Buffer mit der angegeben Nummer | `/buffer NN`
+| key[alt-j,01...99] | wechselt zum Buffer mit der angegeben Nummer | `/buffer *NN`
 | key[alt-l]         | schaltet einfachen Anzeigemodus an/aus | `/window bare`
 | key[alt-m]         | schaltet Mausfunktion ein/aus | `/mouse toggle`
 | key[alt-n]         | springt zur nächsten Highlight Nachricht | `/window scroll_next_highlight`

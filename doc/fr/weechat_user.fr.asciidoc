@@ -1188,7 +1188,7 @@ commande `/buffer` :
 | key[alt-j,alt-r]   | Sauter au tampon IRC de données brutes | `/server raw`
 | key[alt-j,alt-s]   | Sauter au tampon IRC du serveur | `/server jump`
 | key[alt-0...9]     | Sauter au tampon qui porte ce numéro (0 = 10) | `/buffer *N`
-| key[alt-j,01...99] | Sauter au tampon qui porte ce numéro | `/buffer NN`
+| key[alt-j,01...99] | Sauter au tampon qui porte ce numéro | `/buffer *NN`
 | key[alt-l]         | Activer/désactiver le mode d'affichage dépouillé | `/window bare`
 | key[alt-m]         | Activer/désactiver la souris | `/mouse toggle`
 | key[alt-n]         | Se positionner sur le highlight suivant | `/window scroll_next_highlight`
