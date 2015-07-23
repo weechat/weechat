@@ -917,8 +917,6 @@ weeurl_option_map_cb (void *data,
                 break;
         }
     }
-
-    return;
 }
 
 /*
