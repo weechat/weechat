@@ -19,6 +19,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: allow jump from current to previous buffer with default keys
+  key[alt-j,NN] (issue #466)
 * core: fix crash if a file descriptor used in hook_fd() is too high
   (> 1024 on Linux/BSD) (issue #465)
 * core: add option weechat.look.confirm_upgrade (issue #463)
