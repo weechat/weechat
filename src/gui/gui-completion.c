@@ -1157,7 +1157,10 @@ gui_completion_complete (struct t_gui_completion *completion)
 
                     /* alert user of partial completion */
                     if (CONFIG_BOOLEAN(config_completion_partial_completion_alert))
-                        printf ("\a");
+                    {
+                        fprintf (stderr, "\a");
+                        fflush (stderr);
+                    }
 
                     /*
                      * send "partial_completion" signal, to display possible

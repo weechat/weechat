@@ -89,6 +89,7 @@ gui_mouse_enable ()
 {
     gui_mouse_enabled = 1;
     fprintf (stderr, "\033[?1005h\033[?1000h\033[?1002h");
+    fflush (stderr);
 
     (void) hook_signal_send ("mouse_enabled",
                              WEECHAT_HOOK_SIGNAL_STRING, NULL);
@@ -103,6 +104,7 @@ gui_mouse_disable ()
 {
     gui_mouse_enabled = 0;
     fprintf (stderr, "\033[?1002l\033[?1000l\033[?1005l");
+    fflush (stderr);
 
     (void) hook_signal_send ("mouse_disabled",
                              WEECHAT_HOOK_SIGNAL_STRING, NULL);

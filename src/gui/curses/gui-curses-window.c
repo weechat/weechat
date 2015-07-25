@@ -2521,6 +2521,7 @@ gui_window_send_clipboard (const char *storage_unit, const char *text)
         fprintf (stderr, "\033]52;%s;%s\a",
                  (storage_unit) ? storage_unit : "",
                  text_base64);
+        fflush (stderr);
         free (text_base64);
     }
 }
@@ -2545,6 +2546,7 @@ gui_window_set_bracketed_paste_mode (int enable)
              (screen) ? "\033P" : "",
              (enable) ? "h" : "l",
              (screen) ? "\033\\" : "");
+    fflush (stderr);
 }
 
 /*

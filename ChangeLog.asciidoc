@@ -40,6 +40,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: flush stdout/stderr after sending text directly on them
+  (fix corrupted data sent to hook_process() callback) (issue #442)
 * core: allow execution of command "/input return" on a buffer which is not
   displayed in a window
 * core: allow jump from current to previous buffer with default keys

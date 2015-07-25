@@ -465,7 +465,10 @@ gui_key_flush (int paste)
                      * found
                      */
                     if (CONFIG_BOOLEAN(config_look_search_text_not_found_alert))
-                        printf ("\a");
+                    {
+                        fprintf (stderr, "\a");
+                        fflush (stderr);
+                    }
                 }
                 else
                 {

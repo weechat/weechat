@@ -1639,7 +1639,8 @@ gui_window_search_restart (struct t_gui_window *window)
         if (CONFIG_BOOLEAN(config_look_search_text_not_found_alert)
             && window->buffer->input_buffer && window->buffer->input_buffer[0])
         {
-            printf ("\a");
+            fprintf (stderr, "\a");
+            fflush (stderr);
         }
         gui_buffer_ask_chat_refresh (window->buffer, 2);
     }

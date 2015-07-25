@@ -4607,6 +4607,7 @@ COMMAND_CALLBACK(print)
         else if (string_strcasecmp (argv[i], "-beep") == 0)
         {
             fprintf (stderr, "\a");
+            fflush (stderr);
             return WEECHAT_RC_OK;
         }
         else if (argv[i][0] == '-')
@@ -4632,6 +4633,7 @@ COMMAND_CALLBACK(print)
         if (text)
         {
             fprintf ((to_stdout) ? stdout : stderr, "%s", text);
+            fflush ((to_stdout) ? stdout : stderr);
             free (text);
         }
     }
