@@ -40,6 +40,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: allow execution of command "/input return" on a buffer which is not
+  displayed in a window
 * core: allow jump from current to previous buffer with default keys
   key[alt-j,NN] (issue #466)
 * core: fix crash if a file descriptor used in hook_fd() is too high

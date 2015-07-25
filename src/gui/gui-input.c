@@ -406,7 +406,6 @@ gui_input_clipboard_paste (struct t_gui_buffer *buffer)
 void
 gui_input_return (struct t_gui_buffer *buffer)
 {
-    struct t_gui_window *window;
     char *command;
 
     if (CONFIG_BOOLEAN(config_look_bare_display_exit_on_input)
@@ -415,29 +414,26 @@ gui_input_return (struct t_gui_buffer *buffer)
         gui_window_bare_display_toggle (NULL);
     }
 
-    window = gui_window_search_with_buffer (buffer);
-    if (window && window->buffer->input
-        && (window->buffer->input_buffer_size > 0))
+    if (buffer->input && (buffer->input_buffer_size > 0))
     {
-        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-        command = strdup (window->buffer->input_buffer);
+        buffer->input_buffer[buffer->input_buffer_size] = '\0';
+        command = strdup (buffer->input_buffer);
         if (command)
         {
-            gui_history_add (window->buffer,
-                             window->buffer->input_buffer);
-            window->buffer->input_buffer[0] = '\0';
-            window->buffer->input_buffer_size = 0;
-            window->buffer->input_buffer_length = 0;
-            window->buffer->input_buffer_pos = 0;
-            window->buffer->input_buffer_1st_display = 0;
-            gui_buffer_undo_free_all (window->buffer);
-            window->buffer->ptr_history = NULL;
+            gui_history_add (buffer, buffer->input_buffer);
+            buffer->input_buffer[0] = '\0';
+            buffer->input_buffer_size = 0;
+            buffer->input_buffer_length = 0;
+            buffer->input_buffer_pos = 0;
+            buffer->input_buffer_1st_display = 0;
+            gui_buffer_undo_free_all (buffer);
+            buffer->ptr_history = NULL;
             gui_history_ptr = NULL;
-            gui_input_optimize_size (window->buffer);
-            gui_input_text_changed_modifier_and_signal (window->buffer,
+            gui_input_optimize_size (buffer);
+            gui_input_text_changed_modifier_and_signal (buffer,
                                                         0, /* save undo */
                                                         1); /* stop completion */
-            (void) input_data (window->buffer, command);
+            (void) input_data (buffer, command);
             free (command);
         }
     }
