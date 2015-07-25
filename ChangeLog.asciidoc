@@ -19,10 +19,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
-* core: allow jump from current to previous buffer with default keys
-  key[alt-j,NN] (issue #466)
-* core: fix crash if a file descriptor used in hook_fd() is too high
-  (> 1024 on Linux/BSD) (issue #465)
 * core: add option weechat.look.confirm_upgrade (issue #463)
 * core: allow ctrl-C to exit WeeChat when the passphrase is asked on startup
   (issue #452)
@@ -39,13 +35,15 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (issue #440)
 * script: rename option script.scripts.dir to script.scripts.path, evaluate
   content of option (issue #388)
-* xfer: fix crash if the DCC file socket number is too high
-  (> 1024 on Linux/BSD) (issue #465)
 * xfer: evaluate content of options xfer.file.download_path and
   xfer.file.upload_path (issue #388)
 
 === Bugs fixed
 
+* core: allow jump from current to previous buffer with default keys
+  key[alt-j,NN] (issue #466)
+* core: fix crash if a file descriptor used in hook_fd() is too high
+  (> 1024 on Linux/BSD) (issue #465)
 * core: fix display of invalid UTF-8 chars in bars
 * core: fix bar item "scroll" after /buffer clear (issue #448)
 * core: fix display of time in bare display when option
@@ -66,6 +64,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: fix errors displayed on WHOX messages received (issue #376)
 * lua: add detection of Lua 5.3
 * ruby: add detection of Ruby 2.2
+* xfer: fix crash if the DCC file socket number is too high
+  (> 1024 on Linux/BSD) (issue #465)
 * xfer: fix parsing of DCC chat messages (handle "\r\n" at the end of messages)
   (issue #425, issue #426)
 * doc: replace PREFIX with CMAKE_INSTALL_PREFIX in cmake instructions
