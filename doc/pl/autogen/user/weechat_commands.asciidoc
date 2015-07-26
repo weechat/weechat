@@ -414,58 +414,60 @@ Wartość: ilość elementów historii do pokazania
 ----
 /input  <akcja> [<argumenty>]
 
-lista akcji:
-  return: symuluje klawisz "enter"
-  complete_next: dopełnia słowo następnym dopełnieniem
-  complete_previous: dopełnia słowo poprzednim dopełnieniem
-  search_text: szuka tekstu w buforze
-  search_switch_case: przełącza na dokładne dopasowanie przy szukaniu
-  search_switch_regex: przełącza typy wyszukiwania ciąg/wyrażenie regularne
-  search_switch_where: zmienia miejsce przeszukiwania na wiadomości/przedrostki
-  search_previous: szuka poprzednich linii
-  search_next: szuka następnych linii
-  search_stop: zatrzymuje wyszukiwanie
-  delete_previous_char: usuwa poprzedni znak
-  delete_next_char: usuwa następny znak
-  delete_previous_word: usuwa poprzednie słowo
-  delete_next_word: usuwa następne słowo
-  delete_beginning_of_line: usuwa od początku linii do kursora
-  delete_end_of_line: usuwa od kursora do końca linii
-  delete_line: usuwa cała linię
-  clipboard_paste: wkleja ze schowka
-  transpose_chars: zamienia dwa znaki
-  undo: cofa ostatnia akcję w linii poleceń
-  redo: ponownie wykonuje cofniętą akcję w linii poleceń
-  move_beginning_of_line: przesuwa kursor na początek linii
-  move_end_of_line: przesuwa kursor na koniec linii
-  move_previous_char: przesuwa kursor do poprzedniego znaku
-  move_next_char: przesuwa kursor do następnego znaku
-  move_previous_word: przesuwa kursor do poprzedniego słowa
-  move_next_word: przesuwa kursor do następnego słowa
-  history_previous: przywołuje poprzednia komendę z historii obecnego bufora
-  history_next: przywołuje następną komendę z historii obecnego bufora
-  history_global_previous: przywołuje poprzednią komendę z globalnej historii
-  history_global_next: przywołuje następną komendę z globalnej historii
-  jump_smart: przechodzi do następnego bufora z aktywnością
-  jump_last_buffer_displayed: przechodzi do ostatnio wyświetlanego bufora (przed ostatnim przeskoczeniem do bufora)
-  jump_previously_visited_buffer: przeskakuje do poprzedniego bufora
-  jump_next_visited_buffer: przeskakuje to następnego bufora
-  hotlist_clear: czyści hotlistę
-  grab_key: przechwytuje klawisz (opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
-  grab_key_command: przechwytuje klawisz z przypisaną komendą(opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
-  grab_mouse: przechwytuje kod zdarzenia myszy
-  grab_mouse_area: przechwytuje kod zdarzenia myszy z obszarem
-  set_unread: ustawia znacznik nie przeczytania dla wszystkich buforów
-  set_unread_current_buffer: ustawia znacznik nie przeczytania dla obecnego bufora
-  switch_active_buffer: przełącza do następnego połączonego buforu
-  switch_active_buffer_previous: przełącza do poprzedniego połączonego buforu
-  zoom_merged_buffer: zoom na połączony bufor
-  insert: wkleja tekst do linii poleceń (dozwolone są wyescapowane znaki, zobacz /help print)
-  send: wysyła tekst do bufora
-  paste_start: zaczyna wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
-  paste_stop: kończy wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
+list of actions:
+  return: simulate key "enter"
+  complete_next: complete word with next completion
+  complete_previous: complete word with previous completion
+  search_text_here: search text in buffer at current position
+  search_text: search text in buffer
+  search_switch_case: switch exact case for search
+  search_switch_regex: switch search type: string/regular expression
+  search_switch_where: switch search in messages/prefixes
+  search_previous: search previous line
+  search_next: search next line
+  search_stop_here: stop search at current position
+  search_stop: stop search
+  delete_previous_char: delete previous char
+  delete_next_char: delete next char
+  delete_previous_word: delete previous word
+  delete_next_word: delete next word
+  delete_beginning_of_line: delete from beginning of line until cursor
+  delete_end_of_line: delete from cursor until end of line
+  delete_line: delete entire line
+  clipboard_paste: paste from clipboard
+  transpose_chars: transpose two chars
+  undo: undo last command line action
+  redo: redo last command line action
+  move_beginning_of_line: move cursor to beginning of line
+  move_end_of_line: move cursor to end of line
+  move_previous_char: move cursor to previous char
+  move_next_char: move cursor to next char
+  move_previous_word: move cursor to previous word
+  move_next_word: move cursor to next word
+  history_previous: recall previous command in current buffer history
+  history_next: recall next command in current buffer history
+  history_global_previous: recall previous command in global history
+  history_global_next: recall next command in global history
+  jump_smart: jump to next buffer with activity
+  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
+  jump_previously_visited_buffer: jump to previously visited buffer
+  jump_next_visited_buffer: jump to next visited buffer
+  hotlist_clear: clear hotlist
+  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_mouse: grab mouse event code
+  grab_mouse_area: grab mouse event code with area
+  set_unread: set unread marker for all buffers
+  set_unread_current_buffer: set unread marker for current buffer
+  switch_active_buffer: switch to next merged buffer
+  switch_active_buffer_previous: switch to previous merged buffer
+  zoom_merged_buffer: zoom on merged buffer
+  insert: insert text in command line (escaped chars are allowed, see /help print)
+  send: send text to the buffer
+  paste_start: start paste (bracketed paste mode)
+  paste_stop: stop paste (bracketed paste mode)
 
-Ta komenda jest używana do przypisywania klawiszy lub przez wtyczki.
+This command is used by key bindings or plugins.
 ----
 
 [[command_weechat_key]]

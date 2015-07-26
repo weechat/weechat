@@ -942,6 +942,7 @@
 *** 'scrolling' (integer)
 *** 'start_col' (integer)
 *** 'lines_after' (integer)
+*** 'text_search_start_line' (pointer, hdata: "line")
 *** 'prev_scroll' (pointer, hdata: "window_scroll")
 *** 'next_scroll' (pointer, hdata: "window_scroll")
 * 'window_tree': Baumstruktur der Fenster

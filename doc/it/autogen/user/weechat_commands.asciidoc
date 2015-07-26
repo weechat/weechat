@@ -418,12 +418,14 @@ list of actions:
   return: simulate key "enter"
   complete_next: complete word with next completion
   complete_previous: complete word with previous completion
+  search_text_here: search text in buffer at current position
   search_text: search text in buffer
   search_switch_case: switch exact case for search
   search_switch_regex: switch search type: string/regular expression
   search_switch_where: switch search in messages/prefixes
   search_previous: search previous line
   search_next: search next line
+  search_stop_here: stop search at current position
   search_stop: stop search
   delete_previous_char: delete previous char
   delete_next_char: delete next char

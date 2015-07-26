@@ -418,12 +418,14 @@ liste des actions :
   return : simuler la touche "entrée"
   complete_next : compléter le mot avec la complétion suivante
   complete_previous : compléter le mot avec la complétion précédente
+  search_text_here : chercher du texte dans le tampon à la position courante
   search_text : chercher du texte dans le tampon
   search_switch_case : basculer la casse exacte pour la recherche
   search_switch_regex : basculer le type de recherche : chaîne/expression régulière
   search_switch_where : basculer la recherche dans les messages/préfixes
   search_previous : chercher la ligne précédente
   search_next : chercher la ligne suivante
+  search_stop_here : arrêter la recherche à la position courante
   search_stop : arrêter la recherche
   delete_previous_char : effacer le caractère précédent
   delete_next_char : effacer le caractère suivant
