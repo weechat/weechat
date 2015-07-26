@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-07-22 07:49+0200\n"
-"PO-Revision-Date: 2015-07-11 21:42+0200\n"
+"PO-Revision-Date: 2015-07-26 09:42+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -12086,21 +12086,3 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
-
-#~ msgid "List of aliases:"
-#~ msgstr "Lista aliasów:"
-
-#~ msgid "create an alias for a command"
-#~ msgstr "tworzy alias do komendy"
-
-#~ msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
-#~ msgstr "[-completion <dopełnienie>] <alias> [<komenda> [;<komenda>...]]"
-
-#~ msgid "remove aliases"
-#~ msgstr "usuwa aliasy"
-
-#~ msgid "<alias> [<alias>...]"
-#~ msgstr "<alias> [<alias>...]"
-
-#~ msgid "alias: name of alias to remove"
-#~ msgstr "alias: nazwa aliasu do usunięcia"

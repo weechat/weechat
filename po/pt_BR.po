@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-07-22 07:49+0200\n"
-"PO-Revision-Date: 2015-07-11 21:42+0200\n"
+"PO-Revision-Date: 2015-07-26 09:42+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -10868,21 +10868,3 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
-
-#~ msgid "List of aliases:"
-#~ msgstr "Lista de atalhos:"
-
-#~ msgid "create an alias for a command"
-#~ msgstr "cria um atalho para um comando"
-
-#~ msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
-#~ msgstr "[-completion <completion>] <atalho> [<comando> [;<comando>...]]"
-
-#~ msgid "remove aliases"
-#~ msgstr "remover atalhos"
-
-#~ msgid "<alias> [<alias>...]"
-#~ msgstr "<atalho> [<atalho>...]"
-
-#~ msgid "alias: name of alias to remove"
-#~ msgstr "atalho: nome de um atalho para remover"

@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-07-22 07:49+0200\n"
-"PO-Revision-Date: 2015-07-11 21:42+0200\n"
+"PO-Revision-Date: 2015-07-26 09:42+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -10439,26 +10439,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy
-#~ msgid "List of aliases:"
-#~ msgstr "Aliaszok listája:\n"
-
-#~ msgid "create an alias for a command"
-#~ msgstr "alias készítése egy parancshoz"
-
-#, fuzzy
-#~ msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
-#~ msgstr "[alias_név [parancs [paraméterek]]]"
-
-#, fuzzy
-#~ msgid "remove aliases"
-#~ msgstr "alias eltávolítása"
-
-#, fuzzy
-#~ msgid "<alias> [<alias>...]"
-#~ msgstr "név [név...]"
-
-#, fuzzy
-#~ msgid "alias: name of alias to remove"
-#~ msgstr "alias_név: az eltávolítandó alias neve"

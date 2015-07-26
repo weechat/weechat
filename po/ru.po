@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-07-22 07:49+0200\n"
-"PO-Revision-Date: 2015-07-11 21:42+0200\n"
+"PO-Revision-Date: 2015-07-26 09:42+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -10465,26 +10465,3 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
-
-#, fuzzy
-#~ msgid "List of aliases:"
-#~ msgstr "Список сокращений:\n"
-
-#~ msgid "create an alias for a command"
-#~ msgstr "создать ярлык на команду"
-
-#, fuzzy
-#~ msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
-#~ msgstr "[сокращение [команда [аргументы]]]"
-
-#, fuzzy
-#~ msgid "remove aliases"
-#~ msgstr "удалить ярлык"
-
-#, fuzzy
-#~ msgid "<alias> [<alias>...]"
-#~ msgstr "ник [ник ...]"
-
-#, fuzzy
-#~ msgid "alias: name of alias to remove"
-#~ msgstr "сокращение: удаляемое сокращение"

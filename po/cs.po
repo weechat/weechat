@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-07-22 07:49+0200\n"
-"PO-Revision-Date: 2015-07-11 21:42+0200\n"
+"PO-Revision-Date: 2015-07-26 09:41+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -11088,22 +11088,3 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit k odesílateli"
-
-#~ msgid "List of aliases:"
-#~ msgstr "Seznam aliasů:"
-
-#~ msgid "create an alias for a command"
-#~ msgstr "vytvoří alias pro příkaz"
-
-#, fuzzy
-#~ msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
-#~ msgstr "[-completion <doplňování>] <jméno_aliasu> [<příkaz> [<argumenty>]]"
-
-#~ msgid "remove aliases"
-#~ msgstr "odebere aliasy"
-
-#~ msgid "<alias> [<alias>...]"
-#~ msgstr "<jméno_aliasu> [<jméno_aliasu>...]"
-
-#~ msgid "alias: name of alias to remove"
-#~ msgstr "jméno_aliasu: jméno aliasu pro odebrání"

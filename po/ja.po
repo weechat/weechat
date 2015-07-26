@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-07-22 07:49+0200\n"
-"PO-Revision-Date: 2015-07-25 19:03+0900\n"
+"PO-Revision-Date: 2015-07-26 09:42+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -11866,21 +11866,3 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
-
-#~ msgid "List of aliases:"
-#~ msgstr "別名のリスト:"
-
-#~ msgid "create an alias for a command"
-#~ msgstr "コマンドの別名を作成"
-
-#~ msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
-#~ msgstr "[-completion <completion>] <alias> [<command> [;<command>...]]"
-
-#~ msgid "remove aliases"
-#~ msgstr "別名の削除"
-
-#~ msgid "<alias> [<alias>...]"
-#~ msgstr "<alias> [<alias>...]"
-
-#~ msgid "alias: name of alias to remove"
-#~ msgstr "alias: 削除する別名の名前"
