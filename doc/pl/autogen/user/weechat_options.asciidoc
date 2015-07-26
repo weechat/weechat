@@ -718,7 +718,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_weechat.look.key_grab_delay]] *weechat.look.key_grab_delay*
-** opis: `default delay (in milliseconds) to grab a key (using default key alt-k); this delay can be overridden in the /input command (see /help input`
+** opis: `default delay (in milliseconds) to grab a key (using default key alt-k); this delay can be overridden in the /input command (see /help input)`
 ** typ: liczba
 ** wartości: 1 .. 10000 (domyślna wartość: `800`)
 

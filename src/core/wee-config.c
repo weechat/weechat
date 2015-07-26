@@ -2628,7 +2628,7 @@ config_weechat_init_options ()
         "key_grab_delay", "integer",
         N_("default delay (in milliseconds) to grab a key (using default key "
            "alt-k); this delay can be overridden in the /input command (see "
-           "/help input"),
+           "/help input)"),
         NULL, 1, 10000, "800", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_mouse = config_file_new_option (
         weechat_config_file, ptr_section,
