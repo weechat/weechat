@@ -19,6 +19,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: add option weechat.look.key_grab_delay to set the default delay when
+  grabbing a key with key[alt-k]
 * core: add option weechat.look.confirm_upgrade (issue #463)
 * core: allow ctrl-C to exit WeeChat when the passphrase is asked on startup
   (issue #452)

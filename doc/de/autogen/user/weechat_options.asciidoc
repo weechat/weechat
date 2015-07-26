@@ -717,6 +717,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
+* [[option_weechat.look.key_grab_delay]] *weechat.look.key_grab_delay*
+** Beschreibung: `default delay (in milliseconds) to grab a key (using default key alt-k); this delay can be overridden in the /input command (see /help input`
+** Typ: integer
+** Werte: 1 .. 10000 (Standardwert: `800`)
+
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
 ** Beschreibung: `Mausunterstützung einschalten`
 ** Typ: boolesch

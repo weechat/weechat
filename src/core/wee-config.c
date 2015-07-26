@@ -143,6 +143,7 @@ struct t_config_option *config_look_jump_current_to_previous_buffer;
 struct t_config_option *config_look_jump_previous_buffer_when_closing;
 struct t_config_option *config_look_jump_smart_back_to_buffer;
 struct t_config_option *config_look_key_bind_safe;
+struct t_config_option *config_look_key_grab_delay;
 struct t_config_option *config_look_mouse;
 struct t_config_option *config_look_mouse_timer_delay;
 struct t_config_option *config_look_nick_prefix;
@@ -2622,6 +2623,13 @@ config_weechat_init_options ()
         N_("allow only binding of \"safe\" keys (beginning with a ctrl or meta "
            "code)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_key_grab_delay = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "key_grab_delay", "integer",
+        N_("default delay (in milliseconds) to grab a key (using default key "
+           "alt-k); this delay can be overridden in the /input command (see "
+           "/help input"),
+        NULL, 1, 10000, "800", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_mouse = config_file_new_option (
         weechat_config_file, ptr_section,
         "mouse", "boolean",

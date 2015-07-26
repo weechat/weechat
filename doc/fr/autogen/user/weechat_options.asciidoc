@@ -717,6 +717,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_weechat.look.key_grab_delay]] *weechat.look.key_grab_delay*
+** description: `délai par défaut (en millisecondes) pour capturer une touche (en utilisant la touche par défaut alt-k) ; ce délai peut être remplacé dans la commande /input (voir /help input)`
+** type: entier
+** valeurs: 1 .. 10000 (valeur par défaut: `800`)
+
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
 ** description: `activer le support de la souris`
 ** type: booléen

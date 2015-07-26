@@ -177,7 +177,7 @@ gui_key_grab_init (int grab_command, const char *delay)
     gui_key_grab_count = 0;
     gui_key_grab_command = grab_command;
 
-    gui_key_grab_delay = GUI_KEY_GRAB_DELAY_DEFAULT;
+    gui_key_grab_delay = CONFIG_INTEGER(config_look_key_grab_delay);
     if (delay != NULL)
     {
         error = NULL;

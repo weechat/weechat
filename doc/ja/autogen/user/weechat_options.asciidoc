@@ -717,6 +717,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
+* [[option_weechat.look.key_grab_delay]] *weechat.look.key_grab_delay*
+** 説明: `default delay (in milliseconds) to grab a key (using default key alt-k); this delay can be overridden in the /input command (see /help input`
+** タイプ: 整数
+** 値: 1 .. 10000 (デフォルト値: `800`)
+
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
 ** 説明: `マウスサポートの有効化`
 ** タイプ: ブール
