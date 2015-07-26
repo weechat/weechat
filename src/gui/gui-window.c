@@ -1569,12 +1569,15 @@ gui_window_search_text (struct t_gui_window *window)
 }
 
 /*
- * Begins search in a buffer (helper function).
+ * Starts search in a buffer at a given position
+ * (or in whole buffer if text_search_start_line is NULL).
  */
 
 void
-gui_window_search_begin (struct t_gui_window *window)
+gui_window_search_start (struct t_gui_window *window,
+                         struct t_gui_line *text_search_start_line)
 {
+    window->scroll->text_search_start_line = text_search_start_line;
     window->buffer->text_search =
         (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED) ?
         GUI_TEXT_SEARCH_BACKWARD : GUI_TEXT_SEARCH_FORWARD;
@@ -1618,28 +1621,6 @@ gui_window_search_begin (struct t_gui_window *window)
         window->buffer->text_search_input =
             strdup (window->buffer->input_buffer);
     gui_input_delete_line (window->buffer);
-}
-
-/*
- * Starts search in a buffer at current position.
- */
-
-void
-gui_window_search_start_here (struct t_gui_window *window)
-{
-    gui_window_search_begin (window);
-    window->scroll->text_search_start_line = window->scroll->start_line;
-}
-
-/*
- * Starts search in a buffer.
- */
-
-void
-gui_window_search_start (struct t_gui_window *window)
-{
-    gui_window_search_begin (window);
-    window->scroll->text_search_start_line = NULL;
 }
 
 /*
