@@ -533,17 +533,17 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.look.command_incomplete]] *weechat.look.command_incomplete*
-** 説明: `セットされた場合、不完全なコマンドと完全なコマンドを両方使えるようになります、例えば /he は /help の意味で使うことができます`
+** 説明: `これを設定した場合、不完全なコマンドと完全なコマンドを両方使えるようになります、例えば /he は /help の意味で使うことができます`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_weechat.look.confirm_quit]] *weechat.look.confirm_quit*
-** 説明: `セットされた場合、/quit コマンドは "-yes" 引数と共に使われなければいけない (help quit を参照)`
+** 説明: `これを設定した場合、/quit コマンド使う際には必ず "-yes" 引数と共に使う必要があります (help quit 参照)`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_weechat.look.confirm_upgrade]] *weechat.look.confirm_upgrade*
-** 説明: `if set, /upgrade command must be confirmed with extra argument "-yes" (see /help upgrade)`
+** 説明: `これを設定した場合、/upgrade コマンド使う際には必ず "-yes" 引数と共に使う必要があります (help upgrade 参照)`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 

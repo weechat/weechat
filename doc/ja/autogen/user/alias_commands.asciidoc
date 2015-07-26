@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_alias_alias]]
-[command]*`alias`* list, add or remove command aliases::
+[command]*`alias`* 別名コマンドのリストアップ、追加、削除::
 
 ----
 /alias  list [<alias>]
@@ -11,31 +11,31 @@
         addcompletion <completion> <alias> [<command>[;<command>...]]
         del <alias> [<alias>...]
 
-         list: list aliases (without argument, this list is displayed)
-          add: add an alias
-addcompletion: add an alias with a custom completion
-          del: delete an alias
-   completion: completion for alias: by default completion is done with target command
-               note: you can use %%command to use completion of an existing command
-        alias: name of alias
-      command: command name with arguments (many commands can be separated by semicolons)
+         list: 別名をリストアップ (引数を与えなかった場合、このリストが表示されます)
+          add: 別名を追加
+addcompletion: カスタム補完を指定して別名を追加
+          del: 別名を削除
+   completion: 別名の補完: デフォルトでは対象のコマンドに対する補完が行われます
+               注意: %%command で既存のコマンドに対する補完を利用可能です
+        alias: 別名の名前
+      command: 引数を含めたコマンド名 (セミコロンで分割すれば複数のコマンドを指定できます)
 
-Note: in command, special variables are replaced:
-        $n: argument 'n' (between 1 and 9)
-       $-m: arguments from 1 to 'm'
-       $n-: arguments from 'n' to last
-      $n-m: arguments from 'n' to 'm'
-        $*: all arguments
-        $~: last argument
-      $var: where "var" is a local variable of buffer (see /buffer localvar)
-            examples: $nick, $channel, $server, $plugin, $name
+注意: command の中に含まれる特殊変数は置換されます:
+        $n: 'n' 番目の引数 (1 から 9)
+       $-m: 1 から 'm' 番目の引数
+       $n-: 'n' 番目から最後の引数
+      $n-m: 'n' から 'm' 番目の引数
+        $*: 全ての引数
+        $~: 最後の引数
+      $var: ここで "var" とはバッファの局所変数 (/buffer localvar を参照)
+            例: $nick、$channel、$server、$plugin、$name
 
-Examples:
-  alias /split to split window horizontally:
+例:
+  /split をウィンドウを水平方向に分割する別名と定義:
     /alias add split /window splith
-  alias /hello to say "hello" on all channels but not on #weechat:
+  /hello を #weechat を除く全てのチャンネルで "hello" と発言する別名と定義:
     /alias add hello /allchan -exclude=#weechat msg * hello
-  alias /forcejoin to send IRC command "forcejoin" with completion of /sajoin:
+  /forcejoin を /sajoin の補完候補を使い IRC コマンド "forcejoin" を送信する別名と定義:
     /alias addcompletion %%sajoin forcejoin /quote forcejoin
 ----
 
