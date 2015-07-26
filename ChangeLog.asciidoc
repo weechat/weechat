@@ -19,9 +19,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
-* core: start/stop search in current buffer at current scroll position by
-  default, add key key[ctrl-Q] to stop search and reset scroll
-  (issue #76, issue #393)
+* core: start/stop search in buffer at current scroll position by default,
+  add key key[ctrl-Q] to stop search and reset scroll (issue #76, issue #393)
 * core: add option weechat.look.key_grab_delay to set the default delay when
   grabbing a key with key[alt-k]
 * core: add option weechat.look.confirm_upgrade (issue #463)
