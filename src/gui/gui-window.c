@@ -384,6 +384,7 @@ gui_window_scroll_init (struct t_gui_window_scroll *window_scroll,
     window_scroll->scrolling = 0;
     window_scroll->start_col = 0;
     window_scroll->lines_after = 0;
+    window_scroll->text_search_start_line = NULL;
     window_scroll->prev_scroll = NULL;
     window_scroll->next_scroll = NULL;
 }
@@ -443,7 +444,8 @@ gui_window_scroll_remove_not_scrolled (struct t_gui_window *window)
                 && (ptr_scroll->start_line_pos == 0)
                 && (ptr_scroll->scrolling == 0)
                 && (ptr_scroll->start_col == 0)
-                && (ptr_scroll->lines_after == 0))
+                && (ptr_scroll->lines_after == 0)
+                && (ptr_scroll->text_search_start_line == NULL))
             {
                 gui_window_scroll_free (window, ptr_scroll);
             }
@@ -1567,11 +1569,11 @@ gui_window_search_text (struct t_gui_window *window)
 }
 
 /*
- * Starts search in a buffer.
+ * Begins search in a buffer (helper function).
  */
 
 void
-gui_window_search_start (struct t_gui_window *window)
+gui_window_search_begin (struct t_gui_window *window)
 {
     window->buffer->text_search =
         (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED) ?
@@ -1619,13 +1621,35 @@ gui_window_search_start (struct t_gui_window *window)
 }
 
 /*
+ * Starts search in a buffer at current position.
+ */
+
+void
+gui_window_search_start_here (struct t_gui_window *window)
+{
+    gui_window_search_begin (window);
+    window->scroll->text_search_start_line = window->scroll->start_line;
+}
+
+/*
+ * Starts search in a buffer.
+ */
+
+void
+gui_window_search_start (struct t_gui_window *window)
+{
+    gui_window_search_begin (window);
+    window->scroll->text_search_start_line = NULL;
+}
+
+/*
  * Restarts search (after input changes or exact flag (un)set).
  */
 
 void
 gui_window_search_restart (struct t_gui_window *window)
 {
-    window->scroll->start_line = NULL;
+    window->scroll->start_line = window->scroll->text_search_start_line;
     window->scroll->start_line_pos = 0;
     window->buffer->text_search =
         (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED) ?
@@ -1647,11 +1671,11 @@ gui_window_search_restart (struct t_gui_window *window)
 }
 
 /*
- * Stops search in a buffer.
+ * Ends search mode in a buffer (helper function).
  */
 
 void
-gui_window_search_stop (struct t_gui_window *window)
+gui_window_search_end (struct t_gui_window *window)
 {
     window->buffer->text_search = GUI_TEXT_SEARCH_DISABLED;
     window->buffer->text_search = 0;
@@ -1672,8 +1696,31 @@ gui_window_search_stop (struct t_gui_window *window)
         free (window->buffer->text_search_input);
         window->buffer->text_search_input = NULL;
     }
-    window->scroll->start_line = NULL;
+}
+
+/*
+ * Stops search in a buffer at current position.
+ */
+
+void
+gui_window_search_stop_here (struct t_gui_window *window)
+{
+    gui_window_search_end (window);
+    window->scroll->text_search_start_line = NULL;
+    gui_buffer_ask_chat_refresh (window->buffer, 2);
+}
+
+/*
+ * Stops search in a buffer.
+ */
+
+void
+gui_window_search_stop (struct t_gui_window *window)
+{
+    gui_window_search_end (window);
+    window->scroll->start_line = window->scroll->text_search_start_line;
     window->scroll->start_line_pos = 0;
+    window->scroll->text_search_start_line = NULL;
     gui_hotlist_remove_buffer (window->buffer, 0);
     gui_buffer_ask_chat_refresh (window->buffer, 2);
 }
@@ -1793,6 +1840,7 @@ gui_window_hdata_window_scroll_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_window_scroll, scrolling, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_window_scroll, start_col, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_window_scroll, lines_after, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window_scroll, text_search_start_line, POINTER, 0, NULL, "line");
         HDATA_VAR(struct t_gui_window_scroll, prev_scroll, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_window_scroll, next_scroll, POINTER, 0, NULL, hdata_name);
     }
@@ -1937,15 +1985,16 @@ gui_window_print_log ()
         {
             log_printf ("");
             log_printf ("  [scroll (addr:0x%lx)]", ptr_scroll);
-            log_printf ("    buffer. . . . . . . : 0x%lx", ptr_scroll->buffer);
-            log_printf ("    first_line_displayed: %d",    ptr_scroll->first_line_displayed);
-            log_printf ("    start_line. . . . . : 0x%lx", ptr_scroll->start_line);
-            log_printf ("    start_line_pos. . . : %d",    ptr_scroll->start_line_pos);
-            log_printf ("    scrolling . . . . . : %d",    ptr_scroll->scrolling);
-            log_printf ("    start_col . . . . . : %d",    ptr_scroll->start_col);
-            log_printf ("    lines_after . . . . : %d",    ptr_scroll->lines_after);
-            log_printf ("    prev_scroll . . . . : 0x%lx", ptr_scroll->prev_scroll);
-            log_printf ("    next_scroll . . . . : 0x%lx", ptr_scroll->next_scroll);
+            log_printf ("    buffer. . . . . . . . : 0x%lx", ptr_scroll->buffer);
+            log_printf ("    first_line_displayed. : %d",    ptr_scroll->first_line_displayed);
+            log_printf ("    start_line. . . . . . : 0x%lx", ptr_scroll->start_line);
+            log_printf ("    start_line_pos. . . . : %d",    ptr_scroll->start_line_pos);
+            log_printf ("    scrolling . . . . . . : %d",    ptr_scroll->scrolling);
+            log_printf ("    start_col . . . . . . : %d",    ptr_scroll->start_col);
+            log_printf ("    lines_after . . . . . : %d",    ptr_scroll->lines_after);
+            log_printf ("    text_search_start_line: 0x%lx", ptr_scroll->text_search_start_line);
+            log_printf ("    prev_scroll . . . . . : 0x%lx", ptr_scroll->prev_scroll);
+            log_printf ("    next_scroll . . . . . : 0x%lx", ptr_scroll->next_scroll);
         }
 
         for (ptr_bar_win = ptr_window->bar_windows; ptr_bar_win;

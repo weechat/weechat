@@ -990,6 +990,9 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
                     gui_window_ask_refresh (1);
                 }
             }
+
+            if (ptr_scroll->text_search_start_line == line)
+                ptr_scroll->text_search_start_line = NULL;
         }
         /* remove line from coords */
         gui_window_coords_remove_line (ptr_win, line);

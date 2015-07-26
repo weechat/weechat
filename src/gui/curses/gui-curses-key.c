@@ -85,7 +85,7 @@ gui_key_default_bindings (int context)
         BIND(/* <enter>       */ "ctrl-J",             "/input return");
         BIND(/* <tab>         */ "ctrl-I",             "/input complete_next");
         BIND(/* s-<tab>       */ "meta2-Z",            "/input complete_previous");
-        BIND(/* ^R            */ "ctrl-R",             "/input search_text");
+        BIND(/* ^R            */ "ctrl-R",             "/input search_text_here");
         BIND(/* <backspace>   */ "ctrl-H",             "/input delete_previous_char");
         BIND(/* <backspace>   */ "ctrl-?",             "/input delete_previous_char");
         BIND(/* ^_            */ "ctrl-_",             "/input undo");
@@ -228,8 +228,9 @@ gui_key_default_bindings (int context)
     }
     else if (context == GUI_KEY_CONTEXT_SEARCH)
     {
-        BIND(/* <enter> */ "ctrl-M",  "/input search_stop");
-        BIND(/* <enter> */ "ctrl-J",  "/input search_stop");
+        BIND(/* <enter> */ "ctrl-M",  "/input search_stop_here");
+        BIND(/* <enter> */ "ctrl-J",  "/input search_stop_here");
+        BIND(/* ^Q      */ "ctrl-Q",  "/input search_stop");
         BIND(/* m-c     */ "meta-c",  "/input search_switch_case");
         BIND(/* ^R      */ "ctrl-R",  "/input search_switch_regex");
         BIND(/* <tab>   */ "ctrl-I",  "/input search_switch_where");
