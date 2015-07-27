@@ -35,7 +35,16 @@ main.c)
 
 set(EXECUTABLE weechat)
 
-find_package(Ncurses)
+
+find_package(PkgConfig)
+if(PKG_CONFIG_FOUND)
+  pkg_search_module(NCURSES ncursesw ncurses)
+endif(PKG_CONFIG_FOUND)
+
+if(NOT NCURSES_FOUND)
+  find_package(Ncurses)
+endif(NCURSES_FOUND)
+
 if(NCURSES_FOUND)
   check_include_files(ncursesw/ncurses.h NCURSESW_HEADERS)
   if(NCURSESW_HEADERS)
@@ -46,7 +55,7 @@ if(NCURSES_FOUND)
       add_definitions(-DHAVE_NCURSES_H)
     endif()
   endif()
-  list(APPEND EXTRA_LIBS ${NCURSES_LIBRARY})
+  list(APPEND EXTRA_LIBS ${NCURSES_LIBRARY} ${NCURSES_LIBRARIES} )
 endif()
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
