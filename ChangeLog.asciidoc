@@ -20,12 +20,12 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 === New features
 
 * core: start/stop search in buffer at current scroll position by default,
-  add key key[ctrl-Q] to stop search and reset scroll (issue #76, issue #393)
+  add key key[ctrl-q] to stop search and reset scroll (issue #76, issue #393)
 * core: add option weechat.look.key_grab_delay to set the default delay when
   grabbing a key with key[alt-k]
 * core: add option weechat.look.confirm_upgrade (issue #463)
-* core: allow ctrl-C to exit WeeChat when the passphrase is asked on startup
-  (issue #452)
+* core: allow key[ctrl-c] to exit WeeChat when the passphrase is asked on
+  startup (issue #452)
 * core: allow pointer as list name in evaluation of hdata (issue #450)
 * core: add signal "signal_sighup"
 * api: add support of evaluated sub-strings and current date/time in function
@@ -629,7 +629,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: fix ignore on a host without nick
 * irc: use color code 0x1F (`ctrl-_`) for underlined text in input line (same
   code as messages) (bug #40756)
-* irc: use color code 0x16 (`ctrl-V`) for reverse video in messages
+* irc: use color code 0x16 (`ctrl-v`) for reverse video in messages
 * irc: use option irc.network.colors_send instead of irc.network.colors_receive
   when displaying messages sent by commands /away, /me, /msg, /notice, /query
 * irc: fix memory leak when checking the value of ssl_priorities option in
