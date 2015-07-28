@@ -1121,7 +1121,7 @@ Befehl festgelegt werden:
 | key[Backsp.] .2+| entfernt in der Befehlszeile das vorherige Zeichen .2+| `/input delete_previous_char`
 | key[ctrl-h]
 | key[ctrl-k]     | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (Zeichenkette wird in Zwischenablage kopiert) | `/input delete_end_of_line`
-| key[ctrl-r]     | Textsuche im Verlaufsspeicher des Buffers (siehe <<key_bindings_search_context,Tasten für Such-Kontext>>) | `/input search_text`
+| key[ctrl-r]     | Textsuche im Verlaufsspeicher des Buffers (siehe <<key_bindings_search_context,Tasten für Such-Kontext>>) | `/input search_text_here`
 | key[ctrl-t]     | Zeichen austauschen | `/input transpose_chars`
 | key[ctrl-u]     | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (Zeichenkette wird in Zwischenablage kopiert) | `/input delete_beginning_of_line`
 | key[ctrl-w]     | entfernt das Wort links vom Cursor (entferntes Wort wird in Zwischenablage kopiert) | `/input delete_previous_word`
@@ -1216,9 +1216,12 @@ in einem Buffer nach einem Text zu suchen).
 | key[Tab]      | wechselt Suche in: Nachricht (Standard), im Präfix, Präfix + Nachricht | `/input search_switch_where`
 | key[↑]        | sucht vorheriger Zeile | `/input search_previous`
 | key[↓]        | sucht nächste Zeile  | `/input search_next`
-| key[Enter] .3+| Suche abbrechen .3+| `/input search_stop`
+// TRANSLATION MISSING
+| key[Enter] .3+| Stop search at current position .3+| `/input search_stop_here`
 | key[ctrl-j]
 | key[ctrl-m]
+// TRANSLATION MISSING
+| key[ctrl-q]   | Stop search and scroll to bottom of buffer | `/input search_stop`
 |===
 
 [[key_bindings_cursor_context]]

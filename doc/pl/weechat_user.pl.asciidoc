@@ -1112,7 +1112,7 @@ Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buff
 | key[Backsp.] .2+| Usuń poprzedni znak w linii poleceń .2+| `/input delete_previous_char`
 | key[ctrl-h]
 | key[ctrl-k]     | Usuń od znacznika kursora do końca linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_end_of_line`
-| key[ctrl-r]     | Wyszukaj tekst w historii bufora (zobacz <<key_bindings_search_context,skróty dla kontekstu wyszukiwania>>) | `/input search_text`
+| key[ctrl-r]     | Wyszukaj tekst w historii bufora (zobacz <<key_bindings_search_context,skróty dla kontekstu wyszukiwania>>) | `/input search_text_here`
 | key[ctrl-t]     | Przestaw znaki | `/input transpose_chars`
 | key[ctrl-u]     | Usuń od znaku kursora do początku linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_beginning_of_line`
 | key[ctrl-w]     | Usuń poprzednie słowo w linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_previous_word`
@@ -1207,9 +1207,12 @@ zostanie wciśnięta w buforze tekstowym).
 | key[Tab]      | Przełącz miejsce wyszukiwania: wiadomości (domyślne), prefiksy, prefiksy + wiadmości | `/input search_switch_where`
 | key[↑]        | Poprzednie wystąpienie | `/input search_previous`
 | key[↓]        | Następne wystąpienie | `/input search_next`
-| key[Enter] .3+| Zakończ wyszukiwanie .3+| `/input search_stop`
+// TRANSLATION MISSING
+| key[Enter] .3+| Stop search at current position .3+| `/input search_stop_here`
 | key[ctrl-j]
 | key[ctrl-m]
+// TRANSLATION MISSING
+| key[ctrl-q]   | Stop search and scroll to bottom of buffer | `/input search_stop`
 |===
 
 [[key_bindings_cursor_context]]

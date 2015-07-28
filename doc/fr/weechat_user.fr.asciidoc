@@ -1127,7 +1127,7 @@ commande `/buffer` :
 | key[Backsp.] .2+| Effacer le caractère précédent sur la ligne de commande .2+| `/input delete_previous_char`
 | key[ctrl-h]
 | key[ctrl-k]     | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_end_of_line`
-| key[ctrl-r]     | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>) | `/input search_text`
+| key[ctrl-r]     | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>) | `/input search_text_here`
 | key[ctrl-t]     | Inverser deux caractères | `/input transpose_chars`
 | key[ctrl-u]     | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_beginning_of_line`
 | key[ctrl-w]     | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_previous_word`
@@ -1222,9 +1222,10 @@ pressé pour chercher du texte dans le tampon).
 | key[Tab]      | Basculer la recherche dans : les messages (par défaut), les préfixes, les préfixes + messages | `/input search_switch_where`
 | key[↑]        | Chercher la ligne précédente | `/input search_previous`
 | key[↓]        | Chercher la ligne suivante | `/input search_next`
-| key[Enter] .3+| Arrêter la recherche .3+| `/input search_stop`
+| key[Enter] .3+| Arrêter la recherche à la position courante .3+| `/input search_stop_here`
 | key[ctrl-j]
 | key[ctrl-m]
+| key[ctrl-q]   | Arrêter la recherche et aller à la fin du tampon | `/input search_stop`
 |===
 
 [[key_bindings_cursor_context]]

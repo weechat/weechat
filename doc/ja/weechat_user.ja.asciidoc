@@ -1100,7 +1100,7 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | key[Backsp.] .2+| コマンドラインで前の文字を削除 .2+| `/input delete_previous_char`
 | key[ctrl-h]
 | key[ctrl-k]     | コマンドラインでカーソルより後の文字列を削除 (削除された文字列はクリップボードに保存) | `/input delete_end_of_line`
-| key[ctrl-r]     | バッファ中の履歴からテキスト検索 (<<key_bindings_search_context,検索モード用のキー>>を参照) | `/input search_text`
+| key[ctrl-r]     | バッファ中の履歴からテキスト検索 (<<key_bindings_search_context,検索モード用のキー>>を参照) | `/input search_text_here`
 | key[ctrl-t]     | 文字の入れ替え | `/input transpose_chars`
 | key[ctrl-u]     | コマンドラインでカーソルより前の文字列を削除 (削除された文字列はクリップボードに保存) | `/input delete_beginning_of_line`
 | key[ctrl-w]     | コマンドラインで前の単語を削除 (削除された文字列はクリップボードに保存) | `/input delete_previous_word`
@@ -1195,9 +1195,12 @@ key[ctrl-r] が押された状態) でのみ有効です。
 | key[Tab]      | 検索範囲: メッセージ (デフォルト)、プレフィックス、プレフィックスとメッセージ | `/input search_switch_where`
 | key[↑]        | 前のキーワードで検索 | `/input search_previous`
 | key[↓]        | 次のキーワードで検索 | `/input search_next`
-| key[Enter] .3+| 検索を終了 .3+| `/input search_stop`
+// TRANSLATION MISSING
+| key[Enter] .3+| Stop search at current position .3+| `/input search_stop_here`
 | key[ctrl-j]
 | key[ctrl-m]
+// TRANSLATION MISSING
+| key[ctrl-q]   | Stop search and scroll to bottom of buffer | `/input search_stop`
 |===
 
 [[key_bindings_cursor_context]]

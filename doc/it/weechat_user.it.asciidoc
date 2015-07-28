@@ -1151,7 +1151,7 @@ Il livello di notifica per un buffer può essere impostato con il comando `/buff
 | key[Backsp.] .2+| Elimina il carattere precedente nella riga di comando .2+| `/input delete_previous_char`
 | key[ctrl-h]
 | key[ctrl-k]     | Elimina dal cursore fino alla fine della riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_end_of_line`
-| key[ctrl-r]     | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>) | `/input search_text`
+| key[ctrl-r]     | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>) | `/input search_text_here`
 | key[ctrl-t]     | Inverti caratteri | `/input transpose_chars`
 | key[ctrl-u]     | Elimina dal cursore fino all'inizio della riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_beginning_of_line`
 | key[ctrl-w]     | Elimina la parola precedente nella riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_previous_word`
@@ -1252,9 +1252,12 @@ key[ctrl-r] per cercare del testo nel buffer).
 | key[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages | `/input search_switch_where`
 | key[↑]        | Cerca riga precedente | `/input search_previous`
 | key[↓]        | Cerca riga successiva | `/input search_next`
-| key[Invio] .3+| Ferma ricerca .3+| `/input search_stop`
+// TRANSLATION MISSING
+| key[Enter] .3+| Stop search at current position .3+| `/input search_stop_here`
 | key[ctrl-j]
 | key[ctrl-m]
+// TRANSLATION MISSING
+| key[ctrl-q]   | Stop search and scroll to bottom of buffer | `/input search_stop`
 |===
 
 [[key_bindings_cursor_context]]

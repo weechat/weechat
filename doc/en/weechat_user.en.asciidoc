@@ -1097,7 +1097,7 @@ The notify level for a buffer can be set with command `/buffer`:
 | key[Backsp.] .2+| Delete previous char in command line .2+| `/input delete_previous_char`
 | key[ctrl-h]
 | key[ctrl-k]     | Delete from cursor until end of command line (deleted string is copied to clipboard) | `/input delete_end_of_line`
-| key[ctrl-r]     | Search for text in buffer history (see <<key_bindings_search_context,keys for search context>>) | `/input search_text`
+| key[ctrl-r]     | Search for text in buffer history (see <<key_bindings_search_context,keys for search context>>) | `/input search_text_here`
 | key[ctrl-t]     | Transpose chars | `/input transpose_chars`
 | key[ctrl-u]     | Delete from cursor until beginning of command line (deleted string is copied to clipboard) | `/input delete_beginning_of_line`
 | key[ctrl-w]     | Delete previous word of command line (deleted string is copied to clipboard) | `/input delete_previous_word`
@@ -1192,9 +1192,10 @@ text in buffer).
 | key[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages | `/input search_switch_where`
 | key[↑]        | Search previous line | `/input search_previous`
 | key[↓]        | Search next line | `/input search_next`
-| key[Enter] .3+| Stop search .3+| `/input search_stop`
+| key[Enter] .3+| Stop search at current position .3+| `/input search_stop_here`
 | key[ctrl-j]
 | key[ctrl-m]
+| key[ctrl-q]   | Stop search and scroll to bottom of buffer | `/input search_stop`
 |===
 
 [[key_bindings_cursor_context]]
