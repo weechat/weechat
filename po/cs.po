@@ -7925,17 +7925,17 @@ msgstr "%sTéma pro %s%s%s v \"%s%s\""
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
-msgstr "%sTéma nastevil %s%s%s%s%s%s%s%s%s v %s"
+msgstr "%sTéma nastavil %s%s%s%s%s%s%s%s%s v %s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic set on %s"
-msgstr "%sTéma nasteveno %s"
+msgstr "%sTéma nastaveno %s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
-msgstr "%sTéma pro %s%s%s nastevil %s%s%s%s%s%s%s%s%s v %s"
+msgstr "%sTéma pro %s%s%s nastavil %s%s%s%s%s%s%s%s%s v %s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
