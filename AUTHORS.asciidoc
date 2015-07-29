@@ -64,6 +64,7 @@ Alphabetically:
 * Nils Görs (nils_2)
 * nyuszika7h
 * Odin
+* Ondřej Súkup
 * Patrick Steinhardt
 * Paul Komkoff
 * Pavel Shevchuk (Stalwart)
