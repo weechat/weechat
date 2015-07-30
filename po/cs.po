@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-07-26 19:58+0200\n"
-"PO-Revision-Date: 2015-07-26 09:41+0200\n"
+"POT-Creation-Date: 2015-07-30 10:42+0200\n"
+"PO-Revision-Date: 2015-07-30 13:30+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -29,6 +29,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Poedit 1.8.3\n"
 
 msgid "any string"
 msgstr "jakýkoliv řetězec"
@@ -98,13 +99,11 @@ msgstr "Hash tabulka (výstup)"
 msgid "Pointer"
 msgstr "Ukazatel"
 
-#, fuzzy
 msgid "plugin"
-msgstr "Plugin"
+msgstr "plugin"
 
-#, fuzzy
 msgid "variables"
-msgstr "čtení - proměnná"
+msgstr "proměnná"
 
 msgid "update allowed"
 msgstr ""
@@ -112,9 +111,8 @@ msgstr ""
 msgid "lists"
 msgstr ""
 
-#, fuzzy
 msgid "Option"
-msgstr "<volba>"
+msgstr "volba"
 
 msgid "Type"
 msgstr ""
@@ -182,7 +180,7 @@ msgid "Error: not enough memory for home directory\n"
 msgstr "Chyba: nedostatek paměti pro domácí adresář\n"
 
 msgid "Error: WEECHAT_HOME is undefined, check build options\n"
-msgstr ""
+msgstr "Chyba: není definována WEECHAT_HOME, zkontroluj build promněné\n"
 
 #, c-format
 msgid "Error: home (%s) is not a directory\n"
@@ -208,6 +206,20 @@ msgid ""
 "You can add and connect to an IRC server with /server and /connect commands "
 "(see /help server)."
 msgstr ""
+"Vítejte v WeeChatu!\n"
+"\n"
+"Pokud objevujete WeeChat je doporučeno si prečíst alespoň \"quickstart\" "
+"průvodce, a pokud máte trochu času tak uživatelskou příručku, oboje vám "
+"vyvětlí hlavní koncepty WeeChatu.\n"
+"Veškerá dokumentace WeeChatu je dostupná na adrese: https://weechat.org/doc\n"
+"\n"
+"Navíc je zde dostupná integrovaná nápověda /help fungující na všech "
+"příkazech a nastaveních ( použijte Tab klávesu pro doplňování názvů).\n"
+"Příkaz /iset (script iset.pl) může pomoci upravit Weechat\" /script install "
+"iset.pl\n"
+"\n"
+"Můžete přidat IRC server a připojit se k němu pomocí príkazů /server a /"
+"connect ( podívejte se na /help server)."
 
 #. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
 #, c-format
@@ -215,16 +227,21 @@ msgid ""
 "%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
 "display bugs; $TERM should be set to \"screen-256color\" or \"screen\""
 msgstr ""
+"%sVarování: WeeChat běží jako %s a $TERM je \"%s\", což může způsobovat "
+"chyby zobrazení; $TERM by měl být nastaven na \"screen-256color\" nebo "
+"\"screen\""
 
 #, c-format
 msgid "%sYou should add this line in the file %s:  %s"
-msgstr ""
+msgstr "%sMůžete přidat tuto linku do souboru %s:  %s"
 
 #, c-format
 msgid ""
 "%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
 "correct"
 msgstr ""
+"%sVarování: nemohu nastavit lokalizaci; zkontrolujte že $LANG a $LC_* "
+"promněné jsou nastaveny správně"
 
 #, c-format
 msgid "Signal %s received, exiting WeeChat..."
@@ -383,7 +400,7 @@ msgid "Debug disabled for \"%s\""
 msgstr "Ladění vypnuto pro \"%s\""
 
 msgid "error"
-msgstr ""
+msgstr "chyba"
 
 #, c-format
 msgid "%sError in expression to evaluate"
@@ -513,9 +530,9 @@ msgstr "%sChyba: nemohu odpojit klávesu \"%s\""
 msgid "%sKey \"%s\" not found"
 msgstr "%sKlávesa \"%s\" nenalezena"
 
-#, fuzzy, c-format
+#, c-format
 msgid "No key binding defined for context \"%s\""
-msgstr "Žádné klávesové zkratky nejsou definovány"
+msgstr "Žádné klávesové zkratky nejsou definovány pro prostředí \"%s\""
 
 #. TRANSLATORS: first "%d" is number of keys
 #, fuzzy, c-format
@@ -558,12 +575,12 @@ msgstr ""
 "%sChyba: \"-yes\" argument je požadován pro reset kaláves (bezpečnostní "
 "opatření)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d new key added"
 msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] "přidána %d nová klávesa"
-msgstr[1] "přidány %d nové klávesy"
-msgstr[2] "přidáno %d nových kláves"
+msgstr[1] "přidány %d nové klávesy (kontext: \"%s\")"
+msgstr[2] "přidáno %d nových kláves (kontext: \"%s\")"
 
 #, fuzzy
 msgid "Stored layouts:"
@@ -614,13 +631,11 @@ msgstr "%s%s: server \"%s\" pro příkaz \"%s\" již existuje"
 msgid "Layout \"%s\" has been renamed to \"%s\""
 msgstr "Filtr \"%s\" přejmenován na \"%s\""
 
-#, fuzzy
 msgid "Mouse enabled"
-msgstr "1 pokud jsou filtry povoleny"
+msgstr "Myš povolena"
 
-#, fuzzy
 msgid "Mouse disabled"
-msgstr "Filtrování zpráv zakázáno"
+msgstr "Myš vypnuta"
 
 msgid "Plugins loaded:"
 msgstr "Načtené pluginy:"
@@ -741,7 +756,7 @@ msgstr "Žádné proxy nejsou definovány"
 msgid "%sError: wrong type \"%s\" for proxy \"%s\""
 msgstr "%sChyba: špatný typ \"%s\" proxy \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Proxy \"%s\" added"
 msgstr "Proxy \"%s\" vytvořena"
 
@@ -842,9 +857,8 @@ msgstr "Pole bylo smazáno"
 msgid "%sSecured data \"%s\" not found"
 msgstr "%s%s: skript \"%s\" nenalezen"
 
-#, fuzzy
 msgid "default: "
-msgstr "výchozí hodnota"
+msgstr "výchozí: "
 
 msgid "(unknown)"
 msgstr "(neznámý)"
@@ -857,9 +871,8 @@ msgstr ""
 "%sVolba \"%s\" nenalezena (tip: můžete použít  \"*\" na začátku a/nebo konci "
 "volby pro zobrazení podlistu)"
 
-#, fuzzy
 msgid "No option found"
-msgstr "Nebyl nalezen žádný plugin"
+msgstr "Volba nenalezena"
 
 #, fuzzy, c-format
 msgid "%s%d%s option with value changed (matching with \"%s\")"
@@ -875,16 +888,16 @@ msgstr[0] "%s%d%s volba nastavení nalezena s \"%s\""
 msgstr[1] "%s%d%s volby nastavení nalezeny s \"%s\""
 msgstr[2] "%s%d%s voleb nastavení nalezeno s \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%d%s option"
 msgid_plural "%s%d%s options"
-msgstr[0] "%s%d%s volba nastavení nalezena"
-msgstr[1] "%s%d%s volby nastavení nalezeny"
-msgstr[2] "%s%d%s voleb nastavení nalezeno"
+msgstr[0] "%s%d%s volba"
+msgstr[1] "%s%d%s volby"
+msgstr[2] "%s%d%s voleb"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Environment variable \"%s\" is not defined"
-msgstr "čtení - proměnná"
+msgstr "Proměnná prostředí \"%s\" není definována"
 
 #, fuzzy, c-format
 msgid "%sError: failed to set variable \"%s\": %s"
@@ -1020,9 +1033,8 @@ msgstr ""
 "%sChyba: nemohu spojit okna, není zde další okno se stejnou velikostí poblíž "
 "aktuálního okna"
 
-#, fuzzy
 msgid "set or remove away status"
-msgstr "přepnout status nepřítomnosti"
+msgstr "nastavit nebo smazat \"away\" status"
 
 msgid "[-all] [<message>]"
 msgstr "[-all] [<zpráva>]"
@@ -2687,9 +2699,8 @@ msgid "options for bars"
 msgstr "volby pro pole"
 
 #. TRANSLATORS: "key" means "key on the keyboard"
-#, fuzzy
 msgid "key contexts"
-msgstr "klávesové kódy"
+msgstr "klávesové kontexty"
 
 #. TRANSLATORS: "key" means "key on the keyboard"
 msgid "key codes"
@@ -2711,9 +2722,8 @@ msgstr "jména polí"
 msgid "names of secured data (file sec.conf, section data)"
 msgstr ""
 
-#, fuzzy
 msgid "environment variables"
-msgstr "čtení - proměnná"
+msgstr "proměnná prostředí"
 
 #, fuzzy
 msgid "value of an environment variable"
@@ -2723,6 +2733,8 @@ msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
 "weechat.look.save_layout_on_exit is ignored"
 msgstr ""
+"Varování: volba weechat.look.save_config_on_exit je vypnuta, takže volba "
+"weechat.look.save_layout_on_exit je ignorována"
 
 #, fuzzy
 msgid ""
@@ -2736,11 +2748,13 @@ msgid ""
 "WARNING: this option can cause serious display bugs, if you have such "
 "problems, you must turn off this option."
 msgstr ""
+"Varování: tato volba může způsobit vážné potíže se zobrazením. Pokud máte "
+"tento typ problémů musíte vypnout tuto volbu."
 
 #, c-format
 msgid ""
 "%sWarning: proxy \"%s\" does not exist (you can add it with command /proxy)"
-msgstr ""
+msgstr "%sVarování: proxy \"%s\" neexistuje (můžete ji přidat příkazem /proxy)"
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "úroveň ladění pro plugin (\"core\" pro jádro WeeChat)"
@@ -3193,12 +3207,14 @@ msgid ""
 msgstr ""
 
 msgid "enable mouse support"
-msgstr ""
+msgstr "zapni podporu myši"
 
 msgid ""
 "delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay "
 "before processing event"
 msgstr ""
+"zpoždění (v milisekundách) k převzetí události od myši: Weechat počká tuto "
+"dobu před zpracovánim události"
 
 #, fuzzy
 msgid "text to display before nick in prefix of message, example: \"<\""
@@ -3396,10 +3412,10 @@ msgid ""
 msgstr ""
 
 msgid "display an horizontal separator between windows"
-msgstr ""
+msgstr "zobraz vodorovný oddělovač mezi okny"
 
 msgid "display a vertical separator between windows"
-msgstr ""
+msgstr "zobraz svislý oddělovač mezi okny"
 
 #, fuzzy
 msgid ""
@@ -3879,9 +3895,8 @@ msgid "Memory usage not available (function \"mallinfo\" not found)"
 msgstr "Využití pamětí není dostupné (funkce \"mallinfo\" nenalezena)"
 
 msgid "Directories:"
-msgstr ""
+msgstr "Složky:"
 
-#, fuzzy
 msgid "default"
 msgstr "výchozí hodnota"
 
@@ -4006,9 +4021,11 @@ msgid ""
 "cipher used to crypt data (the number after algorithm is the size of the key "
 "in bits)"
 msgstr ""
+"šifra použitá k šifrování dat (číslo za algoritmem je velikost klíče v "
+"bitech)"
 
 msgid "hash algorithm used to check the decrypted data"
-msgstr ""
+msgstr "hash algoritmus použitý ke kontrole dešifrovaných dat"
 
 msgid ""
 "path to a file containing the passphrase to encrypt/decrypt secured data; "
@@ -4063,14 +4080,13 @@ msgstr "GB"
 
 #. TRANSLATORS: file size unit "terabyte"
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
-#, fuzzy
 msgid "byte"
 msgid_plural "bytes"
 msgstr[0] "bajt"
-msgstr[1] "bajt"
-msgstr[2] "bajt"
+msgstr[1] "bajty"
+msgstr[2] "bajtů"
 
 #, c-format
 msgid "debug: removing file: %s"
@@ -4229,13 +4245,11 @@ msgstr "Barvy Weechat (použité: %d, zbývá: %d):"
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminál ztracen, ukončuji WeeChat..."
 
-#, fuzzy
 msgid "Mouse is enabled"
-msgstr "1 pokud jsou filtry povoleny"
+msgstr "Myš je zapnuta"
 
-#, fuzzy
 msgid "Mouse is disabled"
-msgstr "Filtrování zpráv zakázáno"
+msgstr "Myš je vypnuta"
 
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
@@ -4322,7 +4336,7 @@ msgstr[1] "%sVložit %d řádků ? [ctrl-Y] Ano [ctrl-N] Ne"
 msgstr[2] "%sVložit %d řádků ? [ctrl-Y] Ano [ctrl-N] Ne"
 
 msgid "Search"
-msgstr ""
+msgstr "Hledej"
 
 #, c-format
 msgid "%s-MORE(%d)-"
@@ -4579,7 +4593,7 @@ msgid "Default dictionary: %s"
 msgstr "Výchozí barvy:"
 
 msgid "(not set)"
-msgstr ""
+msgstr "(nenastaveno)"
 
 msgid "Specific dictionaries on buffers:"
 msgstr ""
@@ -4782,7 +4796,7 @@ msgstr ""
 "  reset: resetovat znakové sady aktuálního bufferu"
 
 msgid "Execution of external commands in WeeChat"
-msgstr ""
+msgstr "Spouštění externích příkazů v WeeChatu"
 
 #, c-format
 msgid "%s: end of command %d (\"%s\"), return code: %d"
@@ -4792,31 +4806,29 @@ msgstr ""
 msgid "%s: unexpected end of command %d (\"%s\")"
 msgstr ""
 
-#, fuzzy
 msgid "Executed commands"
-msgstr "příkazy weechat"
+msgstr "Vykonané příkazy"
 
 msgid "No command is running"
 msgstr ""
 
-#, fuzzy
 msgid "Commands:"
-msgstr "příkazy weechat"
+msgstr "Příkazy:"
 
 #. TRANSLATORS: format: hours + minutes, for example: 3h59
 #, c-format
 msgid "%dh%02d"
-msgstr ""
+msgstr "%dh%02d"
 
 #. TRANSLATORS: format: minutes + seconds, for example: 3m59
 #, c-format
 msgid "%dm%02d"
-msgstr ""
+msgstr "%dm%02d"
 
 #. TRANSLATORS: format: seconds, for example: 59s
 #, c-format
 msgid "%ds"
-msgstr ""
+msgstr "%ds"
 
 #. TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59"
 #, fuzzy, c-format
@@ -5023,7 +5035,7 @@ msgid "%s: registered script \"%s\", version %s (%s)"
 msgstr "%s: zaregistrován skript \"%s\", verze %s (%s)"
 
 msgid "Support of scheme scripts (with Guile)"
-msgstr ""
+msgstr "Podpora scriptů v Sheme (pomocí Guile)"
 
 #, c-format
 msgid "%s: stdout/stderr: %s%s"
@@ -5071,7 +5083,7 @@ msgid "Lag"
 msgstr "Lag"
 
 msgid "IRC (Internet Relay Chat) protocol"
-msgstr ""
+msgstr "IRC (Internet Relay Chat) protokol"
 
 #, c-format
 msgid ""
@@ -6677,9 +6689,8 @@ msgstr "kanály na všech IRC serverech"
 msgid "privates on all IRC servers"
 msgstr "soukromé rozhovory na všech IRC serverech"
 
-#, fuzzy
 msgid "default kick message"
-msgstr "výchozí příkaz:"
+msgstr "výchozí \"kick\" zpráva"
 
 msgid "default part message for IRC channel"
 msgstr "výchozí odchozí zpráva pro IRC kanál"
@@ -7326,9 +7337,8 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: please do not translate "nick"
-#, fuzzy
 msgid "enable smart filter for \"nick\" messages (nick changes)"
-msgstr "povolit chytrý filter pro \"nick\" zprávy"
+msgstr "povolit chytrý filtr pro \"nick\" zprávy (změny přezdívek)"
 
 #. TRANSLATORS: please do not translate "part" and "quit"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
@@ -7652,13 +7662,11 @@ msgstr "ukazatel notifikace (volitelné)"
 msgid "mapping between IRC color codes and WeeChat color names"
 msgstr ""
 
-#, fuzzy
 msgid "irc nick"
-msgstr "přezdívka: přezdívka"
+msgstr "irc přezdívka"
 
-#, fuzzy
 msgid "irc channel"
-msgstr "kanál"
+msgstr "irc kanál"
 
 msgid "irc channel_speaking"
 msgstr ""
@@ -7666,9 +7674,8 @@ msgstr ""
 msgid "irc ignore"
 msgstr ""
 
-#, fuzzy
 msgid "irc notify"
-msgstr "seznam notifikací"
+msgstr "irc notifikace"
 
 msgid "pattern for irc redirect"
 msgstr ""
@@ -7676,9 +7683,8 @@ msgstr ""
 msgid "irc redirect"
 msgstr ""
 
-#, fuzzy
 msgid "irc server"
-msgstr "server"
+msgstr "irc server"
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -7689,9 +7695,8 @@ msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: tenhle buffer není kanál!"
 
 #. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
-#, fuzzy
 msgid "unknown"
-msgstr "(neznámý)"
+msgstr "neznámý"
 
 msgid "offline"
 msgstr "offline"
@@ -8999,7 +9004,7 @@ msgid "nick in nicklist"
 msgstr "přezdívky v seznamu notifikací"
 
 msgid "proxy"
-msgstr ""
+msgstr "proxy"
 
 #, fuzzy
 msgid "window"
@@ -9277,9 +9282,9 @@ msgstr ""
 
 msgid "client"
 msgid_plural "clients"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "klient"
+msgstr[1] "klienti"
+msgstr[2] "klientu"
 
 msgid "connecting"
 msgstr "připojuji"
@@ -9848,23 +9853,23 @@ msgid "Script"
 msgstr ""
 
 msgid "Version"
-msgstr ""
+msgstr "Verze"
 
 #, fuzzy
 msgid "Version loaded"
 msgstr "Načtené pluginy:"
 
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 msgid "License"
-msgstr ""
+msgstr "Licence"
 
 msgid "Tags"
 msgstr ""
 
 msgid "Status"
-msgstr ""
+msgstr "Stav"
 
 msgid "Date added"
 msgstr ""
@@ -9874,13 +9879,13 @@ msgid "Date updated"
 msgstr "Pole \"%s\" zaktualizováno"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 msgid "MD5"
-msgstr ""
+msgstr "MDř"
 
 msgid "Requires"
-msgstr ""
+msgstr "Vyžaduje"
 
 #, fuzzy
 msgid "Min WeeChat"
@@ -10201,7 +10206,7 @@ msgstr "seznam skriptů"
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "popular"
-msgstr ""
+msgstr "populární"
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "installed"
@@ -10217,7 +10222,7 @@ msgstr ""
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "running"
-msgstr ""
+msgstr "běžící"
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "obsolete"
@@ -10245,9 +10250,8 @@ msgstr "%s%s: chyba při zasílání dat na klienta: %s"
 msgid "%s: downloading list of scripts..."
 msgstr "%s: odebírám skript \"%s\""
 
-#, fuzzy
 msgid "Support of tcl scripts"
-msgstr "seznam skriptů"
+msgstr "Podpora skriptů v TCL"
 
 #, c-format
 msgid "%s%s: unable to run function \"%s\": %s"
@@ -10277,13 +10281,11 @@ msgstr "%s%s: chyba při zpracování regulárního výrazu \"%s\""
 msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
 msgstr ""
 
-#, fuzzy
 msgid "no variable"
-msgstr "čtení - proměnná"
+msgstr "není proměnná"
 
-#, fuzzy
 msgid "empty variable"
-msgstr "čtení - proměnná"
+msgstr "prázdná proměnná"
 
 #, fuzzy, c-format
 msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
@@ -10343,9 +10345,8 @@ msgstr "Filtr \"%s\" přejmenován na \"%s\""
 msgid "%s%s: failed to rename trigger \"%s\""
 msgstr "%sChyba: selhalo vytvoření pole \"%s\""
 
-#, fuzzy
 msgid "List of triggers:"
-msgstr "Seznam proxy:"
+msgstr "Seznam trigerů:"
 
 #, fuzzy, c-format
 msgid "%s%s: invalid hook type \"%s\""
@@ -10702,13 +10703,13 @@ msgid "CRC in progress"
 msgstr ""
 
 msgid "CRC OK"
-msgstr ""
+msgstr "CRC OK"
 
 msgid "wrong CRC"
-msgstr ""
+msgstr "španté CRC"
 
 msgid "CRC error"
-msgstr ""
+msgstr "CRC chyba"
 
 #, fuzzy, c-format
 msgid "%s%s: file %s %s %s (%s): %s"
@@ -11060,9 +11061,9 @@ msgstr "%s%s: nemohu zapisovat do lokálního souboru"
 msgid "%s%s: unable to send ACK to sender"
 msgstr "%s%s: nemohu se připojit k odesílateli"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: wrong CRC32 for file %s"
-msgstr "%s%s: špatné parametry pro funkci \"%s\" (skript: %s)"
+msgstr "%s%s: špatný  kontrolní součet CRC32 souboru %s"
 
 #, fuzzy, c-format
 msgid "%s%s: CRC32 error while resuming"
@@ -11084,14 +11085,14 @@ msgstr ""
 msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s%s: nemohu vytvořit soket pro odesílání souboru"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
-msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
+msgstr "%s%s: nemohu nastavit \"nonblock\" volbu pro soket: chyba %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
-msgstr "%s%s: nemohu se připojit k odesílateli"
+msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
