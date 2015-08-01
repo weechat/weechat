@@ -104,7 +104,7 @@ Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel angezei
    -nojoin: Channel(s) werden nicht betreten (auch falls die Funktion "autojoin" aktiviert sein sollte)
    -switch: wechselt zur nächsten Server-Adresse
 
-Um eine Verbindung zum Server zu beenden bzw. um Verbindungsversuche zu stoppen, wird der Befehl /disconnect verwendet.
+Um eine Verbindung zum Server, oder Verbindungsversuche, zu beenden wird der Befehl /disconnect verwendet.
 
 Beispiele:
   /connect freenode

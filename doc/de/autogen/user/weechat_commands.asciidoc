@@ -425,8 +425,8 @@ Auflistung der möglichen Aktionen:
   search_switch_where: wechselt Suche in Nachricht/Präfix
   search_previous: sucht vorheriger Zeile
   search_next: sucht nächste Zeile
-  search_stop_here: stopped Suche ab aktueller Position
-  search_stop: suche stoppen
+  search_stop_here: beendet Suche ab aktueller Position
+  search_stop: suche beenden
   delete_previous_char: entfernt vorheriges Zeichen
   delete_next_char: entfernt nächstes Zeichen
   delete_previous_word: entfernt vorheriges Wort
