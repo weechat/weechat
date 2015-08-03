@@ -764,12 +764,10 @@ Lorsqu'une phrase de chiffrement est utilisée (données chiffrées), elle est d
 Il est possible de définir la variable d'environnement WEECHAT_PASSPHRASE pour éviter la demande (cette même variable est utilisée par WeeChat sur le /upgrade).
 
 Les données sécurisées avec le format ${sec.data.xxx} peuvent être utilisées dans :
+  - la commande /eval
   - le paramètre de ligne de commande "--run-command"
   - les options weechat.startup.command_{before|after}_plugins
-  - les options de proxy : username, password
-  - les options de serveur irc : autojoin, command, password, sasl_{username|password}, username, realname
-  - l'option relay.network.password
-  - la commande /eval.
+  - d'autres options qui peuvent contenir un mot de passe ou des données sensibles (par exemple proxy, serveur irc et relay) ; voir /help sur les options pour vérifier si elles sont évaluées.
 
 Exemples :
   définir une phrase de chiffrement :

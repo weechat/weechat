@@ -764,12 +764,10 @@ When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
 It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
 
 Secured data with format ${sec.data.xxx} can be used in:
+  - command /eval
   - command line argument "--run-command"
   - options weechat.startup.command_{before|after}_plugins
-  - proxy options: username, password
-  - irc server options: autojoin, command, password, sasl_{username|password}, username, realname
-  - option relay.network.password
-  - command /eval.
+  - other options that may contain a password or sensitive data (for example proxy, irc server and relay); see /help on the options to check if they are evaluated.
 
 Examples:
   set a passphrase:
