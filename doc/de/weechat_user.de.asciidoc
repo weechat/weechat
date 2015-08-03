@@ -1216,12 +1216,10 @@ in einem Buffer nach einem Text zu suchen).
 | key[Tab]      | wechselt Suche in: Nachricht (Standard), im Präfix, Präfix + Nachricht | `/input search_switch_where`
 | key[↑]        | sucht vorheriger Zeile | `/input search_previous`
 | key[↓]        | sucht nächste Zeile  | `/input search_next`
-// TRANSLATION MISSING
 | key[Enter] .3+| beendet Suche ab aktueller Position .3+| `/input search_stop_here`
 | key[ctrl-j]
 | key[ctrl-m]
-// TRANSLATION MISSING
-| key[ctrl-q]   | beendet Suche und blättern zum Ende des Buffer | `/input search_stop`
+| key[ctrl-q]   | beendet Suche und blättert zum Ende des Buffers | `/input search_stop`
 |===
 
 [[key_bindings_cursor_context]]
