@@ -61,6 +61,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: fix type of value returned by function strcasestr
 * fifo: fix send error on Cygwin when something is received in the pipe
   (issue #436)
+* irc: remove lag item when a lag is displayed and new lag computed is exactly
+  0 milliseconds
 * irc: do not allow command /query with a channel name (issue #459)
 * irc: decode/encode only text in IRC messages and not the headers
   (bug #29886, issue #218, issue #451)

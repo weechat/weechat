@@ -1028,7 +1028,7 @@ irc_server_alloc (const char *name)
     new_server->is_away = 0;
     new_server->away_message = NULL;
     new_server->away_time = 0;
-    new_server->lag = 0;
+    new_server->lag = -1;
     new_server->lag_check_time.tv_sec = 0;
     new_server->lag_check_time.tv_usec = 0;
     new_server->lag_next_check = time (NULL) +
@@ -3012,7 +3012,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
                                   (ptr_server->current_address) ?
                                   ptr_server->current_address : "weechat");
                 gettimeofday (&(ptr_server->lag_check_time), NULL);
-                ptr_server->lag = 0;
+                ptr_server->lag = -1;
                 ptr_server->lag_last_refresh = 0;
             }
             else
@@ -4658,7 +4658,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     server->cap_account_notify = 0;
     server->is_away = 0;
     server->away_time = 0;
-    server->lag = 0;
+    server->lag = -1;
     server->lag_check_time.tv_sec = 0;
     server->lag_check_time.tv_usec = 0;
     server->lag_next_check = time (NULL) +
