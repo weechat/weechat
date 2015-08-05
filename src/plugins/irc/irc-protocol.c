@@ -1709,19 +1709,20 @@ IRC_PROTOCOL_CALLBACK(ping)
 IRC_PROTOCOL_CALLBACK(pong)
 {
     struct timeval tv;
-    int old_lag;
 
     IRC_PROTOCOL_MIN_ARGS(0);
 
     if (server->lag_check_time.tv_sec != 0)
     {
         /* calculate lag (time diff with lag check) */
-        old_lag = server->lag;
         gettimeofday (&tv, NULL);
         server->lag = (int)(weechat_util_timeval_diff (&(server->lag_check_time),
                                                        &tv) / 1000);
-        if (old_lag != server->lag)
+        if (server->lag != server->lag_displayed)
+        {
+            server->lag_displayed = server->lag;
             weechat_bar_item_update ("lag");
+        }
 
         /* schedule next lag check */
         server->lag_check_time.tv_sec = 0;

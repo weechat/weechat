@@ -447,7 +447,6 @@ irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
     irc_buffer_get_server_and_channel (buffer, &server, NULL);
 
     if (server
-        && (server->lag >= 0)
         && (server->lag >= weechat_config_integer (irc_config_network_lag_min_show)))
     {
         snprintf (buf, sizeof (buf),

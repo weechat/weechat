@@ -206,6 +206,7 @@ struct t_irc_server
     char *away_message;             /* away message, NULL if not away        */
     time_t away_time;               /* time() when user marking as away      */
     int lag;                        /* lag (in milliseconds)                 */
+    int lag_displayed;              /* last value displayed for lag          */
     struct timeval lag_check_time;  /* last time lag was checked (ping sent) */
     time_t lag_next_check;          /* time for next check                   */
     time_t lag_last_refresh;        /* last refresh of lag item              */

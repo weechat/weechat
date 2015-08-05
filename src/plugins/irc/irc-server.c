@@ -1028,7 +1028,8 @@ irc_server_alloc (const char *name)
     new_server->is_away = 0;
     new_server->away_message = NULL;
     new_server->away_time = 0;
-    new_server->lag = -1;
+    new_server->lag = 0;
+    new_server->lag_displayed = -1;
     new_server->lag_check_time.tv_sec = 0;
     new_server->lag_check_time.tv_usec = 0;
     new_server->lag_next_check = time (NULL) +
@@ -3012,7 +3013,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
                                   (ptr_server->current_address) ?
                                   ptr_server->current_address : "weechat");
                 gettimeofday (&(ptr_server->lag_check_time), NULL);
-                ptr_server->lag = -1;
+                ptr_server->lag = 0;
                 ptr_server->lag_last_refresh = 0;
             }
             else
@@ -3059,7 +3060,11 @@ irc_server_timer_cb (void *data, int remaining_calls)
                     && (ptr_server->lag >= weechat_config_integer (irc_config_network_lag_min_show)))
                 {
                     ptr_server->lag_last_refresh = current_time;
-                    weechat_bar_item_update ("lag");
+                    if (ptr_server->lag != ptr_server->lag_displayed)
+                    {
+                        ptr_server->lag_displayed = ptr_server->lag;
+                        weechat_bar_item_update ("lag");
+                    }
                 }
                 /* lag timeout? => disconnect */
                 if ((weechat_config_integer (irc_config_network_lag_reconnect) > 0)
@@ -3083,7 +3088,11 @@ irc_server_timer_cb (void *data, int remaining_calls)
                     {
                         /* refresh lag item */
                         ptr_server->lag_last_refresh = current_time;
-                        weechat_bar_item_update ("lag");
+                        if (ptr_server->lag != ptr_server->lag_displayed)
+                        {
+                            ptr_server->lag_displayed = ptr_server->lag;
+                            weechat_bar_item_update ("lag");
+                        }
 
                         /* schedule next lag check in 5 seconds */
                         ptr_server->lag_check_time.tv_sec = 0;
@@ -4658,7 +4667,8 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     server->cap_account_notify = 0;
     server->is_away = 0;
     server->away_time = 0;
-    server->lag = -1;
+    server->lag = 0;
+    server->lag_displayed = -1;
     server->lag_check_time.tv_sec = 0;
     server->lag_check_time.tv_usec = 0;
     server->lag_next_check = time (NULL) +
@@ -5256,6 +5266,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, away_message, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, away_time, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, lag, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, lag_displayed, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, lag_check_time, OTHER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, lag_next_check, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, lag_last_refresh, TIME, 0, NULL, NULL);
@@ -5493,6 +5504,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_time (ptr_item, "away_time", server->away_time))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "lag", server->lag))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "lag_displayed", server->lag_displayed))
         return 0;
     if (!weechat_infolist_new_var_buffer (ptr_item, "lag_check_time", &(server->lag_check_time), sizeof (struct timeval)))
         return 0;
@@ -5837,6 +5850,7 @@ irc_server_print_log ()
         weechat_log_printf ("  away_message . . . . : '%s'",  ptr_server->away_message);
         weechat_log_printf ("  away_time. . . . . . : %ld",   ptr_server->away_time);
         weechat_log_printf ("  lag. . . . . . . . . : %d",    ptr_server->lag);
+        weechat_log_printf ("  lag_displayed. . . . : %d",    ptr_server->lag_displayed);
         weechat_log_printf ("  lag_check_time . . . : tv_sec:%d, tv_usec:%d",
                             ptr_server->lag_check_time.tv_sec,
                             ptr_server->lag_check_time.tv_usec);

@@ -444,6 +444,7 @@ irc_upgrade_read_cb (void *data,
                         irc_upgrade_current_server->away_message = strdup (str);
                     irc_upgrade_current_server->away_time = weechat_infolist_time (infolist, "away_time");
                     irc_upgrade_current_server->lag = weechat_infolist_integer (infolist, "lag");
+                    irc_upgrade_current_server->lag_displayed = weechat_infolist_integer (infolist, "lag_displayed");
                     buf = weechat_infolist_buffer (infolist, "lag_check_time", &size);
                     if (buf)
                         memcpy (&(irc_upgrade_current_server->lag_check_time), buf, size);
