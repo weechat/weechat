@@ -1050,7 +1050,7 @@ $ msgcheck.py xx.po
 ファイルを生成するエイリアスを作ってください:
 
 ----
-/alias doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /javascript unload; /python load docgen.py; /wait 1ms /docgen
+/alias add doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /javascript unload; /python load docgen.py; /wait 1ms /docgen
 ----
 
 コマンド `/doc` を使って全ての (全てのプログラミング言語について) 自動生成するファイルを作成してください。

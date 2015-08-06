@@ -1053,7 +1053,7 @@ Then you can load this script in your WeeChat, and setup path to your '/doc' dir
 Then create this alias to build files:
 
 ----
-/alias doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /javascript unload; /python load docgen.py; /wait 1ms /docgen
+/alias add doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /javascript unload; /python load docgen.py; /wait 1ms /docgen
 ----
 
 And use command `/doc` to build all files, for all languages.
