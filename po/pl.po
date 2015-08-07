@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-08-03 21:03+0200\n"
+"POT-Creation-Date: 2015-08-07 07:38+0200\n"
 "PO-Revision-Date: 2015-07-26 09:42+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8202,6 +8202,11 @@ msgstr "kolor tekstu \"Notice\" w podświetleniach"
 msgid "color for reason in part/quit messages"
 msgstr "kolor tekstu powodu opuszczenia kanału/wyjścia z IRC"
 
+#, fuzzy
+msgid ""
+"color for current channel topic (when joining a channel or using /topic)"
+msgstr "kolor nowego tematu kanału (kiedy temat został zmieniony)"
+
 msgid "color for new channel topic (when topic is changed)"
 msgstr "kolor nowego tematu kanału (kiedy temat został zmieniony)"
 
@@ -8728,8 +8733,8 @@ msgstr "%sKanał %s%s%s utworzono %s"
 msgid "%sNo topic set for channel %s%s"
 msgstr "%sBrak tematu dla kanału %s%s"
 
-#, c-format
-msgid "%sTopic for %s%s%s is \"%s%s\""
+#, fuzzy, c-format
+msgid "%sTopic for %s%s%s is \"%s%s%s\""
 msgstr "%sTemat kanału %s%s%s to \"%s%s\""
 
 #. TRANSLATORS: "%s" after "on" is a date

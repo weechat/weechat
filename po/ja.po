@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-08-03 21:03+0200\n"
+"POT-Creation-Date: 2015-08-07 07:38+0200\n"
 "PO-Revision-Date: 2015-07-26 09:42+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -8031,6 +8031,11 @@ msgstr "notices に含まれるテキスト \"Notice\" の色"
 msgid "color for reason in part/quit messages"
 msgstr "退出/終了メッセージに含まれる理由の色"
 
+#, fuzzy
+msgid ""
+"color for current channel topic (when joining a channel or using /topic)"
+msgstr "新しいチャンネルトピックの色 (トピックが変更されたとき)"
+
 msgid "color for new channel topic (when topic is changed)"
 msgstr "新しいチャンネルトピックの色 (トピックが変更されたとき)"
 
@@ -8547,8 +8552,8 @@ msgstr "%sチャンネル %s%s%s の作成日時 %s"
 msgid "%sNo topic set for channel %s%s"
 msgstr "%sチャンネル %s%s にはトピックが設定されていません"
 
-#, c-format
-msgid "%sTopic for %s%s%s is \"%s%s\""
+#, fuzzy, c-format
+msgid "%sTopic for %s%s%s is \"%s%s%s\""
 msgstr "%s%s%s%s のトピックは \"%s%s\" です"
 
 #. TRANSLATORS: "%s" after "on" is a date

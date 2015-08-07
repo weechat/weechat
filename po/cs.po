@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-08-03 21:03+0200\n"
+"POT-Creation-Date: 2015-08-07 07:38+0200\n"
 "PO-Revision-Date: 2015-08-01 10:23+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7413,6 +7413,11 @@ msgstr "barva textu \"Notice\" v upozorněních"
 msgid "color for reason in part/quit messages"
 msgstr "barva textu důvodu ve zprávách odchodu/ukončení"
 
+#, fuzzy
+msgid ""
+"color for current channel topic (when joining a channel or using /topic)"
+msgstr "barva pro nové téma rozhovoru kanálu (když se téma změní)"
+
 msgid "color for new channel topic (when topic is changed)"
 msgstr "barva pro nové téma rozhovoru kanálu (když se téma změní)"
 
@@ -7922,8 +7927,8 @@ msgstr "%sKanál %s%s%s vytvořen v %s"
 msgid "%sNo topic set for channel %s%s"
 msgstr "%sNení nastaveno téma pro kanál %s%s"
 
-#, c-format
-msgid "%sTopic for %s%s%s is \"%s%s\""
+#, fuzzy, c-format
+msgid "%sTopic for %s%s%s is \"%s%s%s\""
 msgstr "%sTéma pro %s%s%s v \"%s%s\""
 
 #. TRANSLATORS: "%s" after "on" is a date

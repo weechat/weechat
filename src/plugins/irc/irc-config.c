@@ -2911,7 +2911,8 @@ irc_config_init ()
     irc_config_color_topic_current = weechat_config_new_option (
         irc_config_file, ptr_section,
         "topic_current", "color",
-        N_("color for current channel topic (when joining or using /topic)"),
+        N_("color for current channel topic (when joining a channel or "
+           "using /topic)"),
         NULL, -1, 0, "default", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_color_topic_new = weechat_config_new_option (
