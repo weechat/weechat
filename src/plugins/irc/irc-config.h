@@ -168,6 +168,7 @@ extern struct t_config_option *irc_config_color_mirc_remap;
 extern struct t_config_option *irc_config_color_nick_prefixes;
 extern struct t_config_option *irc_config_color_notice;
 extern struct t_config_option *irc_config_color_reason_quit;
+extern struct t_config_option *irc_config_color_topic_current;
 extern struct t_config_option *irc_config_color_topic_new;
 extern struct t_config_option *irc_config_color_topic_old;
 

@@ -125,6 +125,7 @@ struct t_config_option *irc_config_color_mirc_remap;
 struct t_config_option *irc_config_color_nick_prefixes;
 struct t_config_option *irc_config_color_notice;
 struct t_config_option *irc_config_color_reason_quit;
+struct t_config_option *irc_config_color_topic_current;
 struct t_config_option *irc_config_color_topic_new;
 struct t_config_option *irc_config_color_topic_old;
 
@@ -2905,6 +2906,12 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "reason_quit", "color",
         N_("color for reason in part/quit messages"),
+        NULL, -1, 0, "default", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_color_topic_current = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "topic_current", "color",
+        N_("color for current channel topic (when joining or using /topic)"),
         NULL, -1, 0, "default", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_color_topic_new = weechat_config_new_option (

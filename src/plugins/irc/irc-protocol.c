@@ -3476,11 +3476,12 @@ IRC_PROTOCOL_CALLBACK(332)
                 server, NULL, command, NULL, ptr_buffer),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-            _("%sTopic for %s%s%s is \"%s%s\""),
+            _("%sTopic for %s%s%s is \"%s%s%s\""),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
             argv[3],
             IRC_COLOR_RESET,
+            IRC_COLOR_TOPIC_CURRENT,
             (topic_color) ? topic_color : ((pos_topic) ? pos_topic : ""),
             IRC_COLOR_RESET);
     }

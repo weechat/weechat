@@ -86,6 +86,7 @@
 #define IRC_COLOR_MESSAGE_JOIN weechat_color(weechat_config_string(irc_config_color_message_join))
 #define IRC_COLOR_MESSAGE_QUIT weechat_color(weechat_config_string(irc_config_color_message_quit))
 #define IRC_COLOR_REASON_QUIT weechat_color(weechat_config_string(irc_config_color_reason_quit))
+#define IRC_COLOR_TOPIC_CURRENT weechat_color(weechat_config_string(irc_config_color_topic_current))
 #define IRC_COLOR_TOPIC_OLD weechat_color(weechat_config_string(irc_config_color_topic_old))
 #define IRC_COLOR_TOPIC_NEW weechat_color(weechat_config_string(irc_config_color_topic_new))
 #define IRC_COLOR_INPUT_NICK weechat_color(weechat_config_string(irc_config_color_input_nick))
