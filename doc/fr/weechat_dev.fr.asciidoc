@@ -1073,7 +1073,7 @@ vers votre répertoire '/doc' :
 Créez alors cet alias pour construire les fichiers :
 
 ----
-/alias doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /javascript unload; /python load docgen.py; /wait 1ms /docgen
+/alias add doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /javascript unload; /python load docgen.py; /wait 1ms /docgen
 ----
 
 Et utilisez la commande `/doc` pour construire tous les fichiers, pour toutes

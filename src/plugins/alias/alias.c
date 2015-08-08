@@ -526,7 +526,7 @@ alias_hook_command (struct t_alias *alias)
     /*
      * if alias has no custom completion, then default is to complete with
      * completion template of target command, for example if alias is
-     * "/alias test /buffer", then str_completion will be "%%buffer"
+     * "/alias add test /buffer", then str_completion will be "%%buffer"
      */
     str_completion = NULL;
     if (!alias->completion)

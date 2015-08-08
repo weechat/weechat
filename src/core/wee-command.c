@@ -7815,7 +7815,7 @@ command_init ()
            "    /set irc.server.oftc.command \"/msg nickserv identify "
            "${sec.data.oftc}\"\n"
            "  alias to ghost the nick \"mynick\":\n"
-           "    /alias ghost /eval /msg -server freenode nickserv ghost mynick "
+           "    /alias add ghost /eval /msg -server freenode nickserv ghost mynick "
            "${sec.data.freenode}"),
         "passphrase -delete"
         " || decrypt -discard"
