@@ -200,6 +200,7 @@
 *** 'away_message' (string)
 *** 'away_time' (time)
 *** 'lag' (integer)
+*** 'lag_displayed' (integer)
 *** 'lag_check_time' (other)
 *** 'lag_next_check' (time)
 *** 'lag_last_refresh' (time)
