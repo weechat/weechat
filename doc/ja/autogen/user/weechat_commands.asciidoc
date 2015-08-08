@@ -779,7 +779,7 @@ Examples:
     /secure set oftc mypassword
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
   alias to ghost the nick "mynick":
-    /alias ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
+    /alias add ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
 ----
 
 [[command_weechat_set]]

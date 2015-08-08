@@ -779,7 +779,7 @@ Beispiele:
     /secure set oftc meinPasswort
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
   Alternativbefehl um den eigenen Nick zu ghosten:
-    /alias ghost /eval /msg -server freenode nickserv ghost meinNick ${sec.data.freenode}
+    /alias add ghost /eval /msg -server freenode nickserv ghost meinNick ${sec.data.freenode}
 ----
 
 [[command_weechat_set]]
