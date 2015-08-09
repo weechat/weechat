@@ -111,16 +111,17 @@ void
 weechat_display_copyright ()
 {
     string_iconv_fprintf (stdout, "\n");
-    string_iconv_fprintf (stdout,
-                          /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
-                          _("WeeChat %s Copyright %s, compiled on %s %s\n"
-                            "Developed by Sébastien Helleu <flashcode@flashtux.org> "
-                            "- %s"),
-                          version_get_version_with_git (),
-                          WEECHAT_COPYRIGHT_DATE,
-                          version_get_compilation_date (),
-                          version_get_compilation_time (),
-                          WEECHAT_WEBSITE);
+    string_iconv_fprintf (
+        stdout,
+        /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
+        _("WeeChat %s Copyright %s, compiled on %s %s\n"
+          "Developed by Sébastien Helleu <flashcode@flashtux.org> "
+          "- %s"),
+        version_get_version_with_git (),
+        WEECHAT_COPYRIGHT_DATE,
+        version_get_compilation_date (),
+        version_get_compilation_time (),
+        WEECHAT_WEBSITE);
     string_iconv_fprintf (stdout, "\n");
 }
 
@@ -139,17 +140,22 @@ weechat_display_usage (char *exec_name)
     string_iconv_fprintf (stdout, "\n");
     string_iconv_fprintf (
         stdout,
-        _("  -a, --no-connect         disable auto-connect to servers at startup\n"
+        _("  -a, --no-connect         disable auto-connect to servers at "
+          "startup\n"
           "  -c, --colors             display default colors in terminal\n"
-          "  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
-          "                           (environment variable WEECHAT_HOME is read if this option is not given)\n"
+          "  -d, --dir <path>         set WeeChat home directory "
+          "(default: ~/.weechat)\n"
+          "                           (environment variable WEECHAT_HOME is "
+          "read if this option is not given)\n"
           "  -h, --help               display this help\n"
           "  -l, --license            display WeeChat license\n"
           "  -p, --no-plugin          don't load any plugin at startup\n"
           "  -r, --run-command <cmd>  run command(s) after startup\n"
-          "                           (many commands can be separated by semicolons)\n"
+          "                           (many commands can be separated by "
+          "semicolons)\n"
           "  -s, --no-script          don't load any script at startup\n"
-          "      --upgrade            upgrade WeeChat using session files (see /help upgrade in WeeChat)\n"
+          "      --upgrade            upgrade WeeChat using session files "
+          "(see /help upgrade in WeeChat)\n"
           "  -v, --version            display WeeChat version\n"
           "  plugin:option            option for plugin (see man weechat)\n"));
     string_iconv_fprintf(stdout, "\n");
@@ -224,7 +230,8 @@ weechat_parse_args (int argc, char *argv[])
         {
             /*
              * Electric-fence is not working fine when gnutls loads
-             * certificates and Valgrind reports many memory errors with gnutls.
+             * certificates and Valgrind reports many memory errors with
+             * gnutls.
              * This option disables the init/deinit of gnutls,
              * it must NOT be used for other purposes!
              */
@@ -393,17 +400,18 @@ weechat_startup_message ()
 {
     if (CONFIG_BOOLEAN(config_startup_display_logo))
     {
-        gui_chat_printf (NULL,
-                         "%s  ___       __         ______________        _____ \n"
-                         "%s  __ |     / /___________  ____/__  /_______ __  /_\n"
-                         "%s  __ | /| / /_  _ \\  _ \\  /    __  __ \\  __ `/  __/\n"
-                         "%s  __ |/ |/ / /  __/  __/ /___  _  / / / /_/ // /_  \n"
-                         "%s  ____/|__/  \\___/\\___/\\____/  /_/ /_/\\__,_/ \\__/  ",
-                         GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                         GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                         GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                         GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                         GUI_COLOR(GUI_COLOR_CHAT_NICK));
+        gui_chat_printf (
+            NULL,
+            "%s  ___       __         ______________        _____ \n"
+            "%s  __ |     / /___________  ____/__  /_______ __  /_\n"
+            "%s  __ | /| / /_  _ \\  _ \\  /    __  __ \\  __ `/  __/\n"
+            "%s  __ |/ |/ / /  __/  __/ /___  _  / / / /_/ // /_  \n"
+            "%s  ____/|__/  \\___/\\___/\\____/  /_/ /_/\\__,_/ \\__/  ",
+            GUI_COLOR(GUI_COLOR_CHAT_NICK),
+            GUI_COLOR(GUI_COLOR_CHAT_NICK),
+            GUI_COLOR(GUI_COLOR_CHAT_NICK),
+            GUI_COLOR(GUI_COLOR_CHAT_NICK),
+            GUI_COLOR(GUI_COLOR_CHAT_NICK));
     }
     if (CONFIG_BOOLEAN(config_startup_display_version))
     {
@@ -412,8 +420,9 @@ weechat_startup_message ()
     if (CONFIG_BOOLEAN(config_startup_display_logo) ||
         CONFIG_BOOLEAN(config_startup_display_version))
     {
-        gui_chat_printf (NULL,
-                         "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+        gui_chat_printf (
+            NULL,
+            "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
     }
 
     if (weechat_first_start)
@@ -436,6 +445,7 @@ weechat_startup_message ()
               "\n"
               "You can add and connect to an IRC server with /server and "
               "/connect commands (see /help server)."));
+        gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, "---");
         gui_chat_printf (NULL, "");
     }
@@ -650,7 +660,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
     }
     weechat_startup_message ();         /* display WeeChat startup message  */
     gui_chat_print_lines_waiting_buffer (NULL); /* display lines waiting    */
-    weechat_term_check ();              /* warnings about $TERM (if wrong)  */
+    weechat_term_check ();              /* warning about wrong $TERM        */
     weechat_locale_check ();            /* warning about wrong locale       */
     command_startup (0);                /* command executed before plugins  */
     plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */
