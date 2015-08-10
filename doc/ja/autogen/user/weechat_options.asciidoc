@@ -718,7 +718,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.key_grab_delay]] *weechat.look.key_grab_delay*
-** 説明: `default delay (in milliseconds) to grab a key (using default key alt-k); this delay can be overridden in the /input command (see /help input)`
+** 説明: `キーを横取りするためのデフォルト遅延時間 (ミリ秒単位) (デフォルトキー alt-k を使います); /input コマンドではこの遅延時間を無視します (/help input 参照)`
 ** タイプ: 整数
 ** 値: 1 .. 10000 (デフォルト値: `800`)
 

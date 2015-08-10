@@ -414,60 +414,60 @@ value: 表示する履歴エントリの数
 ----
 /input  <action> [<arguments>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text_here: search text in buffer at current position
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_switch_regex: switch search type: string/regular expression
-  search_switch_where: switch search in messages/prefixes
-  search_previous: search previous line
-  search_next: search next line
-  search_stop_here: stop search at current position
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  zoom_merged_buffer: zoom on merged buffer
-  insert: insert text in command line (escaped chars are allowed, see /help print)
-  send: send text to the buffer
-  paste_start: start paste (bracketed paste mode)
-  paste_stop: stop paste (bracketed paste mode)
+アクションリスト:
+  return: "enter" キーをシミュレート
+  complete_next: 次の補完候補で単語を補完
+  complete_previous: 一つ前の補完候補で単語を補完
+  search_text_here: 現在の位置でテキストを検索
+  search_text: バッファ内のテキストを検索
+  search_switch_case: 完全一致検索に変更
+  search_switch_regex: 検索タイプの切り替え: 文字列/正規表現
+  search_switch_where: 検索範囲の切り替え: メッセージ/プレフィックス
+  search_previous: 一つ前の行を検索
+  search_next: 次の行を検索
+  search_stop_here: 現在の位置で検索を終了
+  search_stop: 検索を終了
+  delete_previous_char: 一つ前の文字を削除
+  delete_next_char: 次の文字を削除
+  delete_previous_word: 一つ前の単語を削除
+  delete_next_word: 次の単語を削除
+  delete_beginning_of_line: 行の最初からカーソル位置までを削除
+  delete_end_of_line: カーソルから行の最後までを削除
+  delete_line: 行を削除
+  clipboard_paste: クリップボードから貼り付け
+  transpose_chars: 2 つの文字を入れ替え
+  undo: 最新のコマンドラインアクションまで元に戻す
+  redo: 最新のコマンドラインアクションまでやり直す
+  move_beginning_of_line: カーソルを行頭に移動
+  move_end_of_line: カーソルを行末まで移動
+  move_previous_char: カーソルを一つ前の文字に移動
+  move_next_char: カーソルを次の文字に移動
+  move_previous_word: カーソルを一つ前の単語に移動
+  move_next_word: カーソルを次の単語に移動
+  history_previous: 現在のバッファ履歴のひとつ前のコマンドを再呼び出し
+  history_next: 現在のバッファ履歴の次のコマンドを再呼び出し
+  history_global_previous: グローバル履歴の一つ前のコマンドを再呼び出し
+  history_global_next: グローバル履歴の次のコマンドを再呼び出し
+  jump_smart: 次のアクティブバッファに飛ぶ
+  jump_last_buffer_displayed: 表示されている最後のバッファに移動 (最新のバッファ移動の一つ前に表示されていたバッファ)
+  jump_previously_visited_buffer: 一つ前に訪れたバッファに移動
+  jump_next_visited_buffer: 次に訪れたバッファに移動
+  hotlist_clear: ホットリストを消去
+  grab_key: キーを横取り (任意引数: 最後の横取りからの遅延時間、デフォルトは 500 ミリ秒)
+  grab_key_command: あるコマンドに関連してキーを横取り (任意引数: 最後の横取りからの遅延時間、デフォルトは 500 ミリ秒)
+  grab_mouse: grab マウスイベントコードを横取り
+  grab_mouse_area: 範囲指定のマウスイベントコードを横取り
+  set_unread: 全てのバッファに対して未読マーカーを設定
+  set_unread_current_buffer: 現在のバッファに対して未読マーカーを設定
+  switch_active_buffer: 次のマージされたバッファに移動
+  switch_active_buffer_previous: 一つ前のマージされたバッファに移動
+  zoom_merged_buffer: マージされたバッファにズーム
+  insert: コマンドラインにテキストを挿入 (エスケープ文字も可、/help print を参照)
+  send: バッファにテキストを送信
+  paste_start: ペーストの開始 (括弧付きペーストモード)
+  paste_stop: ペーストの終了 (括弧付きペーストモード)
 
-This command is used by key bindings or plugins.
+これらのコマンドはキーバインドかプラグインで利用できます。
 ----
 
 [[command_weechat_key]]
@@ -751,34 +751,34 @@ file: 保存する設定ファイル (拡張子 ".conf" は不要)
          set <name> <value>
          del <name>
 
-passphrase: change the passphrase (without passphrase, data is stored as plain text in file sec.conf)
-   -delete: delete passphrase
-   decrypt: decrypt data still encrypted (it happens only if passphrase was not given on startup)
-  -discard: discard all data still encrypted
-       set: add or change secured data
-       del: delete secured data
+passphrase: パスフレーズを変更 (パスフレーズがない場合、sec.conf ファイルに平文でデータを保存します)
+   -delete: パスフレーズを削除
+   decrypt: 暗号化されているデータを復号化 (起動時にパスフレーズが設定されていない場合に起きます)
+  -discard: 全ての暗号化データを破棄
+       set: 保護データを追加または変更
+       del: 保護データを削除
 
-Without argument, this command displays secured data in a new buffer.
+引数がない場合、新しいバッファに保護データを表示します。
 
-When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
-It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
+パスフレーズを利用する場合 (データが暗号化されている場合)、WeeChat は起動時にパスフレーズを尋ねます。
+環境変数 "WEECHAT_PASSPHRASE" を利用すれば入力を回避できます (WeeChat は /upgrade の時に同じ変数を利用します)。
 
-Secured data with format ${sec.data.xxx} can be used in:
-  - command /eval
-  - command line argument "--run-command"
-  - options weechat.startup.command_{before|after}_plugins
-  - other options that may contain a password or sensitive data (for example proxy, irc server and relay); see /help on the options to check if they are evaluated.
+${sec.data.xxx} の形でフォーマットされた保護データは以下の様に利用できます:
+  - /eval コマンド
+  - コマンドライン引数 "--run-command"
+  - weechat.startup.command_{before|after}_plugins オプション
+  - パスワードや機密データを含むと思われるその他のオプション (例えば、プロキシ、irc サーバ、リレー); 保護データが評価されるかを確認するには各オプションの /help を御覧ください。
 
-Examples:
-  set a passphrase:
+例:
+  パスフレーズを設定:
     /secure passphrase this is my passphrase
-  encrypt freenode SASL password:
+  freenode の SASL パスワードを暗号化:
     /secure set freenode mypassword
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"
-  encrypt oftc password for nickserv:
+  oftc の nickserv 用パスワードを暗号化:
     /secure set oftc mypassword
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
-  alias to ghost the nick "mynick":
+  ニックネーム "mynick" を取り戻すためのエイリアス ghost を設定
     /alias add ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
 ----
 
