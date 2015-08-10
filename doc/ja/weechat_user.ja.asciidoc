@@ -1195,12 +1195,10 @@ key[ctrl-r] が押された状態) でのみ有効です。
 | key[Tab]      | 検索範囲: メッセージ (デフォルト)、プレフィックス、プレフィックスとメッセージ | `/input search_switch_where`
 | key[↑]        | 前のキーワードで検索 | `/input search_previous`
 | key[↓]        | 次のキーワードで検索 | `/input search_next`
-// TRANSLATION MISSING
-| key[Enter] .3+| Stop search at current position .3+| `/input search_stop_here`
+| key[Enter] .3+| 現在の位置で検索を終了 .3+| `/input search_stop_here`
 | key[ctrl-j]
 | key[ctrl-m]
-// TRANSLATION MISSING
-| key[ctrl-q]   | Stop search and scroll to bottom of buffer | `/input search_stop`
+| key[ctrl-q]   | 検索を終了してバッファの最後までスクロール | `/input search_stop`
 |===
 
 [[key_bindings_cursor_context]]
