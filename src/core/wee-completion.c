@@ -410,7 +410,8 @@ completion_list_add_filename_cb (void *data,
     if (!real_prefix || !prefix)
         goto end;
 
-    snprintf (buf, sizeof (buf), "%s", completion->base_word + strlen (prefix));
+    snprintf (buf, sizeof (buf),
+              "%s", completion->base_word + strlen (prefix));
     pos = strrchr (buf, DIR_SEPARATOR_CHAR);
     if (pos)
     {
@@ -792,15 +793,17 @@ completion_list_add_plugins_installed_cb (void *data,
         && CONFIG_STRING(config_plugin_path)[0])
     {
         plugin_path = string_expand_home (CONFIG_STRING(config_plugin_path));
-        plugin_path2 = string_replace ((plugin_path) ?
-                                       plugin_path : CONFIG_STRING(config_plugin_path),
-                                       "%h", weechat_home);
-        util_exec_on_files ((plugin_path2) ?
-                            plugin_path2 : ((plugin_path) ?
-                                            plugin_path : CONFIG_STRING(config_plugin_path)),
-                            0,
-                            completion,
-                            &completion_list_add_plugins_installed_exec_cb);
+        plugin_path2 = string_replace (
+            (plugin_path) ?
+            plugin_path : CONFIG_STRING(config_plugin_path),
+            "%h", weechat_home);
+        util_exec_on_files (
+            (plugin_path2) ?
+            plugin_path2 : ((plugin_path) ?
+                            plugin_path : CONFIG_STRING(config_plugin_path)),
+            0,
+            completion,
+            &completion_list_add_plugins_installed_exec_cb);
         if (plugin_path)
             free (plugin_path);
         if (plugin_path2)
@@ -1279,9 +1282,10 @@ completion_list_add_keys_codes_cb (void *data,
         for (ptr_key = gui_keys[i]; ptr_key; ptr_key = ptr_key->next_key)
         {
             expanded_name = gui_key_get_expanded_name (ptr_key->key);
-            gui_completion_list_add (completion,
-                                     (expanded_name) ? expanded_name : ptr_key->key,
-                                     0, WEECHAT_LIST_POS_SORT);
+            gui_completion_list_add (
+                completion,
+                (expanded_name) ? expanded_name : ptr_key->key,
+                0, WEECHAT_LIST_POS_SORT);
             if (expanded_name)
                 free (expanded_name);
         }
@@ -1320,9 +1324,10 @@ completion_list_add_keys_codes_for_reset_cb (void *data,
                 || (strcmp (ptr_default_key->command, ptr_key->command) != 0))
             {
                 expanded_name = gui_key_get_expanded_name (ptr_key->key);
-                gui_completion_list_add (completion,
-                                         (expanded_name) ? expanded_name : ptr_key->key,
-                                         0, WEECHAT_LIST_POS_SORT);
+                gui_completion_list_add (
+                    completion,
+                    (expanded_name) ? expanded_name : ptr_key->key,
+                    0, WEECHAT_LIST_POS_SORT);
                 if (expanded_name)
                     free (expanded_name);
             }
@@ -1336,9 +1341,10 @@ completion_list_add_keys_codes_for_reset_cb (void *data,
             if (!ptr_key)
             {
                 expanded_name = gui_key_get_expanded_name (ptr_default_key->key);
-                gui_completion_list_add (completion,
-                                         (expanded_name) ? expanded_name : ptr_default_key->key,
-                                         0, WEECHAT_LIST_POS_SORT);
+                gui_completion_list_add (
+                    completion,
+                    (expanded_name) ? expanded_name : ptr_default_key->key,
+                    0, WEECHAT_LIST_POS_SORT);
                 if (expanded_name)
                     free (expanded_name);
             }
@@ -1627,7 +1633,8 @@ completion_init ()
                         "or removed)"),
                      &completion_list_add_keys_codes_for_reset_cb, NULL);
     hook_completion (NULL, "cursor_areas",
-                     N_("areas (\"chat\" or bar name) for free cursor movement"),
+                     N_("areas (\"chat\" or bar name) for free cursor "
+                        "movement"),
                      &completion_list_add_cursor_areas_cb, NULL);
     hook_completion (NULL, "layouts_names",
                      N_("names of layouts"),

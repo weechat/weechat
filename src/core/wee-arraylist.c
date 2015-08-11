@@ -475,9 +475,10 @@ arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer)
         if ((index >= 0) && !arraylist->allow_duplicates)
         {
             while ((index < arraylist->size)
-                   && (((arraylist->callback_cmp) (arraylist->callback_cmp_data,
-                                                   arraylist, arraylist->data[index],
-                                                   pointer)) == 0))
+                   && (((arraylist->callback_cmp) (
+                            arraylist->callback_cmp_data,
+                            arraylist, arraylist->data[index],
+                            pointer)) == 0))
             {
                 arraylist_remove (arraylist, index);
             }
@@ -690,7 +691,9 @@ arraylist_print_log (struct t_arraylist *arraylist, const char *name)
         }
     }
     log_printf ("  callback_cmp . . . . . : 0x%lx", arraylist->callback_cmp);
-    log_printf ("  callback_cmp_data. . . : 0x%lx", arraylist->callback_cmp_data);
+    log_printf ("  callback_cmp_data. . . : 0x%lx",
+                arraylist->callback_cmp_data);
     log_printf ("  callback_free. . . . . : 0x%lx", arraylist->callback_free);
-    log_printf ("  callback_free_data . . : 0x%lx", arraylist->callback_free_data);
+    log_printf ("  callback_free_data . . : 0x%lx",
+                arraylist->callback_free_data);
 }

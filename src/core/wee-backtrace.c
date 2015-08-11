@@ -111,12 +111,13 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
                 pos[0] = '\0';
             if (strchr (ptr_line, ':'))
             {
-                weechat_backtrace_printf ("%03d  %s%s%s%s",
-                                          number,
-                                          ptr_line,
-                                          (function_name[0]) ? " [function " : "",
-                                          function_name,
-                                          (function_name[0]) ? "]" : "");
+                weechat_backtrace_printf (
+                    "%03d  %s%s%s%s",
+                    number,
+                    ptr_line,
+                    (function_name[0]) ? " [function " : "",
+                    function_name,
+                    (function_name[0]) ? "]" : "");
                 function_name[0] = '\0';
             }
             else
