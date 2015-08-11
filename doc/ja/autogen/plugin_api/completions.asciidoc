@@ -112,6 +112,8 @@
 
 | weechat | buffers_plugins_names | バッファの名前 (プラグインの名前を含めた)
 
+| weechat | colors | color names
+
 | weechat | commands | コマンド (weechat とプラグイン)
 
 | weechat | config_files | 設定ファイル

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-08-08 10:28+0200\n"
+"POT-Creation-Date: 2015-08-11 22:24+0200\n"
 "PO-Revision-Date: 2015-07-26 09:42+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2856,6 +2856,10 @@ msgstr "proprietà che possono essere lette su un buffer"
 
 msgid "numbers of windows"
 msgstr "numeri delle finestre"
+
+#, fuzzy
+msgid "color names"
+msgstr "ottiene il nome del colore del nick"
 
 msgid "palette colors"
 msgstr "Tavolozza dei colori"

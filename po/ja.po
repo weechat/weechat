@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-08-08 10:28+0200\n"
+"POT-Creation-Date: 2015-08-11 22:24+0200\n"
 "PO-Revision-Date: 2015-08-10 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -2957,6 +2957,10 @@ msgstr "バッファから読み取り可能なプロパティ"
 
 msgid "numbers of windows"
 msgstr "ウィンドウの数"
+
+#, fuzzy
+msgid "color names"
+msgstr "ニックネームの色名を取得"
 
 msgid "palette colors"
 msgstr "パレットカラー"

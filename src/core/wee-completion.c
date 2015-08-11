@@ -289,6 +289,62 @@ completion_list_add_windows_numbers_cb (void *data,
 }
 
 /*
+ * Adds colors to completion list.
+ */
+
+int
+completion_list_add_colors_cb (void *data,
+                               const char *completion_item,
+                               struct t_gui_buffer *buffer,
+                               struct t_gui_completion *completion)
+{
+    char str_number[64];
+    const char *color_name;
+    int i, num_colors;
+    struct t_gui_color_palette *color_palette;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    num_colors = gui_color_get_weechat_colors_number ();
+    for (i = 0; i < num_colors; i++)
+    {
+        color_name = gui_color_get_name (i);
+        if (color_name)
+        {
+            gui_completion_list_add (completion,
+                                     color_name,
+                                     0, WEECHAT_LIST_POS_SORT);
+        }
+    }
+    num_colors = gui_color_get_term_colors ();
+    for (i = 0; i <= num_colors; i++)
+    {
+        color_palette = gui_color_palette_get (i);
+        if (color_palette)
+        {
+            gui_completion_list_add (completion,
+                                     color_palette->alias,
+                                     0, WEECHAT_LIST_POS_END);
+        }
+        else
+        {
+            snprintf (str_number,
+                      sizeof (str_number),
+                      "%d",
+                      i);
+            gui_completion_list_add (completion,
+                                     str_number,
+                                     0, WEECHAT_LIST_POS_END);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds a palette color to completion list.
  */
 
@@ -901,13 +957,12 @@ completion_list_add_config_option_values_cb (void *data,
                                              struct t_gui_completion *completion)
 {
     char *pos_space, *option_full_name, *pos_section, *pos_option;
-    char *file, *section, *value_string, str_number[64];
+    char *file, *section, *value_string;
     const char *color_name;
-    int length, i, num_colors;
+    int length, i;
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section, *section_found;
     struct t_config_option *option_found;
-    struct t_gui_color_palette *color_palette;
 
     /* make C compiler happy */
     (void) data;
@@ -1066,38 +1121,8 @@ completion_list_add_config_option_values_cb (void *data,
                             }
                             break;
                         case CONFIG_OPTION_TYPE_COLOR:
-                            num_colors = gui_color_get_weechat_colors_number ();
-                            for (i = 0; i < num_colors; i++)
-                            {
-                                color_name = gui_color_get_name (i);
-                                if (color_name)
-                                {
-                                    gui_completion_list_add (completion,
-                                                             color_name,
-                                                             0, WEECHAT_LIST_POS_SORT);
-                                }
-                            }
-                            num_colors = gui_color_get_term_colors ();
-                            for (i = 0; i <= num_colors; i++)
-                            {
-                                color_palette = gui_color_palette_get (i);
-                                if (color_palette)
-                                {
-                                    gui_completion_list_add (completion,
-                                                             color_palette->alias,
-                                                             0, WEECHAT_LIST_POS_END);
-                                }
-                                else
-                                {
-                                    snprintf (str_number,
-                                              sizeof (str_number),
-                                              "%d",
-                                              i);
-                                    gui_completion_list_add (completion,
-                                                             str_number,
-                                                             0, WEECHAT_LIST_POS_END);
-                                }
-                            }
+                            completion_list_add_colors_cb (
+                                data, completion_item, buffer, completion);
                             gui_completion_list_add (completion, "++1",
                                                      0, WEECHAT_LIST_POS_END);
                             gui_completion_list_add (completion, "--1",
@@ -1565,6 +1590,9 @@ completion_init ()
     hook_completion (NULL, "windows_numbers",
                      N_("numbers of windows"),
                      &completion_list_add_windows_numbers_cb, NULL);
+    hook_completion (NULL, "colors",
+                     N_("color names"),
+                     &completion_list_add_colors_cb, NULL);
     hook_completion (NULL, "palette_colors",
                      N_("palette colors"),
                      &completion_list_add_palette_colors_cb, NULL);

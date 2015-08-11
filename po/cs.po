@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-08-08 10:28+0200\n"
+"POT-Creation-Date: 2015-08-11 22:24+0200\n"
 "PO-Revision-Date: 2015-08-01 10:23+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2641,6 +2641,10 @@ msgstr "vlastnosti, které mohou být čteny o bufferu"
 #, fuzzy
 msgid "numbers of windows"
 msgstr "seznam oken"
+
+#, fuzzy
+msgid "color names"
+msgstr "získat jméno barvy přezdívky"
 
 msgid "palette colors"
 msgstr "barvy palety"

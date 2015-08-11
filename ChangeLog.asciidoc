@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: add completion "colors" (issue #481)
 * core: start/stop search in buffer at current scroll position by default,
   add key key[ctrl-q] to stop search and reset scroll (issue #76, issue #393)
 * core: add option weechat.look.key_grab_delay to set the default delay when
