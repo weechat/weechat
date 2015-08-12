@@ -3228,9 +3228,6 @@ API_FUNC(buffer_get_string)
     result = weechat_buffer_get_string (
         (struct t_gui_buffer *)API_STR2PTR(*buffer),
         *property);
-    weechat_log_printf ("buffer: %s", *buffer);
-    weechat_log_printf ("property: %s", *property);
-    weechat_log_printf ("result: %lx", result);
 
     API_RETURN_STRING(result);
 }
