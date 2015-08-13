@@ -5179,6 +5179,28 @@ weechat_ruby_api_infolist_new_var_time (VALUE class, VALUE item,
 }
 
 static VALUE
+weechat_ruby_api_infolist_search_var (VALUE class, VALUE infolist, VALUE name)
+{
+    char *c_infolist, *c_name, *result;
+    VALUE return_value;
+
+    API_INIT_FUNC(1, "infolist_search_var", API_RETURN_EMPTY);
+    if (NIL_P (infolist) || NIL_P (name))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (infolist, T_STRING);
+    Check_Type (name, T_STRING);
+
+    c_infolist = StringValuePtr (infolist);
+    c_name = StringValuePtr (name);
+
+    result = API_PTR2STR(weechat_infolist_search_var (API_STR2PTR(c_infolist),
+                                                      c_name));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+static VALUE
 weechat_ruby_api_infolist_get (VALUE class, VALUE name, VALUE pointer,
                                VALUE arguments)
 {
@@ -6218,6 +6240,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(infolist_new_var_string, 3);
     API_DEF_FUNC(infolist_new_var_pointer, 3);
     API_DEF_FUNC(infolist_new_var_time, 3);
+    API_DEF_FUNC(infolist_search_var, 2);
     API_DEF_FUNC(infolist_get, 3);
     API_DEF_FUNC(infolist_next, 1);
     API_DEF_FUNC(infolist_prev, 1);

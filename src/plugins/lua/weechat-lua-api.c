@@ -4326,6 +4326,24 @@ API_FUNC(infolist_new_var_time)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(infolist_search_var)
+{
+    const char *infolist, *name;
+    char *result;
+
+    API_INIT_FUNC(1, "infolist_search_var", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    infolist = lua_tostring (L, -2);
+    name = lua_tostring (L, -1);
+
+    result = API_PTR2STR(weechat_infolist_search_var (API_STR2PTR(infolist),
+                                                      name));
+
+    API_RETURN_STRING_FREE(result);
+}
+
 API_FUNC(infolist_get)
 {
     const char *name, *pointer, *arguments;
@@ -5152,6 +5170,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(infolist_new_var_string),
     API_DEF_FUNC(infolist_new_var_pointer),
     API_DEF_FUNC(infolist_new_var_time),
+    API_DEF_FUNC(infolist_search_var),
     API_DEF_FUNC(infolist_get),
     API_DEF_FUNC(infolist_next),
     API_DEF_FUNC(infolist_prev),

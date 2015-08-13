@@ -4251,6 +4251,24 @@ API_FUNC(infolist_new_var_time)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(infolist_search_var)
+{
+    char *infolist, *name, *result;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "infolist_search_var", API_RETURN_EMPTY);
+    if (items < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    infolist = SvPV_nolen (ST (0));
+    name = SvPV_nolen (ST (1));
+
+    result = API_PTR2STR(weechat_infolist_search_var (API_STR2PTR(infolist),
+                                                      name));
+
+    API_RETURN_STRING_FREE(result);
+}
+
 API_FUNC(infolist_get)
 {
     char *result, *name, *pointer, *arguments;
@@ -5096,6 +5114,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(infolist_new_var_string);
     API_DEF_FUNC(infolist_new_var_pointer);
     API_DEF_FUNC(infolist_new_var_time);
+    API_DEF_FUNC(infolist_search_var);
     API_DEF_FUNC(infolist_get);
     API_DEF_FUNC(infolist_next);
     API_DEF_FUNC(infolist_prev);

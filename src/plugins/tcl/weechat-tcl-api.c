@@ -4589,6 +4589,22 @@ API_FUNC(infolist_new_var_time)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(infolist_search_var)
+{
+    Tcl_Obj *objp;
+    char *result;
+    int i;
+
+    API_INIT_FUNC(1, "infolist_search_var", API_RETURN_EMPTY);
+    if (objc < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(weechat_infolist_search_var (API_STR2PTR(Tcl_GetStringFromObj (objv[1], &i)), /* infolist */
+                                                      Tcl_GetStringFromObj (objv[2], &i))); /* name */
+
+    API_RETURN_STRING_FREE(result);
+}
+
 API_FUNC(infolist_get)
 {
     Tcl_Obj *objp;
@@ -5558,6 +5574,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(infolist_new_var_string);
     API_DEF_FUNC(infolist_new_var_pointer);
     API_DEF_FUNC(infolist_new_var_time);
+    API_DEF_FUNC(infolist_search_var);
     API_DEF_FUNC(infolist_get);
     API_DEF_FUNC(infolist_next);
     API_DEF_FUNC(infolist_prev);

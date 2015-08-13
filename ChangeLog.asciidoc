@@ -58,6 +58,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: fix bar item "scroll" after /buffer clear (issue #448)
 * core: fix display of time in bare display when option
   weechat.look.buffer_time_format is set to empty string (issue #441)
+* api: add missing function infolist_search_var() in script API (issue #484)
 * api: add missing function hook_completion_get_string() in script API
   (issue #484)
 * api: fix type of value returned by functions strcasestr, utf8_prev_char,

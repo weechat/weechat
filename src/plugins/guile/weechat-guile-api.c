@@ -4094,6 +4094,22 @@ weechat_guile_api_infolist_new_var_time (SCM item, SCM name, SCM value)
 }
 
 SCM
+weechat_guile_api_infolist_search_var (SCM infolist, SCM name)
+{
+    char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "infolist_search_var", API_RETURN_EMPTY);
+    if (!scm_is_string (infolist) || !scm_is_string (name))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(weechat_infolist_search_var (API_STR2PTR(API_SCM_TO_STRING(infolist)),
+                                                      API_SCM_TO_STRING(name)));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+SCM
 weechat_guile_api_infolist_get (SCM name, SCM pointer, SCM arguments)
 {
     char *result;
@@ -4860,6 +4876,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(infolist_new_var_string, 3);
     API_DEF_FUNC(infolist_new_var_pointer, 3);
     API_DEF_FUNC(infolist_new_var_time, 3);
+    API_DEF_FUNC(infolist_search_var, 2);
     API_DEF_FUNC(infolist_get, 3);
     API_DEF_FUNC(infolist_next, 1);
     API_DEF_FUNC(infolist_prev, 1);

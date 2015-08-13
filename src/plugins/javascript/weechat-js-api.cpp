@@ -4050,6 +4050,23 @@ API_FUNC(infolist_new_var_time)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(infolist_search_var)
+{
+    char *result;
+
+    API_INIT_FUNC(1, "infolist_search_var", "ss", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value infolist(args[0]);
+    v8::String::Utf8Value name(args[1]);
+
+    result = API_PTR2STR(
+        weechat_infolist_search_var (
+            (struct t_infolist *)API_STR2PTR(*infolist),
+            *name));
+
+    API_RETURN_STRING_FREE(result);
+}
+
 API_FUNC(infolist_get)
 {
     char *result;
@@ -4872,6 +4889,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(infolist_new_var_string);
     API_DEF_FUNC(infolist_new_var_pointer);
     API_DEF_FUNC(infolist_new_var_time);
+    API_DEF_FUNC(infolist_search_var);
     API_DEF_FUNC(infolist_get);
     API_DEF_FUNC(infolist_next);
     API_DEF_FUNC(infolist_prev);

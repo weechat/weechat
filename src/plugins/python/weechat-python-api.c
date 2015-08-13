@@ -4273,6 +4273,23 @@ API_FUNC(infolist_new_var_time)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(infolist_search_var)
+{
+    char *infolist, *name, *result;
+    PyObject *return_value;
+
+    API_INIT_FUNC(1, "infolist_search_var", API_RETURN_EMPTY);
+    infolist = NULL;
+    name = NULL;
+    if (!PyArg_ParseTuple (args, "ss", &infolist, &name))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(weechat_infolist_search_var (API_STR2PTR(infolist),
+                                                      name));
+
+    API_RETURN_STRING_FREE(result);
+}
+
 API_FUNC(infolist_get)
 {
     char *name, *pointer, *arguments, *result;
@@ -5077,6 +5094,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(infolist_new_var_string),
     API_DEF_FUNC(infolist_new_var_pointer),
     API_DEF_FUNC(infolist_new_var_time),
+    API_DEF_FUNC(infolist_search_var),
     API_DEF_FUNC(infolist_get),
     API_DEF_FUNC(infolist_next),
     API_DEF_FUNC(infolist_prev),
