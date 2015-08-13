@@ -3031,6 +3031,26 @@ API_FUNC(hook_completion)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(hook_completion_get_string)
+{
+    Tcl_Obj *objp;
+    char *completion, *property;
+    const char *result;
+    int i;
+
+    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
+    if (objc < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    completion = Tcl_GetStringFromObj (objv[1], &i);
+    property = Tcl_GetStringFromObj (objv[2], &i);
+
+    result = weechat_hook_completion_get_string (API_STR2PTR(completion),
+                                                 property);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(hook_completion_list_add)
 {
     Tcl_Obj *objp;
@@ -5474,6 +5494,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(hook_hsignal_send);
     API_DEF_FUNC(hook_config);
     API_DEF_FUNC(hook_completion);
+    API_DEF_FUNC(hook_completion_get_string);
     API_DEF_FUNC(hook_completion_list_add);
     API_DEF_FUNC(hook_modifier);
     API_DEF_FUNC(hook_modifier_exec);

@@ -2665,6 +2665,22 @@ API_FUNC(hook_completion)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(hook_completion_get_string)
+{
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_completion_get_string", "ss", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value completion(args[0]);
+    v8::String::Utf8Value property(args[1]);
+
+    result = weechat_hook_completion_get_string (
+        (struct t_gui_completion *)API_STR2PTR(*completion),
+        *property);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(hook_completion_list_add)
 {
     int nick_completion;
@@ -4792,6 +4808,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(hook_hsignal_send);
     API_DEF_FUNC(hook_config);
     API_DEF_FUNC(hook_completion);
+    API_DEF_FUNC(hook_completion_get_string);
     API_DEF_FUNC(hook_completion_list_add);
     API_DEF_FUNC(hook_modifier);
     API_DEF_FUNC(hook_modifier_exec);

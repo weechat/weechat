@@ -2790,6 +2790,23 @@ API_FUNC(hook_completion)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(hook_completion_get_string)
+{
+    char *completion, *property;
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
+    completion = NULL;
+    property = NULL;
+    if (!PyArg_ParseTuple (args, "ss", &completion, &property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_hook_completion_get_string (API_STR2PTR(completion),
+                                                 property);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(hook_completion_list_add)
 {
     char *completion, *word, *where;
@@ -4996,6 +5013,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(hook_hsignal_send),
     API_DEF_FUNC(hook_config),
     API_DEF_FUNC(hook_completion),
+    API_DEF_FUNC(hook_completion_get_string),
     API_DEF_FUNC(hook_completion_list_add),
     API_DEF_FUNC(hook_modifier),
     API_DEF_FUNC(hook_modifier_exec),

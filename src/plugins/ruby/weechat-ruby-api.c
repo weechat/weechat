@@ -3331,6 +3331,29 @@ weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
 }
 
 static VALUE
+weechat_ruby_api_hook_completion_get_string (VALUE class, VALUE completion,
+                                             VALUE property)
+{
+    char *c_completion, *c_property;
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
+    if (NIL_P (completion) || NIL_P (property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (completion, T_STRING);
+    Check_Type (property, T_STRING);
+
+    c_completion = StringValuePtr (completion);
+    c_property = StringValuePtr (property);
+
+    result = weechat_hook_completion_get_string (API_STR2PTR(c_completion),
+                                                 c_property);
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
 weechat_ruby_api_hook_completion_list_add (VALUE class, VALUE completion,
                                            VALUE word, VALUE nick_completion,
                                            VALUE where)
@@ -6131,6 +6154,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(hook_hsignal_send, 2);
     API_DEF_FUNC(hook_config, 3);
     API_DEF_FUNC(hook_completion, 4);
+    API_DEF_FUNC(hook_completion_get_string, 2);
     API_DEF_FUNC(hook_completion_list_add, 4);
     API_DEF_FUNC(hook_modifier, 3);
     API_DEF_FUNC(hook_modifier_exec, 3);

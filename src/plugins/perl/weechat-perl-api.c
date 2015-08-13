@@ -2756,6 +2756,25 @@ API_FUNC(hook_completion)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(hook_completion_get_string)
+{
+    char *completion, *property;
+    const char *result;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
+    if (items < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    completion = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
+
+    result = weechat_hook_completion_get_string (API_STR2PTR(completion),
+                                                 property);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(hook_completion_list_add)
 {
     char *completion, *word, *where;
@@ -5013,6 +5032,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(hook_hsignal_send);
     API_DEF_FUNC(hook_config);
     API_DEF_FUNC(hook_completion);
+    API_DEF_FUNC(hook_completion_get_string);
     API_DEF_FUNC(hook_completion_list_add);
     API_DEF_FUNC(hook_modifier);
     API_DEF_FUNC(hook_modifier_exec);

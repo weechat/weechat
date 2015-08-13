@@ -2722,6 +2722,22 @@ weechat_guile_api_hook_completion (SCM completion, SCM description,
 }
 
 SCM
+weechat_guile_api_hook_completion_get_string (SCM completion, SCM property)
+{
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
+    if (!scm_is_string (completion) || !scm_is_string (property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_hook_completion_get_string (
+        API_STR2PTR(API_SCM_TO_STRING(completion)),
+        API_SCM_TO_STRING(property));
+
+    API_RETURN_STRING(result);
+}
+
+SCM
 weechat_guile_api_hook_completion_list_add (SCM completion, SCM word,
                                             SCM nick_completion, SCM where)
 {
@@ -4780,6 +4796,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(hook_hsignal_send, 2);
     API_DEF_FUNC(hook_config, 3);
     API_DEF_FUNC(hook_completion, 4);
+    API_DEF_FUNC(hook_completion_get_string, 2);
     API_DEF_FUNC(hook_completion_list_add, 4);
     API_DEF_FUNC(hook_modifier, 3);
     API_DEF_FUNC(hook_modifier_exec, 3);
