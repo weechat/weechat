@@ -114,19 +114,21 @@ char python_buffer_output[128];
 
 
 /*
- * Sets path to python 2.x interpreter.
+ * Gets path to python 2.x interpreter.
+ *
+ * Note: result must be freed after use.
  */
 
-void
-weechat_python_set_python2_bin ()
+char *
+weechat_python_get_python2_bin ()
 {
     const char *dir_separator;
-    char *path, **paths, bin[4096];
+    char *py2_bin, *path, **paths, bin[4096];
     char *versions[] = { "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2", NULL };
     int num_paths, i, j, rc;
     struct stat stat_buf;
 
-    python2_bin = NULL;
+    py2_bin = NULL;
 
     dir_separator = weechat_info_get ("dir_separator", "");
     path = getenv ("PATH");
@@ -146,19 +148,21 @@ weechat_python_set_python2_bin ()
                     rc = stat (bin, &stat_buf);
                     if ((rc == 0) && (S_ISREG(stat_buf.st_mode)))
                     {
-                        python2_bin = strdup (bin);
+                        py2_bin = strdup (bin);
                         break;
                     }
                 }
-                if (python2_bin)
+                if (py2_bin)
                     break;
             }
             weechat_string_free_split (paths);
         }
     }
 
-    if (!python2_bin)
-        python2_bin = strdup ("python");
+    if (!py2_bin)
+        py2_bin = strdup ("python");
+
+    return py2_bin;
 }
 
 /*
@@ -1061,7 +1065,7 @@ weechat_python_info_cb (void *data, const char *info_name,
             if ((rc != 0) || (!S_ISREG(stat_buf.st_mode)))
             {
                 free (python2_bin);
-                weechat_python_set_python2_bin ();
+                python2_bin = weechat_python_get_python2_bin ();
             }
         }
         return python2_bin;
@@ -1273,7 +1277,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
      * hook info to get path to python 2.x interpreter
      * (some scripts using hook_process need that)
      */
-    weechat_python_set_python2_bin ();
+    python2_bin = weechat_python_get_python2_bin ();
     weechat_hook_info ("python2_bin",
                        N_("path to python 2.x interpreter"),
                        NULL,
