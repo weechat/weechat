@@ -251,51 +251,51 @@ infolists: wyświetla informacje o infolistach
 /eval  [-n|-s] <wyrażenie>
        [-n] -c <wyrażenie1> <operator> <wyrażenie2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -s: split expression before evaluating it (many commands can be separated by semicolons)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching POSIX extended regex
-                !~  is NOT matching POSIX extended regex
+        -n: wyświetla wynik bez wysyłania go do buforu (tryb debugowania)
+        -s: podziel wyażenie przed przetworzeniem go (wiele komend może być oddzielonych średnikami)
+        -c: przetwarza jako warunek: użyj operatorów i nawiasów, zwraca wartość logiczną ("0" lub "1")
+wyrażenie: wyrażenie do przetworzenia, zmienne o formacie ${zmienna} są zastępowane (zobacz niżej); wiele komend można oddzielić średnikami
+  operator: operator logiczny lub porównania:
+            - operatory logiczne:
+                &&  boolowskie "i"
+                ||  boolowskie "lub"
+            - operatory porównania:
+                ==  równy
+                !=  różny
+                <=  mniejszy lub równy
+                <   mniejszy
+                >=  większy lub równy
+                >   większy
+                =~  pasuje do rozszerzonego wyrażenia regularnego POSIX
+                !~  NIE pasuje do rozszerzonego wyrażenia regularnego POSIX
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using integers if the two expressions are valid integers.
-To force a string comparison, add double quotes around each expression, for example:
+Wyrażenie jest uznawane za "prawdziwe" jeśli nie jest NULL, nie jest puste, oraz różni się od "0".
+Porównania dokonuje się z użyciem liczb całkowitych jeśli oba wyrażenia są liczbami całkowitymi.
+W celu wymuszenia porównywania ciągów, należy umieścić każde wyrażenie w cudzysłowie, na przykład:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. an evaluated sub-string (format: "eval:xxx")
-  2. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  3. a string with chars to hide (format: "hide:char,string")
-  4. a color (format: "color:xxx")
-  5. an info (format: "info:name,arguments", arguments are optional)
-  6. current date/time (format: "date" or "date:format")
-  7. an environment variable (format: "env:XXX")
-  8. an option (format: "file.section.option")
-  9. a local variable in buffer
-  10. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
-    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Niektóre zmienne w wyrażeniach są zamieniane, poprzez zastosowanie formatu ${zmienna}, według priorytetu zmienną może być:
+  1. przetworzony ciąg (format: "eval:xxx")
+  2. ciąg z wyescapowanymi znakami (format: "esc:xxx" lub "\xxx")
+  3. ciąg ze znakami do ukrycia (format: "hide:char,string")
+  4. kolor (format color:xxx)
+  5. informacja (format: "info:nazwa,argumenty", argumenty są opcjonalne)
+  6. obecna data/czas (format: "date" lub "date:format")
+  7. zmienna środowiskowa (format: "env:XXX")
+  8. opcja (format: plik.sekcja.opcja)
+  9. zmienna lokalna w buforze
+  10. nazwa hdatay/zmiennej (wartość jest automatycznie konwertowana na ciąg znaków), domyślnie "window" i "buffer" wskazują na aktualne okno/bufor.
+Format dla hdata może być jednym z poniższych:
+  hdata.zmienna1.zmienna2...: inicjuje hdata (wskaźnik musi być znany), następnie wypytuje zmienne jedna po drugiej (inne hdata mogą być następne)
+  hdata[list].zmienna1.zmienna2...: inicjuje hdata z wykorzystaniem listy, na przykład:
+    ${buffer[gui_buffers].full_name}: pełna nazwa buforu w połączonej liście buforów
+    ${plugin[weechat_plugins].name}: nazwa pierwszej wtyczki w połączonej liście wtyczek
+  hdata[wskaźnik].zmienna1.zmienna2...: zacznij z hdata używając wskaźnika, na przykład:
+    ${buffer[0x1234abcd].full_name}: pełna nazwa buforu z tym wskaźnikiem (może zostać użyte w triggerach)
+Nazwy hdata i zmiennych, można znaleźć w  "Opisie API wtyczek", fukcja "weechat_hdata_get".
 
-Examples (simple strings):
+Przykłady (proste ciągi):
   /eval -n ${info:version}                     ==> 0.4.3
   /eval -n ${env:HOME}                         ==> /home/user
   /eval -n ${weechat.look.scroll_amount}       ==> 3
@@ -305,9 +305,9 @@ Examples (simple strings):
   /eval -n ${window.buffer.number}             ==> 1
   /eval -n ${\t}                               ==> <tab>
   /eval -n ${hide:-,${relay.network.password}} ==> --------
-  /eval -n ${date:%H:%M:%S}                    ==> 07:46:40
+  /eval -n ${hide:-,${relay.network.password}} ==> --------
 
-Examples (conditions):
+Przykłady (warunki):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
   /eval -n -c ${window.win_width} > 100   ==> 1
   /eval -n -c (8 > 12) || (5 > 2)         ==> 1
@@ -414,60 +414,60 @@ Wartość: ilość elementów historii do pokazania
 ----
 /input  <akcja> [<argumenty>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text_here: search text in buffer at current position
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_switch_regex: switch search type: string/regular expression
-  search_switch_where: switch search in messages/prefixes
-  search_previous: search previous line
-  search_next: search next line
-  search_stop_here: stop search at current position
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  zoom_merged_buffer: zoom on merged buffer
-  insert: insert text in command line (escaped chars are allowed, see /help print)
-  send: send text to the buffer
-  paste_start: start paste (bracketed paste mode)
-  paste_stop: stop paste (bracketed paste mode)
+lista akcji:
+  return: symuluje klawisz "enter"
+  complete_next: dopełnia słowo następnym dopełnieniem
+  complete_previous: dopełnia słowo poprzednim dopełnieniem
+  search_text_here: szuka testu w obecnej pozycji w buforze
+  search_text: szuka tekstu w buforze
+  search_switch_case: przełącza na dokładne dopasowanie przy szukaniu
+  search_switch_regex: przełącza typy wyszukiwania ciąg/wyrażenie regularne
+  search_switch_where: zmienia miejsce przeszukiwania na wiadomości/przedrostki
+  search_previous: szuka poprzednich linii
+  search_next: szuka następnych linii
+  search_stop_here: zatrzymuje wyszukiwanie na obecnej pozycji
+  search_stop: zatrzymuje wyszukiwanie
+  delete_previous_char: usuwa poprzedni znak
+  delete_next_char: usuwa następny znak
+  delete_previous_word: usuwa poprzednie słowo
+  delete_next_word: usuwa następne słowo
+  delete_beginning_of_line: usuwa od początku linii do kursora
+  delete_end_of_line: usuwa od kursora do końca linii
+  delete_line: usuwa cała linię
+  clipboard_paste: wkleja ze schowka
+  transpose_chars: zamienia dwa znaki
+  undo: cofa ostatnia akcję w linii poleceń
+  redo: ponownie wykonuje cofniętą akcję w linii poleceń
+  move_beginning_of_line: przesuwa kursor na początek linii
+  move_end_of_line: przesuwa kursor na koniec linii
+  move_previous_char: przesuwa kursor do poprzedniego znaku
+  move_next_char: przesuwa kursor do następnego znaku
+  move_previous_word: przesuwa kursor do poprzedniego słowa
+  move_next_word: przesuwa kursor do następnego słowa
+  history_previous: przywołuje poprzednia komendę z historii obecnego bufora
+  history_next: przywołuje następną komendę z historii obecnego bufora
+  history_global_previous: przywołuje poprzednią komendę z globalnej historii
+  history_global_next: przywołuje następną komendę z globalnej historii
+  jump_smart: przechodzi do następnego bufora z aktywnością
+  jump_last_buffer_displayed: przechodzi do ostatnio wyświetlanego bufora (przed ostatnim przeskoczeniem do bufora)
+  jump_previously_visited_buffer: przeskakuje do poprzedniego bufora
+  jump_next_visited_buffer: przeskakuje to następnego bufora
+  hotlist_clear: czyści hotlistę
+  grab_key: przechwytuje klawisz (opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
+  grab_key_command: przechwytuje klawisz z przypisaną komendą(opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
+  grab_mouse: przechwytuje kod zdarzenia myszy
+  grab_mouse_area: przechwytuje kod zdarzenia myszy z obszarem
+  set_unread: ustawia znacznik nie przeczytania dla wszystkich buforów
+  set_unread_current_buffer: ustawia znacznik nie przeczytania dla obecnego bufora
+  switch_active_buffer: przełącza do następnego połączonego buforu
+  switch_active_buffer_previous: przełącza do poprzedniego połączonego buforu
+  zoom_merged_buffer: zoom na połączony bufor
+  insert: wkleja tekst do linii poleceń (dozwolone są wyescapowane znaki, zobacz /help print)
+  send: wysyła tekst do bufora
+  paste_start: zaczyna wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
+  paste_stop: kończy wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
 
-This command is used by key bindings or plugins.
+Ta komenda jest używana do przypisywania klawiszy lub przez wtyczki.
 ----
 
 [[command_weechat_key]]
@@ -667,28 +667,28 @@ Przykłady:
         del <nazwa>|-all
         set <nazwa> <opcja> <wartość>
 
-    list: list all proxies
-     add: add a new proxy
-    name: name of proxy (must be unique)
-    type: http, socks4 or socks5
- address: IP or hostname
+    list: wyświetla wszystkie proxy
+     add: dodaje nowe proxy
+    nazwa: nazwa proxy (musi być unikalna)
+    typ: http, socks4 lub socks5
+ adres: adres IP lub nazwa hosta
     port: port
-username: username (optional)
-password: password (optional)
-     del: delete a proxy (or all proxies with -all)
-     set: set a value for a proxy property
-  option: option to change (for options list, look at /set weechat.proxy.<proxyname>.*)
-   value: new value for option
+użytkownik: nazwa użytkownika (opcjonalne)
+hasło: hasło (opcjonalne)
+     del: usuwa proxy (albo wszystkie zdefiniowane proxy z -all)
+     set: ustawia wartość dla właściwości proxy
+  opcja: właściwość do zmiany (aby uzyskać listę dostępnych opcji spójrz na /set weechat.proxy.<nazwa proxy>.*)
+   wartość: nowa wartość dla opcji
 
-Examples:
-  add a http proxy, running on local host, port 8888:
+Przykłady:
+  tworzy proxy http, uruchomione na hoście lokalnym i porcie 8888:
     /proxy add local http 127.0.0.1 8888
-  add a http proxy using IPv6 protocol:
+  tworzy proxy http wykorzystujące protokół IPv6:
     /proxy add local http ::1 8888
     /proxy set local ipv6 on
-  add a socks5 proxy with username/password:
+  tworzy proxy socks5 z nazwą użytkownika/hasłem:
     /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
-  delete a proxy:
+  usuwa proxy:
     /proxy del myproxy
 ----
 
@@ -751,35 +751,35 @@ Bez podania argumentu wszystkie pliki (WeeChat oraz wtyczki) zostaną przeładow
          set <nazwa> <wartość>
          del <nazwa>
 
-passphrase: change the passphrase (without passphrase, data is stored as plain text in file sec.conf)
-   -delete: delete passphrase
-   decrypt: decrypt data still encrypted (it happens only if passphrase was not given on startup)
-  -discard: discard all data still encrypted
-       set: add or change secured data
-       del: delete secured data
+passphrase: zmienia hasło (bez hasła dane są przechowywane w postaci tekstu w pliku sec.conf)
+   -delete: kasuje hasło
+   decrypt: rozszyfrowuje dane będące ciągle zaszyfrowane (zdarza się to tylko jeśli hasło nie zostało podane przy uruchomieniu)
+  -discard: odrzuca wszystkie nadal zaszyfrowane dane
+       set: dodaje lub zmienia zaszyfrowane dane
+       del: kasuje zaszyfrowane dane
 
-Without argument, this command displays secured data in a new buffer.
+Bez argumentu, komenda wyświetli zabezpieczone dane w nowym buforze.
 
-When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
-It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
+Jeśli używane jest hasło (dane zaszyfrowane), należy je podać podczas startu WeeChat.
+Jest możliwe ustawienie zmiennej środowiskowej "WEECHAT_PASSPHRASE", aby nie podawać hasła przy uruchomieniu (ta sama zmienna jest używana przez WeeChat podczas wykonywania /upgrade).
 
-Secured data with format ${sec.data.xxx} can be used in:
-  - command /eval
-  - command line argument "--run-command"
-  - options weechat.startup.command_{before|after}_plugins
-  - other options that may contain a password or sensitive data (for example proxy, irc server and relay); see /help on the options to check if they are evaluated.
+Zabezpieczone dane w formacie ${sec.data.xxx} można użyć w:
+  - komendzie /eval
+  - argumencie w linii poleceń "--run-command"
+  - opcjach weechat.startup.command_{before|after}_plugins
+  - innych opcjach, które mogą zawierać hasło lub wrażliwe dane (na przykład proxy, serwer irc i relay); zobacz /help na opcjach żeby sprawdzić czy są przetwarzane.
 
-Examples:
-  set a passphrase:
-    /secure passphrase this is my passphrase
-  encrypt freenode SASL password:
-    /secure set freenode mypassword
+Przykłady:
+  ustawienie hasła:
+    /secure passphrase to jest moje hasło
+  zaszyfrowanie hasła dla freenode SASL:
+    /secure set freenode mojehasło
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"
-  encrypt oftc password for nickserv:
-    /secure set oftc mypassword
+  zaszyfrowanie hasła dla nickserva na serwerze oftc:
+    /secure set oftc mojehasło
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
-  alias to ghost the nick "mynick":
-    /alias add ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
+  alias dla polecenia ghost dla nicka "mójnick":
+    /alias ghost /eval /msg -server freenode nickserv ghost mójnick ${sec.data.freenode}
 ----
 
 [[command_weechat_set]]
@@ -841,32 +841,32 @@ Przykłady:
 [command]*`upgrade`* uaktualnia WeeChat bez rozłączania z serwerami::
 
 ----
-/upgrade  [-yes] [<path_to_binary>|-quit]
+/upgrade  [-yes] [<ścieżka_do_binarki>|-quit]
 
-          -yes: required if option weechat.look.confirm_upgrade is enabled
-path_to_binary: path to WeeChat binary (default is current binary)
-        -dummy: do nothing (option used to prevent accidental completion with "-quit")
-         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
+          -yes: wymagane, jeśli opcja weechat.look.confirm_upgrade jest włączona
+ścieżka_do_binarki: ścieżka do pliku binarnego WeeChat (domyślnie jest to obecny plik)
+        -dummy: nic nie rób (opcja użyta w celu zapobiegnięcia przypadkowego dopełnienia za pomocą"-quit")
+         -quit: zamyka *WSZYSTKIE* połączenia, zapisuje sesję i wyłącza WeeChat, umożliwia to późniejsze przywrócenie (zobacz niżej)
 
-This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
+Ta komenda uaktualnia i przeładowuje działającą sesję WeeChat.  Nowy plik binarny WeeChat powinien zostać skompilowany lub zainstalowany za pomocą managera pakietów przed uruchomieniem tej komendy.
 
-Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
+Uwaga: połączenia SSL są przerywane podczas uaktualniania, ponieważ przeładowanie sesji SSL nie jest obecnie możliwe za pomocą GnuTLS. Po uaktualnieniu nastąpi ponowne ich połączenie.
 
-Upgrade process has 4 steps:
-  1. save session into files for core and plugins (buffers, history, ..)
-  2. unload all plugins (configuration files (*.conf) are written on disk)
-  3. save WeeChat configuration (weechat.conf)
-  4. execute new WeeChat binary and reload session.
+Proces uaktualnienia składa się z 4 kroków:
+  1. zapisania sesji do plików dla rdzenia i wtyczek (bufory, historia, ..)
+  2. wyładowanie wszystkich wtyczek (zapisanie plików konfiguracyjnych *.conf)
+  3. zapisanie konfiguracji WeeChat (weechat.conf)
+  4. uruchomienie nowego pliku binarnego WeeChat i przeładowanie sesji.
 
-With option "-quit", the process is slightly different:
-  1. close *ALL* connections (irc, xfer, relay, ...)
-  2. save session into files (*.upgrade)
-  3. unload all plugins
-  4. save WeeChat configuration
-  5. quit WeeChat
-Then later you can restore session with command: weechat --upgrade
-IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
-It is possible to restore WeeChat session on another machine if you copy the content of directory "~/.weechat".
+Z opcją "-quit", proces przebiega inaczej:
+  1. zamknięcie *WSZYSTKICH* połączeń (irc, xfer, relay, ...)
+  2. zapisanie sesji do pliku (*.upgrade)
+  3. wyładowanie wszystkich wtyczek
+  4. zapisanie konfiguracji WeeChat
+  5. wyłączenie WeeChat
+Następnie można przywrócić sesję za pomocą komendy: weechat --upgrade
+WAŻNE: należy przywracać sesję z identyczną konfiguracją (pliki *.conf).
+Jest możliwe przywrócenie sesji WeeChat na innej maszynie, jeśli skopiujemy zawartość katalogu "~/.weechat".
 ----
 
 [[command_weechat_uptime]]
@@ -921,20 +921,20 @@ Przykłady:
 
 ----
 /window  list
-         -1|+1|b#|up|down|left|right [-window <number>]
-         <number>
-         splith|splitv [-window <number>] [<pct>]
-         resize [-window <number>] [+/-]<pct>
+         -1|+1|b#|up|down|left|right [-window <numer>]
+         <numer>
+         splith|splitv [-window <numer>] [<pct>]
+         resize [-window <numer>] [+/-]<pct>
          balance
-         merge [-window <number>] [all]
-         page_up|page_down [-window <number>]
+         merge [-window <numer>] [all]
+         page_up|page_down [-window <numer>]
          refresh
-         scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]
-         scroll_horiz [-window <number>] [+/-]<value>[%]
-         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
-         swap [-window <number>] [up|down|left|right]
-         zoom [-window <number>]
-         bare [<delay>]
+         scroll [-window <numer>] [+/-]<wartość>[s|m|h|d|M|y]
+         scroll_horiz [-window <numer>] [+/-]<wartość>[%]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <numer>]
+         swap [-window <numer>] [up|down|left|right]
+         zoom[-window <numer>]
+         bare [<opóźnienie>]
 
          list: lista otwartych okien (bez argumentu wyświetlana jest ta lista)
            -1: skok do poprzedniego okna

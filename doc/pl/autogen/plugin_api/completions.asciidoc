@@ -112,7 +112,7 @@
 
 | weechat | buffers_plugins_names | nazwy buforów (włącznie z nazwami wtyczek)
 
-| weechat | colors | color names
+| weechat | colors | nazwy kolorów
 
 | weechat | commands | komendy (weechata i wtyczek)
 

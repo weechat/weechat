@@ -63,7 +63,7 @@
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
 
 * [[option_irc.color.topic_current]] *irc.color.topic_current*
-** opis: `color for current channel topic (when joining a channel or using /topic)`
+** opis: `kolor obecnego tematu kanału (podczas wejścia na kanał lub użycia /topic)`
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
 
@@ -363,7 +363,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_irc.look.temporary_servers]] *irc.look.temporary_servers*
-** opis: `enable automatic addition of temporary servers with command /connect`
+** opis: `włącza tworzenie tymczasowych serwerów za pomocą komendy /connect`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 
@@ -548,7 +548,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_irc.server_default.nicks]] *irc.server_default.nicks*
-** opis: `nicknames to use on server (separated by comma) (note: content is evaluated, see /help eval)`
+** opis: `nazwy użytkownika do użycia na serwerze (oddzielone przecinkiem) (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 

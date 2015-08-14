@@ -48,7 +48,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_logger.file.path]] *logger.file.path*
-** opis: `path for WeeChat log files; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default); date specifiers are permitted (see man strftime) (note: content is evaluated, see /help eval)`
+** opis: `ścieżka do plików z logami WeeChat; "%h" na początku ciągu zostanie zastąpione przez katalog domowy WeeChat (domyślnie "~/.weechat"); określenia dla daty są dozwolone (zobacz man  strftime) (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"%h/logs/"`)
 

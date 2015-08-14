@@ -543,7 +543,7 @@
 ** wartości: on, off (domyślna wartość: `off`)
 
 * [[option_weechat.look.confirm_upgrade]] *weechat.look.confirm_upgrade*
-** opis: `if set, /upgrade command must be confirmed with extra argument "-yes" (see /help upgrade)`
+** opis: `jeśli ustawione, komenda /upgrade musi być potwierdzona dodatkowym argumentem "-yes" (zobacz /help upgrade)`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 
@@ -718,7 +718,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_weechat.look.key_grab_delay]] *weechat.look.key_grab_delay*
-** opis: `default delay (in milliseconds) to grab a key (using default key alt-k); this delay can be overridden in the /input command (see /help input)`
+** opis: `domyślne opóźnienie (w milisekundach) do przechwycenia klawiszy (za pomocą domyślnego skrótu alt-k); to opóźnienie może zostać nadpisane przez komendę /input (zobacz /help input)`
 ** typ: liczba
 ** wartości: 1 .. 10000 (domyślna wartość: `800`)
 

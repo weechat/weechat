@@ -188,7 +188,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_script.scripts.path]] *script.scripts.path*
-** opis: `local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)`
+** opis: `lokalny katalog z cache skryptów; "%h" na początku ciągu zostanie zastąpione przez katalog domowy WeeChat (domyślnie "~/.weechat")  (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"%h/script"`)
 
