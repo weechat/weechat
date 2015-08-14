@@ -38,8 +38,7 @@ Główne cechy to:
   http://tools.ietf.org/html/rfc2811[2811],
   http://tools.ietf.org/html/rfc2812[2812] i
   http://tools.ietf.org/html/rfc2813[2813]
-// TRANSLATION MISSING
-* IRC proxy and relay for remote interfaces
+* proxy IRC i pośrednik dla zdalnych interfejsów
 * wielo-platformowy (GNU/Linux, *BSD, MacOS X, Windows i inne)
 * 100% GPL, darmowe oprogramowanie
 
@@ -71,8 +70,7 @@ Pakiety binarne dostępne są dla wielu dystrybucji, wliczając:
 * Arch Linuxa: `pacman -S weechat`
 * Fedora Core: `yum install weechat`
 * Sourcemage: `cast weechat`
-// TRANSLATION MISSING
-* Cygwin (Windows): select WeeChat packages in setup.exe
+* Cygwin (Windows): wybierz pakiet WeeChat w setup.exe
 
 Niektóre dodatkowe pakiety mogą okazać się przydatne, jak weechat-plugins.
 
@@ -1207,12 +1205,10 @@ zostanie wciśnięta w buforze tekstowym).
 | key[Tab]      | Przełącz miejsce wyszukiwania: wiadomości (domyślne), prefiksy, prefiksy + wiadmości | `/input search_switch_where`
 | key[↑]        | Poprzednie wystąpienie | `/input search_previous`
 | key[↓]        | Następne wystąpienie | `/input search_next`
-// TRANSLATION MISSING
-| key[Enter] .3+| Stop search at current position .3+| `/input search_stop_here`
+| key[Enter] .3+| Zatrzymaj wyszukiwanie na obecnej pozycji .3+| `/input search_stop_here`
 | key[ctrl-j]
 | key[ctrl-m]
-// TRANSLATION MISSING
-| key[ctrl-q]   | Stop search and scroll to bottom of buffer | `/input search_stop`
+| key[ctrl-q]   | Zatrzymaj wyszukiwanie i przewin na spód bufora | `/input search_stop`
 |===
 
 [[key_bindings_cursor_context]]
@@ -2209,8 +2205,7 @@ $ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
 
 Uwaga: możliwe jest umieszczenie wielu certyfikatów w pliku CAs.pem.
 
-// TRANSLATION MISSING
-* In WeeChat, with "oftc" server already added:
+* W WeeChat z dodanym wcześniej serwerem "oftc":
 
 ----
 /connect oftc
@@ -2227,8 +2222,7 @@ $ cd ~/.weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
-// TRANSLATION MISSING
-* In WeeChat, with "oftc" server already added:
+* W WeeChat z dodanym wcześniej serwerem "oftc":
 
 ----
 /set irc.server.oftc.ssl_cert "%h/ssl/nick.pem"
@@ -2325,8 +2319,7 @@ zależą od twojej konfiguracji TORa):
 /proxy add tor socks5 127.0.0.1 9050
 ----
 
-// TRANSLATION MISSING
-Now, add a new server, for example:
+Teraz dodaj nowy serwer na przykład:
 
 ----
 /server add freenode-tor p4fsi4ockecnea7l.onion
@@ -3270,15 +3263,12 @@ są dodawane do tablicy hashy:
 | command              | ciąg | Komendy IRC (na przykład: "PRIVMSG", "NOTICE", ...)
 | channel              | ciąg | Kanał IRC
 | arguments            | ciąg | Argumenty komendy (razem z wartością 'channel')
-// TRANSLATION MISSING
-| text                 | ciąg | Text (for example user message)
-// TRANSLATION MISSING
-| pos_text             | ciąg | The index of text in message ("-1" if text was not found)
+| text                 | ciąg | Tekst (na przykład wiadomość użytkownika)
+| pos_text             | ciąg | Indeks tekstu w wiadomości ("-1" jeśli tekst nie został znaleziony)
 |===
 
-// TRANSLATION MISSING
-When the data is a pointer, the variable `tg_signal_data` can be used like this
-to read a hdata property (in this example this is a pointer on a buffer):
+Kiedy dane są wskaźnikiem, zmienna `tg_signal_data` może zostać użyta do
+odczytania pola w hdata (w tym przypadku jest to wskaźnik na bufor):
 
 ----
 ${buffer[${tg_signal_data}].full_name}

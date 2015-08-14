@@ -97,9 +97,8 @@ Wszystkie protokoły sieciowe jak IRC są dostarczane w oddzielnych wtyczkach.
 Użyj komendy `/plugin` do wyświetlenia załadowanych wtyczek, powinieneś zobaczyć
 na liście "irc" oraz inne wtyczki.
 
-// TRANSLATION MISSING
 [[add_irc_server]]
-== Add an IRC server
+== Dodawanie serwera IRC
 
 Możesz dodać serwer IRC za pomocą komendy `/server`, na przykład:
 
