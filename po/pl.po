@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-08-11 22:24+0200\n"
-"PO-Revision-Date: 2015-07-26 09:42+0200\n"
+"PO-Revision-Date: 2015-08-14 17:54+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.8.3\n"
 
 msgid "any string"
 msgstr "dowolny ciąg"
@@ -189,7 +189,6 @@ msgstr "Błąd: %s nie jest katalogiem\n"
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Błąd: nie można utworzyć katalogu \"%s\"\n"
 
-#, fuzzy
 msgid ""
 "Welcome to WeeChat!\n"
 "\n"
@@ -209,12 +208,13 @@ msgstr ""
 "Witaj w WeeChat!\n"
 "\n"
 "Jeśli dopiero poznajesz WeeChat, zaleca się abyś przeczytał przynajmniej "
-"szybki start i poradnik użytkownika; wyjaśnią one główne założenia WeeChat.\n"
+"szybki start i poradnik użytkownika jeśli znajdziesz na to chwilę; wyjaśnią "
+"one główne założenia WeeChat.\n"
 "Wszystkie dokumenty dotyczące WeeChat dostępne są pod adresem: https://"
 "weechat.org/doc\n"
 "\n"
-"Ponadto, dostępna jest wbudowana pomoc (komenda /help) dla wszystkich komend "
-"i opcji (klawisz Tab dopełnia nazwy).\n"
+"Ponadto, dostępna jest wbudowana pomoc /help dla wszystkich komend i opcji "
+"(klawisz Tab dopełnia nazwy).\n"
 "Komenda /iset (skrypt iset.pl) pomaga w dostosowaniu WeeChat do swoich "
 "preferencji: /script install iset.pl\n"
 "\n"
@@ -762,13 +762,13 @@ msgstr "Nie zdefiniowano proxy"
 msgid "%sError: wrong type \"%s\" for proxy \"%s\""
 msgstr "%sBłąd: zły typ \"%s\" dla proxy \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Proxy \"%s\" added"
-msgstr "Utworzono proxy \"%s\""
+msgstr "Dodano proxy \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: failed to add proxy \"%s\""
-msgstr "%sBłąd: nie udało się utworzyć proxy \"%s\""
+msgstr "%sBłąd: nie udało się dodać proxy \"%s\""
 
 #, c-format
 msgid "%sError: wrong port \"%s\" for proxy \"%s\""
@@ -788,12 +788,12 @@ msgstr "Proxy usunięte"
 msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
 msgstr "%sBłąd: nie można ustawić opcji \"%s\" dla proxy \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sYou must confirm /%s command with extra argument \"-yes\" (see /help %s)"
 msgstr ""
-"%sMusisz potwierdzić użycie komendy quit dodatkowym argumentem \"-yes"
-"\" (zobacz /help quit)"
+"%sMusisz potwierdzić użycie komendy /%s dodatkowym argumentem \"-yes"
+"\" (zobacz /help %s)"
 
 #, c-format
 msgid "Options reloaded from %s"
@@ -1516,7 +1516,6 @@ msgstr "przetwórz wyrażenie"
 msgid "[-n|-s] <expression> || [-n] -c <expression1> <operator> <expression2>"
 msgstr "[-n|-s] <wyrażenie> || [-n] -c <wyrażenie1> <operator> <wyrażenie2>"
 
-#, fuzzy
 msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
 "        -s: split expression before evaluating it (many commands can be "
@@ -1631,14 +1630,16 @@ msgstr ""
 "\n"
 "Niektóre zmienne w wyrażeniach są zamieniane, poprzez zastosowanie formatu "
 "${zmienna}, według priorytetu zmienną może być:\n"
-"  1. ciąg z wyescapowanymi znakami (format: \"esc:xxx\" lub \"\\xxx\")\n"
-"  2. ciąg ze znakami do ukrycia (format: \"hide:char,string\")\n"
-"  3. kolor (format color:xxx)\n"
-"  4. informacja (format: \"info:nazwa,argumenty\", argumenty są opcjonalne)\n"
-"  5. zmienna środowiskowa (format: \"env:XXX\")\n"
-"  6. opcja (format: plik.sekcja.opcja)\n"
-"  7. zmienna lokalna w buforze\n"
-"  8. nazwa hdatay/zmiennej (wartość jest automatycznie konwertowana na ciąg "
+"  1. przetworzony ciąg (format: \"eval:xxx\")\n"
+"  2. ciąg z wyescapowanymi znakami (format: \"esc:xxx\" lub \"\\xxx\")\n"
+"  3. ciąg ze znakami do ukrycia (format: \"hide:char,string\")\n"
+"  4. kolor (format color:xxx)\n"
+"  5. informacja (format: \"info:nazwa,argumenty\", argumenty są opcjonalne)\n"
+"  6. obecna data/czas (format: \"date\" lub \"date:format\")\n"
+"  7. zmienna środowiskowa (format: \"env:XXX\")\n"
+"  8. opcja (format: plik.sekcja.opcja)\n"
+"  9. zmienna lokalna w buforze\n"
+"  10. nazwa hdatay/zmiennej (wartość jest automatycznie konwertowana na ciąg "
 "znaków), domyślnie \"window\" i \"buffer\" wskazują na aktualne okno/bufor.\n"
 "Format dla hdata może być jednym z poniższych:\n"
 "  hdata.zmienna1.zmienna2...: inicjuje hdata (wskaźnik musi być znany), "
@@ -1649,6 +1650,10 @@ msgstr ""
 "buforów\n"
 "    ${plugin[weechat_plugins].name}: nazwa pierwszej wtyczki w połączonej "
 "liście wtyczek\n"
+"  hdata[wskaźnik].zmienna1.zmienna2...: zacznij z hdata używając wskaźnika, "
+"na przykład:\n"
+"    ${buffer[0x1234abcd].full_name}: pełna nazwa buforu z tym wskaźnikiem "
+"(może zostać użyte w triggerach)\n"
 "Nazwy hdata i zmiennych, można znaleźć w  \"Opisie API wtyczek\", fukcja "
 "\"weechat_hdata_get\".\n"
 "\n"
@@ -1661,6 +1666,7 @@ msgstr ""
 "  /eval -n ${window.buffer.full_name}          ==> core.weechat\n"
 "  /eval -n ${window.buffer.number}             ==> 1\n"
 "  /eval -n ${\\t}                               ==> <tab>\n"
+"  /eval -n ${hide:-,${relay.network.password}} ==> --------\n"
 "  /eval -n ${hide:-,${relay.network.password}} ==> --------\n"
 "\n"
 "Przykłady (warunki):\n"
@@ -1857,7 +1863,6 @@ msgstr "funkcje linii komend"
 msgid "<action> [<arguments>]"
 msgstr "<akcja> [<argumenty>]"
 
-#, fuzzy
 msgid ""
 "list of actions:\n"
 "  return: simulate key \"enter\"\n"
@@ -1922,6 +1927,7 @@ msgstr ""
 "  return: symuluje klawisz \"enter\"\n"
 "  complete_next: dopełnia słowo następnym dopełnieniem\n"
 "  complete_previous: dopełnia słowo poprzednim dopełnieniem\n"
+"  search_text_here: szuka testu w obecnej pozycji w buforze\n"
 "  search_text: szuka tekstu w buforze\n"
 "  search_switch_case: przełącza na dokładne dopasowanie przy szukaniu\n"
 "  search_switch_regex: przełącza typy wyszukiwania ciąg/wyrażenie regularne\n"
@@ -1929,6 +1935,7 @@ msgstr ""
 "przedrostki\n"
 "  search_previous: szuka poprzednich linii\n"
 "  search_next: szuka następnych linii\n"
+"  search_stop_here: zatrzymuje wyszukiwanie na obecnej pozycji\n"
 "  search_stop: zatrzymuje wyszukiwanie\n"
 "  delete_previous_char: usuwa poprzedni znak\n"
 "  delete_next_char: usuwa następny znak\n"
@@ -2369,7 +2376,6 @@ msgstr ""
 "list || add <nazwa> <typ> <adres> <port> [<użytkownik> [<hasło>]] || del "
 "<nazwa>|-all || set <nazwa> <opcja> <wartość>"
 
-#, fuzzy
 msgid ""
 "    list: list all proxies\n"
 "     add: add a new proxy\n"
@@ -2510,7 +2516,6 @@ msgstr ""
 "passphrase <hasło>|-delete || decrypt <hasło>|-discard || set <nazwa> "
 "<wartość> || del <nazwa>"
 
-#, fuzzy
 msgid ""
 "passphrase: change the passphrase (without passphrase, data is stored as "
 "plain text in file sec.conf)\n"
@@ -2568,13 +2573,12 @@ msgstr ""
 "WeeChat podczas wykonywania /upgrade).\n"
 "\n"
 "Zabezpieczone dane w formacie ${sec.data.xxx} można użyć w:\n"
+"  - komendzie /eval\n"
 "  - argumencie w linii poleceń \"--run-command\"\n"
 "  - opcjach weechat.startup.command_{before|after}_plugins\n"
-"  - opcjach proxy: username, password\n"
-"  - opcji serwera autojoin, command, password, sasl_{username|password}, "
-"username, realname\n"
-"  - opcji relay.network.password\n"
-"  - komendzie /eval.\n"
+"  - innych opcjach, które mogą zawierać hasło lub wrażliwe dane (na przykład "
+"proxy, serwer irc i relay); zobacz /help na opcjach żeby sprawdzić czy są "
+"przetwarzane.\n"
 "\n"
 "Przykłady:\n"
 "  ustawienie hasła:\n"
@@ -2696,11 +2700,9 @@ msgstr ""
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "uaktualnia WeeChat bez rozłączania z serwerami"
 
-#, fuzzy
 msgid "[-yes] [<path_to_binary>|-quit]"
-msgstr "[<ścieżka_do_binarki>|-quit]"
+msgstr "[-yes] [<ścieżka_do_binarki>|-quit]"
 
-#, fuzzy
 msgid ""
 "          -yes: required if option weechat.look.confirm_upgrade is enabled\n"
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
@@ -2735,6 +2737,8 @@ msgid ""
 "It is possible to restore WeeChat session on another machine if you copy the "
 "content of directory \"~/.weechat\"."
 msgstr ""
+"          -yes: wymagane, jeśli opcja weechat.look.confirm_upgrade jest "
+"włączona\n"
 "ścieżka_do_binarki: ścieżka do pliku binarnego WeeChat (domyślnie jest to "
 "obecny plik)\n"
 "        -dummy: nic nie rób (opcja użyta w celu zapobiegnięcia przypadkowego "
@@ -2742,9 +2746,9 @@ msgstr ""
 "         -quit: zamyka *WSZYSTKIE* połączenia, zapisuje sesję i wyłącza "
 "WeeChat, umożliwia to późniejsze przywrócenie (zobacz niżej)\n"
 "\n"
-"Ta komenda ponownie uruchamia plik binarny WeeChat, zatem powinna zostać "
-"skompilowana lub zainstalowana za pomocą managera pakietów przed "
-"uruchomieniem tej komendy.\n"
+"Ta komenda uaktualnia i przeładowuje działającą sesję WeeChat.  Nowy plik "
+"binarny WeeChat powinien zostać skompilowany lub zainstalowany za pomocą "
+"managera pakietów przed uruchomieniem tej komendy.\n"
 "\n"
 "Uwaga: połączenia SSL są przerywane podczas uaktualniania, ponieważ "
 "przeładowanie sesji SSL nie jest obecnie możliwe za pomocą GnuTLS. Po "
@@ -2848,7 +2852,6 @@ msgstr ""
 msgid "manage windows"
 msgstr "zarządza oknami"
 
-#, fuzzy
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
 "splitv [-window <number>] [<pct>] || resize [-window <number>] [+/-]<pct> || "
@@ -3007,9 +3010,8 @@ msgstr "właściwości, jakie mogą być przeczytane w buforze"
 msgid "numbers of windows"
 msgstr "liczba okien"
 
-#, fuzzy
 msgid "color names"
-msgstr "pobiera nazwę koloru nicka"
+msgstr "nazwy kolorów"
 
 msgid "palette colors"
 msgstr "paleta kolorów"
@@ -3116,12 +3118,12 @@ msgstr ""
 "UWAGA: ta opcja może powodować poważne błędy w wyświetlaniu, jeśli ich "
 "doświadczysz należy wyłączyć ta opcję."
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sWarning: proxy \"%s\" does not exist (you can add it with command /proxy)"
 msgstr ""
-"%sUwaga: pośrednik \"%s\" nie istnieje (możesz go stworzyć za pomocą "
-"komendy /proxy)"
+"%sUwaga: pośrednik \"%s\" nie istnieje (możesz go dodać za pomocą komendy /"
+"proxy)"
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "poziom debugowania dla wtyczki (\"core\" dla rdzenia WeeChat)"
@@ -3385,13 +3387,12 @@ msgstr ""
 "jeśli ustawione, komenda /quit musi być potwierdzona dodatkowym argumentem "
 "\"-yes\" (zobacz /help quit)"
 
-#, fuzzy
 msgid ""
 "if set, /upgrade command must be confirmed with extra argument \"-yes"
 "\" (see /help upgrade)"
 msgstr ""
-"jeśli ustawione, komenda /quit musi być potwierdzona dodatkowym argumentem "
-"\"-yes\" (zobacz /help quit)"
+"jeśli ustawione, komenda /upgrade musi być potwierdzona dodatkowym "
+"argumentem \"-yes\" (zobacz /help upgrade)"
 
 msgid "display special message when day changes"
 msgstr "wyświetlaj specjalną wiadomość, kiedy zmienia się dzień"
@@ -3652,6 +3653,9 @@ msgid ""
 "default delay (in milliseconds) to grab a key (using default key alt-k); "
 "this delay can be overridden in the /input command (see /help input)"
 msgstr ""
+"domyślne opóźnienie (w milisekundach) do przechwycenia klawiszy (za pomocą "
+"domyślnego skrótu alt-k); to opóźnienie może zostać nadpisane przez komendę /"
+"input (zobacz /help input)"
 
 msgid "enable mouse support"
 msgstr "włącza wsparcie dla myszy"
@@ -4517,7 +4521,7 @@ msgstr ""
 "DOSTĘPU do wszystkich zabezpieczonych danych!)"
 
 msgid "(press ctrl-C to exit WeeChat now)"
-msgstr ""
+msgstr "(naciśnij ctrl-C aby wyjść teraz z WeeChat)"
 
 msgid ""
 "To recover your secured data, you can use /secure decrypt (see /help secure)"
@@ -4985,13 +4989,12 @@ msgstr "%s%s: błąd podczas tworzenia aliasu \"%s\" => \"%s\""
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Utworzono alias \"%s\" => \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Aliases with \"%s\":"
-msgstr "Serwery z \"%s\":"
+msgstr "Aliasy z \"%s\":"
 
-#, fuzzy
 msgid "All aliases:"
-msgstr "Aliasy kolorów:"
+msgstr "Wszystkie aliasy:"
 
 #, c-format
 msgid "No alias found matching \"%s\""
@@ -5008,16 +5011,17 @@ msgstr "%sAlias \"%s\" nie został znaleziony"
 msgid "Alias \"%s\" removed"
 msgstr "Alias \"%s\" został usunięty"
 
-#, fuzzy
 msgid "list, add or remove command aliases"
-msgstr "wyświetla, dodaje lub usuwa serwery IRC"
+msgstr "wyświetla, dodaje lub usuwa aliasy komend"
 
 msgid ""
 "list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
 "<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...]"
 msgstr ""
+"list [<alias>] || add <alias> [<komenda>[;<komenda>...]] || addcompletion "
+"<dopełnienie> <alias> [<komenda>[;<komenda>...]] || del <alias> [<alias>...]"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "         list: list aliases (without argument, this list is displayed)\n"
 "          add: add an alias\n"
@@ -5051,32 +5055,27 @@ msgid ""
 "sajoin:\n"
 "    /alias addcompletion %%sajoin forcejoin /quote forcejoin"
 msgstr ""
-"completion: dopełnienie dla aliasu (opcjonalne, domyślnie dopełnienie "
-"wykonuje się z docelową komendą)\n"
-"            uwaga: można użyć %%komenda w celu użycia dopełnień dla "
-"istniejących komend\n"
-"     alias: nazwa aliasu (wildcard \"*\" jest dozwolony)\n"
+"         list: lista aliasów (ta lista wyświetlana jest jeśli nie zostanie podany argument)\n"
+"          add: dodaje alias\n"
+"addcompletion: dodaje alias z niestandardowym dopełnieniem\n"
+"          del: usuwa alias\n"
+"   completion: dopełnienie dla aliasu: domyślnie dopełnienie wykonuje się z docelową komendą\n"
+"            uwaga: można użyć %%komenda w celu użycia dopełnień dla istniejących komend\n"
+"     alias: nazwa aliasu\n"
 "   komenda: nazwa komendy (wiele komend można oddzielić za pomocą średnika)\n"
 "\n"
-"Bez podania argumentu komenda wyświetla listę wszystkich zdefiniowanych "
-"aliasów.\n"
-"\n"
-"Ważne: dla komend specjalne zmienne są zastępowane odpowiednimi "
-"wartościami:\n"
+"Ważne: dla komend specjalne zmienne są zastępowane odpowiednimi wartościami:\n"
 "        $n: argument 'n' (pomiędzy 1 i 9)\n"
 "       $-m: argumenty od 1 do 'm'\n"
 "       $n-: argumenty od 'n' do ostatniego\n"
 "      $n-m: argumenty od 'n' od 'm'\n"
 "        $*: wszystkie argumenty\n"
 "        $~: ostatni argument\n"
-"      $var: gdzie \"var\" to zmienna lokalna buforu (zobacz /buffer "
-"localvar)\n"
+"      $var: gdzie \"var\" to zmienna lokalna buforu (zobacz /buffer localvar)\n"
 "            przykłady: $nick, $channel, $server, $plugin, $name\n"
 "\n"
-"Do usunięcia aliasu służy komenda /unalias.\n"
-"\n"
 "Przykłady:\n"
-"  alias /split do poziomego podziału:\n"
+"  alias /split do poziomego podziału okna:\n"
 "    /alias split /window splith\n"
 "  alias /hello pisze \"hello\" na wszystkich kanałach poza #weechat:\n"
 "    /alias hello /allchan -exclude=#weechat msg * hello\n"
@@ -5765,13 +5764,13 @@ msgid ""
 msgstr ""
 "%s%s: rozłączono z %d %s (połączenie SSL nie wspierane z uaktualnianiem)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: unable to add temporary server \"%s\" (check if there is already a "
 "server with this name)"
 msgstr ""
-"%s%s: nie można utworzyć tymczasowego serwera \"%s\" (sprawdź czy serwer z "
-"ta nazwą już nie istnieje)"
+"%s%s: nie można dodać tymczasowego serwera \"%s\" (sprawdź czy serwer z ta "
+"nazwą już nie istnieje)"
 
 #, c-format
 msgid ""
@@ -5817,26 +5816,26 @@ msgstr "%s%s: już połączony z serwerem \"%s\"!"
 msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr "%s%s: obecnie łączę się z serwerem \"%s\"!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: server %s%s%s added (temporary server, NOT SAVED!)"
-msgstr "%s: utworzono serwer %s%s%s (tymczasowy serwer, NIE ZAPISANO!)"
+msgstr "%s: dodano serwer %s%s%s (tymczasowy serwer, NIE ZAPISANO!)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: unable to add temporary server \"%s\" because the addition of "
 "temporary servers with command /connect is currently disabled"
 msgstr ""
-"%s%s: nie można utworzyć tymczasowego serwera \"%s\" ponieważ możliwość "
-"tworzenia tymczasowych serwerów za pomocą komendy /connect jest obecnie "
+"%s%s: nie można dodać tymczasowego serwera \"%s\" ponieważ możliwość "
+"dodawania tymczasowych serwerów za pomocą komendy /connect jest obecnie "
 "wyłączona"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: if you want to add a standard server, use the command \"/server add"
 "\" (see /help server); if you really want to add a temporary server (NOT "
 "SAVED), turn on the option irc.look.temporary_servers"
 msgstr ""
-"%s%s: jeśli chcesz utworzyć standardowy serwer, użyj komendy \"/server add"
+"%s%s: jeśli chcesz dodać standardowy serwer, użyj komendy \"/server add"
 "\" (zobacz /help server); jeśli naprawdę chcesz utworzyć serwer tymczasowy "
 "(NIE ZAPISANY), włącz opcję irc.look.temporary_servers"
 
@@ -5978,9 +5977,9 @@ msgstr "%s: powiadomienie usunięte dla %s%s%s"
 msgid "%s%s: notification not found"
 msgstr "%s%s: nie znaleziono powiadomienia"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: \"%s\" command can not be executed with a channel name (\"%s\")"
-msgstr "%s%s: komenda \"%s\" może być tylko wykonana w buforze kanału"
+msgstr "%s%s: komenda \"%s\" może być tylko wykonana z nazwą kanału (\"%s\")"
 
 #, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
@@ -6025,17 +6024,17 @@ msgstr "Serwery z \"%s\":"
 msgid "No server found with \"%s\""
 msgstr "Nie znaleziono serwera z  \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: server \"%s\" already exists, can't add it!"
-msgstr "%s%s: serwer \"%s\" już istnieje, nie mogę go utworzyć!"
+msgstr "%s%s: serwer \"%s\" już istnieje, nie mogę go dodać!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to add server"
-msgstr "%s%s: nie można utworzyć serwera"
+msgstr "%s%s: nie można dodać serwera"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: server %s%s%s added"
-msgstr "%s: utworzono serwer %s%s%s"
+msgstr "%s: dodano serwer %s%s%s"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found for \"%s\" command"
@@ -6240,7 +6239,6 @@ msgstr ""
 "[<serwer> [<serwer>...] [-<opcja>[=<wartość>]] [-no<opcja>] [-nojoin] [-"
 "switch] || -all|-auto|-open [-nojoin] [-switch]"
 
-#, fuzzy
 msgid ""
 "    server: server name, which can be:\n"
 "            - internal server name (added by /server add, recommended "
@@ -7037,7 +7035,6 @@ msgstr ""
 "<opcja>[=<wartość>]] [-no<opcja>]|| copy|rename <serwer> <nowa_nazwa> || "
 "reorder <serwer> [<serwer>...] || del|keep <serwer>] || deloutq|jump|raw"
 
-#, fuzzy
 msgid ""
 "    list: list servers (without argument, this list is displayed)\n"
 "listfull: list servers with detailed info for each server\n"
@@ -7388,7 +7385,7 @@ msgstr ""
 "wyśle wszystkie zmiany stanu nieobecności na kanały, jest to często uznawane "
 "za spam; przez to możesz zostać zbanowany na kanale!"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: warning: proxy \"%s\" does not exist (you can add it with command /"
 "proxy)"
@@ -7582,13 +7579,12 @@ msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr ""
 "opóźnienie (w sekundach) przed próbą ponownego połączenia się z serwerem"
 
-#, fuzzy
 msgid ""
 "nicknames to use on server (separated by comma) (note: content is evaluated, "
 "see /help eval)"
 msgstr ""
-"nazwa użytkownika do użycia na serwerze (uwaga: zawartość jest przetwarzana, "
-"zobacz /help eval)"
+"nazwy użytkownika do użycia na serwerze (oddzielone przecinkiem) (uwaga: "
+"zawartość jest przetwarzana, zobacz /help eval)"
 
 msgid "user name to use on server (note: content is evaluated, see /help eval)"
 msgstr ""
@@ -7719,9 +7715,9 @@ msgstr ""
 "lista powiadomień dla tego serwera (nie powinieneś zmieniać tej opcji tylko "
 "użyć w zamian komendy /notify)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error adding server \"%s\""
-msgstr "%s%s: błąd podczas tworzenia serwera \"%s\""
+msgstr "%s%s: błąd podczas dodawania serwera \"%s\""
 
 #, c-format
 msgid "%s%s: error creating server option \"%s\""
@@ -8133,7 +8129,6 @@ msgstr "włącza mądre filtrowanie dla wiadomości \"nick\" (zmiana nicka)"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "włącza inteligentne filtrowanie dla wiadomości \"part\" oraz \"quit\""
 
-#, fuzzy
 msgid "enable automatic addition of temporary servers with command /connect"
 msgstr "włącza tworzenie tymczasowych serwerów za pomocą komendy /connect"
 
@@ -8206,10 +8201,10 @@ msgstr "kolor tekstu \"Notice\" w podświetleniach"
 msgid "color for reason in part/quit messages"
 msgstr "kolor tekstu powodu opuszczenia kanału/wyjścia z IRC"
 
-#, fuzzy
 msgid ""
 "color for current channel topic (when joining a channel or using /topic)"
-msgstr "kolor nowego tematu kanału (kiedy temat został zmieniony)"
+msgstr ""
+"kolor obecnego tematu kanału (podczas wejścia na kanał lub użycia /topic)"
 
 msgid "color for new channel topic (when topic is changed)"
 msgstr "kolor nowego tematu kanału (kiedy temat został zmieniony)"
@@ -8411,7 +8406,6 @@ msgid "\"message\": IRC message, \"server\": server name (optional)"
 msgstr "\"message\": wiadomość IRC, \"server\": nazwa serwera (opcjonalne)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
-#, fuzzy
 msgid ""
 "\"tags\": tags, \"message_without_tags\": message without the tags, \"nick"
 "\": nick, \"host\": host, \"command\": command, \"channel\": channel, "
@@ -8421,7 +8415,9 @@ msgid ""
 msgstr ""
 "\"tags\": tagi, \"message_without_tags\": wiadomość bez tagów, \"nick\": "
 "nick, \"host\": host, \"command\": komenda, \"channel\": kanał, \"arguments"
-"\": argumenty (razem z kanałem)"
+"\": argumenty (razem z kanałem), \"text\": tekst (na przykład wiadomość "
+"użytkownika), \"pos_text\": indeks wiadomości tekstowej (\"-1\" jeśli "
+"wiadomość nie została znaleziona)"
 
 msgid "split an IRC message (to fit in 512 bytes)"
 msgstr "dziel wiadomość IRC (aby zmieściła się w 512 bajtach)"
@@ -8737,9 +8733,9 @@ msgstr "%sKanał %s%s%s utworzono %s"
 msgid "%sNo topic set for channel %s%s"
 msgstr "%sBrak tematu dla kanału %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic for %s%s%s is \"%s%s%s\""
-msgstr "%sTemat kanału %s%s%s to \"%s%s\""
+msgstr "%sTemat kanału %s%s%s to \"%s%s%s\""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
@@ -9446,7 +9442,6 @@ msgstr ""
 msgid "text to write after nick in prefix of message, example: \">\""
 msgstr "tekst wyświetlany za nickiem w przedrostku wiadomości, przykład: \">\""
 
-#, fuzzy
 msgid ""
 "path for WeeChat log files; \"%h\" at beginning of string is replaced by "
 "WeeChat home (\"~/.weechat\" by default); date specifiers are permitted (see "
@@ -9454,7 +9449,8 @@ msgid ""
 msgstr ""
 "ścieżka do plików z logami WeeChat; \"%h\" na początku ciągu zostanie "
 "zastąpione przez katalog domowy WeeChat (domyślnie \"~/.weechat\"); "
-"określenia dla daty są dozwolone (zobacz man  strftime)"
+"określenia dla daty są dozwolone (zobacz man  strftime) (uwaga: zawartość "
+"jest przetwarzana, zobacz /help eval)"
 
 msgid ""
 "replacement char for special chars in filename built with mask (like "
@@ -10089,7 +10085,7 @@ msgstr "%s%s: źródło \"%s\" niedozwolone dla gniazda webowego"
 
 #, c-format
 msgid "%s: websocket client %s%s%s has real IP address \"%s\""
-msgstr ""
+msgstr "%s: klient websocket %s%s%s posiada adres IP \"%s\""
 
 #, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"
@@ -11072,15 +11068,14 @@ msgstr ""
 "lokalnie zapisany czas wygaśnięcia, w minutach (-1 = nigdy nie wygasa, 0 = "
 "zawsze wygasa)"
 
-#, fuzzy
 msgid ""
 "local cache directory for scripts; \"%h\" at beginning of string is replaced "
 "by WeeChat home (\"~/.weechat\" by default) (note: content is evaluated, "
 "see /help eval)"
 msgstr ""
-"ścieżka do plików z logami WeeChat; \"%h\" na początku ciągu zostanie "
-"zastąpione przez katalog domowy WeeChat (domyślnie \"~/.weechat\"); "
-"określenia dla daty są dozwolone (zobacz man  strftime)"
+"lokalny katalog z cache skryptów; \"%h\" na początku ciągu zostanie "
+"zastąpione przez katalog domowy WeeChat (domyślnie \"~/.weechat\")  (uwaga: "
+"zawartość jest przetwarzana, zobacz /help eval)"
 
 msgid ""
 "scripts to \"hold\": comma-separated list of scripts which will never been "
@@ -12007,25 +12002,24 @@ msgstr "automatycznie wznów przesył po utracie połączenia"
 msgid "convert spaces to underscores when sending and receiving files"
 msgstr "zamień spacje na podkreślenia podczas wysyłania i odbierania plików"
 
-#, fuzzy
 msgid ""
 "path for writing incoming files: \"%h\" at beginning of string is replaced "
 "by WeeChat home (\"~/.weechat\" by default) (note: content is evaluated, "
 "see /help eval)"
 msgstr ""
-"ścieżka do plików z logami WeeChat; \"%h\" na początku ciągu zostanie "
-"zastąpione przez katalog domowy WeeChat (domyślnie \"~/.weechat\"); "
-"określenia dla daty są dozwolone (zobacz man  strftime)"
+"ścieżka, do której zapisywane będą pliki przychodzące; \"%h\" na początku "
+"ciągu zostanie zastąpione przez katalog domowy WeeChat (domyślnie \"~/."
+"weechat\")  (uwaga: zawartość jest przetwarzana, zobacz /help eval)"
 
-#, fuzzy
 msgid ""
 "path for reading files when sending (when no path is specified by user): \"%h"
 "\" at beginning of string is replaced by WeeChat home (\"~/.weechat\" by "
 "default) (note: content is evaluated, see /help eval)"
 msgstr ""
-"ścieżka do plików z logami WeeChat; \"%h\" na początku ciągu zostanie "
-"zastąpione przez katalog domowy WeeChat (domyślnie \"~/.weechat\"); "
-"określenia dla daty są dozwolone (zobacz man  strftime)"
+"ścieżka do wysyłanych plików (jeśli nie zostanie ona podana przez "
+"użykownika); \"%h\" na początku ciągu zostanie zastąpione przez katalog "
+"domowy WeeChat (domyślnie \"~/.weechat\")  (uwaga: zawartość jest "
+"przetwarzana, zobacz /help eval)"
 
 msgid "use remote nick as prefix in local filename when receiving a file"
 msgstr "użyj nicku nadawcy jako przedrostka w nazwie odebranego pliku"
