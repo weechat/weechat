@@ -3238,7 +3238,14 @@ ${tg_highlight} || ${tg_msg_pv}
 | channel              | string | IRC チャンネル
 | arguments            | string | コマンドの引数 ('channel' の値を含みます)
 | text                 | string | テキスト (例えばユーザメッセージ)
-| pos_text             | string | メッセージ内のテキストの位置 (テキストが見つからない場合 "-1")
+// TRANSLATION MISSING
+| pos_command          | string | The index of 'command' in message ("-1" if 'command' was not found)
+// TRANSLATION MISSING
+| pos_arguments        | string | The index of 'arguments' in message ("-1" if 'arguments' was not found)
+// TRANSLATION MISSING
+| pos_channel          | string | The index of 'channel' in message ("-1" if 'channel' was not found)
+// TRANSLATION MISSING
+| pos_text             | string | The index of 'text' in message ("-1" if 'text' was not found)
 |===
 
 データがポインタの場合、hdata の属性を読むために変数 `tg_signal_data`

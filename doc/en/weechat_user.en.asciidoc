@@ -3239,7 +3239,10 @@ is added in hashtable:
 | channel              | string | IRC channel
 | arguments            | string | Arguments of command (includes value of 'channel')
 | text                 | string | Text (for example user message)
-| pos_text             | string | The index of text in message ("-1" if text was not found)
+| pos_command          | string | The index of 'command' in message ("-1" if 'command' was not found)
+| pos_arguments        | string | The index of 'arguments' in message ("-1" if 'arguments' was not found)
+| pos_channel          | string | The index of 'channel' in message ("-1" if 'channel' was not found)
+| pos_text             | string | The index of 'text' in message ("-1" if 'text' was not found)
 |===
 
 When the data is a pointer, the variable `tg_signal_data` can be used like this

@@ -135,6 +135,7 @@ struct t_config_option *irc_config_network_alternate_nick;
 struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 struct t_config_option *irc_config_network_autoreconnect_delay_max;
 struct t_config_option *irc_config_network_ban_mask_default;
+struct t_config_option *irc_config_network_channel_encode;
 struct t_config_option *irc_config_network_colors_receive;
 struct t_config_option *irc_config_network_colors_send;
 struct t_config_option *irc_config_network_lag_check;
@@ -2971,6 +2972,15 @@ irc_config_init ()
             "default mask is used only if WeeChat knows the host for the nick"),
         NULL, 0, 0, "*!$ident@$host", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
+    irc_config_network_channel_encode = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "channel_encode", "boolean",
+        N_("decode/encode channel name inside messages using charset options "
+           "(like it was done in WeeChat <= 1.2); it is recommended to keep "
+           "that off if you use only UTF-8 in channel names; you can enable "
+           "this option if you are using an exotic charset like ISO in "
+           "channel names"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_colors_receive = weechat_config_new_option (
         irc_config_file, ptr_section,
         "colors_receive", "boolean",

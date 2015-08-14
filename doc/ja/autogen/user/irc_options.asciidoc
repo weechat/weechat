@@ -392,6 +392,11 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"*!$ident@$host"`)
 
+* [[option_irc.network.channel_encode]] *irc.network.channel_encode*
+** 説明: `decode/encode channel name inside messages using charset options (like it was done in WeeChat <= 1.2); it is recommended to keep that off if you use only UTF-8 in channel names; you can enable this option if you are using an exotic charset like ISO in channel names`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
 * [[option_irc.network.colors_receive]] *irc.network.colors_receive*
 ** 説明: `オフの場合、到着メッセージに含まれる色コードを無視`
 ** タイプ: ブール

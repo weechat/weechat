@@ -844,11 +844,22 @@ irc_info_init ()
         N_("parse an IRC message"),
         N_("\"message\": IRC message, \"server\": server name (optional)"),
         /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
-        N_("\"tags\": tags, \"message_without_tags\": message without the "
-           "tags, \"nick\": nick, \"host\": host, \"command\": command, "
-           "\"channel\": channel, \"arguments\": arguments (includes channel), "
-           "\"text\": text (for example user message), \"pos_text\": index of "
-           "text in message (\"-1\" if no text found)"),
+        N_("\"tags\": tags, "
+           "\"message_without_tags\": message without the tags, "
+           "\"nick\": nick, "
+           "\"host\": host, "
+           "\"command\": command, "
+           "\"channel\": channel, "
+           "\"arguments\": arguments (includes channel), "
+           "\"text\": text (for example user message), "
+           "\"pos_command\": index of \"command\" message (\"-1\" if "
+           "\"command\" was not found), "
+           "\"pos_arguments\": index of \"arguments\" message (\"-1\" if "
+           "\"arguments\" was not found), "
+           "\"pos_channel\": index of \"channel\" message (\"-1\" if "
+           "\"channel\" was not found), "
+           "\"pos_text\": index of \"text\" message (\"-1\" if "
+           "\"text\" was not found)"),
         &irc_info_info_hashtable_irc_message_parse_cb, NULL);
     weechat_hook_info_hashtable (
         "irc_message_split",

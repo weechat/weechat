@@ -2059,7 +2059,8 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
     const char *ptr_msg, *ptr_chan_nick;
     char *new_msg, *pos, *tags_to_send, *msg_encoded;
     char str_modifier[128], modifier_data[256];
-    int rc, queue_msg, add_to_queue, first_message, anti_flood, pos_text;
+    int rc, queue_msg, add_to_queue, first_message, anti_flood;
+    int pos_channel, pos_text, pos_encode;
     time_t time_now;
     struct t_irc_redirect *ptr_redirect;
 
@@ -2088,8 +2089,12 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
 
         msg_encoded = NULL;
         irc_message_parse (server, ptr_msg, NULL, NULL, NULL, NULL, NULL, NULL,
-                           NULL, NULL, &pos_text);
-        if (pos_text >= 0)
+                           NULL, NULL, NULL, NULL, &pos_channel, &pos_text);
+        if (weechat_config_boolean (irc_config_network_channel_encode))
+            pos_encode = (pos_channel >= 0) ? pos_channel : pos_text;
+        else
+            pos_encode = pos_text;
+        if (pos_encode >= 0)
         {
             ptr_chan_nick = (channel) ? channel : nick;
             if (ptr_chan_nick)
@@ -2107,7 +2112,7 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                           weechat_plugin->name,
                           server->name);
             }
-            msg_encoded = irc_message_convert_charset (ptr_msg, pos_text,
+            msg_encoded = irc_message_convert_charset (ptr_msg, pos_encode,
                                                        "charset_encode",
                                                        modifier_data);
         }
@@ -2283,7 +2288,8 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
     {
         /* run modifier "irc_out1_xxx" (like "irc_out_xxx", but before split) */
         irc_message_parse (server, items[i], NULL, NULL,
-                           &nick, NULL, &command, &channel, NULL, NULL, NULL);
+                           &nick, NULL, &command, &channel, NULL, NULL, NULL,
+                           NULL, NULL, NULL);
         snprintf (str_modifier, sizeof (str_modifier),
                   "irc_out1_%s",
                   (command) ? command : "unknown");
@@ -2520,7 +2526,7 @@ irc_server_msgq_flush ()
     char *tags, *nick, *host, *command, *channel, *arguments;
     char *msg_decoded, *msg_decoded_without_color;
     char str_modifier[128], modifier_data[256];
-    int pos_text;
+    int pos_channel, pos_text, pos_decode;
 
     while (irc_recv_msgq)
     {
@@ -2542,7 +2548,8 @@ irc_server_msgq_flush ()
 
                     irc_message_parse (irc_recv_msgq->server,
                                        ptr_data, NULL, NULL, NULL, NULL,
-                                       &command, NULL, NULL, NULL, NULL);
+                                       &command, NULL, NULL, NULL, NULL, NULL,
+                                       NULL, NULL);
                     snprintf (str_modifier, sizeof (str_modifier),
                               "irc_in_%s",
                               (command) ? command : "unknown");
@@ -2583,10 +2590,15 @@ irc_server_msgq_flush ()
                             irc_message_parse (irc_recv_msgq->server, ptr_msg,
                                                &tags, NULL, &nick, &host,
                                                &command, &channel, &arguments,
-                                               NULL, &pos_text);
+                                               NULL, NULL, NULL,
+                                               &pos_channel, &pos_text);
 
                             msg_decoded = NULL;
-                            if (pos_text >= 0)
+                            if (weechat_config_boolean (irc_config_network_channel_encode))
+                                pos_decode = (pos_channel >= 0) ? pos_channel : pos_text;
+                            else
+                                pos_decode = pos_text;
+                            if (pos_decode >= 0)
                             {
                                 /* convert charset for message */
                                 if (channel
@@ -2620,7 +2632,7 @@ irc_server_msgq_flush ()
                                     }
                                 }
                                 msg_decoded = irc_message_convert_charset (
-                                    ptr_msg, pos_text,
+                                    ptr_msg, pos_decode,
                                     "charset_decode", modifier_data);
                             }
 

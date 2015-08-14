@@ -176,6 +176,7 @@ extern struct t_config_option *irc_config_network_alternate_nick;
 extern struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 extern struct t_config_option *irc_config_network_autoreconnect_delay_max;
 extern struct t_config_option *irc_config_network_ban_mask_default;
+extern struct t_config_option *irc_config_network_channel_encode;
 extern struct t_config_option *irc_config_network_colors_receive;
 extern struct t_config_option *irc_config_network_colors_send;
 extern struct t_config_option *irc_config_network_lag_check;

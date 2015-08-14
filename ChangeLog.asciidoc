@@ -34,6 +34,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add function string_eval_path_home()
 * alias: add options "add", "addcompletion" and "del" in command /alias, remove
   command /unalias (issue #458)
+* irc: add option irc.network.channel_encode (issue #218, issue #482)
 * irc: add option irc.color.topic_current (issue #475)
 * irc: evaluate content of server option "nicks"
 * logger: evaluate content of option logger.file.path (issue #388)

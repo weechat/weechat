@@ -906,44 +906,69 @@ _バージョン 0.3.4 の新機能_
 (例の値は以下のメッセージから作られました:
 `@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!`):
 
+// TRANSLATION MISSING
 [width="100%",cols="1,^2,10,8",options="header"]
 |===
 | Key | WeeChat version | Description | Example
 
+// TRANSLATION MISSING
 | tags | ≥ 0.4.0 |
   The tags in message (can be empty) |
   `time=2015-06-27T16:40:35.000Z`
 
+// TRANSLATION MISSING
 | message_without_tags | ≥ 0.4.0 |
   The message without the tags (the same as message if there are no tags) |
   `:nick!user@host PRIVMSG #weechat :hello!`
 
+// TRANSLATION MISSING
 | nick | ≥ 0.3.4 |
   The origin nick |
   `nick`
 
+// TRANSLATION MISSING
 | host | ≥ 0.3.4 |
   The origin host (includes the nick) |
   `nick!user@host`
 
+// TRANSLATION MISSING
 | command | ≥ 0.3.4 |
   The command ('PRIVMSG', 'NOTICE', ...) |
   `PRIVMSG`
 
+// TRANSLATION MISSING
 | channel | ≥ 0.3.4 |
   The target channel |
   `#weechat`
 
+// TRANSLATION MISSING
 | arguments | ≥ 0.3.4 |
   The command arguments (includes the channel) |
   `#weechat :hello!`
 
+// TRANSLATION MISSING
 | text | ≥ 1.3 |
   The text (for example user message) |
   `hello!`
 
+// TRANSLATION MISSING
+| pos_command | ≥ 1.3 |
+  The index of 'command' in message ("-1" if 'command' was not found) |
+  `47`
+
+// TRANSLATION MISSING
+| pos_arguments | ≥ 1.3 |
+  The index of 'arguments' in message ("-1" if 'arguments' was not found) |
+  `55`
+
+// TRANSLATION MISSING
+| pos_channel | ≥ 1.3 |
+  The index of 'channel' in message ("-1" if 'channel' was not found) |
+  `55`
+
+// TRANSLATION MISSING
 | pos_text | ≥ 1.3 |
-  The index of text in message ("-1" if text was not found) |
+  The index of 'text' in message ("-1" if 'text' was not found) |
   `65`
 |===
 
@@ -962,6 +987,9 @@ dict = weechat.info_get_hashtable(
 #     "channel": "#weechat",
 #     "arguments": "#weechat :hello!",
 #     "text": "hello!",
+#     "pos_command": "47",
+#     "pos_arguments": "55",
+#     "pos_channel": "55",
 #     "pos_text": "65",
 # }
 ----

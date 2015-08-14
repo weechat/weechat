@@ -392,6 +392,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"*!$ident@$host"`)
 
+* [[option_irc.network.channel_encode]] *irc.network.channel_encode*
+** Beschreibung: `decode/encode channel name inside messages using charset options (like it was done in WeeChat <= 1.2); it is recommended to keep that off if you use only UTF-8 in channel names; you can enable this option if you are using an exotic charset like ISO in channel names`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
 * [[option_irc.network.colors_receive]] *irc.network.colors_receive*
 ** Beschreibung: `wenn deaktiviert, werden Farben-Codes von eingehenden Nachrichten ignoriert`
 ** Typ: boolesch

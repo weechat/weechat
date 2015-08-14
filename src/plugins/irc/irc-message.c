@@ -39,6 +39,9 @@
  *   - channel (string)
  *   - arguments (string)
  *   - text (string)
+ *   - pos_command (integer: command index in message)
+ *   - pos_arguments (integer: arguments index in message)
+ *   - pos_channel (integer: channel index in message)
  *   - pos_text (integer: text index in message)
  *
  * Example:
@@ -53,6 +56,9 @@
  *            channel: "#weechat"
  *          arguments: "#weechat :hello!"
  *               text: "hello!"
+ *        pos_command: 47
+ *      pos_arguments: 55
+ *        pos_channel: 55
  *           pos_text: 65
  */
 
@@ -60,7 +66,9 @@ void
 irc_message_parse (struct t_irc_server *server, const char *message,
                    char **tags, char **message_without_tags, char **nick,
                    char **host, char **command, char **channel,
-                   char **arguments, char **text, int *pos_text)
+                   char **arguments, char **text,
+                   int *pos_command, int *pos_arguments, int *pos_channel,
+                   int *pos_text)
 {
     const char *ptr_message, *pos, *pos2, *pos3, *pos4;
 
@@ -80,6 +88,12 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         *arguments = NULL;
     if (text)
         *text = NULL;
+    if (pos_command)
+        *pos_command = -1;
+    if (pos_arguments)
+        *pos_arguments = -1;
+    if (pos_channel)
+        *pos_channel = -1;
     if (pos_text)
         *pos_text = -1;
 
@@ -166,6 +180,8 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         {
             if (command)
                 *command = weechat_strndup (ptr_message, pos - ptr_message);
+            if (pos_command)
+                *pos_command = ptr_message - message;
             pos++;
             while (pos[0] == ' ')
             {
@@ -174,6 +190,8 @@ irc_message_parse (struct t_irc_server *server, const char *message,
             /* now we have: pos --> "#weechat :hello!" */
             if (arguments)
                 *arguments = strdup (pos);
+            if (pos_arguments)
+                *pos_arguments = pos - message;
             if ((pos[0] == ':')
                 && ((strncmp (ptr_message, "JOIN ", 5) == 0)
                     || (strncmp (ptr_message, "PART ", 5) == 0)))
@@ -199,6 +217,8 @@ irc_message_parse (struct t_irc_server *server, const char *message,
                         else
                             *channel = strdup (pos);
                     }
+                    if (pos_channel)
+                        *pos_channel = pos - message;
                     if (pos2)
                     {
                         while (pos2[0] == ' ')
@@ -241,6 +261,8 @@ irc_message_parse (struct t_irc_server *server, const char *message,
                                 else
                                     *channel = strdup (pos2);
                             }
+                            if (pos_channel)
+                                *pos_channel = pos2 - message;
                             if (pos4)
                             {
                                 while (pos4[0] == ' ')
@@ -255,9 +277,13 @@ irc_message_parse (struct t_irc_server *server, const char *message,
                                     *pos_text = pos4 - message;
                             }
                         }
-                        else if (channel && !*channel)
+                        else if ((channel && !*channel)
+                                 || (pos_channel && (*pos_channel < 0)))
                         {
-                            *channel = weechat_strndup (pos, pos3 - pos);
+                            if (channel)
+                                *channel = weechat_strndup (pos, pos3 - pos);
+                            if (pos_channel)
+                                *pos_channel = pos - message;
                         }
                     }
                 }
@@ -267,6 +293,8 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         {
             if (command)
                 *command = strdup (ptr_message);
+            if (pos_command)
+                *pos_command = ptr_message - message;
         }
     }
 }
@@ -281,6 +309,9 @@ irc_message_parse (struct t_irc_server *server, const char *message,
  *   - channel
  *   - arguments
  *   - text
+ *   - pos_command
+ *   - pos_arguments
+ *   - pos_channel
  *   - pos_text
  *
  * Note: hashtable must be freed after use.
@@ -291,14 +322,14 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
                                 const char *message)
 {
     char *tags,*message_without_tags, *nick, *host, *command, *channel;
-    char *arguments, *text, str_pos_text[32];
+    char *arguments, *text, str_pos[32];
     char empty_str[1] = { '\0' };
-    int pos_text;
+    int pos_command, pos_arguments, pos_channel, pos_text;
     struct t_hashtable *hashtable;
 
     irc_message_parse (server, message, &tags, &message_without_tags, &nick,
                        &host, &command, &channel, &arguments, &text,
-                       &pos_text);
+                       &pos_command, &pos_arguments, &pos_channel, &pos_text);
 
     hashtable = weechat_hashtable_new (32,
                                        WEECHAT_HASHTABLE_STRING,
@@ -324,8 +355,14 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
                            (arguments) ? arguments : empty_str);
     weechat_hashtable_set (hashtable, "text",
                            (text) ? text : empty_str);
-    snprintf (str_pos_text, sizeof (str_pos_text), "%d", pos_text);
-    weechat_hashtable_set (hashtable, "pos_text", str_pos_text);
+    snprintf (str_pos, sizeof (str_pos), "%d", pos_command);
+    weechat_hashtable_set (hashtable, "pos_command", str_pos);
+    snprintf (str_pos, sizeof (str_pos), "%d", pos_arguments);
+    weechat_hashtable_set (hashtable, "pos_arguments", str_pos);
+    snprintf (str_pos, sizeof (str_pos), "%d", pos_channel);
+    weechat_hashtable_set (hashtable, "pos_channel", str_pos);
+    snprintf (str_pos, sizeof (str_pos), "%d", pos_text);
+    weechat_hashtable_set (hashtable, "pos_text", str_pos);
 
     if (tags)
         free (tags);

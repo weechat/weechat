@@ -3264,7 +3264,14 @@ są dodawane do tablicy hashy:
 | channel              | ciąg | Kanał IRC
 | arguments            | ciąg | Argumenty komendy (razem z wartością 'channel')
 | text                 | ciąg | Tekst (na przykład wiadomość użytkownika)
-| pos_text             | ciąg | Indeks tekstu w wiadomości ("-1" jeśli tekst nie został znaleziony)
+// TRANSLATION MISSING
+| pos_command          | ciąg | The index of 'command' in message ("-1" if 'command' was not found)
+// TRANSLATION MISSING
+| pos_arguments        | ciąg | The index of 'arguments' in message ("-1" if 'arguments' was not found)
+// TRANSLATION MISSING
+| pos_channel          | ciąg | The index of 'channel' in message ("-1" if 'channel' was not found)
+// TRANSLATION MISSING
+| pos_text             | ciąg | The index of 'text' in message ("-1" if 'text' was not found)
 |===
 
 Kiedy dane są wskaźnikiem, zmienna `tg_signal_data` może zostać użyta do

@@ -13373,6 +13373,9 @@ if (hashtable_in)
      *   "channel"             : "#weechat"
      *   "arguments"           : "#weechat :hello!"
      *   "text"                : "hello!"
+     *   "pos_command"         : "47"
+     *   "pos_arguments"       : "55"
+     *   "pos_channel"         : "55"
      *   "pos_text"            : "65"
      */
     weechat_hashtable_free (hashtable_in);

@@ -3323,7 +3323,14 @@ und die Daten in einer Hashtable gesichert:
 | channel              | string | IRC Channel
 | arguments            | string | Argumente des Befehls (Beinhaltet Wert von 'channel')
 | text                 | string | Text (zum Beipiel eine Nachricht eines Users)
-| pos_text             | string | Der Index des Textes in einer Nachricht ("-1" falls Text nicht gefunden wurde)
+// TRANSLATION MISSING
+| pos_command          | string | The index of 'command' in message ("-1" if 'command' was not found)
+// TRANSLATION MISSING
+| pos_arguments        | string | The index of 'arguments' in message ("-1" if 'arguments' was not found)
+// TRANSLATION MISSING
+| pos_channel          | string | The index of 'channel' in message ("-1" if 'channel' was not found)
+// TRANSLATION MISSING
+| pos_text             | string | The index of 'text' in message ("-1" if 'text' was not found)
 |===
 
 Sofern es sich bei den Daten um einen Pointer handelt, kann die Variable `tg_signal_data`
