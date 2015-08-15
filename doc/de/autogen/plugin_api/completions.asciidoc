@@ -112,7 +112,7 @@
 
 | weechat | buffers_plugins_names | Liste der Buffer (inklusive der Erweiterungen)
 
-| weechat | colors | color names
+| weechat | colors | Farbnamen
 
 | weechat | commands | Befehle (WeeChat und Erweiterungen)
 
