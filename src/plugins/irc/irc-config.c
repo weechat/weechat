@@ -2975,11 +2975,10 @@ irc_config_init ()
     irc_config_network_channel_encode = weechat_config_new_option (
         irc_config_file, ptr_section,
         "channel_encode", "boolean",
-        N_("decode/encode channel name inside messages using charset options "
-           "(like it was done in WeeChat <= 1.2); it is recommended to keep "
-           "that off if you use only UTF-8 in channel names; you can enable "
-           "this option if you are using an exotic charset like ISO in "
-           "channel names"),
+        N_("decode/encode channel name inside messages using charset options; "
+           "it is recommended to keep that off if you use only UTF-8 in "
+           "channel names; you can enable this option if you are using an "
+           "exotic charset like ISO in channel names"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_colors_receive = weechat_config_new_option (
         irc_config_file, ptr_section,
