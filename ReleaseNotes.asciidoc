@@ -19,6 +19,24 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 1.3 (under dev)
 
+=== IRC channels encoding
+
+If you are using exotic charsets in your channel names (anything different from
+UTF-8, like ISO charset), you should turn on a new option:
+
+----
+/set irc.network.channel_encode on
+----
+
+This will force WeeChat to decode/encode the channel name
+(like WeeChat 1.2 or older did).
+
+See these issues for more information: issue #482, issue #218.
+
+[NOTE]
+It is *highly recommended* to use only UTF-8 in WeeChat (wherever you can),
+because everything is stored as UTF-8 internally.
+
 === Alias command
 
 The command `/alias` has been updated to list, add and remove aliases.
