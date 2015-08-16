@@ -20,7 +20,7 @@ before_script:
     - sudo pip install msgcheck pylint
 
 script:
-    - ./scripts/build.sh
+    - ./build-scripts/build.sh
     - msgcheck po/*.po
     - pylint doc/docgen.py
 
