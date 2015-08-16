@@ -32,7 +32,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror-implicit-function-de
 
 # version
 set(VERSION_MAJOR "1")
-set(VERSION_MINOR "3")
+set(VERSION_MINOR "4-dev")
 set(VERSION_PATCH "")
 if(VERSION_PATCH STREQUAL "")
   set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
