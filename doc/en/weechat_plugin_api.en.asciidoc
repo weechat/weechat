@@ -1943,6 +1943,10 @@ Arguments:
     parentheses are used, result is a boolean ("0" or "1")
 ** 'prefix': prefix before variables to replace (default: "${")
 ** 'suffix': suffix after variables to replace (default: "}")
+** 'extra': default behavior is to just replace extra variables ('extra_vars'),
+   other behavior can be selected:
+*** 'eval': extra variables ('extra_vars') are evaluated themselves before
+    replacing
 ** 'regex': a regex used to replace text in 'expr' (which is then not
    evaluated)
 ** 'regex_replace': the replacement text to use with 'regex', to replace
