@@ -378,7 +378,7 @@ gui_key_flush (int paste)
                 ptr_char = key_str;
                 while (ptr_char && ptr_char[0])
                 {
-                    (void) utf8_is_valid (ptr_char, &ptr_error);
+                    (void) utf8_is_valid (ptr_char, -1, &ptr_error);
                     if (!ptr_error)
                         break;
                     next_char = (char *)utf8_next_char (ptr_error);

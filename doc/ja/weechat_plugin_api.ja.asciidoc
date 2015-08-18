@@ -2152,18 +2152,23 @@ if (weechat_utf8_has_8bits (string))
 
 ==== utf8_is_valid
 
+_バージョン 1.4 で更新。_
+
 文字列が妥当な UTF-8 表現か確認。
 
 プロトタイプ:
 
 [source,C]
 ----
-int weechat_utf8_is_valid (const char *string, char **error);
+int weechat_utf8_is_valid (const char *string, int length, char **error);
 ----
 
 引数:
 
 * 'string': 文字列
+// TRANSLATION MISSING
+* 'length': max number of UTF-8 chars to check; if ≤ 0, the whole string is
+  checked _(WeeChat ≥ 1.4)_
 * 'error': NULL でない場合は '*error*'
   は文字列に含まれる最初の妥当でない UTF-8 文字へのポインタ
 
@@ -2176,7 +2181,7 @@ C 言語での使用例:
 [source,C]
 ----
 char *error;
-if (weechat_utf8_is_valid (string, &error))
+if (weechat_utf8_is_valid (string, -1, &error))
 {
     /* ... */
 }

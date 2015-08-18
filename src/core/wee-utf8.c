@@ -70,18 +70,24 @@ utf8_has_8bits (const char *string)
 /*
  * Checks if a string is UTF-8 valid.
  *
+ * If length is <= 0, checks whole string.
+ * If length is > 0, checks only this number of chars (not bytes).
+ *
  * Returns:
  *   1: string is UTF-8 valid
- *   0: string it not UTF-8 valid, and then if error is not NULL, it is set with
- *      first non valid UTF-8 char in string
+ *   0: string it not UTF-8 valid, and then if error is not NULL, it is set
+ *      with first non valid UTF-8 char in string
  */
 
 int
-utf8_is_valid (const char *string, char **error)
+utf8_is_valid (const char *string, int length, char **error)
 {
-    int code_point;
+    int code_point, current_char;
 
-    while (string && string[0])
+    current_char = 0;
+
+    while (string && string[0]
+           && ((length <= 0) || (current_char < length)))
     {
         /*
          * UTF-8, 2 bytes, should be: 110vvvvv 10vvvvvv
@@ -142,6 +148,7 @@ utf8_is_valid (const char *string, char **error)
             goto invalid;
         else
             string++;
+        current_char++;
     }
     if (error)
         *error = NULL;
@@ -165,7 +172,7 @@ utf8_normalize (char *string, char replacement)
 
     while (string && string[0])
     {
-        if (utf8_is_valid (string, &error))
+        if (utf8_is_valid (string, -1, &error))
             return;
         error[0] = replacement;
         string = error + 1;

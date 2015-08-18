@@ -265,7 +265,7 @@ gui_mouse_event_code2key (const char *code)
      * mouse code must have at least:
      *   one code (for event) + X + Y == 3 bytes or 3 UTF-8 chars
      */
-    code_utf8 = utf8_is_valid (code, NULL);
+    code_utf8 = utf8_is_valid (code, -1, NULL);
     length = (code_utf8) ? utf8_strlen (code) : (int)strlen (code);
     if (length < 3)
         return NULL;

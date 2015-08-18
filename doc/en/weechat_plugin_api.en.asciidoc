@@ -2151,18 +2151,22 @@ This function is not available in scripting API.
 
 ==== utf8_is_valid
 
+_Updated in 1.4._
+
 Check if a string is UTF-8 valid.
 
 Prototype:
 
 [source,C]
 ----
-int weechat_utf8_is_valid (const char *string, char **error);
+int weechat_utf8_is_valid (const char *string, int length, char **error);
 ----
 
 Arguments:
 
 * 'string': string
+* 'length': max number of UTF-8 chars to check; if ≤ 0, the whole string is
+  checked _(WeeChat ≥ 1.4)_
 * 'error': if not NULL, '*error*' is set with pointer to first non valid UTF-8
   char in string, if any
 
@@ -2175,7 +2179,7 @@ C example:
 [source,C]
 ----
 char *error;
-if (weechat_utf8_is_valid (string, &error))
+if (weechat_utf8_is_valid (string, -1, &error))
 {
     /* ... */
 }

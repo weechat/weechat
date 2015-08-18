@@ -2307,7 +2307,7 @@ string_iconv_to_internal (const char *charset, const char *string)
     if (local_utf8 && (!charset || !charset[0]))
         return input;
 
-    if (utf8_has_8bits (input) && utf8_is_valid (input, NULL))
+    if (utf8_has_8bits (input) && utf8_is_valid (input, -1, NULL))
         return input;
 
     output = string_iconv (0,

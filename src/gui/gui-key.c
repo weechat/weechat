@@ -214,7 +214,7 @@ gui_key_grab_end_timer_cb (void *data, int remaining_calls)
          * but some mouse codes can return ISO chars (for coordinates),
          * then we will convert them to UTF-8 string
          */
-        if (!utf8_is_valid (expanded_key, NULL))
+        if (!utf8_is_valid (expanded_key, -1, NULL))
         {
             expanded_key2 = string_iconv_to_internal ("iso-8859-1",
                                                       expanded_key);

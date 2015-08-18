@@ -2193,18 +2193,22 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== utf8_is_valid
 
+_Mis à jour dans la 1.4._
+
 Vérifier si une chaîne est valide UTF-8.
 
 Prototype :
 
 [source,C]
 ----
-int weechat_utf8_is_valid (const char *string, char **error);
+int weechat_utf8_is_valid (const char *string, int length, char **error);
 ----
 
 Paramètres :
 
 * 'string' : chaîne
+* 'length' : nombre maximum de caractères UTF-8 à vérifier ; si ≤ 0, la chaîne
+  complète est vérifiée _(WeeChat ≥ 1.4)_
 * 'error' : si non NULL, '*error' est alimenté avec le pointeur vers le premier
   caractère non valide dans la chaîne, s'il y en a
 
@@ -2217,7 +2221,7 @@ Exemple en C :
 [source,C]
 ----
 char *error;
-if (weechat_utf8_is_valid (string, &error))
+if (weechat_utf8_is_valid (string, -1, &error))
 {
     /* ... */
 }

@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20150704-02"
+#define WEECHAT_PLUGIN_API_VERSION "20150818-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -317,7 +317,7 @@ struct t_weechat_plugin
 
     /* UTF-8 strings */
     int (*utf8_has_8bits) (const char *string);
-    int (*utf8_is_valid) (const char *string, char **error);
+    int (*utf8_is_valid) (const char *string, int length, char **error);
     void (*utf8_normalize) (char *string, char replacement);
     const char *(*utf8_prev_char) (const char *string_start,
                                    const char *string);
@@ -1110,8 +1110,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 /* UTF-8 strings */
 #define weechat_utf8_has_8bits(__string)                                \
     (weechat_plugin->utf8_has_8bits)(__string)
-#define weechat_utf8_is_valid(__string, __error)                        \
-    (weechat_plugin->utf8_is_valid)(__string, __error)
+#define weechat_utf8_is_valid(__string, __length, __error)              \
+    (weechat_plugin->utf8_is_valid)(__string, __length, __error)
 #define weechat_utf8_normalize(__string, __char)                        \
     (weechat_plugin->utf8_normalize)(__string, __char)
 #define weechat_utf8_prev_char(__start, __string)                       \
