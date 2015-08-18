@@ -6215,7 +6215,7 @@ COMMAND_CALLBACK(uptime)
         snprintf (string, sizeof (string),
                   "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s",
                   day,
-                  (day > 1) ? "days" : "day",
+                  (day != 1) ? "days" : "day",
                   hour,
                   min,
                   sec,
