@@ -983,4 +983,3 @@ Przykłady:
   włączenie trybu niesformatowanego na 2 sekundy:
     /window bare 2
 ----
-

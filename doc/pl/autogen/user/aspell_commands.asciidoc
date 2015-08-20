@@ -30,4 +30,3 @@ W celu wyświetlenia listy sugestii na pasku, użyj elementu "aspell_suggest".
 
 Domyślny skrót klawiszowy przełączający aspell to alt-s.
 ----
-

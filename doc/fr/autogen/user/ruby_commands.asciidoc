@@ -23,4 +23,3 @@ autoload : charger tous les scripts dans le répertoire "autoload"
 
 Sans paramètre, cette commande liste les scripts chargés.
 ----
-

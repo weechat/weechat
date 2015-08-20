@@ -14,4 +14,3 @@
 charset: new charset for current buffer
   reset: reset charsets for current buffer
 ----
-

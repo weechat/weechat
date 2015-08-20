@@ -201,4 +201,3 @@
 ** Beschreibung: `HTTPS wird für das Herunterladen der Indexdatei und der Skripten bevorzugt; diese Einstellung sollte nur deaktiviert werden falls Probleme beim Herunterladen auftreten`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
-

@@ -915,4 +915,3 @@ Jeśli opcja irc.network.whois_double_nick jest włączona, wysyłane są dwa ni
  ilość: ilość zwracanych odpowiedzi (pełne wyszukiwanie dla numerów ujemnych)
 cel: odpowiedź powinna pasować do maski
 ----
-

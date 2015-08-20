@@ -66,4 +66,3 @@
 ** description: `nombre maximum de lignes à afficher du fichier de log lors de l'ouverture du tampon (0 = ne rien afficher)`
 ** type: entier
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `20`)
-

@@ -81,4 +81,3 @@ Beispiele (die standardmäßig, eingebauten Trigger kann man sich mit "/trigger 
   öffnet den Trigger Monitor und zeigt ausschließlich modifier und Trigger an, die mit "resize" im Namen beginnen:
     /trigger monitor @modifier,resize*
 ----
-

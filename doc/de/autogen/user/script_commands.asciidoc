@@ -78,4 +78,3 @@ Beispiele:
   /script reload urlserver
   /script upgrade
 ----
-

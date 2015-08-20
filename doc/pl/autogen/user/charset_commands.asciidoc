@@ -14,4 +14,3 @@
 kodowanie: nowe kodowanie dla obecnego bufora
   reset: resetuje kodowanie dla obecnego bufora
 ----
-

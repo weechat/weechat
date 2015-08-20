@@ -470,7 +470,9 @@ def docgen_cmd_cb(data, buf, args):
         # write commands
         for plugin in commands:
             doc = AutogenDoc(directory, 'user', plugin + '_commands')
-            for command in sorted(commands[plugin]):
+            for i, command in enumerate(sorted(commands[plugin])):
+                if i > 0:
+                    doc.write('\n')
                 _cmd = commands[plugin][command]
                 args = translate(_cmd['args'])
                 args_formats = args.split(' || ')
@@ -488,14 +490,18 @@ def docgen_cmd_cb(data, buf, args):
                     doc.write('\n')
                     for line in args_desc.split('\n'):
                         doc.write(line + '\n')
-                doc.write('----\n\n')
+                doc.write('----\n')
             doc.update('commands', num_files, num_files_updated)
 
         # write config options
         for config in options:
             doc = AutogenDoc(directory, 'user', config + '_options')
+            i = 0
             for section in sorted(options[config]):
                 for option in sorted(options[config][section]):
+                    if i > 0:
+                        doc.write('\n')
+                    i += 1
                     _opt = options[config][section][option]
                     opt_type = _opt['type']
                     string_values = _opt['string_values']
@@ -547,7 +553,6 @@ def docgen_cmd_cb(data, buf, args):
                     if null_value_allowed:
                         doc.write('** {0}\n'.format(
                             _('undefined value allowed (null)')))
-                    doc.write('\n')
             doc.update('options', num_files, num_files_updated)
 
         # write IRC colors

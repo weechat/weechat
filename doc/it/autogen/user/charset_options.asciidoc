@@ -11,4 +11,3 @@
 ** descrizione: `global encoding charset: charset used to encode outgoing messages (if empty, default is UTF-8 because it is the WeeChat internal charset)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
-

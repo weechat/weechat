@@ -201,4 +201,3 @@
 ** opis: `wymusza użycie HTTPS do pobierania (listy i skryptów); powinieneś wyłączyć tą opcję tylko jeśli występują problemy z pobieraniem`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
-

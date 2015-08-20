@@ -38,4 +38,3 @@ Examples:
   use a directory per IRC server and a file per channel inside:
     /set logger.mask.irc "$server/$channel.weechatlog"
 ----
-

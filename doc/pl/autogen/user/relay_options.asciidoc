@@ -131,4 +131,3 @@
 ** opis: `rozszerzone wyrażenia regularne POSIX ze źródłami dozwolonymi dla gniazd webowych (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^http://(www\.)?przykład\.(com|org)"`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
-

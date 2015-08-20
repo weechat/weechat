@@ -141,4 +141,3 @@
 ** description: `timeout for xfer request (in seconds)`
 ** type: integer
 ** values: 5 .. 2147483647 (default value: `300`)
-

@@ -66,4 +66,3 @@
 ** descrizione: `numero massimo di righe da visualizzare dal file di log alla creazione di un nuovo buffer (0 = nessuna cronologia)`
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `20`)
-

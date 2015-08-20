@@ -55,4 +55,3 @@ Beispiele:
   WeeChat Protokoll, mit SSL, mit IPv4 + IPv6:
     /relay add ipv4.ipv6.ssl.weechat 9001
 ----
-

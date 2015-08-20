@@ -21,4 +21,3 @@
 ** opis: `użyj "solenia" podczas generowania klucza używanego w szyfrowaniu (zalecane dla maksimum bezpieczeństwa); jeśli włączone zawartość zaszyfrowanych danych w pliku sec.conf będzie się zmieniać z każdym zapisem pliku; jeśli plik sec.conf zostanie umieszczony w systemie kontroli wersji, można wyłączyć tą opcję (zawartość pliku będzie zawsze taka sama)`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
-

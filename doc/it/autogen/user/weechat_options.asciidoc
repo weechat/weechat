@@ -1016,4 +1016,3 @@
 ** descrizione: `imposta limite delle risorse per il processo WeeChat, il formato è: "res1:limit1,res2,limit2"; il nome della risorsa è il componente finale della costante (RLIMIT_XXX) in caratteri minuscoli (consultare man setrlimit per i valori); il limite -1 vuol dire "illimitato"; esempio: imposta dimensione illimitata per il file core e 1GB massimo di memoria virtuale: "core:-1,as:1000000000"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
-

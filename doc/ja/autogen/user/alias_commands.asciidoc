@@ -38,4 +38,3 @@ addcompletion: カスタム補完を指定して別名を追加
   /forcejoin を /sajoin の補完候補を使い IRC コマンド "forcejoin" を送信する別名と定義:
     /alias addcompletion %%sajoin forcejoin /quote forcejoin
 ----
-

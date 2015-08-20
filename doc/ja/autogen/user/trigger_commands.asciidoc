@@ -81,4 +81,3 @@ return_code: コールバック内のリターンコード (ok (デフォルト)
   トリガモニタを開き、修飾子と名前が "resize" から始まるトリガだけを表示:
     /trigger monitor @modifier,resize*
 ----
-

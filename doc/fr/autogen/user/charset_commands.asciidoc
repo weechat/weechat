@@ -14,4 +14,3 @@
 charset : nouveau charset pour le tampon courant
   reset : réinitialiser les charsets pour le tampon courant
 ----
-

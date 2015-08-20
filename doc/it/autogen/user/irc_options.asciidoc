@@ -641,4 +641,3 @@
 ** descrizione: `user name to use on server (note: content is evaluated, see /help eval)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
-

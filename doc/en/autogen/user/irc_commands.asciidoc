@@ -916,4 +916,3 @@ If option irc.network.whois_double_nick is enabled, two nicks are sent (if only 
  count: number of replies to return (full search if negative number)
 target: reply should match this mask
 ----
-

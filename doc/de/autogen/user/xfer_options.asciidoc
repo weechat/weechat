@@ -141,4 +141,3 @@
 ** Beschreibung: `Zeitüberschreitung bei Transferanfrage (in Sekunden)`
 ** Typ: integer
 ** Werte: 5 .. 2147483647 (Standardwert: `300`)
-

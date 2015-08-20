@@ -30,4 +30,3 @@ Pour afficher une liste des suggestions dans une barre, utilisez l'objet "aspell
 
 La touche par défaut pour activer/désactiver aspell est alt-s.
 ----
-

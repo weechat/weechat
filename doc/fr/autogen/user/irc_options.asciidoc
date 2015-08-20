@@ -641,4 +641,3 @@
 ** description: `nom d'utilisateur pour le serveur (note : le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
-

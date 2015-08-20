@@ -22,4 +22,3 @@ listfull: wyświetla xfer (ze szczegółami)
 
 Bez argumentów komenda otworzy bufor z listą xfer.
 ----
-

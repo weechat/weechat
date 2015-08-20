@@ -22,4 +22,3 @@ listfull: zeigt eine ausführliche Liste der Übertragungen
 
 Ohne Angabe von Argumenten wird der Buffer mit der Übertragungsliste geöffnet.
 ----
-

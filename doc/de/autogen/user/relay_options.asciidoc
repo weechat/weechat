@@ -131,4 +131,3 @@
 ** Beschreibung: `erweiterter regulärer POSIX Ausdruck für Origins in WebSockets (Groß- und Kleinschreibung wird ignoriert. Um Groß- und Kleinschreibung zu unterscheiden muss "(?-i)" dem Origin vorangestellt werden), Beispiele: "^http://(www\.)?example\.(com|org)"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
-

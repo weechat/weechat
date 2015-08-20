@@ -66,4 +66,3 @@
 ** Beschreibung: `maximale Anzahl der letzten Zeilen die aus der Protokolldatei dargestellt werden sollen, sobald ein Buffer geöffnet wird (0 = kein Darstellung)`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `20`)
-

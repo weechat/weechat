@@ -38,4 +38,3 @@ Exemples :
   alias /forcejoin pour envoyer la commande IRC "forcejoin" avec la complétion de /sajoin :
     /alias addcompletion %%sajoin forcejoin /quote forcejoin
 ----
-

@@ -22,4 +22,3 @@ listfull : lister les xfer (verbeux)
 
 Sans paramètre, cette commande ouvre le tampon avec la liste des xfer.
 ----
-

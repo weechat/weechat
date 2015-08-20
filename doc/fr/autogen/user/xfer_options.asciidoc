@@ -141,4 +141,3 @@
 ** description: `délai d'attente pour la requête xfer (en secondes)`
 ** type: entier
 ** valeurs: 5 .. 2147483647 (valeur par défaut: `300`)
-

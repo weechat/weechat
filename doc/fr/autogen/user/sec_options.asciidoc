@@ -21,4 +21,3 @@
 ** description: `utiliser du sel lors de la génération de la clé utilisée dans le chiffrement (recommandé pour un maximum de sécurité) ; lorsque cette option est activée, le contenu des données chiffrées dans le fichier sec.conf sera différent à chaque écriture du fichier ; si vous utilisez le fichier sec.conf dans un système de contrôle de version, alors vous pouvez désactiver cette option pour avoir toujours le même contenu de fichier`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
-

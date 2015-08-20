@@ -916,4 +916,3 @@ Sollte die Einstellung irc.network.whois_double_nick aktiviert sein dann wird ei
  count: maximale Anzahl an Antworten (negative Zahl für eine vollständige Suche)
 target: Antwort soll auf diese Suchmaske zutreffen
 ----
-

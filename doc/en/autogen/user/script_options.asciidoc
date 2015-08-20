@@ -201,4 +201,3 @@
 ** description: `force use of HTTPS for downloads (index and scripts); you should disable this option only if you have problems with the downloads`
 ** type: boolean
 ** values: on, off (default value: `on`)
-

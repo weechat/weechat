@@ -38,4 +38,3 @@ Exemples :
   utiliser un répertoire par serveur IRC et un fichier par canal dedans :
     /set logger.mask.irc "$server/$channel.weechatlog"
 ----
-

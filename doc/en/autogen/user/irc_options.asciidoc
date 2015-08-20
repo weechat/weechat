@@ -641,4 +641,3 @@
 ** description: `user name to use on server (note: content is evaluated, see /help eval)`
 ** type: string
 ** values: any string (default value: `""`)
-

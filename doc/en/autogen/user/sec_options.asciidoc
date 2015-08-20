@@ -21,4 +21,3 @@
 ** description: `use salt when generating key used in encryption (recommended for maximum security); when enabled, the content of crypted data in file sec.conf will be different on each write of the file; if you put the file sec.conf in a version control system, then you can turn off this option to have always same content in file`
 ** type: boolean
 ** values: on, off (default value: `on`)
-

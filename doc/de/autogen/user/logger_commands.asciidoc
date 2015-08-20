@@ -38,4 +38,3 @@ Beispiele:
   Für jeden IRC-Server wird ein separates Verzeichnis erstellt und darin eine eigene Protokoll-Datei, für jeden Channel:
     /set logger.mask.irc "$server/$channel.weechatlog"
 ----
-

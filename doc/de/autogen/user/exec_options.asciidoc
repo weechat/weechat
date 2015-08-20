@@ -21,4 +21,3 @@
 ** Beschreibung: `Wartezeit bis nicht mehr ausgeführte Befehle gelöscht werden (in Sekunden, 0 = lösche Befehle unmittelbar, -1 = niemals löschen)`
 ** Typ: integer
 ** Werte: -1 .. 25920000 (Standardwert: `0`)
-

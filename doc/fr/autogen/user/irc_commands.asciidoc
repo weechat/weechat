@@ -916,4 +916,3 @@ pseudo : pseudo
 nombre : nombre de réponses à retourner (recherche complète si nombre négatif)
  cible : la réponse doit correspondre à ce masque
 ----
-

@@ -1016,4 +1016,3 @@
 ** opis: `ustawia limit zasobów dla procesu WeeChat, format: "res1:limit1,res2:limit2"; nazwa zasobu to końcówka stałej (RLIMIT_XXX) pisana małymi literami (wartości można znaleźć w man setrlimit); limit -1 oznacza "nieograniczone"; przykład ustawienie braku limitu dla rdzenia i maksymalnie 1 GB dla pamięci wirtualnej: "core:-1,as:1000000000"`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
-

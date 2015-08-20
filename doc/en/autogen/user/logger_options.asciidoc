@@ -66,4 +66,3 @@
 ** description: `maximum number of lines to display from log file when creating new buffer (0 = no backlog)`
 ** type: integer
 ** values: 0 .. 2147483647 (default value: `20`)
-

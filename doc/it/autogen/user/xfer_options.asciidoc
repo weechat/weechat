@@ -141,4 +141,3 @@
 ** descrizione: `timeout per la richiesta xfer (in secondi)`
 ** tipo: intero
 ** valori: 5 .. 2147483647 (valore predefinito: `300`)
-

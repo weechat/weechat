@@ -983,4 +983,3 @@ Examples:
   enable bare display for 2 seconds:
     /window bare 2
 ----
-

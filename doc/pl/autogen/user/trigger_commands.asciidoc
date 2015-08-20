@@ -81,4 +81,3 @@ Przykłady (możesz też spojrzeć na domyślne triggery za pomocą /trigger lis
   otwiera monitor triggerów i pokazuje tylko modifiers i triggery, których nazwa zaczyna się od "resize":
     /trigger monitor @modifier,resize*
 ----
-

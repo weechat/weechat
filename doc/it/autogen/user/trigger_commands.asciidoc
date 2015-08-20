@@ -81,4 +81,3 @@ Examples (you can also look at default triggers with /trigger listdefault):
   open trigger monitor and show only modifiers and triggers whose name starts with "resize":
     /trigger monitor @modifier,resize*
 ----
-

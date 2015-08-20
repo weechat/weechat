@@ -73,4 +73,3 @@ property: フックプロパティ
   /exec -n tail -f /var/log/messages
   /exec -kill 0
 ----
-

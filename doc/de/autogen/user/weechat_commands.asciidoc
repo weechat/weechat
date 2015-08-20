@@ -983,4 +983,3 @@ Beispiele:
   aktiviert den einfachen Anzeigemodus für zwei Sekunden:
     /window bare 2
 ----
-

@@ -141,4 +141,3 @@
 ** opis: `czas oczekiwania na żądanie xfer (w sekundach)`
 ** typ: liczba
 ** wartości: 5 .. 2147483647 (domyślna wartość: `300`)
-

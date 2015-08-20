@@ -21,4 +21,3 @@
 ** description: `délai pour purger les commandes terminées (en secondes, 0 = purger les commandes immédiatement, -1 = ne jamais purger)`
 ** type: entier
 ** valeurs: -1 .. 25920000 (valeur par défaut: `0`)
-

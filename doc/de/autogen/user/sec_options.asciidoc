@@ -21,4 +21,3 @@
 ** Beschreibung: `nutzt salt bei der Schlüsselerstellung für die Verschlüsselung (wird für maximale Sicherheit empfohlen); wenn aktiviert, ist der Inhalt der verschlüsselten Daten bei jeder Sicherung in die Datei sec.conf verschieden. Wird die Datei sec.conf in eine Versionsverwaltung eingepflegt kann die Einstellung deaktiviert werden, um immer den selben Dateiinhalt zu erhalten`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
-

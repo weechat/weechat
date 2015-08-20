@@ -38,4 +38,3 @@ IRC プラグインで使われるログレベル:
   IRC サーバごとのディレクトリ、チャンネルごとのファイルを使う:
     /set logger.mask.irc "$server/$channel.weechatlog"
 ----
-

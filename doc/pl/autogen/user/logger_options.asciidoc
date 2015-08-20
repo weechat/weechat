@@ -66,4 +66,3 @@
 ** opis: `maksymalna ilość linii wyświetlana z logu podczas tworzenia nowego bufora (0 = bez historii)`
 ** typ: liczba
 ** wartości: 0 .. 2147483647 (domyślna wartość: `20`)
-

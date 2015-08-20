@@ -131,4 +131,3 @@
 ** descrizione: `POSIX extended regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
-

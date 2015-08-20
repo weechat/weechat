@@ -641,4 +641,3 @@
 ** Beschreibung: `Username der auf dem Server genutzt werden soll (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
-

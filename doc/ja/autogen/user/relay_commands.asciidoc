@@ -55,4 +55,3 @@ protocol.name: リレーするプロトコルと名前:
   SSL を有効にした weechat プロトコル、IPv4 と IPv6 を利用:
     /relay add ipv4.ipv6.ssl.weechat 9001
 ----
-

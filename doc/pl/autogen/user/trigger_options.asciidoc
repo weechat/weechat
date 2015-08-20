@@ -51,4 +51,3 @@
 ** opis: `usuń kolory w wartościach tablic haszy wyświetlanych w buforze monitorującym`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
-

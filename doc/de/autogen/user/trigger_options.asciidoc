@@ -51,4 +51,3 @@
 ** Beschreibung: `entfernt Farben von Hashtablewerten die im Monitor-Buffer angezeigt werden`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
-

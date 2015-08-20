@@ -51,4 +51,3 @@
 ** descrizione: `strip colors in hashtable values displayed on monitor buffer`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
-

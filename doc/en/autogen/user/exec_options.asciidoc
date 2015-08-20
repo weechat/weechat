@@ -21,4 +21,3 @@
 ** description: `delay for purging finished commands (in seconds, 0 = purge commands immediately, -1 = never purge)`
 ** type: integer
 ** values: -1 .. 25920000 (default value: `0`)
-

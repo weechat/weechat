@@ -11,4 +11,3 @@
 ** opis: `globalne dekodowanie: kodowanie użyte do dekodowania wychodzących wiadomości (jeśli się nie powiedzie, zostanie przywrócone UTF-8, ponieważ jest to domyślne kodowanie w WeeChat)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
-

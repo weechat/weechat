@@ -21,4 +21,3 @@
 ** opis: `opóźnienie dla kasowania zakończonych komend (w sekundach, 0 = natychmiast, -1 = nigdy)`
 ** typ: liczba
 ** wartości: -1 .. 25920000 (domyślna wartość: `0`)
-

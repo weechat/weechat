@@ -641,4 +641,3 @@
 ** opis: `nazwa użytkownika do użycia na serwerze (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
-

@@ -201,4 +201,3 @@
 ** description: `forcer l'utilisation de HTTPS pour les téléchargements (index et scripts) ; vous ne devriez désactiver cette option que si vous avez des problèmes avec les téléchargements`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
-

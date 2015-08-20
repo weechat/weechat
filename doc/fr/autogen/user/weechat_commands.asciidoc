@@ -983,4 +983,3 @@ Exemples :
   activer le mode d'affichage dépouillé pendant 2 secondes :
     /window bare 2
 ----
-

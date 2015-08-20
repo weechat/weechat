@@ -14,4 +14,3 @@
 charset: wähle neuen Zeichensatz für aktuellen Buffer
   reset: setze im aktuellen Buffer den Zeichensatz zurück
 ----
-

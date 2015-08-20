@@ -23,4 +23,3 @@ filename: Skript (Datei) welches geladen werden soll
 
 Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
 ----
-

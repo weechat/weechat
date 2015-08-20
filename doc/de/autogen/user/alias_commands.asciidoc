@@ -38,4 +38,3 @@ Beispiele:
   Alternativbefehl "/forcejoin" wird angelegt um den IRC Befehl "forcejoin" mit einer Vervollständigung von /sajoin auszuführen:
     /alias addcompletion %%sajoin forcejoin /quote forcejoin
 ----
-

@@ -23,4 +23,3 @@ nazwa_pliku: skrypt (plik) do załadowania
 
 Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki.
 ----
-

@@ -30,4 +30,3 @@ Um Aspell auf alle Buffer anzuwenden sollte die Einstellung "default_dict" genut
 
 Die Standardtastaturbelegung zum Umschalten der Aspell Funktionalität lautet alt-s.
 ----
-

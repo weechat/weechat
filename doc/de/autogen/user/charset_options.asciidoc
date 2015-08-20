@@ -11,4 +11,3 @@
 ** Beschreibung: `globale Zeichenkodierung: Zeichenkodierung die für ausgehende Nachrichten genutzt werden soll (sollte keine Zeichenkodierung angegeben werden, wird UTF-8 verwendet, da WeeChat UTF-8 zur internen Kodierung nutzt)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
-

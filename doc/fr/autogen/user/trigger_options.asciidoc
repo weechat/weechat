@@ -51,4 +51,3 @@
 ** description: `supprimer les couleurs dans la table de hachage affichée sur le tampon moniteur`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
-
