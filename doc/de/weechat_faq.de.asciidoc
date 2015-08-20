@@ -371,7 +371,7 @@ Weiterführende Informationen zum Farbmanagement erhält man in der Benutzeranle
 [[search_text]]
 === Wie kann ich in einem Buffer nach einem Text suchen (vergleichbar /lastlog in irssi)?
 
-Die Standardtastenbelegung lautet key[ctrl-r] (der dazugehörige Befehl: `/input search_text`).
+Die Standardtastenbelegung lautet key[ctrl-r] (der dazugehörige Befehl: `/input search_text_here`).
 und um zu Highlight-Nachrichten zu springen: key[alt-p] / key[alt-n].
 
 Siehe Benutzeranleitung für weitere Informationen zu dieser Funktion (Standardtastenbelegung).
