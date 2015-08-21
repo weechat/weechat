@@ -119,7 +119,7 @@ a *nie* UTF-8.
 Może to być spowodowane przez błąd libc w funkcji 'wcwidth', który powinien zostać
 naprawiony w glibc 2.22 (może jeszcze nie być dostępny w twojej dystrybucji).
 
-Istnieje sposób na obejście błędu funkcji 'wcwidth': 
+Istnieje sposób na obejście błędu funkcji 'wcwidth':
 https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
 
 Więcej informacji można znaleźć w zgłoszeniu błędu:
