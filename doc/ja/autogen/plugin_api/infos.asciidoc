@@ -32,9 +32,9 @@
 
 | relay | relay_client_count | 中継するクライアントのリスト | 状態名 (任意): connecting、waiting_auth、connected、auth_failed、disconnected
 
-| weechat | charset_internal | WeeChat 内部文字集合 | -
+| weechat | charset_internal | WeeChat 内部文字セット | -
 
-| weechat | charset_terminal | ターミナルの文字集合 | -
+| weechat | charset_terminal | ターミナルの文字セット | -
 
 | weechat | color_ansi_regex | ANSI エスケープコードを検索する POSIX 拡張正規表現 | -
 
