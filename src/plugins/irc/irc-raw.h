@@ -32,6 +32,7 @@
 #define IRC_RAW_FLAG_SEND     2
 #define IRC_RAW_FLAG_MODIFIED 4
 #define IRC_RAW_FLAG_REDIRECT 8
+#define IRC_RAW_FLAG_BINARY   16
 
 struct t_irc_raw_message
 {

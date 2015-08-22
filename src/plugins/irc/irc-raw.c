@@ -229,73 +229,85 @@ irc_raw_message_add (struct t_irc_server *server, int flags,
     int pos_buf, pos_buf2, char_size, i;
     struct t_irc_raw_message *new_raw_message;
 
-    buf = weechat_iconv_to_internal (NULL, message);
-    buf2 = malloc ((strlen (buf) * 4) + 1);
-    if (buf2)
+    buf = NULL;
+    buf2 = NULL;
+
+    if (flags & IRC_RAW_FLAG_BINARY)
     {
-        ptr_buf = (buf) ? (unsigned char *)buf : (unsigned char *)message;
-        pos_buf = 0;
-        pos_buf2 = 0;
-        while (ptr_buf[pos_buf])
+        buf = weechat_string_hex_dump (message, strlen (message), 16,
+                                       "  > ", NULL);
+        snprintf (prefix, sizeof (prefix), " ");
+    }
+    else
+    {
+        buf = weechat_iconv_to_internal (NULL, message);
+        buf2 = malloc ((strlen (buf) * 4) + 1);
+        if (buf2)
         {
-            if ((ptr_buf[pos_buf] < 32)
-                || !weechat_utf8_is_valid ((const char *)(ptr_buf + pos_buf),
-                                           1, NULL))
+            ptr_buf = (buf) ? (unsigned char *)buf : (unsigned char *)message;
+            pos_buf = 0;
+            pos_buf2 = 0;
+            while (ptr_buf[pos_buf])
             {
-                buf2[pos_buf2++] = '\\';
-                buf2[pos_buf2++] = 'x';
-                buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] / 16];
-                buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] % 16];
-                pos_buf++;
-            }
-            else
-            {
-                char_size = weechat_utf8_char_size ((const char *)(ptr_buf + pos_buf));
-                for (i = 0; i < char_size; i++)
+                if ((ptr_buf[pos_buf] < 32)
+                    || !weechat_utf8_is_valid ((const char *)(ptr_buf + pos_buf),
+                                               1, NULL))
                 {
-                    buf2[pos_buf2++] = ptr_buf[pos_buf++];
+                    buf2[pos_buf2++] = '\\';
+                    buf2[pos_buf2++] = 'x';
+                    buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] / 16];
+                    buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] % 16];
+                    pos_buf++;
+                }
+                else
+                {
+                    char_size = weechat_utf8_char_size ((const char *)(ptr_buf + pos_buf));
+                    for (i = 0; i < char_size; i++)
+                    {
+                        buf2[pos_buf2++] = ptr_buf[pos_buf++];
+                    }
                 }
             }
+            buf2[pos_buf2] = '\0';
         }
-        buf2[pos_buf2] = '\0';
-    }
 
-    /* build prefix with arrow */
-    prefix_arrow[0] = '\0';
-    switch (flags & (IRC_RAW_FLAG_RECV | IRC_RAW_FLAG_SEND
-                     | IRC_RAW_FLAG_MODIFIED | IRC_RAW_FLAG_REDIRECT))
-    {
-        case IRC_RAW_FLAG_RECV:
-            strcpy (prefix_arrow, IRC_RAW_PREFIX_RECV);
-            break;
-        case IRC_RAW_FLAG_RECV | IRC_RAW_FLAG_MODIFIED:
-            strcpy (prefix_arrow, IRC_RAW_PREFIX_RECV_MODIFIED);
-            break;
-        case IRC_RAW_FLAG_RECV | IRC_RAW_FLAG_REDIRECT:
-            strcpy (prefix_arrow, IRC_RAW_PREFIX_RECV_REDIRECT);
-            break;
-        case IRC_RAW_FLAG_SEND:
-            strcpy (prefix_arrow, IRC_RAW_PREFIX_SEND);
-            break;
-        case IRC_RAW_FLAG_SEND | IRC_RAW_FLAG_MODIFIED:
-            strcpy (prefix_arrow, IRC_RAW_PREFIX_SEND_MODIFIED);
-            break;
-        default:
-            if (flags & IRC_RAW_FLAG_RECV)
+        /* build prefix with arrow */
+        prefix_arrow[0] = '\0';
+        switch (flags & (IRC_RAW_FLAG_RECV | IRC_RAW_FLAG_SEND
+                         | IRC_RAW_FLAG_MODIFIED | IRC_RAW_FLAG_REDIRECT))
+        {
+            case IRC_RAW_FLAG_RECV:
                 strcpy (prefix_arrow, IRC_RAW_PREFIX_RECV);
-            else
+                break;
+            case IRC_RAW_FLAG_RECV | IRC_RAW_FLAG_MODIFIED:
+                strcpy (prefix_arrow, IRC_RAW_PREFIX_RECV_MODIFIED);
+                break;
+            case IRC_RAW_FLAG_RECV | IRC_RAW_FLAG_REDIRECT:
+                strcpy (prefix_arrow, IRC_RAW_PREFIX_RECV_REDIRECT);
+                break;
+            case IRC_RAW_FLAG_SEND:
                 strcpy (prefix_arrow, IRC_RAW_PREFIX_SEND);
-            break;
-    }
+                break;
+            case IRC_RAW_FLAG_SEND | IRC_RAW_FLAG_MODIFIED:
+                strcpy (prefix_arrow, IRC_RAW_PREFIX_SEND_MODIFIED);
+                break;
+            default:
+                if (flags & IRC_RAW_FLAG_RECV)
+                    strcpy (prefix_arrow, IRC_RAW_PREFIX_RECV);
+                else
+                    strcpy (prefix_arrow, IRC_RAW_PREFIX_SEND);
+                break;
+        }
 
-    snprintf (prefix, sizeof (prefix), "%s%s%s%s%s",
-              (server) ? weechat_color ("chat_server") : "",
-              (server) ? server->name : "",
-              (server) ? " " : "",
-              (flags & IRC_RAW_FLAG_SEND) ?
-              weechat_color ("chat_prefix_quit") :
-              weechat_color ("chat_prefix_join"),
-              prefix_arrow);
+        snprintf (prefix, sizeof (prefix), "%s%s%s%s%s",
+                  (server) ? weechat_color ("chat_server") : "",
+                  (server) ? server->name : "",
+                  (server) ? " " : "",
+                  (flags & IRC_RAW_FLAG_SEND) ?
+                  weechat_color ("chat_prefix_quit") :
+                  weechat_color ("chat_prefix_join"),
+                  prefix_arrow);
+    }
 
     new_raw_message = irc_raw_message_add_to_list (time (NULL),
                                                    prefix,
@@ -333,6 +345,20 @@ irc_raw_print (struct t_irc_server *server, int flags,
             irc_raw_message_print (new_raw_message);
         if (weechat_config_integer (irc_config_look_raw_messages) == 0)
             irc_raw_message_free (new_raw_message);
+    }
+
+    if (weechat_irc_plugin->debug >= 2)
+    {
+        new_raw_message = irc_raw_message_add (server,
+                                               flags | IRC_RAW_FLAG_BINARY,
+                                               message);
+        if (new_raw_message)
+        {
+            if (irc_raw_buffer)
+                irc_raw_message_print (new_raw_message);
+            if (weechat_config_integer (irc_config_look_raw_messages) == 0)
+                irc_raw_message_free (new_raw_message);
+        }
     }
 }
 
