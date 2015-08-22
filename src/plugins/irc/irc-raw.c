@@ -238,7 +238,9 @@ irc_raw_message_add (struct t_irc_server *server, int flags,
         pos_buf2 = 0;
         while (ptr_buf[pos_buf])
         {
-            if (ptr_buf[pos_buf] < 32)
+            if ((ptr_buf[pos_buf] < 32)
+                || !weechat_utf8_is_valid ((const char *)(ptr_buf + pos_buf),
+                                           1, NULL))
             {
                 buf2[pos_buf2++] = '\\';
                 buf2[pos_buf2++] = 'x';
