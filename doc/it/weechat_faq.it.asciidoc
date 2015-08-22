@@ -374,7 +374,7 @@ dei colori.
 [[search_text]]
 === Come posso cercare testo nel buffer (come /lastlog con irssi)?
 
-Il tasto predefinito è key[ctrl-r] (il comando è: `/input search-text`).
+Il tasto predefinito è key[ctrl-r] (il comando è: `/input search_text_here`).
 E per passare alle notifiche: key[alt-p] / key[alt-n].
 
 Consultare la guida per l'utente per maggiori informazioni su questa funzione
