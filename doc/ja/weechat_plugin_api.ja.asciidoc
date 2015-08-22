@@ -1823,8 +1823,7 @@ length = weechat_string_decode_base64 (string, result);
 
 _WeeChat ≥ 1.4._
 
-// TRANSLATION MISSING
-Display a dump of data as hexadecimal and ascii bytes.
+16 進数とアスキーバイトを使ってデータのダンプを表示。
 
 プロトタイプ:
 
@@ -1836,19 +1835,17 @@ char *string_hex_dump (const char *data, int data_size, int bytes_per_line,
 
 引数:
 
-// TRANSLATION MISSING
-* 'data': the data to dump
-* 'data_size': number of bytes to dump in 'data'
-* 'bytes_per_line': number of bytes to display in each line
-* 'prefix': the prefix to display at the beginning of each line
-  (optional, can be NULL)
-* 'suffix': the suffix to display at the end of each line
-  (optional, can be NULL)
+* 'data': ダンプ対象のデータ
+* 'data_size': 'data' からダンプ対象にするバイト数
+* 'bytes_per_line': 各行に表示するバイト数
+* 'prefix': 各行の先頭に表示するプレフィックス
+  (任意、NULL も可)
+* 'suffix': 各行の末尾に表示するサフィックス
+  (任意、NULL も可)
 
 戻り値:
 
-// TRANSLATION MISSING
-* string with dump of data (must be freed by calling "free" after use)
+* データのダンプ表示を含む文字列 (使用後には必ず "free" を呼び出して領域を開放してください)
 
 C 言語での使用例:
 
@@ -2210,9 +2207,8 @@ int weechat_utf8_is_valid (const char *string, int length, char **error);
 引数:
 
 * 'string': 文字列
-// TRANSLATION MISSING
-* 'length': max number of UTF-8 chars to check; if ≤ 0, the whole string is
-  checked _(WeeChat ≥ 1.4)_
+* 'length': 確認する UTF-8 文字の最大文字数; これを 0 以下に設定した場合、文字列中のすべての文字を確認します
+  _(WeeChat バージョン 1.4 以上で利用可)_
 * 'error': NULL でない場合は '*error*'
   は文字列に含まれる最初の妥当でない UTF-8 文字へのポインタ
 
