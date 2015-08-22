@@ -222,10 +222,9 @@ relay_raw_message_add (struct t_relay_client *client, int flags,
                        const char *data, int data_size)
 {
     char *buf, *buf2, prefix[256], prefix_arrow[16];
-    char str_hexa[(16 * 3) + 1], str_ascii[(16 * 2) + 1], str_line[256];
     const unsigned char *ptr_buf;
     const char *hexa = "0123456789ABCDEF";
-    int pos_buf, pos_buf2, char_size, i, hexa_pos, ascii_pos;
+    int pos_buf, pos_buf2, char_size, i;
     struct t_relay_raw_message *new_raw_message;
 
     buf = NULL;
@@ -234,42 +233,8 @@ relay_raw_message_add (struct t_relay_client *client, int flags,
     if (flags & RELAY_RAW_FLAG_BINARY)
     {
         /* binary message */
-        buf = malloc ((data_size * 6) + 128 + 1);
-        if (buf)
-        {
-            buf[0] = '\0';
-            hexa_pos = 0;
-            ascii_pos = 0;
-            for (i = 0; i < data_size; i++)
-            {
-                snprintf (str_hexa + hexa_pos, 4,
-                          "%02X ", (unsigned char)(data[i]));
-                hexa_pos += 3;
-                snprintf (str_ascii + ascii_pos, 3, "%c ",
-                          ((((unsigned char)data[i]) < 32)
-                           || (((unsigned char)data[i]) > 127)) ?
-                          '.' : (unsigned char)(data[i]));
-                ascii_pos += 2;
-                if (ascii_pos == 32)
-                {
-                    if (buf[0])
-                        strcat (buf, "\n");
-                    snprintf (str_line, sizeof (str_line),
-                              "%-48s  %s", str_hexa, str_ascii);
-                    strcat (buf, str_line);
-                    hexa_pos = 0;
-                    ascii_pos = 0;
-                }
-            }
-            if (ascii_pos > 0)
-            {
-                if (buf[0])
-                    strcat (buf, "\n");
-                snprintf (str_line, sizeof (str_line),
-                          "%-48s  %s", str_hexa, str_ascii);
-                strcat (buf, str_line);
-            }
-        }
+        buf = weechat_string_hex_dump (data, data_size, 16, "  > ", NULL);
+        snprintf (prefix, sizeof (prefix), " ");
     }
     else
     {
@@ -309,54 +274,55 @@ relay_raw_message_add (struct t_relay_client *client, int flags,
             }
             buf2[pos_buf2] = '\0';
         }
-    }
 
-    /* build prefix with arrow */
-    prefix_arrow[0] = '\0';
-    switch (flags & (RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_SEND))
-    {
-        case RELAY_RAW_FLAG_RECV:
-            strcpy (prefix_arrow, RELAY_RAW_PREFIX_RECV);
-            break;
-        case RELAY_RAW_FLAG_SEND:
-            strcpy (prefix_arrow, RELAY_RAW_PREFIX_SEND);
-            break;
-        default:
-            if (flags & RELAY_RAW_FLAG_RECV)
+        /* build prefix with arrow */
+        prefix_arrow[0] = '\0';
+        switch (flags & (RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_SEND))
+        {
+            case RELAY_RAW_FLAG_RECV:
                 strcpy (prefix_arrow, RELAY_RAW_PREFIX_RECV);
-            else
+                break;
+            case RELAY_RAW_FLAG_SEND:
                 strcpy (prefix_arrow, RELAY_RAW_PREFIX_SEND);
-            break;
+                break;
+            default:
+                if (flags & RELAY_RAW_FLAG_RECV)
+                    strcpy (prefix_arrow, RELAY_RAW_PREFIX_RECV);
+                else
+                    strcpy (prefix_arrow, RELAY_RAW_PREFIX_SEND);
+                break;
+        }
+
+        if (client)
+        {
+            snprintf (prefix, sizeof (prefix), "%s[%s%d%s] %s%s%s%s %s%s",
+                      weechat_color ("chat_delimiters"),
+                      weechat_color ("chat"),
+                      client->id,
+                      weechat_color ("chat_delimiters"),
+                      weechat_color ("chat_server"),
+                      relay_protocol_string[client->protocol],
+                      (client->protocol_args) ? "." : "",
+                      (client->protocol_args) ? client->protocol_args : "",
+                      (flags & RELAY_RAW_FLAG_SEND) ?
+                      weechat_color ("chat_prefix_quit") :
+                      weechat_color ("chat_prefix_join"),
+                      prefix_arrow);
+        }
+        else
+        {
+            snprintf (prefix, sizeof (prefix), "%s%s",
+                      (flags & RELAY_RAW_FLAG_SEND) ?
+                      weechat_color ("chat_prefix_quit") :
+                      weechat_color ("chat_prefix_join"),
+                      prefix_arrow);
+        }
     }
 
-    if (client)
-    {
-        snprintf (prefix, sizeof (prefix), "%s[%s%d%s] %s%s%s%s %s%s",
-                  weechat_color ("chat_delimiters"),
-                  weechat_color ("chat"),
-                  client->id,
-                  weechat_color ("chat_delimiters"),
-                  weechat_color ("chat_server"),
-                  relay_protocol_string[client->protocol],
-                  (client->protocol_args) ? "." : "",
-                  (client->protocol_args) ? client->protocol_args : "",
-                  (flags & RELAY_RAW_FLAG_SEND) ?
-                  weechat_color ("chat_prefix_quit") :
-                  weechat_color ("chat_prefix_join"),
-                  prefix_arrow);
-    }
-    else
-    {
-        snprintf (prefix, sizeof (prefix), "%s%s",
-                  (flags & RELAY_RAW_FLAG_SEND) ?
-                  weechat_color ("chat_prefix_quit") :
-                  weechat_color ("chat_prefix_join"),
-                  prefix_arrow);
-    }
-
-    new_raw_message = relay_raw_message_add_to_list (time (NULL),
-                                                     prefix,
-                                                     (buf2) ? buf2 : ((buf) ? buf : data));
+    new_raw_message = relay_raw_message_add_to_list (
+        time (NULL),
+        prefix,
+        (buf2) ? buf2 : ((buf) ? buf : data));
 
     if (new_raw_message)
     {
