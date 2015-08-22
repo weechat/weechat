@@ -906,69 +906,56 @@ _バージョン 0.3.4 の新機能_
 (例の値は以下のメッセージから作られました:
 `@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!`):
 
-// TRANSLATION MISSING
 [width="100%",cols="1,^2,10,8",options="header"]
 |===
-| Key | WeeChat version | Description | Example
+| キー | WeeChat バージョン | 説明 | 例
 
-// TRANSLATION MISSING
 | tags | ≥ 0.4.0 |
-  The tags in message (can be empty) |
+  メッセージに付けられたタグ (空にすることも可) |
   `time=2015-06-27T16:40:35.000Z`
 
-// TRANSLATION MISSING
 | message_without_tags | ≥ 0.4.0 |
-  The message without the tags (the same as message if there are no tags) |
+  タグを除いたメッセージ (タグが付けられていなければメッセージと同じ) |
   `:nick!user@host PRIVMSG #weechat :hello!`
 
-// TRANSLATION MISSING
 | nick | ≥ 0.3.4 |
-  The origin nick |
+  発信者のニックネーム |
   `nick`
 
-// TRANSLATION MISSING
 | host | ≥ 0.3.4 |
-  The origin host (includes the nick) |
+  発信者のホスト (ニックネームを含む) |
   `nick!user@host`
 
-// TRANSLATION MISSING
 | command | ≥ 0.3.4 |
-  The command ('PRIVMSG', 'NOTICE', ...) |
+  コマンド ('PRIVMSG' 、'NOTICE' 、...) |
   `PRIVMSG`
 
-// TRANSLATION MISSING
 | channel | ≥ 0.3.4 |
-  The target channel |
+  送信先チャンネル |
   `#weechat`
 
-// TRANSLATION MISSING
 | arguments | ≥ 0.3.4 |
-  The command arguments (includes the channel) |
+  コマンド引数 (チャンネルを含む) |
   `#weechat :hello!`
 
-// TRANSLATION MISSING
 | text | ≥ 1.3 |
-  The text (for example user message) |
+  テキスト (ユーザメッセージなど) |
   `hello!`
 
-// TRANSLATION MISSING
 | pos_command | ≥ 1.3 |
-  The index of 'command' in message ("-1" if 'command' was not found) |
+  メッセージ内における 'command' のインデックス ('command' が見つからない場合 "-1") |
   `47`
 
-// TRANSLATION MISSING
 | pos_arguments | ≥ 1.3 |
-  The index of 'arguments' in message ("-1" if 'arguments' was not found) |
+  メッセージ内における 'arguments' のインデックス ('arguments' が見つからない場合 "-1") |
   `55`
 
-// TRANSLATION MISSING
 | pos_channel | ≥ 1.3 |
-  The index of 'channel' in message ("-1" if 'channel' was not found) |
+  メッセージ内における 'channel' のインデックス ('channel' が見つからない場合 "-1") |
   `55`
 
-// TRANSLATION MISSING
 | pos_text | ≥ 1.3 |
-  The index of 'text' in message ("-1" if 'text' was not found) |
+  メッセージ内における 'text' のインデックス ('text' が見つからない場合 "-1") |
   `65`
 |===
 
