@@ -2184,7 +2184,8 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
             {
                 if (first_message)
                 {
-                    irc_raw_print (server, IRC_RAW_FLAG_SEND, message);
+                    irc_raw_print (server, IRC_RAW_FLAG_SEND,
+                                   (msg_encoded) ? msg_encoded : message);
                 }
                 if (new_msg)
                 {
