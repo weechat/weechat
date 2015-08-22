@@ -2669,6 +2669,111 @@ string_decode_base64 (const char *from, char *to)
 }
 
 /*
+ * Dumps a data buffer as hexadecimal + ascii.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_hex_dump (const char *data, int data_size, int bytes_per_line,
+                 const char *prefix, const char *suffix)
+{
+    char *buf, *str_hexa, *str_ascii, str_format_line[64], *str_line;
+    int length_hexa, length_ascii, length_prefix, length_suffix, length_line;
+    int hexa_pos, ascii_pos, i;
+
+    if (!data || (data_size < 1) || (bytes_per_line < 1))
+        return NULL;
+
+    str_hexa = NULL;
+    str_ascii = NULL;
+    str_line = NULL;
+    buf = NULL;
+
+    length_hexa = bytes_per_line * 3;
+    str_hexa = malloc (length_hexa + 1);
+    if (!str_hexa)
+        goto end;
+
+    length_ascii = bytes_per_line * 2;
+    str_ascii = malloc (length_ascii + 1);
+    if (!str_ascii)
+        goto end;
+
+    length_prefix = (prefix) ? strlen (prefix) : 0;
+    length_suffix = (suffix) ? strlen (suffix) : 0;
+
+    length_line = length_prefix + (bytes_per_line * 3) + 2 + length_ascii +
+        length_suffix;
+    str_line = malloc (length_line + 1);
+    if (!str_line)
+        goto end;
+
+    buf = malloc ((((data_size / bytes_per_line) + 1) * (length_line + 1)) + 1);
+    if (!buf)
+        goto end;
+    buf[0] = '\0';
+
+    snprintf (str_format_line, sizeof (str_format_line),
+              "%%s%%-%ds  %%-%ds%%s",
+              length_hexa,
+              length_ascii);
+
+    hexa_pos = 0;
+    ascii_pos = 0;
+    for (i = 0; i < data_size; i++)
+    {
+        snprintf (str_hexa + hexa_pos, 4,
+                  "%02X ", (unsigned char)(data[i]));
+        hexa_pos += 3;
+        snprintf (str_ascii + ascii_pos, 3, "%c ",
+                  ((((unsigned char)data[i]) < 32)
+                   || (((unsigned char)data[i]) > 127)) ?
+                  '.' : (unsigned char)(data[i]));
+        ascii_pos += 2;
+        if (ascii_pos == bytes_per_line * 2)
+        {
+            if (buf[0])
+                strcat (buf, "\n");
+            str_ascii[ascii_pos - 1] = '\0';
+            snprintf (str_line, length_line + 1,
+                      str_format_line,
+                      (prefix) ? prefix : "",
+                      str_hexa,
+                      str_ascii,
+                      (suffix) ? suffix : "");
+            strcat (buf, str_line);
+            hexa_pos = 0;
+            ascii_pos = 0;
+        }
+    }
+    if (ascii_pos > 0)
+    {
+        if (buf[0])
+            strcat (buf, "\n");
+        str_ascii[ascii_pos - 1] = '\0';
+        str_ascii[ascii_pos] = '\0';
+        snprintf (str_line, length_line + 1,
+                  str_format_line,
+                  (prefix) ? prefix : "",
+                  str_hexa,
+                  str_ascii,
+                  (suffix) ? suffix : "");
+        strcat (buf, str_line);
+    }
+
+end:
+    if (str_hexa)
+        free (str_hexa);
+    if (str_ascii)
+        free (str_ascii);
+    if (str_line)
+        free (str_line);
+
+    return buf;
+}
+
+/*
  * Checks if a string is a command.
  *
  * Returns:

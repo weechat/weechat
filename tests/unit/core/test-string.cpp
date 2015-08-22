@@ -1125,6 +1125,76 @@ TEST(String, BaseN)
 
 /*
  * Tests functions:
+ *    string_hex_dump
+ */
+
+TEST(String, Hex_dump)
+{
+    const char *noel_utf8 = "no\xc3\xabl";  /* noël */
+    const char *noel_iso = "no\xebl";
+    char *str;
+
+    POINTERS_EQUAL(NULL, string_hex_dump (NULL, 0, 0, NULL, NULL));
+    POINTERS_EQUAL(NULL, string_hex_dump ("abc", 0, 0, NULL, NULL));
+    POINTERS_EQUAL(NULL, string_hex_dump ("abc", 3, 0, NULL, NULL));
+    POINTERS_EQUAL(NULL, string_hex_dump ("abc", 0, 5, NULL, NULL));
+
+    str = string_hex_dump ("abc", 3, 3, NULL, NULL);
+    STRCMP_EQUAL("61 62 63   a b c ", str);
+
+    str = string_hex_dump ("abc", 3, 3, "", "");
+    STRCMP_EQUAL("61 62 63   a b c ", str);
+
+    str = string_hex_dump ("abc", 3, 3, "(( ", NULL);
+    STRCMP_EQUAL("(( 61 62 63   a b c ", str);
+
+    str = string_hex_dump ("abc", 3, 3, NULL, " ))");
+    STRCMP_EQUAL("61 62 63   a b c  ))", str);
+
+    str = string_hex_dump ("abc", 3, 3, "(( ", " ))");
+    STRCMP_EQUAL("(( 61 62 63   a b c  ))", str);
+
+    str = string_hex_dump ("abc", 3, 5, NULL, NULL);
+    STRCMP_EQUAL("61 62 63         a b c     ", str);
+
+    str = string_hex_dump ("abc", 3, 10, NULL, NULL);
+    STRCMP_EQUAL("61 62 63                        a b c               ", str);
+
+    str = string_hex_dump ("abc", 3, 2, NULL, NULL);
+    STRCMP_EQUAL("61 62   a b \n"
+                 "63      c   ",
+                 str);
+
+    str = string_hex_dump (noel_utf8, strlen (noel_utf8), 5, NULL, NULL);
+    STRCMP_EQUAL("6E 6F C3 AB 6C   n o . . l ", str);
+
+    str = string_hex_dump (noel_utf8, strlen (noel_utf8), 2, NULL, NULL);
+    STRCMP_EQUAL("6E 6F   n o \n"
+                 "C3 AB   . . \n"
+                 "6C      l   ",
+                 str);
+    str = string_hex_dump (noel_utf8, strlen (noel_utf8), 2, "( ", NULL);
+    STRCMP_EQUAL("( 6E 6F   n o \n"
+                 "( C3 AB   . . \n"
+                 "( 6C      l   ",
+                 str);
+    str = string_hex_dump (noel_utf8, strlen (noel_utf8), 2, "( ", " )");
+    STRCMP_EQUAL("( 6E 6F   n o  )\n"
+                 "( C3 AB   . .  )\n"
+                 "( 6C      l    )",
+                 str);
+
+    str = string_hex_dump (noel_iso, strlen (noel_iso), 5, NULL, NULL);
+    STRCMP_EQUAL("6E 6F EB 6C      n o . l   ", str);
+
+    str = string_hex_dump (noel_iso, strlen (noel_iso), 2, NULL, NULL);
+    STRCMP_EQUAL("6E 6F   n o \n"
+                 "EB 6C   . l ",
+                 str);
+}
+
+/*
+ * Tests functions:
  *    string_is_command_char
  *    string_input_for_buffer
  */

@@ -1882,6 +1882,50 @@ length = weechat_string_decode_base64 (string, result);
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
+==== string_hex_dump
+
+_WeeChat ≥ 1.4._
+
+// TRANSLATION MISSING
+Display a dump of data as hexadecimal and ascii bytes.
+
+Prototipo:
+
+[source,C]
+----
+char *string_hex_dump (const char *data, int data_size, int bytes_per_line,
+                       const char *prefix, const char *suffix);
+----
+
+Argomenti:
+
+// TRANSLATION MISSING
+* 'data': the data to dump
+* 'data_size': number of bytes to dump in 'data'
+* 'bytes_per_line': number of bytes to display in each line
+* 'prefix': the prefix to display at the beginning of each line
+  (optional, can be NULL)
+* 'suffix': the suffix to display at the end of each line
+  (optional, can be NULL)
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* string with dump of data (must be freed by calling "free" after use)
+
+Esempio in C:
+
+[source,C]
+----
+char *string = "abc def-ghi";
+char *dump = weechat_string_hex_dump (string, strlen (string), 8, " >> ", NULL);
+/* dump == " >> 61 62 63 20 64 65 66 2D   a b c   d e f - \n"
+           " >> 67 68 69                  g h i           "  */
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 ==== string_is_command_char
 
 _WeeChat ≥ 0.3.2._

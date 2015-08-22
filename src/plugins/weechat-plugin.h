@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20150818-01"
+#define WEECHAT_PLUGIN_API_VERSION "20150822-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -308,6 +308,9 @@ struct t_weechat_plugin
     char *(*string_remove_color) (const char *string, const char *replacement);
     void (*string_encode_base64) (const char *from, int length, char *to);
     int (*string_decode_base64) (const char *from, char *to);
+    char *(*string_hex_dump) (const char *data, int data_size,
+                              int bytes_per_line, const char *prefix,
+                              const char *suffix);
     int (*string_is_command_char) (const char *string);
     const char *(*string_input_for_buffer) (const char *string);
     char *(*string_eval_expression )(const char *expr,
@@ -1098,6 +1101,11 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->string_encode_base64)(__from, __length, __to)
 #define weechat_string_decode_base64(__from, __to)                      \
     (weechat_plugin->string_decode_base64)(__from, __to)
+#define weechat_string_hex_dump(__data, __data_size, __bytes_per_line,  \
+                                __prefix, __suffix)                     \
+    (weechat_plugin->string_hex_dump)(__data, __data_size,              \
+                                      __bytes_per_line, __prefix,       \
+                                      __suffix)
 #define weechat_string_is_command_char(__string)                        \
     (weechat_plugin->string_is_command_char)(__string)
 #define weechat_string_input_for_buffer(__string)                       \

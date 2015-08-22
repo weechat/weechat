@@ -1851,6 +1851,48 @@ length = weechat_string_decode_base64 (string, result);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== string_hex_dump
+
+_WeeChat ≥ 1.4._
+
+Afficher les données sous forme d'octets en hexadécimal et ascii.
+
+Prototype :
+
+[source,C]
+----
+char *string_hex_dump (const char *data, int data_size, int bytes_per_line,
+                       const char *prefix, const char *suffix);
+----
+
+Paramètres :
+
+* 'data' : les données à afficher
+* 'data_size' : nombre d'octets à afficher dans 'data'
+* 'bytes_per_line' : nombre d'octets à afficher sur chaque ligne
+* 'prefix' : le préfixe à afficher au début de chaque ligne
+  (optionnel, peut être NULL)
+* 'suffix' : le suffixe à afficher à la fin de chaque ligne
+  (optionnel, peut être NULL)
+
+Valeur de retour :
+
+* chaîne avec les données (doit être supprimée par un appel à "free" après
+  utilisation)
+
+Exemple en C :
+
+[source,C]
+----
+char *string = "abc def-ghi";
+char *dump = weechat_string_hex_dump (string, strlen (string), 8, " >> ", NULL);
+/* dump == " >> 61 62 63 20 64 65 66 2D   a b c   d e f - \n"
+           " >> 67 68 69                  g h i           "  */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== string_is_command_char
 
 _WeeChat ≥ 0.3.2._

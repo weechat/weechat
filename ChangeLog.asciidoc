@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* api: add function string_hex_dump()
 * api: add argument "length" in function utf8_is_valid()
 
 === Bugs fixed

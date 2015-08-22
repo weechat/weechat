@@ -634,6 +634,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_remove_color = &gui_color_decode;
         new_plugin->string_encode_base64 = &string_encode_base64;
         new_plugin->string_decode_base64 = &string_decode_base64;
+        new_plugin->string_hex_dump = &string_hex_dump;
         new_plugin->string_is_command_char = &string_is_command_char;
         new_plugin->string_input_for_buffer = &string_input_for_buffer;
         new_plugin->string_eval_expression = &eval_expression;
