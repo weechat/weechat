@@ -42,6 +42,7 @@ struct t_config_option *trigger_config_color_flag_command;
 struct t_config_option *trigger_config_color_flag_conditions;
 struct t_config_option *trigger_config_color_flag_regex;
 struct t_config_option *trigger_config_color_flag_return_code;
+struct t_config_option *trigger_config_color_flag_once_action;
 struct t_config_option *trigger_config_color_regex;
 struct t_config_option *trigger_config_color_replace;
 struct t_config_option *trigger_config_color_trigger;
@@ -56,7 +57,8 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})",
       "",
       "/print -beep",
-      "ok" },
+      "ok",
+      "" },
     /* hide passwords in commands */
     { "cmd_pass", "on",
       "modifier",
@@ -72,6 +74,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "(.*)"
       "==${re:1}${hide:*,${re:+}}",
       "",
+      "",
       "" },
     /* hide password in IRC auth message displayed */
     { "msg_auth", "on",
@@ -80,6 +83,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "==^(.*(id|identify|register|ghost +[^ ]+|release +[^ ]+) +)(.*)"
       "==${re:1}${hide:*,${re:+}}",
+      "",
       "",
       "" },
     /* hide server password in commands /server and /connect */
@@ -90,8 +94,9 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)"
       "==${re:1}${hide:*,${re:4}}${re:5}"
       "",
+      "",
       "" },
-    { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL },
+    { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL },
 };
 
 
@@ -339,6 +344,14 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                    "know where ok_eat/error can be used efficiently)"),
                 "ok|ok_eat|error", 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
+        case TRIGGER_OPTION_ONCE_ACTION:
+            ptr_option = weechat_config_new_option (
+                trigger_config_file, trigger_config_section_trigger,
+                option_name, "integer",
+                N_("action to take after execution"),
+                "none|disable|delete", 0, 0, value, NULL, 0, NULL, NULL,
+                NULL, NULL, NULL, NULL);
             break;
         case TRIGGER_NUM_OPTIONS:
             break;
@@ -637,6 +650,12 @@ trigger_config_init ()
         "flag_return_code", "color",
         N_("text color for return code flag (in /trigger list)"),
         NULL, 0, 0, "lightmagenta", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
+    trigger_config_color_flag_once_action = weechat_config_new_option (
+        trigger_config_file, ptr_section,
+        "flag_once_action", "color",
+        N_("text color for once action flag (in /trigger list)"),
+        NULL, 0, 0, "lightblue", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
     trigger_config_color_regex = weechat_config_new_option (
         trigger_config_file, ptr_section,

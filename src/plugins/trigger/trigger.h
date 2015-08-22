@@ -38,6 +38,7 @@ enum t_trigger_option
     TRIGGER_OPTION_REGEX,              /* replace text with 1 or more regex */
     TRIGGER_OPTION_COMMAND,            /* command run if conditions are OK  */
     TRIGGER_OPTION_RETURN_CODE,        /* return code for hook callback     */
+    TRIGGER_OPTION_ONCE_ACTION,        /* action to take after execution    */
     /* number of trigger options */
     TRIGGER_NUM_OPTIONS,
 };
@@ -55,6 +56,15 @@ enum t_trigger_hook_type
     TRIGGER_HOOK_FOCUS,
     /* number of hook types */
     TRIGGER_NUM_HOOK_TYPES,
+};
+
+enum t_trigger_once_action
+{
+    TRIGGER_ONCE_NONE = 0,
+    TRIGGER_ONCE_DISABLE,
+    TRIGGER_ONCE_DELETE,
+    /* number of once actions */
+    TRIGGER_NUM_ONCE_ACTIONS,
 };
 
 enum t_trigger_return_code
@@ -112,6 +122,7 @@ extern char *trigger_hook_option_values;
 extern char *trigger_hook_default_arguments[];
 extern char *trigger_hook_default_rc[];
 extern char *trigger_hook_regex_default_var[];
+extern char *trigger_once_action_string[];
 extern char *trigger_return_code_string[];
 extern int trigger_return_code[];
 extern struct t_trigger *triggers;
@@ -124,6 +135,7 @@ extern int trigger_enabled;
 extern int trigger_search_option (const char *option_name);
 extern int trigger_search_hook_type (const char *type);
 extern int trigger_search_return_code (const char *return_code);
+extern int trigger_search_once_action (const char *once_action);
 extern struct t_trigger *trigger_search (const char *name);
 extern struct t_trigger *trigger_search_with_option (struct t_config_option *option);
 extern void trigger_regex_free (int *regex_count,
@@ -149,7 +161,8 @@ extern struct t_trigger *trigger_new (const char *name,
                                       const char *conditions,
                                       const char *replace,
                                       const char *command,
-                                      const char *return_code);
+                                      const char *return_code,
+                                      const char *once_action);
 extern void trigger_create_default ();
 extern int trigger_rename (struct t_trigger *trigger, const char *name);
 extern struct t_trigger *trigger_copy (struct t_trigger *trigger,

@@ -44,9 +44,9 @@ struct t_weechat_plugin *weechat_trigger_plugin = NULL;
 
 char *trigger_option_string[TRIGGER_NUM_OPTIONS] =
 { "enabled", "hook", "arguments", "conditions", "regex", "command",
-  "return_code" };
+  "return_code", "once_action" };
 char *trigger_option_default[TRIGGER_NUM_OPTIONS] =
-{ "on", "signal", "", "", "", "", "ok" };
+{ "on", "signal", "", "", "", "", "ok", "none" };
 
 char *trigger_hook_type_string[TRIGGER_NUM_HOOK_TYPES] =
 { "signal", "hsignal", "modifier", "print", "command", "command_run", "timer",
@@ -63,6 +63,9 @@ char *trigger_hook_default_rc[TRIGGER_NUM_HOOK_TYPES] =
 char *trigger_hook_regex_default_var[TRIGGER_NUM_HOOK_TYPES] =
 { "tg_signal_data", "", "tg_string", "tg_message", "tg_argv_eol1", "tg_command",
   "tg_remaining_calls", "tg_value", "" };
+
+char *trigger_once_action_string[TRIGGER_NUM_ONCE_ACTIONS] =
+{ "none", "disable", "delete" };
 
 char *trigger_return_code_string[TRIGGER_NUM_RETURN_CODES] =
 { "ok", "ok_eat", "error" };
@@ -138,6 +141,27 @@ trigger_search_return_code (const char *return_code)
     for (i = 0; i < TRIGGER_NUM_RETURN_CODES; i++)
     {
         if (weechat_strcasecmp (trigger_return_code_string[i], return_code) == 0)
+            return i;
+    }
+
+    /* return code not found */
+    return -1;
+}
+
+/*
+ * Searches for trigger once action.
+ *
+ * Returns index of once action in enum t_trigger_once_action, -1 if not found.
+ */
+
+int
+trigger_search_once_action (const char *once_action)
+{
+    int i;
+
+    for (i = 0; i < TRIGGER_NUM_ONCE_ACTIONS; i++)
+    {
+        if (weechat_strcasecmp (trigger_once_action_string[i], once_action) == 0)
             return i;
     }
 
@@ -872,7 +896,8 @@ trigger_new_with_options (const char *name, struct t_config_option **options)
 struct t_trigger *
 trigger_new (const char *name, const char *enabled, const char *hook,
              const char *arguments, const char *conditions, const char *regex,
-             const char *command, const char *return_code)
+             const char *command, const char *return_code,
+             const char *once_action)
 {
     struct t_config_option *option[TRIGGER_NUM_OPTIONS];
     const char *value[TRIGGER_NUM_OPTIONS];
@@ -897,6 +922,7 @@ trigger_new (const char *name, const char *enabled, const char *hook,
     value[TRIGGER_OPTION_REGEX] = regex;
     value[TRIGGER_OPTION_COMMAND] = command;
     value[TRIGGER_OPTION_RETURN_CODE] = return_code;
+    value[TRIGGER_OPTION_ONCE_ACTION] = once_action;
 
     for (i = 0; i < TRIGGER_NUM_OPTIONS; i++)
     {
@@ -933,7 +959,8 @@ trigger_create_default ()
                      trigger_config_default_list[i][4],   /* conditions */
                      trigger_config_default_list[i][5],   /* regex */
                      trigger_config_default_list[i][6],   /* command */
-                     trigger_config_default_list[i][7]);  /* return code */
+                     trigger_config_default_list[i][7],   /* return code */
+                     trigger_config_default_list[i][8]);  /* once action */
     }
 }
 
@@ -1017,7 +1044,8 @@ trigger_copy (struct t_trigger *trigger, const char *name)
         weechat_config_string (trigger->options[TRIGGER_OPTION_CONDITIONS]),
         weechat_config_string (trigger->options[TRIGGER_OPTION_REGEX]),
         weechat_config_string (trigger->options[TRIGGER_OPTION_COMMAND]),
-        weechat_config_string (trigger->options[TRIGGER_OPTION_RETURN_CODE]));
+        weechat_config_string (trigger->options[TRIGGER_OPTION_RETURN_CODE]),
+        weechat_config_string (trigger->options[TRIGGER_OPTION_ONCE_ACTION]));
 }
 
 /*
@@ -1105,6 +1133,9 @@ trigger_print_log ()
         weechat_log_printf ("  return_code . . . . . . : %d ('%s')",
                             weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]),
                             trigger_return_code_string[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE])]);
+        weechat_log_printf ("  once_action . . . . . . : %d ('%s')",
+                            weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_ONCE_ACTION]),
+                            trigger_once_action_string[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_ONCE_ACTION])]);
         weechat_log_printf ("  hooks_count . . . . . . : %d",    ptr_trigger->hooks_count);
         weechat_log_printf ("  hooks . . . . . . . . . : 0x%lx", ptr_trigger->hooks);
         for (i = 0; i < ptr_trigger->hooks_count; i++)
