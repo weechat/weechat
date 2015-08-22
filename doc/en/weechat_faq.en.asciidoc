@@ -348,7 +348,7 @@ Please read user's guide for more information about colors management.
 [[search_text]]
 === How can I search text in buffer (like /lastlog in irssi)?
 
-The default key is key[ctrl-r] (command is: `/input search_text`).
+The default key is key[ctrl-r] (command is: `/input search_text_here`).
 And jump to highlights: key[alt-p] / key[alt-n].
 
 See user's guide for more info about this feature (default key bindings).

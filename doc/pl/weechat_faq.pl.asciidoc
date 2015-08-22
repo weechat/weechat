@@ -352,7 +352,7 @@ Więcej informacji na temat zarządzania kolorami można uzyskać w poradniku u�
 [[search_text]]
 === Jak mogę wyszukać tekst w buforze (jak za pomocą /lastlog w irssi)?
 
-Domyślny skrót klawiszowy to key[ctrl-r] (komenda: `/input search_text`).
+Domyślny skrót klawiszowy to key[ctrl-r] (komenda: `/input search_text_here`).
 
 Poruszanie się między podświetleniami: key[alt-p] / key[alt-n].
 

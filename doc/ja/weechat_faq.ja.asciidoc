@@ -351,7 +351,7 @@ term screen-256color
 [[search_text]]
 === どうすればバッファ内の文字列を検索できますか (irssi の /lastlog の様に)。
 
-デフォルトのキーは key[ctrl-r] です (コマンドは: `/input search_text`)。
+デフォルトのキーは key[ctrl-r] です (コマンドは: `/input search_text_here`)。
 ハイライト部分へのジャンプは: key[alt-p] / key[alt-n]
 
 この機能に関するより詳しい情報はユーザーガイドを参照してください (デフォルトのキー割り当て)。

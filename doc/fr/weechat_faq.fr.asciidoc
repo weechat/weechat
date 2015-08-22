@@ -363,7 +363,7 @@ couleurs.
 [[search_text]]
 === Comment puis-je chercher du texte dans le tampon (comme /lastlog dans irssi) ?
 
-La touche par défaut est key[ctrl-r] (la commande est : `/input search_text`).
+La touche par défaut est key[ctrl-r] (la commande est : `/input search_text_here`).
 Et sauter aux highlights : key[alt-p] / key[alt-n].
 
 Voir le guide utilisateur pour plus d'information sur cette fonctionnalité
