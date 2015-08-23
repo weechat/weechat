@@ -1365,13 +1365,13 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
             ptr_end_offset = ptr_data + word_end_offset;
 
             /* if message ends with spaces, display them */
-            if ((word_length == 0) && (word_length_with_spaces > 0)
+            if ((word_length <= 0) && (word_length_with_spaces > 0)
                 && !ptr_data[word_end_offset + 1])
             {
                 word_length = word_length_with_spaces;
             }
 
-            if (word_length > 0)
+            if (word_length >= 0)
             {
                 line_align = gui_line_get_align (window->buffer, line, 1,
                                                  (lines_displayed == 0) ? 1 : 0);

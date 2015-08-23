@@ -332,7 +332,7 @@ gui_chat_get_word_info (struct t_gui_window *window,
     *word_start_offset = 0;
     *word_end_offset = 0;
     *word_length_with_spaces = 0;
-    *word_length = 0;
+    *word_length = -1;
 
     start_data = data;
 
@@ -354,6 +354,8 @@ gui_chat_get_word_info (struct t_gui_window *window,
                     *word_end_offset = next_char2 - start_data - 1;
                     char_size_screen = gui_chat_char_size_screen (next_char);
                     (*word_length_with_spaces) += char_size_screen;
+                    if (*word_length < 0)
+                        *word_length = 0;
                     (*word_length) += char_size_screen;
                 }
                 else
