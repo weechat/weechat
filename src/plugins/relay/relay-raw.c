@@ -295,7 +295,11 @@ relay_raw_message_add (struct t_relay_client *client, int flags,
 
         if (client)
         {
-            snprintf (prefix, sizeof (prefix), "%s[%s%d%s] %s%s%s%s %s%s",
+            snprintf (prefix, sizeof (prefix), "%s%s %s[%s%d%s] %s%s%s%s",
+                      (flags & RELAY_RAW_FLAG_SEND) ?
+                      weechat_color ("chat_prefix_quit") :
+                      weechat_color ("chat_prefix_join"),
+                      prefix_arrow,
                       weechat_color ("chat_delimiters"),
                       weechat_color ("chat"),
                       client->id,
@@ -303,11 +307,7 @@ relay_raw_message_add (struct t_relay_client *client, int flags,
                       weechat_color ("chat_server"),
                       relay_protocol_string[client->protocol],
                       (client->protocol_args) ? "." : "",
-                      (client->protocol_args) ? client->protocol_args : "",
-                      (flags & RELAY_RAW_FLAG_SEND) ?
-                      weechat_color ("chat_prefix_quit") :
-                      weechat_color ("chat_prefix_join"),
-                      prefix_arrow);
+                      (client->protocol_args) ? client->protocol_args : "");
         }
         else
         {
