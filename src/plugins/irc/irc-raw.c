@@ -300,13 +300,13 @@ irc_raw_message_add (struct t_irc_server *server, int flags,
         }
 
         snprintf (prefix, sizeof (prefix), "%s%s%s%s%s",
-                  (server) ? weechat_color ("chat_server") : "",
-                  (server) ? server->name : "",
-                  (server) ? " " : "",
                   (flags & IRC_RAW_FLAG_SEND) ?
                   weechat_color ("chat_prefix_quit") :
                   weechat_color ("chat_prefix_join"),
-                  prefix_arrow);
+                  prefix_arrow,
+                  (server) ? weechat_color ("chat_server") : "",
+                  (server) ? " " : "",
+                  (server) ? server->name : "");
     }
 
     new_raw_message = irc_raw_message_add_to_list (time (NULL),
