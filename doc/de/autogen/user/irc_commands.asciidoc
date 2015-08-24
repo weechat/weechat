@@ -78,10 +78,10 @@ Beispiele:
 ----
 /ban  [<channel>] [<nick> [<nick>...]]
 
-channel: Channelname
-   nick: Nick oder Host für den der Bann gelten soll
+channel: channel name
+   nick: nick or host
 
-Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel angezeigt.
+Without argument, this command displays the ban list for current channel.
 ----
 
 [[command_irc_cap]]
@@ -594,10 +594,10 @@ target: Nickname
 ----
 /quiet  [<channel>] [<nick> [<nick>...]]
 
-channel: Name des Channel
-   nick: Nick oder Host
+channel: channel name
+   nick: nick or host
 
-Ohne Angabe von Argumenten wird, für den aktuellen Channel, eine Liste mit den Nick/Host ausgegeben denen das Wort entzogen worden ist.
+Without argument, this command displays the quiet list for current channel.
 ----
 
 [[command_irc_quote]]

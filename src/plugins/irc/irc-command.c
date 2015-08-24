@@ -6131,7 +6131,8 @@ irc_command_init ()
         N_("channel: channel name\n"
            "   nick: nick or host\n"
            "\n"
-           "Without argument, this command display ban list for current channel."),
+           "Without argument, this command displays the ban list for current "
+           "channel."),
         "%(irc_channel_nicks_hosts)", &irc_command_ban, NULL);
     weechat_hook_command (
         "cap",
@@ -6587,8 +6588,8 @@ irc_command_init ()
         N_("channel: channel name\n"
            "   nick: nick or host\n"
            "\n"
-           "Without argument, this command display quiet list for current "
-           "channel."),
+           "Without argument, this command displays the quiet list for "
+           "current channel."),
         "%(irc_channel_nicks_hosts)", &irc_command_quiet, NULL);
     weechat_hook_command (
         "quote",
