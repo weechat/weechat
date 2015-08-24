@@ -84,6 +84,35 @@ channel: channel name
 Without argument, this command display ban list for current channel.
 ----
 
+[[command_irc_cap]]
+[command]*`cap`* client capability negotiation::
+
+----
+/cap  ls
+      list
+      req|ack [<capability> [<capability>...]]
+      clear
+      end
+
+   ls: list the capabilities supported by the server
+ list: list the capabilities currently enabled
+  req: request a capability
+  ack: acknowledge capabilities which require client-side acknowledgement
+clear: clear the capabilities currently enabled
+  end: end the capability negotiation
+
+Without argument, "ls" and "list" are sent.
+
+Capabilities supported by WeeChat are: account-notify, away-notify, extended-join, multi-prefix, server-time, userhost-in-names.
+
+The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
+
+Examples:
+   /cap
+   /cap req multi-prefix
+   /cap clear
+----
+
 [[command_irc_connect]]
 [command]*`connect`* connette ad uno o più server IRC::
 

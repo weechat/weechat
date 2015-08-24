@@ -43,6 +43,12 @@ struct t_irc_channel;
         return WEECHAT_RC_OK;                                           \
     }
 
+/* list of supported capabilities (for completion in command /cap) */
+#define IRC_COMMAND_CAP_SUPPORTED_COMPLETION \
+    "account-notify|away-notify|extended-join|"      \
+    "multi-prefix|server-time|userhost-in-names"     \
+    "|%*"
+
 extern void irc_command_away_server (struct t_irc_server *server,
                                      const char *arguments,
                                      int reset_unread_marker);

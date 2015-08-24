@@ -1072,6 +1072,48 @@ irc_command_ban (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * Callback for command "/cap": client capability negotiation.
+ *
+ * Docs on capability negotiation:
+ *   https://tools.ietf.org/html/draft-mitchell-irc-capabilities-01
+ *   http://ircv3.net/specs/core/capability-negotiation-3.1.html
+ *   http://ircv3.net/specs/core/capability-negotiation-3.2.html
+ */
+
+int
+irc_command_cap (void *data, struct t_gui_buffer *buffer, int argc,
+                 char **argv, char **argv_eol)
+{
+    IRC_BUFFER_GET_SERVER(buffer);
+    IRC_COMMAND_CHECK_SERVER("cap", 1);
+
+    /* make C compiler happy */
+    (void) data;
+
+    if (argc > 1)
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "CAP %s%s%s",
+                          argv[1],
+                          (argv_eol[2]) ? " :" : "",
+                          (argv_eol[2]) ? argv_eol[2] : "");
+    }
+    else
+    {
+        /*
+         * by default, show supported capabilities and capabilities currently
+         * enabled
+         */
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "CAP LS");
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "CAP LIST");
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Connects to one server.
  *
  * Returns:
@@ -6091,6 +6133,40 @@ irc_command_init ()
            "\n"
            "Without argument, this command display ban list for current channel."),
         "%(irc_channel_nicks_hosts)", &irc_command_ban, NULL);
+    weechat_hook_command (
+        "cap",
+        N_("client capability negotiation"),
+        N_("ls || list || req|ack [<capability> [<capability>...]]"
+           " || clear || end"),
+        N_("   ls: list the capabilities supported by the server\n"
+           " list: list the capabilities currently enabled\n"
+           "  req: request a capability\n"
+           "  ack: acknowledge capabilities which require client-side "
+           "acknowledgement\n"
+           "clear: clear the capabilities currently enabled\n"
+           "  end: end the capability negotiation\n"
+           "\n"
+           "Without argument, \"ls\" and \"list\" are sent.\n"
+           "\n"
+           "Capabilities supported by WeeChat are: "
+           "account-notify, away-notify, extended-join, "
+           "multi-prefix, server-time, userhost-in-names.\n"
+           "\n"
+           "The capabilities to automatically enable on servers can be set "
+           "in option irc.server_default.capabilities (or by server in "
+           "option irc.server.xxx.capabilities).\n"
+           "\n"
+           "Examples:\n"
+           "   /cap\n"
+           "   /cap req multi-prefix\n"
+           "   /cap clear"),
+        "ls"
+        " || list"
+        " || req " IRC_COMMAND_CAP_SUPPORTED_COMPLETION
+        " || ack " IRC_COMMAND_CAP_SUPPORTED_COMPLETION
+        " || clear"
+        " || end",
+        &irc_command_cap, NULL);
     weechat_hook_command (
         "connect",
         N_("connect to IRC server(s)"),

@@ -508,7 +508,7 @@
 ** wartości: 0 .. 1000000 (domyślna wartość: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** opis: `oddzielona przecinkami lista opcji klienta do włączenia dla serwera, jeśli są dostępne; opcje wspierane przez WeeChat: account-notify, away-notify, extended-join, multi-prefix, server-time, userhost-in-names (przykład: "away-notify,multi-prefix")`
+** opis: `comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat) (example: "away-notify,multi-prefix")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
