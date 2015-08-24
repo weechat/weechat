@@ -648,9 +648,12 @@ script_action_install (int quiet)
                                     ptr_script_to_install->name_with_extension);
                 }
                 weechat_hashtable_set (options, "file_out", filename);
-                weechat_hook_process_hashtable (url, options, 30000,
-                                                &script_action_install_process_cb,
-                                                (quiet) ? (void *)1 : (void *)0);
+                weechat_hook_process_hashtable (
+                    url,
+                    options,
+                    weechat_config_integer (script_config_scripts_download_timeout) * 1000,
+                    &script_action_install_process_cb,
+                    (quiet) ? (void *)1 : (void *)0);
                 free (url);
             }
             weechat_hashtable_free (options);
@@ -1067,9 +1070,12 @@ script_action_show (const char *name, int quiet)
                         if (url)
                         {
                             weechat_hashtable_set (options, "file_out", filename);
-                            weechat_hook_process_hashtable (url, options, 30000,
-                                                            &script_action_show_source_process_cb,
-                                                            NULL);
+                            weechat_hook_process_hashtable (
+                                url,
+                                options,
+                                weechat_config_integer (script_config_scripts_download_timeout) * 1000,
+                                &script_action_show_source_process_cb,
+                                NULL);
                             free (url);
                         }
                         weechat_hashtable_free (options);

@@ -1472,9 +1472,12 @@ script_repo_file_update (int quiet)
                                 SCRIPT_PLUGIN_NAME);
             }
             weechat_hashtable_set (options, "file_out", filename);
-            weechat_hook_process_hashtable (url, options, 30000,
-                                            &script_repo_file_update_process_cb,
-                                            (quiet) ? (void *)1 : (void *)0);
+            weechat_hook_process_hashtable (
+                url,
+                options,
+                weechat_config_integer (script_config_scripts_download_timeout) * 1000,
+                &script_repo_file_update_process_cb,
+                (quiet) ? (void *)1 : (void *)0);
             free (url);
         }
         weechat_hashtable_free (options);

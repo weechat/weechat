@@ -182,6 +182,11 @@
 ** type: entier
 ** valeurs: -1 .. 525600 (valeur par défaut: `1440`)
 
+* [[option_script.scripts.download_timeout]] *script.scripts.download_timeout*
+** description: `délai d'attente maximum (en secondes) pour le téléchargement des scripts et de la liste des scripts`
+** type: entier
+** valeurs: 1 .. 3600 (valeur par défaut: `30`)
+
 * [[option_script.scripts.hold]] *script.scripts.hold*
 ** description: `scripts à "figer" : liste de scripts séparés par des virgules qui ne seront jamais mis à jour et ne peuvent pas être supprimés, par exemple : "buffers.pl,iset.pl"`
 ** type: chaîne

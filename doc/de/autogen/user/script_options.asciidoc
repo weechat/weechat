@@ -182,6 +182,11 @@
 ** Typ: integer
 ** Werte: -1 .. 525600 (Standardwert: `1440`)
 
+* [[option_script.scripts.download_timeout]] *script.scripts.download_timeout*
+** Beschreibung: `timeout (in seconds) for download of scripts and list of scripts`
+** Typ: integer
+** Werte: 1 .. 3600 (Standardwert: `30`)
+
 * [[option_script.scripts.hold]] *script.scripts.hold*
 ** Beschreibung: `Skripten welche "gehalten" werden sollen. Dies ist eine durch Kommata getrennte Liste von Skripten die weder aktualisiert noch entfernt werden können. Zum Beispiel: "buffers.pl,iset.pl"`
 ** Typ: Zeichenkette

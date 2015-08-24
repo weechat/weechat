@@ -182,6 +182,11 @@
 ** タイプ: 整数
 ** 値: -1 .. 525600 (デフォルト値: `1440`)
 
+* [[option_script.scripts.download_timeout]] *script.scripts.download_timeout*
+** 説明: `timeout (in seconds) for download of scripts and list of scripts`
+** タイプ: 整数
+** 値: 1 .. 3600 (デフォルト値: `30`)
+
 * [[option_script.scripts.hold]] *script.scripts.hold*
 ** 説明: `"ホールド" するスクリプト: コンマ区切りのスクリプトリスト、このリストに含まれるスクリプトはアップグレードされませんし、削除もされません、例: "buffers.pl,iset.pl"`
 ** タイプ: 文字列

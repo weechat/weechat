@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-08-24 10:06+0200\n"
+"POT-Creation-Date: 2015-08-24 13:25+0200\n"
 "PO-Revision-Date: 2015-07-26 09:42+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9588,6 +9588,10 @@ msgid ""
 "local cache expiration time, in minutes (-1 = never expires, 0 = always "
 "expire)"
 msgstr ""
+
+#, fuzzy
+msgid "timeout (in seconds) for download of scripts and list of scripts"
+msgstr "использовать SSL при связи с сервером"
 
 #, fuzzy
 msgid ""

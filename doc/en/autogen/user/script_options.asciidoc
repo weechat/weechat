@@ -182,6 +182,11 @@
 ** type: integer
 ** values: -1 .. 525600 (default value: `1440`)
 
+* [[option_script.scripts.download_timeout]] *script.scripts.download_timeout*
+** description: `timeout (in seconds) for download of scripts and list of scripts`
+** type: integer
+** values: 1 .. 3600 (default value: `30`)
+
 * [[option_script.scripts.hold]] *script.scripts.hold*
 ** description: `scripts to "hold": comma-separated list of scripts which will never been upgraded and can not be removed, for example: "buffers.pl,iset.pl"`
 ** type: string

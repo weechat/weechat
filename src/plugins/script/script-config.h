@@ -62,6 +62,7 @@ extern struct t_config_option *script_config_color_text_version_selected;
 
 extern struct t_config_option *script_config_scripts_autoload;
 extern struct t_config_option *script_config_scripts_cache_expire;
+extern struct t_config_option *script_config_scripts_download_timeout;
 extern struct t_config_option *script_config_scripts_path;
 extern struct t_config_option *script_config_scripts_hold;
 extern struct t_config_option *script_config_scripts_url;

@@ -82,6 +82,7 @@ struct t_config_option *script_config_color_text_version_selected;
 
 struct t_config_option *script_config_scripts_autoload;
 struct t_config_option *script_config_scripts_cache_expire;
+struct t_config_option *script_config_scripts_download_timeout;
 struct t_config_option *script_config_scripts_path;
 struct t_config_option *script_config_scripts_hold;
 struct t_config_option *script_config_scripts_url;
@@ -655,6 +656,12 @@ script_config_init ()
         N_("local cache expiration time, in minutes (-1 = never expires, "
            "0 = always expire)"),
         NULL, -1, 525600, "1440", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    script_config_scripts_download_timeout = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "download_timeout", "integer",
+        N_("timeout (in seconds) for download of scripts and list of scripts"),
+        NULL, 1, 3600, "30", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     script_config_scripts_path = weechat_config_new_option (
         script_config_file, ptr_section,
