@@ -787,9 +787,12 @@ string_convert_escaped_chars (const char *string)
                     }
                     break;
                 default:
-                    output[pos_output++] = '\\';
-                    output[pos_output++] = ptr_string[0];
-                    ptr_string++;
+                    if (ptr_string[0])
+                    {
+                        output[pos_output++] = '\\';
+                        output[pos_output++] = ptr_string[0];
+                        ptr_string++;
+                    }
                     break;
             }
         }

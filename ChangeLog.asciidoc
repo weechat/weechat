@@ -29,6 +29,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * core: fix truncated messages after a word with a length of zero on screen
   (for example a zero width space: U+200B) (bug #40985, issue #502)
+* api: fix handle of invalid escape in function string_convert_escaped_chars()
 * irc: display the arrow before server name in raw buffer
 * irc: fix display of messages sent to server in raw buffer
 * irc: fix display of invalid UTF-8 chars in raw buffer

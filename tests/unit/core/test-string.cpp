@@ -460,6 +460,7 @@ TEST(String, ConvertEscapedChars)
 
     WEE_TEST_STR(NULL, string_convert_escaped_chars (NULL));
     WEE_TEST_STR("", string_convert_escaped_chars (""));
+    WEE_TEST_STR("", string_convert_escaped_chars ("\\"));
     WEE_TEST_STR("\"", string_convert_escaped_chars ("\\\""));
     WEE_TEST_STR("\\", string_convert_escaped_chars ("\\\\"));
     WEE_TEST_STR("\a", string_convert_escaped_chars ("\\a"));
