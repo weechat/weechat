@@ -740,4 +740,3 @@ irc_upgrade_load ()
 
     return rc;
 }
-
