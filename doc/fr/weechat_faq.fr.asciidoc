@@ -523,14 +523,21 @@ vous pouvez utiliser une valeur plus petite pour la clé Diffie-Hellman (par
 défaut 2048) :
 
 ----
-/set irc.server.freenode.ssl_dhkey_size 1024
+/set irc.server.example.ssl_dhkey_size 1024
 ----
 
 Si vous voyez des erreurs à propos du certificat, vous pouvez désactiver
 "ssl_verify" (attention, la connexion sera moins sûre en faisant cela) :
 
 ----
-/set irc.server.freenode.ssl_verify off
+/set irc.server.example.ssl_verify off
+----
+
+Si le serveur a un certificat invalide et que vous savez ce que devrait être
+le certificat, vous pouvez spécifier l'empreinte (SHA-512, SHA-256 ou SHA-1) :
+
+----
+/set irc.server.example.ssl_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
 ----
 
 [[irc_ssl_handshake_error]]
