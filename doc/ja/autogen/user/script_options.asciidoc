@@ -183,7 +183,7 @@
 ** 値: -1 .. 525600 (デフォルト値: `1440`)
 
 * [[option_script.scripts.download_timeout]] *script.scripts.download_timeout*
-** 説明: `timeout (in seconds) for download of scripts and list of scripts`
+** 説明: `スクリプトのダウンロードとスクリプトのリストに対するタイムアウト時間 (秒単位)`
 ** タイプ: 整数
 ** 値: 1 .. 3600 (デフォルト値: `30`)
 

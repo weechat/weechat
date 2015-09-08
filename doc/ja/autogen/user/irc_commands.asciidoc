@@ -78,14 +78,14 @@ arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそ
 ----
 /ban  [<channel>] [<nick> [<nick>...]]
 
-channel: channel name
-   nick: nick or host
+channel: チャンネル名
+   nick: ニックネームまたはホスト名
 
-Without argument, this command displays the ban list for current channel.
+引数無しの場合は、現在のチャンネルのバンリストを表示。
 ----
 
 [[command_irc_cap]]
-[command]*`cap`* client capability negotiation::
+[command]*`cap`* クライアント機能情報の交換::
 
 ----
 /cap  ls
@@ -94,20 +94,20 @@ Without argument, this command displays the ban list for current channel.
       clear
       end
 
-   ls: list the capabilities supported by the server
- list: list the capabilities currently enabled
-  req: request a capability
-  ack: acknowledge capabilities which require client-side acknowledgement
-clear: clear the capabilities currently enabled
-  end: end the capability negotiation
+   ls: サーバがサポートする機能をリスト
+ list: 現在有効化されている機能をリスト
+  req: 機能情報を要求
+  ack: クライアント側に承認を要求する機能を承認
+clear: 現在有効化されている機能を無効化
+  end: 機能情報交換を終了
 
-Without argument, "ls" and "list" are sent.
+引数無しの場合、"ls" と "list" を送信します。
 
-Capabilities supported by WeeChat are: account-notify, away-notify, extended-join, multi-prefix, server-time, userhost-in-names.
+WeeChat がサポートする機能: account-notify、away-notify、extended-join、multi-prefix、server-time、userhost-in-names。
 
-The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
+自動的に有効化する機能を設定するにはオプション irc.server_default.capabilities (または対象のサーバに関するオプション irc.server.xxx.capabilities) を使ってください。
 
-Examples:
+例:
    /cap
    /cap req multi-prefix
    /cap clear
@@ -594,10 +594,10 @@ daemon2: メッセージをデーモンに転送
 ----
 /quiet  [<channel>] [<nick> [<nick>...]]
 
-channel: channel name
-   nick: nick or host
+channel: チャンネル名
+   nick: ニックネーム又はホスト名
 
-Without argument, this command displays the quiet list for current channel.
+引数無しの場合は、現在のチャンネルの発言禁止リストを表示。
 ----
 
 [[command_irc_quote]]
