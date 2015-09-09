@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-08-24 13:25+0200\n"
+"POT-Creation-Date: 2015-09-09 09:16+0200\n"
 "PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -391,20 +391,12 @@ msgid "Filter \"%s\" disabled"
 msgstr "Filtre \"%s\" devre dışı"
 
 #, c-format
-msgid "%sError: filter \"%s\" already exists"
-msgstr ""
-
-#, c-format
 msgid "%sError: you must specify at least tags or regex for filter"
 msgstr ""
 
 #, c-format
 msgid "Filter \"%s\" added:"
 msgstr "Filtre \"%s\" eklendi:"
-
-#, c-format
-msgid "%sError adding filter"
-msgstr "%sFiltre eklenirken hata"
 
 #, c-format
 msgid "Filter \"%s\" renamed to \"%s\""
@@ -3598,6 +3590,26 @@ msgstr[0] ""
 
 msgid "Debug disabled for cursor mode"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError adding filter \"%s\": %s"
+msgstr "%sFiltre eklenirken hata"
+
+#, fuzzy
+msgid "not enough arguments"
+msgstr "%sYeterli bellek yok"
+
+msgid "a filter with same name already exists"
+msgstr ""
+
+#. TRANSLATORS: %s is the error returned by regerror
+#, fuzzy, c-format
+msgid "invalid regular expression (%s)"
+msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+
+#, fuzzy
+msgid "not enough memory"
+msgstr "%sYeterli bellek yok"
 
 #, c-format
 msgid "New key binding (context \"%s\"): %s%s => %s%s"

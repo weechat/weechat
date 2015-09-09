@@ -38,6 +38,7 @@
 #include "../plugins/plugin.h"
 #include "gui-filter.h"
 #include "gui-buffer.h"
+#include "gui-chat.h"
 #include "gui-line.h"
 #include "gui-window.h"
 
@@ -254,6 +255,21 @@ gui_filter_search_by_name (const char *name)
 }
 
 /*
+ * Displays an error when a new filter is created.
+ */
+
+void
+gui_filter_new_error (const char *name, const char *error)
+{
+    gui_chat_printf_date_tags (
+        NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+        _("%sError adding filter \"%s\": %s"),
+        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+        (name) ? name : "",
+        error);
+}
+
+/*
  * Creates a new filter.
  *
  * Returns pointer to new filter, NULL if error.
@@ -265,15 +281,22 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
 {
     struct t_gui_filter *new_filter;
     regex_t *regex1, *regex2;
-    char *pos_tab, *regex_prefix, **tags_array;
+    char *pos_tab, *regex_prefix, **tags_array, buf[512], str_error[512];
     const char *ptr_start_regex, *pos_regex_message;
-    int i;
+    int i, rc;
 
     if (!name || !buffer_name || !tags || !regex)
+    {
+        gui_filter_new_error (name, _("not enough arguments"));
         return NULL;
+    }
 
     if (gui_filter_search_by_name (name))
+    {
+        gui_filter_new_error (name,
+                              _("a filter with same name already exists"));
         return NULL;
+    }
 
     ptr_start_regex = regex;
     if ((ptr_start_regex[0] == '!')
@@ -305,9 +328,16 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
             regex1 = malloc (sizeof (*regex1));
             if (regex1)
             {
-                if (string_regcomp (regex1, regex_prefix,
-                                    REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
+                rc = string_regcomp (regex1, regex_prefix,
+                                     REG_EXTENDED | REG_ICASE | REG_NOSUB);
+                if (rc != 0)
                 {
+                    regerror (rc, regex1, buf, sizeof (buf));
+                    snprintf (str_error, sizeof (str_error),
+                              /* TRANSLATORS: %s is the error returned by regerror */
+                              _("invalid regular expression (%s)"),
+                              buf);
+                    gui_filter_new_error (name, str_error);
                     free (regex_prefix);
                     free (regex1);
                     return NULL;
@@ -320,9 +350,16 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
             regex2 = malloc (sizeof (*regex2));
             if (regex2)
             {
-                if (string_regcomp (regex2, pos_regex_message,
-                                    REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
+                rc = string_regcomp (regex2, pos_regex_message,
+                                     REG_EXTENDED | REG_ICASE | REG_NOSUB);
+                if (rc != 0)
                 {
+                    regerror (rc, regex2, buf, sizeof (buf));
+                    snprintf (str_error, sizeof (str_error),
+                              /* TRANSLATORS: %s is the error returned by regerror */
+                              _("invalid regular expression (%s)"),
+                              buf);
+                    gui_filter_new_error (name, str_error);
                     if (regex_prefix)
                         free (regex_prefix);
                     if (regex1)
@@ -389,6 +426,10 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
 
         (void) hook_signal_send ("filter_added",
                                  WEECHAT_HOOK_SIGNAL_POINTER, new_filter);
+    }
+    else
+    {
+        gui_filter_new_error (name, _("not enough memory"));
     }
 
     return new_filter;

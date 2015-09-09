@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-08-24 13:25+0200\n"
+"POT-Creation-Date: 2015-09-09 09:16+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -388,19 +388,11 @@ msgid "Filter \"%s\" disabled"
 msgstr ""
 
 #, c-format
-msgid "%sError: filter \"%s\" already exists"
-msgstr ""
-
-#, c-format
 msgid "%sError: you must specify at least tags or regex for filter"
 msgstr ""
 
 #, c-format
 msgid "Filter \"%s\" added:"
-msgstr ""
-
-#, c-format
-msgid "%sError adding filter"
 msgstr ""
 
 #, c-format
@@ -3593,6 +3585,24 @@ msgstr[0] ""
 msgstr[1] ""
 
 msgid "Debug disabled for cursor mode"
+msgstr ""
+
+#, c-format
+msgid "%sError adding filter \"%s\": %s"
+msgstr ""
+
+msgid "not enough arguments"
+msgstr ""
+
+msgid "a filter with same name already exists"
+msgstr ""
+
+#. TRANSLATORS: %s is the error returned by regerror
+#, c-format
+msgid "invalid regular expression (%s)"
+msgstr ""
+
+msgid "not enough memory"
 msgstr ""
 
 #, c-format

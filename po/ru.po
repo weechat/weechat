@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-08-24 13:25+0200\n"
-"PO-Revision-Date: 2015-07-26 09:42+0200\n"
+"POT-Creation-Date: 2015-09-09 09:16+0200\n"
+"PO-Revision-Date: 2015-09-09 09:13+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -440,10 +440,6 @@ msgid "Filter \"%s\" disabled"
 msgstr "команда users отключена"
 
 #, fuzzy, c-format
-msgid "%sError: filter \"%s\" already exists"
-msgstr "%s игнорирование уже существует\n"
-
-#, fuzzy, c-format
 msgid "%sError: you must specify at least tags or regex for filter"
 msgstr ""
 "%sОшибка: Вы должны указать как минимум метку(и) или шаблон для фильтра"
@@ -451,10 +447,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Filter \"%s\" added:"
 msgstr "команда users отключена"
-
-#, fuzzy, c-format
-msgid "%sError adding filter"
-msgstr "%s неправильный номер буфера\n"
 
 #, fuzzy, c-format
 msgid "Filter \"%s\" renamed to \"%s\""
@@ -4014,6 +4006,28 @@ msgstr[2] "обычные"
 
 msgid "Debug disabled for cursor mode"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError adding filter \"%s\": %s"
+msgstr "%s неправильный номер буфера\n"
+
+#, fuzzy
+msgid "not enough arguments"
+msgstr "Недостаточно памяти для новой строчки\n"
+
+#, fuzzy
+msgid "a filter with same name already exists"
+msgstr ""
+"%s не могу загрузить plugin \"%s\": одноимённый plugin уже существует\n"
+
+#. TRANSLATORS: %s is the error returned by regerror
+#, fuzzy, c-format
+msgid "invalid regular expression (%s)"
+msgstr "%s \"%s\" не является регулярным выражением (%s)\n"
+
+#, fuzzy
+msgid "not enough memory"
+msgstr "Недостаточно памяти для новой строчки\n"
 
 #, fuzzy, c-format
 msgid "New key binding (context \"%s\"): %s%s => %s%s"

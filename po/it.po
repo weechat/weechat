@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-08-24 13:25+0200\n"
-"PO-Revision-Date: 2015-07-26 09:42+0200\n"
+"POT-Creation-Date: 2015-09-09 09:16+0200\n"
+"PO-Revision-Date: 2015-09-09 09:13+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -418,10 +418,6 @@ msgstr "%sErrore: filtro \"%s\" non trovato"
 msgid "Filter \"%s\" disabled"
 msgstr "Filtro \"%s\" disabilitato"
 
-#, c-format
-msgid "%sError: filter \"%s\" already exists"
-msgstr "%sErrore: il filtro \"%s\" esiste già"
-
 #, fuzzy, c-format
 msgid "%sError: you must specify at least tags or regex for filter"
 msgstr "%sErrore: specificare almeno un tag o una regex per il filtro"
@@ -429,10 +425,6 @@ msgstr "%sErrore: specificare almeno un tag o una regex per il filtro"
 #, c-format
 msgid "Filter \"%s\" added:"
 msgstr "Filtro \"%s\" aggiunto:"
-
-#, c-format
-msgid "%sError adding filter"
-msgstr "%sErrore nell'aggiunta del fitro"
 
 #, c-format
 msgid "Filter \"%s\" renamed to \"%s\""
@@ -4716,6 +4708,27 @@ msgstr[1] "normali"
 
 msgid "Debug disabled for cursor mode"
 msgstr "Debug disabilitato per la modalità cursore"
+
+#, fuzzy, c-format
+msgid "%sError adding filter \"%s\": %s"
+msgstr "%sErrore nell'aggiunta del fitro"
+
+#, fuzzy
+msgid "not enough arguments"
+msgstr "%sSpazio non sufficiente"
+
+#, fuzzy
+msgid "a filter with same name already exists"
+msgstr "%sErrore: un buffer con lo stesso nome (%s) esiste già"
+
+#. TRANSLATORS: %s is the error returned by regerror
+#, fuzzy, c-format
+msgid "invalid regular expression (%s)"
+msgstr "%s%s: \"%s\" non è una espressione regolare valida (%s)"
+
+#, fuzzy
+msgid "not enough memory"
+msgstr "%sSpazio non sufficiente"
 
 #, c-format
 msgid "New key binding (context \"%s\"): %s%s => %s%s"

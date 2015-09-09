@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-08-24 13:25+0200\n"
-"PO-Revision-Date: 2015-08-15 22:22+0200\n"
+"POT-Creation-Date: 2015-09-09 09:16+0200\n"
+"PO-Revision-Date: 2015-09-09 09:13+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -437,10 +437,6 @@ msgstr "%sChyba: filtr \"%s\" nenalezen"
 msgid "Filter \"%s\" disabled"
 msgstr "Filtr \"%s\" zakázán"
 
-#, c-format
-msgid "%sError: filter \"%s\" already exists"
-msgstr "%sChyba: filtr \"%s\" již existuje"
-
 #, fuzzy, c-format
 msgid "%sError: you must specify at least tags or regex for filter"
 msgstr "%sChyba: musíte specifikovat buď tag(y) nebo regulární výrazpro filter"
@@ -448,10 +444,6 @@ msgstr "%sChyba: musíte specifikovat buď tag(y) nebo regulární výrazpro fil
 #, c-format
 msgid "Filter \"%s\" added:"
 msgstr "Filtr \"%s\" přidán:"
-
-#, c-format
-msgid "%sError adding filter"
-msgstr "%sChyba: přidávání filtru"
 
 #, c-format
 msgid "Filter \"%s\" renamed to \"%s\""
@@ -4377,6 +4369,27 @@ msgstr[2] "normálních"
 #, fuzzy
 msgid "Debug disabled for cursor mode"
 msgstr "Ladění vypnuto pro \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError adding filter \"%s\": %s"
+msgstr "%sChyba: přidávání filtru"
+
+#, fuzzy
+msgid "not enough arguments"
+msgstr "%sNedostatek paměti"
+
+#, fuzzy
+msgid "a filter with same name already exists"
+msgstr "%sChyba: buffer se stejným jménem (%s) už existuje"
+
+#. TRANSLATORS: %s is the error returned by regerror
+#, fuzzy, c-format
+msgid "invalid regular expression (%s)"
+msgstr "%s%s: \"%s\" není validní regulární výraz (%s)"
+
+#, fuzzy
+msgid "not enough memory"
+msgstr "%sNedostatek paměti"
 
 #, fuzzy, c-format
 msgid "New key binding (context \"%s\"): %s%s => %s%s"

@@ -19,6 +19,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: display a more explicit error when a filter fails to be added
+  (issue #522)
 * api: add function string_hex_dump()
 * api: add argument "length" in function utf8_is_valid()
 * irc: add command /cap (issue #8)

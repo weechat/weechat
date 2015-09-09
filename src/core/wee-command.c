@@ -2184,14 +2184,6 @@ COMMAND_CALLBACK(filter)
     if (string_strcasecmp (argv[1], "add") == 0)
     {
         COMMAND_MIN_ARGS(6, "add");
-        if (gui_filter_search_by_name (argv[2]))
-        {
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError: filter \"%s\" already exists"),
-                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                       argv[2]);
-            return WEECHAT_RC_OK;
-        }
         if ((strcmp (argv[4], "*") == 0) && (strcmp (argv_eol[5], "*") == 0))
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
@@ -2201,7 +2193,8 @@ COMMAND_CALLBACK(filter)
             return WEECHAT_RC_OK;
         }
 
-        ptr_filter = gui_filter_new (1, argv[2], argv[3], argv[4], argv_eol[5]);
+        ptr_filter = gui_filter_new (1, argv[2], argv[3], argv[4],
+                                     argv_eol[5]);
         if (ptr_filter)
         {
             gui_filter_all_buffers ();
@@ -2210,12 +2203,6 @@ COMMAND_CALLBACK(filter)
                                        _("Filter \"%s\" added:"),
                                        argv[2]);
             command_filter_display (ptr_filter);
-        }
-        else
-        {
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError adding filter"),
-                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         }
 
         return WEECHAT_RC_OK;
