@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-09-09 09:16+0200\n"
-"PO-Revision-Date: 2015-09-09 09:15+0200\n"
+"PO-Revision-Date: 2015-09-09 09:24+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -9258,7 +9258,7 @@ msgstr "(message supprimé)"
 
 #, c-format
 msgid "%s%s: not enough memory for received message"
-msgstr "%s%s : mémoire insuffisante pour un message reçu"
+msgstr "%s%s : pas assez de mémoire pour un message reçu"
 
 #, c-format
 msgid "%s%s: reading data on socket: error %d %s"
@@ -10116,7 +10116,7 @@ msgstr ""
 #, c-format
 msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
 msgstr ""
-"%sErreur : impossible de charger l'extension \"%s\" (mémoire insuffisante)"
+"%sErreur : impossible de charger l'extension \"%s\" (pas assez de mémoire)"
 
 #, c-format
 msgid "Plugin \"%s\" loaded"
@@ -10210,7 +10210,7 @@ msgstr ""
 
 #, c-format
 msgid "%s: error loading script \"%s\" (not enough memory)"
-msgstr "%s : erreur de chargement du script \"%s\" (mémoire insuffisante)"
+msgstr "%s : erreur de chargement du script \"%s\" (pas assez de mémoire)"
 
 #, c-format
 msgid "%s: script removed: %s"
@@ -10291,7 +10291,7 @@ msgstr "%s%s : impossible de libérer l'interpréteur"
 
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
-msgstr "%s%s : mémoire insuffisante pour analyser le message"
+msgstr "%s%s : pas assez de mémoire pour analyser le message"
 
 msgid "Actions (letter+enter):"
 msgstr "Actions (lettre+entrée) :"
