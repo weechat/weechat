@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-09-09 09:16+0200\n"
-"PO-Revision-Date: 2015-09-09 09:13+0200\n"
+"PO-Revision-Date: 2015-09-11 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -4816,26 +4816,23 @@ msgstr[0] "通常"
 msgid "Debug disabled for cursor mode"
 msgstr "カーソルモードのデバッグを無効化"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError adding filter \"%s\": %s"
-msgstr "%sフィルタの追加エラー"
+msgstr "%sフィルタ \"%s\" の追加エラー: %s"
 
-#, fuzzy
 msgid "not enough arguments"
-msgstr "%sメモリ不足"
+msgstr "引数が不足しています"
 
-#, fuzzy
 msgid "a filter with same name already exists"
-msgstr "%sエラー: 同じ名前 (%s) のバッファがあります"
+msgstr "同名のフィルタが既に存在します"
 
 #. TRANSLATORS: %s is the error returned by regerror
-#, fuzzy, c-format
+#, c-format
 msgid "invalid regular expression (%s)"
-msgstr "%s%s: \"%s\" は不正な正規表現です (%s)"
+msgstr "不正な正規表現 (%s)"
 
-#, fuzzy
 msgid "not enough memory"
-msgstr "%sメモリ不足"
+msgstr "メモリ不足"
 
 #, c-format
 msgid "New key binding (context \"%s\"): %s%s => %s%s"
@@ -8923,11 +8920,11 @@ msgstr "%s%s: 遅延が長いです、サーバ %s%s%s に再接続します"
 
 #, c-format
 msgid "%s%s: reconnecting to server in %d %s, %d %s"
-msgstr "%s%s: %d %s 後にサーバに再接続します、%d %s"
+msgstr "%s%s: %d %s %d %s後にサーバに再接続します"
 
 #, c-format
 msgid "%s%s: reconnecting to server in %d %s"
-msgstr "%s%s: %d %s 後にサーバに再接続します"
+msgstr "%s%s: %d %s後にサーバに再接続します"
 
 #, c-format
 msgid "%s%s: switching address to %s/%d"
