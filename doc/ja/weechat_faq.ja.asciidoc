@@ -512,9 +512,8 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 /set irc.server.example.ssl_verify off
 ----
 
-// TRANSLATION MISSING
-If the server has an invalid certificate and you know what the certificate
-should be, you can specify the fingerprint (SHA-512, SHA-256 or SHA-1):
+サーバが不正な証明書を持っており、正常な証明書がどのようなものであるかわかっている場合、証明書の指紋を設定しておくことが可能です
+(SHA-512、SHA-256、SHA-1):
 
 ----
 /set irc.server.example.ssl_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b
