@@ -190,7 +190,7 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                 ptr_option = weechat_config_search_option (
                     alias_config_file,
                     alias_config_section_cmd,
-                                                           ptr_alias_name);
+                    ptr_alias_name);
                 if (ptr_option)
                     weechat_config_option_free (ptr_option);
                 ptr_option = weechat_config_search_option (
