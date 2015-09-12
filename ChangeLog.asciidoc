@@ -23,6 +23,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (issue #522)
 * api: add function string_hex_dump()
 * api: add argument "length" in function utf8_is_valid()
+* alias: display completion in /alias list (issue #518)
 * irc: add command /cap (issue #8)
 * irc: add hex dump of messages in raw buffer when debug is enabled for irc
   plugin (level 2 or more)

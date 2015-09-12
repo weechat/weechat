@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-09-09 09:16+0200\n"
+"POT-Creation-Date: 2015-09-12 09:17+0200\n"
 "PO-Revision-Date: 2015-09-09 09:13+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4086,6 +4086,10 @@ msgstr "Серверы с '%s':\n"
 #, fuzzy
 msgid "All aliases:"
 msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "completion:"
+msgstr "собран:"
 
 #, fuzzy, c-format
 msgid "No alias found matching \"%s\""

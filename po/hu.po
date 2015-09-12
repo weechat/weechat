@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-09-09 09:16+0200\n"
+"POT-Creation-Date: 2015-09-12 09:17+0200\n"
 "PO-Revision-Date: 2015-09-09 09:13+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4047,6 +4047,10 @@ msgstr "A(z) '%s' szerverek listája:\n"
 #, fuzzy
 msgid "All aliases:"
 msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "completion:"
+msgstr "lefordítva:"
 
 #, fuzzy, c-format
 msgid "No alias found matching \"%s\""

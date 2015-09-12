@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-09-09 09:16+0200\n"
+"POT-Creation-Date: 2015-09-12 09:17+0200\n"
 "PO-Revision-Date: 2015-09-09 09:13+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4449,6 +4449,10 @@ msgstr "Servery s \"%s\":"
 #, fuzzy
 msgid "All aliases:"
 msgstr "Aliasy barev:"
+
+#, fuzzy
+msgid "completion:"
+msgstr "kompilováno"
 
 #, c-format
 msgid "No alias found matching \"%s\""

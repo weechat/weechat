@@ -123,11 +123,36 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                             weechat_printf (NULL, _("All aliases:"));
                         }
                     }
-                    weechat_printf (NULL, "  %s %s=>%s %s",
-                                    ptr_alias->name,
-                                    weechat_color ("chat_delimiters"),
-                                    weechat_color ("chat"),
-                                    ptr_alias->command);
+                    ptr_option = weechat_config_search_option (
+                        alias_config_file,
+                        alias_config_section_completion,
+                        ptr_alias->name);
+                    if (ptr_option)
+                    {
+                        weechat_printf (
+                            NULL,
+                            "  %s %s=>%s %s  %s(%s%s %s%s)%s",
+                            ptr_alias->name,
+                            weechat_color ("chat_delimiters"),
+                            weechat_color ("chat"),
+                            ptr_alias->command,
+                            weechat_color ("chat_delimiters"),
+                            weechat_color ("chat"),
+                            _("completion:"),
+                            weechat_config_string (ptr_option),
+                            weechat_color ("chat_delimiters"),
+                            weechat_color ("chat"));
+                    }
+                    else
+                    {
+                        weechat_printf (
+                            NULL,
+                            "  %s %s=>%s %s",
+                            ptr_alias->name,
+                            weechat_color ("chat_delimiters"),
+                            weechat_color ("chat"),
+                            ptr_alias->command);
+                    }
                     alias_found = 1;
                 }
             }
