@@ -943,8 +943,7 @@ relay_client_timer_cb (void *data, int remaining_calls)
                 {
                     for (i = 0; i < 2; i++)
                     {
-                        if (ptr_client->outqueue->raw_message
-                            && ptr_client->outqueue->raw_message[i])
+                        if (ptr_client->outqueue->raw_message[i])
                         {
                             /*
                              * print raw message and remove it from outqueue
