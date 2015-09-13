@@ -18,7 +18,7 @@ target: サーバ名
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
 
  -current: 現在のサーバ上のチャンネルに対してコマンドを実行
- -exclude: 一部のチャンネルを除外 (ワイルドカード '*' を使うことができます)
+ -exclude: 一部のチャンネルを除外 (ワイルドカード "*" を使うことができます)
   command: 実行するコマンド
 arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
@@ -38,7 +38,7 @@ arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそ
 /allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
 
  -current: 現在のサーバ上のプライベートバッファに対してコマンドを実行
- -exclude: 一部のニックネームを除外 (ワイルドカード '*' を使うことができます)
+ -exclude: 一部のニックネームを除外 (ワイルドカード "*" を使うことができます)
   command: 実行するコマンド
 arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
@@ -59,7 +59,7 @@ arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそ
 ----
 /allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
 
- -exclude: いくつかのサーバを除外 (ワイルドカード '*' を使うことができます)
+ -exclude: いくつかのサーバを除外 (ワイルドカード "*" を使うことができます)
   command: 実行するコマンド
 arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
@@ -300,7 +300,7 @@ channel: チャンネル名
 ----
 /ison  <nick> [<nick>...]
 
-nick: nick
+nick: ニックネーム
 ----
 
 [[command_irc_join]]
@@ -584,7 +584,7 @@ daemon2: メッセージをデーモンに転送
 
 -noswitch: 新しいバッファに切り替えない
    server: このサーバに送信 (内部サーバ名)
-   target: ニックネーム
+     nick: ニックネーム
      text: 送信するテキスト
 ----
 
@@ -858,7 +858,7 @@ channel: チャンネル名
 ----
 /userhost  <nick> [<nick>...]
 
-nick: nick
+nick: ニックネーム
 ----
 
 [[command_irc_users]]

@@ -24,9 +24,9 @@
 
 | irc | irc_nick_from_host | IRC ホストからニックネームを取得 | IRC ホスト (例: `:nick!name@server.com`)
 
-| irc | irc_server_isupport | サーバがこの機能がサポートする場合は 1 (IRC メッセージ 005 を使う) | server,feature
+| irc | irc_server_isupport | サーバがこの機能がサポートする場合は 1 (IRC メッセージ 005 を使う) | サーバ、機能
 
-| irc | irc_server_isupport_value | サーバがサポートする場合、機能の値 (IRC メッセージ 005 を使う) | server,feature
+| irc | irc_server_isupport_value | サーバがサポートする場合、機能の値 (IRC メッセージ 005 を使う) | サーバ、機能
 
 | python | python2_bin | python 2.x インタプリタへのパス | -
 

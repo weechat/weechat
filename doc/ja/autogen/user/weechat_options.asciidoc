@@ -538,12 +538,12 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_weechat.look.confirm_quit]] *weechat.look.confirm_quit*
-** 説明: `これを設定した場合、/quit コマンド使う際には必ず "-yes" 引数と共に使う必要があります (help quit 参照)`
+** 説明: `これを設定した場合、/quit コマンド使う際には必ず "-yes" 引数と共に使う必要があります (/help quit 参照)`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_weechat.look.confirm_upgrade]] *weechat.look.confirm_upgrade*
-** 説明: `これを設定した場合、/upgrade コマンド使う際には必ず "-yes" 引数と共に使う必要があります (help upgrade 参照)`
+** 説明: `これを設定した場合、/upgrade コマンド使う際には必ず "-yes" 引数と共に使う必要があります (/help upgrade 参照)`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
@@ -798,7 +798,7 @@
 ** 値: 0 .. 128 (デフォルト値: `0`)
 
 * [[option_weechat.look.prefix_buffer_align_more]] *weechat.look.prefix_buffer_align_more*
-** 説明: `バッファ名が切り詰められた場合に表示する文字 (多くのバッファが同じ番号を持つようにマージされた場合) (スクリーン上のちょうど1文字)`
+** 説明: `バッファ名が切り詰められた場合に表示する文字 (多くのバッファが同じ番号を持つようにマージされた場合) (スクリーン上のちょうど 1 文字)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"+"`)
 
@@ -953,7 +953,7 @@
 ** 値: 1 .. 2147483647 (デフォルト値: `60`)
 
 * [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
-** 説明: `認証局を含むファイル ("%h" は WeeChat ホームに置換されます、デフォルトでは "~/.weechat")`
+** 説明: `認証局を含むファイル ("%h" は WeeChat ホームに置換されます、デフォルトでは "~/.weechat" です)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"/etc/ssl/certs/ca-certificates.crt"`)
 
@@ -983,7 +983,7 @@
 ** 値: 未制約文字列 (デフォルト値: `".so,.dll"`)
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
-** 説明: `プラグイン検索パス ("%h" は WeeChat ホームに置換されます、デフォルトでは "~/.weechat")`
+** 説明: `プラグイン検索パス ("%h" は WeeChat ホームに置換されます、デフォルトでは "~/.weechat" です)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%h/plugins"`)
 
