@@ -1,0 +1,112 @@
+= WEECHAT(1)
+:doctype: manpage
+:lang: cs
+
+== JMÉNO
+
+weechat - the extensible chat client
+
+== PŘEHLED
+
+[verse]
+'weechat' [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+'weechat' [-c|--colors]
+'weechat' [-h|--help]
+'weechat' [-l|--license]
+'weechat' [-v|--version]
+
+== POPIS
+
+WeeChat (Wee Enhanced Environment for Chat) je svobodný chatovací klient, rychlý
+a lehký, připraven pro mnoho operačních systémů.
+Je velmi připůsobitelný a rozšiřitelný s skripty.
+
+== VOLBY
+
+include::cmdline_options.en.asciidoc[]
+
+== VOLBY PLUGINŮ
+
+Pro kompletní dokumentaci nastavení pluginů a jejich volby podívejte se na
+https://weechat.org/doc[WeeChat user's guide].
+
+S irc pluginem se můžete doččasně připojit na server s URL jako:
+
+    irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
+
+K připojení na IRC kanál Weechatu pro podporu s přezdívkou "mynick":
+
+    irc://mynick@chat.freenode.net/#weechat
+
+IPv6 adresa může být uzavřena do hranatých závorek k přidání portu, například:
+
+    irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
+
+== SOUBORY
+
+$HOME/.weechat/weechat.conf::
+    hlavní konfigurační soubor WeeChatu
+
+$HOME/.weechat/plugins.conf::
+    soubor konfigurace pluginů
+
+$HOME/.weechat/sec.conf::
+    konfigurační soubor s chráněnými daty
+
+$HOME/.weechat/alias.conf::
+    configurační soubor pro 'alias' plugin
+
+$HOME/.weechat/aspell.conf::
+    konfigurační soubor pro 'aspell' plugin
+
+$HOME/.weechat/charset.conf::
+    konfigurační soubor pro 'charset' plugin
+
+$HOME/.weechat/exec.conf::
+    konfigurační soubor pro 'exec' plugin
+
+$HOME/.weechat/irc.conf::
+    konfigurační soubor pro 'irc' plugin
+
+$HOME/.weechat/logger.conf::
+    konfigurační soubor pro 'logger' plugin
+
+$HOME/.weechat/relay.conf::
+    konfigurační soubor pro 'relay' plugin
+
+$HOME/.weechat/script.conf::
+    konfigurační soubor pro 'script' plugin
+
+$HOME/.weechat/trigger.conf::
+    konfigurační soubor pro 'trigger' plugin
+
+$HOME/.weechat/xfer.conf::
+    konfigurační soubor pro 'xfer' plugin
+
+$HOME/.weechat/weechat.log::
+    soubor záznamů WeeChatu
+
+== AUTOŘI
+
+Tato manuálová stránka byla napsána Sébastienem Helleu <flashcode@flashtux.org>.
+Tato manuálová stránka byla přeložena Ondřejem Súkupem <mimi.vx@gmail.com>
+
+== COPYRIGHT
+
+WeeChat je napsán Sébastienem Helleu a přispěvovateli (kompletní seznam je v
+souboru AUTHORS.asciidoc).
+
+Copyright (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
+
+WeeChat je svobodný software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+Prosím přečtěte si soubor COPYING pro více informací.
+
+Web: <https://weechat.org/>
+
+== PODPORA / HLÁŠENÍ CHYB
+
+Pro pomoc nebo hlášení chyb <https://weechat.org/dev/support>
