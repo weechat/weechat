@@ -16,12 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
+# Ondřej Súkup <mimi.vx@gmail.com>, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-09-12 09:17+0200\n"
-"PO-Revision-Date: 2015-09-09 09:13+0200\n"
+"POT-Creation-Date: 2015-09-23 10:14+0200\n"
+"PO-Revision-Date: 2015-09-23 10:22+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -29,7 +30,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 1.8.3\n"
+"X-Generator: Poedit 1.8.4\n"
 
 msgid "any string"
 msgstr "jakýkoliv řetězec"
@@ -108,7 +109,7 @@ msgid "update allowed"
 msgstr "aktualizace povolena"
 
 msgid "lists"
-msgstr ""
+msgstr "seznamy"
 
 msgid "Option"
 msgstr "volba"
@@ -5580,7 +5581,7 @@ msgid "client capability negotiation"
 msgstr "%s%s: schopnost klienta, vyžaduji: sasl"
 
 msgid "ls || list || req|ack [<capability> [<capability>...]] || clear || end"
-msgstr ""
+msgstr "ls || list || req|ack [<schopnost> [<schopnost>...]] || clear || end"
 
 msgid ""
 "   ls: list the capabilities supported by the server\n"
@@ -6033,7 +6034,7 @@ msgid "<message>"
 msgstr "<zpráva>"
 
 msgid "message: message to send"
-msgstr "zpráva: zpráva, která se má poslat"
+msgstr "zpráva: zpráva k odeslání"
 
 msgid "change channel or user mode"
 msgstr "změní mód kanálu nebo uživatele"
@@ -7122,10 +7123,10 @@ msgid "display CTCP message even if it is unknown CTCP"
 msgstr "zobrazit CTCP zprávu i když je to neznámé CTCP"
 
 msgid "display host in join messages"
-msgstr "zobrazovat hosta ve vezprávách o připojení"
+msgstr "zobrazovat hosta ve zprávách o připojení"
 
 msgid "display host in join messages from local client"
-msgstr "zobrazovat hosta ve vezprávách o připojení z lokálního klienta"
+msgstr "zobrazovat hosta ve zprávách o připojení z lokálního klienta"
 
 msgid "display host in part/quit messages"
 msgstr "zobrazovat hosta ve zprávách o odchodu/ukončení"
@@ -8820,23 +8821,23 @@ msgid "1 if cursor mode is enabled"
 msgstr "1 pokud jsou filtry povoleny"
 
 msgid "width of terminal"
-msgstr ""
+msgstr "šířka terminálu"
 
 msgid "height of terminal"
-msgstr ""
+msgstr "výška terminálu"
 
 msgid "POSIX extended regular expression to search ANSI escape codes"
-msgstr ""
+msgstr "Rozšířené POSIX regulární výrazy k hledání ANSI escape kodů"
 
 msgid "terminal color (0-255) converted to RGB color"
-msgstr ""
+msgstr "barva terminálu (0-255) konvertována do barev RGB"
 
 #, fuzzy
 msgid "color (terminal color: 0-255)"
 msgstr "barva (barva terminálu: 0-255)"
 
 msgid "RGB color converted to terminal color (0-255)"
-msgstr ""
+msgstr "RGB barva konvertována do barev terminálu (0-255)"
 
 msgid "rgb,limit (limit is optional and is set to 256 by default)"
 msgstr ""
@@ -9040,7 +9041,7 @@ msgid "structure with undo for input line"
 msgstr "funkce pro příkazovou řádku"
 
 msgid "a key (keyboard shortcut)"
-msgstr ""
+msgstr "klávesa (klávesová zkratka)"
 
 #, fuzzy
 msgid "layout"
@@ -9878,7 +9879,7 @@ msgid "Error: file not found"
 msgstr "%sChyba: filtr \"%s\" nenalezen"
 
 msgid "Source code:"
-msgstr ""
+msgstr "Zdrojový kód:"
 
 #, fuzzy
 msgid "Downloading script..."
@@ -9983,7 +9984,7 @@ msgid "Scripts"
 msgstr "Podpora scriptů v Sheme (pomocí Guile)"
 
 msgid "Scripts manager"
-msgstr ""
+msgstr "Správce skriptů"
 
 #, fuzzy
 msgid "WeeChat scripts manager"
@@ -10296,7 +10297,7 @@ msgstr "běžící"
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "obsolete"
-msgstr ""
+msgstr "zastaralý"
 
 #, fuzzy, c-format
 msgid "%s%s: error reading list of scripts"
@@ -10813,9 +10814,9 @@ msgstr "%s%s: nedostatek paměti pro nový xfer"
 msgid "%s%s: unable to interpret address: error %d %s"
 msgstr "%s%s: nemohu vytvořit rouru"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: hashing error"
-msgstr "%s%s: chyba inicializace TLS"
+msgstr "%s%s: chyba hašování"
 
 #, fuzzy, c-format
 msgid ""
