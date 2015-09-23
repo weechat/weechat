@@ -1,0 +1,38 @@
+*-a*, *--no-connect*::
+    Zakaž automatické pripojení k serverům když WeeChat startuje.
+
+*-c*, *--colors*::
+    Zobraz defaultní barvy v terminálu.
+
+*-d*, *--dir* '<path>'::
+    Nastav cestu jako dovmský adresář pro WeeChat (použitou pro konfigurační 
+    soubory,    logy, uživatelské pluginy a skripty), výchozí hodnota je 
+    '~/.weechat' (poznámka: složka bude vytvořena pokud nebude nalezena
+    Weechatem)
+    Pokud tato volba není zadána, použije se promněná prostředí WEECHAT_HOME
+    (pokud není prázdná)
+
+*-h*, *--help*::
+    Zobrazí nápovědu. 
+
+*-l*, *--license*::
+    Zobrazí licenci WeeChatu.
+
+*-p*, *--no-plugin*::
+    Vypne automatické nahrání pluginů.
+
+*-r*, *--run-command* '<command>'::
+    Spustí příkaz(y) po startu (více přůkazů může být odděleno středníky).
+
+*-s*, *--no-script*::
+    Vypni automatické nahrání scriptů.
+
+*--upgrade*::
+    Aktualizuj WeeChat použitím souborů relací generovaných 
+    příkazem `/upgrade -quit`.
+
+*-v*, *--version*::
+    Zobraz verzi WeeChatu.
+
+*plugin:option*::
+   Nastavení pluginů. 

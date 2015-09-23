@@ -1,0 +1,334 @@
+= WeeChat quick start guide
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: cs
+:toc2:
+:max-width: 100%
+
+
+[[start]]
+== Spuštění WeeChatu
+
+Doporučený terminálový emulátor pro X (ale ne vyžadovaný) je rxvt-unicode
+(má dobrou podporu pro UTF-8, a nemá problémy s výchozím nastavením
+klávesových zkratek)
+
+Spustění z Vašeho shellu:
+
+----
+$ weechat
+----
+
+[[help_options]]
+== On-line nápověda/ volby
+
+WeeChat má nápovědů pro všechny příkazy, postě vložte:
+
+----
+/help
+----
+
+K získání nápovědy pro specifický příkaz napište:
+
+----
+/help příkaz
+----
+
+K nastavení voleb napište:
+
+----
+/set config.section.option value
+----
+
+(kde `config` je jméno konfigurace (`weechat` pro jádro, nebo jméno pluginu),
+`section` sekce této konfigurace a `option` jméno volby).
+
+WeeChat okamžitě použije novou hodnotu (*nikdy* nebudete potřebovat restart
+WeeChatu po změně konfigurace).
+
+Můžete použít v příkazu `/set` volbu s částečným jménem a zástupným znakem "*"
+na konci nebo začátku k zobrazení všech voleb obsahující dané znaky.
+Například:
+
+* zobrazí všechny volby (WeeChatu a pluginů):
+
+----
+/set
+----
+
+* zobraz volby WeeChatu:
+
+----
+/set weechat.*
+----
+
+* zobraz volby IRC pluginu:
+
+----
+/set irc.*
+----
+
+Můžete zobrazit nápovědu pro voblby s `/help`, například:
+
+----
+/help weechat.look.highlight
+----
+
+Všechna nastavení jsou uložena při ukončení WeeChatu (nebo použitím příkazu
+`/save` k vynucení zapsaní voleb).
+
+Můžete editovat konfigurační soubory (*.conf) ručně a znovu je načíst příkazem
+`/reload` pokud nechcete použít příkaz `/set`.
+
+[[core_vs_plugins]]
+== Jádro versus pluginy
+
+"Jádro" WeeChatu je použito pouze k zobrazení dat na obrazovce a k interakci
+s uživatelem, což znamená že jádro weechatu je nepoužitelné bez pluginů.
+(pro věrné uživatele: IRC bylo částí jádra ve verzích ≤ 0.2.6).
+
+Všechny síťové protokoly jako IRC jsou pooskytovány vlastnímy pluginy.
+
+Použijte příkaz `/plugin` k zobrazení nahraných pluginů, pravděpodobně uvidíte
+"irc" a ostatní pluginy v seznamu.
+
+[[add_irc_server]]
+== Přidání IRC serveru
+
+Můžete přidat irc server příkazem `/server`, například:
+
+----
+/server add freenode chat.freenode.net
+----
+
+Jako obvykle je poskytována nápověda pokud se ztratíte:
+
+----
+/help server
+----
+
+[[irc_server_options]]
+== Nastavení vlastních voleb IRC serveru
+
+WeeChat používá bezpečné výchozí volby pro všechny servery, pokud nenastavíte
+specifické hodnoty pro volby serveru,
+Výchozí volby jsou "irc.server_default.*"
+
+Pro každou serverovou volbu WeeChat použije její hodnotu pokud je definována
+(není "prázdná"). Jinak WeeChat použije výchozí hodnotu ("irc.server_default.xxx).
+
+Například, je zde výchozí přezdívka (založena na vašem un*x loginu), můžete
+ji přepsat pro freenode s následujícím příkazem:
+
+----
+/set irc.server.freenode.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+----
+
+Nastavení username a realname:
+
+----
+/set irc.server.freenode.username "Mé uživatelské jméno"
+/set irc.server.freenode.realname "Mé skutečné jméno"
+----
+
+K zapnutí automatického připojení při spuštění:
+
+----
+/set irc.server.freenode.autoconnect on
+----
+
+K připojení s SSL:
+
+----
+/set irc.server.freenode.addresses "chat.freenode.net/7000"
+/set irc.server.freenode.ssl on
+----
+
+Pokud je na serveru podporován SASL, můžete jej použít pro autentizaci (mužete
+být identifikován před připojením kanálů):
+
+----
+/set irc.server.freenode.sasl_username "mynick"
+/set irc.server.freenode.sasl_password "xxxxxxx"
+----
+
+K spuštění příkazů po připojení k serveru, například k autentizaci s nickserv
+(pouze pokud nepoužíváte autentizaci přes SASL):
+
+----
+/set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
+----
+
+[POZNÁMKA]
+Více příkazů v volbě 'command' bůže být odděleno pomocí ';' (středník).
+
+K automatickému připojení některých kanálů při připojování k serveru:
+
+----
+/set irc.server.freenode.autojoin "#channel1,#channel2"
+----
+
+K smazání hodnoty serverové volby a k použití výchozí hodnoty místo ní,
+například k požití výchozích přezdívek (irc.server_default.nicks):
+
+----
+/set irc.server.freenode.nicks null
+----
+
+Ostatní volby: můžete nastavit ostatní volby s následujícím příkazem ("xxx" je
+název volby):
+
+----
+/set irc.server.freenode.xxx value
+----
+
+[[connect_to_irc_server]]
+== Připojení k IRC serveru a automatické ořipojení kanálů
+
+----
+/connect freenode
+----
+
+[POZNÁMKA]
+Tento příkaz může být použit k vytvoření nového připojení k serveru bez
+použití příkazu `/server` (mohu zopakovat že můžete zobrazit nápovědu
+pro tento příkaz s `/help connect` ?).
+
+Ve výchozím nastavení jsou serverové bufery spojen s Weechat 'core' buferem.
+K přepnutí mezi 'core' a server bufery můžete použít klávesu [ctrl-x].
+
+Je možné vypnout automatické sloučení serverových buferů a mít nezávislé
+serverové bufery:
+
+----
+/set irc.look.server_buffer independent
+----
+
+[[join_part_irc_channels]]
+== Připojení/Opuštění IRC kanálů
+
+Připojení kanálu:
+
+----
+/join #channel
+----
+
+Opuštění kanálu (zachování otevřeného buferu):
+
+----
+/part [quit message]
+----
+
+Uzavření serverového nebo kanáloveho buferu (`/close` je zkratka pro `/buffer
+close`):
+
+----
+/close
+----
+
+[[irc_private_messages]]
+== IRC soukromé zprávy
+
+Otevření buferu a poslání soukromé zprávy jinému uživateli (přezdívka 'foo'):
+
+----
+/query foo tato zpráva
+----
+
+Uzavření soukromého buferu:
+
+----
+/close
+----
+
+[[buffer_window]]
+== Managment Buferu/Okna
+
+Bufer je komponenta navázaná na plugin s číslem, kategoriía jménem. Bufer
+obsahuje data zobrazená na obrazovce.
+
+Okno je pohled na bufer. Ve výchozím stavu je zde pouze jedno okno zobrazijící
+jeden bufer. Pokud rozdělíte obrazovku, můžete vidět více oken s více bufery
+ve stejný čas.
+
+Příkazy k spravování buferů a oken:
+
+----
+/buffer
+/window
+----
+
+(nebudu se zde opakovat, můžete k těmto příkazům získat nápovědu pomocí /help)
+
+Například, k svislému rozdělení obrazovky na malé okno (1/3 šířky), a velké
+okno (2/3), použijte příkaz:
+
+----
+/window splitv 33
+----
+
+[[key_bindings]]
+== Předvoblby klávesových zkratek
+
+Weechat používá ve výchozím nastavení mnoho klávesových zkratek, Všechny
+najdete v dokumentaci, ale je dobré znát alespoň pár těchto důležitých:
+
+- key[alt-]key[←]/key[→] nebo key[F5]/key[F6]: přepnout na předchozí/další bufer
+- key[F7]/key[F8]: přepnout na předchozí/další okno (pokud je obrazovka rozdělena)
+- key[F9]/key[F10]: posunoutí titulku
+- key[F11]/key[F12]: posunutí seznamu přezdívek
+- key[Tab]: doplnění textu v vstupním řádku, podobně jak v shellu
+- key[PgUp]/key[PgDn]: posunutí textu v aktuálním buferu
+- key[alt-a]: přepni do aktivního buferu (v seznamu)
+
+Dle Vaší klávesnice a/nebo vašich potřeb, můžete přenastavit jakoukoliv
+klávesovou zkratku pomocí příkazu `/key`.
+Užitečná zkratka je key[alt-k] k najítí kodů kláves.
+
+Například k nastavení zkratky key[alt-y] na příkaz `/buffer close`:
+
+----
+/key bind (press alt-k) (press alt-y) /buffer close
+----
+
+Můžete vytvořit příkaz jako:
+
+----
+/key bind meta-y /buffer close
+----
+
+K smazání klávesové zkratky:
+
+----
+/key unbind meta-y
+----
+
+[[plugins_scripts]]
+== Pluginy/Skripty
+
+Na mnoha distribucích, například Debian, jsou pluginy dostupné přes oddělený
+balíček (něco jako weechat-plugins).
+Pluginy jsou automaticky nahrány při nálezení (prosím nahlédněte do
+dokumentace WeeChatu jak nahrát/odebrat plugin nebo skript)
+
+Mnoho externích skriptů (od přispěvovatelů) je dostupných pro WeeChat. můžete
+stáhnout a nainstalovat scripty z repozitáře pomocí příkazu `/script`,
+například:
+
+----
+/script install iset.pl
+----
+
+Zkuste `/help script` pro více informací.
+
+
+A seznam skriptů je dostupný v WeeChatu s příkazem `/script` nebo na této
+adrese https://weechat.org/scripts
+
+[[more_doc]]
+== Další dokumentace
+
+Nyní jste schopni používat WeeChat a můžete si přečíst FAQ/dokumentaci pro
+jakékoliv další otázky: https://weechat.org/doc
+
+Ať máte radost z použití WeeChatu!
