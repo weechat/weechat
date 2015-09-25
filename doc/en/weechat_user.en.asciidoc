@@ -417,6 +417,14 @@ Or max size:
 ulimit -c 200000
 ----
 
+In OSX Yosemite cores disabled so to enable it you must run:
+
+----
+ulimit -c unlimited
+----
+
+The `core.xxxxx` file will be under `/cores/`
+
 [[gdb_backtrace]]
 ==== Get backtrace with gdb
 
@@ -466,6 +474,14 @@ Copying output to /tmp/crash.txt.
 
 You must report this trace to developers, and tell them what action caused this
 crash.
+
+For OSX Yosemite use lldb instead of gdb:
+
+----
+lldb --core "/cores/core.26956"
+...
+(lldb) bt all
+----
 
 Thank you for your help!
 
