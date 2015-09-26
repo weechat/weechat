@@ -68,8 +68,9 @@ Binärpakete sind für folgende Distributionen erhältlich:
 * Mandriva/RedHat (oder eine RPM kompatible Distribution):
   `rpm -i /path/to/weechat-x.y.z-1.i386.rpm`
 * Gentoo: `emerge weechat`
+* openSUSE: `zypper in weechat`
 * Arch Linux: `pacman -S weechat`
-* Fedora Core: `yum install weechat`
+* Fedora Core: `dnf install weechat`
 * Sourcemage: `cast weechat`
 * Cygwin (Windows): wähle das WeeChat Paket in setup.exe aus
 
