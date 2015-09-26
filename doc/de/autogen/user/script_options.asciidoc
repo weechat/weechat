@@ -183,7 +183,7 @@
 ** Werte: -1 .. 525600 (Standardwert: `1440`)
 
 * [[option_script.scripts.download_timeout]] *script.scripts.download_timeout*
-** Beschreibung: `timeout (in seconds) for download of scripts and list of scripts`
+** Beschreibung: `Zeitüberschreitung (in Sekunden) beim herunterladen von Skripten und der Skriptliste`
 ** Typ: integer
 ** Werte: 1 .. 3600 (Standardwert: `30`)
 
