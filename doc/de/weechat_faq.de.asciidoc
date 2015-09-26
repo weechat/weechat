@@ -542,9 +542,8 @@ Fall weniger sicher):
 /set irc.server.example.ssl_verify off
 ----
 
-// TRANSLATION MISSING
-If the server has an invalid certificate and you know what the certificate
-should be, you can specify the fingerprint (SHA-512, SHA-256 or SHA-1):
+Sollte das Zertifikat für den Server ungültiges sein und man kennt das entsprechende
+Zertifikat, dann kann man einen Fingerabdruck festlegen (SHA-512, SHA-256 or SHA-1):
 
 ----
 /set irc.server.example.ssl_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b

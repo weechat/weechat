@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-09-12 09:17+0200\n"
-"PO-Revision-Date: 2015-09-09 09:13+0200\n"
+"PO-Revision-Date: 2015-09-26 13:54+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de_DE\n"
@@ -5154,26 +5154,23 @@ msgstr[1] "normale"
 msgid "Debug disabled for cursor mode"
 msgstr "Debug für Cursor Modus deaktiviert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError adding filter \"%s\": %s"
-msgstr "%sFehler beim Hinzufügen eines Filters"
+msgstr "%sFehler beim Hinzufügen des Filters \"%s\": %s"
 
-#, fuzzy
 msgid "not enough arguments"
-msgstr "%sNicht genügend Speicher"
+msgstr "nicht genügend Argumente"
 
-#, fuzzy
 msgid "a filter with same name already exists"
-msgstr "%sFehler: Ein Buffer mit dem selben Namen (%s) existiert bereits"
+msgstr "es existiert bereits ein Filter mit dem selben Namen"
 
 #. TRANSLATORS: %s is the error returned by regerror
-#, fuzzy, c-format
+#, c-format
 msgid "invalid regular expression (%s)"
-msgstr "%s%s: \"%s\" ist kein korrekter regulärer Ausdruck (%s)"
+msgstr "ungültiger regulärer Ausdruck (%s)"
 
-#, fuzzy
 msgid "not enough memory"
-msgstr "%sNicht genügend Speicher"
+msgstr "nicht genügend Speicher"
 
 #, c-format
 msgid "New key binding (context \"%s\"): %s%s => %s%s"
@@ -5230,9 +5227,8 @@ msgstr "Alternativnamen mit \"%s\":"
 msgid "All aliases:"
 msgstr "Alle Alternativnamen:"
 
-#, fuzzy
 msgid "completion:"
-msgstr "kompiliert am"
+msgstr "Vervollständigung:"
 
 #, c-format
 msgid "No alias found matching \"%s\""
@@ -11650,11 +11646,10 @@ msgstr ""
 "Ablaufdatum des lokalen Caches, in Minuten (-1 = ohne Ablaufdatum, 0 = "
 "umgehend)"
 
-#, fuzzy
 msgid "timeout (in seconds) for download of scripts and list of scripts"
 msgstr ""
-"Zeitüberschreitung (in Sekunden) für eine Verbindung zu einem entfernten "
-"Rechner (mittels einem Kindprozess)"
+"Zeitüberschreitung (in Sekunden) beim herunterladen von Skripten und der "
+"Skriptliste"
 
 msgid ""
 "local cache directory for scripts; \"%h\" at beginning of string is replaced "
