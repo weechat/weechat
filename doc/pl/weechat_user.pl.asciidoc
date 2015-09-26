@@ -62,16 +62,15 @@ Strona domowa WeeChat: https://weechat.org/
 
 Pakiety binarne dostępne są dla wielu dystrybucji, wliczając:
 
-* Debiana (lub dowolną kompatybilną):
-  `apt-get install weechat-curses`
+* Arch Linuxa: `pacman -S weechat`
+* Cygwin (Windows): wybierz pakiet WeeChat w setup.exe
+* Debiana (lub dowolną kompatybilną): `apt-get install weechat-curses`
+* Fedora Core: `dnf install weechat`
+* Gentoo: `emerge weechat`
 * Mandrive/RedHata (lub dowolną kompatybilną):
   `rpm -i /path/to/weechat-x.y.z-1.i386.rpm`
-* Gentoo: `emerge weechat`
 * openSUSE: `zypper in weechat`
-* Arch Linuxa: `pacman -S weechat`
-* Fedora Core: `dnf install weechat`
 * Sourcemage: `cast weechat`
-* Cygwin (Windows): wybierz pakiet WeeChat w setup.exe
 
 Niektóre dodatkowe pakiety mogą okazać się przydatne, jak weechat-plugins.
 
