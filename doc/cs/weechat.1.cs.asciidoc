@@ -23,7 +23,7 @@ Je velmi připůsobitelný a rozšiřitelný s skripty.
 
 == VOLBY
 
-include::cmdline_options.en.asciidoc[]
+include::cmdline_options.cs.asciidoc[]
 
 == VOLBY PLUGINŮ
 
