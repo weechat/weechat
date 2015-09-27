@@ -5,15 +5,15 @@
     Zobraz defaultní barvy v terminálu.
 
 *-d*, *--dir* '<path>'::
-    Nastav cestu jako dovmský adresář pro WeeChat (použitou pro konfigurační 
-    soubory,    logy, uživatelské pluginy a skripty), výchozí hodnota je 
+    Nastav cestu jako dovmský adresář pro WeeChat (použitou pro konfigurační
+    soubory, logy, uživatelské pluginy a skripty), výchozí hodnota je
     '~/.weechat' (poznámka: složka bude vytvořena pokud nebude nalezena
     Weechatem)
     Pokud tato volba není zadána, použije se promněná prostředí WEECHAT_HOME
     (pokud není prázdná)
 
 *-h*, *--help*::
-    Zobrazí nápovědu. 
+    Zobrazí nápovědu.
 
 *-l*, *--license*::
     Zobrazí licenci WeeChatu.
@@ -28,11 +28,11 @@
     Vypni automatické nahrání scriptů.
 
 *--upgrade*::
-    Aktualizuj WeeChat použitím souborů relací generovaných 
+    Aktualizuj WeeChat použitím souborů relací generovaných
     příkazem `/upgrade -quit`.
 
 *-v*, *--version*::
     Zobraz verzi WeeChatu.
 
 *plugin:option*::
-   Nastavení pluginů. 
+   Nastavení pluginů.
