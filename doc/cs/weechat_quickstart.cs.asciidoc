@@ -159,7 +159,7 @@ K spuštění příkazů po připojení k serveru, například k autentizaci s n
 /set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
-[POZNÁMKA]
+[NOTE]
 Více příkazů v volbě 'command' bůže být odděleno pomocí ';' (středník).
 
 K automatickému připojení některých kanálů při připojování k serveru:
@@ -189,7 +189,7 @@ název volby):
 /connect freenode
 ----
 
-[POZNÁMKA]
+[NOTE]
 Tento příkaz může být použit k vytvoření nového připojení k serveru bez
 použití příkazu `/server` (mohu zopakovat že můžete zobrazit nápovědu
 pro tento příkaz s `/help connect` ?).
