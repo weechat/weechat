@@ -1291,6 +1291,7 @@ AC_OUTPUT([Makefile
            doc/es/Makefile
            doc/ru/Makefile
            doc/ja/Makefile
+           doc/cs/Makefile
            src/Makefile
            src/core/Makefile
            src/plugins/Makefile

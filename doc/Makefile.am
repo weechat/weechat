@@ -18,7 +18,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SUBDIRS = . en fr it de pl es ru ja
+SUBDIRS = . en fr it de pl es ru ja cs
 
 EXTRA_DIST = docgen.py \
              CMakeLists.txt \

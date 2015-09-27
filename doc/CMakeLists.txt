@@ -52,6 +52,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
     add_subdirectory(es)
     add_subdirectory(ru)
     add_subdirectory(ja)
+    add_subdirectory(cs)
 
   endif()
 
