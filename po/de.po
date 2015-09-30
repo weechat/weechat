@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-09-12 09:17+0200\n"
-"PO-Revision-Date: 2015-09-26 13:54+0100\n"
+"POT-Creation-Date: 2015-09-30 20:53+0200\n"
+"PO-Revision-Date: 2015-09-30 20:54+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de_DE\n"
@@ -9801,8 +9801,8 @@ msgstr ""
 "%s%s: Verzeichnis für Protokoll-Dateien kann nicht erstellt werden (\"%s\")"
 
 #, c-format
-msgid "%s%s: unable to write log file \"%s\""
-msgstr "%s%s: Protokoll-Datei \"%s\" kann nicht geschrieben werden"
+msgid "%s%s: unable to write log file \"%s\": %s"
+msgstr "%s%s: Protokoll-Datei \"%s\" kann nicht geschrieben werden: %s"
 
 #, c-format
 msgid "%s\t****  Beginning of log  ****"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-09-12 09:17+0200\n"
-"PO-Revision-Date: 2015-09-09 09:13+0200\n"
+"POT-Creation-Date: 2015-09-30 20:53+0200\n"
+"PO-Revision-Date: 2015-09-30 20:55+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -8995,8 +8995,8 @@ msgid "%s%s: unable to create directory for logs (\"%s\")"
 msgstr "%s%s: impossibile creare la directory per i log (\"%s\")"
 
 #, c-format
-msgid "%s%s: unable to write log file \"%s\""
-msgstr "%s%s: impossibile scrivere il file di log \"%s\""
+msgid "%s%s: unable to write log file \"%s\": %s"
+msgstr "%s%s: impossibile scrivere il file di log \"%s\": %s"
 
 #, c-format
 msgid "%s\t****  Beginning of log  ****"
