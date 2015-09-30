@@ -561,9 +561,9 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
         {
             weechat_printf_tags (NULL,
                                  "no_log",
-                                 _("%s%s: unable to write log file \"%s\""),
+                                 _("%s%s: unable to write log file \"%s\": %s"),
                                  weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
-                                 logger_buffer->log_filename);
+                                 logger_buffer->log_filename, strerror(errno));
             logger_buffer_free (logger_buffer);
             return;
         }
