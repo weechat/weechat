@@ -742,6 +742,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
+* [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
+** Beschreibung: `automatically add a newline at the end of pasted text if there are at least two lines and if a confirmation is asked`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** Beschreibung: `aktiviert den "bracketed paste mode" des Terminals (wird nicht durch alle Terminals/Multiplexer unterstützt): Dieser Modus erlaubt das Einfügen von Steuersequenzen die in Klammern gesetzt sind. WeeChat kann dadurch ermitteln ob ein Text eingefügt oder geschrieben wurde ("ESC[200~", gefolgt von dem einzufügenden Text und einem abschließenden "ESC[201~")`
 ** Typ: boolesch

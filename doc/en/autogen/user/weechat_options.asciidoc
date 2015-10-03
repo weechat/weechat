@@ -742,6 +742,11 @@
 ** type: string
 ** values: any string (default value: `""`)
 
+* [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
+** description: `automatically add a newline at the end of pasted text if there are at least two lines and if a confirmation is asked`
+** type: boolean
+** values: on, off (default value: `on`)
+
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** description: `enable terminal "bracketed paste mode" (not supported in all terminals/multiplexers): in this mode, pasted text is bracketed with control sequences so that WeeChat can differentiate pasted text from typed-in text ("ESC[200~", followed by the pasted text, followed by "ESC[201~")`
 ** type: boolean

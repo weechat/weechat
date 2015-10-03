@@ -742,6 +742,11 @@
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
+* [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
+** opis: `automatically add a newline at the end of pasted text if there are at least two lines and if a confirmation is asked`
+** typ: bool
+** wartości: on, off (domyślna wartość: `on`)
+
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** opis: `włącza tryb terminala "bracketed paste mode" (nie wszystkie terminale/multiplexery ją wspierają): w tym trybie, wklejany tekst jest otoczony sekwencją kontrolna, dzięki czemu WeeChat może odróżnić tekst wklejony od wpisanego ("ESC[200~", wklejony tekst, "ESC[201~")`
 ** typ: bool

@@ -1816,7 +1816,8 @@ gui_key_paste_accept ()
      * add final newline if there is not in pasted text
      * (for at least 2 lines pasted)
      */
-    if ((gui_key_get_paste_lines () > 1)
+    if (CONFIG_BOOLEAN(config_look_paste_auto_add_newline)
+        && (gui_key_get_paste_lines () > 1)
         && (gui_key_buffer_size > 0)
         && (gui_key_buffer[gui_key_buffer_size - 1] != '\r')
         && (gui_key_buffer[gui_key_buffer_size - 1] != '\n'))

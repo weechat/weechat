@@ -194,6 +194,7 @@ extern struct t_config_option *config_look_mouse;
 extern struct t_config_option *config_look_mouse_timer_delay;
 extern struct t_config_option *config_look_nick_prefix;
 extern struct t_config_option *config_look_nick_suffix;
+extern struct t_config_option *config_look_paste_auto_add_newline;
 extern struct t_config_option *config_look_paste_bracketed;
 extern struct t_config_option *config_look_paste_bracketed_timer_delay;
 extern struct t_config_option *config_look_paste_max_lines;

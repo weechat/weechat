@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-09-30 20:53+0200\n"
+"POT-Creation-Date: 2015-10-03 12:04+0200\n"
 "PO-Revision-Date: 2015-09-09 09:13+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2842,6 +2842,11 @@ msgstr "текст, который отображать до ника в окн�
 #, fuzzy
 msgid "text to display after nick in prefix of message, example: \">\""
 msgstr "текст, который отображать после ника в окне чата"
+
+msgid ""
+"automatically add a newline at the end of pasted text if there are at least "
+"two lines and if a confirmation is asked"
+msgstr ""
 
 msgid ""
 "enable terminal \"bracketed paste mode\" (not supported in all terminals/"

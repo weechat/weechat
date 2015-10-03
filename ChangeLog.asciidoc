@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: add option weechat.look.paste_auto_add_newline (issue #543)
 * core: display a more explicit error when a filter fails to be added
   (issue #522)
 * api: add function string_hex_dump()
