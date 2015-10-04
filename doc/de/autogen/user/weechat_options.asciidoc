@@ -743,7 +743,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
-** Beschreibung: `automatically add a newline at the end of pasted text if there are at least two lines and if a confirmation is asked`
+** Beschreibung: `fügt automatisch einen Zeilenumbruch nach dem Einfügen eines Textes hinzu, sofern mindestens zwei Zeilen eingefügt wurden und nach einer Bestätigung gefragt wurde`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
