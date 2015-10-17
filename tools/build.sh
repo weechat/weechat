@@ -25,12 +25,14 @@
 # configure commands.
 #
 # Syntax to run the script with environment variables:
-#   BUILDTOOL=cmake|autotools ./build.sh
-#   BUILDTOOL=cmake|autotools BUILDARGS="arguments" ./build.sh
+#   BUILDTOOL=cmake ./build.sh
+#   BUILDTOOL=autotools ./build.sh
+#   BUILDTOOL=cmake BUILDARGS="arguments" ./build.sh
+#   BUILDTOOL=autotools BUILDARGS="arguments" ./build.sh
 #
 # Syntax to run the script with arguments on command line:
-#   ./build.sh cmake|autotools
-#   ./build.sh cmake|autotools arguments
+#   ./build.sh cmake [arguments]
+#   ./build.sh autotools [arguments]
 #
 # This script is used to build WeeChat in Travis CI environment.
 #
