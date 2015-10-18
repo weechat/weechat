@@ -337,11 +337,11 @@ IRC_PROTOCOL_CALLBACK(away)
 
 IRC_PROTOCOL_CALLBACK(cap)
 {
-    char *ptr_caps, **caps_supported, **caps_requested, **caps_added, **caps_removed, *cap_option, *cap_req;
-    char str_msg_auth[512];
+    char *ptr_caps, **caps_supported, **caps_requested, **caps_added;
+    char **caps_removed, *cap_option, *cap_req, str_msg_auth[512];
     const char *ptr_cap_option;
-    int num_caps_supported, num_caps_requested, num_caps_added, num_caps_removed;
-    int sasl_requested, sasl_to_do, sasl_mechanism;
+    int num_caps_supported, num_caps_requested, num_caps_added;
+    int num_caps_removed, sasl_requested, sasl_to_do, sasl_mechanism;
     int i, j, timeout, length;
 
     IRC_PROTOCOL_MIN_ARGS(4);
@@ -363,9 +363,11 @@ IRC_PROTOCOL_CALLBACK(cap)
             {
                 sasl_requested = irc_server_sasl_enabled (server);
                 sasl_to_do = 0;
-                ptr_cap_option = IRC_SERVER_OPTION_STRING(server,
-                                                          IRC_SERVER_OPTION_CAPABILITIES);
-                length = ((ptr_cap_option && ptr_cap_option[0]) ? strlen (ptr_cap_option) : 0) + 16;
+                ptr_cap_option = IRC_SERVER_OPTION_STRING(
+                    server,
+                    IRC_SERVER_OPTION_CAPABILITIES);
+                length = ((ptr_cap_option && ptr_cap_option[0]) ?
+                          strlen (ptr_cap_option) : 0) + 16;
                 cap_option = malloc (length);
                 cap_req = malloc (length);
                 if (cap_option && cap_req)
@@ -524,11 +526,16 @@ IRC_PROTOCOL_CALLBACK(cap)
                 _("%s%s: client capability, now available: %s"),
                 weechat_prefix ("network"), IRC_PLUGIN_NAME, ptr_caps);
 
-            /* Assume that we're not requesting any already-enabled capabilities
-             * TODO SASL Reauthentication */
-            ptr_cap_option = IRC_SERVER_OPTION_STRING(server,
-                                                      IRC_SERVER_OPTION_CAPABILITIES);
-            length = ((ptr_cap_option && ptr_cap_option[0]) ? strlen (ptr_cap_option) : 0) + 16;
+            /*
+             * assume that we're not requesting any already-enabled
+             * capabilities
+             * TODO: SASL Reauthentication
+             */
+            ptr_cap_option = IRC_SERVER_OPTION_STRING(
+                server,
+                IRC_SERVER_OPTION_CAPABILITIES);
+            length = ((ptr_cap_option && ptr_cap_option[0]) ?
+                      strlen (ptr_cap_option) : 0) + 16;
             cap_option = malloc (length);
             cap_req = malloc (length);
             if (cap_option && cap_req)
@@ -540,7 +547,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                 caps_requested = weechat_string_split (cap_option, ",", 0, 0,
                                                        &num_caps_requested);
                 caps_added = weechat_string_split (ptr_caps, " ", 0, 0,
-                                                       &num_caps_added);
+                                                   &num_caps_added);
                 if (caps_requested && caps_added)
                 {
                     for (i = 0; i < num_caps_requested; i++)
@@ -588,11 +595,11 @@ IRC_PROTOCOL_CALLBACK(cap)
                 _("%s%s: client capability, removed: %s"),
                 weechat_prefix ("network"), IRC_PLUGIN_NAME, ptr_caps);
             caps_removed = weechat_string_split (ptr_caps, " ", 0, 0,
-                                                   &num_caps_removed);
-
+                                                 &num_caps_removed);
             if (caps_removed)
             {
-                for (i = 0; i < num_caps_removed; i++) {
+                for (i = 0; i < num_caps_removed; i++)
+                {
                     if (strcmp (caps_removed[i], "away-notify") == 0)
                     {
                         server->cap_away_notify = 0;
