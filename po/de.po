@@ -1,38 +1,33 @@
-#
 # Copyright (C) 2005 Rudolf Polzer <weechat-te@durchnull.de>
 # Copyright (C) 2006-2007 Thomas Schuetz <i18n@internet-villa.de>
 # Copyright (C) 2009-2015 Nils Görs <weechatter@arcor.de>
 # Copyright (C) 2015 Sven Knurr <zeug@tuxproject.de>
-#
 # This file is part of WeeChat, the extensible chat client.
-#
 # WeeChat is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
-#
 # WeeChat is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-#
 # You should have received a copy of the GNU General Public License
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
-#
 # Nils Görs <weechatter@arcor.de>, 2014.
+# nils <weechatter@arcor.de>, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-10-18 19:03+0200\n"
-"PO-Revision-Date: 2015-10-04 07:57+0100\n"
+"PO-Revision-Date: 2015-10-18 20:33+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
-"Language: de_DE\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.7.5\n"
 "X-Poedit-Bookmarks: -1,-1,180,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -6548,7 +6543,6 @@ msgstr "Aushandlung der Clientfähigkeit"
 msgid "ls || list || req|ack [<capability> [<capability>...]] || clear || end"
 msgstr "ls || list || req|ack [<capability> [<capability>...]] || clear || end"
 
-#, fuzzy
 msgid ""
 "   ls: list the capabilities supported by the server\n"
 " list: list the capabilities currently enabled\n"
@@ -6576,13 +6570,13 @@ msgstr ""
 "  req: fordert eine Fähigkeit an\n"
 "  ack: bestätigt eine Fähigkeit die von Serverseite eine Bestätigung "
 "erfordert\n"
-"clear: löscht die aktuell genutzen Fähigkeiten\n"
+"clear: löscht die aktuell genutzten Fähigkeiten\n"
 "  end: beendet die Übertragung von Fähigkeiten\n"
 "\n"
 "Ohne Angaben von Argumenten werden \"ls\" und \"list\" gesendet.\n"
 "\n"
 "Fähigkeiten die von WeeChat unterstützt werden: account-notify, away-notify, "
-"extended-join, multi-prefix, server-time, userhost-in-names.\n"
+"cap-notify, extended-join, multi-prefix, server-time, userhost-in-names.\n"
 "\n"
 "Fähigkeiten die standardmäßig genutzt werden sollen können mit der Option  "
 "irc.server_default.capabilities gesetzt werden (oder individuell für jeden "
@@ -9086,13 +9080,13 @@ msgstr "%s%s: Clientfähigkeit, aktiviert: %s"
 msgid "%s%s: client capability, refused: %s"
 msgstr "%s%s: Clientfähigkeit, abgewiesen: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, now available: %s"
-msgstr "%s%s: Clientfähigkeit, aktiviert: %s"
+msgstr "%s%s: Clientfähigkeit, nicht verfügbar: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, removed: %s"
-msgstr "%s%s: Clientfähigkeit, abgewiesen: %s"
+msgstr "%s%s: Clientfähigkeit, entfernt: %s"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
