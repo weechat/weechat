@@ -103,7 +103,7 @@ clear : effacer les capacités actuellement activées
 
 Sans paramètre, "ls" et "list" sont envoyés.
 
-Les capacités supportées par WeeChat sont : account-notify, away-notify, extended-join, multi-prefix, server-time, userhost-in-names.
+Les capacités supportées par WeeChat sont : account-notify, away-notify, cap-notify, extended-join, multi-prefix, server-time, userhost-in-names.
 
 Les capacités à activer automatiquement sur les serveurs peuvent être définies dans l'opion irc.server_default.capabilities (ou par serveur dans l'option irc.server.xxx.capabilities).
 
