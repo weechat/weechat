@@ -630,13 +630,15 @@ def docgen_cmd_cb(data, buf, args):
         doc = AutogenDoc(directory, 'plugin_api', 'hdata')
         for plugin in sorted(hdata):
             for hdata_name in sorted(hdata[plugin]):
+                anchor = 'hdata_{0}'.format(hdata_name)
                 _hda = hdata[plugin][hdata_name]
                 desc = translate(_hda['description'])
                 variables = _hda['vars']
                 variables_update = _hda['vars_update']
                 lists = _hda['lists']
-                doc.write('* \'{0}\': {1}\n'.format(escape(hdata_name),
-                                                    escape(desc)))
+                doc.write('* [[{0}]]<<{0},\'{1}\'>>: {2}\n'
+                          ''.format(escape(anchor), escape(hdata_name),
+                                    escape(desc)))
                 doc.write('** {0}: {1}\n'.format(_('plugin'),
                                                  escape(plugin)))
                 doc.write('** {0}:\n{1}'.format(_('variables'),
