@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-10-03 12:04+0200\n"
+"POT-Creation-Date: 2015-10-18 18:57+0200\n"
 "PO-Revision-Date: 2015-09-09 09:13+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7301,6 +7301,14 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: client capability, refused: %s"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: client capability, now available: %s"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: client capability, removed: %s"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format

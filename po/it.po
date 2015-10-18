@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-10-03 12:04+0200\n"
+"POT-Creation-Date: 2015-10-18 18:57+0200\n"
 "PO-Revision-Date: 2015-09-30 20:55+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8303,6 +8303,14 @@ msgstr "%s%s: capacità del client, abilitata: %s"
 
 #, c-format
 msgid "%s%s: client capability, refused: %s"
+msgstr "%s%s: capacità del client, rifiutata: %s"
+
+#, fuzzy, c-format
+msgid "%s%s: client capability, now available: %s"
+msgstr "%s%s: capacità del client, abilitata: %s"
+
+#, fuzzy, c-format
+msgid "%s%s: client capability, removed: %s"
 msgstr "%s%s: capacità del client, rifiutata: %s"
 
 #, c-format
