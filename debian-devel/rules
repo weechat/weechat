@@ -1,0 +1,33 @@
+#!/usr/bin/make -f
+
+BUILDDIR = builddir
+
+$(BUILDDIR)/Makefile:
+	mkdir -p $(BUILDDIR)
+	cd $(BUILDDIR) && \
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
+		-DENABLE_DOC:BOOL=OFF \
+		-DENABLE_MAN:BOOL=ON \
+		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+		-DCMAKE_C_FLAGS_RELWITHDEBINFO:STRING="$(CFLAGS) -D_FORTIFY_SOURCE=2" \
+		-DCMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING="$(LDFLAGS)" \
+		-DCMAKE_SKIP_RPATH:BOOL=ON \
+		-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+
+override_dh_auto_build: $(BUILDDIR)/Makefile
+	dh_auto_build
+
+override_dh_auto_configure:
+	# the package also has autotools buildsys and
+	# debhelper try to use it but that's not needed
+	echo
+
+override_dh_installchangelogs:
+	dh_installchangelogs ChangeLog.asciidoc
+
+override_dh_strip:
+	dh_strip --dbg-package=weechat-devel-dbg
+
+%:
+	dh $@ --parallel --builddirectory=$(BUILDDIR)

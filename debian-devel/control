@@ -1,0 +1,127 @@
+Source: weechat-devel
+Section: net
+Priority: optional
+Maintainer: Sébastien Helleu <flashcode@flashtux.org>
+Build-Depends:
+    asciidoc (>= 8.5),
+    source-highlight,
+    xsltproc,
+    docbook-xsl,
+    docbook-xml,
+    debhelper (>= 9),
+    cmake, pkg-config,
+    libncursesw5-dev,
+    gem2deb,
+    libperl-dev,
+    python-dev,
+    libaspell-dev,
+    liblua5.1-0-dev,
+    tcl8.5-dev,
+    guile-2.0-dev,
+    libv8-dev,
+    libcurl4-gnutls-dev,
+    libgcrypt20-dev,
+    libgnutls28-dev,
+    zlib1g-dev
+Standards-Version: 3.9.6
+Homepage: https://weechat.org/
+Vcs-Git: https://github.com/weechat/weechat.git
+Vcs-Browser: https://github.com/weechat/weechat
+
+Package: weechat-devel
+Architecture: all
+Depends: ${misc:Depends}, weechat-devel-curses (>= ${source:Version})
+Description: Fast, light and extensible chat client
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+ for many operating systems. Everything can be done with a keyboard.
+ It is customizable and extensible with plugins/scripts, and includes:
+  - support of IRC protocol (native)
+  - support of XMPP/Jabber protocol (with additional script)
+  - nicklist
+  - smart hotlist
+  - horizontal and vertical split
+  - double charset support (decode/encode)
+  - FIFO pipe for remote control
+  - 256 colors support
+  - incremental text search
+  - dynamic filtering of buffer content
+  - Perl, Python, Ruby, Lua, Tcl, Scheme and Javascript scripting
+  - scripts manager
+  - spell checking
+  - highly customizable and extensible
+  - and much more!
+
+Package: weechat-devel-curses
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-core (= ${binary:Version})
+Recommends: weechat-devel-plugins (= ${binary:Version})
+Description: Fast, light and extensible chat client - console client
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+ for many operating systems. Everything can be done with a keyboard.
+ It is customizable and extensible with plugins/scripts, and includes:
+  - support of IRC protocol (native)
+  - support of XMPP/Jabber protocol (with additional script)
+  - nicklist
+  - smart hotlist
+  - horizontal and vertical split
+  - double charset support (decode/encode)
+  - FIFO pipe for remote control
+  - 256 colors support
+  - incremental text search
+  - dynamic filtering of buffer content
+  - Perl, Python, Ruby, Lua, Tcl, Scheme and Javascript scripting
+  - scripts manager
+  - spell checking
+  - highly customizable and extensible
+  - and much more!
+ .
+ This package provides the console client (ncurses).
+
+Package: weechat-devel-core
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Fast, light and extensible chat client - core files
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+ for many operating systems. Everything can be done with a keyboard.
+ .
+ This package provides core plugins and locales files for WeeChat. It
+ currently ships the following plugins: alias, xfer, irc, charset and
+ logger. It is useless without weechat-curses.
+
+Package: weechat-devel-plugins
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-curses (= ${binary:Version})
+Description: Fast, light and extensible chat client - plugins
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+ for many operating systems. Everything can be done with a keyboard.
+ .
+ This package provides some plugins to enhance WeeChat. It currently
+ ships the following plugins:
+  - Perl, Python, Ruby, Lua, Tcl, Scheme and Javascript scripting
+  - scripts manager
+  - Spell checking (thanks to aspell)
+  - FIFO pipe for remote control
+  - IRC proxy
+  - Trigger
+
+Package: weechat-devel-dev
+Section: devel
+Architecture: all
+Depends: ${misc:Depends}
+Description: Fast, light and extensible chat client - development headers
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+ for many operating systems. Everything can be done with a keyboard.
+ .
+ This package contains the headers needed to build plugins.
+
+Package: weechat-devel-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: ${misc:Depends}, weechat-devel-curses (= ${binary:Version}) |
+ weechat-devel-core (= ${binary:Version}), weechat-devel-plugins (= ${binary:Version})
+Description: Fast, light and extensible chat client - debugging symbols
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+ for many operating systems. Everything can be done with a keyboard.
+ .
+ This package contains gdb debugging symbols for the WeeChat packages.
