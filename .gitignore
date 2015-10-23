@@ -28,7 +28,7 @@ config.rpath
 config.status
 config.sub
 configure
-debian/*.log
+debian-stable/*.log
 depcomp
 insert-header.sin
 install-sh
