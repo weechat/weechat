@@ -905,7 +905,7 @@ Um diesen Befehl in jedem Buffer ausführen zu können, kann der Standardkurzbef
             h: Stunden
 command: Befehl der ausgeführt werden soll (ohne das führende '/') oder ein Text der in dem Buffer ausgegeben werden soll
 
-Hinweis: Der Befehl der Zeit verzögert gestartet werden soll wird im selben Buffer ausgeführt in dem auch der /wait Befehl aufgerufen wurde. Falls der Buffer nicht gefunden werden kann,  da er in der Zwischenzeit zum Beispiel geschlossen wurde, wird der Befehl im WeeChat Core-Buffer ausgeführt.
+Hinweis: Der Befehl der zeitverzögert gestartet werden soll wird im selben Buffer ausgeführt in dem auch der /wait Befehl aufgerufen wurde. Falls der Buffer nicht gefunden werden kann, da er in der Zwischenzeit zum Beispiel geschlossen wurde, wird der Befehl im WeeChat Core-Buffer ausgeführt.
 
 Beispiele:
   Betritt nach 10 Sekunden den Channel #test:
