@@ -31,9 +31,12 @@ set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -Wall -Wextra -Werror-implicit-function-de
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror-implicit-function-declaration")
 
 # version
-set(VERSION_MAJOR "1")
-set(VERSION_MINOR "4-dev")
-set(VERSION_PATCH "")
+execute_process(COMMAND ${CMAKE_SOURCE_DIR}/version.sh devel-major OUTPUT_VARIABLE VERSION_MAJOR)
+execute_process(COMMAND ${CMAKE_SOURCE_DIR}/version.sh devel-minor OUTPUT_VARIABLE VERSION_MINOR)
+execute_process(COMMAND ${CMAKE_SOURCE_DIR}/version.sh devel-patch OUTPUT_VARIABLE VERSION_PATCH)
+string(REGEX REPLACE "\n" "" VERSION_MAJOR "${VERSION_MAJOR}")
+string(REGEX REPLACE "\n" "" VERSION_MINOR "${VERSION_MINOR}")
+string(REGEX REPLACE "\n" "" VERSION_PATCH "${VERSION_PATCH}")
 if(VERSION_PATCH STREQUAL "")
   set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
 else()

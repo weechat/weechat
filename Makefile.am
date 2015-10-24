@@ -66,6 +66,7 @@ EXTRA_DIST = AUTHORS.asciidoc \
              po/srcfiles.cmake \
              tools/build-test.sh \
              tools/git-version.sh \
+             version.sh \
              weechat.png \
              weechat.pc.in \
              weechat.cygport.in
