@@ -1308,9 +1308,13 @@ przykład skrót key[alt-x] wyłączający obsługę myszy na 10 sekund:
 /key bind meta-x /mouse toggle 10
 ----
 
-Kiedy obsługa myszy jest włączona w WeeChat, można użyć modyfikatora key[shift] do
-zaznaczenia lub kliknięcia w terminalu, tak jakby obsługa myszy była wyłączona
-(w niektórych terminalach jak iTerm należy użyć key[alt] zamiast key[shift]).
+// TRANSLATION MISSING
+[IMPORTANT]
+When mouse is enabled in WeeChat, all mouse events are caught by WeeChat, so
+actions such as copy/paste or clicks on URLs are not sent to the terminal. +
+Using key[shift] key causes the events to be sent directly to the terminal,
+as if the mouse was disabled (on some terminals like iTerm, you have to use
+key[alt] instead of key[shift]).
 
 [NOTE]
 W razie jakichkolwiek problemów z obsługą myszy, zajrzyj do 'WeeChat FAQ'.

@@ -1329,10 +1329,13 @@ secondes :
 /key bind meta-x /mouse toggle 10
 ----
 
-Lorsque la souris est activée dans WeeChat, vous pouvez utiliser la touche
-key[shift] pour sélectionner ou cliquer dans le terminal, comme si la souris était
-désactivée (sous certains terminaux comme iTerm, vous devez utiliser key[alt] au
-lieu de key[shift]).
+[IMPORTANT]
+Lorsque la souris est activée dans WeeChat, tous les évènements souris sont
+capturés par WeeChat, donc les actions comme le copier/coller et les clics sur
+les URLs ne sont pas envoyées au terminal. +
+Utiliser la touche key[shift] permet d'envoyer directement les évènements au
+terminal, comme si la souris était désactivée (sous certains terminaux comme
+iTerm, vous devez utiliser key[alt] au lieu de key[shift]).
 
 [NOTE]
 Pour tout problème avec la souris, merci de consulter la 'FAQ WeeChat'.

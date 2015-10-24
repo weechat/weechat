@@ -1298,9 +1298,13 @@ key[alt-x] キーにマウスを 10 秒間無効化する機能を割り当て�
 /key bind meta-x /mouse toggle 10
 ----
 
-WeeChat でマウスが有効化されている場合、key[shift]
-修飾キーで選択やクリックができます。これでマウスが無効化されている場合と同じ作業が行えます
-(iTerm 等の端末では key[shift] の代わりに key[alt] を使ってください)。
+// TRANSLATION MISSING
+[IMPORTANT]
+When mouse is enabled in WeeChat, all mouse events are caught by WeeChat, so
+actions such as copy/paste or clicks on URLs are not sent to the terminal. +
+Using key[shift] key causes the events to be sent directly to the terminal,
+as if the mouse was disabled (on some terminals like iTerm, you have to use
+key[alt] instead of key[shift]).
 
 [NOTE]
 マウスに関するトラブルがあれば 'WeeChat FAQ' を参照してください。

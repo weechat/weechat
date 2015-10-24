@@ -1361,10 +1361,13 @@ tasto. Ad esempio il tasto key[alt-x] per disabilitare il mouse per 10 secondi:
 /key bind meta-x /mouse toggle 10
 ----
 
-Quando il mouse è abilitato in WeeChat, è possibile usare il modificatore
-key[shift] per selezionare o cliccare nel terminale, come se il mouse fosse
-disabilitato (in alcuni terminali come iTerm, bisogna usare key[alt] invece di
-key[shift]).
+// TRANSLATION MISSING
+[IMPORTANT]
+When mouse is enabled in WeeChat, all mouse events are caught by WeeChat, so
+actions such as copy/paste or clicks on URLs are not sent to the terminal. +
+Using key[shift] key causes the events to be sent directly to the terminal,
+as if the mouse was disabled (on some terminals like iTerm, you have to use
+key[alt] instead of key[shift]).
 
 [NOTE]
 Per qualunque problema con il mouse, consultare 'FAQ di WeeChat'.
