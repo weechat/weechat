@@ -1,0 +1,30 @@
+diff --git a/debian-devel/control b/debian-devel/control
+index a12df19..38773be 100644
+--- a/debian-devel/control
++++ b/debian-devel/control
+@@ -20,8 +20,8 @@ Build-Depends:
+     guile-2.0-dev,
+     libv8-dev,
+     libcurl4-gnutls-dev,
+-    libgcrypt20-dev,
+-    libgnutls28-dev,
++    libgcrypt11-dev,
++    libgnutls-dev,
+     zlib1g-dev
+ Standards-Version: 3.9.6
+ Homepage: https://weechat.org/
+diff --git a/debian-stable/control b/debian-stable/control
+index ccb4179..0d73171 100644
+--- a/debian-stable/control
++++ b/debian-stable/control
+@@ -20,8 +20,8 @@ Build-Depends:
+     guile-2.0-dev,
+     libv8-dev,
+     libcurl4-gnutls-dev,
+-    libgcrypt20-dev,
+-    libgnutls28-dev,
++    libgcrypt11-dev,
++    libgnutls-dev,
+     zlib1g-dev
+ Standards-Version: 3.9.6
+ Homepage: https://weechat.org/

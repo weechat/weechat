@@ -28,6 +28,8 @@ config.rpath
 config.status
 config.sub
 configure
+debian
+!tools/debian
 debian-devel/changelog
 debian-devel/*.log
 debian-stable/*.log

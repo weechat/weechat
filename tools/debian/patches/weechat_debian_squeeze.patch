@@ -1,0 +1,70 @@
+diff --git a/debian-devel/compat b/debian-devel/compat
+index ec63514..45a4fb7 100644
+--- a/debian-devel/compat
++++ b/debian-devel/compat
+@@ -1 +1 @@
+-9
++8
+diff --git a/debian-devel/control b/debian-devel/control
+index a12df19..a5f9ceb 100644
+--- a/debian-devel/control
++++ b/debian-devel/control
+@@ -8,10 +8,10 @@ Build-Depends:
+     xsltproc,
+     docbook-xsl,
+     docbook-xml,
+-    debhelper (>= 9),
++    debhelper (>= 8),
+     cmake, pkg-config,
+     libncursesw5-dev,
+-    gem2deb,
++    ruby1.9.1, ruby1.9.1-dev,
+     libperl-dev,
+     python-dev,
+     libaspell-dev,
+@@ -20,8 +20,8 @@ Build-Depends:
+     guile-2.0-dev,
+     libv8-dev,
+     libcurl4-gnutls-dev,
+-    libgcrypt20-dev,
+-    libgnutls28-dev,
++    libgcrypt11-dev,
++    libgnutls-dev,
+     zlib1g-dev
+ Standards-Version: 3.9.6
+ Homepage: https://weechat.org/
+diff --git a/debian-stable/compat b/debian-stable/compat
+index ec63514..45a4fb7 100644
+--- a/debian-stable/compat
++++ b/debian-stable/compat
+@@ -1 +1 @@
+-9
++8
+diff --git a/debian-stable/control b/debian-stable/control
+index ccb4179..790b315 100644
+--- a/debian-stable/control
++++ b/debian-stable/control
+@@ -8,10 +8,10 @@ Build-Depends:
+     xsltproc,
+     docbook-xsl,
+     docbook-xml,
+-    debhelper (>= 9),
++    debhelper (>= 8),
+     cmake, pkg-config,
+     libncursesw5-dev,
+-    gem2deb,
++    ruby1.9.1, ruby1.9.1-dev,
+     libperl-dev,
+     python-dev,
+     libaspell-dev,
+@@ -20,8 +20,8 @@ Build-Depends:
+     guile-2.0-dev,
+     libv8-dev,
+     libcurl4-gnutls-dev,
+-    libgcrypt20-dev,
+-    libgnutls28-dev,
++    libgcrypt11-dev,
++    libgnutls-dev,
+     zlib1g-dev
+ Standards-Version: 3.9.6
+ Homepage: https://weechat.org/

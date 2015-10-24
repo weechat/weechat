@@ -1,8 +1,9 @@
 # files/directories excluded from tarballs
 
-.git*               export-ignore
-debian-devel        export-ignore
-debian-stable       export-ignore
-weechat.spec        export-ignore
-.mailmap            export-ignore
-tests/ubuntu/       export-ignore
+.git*                  export-ignore
+debian-devel           export-ignore
+debian-stable          export-ignore
+weechat.spec           export-ignore
+.mailmap               export-ignore
+tests/ubuntu/          export-ignore
+tools/build-debian.sh  export-ignore
