@@ -33,6 +33,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (issue #541)
 * script: add option script.scripts.download_timeout
 * doc: add Czech man page and quickstart guide (issue #490)
+* build: add scripts version.sh and build-debian.sh, separate stable from devel
+  Debian packaging
 
 === Bugs fixed
 
