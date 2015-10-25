@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-10-18 19:03+0200\n"
+"POT-Creation-Date: 2015-10-25 07:16+0100\n"
 "PO-Revision-Date: 2015-09-30 20:55+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5238,13 +5238,13 @@ msgstr "%s%s: no es posible crear la tubería para control remoto (%s)"
 msgid "%s: pipe closed"
 msgstr "%s: tubería cerrada"
 
-#, c-format
-msgid "%s%s: error, invalid text received on pipe"
+#, fuzzy, c-format
+msgid "%s%s: invalid text received in pipe"
 msgstr "%s%s: error, texto inválido recibido en la tubería"
 
-#, c-format
-msgid "%s%s: error, buffer not found for pipe data"
-msgstr "%s%s: error, buffer no encontrado para los datos de la tubería"
+#, fuzzy, c-format
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%s%s: servidor \"%s\" no encontrado"
 
 #, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
@@ -11472,3 +11472,6 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse al transmisor"
+
+#~ msgid "%s%s: error, buffer not found for pipe data"
+#~ msgstr "%s%s: error, buffer no encontrado para los datos de la tubería"

@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-10-18 19:03+0200\n"
+"POT-Creation-Date: 2015-10-25 07:16+0100\n"
 "PO-Revision-Date: 2015-10-23 14:07+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
@@ -5948,13 +5948,13 @@ msgstr ""
 msgid "%s: pipe closed"
 msgstr "%s: Pipe geschlossen"
 
-#, c-format
-msgid "%s%s: error, invalid text received on pipe"
+#, fuzzy, c-format
+msgid "%s%s: invalid text received in pipe"
 msgstr "%s%s: Fehler: ungültiger Text von Pipe empfangen"
 
-#, c-format
-msgid "%s%s: error, buffer not found for pipe data"
-msgstr "%s%s: Fehler: Buffer für PIPE-Daten nicht gefunden"
+#, fuzzy, c-format
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%s%s: Server \"%s\" nicht gefunden"
 
 #, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
@@ -12724,3 +12724,6 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
+#~ msgid "%s%s: error, buffer not found for pipe data"
+#~ msgstr "%s%s: Fehler: Buffer für PIPE-Daten nicht gefunden"

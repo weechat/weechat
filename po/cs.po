@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-10-18 19:03+0200\n"
+"POT-Creation-Date: 2015-10-25 07:16+0100\n"
 "PO-Revision-Date: 2015-09-29 21:09+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5014,13 +5014,13 @@ msgstr "%s%s: nemohu vytvořit rouru pro vzdálené ovládání (%s)"
 msgid "%s: pipe closed"
 msgstr "%s: roura zavřena"
 
-#, c-format
-msgid "%s%s: error, invalid text received on pipe"
+#, fuzzy, c-format
+msgid "%s%s: invalid text received in pipe"
 msgstr "%s%s: chyba, přijat nekorektní text na rouře"
 
-#, c-format
-msgid "%s%s: error, buffer not found for pipe data"
-msgstr "%s%s: chyba, nenalezen buffer pro data roury"
+#, fuzzy, c-format
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%s%s: server \"%s\" nenalezen"
 
 #, fuzzy, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
@@ -11221,3 +11221,6 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid "%s%s: error, buffer not found for pipe data"
+#~ msgstr "%s%s: chyba, nenalezen buffer pro data roury"

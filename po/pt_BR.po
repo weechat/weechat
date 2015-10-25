@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-10-18 19:03+0200\n"
+"POT-Creation-Date: 2015-10-25 07:16+0100\n"
 "PO-Revision-Date: 2015-09-30 20:56+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5178,13 +5178,13 @@ msgstr "%sErro : incapaz de configurar a opção \"%s\" para o proxy \"%s\""
 msgid "%s: pipe closed"
 msgstr ""
 
-#, c-format
-msgid "%s%s: error, invalid text received on pipe"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: invalid text received in pipe"
+msgstr "%s%s: charset inválido: \"%s\""
 
-#, c-format
-msgid "%s%s: error, buffer not found for pipe data"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%sTecla \"%s\" não encontrada"
 
 #, fuzzy, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"

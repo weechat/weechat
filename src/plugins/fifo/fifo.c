@@ -259,7 +259,7 @@ fifo_exec (const char *text)
         if (!pos_msg)
         {
             weechat_printf (NULL,
-                            _("%s%s: error, invalid text received on pipe"),
+                            _("%s%s: invalid text received in pipe"),
                             weechat_prefix ("error"), FIFO_PLUGIN_NAME);
             free (text2);
             return;
@@ -267,15 +267,15 @@ fifo_exec (const char *text)
         pos_msg[0] = '\0';
         pos_msg += 2;
         ptr_buffer = weechat_buffer_search ("==", text2);
-    }
-
-    if (!ptr_buffer)
-    {
-        weechat_printf (NULL,
-                        _("%s%s: error, buffer not found for pipe data"),
-                        weechat_prefix ("error"), FIFO_PLUGIN_NAME);
-        free (text2);
-        return;
+        if (!ptr_buffer)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: buffer \"%s\" not found"),
+                            weechat_prefix ("error"), FIFO_PLUGIN_NAME,
+                            text2);
+            free (text2);
+            return;
+        }
     }
 
     weechat_command (ptr_buffer, pos_msg);

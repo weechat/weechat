@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-10-18 19:03+0200\n"
+"POT-Creation-Date: 2015-10-25 07:16+0100\n"
 "PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4178,13 +4178,13 @@ msgstr ""
 msgid "%s: pipe closed"
 msgstr ""
 
-#, c-format
-msgid "%s%s: error, invalid text received on pipe"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: invalid text received in pipe"
+msgstr "%sHata: dosya \"%s\" oluşturulamaz"
 
-#, c-format
-msgid "%s%s: error, buffer not found for pipe data"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%s%s: sunucu \"%s\" bulunamadı"
 
 #, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"

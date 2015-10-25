@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-10-18 19:03+0200\n"
+"POT-Creation-Date: 2015-10-25 07:16+0100\n"
 "PO-Revision-Date: 2015-09-30 20:56+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5688,13 +5688,13 @@ msgstr ""
 msgid "%s: pipe closed"
 msgstr "%s: strumień zamknięty"
 
-#, c-format
-msgid "%s%s: error, invalid text received on pipe"
+#, fuzzy, c-format
+msgid "%s%s: invalid text received in pipe"
 msgstr "%s%s: błąd, otrzymano niewłaściwy tekst ze strumienia"
 
-#, c-format
-msgid "%s%s: error, buffer not found for pipe data"
-msgstr "%s%s: błąd, nie znaleziono buforu dla danych ze strumienia"
+#, fuzzy, c-format
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%s%s: serwer \"%s\" nie został znaleziony"
 
 #, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
@@ -12181,3 +12181,6 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid "%s%s: error, buffer not found for pipe data"
+#~ msgstr "%s%s: błąd, nie znaleziono buforu dla danych ze strumienia"

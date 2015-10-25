@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-10-18 19:03+0200\n"
+"POT-Creation-Date: 2015-10-25 07:16+0100\n"
 "PO-Revision-Date: 2015-09-09 09:13+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4584,12 +4584,12 @@ msgid "%s: pipe closed"
 msgstr "FIFO cső bezárva\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error, invalid text received on pipe"
+msgid "%s%s: invalid text received in pipe"
 msgstr "%s érvénytelen üzenet érkezett a FIFO csőben\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error, buffer not found for pipe data"
-msgstr "%s a \"%s\" szerver nem található (FIFO cső adat)\n"
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
@@ -10526,3 +10526,7 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid "%s%s: error, buffer not found for pipe data"
+#~ msgstr "%s a \"%s\" szerver nem található (FIFO cső adat)\n"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-10-18 19:03+0200\n"
+"POT-Creation-Date: 2015-10-25 07:16+0100\n"
 "PO-Revision-Date: 2015-10-07 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -5561,13 +5561,13 @@ msgstr "%s%s: リモート操作用のパイプを作成できません (%s): �
 msgid "%s: pipe closed"
 msgstr "%s: パイプを閉じました"
 
-#, c-format
-msgid "%s%s: error, invalid text received on pipe"
+#, fuzzy, c-format
+msgid "%s%s: invalid text received in pipe"
 msgstr "%s%s: エラー、パイプを通して不正なテキストが渡されました"
 
-#, c-format
-msgid "%s%s: error, buffer not found for pipe data"
-msgstr "%s%s: エラー、パイプデータで指定されたバッファが見つかりません"
+#, fuzzy, c-format
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%s%s: サーバ \"%s\" が見つかりません"
 
 #, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
@@ -11983,3 +11983,6 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "%s%s: error, buffer not found for pipe data"
+#~ msgstr "%s%s: エラー、パイプデータで指定されたバッファが見つかりません"

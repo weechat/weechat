@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-10-18 19:03+0200\n"
+"POT-Creation-Date: 2015-10-25 07:16+0100\n"
 "PO-Revision-Date: 2015-09-09 09:13+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4622,12 +4622,12 @@ msgid "%s: pipe closed"
 msgstr "FIFO pipe закрыт\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error, invalid text received on pipe"
+msgid "%s%s: invalid text received in pipe"
 msgstr "%s некорректный текст получен на FIFO pipe\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error, buffer not found for pipe data"
-msgstr "%s сервер \"%s\" не найден (данные FIFO pipe)\n"
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
@@ -10553,3 +10553,7 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+#~ msgid "%s%s: error, buffer not found for pipe data"
+#~ msgstr "%s сервер \"%s\" не найден (данные FIFO pipe)\n"
