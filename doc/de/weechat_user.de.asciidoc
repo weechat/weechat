@@ -1321,13 +1321,13 @@ key[alt-x] die Mausunterstützung für 10 Sekunden deaktiviert werden:
 /key bind meta-x /mouse toggle 10
 ----
 
-// TRANSLATION MISSING
 [IMPORTANT]
-When mouse is enabled in WeeChat, all mouse events are caught by WeeChat, so
-actions such as copy/paste or clicks on URLs are not sent to the terminal. +
-Using key[shift] key causes the events to be sent directly to the terminal,
-as if the mouse was disabled (on some terminals like iTerm, you have to use
-key[alt] instead of key[shift]).
+Ist die Maus in Weechat aktiviert werden alle Mausereignisse duch WeeChat gefangen.
+Dadurch werden Aktionen wie Kopieren+Einfügen oder Klicks auf URLs nicht an das
+Terminal weitergereicht. + Mittels der key[shift] Taste kann aber das Mausereignis
+an das Terminal weitergeleitet werden, als ob die Maus deaktiviert wäre (bei
+einigen  Terminals, wie z.B. iTerm, muß die Taste key[alt] anstelle von
+key[shift] verwendet werden).
 
 [NOTE]
 Sollten Probleme bei der Mausunterstützung auftreten, dann sollte Bitte die 'WeeChat FAQ' gelesen werden.
