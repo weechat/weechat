@@ -98,12 +98,10 @@ WeeChat немедленно применяет все изменения (ва�
 Используйте команду `/plugin`, чтобы увидеть все загруженные плагины. В этом
 списке должен быть IRC-плагин и другие.
 
-// TRANSLATION MISSING
 [[add_irc_server]]
-== Add an IRC server
+== Добавить IRC сервер
 
-// TRANSLATION MISSING
-You can add an IRC server with `/server` command, for example:
+Вы можете добавить IRC сервер с помощью команды `/server`, например:
 
 ----
 /server add freenode chat.freenode.net
@@ -325,20 +323,17 @@ You can add an IRC server with `/server` command, for example:
 Плагины загружаются автоматически, если найдены (можете посмотреть
 документацию о загрузке и выгрузке плагинов или скиптов).
 
-// TRANSLATION MISSING
-Many external scripts (from contributors) are available for WeeChat, you can
-download and install scripts from the repository with the `/script` command,
-for example:
+Множество внешних скриптов (написанных контрибьюторами) достпуно для WeeChat, 
+вы можете скачать и установить скрипты из репозитория с помощью команды `/script`,
+например:
 
 ----
 /script install iset.pl
 ----
 
-// TRANSLATION MISSING
-See `/help script` for more info.
+Для получения дополнительной информации введите команду `/help script`.
 
-// TRANSLATION MISSING
-A list of scripts is available in WeeChat with `/script` or at this URL:
+Список скриптов, доступных в WeeChat можно просмотреть введя команду `/script` или на сайте:
 https://weechat.org/scripts
 
 [[more_doc]]
