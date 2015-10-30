@@ -1,10 +1,21 @@
 diff --git a/debian-devel/control b/debian-devel/control
-index a12df19..38773be 100644
+index 8fd3e49..38773be 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
-@@ -20,8 +20,8 @@ Build-Depends:
+@@ -9,7 +9,6 @@ Build-Depends:
+     docbook-xsl,
+     docbook-xml,
+     debhelper (>= 9),
+-    dh-exec,
+     cmake, pkg-config,
+     libncursesw5-dev,
+     gem2deb,
+@@ -19,10 +18,10 @@ Build-Depends:
+     liblua5.1-0-dev,
+     tcl8.5-dev,
      guile-2.0-dev,
-     libv8-dev,
+-    libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
++    libv8-dev,
      libcurl4-gnutls-dev,
 -    libgcrypt20-dev,
 -    libgnutls28-dev,
@@ -14,12 +25,23 @@ index a12df19..38773be 100644
  Standards-Version: 3.9.6
  Homepage: https://weechat.org/
 diff --git a/debian-stable/control b/debian-stable/control
-index ccb4179..0d73171 100644
+index 0f3c34b..0d73171 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
-@@ -20,8 +20,8 @@ Build-Depends:
+@@ -9,7 +9,6 @@ Build-Depends:
+     docbook-xsl,
+     docbook-xml,
+     debhelper (>= 9),
+-    dh-exec,
+     cmake, pkg-config,
+     libncursesw5-dev,
+     gem2deb,
+@@ -19,10 +18,10 @@ Build-Depends:
+     liblua5.1-0-dev,
+     tcl8.5-dev,
      guile-2.0-dev,
-     libv8-dev,
+-    libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
++    libv8-dev,
      libcurl4-gnutls-dev,
 -    libgcrypt20-dev,
 -    libgnutls28-dev,
@@ -28,3 +50,21 @@ index ccb4179..0d73171 100644
      zlib1g-dev
  Standards-Version: 3.9.6
  Homepage: https://weechat.org/
+diff --git a/debian-stable/weechat-plugins.install b/debian-stable/weechat-plugins.install
+old mode 100755
+new mode 100644
+index 198360f..980192f
+--- a/debian-stable/weechat-plugins.install
++++ b/debian-stable/weechat-plugins.install
+@@ -1,10 +1,8 @@
+-#!/usr/bin/dh-exec
+-
+ usr/lib/weechat/plugins/aspell.so
+ usr/lib/weechat/plugins/exec.so
+ usr/lib/weechat/plugins/fifo.so
+ usr/lib/weechat/plugins/guile.so
+-[amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel] usr/lib/weechat/plugins/javascript.so
++usr/lib/weechat/plugins/javascript.so
+ usr/lib/weechat/plugins/lua.so
+ usr/lib/weechat/plugins/perl.so
+ usr/lib/weechat/plugins/python.so
