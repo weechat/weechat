@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-10-25 07:16+0100\n"
-"PO-Revision-Date: 2015-10-07 09:00+0900\n"
+"PO-Revision-Date: 2015-10-31 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -5561,13 +5561,13 @@ msgstr "%s%s: リモート操作用のパイプを作成できません (%s): �
 msgid "%s: pipe closed"
 msgstr "%s: パイプを閉じました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid text received in pipe"
-msgstr "%s%s: エラー、パイプを通して不正なテキストが渡されました"
+msgstr "%s%s: パイプを通して不正なテキストが渡されました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: buffer \"%s\" not found"
-msgstr "%s%s: サーバ \"%s\" が見つかりません"
+msgstr "%s%s: バッファ \"%s\" が見つかりません"
 
 #, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
@@ -6124,7 +6124,6 @@ msgstr "クライアント機能情報の交換"
 msgid "ls || list || req|ack [<capability> [<capability>...]] || clear || end"
 msgstr "ls || list || req|ack [<capability> [<capability>...]] || clear || end"
 
-#, fuzzy
 msgid ""
 "   ls: list the capabilities supported by the server\n"
 " list: list the capabilities currently enabled\n"
@@ -6156,8 +6155,8 @@ msgstr ""
 "\n"
 "引数無しの場合、\"ls\" と \"list\" を送信します。\n"
 "\n"
-"WeeChat がサポートする機能: account-notify、away-notify、extended-join、"
-"multi-prefix、server-time、userhost-in-names。\n"
+"WeeChat がサポートする機能: account-notify、away-notify、cap-notify、"
+"extended-join、multi-prefix、server-time、userhost-in-names。\n"
 "\n"
 "自動的に有効化する機能を設定するにはオプション irc.server_default."
 "capabilities (または対象のサーバに関するオプション irc.server.xxx."
@@ -8488,23 +8487,23 @@ msgstr "%s%s: クライアントの機能: sasl はサポートされていま�
 
 #, c-format
 msgid "%s%s: client capability, currently enabled: %s"
-msgstr "%s%s: クライアントの機能、現在有効化: %s"
+msgstr "%s%s: クライアントの機能、現在有効化されているもの: %s"
 
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
-msgstr "%s%s: クライアントの機能、有効化: %s"
+msgstr "%s%s: クライアントの機能、有効化されたもの: %s"
 
 #, c-format
 msgid "%s%s: client capability, refused: %s"
-msgstr "%s%s: クライアントの機能、拒否されました: %s"
+msgstr "%s%s: クライアントの機能、拒否されたもの: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, now available: %s"
-msgstr "%s%s: クライアントの機能、有効化: %s"
+msgstr "%s%s: クライアントの機能、現在利用可能なもの: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, removed: %s"
-msgstr "%s%s: クライアントの機能、拒否されました: %s"
+msgstr "%s%s: クライアントの機能、削除されたもの: %s"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
