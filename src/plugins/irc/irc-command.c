@@ -276,7 +276,8 @@ irc_command_admin (void *data, struct t_gui_buffer *buffer, int argc,
 void
 irc_command_exec_all_channels (struct t_irc_server *server,
                                int channel_type,
-                               const char *exclude_channels,
+                               int inclusive,
+                               const char *str_channels,
                                const char *command)
 {
     struct t_irc_server *ptr_server, *next_server;
@@ -285,7 +286,7 @@ irc_command_exec_all_channels (struct t_irc_server *server,
     struct t_gui_buffer *ptr_buffer;
     char **channels, *str_command, *cmd_vars_replaced;
     const char *ptr_buffer_name;
-    int num_channels, length, excluded, i, list_size;
+    int num_channels, length, picked, i, list_size;
 
     if (!command || !command[0])
         return;
@@ -302,8 +303,8 @@ irc_command_exec_all_channels (struct t_irc_server *server,
     if (!str_command)
         return;
 
-    channels = (exclude_channels && exclude_channels[0]) ?
-        weechat_string_split (exclude_channels, ",", 0, 0, &num_channels) : NULL;
+    channels = (str_channels && str_channels[0]) ?
+        weechat_string_split (str_channels, ",", 0, 0, &num_channels) : NULL;
 
     /* build a list of buffer names where the command will be executed */
     list_buffers = weechat_list_new ();
@@ -323,7 +324,11 @@ irc_command_exec_all_channels (struct t_irc_server *server,
 
                     if (ptr_channel->type == channel_type)
                     {
-                        excluded = 0;
+                        if (inclusive)
+                            picked = 0;
+                        else
+                            picked = 1;
+
                         if (channels)
                         {
                             for (i = 0; i < num_channels; i++)
@@ -331,12 +336,16 @@ irc_command_exec_all_channels (struct t_irc_server *server,
                                 if (weechat_string_match (ptr_channel->name,
                                                           channels[i], 0))
                                 {
-                                    excluded = 1;
+                                    if (inclusive)
+                                        picked = 1;
+                                    else
+                                        picked = 0;
                                     break;
                                 }
                             }
                         }
-                        if (!excluded)
+
+                        if (picked)
                         {
                             weechat_list_add (list_buffers,
                                               weechat_buffer_get_string (
@@ -394,8 +403,8 @@ int
 irc_command_allchan (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
-    int i, current_server;
-    const char *ptr_exclude_channels, *ptr_command;
+    int i, current_server, inclusive;
+    const char *ptr_channels, *ptr_command;
 
     IRC_BUFFER_GET_SERVER(buffer);
 
@@ -405,8 +414,9 @@ irc_command_allchan (void *data, struct t_gui_buffer *buffer, int argc,
     WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     current_server = 0;
-    ptr_exclude_channels = NULL;
+    ptr_channels = NULL;
     ptr_command = argv_eol[1];
+    inclusive = 0;
     for (i = 1; i < argc; i++)
     {
         if (weechat_strcasecmp (argv[i], "-current") == 0)
@@ -416,8 +426,15 @@ irc_command_allchan (void *data, struct t_gui_buffer *buffer, int argc,
         }
         else if (weechat_strncasecmp (argv[i], "-exclude=", 9) == 0)
         {
-            ptr_exclude_channels = argv[i] + 9;
+            ptr_channels = argv[i] + 9;
             ptr_command = argv_eol[i + 1];
+            inclusive = 0;
+        }
+        else if (weechat_strncasecmp (argv[i], "-include=", 9) == 0)
+        {
+            ptr_channels = argv[i] + 9;
+            ptr_command = argv_eol[i + 1];
+            inclusive = 1;
         }
         else
             break;
@@ -428,7 +445,8 @@ irc_command_allchan (void *data, struct t_gui_buffer *buffer, int argc,
         weechat_buffer_set (NULL, "hotlist", "-");
         irc_command_exec_all_channels ((current_server) ? ptr_server : NULL,
                                        IRC_CHANNEL_TYPE_CHANNEL,
-                                       ptr_exclude_channels,
+                                       inclusive,
+                                       ptr_channels,
                                        ptr_command);
         weechat_buffer_set (NULL, "hotlist", "+");
     }
@@ -445,8 +463,8 @@ int
 irc_command_allpv (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    int i, current_server;
-    const char *ptr_exclude_channels, *ptr_command;
+    int i, current_server, inclusive;
+    const char *ptr_channels, *ptr_command;
 
     IRC_BUFFER_GET_SERVER(buffer);
 
@@ -456,8 +474,9 @@ irc_command_allpv (void *data, struct t_gui_buffer *buffer, int argc,
     WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     current_server = 0;
-    ptr_exclude_channels = NULL;
+    ptr_channels = NULL;
     ptr_command = argv_eol[1];
+    inclusive = 0;
     for (i = 1; i < argc; i++)
     {
         if (weechat_strcasecmp (argv[i], "-current") == 0)
@@ -467,8 +486,15 @@ irc_command_allpv (void *data, struct t_gui_buffer *buffer, int argc,
         }
         else if (weechat_strncasecmp (argv[i], "-exclude=", 9) == 0)
         {
-            ptr_exclude_channels = argv[i] + 9;
+            ptr_channels = argv[i] + 9;
             ptr_command = argv_eol[i + 1];
+            inclusive = 0;
+        }
+        else if (weechat_strncasecmp (argv[i], "-include=", 9) == 0)
+        {
+            ptr_channels = argv[i] + 9;
+            ptr_command = argv_eol[i + 1];
+            inclusive = 1;
         }
         else
             break;
@@ -479,7 +505,8 @@ irc_command_allpv (void *data, struct t_gui_buffer *buffer, int argc,
         weechat_buffer_set (NULL, "hotlist", "-");
         irc_command_exec_all_channels ((current_server) ? ptr_server : NULL,
                                        IRC_CHANNEL_TYPE_PRIVATE,
-                                       ptr_exclude_channels,
+                                       inclusive,
+                                       ptr_channels,
                                        ptr_command);
         weechat_buffer_set (NULL, "hotlist", "+");
     }
@@ -494,7 +521,7 @@ irc_command_allpv (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 void
-irc_command_exec_all_servers (const char *exclude_servers, const char *command)
+irc_command_exec_all_servers (int inclusive, const char *str_servers, const char *command)
 {
     struct t_irc_server *ptr_server, *next_server;
     struct t_irc_channel *ptr_channel;
@@ -502,7 +529,7 @@ irc_command_exec_all_servers (const char *exclude_servers, const char *command)
     struct t_gui_buffer *ptr_buffer;
     char **servers, *str_command, *cmd_vars_replaced;
     const char *ptr_buffer_name;
-    int num_servers, length, excluded, i, list_size;
+    int num_servers, length, picked, i, list_size;
 
     if (!command || !command[0])
         return;
@@ -519,8 +546,8 @@ irc_command_exec_all_servers (const char *exclude_servers, const char *command)
     if (!str_command)
         return;
 
-    servers = (exclude_servers && exclude_servers[0]) ?
-        weechat_string_split (exclude_servers, ",", 0, 0, &num_servers) : NULL;
+    servers = (str_servers && str_servers[0]) ?
+        weechat_string_split (str_servers, ",", 0, 0, &num_servers) : NULL;
 
     /* build a list of buffer names where the command will be executed */
     list_buffers = weechat_list_new ();
@@ -531,7 +558,11 @@ irc_command_exec_all_servers (const char *exclude_servers, const char *command)
 
         if (ptr_server->is_connected)
         {
-            excluded = 0;
+            if (inclusive)
+                picked = 0;
+            else
+                picked = 1;
+
             if (servers)
             {
                 for (i = 0; i < num_servers; i++)
@@ -539,12 +570,16 @@ irc_command_exec_all_servers (const char *exclude_servers, const char *command)
                     if (weechat_string_match (ptr_server->name,
                                               servers[i], 0))
                     {
-                        excluded = 1;
+                        if (inclusive)
+                            picked = 1;
+                        else
+                            picked = 0;
                         break;
                     }
                 }
             }
-            if (!excluded)
+
+            if (picked)
             {
                 weechat_list_add (list_buffers,
                                   weechat_buffer_get_string (
@@ -597,8 +632,8 @@ int
 irc_command_allserv (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
-    int i;
-    const char *ptr_exclude_servers, *ptr_command;
+    int i, inclusive;
+    const char *ptr_servers, *ptr_command;
 
     /* make C compiler happy */
     (void) data;
@@ -606,14 +641,22 @@ irc_command_allserv (void *data, struct t_gui_buffer *buffer, int argc,
 
     WEECHAT_COMMAND_MIN_ARGS(2, "");
 
-    ptr_exclude_servers = NULL;
+    ptr_servers = NULL;
     ptr_command = argv_eol[1];
+    inclusive = 0;
     for (i = 1; i < argc; i++)
     {
         if (weechat_strncasecmp (argv[i], "-exclude=", 9) == 0)
         {
-            ptr_exclude_servers = argv[i] + 9;
+            ptr_servers = argv[i] + 9;
             ptr_command = argv_eol[i + 1];
+            inclusive = 0;
+        }
+        else if (weechat_strncasecmp (argv[i], "-include=", 9) == 0)
+        {
+            ptr_servers = argv[i] + 9;
+            ptr_command = argv_eol[i + 1];
+            inclusive = 1;
         }
         else
             break;
@@ -622,7 +665,7 @@ irc_command_allserv (void *data, struct t_gui_buffer *buffer, int argc,
     if (ptr_command && ptr_command[0])
     {
         weechat_buffer_set (NULL, "hotlist", "-");
-        irc_command_exec_all_servers (ptr_exclude_servers, ptr_command);
+        irc_command_exec_all_servers (inclusive, ptr_servers, ptr_command);
         weechat_buffer_set (NULL, "hotlist", "+");
     }
 
@@ -6066,9 +6109,12 @@ irc_command_init ()
         "allchan",
         N_("execute a command on all channels of all connected servers"),
         N_("[-current] [-exclude=<channel>[,<channel>...]] <command> "
+           "[<arguments>]"
+           " || [-current] -include=<channel>[,<channel>...] <command> "
            "[<arguments>]"),
         N_(" -current: execute command for channels of current server only\n"
            " -exclude: exclude some channels (wildcard \"*\" is allowed)\n"
+           " -include: include only some channels (wildcard \"*\" is allowed)\n"
            "  command: command to execute\n"
            "arguments: arguments for command (special variables $nick, $channel "
            "and $server are replaced by their value)\n"
@@ -6080,16 +6126,21 @@ irc_command_init ()
            "    /allchan -exclude=#weechat msg * hello\n"
            "  say 'hello' everywhere but not on #weechat and channels beginning "
            "with #linux:\n"
-           "    /allchan -exclude=#weechat,#linux* msg * hello"),
+           "    /allchan -exclude=#weechat,#linux* msg * hello\n"
+           "  say 'hello' on all channels beginning with #linux:\n"
+           "    /allchan -include=#linux* msg * hello"),
         "-current", &irc_command_allchan, NULL);
     weechat_hook_command (
         "allpv",
         N_("execute a command on all private buffers of all connected servers"),
         N_("[-current] [-exclude=<nick>[,<nick>...]] <command> "
+           "[<arguments>]"
+           " || [-current] -include=<nick>[,<nick>...] <command> "
            "[<arguments>]"),
         N_(" -current: execute command for private buffers of current server "
            "only\n"
            " -exclude: exclude some nicks (wildcard \"*\" is allowed)\n"
+           " -include: include only some nicks (wildcard \"*\" is allowed)\n"
            "  command: command to execute\n"
            "arguments: arguments for command (special variables $nick, $channel "
            "and $server are replaced by their value)\n"
@@ -6102,6 +6153,8 @@ irc_command_init ()
            "  say 'hello' everywhere but not for nick foo and nicks beginning "
            "with bar:\n"
            "    /allpv -exclude=foo,bar* msg * hello\n"
+           "  say 'hello' for all nicks beginning with bar:\n"
+           "    /allpv -include=bar* msg * hello\n"
            "  close all private buffers:\n"
            "    /allpv close"),
         "-current", &irc_command_allpv, NULL);
@@ -6109,8 +6162,11 @@ irc_command_init ()
         "allserv",
         N_("execute a command on all connected servers"),
         N_("[-exclude=<server>[,<server>...]] "
+           "<command> [<arguments>]"
+           " || -include=<server>[,<server>...] "
            "<command> [<arguments>]"),
         N_(" -exclude: exclude some servers (wildcard \"*\" is allowed)\n"
+           " -include: include only some servers (wildcard \"*\" is allowed)\n"
            "  command: command to execute\n"
            "arguments: arguments for command (special variables $nick, $channel "
            "and $server are replaced by their value)\n"
