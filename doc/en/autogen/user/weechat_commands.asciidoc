@@ -513,8 +513,8 @@ A special value for command with format "hsignal:name" can be used for context m
 Another special value "-" can be used to disable key (it will be ignored when looking for keys).
 
 Examples:
-  key alt-x to toggle nicklist bar:
-    /key bind meta-x /bar toggle nicklist
+  key alt-t to toggle nicklist bar:
+    /key bind meta-t /bar toggle nicklist
   key alt-r to jump to #weechat IRC channel:
     /key bind meta-r /buffer #weechat
   restore default binding for key alt-r:

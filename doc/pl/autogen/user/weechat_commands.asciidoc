@@ -513,8 +513,8 @@ Specjalna wartość dla komendy o formacie "hsignal:nazwa" może być użyte dla
 Inna specjalna wartość "-" może zostać użyta do wyłączenia klucza (zostanie on zignorowany podczas szukania kluczy).
 
 Przykłady:
-  kombinacja alt-x przełączająca wyświetlanie listy nicków:
-    /key bind meta-x /bar toggle nicklist
+  kombinacja alt-t przełączająca wyświetlanie listy nicków:
+    /key bind meta-t /bar toggle nicklist
   kombinacja alt-r przechodząca do kanału IRC #weechat IRCl:
     /key bind meta-r /buffer #weechat
   przywrócenie domyślnego przypisania dla kombinacji alt-r:

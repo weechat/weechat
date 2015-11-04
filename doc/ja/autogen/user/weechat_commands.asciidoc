@@ -513,8 +513,8 @@ listdefault: デフォルトキーをリストアップ
 その他の特別な値 "-" はキーを無効化するために利用されます。(これはキーの探索時には無視されます)
 
 例:
-  alt-x キーをニックネームリストバーに割り当てる:
-    /key bind meta-x /bar toggle nicklist
+  alt-t キーをニックネームリストバーに割り当てる:
+    /key bind meta-t /bar toggle nicklist
   alt-r キーを #weechat IRC チャンネルへの移動に割り当てる:
     /key bind meta-r /buffer #weechat
   alt-r キーの割り当てをデフォルトに戻す:

@@ -513,8 +513,8 @@ Für den Kontext "mouse" kann ein besonderer Übergabewert für den zu nutzenden
 Ein weiterer Übergabewert ist "-" und kann genutzt werden um einen Schlüssel zu deaktivieren (der Schlüssel wird bei der Durchführung übersprungen).
 
 Beispiele:
-  Mit der Tastenkombination "alt-x" wird die Nicklist-Bar an-und aus geschaltet:
-    /key bind meta-x /bar toggle nicklist
+  Mit der Tastenkombination "alt-t" wird die Nicklist-Bar an-und aus geschaltet:
+    /key bind meta-t /bar toggle nicklist
   Mit der Tastenkombination "alt-r" wird direkt zum IRC #weechat Buffer gewechselt:
     /key bind meta-r /buffer #weechat
   Die Tastenkombination "alt-r" wird auf die Standardfunktion zurückgesetzt:

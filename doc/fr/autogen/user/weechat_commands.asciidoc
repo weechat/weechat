@@ -513,8 +513,8 @@ Une valeur spéciale pour la commande avec le format "hsignal:nom" peut être ut
 Une autre valeur spéciale "-" peut être utilisée pour désactiver la touche (elle sera ignorée lors de la recherche de touches).
 
 Exemples :
-  touche alt-x pour activer/désactiver la liste des pseudos :
-    /key bind meta-x /bar toggle nicklist
+  touche alt-t pour activer/désactiver la liste des pseudos :
+    /key bind meta-t /bar toggle nicklist
   touche alt-r pour aller sur le canal IRC #weechat :
     /key bind meta-r /buffer #weechat
   restaure l'association par défaut pour la touche alt-r :
