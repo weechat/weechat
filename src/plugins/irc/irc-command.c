@@ -41,6 +41,7 @@
 #include "irc-ignore.h"
 #include "irc-input.h"
 #include "irc-message.h"
+#include "irc-mode.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
@@ -251,6 +252,7 @@ irc_command_mode_nicks (struct t_irc_server *server,
 void
 irc_command_mode_masks (struct t_irc_server *server,
                         const char *channel_name,
+                        const char *command,
                         const char *set, const char *mode,
                         char **argv, int pos_masks)
 {
@@ -260,6 +262,16 @@ irc_command_mode_masks (struct t_irc_server *server,
     const char *ptr_modes;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+
+    if (irc_mode_get_chanmode_type (server, mode[0]) != 'A')
+    {
+        weechat_printf (
+            NULL,
+            _("%s%s: cannot use /%s, type A channel mode \"%s\" not supported "
+              "by server"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, command, mode);
+        return;
+    }
 
     /* default is 4 modes max (if server did not send the info) */
     max_modes = 4;
@@ -1154,7 +1166,9 @@ irc_command_ban (void *data, struct t_gui_buffer *buffer, int argc,
 
         if (argv[pos_args])
         {
-            irc_command_mode_masks (ptr_server, pos_channel, "+", "b", argv, pos_args);
+            irc_command_mode_masks (ptr_server, pos_channel,
+                                    "ban", "+", "b",
+                                    argv, pos_args);
         }
         else
         {
@@ -4125,7 +4139,9 @@ irc_command_quiet (void *data, struct t_gui_buffer *buffer, int argc,
 
         if (argv[pos_args])
         {
-            irc_command_mode_masks (ptr_server, pos_channel, "+", "q", argv, pos_args);
+            irc_command_mode_masks (ptr_server, pos_channel,
+                                    "quiet", "+", "q",
+                                    argv, pos_args);
         }
         else
         {
@@ -5701,7 +5717,9 @@ irc_command_unban (void *data, struct t_gui_buffer *buffer, int argc,
         }
     }
 
-    irc_command_mode_masks (ptr_server, pos_channel, "-", "b", argv, pos_args);
+    irc_command_mode_masks (ptr_server, pos_channel,
+                            "unban", "-", "b",
+                            argv, pos_args);
 
     return WEECHAT_RC_OK;
 }
@@ -5755,7 +5773,9 @@ irc_command_unquiet (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argv[pos_args])
     {
-        irc_command_mode_masks (ptr_server, pos_channel, "-", "q", argv, pos_args);
+        irc_command_mode_masks (ptr_server, pos_channel,
+                                "unquiet", "-", "q",
+                                argv, pos_args);
     }
     else
     {
