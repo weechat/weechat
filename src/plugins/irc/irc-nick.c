@@ -297,17 +297,26 @@ irc_nick_find_color_name (const char *nickname)
 void
 irc_nick_set_current_prefix (struct t_irc_nick *nick)
 {
-    char *ptr_prefixes;
+    char *ptr_prefixes, *ptr_prefix;
 
-    nick->prefix[0] = ' ';
+    ptr_prefix = nick->prefix;
+
     for (ptr_prefixes = nick->prefixes; ptr_prefixes[0]; ptr_prefixes++)
     {
         if (ptr_prefixes[0] != ' ')
         {
-            nick->prefix[0] = ptr_prefixes[0];
-            break;
+            ptr_prefix[0] = ptr_prefixes[0];
+            ptr_prefix++;
         }
     }
+
+    if (ptr_prefix == nick->prefix) /* none were added */
+    {
+        ptr_prefix[0] = ' '; /* backwards compatibility */
+        ptr_prefix++;
+    }
+
+    ptr_prefix[0] = '\0';
 }
 
 /*
@@ -666,8 +675,9 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     new_nick->host = (host) ? strdup (host) : NULL;
     new_nick->account = (account) ? strdup (account) : NULL;
     length = strlen (irc_server_get_prefix_chars (server));
+    new_nick->prefix = malloc (length + 1);
     new_nick->prefixes = malloc (length + 1);
-    if (!new_nick->name || !new_nick->prefixes)
+    if (!new_nick->name || !new_nick->prefix || !new_nick->prefixes)
     {
         if (new_nick->name)
             free (new_nick->name);
@@ -675,6 +685,8 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
             free (new_nick->host);
         if (new_nick->account)
             free (new_nick->account);
+        if (new_nick->prefix)
+            free (new_nick->prefix);
         if (new_nick->prefixes)
             free (new_nick->prefixes);
         free (new_nick);
@@ -685,8 +697,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         memset (new_nick->prefixes, ' ', length);
         new_nick->prefixes[length] = '\0';
     }
-    new_nick->prefix[0] = ' ';
-    new_nick->prefix[1] = '\0';
+    new_nick->prefix[0] = '\0';
     irc_nick_set_prefixes (server, new_nick, prefixes);
     new_nick->away = away;
     if (irc_server_strcasecmp (server, new_nick->name, server->nick) == 0)
@@ -813,6 +824,8 @@ irc_nick_free (struct t_irc_server *server, struct t_irc_channel *channel,
         free (nick->name);
     if (nick->host)
         free (nick->host);
+    if (nick->prefix)
+        free (nick->prefix);
     if (nick->prefixes)
         free (nick->prefixes);
     if (nick->account)
