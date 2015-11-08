@@ -490,6 +490,12 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                             snprintf (str_nick_prefix, sizeof (str_nick_prefix),
                                       "%s",
                                       ptr_nick_prefix);
+                            /*
+                             * Only the first char (highest prefix) is used,
+                             * so that buffers stay aligned when the nick has
+                             * multiple prefixes.
+                             */
+                            str_nick_prefix[weechat_utf8_char_size (str_nick_prefix)] = '\0';
                         }
                     }
                 }

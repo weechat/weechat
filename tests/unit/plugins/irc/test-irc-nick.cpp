@@ -15,14 +15,24 @@ extern "C"
 #include <string.h>
 #include "src/core/core-config-file.h"
 #include "src/core/core-hashtable.h"
+#include "src/core/core-hook.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
+#include "src/gui/gui-nicklist.h"
+#include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-config.h"
 #include "src/plugins/irc/irc-nick.h"
 #include "src/plugins/irc/irc-server.h"
 
 extern void irc_nick_set_current_prefix (struct t_irc_nick *nick);
+extern void irc_nick_nicklist_nick_set (struct t_gui_buffer *buffer,
+                                        struct t_gui_nick *gui_nick,
+                                        const char *property,
+                                        const char *value);
+extern void irc_nick_nicklist_set (struct t_irc_channel *channel,
+                                   struct t_irc_nick *nick,
+                                   const char *property, const char *value);
 extern void irc_nick_set_prefix (struct t_irc_server *server,
                                  struct t_irc_nick *nick,
                                  int set, char prefix);
@@ -31,8 +41,27 @@ extern void irc_nick_set_prefixes (struct t_irc_server *server,
                                    const char *prefixes);
 }
 
+int signal_nicklist_nick_changed_count = 0;
+
 TEST_GROUP(IrcNick)
 {
+    static int signal_nicklist_nick_changed_cb (const void *pointer,
+                                                void *data,
+                                                const char *signal,
+                                                const char *type_data,
+                                                void *signal_data)
+    {
+        /* Make C++ compiler happy. */
+        (void) pointer;
+        (void) data;
+        (void) signal;
+        (void) type_data;
+        (void) signal_data;
+
+        signal_nicklist_nick_changed_count++;
+
+        return WEECHAT_RC_OK;
+    }
 };
 
 /*
@@ -621,6 +650,63 @@ TEST(IrcNick, GetColorForNicklist)
 
 /*
  * Test functions:
+ *   irc_nick_nicklist_add (prefix)
+ *   irc_nick_nicklist_set_prefix_all
+ */
+
+TEST(IrcNick, NicklistPrefix)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_irc_nick *nick;
+    struct t_gui_nick *ptr_gui_nick;
+
+    run_cmd_quiet ("/mute /server add test_prefix fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_prefix");
+
+    server = irc_server_search ("test_prefix");
+    CHECK(server);
+
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    nick = irc_nick_new (server, channel, "bob", "user@host", "@+", 0, NULL, NULL);
+    CHECK(nick);
+    ptr_gui_nick = gui_nicklist_search_nick (channel->buffer, NULL, "bob");
+    CHECK(ptr_gui_nick);
+
+    /* Capability "multi-prefix" not enabled. */
+    STRCMP_EQUAL("@", ptr_gui_nick->prefix);
+    config_file_option_set (irc_config_look_multi_prefix_in_nicklist, "off", 1);
+    STRCMP_EQUAL("@", ptr_gui_nick->prefix);
+    config_file_option_unset (irc_config_look_multi_prefix_in_nicklist);
+    STRCMP_EQUAL("@", ptr_gui_nick->prefix);
+
+    /* Capability "multi-prefix" enabled. */
+    hashtable_set (server->cap_list, "multi-prefix", NULL);
+    config_file_option_set (irc_config_look_multi_prefix_in_nicklist, "off", 1);
+    STRCMP_EQUAL("@", ptr_gui_nick->prefix);
+    config_file_option_unset (irc_config_look_multi_prefix_in_nicklist);
+    STRCMP_EQUAL("@+", ptr_gui_nick->prefix);
+
+    /* Nick added in nicklist with all prefixes. */
+    irc_nick_set_prefixes (server, nick, "+");
+    irc_nick_new (server, channel, "bob", "user@host", "@+", 0, NULL, NULL);
+    ptr_gui_nick = gui_nicklist_search_nick (channel->buffer, NULL, "bob");
+    CHECK(ptr_gui_nick);
+    STRCMP_EQUAL("@+", ptr_gui_nick->prefix);
+    hashtable_remove (server->cap_list, "multi-prefix");
+
+    irc_nick_free (server, channel, nick);
+    if (channel->buffer)
+        gui_buffer_close (channel->buffer);
+
+    run_cmd_quiet ("/mute /disconnect test_prefix");
+    run_cmd_quiet ("/mute /server del test_prefix");
+}
+
+/*
+ * Test functions:
  *   irc_nick_nicklist_add
  */
 
@@ -641,12 +727,135 @@ TEST(IrcNick, NicklistRemove)
 
 /*
  * Test functions:
+ *   irc_nick_nicklist_nick_set
  *   irc_nick_nicklist_set
  */
 
 TEST(IrcNick, NicklistSet)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_irc_nick *nick;
+    struct t_gui_nick *ptr_gui_nick;
+    struct t_hook *hook;
+
+    run_cmd_quiet ("/mute /server add test_nicklist fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_nicklist");
+
+    server = irc_server_search ("test_nicklist");
+    CHECK(server);
+
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    nick = irc_nick_new (server, channel, "bob", "user@host", "@", 0, NULL, NULL);
+    CHECK(nick);
+    ptr_gui_nick = gui_nicklist_search_nick (channel->buffer, NULL, "bob");
+    CHECK(ptr_gui_nick);
+
+    hook = hook_signal (NULL, "nicklist_nick_changed",
+                        &signal_nicklist_nick_changed_cb, NULL, NULL);
+    CHECK(hook);
+
+    signal_nicklist_nick_changed_count = 0;
+    irc_nick_nicklist_nick_set (NULL, NULL, NULL, NULL);
+    irc_nick_nicklist_nick_set (channel->buffer, NULL, "prefix", "@");
+    LONGS_EQUAL(0, signal_nicklist_nick_changed_count);
+
+    /* Same value: property not set, no signal sent. */
+    signal_nicklist_nick_changed_count = 0;
+    irc_nick_nicklist_set (channel, nick, "prefix", "@");
+    LONGS_EQUAL(0, signal_nicklist_nick_changed_count);
+    STRCMP_EQUAL("@", ptr_gui_nick->prefix);
+
+    /* New value: property set, signal sent. */
+    irc_nick_nicklist_set (channel, nick, "prefix", "@+");
+    LONGS_EQUAL(1, signal_nicklist_nick_changed_count);
+    STRCMP_EQUAL("@+", ptr_gui_nick->prefix);
+
+    /* Empty value (prefix removed), then empty again: no signal. */
+    irc_nick_nicklist_set (channel, nick, "prefix", "");
+    LONGS_EQUAL(2, signal_nicklist_nick_changed_count);
+    POINTERS_EQUAL(NULL, ptr_gui_nick->prefix);
+    irc_nick_nicklist_set (channel, nick, "prefix", "");
+    LONGS_EQUAL(2, signal_nicklist_nick_changed_count);
+
+    unhook (hook);
+
+    irc_nick_free (server, channel, nick);
+    if (channel->buffer)
+        gui_buffer_close (channel->buffer);
+
+    run_cmd_quiet ("/mute /disconnect test_nicklist");
+    run_cmd_quiet ("/mute /server del test_nicklist");
+}
+
+/*
+ * Test functions:
+ *   irc_nick_nicklist_set_prefix_channel
+ */
+
+TEST(IrcNick, NicklistSetPrefixChannel)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_gui_nick *ptr_gui_nick1, *ptr_gui_nick2;
+    struct t_hook *hook;
+
+    irc_nick_nicklist_set_prefix_channel (NULL, NULL);
+
+    run_cmd_quiet ("/mute /server add test_prefix fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_prefix");
+
+    server = irc_server_search ("test_prefix");
+    CHECK(server);
+
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    /* No nicks in channel. */
+    irc_nick_nicklist_set_prefix_channel (server, channel);
+
+    CHECK(irc_nick_new (server, channel, "bob", "user@host", "@+", 0, NULL, NULL));
+    CHECK(irc_nick_new (server, channel, "carol", "user@host", "+", 0, NULL, NULL));
+    ptr_gui_nick1 = gui_nicklist_search_nick (channel->buffer, NULL, "bob");
+    CHECK(ptr_gui_nick1);
+    ptr_gui_nick2 = gui_nicklist_search_nick (channel->buffer, NULL, "carol");
+    CHECK(ptr_gui_nick2);
+    STRCMP_EQUAL("@", ptr_gui_nick1->prefix);
+    STRCMP_EQUAL("+", ptr_gui_nick2->prefix);
+
+    hook = hook_signal (NULL, "nicklist_nick_changed",
+                        &signal_nicklist_nick_changed_cb, NULL, NULL);
+    CHECK(hook);
+
+    /* Nothing changed: no prefix set. */
+    signal_nicklist_nick_changed_count = 0;
+    irc_nick_nicklist_set_prefix_channel (server, channel);
+    LONGS_EQUAL(0, signal_nicklist_nick_changed_count);
+
+    /* Capability enabled: only the prefix of bob is changed. */
+    hashtable_set (server->cap_list, "multi-prefix", NULL);
+    irc_nick_nicklist_set_prefix_channel (server, channel);
+    LONGS_EQUAL(1, signal_nicklist_nick_changed_count);
+    STRCMP_EQUAL("@+", ptr_gui_nick1->prefix);
+    STRCMP_EQUAL("+", ptr_gui_nick2->prefix);
+
+    /* Capability disabled. */
+    hashtable_remove (server->cap_list, "multi-prefix");
+    irc_nick_nicklist_set_prefix_channel (server, channel);
+    LONGS_EQUAL(2, signal_nicklist_nick_changed_count);
+    STRCMP_EQUAL("@", ptr_gui_nick1->prefix);
+    STRCMP_EQUAL("+", ptr_gui_nick2->prefix);
+
+    unhook (hook);
+
+    irc_nick_free_all (server, channel);
+    if (channel->buffer)
+        gui_buffer_close (channel->buffer);
+
+    run_cmd_quiet ("/mute /disconnect test_prefix");
+    run_cmd_quiet ("/mute /server del test_prefix");
 }
 
 /*

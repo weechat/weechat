@@ -6445,12 +6445,14 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
 
     /*
      * The nicklist is used to display nicks sorted by group; when all
-     * prefixes are displayed, they are read in IRC nicks (nicklist may have
-     * only the highest prefix): IRC nicks are indexed by name in a hashtable
-     * for a fast lookup.
+     * prefixes are displayed but the nicklist has only the highest prefix
+     * (see option irc.look.multi_prefix_in_nicklist), they are read in IRC
+     * nicks: IRC nicks are indexed by name in a hashtable for a fast lookup.
      */
     hashtable_nicks = NULL;
-    if (display_all_prefixes)
+    if (display_all_prefixes
+        && !irc_nick_display_all_prefixes (
+            server, irc_config_look_multi_prefix_in_nicklist))
     {
         hashtable_nicks = irc_nick_hashtable_by_name (channel);
         if (!hashtable_nicks)

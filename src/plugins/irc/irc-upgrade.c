@@ -960,6 +960,9 @@ irc_upgrade_read_cb (const void *pointer, void *data,
  * Set buffer properties on IRC buffers after upgrade:
  *   - "input_prompt" (introduced in WeeChat 4.3.0)
  *   - "modes" (introduced in WeeChat 4.3.0)
+ *
+ * And set nick prefixes in nicklists (all prefixes can be displayed since
+ * WeeChat 5.0.0).
  */
 
 void
@@ -983,6 +986,9 @@ irc_upgrade_set_buffer_properties (void)
                 irc_channel_set_buffer_modes (ptr_server, ptr_channel);
         }
     }
+
+    /* Set nick prefixes in nicklists. */
+    irc_nick_nicklist_set_prefix_all ();
 }
 
 /*

@@ -89,6 +89,7 @@ struct t_config_option *irc_config_look_list_buffer_sort = NULL;
 struct t_config_option *irc_config_look_list_buffer_topic_strip_colors = NULL;
 struct t_config_option *irc_config_look_msgbuffer_fallback = NULL;
 struct t_config_option *irc_config_look_multi_prefix_in_names = NULL;
+struct t_config_option *irc_config_look_multi_prefix_in_nicklist = NULL;
 struct t_config_option *irc_config_look_multi_prefix_in_prompt = NULL;
 struct t_config_option *irc_config_look_new_channel_position = NULL;
 struct t_config_option *irc_config_look_new_list_position = NULL;
@@ -397,6 +398,23 @@ irc_config_change_look_display_join_message (const void *pointer, void *data,
         }
         weechat_string_free_split (items);
     }
+}
+
+/*
+ * Callback for changes on option "irc.look.multi_prefix_in_nicklist".
+ */
+
+void
+irc_config_change_look_multi_prefix_in_nicklist (const void *pointer,
+                                                 void *data,
+                                                 struct t_config_option *option)
+{
+    /* Make C compiler happy. */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    irc_nick_nicklist_set_prefix_all ();
 }
 
 /*
@@ -3569,6 +3587,16 @@ irc_config_init (void)
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL,
             NULL, NULL, NULL,
+            NULL, NULL, NULL);
+        irc_config_look_multi_prefix_in_nicklist = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "multi_prefix_in_nicklist", "boolean",
+            N_("display all nick prefixes in nicklist when capability "
+               "\"multi-prefix\" is enabled (if disabled, only the highest "
+               "prefix is displayed)"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL,
+            &irc_config_change_look_multi_prefix_in_nicklist, NULL, NULL,
             NULL, NULL, NULL);
         irc_config_look_multi_prefix_in_prompt = weechat_config_new_option (
             irc_config_file, irc_config_section_look,

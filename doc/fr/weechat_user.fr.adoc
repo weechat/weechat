@@ -3843,6 +3843,8 @@ selon ces options :
   prompt de saisie
 * <<option_irc.look.multi_prefix_in_names,irc.look.multi_prefix_in_names>> :
   sortie de `/names` (et liste des pseudos affichés lors de l'arrivée sur un canal)
+* <<option_irc.look.multi_prefix_in_nicklist,irc.look.multi_prefix_in_nicklist>> :
+  liste des pseudos
 
 Exemple : sortie de `/whois alice` :
 

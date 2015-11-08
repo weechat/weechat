@@ -524,7 +524,9 @@ irc_nick_nicklist_add (struct t_irc_server *server,
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                nick->name,
                                color,
-                               nick->prefix,
+                               irc_nick_get_prefixes_to_display (
+                                   server, nick,
+                                   irc_config_look_multi_prefix_in_nicklist),
                                irc_nick_get_prefix_color_name (server, nick->prefix[0]),
                                1);
     free (color);
@@ -549,6 +551,33 @@ irc_nick_nicklist_remove (struct t_irc_server *server,
 }
 
 /*
+ * Set a string property ("color", "prefix" or "prefix_color") for a nick of
+ * buffer nicklist (struct t_gui_nick).
+ *
+ * The property is not set if its value is unchanged (this prevents useless
+ * signals "nicklist_nick_changed"); this check is done with the current string
+ * value of the property, so this function must not be used for other
+ * properties.
+ */
+
+void
+irc_nick_nicklist_nick_set (struct t_gui_buffer *buffer,
+                            struct t_gui_nick *gui_nick,
+                            const char *property, const char *value)
+{
+    const char *ptr_value;
+
+    if (!buffer || !gui_nick)
+        return;
+
+    ptr_value = weechat_nicklist_nick_get_string (buffer, gui_nick, property);
+    if (strcmp ((ptr_value) ? ptr_value : "", (value) ? value : "") == 0)
+        return;
+
+    weechat_nicklist_nick_set (buffer, gui_nick, property, value);
+}
+
+/*
  * Set a property for nick in buffer nicklist.
  */
 
@@ -557,13 +586,10 @@ irc_nick_nicklist_set (struct t_irc_channel *channel,
                        struct t_irc_nick *nick,
                        const char *property, const char *value)
 {
-    struct t_gui_nick *ptr_nick;
-
-    ptr_nick = weechat_nicklist_search_nick (channel->buffer, NULL, nick->name);
-    if (ptr_nick)
-    {
-        weechat_nicklist_nick_set (channel->buffer, ptr_nick, property, value);
-    }
+    irc_nick_nicklist_nick_set (
+        channel->buffer,
+        weechat_nicklist_search_nick (channel->buffer, NULL, nick->name),
+        property, value);
 }
 
 /*
@@ -619,6 +645,78 @@ irc_nick_nicklist_set_color_all (void)
                 irc_nick_nicklist_set (ptr_channel, ptr_nick, "color", color);
                 free (color);
             }
+        }
+    }
+}
+
+/*
+ * Set nick prefixes in nicklist of a channel.
+ *
+ * The nicklist is read only once (nicks are not searched one by one in
+ * nicklist) and the prefix is set only if it has changed.
+ */
+
+void
+irc_nick_nicklist_set_prefix_channel (struct t_irc_server *server,
+                                      struct t_irc_channel *channel)
+{
+    struct t_hashtable *hashtable_nicks;
+    struct t_gui_nick_group *ptr_gui_group;
+    struct t_gui_nick *ptr_gui_nick;
+    struct t_irc_nick *ptr_nick;
+
+    if (!server || !channel || !channel->buffer || !channel->nicks)
+        return;
+
+    hashtable_nicks = irc_nick_hashtable_by_name (channel);
+    if (!hashtable_nicks)
+        return;
+
+    ptr_gui_group = NULL;
+    ptr_gui_nick = NULL;
+    weechat_nicklist_get_next_item (channel->buffer,
+                                    &ptr_gui_group, &ptr_gui_nick);
+    while (ptr_gui_group || ptr_gui_nick)
+    {
+        if (ptr_gui_nick)
+        {
+            ptr_nick = weechat_hashtable_get (
+                hashtable_nicks,
+                weechat_nicklist_nick_get_string (channel->buffer,
+                                                  ptr_gui_nick, "name"));
+            if (ptr_nick)
+            {
+                irc_nick_nicklist_nick_set (
+                    channel->buffer, ptr_gui_nick, "prefix",
+                    irc_nick_get_prefixes_to_display (
+                        server, ptr_nick,
+                        irc_config_look_multi_prefix_in_nicklist));
+            }
+        }
+        weechat_nicklist_get_next_item (channel->buffer,
+                                        &ptr_gui_group, &ptr_gui_nick);
+    }
+
+    weechat_hashtable_free (hashtable_nicks);
+}
+
+/*
+ * Set nick prefixes in nicklist for all servers/channels.
+ */
+
+void
+irc_nick_nicklist_set_prefix_all (void)
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            irc_nick_nicklist_set_prefix_channel (ptr_server, ptr_channel);
         }
     }
 }

@@ -124,6 +124,7 @@ extern struct t_config_option *irc_config_look_list_buffer_sort;
 extern struct t_config_option *irc_config_look_list_buffer_topic_strip_colors;
 extern struct t_config_option *irc_config_look_msgbuffer_fallback;
 extern struct t_config_option *irc_config_look_multi_prefix_in_names;
+extern struct t_config_option *irc_config_look_multi_prefix_in_nicklist;
 extern struct t_config_option *irc_config_look_multi_prefix_in_prompt;
 extern struct t_config_option *irc_config_look_new_channel_position;
 extern struct t_config_option *irc_config_look_new_list_position;

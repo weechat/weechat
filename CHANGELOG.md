@@ -24,6 +24,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - api: add function "buffer_get_longlong"
 - api: add functions "infolist_new_var_long", "infolist_new_var_longlong", "infolist_long", "infolist_longlong"
 - doc: add cheat sheet with all key bindings and mouse actions
+- irc: add option irc.look.multi_prefix_in_nicklist to display all nick prefixes in nicklist when capability "multi-prefix" is enabled ([#132](https://github.com/weechat/weechat/issues/132))
 - irc: add option irc.look.multi_prefix_in_names to display all nick prefixes in output of `/names` when capability "multi-prefix" is enabled ([#310](https://github.com/weechat/weechat/issues/310))
 - irc: add option irc.look.multi_prefix_in_prompt to display all nick prefixes in input prompt when capability "multi-prefix" is enabled
 - irc: add field "all_prefixes" (all prefixes of nick, from higher to lower) in hdata and infolist "irc_nick"
@@ -54,8 +55,10 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - **breaking:** api: convert variable "timeout" from int to long in infolist "hook" (hook process)
 - **breaking:** api: convert variable "interval" from string to long in infolist "hook" (hook timer)
 - api: return an error and an empty string in function string_base_decode when the string to decode is invalid (invalid char, truncated string or invalid padding)
+- buflist: display only the first char of nick prefix in variable `${nick_prefix}`, so that buffers stay aligned when a nick has multiple prefixes in nicklist
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: accept a number or a string with a number as integer data in function hook_signal_send, return an error if the data is not a valid integer
 - **breaking:** guile, javascript, lua, perl, python, ruby, tcl: swap arguments "ip_address" and "error" in callback of function hook_connect, to match the C API and the documentation
+- **breaking:** irc: display all nick prefixes in nicklist when capability "multi-prefix" is enabled (option irc.look.multi_prefix_in_nicklist), the nick prefix in nicklist can now have more than one char
 - irc: split channel modes in multiple messages in commands `/mode` and `/samode` according to the server limit ([#295](https://github.com/weechat/weechat/issues/295))
 - irc: allow multiple nicks separated by commas in command `/notify del`
 - javascript: enable build by default ([#360](https://github.com/weechat/weechat/issues/360))

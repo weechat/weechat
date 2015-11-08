@@ -168,6 +168,22 @@ weechat_hook_connect($proxy, $address, $port, $ipv6, $retry, "", "", 0, "", $loc
 weechat_hook_connect($proxy, $address, $port, $ipv6, $retry, $local_hostname, "connect_cb", "");
 ```
 
+### IRC nick prefixes in nicklist
+
+When the IRC capability "multi-prefix" is enabled, the nicklist now displays all prefixes of
+nicks (for example `@+` for a nick that is op and voiced), with the new option
+`irc.look.multi_prefix_in_nicklist` (enabled by default).
+
+So the nick prefix in nicklist can now have more than one char: scripts and relay clients
+(protocols "weechat" and "api") reading nicklist prefixes must not assume a prefix has a single
+char.
+
+To display only the highest prefix in nicklist, like in previous versions:
+
+```text
+/set irc.look.multi_prefix_in_nicklist off
+```
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer

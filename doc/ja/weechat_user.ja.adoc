@@ -3862,6 +3862,8 @@ according to these options:
   input prompt
 * <<option_irc.look.multi_prefix_in_names,irc.look.multi_prefix_in_names>>:
   output of `/names` (and list of nicks displayed when joining a channel)
+* <<option_irc.look.multi_prefix_in_nicklist,irc.look.multi_prefix_in_nicklist>>:
+  nicklist
 
 Example: output of `/whois alice`:
 

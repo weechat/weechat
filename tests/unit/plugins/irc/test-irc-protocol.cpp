@@ -5926,10 +5926,23 @@ TEST(IrcProtocolWithServer, 366_multi_prefix)
     CHECK_CHAN("--", "Nicks #test: [@bob +carol alice]",
                "irc_353,irc_numeric,nick_server,log3");
 
+    /* Capability enabled: nicklist refreshed, all prefixes in nicklist */
     hashtable_set (ptr_server->cap_list, "multi-prefix", NULL);
+    irc_nick_nicklist_set_prefix_all ();
     RECV(":server 366 alice #test :End of /NAMES list");
     CHECK_CHAN("--", "Nicks #test: [@+bob +carol alice]",
                "irc_353,irc_numeric,nick_server,log3");
+
+    /* Only the highest prefix in nicklist: prefixes read in IRC nicks */
+    config_file_option_set (irc_config_look_multi_prefix_in_nicklist, "off", 1);
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN("--", "Nicks #test: [@+bob +carol alice]",
+               "irc_353,irc_numeric,nick_server,log3");
+    hashtable_set (ptr_server->names_channel_filter, "#test", "v");
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN("--", "Nicks #test (filter: v): [@+bob +carol]",
+               "irc_353,irc_numeric,nick_server,log3");
+    config_file_option_unset (irc_config_look_multi_prefix_in_nicklist);
 
     /* Filter on voiced nicks: all prefixes are checked */
     hashtable_set (ptr_server->names_channel_filter, "#test", "v");
@@ -5950,6 +5963,7 @@ TEST(IrcProtocolWithServer, 366_multi_prefix)
 
     config_file_option_unset (irc_config_look_multi_prefix_in_names);
     hashtable_remove (ptr_server->cap_list, "multi-prefix");
+    irc_nick_nicklist_set_prefix_all ();
 
     /* Nick in nicklist but not in IRC nicks: nicklist prefix is used */
     CHECK(gui_nicklist_add_nick (ptr_server->channels->buffer, NULL, "zed",
