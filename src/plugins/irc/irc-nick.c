@@ -515,6 +515,31 @@ irc_nick_get_color_for_nicklist (struct t_irc_server *server,
 }
 
 /*
+ * Gets nick prefix for nicklist.
+ *
+ * Note: result must be freed after use.
+ */
+
+const char *
+irc_nick_get_prefix_for_nicklist (struct t_irc_server *server,
+                                  struct t_irc_nick *nick)
+{
+    char *prefix;
+
+    if (server->cap_multi_prefix &&
+        weechat_config_boolean (irc_config_look_multi_prefix_in_nicklist))
+        prefix = nick->prefix;
+    else
+    {
+        prefix = malloc (2);
+        prefix[0] = nick->prefix[0];
+        prefix[1] = '\0';
+    }
+
+    return prefix;
+}
+
+/*
  * Adds a nick to buffer nicklist.
  */
 
@@ -529,7 +554,7 @@ irc_nick_nicklist_add (struct t_irc_server *server,
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                nick->name,
                                irc_nick_get_color_for_nicklist (server, nick),
-                               nick->prefix,
+                               irc_nick_get_prefix_for_nicklist (server, nick),
                                irc_nick_get_prefix_color_name (server, nick->prefix[0]),
                                1);
 }
@@ -627,6 +652,34 @@ irc_nick_nicklist_set_color_all ()
 }
 
 /*
+ * Sets nick prefixes in nicklist for all servers/channels.
+ */
+
+void
+irc_nick_nicklist_set_prefix_all ()
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            for (ptr_nick = ptr_channel->nicks; ptr_nick;
+                 ptr_nick = ptr_nick->next_nick)
+            {
+                irc_nick_nicklist_set (ptr_channel, ptr_nick, "prefix",
+                                       irc_nick_get_prefix_for_nicklist (ptr_server,
+                                                                         ptr_nick));
+            }
+        }
+    }
+}
+
+/*
  * Adds a new nick in channel.
  *
  * Returns pointer to new nick, NULL if error.
@@ -697,7 +750,8 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         memset (new_nick->prefixes, ' ', length);
         new_nick->prefixes[length] = '\0';
     }
-    new_nick->prefix[0] = '\0';
+    new_nick->prefix[0] = ' ';
+    new_nick->prefix[1] = '\0';
     irc_nick_set_prefixes (server, new_nick, prefixes);
     new_nick->away = away;
     if (irc_server_strcasecmp (server, new_nick->name, server->nick) == 0)
