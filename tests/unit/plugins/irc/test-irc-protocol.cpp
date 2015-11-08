@@ -2439,6 +2439,7 @@ TEST(IrcProtocolWithServer, mode)
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+    char *prompt;
 
     SRV_INIT_JOIN;
 
@@ -2511,6 +2512,27 @@ TEST(IrcProtocolWithServer, mode)
     STRCMP_EQUAL("@+", ptr_nick->prefixes);
     STRCMP_EQUAL("@", ptr_nick->prefix);
     STRCMP_EQUAL("@+", ptr_nick->all_prefixes);
+
+    /* Input prompt: only the highest prefix without capability "multi-prefix" */
+    prompt = gui_color_decode (ptr_channel->buffer->input_prompt, NULL);
+    STRCMP_EQUAL("@alice", prompt);
+    free (prompt);
+
+    /* Input prompt: all prefixes with capability "multi-prefix" */
+    hashtable_set (ptr_server->cap_list, "multi-prefix", NULL);
+    irc_channel_set_buffer_input_prompt (ptr_server, ptr_channel);
+    prompt = gui_color_decode (ptr_channel->buffer->input_prompt, NULL);
+    STRCMP_EQUAL("@+alice", prompt);
+    free (prompt);
+
+    /* Input prompt: only the highest prefix if option is disabled */
+    config_file_option_set (irc_config_look_multi_prefix_in_prompt, "off", 1);
+    prompt = gui_color_decode (ptr_channel->buffer->input_prompt, NULL);
+    STRCMP_EQUAL("@alice", prompt);
+    free (prompt);
+    config_file_option_unset (irc_config_look_multi_prefix_in_prompt);
+    hashtable_remove (ptr_server->cap_list, "multi-prefix");
+    irc_channel_set_buffer_input_prompt (ptr_server, ptr_channel);
 
     /* Nick mode '@' removed on channel #test */
     RECV(":admin!user@host MODE #test -o alice");

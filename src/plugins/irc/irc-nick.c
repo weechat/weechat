@@ -337,6 +337,81 @@ irc_nick_get_nicklist_group (struct t_irc_server *server,
 }
 
 /*
+ * Check if all nick prefixes must be displayed: capability "multi-prefix" is
+ * enabled on server and the boolean option is on (for example
+ * irc.look.multi_prefix_in_nicklist).
+ *
+ * Return:
+ *   1: all prefixes must be displayed
+ *   0: only the highest prefix must be displayed
+ */
+
+int
+irc_nick_display_all_prefixes (struct t_irc_server *server,
+                               struct t_config_option *option)
+{
+    return (irc_server_cap_multi_prefix_enabled (server)
+            && option
+            && weechat_config_boolean (option)) ? 1 : 0;
+}
+
+/*
+ * Get nick prefixes to display: all prefixes of nick if they must be displayed
+ * (see function irc_nick_display_all_prefixes), otherwise only the highest
+ * prefix.
+ *
+ * Return NULL if nick is NULL.
+ */
+
+const char *
+irc_nick_get_prefixes_to_display (struct t_irc_server *server,
+                                  struct t_irc_nick *nick,
+                                  struct t_config_option *option)
+{
+    if (!nick)
+        return NULL;
+
+    return (irc_nick_display_all_prefixes (server, option)) ?
+        nick->all_prefixes : nick->prefix;
+}
+
+/*
+ * Get nick prefixes with color, for display in input prompt and bar item
+ * "irc_nick_prefix".
+ *
+ * Return NULL if nick is NULL, or if nick has no prefix and option
+ * irc.look.nick_mode_empty is off.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_nick_get_prefix_for_prompt (struct t_irc_server *server,
+                                struct t_irc_nick *nick)
+{
+    char *result;
+
+    if (!nick)
+        return NULL;
+
+    if (!weechat_config_boolean (irc_config_look_nick_mode_empty)
+        && (nick->prefix[0] == ' '))
+    {
+        return NULL;
+    }
+
+    weechat_asprintf (&result, "%s%s",
+                      weechat_color (
+                          irc_nick_get_prefix_color_name (server,
+                                                          nick->prefix[0])),
+                      irc_nick_get_prefixes_to_display (
+                          server, nick,
+                          irc_config_look_multi_prefix_in_prompt));
+
+    return result;
+}
+
+/*
  * Get name of prefix color for a nick.
  */
 

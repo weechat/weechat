@@ -13,9 +13,12 @@
 extern "C"
 {
 #include <string.h>
+#include "src/core/core-config-file.h"
+#include "src/core/core-hashtable.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/irc/irc-channel.h"
+#include "src/plugins/irc/irc-config.h"
 #include "src/plugins/irc/irc-nick.h"
 #include "src/plugins/irc/irc-server.h"
 
@@ -424,6 +427,133 @@ TEST(IrcNick, HasPrefixMode)
 TEST(IrcNick, GetNicklistGroup)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Test functions:
+ *   irc_nick_display_all_prefixes
+ *   irc_nick_get_prefixes_to_display
+ */
+
+TEST(IrcNick, GetPrefixesToDisplay)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_irc_nick *nick;
+    struct t_config_option *option;
+
+    option = irc_config_look_multi_prefix_in_prompt;
+
+    LONGS_EQUAL(0, irc_nick_display_all_prefixes (NULL, NULL));
+    LONGS_EQUAL(0, irc_nick_display_all_prefixes (NULL, option));
+    POINTERS_EQUAL(NULL, irc_nick_get_prefixes_to_display (NULL, NULL, NULL));
+
+    run_cmd_quiet ("/mute /server add test_prefix fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_prefix");
+
+    server = irc_server_search ("test_prefix");
+    CHECK(server);
+
+    POINTERS_EQUAL(NULL, irc_nick_get_prefixes_to_display (server, NULL, option));
+
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    nick = irc_nick_new (server, channel, "bob", "user@host", "@+", 0, NULL, NULL);
+    CHECK(nick);
+
+    /* Capability "multi-prefix" not enabled. */
+    LONGS_EQUAL(0, irc_nick_display_all_prefixes (server, option));
+    STRCMP_EQUAL("@", irc_nick_get_prefixes_to_display (server, nick, option));
+
+    /* Capability "multi-prefix" enabled. */
+    hashtable_set (server->cap_list, "multi-prefix", NULL);
+    LONGS_EQUAL(0, irc_nick_display_all_prefixes (server, NULL));
+    LONGS_EQUAL(1, irc_nick_display_all_prefixes (server, option));
+    STRCMP_EQUAL("@", irc_nick_get_prefixes_to_display (server, nick, NULL));
+    STRCMP_EQUAL("@+", irc_nick_get_prefixes_to_display (server, nick, option));
+
+    /* Capability "multi-prefix" enabled, option disabled. */
+    config_file_option_set (option, "off", 1);
+    LONGS_EQUAL(0, irc_nick_display_all_prefixes (server, option));
+    STRCMP_EQUAL("@", irc_nick_get_prefixes_to_display (server, nick, option));
+    config_file_option_unset (option);
+
+    /* No prefix. */
+    irc_nick_set_prefixes (server, nick, NULL);
+    STRCMP_EQUAL(" ", irc_nick_get_prefixes_to_display (server, nick, option));
+    hashtable_remove (server->cap_list, "multi-prefix");
+    STRCMP_EQUAL(" ", irc_nick_get_prefixes_to_display (server, nick, option));
+
+    irc_nick_free (server, channel, nick);
+    if (channel->buffer)
+        gui_buffer_close (channel->buffer);
+
+    run_cmd_quiet ("/mute /disconnect test_prefix");
+    run_cmd_quiet ("/mute /server del test_prefix");
+}
+
+/*
+ * Test functions:
+ *   irc_nick_get_prefix_for_prompt
+ */
+
+TEST(IrcNick, GetPrefixForPrompt)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_irc_nick *nick;
+    char *str, *str_decoded;
+
+    POINTERS_EQUAL(NULL, irc_nick_get_prefix_for_prompt (NULL, NULL));
+
+    run_cmd_quiet ("/mute /server add test_prefix fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_prefix");
+
+    server = irc_server_search ("test_prefix");
+    CHECK(server);
+
+    POINTERS_EQUAL(NULL, irc_nick_get_prefix_for_prompt (server, NULL));
+
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    nick = irc_nick_new (server, channel, "bob", "user@host", NULL, 0, NULL, NULL);
+    CHECK(nick);
+
+    /* No prefix: NULL, or a space with option irc.look.nick_mode_empty. */
+    POINTERS_EQUAL(NULL, irc_nick_get_prefix_for_prompt (server, nick));
+    config_file_option_set (irc_config_look_nick_mode_empty, "on", 1);
+    str = irc_nick_get_prefix_for_prompt (server, nick);
+    str_decoded = gui_color_decode (str, NULL);
+    STRCMP_EQUAL(" ", str_decoded);
+    free (str_decoded);
+    free (str);
+    config_file_option_unset (irc_config_look_nick_mode_empty);
+
+    /* Capability "multi-prefix" not enabled: only the highest prefix. */
+    irc_nick_set_prefixes (server, nick, "@+");
+    str = irc_nick_get_prefix_for_prompt (server, nick);
+    str_decoded = gui_color_decode (str, NULL);
+    STRCMP_EQUAL("@", str_decoded);
+    free (str_decoded);
+    free (str);
+
+    /* Capability "multi-prefix" enabled: all prefixes. */
+    hashtable_set (server->cap_list, "multi-prefix", NULL);
+    str = irc_nick_get_prefix_for_prompt (server, nick);
+    str_decoded = gui_color_decode (str, NULL);
+    STRCMP_EQUAL("@+", str_decoded);
+    free (str_decoded);
+    free (str);
+    hashtable_remove (server->cap_list, "multi-prefix");
+
+    irc_nick_free (server, channel, nick);
+    if (channel->buffer)
+        gui_buffer_close (channel->buffer);
+
+    run_cmd_quiet ("/mute /disconnect test_prefix");
+    run_cmd_quiet ("/mute /server del test_prefix");
 }
 
 /*

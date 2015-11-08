@@ -567,8 +567,6 @@ irc_bar_item_nick_prefix (const void *pointer, void *data,
 {
     struct t_irc_server *server;
     struct t_irc_channel *channel;
-    struct t_irc_nick *ptr_nick;
-    char str_prefix[64];
 
     /* Make C compiler happy. */
     (void) pointer;
@@ -584,25 +582,11 @@ irc_bar_item_nick_prefix (const void *pointer, void *data,
     if (!server || !server->nick)
         return NULL;
 
-    str_prefix[0] = '\0';
-    if (channel && (channel->type == IRC_CHANNEL_TYPE_CHANNEL))
-    {
-        ptr_nick = irc_nick_search (server, channel, server->nick);
-        if (ptr_nick)
-        {
-            if (weechat_config_boolean (irc_config_look_nick_mode_empty)
-                || (ptr_nick->prefix[0] != ' '))
-            {
-                snprintf (str_prefix, sizeof (str_prefix), "%s%s",
-                          weechat_color (
-                              irc_nick_get_prefix_color_name (
-                                  server, ptr_nick->prefix[0])),
-                          ptr_nick->prefix);
-            }
-        }
-    }
+    if (!channel || (channel->type != IRC_CHANNEL_TYPE_CHANNEL))
+        return NULL;
 
-    return (str_prefix[0]) ? strdup (str_prefix) : NULL;
+    return irc_nick_get_prefix_for_prompt (
+        server, irc_nick_search (server, channel, server->nick));
 }
 
 /*

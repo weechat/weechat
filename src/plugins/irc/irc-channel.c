@@ -609,39 +609,27 @@ char *
 irc_channel_get_buffer_input_prompt (struct t_irc_server *server,
                                      struct t_irc_channel *channel)
 {
-    struct t_irc_nick *ptr_nick;
     int display_modes;
-    char str_prefix[64], *prompt;
+    char *prefix, *prompt;
 
     if (!server || !server->nick)
         return NULL;
 
     /* Build prefix. */
-    str_prefix[0] = '\0';
+    prefix = NULL;
     if (channel
         && (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
         && weechat_config_boolean (irc_config_look_item_nick_prefix))
     {
-        ptr_nick = irc_nick_search (server, channel, server->nick);
-        if (ptr_nick)
-        {
-            if (weechat_config_boolean (irc_config_look_nick_mode_empty)
-                || (ptr_nick->prefix[0] != ' '))
-            {
-                snprintf (str_prefix, sizeof (str_prefix), "%s%s",
-                          weechat_color (
-                              irc_nick_get_prefix_color_name (
-                                  server, ptr_nick->prefix[0])),
-                          ptr_nick->prefix);
-            }
-        }
+        prefix = irc_nick_get_prefix_for_prompt (
+            server, irc_nick_search (server, channel, server->nick));
     }
 
     display_modes = (weechat_config_boolean (irc_config_look_item_nick_modes)
                      && server->nick_modes && server->nick_modes[0]);
 
     weechat_asprintf (&prompt, "%s%s%s%s%s%s%s%s%s",
-                      str_prefix,
+                      (prefix) ? prefix : "",
                       IRC_COLOR_INPUT_NICK,
                       server->nick,
                       (display_modes) ? IRC_COLOR_BAR_DELIM : "",
@@ -650,6 +638,8 @@ irc_channel_get_buffer_input_prompt (struct t_irc_server *server,
                       (display_modes) ? server->nick_modes : "",
                       (display_modes) ? IRC_COLOR_BAR_DELIM : "",
                       (display_modes) ? ")" : "");
+
+    free (prefix);
 
     return prompt;
 }

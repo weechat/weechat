@@ -15,6 +15,7 @@
 #define IRC_NICK_GROUP_OTHER_NUMBER 999
 #define IRC_NICK_GROUP_OTHER_NAME   "..."
 
+struct t_config_option;
 struct t_irc_server;
 struct t_irc_channel;
 
@@ -47,6 +48,13 @@ extern int irc_nick_is_op_or_higher (struct t_irc_server *server,
 extern int irc_nick_has_prefix_mode (struct t_irc_server *server,
                                      struct t_irc_nick *nick,
                                      char prefix_mode);
+extern int irc_nick_display_all_prefixes (struct t_irc_server *server,
+                                          struct t_config_option *option);
+extern const char *irc_nick_get_prefixes_to_display (struct t_irc_server *server,
+                                                     struct t_irc_nick *nick,
+                                                     struct t_config_option *option);
+extern char *irc_nick_get_prefix_for_prompt (struct t_irc_server *server,
+                                             struct t_irc_nick *nick);
 extern const char *irc_nick_get_prefix_color_name (struct t_irc_server *server,
                                                    char prefix);
 extern void irc_nick_nicklist_set_prefix_color_all (void);
