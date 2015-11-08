@@ -379,6 +379,7 @@ extern char irc_server_get_prefix_mode_for_char (struct t_irc_server *server,
                                                  char prefix_char);
 extern char irc_server_get_prefix_char_for_mode (struct t_irc_server *server,
                                                  char mode);
+extern int irc_server_cap_multi_prefix_enabled (struct t_irc_server *server);
 extern const char *irc_server_get_chanmodes (struct t_irc_server *server);
 extern int irc_server_prefix_char_statusmsg (struct t_irc_server *server,
                                              char prefix_char);

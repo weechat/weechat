@@ -15,6 +15,7 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include "src/core/core-config-file.h"
+#include "src/core/core-hashtable.h"
 #include "src/gui/gui-buffer.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-channel.h"
@@ -852,6 +853,34 @@ TEST(IrcServer, GetPrefixModeForChar)
 TEST(IrcServer, GetPrefixCharForMode)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Test functions:
+ *   irc_server_cap_multi_prefix_enabled
+ */
+
+TEST(IrcServer, CapMultiPrefixEnabled)
+{
+    struct t_irc_server *server;
+
+    LONGS_EQUAL(0, irc_server_cap_multi_prefix_enabled (NULL));
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    LONGS_EQUAL(0, irc_server_cap_multi_prefix_enabled (server));
+
+    hashtable_set (server->cap_list, "away-notify", NULL);
+    LONGS_EQUAL(0, irc_server_cap_multi_prefix_enabled (server));
+
+    hashtable_set (server->cap_list, "multi-prefix", NULL);
+    LONGS_EQUAL(1, irc_server_cap_multi_prefix_enabled (server));
+
+    hashtable_remove (server->cap_list, "multi-prefix");
+    LONGS_EQUAL(0, irc_server_cap_multi_prefix_enabled (server));
+
+    irc_server_free (server);
 }
 
 /*

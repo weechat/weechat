@@ -1453,6 +1453,24 @@ irc_server_get_prefix_char_for_mode (struct t_irc_server *server, char mode)
 }
 
 /*
+ * Check if capability "multi-prefix" is enabled on server.
+ *
+ * Return:
+ *   1: capability "multi-prefix" is enabled
+ *   0: capability "multi-prefix" is not enabled
+ */
+
+int
+irc_server_cap_multi_prefix_enabled (struct t_irc_server *server)
+{
+    if (!server)
+        return 0;
+
+    return (weechat_hashtable_has_key (server->cap_list, "multi-prefix")) ?
+        1 : 0;
+}
+
+/*
  * Get chanmodes for server (for example: "eIb,k,l,imnpstS").
  *
  * Return default chanmodes if chanmodes is not set in server.
