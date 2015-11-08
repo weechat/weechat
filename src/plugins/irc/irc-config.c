@@ -82,6 +82,7 @@ struct t_config_option *irc_config_look_item_nick_modes;
 struct t_config_option *irc_config_look_item_nick_prefix;
 struct t_config_option *irc_config_look_join_auto_add_chantype;
 struct t_config_option *irc_config_look_msgbuffer_fallback;
+struct t_config_option *irc_config_look_multi_prefix_in_names;
 struct t_config_option *irc_config_look_multi_prefix_in_prompt;
 struct t_config_option *irc_config_look_new_channel_position;
 struct t_config_option *irc_config_look_new_pv_position;
@@ -2612,6 +2613,13 @@ irc_config_init ()
         N_("default target buffer for msgbuffer options when target is "
            "private and that private buffer is not found"),
         "current|server", 0, 0, "current", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_look_multi_prefix_in_names = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "multi_prefix_in_names", "boolean",
+        N_("show multiple prefixes in output of /names (or list of nicks "
+            "displayed when joining a channel)"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_look_multi_prefix_in_prompt = weechat_config_new_option (
         irc_config_file, ptr_section,
