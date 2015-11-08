@@ -25,6 +25,9 @@ struct t_irc_nick
     char *prefixes;                 /* string with prefixes enabled for nick */
     char *prefix;                   /* current prefix (higher prefix set in  */
                                     /* prefixes); string with just one char  */
+    char *all_prefixes;             /* all prefixes set in prefixes (from    */
+                                    /* higher to lower), without spaces      */
+                                    /* (a space if no prefix is set)         */
     int away;                       /* 1 if nick is away                     */
     char *account;                  /* account name of the user              */
     char *realname;                 /* realname (aka gecos) of the user      */

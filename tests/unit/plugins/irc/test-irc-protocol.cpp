@@ -2510,6 +2510,7 @@ TEST(IrcProtocolWithServer, mode)
                "irc_mode,nick_admin,host_user@host,log3");
     STRCMP_EQUAL("@+", ptr_nick->prefixes);
     STRCMP_EQUAL("@", ptr_nick->prefix);
+    STRCMP_EQUAL("@+", ptr_nick->all_prefixes);
 
     /* Nick mode '@' removed on channel #test */
     RECV(":admin!user@host MODE #test -o alice");

@@ -144,26 +144,40 @@ irc_nick_find_color_name (const char *nickname)
 }
 
 /*
- * Set current prefix, using higher prefix set in prefixes.
+ * Set current prefix, using higher prefix set in prefixes, and all prefixes
+ * set in prefixes (from higher to lower prefix).
+ *
+ * A space is used for both if no prefix is set.
  */
 
 void
 irc_nick_set_current_prefix (struct t_irc_nick *nick)
 {
-    char *ptr_prefixes;
+    char *ptr_prefixes, *ptr_all_prefixes;
 
     if (!nick)
         return;
 
-    nick->prefix[0] = ' ';
+    ptr_all_prefixes = nick->all_prefixes;
     for (ptr_prefixes = nick->prefixes; ptr_prefixes[0]; ptr_prefixes++)
     {
         if (ptr_prefixes[0] != ' ')
         {
-            nick->prefix[0] = ptr_prefixes[0];
-            break;
+            ptr_all_prefixes[0] = ptr_prefixes[0];
+            ptr_all_prefixes++;
         }
     }
+
+    /* No prefix set: use a space. */
+    if (ptr_all_prefixes == nick->all_prefixes)
+    {
+        ptr_all_prefixes[0] = ' ';
+        ptr_all_prefixes++;
+    }
+
+    ptr_all_prefixes[0] = '\0';
+
+    nick->prefix[0] = nick->all_prefixes[0];
 }
 
 /*
@@ -536,7 +550,9 @@ irc_nick_new_in_channel (struct t_irc_server *server,
     length = strlen (irc_server_get_prefix_chars (server));
     new_nick->prefixes = malloc (length + 1);
     new_nick->prefix = malloc (2);
-    if (!new_nick->name || !new_nick->prefixes || !new_nick->prefix)
+    new_nick->all_prefixes = malloc (((length > 0) ? length : 1) + 1);
+    if (!new_nick->name || !new_nick->prefixes || !new_nick->prefix
+        || !new_nick->all_prefixes)
     {
         free (new_nick->name);
         free (new_nick->host);
@@ -544,6 +560,7 @@ irc_nick_new_in_channel (struct t_irc_server *server,
         free (new_nick->realname);
         free (new_nick->prefixes);
         free (new_nick->prefix);
+        free (new_nick->all_prefixes);
         free (new_nick);
         return NULL;
     }
@@ -551,6 +568,8 @@ irc_nick_new_in_channel (struct t_irc_server *server,
     new_nick->prefixes[length] = '\0';
     new_nick->prefix[0] = ' ';
     new_nick->prefix[1] = '\0';
+    new_nick->all_prefixes[0] = ' ';
+    new_nick->all_prefixes[1] = '\0';
     irc_nick_set_prefixes (server, new_nick, prefixes);
     new_nick->away = away;
     if (irc_server_strcasecmp (server, new_nick->name, server->nick) == 0)
@@ -686,8 +705,8 @@ irc_nick_set_mode (struct t_irc_server *server, struct t_irc_channel *channel,
 }
 
 /*
- * Reallocate the "prefixes" string in all nicks of all channels on the server
- * (after 005 has been received).
+ * Reallocate the "prefixes" and "all_prefixes" strings in all nicks of all
+ * channels on the server (after 005 has been received).
  */
 
 void
@@ -696,7 +715,7 @@ irc_nick_realloc_prefixes (struct t_irc_server *server,
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    char *new_prefixes;
+    char *new_prefixes, *new_all_prefixes;
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -704,6 +723,20 @@ irc_nick_realloc_prefixes (struct t_irc_server *server,
         for (ptr_nick = ptr_channel->nicks; ptr_nick;
              ptr_nick = ptr_nick->next_nick)
         {
+            /*
+             * The "all_prefixes" string must always be able to store all
+             * chars of "prefixes": it is reallocated first and the nick is
+             * left unchanged if this fails.
+             */
+            new_all_prefixes = realloc (
+                ptr_nick->all_prefixes,
+                ((new_length > 0) ? new_length : 1) + 1);
+            if (!new_all_prefixes)
+                continue;
+            ptr_nick->all_prefixes = new_all_prefixes;
+            /* The string may have been truncated: terminate it. */
+            ptr_nick->all_prefixes[(new_length > 0) ? new_length : 1] = '\0';
+
             if (ptr_nick->prefixes)
             {
                 new_prefixes = realloc (ptr_nick->prefixes, new_length + 1);
@@ -718,6 +751,11 @@ irc_nick_realloc_prefixes (struct t_irc_server *server,
                     }
                     ptr_nick->prefixes[new_length] = '\0';
                 }
+                else if ((int)strlen (ptr_nick->prefixes) > new_length)
+                {
+                    /* Shrink failed: truncate the string in old buffer. */
+                    ptr_nick->prefixes[new_length] = '\0';
+                }
             }
             else
             {
@@ -728,6 +766,9 @@ irc_nick_realloc_prefixes (struct t_irc_server *server,
                     ptr_nick->prefixes[new_length] = '\0';
                 }
             }
+
+            if (ptr_nick->prefixes)
+                irc_nick_set_current_prefix (ptr_nick);
         }
     }
 }
@@ -769,6 +810,7 @@ irc_nick_free (struct t_irc_server *server, struct t_irc_channel *channel,
     free (nick->host);
     free (nick->prefixes);
     free (nick->prefix);
+    free (nick->all_prefixes);
     free (nick->account);
     free (nick->realname);
     free (nick->color);
@@ -1137,6 +1179,7 @@ irc_nick_hdata_nick_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_nick, host, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, prefixes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, prefix, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, all_prefixes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, away, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, account, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, realname, STRING, 0, NULL, NULL);
@@ -1176,6 +1219,8 @@ irc_nick_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "prefix", nick->prefix))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "all_prefixes", nick->all_prefixes))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "away", nick->away))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "account", nick->account))
@@ -1200,6 +1245,7 @@ irc_nick_print_log (struct t_irc_nick *nick)
     weechat_log_printf ("         host . . . . . : '%s'", nick->host);
     weechat_log_printf ("         prefixes . . . : '%s'", nick->prefixes);
     weechat_log_printf ("         prefix . . . . : '%s'", nick->prefix);
+    weechat_log_printf ("         all_prefixes . : '%s'", nick->all_prefixes);
     weechat_log_printf ("         away . . . . . : %d", nick->away);
     weechat_log_printf ("         account. . . . : '%s'", nick->account);
     weechat_log_printf ("         realname . . . : '%s'", nick->realname);

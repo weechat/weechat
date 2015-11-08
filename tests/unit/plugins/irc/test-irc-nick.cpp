@@ -19,6 +19,7 @@ extern "C"
 #include "src/plugins/irc/irc-nick.h"
 #include "src/plugins/irc/irc-server.h"
 
+extern void irc_nick_set_current_prefix (struct t_irc_nick *nick);
 extern void irc_nick_set_prefix (struct t_irc_server *server,
                                  struct t_irc_nick *nick,
                                  int set, char prefix);
@@ -190,7 +191,58 @@ TEST(IrcNick, FindColor)
 
 TEST(IrcNick, SetCurrentPrefix)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_irc_nick *nick;
+
+    irc_nick_set_current_prefix (NULL);
+
+    run_cmd_quiet ("/mute /server add test_prefix fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_prefix");
+
+    server = irc_server_search ("test_prefix");
+    CHECK(server);
+
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    nick = irc_nick_new (server, channel, "bob", "user@host", NULL, 0, NULL, NULL);
+    CHECK(nick);
+    STRCMP_EQUAL("  ", nick->prefixes);
+    STRCMP_EQUAL(" ", nick->prefix);
+    STRCMP_EQUAL(" ", nick->all_prefixes);
+
+    strcpy (nick->prefixes, "@ ");
+    irc_nick_set_current_prefix (nick);
+    STRCMP_EQUAL("@", nick->prefix);
+    STRCMP_EQUAL("@", nick->all_prefixes);
+
+    strcpy (nick->prefixes, " +");
+    irc_nick_set_current_prefix (nick);
+    STRCMP_EQUAL("+", nick->prefix);
+    STRCMP_EQUAL("+", nick->all_prefixes);
+
+    strcpy (nick->prefixes, "@+");
+    irc_nick_set_current_prefix (nick);
+    STRCMP_EQUAL("@", nick->prefix);
+    STRCMP_EQUAL("@+", nick->all_prefixes);
+
+    strcpy (nick->prefixes, "  ");
+    irc_nick_set_current_prefix (nick);
+    STRCMP_EQUAL(" ", nick->prefix);
+    STRCMP_EQUAL(" ", nick->all_prefixes);
+
+    nick->prefixes[0] = '\0';
+    irc_nick_set_current_prefix (nick);
+    STRCMP_EQUAL(" ", nick->prefix);
+    STRCMP_EQUAL(" ", nick->all_prefixes);
+
+    irc_nick_free (server, channel, nick);
+    if (channel->buffer)
+        gui_buffer_close (channel->buffer);
+
+    run_cmd_quiet ("/mute /disconnect test_prefix");
+    run_cmd_quiet ("/mute /server del test_prefix");
 }
 
 /*
@@ -219,6 +271,7 @@ TEST(IrcNick, SetPrefix)
     CHECK(nick);
     STRCMP_EQUAL("  ", nick->prefixes);
     STRCMP_EQUAL(" ", nick->prefix);
+    STRCMP_EQUAL(" ", nick->all_prefixes);
 
     irc_nick_set_prefix (server, NULL, 1, '@');
 
@@ -226,32 +279,39 @@ TEST(IrcNick, SetPrefix)
     irc_nick_set_prefix (server, nick, 1, '~');
     STRCMP_EQUAL("  ", nick->prefixes);
     STRCMP_EQUAL(" ", nick->prefix);
+    STRCMP_EQUAL(" ", nick->all_prefixes);
 
     irc_nick_set_prefix (server, nick, 1, '+');
     STRCMP_EQUAL(" +", nick->prefixes);
     STRCMP_EQUAL("+", nick->prefix);
+    STRCMP_EQUAL("+", nick->all_prefixes);
 
     irc_nick_set_prefix (server, nick, 1, '@');
     STRCMP_EQUAL("@+", nick->prefixes);
     STRCMP_EQUAL("@", nick->prefix);
+    STRCMP_EQUAL("@+", nick->all_prefixes);
 
     irc_nick_set_prefix (server, nick, 0, '@');
     STRCMP_EQUAL(" +", nick->prefixes);
     STRCMP_EQUAL("+", nick->prefix);
+    STRCMP_EQUAL("+", nick->all_prefixes);
 
     irc_nick_set_prefix (server, nick, 0, '+');
     STRCMP_EQUAL("  ", nick->prefixes);
     STRCMP_EQUAL(" ", nick->prefix);
+    STRCMP_EQUAL(" ", nick->all_prefixes);
 
     /* Index of prefix beyond nick prefixes: ignored. */
     nick->prefixes[1] = '\0';
     irc_nick_set_prefix (server, nick, 1, '+');
     STRCMP_EQUAL(" ", nick->prefixes);
     STRCMP_EQUAL(" ", nick->prefix);
+    STRCMP_EQUAL(" ", nick->all_prefixes);
     nick->prefixes[0] = '\0';
     irc_nick_set_prefix (server, nick, 1, '@');
     STRCMP_EQUAL("", nick->prefixes);
     STRCMP_EQUAL(" ", nick->prefix);
+    STRCMP_EQUAL(" ", nick->all_prefixes);
 
     irc_nick_free (server, channel, nick);
     if (channel->buffer)
@@ -287,30 +347,36 @@ TEST(IrcNick, SetPrefixes)
     CHECK(nick);
     STRCMP_EQUAL("@+", nick->prefixes);
     STRCMP_EQUAL("@", nick->prefix);
+    STRCMP_EQUAL("@+", nick->all_prefixes);
 
     irc_nick_set_prefixes (server, NULL, "@");
 
     irc_nick_set_prefixes (server, nick, NULL);
     STRCMP_EQUAL("  ", nick->prefixes);
     STRCMP_EQUAL(" ", nick->prefix);
+    STRCMP_EQUAL(" ", nick->all_prefixes);
 
     irc_nick_set_prefixes (server, nick, "+");
     STRCMP_EQUAL(" +", nick->prefixes);
     STRCMP_EQUAL("+", nick->prefix);
+    STRCMP_EQUAL("+", nick->all_prefixes);
 
     irc_nick_set_prefixes (server, nick, "+@~");
     STRCMP_EQUAL("@+", nick->prefixes);
     STRCMP_EQUAL("@", nick->prefix);
+    STRCMP_EQUAL("@+", nick->all_prefixes);
 
     irc_nick_set_prefixes (server, nick, "");
     STRCMP_EQUAL("  ", nick->prefixes);
     STRCMP_EQUAL(" ", nick->prefix);
+    STRCMP_EQUAL(" ", nick->all_prefixes);
 
     /* Index of prefix beyond nick prefixes: ignored. */
     nick->prefixes[1] = '\0';
     irc_nick_set_prefixes (server, nick, "@+");
     STRCMP_EQUAL("@", nick->prefixes);
     STRCMP_EQUAL("@", nick->prefix);
+    STRCMP_EQUAL("@", nick->all_prefixes);
 
     irc_nick_free (server, channel, nick);
     if (channel->buffer)
@@ -467,7 +533,53 @@ TEST(IrcNick, SetMode)
 
 TEST(IrcNick, ReallocPrefixes)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_irc_nick *nick;
+
+    run_cmd_quiet ("/mute /server add test_prefix fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_prefix");
+
+    server = irc_server_search ("test_prefix");
+    CHECK(server);
+
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    nick = irc_nick_new (server, channel, "bob", "user@host", "@+", 0, NULL, NULL);
+    CHECK(nick);
+    STRCMP_EQUAL("@+", nick->prefixes);
+    STRCMP_EQUAL("@", nick->prefix);
+    STRCMP_EQUAL("@+", nick->all_prefixes);
+
+    /* Grow prefixes: new prefixes are empty. */
+    irc_nick_realloc_prefixes (server, 2, 5);
+    STRCMP_EQUAL("@+   ", nick->prefixes);
+    STRCMP_EQUAL("@", nick->prefix);
+    STRCMP_EQUAL("@+", nick->all_prefixes);
+    strcpy (nick->prefixes, "~&@%+");
+    irc_nick_set_current_prefix (nick);
+    STRCMP_EQUAL("~", nick->prefix);
+    STRCMP_EQUAL("~&@%+", nick->all_prefixes);
+
+    /* Shrink prefixes: prefix is updated. */
+    irc_nick_realloc_prefixes (server, 5, 2);
+    STRCMP_EQUAL("~&", nick->prefixes);
+    STRCMP_EQUAL("~", nick->prefix);
+    STRCMP_EQUAL("~&", nick->all_prefixes);
+
+    /* No prefixes at all. */
+    irc_nick_realloc_prefixes (server, 2, 0);
+    STRCMP_EQUAL("", nick->prefixes);
+    STRCMP_EQUAL(" ", nick->prefix);
+    STRCMP_EQUAL(" ", nick->all_prefixes);
+
+    irc_nick_free (server, channel, nick);
+    if (channel->buffer)
+        gui_buffer_close (channel->buffer);
+
+    run_cmd_quiet ("/mute /disconnect test_prefix");
+    run_cmd_quiet ("/mute /server del test_prefix");
 }
 
 /*
