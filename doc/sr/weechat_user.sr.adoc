@@ -3494,17 +3494,20 @@ WeeChat приказује ове додатне информације у по�
 Ова могућност оспособљава сервер да шаље све корисничке режиме одједном у
 <<command_irc_names,/names>> и <<command_irc_whois,/whois>> одговорима. +
 
-////
 Пример: излаз команде `/names`:
 
 ....
 -- Надимци #test: [@%+alice bob +carol]
 ....
-////
 
-[NOTE]
-За сада WeeChat не приказује све префиксе у излазу команде `/names`, чак и ако се
-пример и интерно сачувају исправно.
+// TRANSLATION MISSING
+WeeChat displays all prefixes received when this capability is enabled,
+according to these options:
+
+* <<option_irc.look.multi_prefix_in_prompt,irc.look.multi_prefix_in_prompt>>:
+  input prompt
+* <<option_irc.look.multi_prefix_in_names,irc.look.multi_prefix_in_names>>:
+  output of `/names` (and list of nicks displayed when joining a channel)
 
 Пример: излаз команде `/whois alice`:
 

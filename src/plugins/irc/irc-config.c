@@ -88,6 +88,7 @@ struct t_config_option *irc_config_look_list_buffer_scroll_horizontal = NULL;
 struct t_config_option *irc_config_look_list_buffer_sort = NULL;
 struct t_config_option *irc_config_look_list_buffer_topic_strip_colors = NULL;
 struct t_config_option *irc_config_look_msgbuffer_fallback = NULL;
+struct t_config_option *irc_config_look_multi_prefix_in_names = NULL;
 struct t_config_option *irc_config_look_multi_prefix_in_prompt = NULL;
 struct t_config_option *irc_config_look_new_channel_position = NULL;
 struct t_config_option *irc_config_look_new_list_position = NULL;
@@ -3558,6 +3559,17 @@ irc_config_init (void)
                "private and that private buffer is not found"),
             "current|server", 0, 0, "current", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_config_look_multi_prefix_in_names = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "multi_prefix_in_names", "boolean",
+            N_("display all nick prefixes in output of /names (or list of "
+               "nicks displayed when joining a channel) when capability "
+               "\"multi-prefix\" is enabled (if disabled, only the highest "
+               "prefix is displayed)"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
         irc_config_look_multi_prefix_in_prompt = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "multi_prefix_in_prompt", "boolean",

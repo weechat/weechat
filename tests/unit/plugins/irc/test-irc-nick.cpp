@@ -326,6 +326,49 @@ TEST(IrcNick, SetPrefix)
 
 /*
  * Test functions:
+ *   irc_nick_sort_prefixes
+ */
+
+TEST(IrcNick, SortPrefixes)
+{
+    struct t_irc_server *server;
+    char prefixes[16];
+
+    irc_nick_sort_prefixes (NULL, NULL);
+
+    server = irc_server_alloc ("server1");
+    CHECK(server);
+
+    irc_nick_sort_prefixes (server, NULL);
+
+    /* Default prefixes: "@+". */
+    strcpy (prefixes, "");
+    irc_nick_sort_prefixes (server, prefixes);
+    STRCMP_EQUAL("", prefixes);
+    strcpy (prefixes, "+");
+    irc_nick_sort_prefixes (server, prefixes);
+    STRCMP_EQUAL("+", prefixes);
+    strcpy (prefixes, "@+");
+    irc_nick_sort_prefixes (server, prefixes);
+    STRCMP_EQUAL("@+", prefixes);
+    strcpy (prefixes, "+@");
+    irc_nick_sort_prefixes (server, prefixes);
+    STRCMP_EQUAL("@+", prefixes);
+
+    /* Prefixes: "~&@%+". */
+    irc_server_set_prefix_modes_chars (server, "(qaohv)~&@%+");
+    strcpy (prefixes, "+%@&~");
+    irc_nick_sort_prefixes (server, prefixes);
+    STRCMP_EQUAL("~&@%+", prefixes);
+    strcpy (prefixes, "%~+");
+    irc_nick_sort_prefixes (server, prefixes);
+    STRCMP_EQUAL("~%+", prefixes);
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
  *   irc_nick_set_prefixes
  */
 
@@ -740,6 +783,56 @@ TEST(IrcNick, FreeAll)
 TEST(IrcNick, Search)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Test functions:
+ *   irc_nick_hashtable_by_name
+ */
+
+TEST(IrcNick, HashtableByName)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_irc_nick *nick1, *nick2;
+    struct t_hashtable *hashtable;
+
+    POINTERS_EQUAL(NULL, irc_nick_hashtable_by_name (NULL));
+
+    run_cmd_quiet ("/mute /server add test_hashtable fake:127.0.0.1");
+    run_cmd_quiet ("/connect test_hashtable");
+
+    server = irc_server_search ("test_hashtable");
+    CHECK(server);
+
+    channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
+    CHECK(channel);
+
+    hashtable = irc_nick_hashtable_by_name (channel);
+    CHECK(hashtable);
+    LONGS_EQUAL(0, hashtable->items_count);
+    hashtable_free (hashtable);
+
+    nick1 = irc_nick_new (server, channel, "alice", "user@host", NULL, 0, NULL, NULL);
+    CHECK(nick1);
+    nick2 = irc_nick_new (server, channel, "Bob", "user@host", "@", 0, NULL, NULL);
+    CHECK(nick2);
+
+    hashtable = irc_nick_hashtable_by_name (channel);
+    CHECK(hashtable);
+    LONGS_EQUAL(2, hashtable->items_count);
+    POINTERS_EQUAL(nick1, hashtable_get (hashtable, "alice"));
+    POINTERS_EQUAL(nick2, hashtable_get (hashtable, "Bob"));
+    POINTERS_EQUAL(NULL, hashtable_get (hashtable, "bob"));
+    POINTERS_EQUAL(NULL, hashtable_get (hashtable, "carol"));
+    hashtable_free (hashtable);
+
+    irc_nick_free_all (server, channel);
+    if (channel->buffer)
+        gui_buffer_close (channel->buffer);
+
+    run_cmd_quiet ("/mute /disconnect test_hashtable");
+    run_cmd_quiet ("/mute /server del test_hashtable");
 }
 
 /*

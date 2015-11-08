@@ -24,6 +24,7 @@ _The file [UPGRADING.md](UPGRADING.md) contains important information about upgr
 - api: add function "buffer_get_longlong"
 - api: add functions "infolist_new_var_long", "infolist_new_var_longlong", "infolist_long", "infolist_longlong"
 - doc: add cheat sheet with all key bindings and mouse actions
+- irc: add option irc.look.multi_prefix_in_names to display all nick prefixes in output of `/names` when capability "multi-prefix" is enabled ([#310](https://github.com/weechat/weechat/issues/310))
 - irc: add option irc.look.multi_prefix_in_prompt to display all nick prefixes in input prompt when capability "multi-prefix" is enabled
 - irc: add field "all_prefixes" (all prefixes of nick, from higher to lower) in hdata and infolist "irc_nick"
 - irc: add option irc.look.buffer_switch_connect to disable the auto switch to server buffer when connecting to the server ([#2355](https://github.com/weechat/weechat/issues/2355))

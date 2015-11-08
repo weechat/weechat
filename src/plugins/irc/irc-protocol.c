@@ -6119,7 +6119,7 @@ IRC_PROTOCOL_CALLBACK(353)
     char *str_params, **str_nicks, **nicks, *nickname;
     const char *pos_channel, *pos_nick, *pos_host;
     char *prefixes, *color;
-    int i, num_nicks;
+    int i, num_nicks, display_all_prefixes;
     struct t_irc_channel *ptr_channel;
 
     IRC_PROTOCOL_MIN_PARAMS(3);
@@ -6155,6 +6155,9 @@ IRC_PROTOCOL_CALLBACK(353)
      */
     str_nicks = (ptr_channel) ? NULL : weechat_string_dyn_alloc (1024);
 
+    display_all_prefixes = irc_nick_display_all_prefixes (
+        ctxt->server, irc_config_look_multi_prefix_in_names);
+
     for (i = 0; i < num_nicks; i++)
     {
         /* Skip and save prefix(es). */
@@ -6166,6 +6169,7 @@ IRC_PROTOCOL_CALLBACK(353)
         }
         prefixes = (pos_nick > nicks[i]) ?
             weechat_strndup (nicks[i], pos_nick - nicks[i]) : NULL;
+        irc_nick_sort_prefixes (ctxt->server, prefixes);
 
         /* Extract nick from host. */
         pos_host = strchr (pos_nick, '!');
@@ -6209,7 +6213,8 @@ IRC_PROTOCOL_CALLBACK(353)
                             irc_nick_get_prefix_color_name (ctxt->server,
                                                             prefixes[0])),
                         -1);
-                    weechat_string_dyn_concat (str_nicks, prefixes, -1);
+                    weechat_string_dyn_concat (str_nicks, prefixes,
+                                               (display_all_prefixes) ? -1 : 1);
                 }
                 if (weechat_config_boolean (irc_config_look_color_nicks_in_names))
                 {
@@ -6404,6 +6409,10 @@ IRC_PROTOCOL_CALLBACK(354)
  *   ...
  *   *: regular
  *
+ * When all prefixes are displayed (see option irc.look.multi_prefix_in_names),
+ * a nick matches a mode if it has this mode, otherwise only the highest mode
+ * of nick is checked.
+ *
  * Note: result must be freed after use.
  */
 
@@ -6413,10 +6422,12 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
                                        const char *filter)
 {
     struct t_infolist *infolist;
+    struct t_hashtable *hashtable_nicks;
+    struct t_irc_nick *ptr_nick;
     struct t_config_option *ptr_option;
     const char *prefix, *prefix_color, *nickname, *ptr_prefix_modes;
-    char **str_nicks, *color;
-    int index_mode, filter_ok;
+    char **str_nicks, *color, prefix_char;
+    int index_mode, filter_ok, display_all_prefixes, length_prefix;
 
     /*
      * Filter "#" means display only nicks count, so the list of nicks is not
@@ -6429,9 +6440,30 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
     if (!str_nicks)
         return NULL;
 
+    display_all_prefixes = irc_nick_display_all_prefixes (
+        server, irc_config_look_multi_prefix_in_names);
+
+    /*
+     * The nicklist is used to display nicks sorted by group; when all
+     * prefixes are displayed, they are read in IRC nicks (nicklist may have
+     * only the highest prefix): IRC nicks are indexed by name in a hashtable
+     * for a fast lookup.
+     */
+    hashtable_nicks = NULL;
+    if (display_all_prefixes)
+    {
+        hashtable_nicks = irc_nick_hashtable_by_name (channel);
+        if (!hashtable_nicks)
+        {
+            weechat_string_dyn_free (str_nicks, 1);
+            return NULL;
+        }
+    }
+
     infolist = weechat_infolist_get ("nicklist", channel->buffer, NULL);
     if (!infolist)
     {
+        weechat_hashtable_free (hashtable_nicks);
         weechat_string_dyn_free (str_nicks, 1);
         return NULL;
     }
@@ -6442,16 +6474,48 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
     {
         if (strcmp (weechat_infolist_string (infolist, "type"), "nick") == 0)
         {
-            prefix = weechat_infolist_string (infolist, "prefix");
+            nickname = weechat_infolist_string (infolist, "name");
+            ptr_nick = (hashtable_nicks) ?
+                weechat_hashtable_get (hashtable_nicks, nickname) : NULL;
+            if (ptr_nick)
+            {
+                prefix = ptr_nick->all_prefixes;
+                length_prefix = -1;
+            }
+            else
+            {
+                /*
+                 * Use the nicklist prefix (only the first char if all
+                 * prefixes are not displayed).
+                 */
+                prefix = weechat_infolist_string (infolist, "prefix");
+                if (!prefix)
+                    prefix = "";
+                length_prefix = (display_all_prefixes) ?
+                    -1 : weechat_utf8_char_size (prefix);
+            }
             index_mode = (prefix[0] && (prefix[0] != ' ')) ?
                 irc_server_get_prefix_char_index (server, prefix[0]) : -1;
 
             /* Check filter. */
             if (filter && ptr_prefix_modes)
             {
-                filter_ok = (((filter[0] == '*') && (index_mode < 0))
-                             || ((filter[0] != '*') && (index_mode >= 0)
-                                 && (filter[0] == ptr_prefix_modes[index_mode])));
+                if (filter[0] == '*')
+                {
+                    filter_ok = (index_mode < 0);
+                }
+                else if (display_all_prefixes)
+                {
+                    prefix_char = irc_server_get_prefix_char_for_mode (
+                        server, filter[0]);
+                    filter_ok = ((prefix_char != ' ')
+                                 && strchr (prefix, prefix_char));
+                }
+                else
+                {
+                    filter_ok = ((index_mode >= 0)
+                                 && (filter[0] == ptr_prefix_modes[index_mode]));
+                }
             }
             else
             {
@@ -6471,10 +6535,9 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
             {
                 prefix_color = weechat_infolist_string (infolist,
                                                         "prefix_color");
-                if (strchr (prefix_color, '.'))
+                if (prefix_color && strchr (prefix_color, '.'))
                 {
-                    ptr_option = weechat_config_get (
-                        weechat_infolist_string (infolist, "prefix_color"));
+                    ptr_option = weechat_config_get (prefix_color);
                     if (ptr_option)
                     {
                         weechat_string_dyn_concat (
@@ -6484,15 +6547,14 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
                             -1);
                     }
                 }
-                else
+                else if (prefix_color)
                 {
                     weechat_string_dyn_concat (str_nicks,
                                                weechat_color (prefix_color),
                                                -1);
                 }
-                weechat_string_dyn_concat (str_nicks, prefix, -1);
+                weechat_string_dyn_concat (str_nicks, prefix, length_prefix);
             }
-            nickname = weechat_infolist_string (infolist, "name");
             if (weechat_config_boolean (irc_config_look_color_nicks_in_names))
             {
                 if (irc_server_strcasecmp (server, nickname, server->nick) == 0)
@@ -6517,6 +6579,7 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
     }
 
     weechat_infolist_free (infolist);
+    weechat_hashtable_free (hashtable_nicks);
 
     return weechat_string_dyn_free (str_nicks, 0);
 }

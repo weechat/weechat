@@ -3772,17 +3772,20 @@ Spezifikation: https://ircv3.net/specs/extensions/multi-prefix[multi-prefix ^�
 Diese Fähigkeit ermöglicht es dem Server, alle Benutzermodi auf einmal zu senden, wenn
 die Befehle <<command_irc_names,/names>> und <<command_irc_whois,/whois>> genutzt werden. +
 
-////
 Beispiele: Ausgabe von `/names`:
 
 ....
 -- Nicks #test: [@%+alice bob +carol]
 ....
-////
 
-[NOTE]
-Momentan zeigt WeeChat nicht alle Präfixe in der Ausgabe von `/names` an, selbst wenn
-diese empfangen und intern ordnungsgemäß verarbeitet werden.
+// TRANSLATION MISSING
+WeeChat displays all prefixes received when this capability is enabled,
+according to these options:
+
+* <<option_irc.look.multi_prefix_in_prompt,irc.look.multi_prefix_in_prompt>>:
+  input prompt
+* <<option_irc.look.multi_prefix_in_names,irc.look.multi_prefix_in_names>>:
+  output of `/names` (and list of nicks displayed when joining a channel)
 
 Beispiele: Ausgabe von `/whois alice`:
 

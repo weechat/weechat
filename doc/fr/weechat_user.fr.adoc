@@ -3830,17 +3830,19 @@ Spécification : https://ircv3.net/specs/extensions/multi-prefix[multi-prefix 
 Cette capacité autorise le serveur à envoyer tous les modes utilisateur d'un coup
 dans les réponses à <<command_irc_names,/names>> et <<command_irc_whois,/whois>>. +
 
-////
 Exemple : sortie de `/names` :
 
 ....
 -- Pseudos #test : [@%+alice bob +carol]
 ....
-////
 
-[NOTE]
-Pour l'instant, WeeChat n'affiche pas les préfixes dans la sortie de `/names`,
-même s'ils sont reçus et correctement sauvegardés en interne.
+WeeChat affiche tous les préfixes reçus lorsque cette capacité est activée,
+selon ces options :
+
+* <<option_irc.look.multi_prefix_in_prompt,irc.look.multi_prefix_in_prompt>> :
+  prompt de saisie
+* <<option_irc.look.multi_prefix_in_names,irc.look.multi_prefix_in_names>> :
+  sortie de `/names` (et liste des pseudos affichés lors de l'arrivée sur un canal)
 
 Exemple : sortie de `/whois alice` :
 

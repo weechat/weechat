@@ -205,6 +205,36 @@ irc_nick_set_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
 }
 
 /*
+ * Sort prefixes in place, using order of prefixes in server (higher prefix
+ * first), for example "+@" becomes "@+".
+ */
+
+void
+irc_nick_sort_prefixes (struct t_irc_server *server, char *prefixes)
+{
+    int i, j, index;
+    char prefix;
+
+    if (!prefixes || !prefixes[0])
+        return;
+
+    for (i = 1; prefixes[i]; i++)
+    {
+        prefix = prefixes[i];
+        index = irc_server_get_prefix_char_index (server, prefix);
+        for (j = i;
+             (j > 0)
+                 && (irc_server_get_prefix_char_index (server,
+                                                       prefixes[j - 1]) > index);
+             j--)
+        {
+            prefixes[j] = prefixes[j - 1];
+        }
+        prefixes[j] = prefix;
+    }
+}
+
+/*
  * Set prefixes for nick.
  */
 
@@ -946,6 +976,41 @@ irc_nick_search (struct t_irc_server *server, struct t_irc_channel *channel,
 
     /* Nick not found */
     return NULL;
+}
+
+/*
+ * Return a hashtable with all nicks of a channel: keys are nick names (exact
+ * names, case sensitive) and values are pointers to nicks
+ * (struct t_irc_nick *).
+ *
+ * It is used to quickly find the IRC nick of a nick in buffer nicklist.
+ *
+ * Note: result must be freed after use.
+ */
+
+struct t_hashtable *
+irc_nick_hashtable_by_name (struct t_irc_channel *channel)
+{
+    struct t_hashtable *hashtable;
+    struct t_irc_nick *ptr_nick;
+
+    if (!channel)
+        return NULL;
+
+    hashtable = weechat_hashtable_new (
+        (channel->nicks_count > 32) ? channel->nicks_count : 32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER,
+        NULL, NULL);
+    if (!hashtable)
+        return NULL;
+
+    for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+        weechat_hashtable_set (hashtable, ptr_nick->name, ptr_nick);
+    }
+
+    return hashtable;
 }
 
 /*

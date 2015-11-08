@@ -25,6 +25,7 @@ extern "C"
 #include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
+#include "src/gui/gui-nicklist.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-batch.h"
 #include "src/plugins/irc/irc-ctcp.h"
@@ -5574,6 +5575,27 @@ TEST(IrcProtocolWithServer, 353)
     RECV(":server 353 alice = #xyz :alice bob @carol +dan!user@host");
     CHECK_SRV("--", "Nicks #xyz: [alice bob @carol +dan]",
               "irc_353,irc_numeric,nick_server,log3");
+
+    /* Channel not found, multiple prefixes */
+    RECV(":server 353 alice = #xyz :alice @+bob");
+    CHECK_SRV("--", "Nicks #xyz: [alice @bob]",
+              "irc_353,irc_numeric,nick_server,log3");
+    RECV(":server 353 alice = #xyz :alice +@bob");
+    CHECK_SRV("--", "Nicks #xyz: [alice @bob]",
+              "irc_353,irc_numeric,nick_server,log3");
+    hashtable_set (ptr_server->cap_list, "multi-prefix", NULL);
+    RECV(":server 353 alice = #xyz :alice @+bob");
+    CHECK_SRV("--", "Nicks #xyz: [alice @+bob]",
+              "irc_353,irc_numeric,nick_server,log3");
+    RECV(":server 353 alice = #xyz :alice +@bob");
+    CHECK_SRV("--", "Nicks #xyz: [alice @+bob]",
+              "irc_353,irc_numeric,nick_server,log3");
+    config_file_option_set (irc_config_look_multi_prefix_in_names, "off", 1);
+    RECV(":server 353 alice = #xyz :alice @+bob");
+    CHECK_SRV("--", "Nicks #xyz: [alice @bob]",
+              "irc_353,irc_numeric,nick_server,log3");
+    config_file_option_unset (irc_config_look_multi_prefix_in_names);
+    hashtable_remove (ptr_server->cap_list, "multi-prefix");
 }
 
 /*
@@ -5885,6 +5907,58 @@ TEST(IrcProtocolWithServer, 366)
     RECV(":server 366 alice #xyz : End of /NAMES list ");
     CHECK_SRV("--", "#xyz:  End of /NAMES list ",
               "irc_366,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Test functions:
+ *   irc_protocol_get_string_channel_nicks
+ *   irc_protocol_cb_366 (end of /names list), with multiple prefixes
+ */
+
+TEST(IrcProtocolWithServer, 366_multi_prefix)
+{
+    SRV_INIT_JOIN;
+
+    config_file_option_set (irc_config_look_display_join_message, "353", 1);
+
+    RECV(":server 353 alice = #test :alice @+bob +carol");
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN("--", "Nicks #test: [@bob +carol alice]",
+               "irc_353,irc_numeric,nick_server,log3");
+
+    hashtable_set (ptr_server->cap_list, "multi-prefix", NULL);
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN("--", "Nicks #test: [@+bob +carol alice]",
+               "irc_353,irc_numeric,nick_server,log3");
+
+    /* Filter on voiced nicks: all prefixes are checked */
+    hashtable_set (ptr_server->names_channel_filter, "#test", "v");
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN("--", "Nicks #test (filter: v): [@+bob +carol]",
+               "irc_353,irc_numeric,nick_server,log3");
+
+    config_file_option_set (irc_config_look_multi_prefix_in_names, "off", 1);
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN("--", "Nicks #test: [@bob +carol alice]",
+               "irc_353,irc_numeric,nick_server,log3");
+
+    /* Filter on voiced nicks: only the highest prefix is checked */
+    hashtable_set (ptr_server->names_channel_filter, "#test", "v");
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN("--", "Nicks #test (filter: v): [+carol]",
+               "irc_353,irc_numeric,nick_server,log3");
+
+    config_file_option_unset (irc_config_look_multi_prefix_in_names);
+    hashtable_remove (ptr_server->cap_list, "multi-prefix");
+
+    /* Nick in nicklist but not in IRC nicks: nicklist prefix is used */
+    CHECK(gui_nicklist_add_nick (ptr_server->channels->buffer, NULL, "zed",
+                                 NULL, "@", NULL, 1));
+    RECV(":server 366 alice #test :End of /NAMES list");
+    CHECK_CHAN("--", "Nicks #test: [@bob +carol alice @zed]",
+               "irc_353,irc_numeric,nick_server,log3");
+
+    config_file_option_unset (irc_config_look_display_join_message);
 }
 
 /*
