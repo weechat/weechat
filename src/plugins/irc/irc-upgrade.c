@@ -373,6 +373,7 @@ irc_upgrade_read_cb (void *data,
                         irc_upgrade_current_server->nick_modes = strdup (str);
                     irc_upgrade_current_server->cap_away_notify = weechat_infolist_integer (infolist, "cap_away_notify");
                     irc_upgrade_current_server->cap_account_notify = weechat_infolist_integer (infolist, "cap_account_notify");
+                    irc_upgrade_current_server->cap_multi_prefix = weechat_infolist_integer (infolist, "cap_multi_prefix");
                     str = weechat_infolist_string (infolist, "isupport");
                     if (str)
                         irc_upgrade_current_server->isupport = strdup (str);

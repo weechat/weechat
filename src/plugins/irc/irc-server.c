@@ -1011,6 +1011,7 @@ irc_server_alloc (const char *name)
     new_server->nick_modes = NULL;
     new_server->cap_away_notify = 0;
     new_server->cap_account_notify = 0;
+    new_server->cap_multi_prefix = 0;
     new_server->isupport = NULL;
     new_server->prefix_modes = NULL;
     new_server->prefix_chars = NULL;
@@ -4678,6 +4679,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     }
     server->cap_away_notify = 0;
     server->cap_account_notify = 0;
+    server->cap_multi_prefix = 0;
     server->is_away = 0;
     server->away_time = 0;
     server->lag = 0;
@@ -5261,6 +5263,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, nick_modes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, cap_away_notify, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, cap_account_notify, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, cap_multi_prefix, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, isupport, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_modes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_chars, STRING, 0, NULL, NULL);
@@ -5479,6 +5482,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "cap_away_notify", server->cap_away_notify))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "cap_account_notify", server->cap_account_notify))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "cap_multi_prefix", server->cap_multi_prefix))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "isupport", server->isupport))
         return 0;
@@ -5843,6 +5848,7 @@ irc_server_print_log ()
         weechat_log_printf ("  nick_modes . . . . . : '%s'",  ptr_server->nick_modes);
         weechat_log_printf ("  cap_away_notify. . . : %d",    ptr_server->cap_away_notify);
         weechat_log_printf ("  cap_account_notify . : %d",    ptr_server->cap_account_notify);
+        weechat_log_printf ("  cap_multi_prefix . . : %d",    ptr_server->cap_multi_prefix);
         weechat_log_printf ("  isupport . . . . . . : '%s'",  ptr_server->isupport);
         weechat_log_printf ("  prefix_modes . . . . : '%s'",  ptr_server->prefix_modes);
         weechat_log_printf ("  prefix_chars . . . . : '%s'",  ptr_server->prefix_chars);

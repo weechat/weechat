@@ -186,6 +186,7 @@ struct t_irc_server
     char *nick_modes;               /* nick modes                            */
     int cap_away_notify;            /* 1 if capability away-notify is enabled*/
     int cap_account_notify;         /* 1 if CAP account-notify is enabled    */
+    int cap_multi_prefix;           /* 1 if CAP multi-prefix is enabled      */
     char *isupport;                 /* copy of message 005 (ISUPPORT)        */
     char *prefix_modes;             /* prefix modes from msg 005 (eg "ohv")  */
     char *prefix_chars;             /* prefix chars from msg 005 (eg "@%+")  */

@@ -475,6 +475,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                     {
                         server->cap_account_notify = 1;
                     }
+                    else if (strcmp (caps_supported[i], "multi-prefix") == 0)
+                    {
+                        server->cap_multi_prefix = 1;
+                    }
                 }
                 weechat_string_free_split (caps_supported);
             }
@@ -607,6 +611,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                     else if (strcmp (caps_removed[i], "account-notify") == 0)
                     {
                         server->cap_account_notify = 0;
+                    }
+                    else if (strcmp (caps_removed[i], "multi-prefix") == 0)
+                    {
+                        server->cap_multi_prefix = 0;
                     }
                 }
                 weechat_string_free_split (caps_removed);
