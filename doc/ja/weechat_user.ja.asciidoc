@@ -1479,16 +1479,14 @@ WeeChat ではバーやチャットエリアにおけるテキスト表示に 25
 
 [width="50%",cols="8,>2,>2",options="header"]
 |===
-| $TERM                                  | 色     | ペア ^(1)^
-| "rxvt-unicode", "xterm", ...           |     88 |         256
-| "rxvt-256color", "xterm-256color", ... |    256 |       32767
-| "screen"                               |      8 |          64
-| "screen-256color"                      |    256 |       32767
+| $TERM                                  | 色     | ペア
+| "rxvt-unicode", "xterm", ...           |     88 |  256
+| "rxvt-256color", "xterm-256color", ... |    256 |  256
+| "screen"                               |      8 |   64
+| "screen-256color"                      |    256 |  256
+| "tmux"                                 |      8 |   64
+| "tmux-256color"                        |    256 |  256
 |===
-
-[NOTE]
-^(1)^ 端末が 256 ペア以上の表示をサポートしていても、WeeChat
-では ncurses の制限により 256 ペア以上の表示は行えません。
 
 `weechat --colors` を実行するか、`/color` コマンドをin WeeChat
 の中で実行することで、色表示の制限を確認できます。
@@ -1496,7 +1494,10 @@ WeeChat ではバーやチャットエリアにおけるテキスト表示に 25
 256 色を利用したい場合に推奨される 'TERM' 環境変数の値は:
 
 * screen の中: 'screen-256color'
-* screen の外: 'xterm-256color' 、'rxvt-256color' 、'putty-256color' 、...
+// TRANSLATION MISSING
+* under tmux: 'screen-256color' or 'tmux-256color'
+// TRANSLATION MISSING
+* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
 
 [NOTE]
 'TERM' 環境変数の値に上の値を設定するには、"ncurses-term"

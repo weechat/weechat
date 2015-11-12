@@ -1505,17 +1505,14 @@ was die Farbdarstellung in WeeChat betrifft:
 
 [width="50%",cols="8,>2,>2",options="header"]
 |===
-| $TERM                                  | Farben | Paare ^(1)^
-| "rxvt-unicode", "xterm", ...           |     88 |         256
-| "rxvt-256color", "xterm-256color", ... |    256 |       32767
-| "screen"                               |      8 |          64
-| "screen-256color"                      |    256 |       32767
+| $TERM                                  | Farben | Paare
+| "rxvt-unicode", "xterm", ...           |     88 |   256
+| "rxvt-256color", "xterm-256color", ... |    256 |   256
+| "screen"                               |      8 |    64
+| "screen-256color"                      |    256 |   256
+| "tmux"                                 |      8 |    64
+| "tmux-256color"                        |    256 |   256
 |===
-
-[NOTE]
-^(1)^ Auch falls die Terminal-Emulation mehr als 256 Farbpaare unterstützten sollte
-können lediglich 256 Farbpaare durch WeeChat genutzt werden, dies ist eine Einschränkung
-von ncurses.
 
 Mittels `weechat --colors` oder dem internen WeeChat-Befehl `/color` kann man sich
 die Einschränkungen für die jeweilige Umgebungsvariable anzeigen lassen.
@@ -1524,7 +1521,10 @@ Folgende Werte sind für die 'TERM'-Umgebungsvariable zu empfehlen, sofern man 2
 nutzen möchte:
 
 * falls screen genutzt wird: 'screen-256color'
-* screen wird nicht genutzt: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
+// TRANSLATION MISSING
+* under tmux: 'screen-256color' or 'tmux-256color'
+// TRANSLATION MISSING
+* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
 
 [NOTE]
 Es sollte das Paket "ncurses-term" installiert werden um die Werte der 'TERM'

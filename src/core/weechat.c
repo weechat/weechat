@@ -462,35 +462,62 @@ void
 weechat_term_check ()
 {
     char *term, *sty, *tmux;
+    const char *screen_terms = "screen-256color, screen";
+    const char *tmux_terms = "tmux-256color, tmux, screen-256color, screen";
+    const char *ptr_terms;
     int is_term_ok, is_screen, is_tmux;
 
     term = getenv ("TERM");
     sty = getenv ("STY");
     tmux = getenv ("TMUX");
 
-    is_term_ok = (term && (strncmp (term, "screen", 6) == 0));
     is_screen = (sty && sty[0]);
     is_tmux = (tmux && tmux[0]);
 
-    if ((is_screen || is_tmux) && !is_term_ok)
+    if (is_screen || is_tmux)
     {
-        gui_chat_printf (
-            NULL,
-            /* TRANSLATORS: the "under %s" can be "under screen" or "under tmux" */
-            _("%sWarning: WeeChat is running under %s and $TERM is \"%s\", "
-              "which can cause display bugs; $TERM should be set to "
-              "\"screen-256color\" or \"screen\""),
-            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-            (is_screen) ? "screen" : "tmux",
-            (term) ? term : "");
-        gui_chat_printf (
-            NULL,
-            _("%sYou should add this line in the file %s:  %s"),
-            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-            (is_screen) ? "~/.screenrc" : "~/.tmux.conf",
-            (is_screen) ?
-            "term screen-256color" :
-            "set -g default-terminal \"screen-256color\"");
+        /* check if $TERM is OK (according to screen/tmux) */
+        is_term_ok = 0;
+        ptr_terms = NULL;
+        if (is_screen)
+        {
+            is_term_ok = (term && (strncmp (term, "screen", 6) == 0));
+            ptr_terms = screen_terms;
+        }
+        else if (is_tmux)
+        {
+            is_term_ok = (term
+                          && ((strncmp (term, "screen", 6) == 0)
+                              || (strncmp (term, "tmux", 4) == 0)));
+            ptr_terms = tmux_terms;
+        }
+
+        /* display a warning if $TERM is NOT OK */
+        if (!is_term_ok)
+        {
+            gui_chat_printf_date_tags (
+                NULL,
+                0,
+                "term_warning",
+                /* TRANSLATORS: the "under %s" can be "under screen" or "under tmux" */
+                _("%sWarning: WeeChat is running under %s and $TERM is \"%s\", "
+                  "which can cause display bugs; $TERM should be set to one "
+                  "of these values: %s"),
+                gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                (is_screen) ? "screen" : "tmux",
+                (term) ? term : "",
+                ptr_terms);
+            gui_chat_printf_date_tags (
+                NULL,
+                0,
+                "term_warning",
+                _("%sYou should add this line in the file %s:  %s"),
+                gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                (is_screen) ? "~/.screenrc" : "~/.tmux.conf",
+                (is_screen) ?
+                "term screen-256color" :
+                "set -g default-terminal \"tmux-256color\"");
+        }
     }
 }
 

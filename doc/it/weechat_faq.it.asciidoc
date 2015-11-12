@@ -143,10 +143,15 @@ shell (consultare l'output di `echo $TERM` nel terminale).
 
 A seconda di dove viene eseguito WeeChat, si dovrebbe avere:
 
-* se WeeChat viene eseguito localmente o su una macchina remota senza
-  screen, dipende dal terminale utilizzato: 'xterm', 'xterm-256color',
-  'rxvt-unicode', 'rxvt-256color', ...
-* se WeeChat viene eseguito in screen, dovrebbe essere 'screen' o 'screen-256color'.
+// TRANSLATION MISSING
+* if WeeChat runs locally or on a remote machine without screen nor tmux, it
+  depends on the terminal used: 'xterm', 'xterm-256color', 'rxvt-unicode',
+  'rxvt-256color', ...
+// TRANSLATION MISSING
+* if WeeChat runs under screen, you should have 'screen' or 'screen-256color',
+// TRANSLATION MISSING
+* if WeeChat runs under tmux, you should have 'tmux', 'tmux-256color',
+  'screen' or 'screen-256color'.
 
 Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
 
@@ -341,7 +346,10 @@ Per prima cosa verificare che la variabile di ambiente 'TERM' sia corretta, i
 valori raccomandati sono:
 
 * con screen: 'screen-256color'
-* al di fuori di screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
+// TRANSLATION MISSING
+* under tmux: 'screen-256color' or 'tmux-256color'
+// TRANSLATION MISSING
+* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
 
 [NOTE]
 Potrebbe essere necessario installare il pacchetto "ncurses-term" per usare

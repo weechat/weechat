@@ -132,10 +132,15 @@ https://github.com/weechat/weechat/issues/79
 
 WeeChat を起動した場所に依存しますが、以下の値を持つはずです:
 
-* WeeChat を screen を使わずにローカル又はリモートマシンで起動した場合、
-  利用しているターミナルに依存します: 'xterm' 、'xterm-256color' 、'rxvt-unicode' 、
-  'rxvt-256color' 、...
-* WeeChat を screen 内で起動した場合、'screen' 又は 'screen-256color' 。
+// TRANSLATION MISSING
+* if WeeChat runs locally or on a remote machine without screen nor tmux, it
+  depends on the terminal used: 'xterm', 'xterm-256color', 'rxvt-unicode',
+  'rxvt-256color', ...
+// TRANSLATION MISSING
+* if WeeChat runs under screen, you should have 'screen' or 'screen-256color',
+// TRANSLATION MISSING
+* if WeeChat runs under tmux, you should have 'tmux', 'tmux-256color',
+  'screen' or 'screen-256color'.
 
 もし必要であれば、TERM 変数を修正してください: `export TERM="xxx"`
 
@@ -321,7 +326,10 @@ WeeChat ≥ 1.0 では、再起動せずに変更できます:
 お勧めの値は:
 
 * screen の中: 'screen-256color'
-* screen の外: 'xterm-256color' 、'rxvt-256color' 、'putty-256color' 、...
+// TRANSLATION MISSING
+* under tmux: 'screen-256color' or 'tmux-256color'
+// TRANSLATION MISSING
+* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
 
 [NOTE]
 これらの値を 'TERM' に設定するには、"ncurses-term"

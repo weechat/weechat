@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === New features
 
+* core: add tag "term_warning" in warnings about wrong $TERM on startup
 * core: add option weechat.look.paste_auto_add_newline (issue #543)
 * core: display a more explicit error when a filter fails to be added
   (issue #522)
@@ -38,6 +39,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 === Bugs fixed
 
+* core: don't complain any more about "tmux" and "tmux-256color" $TERM values
+  when WeeChat is running under tmux (issue #519)
 * core: fix truncated messages after a word with a length of zero on screen
   (for example a zero width space: U+200B) (bug #40985, issue #502)
 * api: fix handle of invalid escape in function string_convert_escaped_chars()

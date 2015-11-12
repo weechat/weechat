@@ -145,9 +145,15 @@ werden. Bitte überprüfe die Ausgabe von `echo $TERM` in Deinem Terminal.
 
 Abhängig davon von wo WeeChat gestartet wird, solltest Du folgenden Wert haben:
 
-* falls WeeChat lokal oder auf einem entfernten Rechner läuft, je nach benutztem
-  Terminal: 'xterm', 'xterm-256color', 'rxvt-unicode', 'rxvt-256color', ...
-* falls WeeChat unter screen läuft, sollte der Wert 'screen' oder 'screen-256color' lauten.
+// TRANSLATION MISSING
+* if WeeChat runs locally or on a remote machine without screen nor tmux, it
+  depends on the terminal used: 'xterm', 'xterm-256color', 'rxvt-unicode',
+  'rxvt-256color', ...
+// TRANSLATION MISSING
+* if WeeChat runs under screen, you should have 'screen' or 'screen-256color',
+// TRANSLATION MISSING
+* if WeeChat runs under tmux, you should have 'tmux', 'tmux-256color',
+  'screen' or 'screen-256color'.
 
 Falls nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
 
@@ -338,7 +344,10 @@ Zuerst sollte überprüft werden ob die 'TERM'-Umgebungsvariable korrekt hinterl
 ist. Folgende Werte sind zu empfehlen:
 
 * falls screen genutzt wird: 'screen-256color'
-* screen wird nicht genutzt: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
+// TRANSLATION MISSING
+* under tmux: 'screen-256color' or 'tmux-256color'
+// TRANSLATION MISSING
+* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
 
 [NOTE]
 Es sollte das Paket "ncurses-term" installiert werden um die Werte der 'TERM'

@@ -1551,16 +1551,14 @@ seguenti limiti per i colori in WeeChat:
 
 [width="50%",cols="8,>2,>2",options="header"]
 |===
-| $TERM                                  | Colori | Coppie ^(1)^
-| "rxvt-unicode", "xterm", ...           |     88 |         256
-| "rxvt-256color", "xterm-256color", ... |    256 |       32767
-| "screen"                               |      8 |          64
-| "screen-256color"                      |    256 |       32767
+| $TERM                                  | Colori | Coppie
+| "rxvt-unicode", "xterm", ...           |     88 |    256
+| "rxvt-256color", "xterm-256color", ... |    256 |    256
+| "screen"                               |      8 |     64
+| "screen-256color"                      |    256 |    256
+| "tmux"                                 |      8 |     64
+| "tmux-256color"                        |    256 |    256
 |===
-
-[NOTE]
-^(1)^ Anche se il terminale supporta più di 256 coppie, possono essere utilizzate
-solo 256 coppie in WeeChat, a causa di una limitazione di ncurses.
 
 È possibile eseguire `weechat --colors` o utilizzare il comando `/color` in
 WeeChat per visualizzare i limiti del proprio ambiente.
@@ -1568,7 +1566,10 @@ WeeChat per visualizzare i limiti del proprio ambiente.
 Alcuni valori raccomandati per 'TERM' se si desiderano 256 colori:
 
 * con screen: 'screen-256color'
-* al di fuori di screen: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
+// TRANSLATION MISSING
+* under tmux: 'screen-256color' or 'tmux-256color'
+// TRANSLATION MISSING
+* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
 
 [NOTE]
 Potrebbe essere necessario installare il pacchetto "ncurses-term" per usare
