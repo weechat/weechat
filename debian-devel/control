@@ -32,6 +32,7 @@ Vcs-Browser: https://github.com/weechat/weechat
 Package: weechat-devel
 Architecture: all
 Depends: ${misc:Depends}, weechat-devel-curses (>= ${source:Version})
+Conflicts: weechat
 Description: Fast, light and extensible chat client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -55,6 +56,7 @@ Description: Fast, light and extensible chat client
 Package: weechat-devel-curses
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-core (= ${binary:Version})
+Conflicts: weechat-curses
 Recommends: weechat-devel-plugins (= ${binary:Version})
 Description: Fast, light and extensible chat client - console client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
@@ -81,6 +83,7 @@ Description: Fast, light and extensible chat client - console client
 Package: weechat-devel-core
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Conflicts: weechat-core
 Description: Fast, light and extensible chat client - core files
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -92,6 +95,7 @@ Description: Fast, light and extensible chat client - core files
 Package: weechat-devel-plugins
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-curses (= ${binary:Version})
+Conflicts: weechat-plugins
 Description: Fast, light and extensible chat client - plugins
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -109,6 +113,7 @@ Package: weechat-devel-dev
 Section: devel
 Architecture: all
 Depends: ${misc:Depends}
+Conflicts: weechat-dev
 Description: Fast, light and extensible chat client - development headers
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -121,6 +126,7 @@ Priority: extra
 Architecture: any
 Depends: ${misc:Depends}, weechat-devel-curses (= ${binary:Version}) |
  weechat-devel-core (= ${binary:Version}), weechat-devel-plugins (= ${binary:Version})
+Conflicts: weechat-dbg
 Description: Fast, light and extensible chat client - debugging symbols
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
