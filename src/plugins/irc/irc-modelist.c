@@ -84,6 +84,7 @@ irc_modelist_item_new (struct t_irc_modelist *modelist,
     }
 
     /* initialize new item */
+    new_item->number = (modelist->last_item) ? modelist->last_item->number + 1 : 0;
     new_item->mask = strdup (mask);
     new_item->setter = strdup (setter);
     new_item->datetime = datetime;
@@ -175,6 +176,29 @@ irc_modelist_item_search (struct t_irc_modelist *modelist, const char *mask)
          ptr_item = ptr_item->next_item)
     {
         if (strcmp (ptr_item->mask, mask) == 0)
+            return ptr_item;
+    }
+    return NULL;
+}
+
+/*
+ * Searches for an item by number.
+ *
+ * Returns pointer to item found, NULL if not found.
+ */
+
+struct t_irc_modelist_item *
+irc_modelist_item_number (struct t_irc_modelist *modelist, int number)
+{
+    struct t_irc_modelist_item *ptr_item;
+
+    if (!modelist)
+        return NULL;
+
+    for (ptr_item = modelist->items; ptr_item;
+         ptr_item = ptr_item->next_item)
+    {
+        if (ptr_item->number == number)
             return ptr_item;
     }
     return NULL;
@@ -333,6 +357,7 @@ irc_modelist_hdata_item_cb (const void *pointer, void *data, const char *hdata_n
                                0, 0, NULL, NULL);
     if (hdata)
     {
+        WEECHAT_HDATA_VAR(struct t_irc_modelist_item, number, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_modelist_item, mask, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_modelist_item, setter, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_modelist_item, datetime, TIME, 0, NULL, NULL);
@@ -377,7 +402,7 @@ void
 irc_modelist_item_print_log (struct t_irc_modelist_item *item)
 {
     weechat_log_printf ("");
-    weechat_log_printf ("  => modelist item (addr:0x%lx) :", item);
+    weechat_log_printf ("  => modelist item %d (addr:0x%lx):", item, item->number);
     weechat_log_printf ("       mask . . . . . . . . . . : '%s'", item->mask);
     weechat_log_printf ("       setter . . . . . . . . . : '%s'", item->setter);
     weechat_log_printf ("       datetime . . . . . . . . : '%s'", item->datetime);

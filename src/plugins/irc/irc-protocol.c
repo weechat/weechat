@@ -4765,6 +4765,7 @@ IRC_PROTOCOL_CALLBACK(367)
     struct t_irc_modelist *ptr_modelist;
     time_t datetime;
     const char *nick_address;
+    char str_number[64];
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -4772,6 +4773,16 @@ IRC_PROTOCOL_CALLBACK(367)
     ptr_buffer = (ptr_channel && ptr_channel->nicks) ?
         ptr_channel->buffer : server->buffer;
     ptr_modelist = irc_modelist_search (ptr_channel, 'b');
+
+    if (ptr_modelist) {
+        sprintf (str_number, "%s[%s%d%s] ",
+                 IRC_COLOR_CHAT_DELIMITERS,
+                 IRC_COLOR_RESET,
+                 ((ptr_modelist->last_item) ? ptr_modelist->last_item->number + 1 : 0) + 1,
+                 IRC_COLOR_CHAT_DELIMITERS);
+    }
+    else
+        str_number[0] = '\0';
 
     if (argc >= 6)
     {
@@ -4789,12 +4800,13 @@ IRC_PROTOCOL_CALLBACK(367)
                 date,
                 irc_protocol_tags (command, "irc_numeric", NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
-                _("%s%s[%s%s%s] %s%s%s banned by %s on %s"),
+                _("%s%s[%s%s%s] %s%s%s%s banned by %s on %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_CHAT_CHANNEL,
                 argv[3],
                 IRC_COLOR_CHAT_DELIMITERS,
+                str_number,
                 IRC_COLOR_CHAT_HOST,
                 argv[4],
                 IRC_COLOR_RESET,
@@ -4810,12 +4822,13 @@ IRC_PROTOCOL_CALLBACK(367)
                     server, NULL, command, "banlist", ptr_buffer),
                 date,
                 irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-                _("%s%s[%s%s%s] %s%s%s banned by %s"),
+                _("%s%s[%s%s%s] %s%s%s%s banned by %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_CHAT_CHANNEL,
                 argv[3],
                 IRC_COLOR_CHAT_DELIMITERS,
+                str_number,
                 IRC_COLOR_CHAT_HOST,
                 argv[4],
                 IRC_COLOR_RESET,
@@ -4831,12 +4844,13 @@ IRC_PROTOCOL_CALLBACK(367)
                 server, NULL, command, "banlist", ptr_buffer),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-            _("%s%s[%s%s%s] %s%s%s banned"),
+            _("%s%s[%s%s%s] %s%s%s%s banned"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_CHANNEL,
             argv[3],
             IRC_COLOR_CHAT_DELIMITERS,
+            str_number,
             IRC_COLOR_CHAT_HOST,
             argv[4],
             IRC_COLOR_RESET);

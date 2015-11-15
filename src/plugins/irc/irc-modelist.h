@@ -30,6 +30,7 @@ struct t_irc_server;
 
 struct t_irc_modelist_item
 {
+    int number;                            /* item number                   */
     char *mask;                            /* modelist mask                 */
     char *setter;                          /* hostmask of setter            */
     time_t datetime;                       /* datetime of setting (optional)*/
@@ -61,6 +62,8 @@ extern void irc_modelist_item_free (struct t_irc_modelist *modelist,
 extern void irc_modelist_item_free_all (struct t_irc_modelist *modelist);
 extern struct t_irc_modelist_item *irc_modelist_item_search (struct t_irc_modelist *modelist,
                                                              const char *mask);
+extern struct t_irc_modelist_item *irc_modelist_item_number (struct t_irc_modelist *modelist,
+                                                             int number);
 
 extern int irc_modelist_valid (struct t_irc_channel *channel,
                                struct t_irc_modelist *modelist);
