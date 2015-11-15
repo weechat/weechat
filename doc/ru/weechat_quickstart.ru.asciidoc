@@ -299,22 +299,22 @@ You can add an IRC server with `/server` command, for example:
 предпочтениями с помощью команды `/key`.
 Для получения кодов клавиш полезно использовать сочетание key[alt-k].
 
-Например, чтобы назначить на key[alt-y] команду `/buffer close`:
+Например, чтобы назначить на key[alt-!] команду `/buffer close`:
 
 ----
-/key bind (press alt-k) (press alt-y) /buffer close
+/key bind (press alt-k) (press alt-!) /buffer close
 ----
 
 Команда будет выглядеть как-то так:
 
 ----
-/key bind meta-y /buffer close
+/key bind meta-! /buffer close
 ----
 
 Удалить сочетание клавиш:
 
 ----
-/key unbind meta-y
+/key unbind meta-!
 ----
 
 [[plugins_scripts]]

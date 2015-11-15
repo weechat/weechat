@@ -1289,10 +1289,10 @@ To enable mouse now, press key[alt-m] or do following command:
 ----
 
 It is possible to temporarily disable mouse, and bind that on a key. For example
-key key[alt-x] to disable mouse for 10 seconds:
+key key[alt-%] to disable mouse for 10 seconds:
 
 ----
-/key bind meta-x /mouse toggle 10
+/key bind meta-% /mouse toggle 10
 ----
 
 [IMPORTANT]

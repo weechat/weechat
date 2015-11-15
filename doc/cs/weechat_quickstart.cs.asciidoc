@@ -285,22 +285,22 @@ Dle Vaší klávesnice a/nebo vašich potřeb, můžete přenastavit jakoukoliv
 klávesovou zkratku pomocí příkazu `/key`.
 Užitečná zkratka je key[alt-k] k najítí kodů kláves.
 
-Například k nastavení zkratky key[alt-y] na příkaz `/buffer close`:
+Například k nastavení zkratky key[alt-!] na příkaz `/buffer close`:
 
 ----
-/key bind (press alt-k) (press alt-y) /buffer close
+/key bind (press alt-k) (press alt-!) /buffer close
 ----
 
 Můžete vytvořit příkaz jako:
 
 ----
-/key bind meta-y /buffer close
+/key bind meta-! /buffer close
 ----
 
 K smazání klávesové zkratky:
 
 ----
-/key unbind meta-y
+/key unbind meta-!
 ----
 
 [[plugins_scripts]]

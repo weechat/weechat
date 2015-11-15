@@ -1355,10 +1355,10 @@ Per abilitarlo subito, digitare key[alt-m] oppure eseguire il seguente comando:
 ----
 
 È possibile disabilitarlo temporaneamente, e associare il comando ad un
-tasto. Ad esempio il tasto key[alt-x] per disabilitare il mouse per 10 secondi:
+tasto. Ad esempio il tasto key[alt-%] per disabilitare il mouse per 10 secondi:
 
 ----
-/key bind meta-x /mouse toggle 10
+/key bind meta-% /mouse toggle 10
 ----
 
 // TRANSLATION MISSING

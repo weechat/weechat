@@ -306,22 +306,22 @@ associare nuovamente qualsiasi tasto ad un comando tramite
 `/key`.
 Un tasto utile è key[alt-k] per trovare i codici tasti.
 
-Ad esempio, per associare key[alt-y] al comando `/buffer close`:
+Ad esempio, per associare key[alt-!] al comando `/buffer close`:
 
 ----
-/key bind (digitare alt-k) (digitare alt-y) /buffer close
+/key bind (digitare alt-k) (digitare alt-!) /buffer close
 ----
 
 Si otterrà una riga di comando simile a:
 
 ----
-/key bind meta-y /buffer close
+/key bind meta-! /buffer close
 ----
 
 Per eliminare il tasto:
 
 ----
-/key unbind meta-y
+/key unbind meta-!
 ----
 
 [[plugins_scripts]]

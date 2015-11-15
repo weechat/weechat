@@ -284,22 +284,22 @@ According to your keyboard and/or your needs, you can rebind any key
 to a command with `/key` command.
 A useful key is key[alt-k] to find key codes.
 
-For example, to bind key[alt-y] to command `/buffer close`:
+For example, to bind key[alt-!] to command `/buffer close`:
 
 ----
-/key bind (press alt-k) (press alt-y) /buffer close
+/key bind (press alt-k) (press alt-!) /buffer close
 ----
 
 You'll have a command line like:
 
 ----
-/key bind meta-y /buffer close
+/key bind meta-! /buffer close
 ----
 
 To remove key:
 
 ----
-/key unbind meta-y
+/key unbind meta-!
 ----
 
 [[plugins_scripts]]

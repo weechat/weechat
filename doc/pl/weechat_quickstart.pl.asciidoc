@@ -290,22 +290,22 @@ Zgodnie z Twoją klawiaturą i/lub potrzebami, możesz zmienić przypisanie
 dowolnego klawisza do komendy używając komendy `/key`.
 Przydatnym skrótem jest key[alt-k] do odnajdywania kodów klawiszy.
 
-Na przykład, aby przypisać key[alt-y] do komendy `/buffer close`:
+Na przykład, aby przypisać key[alt-!] do komendy `/buffer close`:
 
 ----
-/key bind (wciśnij alt-k) (wciśnij alt-y) /buffer close
+/key bind (wciśnij alt-k) (wciśnij alt-!) /buffer close
 ----
 
 Otrzymasz w linii poleceń:
 
 ----
-/key bind meta-y /buffer close
+/key bind meta-! /buffer close
 ----
 
 Aby usunąć klawisz:
 
 ----
-/key unbind meta-y
+/key unbind meta-!
 ----
 
 [[plugins_scripts]]

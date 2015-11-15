@@ -312,22 +312,22 @@ Gemäß Deiner Tastatur und/oder Deinen Bedürfnissen kann jede Taste mit Hilfe
 des `/key` Befehls durch jedweden Befehl neu belegt werden.
 Eine nützliche Tastenkombination um Tastencodes zu ermitteln ist key[alt-k].
 
-Beispiel: Belegung von key[alt-y] mit dem Befehl `/buffer close`:
+Beispiel: Belegung von key[alt-!] mit dem Befehl `/buffer close`:
 
 ----
-/key bind (drücke alt-k) (drücke alt-y) /buffer close
+/key bind (drücke alt-k) (drücke alt-!) /buffer close
 ----
 
 Du wirst folgende Befehlszeile erhalten:
 
 ----
-/key bind meta-y /buffer close
+/key bind meta-! /buffer close
 ----
 
 Entfernen der Tastenbelegung:
 
 ----
-/key unbind meta-y
+/key unbind meta-!
 ----
 
 [[plugins_scripts]]

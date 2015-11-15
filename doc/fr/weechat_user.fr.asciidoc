@@ -1322,11 +1322,11 @@ suivante :
 ----
 
 Il est possible de désactiver temporairement la souris, et associer ça à une
-touche. Par exemple la touche key[alt-x] pour désactiver la souris pendant 10
+touche. Par exemple la touche key[alt-%] pour désactiver la souris pendant 10
 secondes :
 
 ----
-/key bind meta-x /mouse toggle 10
+/key bind meta-% /mouse toggle 10
 ----
 
 [IMPORTANT]

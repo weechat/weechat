@@ -316,22 +316,22 @@ comando usando el comando `/key`.
 Una combinación de teclas muy valiosa es key[alt-k] para hallar el código de
 alguna tecla.
 
-Por ejemplo, para asignar la combinación key[alt-y] al comando `/buffer close`:
+Por ejemplo, para asignar la combinación key[alt-!] al comando `/buffer close`:
 
 ----
-/key bind (presionamos alt-k) (presionamos alt-y) /buffer close
+/key bind (presionamos alt-k) (presionamos alt-!) /buffer close
 ----
 
 El comando se vera mas o menos así:
 
 ----
-/key bind meta-y /buffer close
+/key bind meta-! /buffer close
 ----
 
 Para eliminar una combinación:
 
 ----
-/key unbind meta-y
+/key unbind meta-!
 ----
 
 [[plugins_scripts]]

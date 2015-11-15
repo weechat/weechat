@@ -297,22 +297,22 @@ Selon votre clavier et/ou vos besoins, vous pouvez associer n'importe
 quelle touche à une commande avec la commande `/key`.
 Une touche utile est key[alt-k] pour trouver le code des touches.
 
-Par exemple, pour associer key[alt-y] à la commande `/buffer close` :
+Par exemple, pour associer key[alt-!] à la commande `/buffer close` :
 
 ----
-/key bind (pressez alt-k) (pressez alt-y) /buffer close
+/key bind (pressez alt-k) (pressez alt-!) /buffer close
 ----
 
 Vous aurez une ligne de commande qui ressemble à ceci :
 
 ----
-/key bind meta-y /buffer close
+/key bind meta-! /buffer close
 ----
 
 Pour enlever la touche :
 
 ----
-/key unbind meta-y
+/key unbind meta-!
 ----
 
 [[plugins_scripts]]

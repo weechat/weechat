@@ -289,22 +289,22 @@ WeeChat はデフォルトでたくさんのショートカットキーが設定
 コマンドでショートカットキーの割り当てを変更することができます。
 キーコードを調べるには、key[alt-k] が役に立つでしょう。
 
-例えば、key[alt-y] に `/buffer close` を割り当てる場合:
+例えば、key[alt-!] に `/buffer close` を割り当てる場合:
 
 ----
-/key bind (alt-kを押下) (alt-yを押下) /buffer close
+/key bind (alt-kを押下) (alt-!を押下) /buffer close
 ----
 
 コマンドラインには以下のように表示されます:
 
 ----
-/key bind meta-y /buffer close
+/key bind meta-! /buffer close
 ----
 
 キー割り当てを解除する場合:
 
 ----
-/key unbind meta-y
+/key unbind meta-!
 ----
 
 [[plugins_scripts]]

@@ -1315,10 +1315,10 @@ key[alt-m] nutzen oder folgenden Befehl ausführen:
 
 Es ist möglich die Mausunterstützung kurzzeitig zu deaktivieren und dies auf
 einen Tastenkurzbefehl zu legen. Zum Beispiel soll über den Tastenkurzbefehl
-key[alt-x] die Mausunterstützung für 10 Sekunden deaktiviert werden:
+key[alt-%] die Mausunterstützung für 10 Sekunden deaktiviert werden:
 
 ----
-/key bind meta-x /mouse toggle 10
+/key bind meta-% /mouse toggle 10
 ----
 
 [IMPORTANT]

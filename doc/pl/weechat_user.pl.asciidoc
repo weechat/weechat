@@ -1302,10 +1302,10 @@ jak i zdalnie przez połączenie ssh z lub bez użycia screena/tmuxa.
 ----
 
 Możliwe jest czasowe wyłączenie obsługi myszy i przypisanie tego do skrótu. Na
-przykład skrót key[alt-x] wyłączający obsługę myszy na 10 sekund:
+przykład skrót key[alt-%] wyłączający obsługę myszy na 10 sekund:
 
 ----
-/key bind meta-x /mouse toggle 10
+/key bind meta-% /mouse toggle 10
 ----
 
 // TRANSLATION MISSING

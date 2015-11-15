@@ -1292,10 +1292,10 @@ WeeChat はマウスクリックとマウスジェスチャーをサポートし
 ----
 
 キーにマウスの一時的な無効化を割り当てることができます。 例えば、
-key[alt-x] キーにマウスを 10 秒間無効化する機能を割り当てるには:
+key[alt-%] キーにマウスを 10 秒間無効化する機能を割り当てるには:
 
 ----
-/key bind meta-x /mouse toggle 10
+/key bind meta-% /mouse toggle 10
 ----
 
 [IMPORTANT]
