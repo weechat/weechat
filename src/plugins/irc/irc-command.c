@@ -42,6 +42,7 @@
 #include "irc-input.h"
 #include "irc-message.h"
 #include "irc-mode.h"
+#include "irc-modelist.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
@@ -1121,6 +1122,7 @@ IRC_COMMAND_CALLBACK(ban)
 {
     char *pos_channel;
     int pos_args;
+    struct t_irc_modelist *ptr_modelist;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("ban", 1);
@@ -1185,6 +1187,12 @@ IRC_COMMAND_CALLBACK(ban)
         }
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "MODE %s +b", ptr_channel->name);
+        ptr_modelist = irc_modelist_search (ptr_channel, 'b');
+        if (ptr_modelist)
+        {
+            irc_modelist_item_free_all (ptr_modelist);
+            ptr_modelist->state = IRC_MODELIST_STATE_RECEIVING;
+        }
     }
 
     return WEECHAT_RC_OK;
