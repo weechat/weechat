@@ -6956,7 +6956,7 @@ irc_command_init ()
         N_("[<channel>] <nick> [<nick>...]"),
         N_("channel: channel name\n"
            "   nick: nick or host"),
-        NULL, &irc_command_unban, NULL, NULL);
+        "%(irc_bans)", &irc_command_unban, NULL, NULL);
     weechat_hook_command (
         "unquiet",
         N_("unquiet nicks or hosts"),
