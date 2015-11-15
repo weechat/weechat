@@ -1141,7 +1141,6 @@ IRC_COMMAND_CALLBACK(ban)
 {
     char *pos_channel;
     int pos_args;
-    struct t_irc_modelist *ptr_modelist;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("ban", 1);
@@ -1206,12 +1205,6 @@ IRC_COMMAND_CALLBACK(ban)
         }
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "MODE %s +b", ptr_channel->name);
-        ptr_modelist = irc_modelist_search (ptr_channel, 'b');
-        if (ptr_modelist)
-        {
-            irc_modelist_item_free_all (ptr_modelist);
-            ptr_modelist->state = IRC_MODELIST_STATE_RECEIVING;
-        }
     }
 
     return WEECHAT_RC_OK;
@@ -6981,8 +6974,8 @@ irc_command_init ()
         N_("unquiet nicks or hosts"),
         N_("[<channel>] <nick> [<nick>...]"),
         N_("channel: channel name\n"
-           "   nick: nick or host"),
-        "%(irc_channel_nicks_hosts)", &irc_command_unquiet, NULL, NULL);
+           "   nick: nick, host or quiet number"),
+        "%(irc_quiets)", &irc_command_unquiet, NULL, NULL);
     weechat_hook_command (
         "userhost",
         N_("return a list of information about nicks"),
