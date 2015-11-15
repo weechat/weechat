@@ -33,6 +33,7 @@ irc-info.c irc-info.h
 irc-input.c irc-input.h
 irc-message.c irc-message.h
 irc-mode.c irc-mode.h
+irc-modelist.c irc-modelist.h
 irc-msgbuffer.c irc-msgbuffer.h
 irc-nick.c irc-nick.h
 irc-notify.c irc-notify.h

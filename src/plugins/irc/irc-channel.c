@@ -33,6 +33,7 @@
 #include "irc-color.h"
 #include "irc-command.h"
 #include "irc-config.h"
+#include "irc-modelist.h"
 #include "irc-nick.h"
 #include "irc-server.h"
 #include "irc-input.h"
@@ -426,6 +427,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 {
     struct t_irc_channel *new_channel;
     struct t_gui_buffer *ptr_buffer;
+    const char *chanmodes;
 
     /* create buffer for channel (or use existing one) */
     ptr_buffer = irc_channel_create_buffer (server, channel_type,
@@ -479,6 +481,12 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->nicks_speaking[1] = NULL;
     new_channel->nicks_speaking_time = NULL;
     new_channel->last_nick_speaking_time = NULL;
+    new_channel->modelists = NULL;
+    new_channel->last_modelist = NULL;
+    for (chanmodes = irc_server_get_chanmodes (server); chanmodes[0] && chanmodes[0] != ','; chanmodes++)
+    {
+        irc_modelist_new (new_channel, chanmodes[0]);
+    }
     new_channel->join_smart_filtered = NULL;
     new_channel->buffer = ptr_buffer;
     new_channel->buffer_as_string = NULL;
@@ -1387,6 +1395,7 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
 
     /* free linked lists */
     irc_nick_free_all (server, channel);
+    irc_modelist_free_all (channel);
 
     /* free channel data */
     if (channel->name)
@@ -1472,6 +1481,8 @@ irc_channel_hdata_channel_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_channel, nicks_speaking, POINTER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, nicks_speaking_time, POINTER, 0, NULL, "irc_channel_speaking");
         WEECHAT_HDATA_VAR(struct t_irc_channel, last_nick_speaking_time, POINTER, 0, NULL, "irc_channel_speaking");
+        WEECHAT_HDATA_VAR(struct t_irc_channel, modelists, POINTER, 0, NULL, "irc_modelist");
+        WEECHAT_HDATA_VAR(struct t_irc_channel, last_modelist, POINTER, 0, NULL, "irc_modelist");
         WEECHAT_HDATA_VAR(struct t_irc_channel, join_smart_filtered, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, buffer, POINTER, 0, NULL, "buffer");
         WEECHAT_HDATA_VAR(struct t_irc_channel, buffer_as_string, STRING, 0, NULL, NULL);
@@ -1629,6 +1640,7 @@ irc_channel_print_log (struct t_irc_channel *channel)
     struct t_irc_channel_speaking *ptr_nick_speaking;
     int i, index;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_modelist *ptr_modelist;
 
     weechat_log_printf ("");
     weechat_log_printf ("  => channel %s (addr:0x%lx):", channel->name, channel);
@@ -1656,6 +1668,8 @@ irc_channel_print_log (struct t_irc_channel *channel)
     weechat_log_printf ("       nicks_speaking[1]. . . . : 0x%lx", channel->nicks_speaking[1]);
     weechat_log_printf ("       nicks_speaking_time. . . : 0x%lx", channel->nicks_speaking_time);
     weechat_log_printf ("       last_nick_speaking_time. : 0x%lx", channel->last_nick_speaking_time);
+    weechat_log_printf ("       modelists. . . . . . . . : 0x%lx", channel->modelists);
+    weechat_log_printf ("       last_modelist. . . . . . : 0x%lx", channel->last_modelist);
     weechat_log_printf ("       join_smart_filtered. . . : 0x%lx (hashtable: '%s')",
                         channel->join_smart_filtered,
                         weechat_hashtable_get_string (channel->join_smart_filtered,
@@ -1694,5 +1708,9 @@ irc_channel_print_log (struct t_irc_channel *channel)
     for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
         irc_nick_print_log (ptr_nick);
+    }
+    for (ptr_modelist = channel->modelists; ptr_modelist; ptr_modelist = ptr_modelist->next_modelist)
+    {
+        irc_modelist_print_log (ptr_modelist);
     }
 }

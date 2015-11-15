@@ -30,6 +30,7 @@
 #include "irc-config.h"
 #include "irc-ignore.h"
 #include "irc-message.h"
+#include "irc-modelist.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
 #include "irc-protocol.h"
@@ -948,6 +949,12 @@ irc_info_init ()
     weechat_hook_hdata (
         "irc_nick", N_("irc nick"),
         &irc_nick_hdata_nick_cb, NULL, NULL);
+    weechat_hook_hdata (
+        "irc_modelist", N_("irc modelist"),
+        &irc_modelist_hdata_modelist_cb, NULL, NULL);
+    weechat_hook_hdata (
+        "irc_modelist_item", N_("irc modelist item"),
+        &irc_modelist_hdata_item_cb, NULL, NULL);
     weechat_hook_hdata (
         "irc_channel", N_("irc channel"),
         &irc_channel_hdata_channel_cb, NULL, NULL);

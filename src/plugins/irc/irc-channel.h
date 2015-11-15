@@ -32,6 +32,7 @@
 #define IRC_CHANNEL_NICKS_SPEAKING_LIMIT 128
 
 struct t_irc_server;
+struct t_irc_modelist;
 
 struct t_irc_channel_speaking
 {
@@ -71,6 +72,8 @@ struct t_irc_channel
     struct t_irc_channel_speaking *nicks_speaking_time; /* for smart filter */
                                        /* of join/part/quit messages        */
     struct t_irc_channel_speaking *last_nick_speaking_time;
+    struct t_irc_modelist *modelists;  /* modelists in the channel          */
+    struct t_irc_modelist *last_modelist; /* last modelist in the channel   */
     struct t_hashtable *join_smart_filtered; /* smart filtered joins        */
     struct t_gui_buffer *buffer;       /* buffer allocated for channel      */
     char *buffer_as_string;            /* used to return buffer info        */
