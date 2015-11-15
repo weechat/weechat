@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #include "../weechat-plugin.h"
 #include "irc.h"
@@ -30,6 +31,7 @@
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
+#include "irc-modelist.h"
 
 
 /*
@@ -317,12 +319,14 @@ irc_mode_smart_filtered (struct t_irc_server *server, char mode)
 int
 irc_mode_channel_set (struct t_irc_server *server,
                       struct t_irc_channel *channel,
+                      const char *host,
                       const char *modes)
 {
     char *pos_args, *str_modes, set_flag, **argv, *pos, *ptr_arg, chanmode_type;
     int argc, current_arg, update_channel_modes, channel_modes_updated;
     int smart_filter;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_modelist *ptr_modelist;
 
     if (!server || !channel || !modes)
         return 0;
@@ -464,6 +468,25 @@ irc_mode_channel_set (struct t_irc_server *server,
                             }
                         }
                     }
+                    else if (chanmode_type == 'A')
+                    {
+                        /* modelist modes */
+                        ptr_modelist = irc_modelist_search (channel, pos[0]);
+                        if (ptr_modelist)
+                        {
+                            if (set_flag == '+')
+                            {
+                                irc_modelist_item_new (ptr_modelist, ptr_arg,
+                                                       host, time (NULL));
+                            }
+                            else if (set_flag == '-')
+                            {
+                                irc_modelist_item_free (ptr_modelist,
+                                    irc_modelist_item_search (ptr_modelist, ptr_arg));
+                            }
+                        }
+                    }
+
                     if (update_channel_modes)
                     {
                         irc_mode_channel_update (server, channel, set_flag,

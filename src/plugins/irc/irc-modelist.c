@@ -71,9 +71,6 @@ irc_modelist_item_new (struct t_irc_modelist *modelist,
 {
     struct t_irc_modelist_item *new_item;
 
-    if (modelist->state == IRC_MODELIST_STATE_EMPTY)
-        return NULL;
-
     /* alloc memory for new item */
     if ((new_item = malloc (sizeof (*new_item))) == NULL)
     {
@@ -98,7 +95,8 @@ irc_modelist_item_new (struct t_irc_modelist *modelist,
         modelist->items = new_item;
     modelist->last_item = new_item;
 
-    if (modelist->state == IRC_MODELIST_STATE_RECEIVED)
+    if (modelist->state == IRC_MODELIST_STATE_EMPTY ||
+        modelist->state == IRC_MODELIST_STATE_RECEIVED)
         modelist->state = IRC_MODELIST_STATE_MODIFIED;
 
     /* all is OK, return address of new item */
