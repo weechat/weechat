@@ -480,6 +480,14 @@ irc_completion_channels_cb (void *data, const char *completion_item,
         }
     }
 
+    /* add current channel first in list */
+    irc_buffer_get_server_and_channel (buffer, NULL, &ptr_channel);
+    if (ptr_channel)
+    {
+        weechat_hook_completion_list_add (completion, ptr_channel->name,
+                                          0, WEECHAT_LIST_POS_BEGINNING);
+    }
+
     return WEECHAT_RC_OK;
 }
 
