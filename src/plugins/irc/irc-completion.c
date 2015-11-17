@@ -93,25 +93,31 @@ irc_completion_server_channels_cb (void *data, const char *completion_item,
                                    struct t_gui_buffer *buffer,
                                    struct t_gui_completion *completion)
 {
-    struct t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel2;
 
-    IRC_BUFFER_GET_SERVER(buffer);
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    (void) buffer;
 
     if (ptr_server)
     {
-        for (ptr_channel = ptr_server->channels; ptr_channel;
-             ptr_channel = ptr_channel->next_channel)
+        for (ptr_channel2 = ptr_server->channels; ptr_channel2;
+             ptr_channel2 = ptr_channel2->next_channel)
         {
-            if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+            if (ptr_channel2->type == IRC_CHANNEL_TYPE_CHANNEL)
             {
-                weechat_hook_completion_list_add (completion, ptr_channel->name,
+                weechat_hook_completion_list_add (completion, ptr_channel2->name,
                                                   0, WEECHAT_LIST_POS_SORT);
             }
+        }
+
+        /* add current channel first in list */
+        if (ptr_channel)
+        {
+            weechat_hook_completion_list_add (completion, ptr_channel->name,
+                                              0, WEECHAT_LIST_POS_BEGINNING);
         }
     }
 
@@ -134,7 +140,6 @@ irc_completion_server_privates_cb (void *data, const char *completion_item,
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    (void) buffer;
 
     if (ptr_server)
     {
@@ -458,30 +463,59 @@ irc_completion_channels_cb (void *data, const char *completion_item,
                             struct t_gui_buffer *buffer,
                             struct t_gui_completion *completion)
 {
-    struct t_irc_server *ptr_server;
-    struct t_irc_channel *ptr_channel;
+    struct t_irc_server *ptr_server2;
+    struct t_irc_channel *ptr_channel2;
+    struct t_weelist *channels_current_server;
+    int i;
+
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    (void) buffer;
 
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
+    channels_current_server = weechat_list_new ();
+
+    for (ptr_server2 = irc_servers; ptr_server2;
+         ptr_server2 = ptr_server2->next_server)
     {
-        for (ptr_channel = ptr_server->channels; ptr_channel;
-             ptr_channel = ptr_channel->next_channel)
+        for (ptr_channel2 = ptr_server2->channels; ptr_channel2;
+             ptr_channel2 = ptr_channel2->next_channel)
         {
-            if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+            if (ptr_channel2->type == IRC_CHANNEL_TYPE_CHANNEL)
             {
-                weechat_hook_completion_list_add (completion, ptr_channel->name,
-                                                  0, WEECHAT_LIST_POS_SORT);
+                if (ptr_server2 == ptr_server)
+                {
+                    /* will be added later to completions */
+                    weechat_list_add (channels_current_server,
+                                      ptr_channel2->name,
+                                      WEECHAT_LIST_POS_SORT,
+                                      NULL);
+                }
+                else
+                {
+                    weechat_hook_completion_list_add (completion,
+                                                      ptr_channel2->name,
+                                                      0,
+                                                      WEECHAT_LIST_POS_SORT);
+                }
             }
         }
     }
 
+    /* add channels of current server first in list */
+    for (i = weechat_list_size (channels_current_server) - 1; i >= 0; i--)
+    {
+        weechat_hook_completion_list_add (
+            completion,
+            weechat_list_string (
+                weechat_list_get (channels_current_server, i)),
+            0,
+            WEECHAT_LIST_POS_BEGINNING);
+    }
+    weechat_list_free (channels_current_server);
+
     /* add current channel first in list */
-    irc_buffer_get_server_and_channel (buffer, NULL, &ptr_channel);
     if (ptr_channel)
     {
         weechat_hook_completion_list_add (completion, ptr_channel->name,

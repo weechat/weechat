@@ -26,8 +26,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add function string_hex_dump()
 * api: add argument "length" in function utf8_is_valid()
 * alias: display completion in /alias list (issue #518)
-* irc: use current channel first in completion "irc_channels"
-  (task #12923, issue #392)
+* irc: use current channel and current server channels first in completions
+  "irc_server_channels" and "irc_channels" (task #12923, issue #392)
 * irc: add support of "cap-notify" capability (issue #182, issue #477)
 * irc: add command /cap (issue #8)
 * irc: add hex dump of messages in raw buffer when debug is enabled for irc
