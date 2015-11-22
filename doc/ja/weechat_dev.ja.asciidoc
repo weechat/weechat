@@ -987,7 +987,7 @@ component: fix a problem (bug #12345)
 * WeeChat コア: 'core' (ルートディレクトリ、'po/' ディレクトリ、 'src/'
   ディレクトリに含まれるファイル、ただし 'src/plugins/' 内のファイルを除く)
 * 文書ファイル: 'doc' ('doc/' ディレクトリに含まれるファイル)
-* プラグインの名前: 'irc'、'python'、'relay'、... ('src/plugins/' ディレクトリに含まれるファイル)
+* プラグインの名前: 'irc' 、'python' 、'relay' 、... ('src/plugins/' ディレクトリに含まれるファイル)
 
 以下のルールに従ってください:
 
