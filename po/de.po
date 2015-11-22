@@ -5115,7 +5115,7 @@ msgstr "Infobar \"%s\" aktualisiert"
 msgid "%sPaste %d line ? [ctrl-Y] Yes [ctrl-N] No"
 msgid_plural "%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No"
 msgstr[0] "%s%d Zeile einfügen? [Strg-Y] Ja [Strg-N] Nein"
-msgstr[1] "%s%d Zeilen einfügen? [Strg-Y] Ja [Strgl-N] Nein"
+msgstr[1] "%s%d Zeilen einfügen? [Strg-Y] Ja [Strg-N] Nein"
 
 msgid "Search"
 msgstr "Suche"
