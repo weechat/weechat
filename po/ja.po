@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-11-12 16:20+0100\n"
-"PO-Revision-Date: 2015-11-04 18:11+0100\n"
+"PO-Revision-Date: 2015-11-22 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -219,14 +219,14 @@ msgstr ""
 "使ってください (/help server 参照)。"
 
 #. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
 "display bugs; $TERM should be set to one of these values: %s"
 msgstr ""
 "%s警告: WeeChat は %s の中で実行中で $TERM は \"%s\" です、この状態は表示上の"
-"バグを引き起こす恐れがあります; $TERM を \"screen-256color\" または \"screen"
-"\" に設定してください"
+"バグを引き起こす恐れがあります; $TERM を以下のうちどれかに設定してください: "
+"%s"
 
 #, c-format
 msgid "%sYou should add this line in the file %s:  %s"

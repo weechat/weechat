@@ -9168,7 +9168,7 @@ hsignal "irc_redirect_pattern" は irc 転送用のパターンを作成する�
 * 'cmd_extra': コマンドを停止した後に受信する可能性のあるコマンドのコンマ区切りリスト
   (任意)
 
-'cmd_start'、'cmd_stop'、'cmd_extra'
+'cmd_start' 、'cmd_stop' 、'cmd_extra'
 には受け取ったメッセージに必ず含まれていなければいけない
 "string" の位置を示す整数を与えることが可能、例:
 
@@ -10228,7 +10228,7 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 
 | signal +
   _(WeeChat バージョン 1.0 以上で利用可)_ |
-  'process'、'process_hashtable' |
+  'process' 、'process_hashtable' |
   シグナル番号または以下の名前から 1 つ:
   `hup`、`int`、`quit`、`kill`、`term`、`usr1`、`usr2` |
   子プロセスにシグナルを送信
@@ -10796,7 +10796,7 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** 'name': バッファの名前
 ** 'full_name': バッファの完全な名前 ("plugin.name") _(WeeChat バージョン 0.3.7 以上で利用可)_
 ** 'short_name': バッファの短縮名 (注意:
-   表示目的以外に使用するのは禁止、ユーザは書き換えることが可能、バッファを検索する際にこれを使ってはいけない、'name'、'full_name'、またはローカル変数
+   表示目的以外に使用するのは禁止、ユーザは書き換えることが可能、バッファを検索する際にこれを使ってはいけない、'name' 、'full_name' 、またはローカル変数
    'channel' を使うこと)
 ** 'title': バッファのタイトル
 ** 'input': 入力テキスト

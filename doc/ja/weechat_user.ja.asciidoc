@@ -735,7 +735,7 @@ WeeChat を起動したターミナルの例:
   (バッファのリストを含むサイドバー) が例の 1 つです。 +
   `window` 型のバーは各ウィンドウに対して表示されます。例えば (`/window splith`
   や `/window splitv` で) 画面を 1 回分割する場合、それぞれのウィンドウにバーが
-  1 つ表示されます。4 つのデフォルトバー ('title'、'status'、'input'、'nicklist')
+  1 つ表示されます。4 つのデフォルトバー ('title' 、'status' 、'input' 、'nicklist')
   は `window` 型のバーです。
 
 | position | `top`、`bottom`、`left`、`right` |
@@ -841,7 +841,7 @@ WeeChat を起動したターミナルの例:
 * `columns_vertical`: テキストを左寄せして、列形式でアイテムを表示。最初のアイテムは左上、2
   番目は同じ列の 1 行下側。
 
-デフォルトバーである 'title'、'status'、'input' は
+デフォルトバーである 'title' 、'status' 、'input' は
 'horizontal' フィリング、'nicklist' は 'vertical' フィリング。
 
 'nicklist' バーに対するフィリングの例:
@@ -1493,11 +1493,9 @@ WeeChat ではバーやチャットエリアにおけるテキスト表示に 25
 
 256 色を利用したい場合に推奨される 'TERM' 環境変数の値は:
 
-* screen の中: 'screen-256color'
-// TRANSLATION MISSING
-* under tmux: 'screen-256color' or 'tmux-256color'
-// TRANSLATION MISSING
-* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
+* screen 内の場合: 'screen-256color'
+* tmux 内の場合: 'screen-256color' 、'tmux-256color'
+* screen および tmux の外の場合: 'xterm-256color' 、'rxvt-256color' 、'putty-256color' 、...
 
 [NOTE]
 'TERM' 環境変数の値に上の値を設定するには、"ncurses-term"
@@ -3332,7 +3330,7 @@ string/string) が含まれています。
 | tg_tag_nick        | string | ニックネーム ("nick_xxx" タグから)
 | tg_tag_prefix_nick | string | プレフィックスで使うニックネームの色 ("prefix_nick_ccc" タグから)
 | tg_tag_host        | string | ユーザ名とホスト名、フォーマット: username@host ("host_xxx" タグから)
-| tg_tag_notify      | string | 通知レベル ('none'、'message'、'private'、'highlight')
+| tg_tag_notify      | string | 通知レベル ('none' 、'message' 、'private' 、'highlight')
 | tg_notify          | string | 通知レベルが 'none' 以外の場合、その通知レベル
 | tg_msg_pv          | string | プライベートメッセージの場合 "1"、それ以外は "0"
 |===
