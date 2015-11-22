@@ -536,7 +536,7 @@ Beispiele:
          rename <name> <new_name>
 
   store: erstellt ein Layout der zur Zeit verwendeten Buffer/Fenster
-  apply: erstelle Layout verwenden
+  apply: erstelltes Layout verwenden
   leave: belässt das aktuelle Layout (es wird kein Layout aktualisiert)
     del: entfernt Buffer und/oder Fenster eines erstellten Layouts
          (falls weder "buffers" noch "windows" angegeben wird, dann wird das Layout entfernt)
