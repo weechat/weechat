@@ -3328,7 +3328,7 @@ irc_server_login (struct t_irc_server *server)
         server, IRC_SERVER_OPTION_CAPABILITIES);
 
     if (password && password[0])
-        irc_server_sendf (server, 0, NULL, "PASS %s", password);
+        irc_server_sendf (server, 0, NULL, "PASS :%s", password);
 
     if (!server->nick)
     {
