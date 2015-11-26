@@ -81,6 +81,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_DEFAULT_MSG_PART,     /* default part message          */
     IRC_SERVER_OPTION_DEFAULT_MSG_QUIT,     /* default quit message          */
     IRC_SERVER_OPTION_NOTIFY,               /* notify list                   */
+    IRC_SERVER_OPTION_SSL_CA_FILE,          /* gnutls ssl ca  file           */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };
@@ -174,6 +175,7 @@ struct t_irc_server
     gnutls_session_t gnutls_sess;   /* gnutls session (only if SSL is used)  */
     gnutls_x509_crt_t tls_cert;     /* certificate used if ssl_cert is set   */
     gnutls_x509_privkey_t tls_cert_key; /* key used if ssl_cert is set       */
+    gnutls_certificate_credentials_t gnutls_xcred; /* gnutls cred            */
 #endif /* HAVE_GNUTLS */
     char *unterminated_message;     /* beginning of a message in input buf   */
     int nicks_count;                /* number of nicknames                   */
