@@ -7195,6 +7195,8 @@ command_init ()
            "                >   greater\n"
            "                =~  is matching POSIX extended regex\n"
            "                !~  is NOT matching POSIX extended regex\n"
+           "                =*  is matching wildcard mask\n"
+           "                !*  is NOT matching wildcard mask\n"
            "\n"
            "An expression is considered as \"true\" if it is not NULL, not "
            "empty, and different from \"0\".\n"
@@ -7256,7 +7258,8 @@ command_init ()
            "  /eval -n -c abcd =~ ^ABC                ==> 1\n"
            "  /eval -n -c abcd =~ (?-i)^ABC           ==> 0\n"
            "  /eval -n -c abcd =~ (?-i)^abc           ==> 1\n"
-           "  /eval -n -c abcd !~ abc                 ==> 0"),
+           "  /eval -n -c abcd !~ abc                 ==> 0\n"
+           "  /eval -n -c abcd =* a*d                 ==> 1"),
         "-n|-s|-c -n|-s|-c",
         &command_eval, NULL);
     hook_command (
