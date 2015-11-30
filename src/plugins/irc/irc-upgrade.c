@@ -490,6 +490,7 @@ irc_upgrade_read_cb (void *data,
                             }
                         }
                         irc_upgrade_current_channel->checking_whox = weechat_infolist_integer (infolist, "checking_whox");
+                        irc_upgrade_current_channel->who_checked = weechat_infolist_integer (infolist, "who_checked");
                         str = weechat_infolist_string (infolist, "away_message");
                         if (str)
                             irc_upgrade_current_channel->away_message = strdup (str);
@@ -638,7 +639,7 @@ irc_upgrade_read_cb (void *data,
                             {
                                 irc_nick_set_away (irc_upgrade_current_server,
                                                    irc_upgrade_current_channel,
-                                                   ptr_nick, 1);
+                                                   ptr_nick, 1, NULL);
                             }
                             /* channel user */
                             if (flags & 128)

@@ -3026,7 +3026,6 @@ IRC_PROTOCOL_CALLBACK(315)
     if (ptr_channel && (ptr_channel->checking_whox > 0))
     {
         ptr_channel->checking_whox--;
-        ptr_channel->who_checked = 1; /* who was checked at least once */
     }
     else
     {
@@ -3045,6 +3044,7 @@ IRC_PROTOCOL_CALLBACK(315)
             (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
     }
 
+    ptr_channel->who_checked = 1; /* who was checked at least once */
     return WEECHAT_RC_OK;
 }
 
@@ -4665,8 +4665,6 @@ IRC_PROTOCOL_CALLBACK(366)
         {
             irc_command_mode_server (server, "MODE", ptr_channel, NULL,
                                      IRC_SERVER_SEND_OUTQ_PRIO_LOW);
-
-            ptr_channel->who_checked = 0;
             irc_channel_check_whox (server, ptr_channel);
         }
     }

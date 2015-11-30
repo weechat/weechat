@@ -336,7 +336,7 @@ extern void irc_server_outqueue_free_all (struct t_irc_server *server,
 extern int irc_server_get_channel_count (struct t_irc_server *server);
 extern int irc_server_get_pv_count (struct t_irc_server *server);
 extern void irc_server_set_away (struct t_irc_server *server, const char *nick,
-                                 int is_away);
+                                 int is_away, const char *away_message);
 extern void irc_server_remove_away (struct t_irc_server *server);
 extern void irc_server_check_away (struct t_irc_server *server);
 extern void irc_server_switch_address (struct t_irc_server *server,

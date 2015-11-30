@@ -791,7 +791,7 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
                 if (string)
                     free (string);
             }
-            irc_server_set_away (server, server->nick, 1);
+            irc_server_set_away (server, server->nick, 1, arguments);
 
             /* reset "unread" indicator on server and channels/pv buffers */
             if (reset_unread_marker)
@@ -867,7 +867,7 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
                     }
                 }
             }
-            irc_server_set_away (server, server->nick, 0);
+            irc_server_set_away (server, server->nick, 0, NULL);
         }
         else
         {

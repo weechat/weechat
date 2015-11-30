@@ -61,6 +61,7 @@ struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 struct t_config_option *irc_config_look_color_pv_nick_like_channel;
 struct t_config_option *irc_config_look_ctcp_time_format;
 struct t_config_option *irc_config_look_display_away;
+struct t_config_option *irc_config_look_display_other_away;
 struct t_config_option *irc_config_look_display_ctcp_blocked;
 struct t_config_option *irc_config_look_display_ctcp_reply;
 struct t_config_option *irc_config_look_display_ctcp_unknown;
@@ -2443,6 +2444,13 @@ irc_config_init ()
         "off|local|channel", 0, 0, "local", NULL, 0, NULL, NULL,
         &irc_config_change_look_display_away, NULL,
         NULL, NULL);
+    irc_config_look_display_other_away = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_other_away", "boolean",
+        N_("display message when other users change away status (off: do not display "
+                   "on: display)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_display_ctcp_blocked = weechat_config_new_option (
         irc_config_file, ptr_section,
         "display_ctcp_blocked", "boolean",

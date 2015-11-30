@@ -87,7 +87,8 @@ extern void irc_nick_count (struct t_irc_server *server,
                             int *count_normal);
 extern void irc_nick_set_away (struct t_irc_server *server,
                                struct t_irc_channel *channel,
-                               struct t_irc_nick *nick, int is_away);
+                               struct t_irc_nick *nick, int is_away,
+                               const char *away_message);
 extern const char *irc_nick_mode_for_display (struct t_irc_server *server,
                                               struct t_irc_nick *nick,
                                               int prefix);
