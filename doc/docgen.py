@@ -45,13 +45,7 @@ SCRIPT_COMMAND = 'docgen'
 
 IMPORT_OK = True
 
-try:
-    import weechat  # pylint: disable=import-error
-except ImportError:
-    print('This script must be run under WeeChat.')
-    print('Get WeeChat now at: https://weechat.org/')
-    IMPORT_OK = False
-
+# pylint: disable=wrong-import-position
 try:
     import gettext
     import hashlib
@@ -61,6 +55,13 @@ try:
     from operator import itemgetter
 except ImportError as message:
     print('Missing package(s) for {0}: {1}'.format(SCRIPT_NAME, message))
+    IMPORT_OK = False
+
+try:
+    import weechat  # pylint: disable=import-error
+except ImportError:
+    print('This script must be run under WeeChat.')
+    print('Get WeeChat now at: https://weechat.org/')
     IMPORT_OK = False
 
 # default path where doc files will be written (should be doc/ in sources
@@ -420,6 +421,7 @@ def get_plugins_priority():
 
 
 # pylint: disable=too-many-locals, too-many-branches, too-many-statements
+# pylint: disable=too-many-nested-blocks
 def docgen_cmd_cb(data, buf, args):
     """Callback for /docgen command."""
     if args:
