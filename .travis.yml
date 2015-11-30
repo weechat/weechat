@@ -22,6 +22,7 @@ before_script:
 script:
     - ./tools/build-test.sh
     - msgcheck po/*.po
+    - pylint --version
     - pylint doc/docgen.py
 
 after_success:
