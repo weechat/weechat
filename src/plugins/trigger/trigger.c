@@ -483,6 +483,62 @@ trigger_regex_free (int *regex_count, struct t_trigger_regex **regex)
 }
 
 /*
+ * Converts escaped chars to their value, including the delimiter.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+trigger_convert_escaped_chars (const char *string, const char *delimiter)
+{
+    const char *ptr_string;
+    char *output, *output_final;
+    int pos_output, length_delimiter;
+
+    if (!string)
+        return NULL;
+
+    /* the output length is always <= to string length */
+    output = malloc (strlen (string) + 1);
+    if (!output)
+        return NULL;
+
+    length_delimiter = strlen (delimiter);
+
+    pos_output = 0;
+    ptr_string = string;
+    while (ptr_string && ptr_string[0])
+    {
+        if (ptr_string[0] == '\\')
+        {
+            ptr_string++;
+            if (strncmp (ptr_string, delimiter, length_delimiter) == 0)
+            {
+                strcpy (output + pos_output, delimiter);
+                pos_output += length_delimiter;
+                ptr_string += length_delimiter;
+            }
+            else if (ptr_string[0])
+            {
+                output[pos_output++] = '\\';
+                output[pos_output++] = ptr_string[0];
+                ptr_string++;
+            }
+        }
+        else
+        {
+            output[pos_output++] = ptr_string[0];
+            ptr_string++;
+        }
+    }
+    output[pos_output] = '\0';
+
+    output_final = weechat_string_convert_escaped_chars (output);
+    free (output);
+    return output_final;
+}
+
+/*
  * Splits the regex in structures, with regex and replacement text.
  *
  * Returns:
@@ -548,12 +604,24 @@ trigger_regex_split (const char *str_regex,
             goto format_error;
 
         /* search the start of replacement string */
-        pos_replace = strstr (ptr_regex, delimiter);
+        pos_replace = ptr_regex;
+        while ((pos_replace = strstr (pos_replace, delimiter)))
+        {
+            if (pos_replace[-1] != '\\') /* check if delimiter is escaped */
+                break;
+            pos_replace += length_delimiter;
+        }
         if (!pos_replace)
             goto format_error;
 
         /* search the end of replacement string */
-        pos_replace_end = strstr (pos_replace + length_delimiter, delimiter);
+        pos_replace_end = pos_replace + length_delimiter;
+        while ((pos_replace_end = strstr (pos_replace_end, delimiter)))
+        {
+            if (pos_replace_end[-1] != '\\') /* check if delimiter is escaped */
+                break;
+            pos_replace_end += length_delimiter;
+        }
 
         new_regex = realloc (*regex,
                              (*regex_count + 1) * sizeof ((*regex)[0]));
@@ -578,7 +646,8 @@ trigger_regex_split (const char *str_regex,
             goto memory_error;
         if (str_regex_escaped)
             free (str_regex_escaped);
-        str_regex_escaped = weechat_string_convert_escaped_chars ((*regex)[index].str_regex);
+        str_regex_escaped = trigger_convert_escaped_chars ((*regex)[index].str_regex,
+                                                           delimiter);
         if (!str_regex_escaped)
             goto memory_error;
 
@@ -603,7 +672,7 @@ trigger_regex_split (const char *str_regex,
         if (!(*regex)[index].replace)
             goto memory_error;
         (*regex)[index].replace_escaped =
-            weechat_string_convert_escaped_chars ((*regex)[index].replace);
+            trigger_convert_escaped_chars ((*regex)[index].replace, delimiter);
         if (!(*regex)[index].replace_escaped)
             goto memory_error;
 
