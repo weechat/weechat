@@ -279,7 +279,7 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * Hook command.
+ * Hooks script command.
  */
 
 void
