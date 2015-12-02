@@ -133,6 +133,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/exec/exec.h
 ./src/plugins/fifo/fifo.c
 ./src/plugins/fifo/fifo.h
+./src/plugins/fifo/fifo-command.c
+./src/plugins/fifo/fifo-command.h
 ./src/plugins/fifo/fifo-info.c
 ./src/plugins/fifo/fifo-info.h
 ./src/plugins/guile/weechat-guile-api.c

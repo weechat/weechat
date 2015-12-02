@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-11-12 16:20+0100\n"
+"POT-Creation-Date: 2015-12-02 19:24+0100\n"
 "PO-Revision-Date: 2015-09-30 20:56+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5162,9 +5162,9 @@ msgstr ""
 msgid "%s: removing old fifo pipe \"%s\""
 msgstr ""
 
-#, c-format
-msgid "%s: pipe opened"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s: pipe opened (file: %s)"
+msgstr "Mouse está habilitado"
 
 #, c-format
 msgid "%s%s: unable to open pipe (%s) for reading"
@@ -5192,6 +5192,45 @@ msgstr "%s%s: erro ao enviar dados ao cliente: %s"
 
 #, c-format
 msgid "%s%s: error opening file, closing it"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: pipe is enabled (file: %s)"
+msgstr "Mouse está habilitado"
+
+#, fuzzy, c-format
+msgid "%s: pipe is disabled"
+msgstr "Mouse está desabilitado"
+
+#, fuzzy
+msgid "fifo plugin configuration"
+msgstr "configuração do plugin de registro"
+
+#, fuzzy
+msgid "enable|disable|toggle"
+msgstr "enable|disable|toggle [<atraso>]"
+
+msgid ""
+" enable: enable FIFO pipe\n"
+"disable: disable FIFO pipe\n"
+" toggle: toggle FIFO pipe\n"
+"\n"
+"FIFO pipe is used as remote control of WeeChat: you can send commands or "
+"text to the FIFO pipe from your shell.\n"
+"By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx (\"xxx\" is the "
+"WeeChat PID).\n"
+"\n"
+"The expected format is one of:\n"
+"  plugin.buffer *text or command here\n"
+"  *text or command here\n"
+"\n"
+"For example to change your freenode nick:\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"\n"
+"Please read the user's guide for more info and examples.\n"
+"\n"
+"Examples:\n"
+"  /fifo toggle"
 msgstr ""
 
 msgid "name of FIFO pipe"

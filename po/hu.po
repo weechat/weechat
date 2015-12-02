@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-11-12 16:20+0100\n"
-"PO-Revision-Date: 2015-09-09 09:13+0200\n"
+"POT-Creation-Date: 2015-12-02 19:24+0100\n"
+"PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -4568,8 +4568,8 @@ msgid "%s: removing old fifo pipe \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 #, fuzzy, c-format
-msgid "%s: pipe opened"
-msgstr "FIFO cső nyitva\n"
+msgid "%s: pipe opened (file: %s)"
+msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to open pipe (%s) for reading"
@@ -4598,6 +4598,44 @@ msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
 #, fuzzy, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
+
+#, fuzzy, c-format
+msgid "%s: pipe is enabled (file: %s)"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%s: pipe is disabled"
+msgstr "Nincs aliasz definiálva.\n"
+
+#, fuzzy
+msgid "fifo plugin configuration"
+msgstr "Beállítások mentése a lemezre\n"
+
+msgid "enable|disable|toggle"
+msgstr ""
+
+msgid ""
+" enable: enable FIFO pipe\n"
+"disable: disable FIFO pipe\n"
+" toggle: toggle FIFO pipe\n"
+"\n"
+"FIFO pipe is used as remote control of WeeChat: you can send commands or "
+"text to the FIFO pipe from your shell.\n"
+"By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx (\"xxx\" is the "
+"WeeChat PID).\n"
+"\n"
+"The expected format is one of:\n"
+"  plugin.buffer *text or command here\n"
+"  *text or command here\n"
+"\n"
+"For example to change your freenode nick:\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"\n"
+"Please read the user's guide for more info and examples.\n"
+"\n"
+"Examples:\n"
+"  /fifo toggle"
+msgstr ""
 
 msgid "name of FIFO pipe"
 msgstr ""
@@ -10526,7 +10564,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy
-#~ msgid "%s%s: error, buffer not found for pipe data"
-#~ msgstr "%s a \"%s\" szerver nem található (FIFO cső adat)\n"

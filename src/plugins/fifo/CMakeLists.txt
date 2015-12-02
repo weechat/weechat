@@ -19,6 +19,7 @@
 
 add_library(fifo MODULE
 fifo.c fifo.h
+fifo-command.c fifo-command.h
 fifo-info.c fifo-info.h)
 set_target_properties(fifo PROPERTIES PREFIX "")
 

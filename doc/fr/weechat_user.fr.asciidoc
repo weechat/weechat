@@ -2168,6 +2168,11 @@ Si le script s'appelle "auto_weechat_command", vous pouvez le lancer ainsi :
 $ ./auto_weechat_command 'irc.freenode.#weechat *bonjour'
 ----
 
+[[fifo_commands]]
+==== Commandes
+
+include::autogen/user/fifo_commands.asciidoc[]
+
 [[irc_plugin]]
 === Extension IRC
 

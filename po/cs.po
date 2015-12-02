@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-11-12 16:20+0100\n"
-"PO-Revision-Date: 2015-10-25 15:19+0100\n"
+"POT-Creation-Date: 2015-12-02 19:24+0100\n"
+"PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -4993,9 +4993,9 @@ msgstr "%s%s: nemohu vytvořit rouru pro vzdálené ovládání (%s)"
 msgid "%s: removing old fifo pipe \"%s\""
 msgstr "%s: odstraňuji starou fifo rouru \"%s\""
 
-#, c-format
-msgid "%s: pipe opened"
-msgstr "%s:roura otevřena"
+#, fuzzy, c-format
+msgid "%s: pipe opened (file: %s)"
+msgstr "Myš je zapnuta"
 
 #, c-format
 msgid "%s%s: unable to open pipe (%s) for reading"
@@ -5024,6 +5024,45 @@ msgstr "%s%s: chyba při znovunačtení roury, zavírám ji"
 #, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s%s: chyba při otevírání souboru, zavírám ho"
+
+#, fuzzy, c-format
+msgid "%s: pipe is enabled (file: %s)"
+msgstr "Myš je zapnuta"
+
+#, fuzzy, c-format
+msgid "%s: pipe is disabled"
+msgstr "Myš je vypnuta"
+
+#, fuzzy
+msgid "fifo plugin configuration"
+msgstr "konfigurace logovacího pluginu"
+
+#, fuzzy
+msgid "enable|disable|toggle"
+msgstr "povol|zakaž|přepni [<zpoždění>]"
+
+msgid ""
+" enable: enable FIFO pipe\n"
+"disable: disable FIFO pipe\n"
+" toggle: toggle FIFO pipe\n"
+"\n"
+"FIFO pipe is used as remote control of WeeChat: you can send commands or "
+"text to the FIFO pipe from your shell.\n"
+"By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx (\"xxx\" is the "
+"WeeChat PID).\n"
+"\n"
+"The expected format is one of:\n"
+"  plugin.buffer *text or command here\n"
+"  *text or command here\n"
+"\n"
+"For example to change your freenode nick:\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"\n"
+"Please read the user's guide for more info and examples.\n"
+"\n"
+"Examples:\n"
+"  /fifo toggle"
+msgstr ""
 
 msgid "name of FIFO pipe"
 msgstr "jméno FIFO roury"
@@ -11207,6 +11246,3 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
-
-#~ msgid "%s%s: error, buffer not found for pipe data"
-#~ msgstr "%s%s: chyba, nenalezen buffer pro data roury"

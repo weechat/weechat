@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-11-12 16:20+0100\n"
-"PO-Revision-Date: 2015-11-22 09:00+0900\n"
+"POT-Creation-Date: 2015-12-02 19:24+0100\n"
+"PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -5545,9 +5545,9 @@ msgstr "リモート操作用の FIFO パイプ"
 msgid "%s: removing old fifo pipe \"%s\""
 msgstr "%s: 古い fifo パイプ \"%s\" の削除中"
 
-#, c-format
-msgid "%s: pipe opened"
-msgstr "%s: パイプを開けました"
+#, fuzzy, c-format
+msgid "%s: pipe opened (file: %s)"
+msgstr "マウスを有効化しました"
 
 #, c-format
 msgid "%s%s: unable to open pipe (%s) for reading"
@@ -5576,6 +5576,45 @@ msgstr "%s%s: パイプ読み取り中にエラー (%d %s)、パイプを閉じ�
 #, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s%s: ファイルを開いている最中にエラー、ファイルを閉じています"
+
+#, fuzzy, c-format
+msgid "%s: pipe is enabled (file: %s)"
+msgstr "マウスを有効化しました"
+
+#, fuzzy, c-format
+msgid "%s: pipe is disabled"
+msgstr "マウスを無効化しました"
+
+#, fuzzy
+msgid "fifo plugin configuration"
+msgstr "logger プラグイン設定"
+
+#, fuzzy
+msgid "enable|disable|toggle"
+msgstr "enable|disable|toggle [<delay>]"
+
+msgid ""
+" enable: enable FIFO pipe\n"
+"disable: disable FIFO pipe\n"
+" toggle: toggle FIFO pipe\n"
+"\n"
+"FIFO pipe is used as remote control of WeeChat: you can send commands or "
+"text to the FIFO pipe from your shell.\n"
+"By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx (\"xxx\" is the "
+"WeeChat PID).\n"
+"\n"
+"The expected format is one of:\n"
+"  plugin.buffer *text or command here\n"
+"  *text or command here\n"
+"\n"
+"For example to change your freenode nick:\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"\n"
+"Please read the user's guide for more info and examples.\n"
+"\n"
+"Examples:\n"
+"  /fifo toggle"
+msgstr ""
 
 msgid "name of FIFO pipe"
 msgstr "FIFO パイプの名前"
@@ -11982,6 +12021,3 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
-
-#~ msgid "%s%s: error, buffer not found for pipe data"
-#~ msgstr "%s%s: エラー、パイプデータで指定されたバッファが見つかりません"

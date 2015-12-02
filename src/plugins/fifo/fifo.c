@@ -32,6 +32,7 @@
 
 #include "../weechat-plugin.h"
 #include "fifo.h"
+#include "fifo-command.h"
 #include "fifo-info.h"
 
 
@@ -158,8 +159,9 @@ fifo_create ()
                     if ((weechat_fifo_plugin->debug >= 1) || !fifo_quiet)
                     {
                         weechat_printf (NULL,
-                                        _("%s: pipe opened"),
-                                        FIFO_PLUGIN_NAME);
+                                        _("%s: pipe opened (file: %s)"),
+                                        FIFO_PLUGIN_NAME,
+                                        fifo_filename);
                     }
                     fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0,
                                                     &fifo_read, NULL);
@@ -424,6 +426,8 @@ fifo_config_cb (void *data, const char *option, const char *value)
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    char *str_option[256];
+
     /* make C compiler happy */
     (void) argc;
     (void) argv;
@@ -434,8 +438,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     fifo_create ();
 
-    weechat_hook_config ("plugins.var.fifo.fifo", &fifo_config_cb, NULL);
+    snprintf (str_option, sizeof (str_option),
+              "plugins.var.fifo.%s", FIFO_OPTION_NAME);
+    weechat_hook_config (str_option, &fifo_config_cb, NULL);
 
+    fifo_command_init ();
     fifo_info_init ();
 
     fifo_quiet = 0;

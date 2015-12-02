@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-11-12 16:20+0100\n"
-"PO-Revision-Date: 2015-11-12 16:23+0100\n"
+"POT-Creation-Date: 2015-12-02 19:24+0100\n"
+"PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de\n"
@@ -5931,9 +5931,9 @@ msgstr "FIFO Pipe für Fernsteuerung"
 msgid "%s: removing old fifo pipe \"%s\""
 msgstr "%s: Entferne alte FIFO Pipe \"%s\""
 
-#, c-format
-msgid "%s: pipe opened"
-msgstr "%s: Pipe ist geöffnet"
+#, fuzzy, c-format
+msgid "%s: pipe opened (file: %s)"
+msgstr "Maus ist aktiv"
 
 #, c-format
 msgid "%s%s: unable to open pipe (%s) for reading"
@@ -5963,6 +5963,47 @@ msgstr "%s%s: Pipe kann nicht gelesen werden (%d %s), wird nun geschlossen"
 #, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s%s: Fehler beim öffnen der Datei, schließe Datei wieder"
+
+#, fuzzy, c-format
+msgid "%s: pipe is enabled (file: %s)"
+msgstr "Maus ist aktiv"
+
+#, fuzzy, c-format
+msgid "%s: pipe is disabled"
+msgstr "Maus ist inaktiv"
+
+#, fuzzy
+msgid "fifo plugin configuration"
+msgstr ""
+"Konfiguration für \"logger\" Erweiterung (dient zum protokollieren der "
+"Buffer)"
+
+#, fuzzy
+msgid "enable|disable|toggle"
+msgstr "enable|disable|toggle [<delay>]"
+
+msgid ""
+" enable: enable FIFO pipe\n"
+"disable: disable FIFO pipe\n"
+" toggle: toggle FIFO pipe\n"
+"\n"
+"FIFO pipe is used as remote control of WeeChat: you can send commands or "
+"text to the FIFO pipe from your shell.\n"
+"By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx (\"xxx\" is the "
+"WeeChat PID).\n"
+"\n"
+"The expected format is one of:\n"
+"  plugin.buffer *text or command here\n"
+"  *text or command here\n"
+"\n"
+"For example to change your freenode nick:\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"\n"
+"Please read the user's guide for more info and examples.\n"
+"\n"
+"Examples:\n"
+"  /fifo toggle"
+msgstr ""
 
 msgid "name of FIFO pipe"
 msgstr "Name der FIFO-Pipe"

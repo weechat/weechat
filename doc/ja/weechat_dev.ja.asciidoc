@@ -207,6 +207,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       exec-config.c               | Exec 設定オプション (exec.conf ファイル)
 |    fifo/                          | fifo プラグイン
 |       fifo.c                      | fifo の主要関数
+// TRANSLATION MISSING
+|       fifo-command.c              | Fifo commands
 |       fifo-info.c                 | fifo の情報/インフォリスト/hdata
 |    guile/                         | guile (scheme) プラグイン
 |       weechat-guile.c             | guile の主要関数 (スクリプトのロード/アンロード、guile コードの実行)

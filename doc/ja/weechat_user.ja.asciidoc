@@ -2101,6 +2101,11 @@ fi
 $ ./auto_weechat_command 'irc.freenode.#weechat *hello'
 ----
 
+[[fifo_commands]]
+==== コマンド
+
+include::autogen/user/fifo_commands.asciidoc[]
+
 [[irc_plugin]]
 === IRC プラグイン
 

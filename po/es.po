@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-11-12 16:20+0100\n"
-"PO-Revision-Date: 2015-09-30 20:55+0200\n"
+"POT-Creation-Date: 2015-12-02 19:24+0100\n"
+"PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -5222,9 +5222,9 @@ msgstr "Tubería FIFO para control remoto"
 msgid "%s: removing old fifo pipe \"%s\""
 msgstr "%s: removiendo vieja tubería fifo \"%s\""
 
-#, c-format
-msgid "%s: pipe opened"
-msgstr "%s: tubería abierto"
+#, fuzzy, c-format
+msgid "%s: pipe opened (file: %s)"
+msgstr "Ratón activado"
 
 #, c-format
 msgid "%s%s: unable to open pipe (%s) for reading"
@@ -5253,6 +5253,45 @@ msgstr "%s%s: error al leer la tubería (%d %s), cerrándolo"
 #, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s%s: error al abrir el archivo, cerrándolo"
+
+#, fuzzy, c-format
+msgid "%s: pipe is enabled (file: %s)"
+msgstr "Ratón activado"
+
+#, fuzzy, c-format
+msgid "%s: pipe is disabled"
+msgstr "Ratón desactivado"
+
+#, fuzzy
+msgid "fifo plugin configuration"
+msgstr "configuración del plugin de registro"
+
+#, fuzzy
+msgid "enable|disable|toggle"
+msgstr "enable|disable|toggle [<retraso>]"
+
+msgid ""
+" enable: enable FIFO pipe\n"
+"disable: disable FIFO pipe\n"
+" toggle: toggle FIFO pipe\n"
+"\n"
+"FIFO pipe is used as remote control of WeeChat: you can send commands or "
+"text to the FIFO pipe from your shell.\n"
+"By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx (\"xxx\" is the "
+"WeeChat PID).\n"
+"\n"
+"The expected format is one of:\n"
+"  plugin.buffer *text or command here\n"
+"  *text or command here\n"
+"\n"
+"For example to change your freenode nick:\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"\n"
+"Please read the user's guide for more info and examples.\n"
+"\n"
+"Examples:\n"
+"  /fifo toggle"
+msgstr ""
 
 msgid "name of FIFO pipe"
 msgstr "nombre de la tubería FIFO"
@@ -11472,6 +11511,3 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse al transmisor"
-
-#~ msgid "%s%s: error, buffer not found for pipe data"
-#~ msgstr "%s%s: error, buffer no encontrado para los datos de la tubería"

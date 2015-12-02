@@ -2207,6 +2207,11 @@ eseguito con:
 $ ./auto_weechat_command 'irc.freenode.#weechat *ciao'
 ----
 
+[[fifo_commands]]
+==== Comandi
+
+include::autogen/user/fifo_commands.asciidoc[]
+
 [[irc_plugin]]
 === Plugin IRC
 

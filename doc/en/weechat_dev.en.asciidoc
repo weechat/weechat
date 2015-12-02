@@ -202,6 +202,7 @@ WeeChat "core" is located in following directories:
 |       exec-config.c               | Exec config options (file exec.conf)
 |    fifo/                          | Fifo plugin
 |       fifo.c                      | Main fifo functions
+|       fifo-command.c              | Fifo commands
 |       fifo-info.c                 | Fifo info/infolists/hdata
 |    guile/                         | Guile (scheme) plugin
 |       weechat-guile.c             | Main guile functions (load/unload scripts, execute guile code)

@@ -2151,6 +2151,11 @@ Falls man das Skript "auto_weechat_command" benennt ruft man es wie folgt auf:
 $ ./auto_weechat_command 'irc.freenode.#weechat *Hallo'
 ----
 
+[[fifo_commands]]
+==== Befehle
+
+include::autogen/user/fifo_commands.asciidoc[]
+
 [[irc_plugin]]
 === IRC Erweiterung
 
