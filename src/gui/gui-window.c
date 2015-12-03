@@ -139,7 +139,7 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                               char **beginning,
                               char **end)
 {
-    int win_x, win_y;
+    int win_x, win_y, coords_x_message;
     char *data_next_line, *str_temp;
     const char *ptr_data, *word_start, *word_end, *last_space;
 
@@ -183,7 +183,11 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
     if (!window->coords[win_y].data)
         return;
 
-    if (win_x < window->coords_x_message)
+    coords_x_message = gui_line_get_align ((*line)->data->buffer, *line, 0,
+                                           ((win_y > 0) &&
+                                            (window->coords[win_y - 1].line != *line)));
+
+    if (win_x < coords_x_message)
     {
         /* X is before message (time/buffer/prefix) */
         if ((win_x >= window->coords[win_y].time_x1)
@@ -209,7 +213,7 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                           && (window->coords[win_y + 1].line == *line)) ?
             window->coords[win_y + 1].data : NULL;
         ptr_data = gui_chat_string_add_offset_screen (window->coords[win_y].data,
-                                                      win_x - window->coords_x_message);
+                                                      win_x - coords_x_message);
         if (ptr_data && ptr_data[0]
             && (!data_next_line || (ptr_data < data_next_line)))
         {
@@ -645,7 +649,6 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
     /* coordinates */
     new_window->coords_size = 0;
     new_window->coords = NULL;
-    new_window->coords_x_message = 0;
 
     /* tree */
     new_window->ptr_tree = ptr_leaf;
@@ -934,7 +937,6 @@ gui_window_coords_alloc (struct t_gui_window *window)
             gui_window_coords_init_line (window, i);
         }
     }
-    window->coords_x_message = 0;
 }
 
 /*
@@ -1956,7 +1958,6 @@ gui_window_print_log ()
         log_printf ("  scroll. . . . . . . : 0x%lx", ptr_window->scroll);
         log_printf ("  coords_size . . . . : %d",    ptr_window->coords_size);
         log_printf ("  coords. . . . . . . : 0x%lx", ptr_window->coords);
-        log_printf ("  coords_x_message. . : %d",    ptr_window->coords_x_message);
         log_printf ("  ptr_tree. . . . . . : 0x%lx", ptr_window->ptr_tree);
         log_printf ("  prev_window . . . . : 0x%lx", ptr_window->prev_window);
         log_printf ("  next_window . . . . : 0x%lx", ptr_window->next_window);

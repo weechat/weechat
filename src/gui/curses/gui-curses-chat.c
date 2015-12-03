@@ -1312,7 +1312,6 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     {
         if (window->win_chat_cursor_y < window->coords_size)
             window->coords[window->win_chat_cursor_y].data = line->data->message;
-        window->coords_x_message = window->win_chat_cursor_x;
     }
 
     /* reset color & style for a new line */
