@@ -426,7 +426,7 @@ fifo_config_cb (void *data, const char *option, const char *value)
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    char *str_option[256];
+    char str_option[256];
 
     /* make C compiler happy */
     (void) argc;
