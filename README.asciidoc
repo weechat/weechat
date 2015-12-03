@@ -62,9 +62,9 @@ https://weechat.org/files/doc/devel/weechat_user.en.html#dependencies[user's gui
 WeeChat can be built with http://cmake.org/[CMake] (recommended) or autotools.
 
 [NOTE]
-Only CMake is officially supported to build WeeChat. You should use autotools
-only if you are not able to use CMake. +
-Build with autotools requires more dependencies and is slower than with CMake.
+Only CMake is officially supported to build WeeChat. You should only use 
+autotools if you are not able to use CMake. +
+Building with autotools requires more dependencies and is slower than with CMake.
 
 ----
 $ mkdir build
@@ -78,7 +78,7 @@ For more information or installation with autotools, please look at
 https://weechat.org/files/doc/devel/weechat_user.en.html#compile_with_autotools[user's guide].
 
 == Copyright
-
+----
 Copyright (C) 2003-2015 Sébastien Helleu <flashcode@flashtux.org>
 
 This file is part of WeeChat, the extensible chat client.
@@ -95,3 +95,4 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
+----
