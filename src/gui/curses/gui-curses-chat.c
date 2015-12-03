@@ -525,7 +525,10 @@ gui_chat_display_word (struct t_gui_window *window,
                     gui_window_restore_style (GUI_WINDOW_OBJECTS(window)->win_chat);
             }
             if (window->win_chat_cursor_y < window->coords_size)
+            {
+                window->coords[window->win_chat_cursor_y].line = line;
                 window->coords[window->win_chat_cursor_y].data = (char *)word + (ptr_data - data);
+            }
         }
 
         chars_to_display = gui_chat_strlen_screen (ptr_data);
