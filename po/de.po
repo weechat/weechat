@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-12-02 19:24+0100\n"
-"PO-Revision-Date: 2015-12-02 19:26+0100\n"
+"PO-Revision-Date: 2015-12-03 20:51+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de\n"
@@ -229,14 +229,14 @@ msgstr ""
 "die Befehle /server und /connect verwendet werden (siehe /help server)."
 
 #. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
 "display bugs; $TERM should be set to one of these values: %s"
 msgstr ""
 "%sWarnung: WeeChat läuft in einer %s-Sitzung und die Umgebungsvariable $TERM "
 "lautet \"%s\". Diese Einstellung kann zu Darstellungsfehlern führen; $TERM "
-"sollte entweder \"screen-256color\" oder \"screen\" lauten"
+"sollte entweder eines der folgenden Werte haben: %s"
 
 #, c-format
 msgid "%sYou should add this line in the file %s:  %s"
@@ -5931,9 +5931,9 @@ msgstr "FIFO Pipe für Fernsteuerung"
 msgid "%s: removing old fifo pipe \"%s\""
 msgstr "%s: Entferne alte FIFO Pipe \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: pipe opened (file: %s)"
-msgstr "Maus ist aktiv"
+msgstr "%s: pipe geöffnet (Datei: %s)"
 
 #, c-format
 msgid "%s%s: unable to open pipe (%s) for reading"
@@ -5964,23 +5964,19 @@ msgstr "%s%s: Pipe kann nicht gelesen werden (%d %s), wird nun geschlossen"
 msgid "%s%s: error opening file, closing it"
 msgstr "%s%s: Fehler beim öffnen der Datei, schließe Datei wieder"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: pipe is enabled (file: %s)"
-msgstr "Maus ist aktiv"
+msgstr "%s: pipe ist aktiviert (Datei: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: pipe is disabled"
-msgstr "Maus ist inaktiv"
+msgstr "%s: pipe ist deaktiviert"
 
-#, fuzzy
 msgid "fifo plugin configuration"
-msgstr ""
-"Konfiguration für \"logger\" Erweiterung (dient zum protokollieren der "
-"Buffer)"
+msgstr "Konfiguration für \"fifo\" Erweiterung"
 
-#, fuzzy
 msgid "enable|disable|toggle"
-msgstr "enable|disable|toggle [<delay>]"
+msgstr "enable|disable|toggle"
 
 msgid ""
 " enable: enable FIFO pipe\n"
@@ -6004,6 +6000,27 @@ msgid ""
 "Examples:\n"
 "  /fifo toggle"
 msgstr ""
+" enable: aktivieren der FIFO pipe\n"
+"disable: deaktivieren der FIFO pipe\n"
+" toggle: Status der FIFO pipe umschalten\n"
+"\n"
+"Die FIFO-Pipe wird als Fernbedienung genutzt, es können Befehle oder Text "
+"von der Shell an die FIFO-Pipe geschickt werden\n"
+"Standardmäßig ist die FIFO-Pipe in ~/.weechat/weechat_fifo_xxx (\"xxx\" ist "
+"die PID von WeeChat).\n"
+"\n"
+"Folgendes Format wird erwartet:\n"
+"  plugin.buffer *Text oder Befehl an dieser Stelle\n"
+"  *Text oder Befehl an dieser Stelle\n"
+"\n"
+"Beispiel um den Nick auf dem Server freenode zu ändern:\n"
+"  echo 'irc.server.freenode */nick neuer_Nick' >~/.weechat/"
+"weechat_fifo_12345\n"
+"\n"
+"Bitte lese die Benutzeranleitung für weitere Informationen und Beispiele.\n"
+"\n"
+"Beispiele:\n"
+"  /fifo toggle"
 
 msgid "name of FIFO pipe"
 msgstr "Name der FIFO-Pipe"
