@@ -3199,8 +3199,12 @@ irc_server_close_connection (struct t_irc_server *server)
         {
             if (server->sock != -1)
                 gnutls_bye (server->gnutls_sess, GNUTLS_SHUT_WR);
-            gnutls_credentials_clear(server->gnutls_sess);
-            gnutls_certificate_free_credentials(server->gnutls_xcred);
+
+            if(server->gnutls_xcred != NULL) {
+                gnutls_credentials_clear(server->gnutls_sess);
+                gnutls_certificate_free_credentials(server->gnutls_xcred);
+            }
+
             gnutls_deinit (server->gnutls_sess);
         }
 #endif /* HAVE_GNUTLS */
