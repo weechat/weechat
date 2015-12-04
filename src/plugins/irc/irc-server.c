@@ -4053,6 +4053,11 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
 
             if (ca_file2)
             {
+                weechat_printf (
+                    server->buffer,
+                    _("%sgnutls: set ca_file to %s"),
+                    weechat_prefix ("network"),
+                    ca_file2);
                 gnutls_certificate_allocate_credentials (&server->gnutls_xcred);
                 gnutls_certificate_set_x509_trust_file (server->gnutls_xcred, ca_file2,
                                                                 GNUTLS_X509_FMT_PEM);
