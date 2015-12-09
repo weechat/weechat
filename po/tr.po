@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-02 19:24+0100\n"
+"POT-Creation-Date: 2015-12-09 07:27+0100\n"
 "PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8579,6 +8579,14 @@ msgid ""
 "  /script reload urlserver\n"
 "  /script upgrade"
 msgstr ""
+
+#, fuzzy
+msgid "list of script languages"
+msgstr "betiklerin listesi"
+
+#, fuzzy
+msgid "list of script extensions"
+msgstr "betiklerin listesi"
 
 msgid "list of scripts in repository"
 msgstr "depodaki betiklerin listesi"

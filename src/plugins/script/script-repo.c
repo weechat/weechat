@@ -948,13 +948,33 @@ script_repo_match_filter (struct t_script_repo *script)
             if (!has_tag)
             {
                 match = 0;
+
                 if (script->name_with_extension
-                    && weechat_strcasestr (script->name_with_extension, words[i]))
+                    && weechat_strcasestr (script->name_with_extension,
+                                           words[i]))
+                {
                     match = 1;
+                }
+
+                if (!match
+                    && (weechat_strcasecmp (script_language[script->language],
+                                            words[i]) == 0))
+                {
+                    match = 1;
+                }
+
+                if (!match
+                    && (weechat_strcasecmp (script_extension[script->language],
+                                            words[i]) == 0))
+                {
+                    match = 1;
+                }
 
                 if (!match && script->description
                     && weechat_strcasestr (script->description, words[i]))
+                {
                     match = 1;
+                }
 
                 if (!match)
                 {

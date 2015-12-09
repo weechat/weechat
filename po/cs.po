@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-02 19:24+0100\n"
+"POT-Creation-Date: 2015-12-09 07:27+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10145,6 +10145,14 @@ msgstr ""
 "  /script hold urlserver.py\n"
 "  /script reload urlserver\n"
 "  /script upgrade"
+
+#, fuzzy
+msgid "list of script languages"
+msgstr "seznam skriptů"
+
+#, fuzzy
+msgid "list of script extensions"
+msgstr "seznam skriptů"
 
 #, fuzzy
 msgid "list of scripts in repository"

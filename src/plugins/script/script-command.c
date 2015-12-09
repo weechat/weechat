@@ -366,7 +366,7 @@ script_command_init ()
            "  /script reload urlserver\n"
            "  /script upgrade"),
         "list -o|-i"
-        " || search %(script_tags)"
+        " || search %(script_tags)|%(script_languages)|%(script_extensions)"
         " || show %(script_scripts)"
         " || load %(script_files)|%*"
         " || unload %(python_script)|%(perl_script)|%(ruby_script)|"

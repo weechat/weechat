@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-02 19:24+0100\n"
+"POT-Creation-Date: 2015-12-09 07:27+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -10835,6 +10835,14 @@ msgstr ""
 "  /script hold urlserver.py\n"
 "  /script reload urlserver\n"
 "  /script upgrade"
+
+#, fuzzy
+msgid "list of script languages"
+msgstr "スクリプトのリスト"
+
+#, fuzzy
+msgid "list of script extensions"
+msgstr "スクリプトのリスト"
 
 msgid "list of scripts in repository"
 msgstr "リポジトリに存在するスクリプトのリスト"

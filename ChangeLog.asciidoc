@@ -37,6 +37,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   plugin (level 2 or more)
 * logger: display system error when the log file can not be written
   (issue #541)
+* script: add completion with languages and extensions, support search by
+  language/extension in /script search
 * script: add option script.scripts.download_timeout
 * doc: add Czech man page and quickstart guide (issue #490)
 * build: add scripts version.sh and build-debian.sh, separate stable from devel

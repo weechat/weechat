@@ -30,6 +30,58 @@
 
 
 /*
+ * Adds script languages (python, perl, ruby, ...) to completion list.
+ */
+
+int
+script_completion_languages_cb (void *data, const char *completion_item,
+                                struct t_gui_buffer *buffer,
+                                struct t_gui_completion *completion)
+{
+    int i;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
+    {
+        weechat_hook_completion_list_add (completion,
+                                          script_language[i],
+                                          0, WEECHAT_LIST_POS_SORT);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Adds script extensions (py, pl, rb, ...) to completion list.
+ */
+
+int
+script_completion_extensions_cb (void *data, const char *completion_item,
+                                 struct t_gui_buffer *buffer,
+                                 struct t_gui_completion *completion)
+{
+    int i;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
+    {
+        weechat_hook_completion_list_add (completion,
+                                          script_extension[i],
+                                          0, WEECHAT_LIST_POS_SORT);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds scripts to completion list.
  */
 
@@ -215,6 +267,12 @@ script_completion_tags_cb (void *data, const char *completion_item,
 void
 script_completion_init ()
 {
+    weechat_hook_completion ("script_languages",
+                             N_("list of script languages"),
+                             &script_completion_languages_cb, NULL);
+    weechat_hook_completion ("script_extensions",
+                             N_("list of script extensions"),
+                             &script_completion_extensions_cb, NULL);
     weechat_hook_completion ("script_scripts",
                              N_("list of scripts in repository"),
                              &script_completion_scripts_cb, NULL);
