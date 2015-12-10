@@ -1634,6 +1634,19 @@ network_connect_with_fork (struct t_hook *hook_connect)
             unhook (hook_connect);
             return;
         }
+        rc = gnutls_server_name_set (*HOOK_CONNECT(hook_connect, gnutls_sess),
+                                     GNUTLS_NAME_DNS,
+                                     HOOK_CONNECT(hook_connect, address),
+                                     strlen (HOOK_CONNECT(hook_connect, address)));
+        if (rc != GNUTLS_E_SUCCESS)
+        {
+            (void) (HOOK_CONNECT(hook_connect, callback))
+                (hook_connect->callback_data,
+                 WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
+                 0, -1, _("set server name indication (SNI) failed"), NULL);
+            unhook (hook_connect);
+            return;
+        }
         rc = gnutls_priority_set_direct (*HOOK_CONNECT(hook_connect, gnutls_sess),
                                          HOOK_CONNECT(hook_connect, gnutls_priorities),
                                          &pos_error);
