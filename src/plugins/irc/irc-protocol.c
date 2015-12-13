@@ -5292,6 +5292,260 @@ IRC_PROTOCOL_CALLBACK(734)
 }
 
 /*
+ * Callback for the IRC message "760": metadata whois value.
+ *
+ * Format:
+ *   <Target> <Key> <Visibility> :<Value>
+ */
+
+IRC_PROTOCOL_CALLBACK(760)
+{
+    IRC_PROTOCOL_MIN_ARGS(6);
+
+    /* public visibility */
+    if (strcmp (argv[4], "*") == 0)
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, argv[2], command, "whois", NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            "%s%s[%s%s%s] %s%s%s%s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, argv[2]),
+            argv[2],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[3],
+            (argc > 5) ? ": " : "",
+            IRC_COLOR_CHAT_VALUE,
+            (argc > 5) ?
+                ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) :
+                "");
+    }
+    else
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, argv[2], command, "whois", NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            "%s%s[%s%s%s] %s%s %s(%s%s%s)%s%s%s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, argv[2]),
+            argv[2],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[3],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[4],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (argc > 5) ? ": " : "",
+            IRC_COLOR_CHAT_VALUE,
+            (argc > 5) ?
+                ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) :
+                "");
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "761": metadata value.
+ *
+ * Format:
+ *   <Target> <Key> <Visibility>[ :<Value>]
+ *
+ * Message looks like:
+ *   :irc.example.com 761 * url * :http://www.example.com
+ *   :irc.example.com 761 #example url * :http://www.example.com
+ *   :irc.example.com 761 user1 bot-likeliness-score visible-only-for-admin :42
+ */
+
+IRC_PROTOCOL_CALLBACK(761)
+{
+    IRC_PROTOCOL_MIN_ARGS(5);
+
+    /* public visibility */
+    if (strcmp (argv[4], "*") == 0)
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, NULL, command, "metadata", NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            "%s%s[%s%s%s] %s%s%s%s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[2],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[3],
+            (argc > 5) ? ": " : "",
+            IRC_COLOR_CHAT_VALUE,
+            (argc > 5) ?
+                ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) :
+                "");
+    }
+    else
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, NULL, command, "metadata", NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            "%s%s[%s%s%s] %s%s %s(%s%s%s)%s%s%s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[2],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[3],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[4],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (argc > 5) ? ": " : "",
+            IRC_COLOR_CHAT_VALUE,
+            (argc > 5) ?
+                ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) :
+                "");
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "762": metadata end.
+ *
+ * Format:
+ *   :end of metadata
+ *
+ * Message looks like:
+ *   :irc.example.com 762 :end of metadata
+ */
+
+IRC_PROTOCOL_CALLBACK(762)
+{
+    IRC_PROTOCOL_MIN_ARGS(3);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (
+            server, NULL, command, "metadata", NULL),
+        date,
+        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        "%s%s",
+        weechat_prefix ("network"),
+        (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC messages "764" (metadata limit reached), and "765"
+ * (invalid metadata target).
+ *
+ * Format:
+ *   <Target> :metadata limit reached
+ *   <Target> :invalid metadata target
+ *
+ * Message looks like:
+ *   :irc.example.com 764 * :metadata limit reached
+ *   :irc.example.com 765 $a:user :invalid metadata target
+ */
+
+IRC_PROTOCOL_CALLBACK(764_765)
+{
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (
+            server, NULL, command, "metadata", NULL),
+        date,
+        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        "%s%s[%s%s%s] %s%s",
+        weechat_prefix ("error"),
+        IRC_COLOR_CHAT_DELIMITERS,
+        IRC_COLOR_RESET,
+        argv[2],
+        IRC_COLOR_CHAT_DELIMITERS,
+        IRC_COLOR_RESET,
+        (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC messages "766" (no matching metadata key), "768"
+ * (metadata key not set) and "769" (metadata permission denied).
+ *
+ * Format:
+ *   <Target> <Key> :key not set
+ *   <Target> <Key> :permission denied
+ *
+ * Message looks like:
+ *   :irc.example.com 766 user1 blargh :no matching key
+ *   :irc.example.com 769 user1 url :permission denied
+ */
+
+IRC_PROTOCOL_CALLBACK(766_768_769)
+{
+    IRC_PROTOCOL_MIN_ARGS(5);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (
+            server, NULL, command, "metadata", NULL),
+        date,
+        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        "%s%s[%s%s%s] %s%s: %s",
+        weechat_prefix ("error"),
+        IRC_COLOR_CHAT_DELIMITERS,
+        IRC_COLOR_RESET,
+        argv[2],
+        IRC_COLOR_CHAT_DELIMITERS,
+        IRC_COLOR_RESET,
+        argv[3],
+        (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
+
+    return WEECHAT_RC_OK;
+}
+
+
+/*
+ * Callback for the IRC message "767": invalid metadata key.
+ *
+ * Format:
+ *   <Key> :invalid metadata key
+ *
+ * Message looks like:
+ *   :irc.example.com 767 $url$ :invalid metadata key
+ */
+
+IRC_PROTOCOL_CALLBACK(767)
+{
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (
+            server, NULL, command, "metadata", NULL),
+        date,
+        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        "%s%s: %s",
+        weechat_prefix ("error"),
+        argv[2],
+        (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC message "900": logged in as (SASL).
  *
  * Message looks like:
@@ -5668,6 +5922,15 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "732", /* list of monitored nicks */ 1, 0, &irc_protocol_cb_732 },
           { "733", /* end of monitor list */ 1, 0, &irc_protocol_cb_733 },
           { "734", /* monitor list is full */ 1, 0, &irc_protocol_cb_734 },
+          { "760", /* metadata whois value */ 1, 0, &irc_protocol_cb_760 },
+          { "761", /* metadata value */ 1, 0, &irc_protocol_cb_761 },
+          { "762", /* metadata end */ 1, 0, &irc_protocol_cb_762 },
+          { "764", /* metadata limit reached */ 1, 0, &irc_protocol_cb_764_765 },
+          { "765", /* invalid metadata target */ 1, 0, &irc_protocol_cb_764_765 },
+          { "766", /* no matching metadata key */ 1, 0, &irc_protocol_cb_766_768_769 },
+          { "767", /* invalid metadata key */ 1, 0, &irc_protocol_cb_767 },
+          { "768", /* metadata key not set */ 1, 0, &irc_protocol_cb_766_768_769 },
+          { "769", /* metadata permission denied */ 1, 0, &irc_protocol_cb_766_768_769 },
           { "900", /* logged in as (SASL) */ 1, 0, &irc_protocol_cb_900 },
           { "901", /* you are now logged in */ 1, 0, &irc_protocol_cb_901 },
           { "902", /* SASL authentication failed (account locked/held) */ 1, 0, &irc_protocol_cb_sasl_end_fail },
