@@ -375,9 +375,15 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     str = weechat_infolist_string (infolist, "nick_modes");
                     if (str)
                         irc_upgrade_current_server->nick_modes = strdup (str);
-                    irc_upgrade_current_server->cap_away_notify = weechat_infolist_integer (infolist, "cap_away_notify");
-                    irc_upgrade_current_server->cap_account_notify = weechat_infolist_integer (infolist, "cap_account_notify");
-                    irc_upgrade_current_server->cap_extended_join = weechat_infolist_integer (infolist, "cap_extended_join");
+                    /* TODO: "cap_list" is new in WeeChat x.y.z */
+                    if (weechat_infolist_integer (infolist, "cap_away_notify"))
+                        weechat_hashtable_set (irc_upgrade_current_server->cap_list, "away-notify", NULL);
+                    if (weechat_infolist_integer (infolist, "cap_account_notify"))
+                        weechat_hashtable_set (irc_upgrade_current_server->cap_list, "account-notify", NULL);
+                    if (weechat_infolist_integer (infolist, "cap_extended_join"))
+                        weechat_hashtable_set (irc_upgrade_current_server->cap_list, "extended-join", NULL);
+                    /* TODO: transfer all of "cap_ls" and "cap_list" */
+
                     str = weechat_infolist_string (infolist, "isupport");
                     if (str)
                         irc_upgrade_current_server->isupport = strdup (str);
