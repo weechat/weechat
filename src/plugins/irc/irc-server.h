@@ -188,7 +188,9 @@ struct t_irc_server
                                     /* (nick____1, nick____2, ...)           */
     char *nick;                     /* current nickname                      */
     char *nick_modes;               /* nick modes                            */
+    int checking_cap_ls;            /* 1 if checking supported capabilities  */
     struct t_hashtable *cap_ls;     /* list of supported capabilities        */
+    int checking_cap_list;          /* 1 if checking enabled capabilities    */
     struct t_hashtable *cap_list;   /* list of enabled capabilities          */
     char *isupport;                 /* copy of message 005 (ISUPPORT)        */
     char *prefix_modes;             /* prefix modes from msg 005 (eg "ohv")  */
