@@ -1116,6 +1116,68 @@ IRC_PROTOCOL_CALLBACK(kill)
 }
 
 /*
+ * Callback for the IRC message "metadata": metadata (cap metadata-notify).
+ *
+ * Format:
+ *   METADATA <Target> <Key> <Visibility> :<Value>
+ */
+
+IRC_PROTOCOL_CALLBACK(metadata)
+{
+    IRC_PROTOCOL_MIN_ARGS(5);
+
+    /* public visibility */
+    if (strcmp (argv[4], "*") == 0)
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, argv[2], command, "metadata", NULL),
+            date,
+            irc_protocol_tags (command, NULL, NULL, NULL),
+            "%s%s[%s%s%s] %s%s%s%s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[2],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[3],
+            (argc > 5) ? ": " : "",
+            IRC_COLOR_CHAT_VALUE,
+            (argc > 5) ?
+                ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) :
+                "");
+    }
+    else
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, argv[2], command, "metadata", NULL),
+            date,
+            irc_protocol_tags (command, NULL, NULL, NULL),
+            "%s%s[%s%s%s] %s%s %s(%s%s%s)%s%s%s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[2],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[3],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[4],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (argc > 5) ? ": " : "",
+            IRC_COLOR_CHAT_VALUE,
+            (argc > 5) ?
+                ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) :
+                "");
+    }
+
+    return WEECHAT_RC_OK;
+}
+/*
  * Callback for the IRC message "MODE".
  *
  * Message looks like:
@@ -5300,7 +5362,7 @@ IRC_PROTOCOL_CALLBACK(734)
 
 IRC_PROTOCOL_CALLBACK(760)
 {
-    IRC_PROTOCOL_MIN_ARGS(6);
+    IRC_PROTOCOL_MIN_ARGS(5);
 
     /* public visibility */
     if (strcmp (argv[4], "*") == 0)
@@ -5794,6 +5856,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "join", /* join a channel */ 1, 0, &irc_protocol_cb_join },
           { "kick", /* forcibly remove a user from a channel */ 1, 1, &irc_protocol_cb_kick },
           { "kill", /* close client-server connection */ 1, 1, &irc_protocol_cb_kill },
+          { "metadata", /* metadata (cap metadata-notify) */ 1, 1, &irc_protocol_cb_metadata },
           { "mode", /* change channel or user mode */ 1, 0, &irc_protocol_cb_mode },
           { "nick", /* change current nickname */ 1, 0, &irc_protocol_cb_nick },
           { "notice", /* send notice message to user */ 1, 1, &irc_protocol_cb_notice },
