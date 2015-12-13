@@ -1521,10 +1521,8 @@ Folgende Werte sind für die 'TERM'-Umgebungsvariable zu empfehlen, sofern man 2
 nutzen möchte:
 
 * falls screen genutzt wird: 'screen-256color'
-// TRANSLATION MISSING
-* under tmux: 'screen-256color' or 'tmux-256color'
-// TRANSLATION MISSING
-* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
+* für tmux: 'screen-256color' oder 'tmux-256color'
+* ausserhalb screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
 
 [NOTE]
 Es sollte das Paket "ncurses-term" installiert werden um die Werte der 'TERM'
