@@ -711,6 +711,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hashtable_get_string = &hashtable_get_string;
         new_plugin->hashtable_set_pointer = &hashtable_set_pointer;
         new_plugin->hashtable_add_to_infolist = &hashtable_add_to_infolist;
+        new_plugin->hashtable_add_from_infolist = &hashtable_add_from_infolist;
         new_plugin->hashtable_remove = &hashtable_remove;
         new_plugin->hashtable_remove_all = &hashtable_remove_all;
         new_plugin->hashtable_free = &hashtable_free;

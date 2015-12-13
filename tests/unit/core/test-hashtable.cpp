@@ -359,6 +359,7 @@ TEST(Hashtable, Properties)
 /*
  * Tests functions:
  *   hashtable_add_to_infolist
+ *   hashtable_add_from_infolist
  */
 
 TEST(Hashtable, Infolist)
