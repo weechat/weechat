@@ -31,7 +31,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * fifo: add /fifo command
 * irc: add support of SNI in SSL connection to IRC server (issue #620)
 * irc: use current channel and current server channels first in completions
-  "irc_server_channels" and "irc_channels" (task #12923, issue #392)
+  "irc_server_channels" and "irc_channels" (task #12923, issue #260,
+  issue #392)
 * irc: add support of "cap-notify" capability (issue #182, issue #477)
 * irc: add command /cap (issue #8)
 * irc: add hex dump of messages in raw buffer when debug is enabled for irc
