@@ -7179,8 +7179,7 @@ int
 my_command_run_cb (void *data, struct t_gui_buffer *buffer,
                    const char *command)
 {
-    weechat_printf (NULL,
-                    "You want to complete? I'm eating the completion ahah!");
+    weechat_printf (NULL, "I'm eating the completion!");
     return WEECHAT_RC_OK_EAT;
 }
 
@@ -7198,7 +7197,7 @@ hook = weechat.hook_command_run(command, callback, callback_data)
 
 # example
 def my_command_run_cb(data, buffer, command):
-    weechat.prnt("", "You want to complete? I'm eating the completion, ahah!")
+    weechat.prnt("", "I'm eating the completion!")
     return weechat.WEECHAT_RC_OK_EAT
 
 hook = weechat.hook_command_run("/input complete*", "my_command_run_cb", "")

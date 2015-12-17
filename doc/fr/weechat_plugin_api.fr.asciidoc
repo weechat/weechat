@@ -7299,8 +7299,7 @@ Exemple en C :
 int
 my_command_run_cb (void *data, struct t_gui_buffer *buffer, const char *command)
 {
-    weechat_printf (NULL,
-                    "Vous voulez compléter ? Je mange la commande, ahah !");
+    weechat_printf (NULL, "Je mange la complétion !");
     return WEECHAT_RC_OK_EAT;
 }
 
@@ -7318,7 +7317,7 @@ hook = weechat.hook_command_run(command, callback, callback_data)
 
 # exemple
 def my_command_run_cb(data, buffer, command):
-    weechat.prnt("", "Vous voulez compléter ? Je mange la commande, ahah !")
+    weechat.prnt("", "Je mange la complétion !")
     return weechat.WEECHAT_RC_OK_EAT
 
 hook = weechat.hook_command_run("/input complete*", "my_command_run_cb", "")
