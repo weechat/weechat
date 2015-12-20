@@ -210,7 +210,7 @@ IRC_PROTOCOL_CALLBACK(account)
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
-    pos_account = (argv[2] && argv[2][0] != '*') ? argv[2] : NULL;
+    pos_account = (strcmp (argv[2], "*") != 0) ? argv[2] : NULL;
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
