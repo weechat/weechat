@@ -63,7 +63,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_relay.irc.backlog_since_last_message]] *relay.irc.backlog_since_last_message*
-** Beschreibung: `display backlog starting from your last message`
+** Beschreibung: `Verlaufsspeicher anzeigen, beginnend mit Ihrer zuletzt geschriebenen Nachricht`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
