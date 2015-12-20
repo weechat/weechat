@@ -33,7 +33,12 @@
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 #include "weechat.h"
 #include "wee-config.h"

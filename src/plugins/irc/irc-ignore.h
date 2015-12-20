@@ -20,7 +20,11 @@
 #ifndef WEECHAT_PLUGIN_IRC_IGNORE_H
 #define WEECHAT_PLUGIN_IRC_IGNORE_H
 
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 struct t_irc_server;
 struct t_irc_channel;

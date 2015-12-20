@@ -22,7 +22,12 @@
 
 #include <stdio.h>
 #include <stdint.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 typedef uint32_t string_shared_count_t;
 

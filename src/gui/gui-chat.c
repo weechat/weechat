@@ -29,7 +29,12 @@
 #include <stdarg.h>
 #include <ctype.h>
 #include <time.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"

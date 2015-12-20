@@ -21,7 +21,12 @@
 #define WEECHAT_GUI_BUFFER_H
 
 #include <limits.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 struct t_hashtable;
 struct t_gui_window;

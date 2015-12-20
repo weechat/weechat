@@ -20,7 +20,11 @@
 #ifndef WEECHAT_GUI_FILTER_H
 #define WEECHAT_GUI_FILTER_H
 
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 #define GUI_FILTER_TAG_NO_FILTER "no_filter"
 

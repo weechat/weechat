@@ -29,7 +29,13 @@ extern "C"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
+
 #include "tests/tests.h"
 #include "src/core/weechat.h"
 #include "src/core/wee-string.h"

@@ -25,7 +25,13 @@
 
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
+
 #include <time.h>
 
 #include "weechat.h"

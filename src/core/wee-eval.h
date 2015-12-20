@@ -20,7 +20,11 @@
 #ifndef WEECHAT_EVAL_H
 #define WEECHAT_EVAL_H
 
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 #define EVAL_STR_FALSE      "0"
 #define EVAL_STR_TRUE       "1"

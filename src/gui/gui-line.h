@@ -21,7 +21,12 @@
 #define WEECHAT_GUI_LINE_H
 
 #include <time.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 struct t_infolist;
 

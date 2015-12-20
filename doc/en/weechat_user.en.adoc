@@ -118,6 +118,7 @@ compile WeeChat.
 | libv8-dev                   | ≤ 3.24.3      |          | JavaScript plugin.
 | php7.1-dev, libphp7.1-embed | ≥ 7.0         |          | PHP plugin.
 | libxml2-dev                 |               |          | PHP plugin.
+| libpcre3-dev                |               |          | PCRE instead of POSIX regular expressions.
 | asciidoctor                 | ≥ 1.5.4       |          | Build man page and documentation.
 | libcpputest-dev             | ≥ 3.4         |          | Build and run tests.
 |===
@@ -245,6 +246,9 @@ List of commonly used options:
 
 | ENABLE_NLS | `ON`, `OFF` | ON |
   Enable NLS (translations).
+
+| ENABLE_PCRE | `ON`, `OFF` | OFF |
+  Enable PCRE.
 
 | ENABLE_PERL | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Perl plugin>>.

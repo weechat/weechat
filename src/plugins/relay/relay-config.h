@@ -20,7 +20,11 @@
 #ifndef WEECHAT_PLUGIN_RELAY_CONFIG_H
 #define WEECHAT_PLUGIN_RELAY_CONFIG_H
 
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 #define RELAY_CONFIG_NAME "relay"
 

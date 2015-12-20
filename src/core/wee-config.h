@@ -21,7 +21,12 @@
 #ifndef WEECHAT_CONFIG_H
 #define WEECHAT_CONFIG_H
 
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
+
 #include <wctype.h>
 
 #include "wee-config-file.h"

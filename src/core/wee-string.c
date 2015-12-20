@@ -30,7 +30,13 @@
 #include <string.h>
 #include <ctype.h>
 #include <wctype.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
+
 #include <wchar.h>
 #include <stdint.h>
 
