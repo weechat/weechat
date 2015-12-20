@@ -2893,8 +2893,8 @@ irc_config_init ()
            "found, WeeChat will try with next modes received from server "
            "(\"PREFIX\"); a special mode \"*\" can be used as default color "
            "if no mode has been found in list)"),
-        NULL, 0, 0, "q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;"
-        "v:yellow;*:lightblue", NULL, 0, NULL, NULL,
+        NULL, 0, 0, "y:lightred;q:lightred;a:lightcyan;o:lightgreen;"
+        "h:lightmagenta;v:yellow;*:lightblue", NULL, 0, NULL, NULL,
         &irc_config_change_color_nick_prefixes, NULL, NULL, NULL);
     irc_config_color_notice = weechat_config_new_option (
         irc_config_file, ptr_section,
