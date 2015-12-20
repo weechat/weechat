@@ -82,6 +82,9 @@ struct t_config_option *irc_config_look_item_nick_modes;
 struct t_config_option *irc_config_look_item_nick_prefix;
 struct t_config_option *irc_config_look_join_auto_add_chantype;
 struct t_config_option *irc_config_look_msgbuffer_fallback;
+struct t_config_option *irc_config_look_multi_prefix_in_names;
+struct t_config_option *irc_config_look_multi_prefix_in_nicklist;
+struct t_config_option *irc_config_look_multi_prefix_in_prompt;
 struct t_config_option *irc_config_look_new_channel_position;
 struct t_config_option *irc_config_look_new_pv_position;
 struct t_config_option *irc_config_look_nick_color_force;
@@ -394,6 +397,36 @@ irc_config_change_look_display_join_message (void *data,
         }
         weechat_string_free_split (items);
     }
+}
+
+/*
+ * Callback for changes on option "irc.look.multi_prefix_in_nicklist".
+ */
+
+void
+irc_config_change_look_multi_prefix_in_nicklist (void *data,
+                                                 struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    irc_nick_nicklist_set_prefix_all ();
+}
+
+/*
+ * Callback for changes on option "irc.look.multi_prefix_in_prompt".
+ */
+
+void
+irc_config_change_look_multi_prefix_in_prompt (void *data,
+                                               struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    weechat_bar_item_update ("input_prompt");
 }
 
 /*
@@ -2597,6 +2630,25 @@ irc_config_init ()
            "private and that private buffer is not found"),
         "current|server", 0, 0, "current", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
+    irc_config_look_multi_prefix_in_names = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "multi_prefix_in_names", "boolean",
+        N_("show multiple prefixes in output of /names (or list of nicks "
+            "displayed when joining a channel)"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_look_multi_prefix_in_nicklist = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "multi_prefix_in_nicklist", "boolean",
+        N_("show multiple prefixes in nicklist"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
+        &irc_config_change_look_multi_prefix_in_nicklist, NULL, NULL, NULL);
+    irc_config_look_multi_prefix_in_prompt = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "multi_prefix_in_prompt", "boolean",
+        N_("show multiple prefixes in input prompt"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        &irc_config_change_look_multi_prefix_in_prompt, NULL, NULL, NULL);
     irc_config_look_new_channel_position = weechat_config_new_option (
         irc_config_file, ptr_section,
         "new_channel_position", "integer",

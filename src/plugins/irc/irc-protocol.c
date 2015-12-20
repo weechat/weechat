@@ -475,6 +475,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                     {
                         server->cap_account_notify = 1;
                     }
+                    else if (strcmp (caps_supported[i], "multi-prefix") == 0)
+                    {
+                        server->cap_multi_prefix = 1;
+                    }
                 }
                 weechat_string_free_split (caps_supported);
             }
@@ -607,6 +611,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                     else if (strcmp (caps_removed[i], "account-notify") == 0)
                     {
                         server->cap_account_notify = 0;
+                    }
+                    else if (strcmp (caps_removed[i], "multi-prefix") == 0)
+                    {
+                        server->cap_multi_prefix = 0;
                     }
                 }
                 weechat_string_free_split (caps_removed);
@@ -4317,7 +4325,12 @@ IRC_PROTOCOL_CALLBACK(353)
                             weechat_color (
                                 irc_nick_get_prefix_color_name (server,
                                                                 prefixes[0])));
-                    strcat (str_nicks, prefixes);
+
+                    if (server->cap_multi_prefix &&
+                        weechat_config_boolean (irc_config_look_multi_prefix_in_names))
+                        strcat (str_nicks, prefixes);
+                    else
+                        strncat (str_nicks, prefixes, 1);
                 }
                 if (weechat_config_boolean (irc_config_look_color_nicks_in_names))
                 {
@@ -4483,6 +4496,7 @@ IRC_PROTOCOL_CALLBACK(366)
 {
     struct t_irc_channel *ptr_channel;
     struct t_infolist *infolist;
+    struct t_irc_nick *ptr_nick;
     struct t_config_option *ptr_option;
     int num_nicks, num_op, num_halfop, num_voice, num_normal, length, i;
     char *string, str_nicks_count[2048];
@@ -4506,15 +4520,18 @@ IRC_PROTOCOL_CALLBACK(366)
                     if (strcmp (weechat_infolist_string (infolist, "type"),
                                 "nick") == 0)
                     {
-                        ptr_option = weechat_config_get (weechat_infolist_string (infolist,
-                                                                                  "prefix_color"));
-                        length +=
-                            ((ptr_option) ? strlen (weechat_color (weechat_config_string (ptr_option))) : 0) +
-                            strlen (weechat_infolist_string (infolist, "prefix")) +
-                            16 + /* nick color */
-                            strlen (weechat_infolist_string (infolist, "name")) +
-                            16 + /* reset color */
-                            1; /* space */
+                        ptr_nick = irc_nick_search (server, ptr_channel,
+                                                    weechat_infolist_string (infolist, "name"));
+                        if (ptr_nick)
+                        {
+                            length +=
+                                16 + /* prefix color */
+                                strlen (ptr_nick->prefix) + // TODO: account for actual multi-prefix preference
+                                16 + /* nick color */
+                                strlen (ptr_nick->name) +
+                                16 + /* reset color */
+                                1; /* space */
+                        }
                     }
                 }
                 if (length > 0)
@@ -4529,41 +4546,49 @@ IRC_PROTOCOL_CALLBACK(366)
                             if (strcmp (weechat_infolist_string (infolist, "type"),
                                         "nick") == 0)
                             {
-                                if (i > 0)
+                                ptr_nick = irc_nick_search (server, ptr_channel,
+                                                            weechat_infolist_string (infolist, "name"));
+                                if (ptr_nick)
                                 {
-                                    strcat (string, IRC_COLOR_RESET);
-                                    strcat (string, " ");
-                                }
-                                prefix = weechat_infolist_string (infolist, "prefix");
-                                if (prefix[0] && (prefix[0] != ' '))
-                                {
-                                    prefix_color = weechat_infolist_string (infolist,
-                                                                            "prefix_color");
-                                    if (strchr (prefix_color, '.'))
+                                    if (i > 0)
                                     {
-                                        ptr_option = weechat_config_get (weechat_infolist_string (infolist,
-                                                                                                  "prefix_color"));
-                                        if (ptr_option)
-                                            strcat (string, weechat_color (weechat_config_string (ptr_option)));
+                                        strcat (string, IRC_COLOR_RESET);
+                                        strcat (string, " ");
+                                    }
+                                    prefix = ptr_nick->prefix;
+                                    if (prefix[0] && (prefix[0] != ' '))
+                                    {
+                                        prefix_color = irc_nick_get_prefix_color_name (server, prefix[0]);
+                                        if (strchr (prefix_color, '.'))
+                                        {
+                                            ptr_option = weechat_config_get (prefix_color);
+                                            if (ptr_option)
+                                                strcat (string, weechat_color (weechat_config_string (ptr_option)));
+                                        }
+                                        else
+                                        {
+                                            strcat (string, weechat_color (prefix_color));
+                                        }
+
+                                        if (server->cap_multi_prefix &&
+                                            weechat_config_boolean (irc_config_look_multi_prefix_in_names))
+                                            strcat (string, prefix);
+                                        else
+                                            strncat (string, prefix, 1);
+                                    }
+                                    nickname = ptr_nick->name;
+                                    if (weechat_config_boolean (irc_config_look_color_nicks_in_names))
+                                    {
+                                        if (irc_server_strcasecmp (server, nickname, server->nick) == 0)
+                                            strcat (string, IRC_COLOR_CHAT_NICK_SELF);
+                                        else
+                                            strcat (string, irc_nick_find_color (nickname));
                                     }
                                     else
-                                    {
-                                        strcat (string, weechat_color (prefix_color));
-                                    }
-                                    strcat (string, prefix);
+                                        strcat (string, IRC_COLOR_RESET);
+                                    strcat (string, nickname);
+                                    i++;
                                 }
-                                nickname = weechat_infolist_string (infolist, "name");
-                                if (weechat_config_boolean (irc_config_look_color_nicks_in_names))
-                                {
-                                    if (irc_server_strcasecmp (server, nickname, server->nick) == 0)
-                                        strcat (string, IRC_COLOR_CHAT_NICK_SELF);
-                                    else
-                                        strcat (string, irc_nick_find_color (nickname));
-                                }
-                                else
-                                    strcat (string, IRC_COLOR_RESET);
-                                strcat (string, nickname);
-                                i++;
                             }
                         }
                         weechat_printf_date_tags (

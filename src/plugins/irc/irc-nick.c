@@ -297,17 +297,26 @@ irc_nick_find_color_name (const char *nickname)
 void
 irc_nick_set_current_prefix (struct t_irc_nick *nick)
 {
-    char *ptr_prefixes;
+    char *ptr_prefixes, *ptr_prefix;
 
-    nick->prefix[0] = ' ';
+    ptr_prefix = nick->prefix;
+
     for (ptr_prefixes = nick->prefixes; ptr_prefixes[0]; ptr_prefixes++)
     {
         if (ptr_prefixes[0] != ' ')
         {
-            nick->prefix[0] = ptr_prefixes[0];
-            break;
+            ptr_prefix[0] = ptr_prefixes[0];
+            ptr_prefix++;
         }
     }
+
+    if (ptr_prefix == nick->prefix) /* none were added */
+    {
+        ptr_prefix[0] = ' '; /* backwards compatibility */
+        ptr_prefix++;
+    }
+
+    ptr_prefix[0] = '\0';
 }
 
 /*
@@ -506,6 +515,31 @@ irc_nick_get_color_for_nicklist (struct t_irc_server *server,
 }
 
 /*
+ * Gets nick prefix for nicklist.
+ *
+ * Note: result must be freed after use.
+ */
+
+const char *
+irc_nick_get_prefix_for_nicklist (struct t_irc_server *server,
+                                  struct t_irc_nick *nick)
+{
+    char *prefix;
+
+    if (server->cap_multi_prefix &&
+        weechat_config_boolean (irc_config_look_multi_prefix_in_nicklist))
+        prefix = nick->prefix;
+    else
+    {
+        prefix = malloc (2);
+        prefix[0] = nick->prefix[0];
+        prefix[1] = '\0';
+    }
+
+    return prefix;
+}
+
+/*
  * Adds a nick to buffer nicklist.
  */
 
@@ -520,7 +554,7 @@ irc_nick_nicklist_add (struct t_irc_server *server,
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                nick->name,
                                irc_nick_get_color_for_nicklist (server, nick),
-                               nick->prefix,
+                               irc_nick_get_prefix_for_nicklist (server, nick),
                                irc_nick_get_prefix_color_name (server, nick->prefix[0]),
                                1);
 }
@@ -618,6 +652,34 @@ irc_nick_nicklist_set_color_all ()
 }
 
 /*
+ * Sets nick prefixes in nicklist for all servers/channels.
+ */
+
+void
+irc_nick_nicklist_set_prefix_all ()
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            for (ptr_nick = ptr_channel->nicks; ptr_nick;
+                 ptr_nick = ptr_nick->next_nick)
+            {
+                irc_nick_nicklist_set (ptr_channel, ptr_nick, "prefix",
+                                       irc_nick_get_prefix_for_nicklist (ptr_server,
+                                                                         ptr_nick));
+            }
+        }
+    }
+}
+
+/*
  * Adds a new nick in channel.
  *
  * Returns pointer to new nick, NULL if error.
@@ -666,8 +728,9 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     new_nick->host = (host) ? strdup (host) : NULL;
     new_nick->account = (account) ? strdup (account) : NULL;
     length = strlen (irc_server_get_prefix_chars (server));
+    new_nick->prefix = malloc (length + 1);
     new_nick->prefixes = malloc (length + 1);
-    if (!new_nick->name || !new_nick->prefixes)
+    if (!new_nick->name || !new_nick->prefix || !new_nick->prefixes)
     {
         if (new_nick->name)
             free (new_nick->name);
@@ -675,6 +738,8 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
             free (new_nick->host);
         if (new_nick->account)
             free (new_nick->account);
+        if (new_nick->prefix)
+            free (new_nick->prefix);
         if (new_nick->prefixes)
             free (new_nick->prefixes);
         free (new_nick);
@@ -813,6 +878,8 @@ irc_nick_free (struct t_irc_server *server, struct t_irc_channel *channel,
         free (nick->name);
     if (nick->host)
         free (nick->host);
+    if (nick->prefix)
+        free (nick->prefix);
     if (nick->prefixes)
         free (nick->prefixes);
     if (nick->account)
