@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-10 07:09+0100\n"
+"POT-Creation-Date: 2015-12-20 08:08+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -10370,6 +10370,10 @@ msgid "maximum number of lines in backlog per IRC channel (0 = unlimited)"
 msgstr "IRC チャンネルごとのバックログの最大行数 (0 = 制限無し)"
 
 msgid "display backlog starting from last client disconnect"
+msgstr "最後にクライアントを切断した以降のバックログを表示"
+
+#, fuzzy
+msgid "display backlog starting from your last message"
 msgstr "最後にクライアントを切断した以降のバックログを表示"
 
 msgid ""

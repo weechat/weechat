@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-10 07:09+0100\n"
+"POT-Creation-Date: 2015-12-20 08:08+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9703,6 +9703,10 @@ msgstr "maximální počet řádků v historii bufferu (0 = nekonečně)"
 
 msgid "display backlog starting from last client disconnect"
 msgstr ""
+
+#, fuzzy
+msgid "display backlog starting from your last message"
+msgstr "zobrazovat hosta ve zprávách o odchodu/ukončení"
 
 msgid ""
 "comma-separated list of messages tags which are displayed in backlog per IRC "

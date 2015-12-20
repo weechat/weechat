@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-10 07:09+0100\n"
+"POT-Creation-Date: 2015-12-20 08:08+0100\n"
 "PO-Revision-Date: 2015-12-13 12:19+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
@@ -11040,6 +11040,11 @@ msgstr ""
 "Channel (0: keine Zeilenbegrenzung)"
 
 msgid "display backlog starting from last client disconnect"
+msgstr ""
+"Verlaufsspeicher anzeigen, beginnend mit dem Client der zuletzt beendet wurde"
+
+#, fuzzy
+msgid "display backlog starting from your last message"
 msgstr ""
 "Verlaufsspeicher anzeigen, beginnend mit dem Client der zuletzt beendet wurde"
 
