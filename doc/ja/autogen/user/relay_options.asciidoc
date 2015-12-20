@@ -62,6 +62,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
+* [[option_relay.irc.backlog_since_last_message]] *relay.irc.backlog_since_last_message*
+** 説明: `display backlog starting from your last message`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
 ** 説明: `IRC チャンネルごとのバックログに表示するメッセージタグのコンマ区切りリスト (利用可能なタグ: "irc_join"、"irc_part"、"irc_quit"、"irc_nick"、"irc_privmsg")、"*" = 利用可能な全てのタグ`
 ** タイプ: 文字列

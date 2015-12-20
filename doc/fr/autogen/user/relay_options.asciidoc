@@ -58,9 +58,14 @@
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `256`)
 
 * [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
-** description: `afficher l'historique en démarrant à la dernière déconnexion du client`
+** description: `afficher l'historique en démarrant depuis la dernière déconnexion du client`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
+
+* [[option_relay.irc.backlog_since_last_message]] *relay.irc.backlog_since_last_message*
+** description: `afficher l'historique en démarrant depuis votre dernier message envoyé`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
 ** description: `liste d'étiquettes de messages (séparées par des virgules) qui sont affichés dans l'historique par canal IRC (étiquettes supportées : "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = toutes les étiquettes supportées`

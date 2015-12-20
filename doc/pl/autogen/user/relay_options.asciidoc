@@ -62,6 +62,11 @@
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
 
+* [[option_relay.irc.backlog_since_last_message]] *relay.irc.backlog_since_last_message*
+** opis: `display backlog starting from your last message`
+** typ: bool
+** wartości: on, off (domyślna wartość: `off`)
+
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
 ** opis: `oddzielona przecinkami lista tagów dla wiadomości, które są wyświetlane w backlogu dla kanałów IRC (wspierane tagi: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = dla wszystkich wspieranych tagów`
 ** typ: ciąg

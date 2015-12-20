@@ -62,6 +62,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
+* [[option_relay.irc.backlog_since_last_message]] *relay.irc.backlog_since_last_message*
+** Beschreibung: `display backlog starting from your last message`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
 ** Beschreibung: `durch Kommata getrennte Liste von Nachrichten-Tags welche im Verlaufsspeicher von IRC Channels angezeigt werden (unterstützte Tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = alle unterstützten Tags`
 ** Typ: Zeichenkette
