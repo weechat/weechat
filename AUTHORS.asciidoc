@@ -60,6 +60,7 @@ Alphabetically:
 * Matt Robinson
 * Max Anton Teufel
 * Murilo Opsfelder Araujo
+* Nick (SolitaryCipher)
 * Nicolas Cavigneaux
 * Nils Görs (nils_2)
 * nyuszika7h
