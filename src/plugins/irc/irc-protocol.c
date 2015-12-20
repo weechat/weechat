@@ -1286,7 +1286,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                     /* temporary disable hotlist */
                     weechat_buffer_set (NULL, "hotlist", "-");
 
-                    /* set host for nick if needed */
+                    /* set host in nick if needed */
                     if (!ptr_nick->host)
                         ptr_nick->host = strdup (address);
 
@@ -4175,7 +4175,7 @@ IRC_PROTOCOL_CALLBACK(352)
     ptr_nick = (ptr_channel) ?
         irc_nick_search (server, ptr_channel, argv[7]) : NULL;
 
-    /* update host for nick */
+    /* update host in nick */
     if (ptr_nick)
     {
         if (ptr_nick->host)
@@ -4186,14 +4186,14 @@ IRC_PROTOCOL_CALLBACK(352)
             snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
     }
 
-    /* update away flag for nick */
+    /* update away flag in nick */
     if (ptr_channel && ptr_nick && pos_attr)
     {
         irc_nick_set_away (server, ptr_channel, ptr_nick,
                            (pos_attr[0] == 'G') ? 1 : 0);
     }
 
-    /* update realname flag for nick */
+    /* update realname in nick */
     if (ptr_channel && ptr_nick && pos_realname)
     {
         if (ptr_nick->realname)
@@ -4407,7 +4407,7 @@ IRC_PROTOCOL_CALLBACK(354)
     ptr_nick = (ptr_channel) ?
         irc_nick_search (server, ptr_channel, argv[7]) : NULL;
 
-    /* update host for nick */
+    /* update host in nick */
     if (ptr_nick)
     {
         if (ptr_nick->host)
@@ -4421,7 +4421,7 @@ IRC_PROTOCOL_CALLBACK(354)
             snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
     }
 
-    /* update away flag for nick */
+    /* update away flag in nick */
     if (ptr_channel && ptr_nick)
     {
         if (pos_attr
@@ -4442,7 +4442,7 @@ IRC_PROTOCOL_CALLBACK(354)
         }
     }
 
-    /* update account flag for nick */
+    /* update account flag in nick */
     if (ptr_nick)
     {
         if (ptr_nick->account)
@@ -4452,7 +4452,7 @@ IRC_PROTOCOL_CALLBACK(354)
             strdup (pos_account) : NULL;
     }
 
-    /* update realname flag for nick */
+    /* update realname in nick */
     if (ptr_nick)
     {
         if (ptr_nick->realname)
