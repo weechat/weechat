@@ -1059,11 +1059,6 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
     if (flags)
         *flags = default_flags;
 
-#ifdef HAVE_PCRE
-    if (flags)
-        *flags |= REG_UTF8;
-#endif
-
     if (!regex)
         return NULL;
 
@@ -1110,6 +1105,16 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
         }
         ptr_regex = pos + 1;
     }
+
+#ifdef HAVE_PCRE
+    if (flags)
+    {
+        /* enable UTF-8 support */
+        *flags |= REG_UTF8;
+        /* enable submatches, pcreposix disables backrefs otherwise */
+        *flags &= ~REG_NOSUB;
+    }
+#endif
 
     return ptr_regex;
 }
