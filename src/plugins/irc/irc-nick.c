@@ -626,7 +626,7 @@ irc_nick_nicklist_set_color_all ()
 struct t_irc_nick *
 irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
               const char *nickname, const char *host, const char *prefixes,
-              int away, const char *account)
+              int away, const char *account, const char *realname)
 {
     struct t_irc_nick *new_nick, *ptr_nick;
     int length;
@@ -650,6 +650,9 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         if (ptr_nick->account)
             free (ptr_nick->account);
         ptr_nick->account = (account) ? strdup (account) : NULL;
+        if (ptr_nick->realname)
+            free (ptr_nick->realname);
+        ptr_nick->realname = (realname) ? strdup (realname) : NULL;
 
         /* add new nick in nicklist */
         irc_nick_nicklist_add (server, channel, ptr_nick);
@@ -665,6 +668,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     new_nick->name = strdup (nickname);
     new_nick->host = (host) ? strdup (host) : NULL;
     new_nick->account = (account) ? strdup (account) : NULL;
+    new_nick->realname = (realname) ? strdup (realname) : NULL;
     length = strlen (irc_server_get_prefix_chars (server));
     new_nick->prefixes = malloc (length + 1);
     if (!new_nick->name || !new_nick->prefixes)
@@ -675,6 +679,8 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
             free (new_nick->host);
         if (new_nick->account)
             free (new_nick->account);
+        if (new_nick->realname)
+            free (new_nick->realname);
         if (new_nick->prefixes)
             free (new_nick->prefixes);
         free (new_nick);
@@ -817,6 +823,8 @@ irc_nick_free (struct t_irc_server *server, struct t_irc_channel *channel,
         free (nick->prefixes);
     if (nick->account)
         free (nick->account);
+    if (nick->realname)
+        free (nick->realname);
     if (nick->color)
         free (nick->color);
 
@@ -1137,6 +1145,7 @@ irc_nick_hdata_nick_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_nick, prefix, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, away, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, account, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, realname, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, color, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_nick, prev_nick, POINTER, 0, NULL, hdata_name);
         WEECHAT_HDATA_VAR(struct t_irc_nick, next_nick, POINTER, 0, NULL, hdata_name);
@@ -1176,6 +1185,8 @@ irc_nick_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "away", nick->away))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "account", nick->account))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "realname", nick->realname))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "color", nick->color))
         return 0;

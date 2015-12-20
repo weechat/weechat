@@ -206,8 +206,11 @@ IRC_PROTOCOL_CALLBACK(account)
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+    char *pos_account;
 
     IRC_PROTOCOL_MIN_ARGS(3);
+
+    pos_account = (argv[2] && argv[2][0] != '*') ? argv[2] : NULL;
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -217,8 +220,8 @@ IRC_PROTOCOL_CALLBACK(account)
         {
             if (ptr_nick->account)
                 free (ptr_nick->account);
-            ptr_nick->account = (server->cap_account_notify) ?
-                strdup (argv[2]) : strdup ("*");
+            ptr_nick->account = (server->cap_account_notify && pos_account) ?
+                strdup (pos_account) : NULL;
         }
     }
 
@@ -474,6 +477,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                     else if (strcmp (caps_supported[i], "account-notify") == 0)
                     {
                         server->cap_account_notify = 1;
+                    }
+                    else if (strcmp (caps_supported[i], "extended-join") == 0)
+                    {
+                        server->cap_extended_join = 1;
                     }
                 }
                 weechat_string_free_split (caps_supported);
@@ -747,7 +754,7 @@ IRC_PROTOCOL_CALLBACK(invite)
  *
  * With extended-join capability:
  *   :nick!user@host JOIN :#channel * :real name
- *   *nick!user@host JOIN :#channel account :real name
+ *   :nick!user@host JOIN :#channel account :real name
  */
 
 IRC_PROTOCOL_CALLBACK(join)
@@ -842,7 +849,7 @@ IRC_PROTOCOL_CALLBACK(join)
 
     /* add nick in channel */
     ptr_nick = irc_nick_new (server, ptr_channel, nick, address, NULL, 0,
-                             (pos_account) ? pos_account : "*");
+                             (pos_account) ? pos_account : NULL, (pos_realname) ? pos_realname : NULL);
 
     /* rename the nick if it was in list with a different case */
     irc_channel_nick_speaking_rename_if_present (server, ptr_channel, nick);
@@ -4185,6 +4192,15 @@ IRC_PROTOCOL_CALLBACK(352)
                            (pos_attr[0] == 'G') ? 1 : 0);
     }
 
+    /* update realname flag for nick */
+    if (ptr_channel && ptr_nick && pos_realname)
+    {
+        if (ptr_nick->realname)
+            free (ptr_nick->realname);
+        ptr_nick->realname = (pos_realname && server->cap_extended_join) ?
+            strdup (pos_realname) : NULL;
+    }
+
     /* display output of who (manual who from user) */
     if (!ptr_channel || (ptr_channel->checking_whox <= 0))
     {
@@ -4295,7 +4311,7 @@ IRC_PROTOCOL_CALLBACK(353)
             if (ptr_channel && ptr_channel->nicks)
             {
                 if (!irc_nick_new (server, ptr_channel, nickname, pos_host,
-                                   prefixes, 0, "*"))
+                                   prefixes, 0, NULL, NULL))
                 {
                     weechat_printf (
                         server->buffer,
@@ -4432,7 +4448,17 @@ IRC_PROTOCOL_CALLBACK(354)
             free (ptr_nick->account);
         ptr_nick->account = (ptr_channel && pos_account
                              && server->cap_account_notify) ?
-            strdup (pos_account) : strdup ("*");
+            strdup (pos_account) : NULL;
+    }
+
+    /* update realname flag for nick */
+    if (ptr_nick)
+    {
+        if (ptr_nick->realname)
+            free (ptr_nick->realname);
+        ptr_nick->realname = (ptr_channel && pos_realname
+                              && server->cap_extended_join) ?
+            strdup (pos_realname) : NULL;
     }
 
     /* display output of who (manual who from user) */

@@ -655,7 +655,7 @@ irc_channel_remove_account (struct t_irc_server *server,
         {
             if (ptr_nick->account)
                 free (ptr_nick->account);
-            ptr_nick->account = strdup ("*");
+            ptr_nick->account = NULL;
         }
     }
 }
