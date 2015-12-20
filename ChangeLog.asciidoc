@@ -29,6 +29,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add argument "length" in function utf8_is_valid()
 * alias: display completion in /alias list (issue #518)
 * fifo: add /fifo command
+* irc: track real names using extended-join and WHO (issue #351)
 * irc: add support of SNI (Server Name Indication) in SSL connection to
   IRC server (issue #620)
 * irc: use current channel and current server channels first in completions
