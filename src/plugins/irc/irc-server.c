@@ -3203,6 +3203,7 @@ irc_server_close_connection (struct t_irc_server *server)
             if(server->gnutls_xcred != NULL) {
                 gnutls_credentials_clear(server->gnutls_sess);
                 gnutls_certificate_free_credentials(server->gnutls_xcred);
+                server->gnutls_xcred = NULL;
             }
 
             gnutls_deinit (server->gnutls_sess);
