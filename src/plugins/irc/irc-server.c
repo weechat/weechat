@@ -63,6 +63,7 @@
 #include "irc-raw.h"
 #include "irc-redirect.h"
 #include "irc-sasl.h"
+#include "../../core/wee-hook.h"
 
 
 struct t_irc_server *irc_servers = NULL;
@@ -4063,6 +4064,22 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                 gnutls_certificate_set_x509_trust_file (server->gnutls_xcred, ca_file2,
                                                                 GNUTLS_X509_FMT_PEM);
                 gnutls_credentials_set(tls_session, GNUTLS_CRD_CERTIFICATE, server->gnutls_xcred);
+
+                /*
+                 * We need to set verify/retrieve functions for our server
+                 * specific gnutls_xcred here.
+                 */
+                #if LIBGNUTLS_VERSION_NUMBER >= 0x02090a /* 2.9.10 */
+                        gnutls_certificate_set_verify_function (server->gnutls_xcred,
+                                                                &hook_connect_gnutls_verify_certificates);
+                #endif /* LIBGNUTLS_VERSION_NUMBER >= 0x02090a */
+                #if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
+                        gnutls_certificate_set_retrieve_function (server->gnutls_xcred,
+                                                                  &hook_connect_gnutls_set_certificates);
+                #else
+                        gnutls_certificate_client_set_retrieve_function (server->gnutls_xcred,
+                                                                         &hook_connect_gnutls_set_certificates);
+                #endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
             }
             if (ca_file1)
                 free (ca_file1);
