@@ -1111,6 +1111,7 @@ gui_window_draw_separators (struct t_gui_window *window)
 {
     int separator_horizontal, separator_vertical;
     int horiz_overlap, x, width, height;
+    struct t_gui_window_tree *ptr_tree, *ptr_child;
 
     /* remove separators */
     if (GUI_WINDOW_OBJECTS(window)->win_separator_horiz)
@@ -1131,10 +1132,24 @@ gui_window_draw_separators (struct t_gui_window *window)
     separator_vertical = (CONFIG_BOOLEAN(config_look_window_separator_vertical)
                           && (window->win_x > gui_bar_root_get_size (NULL, GUI_BAR_POSITION_LEFT)));
 
-    /* check if window is right leaf of vertical split */
-    horiz_overlap = (window->ptr_tree->parent_node)
-                        && !(window->ptr_tree->parent_node->split_horizontal)
-                        && (window->ptr_tree->parent_node->child2 == window->ptr_tree);
+    /* check if horizontal separator must overlap in lower left corner */
+    horiz_overlap = 0;
+    ptr_child = window->ptr_tree;
+    ptr_tree = ptr_child->parent_node;
+    while (ptr_tree)
+    {
+        /* is right/top child */
+        if (ptr_tree->child2 == ptr_child)
+        {
+            /* horizontal overlap is needed when window is right in vertical split */
+            /* horizontal overlap is not needed when window is top in horizontal split */
+            horiz_overlap = !ptr_tree->split_horizontal;
+            break;
+        }
+
+        ptr_child = ptr_child->parent_node;
+        ptr_tree = ptr_tree->parent_node;
+    }
 
     /* create/draw horizontal separator */
     if (separator_horizontal)
