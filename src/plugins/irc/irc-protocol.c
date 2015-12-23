@@ -1124,7 +1124,11 @@ IRC_PROTOCOL_CALLBACK(kill)
 
 IRC_PROTOCOL_CALLBACK(metadata)
 {
+    const char *nick_address;
+
     IRC_PROTOCOL_MIN_ARGS(5);
+
+    nick_address = irc_protocol_nick_address (server, 1, NULL, nick, address);
 
     /* public visibility */
     if (strcmp (argv[4], "*") == 0)
@@ -1134,10 +1138,14 @@ IRC_PROTOCOL_CALLBACK(metadata)
                 server, argv[2], command, "metadata", NULL),
             date,
             irc_protocol_tags (command, NULL, NULL, NULL),
-            "%s%s[%s%s%s] %s%s%s%s%s",
+            _("%sMetadata %s by %s: %s[%s%s%s] %s%s%s%s%s"),
             weechat_prefix ("network"),
+            (argc > 5) ? "set" : "removed",
+            (nick_address[0]) ? nick_address : "?",
             IRC_COLOR_CHAT_DELIMITERS,
-            IRC_COLOR_RESET,
+            (irc_nick_is_nick (argv[2])) ?
+                irc_nick_color_for_msg (server, 1, NULL, argv[2]) :
+                IRC_COLOR_RESET,
             argv[2],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
@@ -1155,10 +1163,14 @@ IRC_PROTOCOL_CALLBACK(metadata)
                 server, argv[2], command, "metadata", NULL),
             date,
             irc_protocol_tags (command, NULL, NULL, NULL),
-            "%s%s[%s%s%s] %s%s %s(%s%s%s)%s%s%s%s",
+            _("%sMetadata %s by %s: %s[%s%s%s] %s%s %s(%s%s%s)%s%s%s%s"),
             weechat_prefix ("network"),
+            (argc > 5) ? "set" : "removed",
+            (nick_address[0]) ? nick_address : "?",
             IRC_COLOR_CHAT_DELIMITERS,
-            IRC_COLOR_RESET,
+            (irc_nick_is_nick (argv[2])) ?
+                irc_nick_color_for_msg (server, 1, NULL, argv[2]) :
+                IRC_COLOR_RESET,
             argv[2],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
@@ -5440,10 +5452,12 @@ IRC_PROTOCOL_CALLBACK(761)
                 server, NULL, command, "metadata", NULL),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-            "%s%s[%s%s%s] %s%s%s%s%s",
+            _("%sMetadata: %s[%s%s%s] %s%s%s%s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
-            IRC_COLOR_RESET,
+            (irc_nick_is_nick (argv[2])) ?
+                irc_nick_color_for_msg (server, 1, NULL, argv[2]) :
+                IRC_COLOR_RESET,
             argv[2],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
@@ -5461,10 +5475,12 @@ IRC_PROTOCOL_CALLBACK(761)
                 server, NULL, command, "metadata", NULL),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-            "%s%s[%s%s%s] %s%s %s(%s%s%s)%s%s%s%s",
+            _("%sMetadata: %s[%s%s%s] %s%s %s(%s%s%s)%s%s%s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
-            IRC_COLOR_RESET,
+            (irc_nick_is_nick (argv[2])) ?
+                irc_nick_color_for_msg (server, 1, NULL, argv[2]) :
+                IRC_COLOR_RESET,
             argv[2],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
@@ -5503,7 +5519,7 @@ IRC_PROTOCOL_CALLBACK(762)
             server, NULL, command, "metadata", NULL),
         date,
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        "%s%s",
+        _("%sMetadata: %s"),
         weechat_prefix ("network"),
         (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]);
 
@@ -5532,10 +5548,12 @@ IRC_PROTOCOL_CALLBACK(764_765)
             server, NULL, command, "metadata", NULL),
         date,
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        "%s%s[%s%s%s] %s%s",
+        _("%sMetadata: %s[%s%s%s] %s%s"),
         weechat_prefix ("error"),
         IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
+        (irc_nick_is_nick (argv[2])) ?
+            irc_nick_color_for_msg (server, 1, NULL, argv[2]) :
+            IRC_COLOR_RESET,
         argv[2],
         IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_RESET,
@@ -5566,10 +5584,12 @@ IRC_PROTOCOL_CALLBACK(766_768_769)
             server, NULL, command, "metadata", NULL),
         date,
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        "%s%s[%s%s%s] %s%s: %s",
+        _("%sMetadata: %s[%s%s%s] %s%s: %s"),
         weechat_prefix ("error"),
         IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
+        (irc_nick_is_nick (argv[2])) ?
+            irc_nick_color_for_msg (server, 1, NULL, argv[2]) :
+            IRC_COLOR_RESET,
         argv[2],
         IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_RESET,
@@ -5599,7 +5619,7 @@ IRC_PROTOCOL_CALLBACK(767)
             server, NULL, command, "metadata", NULL),
         date,
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-        "%s%s: %s",
+        _("%sMetadata: %s: %s"),
         weechat_prefix ("error"),
         argv[2],
         (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]);
