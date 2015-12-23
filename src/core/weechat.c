@@ -613,17 +613,16 @@ weechat_shutdown (int return_code, int crash)
 {
     gui_chat_print_lines_waiting_buffer (stderr);
 
+    log_close ();
+    network_end ();
+    debug_end ();
+
     if (weechat_argv0)
         free (weechat_argv0);
     if (weechat_home)
         free (weechat_home);
-    log_close ();
     if (weechat_local_charset)
         free (weechat_local_charset);
-
-    network_end ();
-
-    debug_end ();
 
     if (crash)
         abort();
