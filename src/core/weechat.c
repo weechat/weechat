@@ -191,7 +191,11 @@ weechat_parse_args (int argc, char *argv[])
             || (strcmp (argv[i], "--dir") == 0))
         {
             if (i + 1 < argc)
+            {
+                if (weechat_home)
+                    free (weechat_home);
                 weechat_home = strdup (argv[++i]);
+            }
             else
             {
                 string_iconv_fprintf (stderr,
@@ -255,7 +259,11 @@ weechat_parse_args (int argc, char *argv[])
                  || (strcmp (argv[i], "--run-command") == 0))
         {
             if (i + 1 < argc)
+            {
+                if (weechat_startup_commands)
+                    free (weechat_startup_commands);
                 weechat_startup_commands = strdup (argv[++i]);
+            }
             else
             {
                 string_iconv_fprintf (stderr,

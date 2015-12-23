@@ -52,6 +52,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[1.4_bugs]]
 === Bugs fixed
 
+* core: fix memory leak when using multiple "-d" or "-r" in command line
+  arguments
 * core: don't complain any more about "tmux" and "tmux-256color" $TERM values
   when WeeChat is running under tmux (issue #519)
 * core: fix truncated messages after a word with a length of zero on screen
