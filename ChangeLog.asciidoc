@@ -52,6 +52,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * doc: add Czech man page and quickstart guide (issue #490)
 * build: add scripts version.sh and build-debian.sh, separate stable from devel
   Debian packaging
+* tests: check if all plugins are loaded
 
 [[1.4_bugs]]
 === Bugs fixed
