@@ -115,7 +115,7 @@ log_init ()
         string_iconv_fprintf (stderr,
                               _("Error: unable to create/append to log file (weechat.log)\n"
                                 "If another WeeChat process is using this file, try to run WeeChat\n"
-                                "with another home using \"--dir\" command line option.\n"));
+                                "with another home using the \"--dir\" command line option.\n"));
         exit (1);
     }
     log_printf ("WeeChat %s (%s %s %s)",
