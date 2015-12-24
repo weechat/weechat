@@ -64,6 +64,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_AUTORECONNECT, /* autoreconnect when disconnected      */
     IRC_SERVER_OPTION_AUTORECONNECT_DELAY, /* delay before trying again reco */
     IRC_SERVER_OPTION_NICKS,         /* nicknames (comma separated list)     */
+    IRC_SERVER_OPTION_NICKS_ALTERNATE, /* use alternate nicknames            */
     IRC_SERVER_OPTION_USERNAME,      /* user name                            */
     IRC_SERVER_OPTION_REALNAME,      /* real name                            */
     IRC_SERVER_OPTION_LOCAL_HOSTNAME,/* custom local hostname                */

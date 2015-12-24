@@ -131,7 +131,6 @@ struct t_config_option *irc_config_color_topic_old;
 
 /* IRC config, network section */
 
-struct t_config_option *irc_config_network_alternate_nick;
 struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 struct t_config_option *irc_config_network_autoreconnect_delay_max;
 struct t_config_option *irc_config_network_ban_mask_default;
@@ -1885,6 +1884,22 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_NICKS_ALTERNATE:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "boolean",
+                N_("get an alternate nick when all the declared nicks are "
+                   "already used on server: add some \"_\" until the nick has "
+                   "a length of 9, and then replace last char (or the two "
+                   "last chars) by a number from 1 to 99, until we find "
+                   "a nick not used on server"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value, callback_check_value_data,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
         case IRC_SERVER_OPTION_USERNAME:
             new_option = weechat_config_new_option (
                 config_file, section,
@@ -2940,14 +2955,6 @@ irc_config_init ()
         return 0;
     }
 
-    irc_config_network_alternate_nick = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "alternate_nick", "boolean",
-        N_("get an alternate nick when the nick is already used on server: add "
-           "some \"_\" until the nick has a length of 9, and then replace last "
-           "char (or the two last chars) by a number from 1 to 99, until we "
-           "find a nick not used on server"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_autoreconnect_delay_growing = weechat_config_new_option (
         irc_config_file, ptr_section,
         "autoreconnect_delay_growing", "integer",

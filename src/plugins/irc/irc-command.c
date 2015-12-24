@@ -4532,7 +4532,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
         else
             weechat_printf (NULL, "  ipv6 . . . . . . . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_IPV6]) ?
+                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_IPV6])) ?
                             _("on") : _("off"));
         /* ssl */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL]))
@@ -4542,7 +4542,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
         else
             weechat_printf (NULL, "  ssl. . . . . . . . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_SSL]) ?
+                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_SSL])) ?
                             _("on") : _("off"));
         /* ssl_cert */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_CERT]))
@@ -4584,7 +4584,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
         else
             weechat_printf (NULL, "  ssl_verify . . . . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_SSL_VERIFY]) ?
+                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_SSL_VERIFY])) ?
                             _("on") : _("off"));
         /* password */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_PASSWORD]))
@@ -4660,7 +4660,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
         else
             weechat_printf (NULL, "  autoconnect. . . . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTOCONNECT]) ?
+                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTOCONNECT])) ?
                             _("on") : _("off"));
         /* autoreconnect */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTORECONNECT]))
@@ -4670,7 +4670,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
         else
             weechat_printf (NULL, "  autoreconnect. . . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTORECONNECT]) ?
+                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTORECONNECT])) ?
                             _("on") : _("off"));
         /* autoreconnect_delay */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTORECONNECT_DELAY]))
@@ -4690,6 +4690,16 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  nicks. . . . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[IRC_SERVER_OPTION_NICKS]));
+        /* nicks_alternate */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_NICKS_ALTERNATE]))
+            weechat_printf (NULL, "  nicks_alternate. . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_NICKS_ALTERNATE)) ?
+                            _("on") : _("off"));
+        else
+            weechat_printf (NULL, "  nicksalternate . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_NICKS_ALTERNATE])) ?
+                            _("on") : _("off"));
         /* username */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_USERNAME]))
             weechat_printf (NULL, "  username . . . . . . :   ('%s')",
@@ -4762,7 +4772,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
         else
             weechat_printf (NULL, "  autorejoin . . . . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTOREJOIN]) ?
+                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTOREJOIN])) ?
                             _("on") : _("off"));
         /* autorejoin_delay */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY]))

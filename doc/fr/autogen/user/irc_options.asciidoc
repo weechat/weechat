@@ -372,11 +372,6 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
-* [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
-** description: `obtenir un pseudo alternatif lorsque le pseudo est déjà utilisé sur le serveur : ajouter des "_" jusqu'à ce que le pseudo ait une longueur de 9, puis remplacer le dernier caractère (ou les deux derniers) par un nombre de 1 à 99, jusqu'à trouver un pseudo non utilisé sur le serveur`
-** type: booléen
-** valeurs: on, off (valeur par défaut: `on`)
-
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** description: `facteur de croissance du délai d'auto-reconnexion au serveur (1 = toujours le même délai, 2 = délai*2 pour chaque tentative, etc...)`
 ** type: entier
@@ -556,6 +551,11 @@
 ** description: `pseudos à utiliser sur le serveur (séparés par des virgules) (note : le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
+
+* [[option_irc.server_default.nicks_alternate]] *irc.server_default.nicks_alternate*
+** description: `obtenir un pseudo alternatif lorsque tous les pseudos déclarés sont déjà utilisés sur le serveur : ajouter des "_" jusqu'à ce que le pseudo ait une longueur de 9, puis remplacer le dernier caractère (ou les deux derniers) par un nombre de 1 à 99, jusqu'à trouver un pseudo non utilisé sur le serveur`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.server_default.notify]] *irc.server_default.notify*
 ** description: `liste de notifications pour le serveur (vous ne devriez pas changer cette option mais utiliser la commande /notify)`

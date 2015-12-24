@@ -372,11 +372,6 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
-* [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
-** Beschreibung: `bezieht einen alternativen Nick, sofern alle voreingestellten Nicks am Server schon genutzt werden. Dazu wird das Zeichen "_" an den Nick angehängt, sofern der Nick nicht mehr als neun Zeichen besitzt. Andernfalls wird das letzte bzw. vorletzte Zeichen durch eine Zahl zwischen 1 und 99 ersetzt, bis ein freier Nick für den Server gefunden wird`
-** Typ: boolesch
-** Werte: on, off (Standardwert: `on`)
-
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** Beschreibung: `Multiplikator für die Verzögerung bei der automatischen Wiederverbindung zum Server (1 = immer die selbe Verzögerung nutzen, 2 = Verzögerung*2 für jeden weiteren Versuch, ..)`
 ** Typ: integer
@@ -556,6 +551,11 @@
 ** Beschreibung: `Nicknamen, die auf dem IRC-Server benutzt werden sollen (durch Komma getrennt) (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
+
+* [[option_irc.server_default.nicks_alternate]] *irc.server_default.nicks_alternate*
+** Beschreibung: `get an alternate nick when all the declared nicks are already used on server: add some "_" until the nick has a length of 9, and then replace last char (or the two last chars) by a number from 1 to 99, until we find a nick not used on server`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.server_default.notify]] *irc.server_default.notify*
 ** Beschreibung: `Liste mit Benachrichtigung für Server (diese Einstellung sollte nicht direkt verändert werden. Dazu sollte der Befehl /notify genutzt werden)`

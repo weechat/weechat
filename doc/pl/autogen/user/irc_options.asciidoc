@@ -372,11 +372,6 @@
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 
-* [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
-** opis: `pobierz alternatywny nick, kiedy nick jest już zajęty na serwerze: dodaje kilka "_", aż nick będzie miał długość 9, następnie zamienia ostatni znak (lub ostatnie dwa znaki) na numer od 1 do 99, do czasu aż zostanie znaleziony nick nie użyty na swerwerze`
-** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
-
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** opis: `rosnący współczynnik opóźnienia ponownego połączenia z serwerem (1 = stała wartość, 2 = opóźnienie*2 dla każdej próby, ..)`
 ** typ: liczba
@@ -556,6 +551,11 @@
 ** opis: `nazwy użytkownika do użycia na serwerze (oddzielone przecinkiem) (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
+
+* [[option_irc.server_default.nicks_alternate]] *irc.server_default.nicks_alternate*
+** opis: `get an alternate nick when all the declared nicks are already used on server: add some "_" until the nick has a length of 9, and then replace last char (or the two last chars) by a number from 1 to 99, until we find a nick not used on server`
+** typ: bool
+** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_irc.server_default.notify]] *irc.server_default.notify*
 ** opis: `lista powiadomień dla tego serwera (nie powinieneś zmieniać tej opcji tylko użyć w zamian komendy /notify)`

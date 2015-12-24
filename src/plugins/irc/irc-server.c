@@ -96,6 +96,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "autoreconnect",        "on"                  },
   { "autoreconnect_delay",  "10"                  },
   { "nicks",                ""                    },
+  { "nicks_alternate",      "on"                  },
   { "username",             ""                    },
   { "realname",             ""                    },
   { "local_hostname",       ""                    },
@@ -624,8 +625,8 @@ irc_server_get_alternate_nick (struct t_irc_server *server)
 
         /* now we have tried all nicks in list */
 
-        /* if alternate nick is disabled, just return NULL */
-        if (!weechat_config_boolean (irc_config_network_alternate_nick))
+        /* if alternate nicks are disabled, just return NULL */
+        if (!IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_NICKS_ALTERNATE))
             return NULL;
 
         /* use main nick and we will add "_" and then number if needed */
@@ -5414,6 +5415,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "nicks",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_NICKS)))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "nicks_alternate",
+                                           IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_NICKS_ALTERNATE)))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "username",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME)))
         return 0;
@@ -5587,7 +5591,7 @@ irc_server_print_log ()
                                 "on" : "off");
         else
             weechat_log_printf ("  ipv6 . . . . . . . . : %s",
-                                weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_IPV6]) ?
+                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_IPV6])) ?
                                 "on" : "off");
         /* ssl */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL]))
@@ -5596,7 +5600,7 @@ irc_server_print_log ()
                                 "on" : "off");
         else
             weechat_log_printf ("  ssl. . . . . . . . . : %s",
-                                weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_SSL]) ?
+                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_SSL])) ?
                                 "on" : "off");
         /* ssl_cert */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_CERT]))
@@ -5633,7 +5637,7 @@ irc_server_print_log ()
                                 "on" : "off");
         else
             weechat_log_printf ("  ssl_verify . . . . . : %s",
-                                weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_SSL_VERIFY]) ?
+                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_SSL_VERIFY])) ?
                                 "on" : "off");
         /* password */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_PASSWORD]))
@@ -5687,7 +5691,7 @@ irc_server_print_log ()
                                 "on" : "off");
         else
             weechat_log_printf ("  autoconnect. . . . . : %s",
-                                weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTOCONNECT]) ?
+                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTOCONNECT])) ?
                                 "on" : "off");
         /* autoreconnect */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTORECONNECT]))
@@ -5696,7 +5700,7 @@ irc_server_print_log ()
                                 "on" : "off");
         else
             weechat_log_printf ("  autoreconnect. . . . : %s",
-                                weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTORECONNECT]) ?
+                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTORECONNECT])) ?
                                 "on" : "off");
         /* autoreconnect_delay */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTORECONNECT_DELAY]))
@@ -5712,6 +5716,15 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  nicks. . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_NICKS]));
+        /* nicks_alternate */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_NICKS_ALTERNATE]))
+            weechat_log_printf ("  nicks_alternate. . . : null (%s)",
+                                (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_NICKS_ALTERNATE)) ?
+                                "on" : "off");
+        else
+            weechat_log_printf ("  nicks_alternate. . . : %s",
+                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_NICKS_ALTERNATE])) ?
+                                "on" : "off");
         /* username */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_USERNAME]))
             weechat_log_printf ("  username . . . . . . : null ('%s')",
@@ -5759,7 +5772,7 @@ irc_server_print_log ()
                                 "on" : "off");
         else
             weechat_log_printf ("  autorejoin . . . . . : %s",
-                                weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN]) ?
+                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN])) ?
                                 "on" : "off");
         /* autorejoin_delay */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY]))

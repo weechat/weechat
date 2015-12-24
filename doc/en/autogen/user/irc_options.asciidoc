@@ -372,11 +372,6 @@
 ** type: boolean
 ** values: on, off (default value: `off`)
 
-* [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
-** description: `get an alternate nick when the nick is already used on server: add some "_" until the nick has a length of 9, and then replace last char (or the two last chars) by a number from 1 to 99, until we find a nick not used on server`
-** type: boolean
-** values: on, off (default value: `on`)
-
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** description: `growing factor for autoreconnect delay to server (1 = always same delay, 2 = delay*2 for each retry, ..)`
 ** type: integer
@@ -556,6 +551,11 @@
 ** description: `nicknames to use on server (separated by comma) (note: content is evaluated, see /help eval)`
 ** type: string
 ** values: any string (default value: `""`)
+
+* [[option_irc.server_default.nicks_alternate]] *irc.server_default.nicks_alternate*
+** description: `get an alternate nick when all the declared nicks are already used on server: add some "_" until the nick has a length of 9, and then replace last char (or the two last chars) by a number from 1 to 99, until we find a nick not used on server`
+** type: boolean
+** values: on, off (default value: `on`)
 
 * [[option_irc.server_default.notify]] *irc.server_default.notify*
 ** description: `notify list for server (you should not change this option but use /notify command instead)`

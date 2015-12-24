@@ -372,11 +372,6 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
-* [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
-** 説明: `サーバでニックネームが既に利用されている場合、他のニックネームを生成します: 利用されていないニックネームが見つかるまで、ニックネームの長さが 9 以下なら数個の "_" を追加、その後最後の 1 文字 (または最後の 2 文字) を 1 から 99 で置き換えます`
-** タイプ: ブール
-** 値: on, off (デフォルト値: `on`)
-
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** 説明: `サーバに自動再接続する際の遅延間隔に関する増加係数 (1 = 遅延間隔は常に同じ, 2 = リトライごとに遅延間隔を 2 倍、..)`
 ** タイプ: 整数
@@ -556,6 +551,11 @@
 ** 説明: `サーバで使用するニックネーム (コンマ区切り) (注意: 値は評価されます、/help eval を参照してください)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.nicks_alternate]] *irc.server_default.nicks_alternate*
+** 説明: `get an alternate nick when all the declared nicks are already used on server: add some "_" until the nick has a length of 9, and then replace last char (or the two last chars) by a number from 1 to 99, until we find a nick not used on server`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.server_default.notify]] *irc.server_default.notify*
 ** 説明: `サーバの通知リスト (これを変更する場合は、/notify コマンドを使うこと)`
