@@ -26,10 +26,13 @@ struct t_config_option;
 
 /*
  * Color from configuration options.
+ *
  * When changing some colors below:
  * - always add to the end
  * - never remove a color (mark it as obsolete if needed)
  * - do not re-use an obsolete color
+ * - add build of color in file src/gui/curses/gui-curses-color.c,
+ *   function gui_color_init_weechat ()
  * - update the Developer's guide
  */
 
@@ -84,6 +87,7 @@ enum t_gui_color_enum
     GUI_COLOR_CHAT_NICK_SUFFIX,
     GUI_COLOR_EMPHASIS,
     GUI_COLOR_CHAT_DAY_CHANGE,
+    GUI_COLOR_CHAT_VALUE_NULL,
 
     /* number of colors */
     GUI_COLOR_NUM_COLORS,

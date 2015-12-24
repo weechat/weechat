@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-20 08:08+0100\n"
+"POT-Creation-Date: 2015-12-24 07:51+0100\n"
 "PO-Revision-Date: 2015-09-30 20:56+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -861,11 +861,12 @@ msgstr "Dados seguros \"%s\" deletados"
 msgid "%sSecured data \"%s\" not found"
 msgstr "%sDados seguros \"%s\" não encontrados"
 
-msgid "default: "
+#, fuzzy
+msgid "default if null: "
 msgstr "padrão: "
 
-msgid "(unknown)"
-msgstr "(desconhecido)"
+msgid "default: "
+msgstr "padrão: "
 
 #, fuzzy, c-format
 msgid ""
@@ -3774,6 +3775,10 @@ msgid "text color for time delimiters"
 msgstr "cor do texto para delimitadores de tempo"
 
 msgid "text color for values"
+msgstr "cor de texto para valores"
+
+#, fuzzy
+msgid "text color for null values (undefined)"
 msgstr "cor de texto para valores"
 
 msgid ""
@@ -11011,3 +11016,6 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
+
+#~ msgid "(unknown)"
+#~ msgstr "(desconhecido)"

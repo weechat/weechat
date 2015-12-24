@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-20 08:08+0100\n"
+"POT-Creation-Date: 2015-12-24 07:51+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -786,10 +786,10 @@ msgstr ""
 msgid "%sSecured data \"%s\" not found"
 msgstr ""
 
-msgid "default: "
+msgid "default if null: "
 msgstr ""
 
-msgid "(unknown)"
+msgid "default: "
 msgstr ""
 
 #, c-format
@@ -2871,6 +2871,9 @@ msgid "text color for time delimiters"
 msgstr ""
 
 msgid "text color for values"
+msgstr ""
+
+msgid "text color for null values (undefined)"
 msgstr ""
 
 msgid ""

@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-20 08:08+0100\n"
+"POT-Creation-Date: 2015-12-24 07:51+0100\n"
 "PO-Revision-Date: 2015-12-20 09:49+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
@@ -869,11 +869,12 @@ msgstr "schutzwürdige Information \"%s\" gelöscht"
 msgid "%sSecured data \"%s\" not found"
 msgstr "%sschutzwürdige Information \"%s\" nicht gefunden"
 
-msgid "default: "
+#, fuzzy
+msgid "default if null: "
 msgstr "Standardwert: "
 
-msgid "(unknown)"
-msgstr "(unbekannt)"
+msgid "default: "
+msgstr "Standardwert: "
 
 #, c-format
 msgid ""
@@ -4263,6 +4264,10 @@ msgid "text color for time delimiters"
 msgstr "Farbe in der das Trennzeichen für die Uhrzeit dargestellt werden soll"
 
 msgid "text color for values"
+msgstr "Farbe für Werte"
+
+#, fuzzy
+msgid "text color for null values (undefined)"
 msgstr "Farbe für Werte"
 
 msgid ""
@@ -12798,3 +12803,6 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
+#~ msgid "(unknown)"
+#~ msgstr "(unbekannt)"

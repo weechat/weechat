@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-20 08:08+0100\n"
+"POT-Creation-Date: 2015-12-24 07:51+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -846,11 +846,12 @@ msgstr "保護データ \"%s\" を削除しました"
 msgid "%sSecured data \"%s\" not found"
 msgstr "%s保護データ \"%s\" が見つかりません"
 
-msgid "default: "
+#, fuzzy
+msgid "default if null: "
 msgstr "デフォルト: "
 
-msgid "(unknown)"
-msgstr "(未定義)"
+msgid "default: "
+msgstr "デフォルト: "
 
 #, c-format
 msgid ""
@@ -3996,6 +3997,10 @@ msgid "text color for time delimiters"
 msgstr "時間区切りのテキスト色"
 
 msgid "text color for values"
+msgstr "値のテキスト色"
+
+#, fuzzy
+msgid "text color for null values (undefined)"
 msgstr "値のテキスト色"
 
 msgid ""
@@ -12038,3 +12043,6 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "(unknown)"
+#~ msgstr "(未定義)"

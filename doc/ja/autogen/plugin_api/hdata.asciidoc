@@ -658,6 +658,7 @@
 *** 'config_file' (pointer, hdata: "config_file")
 *** 'section' (pointer, hdata: "config_section")
 *** 'name' (string)
+*** 'parent_name' (string)
 *** 'type' (integer)
 *** 'description' (string)
 *** 'string_values' (string, array_size: "*")

@@ -1074,25 +1074,28 @@ irc_server_alloc (const char *name)
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
     {
         length = strlen (new_server->name) + 1 +
-            strlen (irc_server_options[i][0]) + 1;
+            strlen (irc_server_options[i][0]) +
+            512 +  /* inherited option name (irc.server_default.xxx) */
+            1;
         option_name = malloc (length);
         if (option_name)
         {
-            snprintf (option_name, length, "%s.%s",
+            snprintf (option_name, length, "%s.%s << irc.server_default.%s",
                       new_server->name,
+                      irc_server_options[i][0],
                       irc_server_options[i][0]);
-            new_server->options[i] =
-                irc_config_server_new_option (irc_config_file,
-                                              irc_config_section_server,
-                                              i,
-                                              option_name,
-                                              NULL,
-                                              NULL,
-                                              1,
-                                              &irc_config_server_check_value_cb,
-                                              irc_server_options[i][0],
-                                              &irc_config_server_change_cb,
-                                              irc_server_options[i][0]);
+            new_server->options[i] = irc_config_server_new_option (
+                irc_config_file,
+                irc_config_section_server,
+                i,
+                option_name,
+                NULL,
+                NULL,
+                1,
+                &irc_config_server_check_value_cb,
+                irc_server_options[i][0],
+                &irc_config_server_change_cb,
+                irc_server_options[i][0]);
             irc_config_server_change_cb (irc_server_options[i][0],
                                          new_server->options[i]);
             free (option_name);

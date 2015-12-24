@@ -873,6 +873,7 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 | 41   | weechat.color.chat_nick_suffix _(WeeChat ≥ 0.4.1)_
 | 42   | weechat.color.emphasized _(WeeChat ≥ 0.4.2)_
 | 43   | weechat.color.chat_day_change _(WeeChat ≥ 0.4.2)_
+| 44   | weechat.color.chat_value_null _(WeeChat ≥ 1.4)_
 |===
 
 WeeChat 色は:

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-20 08:08+0100\n"
-"PO-Revision-Date: 2015-12-20 08:17+0100\n"
+"POT-Creation-Date: 2015-12-24 07:51+0100\n"
+"PO-Revision-Date: 2015-12-24 07:52+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -857,11 +857,11 @@ msgstr "Donnée sécurise \"%s\" supprimée"
 msgid "%sSecured data \"%s\" not found"
 msgstr "%sDonnée sécurisée \"%s\" non trouvée"
 
+msgid "default if null: "
+msgstr "défaut si nul : "
+
 msgid "default: "
 msgstr "défaut : "
-
-msgid "(unknown)"
-msgstr "(inconnu)"
 
 #, c-format
 msgid ""
@@ -4157,6 +4157,9 @@ msgstr "couleur du texte pour les délimiteurs de l'heure"
 
 msgid "text color for values"
 msgstr "couleur du texte pour les valeurs"
+
+msgid "text color for null values (undefined)"
+msgstr "couleur du texte pour les valeurs \"null\" (non définies)"
 
 msgid ""
 "text color for emphasized text (for example when searching text); this "
@@ -12536,3 +12539,6 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#~ msgid "(unknown)"
+#~ msgstr "(inconnu)"

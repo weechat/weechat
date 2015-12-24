@@ -4632,7 +4632,10 @@ Arguments:
 
 * 'config_file': configuration file pointer
 * 'section': section pointer
-* 'name': name of option
+* 'name': name of option; with WeeChat ≥ 1.4, the name can include a parent
+  option name (the value of parent option will be displayed in `/set` command
+  output if this option is "null"), the syntax is then:
+  "name << file.section.option"
 * 'type': type of option:
 ** 'boolean': boolean value (on/off)
 ** 'integer': integer value (with optional strings for values)
@@ -5300,6 +5303,7 @@ Arguments:
 ** 'config_file': configuration file pointer ('struct t_config_file *')
 ** 'section': section pointer ('struct t_config_section *')
 ** 'name': option name ('char *')
+** 'parent_name': name of parent option ('char *') _(WeeChat ≥ 1.4)_
 ** 'type': option type ('int *')
 ** 'description': option description ('char *')
 ** 'string_values': string values ('char *')

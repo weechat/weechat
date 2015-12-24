@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-20 08:08+0100\n"
+"POT-Creation-Date: 2015-12-24 07:51+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -827,11 +827,12 @@ msgstr "Dati sicuri \"%s\" eliminati"
 msgid "%sSecured data \"%s\" not found"
 msgstr "%sDati sicuri \"%s\" non trovati"
 
-msgid "default: "
+#, fuzzy
+msgid "default if null: "
 msgstr "predefinito: "
 
-msgid "(unknown)"
-msgstr "(sconosciuto)"
+msgid "default: "
+msgstr "predefinito: "
 
 #, fuzzy, c-format
 msgid ""
@@ -3888,6 +3889,10 @@ msgid "text color for time delimiters"
 msgstr "colore del testo per i delimitator dell'orario"
 
 msgid "text color for values"
+msgstr "colore del testo per i valori"
+
+#, fuzzy
+msgid "text color for null values (undefined)"
 msgstr "colore del testo per i valori"
 
 msgid ""
@@ -11710,3 +11715,6 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#~ msgid "(unknown)"
+#~ msgstr "(sconosciuto)"

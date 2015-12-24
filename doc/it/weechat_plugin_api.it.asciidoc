@@ -4758,7 +4758,11 @@ Argomenti:
 
 * 'config_file': puntatore al file di configurazione
 * 'section': puntatore alla sezione
-* 'name': nome dell'opzione
+// TRANSLATION MISSING
+* 'name': nome dell'opzione; with WeeChat ≥ 1.4, the name can include a parent
+  option name (the value of parent option will be displayed in `/set` command
+  output if this option is "null"), the syntax is then:
+  "name << file.section.option"
 * 'type': tipo dell'opzione:
 ** 'boolean': valore booleano (on/off)
 ** 'integer': valore intero (con stringhe opzionali per i valori)
@@ -5435,6 +5439,8 @@ Argomenti:
 ** 'config_file': puntatore al file di configurazione ('struct t_config_file *')
 ** 'section': puntatore alla sezione ('struct t_config_section *')
 ** 'name': nome dell'opzione ('char *')
+// TRANSLATION MISSING
+** 'parent_name': name of parent option ('char *') _(WeeChat ≥ 1.4)_
 ** 'type': tipo dell'opzione ('int *')
 ** 'description': descrizione dell'opzione ('char *')
 ** 'string_values': valori stringa ('char *')

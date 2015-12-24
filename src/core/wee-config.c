@@ -224,6 +224,7 @@ struct t_config_option *config_color_chat_text_found_bg;
 struct t_config_option *config_color_chat_time;
 struct t_config_option *config_color_chat_time_delimiters;
 struct t_config_option *config_color_chat_value;
+struct t_config_option *config_color_chat_value_null;
 struct t_config_option *config_color_emphasized;
 struct t_config_option *config_color_emphasized_bg;
 struct t_config_option *config_color_input_actions;
@@ -3219,6 +3220,12 @@ config_weechat_init_options ()
         "chat_value", "color",
         N_("text color for values"),
         NULL, GUI_COLOR_CHAT_VALUE, 0, "cyan", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_chat_value_null = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_value_null", "color",
+        N_("text color for null values (undefined)"),
+        NULL, GUI_COLOR_CHAT_VALUE_NULL, 0, "blue", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* emphasis (chat/bars) */
     config_color_emphasized = config_file_new_option (

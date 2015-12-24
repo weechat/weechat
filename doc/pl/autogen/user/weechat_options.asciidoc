@@ -197,6 +197,11 @@
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `cyan`)
 
+* [[option_weechat.color.chat_value_null]] *weechat.color.chat_value_null*
+** opis: `text color for null values (undefined)`
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `blue`)
+
 * [[option_weechat.color.emphasized]] *weechat.color.emphasized*
 ** opis: `kolor dla wyróżnionego tekstu (na przykład podczas wyszukiwania); opcja używana tylko jeśli opcja weechat.look.emphasized_attributes jest pustym ciągiem (wartość domyślna)`
 ** typ: kolor

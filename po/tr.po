@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-20 08:08+0100\n"
+"POT-Creation-Date: 2015-12-24 07:51+0100\n"
 "PO-Revision-Date: 2015-03-10 21:33+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -788,11 +788,12 @@ msgstr "Filtre \"%s\" silindi"
 msgid "%sSecured data \"%s\" not found"
 msgstr "%s: \"%s\" betiği bulunamadı"
 
-msgid "default: "
+#, fuzzy
+msgid "default if null: "
 msgstr "öntanımlı: "
 
-msgid "(unknown)"
-msgstr "(bilinmiyor)"
+msgid "default: "
+msgstr "öntanımlı: "
 
 #, c-format
 msgid ""
@@ -2875,6 +2876,10 @@ msgid "text color for time delimiters"
 msgstr ""
 
 msgid "text color for values"
+msgstr "değerler için metin rengi"
+
+#, fuzzy
+msgid "text color for null values (undefined)"
 msgstr "değerler için metin rengi"
 
 msgid ""
@@ -9608,3 +9613,6 @@ msgstr ""
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
+
+#~ msgid "(unknown)"
+#~ msgstr "(bilinmiyor)"

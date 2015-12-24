@@ -197,6 +197,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `cyan`)
 
+* [[option_weechat.color.chat_value_null]] *weechat.color.chat_value_null*
+** description: `couleur du texte pour les valeurs "null" (non définies)`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `blue`)
+
 * [[option_weechat.color.emphasized]] *weechat.color.emphasized*
 ** description: `couleur du texte pour le texte mis en valeur (par exemple lors de la recherche de texte) ; cette option est utilisée seulement si l'option weechat.look.emphasized_attributes est une chaîne vide (valeur par défaut)`
 ** type: couleur

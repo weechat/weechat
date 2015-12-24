@@ -115,6 +115,8 @@ struct t_config_option
     struct t_config_file *config_file;     /* configuration file            */
     struct t_config_section *section;      /* section                       */
     char *name;                            /* name                          */
+    char *parent_name;                     /* parent name (to inherit the   */
+                                           /* value from another option)    */
     enum t_config_option_type type;        /* type                          */
     char *description;                     /* description                   */
     char **string_values;                  /* allowed string values         */
@@ -222,6 +224,10 @@ extern int config_file_option_set_null (struct t_config_option *option,
 extern int config_file_option_unset (struct t_config_option *option);
 extern void config_file_option_rename (struct t_config_option *option,
                                        const char *new_name);
+extern char *config_file_option_value_to_string (struct t_config_option *option,
+                                                 int default_value,
+                                                 int add_delimiters,
+                                                 int use_colors);
 extern void *config_file_option_get_pointer (struct t_config_option *option,
                                              const char *property);
 extern int config_file_option_is_null (struct t_config_option *option);

@@ -565,6 +565,7 @@ config_file_option_malloc ()
         new_option->config_file = NULL;
         new_option->section = NULL;
         new_option->name = NULL;
+        new_option->parent_name = NULL;
         new_option->type = 0;
         new_option->description = NULL;
         new_option->string_values = NULL;
@@ -615,14 +616,31 @@ config_file_new_option (struct t_config_file *config_file,
     struct t_config_option *new_option;
     int var_type, int_value, argc, i, index_value;
     long number;
-    char *error;
+    char *error, *pos, *option_name, *parent_name;
+
+    new_option = NULL;
+    option_name = NULL;
+    parent_name = NULL;
 
     if (!name)
-        return NULL;
+        goto error;
+
+    pos = strstr (name, " << ");
+    if (pos)
+    {
+        option_name = string_strndup (name, pos - name);
+        parent_name = strdup (pos + 4);
+    }
+    else
+    {
+        option_name = strdup (name);
+    }
 
     if (config_file && section
-        && config_file_search_option (config_file, section, name))
-        return NULL;
+        && config_file_search_option (config_file, section, option_name))
+    {
+        goto error;
+    }
 
     var_type = -1;
     for (i = 0; i < CONFIG_NUM_OPTION_TYPES; i++)
@@ -638,7 +656,7 @@ config_file_new_option (struct t_config_file *config_file,
         gui_chat_printf (NULL, "%sError: unknown option type \"%s\"",
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          type);
-        return NULL;
+        goto error;
     }
 
     if (!null_value_allowed)
@@ -648,7 +666,7 @@ config_file_new_option (struct t_config_file *config_file,
         else if (!default_value && value)
             default_value = value;
         if (!default_value || !value)
-            return NULL;
+            goto error;
     }
 
     new_option = config_file_option_malloc ();
@@ -656,9 +674,10 @@ config_file_new_option (struct t_config_file *config_file,
     {
         new_option->config_file = config_file;
         new_option->section = section;
-        new_option->name = strdup (name);
+        new_option->name = strdup (option_name);
         if (!new_option->name)
             goto error;
+        new_option->parent_name = (parent_name) ? strdup (parent_name) : NULL;
         new_option->type = var_type;
         if (description)
         {
@@ -838,15 +857,22 @@ config_file_new_option (struct t_config_file *config_file,
         }
     }
 
-    return new_option;
+    goto end;
 
 error:
     if (new_option)
     {
         config_file_option_free_data (new_option);
         free (new_option);
+        new_option = NULL;
     }
-    return NULL;
+
+end:
+    if (option_name)
+        free (option_name);
+    if (parent_name)
+        free (parent_name);
+    return new_option;
 }
 
 /*
@@ -1648,11 +1674,16 @@ void
 config_file_option_rename (struct t_config_option *option,
                            const char *new_name)
 {
-    char *str_new_name;
+    char *str_new_name, *full_old_name, *full_new_name;
+    struct t_config_file *ptr_config;
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
 
     if (!option || !new_name || !new_name[0]
         || config_file_search_option (option->config_file, option->section, new_name))
         return;
+
+    full_old_name = config_file_option_full_name (option);
 
     str_new_name = strdup (new_name);
     if (str_new_name)
@@ -1679,6 +1710,155 @@ config_file_option_rename (struct t_config_option *option,
         if (option->section)
             config_file_option_insert_in_section (option);
     }
+
+    full_new_name = config_file_option_full_name (option);
+
+    /* rename "parent_name" in any option using the old option name */
+    if (full_old_name && full_new_name)
+    {
+        for (ptr_config = config_files; ptr_config;
+             ptr_config = ptr_config->next_config)
+        {
+            for (ptr_section = ptr_config->sections; ptr_section;
+                 ptr_section = ptr_section->next_section)
+            {
+                for (ptr_option = ptr_section->options; ptr_option;
+                     ptr_option = ptr_option->next_option)
+                {
+                    if (ptr_option->parent_name
+                        && (strcmp (ptr_option->parent_name, full_old_name) == 0))
+                    {
+                        free (ptr_option->parent_name);
+                        ptr_option->parent_name = strdup (full_new_name);
+                    }
+                }
+            }
+        }
+    }
+
+    if (full_old_name)
+        free (full_old_name);
+    if (full_new_name)
+        free (full_new_name);
+}
+
+/*
+ * Builds a string with the value or default value of option,
+ * depending on the type of option.
+ *
+ * According to default_value:
+ *   0: value of option is returned
+ *   1: default value of option is returned
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+config_file_option_value_to_string (struct t_config_option *option,
+                                    int default_value,
+                                    int use_colors,
+                                    int use_delimiters)
+{
+    char *value;
+    const char *ptr_value;
+    int enabled, length;
+
+    if ((default_value && !option->default_value)
+        || (!default_value && !option->value))
+    {
+        length = 7 + ((use_colors) ? 64 : 0) + 1;
+        value = malloc (length);
+        if (!value)
+            return NULL;
+        snprintf (value, length,
+                  "%s%s",
+                  (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE_NULL) : "",
+                  "null");
+        return value;
+    }
+
+    switch (option->type)
+    {
+        case CONFIG_OPTION_TYPE_BOOLEAN:
+            enabled = (default_value) ?
+                CONFIG_BOOLEAN_DEFAULT(option) : CONFIG_BOOLEAN(option);
+            length = 7 + ((use_colors) ? 64 : 0) + 1;
+            value = malloc (length);
+            if (!value)
+                return NULL;
+            snprintf (value, length,
+                      "%s%s",
+                      (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
+                      (enabled) ? "on" : "off");
+            return value;
+            break;
+        case CONFIG_OPTION_TYPE_INTEGER:
+            if (option->string_values)
+            {
+                ptr_value = (default_value) ?
+                    option->string_values[CONFIG_INTEGER_DEFAULT(option)] :
+                    option->string_values[CONFIG_INTEGER(option)];
+                length = strlen (ptr_value) + ((use_colors) ? 64 : 0) + 1;
+                value = malloc (length);
+                if (!value)
+                    return NULL;
+                snprintf (value, length,
+                          "%s%s",
+                          (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
+                          ptr_value);
+                return value;
+            }
+            else
+            {
+                length = 31 + ((use_colors) ? 64 : 0) + 1;
+                value = malloc (length);
+                if (!value)
+                    return NULL;
+                snprintf (value, length,
+                          "%s%d",
+                          (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
+                          (default_value) ? CONFIG_INTEGER_DEFAULT(option) : CONFIG_INTEGER(option));
+                return value;
+            }
+            break;
+        case CONFIG_OPTION_TYPE_STRING:
+            ptr_value = (default_value) ? CONFIG_STRING_DEFAULT(option) : CONFIG_STRING(option);
+            length = strlen (ptr_value) + ((use_colors) ? 64 : 0) + 1;
+            value = malloc (length);
+            if (!value)
+                return NULL;
+            snprintf (value, length,
+                      "%s%s%s%s%s%s",
+                      (use_colors && use_delimiters) ? GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS) : "",
+                      (use_delimiters) ? "\"" : "",
+                      (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
+                      ptr_value,
+                      (use_colors && use_delimiters) ? GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS) : "",
+                      (use_delimiters) ? "\"" : "");
+            return value;
+            break;
+        case CONFIG_OPTION_TYPE_COLOR:
+            ptr_value = gui_color_get_name (
+                (default_value) ? CONFIG_COLOR_DEFAULT(option) : CONFIG_COLOR(option));
+            if (!ptr_value)
+                return NULL;
+            length = strlen (ptr_value) + ((use_colors) ? 64 : 0) + 1;
+            value = malloc (length);
+            if (!value)
+                return NULL;
+            snprintf (value, length,
+                      "%s%s",
+                      (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
+                      ptr_value);
+            return value;
+            break;
+        case CONFIG_NUM_OPTION_TYPES:
+            /* make C compiler happy */
+            break;
+    }
+
+    /* make C static analyzer happy (never executed) */
+    return NULL;
 }
 
 /*
@@ -1698,6 +1878,8 @@ config_file_option_get_pointer (struct t_config_option *option,
         return option->section;
     else if (string_strcasecmp (property, "name") == 0)
         return option->name;
+    else if (string_strcasecmp (property, "parent_name") == 0)
+        return option->parent_name;
     else if (string_strcasecmp (property, "type") == 0)
         return &option->type;
     else if (string_strcasecmp (property, "description") == 0)
@@ -2667,6 +2849,8 @@ config_file_option_free_data (struct t_config_option *option)
 {
     if (option->name)
         free (option->name);
+    if (option->parent_name)
+        free (option->parent_name);
     if (option->description)
         free (option->description);
     if (option->string_values)
@@ -2934,6 +3118,7 @@ config_file_hdata_config_option_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_config_option, config_file, POINTER, 0, NULL, "config_file");
         HDATA_VAR(struct t_config_option, section, POINTER, 0, NULL, "config_section");
         HDATA_VAR(struct t_config_option, name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, parent_name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, type, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, description, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, string_values, STRING, 0, "*", NULL);
@@ -2956,6 +3141,150 @@ config_file_hdata_config_option_cb (void *data, const char *hdata_name)
 }
 
 /*
+ * Adds a configuration option in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+config_file_add_option_to_infolist(struct t_infolist *infolist,
+                                   struct t_config_file *config_file,
+                                   struct t_config_section *section,
+                                   struct t_config_option *option,
+                                   const char *option_name)
+{
+    char *option_full_name, *value, *string_values;
+    struct t_config_option *ptr_parent_option;
+    struct t_infolist_item *ptr_item;
+    int rc;
+
+    rc = 1;
+
+    option_full_name = config_file_option_full_name (option);
+    if (!option_full_name)
+        goto error;
+
+    if (option_name && option_name[0]
+        && (!string_match (option_full_name, option_name, 0)))
+    {
+        goto end;
+    }
+
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        goto error;
+
+    if (!infolist_new_var_string (ptr_item, "full_name", option_full_name))
+        goto error;
+    if (!infolist_new_var_string (ptr_item, "config_name", config_file->name))
+        goto error;
+    if (!infolist_new_var_string (ptr_item, "section_name", section->name))
+        goto error;
+    if (!infolist_new_var_string (ptr_item, "option_name", option->name))
+        goto error;
+    if (!infolist_new_var_string (ptr_item, "parent_name", option->parent_name))
+        goto error;
+    if (!infolist_new_var_string (ptr_item, "description", option->description))
+        goto error;
+    if (!infolist_new_var_string (ptr_item, "description_nls",
+                                  (option->description
+                                   && option->description[0]) ?
+                                  _(option->description) : ""))
+    {
+        goto error;
+    }
+    string_values = string_build_with_split_string (
+        (const char **)option->string_values, "|");
+    if (!infolist_new_var_string (ptr_item, "string_values", string_values))
+    {
+        if (string_values)
+            free (string_values);
+        goto error;
+    }
+    if (string_values)
+        free (string_values);
+    if (!infolist_new_var_integer (ptr_item, "min", option->min))
+        goto error;
+    if (!infolist_new_var_integer (ptr_item, "max", option->max))
+        goto error;
+    if (!infolist_new_var_integer (ptr_item, "null_value_allowed",
+                                   option->null_value_allowed))
+    {
+        goto error;
+    }
+    if (!infolist_new_var_integer (ptr_item, "value_is_null",
+                                   (option->value) ? 0 : 1))
+    {
+        goto error;
+    }
+    if (!infolist_new_var_integer (ptr_item,
+                                   "default_value_is_null",
+                                   (option->default_value) ?
+                                   0 : 1))
+    {
+        goto error;
+    }
+    if (!infolist_new_var_string (ptr_item, "type",
+                                  config_option_type_string[option->type]))
+    {
+        goto error;
+    }
+    if (option->value)
+    {
+        value = config_file_option_value_to_string (option, 0, 0, 0);
+        if (!value)
+            goto error;
+        if (!infolist_new_var_string (ptr_item, "value", value))
+        {
+            free (value);
+            goto error;
+        }
+        free (value);
+    }
+    if (option->default_value)
+    {
+        value = config_file_option_value_to_string (option, 1, 0, 0);
+        if (!value)
+            goto error;
+        if (!infolist_new_var_string (ptr_item, "default_value", value))
+        {
+            free (value);
+            goto error;
+        }
+        free (value);
+    }
+    if (option->parent_name)
+    {
+        config_file_search_with_string (option->parent_name,
+                                        NULL, NULL, &ptr_parent_option, NULL);
+        if (ptr_parent_option && ptr_parent_option->value)
+        {
+            value = config_file_option_value_to_string (ptr_parent_option,
+                                                        0, 0, 0);
+            if (!value)
+                goto error;
+            if (!infolist_new_var_string (ptr_item, "parent_value", value))
+            {
+                free (value);
+                goto error;
+            }
+            free (value);
+        }
+    }
+
+    goto end;
+
+error:
+    rc = 0;
+
+end:
+    free (option_full_name);
+    return rc;
+}
+
+/*
  * Adds configuration options in an infolist.
  *
  * Returns:
@@ -2970,9 +3299,6 @@ config_file_add_to_infolist (struct t_infolist *infolist,
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    struct t_infolist_item *ptr_item;
-    int length;
-    char *option_full_name, value[128], *string_values;
 
     if (!infolist)
         return 0;
@@ -2986,280 +3312,13 @@ config_file_add_to_infolist (struct t_infolist *infolist,
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {
-                length = strlen (ptr_config->name) + 1 +
-                    strlen (ptr_section->name) + 1 +
-                    strlen (ptr_option->name) + 1;
-                option_full_name = malloc (length);
-                if (option_full_name)
+                if (!config_file_add_option_to_infolist (infolist,
+                                                         ptr_config,
+                                                         ptr_section,
+                                                         ptr_option,
+                                                         option_name))
                 {
-                    snprintf (option_full_name, length, "%s.%s.%s",
-                              ptr_config->name,
-                              ptr_section->name,
-                              ptr_option->name);
-                    if (!option_name || !option_name[0]
-                        || string_match (option_full_name, option_name, 0))
-                    {
-                        ptr_item = infolist_new_item (infolist);
-                        if (!ptr_item)
-                        {
-                            free (option_full_name);
-                            return 0;
-                        }
-                        if (!infolist_new_var_string (ptr_item,
-                                                      "full_name",
-                                                      option_full_name))
-                        {
-                            free (option_full_name);
-                            return 0;
-                        }
-                        if (!infolist_new_var_string (ptr_item,
-                                                      "config_name",
-                                                      ptr_config->name))
-                        {
-                            free (option_full_name);
-                            return 0;
-                        }
-                        if (!infolist_new_var_string (ptr_item,
-                                                      "section_name",
-                                                      ptr_section->name))
-                        {
-                            free (option_full_name);
-                            return 0;
-                        }
-                        if (!infolist_new_var_string (ptr_item,
-                                                      "option_name",
-                                                      ptr_option->name))
-                        {
-                            free (option_full_name);
-                            return 0;
-                        }
-                        if (!infolist_new_var_string (ptr_item,
-                                                      "description",
-                                                      ptr_option->description))
-                        {
-                            free (option_full_name);
-                            return 0;
-                        }
-                        if (!infolist_new_var_string (ptr_item,
-                                                      "description_nls",
-                                                      (ptr_option->description
-                                                       && ptr_option->description[0]) ?
-                                                      _(ptr_option->description) : ""))
-                        {
-                            free (option_full_name);
-                            return 0;
-                        }
-                        string_values = string_build_with_split_string ((const char **)ptr_option->string_values,
-                                                                        "|");
-                        if (!infolist_new_var_string (ptr_item,
-                                                      "string_values",
-                                                      string_values))
-                        {
-                            if (string_values)
-                                free (string_values);
-                            free (option_full_name);
-                            return 0;
-                        }
-                        if (string_values)
-                            free (string_values);
-                        if (!infolist_new_var_integer (ptr_item,
-                                                       "min",
-                                                       ptr_option->min))
-                        {
-                            free (option_full_name);
-                            return 0;
-                        }
-                        if (!infolist_new_var_integer (ptr_item,
-                                                       "max",
-                                                       ptr_option->max))
-                        {
-                            free (option_full_name);
-                            return 0;
-                        }
-                        if (!infolist_new_var_integer (ptr_item,
-                                                       "null_value_allowed",
-                                                       ptr_option->null_value_allowed))
-                        {
-                            free (option_full_name);
-                            return 0;
-                        }
-                        if (!infolist_new_var_integer (ptr_item,
-                                                       "value_is_null",
-                                                       (ptr_option->value) ?
-                                                       0 : 1))
-                        {
-                            free (option_full_name);
-                            return 0;
-                        }
-                        if (!infolist_new_var_integer (ptr_item,
-                                                       "default_value_is_null",
-                                                       (ptr_option->default_value) ?
-                                                       0 : 1))
-                        {
-                            free (option_full_name);
-                            return 0;
-                        }
-                        switch (ptr_option->type)
-                        {
-                            case CONFIG_OPTION_TYPE_BOOLEAN:
-                                if (!infolist_new_var_string (ptr_item,
-                                                              "type",
-                                                              "boolean"))
-                                {
-                                    free (option_full_name);
-                                    return 0;
-                                }
-                                if (ptr_option->value)
-                                {
-                                    if (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE)
-                                        snprintf (value, sizeof (value), "on");
-                                    else
-                                        snprintf (value, sizeof (value), "off");
-                                    if (!infolist_new_var_string (ptr_item,
-                                                                  "value",
-                                                                  value))
-                                    {
-                                        free (option_full_name);
-                                        return 0;
-                                    }
-                                }
-                                if (ptr_option->default_value)
-                                {
-                                    if (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE)
-                                        snprintf (value, sizeof (value), "on");
-                                    else
-                                        snprintf (value, sizeof (value), "off");
-                                    if (!infolist_new_var_string (ptr_item,
-                                                                  "default_value",
-                                                                  value))
-                                    {
-                                        free (option_full_name);
-                                        return 0;
-                                    }
-                                }
-                                break;
-                            case CONFIG_OPTION_TYPE_INTEGER:
-                                if (!infolist_new_var_string (ptr_item,
-                                                              "type",
-                                                              "integer"))
-                                {
-                                    free (option_full_name);
-                                    return 0;
-                                }
-                                if (ptr_option->string_values)
-                                {
-                                    if (ptr_option->value)
-                                    {
-                                        if (!infolist_new_var_string (ptr_item,
-                                                                      "value",
-                                                                      ptr_option->string_values[CONFIG_INTEGER(ptr_option)]))
-                                        {
-                                            free (option_full_name);
-                                            return 0;
-                                        }
-                                    }
-                                    if (ptr_option->default_value)
-                                    {
-                                        if (!infolist_new_var_string (ptr_item,
-                                                                      "default_value",
-                                                                      ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]))
-                                        {
-                                            free (option_full_name);
-                                            return 0;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    if (ptr_option->value)
-                                    {
-                                        snprintf (value, sizeof (value), "%d",
-                                                  CONFIG_INTEGER(ptr_option));
-                                        if (!infolist_new_var_string (ptr_item,
-                                                                      "value",
-                                                                      value))
-                                        {
-                                            free (option_full_name);
-                                            return 0;
-                                        }
-                                    }
-                                    if (ptr_option->default_value)
-                                    {
-                                        snprintf (value, sizeof (value), "%d",
-                                                  CONFIG_INTEGER_DEFAULT(ptr_option));
-                                        if (!infolist_new_var_string (ptr_item,
-                                                                      "default_value",
-                                                                      value))
-                                        {
-                                            free (option_full_name);
-                                            return 0;
-                                        }
-                                    }
-                                }
-                                break;
-                            case CONFIG_OPTION_TYPE_STRING:
-                                if (!infolist_new_var_string (ptr_item,
-                                                              "type",
-                                                              "string"))
-                                {
-                                    free (option_full_name);
-                                    return 0;
-                                }
-                                if (ptr_option->value)
-                                {
-                                    if (!infolist_new_var_string (ptr_item,
-                                                                  "value",
-                                                                  CONFIG_STRING(ptr_option)))
-                                    {
-                                        free (option_full_name);
-                                        return 0;
-                                    }
-                                }
-                                if (ptr_option->default_value)
-                                {
-                                    if (!infolist_new_var_string (ptr_item,
-                                                                  "default_value",
-                                                                  CONFIG_STRING_DEFAULT(ptr_option)))
-                                    {
-                                        free (option_full_name);
-                                        return 0;
-                                    }
-                                }
-                                break;
-                            case CONFIG_OPTION_TYPE_COLOR:
-                                if (!infolist_new_var_string (ptr_item,
-                                                              "type",
-                                                              "color"))
-                                {
-                                    free (option_full_name);
-                                    return 0;
-                                }
-                                if (ptr_option->value)
-                                {
-                                    if (!infolist_new_var_string (ptr_item,
-                                                                  "value",
-                                                                  gui_color_get_name (CONFIG_COLOR(ptr_option))))
-                                    {
-                                        free (option_full_name);
-                                        return 0;
-                                    }
-                                }
-                                if (ptr_option->default_value)
-                                {
-                                    if (!infolist_new_var_string (ptr_item,
-                                                                  "default_value",
-                                                                  gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option))))
-                                    {
-                                        free (option_full_name);
-                                        return 0;
-                                    }
-                                }
-                                break;
-                            case CONFIG_NUM_OPTION_TYPES:
-                                break;
-                        }
-                    }
-                    free (option_full_name);
+                    return 0;
                 }
             }
         }
@@ -3327,6 +3386,7 @@ config_file_print_log ()
                 log_printf ("        config_file. . . . . : 0x%lx", ptr_option->config_file);
                 log_printf ("        section. . . . . . . : 0x%lx", ptr_option->section);
                 log_printf ("        name . . . . . . . . : '%s'",  ptr_option->name);
+                log_printf ("        parent_name. . . . . : '%s'",  ptr_option->parent_name);
                 log_printf ("        type . . . . . . . . : %d",    ptr_option->type);
                 log_printf ("        description. . . . . : '%s'",  ptr_option->description);
                 log_printf ("        string_values. . . . : 0x%lx", ptr_option->string_values);

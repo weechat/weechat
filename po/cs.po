@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-20 17:29+0100\n"
+"POT-Creation-Date: 2015-12-24 07:51+0100\n"
 "PO-Revision-Date: 2015-12-20 17:33+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -841,11 +841,12 @@ msgstr "Chráněná data \"%s\" nastavena"
 msgid "%sSecured data \"%s\" not found"
 msgstr "%s%s: skript \"%s\" nenalezen"
 
-msgid "default: "
+#, fuzzy
+msgid "default if null: "
 msgstr "výchozí: "
 
-msgid "(unknown)"
-msgstr "(neznámý)"
+msgid "default: "
+msgstr "výchozí: "
 
 #, fuzzy, c-format
 msgid ""
@@ -3595,6 +3596,10 @@ msgid "text color for time delimiters"
 msgstr "barva textu děličů času"
 
 msgid "text color for values"
+msgstr "barva textu pro hodnoty"
+
+#, fuzzy
+msgid "text color for null values (undefined)"
 msgstr "barva textu pro hodnoty"
 
 msgid ""
@@ -11258,3 +11263,6 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid "(unknown)"
+#~ msgstr "(neznámý)"

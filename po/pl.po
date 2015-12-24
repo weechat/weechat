@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-20 08:08+0100\n"
+"POT-Creation-Date: 2015-12-24 07:51+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -856,11 +856,12 @@ msgstr "Usunięto zabezpieczone dane \"%s\""
 msgid "%sSecured data \"%s\" not found"
 msgstr "%sNie znaleziono zabezpieczonych danych \"%s\""
 
-msgid "default: "
+#, fuzzy
+msgid "default if null: "
 msgstr "domyślnie: "
 
-msgid "(unknown)"
-msgstr "(nieznane)"
+msgid "default: "
+msgstr "domyślnie: "
 
 #, c-format
 msgid ""
@@ -4092,6 +4093,10 @@ msgid "text color for time delimiters"
 msgstr "kolor separatora czasu"
 
 msgid "text color for values"
+msgstr "kolor wyświetlania wartości"
+
+#, fuzzy
+msgid "text color for null values (undefined)"
 msgstr "kolor wyświetlania wartości"
 
 msgid ""
@@ -12237,3 +12242,6 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid "(unknown)"
+#~ msgstr "(nieznane)"

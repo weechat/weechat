@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-20 08:08+0100\n"
+"POT-Creation-Date: 2015-12-24 07:51+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -871,11 +871,12 @@ msgid "%sSecured data \"%s\" not found"
 msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy
-msgid "default: "
+msgid "default if null: "
 msgstr "  . alapérték: %d\n"
 
-msgid "(unknown)"
-msgstr "(ismeretlen)"
+#, fuzzy
+msgid "default: "
+msgstr "  . alapérték: %d\n"
 
 #, c-format
 msgid ""
@@ -3180,6 +3181,10 @@ msgstr "információs pult határolóinak színe"
 
 #, fuzzy
 msgid "text color for values"
+msgstr "üzenetek színe"
+
+#, fuzzy
+msgid "text color for null values (undefined)"
 msgstr "üzenetek színe"
 
 msgid ""
@@ -10580,3 +10585,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#~ msgid "(unknown)"
+#~ msgstr "(ismeretlen)"

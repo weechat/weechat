@@ -268,6 +268,7 @@ extern struct t_config_option *config_color_chat_text_found_bg;
 extern struct t_config_option *config_color_chat_time;
 extern struct t_config_option *config_color_chat_time_delimiters;
 extern struct t_config_option *config_color_chat_value;
+extern struct t_config_option *config_color_chat_value_null;
 extern struct t_config_option *config_color_emphasized;
 extern struct t_config_option *config_color_emphasized_bg;
 extern struct t_config_option *config_color_input_actions;

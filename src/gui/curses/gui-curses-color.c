@@ -1462,6 +1462,7 @@ gui_color_init_weechat ()
     gui_color_build (GUI_COLOR_CHAT_NICK_SUFFIX, CONFIG_COLOR(config_color_chat_nick_suffix), CONFIG_COLOR(config_color_chat_bg));
     gui_color_build (GUI_COLOR_EMPHASIS, CONFIG_COLOR(config_color_emphasized), CONFIG_COLOR(config_color_emphasized_bg));
     gui_color_build (GUI_COLOR_CHAT_DAY_CHANGE, CONFIG_COLOR(config_color_chat_day_change), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_VALUE_NULL, CONFIG_COLOR(config_color_chat_value_null), CONFIG_COLOR(config_color_chat_bg));
 
     /*
      * define old nick colors for compatibility on /upgrade with previous

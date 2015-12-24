@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-20 08:08+0100\n"
+"POT-Creation-Date: 2015-12-24 07:51+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -840,11 +840,12 @@ msgstr "Barra eliminada"
 msgid "%sSecured data \"%s\" not found"
 msgstr "%s: script \"%s\" no encontrado"
 
-msgid "default: "
+#, fuzzy
+msgid "default if null: "
 msgstr "predeterminado: "
 
-msgid "(unknown)"
-msgstr "(desconocido)"
+msgid "default: "
+msgstr "predeterminado: "
 
 #, fuzzy, c-format
 msgid ""
@@ -3777,6 +3778,10 @@ msgid "text color for time delimiters"
 msgstr "color para los delimitadores de la hora"
 
 msgid "text color for values"
+msgstr "color para los valores"
+
+#, fuzzy
+msgid "text color for null values (undefined)"
 msgstr "color para los valores"
 
 msgid ""
@@ -11527,3 +11532,6 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse al transmisor"
+
+#~ msgid "(unknown)"
+#~ msgstr "(desconocido)"
