@@ -73,6 +73,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * relay: display the arrow before client id and protocol in raw buffer
 * ruby: fix load of scripts requiring "uri" (issue #433)
 * ruby: fix Ruby detection when pkg-config is not installed
+* tests: fix locale used to execute tests
 
 [[1.3]]
 == Version 1.3 (2015-08-16)
