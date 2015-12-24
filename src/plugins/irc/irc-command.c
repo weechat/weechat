@@ -4696,7 +4696,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                             (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_NICKS_ALTERNATE)) ?
                             _("on") : _("off"));
         else
-            weechat_printf (NULL, "  nicksalternate . . . : %s%s",
+            weechat_printf (NULL, "  nicks_alternate. . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
                             (weechat_config_boolean (server->options[IRC_SERVER_OPTION_NICKS_ALTERNATE])) ?
                             _("on") : _("off"));
