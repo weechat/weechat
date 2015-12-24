@@ -152,6 +152,7 @@ struct t_config_option *config_look_mouse;
 struct t_config_option *config_look_mouse_timer_delay;
 struct t_config_option *config_look_nick_color_force;
 struct t_config_option *config_look_nick_color_hash;
+struct t_config_option *config_look_nick_color_hash_seed;
 struct t_config_option *config_look_nick_color_stop_chars;
 struct t_config_option *config_look_nick_prefix;
 struct t_config_option *config_look_nick_suffix;
@@ -3140,6 +3141,13 @@ config_weechat_init_options ()
            "of djb2 (position of letters matters: anagrams of a nick have "
            "different color), sum = sum of letters"),
         "djb2|sum", 0, 0, "djb2", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_nick_color_hash_seed = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nick_color_hash_seed", "string",
+        N_("seed to be used with the hash algorithm used for nick colors; "
+           "modifying this shuffles nick colors"),
+        NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_nick_color_stop_chars = config_file_new_option (
         weechat_config_file, ptr_section,

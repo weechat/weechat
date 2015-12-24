@@ -46,6 +46,8 @@ int
 gui_nick_hash_color (const char *nickname)
 {
     unsigned long color;
+    int length;
+    char *str;
     const char *ptr_nick;
 
     if (!nickname || !nickname[0])
@@ -57,7 +59,21 @@ gui_nick_hash_color (const char *nickname)
     if (config_num_nick_colors == 0)
         return 0;
 
-    ptr_nick = nickname;
+    length = strlen (CONFIG_STRING(config_look_nick_color_hash_seed)) +
+             strlen (nickname) + 1;
+    str = malloc (length);
+    if (str)
+    {
+        snprintf (str, length, "%s%s",
+                  CONFIG_STRING(config_look_nick_color_hash_seed),
+                  nickname);
+        ptr_nick = str;
+    }
+    else
+    {
+        ptr_nick = nickname;
+    }
+
     color = 0;
 
     switch (CONFIG_INTEGER(config_look_nick_color_hash))
@@ -81,6 +97,9 @@ gui_nick_hash_color (const char *nickname)
             }
             break;
     }
+
+    if (str)
+        free (str);
 
     return (color % config_num_nick_colors);
 }

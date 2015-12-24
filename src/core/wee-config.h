@@ -203,6 +203,7 @@ extern struct t_config_option *config_look_mouse;
 extern struct t_config_option *config_look_mouse_timer_delay;
 extern struct t_config_option *config_look_nick_color_force;
 extern struct t_config_option *config_look_nick_color_hash;
+extern struct t_config_option *config_look_nick_color_hash_seed;
 extern struct t_config_option *config_look_nick_color_stop_chars;
 extern struct t_config_option *config_look_nick_prefix;
 extern struct t_config_option *config_look_nick_suffix;
