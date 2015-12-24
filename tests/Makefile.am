@@ -23,7 +23,8 @@ noinst_LIBRARIES = lib_ncurses_fake.a lib_weechat_unit_tests.a
 
 lib_ncurses_fake_a_SOURCES = ncurses-fake.c
 
-lib_weechat_unit_tests_a_SOURCES = unit/core/test-arraylist.cpp \
+lib_weechat_unit_tests_a_SOURCES = unit/test-plugins.cpp \
+                                   unit/core/test-arraylist.cpp \
                                    unit/core/test-eval.cpp \
                                    unit/core/test-hashtable.cpp \
                                    unit/core/test-hdata.cpp \
