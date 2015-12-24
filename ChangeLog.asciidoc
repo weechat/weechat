@@ -327,7 +327,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * doc: fix compilation of man pages with autotools in source directory
 * api: fix truncated process output in hook_process() (issue #266)
 * api: fix crash when reading config options with NULL value (issue #238)
-* tests: fix compilation of tests with clang (issue #275)
 * irc: defer the auto-connection to servers with a timer
   (issue #279, task #13038)
 * irc: add missing server options "sasl_timeout" and "notify" in output of
@@ -351,6 +350,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * trigger: fix memory leak when allocating a new trigger with several regex
 * xfer: fix freeze when accepting DCC (issue #160, issue #174)
 * xfer: bind to wildcard address when sending (issue #173)
+* tests: fix compilation of tests with clang (issue #275)
 
 [[1.0.1]]
 == Version 1.0.1 (2014-09-28)
@@ -369,9 +369,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   are displayed in same message (issue #171)
 * api: fix bug in function hdata_move() when absolute value of count is greater
   than 1
-* tests: fix build of tests when the build directory is outside source tree
-  (issue #178)
-* tests: fix memory leak in tests launcher
 * aspell: fix compilation with Enchant < 1.6.0 (issue #192)
 * aspell: fix crash with command "/aspell addword" if no word is given
   (issue #164, issue #165)
@@ -388,6 +385,9 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (issue #189)
 * trigger: fix regex used in default triggers to hide passwords ("\S" is not
   supported on *BSD) (issue #172)
+* tests: fix build of tests when the build directory is outside source tree
+  (issue #178)
+* tests: fix memory leak in tests launcher
 
 [[1.0]]
 == Version 1.0 (2014-08-15)
@@ -423,7 +423,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add signals "key_combo_{default|search|cursor}"
 * core: display a warning in case of inconsistency between the options
   weechat.look.save_{config|layout}_on_exit
-* tests: add unit tests using CppUTest
 * api: add argument "flags" in function hdata_new_list()
 * api: allow wildcard "*" inside the mask in function string_match()
 * api: allow value "-1" for property "hotlist" in function buffer_set()
@@ -471,6 +470,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * relay: add option relay.network.clients_purge_delay
 * rmodifier: remove plugin (replaced by trigger)
 * trigger: add trigger plugin: new command /trigger and file trigger.conf
+* tests: add unit tests using CppUTest
 
 [[1.0_bugs]]
 === Bugs fixed
