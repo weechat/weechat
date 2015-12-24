@@ -50,7 +50,7 @@
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
 ** description: `color for nick prefixes using mode char (o=op, h=halfop, v=voice, ..), format is: "o:color1;h:color2;v:color3" (if a mode is not found, WeeChat will try with next modes received from server ("PREFIX"); a special mode "*" can be used as default color if no mode has been found in list)`
 ** type: string
-** values: any string (default value: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
+** values: any string (default value: `"y:lightred;q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
 * [[option_irc.color.notice]] *irc.color.notice*
 ** description: `color for text "Notice" in notices`

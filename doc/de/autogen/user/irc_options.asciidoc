@@ -50,7 +50,7 @@
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
 ** Beschreibung: `Farben für Nick Präfix für das Modus-Symbol (o=op, h=halfop, v=voice, ..), Format: "o:color1;h:color2;v:color3" (wird ein Modus nicht gefunden probiert WeeChat einen der nächsten Modi aus, die der Server sendet ("PREFIX"); wird kein Modus in der Liste gefunden, wird eine Standardfarbe verwendet die dem Zeichen "*" zugeordnet wurde)`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
+** Werte: beliebige Zeichenkette (Standardwert: `"y:lightred;q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
 * [[option_irc.color.notice]] *irc.color.notice*
 ** Beschreibung: `Farbe des "Notice"-Textes in Notizen`

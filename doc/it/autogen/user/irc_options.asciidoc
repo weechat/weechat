@@ -50,7 +50,7 @@
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
 ** descrizione: `colore per i prefissi dei nick usando il carattere di modalità (o=operatore, h=halfop, v=voice, ..), il formato è: "o:colore1;h:colore2;v:colore3" (se una modalità non viene trovata, WeeChat proverà con le modalità successive ricevute dal server ("PREFIX"); può essere usata una modalità speciale "*" come colore prefefinito se non viene trovata nessuna modalità nella lista)`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
+** valori: qualsiasi stringa (valore predefinito: `"y:lightred;q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
 * [[option_irc.color.notice]] *irc.color.notice*
 ** descrizione: `colore per il testo "Notifica" nelle notifiche`

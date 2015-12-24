@@ -50,7 +50,7 @@
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
 ** opis: `kolor dla przedrostków nicków zawierających oznaczenie statusu (o=operator, h=halfop, v=voice, ..), format: "o:kolor1;h:kolor2;v:kolor3" (jeśli nie znaleziono statusu, WeeChat sprawdzi następne atrybuty uzyskane od serwera ("PREFIX"); specjalny tryb "*" może zostać użyty jako domyślny kolor jeśli nie znaleziono atrybutu na liście)`
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
+** wartości: dowolny ciąg (domyślna wartość: `"y:lightred;q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
 * [[option_irc.color.notice]] *irc.color.notice*
 ** opis: `kolor tekstu "Notice" w podświetleniach`

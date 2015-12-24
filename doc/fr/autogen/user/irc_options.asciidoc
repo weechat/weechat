@@ -50,7 +50,7 @@
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
 ** description: `couleur pour les préfixes du pseudo en utilisant les caractères de mode (o=op, h=halfop, v=voice, ...), le format est : "o:couleur1;h:couleur2;v:couleur3" (si un mode n'est pas trouvé, WeeChat essaiera avec les modes suivants reçus du serveur ("PREFIX") ; un mode spécial "*" peut être utilisé comme couleur par défaut si aucun mode n'est trouvé dans la liste)`
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
+** valeurs: toute chaîne (valeur par défaut: `"y:lightred;q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
 * [[option_irc.color.notice]] *irc.color.notice*
 ** description: `couleur pour le texte "Notice" dans les notices`
