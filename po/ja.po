@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2015-12-24 20:42+0100\n"
-"PO-Revision-Date: 2015-12-02 19:26+0100\n"
+"PO-Revision-Date: 2015-12-25 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -846,9 +846,8 @@ msgstr "保護データ \"%s\" を削除しました"
 msgid "%sSecured data \"%s\" not found"
 msgstr "%s保護データ \"%s\" が見つかりません"
 
-#, fuzzy
 msgid "default if null: "
-msgstr "デフォルト: "
+msgstr "null の場合のデフォルト: "
 
 msgid "default: "
 msgstr "デフォルト: "
@@ -3999,9 +3998,8 @@ msgstr "時間区切りのテキスト色"
 msgid "text color for values"
 msgstr "値のテキスト色"
 
-#, fuzzy
 msgid "text color for null values (undefined)"
-msgstr "値のテキスト色"
+msgstr "値が null (未定義) の場合のテキスト色"
 
 msgid ""
 "text color for emphasized text (for example when searching text); this "
@@ -4375,7 +4373,6 @@ msgid "%sError: too many calls to command \"%s\" (looping)"
 msgstr ""
 "%sエラー: コマンド \"%s\" の呼び出し回数が多すぎます (ループしています)"
 
-#, fuzzy
 msgid ""
 "Error: unable to create/append to log file (weechat.log)\n"
 "If another WeeChat process is using this file, try to run WeeChat\n"
@@ -4386,7 +4383,7 @@ msgstr ""
 "\"--dir\" コマンドラインオプションをつけて WeeChat を起動してみてください。\n"
 
 msgid "set server name indication (SNI) failed"
-msgstr ""
+msgstr "サーバ名表示 (SNI) の設定に失敗しました"
 
 msgid "invalid priorities"
 msgstr "無効なプロパティ"
@@ -5554,9 +5551,9 @@ msgstr "リモート操作用の FIFO パイプ"
 msgid "%s: removing old fifo pipe \"%s\""
 msgstr "%s: 古い fifo パイプ \"%s\" の削除中"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: pipe opened (file: %s)"
-msgstr "マウスを有効化しました"
+msgstr "%s: パイプを開けました (ファイル: %s)"
 
 #, c-format
 msgid "%s%s: unable to open pipe (%s) for reading"
@@ -5586,21 +5583,19 @@ msgstr "%s%s: パイプ読み取り中にエラー (%d %s)、パイプを閉じ�
 msgid "%s%s: error opening file, closing it"
 msgstr "%s%s: ファイルを開いている最中にエラー、ファイルを閉じています"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: pipe is enabled (file: %s)"
-msgstr "マウスを有効化しました"
+msgstr "%s: パイプは有効化されています (ファイル: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: pipe is disabled"
-msgstr "マウスを無効化しました"
+msgstr "%s: パイプは無効化されています"
 
-#, fuzzy
 msgid "fifo plugin configuration"
-msgstr "logger プラグイン設定"
+msgstr "fifo プラグイン設定"
 
-#, fuzzy
 msgid "enable|disable|toggle"
-msgstr "enable|disable|toggle [<delay>]"
+msgstr "enable|disable|toggle"
 
 msgid ""
 " enable: enable FIFO pipe\n"
@@ -5624,6 +5619,26 @@ msgid ""
 "Examples:\n"
 "  /fifo toggle"
 msgstr ""
+" enable: FIFO パイプを有効化します\n"
+"disable: FIFO パイプを無効化します\n"
+" toggle: FIFO パイプの有効無効を切り替えます\n"
+"\n"
+"FIFO パイプは WeeChat をリモート操作する際に使われます: FIFO パイプを通じて"
+"シェルからコマンドやテキストを送信できます。\n"
+"デフォルトの場合 FIFO パイプは ~/.weechat/weechat_fifo_xxx です (\"xxx\" は "
+"WeeChat の PID です)。\n"
+"\n"
+"フォーマットは次のうちのどれか 1 つを使ってください:\n"
+"  plugin.buffer *テキストまたはコマンド\n"
+"  *テキストまたはコマンド\n"
+"\n"
+"freenode のニックネームを変更する例:\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"\n"
+"詳しい情報と例はユーザーズガイドを参照してください。\n"
+"\n"
+"例:\n"
+"  /fifo toggle"
 
 msgid "name of FIFO pipe"
 msgstr "FIFO パイプの名前"
@@ -7552,17 +7567,16 @@ msgstr ""
 "サーバで使用するニックネーム (コンマ区切り) (注意: 値は評価されます、/help "
 "eval を参照してください)"
 
-#, fuzzy
 msgid ""
 "get an alternate nick when all the declared nicks are already used on "
 "server: add some \"_\" until the nick has a length of 9, and then replace "
 "last char (or the two last chars) by a number from 1 to 99, until we find a "
 "nick not used on server"
 msgstr ""
-"サーバでニックネームが既に利用されている場合、他のニックネームを生成します: "
-"利用されていないニックネームが見つかるまで、ニックネームの長さが 9 以下なら数"
-"個の \"_\" を追加、その後最後の 1 文字 (または最後の 2 文字) を 1 から 99 で"
-"置き換えます"
+"すべての指定されたニックネームがサーバで既に利用されている場合、他のニック"
+"ネームを生成します: ニックネームの長さが 9 になるまで数個の \"_\" を追加しま"
+"す。その後利用されていないニックネームが見つかるまで、最後の 1 文字 (または最"
+"後の 2 文字) を 1 から 99 まで置き換えていきます"
 
 msgid "user name to use on server (note: content is evaluated, see /help eval)"
 msgstr ""
@@ -10380,9 +10394,8 @@ msgstr "IRC チャンネルごとのバックログの最大行数 (0 = 制限�
 msgid "display backlog starting from last client disconnect"
 msgstr "最後にクライアントを切断した以降のバックログを表示"
 
-#, fuzzy
 msgid "display backlog starting from your last message"
-msgstr "最後にクライアントを切断した以降のバックログを表示"
+msgstr "最後に自分が送信したメッセージ以降のバックログを表示"
 
 msgid ""
 "comma-separated list of messages tags which are displayed in backlog per IRC "
@@ -10712,7 +10725,6 @@ msgstr ""
 "[<script>...] || install|remove|installremove|hold [-q] <script> "
 "[<script>...] || upgrade || update"
 
-#, fuzzy
 msgid ""
 "          list: list loaded scripts (all languages)\n"
 "            -o: send list of loaded scripts to buffer\n"
@@ -10787,8 +10799,9 @@ msgstr ""
 "            -o: バッファにロード済みスクリプトのリストを表示\n"
 "            -i: コマンドラインにロード済みスクリプトのリストをコピー (バッ"
 "ファ送信用)\n"
-"        search: タグまたはテキストでスクリプトを検索し、スクリプトバッファに"
-"結果を表示\n"
+"        search: タグ、プログラミング言語 (python、perl、...)、ファイル名拡張"
+"子(py、pl、...)、テキストに基づいてスクリプトを検索し、スクリプトバッファに結"
+"果を表示\n"
 "          show: スクリプトに関する詳細を表示\n"
 "          load: スクリプトのロード (複数可)\n"
 "        unload: スクリプトのアンロード (複数可)\n"
@@ -10853,13 +10866,11 @@ msgstr ""
 "  /script reload urlserver\n"
 "  /script upgrade"
 
-#, fuzzy
 msgid "list of script languages"
-msgstr "スクリプトのリスト"
+msgstr "スクリプトのプログラミング言語のリスト"
 
-#, fuzzy
 msgid "list of script extensions"
-msgstr "スクリプトのリスト"
+msgstr "スクリプトの拡張子のリスト"
 
 msgid "list of scripts in repository"
 msgstr "リポジトリに存在するスクリプトのリスト"

@@ -4633,10 +4633,9 @@ struct t_config_option *weechat_config_new_option (
 
 * 'config_file': 設定ファイルへのポインタ
 * 'section': セクションへのポインタ
-// TRANSLATION MISSING
-* 'name': オプションの名前; with WeeChat ≥ 1.4, the name can include a parent
-  option name (the value of parent option will be displayed in `/set` command
-  output if this option is "null"), the syntax is then:
+* 'name': オプションの名前; WeeChat バージョン 1.4 以上の場合、名前には親オプションの名前を含めることも可能です
+  (このオプションが "null" の場合、親オプションの値が `/set`
+  コマンドの出力に表示されます)。以下の構文を使ってください:
   "name << file.section.option"
 * 'type': オプションの型:
 ** 'boolean': ブール値 (on/off)
@@ -5305,8 +5304,7 @@ void *weechat_config_option_get_pointer (struct t_config_option *option,
 ** 'config_file': 設定ファイルへのポインタ ('struct t_config_file *')
 ** 'section': セクションへのポインタ ('struct t_config_section *')
 ** 'name': オプション名 ('char *')
-// TRANSLATION MISSING
-** 'parent_name': name of parent option ('char *') _(WeeChat ≥ 1.4)_
+** 'parent_name': 親オプションの名前 ('char *') _(WeeChat バージョン 1.4 以上で利用可)_
 ** 'type': オプションの型 ('int *')
 ** 'description': オプションの説明 ('char *')
 ** 'string_values': 文字列値 ('char *')

@@ -199,16 +199,15 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       weechat-aspell-speller.c    | スペルチェッカ管理
 |    charset/                       | charset プラグイン
 |       charset.c                   | charset 関数
-|    exec/                          | Exec プラグイン
+|    exec/                          | exec プラグイン
 |       exec.c                      | exec の主要関数
-|       exec-buffer.c               | Exec バッファ
-|       exec-command.c              | Exec コマンド
-|       exec-completion.c           | Exec 補完
-|       exec-config.c               | Exec 設定オプション (exec.conf ファイル)
+|       exec-buffer.c               | exec バッファ
+|       exec-command.c              | exec コマンド
+|       exec-completion.c           | exec 補完
+|       exec-config.c               | exec 設定オプション (exec.conf ファイル)
 |    fifo/                          | fifo プラグイン
 |       fifo.c                      | fifo の主要関数
-// TRANSLATION MISSING
-|       fifo-command.c              | Fifo commands
+|       fifo-command.c              | fifo コマンド
 |       fifo-info.c                 | fifo の情報/インフォリスト/hdata
 |    guile/                         | guile (scheme) プラグイン
 |       weechat-guile.c             | guile の主要関数 (スクリプトのロード/アンロード、guile コードの実行)
