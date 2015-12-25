@@ -66,11 +66,11 @@
 
 | ruby | ruby_script | スクリプトのリスト
 
-| script | script_extensions | list of script extensions
+| script | script_extensions | スクリプトの拡張子のリスト
 
 | script | script_files | スクリプトディレクトリ内のファイル
 
-| script | script_languages | list of script languages
+| script | script_languages | スクリプトのプログラミング言語のリスト
 
 | script | script_scripts | リポジトリに存在するスクリプトのリスト
 

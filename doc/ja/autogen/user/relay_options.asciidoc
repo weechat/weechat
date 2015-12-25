@@ -63,7 +63,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_relay.irc.backlog_since_last_message]] *relay.irc.backlog_since_last_message*
-** 説明: `display backlog starting from your last message`
+** 説明: `最後に自分が送信したメッセージ以降のバックログを表示`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
