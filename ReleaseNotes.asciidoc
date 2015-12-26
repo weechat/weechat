@@ -17,6 +17,30 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file 'ChangeLog.asciidoc' in sources).
 
 
+[[1.4]]
+== Version 1.4 (under dev)
+
+[[1.4_irc_alternate_nicks]]
+=== IRC alternate nicks
+
+The option 'irc.network.alternate_nick' has been moved into servers
+('irc.server_default.nicks_alternate' and 'irc.server.xxx.nicks_alternate').
+
+If you disabled this option, you must switch it off again, globally or by
+server.
+
+Globally (default value for all servers):
+
+----
+/set irc.server_default.nicks_alternate off
+----
+
+For a specific server:
+
+----
+/set irc.server.freenode.nicks_alternate off
+----
+
 [[1.3]]
 == Version 1.3 (2015-08-16)
 
