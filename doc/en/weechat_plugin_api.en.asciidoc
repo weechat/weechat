@@ -14633,7 +14633,7 @@ C example:
 [source,C]
 ----
 struct t_hdata *hdata = weechat_hdata_get ("irc_server");
-void *servers = weechat_hdata_get (hdata, "irc_servers");
+void *servers = weechat_hdata_get_list (hdata, "irc_servers");
 
 /* search irc server with name "freenode" */
 void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == freenode", 1);
