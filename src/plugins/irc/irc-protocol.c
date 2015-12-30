@@ -638,6 +638,43 @@ IRC_PROTOCOL_CALLBACK(cap)
 }
 
 /*
+ * Callback for the IRC message "CHGHOST": user/host change of a nick (with
+ * capability "chghost"):
+ * http://ircv3.net/specs/extensions/chghost-3.2.html
+ *
+ * Message looks like:
+ *   :nick!user@host CHGHOST user new.host.goes.here
+ *   :nick!user@host CHGHOST newuser host
+ *   :nick!user@host CHGHOST newuser new.host.goes.here
+ */
+
+IRC_PROTOCOL_CALLBACK(chghost)
+{
+    int length;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        ptr_nick = irc_nick_search (server, ptr_channel, nick);
+        if (ptr_nick)
+        {
+            if (ptr_nick->host)
+                free (ptr_nick->host);
+            length = strlen (argv[2]) + 1 + strlen (argv[3]) + 1;
+            ptr_nick->host = malloc (length);
+            if (ptr_nick->host)
+                snprintf (ptr_nick->host, length, "%s@%s", argv[2], argv[3]);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC message "ERROR".
  *
  * Message looks like:
@@ -5706,6 +5743,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "authenticate", /* authenticate */ 1, 0, &irc_protocol_cb_authenticate },
           { "away", /* away (cap away-notify) */ 1, 0, &irc_protocol_cb_away },
           { "cap", /* client capability */ 1, 0, &irc_protocol_cb_cap },
+          { "chghost", /* user/host change (cap chghost) */ 1, 0, &irc_protocol_cb_chghost },
           { "error", /* error received from IRC server */ 1, 0, &irc_protocol_cb_error },
           { "invite", /* invite a nick on a channel */ 1, 0, &irc_protocol_cb_invite },
           { "join", /* join a channel */ 1, 0, &irc_protocol_cb_join },
