@@ -2825,6 +2825,14 @@ string_input_for_buffer (const char *string)
     if (!string)
         return NULL;
 
+    /* a single "/" is not a command */
+    if (strcmp (string, "/") == 0)
+        return string;
+
+    /* "/ " is not a command */
+    if (strncmp (string, "/ ", 2) == 0)
+        return string;
+
     /* special case for C comments pasted in input line */
     if (strncmp (string, "/*", 2) == 0)
         return string;
@@ -2854,9 +2862,13 @@ string_input_for_buffer (const char *string)
 
     next_char = utf8_next_char (string);
 
-    /* there's no next char, then it's a command */
+    /* there's no next char, then it's a not command */
     if (!next_char || !next_char[0])
-        return NULL;
+        return string;
+
+    /* next char is a space, then it's not a command */
+    if (next_char[0] == ' ')
+        return string;
 
     /* check if first char is doubled: if yes, then it's not a command */
     if (utf8_charcmp (string, next_char) == 0)

@@ -21,6 +21,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[1.4_features]]
 === New features
 
+* core: fix execution of empty command name ("/" and "/ " are not valid
+  commands)
 * core: add a parent name in options, display inherited values if null in
   /set output, add option weechat.color.chat_value_null (issue #629)
 * core: add tag "term_warning" in warnings about wrong $TERM on startup
