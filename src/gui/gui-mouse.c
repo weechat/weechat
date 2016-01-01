@@ -1,7 +1,7 @@
 /*
  * gui-mouse.c - functions for mouse (used by all GUI)
  *
- * Copyright (C) 2011-2015 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2011-2016 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

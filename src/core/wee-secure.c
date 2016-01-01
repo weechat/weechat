@@ -1,7 +1,7 @@
 /*
  * wee-secure.c - secured data configuration options (file sec.conf)
  *
- * Copyright (C) 2013-2015 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2013-2016 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

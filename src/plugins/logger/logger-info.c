@@ -1,7 +1,7 @@
 /*
  * logger-info.c - info and infolist hooks for logger plugin
  *
- * Copyright (C) 2003-2015 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2016 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

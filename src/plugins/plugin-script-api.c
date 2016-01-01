@@ -1,7 +1,7 @@
 /*
  * script-api.c - script API functions, used by script plugins
  *
- * Copyright (C) 2003-2015 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2016 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.

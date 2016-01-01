@@ -1,7 +1,7 @@
 /*
  * wee-upgrade.c - save/restore session data of WeeChat core
  *
- * Copyright (C) 2003-2015 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2016 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

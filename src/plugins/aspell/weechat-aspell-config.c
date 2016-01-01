@@ -2,7 +2,7 @@
  * weechat-aspell-config.c - aspell configuration options (file aspell.conf)
  *
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
- * Copyright (C) 2006-2015 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2006-2016 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
