@@ -448,7 +448,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
-** descrizione: `elenco di host/porte o IP/porte per il server (separati da virgole)`
+** descrizione: `list of hostname/port or IP/port for server (separated by comma) (note: content is evaluated, see /help eval)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

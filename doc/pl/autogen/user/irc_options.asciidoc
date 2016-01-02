@@ -448,7 +448,7 @@
 ** wartości: on, off (domyślna wartość: `off`)
 
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
-** opis: `lista host/port lub adres IP/port dla serwera (oddzielone przecinkiem)`
+** opis: `list of hostname/port or IP/port for server (separated by comma) (note: content is evaluated, see /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 

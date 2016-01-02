@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-24 20:42+0100\n"
+"POT-Creation-Date: 2016-01-02 10:06+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7102,8 +7102,11 @@ msgstr ""
 msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
 msgstr "%s%s: error al crear CTCP \"%s\" => \"%s\""
 
-msgid "list of hostname/port or IP/port for server (separated by comma)"
-msgstr "lista de dirección/puerto para el servidor (separados por comas)"
+#, fuzzy
+msgid ""
+"list of hostname/port or IP/port for server (separated by comma) (note: "
+"content is evaluated, see /help eval)"
+msgstr "comando ejecutado cuando WeeChat inicia, antes de cargar los plugins"
 
 msgid ""
 "name of proxy used for this server (optional, proxy must be defined with "
@@ -11534,6 +11537,9 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse al transmisor"
+
+#~ msgid "list of hostname/port or IP/port for server (separated by comma)"
+#~ msgstr "lista de dirección/puerto para el servidor (separados por comas)"
 
 #~ msgid "(unknown)"
 #~ msgstr "(desconocido)"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-24 20:42+0100\n"
+"POT-Creation-Date: 2016-01-02 10:06+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6344,7 +6344,9 @@ msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 #, fuzzy
-msgid "list of hostname/port or IP/port for server (separated by comma)"
+msgid ""
+"list of hostname/port or IP/port for server (separated by comma) (note: "
+"content is evaluated, see /help eval)"
 msgstr "felhasználónév az IRC szerveren"
 
 msgid ""
@@ -10586,6 +10588,10 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid "list of hostname/port or IP/port for server (separated by comma)"
+#~ msgstr "felhasználónév az IRC szerveren"
 
 #~ msgid "(unknown)"
 #~ msgstr "(ismeretlen)"

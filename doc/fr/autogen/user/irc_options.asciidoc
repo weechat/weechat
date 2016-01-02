@@ -448,7 +448,7 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
-** description: `liste de nom/port ou IP/port pour le serveur (séparés par des virgules)`
+** description: `liste de nom/port ou IP/port pour le serveur (séparés par des virgules) (note : le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

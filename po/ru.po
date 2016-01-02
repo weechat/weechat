@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2015-12-24 20:42+0100\n"
+"POT-Creation-Date: 2016-01-02 10:06+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6374,7 +6374,9 @@ msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 #, fuzzy
-msgid "list of hostname/port or IP/port for server (separated by comma)"
+msgid ""
+"list of hostname/port or IP/port for server (separated by comma) (note: "
+"content is evaluated, see /help eval)"
 msgstr "ник, используемый на IRC сервере"
 
 msgid ""
@@ -10613,6 +10615,10 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+#~ msgid "list of hostname/port or IP/port for server (separated by comma)"
+#~ msgstr "ник, используемый на IRC сервере"
 
 #~ msgid "(unknown)"
 #~ msgstr "(неизвестен)"

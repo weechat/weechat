@@ -408,7 +408,7 @@ void
 irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
 {
     int i;
-    char *pos, *error;
+    char *pos, *error, *addresses_eval;
     long number;
 
     /* free data */
@@ -432,8 +432,11 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
     /* set new addresses/ports */
     if (addresses && addresses[0])
     {
+        addresses_eval = weechat_string_eval_expression (addresses,
+                                                         NULL, NULL, NULL);
         server->addresses_array = weechat_string_split (
-            addresses, ",", 0, 0, &server->addresses_count);
+            (addresses_eval) ? addresses_eval : addresses,
+            ",", 0, 0, &server->addresses_count);
         server->ports_array = malloc (
             server->addresses_count * sizeof (server->ports_array[0]));
         server->retry_array = malloc (
@@ -456,6 +459,8 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
             }
             server->retry_array[i] = 0;
         }
+        if (addresses_eval)
+            free (addresses_eval);
     }
 }
 

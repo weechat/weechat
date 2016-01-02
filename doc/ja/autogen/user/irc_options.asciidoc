@@ -448,7 +448,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
-** 説明: `サーバのホスト名/ポート番号又は IP アドレス/ポート番号のリスト (コンマ区切り)`
+** 説明: `list of hostname/port or IP/port for server (separated by comma) (note: content is evaluated, see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
