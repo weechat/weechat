@@ -91,14 +91,12 @@ Sans paramètre, cette commande affiche la liste des bannissements pour le canal
 /cap  ls
       list
       req|ack [<capacité> [<capacité>...]]
-      clear
       end
 
    ls : lister les capacités supportées par le serveur
  list : lister les capacités actuellement activées
   req : demander une capacité
   ack : accuser réception de capacités qui nécessitent un accusé de réception du client
-clear : effacer les capacités actuellement activées
   end : terminer la négociation de capacité
 
 Sans paramètre, "ls" et "list" sont envoyés.
@@ -109,8 +107,7 @@ Les capacités à activer automatiquement sur les serveurs peuvent être défini
 
 Exemples :
    /cap
-   /cap req multi-prefix
-   /cap clear
+   /cap req multi-prefix away-notify
 ----
 
 [[command_irc_connect]]

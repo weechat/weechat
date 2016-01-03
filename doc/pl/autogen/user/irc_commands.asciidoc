@@ -91,14 +91,12 @@ Without argument, this command displays the ban list for current channel.
 /cap  ls
       list
       req|ack [<capability> [<capability>...]]
-      clear
       end
 
    ls: list the capabilities supported by the server
  list: list the capabilities currently enabled
   req: request a capability
   ack: acknowledge capabilities which require client-side acknowledgement
-clear: clear the capabilities currently enabled
   end: end the capability negotiation
 
 Without argument, "ls" and "list" are sent.
@@ -109,8 +107,7 @@ The capabilities to automatically enable on servers can be set in option irc.ser
 
 Examples:
    /cap
-   /cap req multi-prefix
-   /cap clear
+   /cap req multi-prefix away-notify
 ----
 
 [[command_irc_connect]]

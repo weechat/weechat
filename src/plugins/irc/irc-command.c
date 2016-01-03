@@ -6148,13 +6148,12 @@ irc_command_init ()
         "cap",
         N_("client capability negotiation"),
         N_("ls || list || req|ack [<capability> [<capability>...]]"
-           " || clear || end"),
+           " || end"),
         N_("   ls: list the capabilities supported by the server\n"
            " list: list the capabilities currently enabled\n"
            "  req: request a capability\n"
            "  ack: acknowledge capabilities which require client-side "
            "acknowledgement\n"
-           "clear: clear the capabilities currently enabled\n"
            "  end: end the capability negotiation\n"
            "\n"
            "Without argument, \"ls\" and \"list\" are sent.\n"
@@ -6169,13 +6168,11 @@ irc_command_init ()
            "\n"
            "Examples:\n"
            "   /cap\n"
-           "   /cap req multi-prefix\n"
-           "   /cap clear"),
+           "   /cap req multi-prefix away-notify"),
         "ls"
         " || list"
         " || req " IRC_COMMAND_CAP_SUPPORTED_COMPLETION
         " || ack " IRC_COMMAND_CAP_SUPPORTED_COMPLETION
-        " || clear"
         " || end",
         &irc_command_cap, NULL);
     weechat_hook_command (
