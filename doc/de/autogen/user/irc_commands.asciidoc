@@ -93,19 +93,19 @@ Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel angezei
       req|ack [<capability> [<capability>...]]
       end
 
-   ls: list the capabilities supported by the server
- list: list the capabilities currently enabled
-  req: request a capability
-  ack: acknowledge capabilities which require client-side acknowledgement
-  end: end the capability negotiation
+   ls: führt alle Fähigkeiten auf die vom Server unterstützt werden
+ list: führt alle Fähigkeiten auf die aktuell genutzt werden
+  req: fordert eine Fähigkeit an
+  ack: bestätigt eine Fähigkeit die von Serverseite eine Bestätigung erfordert
+  end: beendet die Übertragung von Fähigkeiten
 
-Without argument, "ls" and "list" are sent.
+Ohne Angaben von Argumenten werden "ls" und "list" gesendet.
 
-Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, extended-join, multi-prefix, server-time, userhost-in-names.
+Fähigkeiten die von WeeChat unterstützt werden: account-notify, away-notify, cap-notify, extended-join, multi-prefix, server-time, userhost-in-names.
 
-The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
+Fähigkeiten die standardmäßig genutzt werden sollen können mit der Option  irc.server_default.capabilities gesetzt werden (oder individuell für jeden Server mit der Option irc.server.xxx.capabilities).
 
-Examples:
+Beispiele:
    /cap
    /cap req multi-prefix away-notify
 ----
