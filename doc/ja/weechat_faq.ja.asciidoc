@@ -8,7 +8,7 @@
 
 翻訳者:
 
-* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2012-2015
+* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2012-2016
 
 [NOTE]
 この文書は WeeChat バージョン 0.3.0 以上向けに書かれたものですが、
