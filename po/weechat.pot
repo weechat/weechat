@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:28+0100\n"
+"POT-Creation-Date: 2016-01-05 07:49+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8769,7 +8769,7 @@ msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr ""
 
 #, c-format
-msgid "%s%s: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr ""
 
 #, c-format
@@ -8821,7 +8821,7 @@ msgid "Trigger \"%s\" disabled"
 msgstr ""
 
 #, c-format
-msgid "%s%s: invalid name for trigger"
+msgid "%s%s: invalid trigger name: \"%s\""
 msgstr ""
 
 #, c-format
@@ -8840,7 +8840,7 @@ msgid "List of triggers:"
 msgstr ""
 
 #, c-format
-msgid "%s%s: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type: \"%s\""
 msgstr ""
 
 #, c-format
@@ -8852,7 +8852,7 @@ msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr ""
 
 #, c-format
-msgid "%s%s: invalid return code \"%s\""
+msgid "%s%s: invalid return code: \"%s\""
 msgstr ""
 
 #, c-format

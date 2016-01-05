@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:28+0100\n"
-"PO-Revision-Date: 2015-12-02 19:26+0100\n"
+"POT-Creation-Date: 2016-01-05 07:49+0100\n"
+"PO-Revision-Date: 2016-01-05 07:50+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -10707,7 +10707,7 @@ msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sError: no se pudo renombrar el filtro \"%s\" a \"%s\""
 
 #, fuzzy, c-format
-msgid "%s%s: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%s%s: error al compilar la expresión regular \"%s\""
 
 #, c-format
@@ -10765,7 +10765,7 @@ msgid "Trigger \"%s\" disabled"
 msgstr "Filtro \"%s\" desactivado"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid name for trigger"
+msgid "%s%s: invalid trigger name: \"%s\""
 msgstr "%s%s: set de caracteres inválido: \"%s\""
 
 #, fuzzy, c-format
@@ -10785,7 +10785,7 @@ msgid "List of triggers:"
 msgstr "Lista de proxies:"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%sError: no se pudo crear el atajo \"%s\""
 
 #, fuzzy, c-format
@@ -10797,7 +10797,7 @@ msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%sError en la expresión a evaluar"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid return code \"%s\""
+msgid "%s%s: invalid return code: \"%s\""
 msgstr "%sError: no se pudo deshacer el atajo \"%s\""
 
 #, c-format
@@ -11539,9 +11539,3 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse al transmisor"
-
-#~ msgid "list of hostname/port or IP/port for server (separated by comma)"
-#~ msgstr "lista de dirección/puerto para el servidor (separados por comas)"
-
-#~ msgid "(unknown)"
-#~ msgstr "(desconocido)"

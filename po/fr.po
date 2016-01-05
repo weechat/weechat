@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:28+0100\n"
-"PO-Revision-Date: 2016-01-05 07:28+0100\n"
+"POT-Creation-Date: 2016-01-05 07:49+0100\n"
+"PO-Revision-Date: 2016-01-05 07:50+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -11596,8 +11596,8 @@ msgstr ""
 "paramètres)"
 
 #, c-format
-msgid "%s%s: invalid regular expression in trigger \"%s\""
-msgstr "%s%s : expression régulière invalide dans le trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
+msgstr "%s%s : expression régulière invalide dans le trigger : \"%s\""
 
 #, c-format
 msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
@@ -11650,8 +11650,8 @@ msgid "Trigger \"%s\" disabled"
 msgstr "Trigger \"%s\" désactivé"
 
 #, c-format
-msgid "%s%s: invalid name for trigger"
-msgstr "%s%s : nom invalide pour le trigger"
+msgid "%s%s: invalid trigger name: \"%s\""
+msgstr "%s%s : nom de trigger invalide : \"%s\""
 
 #, c-format
 msgid "%s%s: trigger \"%s\" already exists"
@@ -11669,8 +11669,8 @@ msgid "List of triggers:"
 msgstr "Liste des triggers :"
 
 #, c-format
-msgid "%s%s: invalid hook type \"%s\""
-msgstr "%s%s : type de hook \"%s\" invalide"
+msgid "%s%s: invalid hook type: \"%s\""
+msgstr "%s%s : type de hook invalide : \"%s\""
 
 #, c-format
 msgid "%s%s: invalid format for regular expression"
@@ -11681,8 +11681,8 @@ msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%s%s : expression régulière invalide (la compilation a échoué)"
 
 #, c-format
-msgid "%s%s: invalid return code \"%s\""
-msgstr "%s%s : code retour \"%s\" invalide"
+msgid "%s%s: invalid return code: \"%s\""
+msgstr "%s%s : code retour invalide : \"%s\""
 
 #, c-format
 msgid ""
@@ -12543,10 +12543,3 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
-
-#~ msgid "list of hostname/port or IP/port for server (separated by comma)"
-#~ msgstr ""
-#~ "liste de nom/port ou IP/port pour le serveur (séparés par des virgules)"
-
-#~ msgid "(unknown)"
-#~ msgstr "(inconnu)"

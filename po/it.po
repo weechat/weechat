@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:28+0100\n"
-"PO-Revision-Date: 2015-12-02 19:26+0100\n"
+"POT-Creation-Date: 2016-01-05 07:49+0100\n"
+"PO-Revision-Date: 2016-01-05 07:50+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -10898,7 +10898,7 @@ msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sErrore: impossibile rinominare il filtro da \"%s\" a \"%s\""
 
 #, fuzzy, c-format
-msgid "%s%s: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%s%s: errore nella compilazione dell'espressione regolare \"%s\""
 
 #, c-format
@@ -10956,7 +10956,7 @@ msgid "Trigger \"%s\" disabled"
 msgstr "Filtro \"%s\" disabilitato"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid name for trigger"
+msgid "%s%s: invalid trigger name: \"%s\""
 msgstr "%s%s: set di caratter invalido: \"%s\""
 
 #, fuzzy, c-format
@@ -10976,7 +10976,7 @@ msgid "List of triggers:"
 msgstr "Elenco di proxy:"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%sErrore: impossibile associare il tasto \"%s\""
 
 #, fuzzy, c-format
@@ -10988,7 +10988,7 @@ msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%sErrore nell'espressione da analizzare"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid return code \"%s\""
+msgid "%s%s: invalid return code: \"%s\""
 msgstr "%sErrore: impossibile rimuovere la combinazione del tasto \"%s\""
 
 #, c-format
@@ -11724,9 +11724,3 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
-
-#~ msgid "list of hostname/port or IP/port for server (separated by comma)"
-#~ msgstr "elenco di host/porte o IP/porte per il server (separati da virgole)"
-
-#~ msgid "(unknown)"
-#~ msgstr "(sconosciuto)"

@@ -405,8 +405,9 @@ trigger_command_rename (struct t_trigger *trigger, const char *new_name)
         if (!trigger_name_valid (name2))
         {
             weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: invalid name for trigger"),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
+                                 _("%s%s: invalid trigger name: \"%s\""),
+                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
+                                 name2);
             goto end;
         }
         /* check that no trigger already exists with the new name */
@@ -496,15 +497,16 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         if (!trigger_name_valid (sargv[0]))
         {
             weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: invalid name for trigger"),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
+                                 _("%s%s: invalid trigger name: \"%s\""),
+                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
+                                 sargv[0]);
             goto end;
         }
         type = trigger_search_hook_type (sargv[1]);
         if (type < 0)
         {
             weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: invalid hook type \"%s\""),
+                                 _("%s%s: invalid hook type: \"%s\""),
                                  weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
                                  sargv[1]);
             goto end;
@@ -548,7 +550,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
             && (trigger_search_return_code (sargv[6]) < 0))
         {
             weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: invalid return code \"%s\""),
+                                 _("%s%s: invalid return code: \"%s\""),
                                  weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
                                  sargv[6]);
             goto end;
@@ -622,7 +624,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
             if (type < 0)
             {
                 weechat_printf_tags (NULL, "no_trigger",
-                                     _("%s%s: invalid hook type \"%s\""),
+                                     _("%s%s: invalid hook type: \"%s\""),
                                      weechat_prefix ("error"),
                                      TRIGGER_PLUGIN_NAME, argv[2]);
                 goto end;
@@ -783,8 +785,9 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         if (!trigger_name_valid (argv[3]))
         {
             weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: invalid name for trigger"),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
+                                 _("%s%s: invalid trigger name: \"%s\""),
+                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
+                                 argv[3]);
             goto end;
         }
         /* check that no trigger already exists with the new name */

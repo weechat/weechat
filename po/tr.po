@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:28+0100\n"
-"PO-Revision-Date: 2015-03-10 21:33+0100\n"
+"POT-Creation-Date: 2016-01-05 07:49+0100\n"
+"PO-Revision-Date: 2016-01-05 07:51+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -8851,7 +8851,7 @@ msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sHata: dosya \"%s\" oluşturulamaz"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%sHata: dosya \"%s\" oluşturulamaz"
 
 #, c-format
@@ -8905,9 +8905,9 @@ msgstr "Filtre \"%s\" etkin"
 msgid "Trigger \"%s\" disabled"
 msgstr "Filtre \"%s\" devre dışı"
 
-#, c-format
-msgid "%s%s: invalid name for trigger"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: invalid trigger name: \"%s\""
+msgstr "%sHata: dosya \"%s\" oluşturulamaz"
 
 #, fuzzy, c-format
 msgid "%s%s: trigger \"%s\" already exists"
@@ -8926,7 +8926,7 @@ msgid "List of triggers:"
 msgstr "filtrelerin listesi"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%sHata: dosya \"%s\" oluşturulamaz"
 
 #, fuzzy, c-format
@@ -8938,7 +8938,7 @@ msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%sHata: dosya \"%s\" oluşturulamaz"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid return code \"%s\""
+msgid "%s%s: invalid return code: \"%s\""
 msgstr "%sHata: dosya \"%s\" oluşturulamaz"
 
 #, c-format
@@ -9618,6 +9618,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
-
-#~ msgid "(unknown)"
-#~ msgstr "(bilinmiyor)"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:28+0100\n"
-"PO-Revision-Date: 2016-01-05 09:00+0900\n"
+"POT-Creation-Date: 2016-01-05 07:49+0100\n"
+"PO-Revision-Date: 2016-01-05 07:50+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -11159,8 +11159,8 @@ msgstr ""
 msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%s%s: トリガ \"%s\" のフックを作成できません (無効な引数)"
 
-#, c-format
-msgid "%s%s: invalid regular expression in trigger \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%s%s: トリガ \"%s\" の正規表現が間違っています"
 
 #, c-format
@@ -11214,9 +11214,9 @@ msgstr "トリガ \"%s\" が有効化されました"
 msgid "Trigger \"%s\" disabled"
 msgstr "トリガ \"%s\" が無効化されました"
 
-#, c-format
-msgid "%s%s: invalid name for trigger"
-msgstr "%s%s: トリガの名前が無効です"
+#, fuzzy, c-format
+msgid "%s%s: invalid trigger name: \"%s\""
+msgstr "%s%s: 不正な文字セット: \"%s\""
 
 #, c-format
 msgid "%s%s: trigger \"%s\" already exists"
@@ -11233,8 +11233,8 @@ msgstr "%s%s: トリガ \"%s\" の名前変更に失敗しました"
 msgid "List of triggers:"
 msgstr "トリガのリスト:"
 
-#, c-format
-msgid "%s%s: invalid hook type \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%s%s: 無効なフックタイプ \"%s\""
 
 #, c-format
@@ -11245,8 +11245,8 @@ msgstr "%s%s: 正規表現用のフォーマットが間違っています"
 msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%s%s: 不正な正規表現 (コンパイル失敗)"
 
-#, c-format
-msgid "%s%s: invalid return code \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: invalid return code: \"%s\""
 msgstr "%s%s: 無効なリターンコード \"%s\""
 
 #, c-format
@@ -12060,11 +12060,3 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
-
-#~ msgid "list of hostname/port or IP/port for server (separated by comma)"
-#~ msgstr ""
-#~ "サーバのホスト名/ポート番号又は IP アドレス/ポート番号のリスト (コンマ区切"
-#~ "り)"
-
-#~ msgid "(unknown)"
-#~ msgstr "(未定義)"

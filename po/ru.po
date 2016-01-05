@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:28+0100\n"
-"PO-Revision-Date: 2015-12-02 19:26+0100\n"
+"POT-Creation-Date: 2016-01-05 07:49+0100\n"
+"PO-Revision-Date: 2016-01-05 07:51+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -9790,7 +9790,7 @@ msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 #, c-format
@@ -9848,7 +9848,7 @@ msgid "Trigger \"%s\" disabled"
 msgstr "команда users отключена"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid name for trigger"
+msgid "%s%s: invalid trigger name: \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
@@ -9868,7 +9868,7 @@ msgid "List of triggers:"
 msgstr "Список сокращений:\n"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%s не могу установить клавишу \"%s\"\n"
 
 #, fuzzy, c-format
@@ -9880,7 +9880,7 @@ msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%s \"%s\" не является регулярным выражением (%s)\n"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid return code \"%s\""
+msgid "%s%s: invalid return code: \"%s\""
 msgstr "%s не могу отвязать клавишу \"%s\"\n"
 
 #, c-format
@@ -10617,10 +10617,3 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
-
-#, fuzzy
-#~ msgid "list of hostname/port or IP/port for server (separated by comma)"
-#~ msgstr "ник, используемый на IRC сервере"
-
-#~ msgid "(unknown)"
-#~ msgstr "(неизвестен)"

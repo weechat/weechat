@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:28+0100\n"
-"PO-Revision-Date: 2015-12-02 19:26+0100\n"
+"POT-Creation-Date: 2016-01-05 07:49+0100\n"
+"PO-Revision-Date: 2016-01-05 07:50+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -9759,7 +9759,7 @@ msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 #, c-format
@@ -9817,7 +9817,7 @@ msgid "Trigger \"%s\" disabled"
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid name for trigger"
+msgid "%s%s: invalid trigger name: \"%s\""
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
@@ -9837,7 +9837,7 @@ msgid "List of triggers:"
 msgstr "Aliaszok listája:\n"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
 
 #, fuzzy, c-format
@@ -9849,7 +9849,7 @@ msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%s a(z) \"%s\" érvénytelen reguláris kifejezés (%s)\n"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid return code \"%s\""
+msgid "%s%s: invalid return code: \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
 
 #, c-format
@@ -10590,10 +10590,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy
-#~ msgid "list of hostname/port or IP/port for server (separated by comma)"
-#~ msgstr "felhasználónév az IRC szerveren"
-
-#~ msgid "(unknown)"
-#~ msgstr "(ismeretlen)"

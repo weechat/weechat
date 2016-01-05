@@ -848,7 +848,7 @@ trigger_new_with_options (const char *name, struct t_config_option **options)
                              &new_trigger->regex) < 0)
     {
         weechat_printf (NULL,
-                        _("%s%s: invalid regular expression in trigger "
+                        _("%s%s: invalid regular expression in trigger: "
                           "\"%s\""),
                         weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
                         name);

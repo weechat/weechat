@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:28+0100\n"
-"PO-Revision-Date: 2015-12-02 19:26+0100\n"
+"POT-Creation-Date: 2016-01-05 07:49+0100\n"
+"PO-Revision-Date: 2016-01-05 07:51+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -11334,8 +11334,8 @@ msgstr ""
 msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%s%s: nie można utworzyć hooka dla triggera \"%s\" (złe argumenty)"
 
-#, c-format
-msgid "%s%s: invalid regular expression in trigger \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%s%s: nieprawidłowe wyrażenie regularne w triggerze \"%s\""
 
 #, c-format
@@ -11388,9 +11388,9 @@ msgstr "Trigger \"%s\" włączony"
 msgid "Trigger \"%s\" disabled"
 msgstr "Trigger \"%s\" wyłączony"
 
-#, c-format
-msgid "%s%s: invalid name for trigger"
-msgstr "%s%s: nieprawidłowa nazwa dla triggera"
+#, fuzzy, c-format
+msgid "%s%s: invalid trigger name: \"%s\""
+msgstr "%s%s: nieprawidłowe kodowanie: \"%s\""
 
 #, c-format
 msgid "%s%s: trigger \"%s\" already exists"
@@ -11407,8 +11407,8 @@ msgstr "%s%s: zmiana nazwy triggera \"%s\" nie powiodła się"
 msgid "List of triggers:"
 msgstr "Lista triggerów:"
 
-#, c-format
-msgid "%s%s: invalid hook type \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%s%s: nieprawidłowy typ hooka \"%s\""
 
 #, c-format
@@ -11419,8 +11419,8 @@ msgstr "%s%s: nieprawidłowy format dla wyrażenia regularnego"
 msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%s%s: nieprawidłowe wyrażenie regularne (kompilacja nieudana)"
 
-#, c-format
-msgid "%s%s: invalid return code \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: invalid return code: \"%s\""
 msgstr "%s%s: niepoprawny kod powrotu \"%s\""
 
 #, c-format
@@ -12252,10 +12252,3 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
-
-#~ msgid "list of hostname/port or IP/port for server (separated by comma)"
-#~ msgstr ""
-#~ "lista host/port lub adres IP/port dla serwera (oddzielone przecinkiem)"
-
-#~ msgid "(unknown)"
-#~ msgstr "(nieznane)"

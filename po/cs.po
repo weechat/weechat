@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:28+0100\n"
-"PO-Revision-Date: 2015-12-20 17:33+0100\n"
+"POT-Creation-Date: 2016-01-05 07:49+0100\n"
+"PO-Revision-Date: 2016-01-05 07:50+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -10444,7 +10444,7 @@ msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sChyba: nemohu přejmenovat filter \"%s\" na \"%s\""
 
 #, fuzzy, c-format
-msgid "%s%s: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%s%s: \"%s\" není validní regulární výraz (%s)"
 
 #, c-format
@@ -10500,7 +10500,7 @@ msgid "Trigger \"%s\" disabled"
 msgstr "%s: automatické spuštění pro skript \"%s\" vypnuto"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid name for trigger"
+msgid "%s%s: invalid trigger name: \"%s\""
 msgstr "%s%s: nekorektní znaková sada: \"%s\""
 
 #, fuzzy, c-format
@@ -10519,7 +10519,7 @@ msgid "List of triggers:"
 msgstr "Seznam trigerů:"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type: \"%s\""
 msgstr "%s%s: nekorektní znaková sada: \"%s\""
 
 #, fuzzy, c-format
@@ -10530,8 +10530,8 @@ msgstr "%s%s: nedostatek paměti pro regulární výraz"
 msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%s%s: \"%s\" není validní regulární výraz (%s)"
 
-#, c-format
-msgid "%s%s: invalid return code \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: invalid return code: \"%s\""
 msgstr "%s%s: neplatný návratový kód \"%s\""
 
 #, c-format
@@ -11270,10 +11270,3 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
-
-#~ msgid "list of hostname/port or IP/port for server (separated by comma)"
-#~ msgstr ""
-#~ "seznam jmen hostů nebo IP adres (s porty) pro servery (oddělený čárkami)"
-
-#~ msgid "(unknown)"
-#~ msgstr "(neznámý)"
