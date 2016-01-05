@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-03 08:56+0100\n"
+"POT-Creation-Date: 2016-01-05 07:28+0100\n"
 "PO-Revision-Date: 2015-12-02 19:26+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4044,6 +4044,10 @@ msgstr "%s belső parancsok:\n"
 #, fuzzy, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s körreferencia a \"/%s\" aliasz hívásakor\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid alias name: \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""

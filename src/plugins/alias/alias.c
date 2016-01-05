@@ -572,6 +572,33 @@ alias_update_completion (struct t_alias *alias, const char *completion)
 }
 
 /*
+ * Checks if an alias name is valid: it must not contain any slashes nor
+ * any spaces.
+ *
+ * Returns:
+ *   1: name is valid
+ *   0: name is invalid
+ */
+
+int
+alias_name_valid (const char *name)
+{
+    if (!name || !name[0])
+        return 0;
+
+    /* no spaces allowed */
+    if (strchr (name, ' '))
+        return 0;
+
+    /* no slashes allowed */
+    if (strchr (name, '/'))
+        return 0;
+
+    /* name is valid */
+    return 1;
+}
+
+/*
  * Creates a new alias and adds it to alias list.
  *
  * Returns pointer to new alias, NULL if error.
@@ -582,7 +609,16 @@ alias_new (const char *name, const char *command, const char *completion)
 {
     struct t_alias *new_alias, *ptr_alias, *pos_alias;
 
-    if (!name || !name[0] || !command || !command[0])
+    if (!alias_name_valid (name))
+    {
+        weechat_printf (NULL,
+                        _("%s%s: invalid alias name: \"%s\""),
+                        weechat_prefix ("error"), ALIAS_PLUGIN_NAME,
+                        name);
+        return NULL;
+    }
+
+    if (!command || !command[0])
         return NULL;
 
     while (weechat_string_is_command_char (name))

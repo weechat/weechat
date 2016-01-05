@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-03 08:56+0100\n"
+"POT-Creation-Date: 2016-01-05 07:28+0100\n"
 "PO-Revision-Date: 2015-12-20 17:33+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4455,6 +4455,10 @@ msgstr "alias pro barvu"
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s%s: chyba, cyklický odkaz při volání aliasu \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: invalid alias name: \"%s\""
+msgstr "%s%s: nekorektní znaková sada: \"%s\""
 
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
