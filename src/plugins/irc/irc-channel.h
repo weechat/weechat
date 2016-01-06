@@ -78,6 +78,11 @@ struct t_irc_channel
 
 extern int irc_channel_valid (struct t_irc_server *server,
                               struct t_irc_channel *channel);
+extern struct t_irc_channel *irc_channel_search (struct t_irc_server *server,
+                                                 const char *channel_name);
+extern struct t_gui_buffer *irc_channel_search_buffer (struct t_irc_server *server,
+                                                       int channel_type,
+                                                       const char *channel_name);
 extern struct t_gui_buffer *irc_channel_create_buffer (struct t_irc_server *server,
                                                        int channel_type,
                                                        const char *channel_name,
@@ -98,8 +103,6 @@ extern void irc_channel_set_modes (struct t_irc_channel *channel,
 extern void irc_channel_free (struct t_irc_server *server,
                               struct t_irc_channel *channel);
 extern void irc_channel_free_all (struct t_irc_server *server);
-extern struct t_irc_channel *irc_channel_search (struct t_irc_server *server,
-                                                 const char *channel_name);
 extern int irc_channel_is_channel (struct t_irc_server *server,
                                    const char *string);
 extern const char *irc_channel_get_auto_chantype (struct t_irc_server *server,

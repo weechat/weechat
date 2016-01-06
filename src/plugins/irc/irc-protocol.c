@@ -5038,6 +5038,74 @@ IRC_PROTOCOL_CALLBACK(438)
 }
 
 /*
+ * Callback for the IRC message "470": forwarding to another channel.
+ *
+ * Message looks like:
+ *   :server 470 mynick #channel ##channel :Forwarding to another channel
+ */
+
+IRC_PROTOCOL_CALLBACK(470)
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_lines *own_lines;
+    const char *buffer_name, *short_name, *localvar_channel;
+    int lines_count;
+
+    irc_protocol_cb_generic_error (server,
+                                   date, nick, address, host, command,
+                                   ignored, argc, argv, argv_eol);
+
+    if ((argc >= 5) && !irc_channel_search (server, argv[3]))
+    {
+        ptr_buffer = irc_channel_search_buffer (server,
+                                                IRC_CHANNEL_TYPE_CHANNEL,
+                                                argv[3]);
+        if (ptr_buffer)
+        {
+            short_name = weechat_buffer_get_string (ptr_buffer, "short_name");
+            localvar_channel = weechat_buffer_get_string (ptr_buffer,
+                                                          "localvar_channel");
+            if (!short_name
+                || (localvar_channel
+                    && (strcmp (localvar_channel, short_name) == 0)))
+            {
+                /*
+                 * update the short_name only if it was not changed by the
+                 * user
+                 */
+                weechat_buffer_set (ptr_buffer, "short_name", argv[4]);
+            }
+            buffer_name = irc_buffer_build_name (server->name, argv[4]);
+            weechat_buffer_set (ptr_buffer, "name", buffer_name);
+            weechat_buffer_set (ptr_buffer, "localvar_set_channel", argv[4]);
+
+            /*
+             * check if logger backlog should be displayed for the new channel
+             * name: it is displayed only if the buffer is currently completely
+             * empty (no messages at all)
+             */
+            lines_count = 0;
+            own_lines = weechat_hdata_pointer (weechat_hdata_get ("buffer"),
+                                               ptr_buffer, "own_lines");
+            if (own_lines)
+            {
+                lines_count = weechat_hdata_integer (
+                    weechat_hdata_get ("lines"),
+                    own_lines, "lines_count");
+            }
+            if (lines_count == 0)
+            {
+                (void) weechat_hook_signal_send ("logger_backlog",
+                                                 WEECHAT_HOOK_SIGNAL_POINTER,
+                                                 ptr_buffer);
+            }
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC message "728": quietlist.
  *
  * Message looks like:
@@ -5670,7 +5738,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "464", /* password incorrect */ 1, 0, &irc_protocol_cb_generic_error },
           { "465", /* you are banned from this server */ 1, 0, &irc_protocol_cb_generic_error },
           { "467", /* channel key already set */ 1, 0, &irc_protocol_cb_generic_error },
-          { "470", /* forwarding to another channel */ 1, 0, &irc_protocol_cb_generic_error },
+          { "470", /* forwarding to another channel */ 1, 0, &irc_protocol_cb_470 },
           { "471", /* channel is already full */ 1, 0, &irc_protocol_cb_generic_error },
           { "472", /* unknown mode char to me */ 1, 0, &irc_protocol_cb_generic_error },
           { "473", /* cannot join channel (invite only) */ 1, 0, &irc_protocol_cb_generic_error },

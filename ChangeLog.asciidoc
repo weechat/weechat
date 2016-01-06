@@ -68,6 +68,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (for example a zero width space: U+200B) (bug #40985, issue #502)
 * api: fix handle of invalid escape in function string_convert_escaped_chars()
 * alias: do not allow slashes and spaces in alias name (issue #646)
+* irc: fix channel forwarding when option
+  irc.look.buffer_open_before_{autojoin|join} is on (issue #643)
 * irc: add a missing colon before the password in PASS message, if the password
   has spaces or begins with a colon (issue #602)
 * irc: fix charset decoding in incoming private messages (issue #520)
