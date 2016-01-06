@@ -275,7 +275,6 @@ extern struct t_config_option *config_color_input_actions;
 extern struct t_config_option *config_color_input_text_not_found;
 extern struct t_config_option *config_color_nicklist_away;
 extern struct t_config_option *config_color_nicklist_group;
-extern struct t_config_option *config_color_nicklist_offline;
 extern struct t_config_option *config_color_separator;
 extern struct t_config_option *config_color_status_count_highlight;
 extern struct t_config_option *config_color_status_count_msg;
