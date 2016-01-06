@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-01-05 07:49+0100\n"
-"PO-Revision-Date: 2016-01-05 07:50+0100\n"
+"PO-Revision-Date: 2016-01-06 20:39+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de\n"
@@ -5225,9 +5225,9 @@ msgstr "Alias-Befehle"
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s%s: Fehler, Zirkelbezug beim Aufruf des Alias \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid alias name: \"%s\""
-msgstr "%s%s: Ungültiger Zeichensatz: \"%s\""
+msgstr "%s%s: ungültiger Alias-Name: \"%s\""
 
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
@@ -7857,8 +7857,8 @@ msgid ""
 "%s%s: invalid fingerprint size, the number of hexadecimal digits must be one "
 "of: %s"
 msgstr ""
-"%s%s: ungültiger Größe des Fingerprint, die Anzahl der hexadezimalen Zeichen "
-"muss %s betragen"
+"%s%s: ungültige Größe des Fingerprint, die Anzahl der hexadezimalen Zeichen "
+"muss wie folgt sein: %s"
 
 #, c-format
 msgid ""
@@ -11862,9 +11862,9 @@ msgstr ""
 "%s%s: Hook für Trigger \"%s\" kann nicht erstellt werden (fehlerhafte "
 "Argumente)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid regular expression in trigger: \"%s\""
-msgstr "%s%s: ungültiger regulärer Ausdruck in Trigger \"%s\""
+msgstr "%s%s: ungültiger regulärer Ausdruck in Trigger: \"%s\""
 
 #, c-format
 msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
@@ -11916,9 +11916,9 @@ msgstr "Trigger \"%s\" aktiviert"
 msgid "Trigger \"%s\" disabled"
 msgstr "Trigger \"%s\" deaktiviert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid trigger name: \"%s\""
-msgstr "%s%s: Ungültiger Zeichensatz: \"%s\""
+msgstr "%s%s: ungültiger Trigger-Name: \"%s\""
 
 #, c-format
 msgid "%s%s: trigger \"%s\" already exists"
@@ -11935,9 +11935,9 @@ msgstr "%s%s: Trigger \"%s\" konnte nicht umbenannt werden"
 msgid "List of triggers:"
 msgstr "Auflistung der Trigger:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid hook type: \"%s\""
-msgstr "%s%s: ungültiger hook Typ \"%s\""
+msgstr "%s%s: ungültiger hook-Typ: \"%s\""
 
 #, c-format
 msgid "%s%s: invalid format for regular expression"
@@ -11947,9 +11947,9 @@ msgstr "%s%s: ungültiges Format für regulären Ausdruck"
 msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%s%s: ungültiger regulärer Ausdruck (Kompilat fehlgeschlagen)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid return code: \"%s\""
-msgstr "%s%s: ungültiger Rückgabewert \"%s\""
+msgstr "%s%s: ungültiger Rückgabewert: \"%s\""
 
 #, c-format
 msgid ""
@@ -12264,8 +12264,8 @@ msgid ""
 "%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
 msgstr ""
-"%s%s: ungültiger regulärer Ausdruck in Einstellung \"regex\", siehe /help "
-"trigger.trigger.%s.regex"
+"%s%s: ungültiger regulärer Ausdruck in Option \"regex\", siehe /help trigger."
+"trigger.%s.regex"
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"
