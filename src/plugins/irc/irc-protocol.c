@@ -2593,9 +2593,12 @@ IRC_PROTOCOL_CALLBACK(001)
 
 IRC_PROTOCOL_CALLBACK(005)
 {
-    char *pos, *pos2, *pos_start, *error, *isupport2;
+    char *pos, *pos2, *pos_start, *error, *isupport2, mask[512];
+    const char *option_name;
     int length_isupport, length, casemapping;
     long value;
+    struct t_infolist *infolist;
+    struct t_config_option *ptr_option;
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -2691,6 +2694,66 @@ IRC_PROTOCOL_CALLBACK(005)
             server->monitor = (int)value;
         if (pos2)
             pos2[0] = ' ';
+    }
+
+    /* set metadata */
+    if (strstr (argv_eol[3], "METADATA"))
+    {
+        /* global metadata */
+        infolist = weechat_infolist_get ("option", NULL, "irc.metadata.*");
+        if (infolist)
+        {
+            while (weechat_infolist_next (infolist))
+            {
+                option_name = weechat_infolist_string (infolist, "option_name");
+                if (option_name)
+                {
+                    pos = strchr (option_name, '.');
+                    if (!pos)
+                    {
+                        snprintf (mask, sizeof (mask), "%s.%s",
+                                  server->name, option_name);
+
+                        /* search for metadata, for server */
+                        ptr_option = weechat_config_search_option (
+                            irc_config_file, irc_config_section_metadata, mask);
+
+                        /* server does not override global metadata */
+                        if (!ptr_option)
+                        {
+                            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                              "METADATA * SET %s :%s",
+                                              option_name,
+                                              weechat_infolist_string (infolist, "value"));
+                        }
+                    }
+                }
+            }
+            weechat_infolist_free (infolist);
+        }
+        /* server metadata */
+        snprintf (mask, sizeof (mask), "irc.metadata.%s.*", server->name);
+        infolist = weechat_infolist_get ("option", NULL, mask);
+        if (infolist)
+        {
+            while (weechat_infolist_next (infolist))
+            {
+                option_name = weechat_infolist_string (infolist, "option_name");
+                if (option_name)
+                {
+                    pos = strchr (option_name, '.');
+                    if (pos)
+                    {
+                        pos++;
+                        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                          "METADATA * SET %s :%s",
+                                          pos,
+                                          weechat_infolist_string (infolist, "value"));
+                    }
+                }
+            }
+            weechat_infolist_free (infolist);
+        }
     }
 
     /* save whole message (concatenate to existing isupport, if any) */

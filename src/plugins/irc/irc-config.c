@@ -44,6 +44,7 @@
 struct t_config_file *irc_config_file = NULL;
 struct t_config_section *irc_config_section_msgbuffer = NULL;
 struct t_config_section *irc_config_section_ctcp = NULL;
+struct t_config_section *irc_config_section_metadata = NULL;
 struct t_config_section *irc_config_section_server_default = NULL;
 struct t_config_section *irc_config_section_server = NULL;
 
@@ -1482,6 +1483,169 @@ irc_config_ctcp_create_option (void *data, struct t_config_file *config_file,
         weechat_printf (
             NULL,
             _("%s%s: error creating CTCP \"%s\" => \"%s\""),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, option_name, value);
+    }
+
+    return rc;
+}
+
+/*
+ * Synchronize metadata key with server(s).
+ */
+
+void
+irc_config_metadata_sync (struct t_config_option *option, int removed)
+{
+    const char *ptr_name, *key;
+    char *server_name, option_name[512];
+    struct t_irc_server *ptr_server;
+    struct t_config_option *ptr_option;
+
+
+    ptr_name = (char*) weechat_config_option_get_pointer (option, "name");
+    key = strchr (ptr_name, '.');
+    if (key)
+    {
+        server_name = weechat_strndup (ptr_name, key - ptr_name);
+        key++;
+    }
+    else
+    {
+        server_name = NULL;
+        key = ptr_name;
+    }
+
+    /* if only one server affected */
+    if (server_name)
+    {
+        ptr_server = irc_server_search (server_name);
+        if (ptr_server && ptr_server->is_connected &&
+            irc_server_get_isupport_value (ptr_server, "METADATA"))
+        {
+            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              "METADATA * SET %s%s%s",
+                              key,
+                              (!removed) ? " :" : "",
+                              (!removed) ? weechat_config_string (option) : "");
+        }
+    }
+    else
+    {
+        for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
+        {
+            if (ptr_server->is_connected &&
+                irc_server_get_isupport_value (ptr_server, "METADATA"))
+            {
+                snprintf (option_name, sizeof (option_name), "%s.%s",
+                          ptr_server->name, key);
+
+                /* search for metadata, for server */
+                ptr_option = weechat_config_search_option (irc_config_file,
+                                                           irc_config_section_metadata,
+                                                           option_name);
+
+                /* server does not override global metadata */
+                if (!ptr_option)
+                {
+                    irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                      "METADATA * SET %s%s%s",
+                                      key,
+                                      (!removed) ? " :" : "",
+                                      (!removed) ? weechat_config_string (option) : "");
+                }
+            }
+        }
+    }
+
+    if (server_name)
+        free (server_name);
+}
+
+/*
+ * Modifies a metadata.
+ */
+
+void
+irc_config_metadata_change (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    irc_config_metadata_sync (option, 0);
+}
+
+/*
+ * Removes a metadata.
+ */
+
+void
+irc_config_metadata_delete (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    irc_config_metadata_sync (option, 1);
+}
+
+/*
+ * Sets a metadata.
+ */
+
+int
+irc_config_metadata_create_option (void *data, struct t_config_file *config_file,
+                                   struct t_config_section *section,
+                                   const char *option_name, const char *value)
+{
+    struct t_config_option *ptr_option;
+    int rc;
+
+    /* make C compiler happy */
+    (void) data;
+
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+
+    if (option_name)
+    {
+        ptr_option = weechat_config_search_option (config_file, section,
+                                                   option_name);
+        if (ptr_option)
+        {
+            if (value)
+                rc = weechat_config_option_set (ptr_option, value, 1);
+            else
+            {
+                weechat_config_option_free (ptr_option);
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+            }
+        }
+        else
+        {
+            if (value)
+            {
+                ptr_option = weechat_config_new_option (
+                    config_file, section,
+                    option_name, "string",
+                    _("metadata value"),
+                    NULL, 0, 0, "", value, 0, NULL, NULL,
+                    &irc_config_metadata_change, NULL,
+                    &irc_config_metadata_delete, NULL);
+                rc = (ptr_option) ?
+                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE :
+                    WEECHAT_CONFIG_OPTION_SET_ERROR;
+
+                if (ptr_option)
+                    irc_config_metadata_sync (ptr_option, 0);
+            }
+            else
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+        }
+    }
+
+    if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
+    {
+        weechat_printf (
+            NULL,
+            _("%s%s: error creating metadata \"%s\" => \"%s\""),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, option_name, value);
     }
 
@@ -3081,6 +3245,20 @@ irc_config_init ()
         return 0;
     }
     irc_config_section_ctcp = ptr_section;
+
+    /* metadata */
+    ptr_section = weechat_config_new_section (irc_config_file, "metadata",
+                                              1, 1,
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL,
+                                              &irc_config_metadata_create_option, NULL,
+                                              NULL, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (irc_config_file);
+        return 0;
+    }
+    irc_config_section_metadata = ptr_section;
 
     /* ignore */
     ptr_section = weechat_config_new_section (irc_config_file, "ignore",
