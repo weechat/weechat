@@ -231,7 +231,6 @@ struct t_config_option *config_color_input_actions;
 struct t_config_option *config_color_input_text_not_found;
 struct t_config_option *config_color_nicklist_away;
 struct t_config_option *config_color_nicklist_group;
-struct t_config_option *config_color_nicklist_offline;
 struct t_config_option *config_color_separator;
 struct t_config_option *config_color_status_count_highlight;
 struct t_config_option *config_color_status_count_msg;
@@ -3269,12 +3268,6 @@ config_weechat_init_options ()
         "nicklist_group", "color",
         N_("text color for groups in nicklist"),
         NULL, -1, 0, "green", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_nicklist_offline = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nicklist_offline", "color",
-        N_("text color for offline nicknames"),
-        NULL, -1, 0, "blue", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* general color settings */
     config_color_separator = config_file_new_option (
