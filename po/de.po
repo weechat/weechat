@@ -1,20 +1,24 @@
+#
 # Copyright (C) 2005 Rudolf Polzer <weechat-te@durchnull.de>
 # Copyright (C) 2006-2007 Thomas Schuetz <i18n@internet-villa.de>
-# Copyright (C) 2009-2015 Nils Görs <weechatter@arcor.de>
+# Copyright (C) 2009-2016 Nils Görs <weechatter@arcor.de>
 # Copyright (C) 2015 Sven Knurr <zeug@tuxproject.de>
+#
 # This file is part of WeeChat, the extensible chat client.
+#
 # WeeChat is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
+#
 # WeeChat is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
+#
 # You should have received a copy of the GNU General Public License
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
-# Nils Görs <weechatter@arcor.de>, 2014.
-# nils <weechatter@arcor.de>, 2015.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"

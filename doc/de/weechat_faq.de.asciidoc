@@ -9,7 +9,7 @@
 Übersetzer:
 
 * Juergen Descher <jhdl@gmx.net>, 2009
-* Nils Görs <weechatter@arcor.de>, 2009-2015
+* Nils Görs <weechatter@arcor.de>, 2009-2016
 
 [NOTE]
 Diese Dokumentation bezieht sich auf die WeeChat Version ≥ 0.3.0. Es sollte aber

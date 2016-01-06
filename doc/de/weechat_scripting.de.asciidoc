@@ -9,7 +9,7 @@
 
 Übersetzer:
 
-* Nils Görs <weechatter@arcor.de>, 2010-2015
+* Nils Görs <weechatter@arcor.de>, 2010-2016
 
 
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
