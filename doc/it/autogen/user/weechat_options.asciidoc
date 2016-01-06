@@ -232,11 +232,6 @@
 ** tipo: colore
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `green`)
 
-* [[option_weechat.color.nicklist_offline]] *weechat.color.nicklist_offline*
-** descrizione: `colore del testo per i nick non in linea`
-** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `blue`)
-
 * [[option_weechat.color.separator]] *weechat.color.separator*
 ** descrizione: `colore per i separatori delle finestre (quando divise) e dei separatori tra le barre (come la lista nick)`
 ** tipo: colore

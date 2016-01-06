@@ -232,11 +232,6 @@
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `green`)
 
-* [[option_weechat.color.nicklist_offline]] *weechat.color.nicklist_offline*
-** opis: `kolor dla nieobecnych nicków`
-** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `blue`)
-
 * [[option_weechat.color.separator]] *weechat.color.separator*
 ** opis: `kolor tła dla separatorów (kiedy podzielone) i separatorów obok pasków (jak lista nicków)`
 ** typ: kolor

@@ -232,11 +232,6 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `green`)
 
-* [[option_weechat.color.nicklist_offline]] *weechat.color.nicklist_offline*
-** Beschreibung: `Textfarbe von Nicknamen die Offline sind`
-** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `blue`)
-
 * [[option_weechat.color.separator]] *weechat.color.separator*
 ** Beschreibung: `Farbe der Trennlinie von Fenstern (bei Fenster geteilt sind) und Bars (wie z.B. Nicklist)`
 ** Typ: Farbe
