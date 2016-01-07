@@ -133,15 +133,12 @@ wynik `echo $TERM` w terminalu).
 
 W zależności, gdzie uruchamiasz WeeChat, powinieneś uzyskać:
 
-// TRANSLATION MISSING
-* if WeeChat runs locally or on a remote machine without screen nor tmux, it
-  depends on the terminal used: 'xterm', 'xterm-256color', 'rxvt-unicode',
+* jeżeli WeeChat działa lokalnie lub na zdalnej maszynie bez programów jak screen czy tmux, 
+  zależy od używanego terminala: 'xterm', 'xterm-256color', 'rxvt-unicode',
   'rxvt-256color', ...
-// TRANSLATION MISSING
-* if WeeChat runs under screen, you should have 'screen' or 'screen-256color',
-// TRANSLATION MISSING
-* if WeeChat runs under tmux, you should have 'tmux', 'tmux-256color',
-  'screen' or 'screen-256color'.
+* jeśli WeeChat działa pod screenem, zmienna $TERM powinna zawierać 'screen' lub 'screen-256color',
+* jeśli WeeChat działa pod tmuxem, zmienna $TERM powinna zawierać 'tmux', 'tmux-256color',
+  'screen' lub 'screen-256color'.
 
 W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 
@@ -327,10 +324,8 @@ Najpierw należy sprawdzić czy wartość zmiennej środowiskowej 'TERM' jest po
 zalecane wartości to:
 
 * w screenie: 'screen-256color'
-// TRANSLATION MISSING
-* under tmux: 'screen-256color' or 'tmux-256color'
-// TRANSLATION MISSING
-* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
+* pod tmuxem: 'screen-256color' lub 'tmux-256color'
+* poza screenem/tmuxem: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
 
 [NOTE]
 Może okazać się konieczne zainstalowanie pakietu "ncurses-term" w celu użycia
@@ -525,9 +520,8 @@ Jeśli widzisz błędy związanie z certyfikatami, możesz wyłączyć opcję "s
 /set irc.server.example.ssl_verify off
 ----
 
-// TRANSLATION MISSING
-If the server has an invalid certificate and you know what the certificate
-should be, you can specify the fingerprint (SHA-512, SHA-256 or SHA-1):
+Jeśli serwer ma niewłaściwy certyfikat i wiesz jaki on powinien być,
+możesz podać sumę kontrolną (SHA-512, SHA-256 lub SHA-1):
 
 ----
 /set irc.server.example.ssl_fingerprint 0c06e399d3c3597511dc8550848bfd2a502f0ce19883b728b73f6b7e8604243b

@@ -1308,13 +1308,13 @@ przykład skrót key[alt-%] wyłączający obsługę myszy na 10 sekund:
 /key bind meta-% /mouse toggle 10
 ----
 
-// TRANSLATION MISSING
 [IMPORTANT]
-When mouse is enabled in WeeChat, all mouse events are caught by WeeChat, so
-actions such as copy/paste or clicks on URLs are not sent to the terminal. +
-Using key[shift] key causes the events to be sent directly to the terminal,
-as if the mouse was disabled (on some terminals like iTerm, you have to use
-key[alt] instead of key[shift]).
+Kiedy obsługa myszy jest włączona w WeeChat, wszystkie zdarzenia myszy są 
+przechwytywane przez WeeChat. Dlatego akcje jak kopiowanie/wklejanie lub 
+klikanie w URLe nie są przesyłane do terminala. +
+Użycie klawisza key[shift] sprawia, że te zdarzenia są przesyłane bezpośrednio
+do terminala, tak jakby obsługa myszy była wyłączona (w niektórych terminalach
+jak iTerm, należy użyc klawisza key[alt] zamiast key[shift]).
 
 [NOTE]
 W razie jakichkolwiek problemów z obsługą myszy, zajrzyj do 'WeeChat FAQ'.
@@ -1506,10 +1506,8 @@ wyświetlić limity dla twojego środowiska.
 Niektóre z zalecanych wartości dla 'TERM' jeśli chcesz używać 256 kolorów:
 
 * dla screena: 'screen-256color'
-// TRANSLATION MISSING
-* under tmux: 'screen-256color' or 'tmux-256color'
-// TRANSLATION MISSING
-* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
+* pod tmux: 'screen-256color' lub 'tmux-256color'
+* poza screenem/tmuxem: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
 
 [NOTE]
 Być może konieczne jest zainstalowanie pakietu "ncurses-term", w celu użycia
@@ -3269,19 +3267,15 @@ są dodawane do tablicy hashy:
 | tags                 | ciąg | Tagi w wiadomości (rzadko używane)
 | message_without_tags | ciąg | Wiadomość bez tagów
 | nick                 | ciąg | Nick
-| host                 | ciąg | nazwa hosta
+| host                 | ciąg | Nazwa hosta
 | command              | ciąg | Komendy IRC (na przykład: "PRIVMSG", "NOTICE", ...)
 | channel              | ciąg | Kanał IRC
 | arguments            | ciąg | Argumenty komendy (razem z wartością 'channel')
 | text                 | ciąg | Tekst (na przykład wiadomość użytkownika)
-// TRANSLATION MISSING
-| pos_command          | ciąg | The index of 'command' in message ("-1" if 'command' was not found)
-// TRANSLATION MISSING
-| pos_arguments        | ciąg | The index of 'arguments' in message ("-1" if 'arguments' was not found)
-// TRANSLATION MISSING
-| pos_channel          | ciąg | The index of 'channel' in message ("-1" if 'channel' was not found)
-// TRANSLATION MISSING
-| pos_text             | ciąg | The index of 'text' in message ("-1" if 'text' was not found)
+| pos_command          | ciąg | Indeks 'command' w wiadomości ("-1" jeśli 'command' nie zostanie znalezione)
+| pos_arguments        | ciąg | Indeks 'arguments' w wiadomości ("-1" jeśli 'arguments' nie zostaną znalezione)
+| pos_channel          | ciąg | Indeks 'channel' w wiadomości ("-1" jeśli 'channel' nie został znaleziony)
+| pos_text             | ciąg | Indeks 'text' w wiadomości ("-1" jeśli 'text' nie został znaleziony)
 |===
 
 Kiedy dane są wskaźnikiem, zmienna `tg_signal_data` może zostać użyta do
