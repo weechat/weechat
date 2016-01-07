@@ -137,6 +137,7 @@ extern struct t_config_option *irc_config_look_pv_tags;
 extern struct t_config_option *irc_config_look_raw_messages;
 extern struct t_config_option *irc_config_look_server_buffer;
 extern struct t_config_option *irc_config_look_smart_filter;
+extern struct t_config_option *irc_config_look_smart_filter_chghost;
 extern struct t_config_option *irc_config_look_smart_filter_delay;
 extern struct t_config_option *irc_config_look_smart_filter_join;
 extern struct t_config_option *irc_config_look_smart_filter_join_unmask;

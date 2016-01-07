@@ -98,6 +98,7 @@ struct t_config_option *irc_config_look_pv_tags;
 struct t_config_option *irc_config_look_raw_messages;
 struct t_config_option *irc_config_look_server_buffer;
 struct t_config_option *irc_config_look_smart_filter;
+struct t_config_option *irc_config_look_smart_filter_chghost;
 struct t_config_option *irc_config_look_smart_filter_delay;
 struct t_config_option *irc_config_look_smart_filter_join;
 struct t_config_option *irc_config_look_smart_filter_join_unmask;
@@ -2890,6 +2891,13 @@ irc_config_init ()
         N_("filter join/part/quit/nick messages for a nick if not speaking "
            "for some minutes on channel (you must create a filter on tag "
            "\"irc_smart_filter\")"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_smart_filter_chghost = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "smart_filter_chghost", "boolean",
+        /* TRANSLATORS: please do not translate "chghost" */
+        N_("enable smart filter for \"chghost\" messages"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_delay = weechat_config_new_option (
