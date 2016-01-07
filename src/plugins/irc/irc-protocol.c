@@ -651,10 +651,16 @@ IRC_PROTOCOL_CALLBACK(cap)
 IRC_PROTOCOL_CALLBACK(chghost)
 {
     int length;
+    char *str_host;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
     IRC_PROTOCOL_MIN_ARGS(4);
+
+    length = strlen (argv[2]) + 1 + strlen (argv[3]) + 1;
+    str_host = malloc (length);
+    if (str_host)
+        snprintf (str_host, length, "%s@%s", argv[2], argv[3]);
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -662,14 +668,31 @@ IRC_PROTOCOL_CALLBACK(chghost)
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
         if (ptr_nick)
         {
+            weechat_printf_date_tags (
+                irc_msgbuffer_get_target_buffer (
+                    server, NULL, command, NULL, ptr_channel->buffer),
+                date,
+                irc_protocol_tags (command, NULL, nick, address),
+                _("%s%s%s%s (%s%s%s)%s has changed host to %s%s"),
+                weechat_prefix ("network"),
+                irc_nick_color_for_msg (server, 1, ptr_nick, nick),
+                nick,
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_CHAT_HOST,
+                address,
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_MESSAGE_CHGHOST,
+                IRC_COLOR_CHAT_HOST,
+                str_host);
+
             if (ptr_nick->host)
                 free (ptr_nick->host);
-            length = strlen (argv[2]) + 1 + strlen (argv[3]) + 1;
-            ptr_nick->host = malloc (length);
-            if (ptr_nick->host)
-                snprintf (ptr_nick->host, length, "%s@%s", argv[2], argv[3]);
+            ptr_nick->host = strdup (str_host);
         }
     }
+
+    if (str_host)
+        free (str_host);
 
     return WEECHAT_RC_OK;
 }

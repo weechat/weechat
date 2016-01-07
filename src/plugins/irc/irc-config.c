@@ -115,6 +115,7 @@ struct t_config_option *irc_config_color_item_lag_counting;
 struct t_config_option *irc_config_color_item_lag_finished;
 struct t_config_option *irc_config_color_item_nick_modes;
 struct t_config_option *irc_config_color_message_join;
+struct t_config_option *irc_config_color_message_chghost;
 struct t_config_option *irc_config_color_message_quit;
 struct t_config_option *irc_config_color_mirc_remap;
 struct t_config_option *irc_config_color_nick_prefixes;
@@ -3017,6 +3018,12 @@ irc_config_init ()
         "message_join", "color",
         N_("color for text in join messages"),
         NULL, -1, 0, "green", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_color_message_chghost = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "message_chghost", "color",
+        N_("color for text in chghost messages"),
+        NULL, -1, 0, "brown", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_message_quit = weechat_config_new_option (
         irc_config_file, ptr_section,
