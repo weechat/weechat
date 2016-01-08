@@ -198,7 +198,7 @@
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `cyan`)
 
 * [[option_weechat.color.chat_value_null]] *weechat.color.chat_value_null*
-** opis: `text color for null values (undefined)`
+** opis: `kolor wyświetlania wartości null (niezdefiniowane)`
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `blue`)
 
@@ -743,7 +743,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
-** opis: `automatically add a newline at the end of pasted text if there are at least two lines and if a confirmation is asked`
+** opis: `automatyczne dodawanie nowej linii na końcu wklejanego tesktu jeśli wklejane są co najmniej dwie linie i jeśli potwierdzenie jest wmagane`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
 

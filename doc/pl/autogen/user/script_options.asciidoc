@@ -183,7 +183,7 @@
 ** wartości: -1 .. 525600 (domyślna wartość: `1440`)
 
 * [[option_script.scripts.download_timeout]] *script.scripts.download_timeout*
-** opis: `timeout (in seconds) for download of scripts and list of scripts`
+** opis: `czas oczekiwania (w sekundach) na pobranie skryptu i listy skryptów`
 ** typ: liczba
 ** wartości: 1 .. 3600 (domyślna wartość: `30`)
 

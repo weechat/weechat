@@ -66,11 +66,11 @@
 
 | ruby | ruby_script | lista skryptów
 
-| script | script_extensions | list of script extensions
+| script | script_extensions | lista rozszerzeń skryptów
 
 | script | script_files | pliki w katalogach skryptów
 
-| script | script_languages | list of script languages
+| script | script_languages | lista języków skryptów
 
 | script | script_scripts | lista skryptów w repozytorium
 

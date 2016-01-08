@@ -388,7 +388,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `"*!$ident@$host"`)
 
 * [[option_irc.network.channel_encode]] *irc.network.channel_encode*
-** opis: `decode/encode channel name inside messages using charset options; it is recommended to keep that off if you use only UTF-8 in channel names; you can enable this option if you are using an exotic charset like ISO in channel names`
+** opis: `dekodowanie/kodowanie nazwy kanału wewnątrz wiadomości za pomocą opcji charset; zaleca się nie włączanie jej w przypadku używania tylko nazw kanałów UTF-8; możesz włączyć tą opcję jeśli używasz egzotycznych kodowań jak ISO w nazwach kanałów`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 
@@ -448,7 +448,7 @@
 ** wartości: on, off (domyślna wartość: `off`)
 
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
-** opis: `list of hostname/port or IP/port for server (separated by comma) (note: content is evaluated, see /help eval)`
+** opis: `lista nazw hostów/port lub IP/port dla serwera (oddzielone przecinkiem) (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -503,7 +503,7 @@
 ** wartości: 0 .. 1000000 (domyślna wartość: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** opis: `comma-separated list of client capabilities to enable for server if they are available (see /help cap for a list of capabilities supported by WeeChat) (example: "away-notify,multi-prefix")`
+** opis: `oddzielona przecinkami lista opcji klienta do włączenia dla serwera, jeśli są dostępne  (zobacz /help cap żeby poznać listę opcji wspieranych przez WeeChat) (przykład: "away-notify,multi-prefix")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -553,7 +553,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_irc.server_default.nicks_alternate]] *irc.server_default.nicks_alternate*
-** opis: `get an alternate nick when all the declared nicks are already used on server: add some "_" until the nick has a length of 9, and then replace last char (or the two last chars) by a number from 1 to 99, until we find a nick not used on server`
+** opis: `alternatywny nick, kiedy nick jest już zajęty na serwerze: dodaje kilka "_", aż nick będzie miał długość 9, następnie zamienia ostatni znak (lub ostatnie dwa znaki) na numer od 1 do 99, do czasu aż zostanie znaleziony nick nie użyty na swerwerze`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
 

@@ -15,62 +15,62 @@
          upgrade
          update
 
-          list: list loaded scripts (all languages)
-            -o: send list of loaded scripts to buffer
-            -i: copy list of loaded scripts in command line (for sending to buffer)
-        search: search scripts by tags, language (python, perl, ...), filename extension (py, pl, ...) or text; result is displayed on scripts buffer
-          show: show detailed info about a script
-          load: load script(s)
-        unload: unload script(s)
-        reload: reload script(s)
-      autoload: autoload the script
-    noautoload: do not autoload the script
-toggleautoload: toggle autoload
-       install: install/upgrade script(s)
-        remove: remove script(s)
- installremove: install or remove script(s), depending on current state
-          hold: hold/unhold script(s) (a script held will not be upgraded any more and cannot be removed)
-            -q: quiet mode: do not display messages
-       upgrade: upgrade all installed scripts which are obsolete (new version available)
-        update: update local scripts cache
+         list: lista załadowanych skryptów (wszystkie języki)
+           -o: wysyła listę skryptów do bufora
+           -i: kopiuje listę skryptów do wiersza poleceń (do wysłania do bufora)
+       search: wyszukuje skryptu po tagach, języku (python, perl, ...), rozszerzeniu pliku (py, pl, ...) lub tekście; wynik jest wyświetlany w buforze skryptów
+         show: pokazuje dokładne informacje o skrypcie
+         load: ładuje skrypt(y)
+       unload: wyładowuje skrypt(y)
+       reload: przeładowuje skrypt(y)
+      autoload: automatyczne ładowanie skryptu
+    noautoload: nie ładuj automatycznie skryptu
+toggleautoload: przełącza automatyczne logowanie
+      install: instaluje/uaktualnia skrypt(y)
+       remove: usuwa skrypt(y)
+installremove: instaluje lub usuwa skrypt(y), w zależności od obecnego stanu
+         hold: przełącza stan wstrzymania skrypt(y) (wstrzymany skrypt nie będzie aktualizowany ani nie może zostać usunięty)
+           -q: tryb cichy: nie wyświetla wiadomości
+      upgrade: aktualizuje wszystkie zainstalowane skrypty, które są przestarzałe (nowa wersja jest dostępne)
+       update: aktualizuje lokalna listę dostępnych skryptów
 
-Without argument, this command opens a buffer with list of scripts.
+Bez żadnego argumentu, komenda otwiera bufor z listą skryptów.
 
-On script buffer, the possible status for each script are:
+W buforze skryptów, możliwe statusy dla każdego ze skryptów:
   * i a H r N
   | | | | | |
-  | | | | | obsolete (new version available)
-  | | | | running (loaded)
-  | | | held
-  | | autoloaded
-  | installed
-  popular script
+  | | | | | przestarzały (dostępna jest nowa wersja)
+  | | | | działający (załadowany)
+  | | | wstrzymany
+  | | automatycznie ładowany
+  | zainstalowany
+  popularny skrypt
 
-Keys on script buffer:
-  alt+i  install script
-  alt+r  remove script
-  alt+l  load script
-  alt+L  reload script
-  alt+u  unload script
-  alt+A  autoload script
-  alt+h  (un)hold script
-  alt+v  view script
+Skróty klawiszowe w buforze skryptów:
+  alt+i  instaluje skrypt
+  alt+r  usuwa skrypt
+  alt+l  ładuje skrypt
+  alt+L  przeładowuje skrypt
+  alt+u  wyładowuje skrypt
+  alt+A  automatyczne ładowanie skryptu
+  alt+h  przełącza stan wstrzymania skryptu
+  alt+v  wyświetla skrypt
 
-Input allowed on script buffer:
-  i/r/l/L/u/h  action on script (same as keys above)
-  q            close buffer
-  $            refresh buffer
-  s:x,y        sort buffer using keys x and y (see /help script.look.sort)
-  s:           reset sort (use default sort)
-  word(s)      filter scripts: search word(s) in scripts (description, tags, ...)
-  *            remove filter
+Dozwolone komendy z linii poleceń w buforze skryptów:
+  i/r/l/L/u/h  akcje dla skryptu (takie same jak skróty klawiszowe powyżej)
+  q            zamknij bufor
+  $            odśwież bufor
+  s:x,y        sortuj bufor używając klawiszy x i y (zobacz /help script.look.sort)
+  s:           resetuj sortowanie (użyj domyślnego)
+  słowo(a)      filtruj skrypty: szukaj słowa(ów) w skryptach (opis, tagi, ...)
+  *            usuń filtr
 
-Mouse actions on script buffer:
-  wheel         scroll list
-  left button   select script
-  right button  install/remove script
+Akcje myszy w buforze skryptów:
+  kółko         przewija listę
+  lewy przycisk   wybiera skrypt
+  prawy przycisk  instaluj/usuń skrypt
 
-Examples:
+Przykłady:
   /script search url
   /script install iset.pl buffers.pl
   /script remove iset.pl

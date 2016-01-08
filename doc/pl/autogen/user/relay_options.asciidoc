@@ -63,7 +63,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_relay.irc.backlog_since_last_message]] *relay.irc.backlog_since_last_message*
-** opis: `display backlog starting from your last message`
+** opis: `wyświetlaj backlog zaczynając od twojej ostatniej wiadomości`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 
