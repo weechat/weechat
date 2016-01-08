@@ -1309,8 +1309,8 @@ przykład skrót key[alt-%] wyłączający obsługę myszy na 10 sekund:
 ----
 
 [IMPORTANT]
-Kiedy obsługa myszy jest włączona w WeeChat, wszystkie zdarzenia myszy są 
-przechwytywane przez WeeChat. Dlatego akcje jak kopiowanie/wklejanie lub 
+Kiedy obsługa myszy jest włączona w WeeChat, wszystkie zdarzenia myszy są
+przechwytywane przez WeeChat. Dlatego akcje jak kopiowanie/wklejanie lub
 klikanie w URLe nie są przesyłane do terminala. +
 Użycie klawisza key[shift] sprawia, że te zdarzenia są przesyłane bezpośrednio
 do terminala, tak jakby obsługa myszy była wyłączona (w niektórych terminalach

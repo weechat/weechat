@@ -133,7 +133,7 @@ wynik `echo $TERM` w terminalu).
 
 W zależności, gdzie uruchamiasz WeeChat, powinieneś uzyskać:
 
-* jeżeli WeeChat działa lokalnie lub na zdalnej maszynie bez programów jak screen czy tmux, 
+* jeżeli WeeChat działa lokalnie lub na zdalnej maszynie bez programów jak screen czy tmux,
   zależy od używanego terminala: 'xterm', 'xterm-256color', 'rxvt-unicode',
   'rxvt-256color', ...
 * jeśli WeeChat działa pod screenem, zmienna $TERM powinna zawierać 'screen' lub 'screen-256color',
