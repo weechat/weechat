@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2009-2011 Krzysztof Koroscik <soltys@szluug.org>
+# Copyright (C) 2009-2016 Krzysztof Koroscik <soltys@szluug.org>
 # Copyright (C) 2010 B.J. Stobiecki <bartek@stobiecki.eu>
 #
 # This file is part of WeeChat, the extensible chat client.

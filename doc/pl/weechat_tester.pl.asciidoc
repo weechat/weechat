@@ -8,7 +8,7 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys@szluug.org>, 2009-2015
+* Krzysztof Korościk <soltys@szluug.org>, 2009-2016
 
 
 [[purpose]]
