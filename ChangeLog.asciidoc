@@ -16,7 +16,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 
 [[1.4]]
-== Version 1.4 (under dev)
+== Version 1.4 (2016-01-10)
 
 [[1.4_features]]
 === New features
