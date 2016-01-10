@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2012-2015 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
+# Copyright (C) 2012-2016 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-01-05 07:49+0100\n"
-"PO-Revision-Date: 2016-01-05 07:50+0100\n"
+"PO-Revision-Date: 2016-01-11 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -4887,9 +4887,9 @@ msgstr "別名コマンド"
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s%s: エラー、別名 \"%s\" の呼び出し中に循環参照を検知"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid alias name: \"%s\""
-msgstr "%s%s: 不正な文字セット: \"%s\""
+msgstr "%s%s: 別名が間違っています: \"%s\""
 
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
@@ -6344,7 +6344,7 @@ msgid ""
 "    /dcc send toto /home/foo/bar.txt"
 msgstr ""
 "nick: ニックネーム\n"
-"file: ファイルネーム (ローカルホスト上の)\n"
+"file: ファイル名 (ローカルホスト上の)\n"
 "\n"
 "例:\n"
 "  \"toto\" とチャット:\n"
@@ -7428,7 +7428,8 @@ msgstr ""
 "い)、以下の変数は置換されます: $version (WeeChat バージョン)、$compilation "
 "(コンパイル日時)、$osinfo (OS に関する情報)、$site (WeeChat サイ"
 "ト)、$download (WeeChat サイト、ダウンロードページ)、$time (現在の日時をテキ"
-"ストで)、$username (サーバ上のユーザ名)、$realname (サーバの時間)"
+"ストで)、$username (サーバで使っているユーザ名)、$realname (サーバで使ってい"
+"る実名)"
 
 #, c-format
 msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
@@ -9137,7 +9138,7 @@ msgstr ""
 
 #, c-format
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
-msgstr "%sgnutls: 証明書内のホストネームは \"%s\" とマッチしません"
+msgstr "%sgnutls: 証明書内のホスト名は \"%s\" とマッチしません"
 
 #, c-format
 msgid "%sgnutls: error while checking peer's certificate"
@@ -11159,9 +11160,9 @@ msgstr ""
 msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%s%s: トリガ \"%s\" のフックを作成できません (無効な引数)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid regular expression in trigger: \"%s\""
-msgstr "%s%s: トリガ \"%s\" の正規表現が間違っています"
+msgstr "%s%s: トリガの正規表現が間違っています: \"%s\""
 
 #, c-format
 msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
@@ -11214,9 +11215,9 @@ msgstr "トリガ \"%s\" が有効化されました"
 msgid "Trigger \"%s\" disabled"
 msgstr "トリガ \"%s\" が無効化されました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid trigger name: \"%s\""
-msgstr "%s%s: 不正な文字セット: \"%s\""
+msgstr "%s%s: トリガ名が間違っています: \"%s\""
 
 #, c-format
 msgid "%s%s: trigger \"%s\" already exists"
@@ -11233,9 +11234,9 @@ msgstr "%s%s: トリガ \"%s\" の名前変更に失敗しました"
 msgid "List of triggers:"
 msgstr "トリガのリスト:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid hook type: \"%s\""
-msgstr "%s%s: 無効なフックタイプ \"%s\""
+msgstr "%s%s: フックタイプが間違っています: \"%s\""
 
 #, c-format
 msgid "%s%s: invalid format for regular expression"
@@ -11245,9 +11246,9 @@ msgstr "%s%s: 正規表現用のフォーマットが間違っています"
 msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%s%s: 不正な正規表現 (コンパイル失敗)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid return code: \"%s\""
-msgstr "%s%s: 無効なリターンコード \"%s\""
+msgstr "%s%s: リターンコードが間違っています: \"%s\""
 
 #, c-format
 msgid ""
