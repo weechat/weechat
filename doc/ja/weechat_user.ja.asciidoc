@@ -2428,8 +2428,8 @@ CTCP 応答時に自動的に WeeChat によって展開されます:
 | $site        | WeeChat ウェブサイト                      | `https://weechat.org/`
 | $download    | WeeChat ウェブサイトのダウンロードページ  | `https://weechat.org/download`
 | $time        | 現在の日時                                | `Sun, 16 Dec 2012 10:40:48 +0100`
-| $username    | IRC サーバのユーザネーム                  | `ログイン名`
-| $realname    | IRC サーバのリアルネーム                  | `John Doe`
+| $username    | IRC サーバ上で使うユーザ名                | `ログイン名`
+| $realname    | IRC サーバ上で使う実名                    | `John Doe`
 |===
 
 [NOTE]
