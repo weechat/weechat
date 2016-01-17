@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:49+0100\n"
-"PO-Revision-Date: 2016-01-11 09:00+0900\n"
+"POT-Creation-Date: 2016-01-17 08:51+0100\n"
+"PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -4031,9 +4031,6 @@ msgstr "離席状態のニックネームのテキスト色"
 msgid "text color for groups in nicklist"
 msgstr "ニックネームリスト内のグループのテキスト色"
 
-msgid "text color for offline nicknames"
-msgstr "オフラインのニックネームのテキスト色"
-
 msgid ""
 "color for window separators (when split) and separators beside bars (like "
 "nicklist)"
@@ -5803,6 +5800,12 @@ msgstr ""
 "場合は、irc.look.temporary_servers オプションを on にしてください"
 
 #, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+"%s%s: \"%s\" コマンドはチャンネル内かプライベートバッファで実行できます"
+
+#, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
 msgstr "%s%s%s%s への CTCP クエリ: %s%s%s%s%s"
 
@@ -5888,12 +5891,6 @@ msgid ""
 msgstr ""
 "%s%s: チャンネルに居ない状態で \"%s\" コマンドを実行するにはチャンネル名の指"
 "定が必要です"
-
-#, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
-msgstr ""
-"%s%s: \"%s\" コマンドはチャンネル内かプライベートバッファで実行できます"
 
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
@@ -6302,13 +6299,21 @@ msgstr ""
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "CTCP メッセージの送信 (Client-To-Client Protocol)"
 
-msgid "<target> <type> [<arguments>]"
-msgstr "<target> <type> [<arguments>]"
+#, fuzzy
+msgid "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
+msgstr "[-server <server>] <target>[,<target>...] <text>"
 
+#, fuzzy
 msgid ""
-" target: nick or channel name to send CTCP to\n"
-"   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
-"arguments: arguments for CTCP"
+"   server: send to this server (internal name)\n"
+"   target: nick or channel ('*' = current channel)\n"
+"     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
+"arguments: arguments for CTCP\n"
+"\n"
+"Examples:\n"
+"  /ctcp toto time\n"
+"  /ctcp toto version\n"
+"  /ctcp * version"
 msgstr ""
 " target: CTCP を送信するニックネーム又はチャンネル\n"
 "   type: CTCP タイプ (例: \"version\"、\"ping\"、..)\n"

@@ -146,11 +146,17 @@ WeeChat がサポートする機能: account-notify、away-notify、cap-notify�
 [command]*`ctcp`* CTCP メッセージの送信 (Client-To-Client Protocol)::
 
 ----
-/ctcp  <target> <type> [<arguments>]
+/ctcp  [-server <server>] <target>[,<target>...] <type> [<arguments>]
 
- target: CTCP を送信するニックネーム又はチャンネル
-   type: CTCP タイプ (例: "version"、"ping"、..)
-arguments: CTCP の引数
+   server: send to this server (internal name)
+   target: nick or channel ('*' = current channel)
+     type: CTCP type (examples: "version", "ping", ..)
+arguments: arguments for CTCP
+
+Examples:
+  /ctcp toto time
+  /ctcp toto version
+  /ctcp * version
 ----
 
 [[command_irc_cycle]]

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:49+0100\n"
-"PO-Revision-Date: 2016-01-05 07:50+0100\n"
+"POT-Creation-Date: 2016-01-17 08:51+0100\n"
+"PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -3216,10 +3216,6 @@ msgid "text color for groups in nicklist"
 msgstr "név színe"
 
 #, fuzzy
-msgid "text color for offline nicknames"
-msgstr "távollevő felhasználók nevének színe"
-
-#, fuzzy
 msgid ""
 "color for window separators (when split) and separators beside bars (like "
 "nicklist)"
@@ -4797,6 +4793,11 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
+
+#, fuzzy, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
 msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
 
@@ -4880,11 +4881,6 @@ msgstr "%s nincs elég memória a reguláris kifejezéshez\n"
 msgid ""
 "%s%s: you must specify channel for \"%s\" command if you're not in a channel"
 msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
-msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
 
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
@@ -5228,14 +5224,20 @@ msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "CTCP üzenet küldése (Client-To-Client Protokoll)"
 
 #, fuzzy
-msgid "<target> <type> [<arguments>]"
-msgstr "fogadó típusa [paraméterek]"
+msgid "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
+msgstr "fogadó [,fogadó] szöveg"
 
 #, fuzzy
 msgid ""
-" target: nick or channel name to send CTCP to\n"
-"   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
-"arguments: arguments for CTCP"
+"   server: send to this server (internal name)\n"
+"   target: nick or channel ('*' = current channel)\n"
+"     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
+"arguments: arguments for CTCP\n"
+"\n"
+"Examples:\n"
+"  /ctcp toto time\n"
+"  /ctcp toto version\n"
+"  /ctcp * version"
 msgstr ""
 "   fogadó: a felhasználó vagy szoba ahová a CTCP üzenetet küldjük\n"
 "    típus: CTCP üzenet típusa (példa: \"version\", \"ping\", ..)\n"

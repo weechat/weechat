@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:49+0100\n"
-"PO-Revision-Date: 2016-01-07 21:28+0100\n"
+"POT-Creation-Date: 2016-01-17 08:51+0100\n"
+"PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -4129,9 +4129,6 @@ msgstr "kolor nicków ze statusem nieobecności"
 msgid "text color for groups in nicklist"
 msgstr "kolor grup na liście nicków"
 
-msgid "text color for offline nicknames"
-msgstr "kolor dla nieobecnych nicków"
-
 msgid ""
 "color for window separators (when split) and separators beside bars (like "
 "nicklist)"
@@ -5932,6 +5929,12 @@ msgstr ""
 "(NIE ZAPISANY), włącz opcję irc.look.temporary_servers"
 
 #, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+"%s%s: komenda \"%s\" może być wykonana tylko na kanale lub prywatnym buforze"
+
+#, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
 msgstr "%sZapytanie CTCP do %s%s%s: %s%s%s%s%s"
 
@@ -6018,12 +6021,6 @@ msgid ""
 msgstr ""
 "%s%s: musisz podać kanał dla komendy \"%s\" jeśli nie znajdujesz się na "
 "kanale"
-
-#, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
-msgstr ""
-"%s%s: komenda \"%s\" może być wykonana tylko na kanale lub prywatnym buforze"
 
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
@@ -6440,13 +6437,21 @@ msgstr ""
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "wyślij wiadomość CTCP (protokół klient-klient)"
 
-msgid "<target> <type> [<arguments>]"
-msgstr "<cel> <typ> [<argumenty>]"
+#, fuzzy
+msgid "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
+msgstr "[-server <serwer>] <cel>[,<cel>...] <tekst>"
 
+#, fuzzy
 msgid ""
-" target: nick or channel name to send CTCP to\n"
-"   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
-"arguments: arguments for CTCP"
+"   server: send to this server (internal name)\n"
+"   target: nick or channel ('*' = current channel)\n"
+"     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
+"arguments: arguments for CTCP\n"
+"\n"
+"Examples:\n"
+"  /ctcp toto time\n"
+"  /ctcp toto version\n"
+"  /ctcp * version"
 msgstr ""
 " cel: nick albo kanał, na który wysłać CTCP\n"
 "     typ: typ CTCP (przykłady: \"version\", \"ping\", ..)\n"

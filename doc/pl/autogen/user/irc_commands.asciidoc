@@ -146,11 +146,17 @@ Przykłady:
 [command]*`ctcp`* wyślij wiadomość CTCP (protokół klient-klient)::
 
 ----
-/ctcp  <cel> <typ> [<argumenty>]
+/ctcp  [-server <server>] <target>[,<target>...] <type> [<arguments>]
 
- cel: nick albo kanał, na który wysłać CTCP
-     typ: typ CTCP (przykłady: "version", "ping", ..)
-argumenty: argumenty dla CTCP
+   server: send to this server (internal name)
+   target: nick or channel ('*' = current channel)
+     type: CTCP type (examples: "version", "ping", ..)
+arguments: arguments for CTCP
+
+Examples:
+  /ctcp toto time
+  /ctcp toto version
+  /ctcp * version
 ----
 
 [[command_irc_cycle]]

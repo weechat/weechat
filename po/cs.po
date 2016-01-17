@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:49+0100\n"
-"PO-Revision-Date: 2016-01-05 07:50+0100\n"
+"POT-Creation-Date: 2016-01-17 08:51+0100\n"
+"PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -3626,9 +3626,6 @@ msgstr "barva textu pro nepřítomné přezdíveky"
 msgid "text color for groups in nicklist"
 msgstr "barva textu pro skupiny v seznamu přezdívek"
 
-msgid "text color for offline nicknames"
-msgstr "barva textu pro nepřipojené přezdíveky"
-
 #, fuzzy
 msgid ""
 "color for window separators (when split) and separators beside bars (like "
@@ -5250,6 +5247,13 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+"%s%s: příkaz \"%s\" může být spuštěn pouze v bufferu kanálu nebo soukromého "
+"rozhovoru"
+
+#, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
 msgstr "%sCTCP dotaz pro %s%s%s: %s%s%s%s%s"
 
@@ -5333,13 +5337,6 @@ msgstr "%s%s: nedostatek paměti pro regulární výraz"
 msgid ""
 "%s%s: you must specify channel for \"%s\" command if you're not in a channel"
 msgstr "%s%s: pokud nejste v kanálu, je ho třeba uvést pro příkaz \"%s\""
-
-#, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
-msgstr ""
-"%s%s: příkaz \"%s\" může být spuštěn pouze v bufferu kanálu nebo soukromého "
-"rozhovoru"
 
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
@@ -5729,14 +5726,21 @@ msgstr ""
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "poslat CTCP zprávu (Client-To-Client Protocol)"
 
-msgid "<target> <type> [<arguments>]"
-msgstr "<příjemce> <typ> [<argumenty>]"
+#, fuzzy
+msgid "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
+msgstr "[-server <server>] <příjemce>[,<příjemce>...] <text>"
 
 #, fuzzy
 msgid ""
-" target: nick or channel name to send CTCP to\n"
-"   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
-"arguments: arguments for CTCP"
+"   server: send to this server (internal name)\n"
+"   target: nick or channel ('*' = current channel)\n"
+"     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
+"arguments: arguments for CTCP\n"
+"\n"
+"Examples:\n"
+"  /ctcp toto time\n"
+"  /ctcp toto version\n"
+"  /ctcp * version"
 msgstr ""
 " příjemce: uživatel nebo kanál, kterému se pošle CTCP\n"
 "      typ: CTCP typ (například: \"version\", \"ping\", ...)\n"

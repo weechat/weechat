@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-05 07:49+0100\n"
+"POT-Creation-Date: 2016-01-17 08:51+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2900,9 +2900,6 @@ msgstr ""
 msgid "text color for groups in nicklist"
 msgstr ""
 
-msgid "text color for offline nicknames"
-msgstr ""
-
 msgid ""
 "color for window separators (when split) and separators beside bars (like "
 "nicklist)"
@@ -4369,6 +4366,11 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+
+#, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
 msgstr ""
 
@@ -4451,11 +4453,6 @@ msgstr ""
 #, c-format
 msgid ""
 "%s%s: you must specify channel for \"%s\" command if you're not in a channel"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: \"%s\" command can only be executed in a channel or private buffer"
 msgstr ""
 
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
@@ -4766,13 +4763,19 @@ msgstr ""
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr ""
 
-msgid "<target> <type> [<arguments>]"
+msgid "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
 msgstr ""
 
 msgid ""
-" target: nick or channel name to send CTCP to\n"
-"   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
-"arguments: arguments for CTCP"
+"   server: send to this server (internal name)\n"
+"   target: nick or channel ('*' = current channel)\n"
+"     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
+"arguments: arguments for CTCP\n"
+"\n"
+"Examples:\n"
+"  /ctcp toto time\n"
+"  /ctcp toto version\n"
+"  /ctcp * version"
 msgstr ""
 
 msgid "leave and rejoin a channel"
