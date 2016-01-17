@@ -15,6 +15,15 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'ReleaseNotes.asciidoc' in sources).
 
 
+[[1.5]]
+== Version 1.5 (under dev)
+
+[[1.5_features]]
+=== New features
+
+* irc: add multiple targets and support of "-server" in command /ctcp
+  (issue #204, issue #493)
+
 [[1.4]]
 == Version 1.4 (2016-01-10)
 
