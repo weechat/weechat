@@ -6259,9 +6259,9 @@ irc_command_init ()
            "   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
            "arguments: arguments for CTCP"),
         "-server %(irc_servers) %(irc_channel)|%(nicks)|* "
-        "action|clientinfo|finger|ping|source|time|userinfo|version"
+        IRC_COMMAND_CTCP_SUPPORTED_COMPLETION
         " || %(irc_channel)|%(nicks)|* "
-        "action|clientinfo|finger|ping|source|time|userinfo|version",
+        IRC_COMMAND_CTCP_SUPPORTED_COMPLETION,
         &irc_command_ctcp, NULL);
     weechat_hook_command (
         "cycle",
