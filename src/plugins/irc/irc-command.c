@@ -6258,9 +6258,9 @@ irc_command_init ()
            " target: nick or channel ('*' = current channel)\n"
            "   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
            "arguments: arguments for CTCP"),
-        "-server %(irc_servers) %(irc_channel)|%(nicks) "
+        "-server %(irc_servers) %(irc_channel)|%(nicks)|* "
         "action|clientinfo|finger|ping|source|time|userinfo|version"
-        " || %(irc_channel)|%(nicks) "
+        " || %(irc_channel)|%(nicks)|* "
         "action|clientinfo|finger|ping|source|time|userinfo|version",
         &irc_command_ctcp, NULL);
     weechat_hook_command (
