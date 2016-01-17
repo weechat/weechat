@@ -6254,10 +6254,15 @@ irc_command_init ()
         "ctcp",
         N_("send a CTCP message (Client-To-Client Protocol)"),
         N_("[-server <server>] <target>[,<target>...] <type> [<arguments>]"),
-        N_(" server: send to this server (internal name)\n"
-           " target: nick or channel ('*' = current channel)\n"
-           "   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
-           "arguments: arguments for CTCP"),
+        N_("   server: send to this server (internal name)\n"
+           "   target: nick or channel ('*' = current channel)\n"
+           "     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
+           "arguments: arguments for CTCP\n"
+           "\n"
+           "Examples:\n"
+           "  /ctcp toto time\n"
+           "  /ctcp toto version\n"
+           "  /ctcp * version"),
         "-server %(irc_servers) %(irc_channel)|%(nicks)|* "
         IRC_COMMAND_CTCP_SUPPORTED_COMPLETION
         " || %(irc_channel)|%(nicks)|* "
