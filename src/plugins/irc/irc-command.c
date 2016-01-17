@@ -1393,7 +1393,6 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
     IRC_COMMAND_CHECK_SERVER("ctcp", 1);
 
     targets = weechat_string_split (argv[arg_target], ",", 0, 0, &num_targets);
-
     if (!targets)
         WEECHAT_COMMAND_ERROR;
 
@@ -1405,7 +1404,7 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
 
     if ((strcmp (ctcp_type, "PING") == 0) && !argv_eol[arg_args])
     {
-        // generate argument for PING if not provided
+        /* generate argument for PING if not provided */
         gettimeofday (&tv, NULL);
         snprintf (str_time, sizeof (str_time), "%ld %ld",
                   (long)tv.tv_sec, (long)tv.tv_usec);
@@ -6252,10 +6251,10 @@ irc_command_init ()
            " target: nick or channel ('*' = current channel)\n"
            "   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
            "arguments: arguments for CTCP"),
-        "-server %(irc_servers) %(irc_channel)|%(nicks)"
-        " action|clientinfo|finger|ping|source|time|userinfo|version"
-        " || %(irc_channel)|%(nicks)"
-        " action|clientinfo|finger|ping|source|time|userinfo|version",
+        "-server %(irc_servers) %(irc_channel)|%(nicks) "
+        "action|clientinfo|finger|ping|source|time|userinfo|version"
+        " || %(irc_channel)|%(nicks) "
+        "action|clientinfo|finger|ping|source|time|userinfo|version",
         &irc_command_ctcp, NULL);
     weechat_hook_command (
         "cycle",
