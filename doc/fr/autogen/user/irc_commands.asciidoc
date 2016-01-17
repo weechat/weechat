@@ -154,7 +154,6 @@ Exemples :
 arguments : paramètres pour le CTCP
 
 Exemples :
-
   /ctcp toto time
   /ctcp toto version
   /ctcp * version
