@@ -6538,8 +6538,8 @@ irc_command_init ()
         N_("server: send to this server (internal name)\n"
            "target: nick or channel (may be mask, '*' = current channel)\n"
            "  text: text to send"),
-        "-server %(irc_servers) %(nicks)"
-        " || %(nicks)",
+        "-server %(irc_servers) %(nicks)|*"
+        " || %(nicks)|*",
         &irc_command_msg, NULL);
     weechat_hook_command (
         "names",
