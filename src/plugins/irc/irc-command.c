@@ -1398,7 +1398,10 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
 
     ctcp_type = strdup (argv[arg_type]);
     if (!ctcp_type)
+    {
+        weechat_string_free_split (targets);
         WEECHAT_COMMAND_ERROR;
+    }
 
     weechat_string_toupper (ctcp_type);
 
