@@ -24,6 +24,11 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: add multiple targets and support of "-server" in command /ctcp
   (issue #204, issue #493)
 
+[[1.5_bugs]]
+=== Bugs fixed
+
+* irc: fix /msg command with multiple targets including "*"
+
 [[1.4]]
 == Version 1.4 (2016-01-10)
 
