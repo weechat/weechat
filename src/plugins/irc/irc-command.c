@@ -1366,7 +1366,8 @@ int
 irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    char **targets, *ctcp_target, *ctcp_type, *ctcp_args, str_time[512];
+    char **targets, *ctcp_type, str_time[512];
+    const char *ctcp_target, *ctcp_args;
     int num_targets, arg_target, arg_type, arg_args, i;
     struct timeval tv;
 
@@ -1433,31 +1434,34 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
                     _("%s%s: \"%s\" command can only be executed in a channel "
                       "or private buffer"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "ctcp *");
-                return WEECHAT_RC_OK;
+                ctcp_target = NULL;
             }
-
-            ctcp_target = ptr_channel->name;
+            else
+                ctcp_target = ptr_channel->name;
         }
 
-        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "PRIVMSG %s :\01%s%s%s\01",
-                          ctcp_target,
-                          ctcp_type,
-                          (ctcp_args) ? " " : "",
-                          (ctcp_args) ? ctcp_args : "");
-        weechat_printf (
-            irc_msgbuffer_get_target_buffer (
-                ptr_server, ctcp_target, NULL, "ctcp", NULL),
-            _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
-            weechat_prefix ("network"),
-            irc_nick_color_for_msg (ptr_server, 0, NULL, ctcp_target),
-            ctcp_target,
-            IRC_COLOR_RESET,
-            IRC_COLOR_CHAT_CHANNEL,
-            ctcp_type,
-            IRC_COLOR_RESET,
-            (ctcp_args) ? " " : "",
-            (ctcp_args) ? ctcp_args : "");
+        if (ctcp_target)
+        {
+            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              "PRIVMSG %s :\01%s%s%s\01",
+                              ctcp_target,
+                              ctcp_type,
+                              (ctcp_args) ? " " : "",
+                              (ctcp_args) ? ctcp_args : "");
+            weechat_printf (
+                irc_msgbuffer_get_target_buffer (
+                    ptr_server, ctcp_target, NULL, "ctcp", NULL),
+                _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
+                weechat_prefix ("network"),
+                irc_nick_color_for_msg (ptr_server, 0, NULL, ctcp_target),
+                ctcp_target,
+                IRC_COLOR_RESET,
+                IRC_COLOR_CHAT_CHANNEL,
+                ctcp_type,
+                IRC_COLOR_RESET,
+                (ctcp_args) ? " " : "",
+                (ctcp_args) ? ctcp_args : "");
+        }
     }
 
     free (ctcp_type);
