@@ -42,9 +42,9 @@ extern struct t_config_option *xfer_config_network_port_range;
 extern struct t_config_option *xfer_config_network_speed_limit;
 extern struct t_config_option *xfer_config_network_timeout;
 
-extern struct t_config_option *xfer_config_file_auto_accept_chats;
-extern struct t_config_option *xfer_config_file_auto_accept_files;
-extern struct t_config_option *xfer_config_file_auto_accept_nicks;
+struct t_config_option *xfer_config_file_auto_accept_chats;
+struct t_config_option *xfer_config_file_auto_accept_files;
+struct t_config_option *xfer_config_file_auto_accept_nicks;
 extern struct t_config_option *xfer_config_file_auto_rename;
 extern struct t_config_option *xfer_config_file_auto_resume;
 extern struct t_config_option *xfer_config_file_auto_check_crc32;
