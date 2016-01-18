@@ -2589,37 +2589,14 @@ irc_server_msgq_flush ()
                             }
 
                             msg_decoded = NULL;
+
                             /* convert charset for message */
-                            if (channel
-                                && irc_channel_is_channel (irc_recv_msgq->server,
-                                                           channel))
-                            {
-                                snprintf (modifier_data, sizeof (modifier_data),
-                                          "%s.%s.%s",
-                                          weechat_plugin->name,
-                                          irc_recv_msgq->server->name,
-                                          channel);
-                            }
-                            else
-                            {
-                                if (nick && (!host || (strcmp (nick, host) != 0)))
-                                {
-                                    snprintf (modifier_data,
-                                              sizeof (modifier_data),
-                                              "%s.%s.%s",
-                                              weechat_plugin->name,
-                                              irc_recv_msgq->server->name,
-                                              nick);
-                                }
-                                else
-                                {
-                                    snprintf (modifier_data,
-                                              sizeof (modifier_data),
-                                              "%s.%s",
-                                              weechat_plugin->name,
-                                              irc_recv_msgq->server->name);
-                                }
-                            }
+                            snprintf (modifier_data,
+                                      sizeof (modifier_data),
+                                      "%s.%s",
+                                      weechat_plugin->name,
+                                      irc_recv_msgq->server->name);
+
                             msg_decoded = irc_message_convert_charset (
                                 ptr_msg,
                                 "charset_decode",
