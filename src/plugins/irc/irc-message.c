@@ -27,6 +27,7 @@
 #include "irc.h"
 #include "irc-server.h"
 #include "irc-channel.h"
+#include "irc-message.h"
 
 
 /*
@@ -419,33 +420,11 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
  */
 
 char *
-irc_message_convert_charset (const char *message, int pos_start,
+irc_message_convert_charset (const char *message,
                              const char *modifier, const char *modifier_data)
 {
-    char *text, *msg_result;
-    int length;
-
-    text = weechat_hook_modifier_exec (modifier, modifier_data,
-                                       message + pos_start);
-    if (!text)
-        return NULL;
-
-    length = pos_start + strlen (text) + 1;
-    msg_result = malloc (length);
-    if (msg_result)
-    {
-        msg_result[0] = '\0';
-        if (pos_start > 0)
-        {
-            memcpy (msg_result, message, pos_start);
-            msg_result[pos_start] = '\0';
-        }
-        strcat (msg_result, text);
-    }
-
-    free (text);
-
-    return msg_result;
+    return weechat_hook_modifier_exec (
+            modifier, modifier_data, message);
 }
 
 

@@ -32,7 +32,6 @@ extern void irc_message_parse (struct t_irc_server *server, const char *message,
 extern struct t_hashtable *irc_message_parse_to_hashtable (struct t_irc_server *server,
                                                            const char *message);
 extern char *irc_message_convert_charset (const char *message,
-                                          int pos_start,
                                           const char *modifier,
                                           const char *modifier_data);
 extern const char *irc_message_get_nick_from_host (const char *host);
