@@ -2070,7 +2070,6 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
     char *new_msg, *pos, *tags_to_send, *msg_encoded;
     char str_modifier[128], modifier_data[256];
     int rc, queue_msg, add_to_queue, first_message, anti_flood;
-    int pos_channel, pos_text, pos_encode;
     time_t time_now;
     struct t_irc_redirect *ptr_redirect;
 
@@ -2098,34 +2097,26 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
         ptr_msg = (new_msg) ? new_msg : message;
 
         msg_encoded = NULL;
-        irc_message_parse (server, ptr_msg, NULL, NULL, NULL, NULL, NULL, NULL,
-                           NULL, NULL, NULL, NULL, &pos_channel, &pos_text);
-        if (weechat_config_boolean (irc_config_network_channel_encode))
-            pos_encode = (pos_channel >= 0) ? pos_channel : pos_text;
-        else
-            pos_encode = pos_text;
-        if (pos_encode >= 0)
+        ptr_chan_nick = (channel) ? channel : nick;
+        if (ptr_chan_nick)
         {
-            ptr_chan_nick = (channel) ? channel : nick;
-            if (ptr_chan_nick)
-            {
-                snprintf (modifier_data, sizeof (modifier_data),
-                          "%s.%s.%s",
-                          weechat_plugin->name,
-                          server->name,
-                          ptr_chan_nick);
-            }
-            else
-            {
-                snprintf (modifier_data, sizeof (modifier_data),
-                          "%s.%s",
-                          weechat_plugin->name,
-                          server->name);
-            }
-            msg_encoded = irc_message_convert_charset (ptr_msg, pos_encode,
-                                                       "charset_encode",
-                                                       modifier_data);
+            snprintf (modifier_data, sizeof (modifier_data),
+                      "%s.%s.%s",
+                      weechat_plugin->name,
+                      server->name,
+                      ptr_chan_nick);
         }
+        else
+        {
+            snprintf (modifier_data, sizeof (modifier_data),
+                      "%s.%s",
+                      weechat_plugin->name,
+                      server->name);
+        }
+        msg_encoded = irc_message_convert_charset (
+                ptr_msg,
+                "charset_encode",
+                modifier_data);
 
         if (msg_encoded)
             ptr_msg = msg_encoded;
@@ -2537,7 +2528,6 @@ irc_server_msgq_flush ()
     char *tags, *nick, *host, *command, *channel, *arguments;
     char *msg_decoded, *msg_decoded_without_color;
     char str_modifier[128], modifier_data[256];
-    int pos_channel, pos_text, pos_decode;
 
     while (irc_recv_msgq)
     {
@@ -2598,54 +2588,26 @@ irc_server_msgq_flush ()
                                     ptr_msg);
                             }
 
+                            msg_decoded = NULL;
+
+                            /* convert charset for message */
+                            snprintf (modifier_data,
+                                      sizeof (modifier_data),
+                                      "%s.%s",
+                                      weechat_plugin->name,
+                                      irc_recv_msgq->server->name);
+
+                            msg_decoded = irc_message_convert_charset (
+                                ptr_msg,
+                                "charset_decode",
+                                modifier_data);
+
                             irc_message_parse (irc_recv_msgq->server, ptr_msg,
                                                &tags, NULL, &nick, &host,
                                                &command, &channel, &arguments,
                                                NULL, NULL, NULL,
-                                               &pos_channel, &pos_text);
+                                               NULL, NULL);
 
-                            msg_decoded = NULL;
-                            if (weechat_config_boolean (irc_config_network_channel_encode))
-                                pos_decode = (pos_channel >= 0) ? pos_channel : pos_text;
-                            else
-                                pos_decode = pos_text;
-                            if (pos_decode >= 0)
-                            {
-                                /* convert charset for message */
-                                if (channel
-                                    && irc_channel_is_channel (irc_recv_msgq->server,
-                                                               channel))
-                                {
-                                    snprintf (modifier_data, sizeof (modifier_data),
-                                              "%s.%s.%s",
-                                              weechat_plugin->name,
-                                              irc_recv_msgq->server->name,
-                                              channel);
-                                }
-                                else
-                                {
-                                    if (nick && (!host || (strcmp (nick, host) != 0)))
-                                    {
-                                        snprintf (modifier_data,
-                                                  sizeof (modifier_data),
-                                                  "%s.%s.%s",
-                                                  weechat_plugin->name,
-                                                  irc_recv_msgq->server->name,
-                                                  nick);
-                                    }
-                                    else
-                                    {
-                                        snprintf (modifier_data,
-                                                  sizeof (modifier_data),
-                                                  "%s.%s",
-                                                  weechat_plugin->name,
-                                                  irc_recv_msgq->server->name);
-                                    }
-                                }
-                                msg_decoded = irc_message_convert_charset (
-                                    ptr_msg, pos_decode,
-                                    "charset_decode", modifier_data);
-                            }
 
                             /* replace WeeChat internal color codes by "?" */
                             msg_decoded_without_color =
