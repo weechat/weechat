@@ -6206,8 +6206,8 @@ msgstr ""
 "Buffer ausgeführt werden"
 
 #, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%sCTCP Anfrage an %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP query to %s%s%s @ %s%s%s:  %s%s%s%s%s"
+msgstr "%sCTCP Anfrage an %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -8880,8 +8880,8 @@ msgstr ""
 "\"whois nick nick\" verschickt"
 
 #, c-format
-msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
-msgstr "%sCTCP angefordert von %s%s%s: %s%s%s%s%s%s"
+msgid "%sCTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s%s"
+msgstr "%sCTCP angefordert von %s%s%s @ %s%s%s:  %s%s%s%s%s%s"
 
 msgid " (blocked)"
 msgstr " (unterdrückt)"
@@ -8892,12 +8892,12 @@ msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
 msgstr "%sCTCP Antwort von %s%s%s: %s%s%s %.3fs"
 
 #, c-format
-msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
-msgstr "%sCTCP Antwort von %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply from %s%s%s @ %s%s%s:  %s%s%s%s%s"
+msgstr "%sCTCP Antwort von %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 #, c-format
-msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
-msgstr "%sCTCP Antwort an %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply to %s%s%s @ %s%s%s:  %s%s%s%s%s"
+msgstr "%sCTCP Antwort an %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 #, c-format
 msgid "%s%s: not enough memory for \"%s\" command"
@@ -8912,8 +8912,8 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s%s: unbekannter DCC CHAT-Typ empfangen von %s%s%s: \"%s\""
 
 #, c-format
-msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
-msgstr "%sunbekannte CTCP Anfrage von %s%s%s: %s%s%s%s%s"
+msgid "%sUnknown CTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s"
+msgstr "%sunbekannte CTCP Anfrage von %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr ""

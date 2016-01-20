@@ -4798,7 +4798,7 @@ msgid ""
 msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
 
 #, fuzzy, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP query to %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
 
 #, fuzzy, c-format
@@ -7035,7 +7035,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
+msgid "%sCTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s%s"
 msgstr "%s%s%s eltávolította %s%s%s-t a szerverről"
 
 #, fuzzy
@@ -7048,11 +7048,11 @@ msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
 msgstr "CTCP %sPING%s válasz %s%s%s felhasználótól: %ld.%ld másodperc\n"
 
 #, fuzzy, c-format
-msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply from %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr "CTCP %sPING%s válasz %s%s%s felhasználótól: %ld.%ld másodperc\n"
 
 #, fuzzy, c-format
-msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply to %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr "CTCP %sPING%s válasz %s%s%s felhasználótól: %ld.%ld másodperc\n"
 
 #, fuzzy, c-format
@@ -7068,7 +7068,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s usmeretlen DCC CHAT típus érkezett a következőtől:"
 
 #, fuzzy, c-format
-msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
+msgid "%sUnknown CTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
 
 #, fuzzy
