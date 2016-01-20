@@ -2096,23 +2096,11 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
         first_message = 1;
         ptr_msg = (new_msg) ? new_msg : message;
 
-        msg_encoded = NULL;
-        ptr_chan_nick = (channel) ? channel : nick;
-        if (ptr_chan_nick)
-        {
-            snprintf (modifier_data, sizeof (modifier_data),
-                      "%s.%s.%s",
-                      weechat_plugin->name,
-                      server->name,
-                      ptr_chan_nick);
-        }
-        else
-        {
-            snprintf (modifier_data, sizeof (modifier_data),
-                      "%s.%s",
-                      weechat_plugin->name,
-                      server->name);
-        }
+        snprintf (modifier_data, sizeof (modifier_data),
+                  "%s.%s",
+                  weechat_plugin->name,
+                  server->name);
+
         msg_encoded = irc_message_convert_charset (
                 ptr_msg,
                 "charset_encode",
