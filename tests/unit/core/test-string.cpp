@@ -812,7 +812,7 @@ TEST(String, Split)
     POINTERS_EQUAL(NULL, argv[2]);
     string_free_split (argv);
 
-    /* keep eol */
+    /* keep eol == 1 */
     argv = string_split (" abc de  fghi ", " ", 1, 0, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
@@ -822,12 +822,31 @@ TEST(String, Split)
     POINTERS_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
-    /* keep eol and max 2 items */
+    /* keep eol == 1 and max 2 items */
     argv = string_split (" abc de  fghi ", " ", 1, 2, &argc);
     LONGS_EQUAL(2, argc);
     CHECK(argv);
     STRCMP_EQUAL("abc de  fghi", argv[0]);
     STRCMP_EQUAL("de  fghi", argv[1]);
+    POINTERS_EQUAL(NULL, argv[2]);
+    string_free_split (argv);
+
+    /* keep eol == 2 */
+    argv = string_split (" abc de  fghi ", " ", 2, 0, &argc);
+    LONGS_EQUAL(3, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("abc de  fghi ", argv[0]);
+    STRCMP_EQUAL("de  fghi ", argv[1]);
+    STRCMP_EQUAL("fghi ", argv[2]);
+    POINTERS_EQUAL(NULL, argv[3]);
+    string_free_split (argv);
+
+    /* keep eol == 2 and max 2 items */
+    argv = string_split (" abc de  fghi ", " ", 2, 2, &argc);
+    LONGS_EQUAL(2, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("abc de  fghi ", argv[0]);
+    STRCMP_EQUAL("de  fghi ", argv[1]);
     POINTERS_EQUAL(NULL, argv[2]);
     string_free_split (argv);
 }
