@@ -30,6 +30,9 @@ extern "C"
 #define LIST_VALUE_TEST "test"
 #define LIST_VALUE_XYZ  "xyz"
 #define LIST_VALUE_ZZZ  "zzz"
+int list_value_user_data_test;
+int list_value_user_data_xyz;
+int list_value_user_data_zzz;
 
 TEST_GROUP(List)
 {
@@ -46,9 +49,9 @@ test_list_new ()
 
     list = weelist_new ();
 
-    weelist_add (list, LIST_VALUE_ZZZ, WEECHAT_LIST_POS_END, NULL);
-    weelist_add (list, LIST_VALUE_TEST, WEECHAT_LIST_POS_BEGINNING, NULL);
-    weelist_add (list, LIST_VALUE_XYZ, WEECHAT_LIST_POS_SORT, NULL);
+    weelist_add (list, LIST_VALUE_ZZZ, WEECHAT_LIST_POS_END, &list_value_user_data_zzz);
+    weelist_add (list, LIST_VALUE_TEST, WEECHAT_LIST_POS_BEGINNING, &list_value_user_data_test);
+    weelist_add (list, LIST_VALUE_XYZ, WEECHAT_LIST_POS_SORT, &list_value_user_data_xyz);
 
     return list;
 }
@@ -231,6 +234,7 @@ TEST(List, Search)
  * Tests functions:
  *   weelist_get
  *   weelist_string
+ *   weelist_user_data
  */
 
 TEST(List, Get)
@@ -272,6 +276,18 @@ TEST(List, Get)
 
     ptr_item = weelist_get(list, 2);
     STRCMP_EQUAL(LIST_VALUE_ZZZ, weelist_string (ptr_item));
+
+    /* get user_data value of an element */
+    POINTERS_EQUAL(NULL, weelist_user_data (NULL));
+
+    ptr_item = weelist_get(list, 0);
+    POINTERS_EQUAL(&list_value_user_data_test, weelist_user_data (ptr_item));
+
+    ptr_item = weelist_get(list, 1);
+    POINTERS_EQUAL(&list_value_user_data_xyz, weelist_user_data (ptr_item));
+
+    ptr_item = weelist_get(list, 2);
+    POINTERS_EQUAL(&list_value_user_data_zzz, weelist_user_data (ptr_item));
 
     /* free list */
     weelist_free (list);

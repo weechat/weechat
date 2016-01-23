@@ -454,3 +454,14 @@ weelist_print_log (struct t_weelist *weelist, const char *name)
         i++;
     }
 }
+/*
+ * Gets user data pointer to item data.
+ */
+void*
+weelist_user_data (struct t_weelist_item *item)
+{
+    if (item)
+        return item->user_data;
+
+    return NULL;
+}

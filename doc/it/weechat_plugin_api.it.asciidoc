@@ -3622,6 +3622,40 @@ value = weechat.list_string(item)
 weechat.prnt("", "valore dell'elemento: %s" % weechat.list_string(item))
 ----
 
+==== list_user_data
+
+_WeeChat ≥ 1.6._
+
+// TRANSLATION MISSING
+Return user data value of an item.
+
+Prototipo:
+
+[source,C]
+----
+void *weechat_list_user_data (struct t_weelist_item *item);
+----
+
+Argomenti:
+
+// TRANSLATION MISSING
+* 'item': item pointer
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* user data value of item
+
+Esempio in C:
+
+[source,C]
+----
+weechat_printf (NULL, "valore dell'elemento: %p", weechat_list_user_data (item));
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 ==== list_size
 
 Restituisce la dimensione della lista (numero di elementi).

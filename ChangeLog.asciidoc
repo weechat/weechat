@@ -14,6 +14,15 @@ For a list of important changes that require manual action, please look at
 https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'ReleaseNotes.asciidoc' in sources).
 
+[[1.6]]
+== Version 1.6 (under dev)
+
+[[1.6_features]]
+=== New features
+* api: add function list_user_data()
+
+[[1.6_bugs]]
+=== Bugs fixed
 
 [[1.5]]
 == Version 1.5 (2016-05-01)

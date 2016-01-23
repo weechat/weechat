@@ -684,6 +684,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->list_remove = &weelist_remove;
         new_plugin->list_remove_all = &weelist_remove_all;
         new_plugin->list_free = &weelist_free;
+        new_plugin->list_user_data = &weelist_user_data;
 
         new_plugin->hashtable_new = &hashtable_new;
         new_plugin->hashtable_set_with_size = &hashtable_set_with_size;

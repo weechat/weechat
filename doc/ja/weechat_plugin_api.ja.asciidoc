@@ -3509,6 +3509,40 @@ value = weechat.list_string(item)
 weechat.prnt("", "value of item: %s" % weechat.list_string(item))
 ----
 
+==== list_user_data
+
+_WeeChat ≥ 1.6._
+
+// TRANSLATION MISSING
+Return user data value of an item.
+
+プロトタイプ:
+
+[source,C]
+----
+void *weechat_list_user_data (struct t_weelist_item *item);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* 'item': item pointer
+
+戻り値:
+
+// TRANSLATION MISSING
+* user data value of item
+
+C 言語での使用例:
+
+[source,C]
+----
+weechat_printf (NULL, "value of item: %p", weechat_list_user_data (item));
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 ==== list_size
 
 リストのサイズ (要素の個数) を返す。
