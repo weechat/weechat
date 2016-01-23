@@ -1587,17 +1587,30 @@ string_replace_regex (const char *string, void *regex, const char *replace,
  * This function must not be called directly (call string_split or
  * string_split_shared instead).
  *
+ * According to keep_eol value:
+ *   0: standard split
+ *   1: each argument contains the argument and all the following arguments
+ *   2: same as 1, and separator is kept at the end of string.
+ *
  * Examples:
- *   string_split ("abc de  fghi", " ", 0, 0, NULL)
- *     ==> array[0] = "abc"
- *         array[1] = "de"
- *         array[2] = "fghi"
- *         array[3] = NULL
- *   string_split ("abc de  fghi", " ", 1, 0, NULL)
- *     ==> array[0] = "abc de  fghi"
- *         array[1] = "de  fghi"
- *         array[2] = "fghi"
- *         array[3] = NULL
+ *   string_split ("abc de  fghi ", " ", 0, 0, &argc)
+ *     ==> argc == 3
+ *         array[0] == "abc"
+ *         array[1] == "de"
+ *         array[2] == "fghi"
+ *         array[3] == NULL
+ *   string_split ("abc de  fghi ", " ", 1, 0, &argc)
+ *     ==> argc == 3
+ *         array[0] == "abc de  fghi"
+ *         array[1] == "de  fghi"
+ *         array[2] == "fghi"
+ *         array[3] == NULL
+ *   string_split ("abc de  fghi ", " ", 2, 0, &argc)
+ *     ==> argc == 3
+ *         array[0] == "abc de  fghi "
+ *         array[1] == "de  fghi "
+ *         array[2] == "fghi "
+ *         array[3] == NULL
  */
 
 char **
@@ -1628,7 +1641,8 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
         {
             ptr++;
         }
-        i++;
+        if (ptr[0])
+            i++;
     }
     n_items = i;
 
