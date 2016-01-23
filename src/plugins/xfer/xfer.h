@@ -156,7 +156,7 @@ struct t_xfer
     int fast_send;                     /* fast send file: does not wait ACK */
     int blocksize;                     /* block size for sending file       */
     time_t start_time;                 /* time when xfer started            */
-    time_t start_transfer;             /* time when xfer transfer started   */
+    struct timeval start_transfer;     /* time when xfer transfer started   */
     int sock;                          /* socket for connection             */
     pid_t child_pid;                   /* pid of child process (send/recv)  */
     int child_read;                    /* to read into child pipe           */
@@ -171,7 +171,7 @@ struct t_xfer
     unsigned long long pos;            /* number of bytes received/sent     */
     unsigned long long ack;            /* number of bytes received OK       */
     unsigned long long start_resume;   /* start of resume (in bytes)        */
-    time_t last_check_time;            /* last time we checked bytes snt/rcv*/
+    struct timeval last_check_time;    /* last time we checked bytes snt/rcv*/
     unsigned long long last_check_pos; /* bytes sent/recv at last check     */
     time_t last_activity;              /* time of last byte received/sent   */
     unsigned long long bytes_per_sec;  /* bytes per second                  */

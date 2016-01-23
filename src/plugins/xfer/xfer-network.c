@@ -178,8 +178,8 @@ xfer_network_child_read_cb (void *arg_xfer, int fd)
                 {
                     /* connection was successful by child, init transfer times */
                     xfer->status = XFER_STATUS_ACTIVE;
-                    xfer->start_transfer = time (NULL);
-                    xfer->last_check_time = time (NULL);
+                    gettimeofday(&xfer->start_transfer, NULL);
+                    xfer->last_check_time = xfer->start_transfer;
                     xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 }
                 else
@@ -427,7 +427,7 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
             xfer_set_remote_address (xfer, (struct sockaddr *)&addr, length,
                                      str_address);
             xfer->status = XFER_STATUS_ACTIVE;
-            xfer->start_transfer = time (NULL);
+            gettimeofday(&xfer->start_transfer, NULL);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             xfer_network_send_file_fork (xfer);
         }
