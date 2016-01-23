@@ -170,7 +170,7 @@ xfer_command_xfer_list (int full)
                                     ptr_xfer->remote_address_str,
                                     ptr_xfer->port);
                     date[0] = '\0';
-                    date_tmp = localtime (&(ptr_xfer->start_transfer));
+                    date_tmp = localtime (&(ptr_xfer->start_transfer.tv_sec));
                     if (date_tmp)
                     {
                         if (strftime (date, sizeof (date),
