@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <limits.h>
 
 #include "../weechat-plugin.h"
 #include "xfer.h"
@@ -216,12 +217,22 @@ xfer_buffer_refresh (const char *hotlist)
                 eta[0] = '\0';
                 if (ptr_xfer->status == XFER_STATUS_ACTIVE)
                 {
-                    snprintf (eta, sizeof (eta),
-                              "%s: %.2llu:%.2llu:%.2llu - ",
-                              _("ETA"),
-                              ptr_xfer->eta / 3600,
-                              (ptr_xfer->eta / 60) % 60,
-                              ptr_xfer->eta % 60);
+                    if (ptr_xfer->eta != ULLONG_MAX)
+                    {
+                        snprintf (eta, sizeof (eta),
+                                  "%s: %.2llu:%.2llu:%.2llu - ",
+                                  _("ETA"),
+                                  ptr_xfer->eta / 3600,
+                                  (ptr_xfer->eta / 60) % 60,
+                                  ptr_xfer->eta % 60);
+                    }
+                    else
+                    {
+                        snprintf (eta, sizeof (eta),
+                                  "%s: %s - ",
+                                  _("ETA"),
+                                  _("Unknown"));
+                    }
                 }
 
                 /* display second line for file with status, progress bar and estimated time */
