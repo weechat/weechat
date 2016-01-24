@@ -1594,23 +1594,23 @@ string_replace_regex (const char *string, void *regex, const char *replace,
  *
  * Examples:
  *   string_split ("abc de  fghi ", " ", 0, 0, &argc)
- *     ==> argc == 3
- *         array[0] == "abc"
+ *     ==> array[0] == "abc"
  *         array[1] == "de"
  *         array[2] == "fghi"
  *         array[3] == NULL
+ *         argc == 3
  *   string_split ("abc de  fghi ", " ", 1, 0, &argc)
- *     ==> argc == 3
- *         array[0] == "abc de  fghi"
+ *     ==> array[0] == "abc de  fghi"
  *         array[1] == "de  fghi"
  *         array[2] == "fghi"
  *         array[3] == NULL
+ *         argc == 3
  *   string_split ("abc de  fghi ", " ", 2, 0, &argc)
- *     ==> argc == 3
- *         array[0] == "abc de  fghi "
+ *     ==> array[0] == "abc de  fghi "
  *         array[1] == "de  fghi "
  *         array[2] == "fghi "
  *         array[3] == NULL
+ *         argc == 3
  */
 
 char **
