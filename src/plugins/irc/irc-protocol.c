@@ -1136,7 +1136,7 @@ IRC_PROTOCOL_CALLBACK(metadata)
     {
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
-                server, argv[2], command, "metadata", NULL),
+                server, target, command, "metadata", NULL),
             date,
             irc_protocol_tags (command, NULL, NULL, NULL),
             _("%sMetadata %s by %s: %s[%s%s%s] %s%s%s%s%s"),
@@ -1161,7 +1161,7 @@ IRC_PROTOCOL_CALLBACK(metadata)
     {
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
-                server, argv[2], command, "metadata", NULL),
+                server, target, command, "metadata", NULL),
             date,
             irc_protocol_tags (command, NULL, NULL, NULL),
             _("%sMetadata %s by %s: %s[%s%s%s] %s%s %s(%s%s%s)%s%s%s%s"),
@@ -5517,7 +5517,7 @@ IRC_PROTOCOL_CALLBACK(761)
     {
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
-                server, NULL, command, "metadata", NULL),
+                server, target, command, "metadata", NULL),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             _("%sMetadata: %s[%s%s%s] %s%s%s%s%s"),
@@ -5540,7 +5540,7 @@ IRC_PROTOCOL_CALLBACK(761)
     {
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (
-                server, NULL, command, "metadata", NULL),
+                server, target, command, "metadata", NULL),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             _("%sMetadata: %s[%s%s%s] %s%s %s(%s%s%s)%s%s%s%s"),
@@ -5617,7 +5617,7 @@ IRC_PROTOCOL_CALLBACK(764_765)
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (
-            server, NULL, command, "metadata", NULL),
+            server, target, command, "metadata", NULL),
         date,
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
         _("%sMetadata: %s[%s%s%s] %s%s"),
@@ -5657,7 +5657,7 @@ IRC_PROTOCOL_CALLBACK(766_768_769)
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (
-            server, NULL, command, "metadata", NULL),
+            server, target, command, "metadata", NULL),
         date,
         irc_protocol_tags (command, "irc_numeric", NULL, NULL),
         _("%sMetadata: %s[%s%s%s] %s%s: %s"),
