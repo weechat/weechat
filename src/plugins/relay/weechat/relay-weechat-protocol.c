@@ -405,7 +405,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
     struct t_gui_buffer *ptr_buffer;
     char *pos, **timer_args;
 
-    RELAY_WEECHAT_PROTOCOL_MIN_ARGS(2);
+    RELAY_WEECHAT_PROTOCOL_MIN_ARGS(1);
 
     ptr_buffer = relay_weechat_protocol_get_buffer (argv[0]);
     if (!ptr_buffer)
@@ -417,7 +417,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
                               "\"%s %s\""),
                             RELAY_PLUGIN_NAME,
                             command,
-                            argv_eol[0]);
+                            argv[0]);
         }
         return WEECHAT_RC_OK;
     }
@@ -1351,7 +1351,7 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
             pos++;
         }
         argv = weechat_string_split (pos, " ", 0, 0, &argc);
-        argv_eol = weechat_string_split (pos, " ", 1, 0, NULL);
+        argv_eol = weechat_string_split (pos, " ", 2, 0, NULL);
     }
 
     for (i = 0; protocol_cb[i].name; i++)

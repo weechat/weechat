@@ -27,8 +27,12 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[1.5_bugs]]
 === Bugs fixed
 
+* api: fix number of arguments returned by function string_split() when
+  keep_eol is 2 and the string ends with separators
 * irc: add missing completion "*" for target in command /msg
 * irc: fix /msg command with multiple targets including "*"
+* relay: fix command "input" received from clients with only spaces in
+  content of message (weechat protocol) (issue #663)
 
 [[1.4]]
 == Version 1.4 (2016-01-10)

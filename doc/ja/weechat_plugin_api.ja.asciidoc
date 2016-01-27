@@ -1454,7 +1454,7 @@ C 言語での使用例:
 ----
 char **argv;
 int argc;
-argv = weechat_string_split ("abc de  fghi", " ", 0, 0, &argc);
+argv = weechat_string_split ("abc de  fghi ", " ", 0, 0, &argc);
 /* result: argv[0] == "abc"
            argv[1] == "de"
            argv[2] == "fghi"
@@ -1463,10 +1463,19 @@ argv = weechat_string_split ("abc de  fghi", " ", 0, 0, &argc);
 */
 weechat_string_free_split (argv);
 
-argv = weechat_string_split ("abc de  fghi", " ", 1, 0, &argc);
+argv = weechat_string_split ("abc de  fghi ", " ", 1, 0, &argc);
 /* result: argv[0] == "abc de  fghi"
            argv[1] == "de  fghi"
            argv[2] == "fghi"
+           argv[3] == NULL
+           argc == 3
+*/
+weechat_string_free_split (argv);
+
+argv = weechat_string_split ("abc de  fghi ", " ", 2, 0, &argc);
+/* result: argv[0] == "abc de  fghi "
+           argv[1] == "de  fghi "
+           argv[2] == "fghi "
            argv[3] == NULL
            argc == 3
 */
