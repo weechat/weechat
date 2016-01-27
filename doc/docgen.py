@@ -117,6 +117,7 @@ IGNORE_OPTIONS = (
     r'irc\.msgbuffer\..*',
     r'irc\.ctcp\..*',
     r'irc\.ignore\..*',
+    r'irc\.metadata\..*',
     r'irc\.server\..*',
     r'jabber\.server\..*',
     r'logger\.level\..*',
