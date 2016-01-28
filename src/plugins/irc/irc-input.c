@@ -123,6 +123,7 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
                 "%s%s",
                 irc_nick_as_prefix (
                     ptr_server,
+                    ptr_channel,
                     (ptr_nick) ? ptr_nick : NULL,
                     (ptr_nick) ? NULL : ptr_server->nick,
                     IRC_COLOR_CHAT_NICK_SELF),

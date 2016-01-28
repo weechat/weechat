@@ -165,8 +165,9 @@ irc_info_info_irc_nick_color_cb (void *data, const char *info_name,
     (void) data;
     (void) info_name;
 
+    /* TODO: parse server, channel from arguments */
     return (arguments && arguments[0]) ?
-        irc_nick_find_color (arguments) : NULL;
+        irc_nick_find_color (NULL, NULL, arguments) : NULL;
 }
 
 /*
@@ -181,8 +182,9 @@ irc_info_info_irc_nick_color_name_cb (void *data, const char *info_name,
     (void) data;
     (void) info_name;
 
+    /* TODO: parse server, channel from arguments */
     return (arguments && arguments[0]) ?
-        irc_nick_find_color_name (arguments) : NULL;
+        irc_nick_find_color_name (NULL, NULL, arguments) : NULL;
 }
 
 /*

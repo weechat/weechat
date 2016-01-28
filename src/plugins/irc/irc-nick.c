@@ -261,14 +261,41 @@ const char *irc_nick_color_provider_hash_cb (void *data, const char *provider,
  */
 
 const char *
-irc_nick_find_color_name (const char *nickname)
+irc_nick_find_color_name (struct t_irc_server *server,
+                          struct t_irc_channel *channel,
+                          const char *nickname)
 {
+    int length;
+    char *provider_data;
+    const char *color_name;
+
     if (!irc_config_nick_colors)
         irc_config_set_nick_colors ();
 
-    return weechat_hook_provider_exec ("irc_nick_color",
-                                       NULL,
-                                       nickname);
+    if (server)
+    {
+        length = 1 + strlen (server->name);
+        if (channel)
+            length += 1 + strlen (channel->name);
+
+        provider_data = malloc (length);
+        snprintf (provider_data, length,
+                  "%s%s%s",
+                  server->name,
+                  (channel) ? ";" : "",
+                  (channel) ? channel->name : "");
+    }
+    else
+    {
+        provider_data = NULL;
+    }
+
+    color_name = weechat_hook_provider_exec ("irc_nick_color",
+                                             provider_data,
+                                             nickname);
+    if (provider_data)
+        free (provider_data);
+    return color_name;
 }
 
 /*
@@ -278,9 +305,13 @@ irc_nick_find_color_name (const char *nickname)
  */
 
 const char *
-irc_nick_find_color (const char *nickname)
+irc_nick_find_color (struct t_irc_server *server,
+                     struct t_irc_channel *channel,
+                     const char *nickname)
 {
-    return weechat_color (irc_nick_find_color_name (nickname));
+    return weechat_color (irc_nick_find_color_name (server,
+                                                    channel,
+                                                    nickname));
 }
 
 /*
@@ -478,6 +509,7 @@ irc_nick_get_prefix_color_name (struct t_irc_server *server, char prefix)
 
 const char *
 irc_nick_get_color_for_nicklist (struct t_irc_server *server,
+                                 struct t_irc_channel *channel,
                                  struct t_irc_nick *nick)
 {
     static char *nick_color_bar_fg = "bar_fg";
@@ -492,7 +524,7 @@ irc_nick_get_color_for_nicklist (struct t_irc_server *server,
         if (irc_server_strcasecmp (server, nick->name, server->nick) == 0)
             return nick_color_self;
         else
-            return irc_nick_find_color_name (nick->name);
+            return irc_nick_find_color_name (server, channel, nick->name);
     }
 
     return nick_color_bar_fg;
@@ -512,7 +544,7 @@ irc_nick_nicklist_add (struct t_irc_server *server,
     ptr_group = irc_nick_get_nicklist_group (server, channel->buffer, nick);
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                nick->name,
-                               irc_nick_get_color_for_nicklist (server, nick),
+                               irc_nick_get_color_for_nicklist (server, channel, nick),
                                nick->prefix,
                                irc_nick_get_prefix_color_name (server, nick->prefix[0]),
                                1);
@@ -604,6 +636,7 @@ irc_nick_nicklist_set_color_all ()
             {
                 irc_nick_nicklist_set (ptr_channel, ptr_nick, "color",
                                        irc_nick_get_color_for_nicklist (ptr_server,
+                                                                        ptr_channel,
                                                                         ptr_nick));
             }
         }
@@ -691,7 +724,8 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     if (irc_server_strcasecmp (server, new_nick->name, server->nick) == 0)
         new_nick->color = strdup (IRC_COLOR_CHAT_NICK_SELF);
     else
-        new_nick->color = strdup (irc_nick_find_color (new_nick->name));
+        new_nick->color = strdup (irc_nick_find_color (server, channel,
+                                                       new_nick->name));
 
     /* add nick to end of list */
     new_nick->prev_nick = channel->last_nick;
@@ -740,7 +774,8 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
     if (nick_is_me)
         nick->color = strdup (IRC_COLOR_CHAT_NICK_SELF);
     else
-        nick->color = strdup (irc_nick_find_color (nick->name));
+        nick->color = strdup (irc_nick_find_color (server, channel,
+                                                   nick->name));
 
     /* add nick in nicklist */
     irc_nick_nicklist_add (server, channel, nick);
@@ -931,7 +966,7 @@ irc_nick_set_away (struct t_irc_server *server, struct t_irc_channel *channel,
         {
             nick->away = is_away;
             irc_nick_nicklist_set (channel, nick, "color",
-                                   irc_nick_get_color_for_nicklist (server, nick));
+                                   irc_nick_get_color_for_nicklist (server, channel, nick));
         }
     }
 }
@@ -995,14 +1030,17 @@ irc_nick_mode_for_display (struct t_irc_server *server, struct t_irc_nick *nick,
  */
 
 const char *
-irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
-                    const char *nickname, const char *force_color)
+irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_channel *channel,
+                    struct t_irc_nick *nick, const char *nickname,
+                    const char *force_color)
 {
     static char result[256];
 
     snprintf (result, sizeof (result), "%s%s%s\t",
               irc_nick_mode_for_display (server, nick, 1),
-              (force_color) ? force_color : ((nick) ? nick->color : ((nickname) ? irc_nick_find_color (nickname) : IRC_COLOR_CHAT_NICK)),
+              (force_color) ? force_color :
+                  ((nick) ? nick->color :
+                      ((nickname) ? irc_nick_find_color (server, channel, nickname) : IRC_COLOR_CHAT_NICK)),
               (nick) ? nick->name : nickname);
 
     return result;
@@ -1013,8 +1051,9 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
  */
 
 const char *
-irc_nick_color_for_msg (struct t_irc_server *server, int server_message,
-                        struct t_irc_nick *nick, const char *nickname)
+irc_nick_color_for_msg (struct t_irc_server *server, struct t_irc_channel *channel,
+                        int server_message, struct t_irc_nick *nick,
+                        const char *nickname)
 {
     if (server_message
         && !weechat_config_boolean (irc_config_look_color_nicks_in_server_messages))
@@ -1032,7 +1071,7 @@ irc_nick_color_for_msg (struct t_irc_server *server, int server_message,
         {
             return IRC_COLOR_CHAT_NICK_SELF;
         }
-        return irc_nick_find_color (nickname);
+        return irc_nick_find_color (server, channel, nickname);
     }
 
     return IRC_COLOR_CHAT_NICK;
@@ -1043,12 +1082,15 @@ irc_nick_color_for_msg (struct t_irc_server *server, int server_message,
  */
 
 const char *
-irc_nick_color_for_pv (struct t_irc_channel *channel, const char *nickname)
+irc_nick_color_for_pv (struct t_irc_server *server, struct t_irc_channel *channel,
+                       const char *nickname)
 {
     if (weechat_config_boolean (irc_config_look_color_pv_nick_like_channel))
     {
         if (!channel->pv_remote_nick_color)
-            channel->pv_remote_nick_color = strdup (irc_nick_find_color (nickname));
+            channel->pv_remote_nick_color = strdup (irc_nick_find_color (server,
+                                                                         channel,
+                                                                         nickname));
         if (channel->pv_remote_nick_color)
             return channel->pv_remote_nick_color;
     }
