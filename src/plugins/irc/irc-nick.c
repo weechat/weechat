@@ -405,8 +405,8 @@ irc_nick_set_current_prefix (struct t_irc_nick *nick)
  */
 
 void
-irc_nick_set_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
-                     int set, char prefix)
+irc_nick_set_prefix (struct t_irc_server *server, struct t_irc_channel *channel,
+                     struct t_irc_nick *nick, int set, char prefix)
 {
     int index;
 
@@ -416,6 +416,8 @@ irc_nick_set_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
         nick->prefixes[index] = (set) ? prefix : ' ';
         irc_nick_set_current_prefix (nick);
     }
+
+    irc_nick_refresh_color (server, channel, nick);
 }
 
 /*
@@ -423,8 +425,8 @@ irc_nick_set_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
  */
 
 void
-irc_nick_set_prefixes (struct t_irc_server *server, struct t_irc_nick *nick,
-                       const char *prefixes)
+irc_nick_set_prefixes (struct t_irc_server *server, struct t_irc_channel *channel,
+                       struct t_irc_nick *nick, const char *prefixes)
 {
     const char *ptr_prefixes;
 
@@ -436,7 +438,7 @@ irc_nick_set_prefixes (struct t_irc_server *server, struct t_irc_nick *nick,
     {
         for (ptr_prefixes = prefixes; ptr_prefixes[0]; ptr_prefixes++)
         {
-            irc_nick_set_prefix (server, nick, 1, ptr_prefixes[0]);
+            irc_nick_set_prefix (server, channel, nick, 1, ptr_prefixes[0]);
         }
     }
 
@@ -706,6 +708,100 @@ irc_nick_nicklist_set_color_all ()
     }
 }
 
+void
+irc_nick_refresh_color (struct t_irc_server *server,
+                        struct t_irc_channel *channel,
+                        struct t_irc_nick *nick)
+{
+    int nick_is_me;
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    if (server && channel && nick && irc_nick_valid (channel, nick))
+    {
+        /* remove nick from nicklist */
+        irc_nick_nicklist_remove (server, channel, nick);
+
+        /* update nicks speaking */
+        nick_is_me = (irc_server_strcasecmp (server, nick->name, server->nick) == 0) ? 1 : 0;
+
+        if (nick->color)
+            free (nick->color);
+        if (nick_is_me)
+            nick->color = strdup (IRC_COLOR_CHAT_NICK_SELF);
+        else
+            nick->color = strdup (irc_nick_find_color (server, channel,
+                                                       nick->name));
+
+        /* add nick in nicklist */
+        irc_nick_nicklist_add (server, channel, nick);
+    }
+    else if (server && channel)
+    {
+        for (ptr_nick = channel->nicks; ptr_nick;
+             ptr_nick = ptr_nick->next_nick)
+        {
+            irc_nick_refresh_color (server, channel, ptr_nick);
+        }
+    }
+    else if (server)
+    {
+        for (ptr_channel = server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            irc_nick_refresh_color (server, ptr_channel, NULL);
+        }
+    }
+    else
+    {
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            irc_nick_refresh_color (ptr_server, NULL, NULL);
+        }
+    }
+}
+
+int
+irc_nick_refresh_color_cb (void *data, const char *signal,
+                           const char *type_data, void *signal_data)
+{
+    char **args;
+    int num_args;
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        ptr_server = NULL;
+        ptr_channel = NULL;
+        ptr_nick = NULL;
+
+        args = weechat_string_split ((char *)signal_data, ";", 0, 3, &num_args);
+        if (args)
+        {
+            if (num_args >= 1)
+                ptr_server = irc_server_search (args[0]);
+            if (num_args >= 2 && ptr_server)
+                ptr_channel = irc_channel_search (ptr_server, args[1]);
+            if (num_args >= 3 && ptr_channel)
+                ptr_nick = irc_nick_search (ptr_server, ptr_channel, args[2]);
+
+            irc_nick_refresh_color (ptr_server, ptr_channel, ptr_nick);
+
+            weechat_string_free_split (args);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
 /*
  * Adds a new nick in channel.
  *
@@ -734,7 +830,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         irc_nick_nicklist_remove (server, channel, ptr_nick);
 
         /* update nick */
-        irc_nick_set_prefixes (server, ptr_nick, prefixes);
+        irc_nick_set_prefixes (server, channel, ptr_nick, prefixes);
         ptr_nick->away = away;
         if (ptr_nick->account)
             free (ptr_nick->account);
@@ -782,7 +878,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     }
     new_nick->prefix[0] = ' ';
     new_nick->prefix[1] = '\0';
-    irc_nick_set_prefixes (server, new_nick, prefixes);
+    irc_nick_set_prefixes (server, channel, new_nick, prefixes);
     new_nick->away = away;
     if (irc_server_strcasecmp (server, new_nick->name, server->nick) == 0)
         new_nick->color = strdup (IRC_COLOR_CHAT_NICK_SELF);
@@ -805,6 +901,8 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
 
     /* add nick to buffer nicklist */
     irc_nick_nicklist_add (server, channel, new_nick);
+
+    irc_nick_refresh_color (server, channel, new_nick);
 
     /* all is OK, return address of new nick */
     return new_nick;
@@ -864,7 +962,7 @@ irc_nick_set_mode (struct t_irc_server *server, struct t_irc_channel *channel,
 
     /* set flag */
     prefix_chars = irc_server_get_prefix_chars (server);
-    irc_nick_set_prefix (server, nick, set, prefix_chars[index]);
+    irc_nick_set_prefix (server, channel, nick, set, prefix_chars[index]);
 
     /* add nick in nicklist */
     irc_nick_nicklist_add (server, channel, nick);

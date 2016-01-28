@@ -74,6 +74,11 @@ extern const char *irc_nick_get_prefix_color_name (struct t_irc_server *server,
                                                    char prefix);
 extern void irc_nick_nicklist_set_prefix_color_all ();
 extern void irc_nick_nicklist_set_color_all ();
+extern void irc_nick_refresh_color (struct t_irc_server *server,
+                                    struct t_irc_channel *channel,
+                                    struct t_irc_nick *nick);
+extern int irc_nick_refresh_color_cb (void *data, const char *signal,
+                                      const char *type_data, void *signal_data);
 extern struct t_irc_nick *irc_nick_new (struct t_irc_server *server,
                                         struct t_irc_channel *channel,
                                         const char *nickname,

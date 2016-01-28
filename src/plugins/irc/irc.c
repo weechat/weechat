@@ -185,6 +185,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("xfer_resume_ready", &irc_server_xfer_resume_ready_cb, NULL);
     weechat_hook_signal ("xfer_send_accept_resume", &irc_server_xfer_send_accept_resume_cb, NULL);
     weechat_hook_signal ("irc_input_send", &irc_input_send_cb, NULL);
+    weechat_hook_signal ("irc_nick_refresh_color", &irc_nick_refresh_color_cb, NULL);
 
     /* hook hsignals for redirection */
     weechat_hook_hsignal ("irc_redirect_pattern", &irc_redirect_pattern_hsignal_cb, NULL);
