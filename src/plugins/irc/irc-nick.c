@@ -237,6 +237,12 @@ irc_nick_get_forced_mode_color (const char *mode)
     return forced_color;
 }
 
+/*
+ * Callback for provider "irc_nick_color".
+ *
+ * Returns color name from "irc.look.nick_color_force".
+ */
+
 const char *irc_nick_color_provider_forced_cb (void *data, const char *provider,
                                                const char *provider_data,
                                                const char *nickname)
@@ -248,6 +254,12 @@ const char *irc_nick_color_provider_forced_cb (void *data, const char *provider,
 
     return irc_nick_get_forced_color (nickname);
 }
+
+/*
+ * Callback for provider "irc_nick_color".
+ *
+ * Returns color name from "irc.look.nick_color_force_modes".
+ */
 
 const char *irc_nick_color_provider_forced_mode_cb (void *data, const char *provider,
                                                     const char *provider_data,
@@ -291,6 +303,12 @@ const char *irc_nick_color_provider_forced_mode_cb (void *data, const char *prov
 
     return NULL;
 }
+
+/*
+ * Callback for provider "irc_nick_color".
+ *
+ * Returns color name using a hash function.
+ */
 
 const char *irc_nick_color_provider_hash_cb (void *data, const char *provider,
                                              const char *provider_data,
@@ -367,6 +385,7 @@ irc_nick_find_color_name (struct t_irc_server *server,
  *
  * Returns a WeeChat color code (that can be used for display).
  */
+
 const char *
 irc_nick_find_color (struct t_irc_server *server,
                      struct t_irc_channel *channel,
@@ -708,6 +727,10 @@ irc_nick_nicklist_set_color_all ()
     }
 }
 
+/*
+ * Force refresh of nick colors in server/channel/nick.
+ */
+
 void
 irc_nick_refresh_color (struct t_irc_server *server,
                         struct t_irc_channel *channel,
@@ -762,6 +785,10 @@ irc_nick_refresh_color (struct t_irc_server *server,
         }
     }
 }
+
+/*
+ * Callback for signal "irc_nick_refresh_color".
+ */
 
 int
 irc_nick_refresh_color_cb (void *data, const char *signal,
