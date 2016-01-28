@@ -50,11 +50,11 @@ extern int irc_nick_valid (struct t_irc_channel *channel,
 extern int irc_nick_is_nick (const char *string);
 extern int irc_nick_config_colors_cb (void *data, const char *option,
                                       const char *value);
-extern const char *irc_nick_color_modifier_forced_cb (void *data, const char *modifier,
-                                                      const char *modifier_data,
+extern const char *irc_nick_color_provider_forced_cb (void *data, const char *provider,
+                                                      const char *provider_data,
                                                       const char *string);
-extern const char *irc_nick_color_modifier_hash_cb (void *data, const char *modifier,
-                                                    const char *modifier_data,
+extern const char *irc_nick_color_provider_hash_cb (void *data, const char *provider,
+                                                    const char *provider_data,
                                                     const char *string);
 extern const char *irc_nick_find_color (const char *nickname);
 extern const char *irc_nick_find_color_name (const char *nickname);

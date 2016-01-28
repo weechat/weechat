@@ -64,7 +64,7 @@
 
 char *hook_type_string[HOOK_NUM_TYPES] =
 { "command", "command_run", "timer", "fd", "process", "connect", "print",
-  "signal", "hsignal", "config", "completion", "modifier",
+  "signal", "hsignal", "config", "completion", "modifier", "provider",
   "info", "info_hashtable", "infolist", "hdata", "focus" };
 struct t_hook *weechat_hooks[HOOK_NUM_TYPES];     /* list of hooks          */
 struct t_hook *last_weechat_hook[HOOK_NUM_TYPES]; /* last hook              */
@@ -2848,14 +2848,54 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
 }
 
 /*
- * Executes a modifier hook until first non-empty string.
+ * Hooks a provider.
  *
- * Note: result must be freed after use.
+ * Returns pointer to new hook, NULL if error.
+ */
+
+struct t_hook *
+hook_provider (struct t_weechat_plugin *plugin, const char *provider,
+               t_hook_callback_provider *callback, void *callback_data)
+{
+    struct t_hook *new_hook;
+    struct t_hook_provider *new_hook_provider;
+    int priority;
+    const char *ptr_provider;
+
+    if (!provider || !provider[0] || !callback)
+        return NULL;
+
+    new_hook = malloc (sizeof (*new_hook));
+    if (!new_hook)
+        return NULL;
+    new_hook_provider = malloc (sizeof (*new_hook_provider));
+    if (!new_hook_provider)
+    {
+        free (new_hook);
+        return NULL;
+    }
+
+    hook_get_priority_and_name (provider, &priority, &ptr_provider);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_PROVIDER, priority,
+                    callback_data);
+
+    new_hook->hook_data = new_hook_provider;
+    new_hook_provider->callback = callback;
+    new_hook_provider->provider = strdup ((ptr_provider) ? ptr_provider : provider);
+
+    hook_add_to_list (new_hook);
+
+    return new_hook;
+}
+
+
+/*
+ * Executes a provider hook.
  */
 
 const char *
-hook_modifier_exec_first (struct t_weechat_plugin *plugin, const char *modifier,
-                          const char *modifier_data, const char *string)
+hook_provider_exec (struct t_weechat_plugin *plugin, const char *provider,
+                    const char *provider_data, const char *string)
 {
     struct t_hook *ptr_hook, *next_hook;
     const char *new_msg;
@@ -2863,26 +2903,26 @@ hook_modifier_exec_first (struct t_weechat_plugin *plugin, const char *modifier,
     /* make C compiler happy */
     (void) plugin;
 
-    if (!modifier || !modifier[0])
+    if (!provider || !provider[0])
         return NULL;
 
     new_msg = NULL;
 
     hook_exec_start ();
 
-    ptr_hook = weechat_hooks[HOOK_TYPE_MODIFIER];
+    ptr_hook = weechat_hooks[HOOK_TYPE_PROVIDER];
     while (ptr_hook)
     {
         next_hook = ptr_hook->next_hook;
 
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (string_strcasecmp (HOOK_MODIFIER(ptr_hook, modifier),
-                                   modifier) == 0))
+            && (string_strcasecmp (HOOK_PROVIDER(ptr_hook, provider),
+                                   provider) == 0))
         {
             ptr_hook->running = 1;
-            new_msg = (HOOK_MODIFIER(ptr_hook, callback))
-                (ptr_hook->callback_data, modifier, modifier_data,
+            new_msg = (HOOK_PROVIDER(ptr_hook, callback))
+                (ptr_hook->callback_data, provider, provider_data,
                  string);
             ptr_hook->running = 0;
 
@@ -3913,6 +3953,13 @@ unhook (struct t_hook *hook)
                     HOOK_MODIFIER(hook, modifier) = NULL;
                 }
                 break;
+            case HOOK_TYPE_PROVIDER:
+                if (HOOK_PROVIDER(hook, provider))
+                {
+                    free (HOOK_PROVIDER(hook, provider));
+                    HOOK_PROVIDER(hook, provider) = NULL;
+                }
+                break;
             case HOOK_TYPE_INFO:
                 if (HOOK_INFO(hook, info_name))
                 {
@@ -4334,6 +4381,15 @@ hook_add_to_infolist_pointer (struct t_infolist *infolist, struct t_hook *hook)
                     return 0;
             }
             break;
+        case HOOK_TYPE_PROVIDER:
+            if (!hook->deleted)
+            {
+                if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_PROVIDER(hook, callback)))
+                    return 0;
+                if (!infolist_new_var_string (ptr_item, "provider", HOOK_PROVIDER(hook, provider)))
+                    return 0;
+            }
+            break;
         case HOOK_TYPE_INFO:
             if (!hook->deleted)
             {
@@ -4742,6 +4798,11 @@ hook_print_log ()
                     log_printf ("  modifier data:");
                     log_printf ("    callback. . . . . . . : 0x%lx", HOOK_MODIFIER(ptr_hook, callback));
                     log_printf ("    modifier. . . . . . . : '%s'",  HOOK_MODIFIER(ptr_hook, modifier));
+                    break;
+                case HOOK_TYPE_PROVIDER:
+                    log_printf ("  provider data:");
+                    log_printf ("    callback. . . . . . . : 0x%lx", HOOK_PROVIDER(ptr_hook, callback));
+                    log_printf ("    provider. . . . . . . : '%s'",  HOOK_PROVIDER(ptr_hook, provider));
                     break;
                 case HOOK_TYPE_INFO:
                     log_printf ("  info data:");

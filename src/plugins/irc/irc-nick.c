@@ -216,26 +216,26 @@ irc_nick_get_forced_color (const char *nickname)
     return forced_color;
 }
 
-const char *irc_nick_color_modifier_forced_cb (void *data, const char *modifier,
-                                               const char *modifier_data,
+const char *irc_nick_color_provider_forced_cb (void *data, const char *provider,
+                                               const char *provider_data,
                                                const char *nickname)
 {
     /* make C compiler happy */
     (void) data;
-    (void) modifier;
-    (void) modifier_data;
+    (void) provider;
+    (void) provider_data;
 
     return irc_nick_get_forced_color (nickname);
 }
 
-const char *irc_nick_color_modifier_hash_cb (void *data, const char *modifier,
-                                             const char *modifier_data,
+const char *irc_nick_color_provider_hash_cb (void *data, const char *provider,
+                                             const char *provider_data,
                                              const char *nickname)
 {
     /* make C compiler happy */
     (void) data;
-    (void) modifier;
-    (void) modifier_data;
+    (void) provider;
+    (void) provider_data;
 
     int color;
     char *nickname2;
@@ -266,9 +266,9 @@ irc_nick_find_color_name (const char *nickname)
     if (!irc_config_nick_colors)
         irc_config_set_nick_colors ();
 
-    return weechat_hook_modifier_exec_first ("irc_nick_color",
-                                             NULL,
-                                             nickname);
+    return weechat_hook_provider_exec ("irc_nick_color",
+                                       NULL,
+                                       nickname);
 }
 
 /*
