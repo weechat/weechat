@@ -217,22 +217,22 @@ irc_nick_get_forced_color (const char *nickname)
 }
 
 /*
- * Gets forced color for nick by prefix.
+ * Gets forced color for nick by mode.
  *
  * Returns the name of color (for example: "green"), NULL if no color is forced
- * for prefix.
+ * for mode.
  */
 
 const char *
-irc_nick_get_forced_prefix_color (const char *prefix)
+irc_nick_get_forced_mode_color (const char *mode)
 {
     const char *forced_color;
 
-    if (!prefix)
+    if (!mode)
         return NULL;
 
-    forced_color = weechat_hashtable_get (irc_config_hashtable_nick_color_force_prefix,
-                                          prefix);
+    forced_color = weechat_hashtable_get (irc_config_hashtable_nick_color_force_modes,
+                                          mode);
 
     return forced_color;
 }
@@ -249,11 +249,12 @@ const char *irc_nick_color_provider_forced_cb (void *data, const char *provider,
     return irc_nick_get_forced_color (nickname);
 }
 
-const char *irc_nick_color_provider_forced_prefix_cb (void *data, const char *provider,
-                                                      const char *provider_data,
-                                                      const char *nickname)
+const char *irc_nick_color_provider_forced_mode_cb (void *data, const char *provider,
+                                                    const char *provider_data,
+                                                    const char *nickname)
 {
     char *str_server, *pos_channel;
+    char mode[2];
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
@@ -281,7 +282,9 @@ const char *irc_nick_color_provider_forced_prefix_cb (void *data, const char *pr
             ptr_nick = irc_nick_search (ptr_server, ptr_channel, nickname);
             if (ptr_nick)
             {
-                return irc_nick_get_forced_prefix_color (ptr_nick->prefix);
+                mode[0] = irc_server_get_prefix_mode_for_char (ptr_server, ptr_nick->prefix[0]);
+                mode[1] = '\0';
+                return irc_nick_get_forced_mode_color (mode);
             }
         }
     }
