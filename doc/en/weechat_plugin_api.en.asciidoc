@@ -8880,6 +8880,39 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
                          "freenode;;2;;/whois FlashCode")
 ----
 
+[[signal_irc_nick_refresh_color]]
+===== Signal irc_nick_refresh_color
+
+_WeeChat ≥ x.y.z._
+
+The signal "irc_nick_refresh_color" can be sent to force refresh of cached
+IRC nick colors.
+
+Following argument formats are allowed:
+
+* empty
+* 'server'
+* 'server;channel'
+* 'server;channel;nick'
+
+C examples:
+
+[source,C]
+----
+/* force nick color refresh on freenode server, #weechat channel */
+weechat_hook_signal_send ("irc_nick_refresh_color", WEECHAT_HOOK_SIGNAL_STRING,
+                          "freenode;#weechat");
+----
+
+Script (Python):
+
+[source,python]
+----
+# force nick color refresh on freenode server, #weechat channel
+weechat.hook_signal_send ("irc_nick_refresh_color", weechat.WEECHAT_HOOK_SIGNAL_STRING,
+                          "freenode;#weechat")
+----
+
 ==== hook_hsignal
 
 _WeeChat ≥ 0.3.4._
