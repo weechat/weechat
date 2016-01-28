@@ -53,6 +53,9 @@ extern int irc_nick_config_colors_cb (void *data, const char *option,
 extern const char *irc_nick_color_provider_forced_cb (void *data, const char *provider,
                                                       const char *provider_data,
                                                       const char *string);
+extern const char *irc_nick_color_provider_forced_prefix_cb (void *data, const char *provider,
+                                                             const char *provider_data,
+                                                             const char *string);
 extern const char *irc_nick_color_provider_hash_cb (void *data, const char *provider,
                                                     const char *provider_data,
                                                     const char *string);

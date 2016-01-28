@@ -216,6 +216,27 @@ irc_nick_get_forced_color (const char *nickname)
     return forced_color;
 }
 
+/*
+ * Gets forced color for nick by prefix.
+ *
+ * Returns the name of color (for example: "green"), NULL if no color is forced
+ * for prefix.
+ */
+
+const char *
+irc_nick_get_forced_prefix_color (const char *prefix)
+{
+    const char *forced_color;
+
+    if (!prefix)
+        return NULL;
+
+    forced_color = weechat_hashtable_get (irc_config_hashtable_nick_color_force_prefix,
+                                          prefix);
+
+    return forced_color;
+}
+
 const char *irc_nick_color_provider_forced_cb (void *data, const char *provider,
                                                const char *provider_data,
                                                const char *nickname)
@@ -226,6 +247,46 @@ const char *irc_nick_color_provider_forced_cb (void *data, const char *provider,
     (void) provider_data;
 
     return irc_nick_get_forced_color (nickname);
+}
+
+const char *irc_nick_color_provider_forced_prefix_cb (void *data, const char *provider,
+                                                      const char *provider_data,
+                                                      const char *nickname)
+{
+    char *str_server, *pos_channel;
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) provider;
+
+    if (!provider_data)
+        return NULL;
+
+    pos_channel = strchr (provider_data, ';');
+    if (!pos_channel)
+        return NULL;
+
+    str_server = weechat_strndup (provider_data, pos_channel - provider_data);
+    pos_channel++;
+
+    ptr_server = irc_server_search (str_server);
+    if (ptr_server)
+    {
+        ptr_channel = irc_channel_search (ptr_server, pos_channel);
+        if (ptr_channel)
+        {
+            ptr_nick = irc_nick_search (ptr_server, ptr_channel, nickname);
+            if (ptr_nick)
+            {
+                return irc_nick_get_forced_prefix_color (ptr_nick->prefix);
+            }
+        }
+    }
+
+    return NULL;
 }
 
 const char *irc_nick_color_provider_hash_cb (void *data, const char *provider,
@@ -303,7 +364,6 @@ irc_nick_find_color_name (struct t_irc_server *server,
  *
  * Returns a WeeChat color code (that can be used for display).
  */
-
 const char *
 irc_nick_find_color (struct t_irc_server *server,
                      struct t_irc_channel *channel,

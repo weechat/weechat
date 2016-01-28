@@ -197,6 +197,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     /* providers */
     weechat_hook_provider ("5000|irc_nick_color", &irc_nick_color_provider_forced_cb, NULL);
+    weechat_hook_provider ("4000|irc_nick_color", &irc_nick_color_provider_forced_prefix_cb, NULL);
     weechat_hook_provider ("1000|irc_nick_color", &irc_nick_color_provider_hash_cb, NULL);
 
     /* hook completions */
