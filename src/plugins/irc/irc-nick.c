@@ -216,9 +216,21 @@ irc_nick_get_forced_color (const char *nickname)
     return forced_color;
 }
 
-const char *irc_nick_color_modifier_cb (void *data, const char *modifier,
-                                        const char *modifier_data,
-                                        const char *nickname)
+const char *irc_nick_color_modifier_forced_cb (void *data, const char *modifier,
+                                               const char *modifier_data,
+                                               const char *nickname)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) modifier;
+    (void) modifier_data;
+
+    return irc_nick_get_forced_color (nickname);
+}
+
+const char *irc_nick_color_modifier_hash_cb (void *data, const char *modifier,
+                                             const char *modifier_data,
+                                             const char *nickname)
 {
     /* make C compiler happy */
     (void) data;
@@ -227,19 +239,10 @@ const char *irc_nick_color_modifier_cb (void *data, const char *modifier,
 
     int color;
     char *nickname2;
-    const char *forced_color;
     static char *default_color = "default";
-
-    if (!irc_config_nick_colors)
-        irc_config_set_nick_colors ();
 
     if (irc_config_num_nick_colors == 0)
         return default_color;
-
-    /* look if color is forced */
-    forced_color = irc_nick_get_forced_color (nickname);
-    if (forced_color)
-        return forced_color;
 
     /* hash nickname to get color */
     nickname2 = irc_nick_strdup_for_color (nickname);
@@ -252,6 +255,23 @@ const char *irc_nick_color_modifier_cb (void *data, const char *modifier,
 }
 
 /*
+ * Finds a color name for a nick (according to nick letters).
+ *
+ * Returns the name of a color (for example: "green").
+ */
+
+const char *
+irc_nick_find_color_name (const char *nickname)
+{
+    if (!irc_config_nick_colors)
+        irc_config_set_nick_colors ();
+
+    return weechat_hook_modifier_exec_first ("irc_nick_color",
+                                             NULL,
+                                             nickname);
+}
+
+/*
  * Finds a color code for a nick (according to nick letters).
  *
  * Returns a WeeChat color code (that can be used for display).
@@ -261,20 +281,6 @@ const char *
 irc_nick_find_color (const char *nickname)
 {
     return weechat_color (irc_nick_find_color_name (nickname));
-}
-
-/*
- * Finds a color name for a nick (according to nick letters).
- *
- * Returns the name of a color (for example: "green").
- */
-
-const char *
-irc_nick_find_color_name (const char *nickname)
-{
-    return weechat_hook_modifier_exec_first ("irc_nick_color",
-                                             NULL,
-                                             nickname);
 }
 
 /*

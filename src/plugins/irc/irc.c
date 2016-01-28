@@ -194,7 +194,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_modifier ("irc_color_decode", &irc_color_modifier_cb, NULL);
     weechat_hook_modifier ("irc_color_encode", &irc_color_modifier_cb, NULL);
     weechat_hook_modifier ("irc_color_decode_ansi", &irc_color_modifier_cb, NULL);
-    weechat_hook_modifier ("irc_nick_color", &irc_nick_color_modifier_cb, NULL);
+    weechat_hook_modifier ("5000|irc_nick_color", &irc_nick_color_modifier_forced_cb, NULL);
+    weechat_hook_modifier ("1000|irc_nick_color", &irc_nick_color_modifier_hash_cb, NULL);
 
     /* hook completions */
     irc_completion_init ();
