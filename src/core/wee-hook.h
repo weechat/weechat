@@ -553,6 +553,10 @@ extern char *hook_modifier_exec (struct t_weechat_plugin *plugin,
                                  const char *modifier,
                                  const char *modifier_data,
                                  const char *string);
+extern const char *hook_modifier_exec_first (struct t_weechat_plugin *plugin,
+                                             const char *modifier,
+                                             const char *modifier_data,
+                                             const char *string);
 extern struct t_hook *hook_info (struct t_weechat_plugin *plugin,
                                  const char *info_name,
                                  const char *description,

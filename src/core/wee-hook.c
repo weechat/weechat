@@ -2848,6 +2848,61 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
 }
 
 /*
+ * Executes a modifier hook until first non-empty string.
+ *
+ * Note: result must be freed after use.
+ */
+
+const char *
+hook_modifier_exec_first (struct t_weechat_plugin *plugin, const char *modifier,
+                          const char *modifier_data, const char *string)
+{
+    struct t_hook *ptr_hook, *next_hook;
+    const char *new_msg;
+
+    /* make C compiler happy */
+    (void) plugin;
+
+    if (!modifier || !modifier[0])
+        return NULL;
+
+    new_msg = NULL;
+
+    hook_exec_start ();
+
+    ptr_hook = weechat_hooks[HOOK_TYPE_MODIFIER];
+    while (ptr_hook)
+    {
+        next_hook = ptr_hook->next_hook;
+
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
+            && (string_strcasecmp (HOOK_MODIFIER(ptr_hook, modifier),
+                                   modifier) == 0))
+        {
+            ptr_hook->running = 1;
+            new_msg = (HOOK_MODIFIER(ptr_hook, callback))
+                (ptr_hook->callback_data, modifier, modifier_data,
+                 string);
+            ptr_hook->running = 0;
+
+            /* non-empty string returned => return string */
+            if (new_msg && new_msg[0])
+            {
+                hook_exec_end ();
+                return new_msg;
+            }
+        }
+
+        ptr_hook = next_hook;
+    }
+
+    hook_exec_end ();
+
+    return NULL;
+}
+
+/*
  * Hooks an info.
  *
  * Returns pointer to new hook, NULL if error.
