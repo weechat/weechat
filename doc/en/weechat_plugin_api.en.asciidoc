@@ -9793,10 +9793,10 @@ List of providers used by WeeChat and plugins:
 
 [width="100%",cols="^2,3,4,4",options="header"]
 |===
-| provider | provider data | String | Output
+| Provider | Provider data | String | Output
 
 | irc_nick_color |
-  |
+  [server[;channel]] |
   Nickname to provide color for |
   Color name provided for nickname
 |===
