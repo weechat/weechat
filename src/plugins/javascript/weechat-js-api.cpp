@@ -2767,6 +2767,70 @@ API_FUNC(hook_modifier_exec)
 }
 
 const char *
+weechat_js_api_hook_provider_cb (void *data, const char *provider,
+                                 const char *provider_data, const char *string)
+{
+    struct t_plugin_script_cb *script_callback;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+
+    script_callback = (struct t_plugin_script_cb *)data;
+
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[1] = (provider) ? (char *)provider : empty_arg;
+        func_argv[2] = (provider_data) ? (char *)provider_data : empty_arg;
+        func_argv[3] = (string) ? (char *)string : empty_arg;
+
+        return (const char *)weechat_js_exec (
+            (struct t_plugin_script *)script_callback->script,
+            WEECHAT_SCRIPT_EXEC_STRING,
+            script_callback->function,
+            "ssss", func_argv);
+    }
+
+    return NULL;
+}
+
+API_FUNC(hook_provider)
+{
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_provider", "sss", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value provider(args[0]);
+    v8::String::Utf8Value function(args[1]);
+    v8::String::Utf8Value data(args[2]);
+
+    result = API_PTR2STR(
+        plugin_script_api_hook_provider (
+            weechat_js_plugin,
+            js_current_script,
+            *provider,
+            &weechat_js_api_hook_provider_cb,
+            *function,
+            *data));
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(hook_provider_exec)
+{
+    char *result;
+
+    API_INIT_FUNC(1, "hook_provider_exec", "sss", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value provider(args[0]);
+    v8::String::Utf8Value provider_data(args[1]);
+    v8::String::Utf8Value string(args[2]);
+
+    result = (weechat_hook_provider_exec (*provider, *provider_data, *string);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+const char *
 weechat_js_api_hook_info_cb (void *data, const char *info_name,
                              const char *arguments)
 {
@@ -4830,6 +4894,8 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(hook_completion_list_add);
     API_DEF_FUNC(hook_modifier);
     API_DEF_FUNC(hook_modifier_exec);
+    API_DEF_FUNC(hook_provider);
+    API_DEF_FUNC(hook_provider_exec);
     API_DEF_FUNC(hook_info);
     API_DEF_FUNC(hook_info_hashtable);
     API_DEF_FUNC(hook_infolist);

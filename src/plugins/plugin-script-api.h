@@ -257,6 +257,15 @@ extern struct t_hook *plugin_script_api_hook_modifier (struct t_weechat_plugin *
                                                                          const char *string),
                                                        const char *function,
                                                        const char *data);
+extern struct t_hook *plugin_script_api_hook_provider (struct t_weechat_plugin *weechat_plugin,
+                                                       struct t_plugin_script *script,
+                                                       const char *provider,
+                                                       const char *(*callback)(void *data,
+                                                                               const char *provider,
+                                                                               const char *provider_data,
+                                                                               const char *string),
+                                                       const char *function,
+                                                       const char *data);
 extern struct t_hook *plugin_script_api_hook_info (struct t_weechat_plugin *weechat_plugin,
                                                    struct t_plugin_script *script,
                                                    const char *info_name,

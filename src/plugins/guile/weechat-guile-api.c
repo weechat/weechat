@@ -2821,6 +2821,72 @@ weechat_guile_api_hook_modifier_exec (SCM modifier, SCM modifier_data,
 }
 
 const char *
+weechat_guile_api_hook_provider_cb (void *data, const char *provider,
+                                    const char *provider_data,  const char *string)
+{
+    struct t_plugin_script_cb *script_callback;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+
+    script_callback = (struct t_plugin_script_cb *)data;
+
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[1] = (provider) ? (char *)provider : empty_arg;
+        func_argv[2] = (provider_data) ? (char *)provider_data : empty_arg;
+        func_argv[3] = (string) ? (char *)string : empty_arg;
+
+        return (const char *)weechat_guile_exec (script_callback->script,
+                                                 WEECHAT_SCRIPT_EXEC_STRING,
+                                                 script_callback->function,
+                                                 "ssss", func_argv);
+    }
+
+    return NULL;
+}
+
+SCM
+weechat_guile_api_hook_provider (SCM provider, SCM function, SCM data)
+{
+    char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "hook_provider", API_RETURN_EMPTY);
+    if (!scm_is_string (provider) || !scm_is_string (function)
+        || !scm_is_string (data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(plugin_script_api_hook_provider (weechat_guile_plugin,
+                                                          guile_current_script,
+                                                          API_SCM_TO_STRING(provider),
+                                                          &weechat_guile_api_hook_provider_cb,
+                                                          API_SCM_TO_STRING(function),
+                                                          API_SCM_TO_STRING(data)));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+SCM
+weechat_guile_api_hook_provider_exec (SCM provider, SCM provider_data,
+                                      SCM string)
+{
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "hook_provider_exec", API_RETURN_EMPTY);
+    if (!scm_is_string (provider) || !scm_is_string (provider_data)
+        || !scm_is_string (string))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_hook_provider_exec (API_SCM_TO_STRING(provider),
+                                         API_SCM_TO_STRING(provider_data),
+                                         API_SCM_TO_STRING(string));
+
+    API_RETURN_STRING(result);
+}
+
+const char *
 weechat_guile_api_hook_info_cb (void *data, const char *info_name,
                                 const char *arguments)
 {
@@ -4816,6 +4882,8 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(hook_completion_list_add, 4);
     API_DEF_FUNC(hook_modifier, 3);
     API_DEF_FUNC(hook_modifier_exec, 3);
+    API_DEF_FUNC(hook_provider, 3);
+    API_DEF_FUNC(hook_provider_exec, 3);
     API_DEF_FUNC(hook_info, 5);
     API_DEF_FUNC(hook_info_hashtable, 6);
     API_DEF_FUNC(hook_infolist, 6);
