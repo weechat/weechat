@@ -184,6 +184,32 @@ with nickserv (only if you don't use SASL for authentication):
 [NOTE]
 Many commands in option 'command' can be separated by ';' (semi-colon).
 
+// TRANSLATION MISSING
+If you want to protect your password in configuration files, you can use
+secured data.
+
+// TRANSLATION MISSING
+First setup a passphrase:
+
+----
+/secure passphrase this is my secret passphrase
+----
+
+// TRANSLATION MISSING
+Then add a secured data with your freenode password:
+
+----
+/secure set freenode_password xxxxxxx
+----
+
+// TRANSLATION MISSING
+Then you can use `${sec.data.freenode_password}` instead of your password in
+IRC options mentioned above, for example:
+
+----
+/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+----
+
 Para unirse automáticamente a canales cuando el servidor se conecte:
 
 ----

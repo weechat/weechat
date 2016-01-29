@@ -170,6 +170,28 @@ l'authentification) :
 Plusieurs commandes dans l'option 'command' peuvent être séparées par ';'
 (point-virgule).
 
+Si vous souhaitez protéger votre mot de passe dans les fichiers de
+configuration, vous pouvez utiliser les données sécurisées.
+
+Définissez d'abord une phrase de chiffrement :
+
+----
+/secure passphrase this is my secret passphrase
+----
+
+Puis ajoutez une donnée sécurisée avec votre mot de passe freenode :
+
+----
+/secure set freenode_password xxxxxxx
+----
+
+Vous pouvez alors utiliser `${sec.data.freenode_password}` au lieu de votre
+mot de passe dans les options IRC mentionnées ci-dessus, par exemple :
+
+----
+/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+----
+
 Pour rejoindre automatiquement des canaux lors de la connexion au serveur :
 
 ----
