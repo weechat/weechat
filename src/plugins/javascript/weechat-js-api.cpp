@@ -2795,7 +2795,7 @@ weechat_js_api_hook_provider_cb (void *data, const char *provider,
 
 API_FUNC(hook_provider)
 {
-    const char *result;
+    char *result;
 
     API_INIT_FUNC(1, "hook_provider", "sss", API_RETURN_EMPTY);
 
@@ -2812,12 +2812,12 @@ API_FUNC(hook_provider)
             *function,
             *data));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 API_FUNC(hook_provider_exec)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_provider_exec", "sss", API_RETURN_EMPTY);
 
@@ -2825,9 +2825,9 @@ API_FUNC(hook_provider_exec)
     v8::String::Utf8Value provider_data(args[1]);
     v8::String::Utf8Value string(args[2]);
 
-    result = (weechat_hook_provider_exec (*provider, *provider_data, *string);
+    result = weechat_hook_provider_exec (*provider, *provider_data, *string);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 const char *

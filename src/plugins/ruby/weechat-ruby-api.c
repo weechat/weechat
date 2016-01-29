@@ -3524,7 +3524,6 @@ weechat_ruby_api_hook_provider_exec (VALUE class, VALUE provider,
 {
     char *c_provider, *c_provider_data, *c_string;
     const char *result;
-    VALUE return_value;
 
     API_INIT_FUNC(1, "hook_provider_exec", API_RETURN_EMPTY);
     if (NIL_P (provider) || NIL_P (provider_data) || NIL_P (string))

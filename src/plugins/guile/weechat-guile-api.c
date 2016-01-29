@@ -2872,7 +2872,6 @@ weechat_guile_api_hook_provider_exec (SCM provider, SCM provider_data,
                                       SCM string)
 {
     const char *result;
-    SCM return_value;
 
     API_INIT_FUNC(1, "hook_provider_exec", API_RETURN_EMPTY);
     if (!scm_is_string (provider) || !scm_is_string (provider_data)

@@ -2946,7 +2946,6 @@ API_FUNC(hook_provider_exec)
 {
     char *provider, *provider_data, *string;
     const char *result;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "hook_provider_exec", API_RETURN_EMPTY);
     provider = NULL;
