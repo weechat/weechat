@@ -820,10 +820,10 @@ irc_nick_refresh_color_cb (void *data, const char *signal,
             if (num_args >= 3 && ptr_channel)
                 ptr_nick = irc_nick_search (ptr_server, ptr_channel, args[2]);
 
-            irc_nick_refresh_color (ptr_server, ptr_channel, ptr_nick);
-
             weechat_string_free_split (args);
         }
+
+        irc_nick_refresh_color (ptr_server, ptr_channel, ptr_nick);
     }
 
     return WEECHAT_RC_OK;
