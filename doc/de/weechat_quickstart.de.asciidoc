@@ -179,27 +179,23 @@ identifizieren:
 [NOTE]
 Mehrere Befehle in der Option 'command' können durch ein ';' (Semikolon) voneinander getrennt werden.
 
-// TRANSLATION MISSING
-If you want to protect your password in configuration files, you can use
-secured data.
+Möchte man seine Passwörter nicht als Klartext in der Konfiguration sichern, kann man die
+Erweiterung /secure nutzen.
 
-// TRANSLATION MISSING
-First setup a passphrase:
+Zuerst sollte eine Passphrase gesetzt werden:
 
 ----
-/secure passphrase this is my secret passphrase
+/secure passphrase Dies ist meine geheime Passphrase
 ----
 
-// TRANSLATION MISSING
-Then add a secured data with your freenode password:
+Dann kann man zum Beispiel für Freenode ein geheimes Passwort setzen:
 
 ----
 /secure set freenode_password xxxxxxx
 ----
 
-// TRANSLATION MISSING
-Then you can use `${sec.data.freenode_password}` instead of your password in
-IRC options mentioned above, for example:
+Um nun das geschützte Freenode-Passwort in einer Option zu nutzen setzt man eine
+Variable anstelle des Passworts, `${sec.data.freenode_password}`:
 
 ----
 /set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
