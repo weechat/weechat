@@ -117,7 +117,7 @@ These default options are "irc.server_default.*".
 For each server option, WeeChat uses its value if it is defined (not
 "null"). Otherwise WeeChat uses default value ("irc.server_default.xxx").
 
-For example there's default nicks (based on your un*x login), and you can
+For example there are default nicks (based on your un*x login), and you can
 override them for freenode server with following command:
 
 ----
