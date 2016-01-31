@@ -2861,7 +2861,7 @@ string_input_for_buffer (const char *string)
         pos_space = strchr (string + 1, ' ');
 
         /*
-         * if there's no other '/' or if '/' is after first space,
+         * if there are no other '/' or if '/' is after first space,
          * then it is a command, and return NULL
          */
         if (!pos_slash || (pos_space && pos_slash > pos_space))
