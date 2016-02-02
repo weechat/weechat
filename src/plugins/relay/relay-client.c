@@ -263,8 +263,8 @@ relay_client_handshake_timer_cb (void *data, int remaining_calls)
 #endif /* HAVE_GNUTLS */
 
 /*
- * Reads text data from a client: splits data on '\n' and keep a partial message
- * if date  does not end with '\n'.
+ * Reads text data from a client: splits data on '\n' and keeps a partial
+ * message if data does not end with '\n'.
  */
 
 void
