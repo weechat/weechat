@@ -515,8 +515,7 @@ relay_client_recv_cb (void *arg_client, int fd)
                  *
                  *   "A Pong frame MAY be sent unsolicited.  This serves as a
                  *   unidirectional heartbeat.  A response to an unsolicited
-                 *   Pong
-                 *   frame is not expected."
+                 *   Pong frame is not expected."
                  */
                 return WEECHAT_RC_OK;
             }
