@@ -64,7 +64,8 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "==^("
       "(/(msg|m|quote) +nickserv "
-      "+(id|identify|register|ghost +[^ ]+|release +[^ ]+|regain +[^ ]+|recover +[^ ]+) +)|"
+      "+(id|identify|register|ghost +[^ ]+|release +[^ ]+|regain +[^ ]+|"
+      "recover +[^ ]+) +)|"
       "/oper +[^ ]+ +|"
       "/quote +pass +|"
       "/set +[^ ]*password[^ ]* +|"
@@ -78,7 +79,8 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|irc_message_auth",
       "",
-      "==^(.*(id|identify|register|ghost +[^ ]+|release +[^ ]+|regain +[^ ]+|recover +[^ ]+) +)(.*)"
+      "==^(.*(id|identify|register|ghost +[^ ]+|release +[^ ]+|regain +[^ ]+|"
+      "recover +[^ ]+) +)(.*)"
       "==${re:1}${hide:*,${re:+}}",
       "",
       "" },
