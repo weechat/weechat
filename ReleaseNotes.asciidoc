@@ -17,6 +17,21 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file 'ChangeLog.asciidoc' in sources).
 
 
+[[1.5]]
+== Version 1.5 (under dev)
+
+[[1.5_default_triggers]]
+=== Default triggers
+
+The default triggers "cmd_pass" and "msg_auth" have been updated to include
+nickserv commands "recover" and "regain".
+
+You can restore them with the following command:
+
+----
+/trigger restore cmd_pass msg_auth
+----
+
 [[1.4]]
 == Version 1.4 (2016-01-10)
 

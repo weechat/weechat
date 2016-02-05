@@ -23,6 +23,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * irc: add multiple targets and support of "-server" in command /ctcp
   (issue #204, issue #493)
+* trigger: add "recover" in default triggers cmd_pass/msg_auth, and "regain"
+  in default trigger "msg_auth"
 
 [[1.5_bugs]]
 === Bugs fixed
