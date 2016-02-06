@@ -3028,9 +3028,9 @@ irc_config_init ()
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_message_kick = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "message_kick", "color",
+        "message_kick << irc.color.message_quit", "color",
         N_("color for text in kick/kill messages"),
-        NULL, -1, 0, "red", NULL, 0,
+        NULL, -1, 0, NULL, NULL, 1,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_mirc_remap = weechat_config_new_option (
         irc_config_file, ptr_section,
@@ -3076,9 +3076,9 @@ irc_config_init ()
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_reason_kick = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "reason_kick", "color",
+        "reason_kick << irc.color.reason_quit", "color",
         N_("color for reason in kick/kill messages"),
-        NULL, -1, 0, "default", NULL, 0,
+        NULL, -1, 0, NULL, NULL, 1,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_topic_current = weechat_config_new_option (
         irc_config_file, ptr_section,
