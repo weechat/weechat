@@ -116,10 +116,12 @@ struct t_config_option *irc_config_color_item_lag_finished;
 struct t_config_option *irc_config_color_item_nick_modes;
 struct t_config_option *irc_config_color_message_join;
 struct t_config_option *irc_config_color_message_quit;
+struct t_config_option *irc_config_color_message_kick;
 struct t_config_option *irc_config_color_mirc_remap;
 struct t_config_option *irc_config_color_nick_prefixes;
 struct t_config_option *irc_config_color_notice;
 struct t_config_option *irc_config_color_reason_quit;
+struct t_config_option *irc_config_color_reason_kick;
 struct t_config_option *irc_config_color_topic_current;
 struct t_config_option *irc_config_color_topic_new;
 struct t_config_option *irc_config_color_topic_old;
@@ -3024,6 +3026,12 @@ irc_config_init ()
         N_("color for text in part/quit messages"),
         NULL, -1, 0, "red", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_color_message_kick = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "message_kick", "color",
+        N_("color for text in kick/kill messages"),
+        NULL, -1, 0, "red", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_mirc_remap = weechat_config_new_option (
         irc_config_file, ptr_section,
         "mirc_remap", "string",
@@ -3064,6 +3072,12 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "reason_quit", "color",
         N_("color for reason in part/quit messages"),
+        NULL, -1, 0, "default", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_color_reason_kick = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "reason_kick", "color",
+        N_("color for reason in kick/kill messages"),
         NULL, -1, 0, "default", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_topic_current = weechat_config_new_option (
