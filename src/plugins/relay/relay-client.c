@@ -480,7 +480,7 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
                 relay_raw_print (client, RELAY_CLIENT_MSG_PING,
                                  RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
                                  buffer + index + 1,
-                                 strlen (buffer + index + 1) + 1);
+                                 strlen (buffer + index + 1));
                 /* answer with a PONG */
                 relay_client_send (client,
                                    RELAY_CLIENT_MSG_PONG,
