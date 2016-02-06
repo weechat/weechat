@@ -49,6 +49,17 @@ enum t_relay_client_data_type
     RELAY_NUM_CLIENT_DATA_TYPES,
 };
 
+/* type of message exchanged with the client (used for websockets) */
+
+enum t_relay_client_msg_type
+{
+    RELAY_CLIENT_MSG_STANDARD,
+    RELAY_CLIENT_MSG_PING,
+    RELAY_CLIENT_MSG_PONG,
+    /* number of message types */
+    RELAY_NUM_CLIENT_MSG_TYPES,
+};
+
 /* macros for status */
 
 #define RELAY_CLIENT_HAS_ENDED(client)                                  \
@@ -61,6 +72,7 @@ struct t_relay_client_outqueue
 {
     char *data;                         /* data to send                     */
     int data_size;                      /* number of bytes                  */
+    int raw_msg_type[2];                /* msgs types                       */
     int raw_flags[2];                   /* flags for raw messages           */
     char *raw_message[2];               /* msgs for raw buffer (can be NULL)*/
     int raw_size[2];                    /* size (in bytes) of raw messages  */
@@ -107,6 +119,7 @@ struct t_relay_client
 };
 
 extern char *relay_client_status_string[];
+extern char *relay_client_msg_type_string[];
 extern struct t_relay_client *relay_clients;
 extern struct t_relay_client *last_relay_client;
 extern int relay_client_count;
@@ -117,7 +130,9 @@ extern struct t_relay_client *relay_client_search_by_id (int id);
 extern int relay_client_status_search (const char *name);
 extern void relay_client_set_desc (struct t_relay_client *client);
 extern int relay_client_recv_cb (void *arg_client, int fd);
-extern int relay_client_send (struct t_relay_client *client, const char *data,
+extern int relay_client_send (struct t_relay_client *client,
+                              enum t_relay_client_msg_type msg_type,
+                              const char *data,
                               int data_size, const char *message_raw_buffer);
 extern int relay_client_timer_cb (void *data, int remaining_calls);
 extern struct t_relay_client *relay_client_new (int sock, const char *address,

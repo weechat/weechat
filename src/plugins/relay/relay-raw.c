@@ -218,17 +218,20 @@ relay_raw_message_add_to_list (time_t date, const char *prefix,
  */
 
 void
-relay_raw_message_add (struct t_relay_client *client, int flags,
+relay_raw_message_add (struct t_relay_client *client,
+                       enum t_relay_client_msg_type msg_type,
+                       int flags,
                        const char *data, int data_size)
 {
-    char *buf, *buf2, prefix[256], prefix_arrow[16];
+    char *buf, *buf2, *buf3, prefix[256], prefix_arrow[16];
     const unsigned char *ptr_buf;
     const char *hexa = "0123456789ABCDEF";
-    int pos_buf, pos_buf2, char_size, i;
+    int pos_buf, pos_buf2, char_size, i, length;
     struct t_relay_raw_message *new_raw_message;
 
     buf = NULL;
     buf2 = NULL;
+    buf3 = NULL;
 
     if (flags & RELAY_RAW_FLAG_BINARY)
     {
@@ -274,7 +277,12 @@ relay_raw_message_add (struct t_relay_client *client, int flags,
             }
             buf2[pos_buf2] = '\0';
         }
+    }
 
+    if (!(flags & RELAY_RAW_FLAG_BINARY)
+        || (msg_type == RELAY_CLIENT_MSG_PING)
+        || (msg_type == RELAY_CLIENT_MSG_PONG))
+    {
         /* build prefix with arrow */
         prefix_arrow[0] = '\0';
         switch (flags & (RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_SEND))
@@ -319,10 +327,20 @@ relay_raw_message_add (struct t_relay_client *client, int flags,
         }
     }
 
+    length = strlen (relay_client_msg_type_string[msg_type]) +
+        strlen ((buf2) ? buf2 : ((buf) ? buf : data)) + 1;
+    buf3 = malloc (length);
+    if (buf3)
+    {
+        snprintf (buf3, length, "%s%s",
+                  relay_client_msg_type_string[msg_type],
+                  (buf2) ? buf2 : ((buf) ? buf : data));
+    }
+
     new_raw_message = relay_raw_message_add_to_list (
         time (NULL),
         prefix,
-        (buf2) ? buf2 : ((buf) ? buf : data));
+        (buf3) ? buf3 : ((buf2) ? buf2 : ((buf) ? buf : data)));
 
     if (new_raw_message)
     {
@@ -336,6 +354,8 @@ relay_raw_message_add (struct t_relay_client *client, int flags,
         free (buf);
     if (buf2)
         free (buf2);
+    if (buf3)
+        free (buf3);
 }
 
 /*
@@ -343,14 +363,15 @@ relay_raw_message_add (struct t_relay_client *client, int flags,
  */
 
 void
-relay_raw_print (struct t_relay_client *client, int flags,
+relay_raw_print (struct t_relay_client *client,
+                 enum t_relay_client_msg_type msg_type, int flags,
                  const char *data, int data_size)
 {
     /* auto-open Relay raw buffer if debug for irc plugin is >= 1 */
     if (!relay_raw_buffer && (weechat_relay_plugin->debug >= 1))
         relay_raw_open (0);
 
-    relay_raw_message_add (client, flags, data, data_size);
+    relay_raw_message_add (client, msg_type, flags, data, data_size);
 }
 
 /*

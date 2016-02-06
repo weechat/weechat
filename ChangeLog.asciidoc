@@ -33,6 +33,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   keep_eol is 2 and the string ends with separators
 * irc: add missing completion "*" for target in command /msg
 * irc: fix /msg command with multiple targets including "*"
+* relay: fix decoding of multiple frames in a single websocket message,
+  send PONG on PING received in a websocket frame (issue #675)
 * relay: fix command "input" received from clients with only spaces in
   content of message (weechat protocol) (issue #663)
 

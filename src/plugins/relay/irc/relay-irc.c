@@ -236,7 +236,8 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
                 if (message)
                 {
                     snprintf (message, length, "%s\r\n", str_message);
-                    relay_client_send (client, message, strlen (message), NULL);
+                    relay_client_send (client, RELAY_CLIENT_MSG_STANDARD,
+                                       message, strlen (message), NULL);
                     free (message);
                 }
                 number++;

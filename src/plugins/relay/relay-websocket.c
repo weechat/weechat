@@ -29,6 +29,7 @@
 #include "relay.h"
 #include "relay-client.h"
 #include "relay-config.h"
+#include "relay-websocket.h"
 
 
 /*
@@ -249,7 +250,8 @@ relay_websocket_send_http (struct t_relay_client *client,
     if (message)
     {
         snprintf (message, length, "HTTP/1.1 %s\r\n\r\n", http);
-        relay_client_send (client, message, strlen (message), NULL);
+        relay_client_send (client, RELAY_CLIENT_MSG_STANDARD,
+                           message, strlen (message), NULL);
         free (message);
     }
 }
@@ -269,6 +271,7 @@ relay_websocket_decode_frame (const unsigned char *buffer,
                               unsigned long long *decoded_length)
 {
     unsigned long long i, index_buffer, length_frame_size, length_frame;
+    unsigned char opcode;
 
     *decoded_length = 0;
     index_buffer = 0;
@@ -276,6 +279,8 @@ relay_websocket_decode_frame (const unsigned char *buffer,
     /* loop to decode all frames in message */
     while (index_buffer + 2 <= buffer_length)
     {
+        opcode = buffer[index_buffer] & 15;
+
         /*
          * check if frame is masked: client MUST send a masked frame; if frame is
          * not masked, we MUST reject it and close the connection (see RFC 6455)
@@ -311,13 +316,18 @@ relay_websocket_decode_frame (const unsigned char *buffer,
         }
         index_buffer += 4;
 
+        /* copy opcode in decoded data */
+        decoded[*decoded_length] = (opcode == WEBSOCKET_FRAME_OPCODE_PING) ?
+            RELAY_CLIENT_MSG_PING : RELAY_CLIENT_MSG_STANDARD;
+        *decoded_length += 1;
+
         /* decode data using masks */
         for (i = 0; i < length_frame; i++)
         {
             decoded[*decoded_length + i] = (int)((unsigned char)buffer[index_buffer + i]) ^ masks[i % 4];
         }
         decoded[*decoded_length + length_frame] = '\0';
-        *decoded_length += length_frame;
+        *decoded_length += length_frame + 1;
         index_buffer += length_frame;
     }
 
@@ -334,7 +344,7 @@ relay_websocket_decode_frame (const unsigned char *buffer,
  */
 
 char *
-relay_websocket_encode_frame (struct t_relay_client *client,
+relay_websocket_encode_frame (int opcode,
                               const char *buffer,
                               unsigned long long length,
                               unsigned long long *length_frame)
@@ -348,7 +358,8 @@ relay_websocket_encode_frame (struct t_relay_client *client,
     if (!frame)
         return NULL;
 
-    frame[0] = (client->send_data_type == RELAY_CLIENT_DATA_TEXT) ? 0x81 : 0x82;
+    frame[0] = 0x80;
+    frame[0] |= opcode;
 
     if (length <= 125)
     {

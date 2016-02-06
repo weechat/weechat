@@ -20,6 +20,8 @@
 #ifndef WEECHAT_RELAY_RAW_H
 #define WEECHAT_RELAY_RAW_H 1
 
+#include "relay-client.h"
+
 #define RELAY_RAW_BUFFER_NAME     "relay_raw"
 #define RELAY_RAW_PREFIX_RECV     "-->"
 #define RELAY_RAW_PREFIX_SEND     "<--"
@@ -47,7 +49,8 @@ extern void relay_raw_open (int switch_to_buffer);
 extern struct t_relay_raw_message *relay_raw_message_add_to_list (time_t date,
                                                                   const char *prefix,
                                                                   const char *message);
-extern void relay_raw_print (struct t_relay_client *client, int flags,
+extern void relay_raw_print (struct t_relay_client *client,
+                             enum t_relay_client_msg_type msg_type, int flags,
                              const char *data, int data_size);
 extern void relay_raw_message_free_all ();
 extern int relay_raw_add_to_infolist (struct t_infolist *infolist,
