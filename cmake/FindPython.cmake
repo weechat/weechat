@@ -57,7 +57,7 @@ if(PYTHON_EXECUTABLE)
     )
 
   execute_process(
-    COMMAND ${PYTHON_EXECUTABLE} -c "import sys; from distutils.sysconfig import *; sys.stdout.write(get_config_var('LINKFORSHARED'))"
+    COMMAND ${PYTHON_EXECUTABLE} -c "import sys; from distutils.sysconfig import *; sys.stdout.write(get_config_var('LIBS') + ' ' + get_config_var('LINKFORSHARED'))"
     OUTPUT_VARIABLE PYTHON_LFLAGS
     )
 
