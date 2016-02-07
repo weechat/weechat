@@ -2467,7 +2467,8 @@ gui_window_set_title (const char *title)
     {
         printf ("\33]0;%s\7", new_title);
     }
-    else if (strncmp (envterm, "screen", 6) == 0)
+    else if ((strncmp (envterm, "screen", 6) == 0)
+             || (strncmp (envterm, "tmux", 4) == 0))
     {
         if (title && title[0])
         {
