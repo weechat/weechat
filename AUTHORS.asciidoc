@@ -82,6 +82,7 @@ Alphabetically:
 * Rudolf Polzer (divVerent)
 * Ryuunosuke Ayanokouzi
 * Sergio Durigan Junior
+* Shane McCarron
 * Shawn Smith
 * Simmo Saan (sim642)
 * Simon Arlott
