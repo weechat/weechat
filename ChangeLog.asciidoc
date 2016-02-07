@@ -38,6 +38,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   send PONG on PING received in a websocket frame (issue #675)
 * relay: fix command "input" received from clients with only spaces in
   content of message (weechat protocol) (issue #663)
+* xfer: fix DCC file received when the terminal is resized
+  (issue #677, issue #680)
 
 [[1.4]]
 == Version 1.4 (2016-01-10)
