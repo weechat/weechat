@@ -368,9 +368,14 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
         ready = poll (&poll_fd, 1, -1);
         if (ready <= 0)
         {
-            xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
-                                     XFER_ERROR_RECV_BLOCK);
-            return;
+            if ((errno == EINTR) || (errno == EAGAIN))
+                continue;
+            else
+            {
+                xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
+                                         XFER_ERROR_RECV_BLOCK);
+                return;
+            }
         }
 
         /* read maximum data on socket (until nothing is available) */
