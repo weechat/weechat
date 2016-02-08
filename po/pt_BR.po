@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-17 08:51+0100\n"
+"POT-Creation-Date: 2016-02-08 19:54+0100\n"
 "PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9483,7 +9483,8 @@ msgid ""
 "protocol name (see /help relay)"
 msgstr ""
 
-msgid "maximum number of clients connecting to a port"
+#, fuzzy
+msgid "maximum number of clients connecting to a port (0 = no limit)"
 msgstr "número máximo de clientes conectando-se a uma porta"
 
 #, fuzzy
@@ -9572,6 +9573,13 @@ msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s%s: não foi possível aceitar o cliente na porta %d (%s): erro %d %s"
 
 #, c-format
+msgid "%s%s: client not allowed (max %d client is allowed at same time)"
+msgid_plural ""
+"%s%s: client not allowed (max %d clients are allowed at same time)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: endereço IP \"%s\" não permitido para relay"
 
@@ -9601,7 +9609,13 @@ msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
 msgstr "%s%s: não foi possível aceitar o cliente na porta %d (%s.%s)"
 
 #, fuzzy, c-format
-msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
+msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
+msgid_plural "%s: listening on port %d (relay: %s, %s, max %d clients)"
+msgstr[0] "%s: escutando na porta %d (relay: %s.%s, máximo de %d clientes)"
+msgstr[1] "%s: escutando na porta %d (relay: %s.%s, máximo de %d clientes)"
+
+#, fuzzy, c-format
+msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: escutando na porta %d (relay: %s.%s, máximo de %d clientes)"
 
 #, c-format

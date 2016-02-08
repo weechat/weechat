@@ -748,8 +748,8 @@ relay_config_init ()
     relay_config_network_max_clients = weechat_config_new_option (
         relay_config_file, ptr_section,
         "max_clients", "integer",
-        N_("maximum number of clients connecting to a port"),
-        NULL, 1, 1024, "5", NULL, 0,
+        N_("maximum number of clients connecting to a port (0 = no limit)"),
+        NULL, 0, INT_MAX, "5", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_password = weechat_config_new_option (
         relay_config_file, ptr_section,

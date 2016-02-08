@@ -113,9 +113,9 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
-** 説明: `ポートに接続するクライアントの最大数`
+** 説明: `maximum number of clients connecting to a port (0 = no limit)`
 ** タイプ: 整数
-** 値: 1 .. 1024 (デフォルト値: `5`)
+** 値: 0 .. 2147483647 (デフォルト値: `5`)
 
 * [[option_relay.network.password]] *relay.network.password*
 ** 説明: `このリレーを利用するためにクライアントが必要なパスワード (空の場合パスワードなし) (注意: 値は評価されます、/help eval を参照してください)`

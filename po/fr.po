@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-17 08:51+0100\n"
-"PO-Revision-Date: 2016-01-17 09:41+0100\n"
+"POT-Creation-Date: 2016-02-08 19:54+0100\n"
+"PO-Revision-Date: 2016-02-08 19:57+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -10770,8 +10770,9 @@ msgstr ""
 "défaut) ; les protocoles IPv4 et IPv6 peuvent être forcés (individuellement "
 "ou ensemble) dans le nom du protocole (voir /help relay)"
 
-msgid "maximum number of clients connecting to a port"
-msgstr "nombre maximum de clients qui se connectent sur un port"
+msgid "maximum number of clients connecting to a port (0 = no limit)"
+msgstr ""
+"nombre maximum de clients qui se connectent sur un port (0 = pas de limite)"
 
 msgid ""
 "password required by clients to access this relay (empty value means no "
@@ -10875,6 +10876,13 @@ msgstr ""
 "%s%s : impossible d'accepter le client sur le port %d (%s) : erreur %d %s"
 
 #, c-format
+msgid "%s%s: client not allowed (max %d client is allowed at same time)"
+msgid_plural ""
+"%s%s: client not allowed (max %d clients are allowed at same time)"
+msgstr[0] "%s%s : client non autorisé (%d client est autorisé à la fois)"
+msgstr[1] "%s%s : client non autorisé (%d clients sont autorisés à la fois)"
+
+#, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s : adresse IP \"%s\" non autorisée pour le relai"
 
@@ -10904,8 +10912,14 @@ msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
 msgstr "%s%s : \"listen\" impossible sur le port %d (%s) : erreur %d %s"
 
 #, c-format
-msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
-msgstr "%s : écoute sur le port %d (relai : %s, %s, max %d clients)"
+msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
+msgid_plural "%s: listening on port %d (relay: %s, %s, max %d clients)"
+msgstr[0] "%s : écoute sur le port %d (relai : %s, %s, max %d client)"
+msgstr[1] "%s : écoute sur le port %d (relai : %s, %s, max %d clients)"
+
+#, c-format
+msgid "%s: listening on port %d (relay: %s, %s)"
+msgstr "%s : écoute sur le port %d (relai : %s, %s)"
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"

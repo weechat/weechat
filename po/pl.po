@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-17 08:51+0100\n"
+"POT-Creation-Date: 2016-02-08 19:54+0100\n"
 "PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10555,7 +10555,8 @@ msgstr ""
 "protokoły IPv4 i IPv6 mogą być wymuszane (pojedynczo lub razem) w nazwie "
 "protokołu (zobacz /help relay)"
 
-msgid "maximum number of clients connecting to a port"
+#, fuzzy
+msgid "maximum number of clients connecting to a port (0 = no limit)"
 msgstr "maksymalna ilość klientów łączących się na port"
 
 msgid ""
@@ -10659,6 +10660,14 @@ msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s%s: nie można zaakceptować klienta na porcie %d (%s): błąd %d %s"
 
 #, c-format
+msgid "%s%s: client not allowed (max %d client is allowed at same time)"
+msgid_plural ""
+"%s%s: client not allowed (max %d clients are allowed at same time)"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: adres IP \"%s\" nie posiada zezwolenia na połączenie"
 
@@ -10687,8 +10696,15 @@ msgstr "%s%s: nie można wykonać \"bind\" na porcie %d (%s): błąd %d %s"
 msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
 msgstr "%s%s: nie można wykonać \"listen\" na porcie %d (%s): błąd %d %s"
 
-#, c-format
-msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
+#, fuzzy, c-format
+msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
+msgid_plural "%s: listening on port %d (relay: %s, %s, max %d clients)"
+msgstr[0] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klientów)"
+msgstr[1] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klientów)"
+msgstr[2] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klientów)"
+
+#, fuzzy, c-format
+msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klientów)"
 
 #, c-format

@@ -162,6 +162,31 @@ relay_client_status_search (const char *name)
 }
 
 /*
+ * Returns the number of active clients (connecting or connected) on a given
+ * server port.
+ */
+
+int
+relay_client_count_active_by_port (int server_port)
+{
+    struct t_relay_client *ptr_client;
+    int count;
+
+    count = 0;
+    for (ptr_client = relay_clients; ptr_client;
+         ptr_client = ptr_client->next_client)
+    {
+        if ((ptr_client->server_port == server_port)
+            && !RELAY_CLIENT_HAS_ENDED(ptr_client))
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+/*
  * Sends a signal with the status of client ("relay_client_xxx").
  */
 
@@ -1163,6 +1188,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->id = (relay_clients) ? relay_clients->id + 1 : 1;
         new_client->desc = NULL;
         new_client->sock = sock;
+        new_client->server_port = server->port;
         new_client->ssl = server->ssl;
 #ifdef HAVE_GNUTLS
         new_client->hook_timer_handshake = NULL;
@@ -1330,6 +1356,7 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->id = weechat_infolist_integer (infolist, "id");
         new_client->desc = NULL;
         new_client->sock = weechat_infolist_integer (infolist, "sock");
+        new_client->server_port = weechat_infolist_integer (infolist, "server_port");
         new_client->ssl = weechat_infolist_integer (infolist, "ssl");
 #ifdef HAVE_GNUTLS
         new_client->gnutls_sess = NULL;
@@ -1636,6 +1663,8 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "sock", client->sock))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "server_port", client->server_port))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ssl", client->ssl))
         return 0;
 #ifdef HAVE_GNUTLS
@@ -1715,6 +1744,7 @@ relay_client_print_log ()
         weechat_log_printf ("  id. . . . . . . . . . : %d",   ptr_client->id);
         weechat_log_printf ("  desc. . . . . . . . . : '%s'", ptr_client->desc);
         weechat_log_printf ("  sock. . . . . . . . . : %d",   ptr_client->sock);
+        weechat_log_printf ("  server_port . . . . . : %d",   ptr_client->server_port);
         weechat_log_printf ("  ssl . . . . . . . . . : %d",   ptr_client->ssl);
 #ifdef HAVE_GNUTLS
         weechat_log_printf ("  gnutls_sess . . . . . : 0x%lx", ptr_client->gnutls_sess);

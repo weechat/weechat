@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-17 08:51+0100\n"
+"POT-Creation-Date: 2016-02-08 19:54+0100\n"
 "PO-Revision-Date: 2016-01-27 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -10371,7 +10371,8 @@ msgstr ""
 "トコルでプロトコルに IPv4 と IPv6 (個別または両方) を強制 (/help relay を参"
 "照)"
 
-msgid "maximum number of clients connecting to a port"
+#, fuzzy
+msgid "maximum number of clients connecting to a port (0 = no limit)"
 msgstr "ポートに接続するクライアントの最大数"
 
 msgid ""
@@ -10468,6 +10469,12 @@ msgstr ""
 "%s"
 
 #, c-format
+msgid "%s%s: client not allowed (max %d client is allowed at same time)"
+msgid_plural ""
+"%s%s: client not allowed (max %d clients are allowed at same time)"
+msgstr[0] ""
+
+#, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: IP アドレス \"%s\" はリレーの許可がありません"
 
@@ -10498,8 +10505,14 @@ msgstr ""
 "%s%s: ポート %d (%s) ではクライアントを受け付けることができません: エラー %d "
 "%s"
 
-#, c-format
-msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
+#, fuzzy, c-format
+msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
+msgid_plural "%s: listening on port %d (relay: %s, %s, max %d clients)"
+msgstr[0] ""
+"%s: ポート %d をリッスンしています (リレー: %s、%s、最大 %d クライアント)"
+
+#, fuzzy, c-format
+msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr ""
 "%s: ポート %d をリッスンしています (リレー: %s、%s、最大 %d クライアント)"
 

@@ -226,7 +226,7 @@ relay_server_sock_cb (void *data, int fd)
     struct sockaddr_in6 client_addr6;
     socklen_t client_addr_size;
     void *ptr_addr;
-    int client_fd, flags, set;
+    int client_fd, flags, set, max_clients, num_clients_on_port;
     char ipv4_address[INET_ADDRSTRLEN + 1], ipv6_address[INET6_ADDRSTRLEN + 1];
     char *ptr_ip_address;
 
@@ -260,6 +260,28 @@ relay_server_sock_cb (void *data, int fd)
         return WEECHAT_RC_OK;
     }
 
+    /* check if we have reached the max number of clients on this port */
+    max_clients = weechat_config_integer (relay_config_network_max_clients);
+    if (max_clients > 0)
+    {
+        num_clients_on_port = relay_client_count_active_by_port (server->port);
+        if (num_clients_on_port >= max_clients)
+        {
+            weechat_printf (
+                NULL,
+                NG_("%s%s: client not allowed (max %d client is "
+                    "allowed at same time)",
+                    "%s%s: client not allowed (max %d clients are "
+                    "allowed at same time)",
+                    max_clients),
+                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                max_clients);
+            close (client_fd);
+            return WEECHAT_RC_OK;
+        }
+    }
+
+    /* get the IP address */
     ptr_ip_address = NULL;
     if (server->ipv6)
     {
@@ -474,9 +496,11 @@ relay_server_create_socket (struct t_relay_server *server)
         return 0;
     }
 
-    max_clients = weechat_config_integer (relay_config_network_max_clients);
-
-    if (listen (server->sock, max_clients) != 0)
+#ifdef SOMAXCONN
+    if (listen (server->sock, SOMAXCONN) != 0)
+#else
+    if (listen (server->sock, 1) != 0)
+#endif
     {
         weechat_printf (NULL,
                         _("%s%s: cannot \"listen\" on port %d (%s): error %d %s"),
@@ -488,14 +512,30 @@ relay_server_create_socket (struct t_relay_server *server)
         return 0;
     }
 
-    weechat_printf (NULL,
-                    _("%s: listening on port %d (relay: %s, %s, max %d clients)"),
-                    RELAY_PLUGIN_NAME,
-                    server->port,
-                    server->protocol_string,
-                    ((server->ipv4 && server->ipv6) ? "IPv4+6" : ((server->ipv6) ? "IPv6" : "IPv4")),
-                    max_clients);
-
+    max_clients = weechat_config_integer (relay_config_network_max_clients);
+    if (max_clients > 0)
+    {
+        weechat_printf (
+            NULL,
+            NG_("%s: listening on port %d (relay: %s, %s, max %d client)",
+                "%s: listening on port %d (relay: %s, %s, max %d clients)",
+                max_clients),
+            RELAY_PLUGIN_NAME,
+            server->port,
+            server->protocol_string,
+            ((server->ipv4 && server->ipv6) ? "IPv4+6" : ((server->ipv6) ? "IPv6" : "IPv4")),
+            max_clients);
+    }
+    else
+    {
+        weechat_printf (
+            NULL,
+            _("%s: listening on port %d (relay: %s, %s)"),
+            RELAY_PLUGIN_NAME,
+            server->port,
+            server->protocol_string,
+            ((server->ipv4 && server->ipv6) ? "IPv4+6" : ((server->ipv6) ? "IPv6" : "IPv4")));
+    }
     server->hook_fd = weechat_hook_fd (server->sock,
                                        1, 0, 0,
                                        &relay_server_sock_cb,

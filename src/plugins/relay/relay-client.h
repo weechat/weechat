@@ -87,6 +87,7 @@ struct t_relay_client
     int id;                            /* unique id (diff. for each client) */
     char *desc;                        /* description, used for display     */
     int sock;                          /* socket for connection             */
+    int server_port;                   /* port used for connection          */
     int ssl;                           /* 1 if SSL is enabled               */
 #ifdef HAVE_GNUTLS
     gnutls_session_t gnutls_sess;      /* gnutls session (only if SSL used) */
@@ -128,6 +129,7 @@ extern int relay_client_valid (struct t_relay_client *client);
 extern struct t_relay_client *relay_client_search_by_number (int number);
 extern struct t_relay_client *relay_client_search_by_id (int id);
 extern int relay_client_status_search (const char *name);
+extern int relay_client_count_active_by_port (int server_port);
 extern void relay_client_set_desc (struct t_relay_client *client);
 extern int relay_client_recv_cb (void *arg_client, int fd);
 extern int relay_client_send (struct t_relay_client *client,

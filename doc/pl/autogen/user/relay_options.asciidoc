@@ -113,9 +113,9 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
-** opis: `maksymalna ilość klientów łączących się na port`
+** opis: `maximum number of clients connecting to a port (0 = no limit)`
 ** typ: liczba
-** wartości: 1 .. 1024 (domyślna wartość: `5`)
+** wartości: 0 .. 2147483647 (domyślna wartość: `5`)
 
 * [[option_relay.network.password]] *relay.network.password*
 ** opis: `hasło wymagane od klientów do połączenia z tym pośrednikiem (pusta wartość oznacza brak wymaganego hasła) (zawartość jest przetwarzana, zobacz /help eval)`

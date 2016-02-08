@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-01-17 08:51+0100\n"
+"POT-Creation-Date: 2016-02-08 19:54+0100\n"
 "PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9680,7 +9680,8 @@ msgid ""
 "protocol name (see /help relay)"
 msgstr ""
 
-msgid "maximum number of clients connecting to a port"
+#, fuzzy
+msgid "maximum number of clients connecting to a port (0 = no limit)"
 msgstr "maximální počet klientů připojených k portu"
 
 #, fuzzy
@@ -9768,6 +9769,14 @@ msgstr "%s: soket uzavřen pro %s (port %d)"
 msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s%s: nemohu \"naslouchat\" na portu %d (%s): chyba %d %s"
 
+#, c-format
+msgid "%s%s: client not allowed (max %d client is allowed at same time)"
+msgid_plural ""
+"%s%s: client not allowed (max %d clients are allowed at same time)"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
 #, fuzzy, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: IP adresa proxy nenalezena"
@@ -9798,7 +9807,17 @@ msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
 msgstr "%s%s: nemohu \"naslouchat\" na portu %d (%s): chyba %d %s"
 
 #, fuzzy, c-format
-msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
+msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
+msgid_plural "%s: listening on port %d (relay: %s, %s, max %d clients)"
+msgstr[0] ""
+"%s: poslouchám na portu %d (přesměrování %s.%s, maximálně %d klientů)"
+msgstr[1] ""
+"%s: poslouchám na portu %d (přesměrování %s.%s, maximálně %d klientů)"
+msgstr[2] ""
+"%s: poslouchám na portu %d (přesměrování %s.%s, maximálně %d klientů)"
+
+#, fuzzy, c-format
+msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: poslouchám na portu %d (přesměrování %s.%s, maximálně %d klientů)"
 
 #, c-format

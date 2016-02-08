@@ -113,9 +113,9 @@
 ** values: on, off (default value: `on`)
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
-** description: `maximum number of clients connecting to a port`
+** description: `maximum number of clients connecting to a port (0 = no limit)`
 ** type: integer
-** values: 1 .. 1024 (default value: `5`)
+** values: 0 .. 2147483647 (default value: `5`)
 
 * [[option_relay.network.password]] *relay.network.password*
 ** description: `password required by clients to access this relay (empty value means no password required) (note: content is evaluated, see /help eval)`
