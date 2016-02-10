@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-02-08 19:54+0100\n"
-"PO-Revision-Date: 2016-01-17 09:27+0100\n"
+"PO-Revision-Date: 2016-02-10 07:24+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de\n"
@@ -11018,9 +11018,10 @@ msgstr ""
 "und IPv6 Protokoll, einzeln oder gemeinsam, erzwungen werden (siehe /help "
 "relay)"
 
-#, fuzzy
 msgid "maximum number of clients connecting to a port (0 = no limit)"
-msgstr "maximale Anzahl an Clients die mit einem Port verbunden sein dürfen"
+msgstr ""
+"maximale Anzahl an Clients die mit einem Port verbunden sein dürfen (0 = "
+"keine Begrenzung)"
 
 msgid ""
 "password required by clients to access this relay (empty value means no "
@@ -11130,8 +11131,8 @@ msgstr "%s%s: Der Client wird am Port %d (%s) nicht akzeptiert: Fehler %d %s"
 msgid "%s%s: client not allowed (max %d client is allowed at same time)"
 msgid_plural ""
 "%s%s: client not allowed (max %d clients are allowed at same time)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s%s: Client nicht erwünscht (maximal %d Client ist erlaubt)"
+msgstr[1] "%s%s: Client nicht erwünscht (maximal %d Clients sind erlaubt)"
 
 #, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
@@ -11164,15 +11165,15 @@ msgstr "%s%s: \"bind\" am Port %d (%s) nicht möglich: Fehler %d %s"
 msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
 msgstr "%s%s: \"listen\" an Port %d (%s) nicht möglich: Fehler %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
 msgid_plural "%s: listening on port %d (relay: %s, %s, max %d clients)"
-msgstr[0] "%s: Lausche am Port %d (Relay: %s,%s, Max.: %d Clients)"
+msgstr[0] "%s: Lausche am Port %d (Relay: %s,%s, Max.: %d Client)"
 msgstr[1] "%s: Lausche am Port %d (Relay: %s,%s, Max.: %d Clients)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
-msgstr "%s: Lausche am Port %d (Relay: %s,%s, Max.: %d Clients)"
+msgstr "%s: Lausche am Port %d (Relay: %s,%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
