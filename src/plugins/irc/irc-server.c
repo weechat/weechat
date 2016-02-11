@@ -2916,7 +2916,7 @@ irc_server_timer_sasl_cb (void *data, int remaining_calls)
     if (!server->is_connected)
     {
         weechat_printf (server->buffer,
-                        _("%s%s: sasl authentication timeout"),
+                        _("%s%s: SASL authentication timeout"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME);
         sasl_fail = IRC_SERVER_OPTION_INTEGER(server,
                                               IRC_SERVER_OPTION_SASL_FAIL);

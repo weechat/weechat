@@ -427,7 +427,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                     {
                         weechat_printf (
                             server->buffer,
-                            _("%s%s: client capability: sasl not supported"),
+                            _("%s%s: client capability: SASL not supported"),
                             weechat_prefix ("network"), IRC_PLUGIN_NAME);
                     }
                 }

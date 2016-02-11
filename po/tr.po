@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-02-08 19:54+0100\n"
+"POT-Creation-Date: 2016-02-11 07:28+0100\n"
 "PO-Revision-Date: 2016-01-05 07:51+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6577,9 +6577,9 @@ msgstr ""
 msgid "%s%s: client capability, requesting: %s"
 msgstr ""
 
-#, c-format
-msgid "%s%s: client capability: sasl not supported"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: client capability: SASL not supported"
+msgstr "%s: betik kaldırıldı: %s"
 
 #, c-format
 msgid "%s%s: client capability, currently enabled: %s"
@@ -7002,7 +7002,7 @@ msgid "%s%s: connection timeout (message 001 not received)"
 msgstr ""
 
 #, c-format
-msgid "%s%s: sasl authentication timeout"
+msgid "%s%s: SASL authentication timeout"
 msgstr ""
 
 #, c-format
