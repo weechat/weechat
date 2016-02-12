@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-02-12 07:33+0100\n"
-"PO-Revision-Date: 2016-02-12 07:28+0100\n"
+"PO-Revision-Date: 2016-02-12 21:53+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de\n"
@@ -2180,7 +2180,6 @@ msgstr ""
 "store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
 "leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
 
-#, fuzzy
 msgid ""
 "  store: store current buffers/windows in a layout\n"
 "  apply: apply stored layout\n"
@@ -2212,7 +2211,10 @@ msgstr ""
 "Fenster dargestellt werden)\n"
 "\n"
 "Wird der Befehl ohne Argumente aufgerufen, werden die erstellten Layout "
-"dargestellt."
+"dargestellt.\n"
+"\n"
+"Das aktuelle Layout kann beim Ausführen des /quit Befehls mit der Option "
+"\"weechat.look.save_layout_on_exit\" gesichert werden."
 
 msgid "mouse control"
 msgstr "Maussteuerung"
@@ -2501,7 +2503,6 @@ msgstr "WeeChat beenden"
 msgid "[-yes] [<arguments>]"
 msgstr "[-yes] [<arguments>]"
 
-#, fuzzy
 msgid ""
 "     -yes: required if option \"weechat.look.confirm_quit\" is enabled\n"
 "arguments: text sent with signal \"quit\"\n"
@@ -2516,7 +2517,11 @@ msgstr ""
 "aktiviert sein sollte\n"
 "arguments: Text der beim Signal \"quit\" verschickt wird\n"
 "           (zum Beispiel sendet die IRC Erweiterung diesen Text als Quit-"
-"Nachricht an den Server)"
+"Nachricht an den Server)\n"
+"\n"
+"Standardmäßig werden alle Konfigurationsdateien beim Beenden gespeichert "
+"(siehe Option \"weechat.look.save_config_on_exit\") und das aktuelle Layout "
+"kann gesichert werden (siehe Option \"weechat.look.save_layout_on_exit\")."
 
 msgid "reload configuration files from disk"
 msgstr "Konfiguration neu laden"
@@ -2569,7 +2574,6 @@ msgstr ""
 msgid "save configuration files to disk"
 msgstr "Konfiguration abspeichern"
 
-#, fuzzy
 msgid ""
 "file: configuration file to save (without extension \".conf\")\n"
 "\n"
@@ -2582,7 +2586,10 @@ msgstr ""
 "Dateinamenserweiterung \".conf\")\n"
 "\n"
 "Wird keine Datei angegeben dann werden alle Konfigurationen (WeeChat und "
-"Erweiterungen) gesichert."
+"Erweiterungen) gesichert.\n"
+"\n"
+"Standardmäßig werden alle Konfigurationsdateien beim Ausführen des /quit "
+"Befehls gespeichert (siehe Option \"weechat.look.save_config_on_exit\")."
 
 msgid ""
 "manage secured data (passwords or private data encrypted in file sec.conf)"
@@ -9159,7 +9166,7 @@ msgstr "%s%s: Clientfähigkeit, Server unterstützt: %s"
 msgid "%s%s: client capability, requesting: %s"
 msgstr "%s%s: Clientfähigkeit, Anfrage: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability: SASL not supported"
 msgstr "%s%s: Clientfähigkeit: SASL wird nicht unterstützt"
 
@@ -9621,7 +9628,7 @@ msgid "%s%s: connection timeout (message 001 not received)"
 msgstr ""
 "%s%s: Zeitüberschreitung bei Verbindungsversuch (message 001 nicht empfangen)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: SASL authentication timeout"
 msgstr "%s%s: Zeitüberschreitung bei SASL Authentifizierung"
 
