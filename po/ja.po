@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-02-12 07:33+0100\n"
-"PO-Revision-Date: 2016-02-12 07:29+0100\n"
+"PO-Revision-Date: 2016-02-12 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -2069,7 +2069,6 @@ msgstr ""
 "store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
 "leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
 
-#, fuzzy
 msgid ""
 "  store: store current buffers/windows in a layout\n"
 "  apply: apply stored layout\n"
@@ -2099,7 +2098,10 @@ msgstr ""
 "windows: ウィンドウのみに対してレイアウトを保存/適用 (それぞれのウィンドウに"
 "表示されるバッファ)\n"
 "\n"
-"引数無しでは、保存されたレイアウトを表示します。"
+"引数を指定しなかった場合、保存されたレイアウトを表示します。\n"
+"\n"
+"\"weechat.look.save_layout_on_exit\" オプションを使えば、現在のレイアウトを /"
+"quit コマンドの実行時に保存することが可能です。"
 
 msgid "mouse control"
 msgstr "マウス操作"
@@ -2381,7 +2383,6 @@ msgstr "WeeChat の終了"
 msgid "[-yes] [<arguments>]"
 msgstr "[-yes] [<arguments>]"
 
-#, fuzzy
 msgid ""
 "     -yes: required if option \"weechat.look.confirm_quit\" is enabled\n"
 "arguments: text sent with signal \"quit\"\n"
@@ -2395,7 +2396,11 @@ msgstr ""
 "     -yes: weechat.look.confirm_quit オプションが有効な場合に必要\n"
 "arguments: \"quit\" シグナルと共に送られるテキスト\n"
 "           (例えば irc プラグインはサーバに quit メッセージを送る際にこのテキ"
-"ストを使います)"
+"ストを使います)\n"
+"\n"
+"デフォルト設定では、終了時に設定ファイルを保存します (オプション \"weechat."
+"look.save_config_on_exit\" 参照)。また、終了時に現在のレイアウトを保存するこ"
+"とも可能です (オプション \"weechat.look.save_layout_on_exit\" 参照)。"
 
 msgid "reload configuration files from disk"
 msgstr "ディスクから設定ファイルを再読み込み"
@@ -2443,7 +2448,6 @@ msgstr ""
 msgid "save configuration files to disk"
 msgstr "設定をファイルに保存"
 
-#, fuzzy
 msgid ""
 "file: configuration file to save (without extension \".conf\")\n"
 "\n"
@@ -2454,7 +2458,10 @@ msgid ""
 msgstr ""
 "file: 保存する設定ファイル (拡張子 \".conf\" は不要)\n"
 "\n"
-"引数無しでは、全てのファイル (WeeChat とプラグイン) が保存されます。"
+"引数無しでは、全てのファイル (WeeChat とプラグイン) が保存されます。\n"
+"\n"
+"デフォルト設定では、/quit コマンドの実行時にすべての設定ファイルがディスクに"
+"保存されます (オプション \"weechat.look.save_config_on_exit\" 参照)。"
 
 msgid ""
 "manage secured data (passwords or private data encrypted in file sec.conf)"
@@ -8573,9 +8580,9 @@ msgstr "%s%s: クライアントの機能、サーバは以下をサポート: %
 msgid "%s%s: client capability, requesting: %s"
 msgstr "%s%s: クライアントの機能、リクエスト中: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability: SASL not supported"
-msgstr "%s%s: クライアントの機能: sasl はサポートされていません"
+msgstr "%s%s: クライアントの機能: SASL はサポートされていません"
 
 #, c-format
 msgid "%s%s: client capability, currently enabled: %s"
@@ -9022,9 +9029,9 @@ msgstr "%s%s: サーバとの接続を切断中..."
 msgid "%s%s: connection timeout (message 001 not received)"
 msgstr "%s%s: 接続タイムアウト (メッセージ 001 が受信されません)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: SASL authentication timeout"
-msgstr "%s%s: sasl 認証タイムアウト"
+msgstr "%s%s: SASL 認証タイムアウト"
 
 #, c-format
 msgid "%s%s: lag is high, reconnecting to server %s%s%s"
@@ -10385,9 +10392,8 @@ msgstr ""
 "トコルでプロトコルに IPv4 と IPv6 (個別または両方) を強制 (/help relay を参"
 "照)"
 
-#, fuzzy
 msgid "maximum number of clients connecting to a port (0 = no limit)"
-msgstr "ポートに接続するクライアントの最大数"
+msgstr "ポートに接続するクライアントの最大数 (0 = 制限なし)"
 
 msgid ""
 "password required by clients to access this relay (empty value means no "
@@ -10487,6 +10493,8 @@ msgid "%s%s: client not allowed (max %d client is allowed at same time)"
 msgid_plural ""
 "%s%s: client not allowed (max %d clients are allowed at same time)"
 msgstr[0] ""
+"%s%s: クライアントの接続を拒否します (クライアントの同時接続数の最大値は %d "
+"です)"
 
 #, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
@@ -10519,16 +10527,15 @@ msgstr ""
 "%s%s: ポート %d (%s) ではクライアントを受け付けることができません: エラー %d "
 "%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
 msgid_plural "%s: listening on port %d (relay: %s, %s, max %d clients)"
 msgstr[0] ""
 "%s: ポート %d をリッスンしています (リレー: %s、%s、最大 %d クライアント)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
-msgstr ""
-"%s: ポート %d をリッスンしています (リレー: %s、%s、最大 %d クライアント)"
+msgstr "%s: ポート %d をリッスンしています (リレー: %s、%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
