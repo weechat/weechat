@@ -152,7 +152,7 @@ Beispiele:
 unalias: entfernt einen Namen
   color: Farbnummer (>= 0, maximale Anzahl ist abhängig vom Terminal, üblicherweise 63 oder 255 Farben)
    name: Alternativname für eine Farbe (zum Beispiel: "orange")
-  reset: setzt alle Farbpaarungen zurück (nützlich falls keine Farbpaarung mehr verfügbar sein sollte und die automatische Reset-Option deaktiviert ist, siehe Einstellung: weechat.look.color_pairs_auto_reset)
+  reset: setzt alle Farbpaarungen zurück (nützlich falls keine Farbpaarung mehr verfügbar sein sollte und die automatische Reset-Option deaktiviert ist, siehe Einstellung: "weechat.look.color_pairs_auto_reset")
 term2rgb: konvertiert eine Terminalfarbe (0-255) in eine RGB Farbe
 rgb2term: konvertiert eine RGB Farbe in eine Terminalfarbe (0-255)
    limit: Anzahl an Farben die aus der Terminalpalette genutzt werden sollen (beginnend von 0); Standardwert: 256
@@ -535,17 +535,19 @@ Beispiele:
          del [<name>] [buffers|windows]
          rename <name> <new_name>
 
-  store: erstellt ein Layout der zur Zeit verwendeten Buffer/Fenster
-  apply: erstelltes Layout verwenden
-  leave: belässt das aktuelle Layout (es wird kein Layout aktualisiert)
-    del: entfernt Buffer und/oder Fenster eines erstellten Layouts
-         (falls weder "buffers" noch "windows" angegeben wird, dann wird das Layout entfernt)
- rename: ein Layout umbenennen
-   name: Name unter welchem das Layout erstellt werden soll (Standardlayout heisst "default")
-buffers: erstellt bzw. verwendet nur Buffer (Reihenfolge der Buffer)
-windows: erstellt bzw. verwendet nur Fenster (Buffer welche im jeweiligen Fenster dargestellt werden)
+  store: store current buffers/windows in a layout
+  apply: apply stored layout
+  leave: leave current layout (does not update any layout)
+    del: delete buffers and/or windows in a stored layout
+         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
+ rename: rename a layout
+   name: name for stored layout (default is "default")
+buffers: store/apply only buffers (order of buffers)
+windows: store/apply only windows (buffer displayed by each window)
 
-Wird der Befehl ohne Argumente aufgerufen, werden die erstellten Layout dargestellt.
+Without argument, this command displays stored layouts.
+
+The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
 ----
 
 [[command_weechat_mouse]]
@@ -698,9 +700,11 @@ Beispiele:
 ----
 /quit  [-yes] [<arguments>]
 
-     -yes: Argument muss genutzt werden falls weechat.look.confirm_quit aktiviert sein sollte
-arguments: Text der beim Signal "quit" verschickt wird
-           (zum Beispiel sendet die IRC Erweiterung diesen Text als Quit-Nachricht an den Server)
+     -yes: required if option "weechat.look.confirm_quit" is enabled
+arguments: text sent with signal "quit"
+           (for example irc plugin uses this text to send quit message to server)
+
+By default when quitting the configuration files are saved (see option "weechat.look.save_config_on_exit") and the current layout can be saved (see option "weechat.look.save_layout_on_exit").
 ----
 
 [[command_weechat_reload]]
@@ -737,9 +741,11 @@ Beispiel:
 ----
 /save  [<file> [<file>...]]
 
-file: Konfigurationsdatei die gesichert werden soll (ohne Dateinamenserweiterung ".conf")
+file: configuration file to save (without extension ".conf")
 
-Wird keine Datei angegeben dann werden alle Konfigurationen (WeeChat und Erweiterungen) gesichert.
+Without argument, all files (WeeChat and plugins) are saved.
+
+By default all configuration files are saved to disk on /quit command (see option "weechat.look.save_config_on_exit").
 ----
 
 [[command_weechat_secure]]
@@ -843,7 +849,7 @@ Beispiele:
 ----
 /upgrade  [-yes] [<path_to_binary>|-quit]
 
-          -yes: wird benötigt, sobald Option weechat.look.confirm_upgrade aktiviert ist
+          -yes: wird benötigt, sobald Option "weechat.look.confirm_upgrade" aktiviert ist
 path_to_binary: Pfad zu einer ausführbaren WeeChat Binärdatei (Standardeinstellung ist die aktuell ausführbare Datei)
         -dummy: ohne Funktion (dient lediglich dazu, um nicht versehentlich die "-quit" Funktion auszuführen)
          -quit: trennt *ALLE* Verbindungen, speichert die aktuelle Sitzung und beendet WeeChat, um den aktuellen Zustand später wiederherstellen (siehe unten)

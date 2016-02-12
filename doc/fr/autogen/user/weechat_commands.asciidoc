@@ -152,7 +152,7 @@ Exemples :
  unalias : supprimer un alias pour une couleur
  couleur : numéro de couleur (supérieur ou égal à 0, le max dépend du terminal, généralement 63 ou 255)
      nom : nom d'alias pour la couleur (par exemple : "orange")
-   reset : réinitialiser toutes les paires de couleurs (requis quand il n'y a plus de paires de couleurs disponibles si la réinitialisation automatique est désactivée, voir l'option weechat.look.color_pairs_auto_reset)
+   reset : réinitialiser toutes les paires de couleurs (requis quand il n'y a plus de paires de couleurs disponibles si la réinitialisation automatique est désactivée, voir l'option "weechat.look.color_pairs_auto_reset")
 term2rgb : convertir une couleur du terminal (0-255) en couleur RGB
 rgb2term : convertir une couleur RGB en couleur du terminal (0-255)
   limite : nombre de couleurs à utiliser dans la table du terminal (en démarrant de 0) ; par défaut 256
@@ -546,6 +546,8 @@ buffers : stocker/appliquer seulement pour les tampons (ordre des tampons)
 windows : stocker/appliquer seulement pour les fenêtres (le tampon affiché par chaque fenêtre)
 
 Sans paramètre, cette commande affiche les dispositions stockées.
+
+La disposition courante peut être sauvegardée sur la commande /quit avec l'option "weechat.look.save_layout_on_exit".
 ----
 
 [[command_weechat_mouse]]
@@ -698,9 +700,11 @@ Exemples :
 ----
 /quit  [-yes] [<paramètres>]
 
-      -yes : requis si l'option weechat.look.confirm_quit est activée
+      -yes : requis si l'option "weechat.look.confirm_quit" est activée
 paramètres : texte envoyé avec le signal "quit"
              (par exemple l'extension irc utilise ce texte pour envoyer le message de quit au serveur)
+
+Par défaut en quittant les fichiers de configuration sont sauvegardés (voir l'option "weechat.look.save_config_on_exit") et la disposition courante peut être sauvegardée (voir l'option "weechat.look.save_layout_on_exit").
 ----
 
 [[command_weechat_reload]]
@@ -740,6 +744,8 @@ Exemple :
 fichier : fichier de configuration à sauvegarder (sans l'extension ".conf")
 
 Sans paramètre, tous les fichiers (WeeChat et extensions) sont sauvegardés.
+
+Par défaut tous les fichiers de configuration sont sauvegardés sur disque sur la commande /quit (voir l'option "weechat.look.save_config_on_exit").
 ----
 
 [[command_weechat_secure]]
@@ -843,7 +849,7 @@ Exemples :
 ----
 /upgrade  [-yes] [<chemin_vers_binaire>|-quit]
 
-               -yes : requis si l'option weechat.look.confirm_upgrade est activée
+               -yes : requis si l'option "weechat.look.confirm_upgrade" est activée
 chemin_vers_binaire : chemin vers le binaire WeeChat (par défaut le binaire courant)
              -dummy : ne rien faire (option utilisée pour éviter une complétion accidentelle avec "-quit")
               -quit : fermer *TOUTES* les connexions, sauver la session et quitter, ce qui rend possible une restauration différée (voir ci-dessous)

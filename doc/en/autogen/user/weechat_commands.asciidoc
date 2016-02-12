@@ -152,7 +152,7 @@ Examples:
  unalias: delete an alias
    color: color number (greater than or equal to 0, max depends on terminal, commonly 63 or 255)
     name: alias name for color (for example: "orange")
-   reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option weechat.look.color_pairs_auto_reset)
+   reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option "weechat.look.color_pairs_auto_reset")
 term2rgb: convert a terminal color (0-255) to RGB color
 rgb2term: convert a RGB color to terminal color (0-255)
    limit: number of colors to use in terminal table (starting from 0); default is 256
@@ -546,6 +546,8 @@ buffers: store/apply only buffers (order of buffers)
 windows: store/apply only windows (buffer displayed by each window)
 
 Without argument, this command displays stored layouts.
+
+The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
 ----
 
 [[command_weechat_mouse]]
@@ -698,9 +700,11 @@ Examples:
 ----
 /quit  [-yes] [<arguments>]
 
-     -yes: required if option weechat.look.confirm_quit is enabled
+     -yes: required if option "weechat.look.confirm_quit" is enabled
 arguments: text sent with signal "quit"
            (for example irc plugin uses this text to send quit message to server)
+
+By default when quitting the configuration files are saved (see option "weechat.look.save_config_on_exit") and the current layout can be saved (see option "weechat.look.save_layout_on_exit").
 ----
 
 [[command_weechat_reload]]
@@ -740,6 +744,8 @@ Example:
 file: configuration file to save (without extension ".conf")
 
 Without argument, all files (WeeChat and plugins) are saved.
+
+By default all configuration files are saved to disk on /quit command (see option "weechat.look.save_config_on_exit").
 ----
 
 [[command_weechat_secure]]
@@ -843,7 +849,7 @@ Examples:
 ----
 /upgrade  [-yes] [<path_to_binary>|-quit]
 
-          -yes: required if option weechat.look.confirm_upgrade is enabled
+          -yes: required if option "weechat.look.confirm_upgrade" is enabled
 path_to_binary: path to WeeChat binary (default is current binary)
         -dummy: do nothing (option used to prevent accidental completion with "-quit")
          -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)

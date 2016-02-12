@@ -152,7 +152,7 @@ localvar: 現在のバッファのローカル変数を表示
  unalias: 別名の削除
    color: カラー番号 (0 以上、最大値はターミナル依存、多くの場合 63 か 255)
     name: カラーの別名 (例: "orange")
-   reset: 全てのカラーペアをリセット (自動的なリセットが無効化されており、これ以上のカラーペアが利用できない場合に必要、オプション weechat.look.color_pairs_auto_reset を参照)
+   reset: 全てのカラーペアをリセット (自動的なリセットが無効化されており、これ以上のカラーペアが利用できない場合に必要、オプション "weechat.look.color_pairs_auto_reset" を参照)
 term2rgb: ターミナル色 (0-255) を RGB 色に変換
 rgb2term: RGB 色をターミナル色 (0-255) に変換
    limit: ターミナルテーブル内で使う色の数 (0 から始まる); デフォルトは 256
@@ -535,17 +535,19 @@ listdefault: デフォルトキーをリストアップ
          del [<name>] [buffers|windows]
          rename <name> <new_name>
 
-  store: レイアウトに現在のバッファ/ウィンドウを保存
-  apply: 保存されたレイアウトを適用
-  leave: 現在のレイアウトを保持する (レイアウトを更新しない)
-    del: レイアウトとして保存されているバッファとウィンドウを削除
-         (名前の後に "バッファ" や "ウィンドウ" を指定しない場合、レイアウトを削除)
- rename: レイアウトのリネーム
-   name: 保存されたレイアウトの名前 (初期状態は "default")
-buffers: バッファのみに対してレイアウトを保存/適用 (バッファの順番)
-windows: ウィンドウのみに対してレイアウトを保存/適用 (それぞれのウィンドウに表示されるバッファ)
+  store: store current buffers/windows in a layout
+  apply: apply stored layout
+  leave: leave current layout (does not update any layout)
+    del: delete buffers and/or windows in a stored layout
+         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
+ rename: rename a layout
+   name: name for stored layout (default is "default")
+buffers: store/apply only buffers (order of buffers)
+windows: store/apply only windows (buffer displayed by each window)
 
-引数無しでは、保存されたレイアウトを表示します。
+Without argument, this command displays stored layouts.
+
+The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
 ----
 
 [[command_weechat_mouse]]
@@ -698,9 +700,11 @@ password: パスワード (任意)
 ----
 /quit  [-yes] [<arguments>]
 
-     -yes: weechat.look.confirm_quit オプションが有効な場合に必要
-arguments: "quit" シグナルと共に送られるテキスト
-           (例えば irc プラグインはサーバに quit メッセージを送る際にこのテキストを使います)
+     -yes: required if option "weechat.look.confirm_quit" is enabled
+arguments: text sent with signal "quit"
+           (for example irc plugin uses this text to send quit message to server)
+
+By default when quitting the configuration files are saved (see option "weechat.look.save_config_on_exit") and the current layout can be saved (see option "weechat.look.save_layout_on_exit").
 ----
 
 [[command_weechat_reload]]
@@ -737,9 +741,11 @@ command: 実行するコマンド (最初に '/' が無い場合は自動的に�
 ----
 /save  [<file> [<file>...]]
 
-file: 保存する設定ファイル (拡張子 ".conf" は不要)
+file: configuration file to save (without extension ".conf")
 
-引数無しでは、全てのファイル (WeeChat とプラグイン) が保存されます。
+Without argument, all files (WeeChat and plugins) are saved.
+
+By default all configuration files are saved to disk on /quit command (see option "weechat.look.save_config_on_exit").
 ----
 
 [[command_weechat_secure]]
@@ -843,7 +849,7 @@ option: オプションの名前
 ----
 /upgrade  [-yes] [<path_to_binary>|-quit]
 
-          -yes: weechat.look.confirm_upgrade オプションが有効化されていた場合、このオプションは必須です。
+          -yes: "weechat.look.confirm_upgrade" オプションが有効化されていた場合、このオプションは必須です。
 path_to_binary: WeeChat バイナリへのパス (デフォルトは現在のバイナリ)
         -dummy: 何もしない (補完された "-quit" オプションを不用意に使わないためのオプション)
          -quit: *すべての*接続を閉じ、セッションを保存して WeeChat を終了。遅延復帰 (詳しくは後述) が可能になります。

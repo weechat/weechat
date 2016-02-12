@@ -6947,7 +6947,7 @@ command_init ()
            "    name: alias name for color (for example: \"orange\")\n"
            "   reset: reset all color pairs (required when no more color pairs "
            "are available if automatic reset is disabled, see option "
-           "weechat.look.color_pairs_auto_reset)\n"
+           "\"weechat.look.color_pairs_auto_reset\")\n"
            "term2rgb: convert a terminal color (0-255) to RGB color\n"
            "rgb2term: convert a RGB color to terminal color (0-255)\n"
            "   limit: number of colors to use in terminal table (starting from "
@@ -7444,9 +7444,13 @@ command_init ()
            " rename: rename a layout\n"
            "   name: name for stored layout (default is \"default\")\n"
            "buffers: store/apply only buffers (order of buffers)\n"
-           "windows: store/apply only windows (buffer displayed by each window)\n"
+           "windows: store/apply only windows (buffer displayed by each "
+           "window)\n"
            "\n"
-           "Without argument, this command displays stored layouts."),
+           "Without argument, this command displays stored layouts.\n"
+           "\n"
+           "The current layout can be saved on /quit command with the option "
+           "\"weechat.look.save_layout_on_exit\"."),
         "store %(layouts_names)|buffers|windows buffers|windows"
         " || apply %(layouts_names)|buffers|windows buffers|windows"
         " || leave"
@@ -7619,10 +7623,16 @@ command_init ()
         NULL, "quit",
         N_("quit WeeChat"),
         N_("[-yes] [<arguments>]"),
-        N_("     -yes: required if option weechat.look.confirm_quit is enabled\n"
+        N_("     -yes: required if option \"weechat.look.confirm_quit\" "
+           "is enabled\n"
            "arguments: text sent with signal \"quit\"\n"
            "           (for example irc plugin uses this text to send quit "
-           "message to server)"),
+           "message to server)\n"
+           "\n"
+           "By default when quitting the configuration files are saved "
+           "(see option \"weechat.look.save_config_on_exit\") and the current "
+           "layout can be saved (see option "
+           "\"weechat.look.save_layout_on_exit\")."),
         "",
         &command_quit, NULL);
     hook_command (
@@ -7656,7 +7666,10 @@ command_init ()
         N_("[<file> [<file>...]]"),
         N_("file: configuration file to save (without extension \".conf\")\n"
            "\n"
-           "Without argument, all files (WeeChat and plugins) are saved."),
+           "Without argument, all files (WeeChat and plugins) are saved.\n"
+           "\n"
+           "By default all configuration files are saved to disk on /quit "
+           "command (see option \"weechat.look.save_config_on_exit\")."),
         "%(config_files)|%*",
         &command_save, NULL);
     hook_command (
@@ -7774,7 +7787,7 @@ command_init ()
         NULL, "upgrade",
         N_("upgrade WeeChat without disconnecting from servers"),
         N_("[-yes] [<path_to_binary>|-quit]"),
-        N_("          -yes: required if option weechat.look.confirm_upgrade "
+        N_("          -yes: required if option \"weechat.look.confirm_upgrade\" "
            "is enabled\n"
            "path_to_binary: path to WeeChat binary (default is current binary)\n"
            "        -dummy: do nothing (option used to prevent accidental "
