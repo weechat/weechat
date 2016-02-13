@@ -535,19 +535,19 @@ Beispiele:
          del [<name>] [buffers|windows]
          rename <name> <new_name>
 
-  store: store current buffers/windows in a layout
-  apply: apply stored layout
-  leave: leave current layout (does not update any layout)
-    del: delete buffers and/or windows in a stored layout
-         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
- rename: rename a layout
-   name: name for stored layout (default is "default")
-buffers: store/apply only buffers (order of buffers)
-windows: store/apply only windows (buffer displayed by each window)
+  store: erstellt ein Layout der zur Zeit verwendeten Buffer/Fenster
+  apply: erstelltes Layout verwenden
+  leave: belässt das aktuelle Layout (es wird kein Layout aktualisiert)
+    del: entfernt Buffer und/oder Fenster eines erstellten Layouts
+         (falls weder "buffers" noch "windows" angegeben wird, dann wird das Layout entfernt)
+ rename: ein Layout umbenennen
+   name: Name unter welchem das Layout erstellt werden soll (Standardlayout heisst "default")
+buffers: erstellt bzw. verwendet nur Buffer (Reihenfolge der Buffer)
+windows: erstellt bzw. verwendet nur Fenster (Buffer welche im jeweiligen Fenster dargestellt werden)
 
-Without argument, this command displays stored layouts.
+Wird der Befehl ohne Argumente aufgerufen, werden die erstellten Layout dargestellt.
 
-The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
+Das aktuelle Layout kann beim Ausführen des /quit Befehls mit der Option "weechat.look.save_layout_on_exit" gesichert werden.
 ----
 
 [[command_weechat_mouse]]
@@ -700,11 +700,11 @@ Beispiele:
 ----
 /quit  [-yes] [<arguments>]
 
-     -yes: required if option "weechat.look.confirm_quit" is enabled
-arguments: text sent with signal "quit"
-           (for example irc plugin uses this text to send quit message to server)
+     -yes: Argument muss genutzt werden falls weechat.look.confirm_quit aktiviert sein sollte
+arguments: Text der beim Signal "quit" verschickt wird
+           (zum Beispiel sendet die IRC Erweiterung diesen Text als Quit-Nachricht an den Server)
 
-By default when quitting the configuration files are saved (see option "weechat.look.save_config_on_exit") and the current layout can be saved (see option "weechat.look.save_layout_on_exit").
+Standardmäßig werden alle Konfigurationsdateien beim Beenden gespeichert (siehe Option "weechat.look.save_config_on_exit") und das aktuelle Layout kann gesichert werden (siehe Option "weechat.look.save_layout_on_exit").
 ----
 
 [[command_weechat_reload]]
@@ -741,11 +741,11 @@ Beispiel:
 ----
 /save  [<file> [<file>...]]
 
-file: configuration file to save (without extension ".conf")
+file: Konfigurationsdatei die gesichert werden soll (ohne Dateinamenserweiterung ".conf")
 
-Without argument, all files (WeeChat and plugins) are saved.
+Wird keine Datei angegeben dann werden alle Konfigurationen (WeeChat und Erweiterungen) gesichert.
 
-By default all configuration files are saved to disk on /quit command (see option "weechat.look.save_config_on_exit").
+Standardmäßig werden alle Konfigurationsdateien beim Ausführen des /quit Befehls gespeichert (siehe Option "weechat.look.save_config_on_exit").
 ----
 
 [[command_weechat_secure]]

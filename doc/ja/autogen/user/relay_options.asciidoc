@@ -113,7 +113,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
-** 説明: `maximum number of clients connecting to a port (0 = no limit)`
+** 説明: `ポートに接続するクライアントの最大数 (0 = 制限なし)`
 ** タイプ: 整数
 ** 値: 0 .. 2147483647 (デフォルト値: `5`)
 

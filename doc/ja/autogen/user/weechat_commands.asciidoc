@@ -535,19 +535,19 @@ listdefault: デフォルトキーをリストアップ
          del [<name>] [buffers|windows]
          rename <name> <new_name>
 
-  store: store current buffers/windows in a layout
-  apply: apply stored layout
-  leave: leave current layout (does not update any layout)
-    del: delete buffers and/or windows in a stored layout
-         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
- rename: rename a layout
-   name: name for stored layout (default is "default")
-buffers: store/apply only buffers (order of buffers)
-windows: store/apply only windows (buffer displayed by each window)
+  store: レイアウトに現在のバッファ/ウィンドウを保存
+  apply: 保存されたレイアウトを適用
+  leave: 現在のレイアウトを保持する (レイアウトを更新しない)
+    del: レイアウトとして保存されているバッファとウィンドウを削除
+         (名前の後に "バッファ" や "ウィンドウ" を指定しない場合、レイアウトを削除)
+ rename: レイアウトのリネーム
+   name: 保存されたレイアウトの名前 (初期状態は "default")
+buffers: バッファのみに対してレイアウトを保存/適用 (バッファの順番)
+windows: ウィンドウのみに対してレイアウトを保存/適用 (それぞれのウィンドウに表示されるバッファ)
 
-Without argument, this command displays stored layouts.
+引数を指定しなかった場合、保存されたレイアウトを表示します。
 
-The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
+"weechat.look.save_layout_on_exit" オプションを使えば、現在のレイアウトを /quit コマンドの実行時に保存することが可能です。
 ----
 
 [[command_weechat_mouse]]
@@ -700,11 +700,11 @@ password: パスワード (任意)
 ----
 /quit  [-yes] [<arguments>]
 
-     -yes: required if option "weechat.look.confirm_quit" is enabled
-arguments: text sent with signal "quit"
-           (for example irc plugin uses this text to send quit message to server)
+     -yes: weechat.look.confirm_quit オプションが有効な場合に必要
+arguments: "quit" シグナルと共に送られるテキスト
+           (例えば irc プラグインはサーバに quit メッセージを送る際にこのテキストを使います)
 
-By default when quitting the configuration files are saved (see option "weechat.look.save_config_on_exit") and the current layout can be saved (see option "weechat.look.save_layout_on_exit").
+デフォルト設定では、終了時に設定ファイルを保存します (オプション "weechat.look.save_config_on_exit" 参照)。また、終了時に現在のレイアウトを保存することも可能です (オプション "weechat.look.save_layout_on_exit" 参照)。
 ----
 
 [[command_weechat_reload]]
@@ -741,11 +741,11 @@ command: 実行するコマンド (最初に '/' が無い場合は自動的に�
 ----
 /save  [<file> [<file>...]]
 
-file: configuration file to save (without extension ".conf")
+file: 保存する設定ファイル (拡張子 ".conf" は不要)
 
-Without argument, all files (WeeChat and plugins) are saved.
+引数無しでは、全てのファイル (WeeChat とプラグイン) が保存されます。
 
-By default all configuration files are saved to disk on /quit command (see option "weechat.look.save_config_on_exit").
+デフォルト設定では、/quit コマンドの実行時にすべての設定ファイルがディスクに保存されます (オプション "weechat.look.save_config_on_exit" 参照)。
 ----
 
 [[command_weechat_secure]]
