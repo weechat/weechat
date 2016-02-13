@@ -167,27 +167,22 @@ SSL を使って接続する場合:
 [NOTE]
 'command' オプションに複数のコマンドを含める場合は ';' (セミコロン) で区切ってください。
 
-// TRANSLATION MISSING
-If you want to protect your password in configuration files, you can use
-secured data.
+設定ファイル内にパスワードを直接書きたくない場合、保護データを使うことが可能です。
 
-// TRANSLATION MISSING
-First setup a passphrase:
+最初にパスフレーズを登録します:
 
 ----
 /secure passphrase this is my secret passphrase
 ----
 
-// TRANSLATION MISSING
-Then add a secured data with your freenode password:
+その後に freenode のパスワードを含む保護データを追加します:
 
 ----
 /secure set freenode_password xxxxxxx
 ----
 
-// TRANSLATION MISSING
-Then you can use `${sec.data.freenode_password}` instead of your password in
-IRC options mentioned above, for example:
+こうすることで前述したようにパスワードを IRC オプションに直接書くのではなく
+ `${sec.data.freenode_password}` を指定可能になります。例えば以下のように設定します:
 
 ----
 /set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
