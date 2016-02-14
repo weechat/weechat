@@ -1059,7 +1059,7 @@ if test "x$ac_found_zlib_header" = "xno" -o "x$ac_found_zlib_lib" = "xno" ; then
     AC_MSG_RESULT(no)
     AC_MSG_ERROR([
 *** zlib was not found. You may want to get it from http://zlib.net/
-*** or try to install libcurl-dev with your software package manager.])
+*** or try to install zlib1g-dev with your software package manager.])
 else
     AC_MSG_RESULT(yes)
     ZLIB_CFLAGS=`pkg-config zlib --cflags`
