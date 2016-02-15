@@ -222,6 +222,11 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `red`)
 
+* [[option_weechat.color.item_away]] *weechat.color.item_away*
+** Beschreibung: `text color for away item`
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `yellow`)
+
 * [[option_weechat.color.nicklist_away]] *weechat.color.nicklist_away*
 ** Beschreibung: `Textfarbe von abwesenden Nicknamen`
 ** Typ: Farbe
@@ -676,6 +681,11 @@
 ** Beschreibung: `maximale Anzahl von "Rücknahmen" für Befehle im Verlauf, pro Buffer (0: deaktiviert die Funktion)`
 ** Typ: integer
 ** Werte: 0 .. 65535 (Standardwert: `32`)
+
+* [[option_weechat.look.item_away_message]] *weechat.look.item_away_message*
+** Beschreibung: `Abwesenheitsnachricht im Away-Bar-Item anzeigen`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.item_buffer_filter]] *weechat.look.item_buffer_filter*
 ** Beschreibung: `Zeichen mit welchem signalisiert wird ob im aktuellen Buffer die Filterfunktion eingeschaltet ist (durch Bar-Item "buffer_filter")`

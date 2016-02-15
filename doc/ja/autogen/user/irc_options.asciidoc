@@ -7,11 +7,6 @@
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `lightcyan`)
 
-* [[option_irc.color.item_away]] *irc.color.item_away*
-** 説明: `離席アイテムに使う色`
-** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `yellow`)
-
 * [[option_irc.color.item_channel_modes]] *irc.color.item_channel_modes*
 ** 説明: `チャンネル名付近のチャンネルモードに使う色`
 ** タイプ: 色
@@ -196,11 +191,6 @@
 ** 説明: `irc バッファでハイライトを禁止するタグ (ユーザメッセージをハイライトして、サーバメッセージをハイライトしない); タグの区切り文字はコンマ、論理積を取る場合には "+" 使ってください; ワイルドカード "*" を使うことができます; 任意のタグをハイライトさせるには空値を指定してください`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"irc_privmsg,irc_notice"`)
-
-* [[option_irc.look.item_away_message]] *irc.look.item_away_message*
-** 説明: `サーバの離席メッセージを離席バーアイテムに表示`
-** タイプ: ブール
-** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
 ** 説明: `設定したモードのうち少なくとも 1 つがチャンネルモードに設定されていた場合、チャンネルモード引数を隠す (全ての引数を隠すには "*" を使ってください、値が空の場合は全てのチャンネルモード引数が表示されます); 例: チャンネルモードに "k" または "f" が設定されていた場合にチャンネルモード引数を隠すには "kf" と設定してください`

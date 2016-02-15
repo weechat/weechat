@@ -7,11 +7,6 @@
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightcyan`)
 
-* [[option_irc.color.item_away]] *irc.color.item_away*
-** opis: `kolor elementu nieobecności`
-** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
-
 * [[option_irc.color.item_channel_modes]] *irc.color.item_channel_modes*
 ** opis: `kolor trybów kanału, przy nazwie kanału`
 ** typ: kolor
@@ -196,11 +191,6 @@
 ** opis: `ogranicza podświetlenia do tych tagów w buforach irc (żeby mieć podświetlenia tylko od wiadomości użytkowników ale nie serwera); tagi muszą być oddzielone przecinkami, "+" może zostać użyty w celu uzyskania logicznego "i" pomiędzy tagami; wildcard "*" jest dozwolony w tagach; pusta wartość zezwala na podświetlenia przez dowolny tag`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"irc_privmsg,irc_notice"`)
-
-* [[option_irc.look.item_away_message]] *irc.look.item_away_message*
-** opis: `wyświetla wiadomość o nieobecności dla serwera w elemencie paska`
-** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
 ** opis: `ukryj atrybuty trybów kanałów jeśli przynajmniej jeden z tych trybów jest ustawiony ("*" zawsze ukrywaj argumenty, pusta wartość - nigdy nie ukrywaj); przykład: "kf" dla ukrycia argumentów, jeśli ustawiony jest tryb "k" lub "f"`

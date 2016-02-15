@@ -222,6 +222,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `red`)
 
+* [[option_weechat.color.item_away]] *weechat.color.item_away*
+** description: `couleur du texte pour l'objet away`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `yellow`)
+
 * [[option_weechat.color.nicklist_away]] *weechat.color.nicklist_away*
 ** description: `couleur du texte pour les pseudos absents`
 ** type: couleur
@@ -676,6 +681,11 @@
 ** description: `nombre maximum de "undo" pour la ligne de commande, par tampon (0 = undo désactivé)`
 ** type: entier
 ** valeurs: 0 .. 65535 (valeur par défaut: `32`)
+
+* [[option_weechat.look.item_away_message]] *weechat.look.item_away_message*
+** description: `afficher le message d'absence du serveur dans l'objet de barre d'absence`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.look.item_buffer_filter]] *weechat.look.item_buffer_filter*
 ** description: `chaîne utilisée pour montrer que des lignes sont filtrées dans le tampon courant (objet de barre "buffer_filter")`

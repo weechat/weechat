@@ -7,11 +7,6 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `lightcyan`)
 
-* [[option_irc.color.item_away]] *irc.color.item_away*
-** Beschreibung: `Farbe des Abwesenheit-Textes in der Eingabezeile`
-** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `yellow`)
-
 * [[option_irc.color.item_channel_modes]] *irc.color.item_channel_modes*
 ** Beschreibung: `Farbe der Channel-Modes (neben dem Channelnamen)`
 ** Typ: Farbe
@@ -196,11 +191,6 @@
 ** Beschreibung: `beschränkt Highlights für IRC Buffer auf bestimmte Tags (um Highlights durch User- aber nicht durch Servernachrichten zu erhalten); Tags müssen durch Kommata getrennt werden; um eine logische "und" Verknüpfung zu verwenden, können mehrere Tags durch "+" zusammengefügt werden; der Platzhalter "*" kann verwendet werden um mehr als ein Tag zu markieren; wird kein Wert angegeben, erzeugt jedes Tag ein Highlight`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"irc_privmsg,irc_notice"`)
-
-* [[option_irc.look.item_away_message]] *irc.look.item_away_message*
-** Beschreibung: `Abwesenheitsnachricht im Away-Bar-Item anzeigen`
-** Typ: boolesch
-** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
 ** Beschreibung: `unterdrückt die Ausgabe von Argumenten die die Channel-Modi betreffen, sofern der entsprechende Modus für den Channel gesetzt ist ("*" unterdrückt jedwede Ausgabe von Argumenten; wird kein Wert angegeben, dann werden alle Argumente angezeigt); Beispiele: "kf" unterdrückt die Argumente, falls "k" oder "f"  für den Channel gesetzt sind`

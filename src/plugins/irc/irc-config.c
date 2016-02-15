@@ -75,7 +75,6 @@ struct t_config_option *irc_config_look_highlight_channel;
 struct t_config_option *irc_config_look_highlight_pv;
 struct t_config_option *irc_config_look_highlight_server;
 struct t_config_option *irc_config_look_highlight_tags_restrict;
-struct t_config_option *irc_config_look_item_away_message;
 struct t_config_option *irc_config_look_item_channel_modes_hide_args;
 struct t_config_option *irc_config_look_item_display_server;
 struct t_config_option *irc_config_look_item_nick_modes;
@@ -114,7 +113,6 @@ struct t_config_option *irc_config_look_topic_strip_colors;
 /* IRC config, color section */
 
 struct t_config_option *irc_config_color_input_nick;
-struct t_config_option *irc_config_color_item_away;
 struct t_config_option *irc_config_color_item_channel_modes;
 struct t_config_option *irc_config_color_item_lag_counting;
 struct t_config_option *irc_config_color_item_lag_finished;
@@ -506,21 +504,6 @@ irc_config_change_look_pv_buffer (void *data,
 }
 
 /*
- * Callback for changes on option "irc.look.item_away_message".
- */
-
-void
-irc_config_change_look_item_away_message (void *data,
-                                          struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-
-    weechat_bar_item_update ("away");
-}
-
-/*
  * Callback for changes on option "irc.look.item_channel_modes_hide_args".
  */
 
@@ -723,21 +706,6 @@ irc_config_change_bar_item_input_prompt (void *data,
     (void) option;
 
     weechat_bar_item_update ("input_prompt");
-}
-
-/*
- * Callback for changes on option "irc.color.item_away".
- */
-
-void
-irc_config_change_color_item_away (void *data,
-                                   struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-
-    weechat_bar_item_update ("away");
 }
 
 /*
@@ -2564,12 +2532,6 @@ irc_config_init ()
            "an empty value allows highlight on any tag"),
         NULL, 0, 0, "irc_privmsg,irc_notice", NULL, 0, NULL, NULL,
         &irc_config_change_look_highlight_tags_restrict, NULL, NULL, NULL);
-    irc_config_look_item_away_message = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "item_away_message", "boolean",
-        N_("display server away message in away bar item"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
-        &irc_config_change_look_item_away_message, NULL, NULL, NULL);
     irc_config_look_item_channel_modes_hide_args = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_channel_modes_hide_args", "string",
@@ -2843,12 +2805,6 @@ irc_config_init ()
         N_("color for nick in input bar"),
         NULL, -1, 0, "lightcyan", NULL, 0, NULL, NULL,
         &irc_config_change_bar_item_input_prompt, NULL, NULL, NULL);
-    irc_config_color_item_away = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "item_away", "color",
-        N_("color for away item"),
-        NULL, -1, 0, "yellow", NULL, 0, NULL, NULL,
-        &irc_config_change_color_item_away, NULL, NULL, NULL);
     irc_config_color_item_channel_modes = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_channel_modes", "color",

@@ -222,6 +222,11 @@
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `red`)
 
+* [[option_weechat.color.item_away]] *weechat.color.item_away*
+** opis: `text color for away item`
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
+
 * [[option_weechat.color.nicklist_away]] *weechat.color.nicklist_away*
 ** opis: `kolor nicków ze statusem nieobecności`
 ** typ: kolor
@@ -676,6 +681,11 @@
 ** opis: `maksymalna ilość "cofnięć" dla linii poleceń dla bufora (0 = wyłączone)`
 ** typ: liczba
 ** wartości: 0 .. 65535 (domyślna wartość: `32`)
+
+* [[option_weechat.look.item_away_message]] *weechat.look.item_away_message*
+** opis: `wyświetla wiadomość o nieobecności dla serwera w elemencie paska`
+** typ: bool
+** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_weechat.look.item_buffer_filter]] *weechat.look.item_buffer_filter*
 ** opis: `ciąg użyty do pokazania, że część linii jest filtrowana w obecnym buforze (element paska "buffer_filter")`

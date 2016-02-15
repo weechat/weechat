@@ -34,60 +34,6 @@
 
 
 /*
- * Returns content of bar item "away": bar item with away indicator.
- */
-
-char *
-irc_bar_item_away (void *data, struct t_gui_bar_item *item,
-                   struct t_gui_window *window, struct t_gui_buffer *buffer,
-                   struct t_hashtable *extra_info)
-{
-    struct t_irc_server *server;
-    char *buf, *message;
-    int length;
-
-    /* make C compiler happy */
-    (void) data;
-    (void) item;
-    (void) window;
-    (void) extra_info;
-
-    if (!buffer)
-        return NULL;
-
-    buf = NULL;
-
-    irc_buffer_get_server_and_channel (buffer, &server, NULL);
-
-    if (server && server->is_away)
-    {
-        if (weechat_config_boolean (irc_config_look_item_away_message)
-            && server->away_message && server->away_message[0])
-        {
-            message = strdup (server->away_message);
-        }
-        else
-        {
-            message = strdup (_("away"));
-        }
-        if (message)
-        {
-            length = strlen (message) + 64 + 1;
-            buf = malloc (length);
-            if (buf)
-            {
-                snprintf (buf, length, "%s%s",
-                          IRC_COLOR_ITEM_AWAY,
-                          message);
-            }
-            free (message);
-        }
-    }
-
-    return buf;
-}
-
-/*
  * Returns content of bar item "buffer_plugin": bar item with buffer plugin.
  */
 
@@ -673,7 +619,6 @@ irc_bar_item_update_channel ()
 void
 irc_bar_item_init ()
 {
-    weechat_bar_item_new ("away", &irc_bar_item_away, NULL);
     weechat_bar_item_new ("buffer_plugin", &irc_bar_item_buffer_plugin, NULL);
     weechat_bar_item_new ("buffer_name", &irc_bar_item_buffer_name, NULL);
     weechat_bar_item_new ("buffer_short_name", &irc_bar_item_buffer_short_name, NULL);

@@ -7,11 +7,6 @@
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `lightcyan`)
 
-* [[option_irc.color.item_away]] *irc.color.item_away*
-** description: `color for away item`
-** type: color
-** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `yellow`)
-
 * [[option_irc.color.item_channel_modes]] *irc.color.item_channel_modes*
 ** description: `color for channel modes, near channel name`
 ** type: color
@@ -196,11 +191,6 @@
 ** description: `restrict highlights to these tags on irc buffers (to have highlight on user messages but not server messages); tags must be separated by a comma and "+" can be used to make a logical "and" between tags; wildcard "*" is allowed in tags; an empty value allows highlight on any tag`
 ** type: string
 ** values: any string (default value: `"irc_privmsg,irc_notice"`)
-
-* [[option_irc.look.item_away_message]] *irc.look.item_away_message*
-** description: `display server away message in away bar item`
-** type: boolean
-** values: on, off (default value: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
 ** description: `hide channel modes arguments if at least one of these modes is in channel modes ("*" to always hide all arguments, empty value to never hide arguments); example: "kf" to hide arguments if "k" or "f" are in channel modes`

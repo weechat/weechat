@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-02-12 07:33+0100\n"
+"POT-Creation-Date: 2016-02-15 12:31+0100\n"
 "PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2769,6 +2769,10 @@ msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
 "felhasználói parancsok maximális száma az előzményekben (0 = korlátlan)"
 
+#, fuzzy
+msgid "display server away message in away bar item"
+msgstr "privát beszélgetésben a másik fél távollétét csak egyszer jelezze"
+
 msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
@@ -3217,6 +3221,10 @@ msgstr "kilépési nyíl színe"
 #, fuzzy
 msgid "text color for unsuccessful text search in input line"
 msgstr "információs pult határolóinak színe"
+
+#, fuzzy
+msgid "text color for away item"
+msgstr "távollevő felhasználók nevének színe"
 
 #, fuzzy
 msgid "text color for away nicknames"
@@ -3956,6 +3964,9 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s-MORE(%d)-"
 msgstr "-TOVÁBB-"
+
+msgid "away"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -4709,9 +4720,6 @@ msgstr "A \"%s\" modul eltávolítva.\n"
 #, fuzzy, c-format
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s a \"%s\" szerver nem található\n"
-
-msgid "away"
-msgstr ""
 
 #, fuzzy
 msgid "server"
@@ -6708,10 +6716,6 @@ msgid ""
 "allowed in tags; an empty value allows highlight on any tag"
 msgstr ""
 
-#, fuzzy
-msgid "display server away message in away bar item"
-msgstr "privát beszélgetésben a másik fél távollétét csak egyszer jelezze"
-
 msgid ""
 "hide channel modes arguments if at least one of these modes is in channel "
 "modes (\"*\" to always hide all arguments, empty value to never hide "
@@ -6897,10 +6901,6 @@ msgstr ""
 #, fuzzy
 msgid "color for nick in input bar"
 msgstr "nevek színe"
-
-#, fuzzy
-msgid "color for away item"
-msgstr "távollevő felhasználók nevének színe"
 
 #, fuzzy
 msgid "color for channel modes, near channel name"

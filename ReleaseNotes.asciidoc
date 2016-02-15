@@ -20,6 +20,17 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[1.5]]
 == Version 1.5 (under dev)
 
+[[1.5_bar_item_away]]
+=== Bar item "away"
+
+The bar item "away" has been moved from irc plugin to core (so that away status
+can be displayed for any plugin, using the buffer local variable "away").
+
+Two options have been moved from irc plugin (irc.conf) to core (weechat.conf):
+
+* 'irc.look.item_away_message' moved to 'weechat.look.item_away_message'
+* 'irc.color.item_away' moved to 'weechat.color.item_away'
+
 [[1.5_default_triggers]]
 === Default triggers
 

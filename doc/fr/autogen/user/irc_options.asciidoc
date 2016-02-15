@@ -7,11 +7,6 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `lightcyan`)
 
-* [[option_irc.color.item_away]] *irc.color.item_away*
-** description: `couleur pour l'objet away`
-** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `yellow`)
-
 * [[option_irc.color.item_channel_modes]] *irc.color.item_channel_modes*
 ** description: `couleur pour les modes du canal, à côté du nom du canal`
 ** type: couleur
@@ -196,11 +191,6 @@
 ** description: `restreindre les highlights à ces étiquettes sur les tampons irc (pour avoir un highlight seulement sur les messages utilisateur et pas les messages du serveur) ; les étiquettes doivent être séparées par des virgules et "+" peut être utilisé pour faire un "et" logique entre étiquettes ; le caractère joker "*" est autorisé dans les étiquettes ; une valeur vide autorise le highlight sur n'importe quelle étiquette`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"irc_privmsg,irc_notice"`)
-
-* [[option_irc.look.item_away_message]] *irc.look.item_away_message*
-** description: `afficher le message d'absence du serveur dans l'objet de barre d'absence`
-** type: booléen
-** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
 ** description: `cacher les paramètres des modes du canal si au moins un de ces modes est dans les modes du canal ("*" pour toujours cacher les paramètres, valeur vide pour ne jamais cacher les paramètres) ; exemple : "kf" pour cacher les paramètres si "k" ou "f" sont dans les modes du canal`

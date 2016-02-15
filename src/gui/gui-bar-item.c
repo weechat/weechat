@@ -63,7 +63,7 @@ char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
   "buffer_count", "buffer_last_number", "buffer_plugin", "buffer_number",
   "buffer_name", "buffer_short_name", "buffer_modes", "buffer_filter",
   "buffer_zoom", "buffer_nicklist_count", "scroll", "hotlist", "completion",
-  "buffer_title", "buffer_nicklist", "window_number", "mouse_status"
+  "buffer_title", "buffer_nicklist", "window_number", "mouse_status", "away"
 };
 char *gui_bar_items_default_for_bars[][2] =
 { { GUI_BAR_DEFAULT_NAME_INPUT,
@@ -724,14 +724,14 @@ gui_bar_item_free_all_plugin (struct t_weechat_plugin *plugin)
 }
 
 /*
- * Default item for input paste question.
+ * Bar item with input paste question.
  */
 
 char *
-gui_bar_item_default_input_paste (void *data, struct t_gui_bar_item *item,
-                                  struct t_gui_window *window,
-                                  struct t_gui_buffer *buffer,
-                                  struct t_hashtable *extra_info)
+gui_bar_item_input_paste_cb (void *data, struct t_gui_bar_item *item,
+                             struct t_gui_window *window,
+                             struct t_gui_buffer *buffer,
+                             struct t_hashtable *extra_info)
 {
     char str_paste[1024];
     int lines;
@@ -759,14 +759,14 @@ gui_bar_item_default_input_paste (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for input prompt.
+ * Bar item with input prompt.
  */
 
 char *
-gui_bar_item_default_input_prompt (void *data, struct t_gui_bar_item *item,
-                                   struct t_gui_window *window,
-                                   struct t_gui_buffer *buffer,
-                                   struct t_hashtable *extra_info)
+gui_bar_item_input_prompt_cb (void *data, struct t_gui_bar_item *item,
+                              struct t_gui_window *window,
+                              struct t_gui_buffer *buffer,
+                              struct t_hashtable *extra_info)
 {
     const char *nick;
 
@@ -785,14 +785,14 @@ gui_bar_item_default_input_prompt (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for input search status.
+ * Bar item with input search status.
  */
 
 char *
-gui_bar_item_default_input_search (void *data, struct t_gui_bar_item *item,
-                                   struct t_gui_window *window,
-                                   struct t_gui_buffer *buffer,
-                                   struct t_hashtable *extra_info)
+gui_bar_item_input_search_cb (void *data, struct t_gui_bar_item *item,
+                              struct t_gui_window *window,
+                              struct t_gui_buffer *buffer,
+                              struct t_hashtable *extra_info)
 {
     char str_search[1024];
 
@@ -826,14 +826,14 @@ gui_bar_item_default_input_search (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for input text.
+ * Bar item with input text.
  */
 
 char *
-gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
-                                 struct t_gui_window *window,
-                                 struct t_gui_buffer *buffer,
-                                 struct t_hashtable *extra_info)
+gui_bar_item_input_text_cb (void *data, struct t_gui_bar_item *item,
+                            struct t_gui_window *window,
+                            struct t_gui_buffer *buffer,
+                            struct t_hashtable *extra_info)
 {
     char *ptr_input, *ptr_input2, str_buffer[128], str_start_input[16];
     char str_cursor[16], *buf;
@@ -953,14 +953,14 @@ gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for time.
+ * Bar item with time.
  */
 
 char *
-gui_bar_item_default_time (void *data, struct t_gui_bar_item *item,
-                           struct t_gui_window *window,
-                           struct t_gui_buffer *buffer,
-                           struct t_hashtable *extra_info)
+gui_bar_item_time_cb (void *data, struct t_gui_bar_item *item,
+                      struct t_gui_window *window,
+                      struct t_gui_buffer *buffer,
+                      struct t_hashtable *extra_info)
 {
     time_t date;
     struct tm *local_time;
@@ -988,14 +988,14 @@ gui_bar_item_default_time (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for number of buffers.
+ * Bar item with number of buffers.
  */
 
 char *
-gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
-                                   struct t_gui_window *window,
-                                   struct t_gui_buffer *buffer,
-                                   struct t_hashtable *extra_info)
+gui_bar_item_buffer_count_cb (void *data, struct t_gui_bar_item *item,
+                              struct t_gui_window *window,
+                              struct t_gui_buffer *buffer,
+                              struct t_hashtable *extra_info)
 {
     char buf[32];
 
@@ -1012,15 +1012,15 @@ gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for last buffer number.
+ * Bar item with last buffer number.
  */
 
 char *
-gui_bar_item_default_buffer_last_number (void *data,
-                                         struct t_gui_bar_item *item,
-                                         struct t_gui_window *window,
-                                         struct t_gui_buffer *buffer,
-                                         struct t_hashtable *extra_info)
+gui_bar_item_buffer_last_number_cb (void *data,
+                                    struct t_gui_bar_item *item,
+                                    struct t_gui_window *window,
+                                    struct t_gui_buffer *buffer,
+                                    struct t_hashtable *extra_info)
 {
     char buf[32];
 
@@ -1038,14 +1038,14 @@ gui_bar_item_default_buffer_last_number (void *data,
 }
 
 /*
- * Default item for name of buffer plugin.
+ * Bar item with name of buffer plugin.
  */
 
 char *
-gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
-                                    struct t_gui_window *window,
-                                    struct t_gui_buffer *buffer,
-                                    struct t_hashtable *extra_info)
+gui_bar_item_buffer_plugin_cb (void *data, struct t_gui_bar_item *item,
+                               struct t_gui_window *window,
+                               struct t_gui_buffer *buffer,
+                               struct t_hashtable *extra_info)
 {
     const char *plugin_name;
 
@@ -1064,14 +1064,14 @@ gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for number of buffer.
+ * Bar item with number of buffer.
  */
 
 char *
-gui_bar_item_default_buffer_number (void *data, struct t_gui_bar_item *item,
-                                    struct t_gui_window *window,
-                                    struct t_gui_buffer *buffer,
-                                    struct t_hashtable *extra_info)
+gui_bar_item_buffer_number_cb (void *data, struct t_gui_bar_item *item,
+                               struct t_gui_window *window,
+                               struct t_gui_buffer *buffer,
+                               struct t_hashtable *extra_info)
 {
     char str_number[64];
 
@@ -1092,14 +1092,14 @@ gui_bar_item_default_buffer_number (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for name of buffer.
+ * Bar item with name of buffer.
  */
 
 char *
-gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
-                                  struct t_gui_window *window,
-                                  struct t_gui_buffer *buffer,
-                                  struct t_hashtable *extra_info)
+gui_bar_item_buffer_name_cb (void *data, struct t_gui_bar_item *item,
+                             struct t_gui_window *window,
+                             struct t_gui_buffer *buffer,
+                             struct t_hashtable *extra_info)
 {
     char str_name[256];
 
@@ -1121,15 +1121,15 @@ gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for short name of buffer.
+ * Bar item with short name of buffer.
  */
 
 char *
-gui_bar_item_default_buffer_short_name (void *data,
-                                        struct t_gui_bar_item *item,
-                                        struct t_gui_window *window,
-                                        struct t_gui_buffer *buffer,
-                                        struct t_hashtable *extra_info)
+gui_bar_item_buffer_short_name_cb (void *data,
+                                   struct t_gui_bar_item *item,
+                                   struct t_gui_window *window,
+                                   struct t_gui_buffer *buffer,
+                                   struct t_hashtable *extra_info)
 {
     char str_short_name[256];
 
@@ -1151,17 +1151,17 @@ gui_bar_item_default_buffer_short_name (void *data,
 }
 
 /*
- * Default item for modes of buffer.
+ * Bar item with modes of buffer.
  *
  * Note: this bar item is empty for WeeChat core, this is used only by plugins
  * like irc to display channel modes.
  */
 
 char *
-gui_bar_item_default_buffer_modes (void *data, struct t_gui_bar_item *item,
-                                   struct t_gui_window *window,
-                                   struct t_gui_buffer *buffer,
-                                   struct t_hashtable *extra_info)
+gui_bar_item_buffer_modes_cb (void *data, struct t_gui_bar_item *item,
+                              struct t_gui_window *window,
+                              struct t_gui_buffer *buffer,
+                              struct t_hashtable *extra_info)
 {
     /* make C compiler happy */
     (void) data;
@@ -1174,14 +1174,14 @@ gui_bar_item_default_buffer_modes (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for buffer filter.
+ * Bar item with buffer filter indicator.
  */
 
 char *
-gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
-                                    struct t_gui_window *window,
-                                    struct t_gui_buffer *buffer,
-                                    struct t_hashtable *extra_info)
+gui_bar_item_buffer_filter_cb (void *data, struct t_gui_bar_item *item,
+                               struct t_gui_window *window,
+                               struct t_gui_buffer *buffer,
+                               struct t_hashtable *extra_info)
 {
     char str_filter[512];
 
@@ -1209,15 +1209,15 @@ gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for number of nicks in buffer nicklist.
+ * Bar item with number of nicks in buffer nicklist.
  */
 
 char *
-gui_bar_item_default_buffer_nicklist_count (void *data,
-                                            struct t_gui_bar_item *item,
-                                            struct t_gui_window *window,
-                                            struct t_gui_buffer *buffer,
-                                            struct t_hashtable *extra_info)
+gui_bar_item_buffer_nicklist_count_cb (void *data,
+                                       struct t_gui_bar_item *item,
+                                       struct t_gui_window *window,
+                                       struct t_gui_buffer *buffer,
+                                       struct t_hashtable *extra_info)
 {
     char str_count[64];
 
@@ -1239,14 +1239,14 @@ gui_bar_item_default_buffer_nicklist_count (void *data,
 }
 
 /*
- * Default item for zoom on merged buffer.
+ * Bar item with zoom on merged buffer.
  */
 
 char *
-gui_bar_item_buffer_zoom (void *data, struct t_gui_bar_item *item,
-                          struct t_gui_window *window,
-                          struct t_gui_buffer *buffer,
-                          struct t_hashtable *extra_info)
+gui_bar_item_buffer_zoom_cb (void *data, struct t_gui_bar_item *item,
+                             struct t_gui_window *window,
+                             struct t_gui_buffer *buffer,
+                             struct t_hashtable *extra_info)
 
 {
     char buf[512];
@@ -1271,14 +1271,14 @@ gui_bar_item_buffer_zoom (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for scrolling indicator.
+ * Bar item with scrolling indicator.
  */
 
 char *
-gui_bar_item_default_scroll (void *data, struct t_gui_bar_item *item,
-                             struct t_gui_window *window,
-                             struct t_gui_buffer *buffer,
-                             struct t_hashtable *extra_info)
+gui_bar_item_scroll_cb (void *data, struct t_gui_bar_item *item,
+                        struct t_gui_window *window,
+                        struct t_gui_buffer *buffer,
+                        struct t_hashtable *extra_info)
 {
     char str_scroll[512];
 
@@ -1302,14 +1302,14 @@ gui_bar_item_default_scroll (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for hotlist.
+ * Bar item with hotlist.
  */
 
 char *
-gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
-                              struct t_gui_window *window,
-                              struct t_gui_buffer *buffer,
-                              struct t_hashtable *extra_info)
+gui_bar_item_hotlist_cb (void *data, struct t_gui_bar_item *item,
+                         struct t_gui_window *window,
+                         struct t_gui_buffer *buffer,
+                         struct t_hashtable *extra_info)
 {
     char str_hotlist[4096], format[32], *buffer_without_name_displayed;
     const char *hotlist_suffix;
@@ -1532,14 +1532,14 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for (partial) completion.
+ * Bar item with (partial) completion.
  */
 
 char *
-gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
-                                 struct t_gui_window *window,
-                                 struct t_gui_buffer *buffer,
-                                 struct t_hashtable *extra_info)
+gui_bar_item_completion_cb (void *data, struct t_gui_bar_item *item,
+                            struct t_gui_window *window,
+                            struct t_gui_buffer *buffer,
+                            struct t_hashtable *extra_info)
 {
     int length, i;
     char *buf, str_number[64];
@@ -1593,14 +1593,14 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for buffer title.
+ * Bar item with buffer title.
  */
 
 char *
-gui_bar_item_default_buffer_title (void *data, struct t_gui_bar_item *item,
-                                   struct t_gui_window *window,
-                                   struct t_gui_buffer *buffer,
-                                   struct t_hashtable *extra_info)
+gui_bar_item_buffer_title_cb (void *data, struct t_gui_bar_item *item,
+                              struct t_gui_window *window,
+                              struct t_gui_buffer *buffer,
+                              struct t_hashtable *extra_info)
 {
     /* make C compiler happy */
     (void) data;
@@ -1615,14 +1615,14 @@ gui_bar_item_default_buffer_title (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for nicklist.
+ * Bar item with nicklist.
  */
 
 char *
-gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
-                                      struct t_gui_window *window,
-                                      struct t_gui_buffer *buffer,
-                                      struct t_hashtable *extra_info)
+gui_bar_item_buffer_nicklist_cb (void *data, struct t_gui_bar_item *item,
+                                 struct t_gui_window *window,
+                                 struct t_gui_buffer *buffer,
+                                 struct t_hashtable *extra_info)
 {
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
@@ -1756,14 +1756,14 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for number of window.
+ * Bar item with number of window.
  */
 
 char *
-gui_bar_item_default_window_number (void *data, struct t_gui_bar_item *item,
-                                    struct t_gui_window *window,
-                                    struct t_gui_buffer *buffer,
-                                    struct t_hashtable *extra_info)
+gui_bar_item_window_number_cb (void *data, struct t_gui_bar_item *item,
+                               struct t_gui_window *window,
+                               struct t_gui_buffer *buffer,
+                               struct t_hashtable *extra_info)
 {
     char str_number[64];
 
@@ -1782,14 +1782,14 @@ gui_bar_item_default_window_number (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * Default item for mouse status.
+ * Bar item with mouse status.
  */
 
 char *
-gui_bar_item_default_mouse_status (void *data, struct t_gui_bar_item *item,
-                                   struct t_gui_window *window,
-                                   struct t_gui_buffer *buffer,
-                                   struct t_hashtable *extra_info)
+gui_bar_item_mouse_status_cb (void *data, struct t_gui_bar_item *item,
+                              struct t_gui_window *window,
+                              struct t_gui_buffer *buffer,
+                              struct t_hashtable *extra_info)
 {
     char str_mouse[512];
 
@@ -1811,12 +1811,58 @@ gui_bar_item_default_mouse_status (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * Bar item with away message.
+ */
+
+char *
+gui_bar_item_away_cb (void *data, struct t_gui_bar_item *item,
+                      struct t_gui_window *window,
+                      struct t_gui_buffer *buffer,
+                      struct t_hashtable *extra_info)
+{
+    const char *away;
+    char *buf, *message;
+    int length;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer)
+        return NULL;
+
+    away = (const char *)hashtable_get (buffer->local_variables, "away");
+    if (!away)
+        return NULL;
+
+    buf = NULL;
+    message = (CONFIG_BOOLEAN(config_look_item_away_message)) ?
+        strdup (away) : strdup (_("away"));
+    if (message)
+    {
+        length = strlen (message) + 64 + 1;
+        buf = malloc (length);
+        if (buf)
+        {
+            snprintf (buf, length, "%s%s",
+                      gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_item_away))),
+                      message);
+        }
+        free (message);
+    }
+
+    return buf;
+}
+
+/*
  * Focus on nicklist.
  */
 
 struct t_hashtable *
-gui_bar_item_focus_buffer_nicklist (void *data,
-                                    struct t_hashtable *info)
+gui_bar_item_focus_buffer_nicklist_cb (void *data,
+                                       struct t_hashtable *info)
 {
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
@@ -1991,14 +2037,14 @@ gui_bar_item_init ()
     /* input paste */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_PASTE],
-                      &gui_bar_item_default_input_paste, NULL);
+                      &gui_bar_item_input_paste_cb, NULL);
     gui_bar_item_hook_signal ("input_paste_pending",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_PASTE]);
 
     /* input prompt */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
-                      &gui_bar_item_default_input_prompt, NULL);
+                      &gui_bar_item_input_prompt_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
     gui_bar_item_hook_signal ("buffer_switch",
@@ -2009,7 +2055,7 @@ gui_bar_item_init ()
     /* input search */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH],
-                      &gui_bar_item_default_input_search, NULL);
+                      &gui_bar_item_input_search_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH]);
     gui_bar_item_hook_signal ("input_search",
@@ -2020,7 +2066,7 @@ gui_bar_item_init ()
     /* input text */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT],
-                      &gui_bar_item_default_input_text, NULL);
+                      &gui_bar_item_input_text_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
     gui_bar_item_hook_signal ("buffer_switch",
@@ -2031,14 +2077,14 @@ gui_bar_item_init ()
     /* time */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_TIME],
-                      &gui_bar_item_default_time, NULL);
+                      &gui_bar_item_time_cb, NULL);
     gui_bar_item_timer = hook_timer (NULL, 1000, 1, 0, &gui_bar_item_timer_cb,
                                      gui_bar_item_names[GUI_BAR_ITEM_TIME]);
 
     /* buffer count */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT],
-                      &gui_bar_item_default_buffer_count, NULL);
+                      &gui_bar_item_buffer_count_cb, NULL);
     gui_bar_item_hook_signal ("buffer_opened",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT]);
     gui_bar_item_hook_signal ("buffer_closed",
@@ -2047,7 +2093,7 @@ gui_bar_item_init ()
     /* last buffer number */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_LAST_NUMBER],
-                      &gui_bar_item_default_buffer_last_number, NULL);
+                      &gui_bar_item_buffer_last_number_cb, NULL);
     gui_bar_item_hook_signal ("buffer_opened",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_LAST_NUMBER]);
     gui_bar_item_hook_signal ("buffer_closed",
@@ -2062,7 +2108,7 @@ gui_bar_item_init ()
     /* buffer plugin */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN],
-                      &gui_bar_item_default_buffer_plugin, NULL);
+                      &gui_bar_item_buffer_plugin_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN]);
     gui_bar_item_hook_signal ("buffer_switch",
@@ -2073,7 +2119,7 @@ gui_bar_item_init ()
     /* buffer number */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER],
-                      &gui_bar_item_default_buffer_number, NULL);
+                      &gui_bar_item_buffer_number_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
     gui_bar_item_hook_signal ("buffer_switch",
@@ -2090,7 +2136,7 @@ gui_bar_item_init ()
     /* buffer name */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME],
-                      &gui_bar_item_default_buffer_name, NULL);
+                      &gui_bar_item_buffer_name_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
     gui_bar_item_hook_signal ("buffer_switch",
@@ -2103,7 +2149,7 @@ gui_bar_item_init ()
     /* buffer short name */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_SHORT_NAME],
-                      &gui_bar_item_default_buffer_short_name, NULL);
+                      &gui_bar_item_buffer_short_name_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_SHORT_NAME]);
     gui_bar_item_hook_signal ("buffer_switch",
@@ -2116,7 +2162,7 @@ gui_bar_item_init ()
     /* buffer modes */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_MODES],
-                      &gui_bar_item_default_buffer_modes, NULL);
+                      &gui_bar_item_buffer_modes_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_MODES]);
     gui_bar_item_hook_signal ("buffer_switch",
@@ -2125,7 +2171,7 @@ gui_bar_item_init ()
     /* buffer filter */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER],
-                      &gui_bar_item_default_buffer_filter, NULL);
+                      &gui_bar_item_buffer_filter_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
     gui_bar_item_hook_signal ("buffer_switch",
@@ -2138,7 +2184,7 @@ gui_bar_item_init ()
     /* buffer zoom */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_ZOOM],
-                      &gui_bar_item_buffer_zoom, NULL);
+                      &gui_bar_item_buffer_zoom_cb, NULL);
     gui_bar_item_hook_signal ("buffer_zoomed",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_ZOOM]);
     gui_bar_item_hook_signal ("buffer_unzoomed",
@@ -2149,7 +2195,7 @@ gui_bar_item_init ()
     /* buffer nicklist count */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT],
-                      &gui_bar_item_default_buffer_nicklist_count, NULL);
+                      &gui_bar_item_buffer_nicklist_count_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT]);
     gui_bar_item_hook_signal ("buffer_switch",
@@ -2160,7 +2206,7 @@ gui_bar_item_init ()
     /* scroll indicator */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_SCROLL],
-                      &gui_bar_item_default_scroll, NULL);
+                      &gui_bar_item_scroll_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
     gui_bar_item_hook_signal ("buffer_switch",
@@ -2171,7 +2217,7 @@ gui_bar_item_init ()
     /* hotlist */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_HOTLIST],
-                      &gui_bar_item_default_hotlist, NULL);
+                      &gui_bar_item_hotlist_cb, NULL);
     gui_bar_item_hook_signal ("hotlist_changed",
                               gui_bar_item_names[GUI_BAR_ITEM_HOTLIST]);
     gui_bar_item_hook_signal ("buffer_moved",
@@ -2182,14 +2228,14 @@ gui_bar_item_init ()
     /* completion (possible words when a partial completion occurs) */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_COMPLETION],
-                      &gui_bar_item_default_completion, NULL);
+                      &gui_bar_item_completion_cb, NULL);
     gui_bar_item_hook_signal ("partial_completion",
                               gui_bar_item_names[GUI_BAR_ITEM_COMPLETION]);
 
     /* buffer title */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE],
-                      &gui_bar_item_default_buffer_title, NULL);
+                      &gui_bar_item_buffer_title_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]);
     gui_bar_item_hook_signal ("buffer_switch",
@@ -2200,7 +2246,7 @@ gui_bar_item_init ()
     /* buffer nicklist */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST],
-                      &gui_bar_item_default_buffer_nicklist, NULL);
+                      &gui_bar_item_buffer_nicklist_cb, NULL);
     gui_bar_item_hook_signal ("nicklist_*",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
     gui_bar_item_hook_signal ("window_switch",
@@ -2209,12 +2255,12 @@ gui_bar_item_init ()
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
     snprintf (name, sizeof (name), "2000|%s",
               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
-    hook_focus (NULL, name, &gui_bar_item_focus_buffer_nicklist, NULL);
+    hook_focus (NULL, name, &gui_bar_item_focus_buffer_nicklist_cb, NULL);
 
     /* window number */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_WINDOW_NUMBER],
-                      &gui_bar_item_default_window_number, NULL);
+                      &gui_bar_item_window_number_cb, NULL);
     gui_bar_item_hook_signal ("window_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_WINDOW_NUMBER]);
     gui_bar_item_hook_signal ("window_closed",
@@ -2223,11 +2269,18 @@ gui_bar_item_init ()
     /* mouse status */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_MOUSE_STATUS],
-                      &gui_bar_item_default_mouse_status, NULL);
+                      &gui_bar_item_mouse_status_cb, NULL);
     gui_bar_item_hook_signal ("mouse_enabled",
                               gui_bar_item_names[GUI_BAR_ITEM_MOUSE_STATUS]);
     gui_bar_item_hook_signal ("mouse_disabled",
                               gui_bar_item_names[GUI_BAR_ITEM_MOUSE_STATUS]);
+
+    /* away message */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_AWAY],
+                      &gui_bar_item_away_cb, NULL);
+    gui_bar_item_hook_signal ("buffer_localvar_*",
+                              gui_bar_item_names[GUI_BAR_ITEM_AWAY]);
 }
 
 /*

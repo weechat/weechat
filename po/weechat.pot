@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-02-12 07:33+0100\n"
+"POT-Creation-Date: 2016-02-15 12:31+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2507,6 +2507,9 @@ msgstr ""
 msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
 
+msgid "display server away message in away bar item"
+msgstr ""
+
 msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
@@ -2903,6 +2906,9 @@ msgid "text color for actions in input line"
 msgstr ""
 
 msgid "text color for unsuccessful text search in input line"
+msgstr ""
+
+msgid "text color for away item"
 msgstr ""
 
 msgid "text color for away nicknames"
@@ -3573,6 +3579,9 @@ msgstr ""
 
 #, c-format
 msgid "%s-MORE(%d)-"
+msgstr ""
+
+msgid "away"
 msgstr ""
 
 #, c-format
@@ -4284,9 +4293,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: script \"%s\" not loaded"
-msgstr ""
-
-msgid "away"
 msgstr ""
 
 msgid "server"
@@ -5953,9 +5959,6 @@ msgid ""
 "allowed in tags; an empty value allows highlight on any tag"
 msgstr ""
 
-msgid "display server away message in away bar item"
-msgstr ""
-
 msgid ""
 "hide channel modes arguments if at least one of these modes is in channel "
 "modes (\"*\" to always hide all arguments, empty value to never hide "
@@ -6131,9 +6134,6 @@ msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
 
 msgid "color for nick in input bar"
-msgstr ""
-
-msgid "color for away item"
 msgstr ""
 
 msgid "color for channel modes, near channel name"

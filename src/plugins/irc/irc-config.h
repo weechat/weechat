@@ -120,7 +120,6 @@ extern struct t_config_option *irc_config_look_highlight_channel;
 extern struct t_config_option *irc_config_look_highlight_pv;
 extern struct t_config_option *irc_config_look_highlight_server;
 extern struct t_config_option *irc_config_look_highlight_tags_restrict;
-extern struct t_config_option *irc_config_look_item_away_message;
 extern struct t_config_option *irc_config_look_item_channel_modes_hide_args;
 extern struct t_config_option *irc_config_look_item_display_server;
 extern struct t_config_option *irc_config_look_item_nick_modes;
@@ -157,7 +156,6 @@ extern struct t_config_option *irc_config_look_temporary_servers;
 extern struct t_config_option *irc_config_look_topic_strip_colors;
 
 extern struct t_config_option *irc_config_color_input_nick;
-extern struct t_config_option *irc_config_color_item_away;
 extern struct t_config_option *irc_config_color_item_channel_modes;
 extern struct t_config_option *irc_config_color_item_lag_counting;
 extern struct t_config_option *irc_config_color_item_lag_finished;

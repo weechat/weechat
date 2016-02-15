@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-02-12 07:33+0100\n"
+"POT-Creation-Date: 2016-02-15 12:31+0100\n"
 "PO-Revision-Date: 2016-02-12 21:53+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
@@ -3756,6 +3756,9 @@ msgstr ""
 "maximale Anzahl von \"Rücknahmen\" für Befehle im Verlauf, pro Buffer (0: "
 "deaktiviert die Funktion)"
 
+msgid "display server away message in away bar item"
+msgstr "Abwesenheitsnachricht im Away-Bar-Item anzeigen"
+
 msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
@@ -4317,6 +4320,10 @@ msgstr ""
 
 msgid "text color for unsuccessful text search in input line"
 msgstr "Textfarbe in der Eingabezeile bei einer erfolglosen Textsuche"
+
+#, fuzzy
+msgid "text color for away item"
+msgstr "Farbe des Abwesenheit-Textes in der Eingabezeile"
 
 msgid "text color for away nicknames"
 msgstr "Textfarbe von abwesenden Nicknamen"
@@ -5151,6 +5158,9 @@ msgstr "Suche"
 #, c-format
 msgid "%s-MORE(%d)-"
 msgstr "%s-MEHR(%d)-"
+
+msgid "away"
+msgstr "abwesend"
 
 #, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -6110,9 +6120,6 @@ msgstr "%s: Skript \"%s\" wurde beendet"
 #, c-format
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: Das Skript \"%s\" wurde nicht installiert"
-
-msgid "away"
-msgstr "abwesend"
 
 msgid "server"
 msgid_plural "servers"
@@ -8419,9 +8426,6 @@ msgstr ""
 "kann verwendet werden um mehr als ein Tag zu markieren; wird kein Wert "
 "angegeben, erzeugt jedes Tag ein Highlight"
 
-msgid "display server away message in away bar item"
-msgstr "Abwesenheitsnachricht im Away-Bar-Item anzeigen"
-
 msgid ""
 "hide channel modes arguments if at least one of these modes is in channel "
 "modes (\"*\" to always hide all arguments, empty value to never hide "
@@ -8696,9 +8700,6 @@ msgstr ""
 
 msgid "color for nick in input bar"
 msgstr "Farbe des eigenen Nicknamens in der Eingabezeile"
-
-msgid "color for away item"
-msgstr "Farbe des Abwesenheit-Textes in der Eingabezeile"
 
 msgid "color for channel modes, near channel name"
 msgstr "Farbe der Channel-Modes (neben dem Channelnamen)"

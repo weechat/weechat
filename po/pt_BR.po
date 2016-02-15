@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-02-12 07:33+0100\n"
+"POT-Creation-Date: 2016-02-15 12:31+0100\n"
 "PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3353,6 +3353,9 @@ msgstr ""
 "número máximo de \"undo\" para a linha de comando, por buffer (0 = desfazer "
 "desabilitado)"
 
+msgid "display server away message in away bar item"
+msgstr ""
+
 msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
@@ -3811,6 +3814,10 @@ msgstr "cor de texto para ações de linha de entrada"
 
 msgid "text color for unsuccessful text search in input line"
 msgstr "cor de texto para busca mal sucedida na linha de entrada"
+
+#, fuzzy
+msgid "text color for away item"
+msgstr "cor de texto para apelidos ausentes"
 
 msgid "text color for away nicknames"
 msgstr "cor de texto para apelidos ausentes"
@@ -4553,6 +4560,9 @@ msgstr ""
 #, c-format
 msgid "%s-MORE(%d)-"
 msgstr "%s-MORE(%d)-"
+
+msgid "away"
+msgstr ""
 
 #, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -5308,9 +5318,6 @@ msgstr "%s: script \"%s\" descarregado"
 #, c-format
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: script \"%s\" não carregado"
-
-msgid "away"
-msgstr ""
 
 msgid "server"
 msgid_plural "servers"
@@ -7119,9 +7126,6 @@ msgid ""
 "allowed in tags; an empty value allows highlight on any tag"
 msgstr ""
 
-msgid "display server away message in away bar item"
-msgstr ""
-
 msgid ""
 "hide channel modes arguments if at least one of these modes is in channel "
 "modes (\"*\" to always hide all arguments, empty value to never hide "
@@ -7318,9 +7322,6 @@ msgstr ""
 
 msgid "color for nick in input bar"
 msgstr "cor para o apelido na barra de entrada"
-
-msgid "color for away item"
-msgstr ""
 
 msgid "color for channel modes, near channel name"
 msgstr "cor para os modos de canal, próximo ao nome do canal"

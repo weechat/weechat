@@ -47,6 +47,7 @@
 #include "wee-string.h"
 #include "wee-version.h"
 #include "../gui/gui-bar.h"
+#include "../gui/gui-bar-item.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
@@ -135,6 +136,7 @@ struct t_config_option *config_look_input_cursor_scroll;
 struct t_config_option *config_look_input_share;
 struct t_config_option *config_look_input_share_overwrite;
 struct t_config_option *config_look_input_undo_max;
+struct t_config_option *config_look_item_away_message;
 struct t_config_option *config_look_item_buffer_filter;
 struct t_config_option *config_look_item_buffer_zoom;
 struct t_config_option *config_look_item_mouse_status;
@@ -229,6 +231,7 @@ struct t_config_option *config_color_emphasized;
 struct t_config_option *config_color_emphasized_bg;
 struct t_config_option *config_color_input_actions;
 struct t_config_option *config_color_input_text_not_found;
+struct t_config_option *config_color_item_away;
 struct t_config_option *config_color_nicklist_away;
 struct t_config_option *config_color_nicklist_group;
 struct t_config_option *config_color_separator;
@@ -818,6 +821,21 @@ config_change_hotlist_sort (void *data, struct t_config_option *option)
     (void) option;
 
     gui_hotlist_resort ();
+}
+
+/*
+ * Callback for changes on options "weechat.look.item_away_message"
+ * and "weechat.color.item_away".
+ */
+
+void
+config_change_item_away (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    gui_bar_item_update ("away");
 }
 
 /*
@@ -2576,6 +2594,12 @@ config_weechat_init_options ()
         N_("max number of \"undo\" for command line, by buffer (0 = undo "
            "disabled)"),
         NULL, 0, 65535, "32", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_item_away_message = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "item_away_message", "boolean",
+        N_("display server away message in away bar item"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        &config_change_item_away, NULL, NULL, NULL);
     config_look_item_buffer_filter = config_file_new_option (
         weechat_config_file, ptr_section,
         "item_buffer_filter", "string",
@@ -3256,6 +3280,13 @@ config_weechat_init_options ()
         N_("text color for unsuccessful text search in input line"),
         NULL, -1, 0, "red", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    /* items */
+    config_color_item_away = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "item_away", "color",
+        N_("text color for away item"),
+        NULL, -1, 0, "yellow", NULL, 0, NULL, NULL,
+        &config_change_item_away, NULL, NULL, NULL);
     /* nicklist bar */
     config_color_nicklist_away = config_file_new_option (
         weechat_config_file, ptr_section,

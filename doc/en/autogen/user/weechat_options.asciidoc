@@ -222,6 +222,11 @@
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `red`)
 
+* [[option_weechat.color.item_away]] *weechat.color.item_away*
+** description: `text color for away item`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `yellow`)
+
 * [[option_weechat.color.nicklist_away]] *weechat.color.nicklist_away*
 ** description: `text color for away nicknames`
 ** type: color
@@ -676,6 +681,11 @@
 ** description: `max number of "undo" for command line, by buffer (0 = undo disabled)`
 ** type: integer
 ** values: 0 .. 65535 (default value: `32`)
+
+* [[option_weechat.look.item_away_message]] *weechat.look.item_away_message*
+** description: `display server away message in away bar item`
+** type: boolean
+** values: on, off (default value: `on`)
 
 * [[option_weechat.look.item_buffer_filter]] *weechat.look.item_buffer_filter*
 ** description: `string used to show that some lines are filtered in current buffer (bar item "buffer_filter")`

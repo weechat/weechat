@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-02-12 07:33+0100\n"
+"POT-Creation-Date: 2016-02-15 12:31+0100\n"
 "PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3180,6 +3180,9 @@ msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
 "maximální počet \"undo\" pro příkazovou řádku pro bufferu (0 = vypnuto)"
 
+msgid "display server away message in away bar item"
+msgstr "zobrazit zprávu nepřítomnosti na serveru v položce nepřítomnosti pole"
+
 msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
@@ -3633,6 +3636,10 @@ msgstr "barva textu pro akce ve vstupní řádce"
 
 msgid "text color for unsuccessful text search in input line"
 msgstr "barva textu pro nepovedené hledání textu ve vstupní rádce"
+
+#, fuzzy
+msgid "text color for away item"
+msgstr "barva položek, které jsou pryč"
 
 msgid "text color for away nicknames"
 msgstr "barva textu pro nepřítomné přezdíveky"
@@ -4371,6 +4378,9 @@ msgstr "Hledej"
 #, c-format
 msgid "%s-MORE(%d)-"
 msgstr "%s-VÍCE(%d)-"
+
+msgid "away"
+msgstr "pryč"
 
 #, fuzzy, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -5157,9 +5167,6 @@ msgstr "%s: skript \"%s\" odebrán"
 #, c-format
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: skript \"%s\" nenačten"
-
-msgid "away"
-msgstr "pryč"
 
 msgid "server"
 msgid_plural "servers"
@@ -7257,9 +7264,6 @@ msgid ""
 "allowed in tags; an empty value allows highlight on any tag"
 msgstr ""
 
-msgid "display server away message in away bar item"
-msgstr "zobrazit zprávu nepřítomnosti na serveru v položce nepřítomnosti pole"
-
 msgid ""
 "hide channel modes arguments if at least one of these modes is in channel "
 "modes (\"*\" to always hide all arguments, empty value to never hide "
@@ -7484,9 +7488,6 @@ msgstr ""
 
 msgid "color for nick in input bar"
 msgstr "barva přezdívky ve vstupním poli"
-
-msgid "color for away item"
-msgstr "barva položek, které jsou pryč"
 
 msgid "color for channel modes, near channel name"
 msgstr "barva módů kanálu, blízko jména kanálu"

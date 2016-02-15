@@ -222,6 +222,11 @@
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `red`)
 
+* [[option_weechat.color.item_away]] *weechat.color.item_away*
+** 説明: `text color for away item`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `yellow`)
+
 * [[option_weechat.color.nicklist_away]] *weechat.color.nicklist_away*
 ** 説明: `離席状態のニックネームのテキスト色`
 ** タイプ: 色
@@ -676,6 +681,11 @@
 ** 説明: `バッファごとのコマンドラインの "undo" 回数の上限値 (0 = アンドゥは無効)`
 ** タイプ: 整数
 ** 値: 0 .. 65535 (デフォルト値: `32`)
+
+* [[option_weechat.look.item_away_message]] *weechat.look.item_away_message*
+** 説明: `サーバの離席メッセージを離席バーアイテムに表示`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.item_buffer_filter]] *weechat.look.item_buffer_filter*
 ** 説明: `現在のバッファで何行かがフィルタされたことを示す文字列 (バーアイテム "buffer_filter")`

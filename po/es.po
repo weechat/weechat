@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-02-12 07:33+0100\n"
+"POT-Creation-Date: 2016-02-15 12:31+0100\n"
 "PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3325,6 +3325,9 @@ msgstr ""
 "número máximo de niveles de deshaces en la línea de comando, por buffer (0 = "
 "deshacer desactivado)"
 
+msgid "display server away message in away bar item"
+msgstr "mostrar mensaje de ausencia en el elemento de barra \"away\""
+
 msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
@@ -3814,6 +3817,10 @@ msgstr "color para acciones en la línea de entrada"
 
 msgid "text color for unsuccessful text search in input line"
 msgstr "color para una búsqueda fallida en la línea de entrada"
+
+#, fuzzy
+msgid "text color for away item"
+msgstr "color para el texto \"ausente\" en al barra de entrada"
 
 msgid "text color for away nicknames"
 msgstr "color para apodos ausentes"
@@ -4567,6 +4574,9 @@ msgstr ""
 #, c-format
 msgid "%s-MORE(%d)-"
 msgstr "%s-MÁS(%d)-"
+
+msgid "away"
+msgstr "ausente"
 
 #, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -5370,9 +5380,6 @@ msgstr "%s: script \"%s\" descargado"
 #, c-format
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: el script \"%s\" no está cargado"
-
-msgid "away"
-msgstr "ausente"
 
 msgid "server"
 msgid_plural "servers"
@@ -7531,9 +7538,6 @@ msgid ""
 "allowed in tags; an empty value allows highlight on any tag"
 msgstr ""
 
-msgid "display server away message in away bar item"
-msgstr "mostrar mensaje de ausencia en el elemento de barra \"away\""
-
 msgid ""
 "hide channel modes arguments if at least one of these modes is in channel "
 "modes (\"*\" to always hide all arguments, empty value to never hide "
@@ -7764,9 +7768,6 @@ msgstr ""
 
 msgid "color for nick in input bar"
 msgstr "color para el apodo en la barra de entrada"
-
-msgid "color for away item"
-msgstr "color para el texto \"ausente\" en al barra de entrada"
 
 msgid "color for channel modes, near channel name"
 msgstr "color para los modos del canal, junto al nombre del canal"

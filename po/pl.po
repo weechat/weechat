@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-02-12 07:33+0100\n"
+"POT-Creation-Date: 2016-02-15 12:31+0100\n"
 "PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3609,6 +3609,9 @@ msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
 "maksymalna ilość \"cofnięć\" dla linii poleceń dla bufora (0 = wyłączone)"
 
+msgid "display server away message in away bar item"
+msgstr "wyświetla wiadomość o nieobecności dla serwera w elemencie paska"
+
 msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
@@ -4138,6 +4141,10 @@ msgstr "kolor akcji w wprowadzonej linii"
 
 msgid "text color for unsuccessful text search in input line"
 msgstr "kolor nieudanego wyszukiwania tekstu w wprowadzonej linii"
+
+#, fuzzy
+msgid "text color for away item"
+msgstr "kolor elementu nieobecności"
 
 msgid "text color for away nicknames"
 msgstr "kolor nicków ze statusem nieobecności"
@@ -4925,6 +4932,9 @@ msgstr "Szukam"
 #, c-format
 msgid "%s-MORE(%d)-"
 msgstr "%s-Więcej(%d)-"
+
+msgid "away"
+msgstr "nieobecny"
 
 #, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -5837,9 +5847,6 @@ msgstr "%s: skrypt \"%s\" wyładowano"
 #, c-format
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: skrypt \"%s\" nie załadowany"
-
-msgid "away"
-msgstr "nieobecny"
 
 msgid "server"
 msgid_plural "servers"
@@ -8053,9 +8060,6 @@ msgstr ""
 "logicznego \"i\" pomiędzy tagami; wildcard \"*\" jest dozwolony w tagach; "
 "pusta wartość zezwala na podświetlenia przez dowolny tag"
 
-msgid "display server away message in away bar item"
-msgstr "wyświetla wiadomość o nieobecności dla serwera w elemencie paska"
-
 msgid ""
 "hide channel modes arguments if at least one of these modes is in channel "
 "modes (\"*\" to always hide all arguments, empty value to never hide "
@@ -8308,9 +8312,6 @@ msgstr "usuń kolory w tematach (używane przy wyświetlaniu tytułu bufora)"
 
 msgid "color for nick in input bar"
 msgstr "kolor nicka w pasku danych wejściowych"
-
-msgid "color for away item"
-msgstr "kolor elementu nieobecności"
 
 msgid "color for channel modes, near channel name"
 msgstr "kolor trybów kanału, przy nazwie kanału"

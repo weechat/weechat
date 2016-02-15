@@ -222,6 +222,11 @@
 ** tipo: colore
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `red`)
 
+* [[option_weechat.color.item_away]] *weechat.color.item_away*
+** descrizione: `text color for away item`
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `yellow`)
+
 * [[option_weechat.color.nicklist_away]] *weechat.color.nicklist_away*
 ** descrizione: `colore del testo per i nick assenti`
 ** tipo: colore
@@ -676,6 +681,11 @@
 ** descrizione: `numero massimo di righe nella cronologia per buffer (0 = nessun limite)`
 ** tipo: intero
 ** valori: 0 .. 65535 (valore predefinito: `32`)
+
+* [[option_weechat.look.item_away_message]] *weechat.look.item_away_message*
+** descrizione: `mostra il messaggio di assenza del server nell'elemento barra di away`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.item_buffer_filter]] *weechat.look.item_buffer_filter*
 ** descrizione: `stringa usata per mostrare che alcune righe sono state filtrate  nel buffer corrente (elemento barra "buffer_filter")`

@@ -21,6 +21,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[1.5_features]]
 === New features
 
+* core: move irc bar item "away" to core, move options
+  "irc.look.item_away_message" and "irc.color.item_away" to core (issue #692)
 * irc: add multiple targets and support of "-server" in command /ctcp
   (issue #204, issue #493)
 * trigger: add "recover" in default triggers cmd_pass/msg_auth, and "regain"
