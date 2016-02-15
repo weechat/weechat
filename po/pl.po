@@ -1311,7 +1311,6 @@ msgstr ""
 "alias <kolor> <nazwa> || unalias <kolor> || reset || term2rgb <kolor> || "
 "rgb2term <rgb> [<limit>] || -o"
 
-#, fuzzy
 msgid ""
 "   alias: add an alias for a color\n"
 " unalias: delete an alias\n"
@@ -1337,12 +1336,12 @@ msgid ""
 msgstr ""
 "  alias: dodaje alias dla koloru\n"
 "unalias: usuwa alias\n"
-"  color: numer koloru (większy lub równy 0, maksymalna wartość zależy od "
+"  kolor: numer koloru (większy lub równy 0, maksymalna wartość zależy od "
 "terminala, zazwyczaj 63 lub 255)\n"
 "   nazwa: nazwa aliasu dla koloru (na przykład: \"orange\")\n"
 "  reset: resetuje wszystkie pary kolorów (wymagane jeśli nie ma dostępnej "
 "większej ilości par kolorów, jeśli automatyczny reset jest wyłączony, zobacz "
-"opcję weechat.look.color_pairs_auto_reset)\n"
+"opcję \"weechat.look.color_pairs_auto_reset\")\n"
 "term2rgb: konwersja koloru terminala (0-255) na kolor RGB\n"
 "rgb2term: konwersja koloru RGB na kolor terminala (0-255)\n"
 "   limit: liczba kolorów w tabeli kolorów terminala (numerowane od 0); "
@@ -2116,7 +2115,6 @@ msgstr ""
 "store [<nazwa>] [buffers|windows] || apply [<nazwa>] [buffers|windows] || "
 "leave || del [<nazwa>] [buffers|windows] || rename <nazwa> <nowa nazwa>"
 
-#, fuzzy
 msgid ""
 "  store: store current buffers/windows in a layout\n"
 "  apply: apply stored layout\n"
@@ -2145,7 +2143,10 @@ msgstr ""
 "buffers: zapisuje/stosuje tylko bufory (kolejność buforów)\n"
 "windows: zapisuje/stosuje tylko okna (bufory wyświetlane w każdym oknie)\n"
 "\n"
-"Komenda wywołana bez argumentów wyświetli zapisane układy."
+"Komenda wywołana bez argumentów wyświetli zapisane układy.\n"
+"\n"
+"Obecny układ można zapisać podczas wykonywania komendy /quit za pomocą "
+"opcji \"weechat.look.save_layout_on_exit\"."
 
 msgid "mouse control"
 msgstr "kontrola myszy"
@@ -2430,7 +2431,6 @@ msgstr "zakończ WeeChat"
 msgid "[-yes] [<arguments>]"
 msgstr "[-yes][<argumenty>]"
 
-#, fuzzy
 msgid ""
 "     -yes: required if option \"weechat.look.confirm_quit\" is enabled\n"
 "arguments: text sent with signal \"quit\"\n"
@@ -2444,7 +2444,11 @@ msgstr ""
 "     -yes: wymagane jeśli opcja weechat.look.confirm_quit jest włączona\n"
 "argumenty: tekst wysłany na sygnał \"quit\"\n"
 "           (na przykład wtyczka irc używa tego tekstu do wysłania wiadomości "
-"pożegnalnej na serwer)"
+"pożegnalnej na serwer)\n"
+"\n"
+"Domyślnie pliki konfiguracyjne są zapisywane przy wyjściu z aplikacji (zobacz "
+"opcję \"weechat.look.save_config_on_exit\") zapisany może byc też obecny układ "
+"okien (zobacz opcję \"weechat.look.save_layout_on_exit\")."
 
 msgid "reload configuration files from disk"
 msgstr "przeładuj pliki konfiguracyjne z dysku"
@@ -2495,7 +2499,6 @@ msgstr ""
 msgid "save configuration files to disk"
 msgstr "zapisuje pliki konfiguracyjne na dysku"
 
-#, fuzzy
 msgid ""
 "file: configuration file to save (without extension \".conf\")\n"
 "\n"
@@ -2504,10 +2507,13 @@ msgid ""
 "By default all configuration files are saved to disk on /quit command (see "
 "option \"weechat.look.save_config_on_exit\")."
 msgstr ""
-"plik: plik konfiguracyjny do przeładowania (bez rozszerzenia \".conf\")\n"
+"plik: plik konfiguracyjny do zapisania (bez rozszerzenia \".conf\")\n"
 "\n"
 "Bez podania argumentu wszystkie pliki (WeeChat oraz wtyczki) zostaną "
-"przeładowane."
+"zapisane.\n"
+"\n"
+"Domyślnie zapisywane na dysku są wszystkie pliki konfiguracyjne podczas wykonywania "
+"komendy /quit (zobacz opcję \"weechat.look.save_config_on_exit\")."
 
 msgid ""
 "manage secured data (passwords or private data encrypted in file sec.conf)"
@@ -2709,7 +2715,6 @@ msgstr "uaktualnia WeeChat bez rozłączania z serwerami"
 msgid "[-yes] [<path_to_binary>|-quit]"
 msgstr "[-yes] [<ścieżka_do_binarki>|-quit]"
 
-#, fuzzy
 msgid ""
 "          -yes: required if option \"weechat.look.confirm_upgrade\" is "
 "enabled\n"
@@ -2745,7 +2750,7 @@ msgid ""
 "It is possible to restore WeeChat session on another machine if you copy the "
 "content of directory \"~/.weechat\"."
 msgstr ""
-"          -yes: wymagane, jeśli opcja weechat.look.confirm_upgrade jest "
+"          -yes: wymagane, jeśli \"weechat.look.confirm_upgrade\" jest "
 "włączona\n"
 "ścieżka_do_binarki: ścieżka do pliku binarnego WeeChat (domyślnie jest to "
 "obecny plik)\n"
@@ -4142,7 +4147,6 @@ msgstr "kolor akcji w wprowadzonej linii"
 msgid "text color for unsuccessful text search in input line"
 msgstr "kolor nieudanego wyszukiwania tekstu w wprowadzonej linii"
 
-#, fuzzy
 msgid "text color for away item"
 msgstr "kolor elementu nieobecności"
 
@@ -6460,11 +6464,9 @@ msgstr ""
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "wyślij wiadomość CTCP (protokół klient-klient)"
 
-#, fuzzy
 msgid "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
-msgstr "[-server <serwer>] <cel>[,<cel>...] <tekst>"
+msgstr "[-server <serwer>] <cel>[,<cel>...] <typ> [<argumenty>]"
 
-#, fuzzy
 msgid ""
 "   server: send to this server (internal name)\n"
 "   target: nick or channel ('*' = current channel)\n"
@@ -6476,9 +6478,15 @@ msgid ""
 "  /ctcp toto version\n"
 "  /ctcp * version"
 msgstr ""
-" cel: nick albo kanał, na który wysłać CTCP\n"
-"     typ: typ CTCP (przykłady: \"version\", \"ping\", ..)\n"
-"argumenty: argumenty dla CTCP"
+"   serwer: wyślij do tego serwera (nazwa wewnętrzna)\n"
+"      cel: nick albo kanał ('*' = obecny kanał)\n"
+"      typ: rodzaj CTCP (przykłady: \"version\", \"ping\", ..)\n"
+"argumenty: argumenty dla CTCP\n"
+"\n"
+"Przykłady:\n"
+"  /ctcp toto time\n"
+"  /ctcp toto version\n"
+"  /ctcp * version"
 
 msgid "leave and rejoin a channel"
 msgstr "wyjdź i wejdź ponownie na kanał"
@@ -8750,9 +8758,9 @@ msgstr "%s%s: możliwości klienta, serwer wspiera: %s"
 msgid "%s%s: client capability, requesting: %s"
 msgstr "%s%s: możliwości klienta, żądanie: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability: SASL not supported"
-msgstr "%s%s: możliwości klienta: sasl nie wspierany"
+msgstr "%s%s: możliwości klienta: SASL nie wspierany"
 
 #, c-format
 msgid "%s%s: client capability, currently enabled: %s"
@@ -9197,9 +9205,9 @@ msgstr "%s%s: rozłączam z serwerem..."
 msgid "%s%s: connection timeout (message 001 not received)"
 msgstr "%s%s: przekroczono czas połączenia (nie otrzymano wiadomości 001)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: SASL authentication timeout"
-msgstr "%s%s: przekroczono czas uwierzytelniania sasl"
+msgstr "%s%s: przekroczono czas uwierzytelniania SASL"
 
 #, c-format
 msgid "%s%s: lag is high, reconnecting to server %s%s%s"
@@ -10572,9 +10580,8 @@ msgstr ""
 "protokoły IPv4 i IPv6 mogą być wymuszane (pojedynczo lub razem) w nazwie "
 "protokołu (zobacz /help relay)"
 
-#, fuzzy
 msgid "maximum number of clients connecting to a port (0 = no limit)"
-msgstr "maksymalna ilość klientów łączących się na port"
+msgstr "maksymalna ilość klientów łączących się na port (0 = brak limitu)"
 
 msgid ""
 "password required by clients to access this relay (empty value means no "
@@ -10680,9 +10687,9 @@ msgstr "%s%s: nie można zaakceptować klienta na porcie %d (%s): błąd %d %s"
 msgid "%s%s: client not allowed (max %d client is allowed at same time)"
 msgid_plural ""
 "%s%s: client not allowed (max %d clients are allowed at same time)"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%s%s: klient odrzucony (maksymalnie %d klientów może się połączyć w tym samym czasie)"
+msgstr[1] "%s%s: klienty odrzucone (maksymalnie %d klientów może się połączyć w tym samym czasie)"
+msgstr[2] "%s%s: klienty odrzucone (maksymalnie %d klientów może się połączyć w tym samym czasie)"
 
 #, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
@@ -10713,16 +10720,16 @@ msgstr "%s%s: nie można wykonać \"bind\" na porcie %d (%s): błąd %d %s"
 msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
 msgstr "%s%s: nie można wykonać \"listen\" na porcie %d (%s): błąd %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
 msgid_plural "%s: listening on port %d (relay: %s, %s, max %d clients)"
-msgstr[0] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klientów)"
-msgstr[1] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klientów)"
+msgstr[0] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klient)"
+msgstr[1] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klienty)"
 msgstr[2] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klientów)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
-msgstr "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klientów)"
+msgstr "%s: nasłuchuję na porcie %d (relay: %s, %s)"
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
