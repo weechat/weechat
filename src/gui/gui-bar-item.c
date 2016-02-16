@@ -1311,8 +1311,8 @@ gui_bar_item_hotlist_cb (void *data, struct t_gui_bar_item *item,
                          struct t_gui_buffer *buffer,
                          struct t_hashtable *extra_info)
 {
-    char str_hotlist[4096], format[32], *buffer_without_name_displayed;
-    const char *hotlist_suffix;
+    char str_hotlist[4096], *buffer_without_name_displayed, *buffer_name;
+    const char *hotlist_suffix, *ptr_buffer_name;
     struct t_gui_hotlist *ptr_hotlist;
     int numbers_count, names_count, display_name, count_max;
     int priority, priority_min, priority_min_displayed, private;
@@ -1417,19 +1417,25 @@ gui_bar_item_hotlist_cb (void *data, struct t_gui_bar_item *item,
                 strcat (str_hotlist, GUI_COLOR_CUSTOM_BAR_DELIM);
                 strcat (str_hotlist, ":");
                 strcat (str_hotlist, GUI_COLOR_CUSTOM_BAR_FG);
+                ptr_buffer_name = (CONFIG_BOOLEAN(config_look_hotlist_short_names)) ?
+                    gui_buffer_get_short_name (ptr_hotlist->buffer) : ptr_hotlist->buffer->name;
                 if (CONFIG_INTEGER(config_look_hotlist_names_length) == 0)
                 {
-                    snprintf (format, sizeof (format), "%%s");
+                    buffer_name = strdup (ptr_buffer_name);
                 }
                 else
                 {
-                    snprintf (format, sizeof (format),
-                              "%%.%ds",
-                              CONFIG_INTEGER(config_look_hotlist_names_length));
+                    buffer_name = utf8_strndup (
+                        ptr_buffer_name,
+                        CONFIG_INTEGER(config_look_hotlist_names_length));
                 }
-                snprintf (str_hotlist + strlen (str_hotlist), 128, format,
-                          (CONFIG_BOOLEAN(config_look_hotlist_short_names)) ?
-                          gui_buffer_get_short_name (ptr_hotlist->buffer) : ptr_hotlist->buffer->name);
+                if (buffer_name)
+                {
+                    if (strlen (buffer_name) > 128)
+                        buffer_name[128] = '\0';
+                    strcat (str_hotlist, buffer_name);
+                    free (buffer_name);
+                }
             }
             else
             {
