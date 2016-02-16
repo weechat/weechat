@@ -148,22 +148,22 @@ Przykłady:
         rgb2term <rgb> [<limit>]
         -o
 
-   alias: add an alias for a color
- unalias: delete an alias
-   color: color number (greater than or equal to 0, max depends on terminal, commonly 63 or 255)
-    name: alias name for color (for example: "orange")
-   reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option "weechat.look.color_pairs_auto_reset")
-term2rgb: convert a terminal color (0-255) to RGB color
-rgb2term: convert a RGB color to terminal color (0-255)
-   limit: number of colors to use in terminal table (starting from 0); default is 256
-      -o: send terminal/colors info to current buffer as input
+  alias: dodaje alias dla koloru
+unalias: usuwa alias
+  kolor: numer koloru (większy lub równy 0, maksymalna wartość zależy od terminala, zazwyczaj 63 lub 255)
+   nazwa: nazwa aliasu dla koloru (na przykład: "orange")
+  reset: resetuje wszystkie pary kolorów (wymagane jeśli nie ma dostępnej większej ilości par kolorów, jeśli automatyczny reset jest wyłączony, zobacz opcję "weechat.look.color_pairs_auto_reset")
+term2rgb: konwersja koloru terminala (0-255) na kolor RGB
+rgb2term: konwersja koloru RGB na kolor terminala (0-255)
+   limit: liczba kolorów w tabeli kolorów terminala (numerowane od 0); domyślnie 256
+     -o: wysyła informacje o terminalu/kolorach do obecnego bufora
 
-Without argument, this command displays colors in a new buffer.
+Bez podania argumentu komenda wyświetli kolory w nowym buforze.
 
-Examples:
-  add alias "orange" for color 214:
+Przykłady:
+  dodaje alias "orange" dla koloru 214:
     /color alias 214 orange
-  delete color 214:
+  usuwa kolor 214:
     /color unalias 214
 ----
 
@@ -535,19 +535,19 @@ Przykłady:
          del [<nazwa>] [buffers|windows]
          rename <nazwa> <nowa nazwa>
 
-  store: store current buffers/windows in a layout
-  apply: apply stored layout
-  leave: leave current layout (does not update any layout)
-    del: delete buffers and/or windows in a stored layout
-         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
- rename: rename a layout
-   name: name for stored layout (default is "default")
-buffers: store/apply only buffers (order of buffers)
-windows: store/apply only windows (buffer displayed by each window)
+  store: zachowuje układ używając obecnych buforów/okien
+  apply: stosuje zapisany układ
+  leave: opuszcza obecny układ (nie aktualizuje żadnego układu)
+    del: usuwa bufory i/lub okna w zapisanym układzie
+         (jeśli zarówno "buffers" jak i "windows" nie zostaną podane po nazwie, układ jest kasowany)
+ rename: zmienia nazwę układu
+   nazwa: nazwa zapisanego układu (domyślnie "default")
+buffers: zapisuje/stosuje tylko bufory (kolejność buforów)
+windows: zapisuje/stosuje tylko okna (bufory wyświetlane w każdym oknie)
 
-Without argument, this command displays stored layouts.
+Komenda wywołana bez argumentów wyświetli zapisane układy.
 
-The current layout can be saved on /quit command with the option "weechat.look.save_layout_on_exit".
+Obecny układ można zapisać podczas wykonywania komendy /quit za pomocą opcji "weechat.look.save_layout_on_exit".
 ----
 
 [[command_weechat_mouse]]
@@ -700,11 +700,11 @@ Przykłady:
 ----
 /quit  [-yes][<argumenty>]
 
-     -yes: required if option "weechat.look.confirm_quit" is enabled
-arguments: text sent with signal "quit"
-           (for example irc plugin uses this text to send quit message to server)
+     -yes: wymagane jeśli opcja weechat.look.confirm_quit jest włączona
+argumenty: tekst wysłany na sygnał "quit"
+           (na przykład wtyczka irc używa tego tekstu do wysłania wiadomości pożegnalnej na serwer)
 
-By default when quitting the configuration files are saved (see option "weechat.look.save_config_on_exit") and the current layout can be saved (see option "weechat.look.save_layout_on_exit").
+Domyślnie pliki konfiguracyjne są zapisywane przy wyjściu z aplikacji (zobacz opcję "weechat.look.save_config_on_exit") zapisany może byc też obecny układ okien (zobacz opcję "weechat.look.save_layout_on_exit").
 ----
 
 [[command_weechat_reload]]
@@ -741,11 +741,11 @@ Przykład:
 ----
 /save  [<plik> [<plik>...]]
 
-file: configuration file to save (without extension ".conf")
+plik: plik konfiguracyjny do zapisania (bez rozszerzenia ".conf")
 
-Without argument, all files (WeeChat and plugins) are saved.
+Bez podania argumentu wszystkie pliki (WeeChat oraz wtyczki) zostaną zapisane.
 
-By default all configuration files are saved to disk on /quit command (see option "weechat.look.save_config_on_exit").
+Domyślnie zapisywane na dysku są wszystkie pliki konfiguracyjne podczas wykonywania komendy /quit (zobacz opcję "weechat.look.save_config_on_exit").
 ----
 
 [[command_weechat_secure]]
@@ -849,30 +849,30 @@ Przykłady:
 ----
 /upgrade  [-yes] [<ścieżka_do_binarki>|-quit]
 
-          -yes: required if option "weechat.look.confirm_upgrade" is enabled
-path_to_binary: path to WeeChat binary (default is current binary)
-        -dummy: do nothing (option used to prevent accidental completion with "-quit")
-         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
+          -yes: wymagane, jeśli "weechat.look.confirm_upgrade" jest włączona
+ścieżka_do_binarki: ścieżka do pliku binarnego WeeChat (domyślnie jest to obecny plik)
+        -dummy: nic nie rób (opcja użyta w celu zapobiegnięcia przypadkowego dopełnienia za pomocą"-quit")
+         -quit: zamyka *WSZYSTKIE* połączenia, zapisuje sesję i wyłącza WeeChat, umożliwia to późniejsze przywrócenie (zobacz niżej)
 
-This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
+Ta komenda uaktualnia i przeładowuje działającą sesję WeeChat.  Nowy plik binarny WeeChat powinien zostać skompilowany lub zainstalowany za pomocą managera pakietów przed uruchomieniem tej komendy.
 
-Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
+Uwaga: połączenia SSL są przerywane podczas uaktualniania, ponieważ przeładowanie sesji SSL nie jest obecnie możliwe za pomocą GnuTLS. Po uaktualnieniu nastąpi ponowne ich połączenie.
 
-Upgrade process has 4 steps:
-  1. save session into files for core and plugins (buffers, history, ..)
-  2. unload all plugins (configuration files (*.conf) are written on disk)
-  3. save WeeChat configuration (weechat.conf)
-  4. execute new WeeChat binary and reload session.
+Proces uaktualnienia składa się z 4 kroków:
+  1. zapisania sesji do plików dla rdzenia i wtyczek (bufory, historia, ..)
+  2. wyładowanie wszystkich wtyczek (zapisanie plików konfiguracyjnych *.conf)
+  3. zapisanie konfiguracji WeeChat (weechat.conf)
+  4. uruchomienie nowego pliku binarnego WeeChat i przeładowanie sesji.
 
-With option "-quit", the process is slightly different:
-  1. close *ALL* connections (irc, xfer, relay, ...)
-  2. save session into files (*.upgrade)
-  3. unload all plugins
-  4. save WeeChat configuration
-  5. quit WeeChat
-Then later you can restore session with command: weechat --upgrade
-IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
-It is possible to restore WeeChat session on another machine if you copy the content of directory "~/.weechat".
+Z opcją "-quit", proces przebiega inaczej:
+  1. zamknięcie *WSZYSTKICH* połączeń (irc, xfer, relay, ...)
+  2. zapisanie sesji do pliku (*.upgrade)
+  3. wyładowanie wszystkich wtyczek
+  4. zapisanie konfiguracji WeeChat
+  5. wyłączenie WeeChat
+Następnie można przywrócić sesję za pomocą komendy: weechat --upgrade
+WAŻNE: należy przywracać sesję z identyczną konfiguracją (pliki *.conf).
+Jest możliwe przywrócenie sesji WeeChat na innej maszynie, jeśli skopiujemy zawartość katalogu "~/.weechat".
 ----
 
 [[command_weechat_uptime]]

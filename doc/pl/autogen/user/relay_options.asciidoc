@@ -113,7 +113,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
-** opis: `maximum number of clients connecting to a port (0 = no limit)`
+** opis: `maksymalna ilość klientów łączących się na port (0 = brak limitu)`
 ** typ: liczba
 ** wartości: 0 .. 2147483647 (domyślna wartość: `5`)
 
