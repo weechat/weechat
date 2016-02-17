@@ -494,11 +494,13 @@ WeeChat でマウスが利用可能な場合、key[shift] キーを押しなが�
 [[irc_ssl_connection]]
 === SSL を使うサーバへの接続中に問題が発生しました。どうすればいいですか。
 
-Mac OS X をお使いの場合、必ず `curl-ca-bundle` をインストールして、WeeChat
-で証明書へのパスを設定してください:
+// TRANSLATION MISSING
+If you are using Mac OS X, you must install `openssl` from Homebrew.
+A CA file will be bootstrapped using certificates from the system keychain.
+You can then set the path to certificates in WeeChat:
 
 ----
-/set weechat.network.gnutls_ca_file "/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt"
+/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
 ----
 
 gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キー

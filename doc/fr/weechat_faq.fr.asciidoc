@@ -515,11 +515,12 @@ key[alt] au lieu de key[shift]).
 [[irc_ssl_connection]]
 === J'ai des problèmes pour me connecter au serveur avec SSL, que puis-je faire ?
 
-Si vous utilisez Mac OS X, vous devez installer `curl-ca-bundle` et définir le
-chemin vers les certificats sous WeeChat :
+Si vous utilisez Mac OS X, vous devez installer `openssl` depuis Homebrew.
+Un fichier CA sera installé avec le le trousseau système. Vous pouvez alors
+définie le chemin vers les certificats sous WeeChat :
 
 ----
-/set weechat.network.gnutls_ca_file "/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt"
+/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
 ----
 
 Si vous voyez des erreurs à propos de la poignée de main gnutls ("handshake"),

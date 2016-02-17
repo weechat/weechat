@@ -492,9 +492,9 @@ you have to use key[alt] instead of key[shift]).
 [[irc_ssl_connection]]
 === I have some problems when connecting to a server using SSL, what can I do?
 
-If you are using Mac OS X, you must install `openssl` from Homebrew. A CA file
-will be bootstrapped using certificates from the system keychain. And set the
-path to certificates in WeeChat:
+If you are using Mac OS X, you must install `openssl` from Homebrew.
+A CA file will be bootstrapped using certificates from the system keychain.
+You can then set the path to certificates in WeeChat:
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
