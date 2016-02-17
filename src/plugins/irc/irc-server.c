@@ -3544,7 +3544,7 @@ irc_server_login (struct t_irc_server *server)
 
     if (irc_server_sasl_enabled (server) || (capabilities && capabilities[0]))
     {
-        irc_server_sendf (server, 0, NULL, "CAP LS 302");
+        irc_server_sendf (server, 0, NULL, "CAP LS " IRC_SERVER_VERSION_CAP);
     }
 
     username2 = (username && username[0]) ?

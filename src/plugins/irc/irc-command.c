@@ -1221,7 +1221,7 @@ IRC_COMMAND_CALLBACK(cap)
         if ((weechat_strcasecmp (argv[1], "ls") == 0) && !argv_eol[2])
         {
             irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "CAP LS 302");
+                              "CAP LS " IRC_SERVER_VERSION_CAP);
         }
         else
         {
@@ -1241,7 +1241,7 @@ IRC_COMMAND_CALLBACK(cap)
          * enabled
          */
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "CAP LS 302");
+                          "CAP LS " IRC_SERVER_VERSION_CAP);
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "CAP LIST");
     }

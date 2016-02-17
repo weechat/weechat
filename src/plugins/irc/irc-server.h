@@ -121,6 +121,9 @@ enum t_irc_server_option
 #define IRC_SERVER_SEND_OUTQ_PRIO_LOW    2
 #define IRC_SERVER_SEND_RETURN_HASHTABLE 4
 
+/* version strings */
+#define IRC_SERVER_VERSION_CAP "302"
+
 /* casemapping (string comparisons for nicks/channels) */
 enum t_irc_server_casemapping
 {
