@@ -2359,7 +2359,7 @@ string_iconv_from_internal (const char *charset, const char *string)
 
     /*
      * optimized for UTF-8: if charset is NULL => we use term charset => if
-     * this charset is already UTF-8, then no iconv needed
+     * this charset is already UTF-8, then no iconv is needed
      */
     if (local_utf8 && (!charset || !charset[0]))
         return input;
