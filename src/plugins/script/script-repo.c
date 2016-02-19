@@ -1448,6 +1448,8 @@ script_repo_file_update_process_cb (void *data, const char *command,
 
         if (script_repo_file_read (quiet) && scripts_repo)
         {
+            if (script_buffer)
+                script_buffer_refresh (1);
             if (!script_action_run ())
                 script_buffer_refresh (1);
         }
