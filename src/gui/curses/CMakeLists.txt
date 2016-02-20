@@ -27,7 +27,13 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "SunOS")
   list(APPEND EXTRA_LIBS "socket" "nsl")
 endif()
 
-list(APPEND EXTRA_LIBS "pthread")
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
+  list(APPEND EXTRA_LIBS "network")
+endif()
+
+if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
+  list(APPEND EXTRA_LIBS "pthread")
+endif()
 
 if(ICONV_LIBRARY)
   list(APPEND EXTRA_LIBS ${ICONV_LIBRARY})
