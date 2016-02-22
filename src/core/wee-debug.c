@@ -154,20 +154,27 @@ debug_sigsegv ()
     unhook_all ();
     gui_main_end (0);
 
-    string_iconv_fprintf (stderr, "\n");
-    string_iconv_fprintf (stderr, "*** Very bad! WeeChat is crashing (SIGSEGV received)\n");
+    string_iconv_fprintf (
+        stderr,
+        "\n"
+        "*** Very bad! WeeChat is crashing (SIGSEGV received)\n");
     if (!log_crash_rename ())
-        string_iconv_fprintf (stderr,
-                              "*** Full crash dump was saved to %s/weechat.log file.\n",
-                              weechat_home);
-    string_iconv_fprintf (stderr, "***\n");
-    string_iconv_fprintf (stderr, "*** Please help WeeChat developers to fix this bug:\n");
-    string_iconv_fprintf (stderr, "***   1. If you have a core file, please run:  gdb /path/to/weechat core\n");
-    string_iconv_fprintf (stderr, "***      then issue command: \"bt full\" and send result to developers\n");
-    string_iconv_fprintf (stderr, "***      (see user's guide for more info about report of crashes).\n");
-    string_iconv_fprintf (stderr, "***   2. Otherwise send backtrace (below), only if it is a complete trace.\n");
-    string_iconv_fprintf (stderr, "***      Keep the crash log file, just in case developers ask you some info\n");
-    string_iconv_fprintf (stderr, "***      (be careful, private info like passwords may be in this file).\n\n");
+    {
+        string_iconv_fprintf (
+            stderr,
+            "*** Full crash dump was saved to %s/weechat.log file.\n",
+            weechat_home);
+    }
+    string_iconv_fprintf (
+        stderr,
+        "***\n"
+        "*** Please help WeeChat developers to fix this bug:\n"
+        "***   1. If you have a core file, please run:  gdb /path/to/weechat core\n"
+        "***      then issue command: \"bt full\" and send result to developers\n"
+        "***      (see user's guide for more info about report of crashes).\n"
+        "***   2. Otherwise send backtrace (below), only if it is a complete trace.\n"
+        "***      Keep the crash log file, just in case developers ask you some info\n"
+        "***      (be careful, private info like passwords may be in this file).\n\n");
 
     weechat_backtrace ();
 
