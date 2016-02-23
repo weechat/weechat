@@ -25,7 +25,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <string>
-#include <time.h>
+#include <ctime>
 
 extern "C"
 {
