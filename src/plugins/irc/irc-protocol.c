@@ -345,7 +345,7 @@ IRC_PROTOCOL_CALLBACK(cap)
     const char *ptr_cap_option;
     int num_caps_supported, num_caps_requested, num_caps_added;
     int num_caps_removed, sasl_requested, sasl_to_do, sasl_mechanism;
-    int i, j, timeout, length;
+    int sasl_fail, i, j, timeout, length;
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -429,6 +429,19 @@ IRC_PROTOCOL_CALLBACK(cap)
                             server->buffer,
                             _("%s%s: client capability: SASL not supported"),
                             weechat_prefix ("network"), IRC_PLUGIN_NAME);
+
+                        if (weechat_config_boolean (irc_config_network_sasl_fail_unavailable))
+                        {
+                            /* same handling as for sasl_end_fail */
+                            sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
+                            if ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
+                                || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT))
+                            {
+                                irc_server_disconnect (
+                                    server, 0,
+                                    (sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT) ? 1 : 0);
+                            }
+                        }
                     }
                 }
                 if (cap_option)
