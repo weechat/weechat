@@ -393,6 +393,72 @@ irc_modelist_hdata_modelist_cb (const void *pointer, void *data, const char *hda
 }
 
 /*
+ * Adds a modelist item in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+irc_modelist_item_add_to_infolist (struct t_infolist *infolist,
+                                   struct t_irc_modelist_item *item)
+{
+    struct t_infolist_item *ptr_item;
+
+    if (!infolist || !item)
+        return 0;
+
+    ptr_item = weechat_infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+
+    if (!weechat_infolist_new_var_integer (ptr_item, "number", item->number))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "mask", item->mask))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "setter", item->setter))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "datetime", item->datetime))
+        return 0;
+
+    return 1;
+}
+
+/*
+ * Adds a modelist in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+irc_modelist_add_to_infolist (struct t_infolist *infolist,
+                              struct t_irc_modelist *modelist)
+{
+    struct t_infolist_item *ptr_item;
+    char str_type[2];
+
+    if (!infolist || !modelist)
+        return 0;
+
+    ptr_item = weechat_infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+
+    str_type[0] = modelist->type;
+    str_type[1] = '\0';
+
+    if (!weechat_infolist_new_var_string (ptr_item, "type", str_type))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "state", modelist->state))
+        return 0;
+
+    return 1;
+}
+
+/*
  * Prints modelist item infos in WeeChat log file (usually for crash dump).
  */
 
