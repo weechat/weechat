@@ -3009,7 +3009,7 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "sasl_fail_unavailable", "boolean",
         N_("cause SASL authentication failure when SASL is requested but "
-           "unavailable"),
+           "unavailable on the server"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_send_unknown_commands = weechat_config_new_option (
         irc_config_file, ptr_section,

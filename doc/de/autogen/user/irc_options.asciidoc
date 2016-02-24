@@ -427,6 +427,11 @@
 ** Typ: integer
 ** Werte: 1 .. 10080 (Standardwert: `5`)
 
+* [[option_irc.network.sasl_fail_unavailable]] *irc.network.sasl_fail_unavailable*
+** Beschreibung: `cause SASL authentication failure when SASL is requested but unavailable on the server`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
 * [[option_irc.network.send_unknown_commands]] *irc.network.send_unknown_commands*
 ** Beschreibung: `sendet unbekannte Befehle an den Server`
 ** Typ: boolesch

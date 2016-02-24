@@ -427,6 +427,11 @@
 ** タイプ: 整数
 ** 値: 1 .. 10080 (デフォルト値: `5`)
 
+* [[option_irc.network.sasl_fail_unavailable]] *irc.network.sasl_fail_unavailable*
+** 説明: `cause SASL authentication failure when SASL is requested but unavailable on the server`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
 * [[option_irc.network.send_unknown_commands]] *irc.network.send_unknown_commands*
 ** 説明: `未定義のコマンドをサーバに送信`
 ** タイプ: ブール
