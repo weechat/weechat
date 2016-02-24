@@ -142,6 +142,7 @@ struct t_config_option *irc_config_network_lag_reconnect;
 struct t_config_option *irc_config_network_lag_refresh_interval;
 struct t_config_option *irc_config_network_notify_check_ison;
 struct t_config_option *irc_config_network_notify_check_whois;
+struct t_config_option *irc_config_network_sasl_fail_unavailable;
 struct t_config_option *irc_config_network_send_unknown_commands;
 struct t_config_option *irc_config_network_whois_double_nick;
 
@@ -3004,6 +3005,12 @@ irc_config_init ()
            "(in minutes)"),
         NULL, 1, 60 * 24 * 7, "5", NULL, 0, NULL, NULL,
         &irc_config_change_network_notify_check_whois, NULL, NULL, NULL);
+    irc_config_network_sasl_fail_unavailable = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "sasl_fail_unavailable", "boolean",
+        N_("cause SASL authentication failure when SASL is requested but "
+           "unavailable"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_send_unknown_commands = weechat_config_new_option (
         irc_config_file, ptr_section,
         "send_unknown_commands", "boolean",

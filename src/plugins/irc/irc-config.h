@@ -183,6 +183,7 @@ extern struct t_config_option *irc_config_network_lag_reconnect;
 extern struct t_config_option *irc_config_network_lag_refresh_interval;
 extern struct t_config_option *irc_config_network_notify_check_ison;
 extern struct t_config_option *irc_config_network_notify_check_whois;
+extern struct t_config_option *irc_config_network_sasl_fail_unavailable;
 extern struct t_config_option *irc_config_network_send_unknown_commands;
 extern struct t_config_option *irc_config_network_whois_double_nick;
 
