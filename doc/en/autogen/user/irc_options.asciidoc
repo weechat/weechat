@@ -428,7 +428,7 @@
 ** values: 1 .. 10080 (default value: `5`)
 
 * [[option_irc.network.sasl_fail_unavailable]] *irc.network.sasl_fail_unavailable*
-** description: `cause SASL authentication failure when SASL is requested but unavailable on the server`
+** description: `cause SASL authentication failure when SASL is requested but unavailable on the server; when this option is enabled, it has effect only if option "sasl_fail" is set to "reconnect" or "disconnect" in the server`
 ** type: boolean
 ** values: on, off (default value: `on`)
 
@@ -573,7 +573,7 @@
 ** values: any string (default value: `""`)
 
 * [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
-** description: `action to perform if SASL authentication fails: "continue" to ignore the authentication problem, "reconnect" to schedule a reconnection to the server, "disconnect" to disconnect from server`
+** description: `action to perform if SASL authentication fails: "continue" to ignore the authentication problem, "reconnect" to schedule a reconnection to the server, "disconnect" to disconnect from server (see also option irc.network.sasl_fail_unavailable)`
 ** type: integer
 ** values: continue, reconnect, disconnect (default value: `continue`)
 

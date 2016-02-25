@@ -1796,7 +1796,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 N_("action to perform if SASL authentication fails: "
                    "\"continue\" to ignore the authentication problem, "
                    "\"reconnect\" to schedule a reconnection to the server, "
-                   "\"disconnect\" to disconnect from server"),
+                   "\"disconnect\" to disconnect from server "
+                   "(see also option irc.network.sasl_fail_unavailable)"),
                 "continue|reconnect|disconnect", 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -3009,7 +3010,9 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "sasl_fail_unavailable", "boolean",
         N_("cause SASL authentication failure when SASL is requested but "
-           "unavailable on the server"),
+           "unavailable on the server; when this option is enabled, it has "
+           "effect only if option \"sasl_fail\" is set to \"reconnect\" or "
+           "\"disconnect\" in the server"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_send_unknown_commands = weechat_config_new_option (
         irc_config_file, ptr_section,

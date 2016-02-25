@@ -428,7 +428,7 @@
 ** valeurs: 1 .. 10080 (valeur par défaut: `5`)
 
 * [[option_irc.network.sasl_fail_unavailable]] *irc.network.sasl_fail_unavailable*
-** description: `provoquer un échec d'authentification SASL quand SASL est demandé mais non disponible sur le serveur`
+** description: `provoquer un échec d'authentification SASL quand SASL est demandé mais non disponible sur le serveur ; lorsque cette option est activée, elle n'a d'effet que si l'option "sasl_fail" est égale à "reconnect" ou "disconnect" dans le serveur`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
@@ -573,7 +573,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.sasl_fail]] *irc.server_default.sasl_fail*
-** description: `action à effectuer si l'authentification SASL échoue : "continue" pour ignorer le problème d'authentification, "reconnect" pour planifier une reconnexion au serveur, "disconnect" pour se déconnecter du serveur`
+** description: `action à effectuer si l'authentification SASL échoue : "continue" pour ignorer le problème d'authentification, "reconnect" pour planifier une reconnexion au serveur, "disconnect" pour se déconnecter du serveur (voir aussi l'option irc.network.sasl_fail_unavailable)`
 ** type: entier
 ** valeurs: continue, reconnect, disconnect (valeur par défaut: `continue`)
 
