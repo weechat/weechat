@@ -465,41 +465,41 @@ gui_window_scroll_switch (struct t_gui_window *window,
 {
     struct t_gui_window_scroll *ptr_scroll, *new_scroll;
 
-    if (window && buffer)
+    if (!window || !buffer)
+        return;
+
+    ptr_scroll = gui_window_scroll_search (window, buffer);
+
+    /* scroll is already selected (first in list)? */
+    if (ptr_scroll && (ptr_scroll == window->scroll))
+        return;
+
+    if (ptr_scroll)
     {
-        ptr_scroll = gui_window_scroll_search (window, buffer);
-
-        /* scroll is already selected (first in list)? */
-        if (ptr_scroll && (ptr_scroll == window->scroll))
-            return;
-
-        if (ptr_scroll)
-        {
-            /* scroll found, move it in first position */
-            if (ptr_scroll->prev_scroll)
-                (ptr_scroll->prev_scroll)->next_scroll = ptr_scroll->next_scroll;
-            if (ptr_scroll->next_scroll)
-                (ptr_scroll->next_scroll)->prev_scroll = ptr_scroll->prev_scroll;
-            (window->scroll)->prev_scroll = ptr_scroll;
-            ptr_scroll->prev_scroll = NULL;
-            ptr_scroll->next_scroll = window->scroll;
-            window->scroll = ptr_scroll;
-        }
-        else
-        {
-            /* scroll not found, create one and add it at first position */
-            new_scroll = malloc (sizeof (*new_scroll));
-            if (new_scroll)
-            {
-                gui_window_scroll_init (new_scroll, buffer);
-                new_scroll->next_scroll = window->scroll;
-                (window->scroll)->prev_scroll = new_scroll;
-                window->scroll = new_scroll;
-            }
-        }
-
-        gui_window_scroll_remove_not_scrolled (window);
+        /* scroll found, move it in first position */
+        if (ptr_scroll->prev_scroll)
+            (ptr_scroll->prev_scroll)->next_scroll = ptr_scroll->next_scroll;
+        if (ptr_scroll->next_scroll)
+            (ptr_scroll->next_scroll)->prev_scroll = ptr_scroll->prev_scroll;
+        (window->scroll)->prev_scroll = ptr_scroll;
+        ptr_scroll->prev_scroll = NULL;
+        ptr_scroll->next_scroll = window->scroll;
+        window->scroll = ptr_scroll;
     }
+    else
+    {
+        /* scroll not found, create one and add it at first position */
+        new_scroll = malloc (sizeof (*new_scroll));
+        if (new_scroll)
+        {
+            gui_window_scroll_init (new_scroll, buffer);
+            new_scroll->next_scroll = window->scroll;
+            (window->scroll)->prev_scroll = new_scroll;
+            window->scroll = new_scroll;
+        }
+    }
+
+    gui_window_scroll_remove_not_scrolled (window);
 }
 
 /*
@@ -512,12 +512,12 @@ gui_window_scroll_remove_buffer (struct t_gui_window *window,
 {
     struct t_gui_window_scroll *ptr_scroll;
 
-    if (window && buffer)
-    {
-        ptr_scroll = gui_window_scroll_search (window, buffer);
-        if (ptr_scroll)
-            gui_window_scroll_free (window, ptr_scroll);
-    }
+    if (!window || !buffer)
+        return;
+
+    ptr_scroll = gui_window_scroll_search (window, buffer);
+    if (ptr_scroll)
+        gui_window_scroll_free (window, ptr_scroll);
 }
 
 /*
@@ -738,37 +738,37 @@ gui_window_search_with_buffer (struct t_gui_buffer *buffer)
 int
 gui_window_get_integer (struct t_gui_window *window, const char *property)
 {
-    if (window && property)
-    {
-        if (string_strcasecmp (property, "number") == 0)
-            return window->number;
-        if (string_strcasecmp (property, "win_x") == 0)
-            return window->win_x;
-        if (string_strcasecmp (property, "win_y") == 0)
-            return window->win_y;
-        if (string_strcasecmp (property, "win_width") == 0)
-            return window->win_width;
-        if (string_strcasecmp (property, "win_height") == 0)
-            return window->win_height;
-        if (string_strcasecmp (property, "win_width_pct") == 0)
-            return window->win_width_pct;
-        if (string_strcasecmp (property, "win_height_pct") == 0)
-            return window->win_height_pct;
-        if (string_strcasecmp (property, "win_chat_x") == 0)
-            return window->win_chat_x;
-        if (string_strcasecmp (property, "win_chat_y") == 0)
-            return window->win_chat_y;
-        if (string_strcasecmp (property, "win_chat_width") == 0)
-            return window->win_chat_width;
-        if (string_strcasecmp (property, "win_chat_height") == 0)
-            return window->win_chat_height;
-        if (string_strcasecmp (property, "first_line_displayed") == 0)
-            return window->scroll->first_line_displayed;
-        if (string_strcasecmp (property, "scrolling") == 0)
-            return window->scroll->scrolling;
-        if (string_strcasecmp (property, "lines_after") == 0)
-            return window->scroll->lines_after;
-    }
+    if (!window || !property)
+        return 0;
+
+    if (string_strcasecmp (property, "number") == 0)
+        return window->number;
+    if (string_strcasecmp (property, "win_x") == 0)
+        return window->win_x;
+    if (string_strcasecmp (property, "win_y") == 0)
+        return window->win_y;
+    if (string_strcasecmp (property, "win_width") == 0)
+        return window->win_width;
+    if (string_strcasecmp (property, "win_height") == 0)
+        return window->win_height;
+    if (string_strcasecmp (property, "win_width_pct") == 0)
+        return window->win_width_pct;
+    if (string_strcasecmp (property, "win_height_pct") == 0)
+        return window->win_height_pct;
+    if (string_strcasecmp (property, "win_chat_x") == 0)
+        return window->win_chat_x;
+    if (string_strcasecmp (property, "win_chat_y") == 0)
+        return window->win_chat_y;
+    if (string_strcasecmp (property, "win_chat_width") == 0)
+        return window->win_chat_width;
+    if (string_strcasecmp (property, "win_chat_height") == 0)
+        return window->win_chat_height;
+    if (string_strcasecmp (property, "first_line_displayed") == 0)
+        return window->scroll->first_line_displayed;
+    if (string_strcasecmp (property, "scrolling") == 0)
+        return window->scroll->scrolling;
+    if (string_strcasecmp (property, "lines_after") == 0)
+        return window->scroll->lines_after;
 
     return 0;
 }
@@ -780,9 +780,8 @@ gui_window_get_integer (struct t_gui_window *window, const char *property)
 const char *
 gui_window_get_string (struct t_gui_window *window, const char *property)
 {
-    if (window && property)
-    {
-    }
+    if (!window || !property)
+        return NULL;
 
     return NULL;
 }
@@ -817,6 +816,9 @@ void
 gui_window_set_layout_plugin_name (struct t_gui_window *window,
                                    const char *plugin_name)
 {
+    if (!window)
+        return;
+
     if (window->layout_plugin_name)
     {
         free (window->layout_plugin_name);
@@ -835,6 +837,9 @@ void
 gui_window_set_layout_buffer_name (struct t_gui_window *window,
                                    const char *buffer_name)
 {
+    if (!window)
+        return;
+
     if (window->layout_buffer_name)
     {
         free (window->layout_buffer_name);
@@ -852,8 +857,11 @@ gui_window_set_layout_buffer_name (struct t_gui_window *window,
 void
 gui_window_coords_init_line (struct t_gui_window *window, int line)
 {
-    if (!window->coords || (line < 0) || (line >= window->coords_size))
+    if (!window || !window->coords || (line < 0)
+        || (line >= window->coords_size))
+    {
         return;
+    }
 
     window->coords[line].line = NULL;
     window->coords[line].data = NULL;
@@ -876,7 +884,7 @@ gui_window_coords_remove_line (struct t_gui_window *window,
 {
     int i;
 
-    if (!window->coords)
+    if (!window || !window->coords)
         return;
 
     for (i = 0; i < window->coords_size; i++)
@@ -897,7 +905,7 @@ gui_window_coords_remove_line_data (struct t_gui_window *window,
 {
     int i;
 
-    if (!window->coords)
+    if (!window || !window->coords)
         return;
 
     for (i = 0; i < window->coords_size; i++)
@@ -918,6 +926,9 @@ void
 gui_window_coords_alloc (struct t_gui_window *window)
 {
     int i;
+
+    if (!window)
+        return;
 
     if (window->coords && (window->coords_size != window->win_chat_height))
     {
@@ -946,6 +957,9 @@ gui_window_free (struct t_gui_window *window)
 {
     struct t_gui_window *ptr_win, *old_current_window;
     int i;
+
+    if (!window)
+        return;
 
     old_current_window = gui_current_window;
 
@@ -1021,7 +1035,7 @@ gui_window_free (struct t_gui_window *window)
 void
 gui_window_switch_previous (struct t_gui_window *window)
 {
-    if (!gui_init_ok)
+    if (!gui_init_ok || !window)
         return;
 
     gui_window_switch ((window->prev_window) ?
@@ -1035,7 +1049,7 @@ gui_window_switch_previous (struct t_gui_window *window)
 void
 gui_window_switch_next (struct t_gui_window *window)
 {
-    if (!gui_init_ok)
+    if (!gui_init_ok || !window)
         return;
 
     gui_window_switch ((window->next_window) ?
@@ -1068,7 +1082,7 @@ gui_window_switch_by_buffer (struct t_gui_window *window, int buffer_number)
 {
     struct t_gui_window *ptr_win;
 
-    if (!gui_init_ok)
+    if (!gui_init_ok || !window)
         return;
 
     ptr_win = (window->next_window) ? window->next_window : gui_windows;
@@ -1098,7 +1112,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
     struct t_gui_line *ptr_line;
     struct tm *date_tmp, line_date, old_line_date;
 
-    if (!window->buffer->lines->first_line)
+    if (!window || !window->buffer->lines->first_line)
         return;
 
     direction = 1;
@@ -1345,61 +1359,61 @@ gui_window_scroll_horiz (struct t_gui_window *window, char *scroll)
     char saved_char, *pos, *error;
     long number;
 
-    if (window->buffer->lines->first_line)
+    if (!window || !window->buffer->lines->first_line)
+        return;
+
+    direction = 1;
+    number = 0;
+    percentage = 0;
+
+    /* search direction */
+    if (scroll[0] == '-')
     {
-        direction = 1;
-        number = 0;
-        percentage = 0;
+        direction = -1;
+        scroll++;
+    }
+    else if (scroll[0] == '+')
+    {
+        direction = +1;
+        scroll++;
+    }
 
-        /* search direction */
-        if (scroll[0] == '-')
-        {
-            direction = -1;
-            scroll++;
-        }
-        else if (scroll[0] == '+')
-        {
-            direction = +1;
-            scroll++;
-        }
+    /* search number and percentage */
+    pos = scroll;
+    while (pos && pos[0] && isdigit ((unsigned char)pos[0]))
+    {
+        pos++;
+    }
+    if (pos && (pos > scroll))
+    {
+        percentage = (pos[0] == '%') ? 1 : 0;
+        saved_char = pos[0];
+        pos[0] = '\0';
+        error = NULL;
+        number = strtol (scroll, &error, 10);
+        if (!error || error[0])
+            number = 0;
+        pos[0] = saved_char;
+    }
 
-        /* search number and percentage */
-        pos = scroll;
-        while (pos && pos[0] && isdigit ((unsigned char)pos[0]))
-        {
-            pos++;
-        }
-        if (pos && (pos > scroll))
-        {
-            percentage = (pos[0] == '%') ? 1 : 0;
-            saved_char = pos[0];
-            pos[0] = '\0';
-            error = NULL;
-            number = strtol (scroll, &error, 10);
-            if (!error || error[0])
-                number = 0;
-            pos[0] = saved_char;
-        }
+    /* for percentage, compute number of columns */
+    if (percentage)
+    {
+        number = (window->win_chat_width * number) / 100;
+    }
 
-        /* for percentage, compute number of columns */
-        if (percentage)
-        {
-            number = (window->win_chat_width * number) / 100;
-        }
+    /* number must be different from 0 */
+    if (number == 0)
+        return;
 
-        /* number must be different from 0 */
-        if (number == 0)
-            return;
-
-        /* do the horizontal scroll! */
-        start_col = window->scroll->start_col + (number * direction);
-        if (start_col < 0)
-            start_col = 0;
-        if (start_col != window->scroll->start_col)
-        {
-            window->scroll->start_col = start_col;
-            gui_buffer_ask_chat_refresh (window->buffer, 2);
-        }
+    /* do the horizontal scroll! */
+    start_col = window->scroll->start_col + (number * direction);
+    if (start_col < 0)
+        start_col = 0;
+    if (start_col != window->scroll->start_col)
+    {
+        window->scroll->start_col = start_col;
+        gui_buffer_ask_chat_refresh (window->buffer, 2);
     }
 }
 
@@ -1411,6 +1425,9 @@ void
 gui_window_scroll_previous_highlight (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
+
+    if (!window)
+        return;
 
     if ((window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
         && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
@@ -1447,6 +1464,9 @@ gui_window_scroll_next_highlight (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
 
+    if (!window)
+        return;
+
     if ((window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
         && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
@@ -1480,6 +1500,9 @@ gui_window_scroll_next_highlight (struct t_gui_window *window)
 void
 gui_window_scroll_unread (struct t_gui_window *window)
 {
+    if (!window)
+        return;
+
     if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
         if (CONFIG_STRING(config_look_read_marker) &&
@@ -1518,6 +1541,9 @@ int
 gui_window_search_text (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
+
+    if (!window)
+        return 0;
 
     if (window->buffer->text_search == GUI_TEXT_SEARCH_BACKWARD)
     {
@@ -1577,6 +1603,9 @@ void
 gui_window_search_start (struct t_gui_window *window,
                          struct t_gui_line *text_search_start_line)
 {
+    if (!window)
+        return;
+
     window->scroll->text_search_start_line = text_search_start_line;
     window->buffer->text_search =
         (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED) ?
@@ -1630,6 +1659,9 @@ gui_window_search_start (struct t_gui_window *window,
 void
 gui_window_search_restart (struct t_gui_window *window)
 {
+    if (!window)
+        return;
+
     window->scroll->start_line = window->scroll->text_search_start_line;
     window->scroll->start_line_pos = 0;
     window->buffer->text_search =
@@ -1658,6 +1690,9 @@ gui_window_search_restart (struct t_gui_window *window)
 void
 gui_window_search_end (struct t_gui_window *window)
 {
+    if (!window)
+        return;
+
     window->buffer->text_search = GUI_TEXT_SEARCH_DISABLED;
     window->buffer->text_search = 0;
     if (window->buffer->text_search_regex_compiled)
@@ -1686,6 +1721,9 @@ gui_window_search_end (struct t_gui_window *window)
 void
 gui_window_search_stop_here (struct t_gui_window *window)
 {
+    if (!window)
+        return;
+
     gui_window_search_end (window);
     window->scroll->text_search_start_line = NULL;
     gui_buffer_ask_chat_refresh (window->buffer, 2);
@@ -1698,6 +1736,9 @@ gui_window_search_stop_here (struct t_gui_window *window)
 void
 gui_window_search_stop (struct t_gui_window *window)
 {
+    if (!window)
+        return;
+
     gui_window_search_end (window);
     window->scroll->start_line = window->scroll->text_search_start_line;
     window->scroll->start_line_pos = 0;
@@ -1715,7 +1756,7 @@ gui_window_zoom (struct t_gui_window *window)
 {
     struct t_gui_layout *ptr_layout;
 
-    if (!gui_init_ok)
+    if (!gui_init_ok || !window)
         return;
 
     ptr_layout = gui_layout_search (GUI_LAYOUT_ZOOM);

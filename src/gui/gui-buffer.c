@@ -121,6 +121,9 @@ char *gui_buffer_properties_set[] =
 const char *
 gui_buffer_get_plugin_name (struct t_gui_buffer *buffer)
 {
+    if (!buffer)
+        return NULL;
+
     if (buffer->plugin_name_for_upgrade)
         return buffer->plugin_name_for_upgrade;
 
@@ -136,6 +139,9 @@ gui_buffer_get_plugin_name (struct t_gui_buffer *buffer)
 const char *
 gui_buffer_get_short_name (struct t_gui_buffer *buffer)
 {
+    if (!buffer)
+        return NULL;
+
     return (buffer->short_name) ? buffer->short_name : buffer->name;
 }
 
@@ -148,6 +154,9 @@ void
 gui_buffer_build_full_name (struct t_gui_buffer *buffer)
 {
     int length;
+
+    if (!buffer)
+        return;
 
     if (buffer->full_name)
         free (buffer->full_name);
@@ -231,6 +240,9 @@ gui_buffer_notify_get (struct t_gui_buffer *buffer)
     int length;
     struct t_config_option *ptr_option;
 
+    if (!buffer)
+        return CONFIG_INTEGER(config_look_buffer_notify_default);
+
     length = strlen (buffer->full_name) + 1;
     option_name = malloc (length);
     if (option_name)
@@ -278,6 +290,9 @@ void
 gui_buffer_notify_set (struct t_gui_buffer *buffer)
 {
     int old_notify, new_notify;
+
+    if (!buffer)
+        return;
 
     old_notify = buffer->notify;
     new_notify = gui_buffer_notify_get (buffer);
@@ -327,6 +342,9 @@ struct t_gui_buffer *
 gui_buffer_find_pos (struct t_gui_buffer *buffer)
 {
     struct t_gui_buffer *ptr_buffer;
+
+    if (!buffer)
+        return NULL;
 
     /* if no number is asked by layout, position is undefined */
     if (buffer->layout_number < 1)
@@ -770,7 +788,7 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
     char *result, *result2, *local_var;
     const char *pos_end_name, *ptr_value;
 
-    if (!string)
+    if (!buffer || !string)
         return NULL;
 
     length = strlen (string) + 1;
@@ -854,6 +872,9 @@ gui_buffer_match_list_split (struct t_gui_buffer *buffer,
     int i, match;
     char *ptr_name;
 
+    if (!buffer)
+        return 0;
+
     match = 0;
 
     for (i = 0; i < num_buffers; i++)
@@ -893,7 +914,7 @@ gui_buffer_match_list (struct t_gui_buffer *buffer, const char *string)
     char **buffers;
     int num_buffers, match;
 
-    if (!string || !string[0])
+    if (!buffer || !string || !string[0])
         return 0;
 
     match = 0;
@@ -966,85 +987,85 @@ gui_buffer_property_in_list (char *properties[], char *property)
 int
 gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
 {
-    if (buffer && property)
-    {
-        if (string_strcasecmp (property, "number") == 0)
-            return buffer->number;
-        else if (string_strcasecmp (property, "layout_number") == 0)
-            return buffer->layout_number;
-        else if (string_strcasecmp (property, "layout_number_merge_order") == 0)
-            return buffer->layout_number_merge_order;
-        else if (string_strcasecmp (property, "short_name_is_set") == 0)
-            return (buffer->short_name) ? 1 : 0;
-        else if (string_strcasecmp (property, "type") == 0)
-            return buffer->type;
-        else if (string_strcasecmp (property, "notify") == 0)
-            return buffer->notify;
-        else if (string_strcasecmp (property, "num_displayed") == 0)
-            return buffer->num_displayed;
-        else if (string_strcasecmp (property, "active") == 0)
-            return buffer->active;
-        else if (string_strcasecmp (property, "hidden") == 0)
-            return buffer->hidden;
-        else if (string_strcasecmp (property, "zoomed") == 0)
-            return buffer->zoomed;
-        else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
-            return buffer->print_hooks_enabled;
-        else if (string_strcasecmp (property, "day_change") == 0)
-            return buffer->day_change;
-        else if (string_strcasecmp (property, "clear") == 0)
-            return buffer->clear;
-        else if (string_strcasecmp (property, "filter") == 0)
-            return buffer->filter;
-        else if (string_strcasecmp (property, "closing") == 0)
-            return buffer->closing;
-        else if (string_strcasecmp (property, "lines_hidden") == 0)
-            return buffer->lines->lines_hidden;
-        else if (string_strcasecmp (property, "prefix_max_length") == 0)
-            return buffer->lines->prefix_max_length;
-        else if (string_strcasecmp (property, "time_for_each_line") == 0)
-            return buffer->time_for_each_line;
-        else if (string_strcasecmp (property, "nicklist") == 0)
-            return buffer->nicklist;
-        else if (string_strcasecmp (property, "nicklist_case_sensitive") == 0)
-            return buffer->nicklist_case_sensitive;
-        else if (string_strcasecmp (property, "nicklist_max_length") == 0)
-            return buffer->nicklist_max_length;
-        else if (string_strcasecmp (property, "nicklist_display_groups") == 0)
-            return buffer->nicklist_display_groups;
-        else if (string_strcasecmp (property, "nicklist_count") == 0)
-            return buffer->nicklist_count;
-        else if (string_strcasecmp (property, "nicklist_groups_count") == 0)
-            return buffer->nicklist_groups_count;
-        else if (string_strcasecmp (property, "nicklist_nicks_count") == 0)
-            return buffer->nicklist_nicks_count;
-        else if (string_strcasecmp (property, "nicklist_visible_count") == 0)
-            return buffer->nicklist_visible_count;
-        else if (string_strcasecmp (property, "input") == 0)
-            return buffer->input;
-        else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
-            return buffer->input_get_unknown_commands;
-        else if (string_strcasecmp (property, "input_size") == 0)
-            return buffer->input_buffer_size;
-        else if (string_strcasecmp (property, "input_length") == 0)
-            return buffer->input_buffer_length;
-        else if (string_strcasecmp (property, "input_pos") == 0)
-            return buffer->input_buffer_pos;
-        else if (string_strcasecmp (property, "input_1st_display") == 0)
-            return buffer->input_buffer_1st_display;
-        else if (string_strcasecmp (property, "num_history") == 0)
-            return buffer->num_history;
-        else if (string_strcasecmp (property, "text_search") == 0)
-            return buffer->text_search;
-        else if (string_strcasecmp (property, "text_search_exact") == 0)
-            return buffer->text_search_exact;
-        else if (string_strcasecmp (property, "text_search_regex") == 0)
-            return buffer->text_search_regex;
-        else if (string_strcasecmp (property, "text_search_where") == 0)
-            return buffer->text_search_where;
-        else if (string_strcasecmp (property, "text_search_found") == 0)
-            return buffer->text_search_found;
-    }
+    if (!buffer || !property)
+        return 0;
+
+    if (string_strcasecmp (property, "number") == 0)
+        return buffer->number;
+    else if (string_strcasecmp (property, "layout_number") == 0)
+        return buffer->layout_number;
+    else if (string_strcasecmp (property, "layout_number_merge_order") == 0)
+        return buffer->layout_number_merge_order;
+    else if (string_strcasecmp (property, "short_name_is_set") == 0)
+        return (buffer->short_name) ? 1 : 0;
+    else if (string_strcasecmp (property, "type") == 0)
+        return buffer->type;
+    else if (string_strcasecmp (property, "notify") == 0)
+        return buffer->notify;
+    else if (string_strcasecmp (property, "num_displayed") == 0)
+        return buffer->num_displayed;
+    else if (string_strcasecmp (property, "active") == 0)
+        return buffer->active;
+    else if (string_strcasecmp (property, "hidden") == 0)
+        return buffer->hidden;
+    else if (string_strcasecmp (property, "zoomed") == 0)
+        return buffer->zoomed;
+    else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
+        return buffer->print_hooks_enabled;
+    else if (string_strcasecmp (property, "day_change") == 0)
+        return buffer->day_change;
+    else if (string_strcasecmp (property, "clear") == 0)
+        return buffer->clear;
+    else if (string_strcasecmp (property, "filter") == 0)
+        return buffer->filter;
+    else if (string_strcasecmp (property, "closing") == 0)
+        return buffer->closing;
+    else if (string_strcasecmp (property, "lines_hidden") == 0)
+        return buffer->lines->lines_hidden;
+    else if (string_strcasecmp (property, "prefix_max_length") == 0)
+        return buffer->lines->prefix_max_length;
+    else if (string_strcasecmp (property, "time_for_each_line") == 0)
+        return buffer->time_for_each_line;
+    else if (string_strcasecmp (property, "nicklist") == 0)
+        return buffer->nicklist;
+    else if (string_strcasecmp (property, "nicklist_case_sensitive") == 0)
+        return buffer->nicklist_case_sensitive;
+    else if (string_strcasecmp (property, "nicklist_max_length") == 0)
+        return buffer->nicklist_max_length;
+    else if (string_strcasecmp (property, "nicklist_display_groups") == 0)
+        return buffer->nicklist_display_groups;
+    else if (string_strcasecmp (property, "nicklist_count") == 0)
+        return buffer->nicklist_count;
+    else if (string_strcasecmp (property, "nicklist_groups_count") == 0)
+        return buffer->nicklist_groups_count;
+    else if (string_strcasecmp (property, "nicklist_nicks_count") == 0)
+        return buffer->nicklist_nicks_count;
+    else if (string_strcasecmp (property, "nicklist_visible_count") == 0)
+        return buffer->nicklist_visible_count;
+    else if (string_strcasecmp (property, "input") == 0)
+        return buffer->input;
+    else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
+        return buffer->input_get_unknown_commands;
+    else if (string_strcasecmp (property, "input_size") == 0)
+        return buffer->input_buffer_size;
+    else if (string_strcasecmp (property, "input_length") == 0)
+        return buffer->input_buffer_length;
+    else if (string_strcasecmp (property, "input_pos") == 0)
+        return buffer->input_buffer_pos;
+    else if (string_strcasecmp (property, "input_1st_display") == 0)
+        return buffer->input_buffer_1st_display;
+    else if (string_strcasecmp (property, "num_history") == 0)
+        return buffer->num_history;
+    else if (string_strcasecmp (property, "text_search") == 0)
+        return buffer->text_search;
+    else if (string_strcasecmp (property, "text_search_exact") == 0)
+        return buffer->text_search_exact;
+    else if (string_strcasecmp (property, "text_search_regex") == 0)
+        return buffer->text_search_regex;
+    else if (string_strcasecmp (property, "text_search_where") == 0)
+        return buffer->text_search_where;
+    else if (string_strcasecmp (property, "text_search_found") == 0)
+        return buffer->text_search_found;
 
     return 0;
 }
@@ -1058,39 +1079,39 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 {
     const char *ptr_value;
 
-    if (buffer && property)
+    if (!buffer || !property)
+        return NULL;
+
+    if (string_strcasecmp (property, "plugin") == 0)
+        return gui_buffer_get_plugin_name (buffer);
+    else if (string_strcasecmp (property, "name") == 0)
+        return buffer->name;
+    else if (string_strcasecmp (property, "full_name") == 0)
+        return buffer->full_name;
+    else if (string_strcasecmp (property, "short_name") == 0)
+        return gui_buffer_get_short_name (buffer);
+    else if (string_strcasecmp (property, "title") == 0)
+        return buffer->title;
+    else if (string_strcasecmp (property, "input") == 0)
+        return buffer->input_buffer;
+    else if (string_strcasecmp (property, "text_search_input") == 0)
+        return buffer->text_search_input;
+    else if (string_strcasecmp (property, "highlight_words") == 0)
+        return buffer->highlight_words;
+    else if (string_strcasecmp (property, "highlight_regex") == 0)
+        return buffer->highlight_regex;
+    else if (string_strcasecmp (property, "highlight_tags_restrict") == 0)
+        return buffer->highlight_tags_restrict;
+    else if (string_strcasecmp (property, "highlight_tags") == 0)
+        return buffer->highlight_tags;
+    else if (string_strcasecmp (property, "hotlist_max_level_nicks") == 0)
+        return hashtable_get_string (buffer->hotlist_max_level_nicks, "keys_values");
+    else if (string_strncasecmp (property, "localvar_", 9) == 0)
     {
-        if (string_strcasecmp (property, "plugin") == 0)
-            return gui_buffer_get_plugin_name (buffer);
-        else if (string_strcasecmp (property, "name") == 0)
-            return buffer->name;
-        else if (string_strcasecmp (property, "full_name") == 0)
-            return buffer->full_name;
-        else if (string_strcasecmp (property, "short_name") == 0)
-            return gui_buffer_get_short_name (buffer);
-        else if (string_strcasecmp (property, "title") == 0)
-            return buffer->title;
-        else if (string_strcasecmp (property, "input") == 0)
-            return buffer->input_buffer;
-        else if (string_strcasecmp (property, "text_search_input") == 0)
-            return buffer->text_search_input;
-        else if (string_strcasecmp (property, "highlight_words") == 0)
-            return buffer->highlight_words;
-        else if (string_strcasecmp (property, "highlight_regex") == 0)
-            return buffer->highlight_regex;
-        else if (string_strcasecmp (property, "highlight_tags_restrict") == 0)
-            return buffer->highlight_tags_restrict;
-        else if (string_strcasecmp (property, "highlight_tags") == 0)
-            return buffer->highlight_tags;
-        else if (string_strcasecmp (property, "hotlist_max_level_nicks") == 0)
-            return hashtable_get_string (buffer->hotlist_max_level_nicks, "keys_values");
-        else if (string_strncasecmp (property, "localvar_", 9) == 0)
-        {
-            ptr_value = (const char *)hashtable_get (buffer->local_variables,
-                                                     property + 9);
-            if (ptr_value)
-                return ptr_value;
-        }
+        ptr_value = (const char *)hashtable_get (buffer->local_variables,
+                                                 property + 9);
+        if (ptr_value)
+            return ptr_value;
     }
 
     return NULL;
@@ -1103,15 +1124,15 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 void *
 gui_buffer_get_pointer (struct t_gui_buffer *buffer, const char *property)
 {
-    if (buffer && property)
-    {
-        if (string_strcasecmp (property, "plugin") == 0)
-            return buffer->plugin;
-        else if (string_strcasecmp (property, "text_search_regex_compiled") == 0)
-            return buffer->text_search_regex_compiled;
-        else if (string_strcasecmp (property, "highlight_regex_compiled") == 0)
-            return buffer->highlight_regex_compiled;
-    }
+    if (!buffer || !property)
+        return NULL;
+
+    if (string_strcasecmp (property, "plugin") == 0)
+        return buffer->plugin;
+    else if (string_strcasecmp (property, "text_search_regex_compiled") == 0)
+        return buffer->text_search_regex_compiled;
+    else if (string_strcasecmp (property, "highlight_regex_compiled") == 0)
+        return buffer->highlight_regex_compiled;
 
     return NULL;
 }
@@ -1123,6 +1144,9 @@ gui_buffer_get_pointer (struct t_gui_buffer *buffer, const char *property)
 void
 gui_buffer_ask_chat_refresh (struct t_gui_buffer *buffer, int refresh)
 {
+    if (!buffer)
+        return;
+
     if (refresh > buffer->chat_refresh_needed)
         buffer->chat_refresh_needed = refresh;
 }
@@ -1134,18 +1158,18 @@ gui_buffer_ask_chat_refresh (struct t_gui_buffer *buffer, int refresh)
 void
 gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
 {
-    if (name && name[0])
-    {
-        if (buffer->name)
-            free (buffer->name);
-        buffer->name = strdup (name);
-        gui_buffer_build_full_name (buffer);
+    if (!buffer || !name || !name[0])
+        return;
 
-        gui_buffer_local_var_add (buffer, "name", name);
+    if (buffer->name)
+        free (buffer->name);
+    buffer->name = strdup (name);
+    gui_buffer_build_full_name (buffer);
 
-        (void) hook_signal_send ("buffer_renamed",
-                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
-    }
+    gui_buffer_local_var_add (buffer, "name", name);
+
+    (void) hook_signal_send ("buffer_renamed",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -1155,6 +1179,9 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
 void
 gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
 {
+    if (!buffer)
+        return;
+
     if (buffer->short_name)
     {
         free (buffer->short_name);
@@ -1178,7 +1205,7 @@ gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
 void
 gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
 {
-    if (buffer->type == type)
+    if (!buffer || (buffer->type == type))
         return;
 
     gui_line_free_all (buffer);
@@ -1200,6 +1227,9 @@ gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
 void
 gui_buffer_set_title (struct t_gui_buffer *buffer, const char *new_title)
 {
+    if (!buffer)
+        return;
+
     if (buffer->title)
         free (buffer->title);
     buffer->title = (new_title && new_title[0]) ? strdup (new_title) : NULL;
@@ -1216,6 +1246,9 @@ void
 gui_buffer_set_time_for_each_line (struct t_gui_buffer *buffer,
                                    int time_for_each_line)
 {
+    if (!buffer)
+        return;
+
     buffer->time_for_each_line = (time_for_each_line) ? 1 : 0;
     gui_buffer_ask_chat_refresh (buffer, 2);
 }
@@ -1227,6 +1260,9 @@ gui_buffer_set_time_for_each_line (struct t_gui_buffer *buffer,
 void
 gui_buffer_set_nicklist (struct t_gui_buffer *buffer, int nicklist)
 {
+    if (!buffer)
+        return;
+
     buffer->nicklist = (nicklist) ? 1 : 0;
     gui_window_ask_refresh (1);
 }
@@ -1239,6 +1275,9 @@ void
 gui_buffer_set_nicklist_case_sensitive (struct t_gui_buffer *buffer,
                                         int case_sensitive)
 {
+    if (!buffer)
+        return;
+
     buffer->nicklist_case_sensitive = (case_sensitive) ? 1 : 0;
 }
 
@@ -1250,6 +1289,9 @@ void
 gui_buffer_set_nicklist_display_groups (struct t_gui_buffer *buffer,
                                         int display_groups)
 {
+    if (!buffer)
+        return;
+
     buffer->nicklist_display_groups = (display_groups) ? 1 : 0;
     buffer->nicklist_visible_count = 0;
     gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
@@ -1264,6 +1306,9 @@ void
 gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
                                 const char *new_highlight_words)
 {
+    if (!buffer)
+        return;
+
     if (buffer->highlight_words)
         free (buffer->highlight_words);
     buffer->highlight_words = (new_highlight_words && new_highlight_words[0]) ?
@@ -1282,6 +1327,9 @@ gui_buffer_set_highlight_words_list (struct t_gui_buffer *buffer,
     int length;
     const char *ptr_string;
     char *words;
+
+    if (!buffer)
+        return;
 
     /* compute length */
     length = 0;
@@ -1330,7 +1378,7 @@ gui_buffer_add_highlight_words (struct t_gui_buffer *buffer,
     int current_count, add_count, i;
     struct t_weelist *list;
 
-    if (!words_to_add)
+    if (!buffer || !words_to_add)
         return;
 
     list = weelist_new ();
@@ -1375,7 +1423,7 @@ gui_buffer_remove_highlight_words (struct t_gui_buffer *buffer,
     int current_count, remove_count, i, j, to_remove;
     struct t_weelist *list;
 
-    if (!words_to_remove)
+    if (!buffer || !words_to_remove)
         return;
 
     list = weelist_new ();
@@ -1421,6 +1469,9 @@ void
 gui_buffer_set_highlight_regex (struct t_gui_buffer *buffer,
                                 const char *new_highlight_regex)
 {
+    if (!buffer)
+        return;
+
     if (buffer->highlight_regex)
     {
         free (buffer->highlight_regex);
@@ -1464,6 +1515,9 @@ gui_buffer_set_highlight_tags_restrict (struct t_gui_buffer *buffer,
 {
     int i;
     char **tags_array;
+
+    if (!buffer)
+        return;
 
     if (buffer->highlight_tags_restrict)
     {
@@ -1518,6 +1572,9 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
 {
     int i;
     char **tags_array;
+
+    if (!buffer)
+        return;
 
     if (buffer->highlight_tags)
     {
@@ -1574,6 +1631,9 @@ gui_buffer_set_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
     int nicks_count, value, i;
     long number;
 
+    if (!buffer)
+        return;
+
     hashtable_remove_all (buffer->hotlist_max_level_nicks);
 
     if (new_hotlist_max_level_nicks && new_hotlist_max_level_nicks[0])
@@ -1615,7 +1675,7 @@ gui_buffer_add_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
     int nicks_count, value, i;
     long number;
 
-    if (!nicks_to_add)
+    if (!buffer || !nicks_to_add)
         return;
 
     nicks = string_split (nicks_to_add, ",", 0, 0, &nicks_count);
@@ -1652,7 +1712,7 @@ gui_buffer_remove_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
     char **nicks, *pos;
     int nicks_count, i;
 
-    if (!nicks_to_remove)
+    if (!buffer || !nicks_to_remove)
         return;
 
     nicks = string_split (nicks_to_remove, ",", 0, 0, &nicks_count);
@@ -1677,6 +1737,9 @@ void
 gui_buffer_set_input_get_unknown_commands (struct t_gui_buffer *buffer,
                                            int input_get_unknown_commands)
 {
+    if (!buffer)
+        return;
+
     buffer->input_get_unknown_commands = (input_get_unknown_commands) ? 1 : 0;
 }
 
@@ -1689,17 +1752,17 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer)
 {
     int refresh;
 
-    if (buffer->type == GUI_BUFFER_TYPE_FORMATTED)
-    {
-        refresh = ((buffer->lines->last_read_line != NULL)
-                   && (buffer->lines->last_read_line != buffer->lines->last_line));
+    if (!buffer || (buffer->type != GUI_BUFFER_TYPE_FORMATTED))
+        return;
 
-        buffer->lines->last_read_line = buffer->lines->last_line;
-        buffer->lines->first_line_not_read = (buffer->lines->last_read_line) ? 0 : 1;
+    refresh = ((buffer->lines->last_read_line != NULL)
+               && (buffer->lines->last_read_line != buffer->lines->last_line));
 
-        if (refresh)
-            gui_buffer_ask_chat_refresh (buffer, 2);
-    }
+    buffer->lines->last_read_line = buffer->lines->last_line;
+    buffer->lines->first_line_not_read = (buffer->lines->last_read_line) ? 0 : 1;
+
+    if (refresh)
+        gui_buffer_ask_chat_refresh (buffer, 2);
 }
 
 /*
@@ -2035,6 +2098,9 @@ void
 gui_buffer_add_value_num_displayed (struct t_gui_buffer *buffer, int value)
 {
     struct t_gui_buffer *ptr_buffer;
+
+    if (!buffer)
+        return;
 
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -2505,6 +2571,9 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     int index, i;
     struct t_gui_buffer_visited *ptr_buffer_visited;
 
+    if (!buffer)
+        return;
+
     buffer->closing = 1;
 
     (void) hook_signal_send ("buffer_closing",
@@ -2713,6 +2782,9 @@ gui_buffer_switch_by_number (struct t_gui_window *window, int number)
 {
     struct t_gui_buffer *ptr_buffer;
 
+    if (!window || !window->buffer)
+        return;
+
     /* invalid buffer */
     if ((number < 0) || (number == window->buffer->number))
         return;
@@ -2738,6 +2810,9 @@ gui_buffer_set_active_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_buffer *ptr_buffer;
     int active;
+
+    if (!buffer)
+        return;
 
     active = 1;
     for (ptr_buffer = gui_buffers; ptr_buffer;
@@ -2785,6 +2860,9 @@ gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer,
 {
     struct t_gui_buffer *ptr_buffer;
 
+    if (!buffer)
+        return NULL;
+
     /* search after buffer */
     for (ptr_buffer = buffer->next_buffer; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -2824,6 +2902,9 @@ gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
                                        int allow_hidden_buffer)
 {
     struct t_gui_buffer *ptr_buffer;
+
+    if (!buffer)
+        return NULL;
 
     /* search before buffer */
     for (ptr_buffer = buffer->prev_buffer; ptr_buffer;
@@ -2974,6 +3055,9 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     int auto_renumber;
 
     auto_renumber = CONFIG_BOOLEAN(config_look_buffer_auto_renumber);
+
+    if (!buffer)
+        return;
 
     /* nothing to do if auto renumber is ON and that there is only one buffer */
     if (auto_renumber && (gui_buffers == last_gui_buffer))
@@ -3191,6 +3275,9 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
 {
     struct t_gui_buffer *ptr_buffer, *ptr_first_buffer[2], *ptr_last_buffer[2];
 
+    if (!buffer || !target_buffer)
+        return;
+
     /*
      * nothing to do if:
      * - there is only one buffer
@@ -3295,6 +3382,9 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 {
     int num_merged;
     struct t_gui_buffer *ptr_buffer, *ptr_new_active_buffer;
+
+    if (!buffer)
+        return;
 
     /* nothing to do if there is only one buffer */
     if (gui_buffers == last_gui_buffer)
@@ -3570,6 +3660,9 @@ gui_buffer_sort_by_layout_number ()
 void
 gui_buffer_undo_snap (struct t_gui_buffer *buffer)
 {
+    if (!buffer)
+        return;
+
     if ((buffer->input_undo_snap)->data)
     {
         free ((buffer->input_undo_snap)->data);
@@ -3592,6 +3685,9 @@ gui_buffer_undo_snap (struct t_gui_buffer *buffer)
 void
 gui_buffer_undo_snap_free (struct t_gui_buffer *buffer)
 {
+    if (!buffer)
+        return;
+
     if ((buffer->input_undo_snap)->data)
     {
         free ((buffer->input_undo_snap)->data);
@@ -3611,6 +3707,9 @@ void
 gui_buffer_undo_add (struct t_gui_buffer *buffer)
 {
     struct t_gui_input_undo *new_undo;
+
+    if (!buffer)
+        return;
 
     /* undo disabled by configuration */
     if (CONFIG_INTEGER(config_look_input_undo_max) == 0)
@@ -3692,6 +3791,9 @@ void
 gui_buffer_undo_free (struct t_gui_buffer *buffer,
                       struct t_gui_input_undo *undo)
 {
+    if (!buffer || !undo)
+        return;
+
     /* update current undo if needed */
     if (buffer->ptr_input_undo == undo)
     {
@@ -3727,6 +3829,9 @@ gui_buffer_undo_free (struct t_gui_buffer *buffer,
 void
 gui_buffer_undo_free_all (struct t_gui_buffer *buffer)
 {
+    if (!buffer)
+        return;
+
     gui_buffer_undo_snap_free (buffer);
 
     while (buffer->input_undo)

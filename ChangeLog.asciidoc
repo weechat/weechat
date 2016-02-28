@@ -32,6 +32,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[1.5_bugs]]
 === Bugs fixed
 
+* core: check that pointers received in arguments are not NULL in buffers and
+  windows functions
 * core: fix truncation of buffer names in hotlist (issue #668)
 * core: fix update of window title under tmux (issue #685)
 * core: fix detection of python shared libraries (issue #676)
