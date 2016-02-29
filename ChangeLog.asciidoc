@@ -47,6 +47,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   send PONG on PING received in a websocket frame (issue #675)
 * relay: fix command "input" received from clients with only spaces in
   content of message (weechat protocol) (issue #663)
+* ruby: add detection of Ruby 2.3
 * script: force refresh of scripts buffer after download of scripts list
   (issue #693)
 * xfer: fix DCC file received when the terminal is resized
