@@ -585,7 +585,7 @@ RUBY_VERSION=
 if test "x$enable_ruby" = "xyes" ; then
     RUBY_CFLAGS=""
     RUBY_LFLAGS=""
-    for v in "2.1" "2.0" "1.9" "1.8" ; do
+    for v in "2.3" "2.2" "2.1" "2.0" "1.9" "1.8" ; do
         pkgconfig_ruby_found=`$PKGCONFIG --exists ruby-$v 2>/dev/null`
         if test "x$?" = "x0" ; then
             RUBY_VERSION=`$PKGCONFIG --modversion ruby-$v`
