@@ -26,6 +26,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: add option irc.network.sasl_fail_unavailable (issue #600, issue #697)
 * irc: add multiple targets and support of "-server" in command /ctcp
   (issue #204, issue #493)
+* ruby: add detection of Ruby 2.3
 * trigger: add "recover" in default triggers cmd_pass/msg_auth, and "regain"
   in default trigger "msg_auth" (issue #511)
 
@@ -47,7 +48,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   send PONG on PING received in a websocket frame (issue #675)
 * relay: fix command "input" received from clients with only spaces in
   content of message (weechat protocol) (issue #663)
-* ruby: add detection of Ruby 2.3
 * script: force refresh of scripts buffer after download of scripts list
   (issue #693)
 * xfer: fix DCC file received when the terminal is resized
@@ -144,8 +144,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: add option irc.color.topic_current (issue #475)
 * irc: evaluate content of server option "nicks"
 * logger: evaluate content of option logger.file.path (issue #388)
+* lua: add detection of Lua 5.3
 * relay: display value of HTTP header "X-Real-IP" for websocket connections
   (issue #440)
+* ruby: add detection of Ruby 2.2
 * script: rename option script.scripts.dir to script.scripts.path, evaluate
   content of option (issue #388)
 * xfer: evaluate content of options xfer.file.download_path and
@@ -184,8 +186,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   in command /connect (even if the option irc.look.buffer_open_before_autojoin
   is on)
 * irc: fix errors displayed on WHOX messages received (issue #376)
-* lua: add detection of Lua 5.3
-* ruby: add detection of Ruby 2.2
 * xfer: fix crash if the DCC file socket number is too high
   (> 1024 on Linux/BSD) (issue #465)
 * xfer: fix parsing of DCC chat messages (handle "\r\n" at the end of messages)
@@ -348,6 +348,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: display own nick changes in server buffer (issue #188)
 * irc: disable creation of temporary servers by default with command /connect,
   new option irc.look.temporary_servers
+* lua: add detection of Lua 5.2
 * relay: add options "stop" and "restart" in command /relay
 * relay: add option relay.network.ssl_priorities (issue #234)
 * relay: add host in sender for IRC backlog PRIVMSG messages sent to clients
@@ -383,7 +384,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: add tag "nick_xxx" in invite messages
 * irc: fix completion of commands /msg, /notice and /query
 * irc: fix translation of CTCP PING reply (issue #137)
-* lua: add detection of Lua 5.2
 * python: fix Python detection with Homebrew (issue #217)
 * relay: wait for message CAP END before sending join of channels and backlog
   to the client (issue #223)
@@ -515,6 +515,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * relay: add signals "relay_client_xxx" for client status changes (issue #2)
 * relay: add option relay.network.clients_purge_delay
 * rmodifier: remove plugin (replaced by trigger)
+* ruby: add detection of Ruby 2.1
 * trigger: add trigger plugin: new command /trigger and file trigger.conf
 * tests: add unit tests using CppUTest
 
@@ -630,7 +631,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * relay: fix freeze after /upgrade when many disconnected clients still exist
 * relay: fix NULL pointer when reading buffer lines for irc backlog
 * ruby: fix crash when trying to load a directory with /ruby load
-* ruby: add detection of Ruby 2.1
 * script: fix display of curl errors
 * script: set option script.scripts.cache_expire to 1440 by default
 * script: fix scroll on script buffer in the detailed view of script
@@ -1242,11 +1242,12 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (task #12150)
 * logger: add tags in backlog lines displayed when opening buffer
 * logger: add messages "Day changed to" in backlog (task #12187)
-* lua: add support of lua 5.2
+* lua: add support of Lua 5.2
 * relay: add support of SSL (for irc and weechat protocols), new option
   relay.network.ssl_cert_key (task #12044)
 * relay: add option relay.color.client
 * relay: add object type "arr" (array) in WeeChat protocol
+* ruby: add detection of Ruby 1.9.3
 * script: new plugin "script" (scripts manager, replacing scripts weeget.py and
   script.pl)
 * scripts: add signals for scripts loaded/unloaded/installed/removed
@@ -1309,7 +1310,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * python: fix crash when unloading a script without pointer to interpreter
 * relay: fix freeze when writing on relay socket (use non-blocking sockets in
   relay for irc and weechat protocols) (bug #36655)
-* ruby: detect Ruby version 1.9.3 in cmake and autotools
 * scripts: fix deletion of configuration files when script is unloaded
   (bug #36977)
 * scripts: fix function unhook_all(): delete only callbacks of hooks and add
@@ -1771,7 +1771,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * relay: do not send join for private buffers to client
 * rmodifier: fix reload of file rmodifier.conf
 * rmodifier: fix crash when adding rmodifier with invalid regex
-* tcl: fix tcl detection on some 64-bits systems (bug #32915)
+* tcl: fix Tcl detection on some 64-bits systems (bug #32915)
 * xfer: do not close chat buffers when removing xfer from list (bug #32271)
 
 [[0.3.4]]
@@ -2081,6 +2081,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (task #7270)
 * irc: add all server options for commands /server and /connect
 * irc: add arguments for command /rehash
+* ruby: support of Ruby >= 1.9.1 (patch #6989)
 * xfer: add color for nicks in chat
 * xfer: add missing command /me (bug #28658)
 * gui: add color "darkgray", add support for background with light color
@@ -2106,7 +2107,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: fix autorejoin on channels with key
 * irc: fix command /connect (options -ssl, -ipv6 and -port) (bug #27486)
 * xfer: add missing charset decoding/encoding for IRC DCC chat (bug #27482)
-* ruby: support of Ruby >= 1.9.1 (patch #6989)
 * fifo: remove old pipes before creating new pipe
 * gui: fix color "black" (bug #23882, debian #512957)
 * gui: fix message "Day changed to", sometimes displayed at wrong time
