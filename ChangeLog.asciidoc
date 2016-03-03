@@ -37,7 +37,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   windows functions
 * core: fix truncation of buffer names in hotlist (issue #668)
 * core: fix update of window title under tmux (issue #685)
-* core: fix detection of python shared libraries (issue #676)
+* core: fix detection of Python shared libraries (issue #676)
 * api: fix number of arguments returned by function string_split() when
   keep_eol is 2 and the string ends with separators
 * irc: add missing completion "*" for target in command /msg
@@ -583,7 +583,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: use same return code and message in all commands when arguments are
   wrong/missing
 * core: allow empty arguments for command /print
-* core: fix freeze/crash in gnutls (bug #41576)
+* core: fix freeze/crash in GnuTLS (bug #41576)
 * core: fix cmake warning CMP0007 on "make uninstall" (bug #41528)
 * api: fix function string_decode_base64()
 * api: fix function string_format_size() on 32-bit systems
@@ -748,7 +748,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * aspell: fix detection of nicks with non-alphanumeric chars
 * guile: disable guile gmp allocator (fix crash on unload of relay plugin)
   (bug #40628)
-* irc: clear the gnutls session in all cases after SSL connection error
+* irc: clear the GnuTLS session in all cases after SSL connection error
 * irc: do not display names by default when joining a channel (task #13045)
 * irc: display PONG answer when resulting from manual /ping command
 * irc: fix time parsed in tag of messages on Cygwin
@@ -773,7 +773,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (bug #41207)
 * lua: fix detection of Lua 5.2 in autotools (patch #8270)
 * lua: fix crash on calls to callbacks during load of script
-* python: fix load of scripts with python >= 3.3
+* python: fix load of scripts with Python >= 3.3
 * relay: fix memory leak on unload of relay plugin
 * ruby: add detection and fix compilation with Ruby 2.0 (patch #8209)
 * ruby: fix ruby init with Ruby >= 2.0 (bug #41115)
@@ -979,7 +979,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: fix structures before buffer data when a buffer is closed
 * core: fix refresh of line after changes with hdata_update() (update flag
   "displayed" according to filters)
-* core: fix detection of python on Ubuntu Raring
+* core: fix detection of Python on Ubuntu Raring
 * core: fix hidden lines for messages without date when option
   weechat.history.max_buffer_lines_minutes is set (bug #38197)
 * core: use default hash/comparison callback for keys of type
@@ -994,9 +994,9 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   regex (bug #38398)
 * guile: fix crash in function hdata_move()
 * guile: fix arguments given to callbacks (separate arguments instead of one
-  list with arguments inside), guile >= 2.0 is now required (bug #38350)
+  list with arguments inside), Guile >= 2.0 is now required (bug #38350)
 * guile: fix crash on calls to callbacks during load of script (bug #38343)
-* guile: fix compilation with guile 2.0
+* guile: fix compilation with Guile 2.0
 * irc: fix name of server buffer after /server rename (set name "server.name"
   instead of "name")
 * irc: fix uncontrolled format string when sending unknown irc commands
@@ -1100,7 +1100,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 === Bugs fixed
 
 * core: fix infinite loop when a regex gives an empty match (bug #38112)
-* core: fix detection of guile in configure
+* core: fix detection of Guile in configure
 * core: fix click in item "buffer_nicklist" when nicklist is a root bar
   (bug #38080)
 * core: fix line returned when clicking on a bar (according to position and
@@ -1285,7 +1285,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   UTF-8 is the internal WeeChat charset)
 * fifo: ignore read failing with error EAGAIN (bug #37019)
 * guile: fix crash when unloading a script without pointer to interpreter
-* guile: fix path of guile include dirs in cmake build (patch #7790)
+* guile: fix path of Guile include dirs in cmake build (patch #7790)
 * irc: fix rejoin of channels with a key, ignore value "*" sent by server for
   key (bug #24131)
 * irc: fix SASL mechanism "external" (bug #37274)
@@ -1305,7 +1305,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   sockets) (bug #35097)
 * irc: allow again names beginning with "#" for servers
 * lua: fix crash when unloading a script without pointer to interpreter
-* python: fix detection of python (first try "python2.x" and then "python")
+* python: fix detection of Python (first try "python2.x" and then "python")
   (bug #36835)
 * python: fix crash when unloading a script without pointer to interpreter
 * relay: fix freeze when writing on relay socket (use non-blocking sockets in
@@ -1611,9 +1611,9 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (bug #34305)
 * core: change default value of option weechat.network.gnutls_ca_file to
   "/etc/ssl/certs/ca-certificates.crt"
-* core: replace deprecated gnutls function
+* core: replace deprecated GnuTLS function
   gnutls_certificate_client_set_retrieve_function() by new function
-  gnutls_certificate_set_retrieve_function() (gnutls >= 2.11.0)
+  gnutls_certificate_set_retrieve_function() (GnuTLS >= 2.11.0)
 * core: use dynamic buffer size for calls to vsnprintf()
 * core: fix memory leak in unhook of hook_connect()
 * core: fix memory leak in display of empty bar items
@@ -1737,7 +1737,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: reload file with certificate authorities when option
   weechat.network.gnutls_ca_file is changed
 * core: rebuild bar content when items are changed in an hidden bar
-* core: fix verification of SSL certificates by calling gnutls verify callback
+* core: fix verification of SSL certificates by calling GnuTLS verify callback
   (patch #7459)
 * core: fix crash when using column filling in bars with some empty items
   (bug #32565)
@@ -1765,7 +1765,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: add many missing commands for target buffer (options irc.msgbuffer.xxx)
   (bug #32216)
 * lua: fix crash when many scripts are executing callbacks at same time
-* perl: fix memory leak when calling perl functions (bug #32895)
+* perl: fix memory leak when calling Perl functions (bug #32895)
 * relay: fix crash on /upgrade when nick in irc client is not yet set
 * relay: allow colon in server password received from client
 * relay: do not send join for private buffers to client
@@ -1827,16 +1827,16 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * rmodifier: new plugin "rmodifier": alter modifier strings with regular
   expressions (bug #26964)
 * relay: beta version of IRC proxy, now relay plugin is compiled by default
-* python: add info "python2_bin" (path to python 2.x interpreter)
+* python: add info "python2_bin" (path to Python 2.x interpreter)
 
 [[0.3.4_bugs]]
 === Bugs fixed
 
 * core: fix scroll problem on buffers with free content and non-allocated lines
   (bug #32039)
-* core: add support of python 2.7 in cmake and configure (debian #606989)
+* core: add support of Python 2.7 in cmake and configure (debian #606989)
 * core: call to function hook_config() when config option is created
-* core: fix infinite loop on gnutls handshake when connecting with SSL to
+* core: fix infinite loop on GnuTLS handshake when connecting with SSL to
   server on wrong port or server with SSL problems (bug #27487)
 * core: fix data sent to callback of hook_process() (some data was sometimes
   missing), use a 64KB buffer for child output and send data to callback only
@@ -2216,7 +2216,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[0.2.6.3_bugs]]
 === Bugs fixed
 
-* fix gnutls detection (use pkg-config instead of libgnutls-config)
+* fix GnuTLS detection (use pkg-config instead of libgnutls-config)
   (bug #26790)
 
 [[0.2.6.2]]
@@ -2311,7 +2311,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   by semicolon (task #5444)
 * improve IRC long message split: use word boundary (task #6685)
 * add cmake for weechat compile (patch #5943)
-* add protocol priority for gnutls (patch #5915)
+* add protocol priority for GnuTLS (patch #5915)
 * add channel admin mode "!" for some IRC servers
 * add /reconnect command (task #5448)
 * add "-all" option for /connect and /disconnect commands (task #6232)
@@ -2578,7 +2578,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * fix /squery command (message sent to server, now OK with more than two
   arguments)
 * fix /alias command (with an alias name, display content)
-* improve lua plugin detection (bug #16574)
+* improve Lua detection (bug #16574)
 * add lock for log file (~/.weechat/weechat.log), only one WeeChat process can
   use this file (bug #16382)
 * fix crash with malformed UTF-8 strings
