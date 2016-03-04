@@ -124,7 +124,7 @@ override them for freenode server with following command:
 /set irc.server.freenode.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
 ----
 
-To set username and realname:
+To set the user and real names:
 
 ----
 /set irc.server.freenode.username "My user name"
