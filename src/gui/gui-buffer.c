@@ -2249,17 +2249,18 @@ gui_buffer_search_by_name (const char *plugin, const char *name)
 struct t_gui_buffer *
 gui_buffer_search_by_partial_name (const char *plugin, const char *name)
 {
-    struct t_gui_buffer *ptr_start_buffer, *ptr_buffer, *buffer_partial_match[3];
+    struct t_gui_buffer *ptr_start_buffer, *ptr_buffer, *buffer_partial_match[4];
     int plugin_match, length_name;
     const char *pos;
 
     if (!name || !name[0])
         return gui_current_window->buffer;
 
-    /* 0: matches beginning of buffer name, 1: in the middle, 2: the end */
+    /* 0: matches beginning of buffer name, 1: in the middle, 2: the end, 3: short name */
     buffer_partial_match[0] = NULL;
     buffer_partial_match[1] = NULL;
     buffer_partial_match[2] = NULL;
+    buffer_partial_match[3] = NULL;
 
     length_name = strlen (name);
 
@@ -2310,6 +2311,14 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
                         }
                     }
                 }
+
+                if (ptr_buffer->short_name &&
+                    (strcmp (name, ptr_buffer->short_name) == 0))
+                {
+                    /* matches short name */
+                    if (!buffer_partial_match[3])
+                        buffer_partial_match[3] = ptr_buffer;
+                }
             }
         }
         ptr_buffer = ptr_buffer->next_buffer;
@@ -2318,6 +2327,10 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
         if (ptr_buffer == ptr_start_buffer)
             break;
     }
+
+    /* matches short name? */
+    if (buffer_partial_match[3])
+        return buffer_partial_match[3];
 
     /* matches end of name? */
     if (buffer_partial_match[2])
