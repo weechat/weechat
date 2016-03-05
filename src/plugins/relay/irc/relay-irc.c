@@ -1118,7 +1118,7 @@ relay_irc_send_join_channels (struct t_relay_client *client)
 
 void
 relay_irc_input_send (struct t_relay_client *client, const char *irc_channel,
-                      int flags, const char *format, ...)
+                      char *options, const char *format, ...)
 {
     char buf_beginning[1024], *buf;
     int length_beginning, length_vbuffer;
@@ -1128,10 +1128,10 @@ relay_irc_input_send (struct t_relay_client *client, const char *irc_channel,
         return;
 
     snprintf (buf_beginning, sizeof (buf_beginning),
-              "%s;%s;%d;relay_client_%d;",
+              "%s;%s;%s;relay_client_%d;",
               client->protocol_args,
               (irc_channel) ? irc_channel : "",
-              flags,
+              options,
               client->id);
 
     length_beginning = strlen (buf_beginning);
@@ -1567,10 +1567,10 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                     }
                     if (irc_args2[0] == ':')
                         irc_args2++;
-                    relay_irc_input_send (client, NULL, 1,
+                    relay_irc_input_send (client, NULL,
+                                          "priority_high",
                                           "/notice %s %s",
-                                          target,
-                                          irc_args2);
+                                          target, irc_args2);
                     free (target);
                 }
             }
@@ -1591,12 +1591,15 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
             irc_is_channel = weechat_info_get ("irc_is_channel", irc_channel);
             if (irc_is_channel && (strcmp (irc_is_channel, "1") == 0))
             {
-                relay_irc_input_send (client, irc_channel, 1,
-                                      "%s", irc_args2);
+                relay_irc_input_send (client, irc_channel,
+                                      "priority_high,user_message",
+                                      "%s",
+                                      irc_args2);
             }
             else
             {
-                relay_irc_input_send (client, NULL, 1,
+                relay_irc_input_send (client, NULL,
+                                      "priority_high",
                                       "/query %s %s",
                                       irc_channel, irc_args2);
             }
@@ -1723,7 +1726,8 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                 weechat_hashtable_free (hash_redirect);
             }
             /* send the IRC message to server */
-            relay_irc_input_send (client, NULL, 1,
+            relay_irc_input_send (client, NULL,
+                                  "priority_high",
                                   "/quote %s",
                                   data);
         }

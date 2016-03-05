@@ -42,6 +42,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   keep_eol is 2 and the string ends with separators
 * irc: add missing completion "*" for target in command /msg
 * irc: fix /msg command with multiple targets including "*"
+* relay: do not execute any command received in a PRIVMSG message from an irc
+  relay client (issue #699)
 * relay: fix the max number of clients connected on a port, allow value 0 for
   "no limit" (issue #669)
 * relay: fix decoding of multiple frames in a single websocket message,

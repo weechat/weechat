@@ -8834,7 +8834,7 @@ weechat.hook_signal_send("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
 [[signal_irc_input_send]]
 ===== Signal irc_input_send
 
-_WeeChat ≥ 0.3.4._
+_WeeChat ≥ 0.3.4, updated in 1.5._
 
 The signal "irc_input_send" can be sent to simulate input in an irc buffer
 (server, channel or private).
@@ -8845,9 +8845,12 @@ Argument is a string with following format:
 * semicolon
 * channel name (optional)
 * semicolon
-* flags used when sending message (optional, default is 1):
-** '1': queue with high priority (like user messages)
-** '2': queue with low priority (like messages automatically sent by WeeChat)
+* comma-separated list of options (optional):
+** 'priority_high': queue with high priority (like user messages); this is the
+   default priority
+** 'priority_low': queue with low priority (like messages automatically sent by
+   WeeChat)
+** 'user_message': force user message (don't execute a command)
 * semicolon
 * comma-separated list of tags used when sending message (optional)
 * semicolon
@@ -8859,11 +8862,11 @@ C examples:
 ----
 /* say "Hello!" on freenode server, #weechat channel */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                          "freenode;#weechat;1;;Hello!");
+                          "freenode;#weechat;priority_high,user_message;;Hello!");
 
 /* send command "/whois FlashCode" on freenode server, with low priority */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                          "freenode;;2;;/whois FlashCode");
+                          "freenode;;priority_low;;/whois FlashCode");
 ----
 
 Script (Python):
@@ -8872,11 +8875,11 @@ Script (Python):
 ----
 # say "Hello!" on freenode server, #weechat channel
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;#weechat;1;;Hello!")
+                         "freenode;#weechat;priority_high,user_message;;Hello!")
 
 # send command "/whois FlashCode" on freenode server, with low priority
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;;2;;/whois FlashCode")
+                         "freenode;;priority_low;;/whois FlashCode")
 ----
 
 ==== hook_hsignal

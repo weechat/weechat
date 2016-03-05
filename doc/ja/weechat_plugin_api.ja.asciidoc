@@ -8833,7 +8833,7 @@ weechat.hook_signal_send("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
 [[signal_irc_input_send]]
 ===== irc_input_send シグナル
 
-_WeeChat バージョン 0.3.4 以上で利用可。_
+_WeeChat バージョン 0.3.4 以上で利用可。バージョン 1.5 で更新。_
 
 irc バッファ(サーバ、チャンネル、プライベート)
 への入力をシミュレートするにはシグナル "irc_input_send" を送信してください。
@@ -8844,9 +8844,13 @@ irc バッファ(サーバ、チャンネル、プライベート)
 * セミコロン
 * チャンネル名 (任意)
 * セミコロン
-* メッセージを送信する際に使うフラグ (任意、デフォルトは 1):
-** '1': 高い優先度を持つキュー (ユーザメッセージなどと同等)
-** '2': 低い優先度を持つキュー (WeeChat が自動的に送信するメッセージと同等)
+// TRANSLATION MISSING
+* comma-separated list of options (optional):
+** 'priority_high': queue with high priority (like user messages); this is the
+   default priority
+** 'priority_low': queue with low priority (like messages automatically sent by
+   WeeChat)
+** 'user_message': force user message (don't execute a command)
 * セミコロン
 * メッセージを送信する際に使うタグのコンマ区切りリスト (任意)
 * セミコロン
@@ -8858,11 +8862,11 @@ C 言語での使用例:
 ----
 /* say "Hello!" on freenode server, #weechat channel */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                          "freenode;#weechat;1;;Hello!");
+                          "freenode;#weechat;priority_high,user_message;;Hello!");
 
 /* send command "/whois FlashCode" on freenode server, with low priority */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                          "freenode;;2;;/whois FlashCode");
+                          "freenode;;priority_low;;/whois FlashCode");
 ----
 
 スクリプト (Python) での使用例:
@@ -8871,11 +8875,11 @@ weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
 ----
 # say "Hello!" on freenode server, #weechat channel
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;#weechat;1;;Hello!")
+                         "freenode;#weechat;priority_high,user_message;;Hello!")
 
 # send command "/whois FlashCode" on freenode server, with low priority
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;;2;;/whois FlashCode")
+                         "freenode;;priority_low;;/whois FlashCode")
 ----
 
 ==== hook_hsignal

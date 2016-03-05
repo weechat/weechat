@@ -8991,7 +8991,7 @@ weechat.hook_signal_send("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
 [[signal_irc_input_send]]
 ===== Signal irc_input_send
 
-_WeeChat ≥ 0.3.4._
+_WeeChat ≥ 0.3.4, mis à jour dans la 1.5._
 
 Le signal "irc_input_send" peut être envoyé pour simuler une entrée de texte
 dans un tampon irc (serveur, canal ou privé).
@@ -9002,11 +9002,12 @@ Le paramètre est une chaîne avec le format suivant :
 * point-virgule
 * nom de canal (optionnel)
 * point-virgule
-* drapeaux utilisés lors de l'envoi du message (optionnel, 1 par
-  défaut) :
-** '1' : file d'attente avec haute priorité (comme les messages utilisateur)
-** '2' : file d'attente avec basse priorité (comme les messages envoyés
-   automatiquement par WeeChat)
+* liste d'options séparées par des virgules (optionnel) :
+** 'priority_high' : file d'attente avec haute priorité (comme les messages
+   utilisateur) ; c'est la priorité par défaut
+** 'priority_low' : file d'attente avec basse priorité (comme les messages
+   envoyés automatiquement par WeeChat)
+** 'user_message' : forcer un message utilisateur (ne pas exécuter de commande)
 * point-virgule
 * liste d'étiquettes (séparées par des virgules) utilisées lors de l'envoi du
   message (optionnel)
@@ -9019,11 +9020,11 @@ Exemples en C :
 ----
 /* dis "Bonjour !" sur le serveur freenode, canal #weechat */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                          "freenode;#weechat;1;;Bonjour !");
+                          "freenode;#weechat;priority_high,user_message;;Bonjour !");
 
 /* envoie la commande "/whois FlashCode" sur le canal freenode, en basse priorité */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                          "freenode;;2;;/whois FlashCode");
+                          "freenode;;priority_low;;/whois FlashCode");
 ----
 
 Script (Python) :
@@ -9032,11 +9033,11 @@ Script (Python) :
 ----
 # dis "Bonjour !" sur le serveur freenode, canal #weechat
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;#weechat;1;;Bonjour !")
+                         "freenode;#weechat;priority_high,user_message;;Bonjour !")
 
 # envoie la commande "/whois FlashCode" sur le canal freenode, en basse priorité
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;;2;;/whois FlashCode")
+                         "freenode;;priority_low;;/whois FlashCode")
 ----
 
 ==== hook_hsignal
