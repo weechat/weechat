@@ -2249,18 +2249,30 @@ gui_buffer_search_by_name (const char *plugin, const char *name)
 struct t_gui_buffer *
 gui_buffer_search_by_partial_name (const char *plugin, const char *name)
 {
-    struct t_gui_buffer *ptr_start_buffer, *ptr_buffer, *buffer_partial_match[4];
-    int plugin_match, length_name;
+    /* Possible partial match types in the order of priority (preferred first) */
+    enum t_match_type
+    {
+        MATCH_NAME_EXACT,
+        MATCH_SHORT_EXACT,
+        MATCH_NAME_BEGIN,
+        MATCH_SHORT_BEGIN,
+        MATCH_NAME_MIDDLE,
+        MATCH_SHORT_MIDDLE,
+        MATCH_NAME_END,
+        MATCH_SHORT_END,
+        /* number of match types */
+        NUM_MATCH_TYPE,
+    };
+
+    struct t_gui_buffer *ptr_start_buffer, *ptr_buffer, *buffer_partial_match[NUM_MATCH_TYPE];
+    int plugin_match, length_name, i;
     const char *pos;
 
     if (!name || !name[0])
         return gui_current_window->buffer;
 
-    /* 0: matches beginning of buffer name, 1: in the middle, 2: the end, 3: short name */
-    buffer_partial_match[0] = NULL;
-    buffer_partial_match[1] = NULL;
-    buffer_partial_match[2] = NULL;
-    buffer_partial_match[3] = NULL;
+    for (i = 0; i < NUM_MATCH_TYPE; i++)
+        buffer_partial_match[i] = NULL;
 
     length_name = strlen (name);
 
@@ -2288,36 +2300,70 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
                     {
                         if (!pos[length_name])
                         {
-                            /* matches full name, return it immediately */
-                            return ptr_buffer;
+                            /* matches full name */
+                            if (!buffer_partial_match[MATCH_NAME_EXACT])
+                                buffer_partial_match[MATCH_NAME_EXACT] = ptr_buffer;
                         }
-                        /* matches beginning of name */
-                        if (!buffer_partial_match[0])
-                            buffer_partial_match[0] = ptr_buffer;
+                        else
+                        {
+                            /* matches beginning of name */
+                            if (!buffer_partial_match[MATCH_NAME_BEGIN])
+                                buffer_partial_match[MATCH_NAME_BEGIN] = ptr_buffer;
+                        }
                     }
                     else
                     {
                         if (pos[length_name])
                         {
                             /* matches middle of buffer name */
-                            if (!buffer_partial_match[1])
-                                buffer_partial_match[1] = ptr_buffer;
+                            if (!buffer_partial_match[MATCH_NAME_MIDDLE])
+                                buffer_partial_match[MATCH_NAME_MIDDLE] = ptr_buffer;
                         }
                         else
                         {
                             /* matches end of buffer name */
-                            if (!buffer_partial_match[2])
-                                buffer_partial_match[2] = ptr_buffer;
+                            if (!buffer_partial_match[MATCH_NAME_END])
+                                buffer_partial_match[MATCH_NAME_END] = ptr_buffer;
                         }
                     }
                 }
 
-                if (ptr_buffer->short_name &&
-                    (strcmp (name, ptr_buffer->short_name) == 0))
+                if (ptr_buffer->short_name && ptr_buffer->short_name[0])
                 {
-                    /* matches short name */
-                    if (!buffer_partial_match[3])
-                        buffer_partial_match[3] = ptr_buffer;
+                    pos = strstr (ptr_buffer->short_name, name);
+                    if (pos)
+                    {
+                        if (pos == ptr_buffer->short_name)
+                        {
+                            if (!pos[length_name])
+                            {
+                                /* matches full short name */
+                                if (!buffer_partial_match[MATCH_SHORT_EXACT])
+                                    buffer_partial_match[MATCH_SHORT_EXACT] = ptr_buffer;
+                            }
+                            else
+                            {
+                                /* matches beginning of short name */
+                                if (!buffer_partial_match[MATCH_SHORT_BEGIN])
+                                    buffer_partial_match[MATCH_SHORT_BEGIN] = ptr_buffer;
+                            }
+                        }
+                        else
+                        {
+                            if (pos[length_name])
+                            {
+                                /* matches middle of buffer short name */
+                                if (!buffer_partial_match[MATCH_SHORT_MIDDLE])
+                                    buffer_partial_match[MATCH_SHORT_MIDDLE] = ptr_buffer;
+                            }
+                            else
+                            {
+                                /* matches end of buffer short name */
+                                if (!buffer_partial_match[MATCH_SHORT_END])
+                                    buffer_partial_match[MATCH_SHORT_END] = ptr_buffer;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -2328,23 +2374,15 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
             break;
     }
 
-    /* matches short name? */
-    if (buffer_partial_match[3])
-        return buffer_partial_match[3];
+    /* return most preferred match type available */
+    for (i = 0; i < NUM_MATCH_TYPE; i++)
+    {
+        if (buffer_partial_match[i])
+            return buffer_partial_match[i];
+    }
 
-    /* matches end of name? */
-    if (buffer_partial_match[2])
-        return buffer_partial_match[2];
-
-    /* matches beginning of name? */
-    if (buffer_partial_match[0])
-        return buffer_partial_match[0];
-
-    /*
-     * return buffer partially matching in name
-     * (may be NULL if no buffer was found)
-     */
-    return buffer_partial_match[1];
+    /* no partial match of any type */
+    return NULL;
 }
 
 /*
