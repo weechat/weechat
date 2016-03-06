@@ -378,10 +378,11 @@ hook_init_data (struct t_hook *hook, struct t_weechat_plugin *plugin,
     if (weechat_debug_core >= 2)
     {
         gui_chat_printf (NULL,
-                         "debug: adding hook: type=%d (%s), plugin=%lx (%s), "
+                         "debug: adding hook: type=%d (%s), plugin=\"%s\", "
                          "priority=%d",
-                         hook->type, hook_type_string[hook->type],
-                         hook->plugin, plugin_get_name (hook->plugin),
+                         hook->type,
+                         hook_type_string[hook->type],
+                         plugin_get_name (hook->plugin),
                          hook->priority);
     }
 }
@@ -3538,9 +3539,10 @@ unhook (struct t_hook *hook)
     if (weechat_debug_core >= 2)
     {
         gui_chat_printf (NULL,
-                         "debug: removing hook: type=%d (%s), plugin=%lx (%s)",
-                         hook->type, hook_type_string[hook->type],
-                         hook->plugin, plugin_get_name (hook->plugin));
+                         "debug: removing hook: type=%d (%s), plugin=\"%s\"",
+                         hook->type,
+                         hook_type_string[hook->type],
+                         plugin_get_name (hook->plugin));
     }
 
     /* free data */
