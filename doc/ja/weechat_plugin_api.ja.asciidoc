@@ -8844,13 +8844,12 @@ irc バッファ(サーバ、チャンネル、プライベート)
 * セミコロン
 * チャンネル名 (任意)
 * セミコロン
-// TRANSLATION MISSING
-* comma-separated list of options (optional):
-** 'priority_high': queue with high priority (like user messages); this is the
-   default priority
-** 'priority_low': queue with low priority (like messages automatically sent by
-   WeeChat)
-** 'user_message': force user message (don't execute a command)
+* オプションのコンマ区切りリスト (任意):
+** 'priority_high': キューに高い優先度を設定 (ユーザメッセージなど);
+   特に設定しなければこの優先度が設定されます
+** 'priority_low': キューに低い優先度を設定 (WeeChat
+   が自動的に送信するメッセージなど)
+** 'user_message': 強制的にユーザメッセージ化 (コマンドを実行しません)
 * セミコロン
 * メッセージを送信する際に使うタグのコンマ区切りリスト (任意)
 * セミコロン
