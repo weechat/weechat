@@ -263,10 +263,23 @@ Einen Channel verlassen (der Buffer bleibt dabei geöffnet):
 /part [quit message]
 ----
 
-Schließen eines Server- oder Channel-Buffers (`/close` ist ein Alias für `/buffer close`):
+// TRANSLATION MISSING
+Close a server, channel or private buffer (`/close` is an alias for
+`/buffer close`):
 
 ----
 /close
+----
+
+// TRANSLATION MISSING
+[WARNING]
+Closing the server buffer will close all channel/private buffers.
+
+// TRANSLATION MISSING
+Disconnect from server, on the server buffer:
+
+----
+/disconnect
 ----
 
 [[irc_private_messages]]

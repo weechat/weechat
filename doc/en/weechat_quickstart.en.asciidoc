@@ -241,11 +241,22 @@ Part a channel (keeping buffer open):
 /part [quit message]
 ----
 
-Close server or channel buffer (`/close` is an alias for `/buffer close`):
+Close a server, channel or private buffer (`/close` is an alias for
+`/buffer close`):
 
 ----
 /close
 ----
+
+[WARNING]
+Closing the server buffer will close all channel/private buffers.
+
+Disconnect from server, on the server buffer:
+
+----
+/disconnect
+----
+
 
 [[irc_private_messages]]
 == IRC private messages

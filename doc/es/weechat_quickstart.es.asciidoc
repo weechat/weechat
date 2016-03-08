@@ -269,11 +269,23 @@ Sale de un canal (mantiene el buffer abierto):
 /part [mensaje de partida]
 ----
 
-Cierra un servidor o el buffer de un canal (`/close` es un alias de
+// TRANSLATION MISSING
+Close a server, channel or private buffer (`/close` is an alias for
 `/buffer close`):
 
 ----
 /close
+----
+
+// TRANSLATION MISSING
+[WARNING]
+Closing the server buffer will close all channel/private buffers.
+
+// TRANSLATION MISSING
+Disconnect from server, on the server buffer:
+
+----
+/disconnect
 ----
 
 // TRANSLATION MISSING

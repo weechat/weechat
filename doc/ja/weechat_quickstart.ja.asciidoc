@@ -245,10 +245,23 @@ SSL を使って接続する場合:
 /part [切断メッセージ]
 ----
 
-チャンネルから切断し、バッファを閉じる (`/close` は `/buffer close` の別名)
+// TRANSLATION MISSING
+Close a server, channel or private buffer (`/close` is an alias for
+`/buffer close`):
 
 ----
 /close
+----
+
+// TRANSLATION MISSING
+[WARNING]
+Closing the server buffer will close all channel/private buffers.
+
+// TRANSLATION MISSING
+Disconnect from server, on the server buffer:
+
+----
+/disconnect
 ----
 
 [[irc_private_messages]]

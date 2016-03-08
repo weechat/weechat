@@ -254,10 +254,23 @@ IRC options mentioned above, for example:
 /part [quit message]
 ----
 
-Закрыть буфер сервера или канала (`/close` — алиас для `/buffer close`):
+// TRANSLATION MISSING
+Close a server, channel or private buffer (`/close` is an alias for
+`/buffer close`):
 
 ----
 /close
+----
+
+// TRANSLATION MISSING
+[WARNING]
+Closing the server buffer will close all channel/private buffers.
+
+// TRANSLATION MISSING
+Disconnect from server, on the server buffer:
+
+----
+/disconnect
 ----
 
 [[irc_private_messages]]

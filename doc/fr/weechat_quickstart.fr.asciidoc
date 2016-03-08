@@ -251,11 +251,20 @@ Quitter un canal (en laissant le tampon ouvert) :
 /part [message de fin]
 ----
 
-quitter un canal et fermer le tampon (`/close` est un alias sur
+Fermer un tampon serveur, canal ou privé (`/close` est un alias sur
 `/buffer close`) :
 
 ----
 /close
+----
+
+[WARNING]
+Fermer le tampon du serveur fermera tous les tampons canaux/privés.
+
+Se déconnecter du serveur, sur le tampon du serveur :
+
+----
+/disconnect
 ----
 
 [[irc_private_messages]]
