@@ -28,7 +28,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_logger.file.mask]] *logger.file.mask*
-** Beschreibung: `Standardmaske für Protokolldateien (Format: "Verzeichnis/zur/Datei" oder "Datei", ohne ein führendes "/", da die "Verzeichnis" Einstellung genutzt wird um vollständige Verzeichnisstrukturen zu erstellen); lokale Buffer Variablen und Datumsspezifikationen (siehe: man strftime) sind zulässig`
+** Beschreibung: `default file name mask for log files (format is "directory/to/file" or "file", without first "/" because "path" option is used to build complete path to file); local buffer variables are permitted (you should use only variables that are defined on all buffers, so for example you should NOT use $server nor $channel); date specifiers are permitted (see man strftime)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$plugin.$name.weechatlog"`)
 

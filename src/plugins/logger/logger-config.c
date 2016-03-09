@@ -445,7 +445,9 @@ logger_config_init ()
         N_("default file name mask for log files (format is "
            "\"directory/to/file\" or \"file\", without first \"/\" because "
            "\"path\" option is used to build complete path to file); local "
-           "buffer variables are permitted; date specifiers are permitted "
+           "buffer variables are permitted (you should use only variables "
+           "that are defined on all buffers, so for example you should NOT "
+           "use $server nor $channel); date specifiers are permitted "
            "(see man strftime)"),
         NULL, 0, 0, "$plugin.$name.weechatlog", NULL, 0, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
