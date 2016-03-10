@@ -17,8 +17,8 @@
 == Start von WeeChat
 
 Die bevorzugte Terminal-Emulation für X (aber nicht obligatorisch) ist
-rxvt-unicode (rxvt verfügt über eine gute UTF-8 Unterstützung und hat
-keine Probleme mit der Standard Tastaturbelegung).
+rxvt-unicode: rxvt verfügt über eine gute UTF-8 Unterstützung und hat
+keine Probleme mit der Standard Tastaturbelegung.
 
 Programmstart aus Deiner shell:
 

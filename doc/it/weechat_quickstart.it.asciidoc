@@ -16,8 +16,8 @@ Translators:
 == Avvio di WeeChat
 
 Un emulatore di terminale raccomandato per X (ma non obbligatorio) è
-rxvt-unicode (ha un buon supporto per UTF-8, e nessun problema con
-le scorciatoie da tastiera predefinite).
+rxvt-unicode: ha un buon supporto per UTF-8, e nessun problema con
+le scorciatoie da tastiera predefinite.
 
 Avviare dalla propria shell:
 

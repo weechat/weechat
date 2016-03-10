@@ -9,9 +9,9 @@
 [[start]]
 == Spuštění WeeChatu
 
-Doporučený terminálový emulátor pro X (ale ne vyžadovaný) je rxvt-unicode
-(má dobrou podporu pro UTF-8, a nemá problémy s výchozím nastavením
-klávesových zkratek)
+Doporučený terminálový emulátor pro X (ale ne vyžadovaný) je rxvt-unicode:
+má dobrou podporu pro UTF-8, a nemá problémy s výchozím nastavením
+klávesových zkratek.
 
 Spustění z Vašeho shellu:
 

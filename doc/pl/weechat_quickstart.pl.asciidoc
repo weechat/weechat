@@ -14,9 +14,9 @@ Tłumaczenie:
 [[start]]
 == Uruchamianie WeeChat
 
-Zalecanym emulatorem terminala dla X (ale nieobowiązkowym) jest rxvt-unicode
-(posiada dobre wsparcie UTF-8, oraz nie ma problemów z domyślnymi skrótami
-klawiszowymi).
+Zalecanym emulatorem terminala dla X (ale nieobowiązkowym) jest rxvt-unicode:
+posiada dobre wsparcie UTF-8, oraz nie ma problemów z domyślnymi skrótami
+klawiszowymi.
 
 Wywołaj z terminala:
 

@@ -16,8 +16,8 @@ Translators:
 == Iniciar WeeChat
 
 Es recomendable una terminal emulada para X (pero no indispensable)
-rxvt-unicode (tiene un buen soporte para UTF-8, y no da problemas con
-los atajas de teclados predeterminados).
+rxvt-unicode: tiene un buen soporte para UTF-8, y no da problemas con
+los atajas de teclados predeterminados.
 
 // TRANSLATION MISSING
 Run from your shell:

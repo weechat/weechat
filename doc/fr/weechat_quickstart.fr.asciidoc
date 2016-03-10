@@ -10,8 +10,8 @@
 == Démarrer WeeChat
 
 Un émulateur de terminal recommandé pour X (mais pas obligatoire) est
-rxvt-unicode (il a un bon support UTF-8, et aucun problème avec les
-touches par défaut).
+rxvt-unicode : il a un bon support UTF-8, et aucun problème avec les
+touches par défaut.
 
 Lancer depuis votre shell :
 

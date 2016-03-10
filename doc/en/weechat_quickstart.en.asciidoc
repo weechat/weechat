@@ -9,8 +9,8 @@
 [[start]]
 == Start WeeChat
 
-A recommended terminal emulator for X (but not mandatory) is rxvt-unicode
-(it has good UTF-8 support, and no problem with default keyboard bindings).
+A recommended terminal emulator for X (but not mandatory) is rxvt-unicode:
+it has good UTF-8 support, and no problem with default keyboard bindings.
 
 Run from your shell:
 
