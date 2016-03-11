@@ -562,8 +562,8 @@ Option 'aspell.look.color' has been renamed to 'aspell.color.misspelled'.
 === Nicklist diff in relay
 
 A new message with identifier "_nicklist_diff" has been added in relay (WeeChat
-protocol). WeeChat may decide to send full nicklist or this nicklist diff at any
-time (depending on size of message, the smaller is sent).
+protocol). WeeChat may decide to send full nicklist or this nicklist diff at
+any time (depending on size of message, the smaller is sent).
 
 Clients using nicklist must implement it.
 
@@ -717,8 +717,8 @@ about bars in the 'WeeChat User's guide').
 
 IPv6 is now used by default to connect to IRC servers, with fallback to
 IPv4. The option 'irc.server_default.ipv6' is now "on" by default. If IPv6 is
-not enabled or fails, IPv4 will be used. The "ipv6" option in server is now used
-to disable IPv6 and force IPv4 (if option is turned "off").
+not enabled or fails, IPv4 will be used. The "ipv6" option in server is now
+used to disable IPv6 and force IPv4 (if option is turned "off").
 
 ==== Relay
 
@@ -735,8 +735,8 @@ disable IPv6 in relay if you don't plan to use it at all:
 [[0.3.9.2]]
 == Version 0.3.9.2 (2012-11-18)
 
-This version fixes a security vulnerability when a plugin/script gives untrusted
-command to API function "hook_process".
+This version fixes a security vulnerability when a plugin/script gives
+untrusted command to API function "hook_process".
 
 [[0.3.9.1]]
 == Version 0.3.9.1 (2012-11-09)
@@ -805,11 +805,11 @@ to see differences between your current keys and WeeChat default keys.
 === Options
 
 Options 'weechat.look.prefix_align_more' and
-'weechat.look.prefix_buffer_align_more' have been converted from type boolean to
-string:
+'weechat.look.prefix_buffer_align_more' have been converted from type boolean
+to string:
 
-* if the value was on (default), new value is "+" and you can now customize this
-  char
+* if the value was on (default), new value is "+" and you can now customize
+  this char
 * if the value was off, you have to set " " (string with one space)
 
 [[0.3.8_paste_detection]]
@@ -827,8 +827,8 @@ disable paste detection: if your value was 0, you should set it to -1
 [[0.3.8_rmodifier]]
 === Rmodifier
 
-Rmodifier "nickserv" has a new default regex which includes option "release" for
-command "/msg nickserv".
+Rmodifier "nickserv" has a new default regex which includes option "release"
+for command "/msg nickserv".
 
 If you never added/changed rmodifiers, you can just reset all rmodifiers:
 
@@ -901,8 +901,8 @@ If you have some colors defined in section "palette" with version 0.3.4, you
 should remove all colors defined, and add new aliases (it's not needed any more
 to add colors before using them).
 
-Colors for nick prefixes (char for op, voice, ..) are defined in a single option
-'irc.color.nick_prefixes', therefore following options will be lost:
+Colors for nick prefixes (char for op, voice, ..) are defined in a single
+option 'irc.color.nick_prefixes', therefore following options will be lost:
 'irc.color.nick_prefix_op', 'irc.color.nick_prefix_halfop',
 'irc.color.nick_prefix_voice', 'irc.color.nick_prefix_user'.
 
@@ -923,8 +923,9 @@ back to old behavior, do that:
 [[0.3.5_hotlist_away_current_buffer]]
 ==== Away and current buffer
 
-When you are away, all buffers are now added to hotlist by default (even if they
-are displayed in a window), if you want to come back to old behavior, do that:
+When you are away, all buffers are now added to hotlist by default (even if
+they are displayed in a window), if you want to come back to old behavior, do
+that:
 
 ----
 /set weechat.look.hotlist_add_buffer_if_away off
@@ -957,8 +958,8 @@ If you are using `/upgrade` from a previous release:
 Some IRC options have been renamed, before upgrading to this version, note
 value for old options, and set them again with new name:
 
-* options moved from 'network' section to servers (with global value, and server
-  value, like other server options):
+* options moved from 'network' section to servers (with global value, and
+  server value, like other server options):
 ** 'irc.network.connection_timeout' moved to
    'irc.server_default.connection_timeout'
 ** 'irc.network.anti_flood_prio_high' moved to
@@ -968,8 +969,10 @@ value for old options, and set them again with new name:
 ** 'irc.network.away_check' moved to 'irc.server_default.away_check'
 ** 'irc.network.away_check_max_nicks' moved to
    'irc.server_default.away_check_max_nicks'
-** 'irc.network.default_msg_part' moved to 'irc.server_default.default_msg_part'
-** 'irc.network.default_msg_quit' moved to 'irc.server_default.default_msg_quit'
+** 'irc.network.default_msg_part' moved to
+   'irc.server_default.default_msg_part'
+** 'irc.network.default_msg_quit' moved to
+   'irc.server_default.default_msg_quit'
 * other IRC options renamed:
 ** 'irc.look.open_channel_near_server' moved to 'irc.look.new_channel_position'
    (old option was boolean, new is integer with value as string)
@@ -1041,9 +1044,10 @@ Major differences:
 
 * it is *NOT POSSIBLE* to use command `/upgrade` from a version 0.2.x to 0.3.x;
   you have to quit your old WeeChat, then run new version.
-* new configuration files (`*.conf`) are not compatible with old files (`*.rc`).
-* name of options is similar to old versions, but there is now one configuration
-  file by plugin, and one file for WeeChat core; there is
+* new configuration files (`*.conf`) are not compatible with old files
+  (`*.rc`).
+* name of options is similar to old versions, but there is now one
+  configuration file by plugin, and one file for WeeChat core; there is
   *no automatic conversion* for your old options to new configuration files,
   so you'll have to setup again your IRC servers and all other options.
 * plugin API has been rewritten and is not compatible with previous versions;
@@ -1104,9 +1108,9 @@ with new 'charset' plugin.
 For ISO users: history of channels may be without accents (after `/upgrade`),
 this is not recoverable, but this is not a bug. All new messages should be OK.
 
-Be careful, now default encode is UTF-8 for all channels (before it was terminal
-charset). If you still want to send messages as 'ISO-8859-1', you should set
-either global encode or server specific encode to 'ISO-8859-1'.
+Be careful, now default encode is UTF-8 for all channels (before it was
+terminal charset). If you still want to send messages as 'ISO-8859-1', you
+should set either global encode or server specific encode to 'ISO-8859-1'.
 
 For global encode:
 
@@ -1155,10 +1159,10 @@ If you upgraded with `/upgrade` in WeeChat, you should `/disconnect` and then
 [[0.2.0_plugins]]
 === Plugins
 
-If you're using plugins, you should remove some old plugins libraries in WeeChat
-system library directory (commonly '/usr/local/lib/weechat/plugins'): remove
-`lib*` files (like `libperl.*`, `libpython.*`, ..) and keep only new libraries
-(`perl.*`, `python.*`, ..).
+If you're using plugins, you should remove some old plugins libraries in
+WeeChat system library directory (commonly '/usr/local/lib/weechat/plugins'):
+remove `lib*` files (like `libperl.*`, `libpython.*`, ..) and keep only new
+libraries (`perl.*`, `python.*`, ..).
 
 [[0.1.9]]
 == Version 0.1.9 (2006-05-25)
@@ -1248,8 +1252,9 @@ the plugins names are ending by '.so.0.0' and not '.so'.
 
 With new and full UTF-8 support, the option 'look_charset_internal' should be
 set to blank for most cases. Forces it only if your locale is not properly
-detected by WeeChat (you can set 'UTF-8' or 'ISO-8859-15' for example, depending
-on your locale). WeeChat is looking for 'UTF-8' in your locale name at startup.
+detected by WeeChat (you can set 'UTF-8' or 'ISO-8859-15' for example,
+depending on your locale). WeeChat is looking for 'UTF-8' in your locale name
+at startup.
 
 [[0.1.5]]
 == Version 0.1.5 (2005-09-24)
