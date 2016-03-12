@@ -709,7 +709,7 @@ plugin_script_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * Removes callbacks for a buffer (called when a buffer is closed  by user).
+ * Removes callbacks for a buffer (called when a buffer is closed by user).
  */
 
 void
@@ -781,7 +781,7 @@ plugin_script_remove (struct t_weechat_plugin *weechat_plugin,
 
         /*
          * remove same pointers in other callbacks
-         * (to not free 2 times with same pointer!)
+         * (to not free two times the same pointer!)
          */
         for (ptr_script_cb2 = ptr_script_cb->next_callback; ptr_script_cb2;
              ptr_script_cb2 = ptr_script_cb2->next_callback)
