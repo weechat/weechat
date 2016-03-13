@@ -862,7 +862,7 @@ exec_command_init ()
            "\n"
            "Examples:\n"
            "  /exec -n ls -l /tmp\n"
-           "  /exec -n ps xu | grep weechat\n"
+           "  /exec -sh -n ps xu | grep weechat\n"
            "  /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx\n"
            "  /exec -nf -noln links -dump "
            "https://weechat.org/files/doc/devel/weechat_user.en.html\n"

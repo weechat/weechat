@@ -65,7 +65,7 @@ property: フックプロパティ
 
 例:
   /exec -n ls -l /tmp
-  /exec -n ps xu | grep weechat
+  /exec -sh -n ps xu | grep weechat
   /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx
   /exec -nf -noln links -dump https://weechat.org/files/doc/devel/weechat_user.en.html
   /exec -o uptime
