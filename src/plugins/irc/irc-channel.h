@@ -51,6 +51,8 @@ struct t_irc_channel
                                        /* 353=names, 366=names count,       */
                                        /* 332/333=topic, 329=creation date  */
     int checking_whox;                 /* = 1 if checking WHOX              */
+    int who_checked;                   /* =1 if who(x) has been received at
+                                         least once */
     char *away_message;                /* to display away only once in pv   */
     int has_quit_server;               /* =1 if nick has quit (pv only), to */
                                        /* display message when he's back    */
@@ -116,7 +118,7 @@ extern void irc_channel_check_whox (struct t_irc_server *server,
 extern void irc_channel_set_away (struct t_irc_server *server,
                                   struct t_irc_channel *channel,
                                   const char *nick_name,
-                                  int is_away);
+                                  int is_away, const char *away_message);
 extern void irc_channel_nick_speaking_add (struct t_irc_channel *channel,
                                            const char *nick_name,
                                            int highlight);

@@ -466,6 +466,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         NULL,
         NULL);
     new_channel->checking_whox = 0;
+    new_channel->who_checked = 0;
     new_channel->away_message = NULL;
     new_channel->has_quit_server = 0;
     new_channel->cycle = 0;
@@ -675,7 +676,7 @@ irc_channel_remove_away (struct t_irc_server *server,
         for (ptr_nick = channel->nicks; ptr_nick;
              ptr_nick = ptr_nick->next_nick)
         {
-            irc_nick_set_away (server, channel, ptr_nick, 0);
+            irc_nick_set_away (server, channel, ptr_nick, 0, NULL);
         }
     }
 }
@@ -725,7 +726,7 @@ irc_channel_check_whox (struct t_irc_server *server,
 void
 irc_channel_set_away (struct t_irc_server *server,
                       struct t_irc_channel *channel, const char *nick_name,
-                      int is_away)
+                      int is_away, const char *away_message)
 {
     struct t_irc_nick *ptr_nick;
 
@@ -733,7 +734,7 @@ irc_channel_set_away (struct t_irc_server *server,
     {
         ptr_nick = irc_nick_search (server, channel, nick_name);
         if (ptr_nick)
-            irc_nick_set_away (server, channel, ptr_nick, is_away);
+            irc_nick_set_away (server, channel, ptr_nick, is_away, away_message);
     }
 }
 

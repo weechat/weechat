@@ -926,8 +926,9 @@ irc_nick_count (struct t_irc_server *server, struct t_irc_channel *channel,
 
 void
 irc_nick_set_away (struct t_irc_server *server, struct t_irc_channel *channel,
-                   struct t_irc_nick *nick, int is_away)
+                   struct t_irc_nick *nick, int is_away, const char* away_message)
 {
+
     if (!is_away
         || server->cap_away_notify
         || ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
@@ -936,6 +937,23 @@ irc_nick_set_away (struct t_irc_server *server, struct t_irc_channel *channel,
     {
         if ((is_away && !nick->away) || (!is_away && nick->away))
         {
+            if (weechat_config_boolean(irc_config_look_display_other_away) &&
+                channel->who_checked)
+            {
+                if (strcmp(nick->name, server->nick) != 0)
+                    weechat_printf_tags (channel->buffer,
+                                         "away_info",
+                                         "%s[%s%s%s %s%s%s%s]",
+                                         IRC_COLOR_CHAT_DELIMITERS,
+                                         IRC_COLOR_CHAT_NICK,
+                                         nick->name,
+                                         IRC_COLOR_RESET,
+                                         is_away ? "away" : "back",
+                                         away_message ? ": " : "",
+                                         away_message ? away_message : "",
+                                         IRC_COLOR_CHAT_DELIMITERS);
+            }
+
             nick->away = is_away;
             irc_nick_nicklist_set (channel, nick, "color",
                                    irc_nick_get_color_for_nicklist (server, nick));

@@ -1,7 +1,7 @@
 /*
  * irc-protocol.c - implementation of IRC protocol (RFCs 1459/2810/2811/2812/2813)
  *
- * Copyright (C) 2003-2016 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2015 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2014 Shawn Smith <ShawnSmith0828@gmail.com>
  *
@@ -206,11 +206,8 @@ IRC_PROTOCOL_CALLBACK(account)
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    char *pos_account;
 
     IRC_PROTOCOL_MIN_ARGS(3);
-
-    pos_account = (strcmp (argv[2], "*") != 0) ? argv[2] : NULL;
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -220,8 +217,8 @@ IRC_PROTOCOL_CALLBACK(account)
         {
             if (ptr_nick->account)
                 free (ptr_nick->account);
-            ptr_nick->account = (server->cap_account_notify && pos_account) ?
-                strdup (pos_account) : NULL;
+            ptr_nick->account = (server->cap_account_notify) ?
+                strdup (argv[2]) : strdup ("*");
         }
     }
 
@@ -346,7 +343,7 @@ IRC_PROTOCOL_CALLBACK(cap)
     const char *ptr_cap_option;
     int num_caps_supported, num_caps_requested, num_caps_added;
     int num_caps_removed, sasl_requested, sasl_to_do, sasl_mechanism;
-    int sasl_fail, i, j, timeout, length;
+    int i, j, timeout, length;
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -428,21 +425,8 @@ IRC_PROTOCOL_CALLBACK(cap)
                     {
                         weechat_printf (
                             server->buffer,
-                            _("%s%s: client capability: SASL not supported"),
+                            _("%s%s: client capability: sasl not supported"),
                             weechat_prefix ("network"), IRC_PLUGIN_NAME);
-
-                        if (weechat_config_boolean (irc_config_network_sasl_fail_unavailable))
-                        {
-                            /* same handling as for sasl_end_fail */
-                            sasl_fail = IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_FAIL);
-                            if ((sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT)
-                                || (sasl_fail == IRC_SERVER_SASL_FAIL_DISCONNECT))
-                            {
-                                irc_server_disconnect (
-                                    server, 0,
-                                    (sasl_fail == IRC_SERVER_SASL_FAIL_RECONNECT) ? 1 : 0);
-                            }
-                        }
                     }
                 }
                 if (cap_option)
@@ -491,10 +475,6 @@ IRC_PROTOCOL_CALLBACK(cap)
                     else if (strcmp (caps_supported[i], "account-notify") == 0)
                     {
                         server->cap_account_notify = 1;
-                    }
-                    else if (strcmp (caps_supported[i], "extended-join") == 0)
-                    {
-                        server->cap_extended_join = 1;
                     }
                 }
                 weechat_string_free_split (caps_supported);
@@ -768,7 +748,7 @@ IRC_PROTOCOL_CALLBACK(invite)
  *
  * With extended-join capability:
  *   :nick!user@host JOIN :#channel * :real name
- *   :nick!user@host JOIN :#channel account :real name
+ *   *nick!user@host JOIN :#channel account :real name
  */
 
 IRC_PROTOCOL_CALLBACK(join)
@@ -863,8 +843,7 @@ IRC_PROTOCOL_CALLBACK(join)
 
     /* add nick in channel */
     ptr_nick = irc_nick_new (server, ptr_channel, nick, address, NULL, 0,
-                             (pos_account) ? pos_account : NULL,
-                             (pos_realname) ? pos_realname : NULL);
+                             (pos_account) ? pos_account : "*");
 
     /* rename the nick if it was in list with a different case */
     irc_channel_nick_speaking_rename_if_present (server, ptr_channel, nick);
@@ -1300,7 +1279,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                     /* temporary disable hotlist */
                     weechat_buffer_set (NULL, "hotlist", "-");
 
-                    /* set host in nick if needed */
+                    /* set host for nick if needed */
                     if (!ptr_nick->host)
                         ptr_nick->host = strdup (address);
 
@@ -3047,7 +3026,6 @@ IRC_PROTOCOL_CALLBACK(315)
     if (ptr_channel && (ptr_channel->checking_whox > 0))
     {
         ptr_channel->checking_whox--;
-        ptr_channel->who_checked = 1; /* who was checked at least once */
     }
     else
     {
@@ -3066,6 +3044,7 @@ IRC_PROTOCOL_CALLBACK(315)
             (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
     }
 
+    ptr_channel->who_checked = 1; /* who was checked at least once */
     return WEECHAT_RC_OK;
 }
 
@@ -4190,7 +4169,7 @@ IRC_PROTOCOL_CALLBACK(352)
     ptr_nick = (ptr_channel) ?
         irc_nick_search (server, ptr_channel, argv[7]) : NULL;
 
-    /* update host in nick */
+    /* update host for nick */
     if (ptr_nick)
     {
         if (ptr_nick->host)
@@ -4201,20 +4180,11 @@ IRC_PROTOCOL_CALLBACK(352)
             snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
     }
 
-    /* update away flag in nick */
+    /* update away flag for nick */
     if (ptr_channel && ptr_nick && pos_attr)
     {
         irc_nick_set_away (server, ptr_channel, ptr_nick,
                            (pos_attr[0] == 'G') ? 1 : 0, NULL);
-    }
-
-    /* update realname in nick */
-    if (ptr_channel && ptr_nick && pos_realname)
-    {
-        if (ptr_nick->realname)
-            free (ptr_nick->realname);
-        ptr_nick->realname = (pos_realname && server->cap_extended_join) ?
-            strdup (pos_realname) : NULL;
     }
 
     /* display output of who (manual who from user) */
@@ -4327,7 +4297,7 @@ IRC_PROTOCOL_CALLBACK(353)
             if (ptr_channel && ptr_channel->nicks)
             {
                 if (!irc_nick_new (server, ptr_channel, nickname, pos_host,
-                                   prefixes, 0, NULL, NULL))
+                                   prefixes, 0, "*"))
                 {
                     weechat_printf (
                         server->buffer,
@@ -4422,7 +4392,7 @@ IRC_PROTOCOL_CALLBACK(354)
     ptr_nick = (ptr_channel) ?
         irc_nick_search (server, ptr_channel, argv[7]) : NULL;
 
-    /* update host in nick */
+    /* update host for nick */
     if (ptr_nick)
     {
         if (ptr_nick->host)
@@ -4436,7 +4406,7 @@ IRC_PROTOCOL_CALLBACK(354)
             snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
     }
 
-    /* update away flag in nick */
+    /* update away flag for nick */
     if (ptr_channel && ptr_nick)
     {
         if (pos_attr
@@ -4457,24 +4427,14 @@ IRC_PROTOCOL_CALLBACK(354)
         }
     }
 
-    /* update account flag in nick */
+    /* update account flag for nick */
     if (ptr_nick)
     {
         if (ptr_nick->account)
             free (ptr_nick->account);
         ptr_nick->account = (ptr_channel && pos_account
                              && server->cap_account_notify) ?
-            strdup (pos_account) : NULL;
-    }
-
-    /* update realname in nick */
-    if (ptr_nick)
-    {
-        if (ptr_nick->realname)
-            free (ptr_nick->realname);
-        ptr_nick->realname = (ptr_channel && pos_realname
-                              && server->cap_extended_join) ?
-            strdup (pos_realname) : NULL;
+            strdup (pos_account) : strdup ("*");
     }
 
     /* display output of who (manual who from user) */
@@ -4705,8 +4665,6 @@ IRC_PROTOCOL_CALLBACK(366)
         {
             irc_command_mode_server (server, "MODE", ptr_channel, NULL,
                                      IRC_SERVER_SEND_OUTQ_PRIO_LOW);
-
-            ptr_channel->who_checked = 0;
             irc_channel_check_whox (server, ptr_channel);
         }
     }
@@ -5049,74 +5007,6 @@ IRC_PROTOCOL_CALLBACK(438)
             weechat_prefix ("network"),
             argv[2],
             argv[3]);
-    }
-
-    return WEECHAT_RC_OK;
-}
-
-/*
- * Callback for the IRC message "470": forwarding to another channel.
- *
- * Message looks like:
- *   :server 470 mynick #channel ##channel :Forwarding to another channel
- */
-
-IRC_PROTOCOL_CALLBACK(470)
-{
-    struct t_gui_buffer *ptr_buffer;
-    struct t_gui_lines *own_lines;
-    const char *buffer_name, *short_name, *localvar_channel;
-    int lines_count;
-
-    irc_protocol_cb_generic_error (server,
-                                   date, nick, address, host, command,
-                                   ignored, argc, argv, argv_eol);
-
-    if ((argc >= 5) && !irc_channel_search (server, argv[3]))
-    {
-        ptr_buffer = irc_channel_search_buffer (server,
-                                                IRC_CHANNEL_TYPE_CHANNEL,
-                                                argv[3]);
-        if (ptr_buffer)
-        {
-            short_name = weechat_buffer_get_string (ptr_buffer, "short_name");
-            localvar_channel = weechat_buffer_get_string (ptr_buffer,
-                                                          "localvar_channel");
-            if (!short_name
-                || (localvar_channel
-                    && (strcmp (localvar_channel, short_name) == 0)))
-            {
-                /*
-                 * update the short_name only if it was not changed by the
-                 * user
-                 */
-                weechat_buffer_set (ptr_buffer, "short_name", argv[4]);
-            }
-            buffer_name = irc_buffer_build_name (server->name, argv[4]);
-            weechat_buffer_set (ptr_buffer, "name", buffer_name);
-            weechat_buffer_set (ptr_buffer, "localvar_set_channel", argv[4]);
-
-            /*
-             * check if logger backlog should be displayed for the new channel
-             * name: it is displayed only if the buffer is currently completely
-             * empty (no messages at all)
-             */
-            lines_count = 0;
-            own_lines = weechat_hdata_pointer (weechat_hdata_get ("buffer"),
-                                               ptr_buffer, "own_lines");
-            if (own_lines)
-            {
-                lines_count = weechat_hdata_integer (
-                    weechat_hdata_get ("lines"),
-                    own_lines, "lines_count");
-            }
-            if (lines_count == 0)
-            {
-                (void) weechat_hook_signal_send ("logger_backlog",
-                                                 WEECHAT_HOOK_SIGNAL_POINTER,
-                                                 ptr_buffer);
-            }
-        }
     }
 
     return WEECHAT_RC_OK;
@@ -5755,7 +5645,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "464", /* password incorrect */ 1, 0, &irc_protocol_cb_generic_error },
           { "465", /* you are banned from this server */ 1, 0, &irc_protocol_cb_generic_error },
           { "467", /* channel key already set */ 1, 0, &irc_protocol_cb_generic_error },
-          { "470", /* forwarding to another channel */ 1, 0, &irc_protocol_cb_470 },
+          { "470", /* forwarding to another channel */ 1, 0, &irc_protocol_cb_generic_error },
           { "471", /* channel is already full */ 1, 0, &irc_protocol_cb_generic_error },
           { "472", /* unknown mode char to me */ 1, 0, &irc_protocol_cb_generic_error },
           { "473", /* cannot join channel (invite only) */ 1, 0, &irc_protocol_cb_generic_error },

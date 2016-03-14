@@ -4977,7 +4977,8 @@ irc_server_check_away (struct t_irc_server *server)
  */
 
 void
-irc_server_set_away (struct t_irc_server *server, const char *nick, int is_away)
+irc_server_set_away (struct t_irc_server *server, const char *nick, int is_away,
+                     const char *away_message)
 {
     struct t_irc_channel *ptr_channel;
 
@@ -5000,7 +5001,7 @@ irc_server_set_away (struct t_irc_server *server, const char *nick, int is_away)
         {
             /* set away flag for nick on channel */
             if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                irc_channel_set_away (server, ptr_channel, nick, is_away);
+                irc_channel_set_away (server, ptr_channel, nick, is_away, away_message);
 
             /* set/del "away" local variable on channel buffer */
             if (is_away)
