@@ -4314,7 +4314,7 @@ struct t_config_file *config_file = weechat_config_new ("test",
 [source,python]
 ----
 # プロトタイプ
-config_file = weechat.config_new(name, calback_reload, callback_reload_data)
+config_file = weechat.config_new(name, callback_reload, callback_reload_data)
 
 # 例
 def my_config_reload_cb(data, config_file):
