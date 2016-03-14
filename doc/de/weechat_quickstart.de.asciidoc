@@ -263,20 +263,19 @@ Einen Channel verlassen (der Buffer bleibt dabei geöffnet):
 /part [quit message]
 ----
 
-// TRANSLATION MISSING
-Close a server, channel or private buffer (`/close` is an alias for
-`/buffer close`):
+Schließt einen Server, Channel oder privaten Buffer (`/close` ist ein Alias
+für `/buffer close`):
 
 ----
 /close
 ----
 
-// TRANSLATION MISSING
 [WARNING]
-Closing the server buffer will close all channel/private buffers.
+Wird ein Server-Buffer geschlossen, werden automatisch die Channel/privaten
+Buffer geschlossen.
 
-// TRANSLATION MISSING
-Disconnect from server, on the server buffer:
+Um sich bei einem Server abzumelden, führt man im entsprechenden Server-Buffer
+folgenden Befehl aus:
 
 ----
 /disconnect
