@@ -1416,7 +1416,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                    "\"active\", \"inactive\", \"nicklist\" (window must be "
                    "active/inactive, buffer must have a nicklist), or an "
                    "expression with condition(s) (see /help eval), "
-                   "like: \"${nicklist} && ${window.win_width} > 100\" "
+                   "like: \"${nicklist} && ${info:term_width} > 100\" "
                    "(local variables for expression are ${active}, "
                    "${inactive} and ${nicklist})"),
                 NULL, 0, 0, value, NULL, 0,
