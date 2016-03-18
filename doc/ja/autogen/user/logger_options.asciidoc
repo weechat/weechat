@@ -28,7 +28,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_logger.file.mask]] *logger.file.mask*
-** 説明: `default file name mask for log files (format is "directory/to/file" or "file", without first "/" because "path" option is used to build complete path to file); local buffer variables are permitted (you should use only variables that are defined on all buffers, so for example you should NOT use $server nor $channel); date specifiers are permitted (see man strftime)`
+** 説明: `ログファイルのデフォルトファイル名マスク (フォーマットは "directory/to/file" または "file" で、最初に "/" が無ければ "path" オプションがファイルへの完全なパスを作るために使われます); ローカルバッファ変数を使うことも可能です (全てのバッファで定義されている変数以外を使わないでください。すなわち、$server や $channel などを使うべきではありません); 日付指定子を使うことも可能です (strftime の man を参照してください)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"$plugin.$name.weechatlog"`)
 
