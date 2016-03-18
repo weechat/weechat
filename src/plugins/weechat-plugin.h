@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20150822-01"
+#define WEECHAT_PLUGIN_API_VERSION "20160128-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -687,6 +687,17 @@ struct t_weechat_plugin
                                  const char *modifier,
                                  const char *modifier_data,
                                  const char *string);
+    struct t_hook *(*hook_provider) (struct t_weechat_plugin *plugin,
+                                     const char *provider,
+                                     const char *(*callback)(void *data,
+                                                             const char *provider,
+                                                             const char *provider_data,
+                                                             const char *string),
+                                     void *callback_data);
+    const char *(*hook_provider_exec) (struct t_weechat_plugin *plugin,
+                                       const char *provider,
+                                       const char *provider_data,
+                                       const char *string);
     struct t_hook *(*hook_info) (struct t_weechat_plugin *plugin,
                                  const char *info_name,
                                  const char *description,
@@ -1498,6 +1509,13 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                    __string)                            \
     (weechat_plugin->hook_modifier_exec)(weechat_plugin, __modifier,    \
                                          __modifier_data, __string)
+#define weechat_hook_provider(__provider, __callback, __data)           \
+    (weechat_plugin->hook_provider)(weechat_plugin, __provider,         \
+                                    __callback, __data)
+#define weechat_hook_provider_exec(__provider, __provider_data,         \
+                                   __string)                            \
+    (weechat_plugin->hook_provider_exec)(weechat_plugin, __provider,    \
+                                         __provider_data, __string)
 #define weechat_hook_info(__info_name, __description,                   \
                           __args_description, __callback, __data)       \
     (weechat_plugin->hook_info)(weechat_plugin, __info_name,            \

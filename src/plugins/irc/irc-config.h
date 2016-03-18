@@ -129,6 +129,7 @@ extern struct t_config_option *irc_config_look_msgbuffer_fallback;
 extern struct t_config_option *irc_config_look_new_channel_position;
 extern struct t_config_option *irc_config_look_new_pv_position;
 extern struct t_config_option *irc_config_look_nick_color_force;
+extern struct t_config_option *irc_config_look_nick_color_force_modes;
 extern struct t_config_option *irc_config_look_nick_color_hash;
 extern struct t_config_option *irc_config_look_nick_color_stop_chars;
 extern struct t_config_option *irc_config_look_nick_completion_smart;
@@ -194,6 +195,7 @@ extern int irc_config_num_nick_colors;
 
 extern struct t_hashtable *irc_config_hashtable_display_join_message;
 extern struct t_hashtable *irc_config_hashtable_nick_color_force;
+extern struct t_hashtable *irc_config_hashtable_nick_color_force_modes;
 extern struct t_hashtable *irc_config_hashtable_nick_prefixes;
 extern struct t_hashtable *irc_config_hashtable_color_mirc_remap;
 extern char **irc_config_nicks_hide_password;

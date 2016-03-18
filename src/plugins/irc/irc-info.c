@@ -154,6 +154,66 @@ irc_info_info_irc_nick_from_host_cb (void *data, const char *info_name,
 }
 
 /*
+ * Returns IRC info "irc_nick_color_name".
+ */
+
+const char *
+irc_info_info_irc_nick_color_name_cb (void *data, const char *info_name,
+                                      const char *arguments)
+{
+    char **args, *str_nick;
+    const char *color_name;
+    int num_args;
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+
+    ptr_server = NULL;
+    ptr_channel = NULL;
+    str_nick = NULL;
+
+    if (arguments && arguments[0])
+    {
+        args = weechat_string_split (arguments, ",", 0, 3, &num_args);
+        if (args)
+        {
+            switch (num_args)
+            {
+                case 1:
+                    str_nick = args[0];
+                    break;
+
+                case 2:
+                    ptr_server = irc_server_search (args[0]);
+                    str_nick = args[1];
+                    break;
+
+                case 3:
+                    ptr_server = irc_server_search (args[0]);
+                    if (ptr_server)
+                        ptr_channel = irc_channel_search (ptr_server, args[1]);
+                    str_nick = args[2];
+                    break;
+
+                default:
+                    weechat_string_free_split (args);
+                    return NULL;
+            }
+
+            color_name = irc_nick_find_color_name (ptr_server, ptr_channel, str_nick);
+
+            weechat_string_free_split (args);
+            return color_name;
+        }
+    }
+
+    return NULL;
+}
+
+/*
  * Returns IRC info "irc_nick_color".
  */
 
@@ -165,24 +225,9 @@ irc_info_info_irc_nick_color_cb (void *data, const char *info_name,
     (void) data;
     (void) info_name;
 
-    return (arguments && arguments[0]) ?
-        irc_nick_find_color (arguments) : NULL;
-}
-
-/*
- * Returns IRC info "irc_nick_color_name".
- */
-
-const char *
-irc_info_info_irc_nick_color_name_cb (void *data, const char *info_name,
-                                      const char *arguments)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) info_name;
-
-    return (arguments && arguments[0]) ?
-        irc_nick_find_color_name (arguments) : NULL;
+    return weechat_color (
+        irc_info_info_irc_nick_color_name_cb (data, info_name,
+                                              arguments));
 }
 
 /*
@@ -815,12 +860,12 @@ irc_info_init ()
     weechat_hook_info (
         "irc_nick_color",
         N_("get nick color code"),
-        N_("nickname"),
+        N_("[server,[channel,]]nickname"),
         &irc_info_info_irc_nick_color_cb, NULL);
     weechat_hook_info (
         "irc_nick_color_name",
         N_("get nick color name"),
-        N_("nickname"),
+        N_("[server,[channel,]]nickname"),
         &irc_info_info_irc_nick_color_name_cb, NULL);
     weechat_hook_info (
         "irc_buffer",

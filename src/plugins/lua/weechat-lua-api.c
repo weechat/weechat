@@ -2945,6 +2945,73 @@ API_FUNC(hook_modifier_exec)
 }
 
 const char *
+weechat_lua_api_hook_provider_cb (void *data, const char *provider,
+                                  const char *provider_data,
+                                  const char *string)
+{
+    struct t_plugin_script_cb *script_callback;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+
+    script_callback = (struct t_plugin_script_cb *)data;
+
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[1] = (provider) ? (char *)provider : empty_arg;
+        func_argv[2] = (provider_data) ? (char *)provider_data : empty_arg;
+        func_argv[3] = (string) ? (char *)string : empty_arg;
+
+        return (const char *)weechat_lua_exec (script_callback->script,
+                                               WEECHAT_SCRIPT_EXEC_STRING,
+                                               script_callback->function,
+                                               "ssss", func_argv);
+    }
+
+    return NULL;
+}
+
+API_FUNC(hook_provider)
+{
+    const char *provider, *function, *data;
+    char *result;
+
+    API_INIT_FUNC(1, "hook_provider", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    provider = lua_tostring (L, -3);
+    function = lua_tostring (L, -2);
+    data = lua_tostring (L, -1);
+
+    result = API_PTR2STR(plugin_script_api_hook_provider (weechat_lua_plugin,
+                                                          lua_current_script,
+                                                          provider,
+                                                          &weechat_lua_api_hook_provider_cb,
+                                                          function,
+                                                          data));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+API_FUNC(hook_provider_exec)
+{
+    const char *provider, *provider_data, *string, *result;
+
+    API_INIT_FUNC(1, "hook_provider_exec", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    provider = lua_tostring (L, -3);
+    provider_data = lua_tostring (L, -2);
+    string = lua_tostring (L, -1);
+
+    result = weechat_hook_provider_exec (provider, provider_data, string);
+
+    API_RETURN_STRING(result);
+}
+
+const char *
 weechat_lua_api_hook_info_cb (void *data, const char *info_name,
                               const char *arguments)
 {
@@ -5110,6 +5177,8 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(hook_completion_list_add),
     API_DEF_FUNC(hook_modifier),
     API_DEF_FUNC(hook_modifier_exec),
+    API_DEF_FUNC(hook_provider),
+    API_DEF_FUNC(hook_provider_exec),
     API_DEF_FUNC(hook_info),
     API_DEF_FUNC(hook_info_hashtable),
     API_DEF_FUNC(hook_infolist),

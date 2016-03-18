@@ -3464,6 +3464,85 @@ weechat_ruby_api_hook_modifier_exec (VALUE class, VALUE modifier,
 }
 
 const char *
+weechat_ruby_api_hook_provider_cb (void *data, const char *provider,
+                                   const char *provider_data,  const char *string)
+{
+    struct t_plugin_script_cb *script_callback;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+
+    script_callback = (struct t_plugin_script_cb *)data;
+
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[1] = (provider) ? (char *)provider : empty_arg;
+        func_argv[2] = (provider_data) ? (char *)provider_data : empty_arg;
+        func_argv[3] = (string) ? (char *)string : empty_arg;
+
+        return (const char *)weechat_ruby_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_STRING,
+                                          script_callback->function,
+                                          "ssss", func_argv);
+    }
+
+    return NULL;
+}
+
+static VALUE
+weechat_ruby_api_hook_provider (VALUE class, VALUE provider, VALUE function,
+                                VALUE data)
+{
+    char *c_provider, *c_function, *c_data, *result;
+    VALUE return_value;
+
+    API_INIT_FUNC(1, "hook_provider", API_RETURN_EMPTY);
+    if (NIL_P (provider) || NIL_P (function) || NIL_P (data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (provider, T_STRING);
+    Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
+
+    c_provider = StringValuePtr (provider);
+    c_function = StringValuePtr (function);
+    c_data = StringValuePtr (data);
+
+    result = API_PTR2STR(plugin_script_api_hook_provider (weechat_ruby_plugin,
+                                                          ruby_current_script,
+                                                          c_provider,
+                                                          &weechat_ruby_api_hook_provider_cb,
+                                                          c_function,
+                                                          c_data));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+static VALUE
+weechat_ruby_api_hook_provider_exec (VALUE class, VALUE provider,
+                                     VALUE provider_data, VALUE string)
+{
+    char *c_provider, *c_provider_data, *c_string;
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_provider_exec", API_RETURN_EMPTY);
+    if (NIL_P (provider) || NIL_P (provider_data) || NIL_P (string))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (provider, T_STRING);
+    Check_Type (provider_data, T_STRING);
+    Check_Type (string, T_STRING);
+
+    c_provider = StringValuePtr (provider);
+    c_provider_data = StringValuePtr (provider_data);
+    c_string = StringValuePtr (string);
+
+    result = weechat_hook_provider_exec (c_provider, c_provider_data, c_string);
+
+    API_RETURN_STRING(result);
+}
+
+const char *
 weechat_ruby_api_hook_info_cb (void *data, const char *info_name,
                                const char *arguments)
 {
@@ -6180,6 +6259,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(hook_completion_list_add, 4);
     API_DEF_FUNC(hook_modifier, 3);
     API_DEF_FUNC(hook_modifier_exec, 3);
+    API_DEF_FUNC(hook_provider, 3);
+    API_DEF_FUNC(hook_provider_exec, 3);
     API_DEF_FUNC(hook_info, 5);
     API_DEF_FUNC(hook_info_hashtable, 6);
     API_DEF_FUNC(hook_infolist, 6);

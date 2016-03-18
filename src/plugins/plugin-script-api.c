@@ -953,6 +953,41 @@ plugin_script_api_hook_modifier (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * Hooks a provider.
+ *
+ * Returns pointer to new hook, NULL if error.
+ */
+
+struct t_hook *
+plugin_script_api_hook_provider (struct t_weechat_plugin *weechat_plugin,
+                                 struct t_plugin_script *script,
+                                 const char *provider,
+                                 const char *(*callback)(void *data, const char *provider,
+                                                         const char *provider_data,
+                                                         const char *string),
+                                 const char *function,
+                                 const char *data)
+{
+    struct t_plugin_script_cb *script_cb;
+    struct t_hook *new_hook;
+
+    script_cb = plugin_script_callback_add (script, function, data);
+    if (!script_cb)
+        return NULL;
+
+    new_hook = weechat_hook_provider (provider, callback, script_cb);
+    if (new_hook)
+    {
+        weechat_hook_set (new_hook, "subplugin", script->name);
+        script_cb->hook = new_hook;
+    }
+    else
+        plugin_script_callback_remove (script, script_cb);
+
+    return new_hook;
+}
+
+/*
  * Hooks an info.
  *
  * Returns pointer to new hook, NULL if error.

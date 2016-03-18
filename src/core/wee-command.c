@@ -4337,6 +4337,23 @@ command_plugin_list (const char *name, int full)
                                          HOOK_MODIFIER(ptr_hook, modifier));
                     }
                 }
+
+                /* provider hooked */
+                hook_found = 0;
+                for (ptr_hook = weechat_hooks[HOOK_TYPE_PROVIDER]; ptr_hook;
+                     ptr_hook = ptr_hook->next_hook)
+                {
+                    if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
+                    {
+                        if (!hook_found)
+                            gui_chat_printf (NULL,
+                                             _("    providers hooked:"));
+                        hook_found = 1;
+                        gui_chat_printf (NULL,
+                                         "        %s",
+                                         HOOK_PROVIDER(ptr_hook, provider));
+                    }
+                }
             }
             else
             {

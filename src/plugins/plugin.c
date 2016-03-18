@@ -768,6 +768,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hook_completion_list_add = &hook_completion_list_add;
         new_plugin->hook_modifier = &hook_modifier;
         new_plugin->hook_modifier_exec = &hook_modifier_exec;
+        new_plugin->hook_provider = &hook_provider;
+        new_plugin->hook_provider_exec = &hook_provider_exec;
         new_plugin->hook_info = &hook_info;
         new_plugin->hook_info_hashtable = &hook_info_hashtable;
         new_plugin->hook_infolist = &hook_infolist;

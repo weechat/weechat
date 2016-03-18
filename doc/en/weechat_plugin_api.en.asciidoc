@@ -6991,7 +6991,7 @@ _WeeChat ≥ 0.3.4._
 
 In some hooks, you can set a priority. A hook with higher priority is at the
 beginning of hooks list, so it will be found and executed before other hooks.
-It's useful for modifiers, because execution order is important.
+It's useful for modifiers and providers, because execution order is important.
 
 To set a priority, you must use this syntax, for argument where priority is
 allowed: "nnn|name" where "nnn" is non-negative integer with priority and "name"
@@ -7009,7 +7009,8 @@ weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
 ----
 
 Following hook types allow priority: command, command_run, signal, hsignal,
-config, completion, modifier, info, info_hashtable, infolist, hdata, focus.
+config, completion, modifier, provider, info, info_hashtable, infolist, hdata,
+focus.
 
 ==== hook_command
 
@@ -8882,6 +8883,39 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
                          "freenode;;priority_low;;/whois FlashCode")
 ----
 
+[[signal_irc_nick_refresh_color]]
+===== Signal irc_nick_refresh_color
+
+_WeeChat ≥ x.y.z._
+
+The signal "irc_nick_refresh_color" can be sent to force refresh of cached
+IRC nick colors.
+
+Following argument formats are allowed:
+
+* empty
+* 'server'
+* 'server;channel'
+* 'server;channel;nick'
+
+C examples:
+
+[source,C]
+----
+/* force nick color refresh on freenode server, #weechat channel */
+weechat_hook_signal_send ("irc_nick_refresh_color", WEECHAT_HOOK_SIGNAL_STRING,
+                          "freenode;#weechat");
+----
+
+Script (Python):
+
+[source,python]
+----
+# force nick color refresh on freenode server, #weechat channel
+weechat.hook_signal_send ("irc_nick_refresh_color", weechat.WEECHAT_HOOK_SIGNAL_STRING,
+                          "freenode;#weechat")
+----
+
 ==== hook_hsignal
 
 _WeeChat ≥ 0.3.4._
@@ -9723,6 +9757,125 @@ weechat.hook_modifier_exec(modifier, modifier_data, string)
 
 # example
 weechat.hook_modifier_exec("my_modifier", my_data, my_string)
+----
+
+==== hook_provider
+
+Hook a provider.
+
+Prototype:
+
+[source,C]
+----
+struct t_hook *weechat_hook_provider (const char *provider,
+                                      const char *(*callback)(void *data,
+                                                              const char *provider,
+                                                              const char *provider_data,
+                                                              const char *string),
+                                      void *callback_data);
+----
+
+Arguments:
+
+* 'provider': provider name, list of providers used by Weechat or plugins
+  (priority allowed, see note about <<hook_priority,priority>>)
+  (see table below)
+* 'callback': function called when provider is used, arguments and return value:
+** 'void *data': pointer
+** 'const char *provider': name of provider
+** 'const char *provider_data': data for provider
+** 'const char *string': string to provide for
+** return value: provided string, or empty string when not providing
+* 'callback_data': pointer given to callback when it is called by WeeChat
+
+Return value:
+
+* pointer to new hook, NULL if error occurred
+
+List of providers used by WeeChat and plugins:
+
+[width="100%",cols="^2,3,4,4",options="header"]
+|===
+| Provider | Provider data | String | Output
+
+| irc_nick_color |
+  [server[;channel]] |
+  Nickname to provide color for |
+  Color name provided for nickname
+|===
+
+C example:
+
+[source,C]
+----
+const char *
+my_provider_cb (void *data, const char *provider,
+                const char *provider_data,
+                const char *string)
+{
+    static const char *my_color = "red";
+
+    return my_color;
+}
+
+struct t_hook *my_provider_hook = weechat_hook_provider ("9000|irc_nick_color",
+                                                         &my_provider_cb, NULL);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+hook = weechat.hook_provider(provider, callback, callback_data)
+
+# example
+def my_provider_cb(data, provider, provider_data, string):
+    return "red"
+
+hook = weechat.hook_provider("9000|irc_nick_color", "my_provider_cb", "")
+----
+
+==== hook_provider_exec
+
+Execute provider(s).
+
+Prototype:
+
+[source,C]
+----
+char *weechat_hook_provider_exec (const char *provider,
+                                  const char *provider_data,
+                                  const char *string);
+----
+
+Arguments:
+
+* 'provider': provider name
+* 'provider_data': provider data
+* 'string': string to modify
+
+Return value:
+
+* string provided, NULL if error occurred
+
+C example:
+
+[source,C]
+----
+char *new_string = weechat_hook_provider_exec ("my_provider",
+                                               my_data, my_string);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+weechat.hook_provider_exec(provider, provider_data, string)
+
+# example
+weechat.hook_provider_exec("my_provider", my_data, my_string)
 ----
 
 ==== hook_info
