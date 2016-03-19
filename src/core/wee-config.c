@@ -257,6 +257,7 @@ struct t_config_option *config_color_status_time;
 struct t_config_option *config_completion_base_word_until_cursor;
 struct t_config_option *config_completion_command_inline;
 struct t_config_option *config_completion_default_template;
+struct t_config_option *config_completion_ignore_prefix_chars;
 struct t_config_option *config_completion_nick_add_space;
 struct t_config_option *config_completion_nick_completer;
 struct t_config_option *config_completion_nick_first_only;
@@ -3442,6 +3443,11 @@ config_weechat_init_options ()
            "\"weechat_hook_command\")"),
         NULL, 0, 0, "%(nicks)|%(irc_channels)", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_ignore_prefix_chars = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "ignore_prefix_chars", "string",
+        N_("characters to ignore when they prefix words to complete"),
+        NULL, 0, 0, "@():", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_nick_add_space = config_file_new_option (
         weechat_config_file, ptr_section,
         "nick_add_space", "boolean",
