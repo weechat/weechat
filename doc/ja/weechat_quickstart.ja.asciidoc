@@ -231,34 +231,31 @@ SSL を使って接続する場合:
 ----
 
 [[join_part_irc_channels]]
-== チャンネルに接続 / 切断する
+== チャンネルに参加 / 退出する
 
-チャンネルに接続する
+チャンネルに参加します
 
 ----
 /join #channel
 ----
 
-チャンネルから切断する (バッファは開いたままにする)
+チャンネルから退出します (バッファは開いたままにします)
 
 ----
 /part [切断メッセージ]
 ----
 
-// TRANSLATION MISSING
-Close a server, channel or private buffer (`/close` is an alias for
-`/buffer close`):
+サーバから切断し、チャンネルやプライベートバッファを閉じます (`/close` は
+`/buffer close` の別名です):
 
 ----
 /close
 ----
 
-// TRANSLATION MISSING
 [WARNING]
-Closing the server buffer will close all channel/private buffers.
+`/close` を用いてサーバから切断した場合、すべてのチャンネルおよびプライベートバッファは閉じられます。
 
-// TRANSLATION MISSING
-Disconnect from server, on the server buffer:
+サーババッファ上で実行することで、サーバから切断します:
 
 ----
 /disconnect
