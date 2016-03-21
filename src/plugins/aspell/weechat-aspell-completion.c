@@ -33,13 +33,15 @@
  */
 
 int
-weechat_aspell_completion_langs_cb (void *data, const char *completion_item,
+weechat_aspell_completion_langs_cb (const void *pointer, void *data,
+                                    const char *completion_item,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_completion *completion)
 {
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -81,7 +83,7 @@ weechat_aspell_completion_enchant_add_dict_cb (const char *lang_tag,
  */
 
 int
-weechat_aspell_completion_dicts_cb (void *data,
+weechat_aspell_completion_dicts_cb (const void *pointer, void *data,
                                     const char *completion_item,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_completion *completion)
@@ -94,6 +96,7 @@ weechat_aspell_completion_dicts_cb (void *data,
 #endif /* USE_ENCHANT */
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -129,8 +132,8 @@ weechat_aspell_completion_init ()
 {
     weechat_hook_completion ("aspell_langs",
                              N_("list of all languages supported by aspell"),
-                             &weechat_aspell_completion_langs_cb, NULL);
+                             &weechat_aspell_completion_langs_cb, NULL, NULL);
     weechat_hook_completion ("aspell_dicts",
                              N_("list of aspell installed dictionaries"),
-                             &weechat_aspell_completion_dicts_cb, NULL);
+                             &weechat_aspell_completion_dicts_cb, NULL, NULL);
 }

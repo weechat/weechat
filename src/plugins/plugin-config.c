@@ -94,7 +94,8 @@ plugin_config_set_internal (const char *option, const char *value)
         ptr_option = config_file_new_option (
             plugin_config_file, plugin_config_section_var,
             option, "string", NULL,
-            NULL, 0, 0, "", value, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+            NULL, 0, 0, "", value, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         rc = (ptr_option) ? WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
 
@@ -133,11 +134,13 @@ plugin_config_set (const char *plugin_name, const char *option_name,
  */
 
 void
-plugin_config_desc_changed_cb (void *data, struct t_config_option *option)
+plugin_config_desc_changed_cb (const void *pointer, void *data,
+                               struct t_config_option *option)
 {
     struct t_config_option *ptr_option;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_option = config_file_search_option (plugin_config_file,
@@ -177,12 +180,14 @@ plugin_config_set_desc_internal (const char *option, const char *value)
         ptr_option = config_file_new_option (
             plugin_config_file, plugin_config_section_desc,
             option, "string", _("description of plugin option"),
-            NULL, 0, 0, "", value, 0, NULL, NULL,
-            &plugin_config_desc_changed_cb, NULL, NULL, NULL);
+            NULL, 0, 0, "", value, 0,
+            NULL, NULL, NULL,
+            &plugin_config_desc_changed_cb, NULL, NULL,
+            NULL, NULL, NULL);
     }
 
     if (ptr_option)
-        plugin_config_desc_changed_cb (NULL, ptr_option);
+        plugin_config_desc_changed_cb (NULL, NULL, ptr_option);
 }
 
 /*
@@ -213,9 +218,11 @@ plugin_config_set_desc (const char *plugin_name, const char *option_name,
  */
 
 int
-plugin_config_reload (void *data, struct t_config_file *config_file)
+plugin_config_reload (const void *pointer, void *data,
+                      struct t_config_file *config_file)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     /* remove all plugin options and descriptions */
@@ -231,13 +238,15 @@ plugin_config_reload (void *data, struct t_config_file *config_file)
  */
 
 int
-plugin_config_create_option (void *data, struct t_config_file *config_file,
+plugin_config_create_option (const void *pointer, void *data,
+                             struct t_config_file *config_file,
                              struct t_config_section *section,
                              const char *option_name, const char *value)
 {
     struct t_config_option *ptr_option_desc, *ptr_option;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_option_desc = config_file_search_option (config_file,
@@ -248,7 +257,8 @@ plugin_config_create_option (void *data, struct t_config_file *config_file,
         config_file, section,
         option_name, "string",
         (ptr_option_desc) ? CONFIG_STRING(ptr_option_desc) : NULL,
-        NULL, 0, 0, "", value, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "", value, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     return (ptr_option) ?
         WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -259,13 +269,15 @@ plugin_config_create_option (void *data, struct t_config_file *config_file,
  */
 
 int
-plugin_config_create_desc (void *data, struct t_config_file *config_file,
+plugin_config_create_desc (const void *pointer, void *data,
+                           struct t_config_file *config_file,
                            struct t_config_section *section,
                            const char *option_name, const char *value)
 {
     struct t_config_option *ptr_option_var, *ptr_option;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_option_var = config_file_search_option (config_file,
@@ -285,8 +297,10 @@ plugin_config_create_desc (void *data, struct t_config_file *config_file,
     ptr_option = config_file_new_option (
         config_file, section,
         option_name, "string", _("description of plugin option"),
-        NULL, 0, 0, "", value, 0, NULL, NULL,
-        &plugin_config_desc_changed_cb, NULL, NULL, NULL);
+        NULL, 0, 0, "", value, 0,
+        NULL, NULL, NULL,
+        &plugin_config_desc_changed_cb, NULL, NULL,
+        NULL, NULL, NULL);
 
     return (ptr_option) ?
         WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -297,13 +311,15 @@ plugin_config_create_desc (void *data, struct t_config_file *config_file,
  */
 
 int
-plugin_config_delete_desc (void *data, struct t_config_file *config_file,
+plugin_config_delete_desc (const void *pointer, void *data,
+                           struct t_config_file *config_file,
                            struct t_config_section *section,
                            struct t_config_option *option)
 {
     struct t_config_option *ptr_option_var;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) section;
 
@@ -332,23 +348,23 @@ void
 plugin_config_init ()
 {
     plugin_config_file = config_file_new (NULL, PLUGIN_CONFIG_NAME,
-                                          &plugin_config_reload, NULL);
+                                          &plugin_config_reload, NULL, NULL);
     if (plugin_config_file)
     {
         plugin_config_section_var = config_file_new_section (
             plugin_config_file, "var", 1, 1,
-            NULL, NULL,
-            NULL, NULL,
-            NULL, NULL,
-            &plugin_config_create_option, NULL,
-            NULL, NULL);
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            &plugin_config_create_option, NULL, NULL,
+            NULL, NULL, NULL);
         plugin_config_section_desc = config_file_new_section (
             plugin_config_file, "desc", 1, 1,
-            NULL, NULL,
-            NULL, NULL,
-            NULL, NULL,
-            &plugin_config_create_desc, NULL,
-            &plugin_config_delete_desc, NULL);
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            &plugin_config_create_desc, NULL, NULL,
+            &plugin_config_delete_desc, NULL, NULL);
     }
     else
     {

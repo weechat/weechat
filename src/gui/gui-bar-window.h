@@ -104,7 +104,8 @@ extern void gui_bar_window_scroll (struct t_gui_bar_window *bar_window,
                                    int add_x, int scroll_beginning,
                                    int scroll_end, int add, int percent,
                                    int value);
-extern struct t_hdata *gui_bar_window_hdata_bar_window_cb (void *data,
+extern struct t_hdata *gui_bar_window_hdata_bar_window_cb (const void *pointer,
+                                                           void *data,
                                                            const char *hdata_name);
 extern int gui_bar_window_add_to_infolist (struct t_infolist *infolist,
                                            struct t_gui_bar_window *bar_window);

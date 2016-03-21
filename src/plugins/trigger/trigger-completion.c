@@ -33,13 +33,15 @@
  */
 
 int
-trigger_completion_triggers_cb (void *data, const char *completion_item,
+trigger_completion_triggers_cb (const void *pointer, void *data,
+                                const char *completion_item,
                                 struct t_gui_buffer *buffer,
                                 struct t_gui_completion *completion)
 {
     struct t_trigger *ptr_trigger;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -59,7 +61,8 @@ trigger_completion_triggers_cb (void *data, const char *completion_item,
  */
 
 int
-trigger_completion_triggers_default_cb (void *data,
+trigger_completion_triggers_default_cb (const void *pointer, void *data,
+
                                         const char *completion_item,
                                         struct t_gui_buffer *buffer,
                                         struct t_gui_completion *completion)
@@ -67,6 +70,7 @@ trigger_completion_triggers_default_cb (void *data,
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -86,13 +90,15 @@ trigger_completion_triggers_default_cb (void *data,
  */
 
 int
-trigger_completion_options_cb (void *data, const char *completion_item,
+trigger_completion_options_cb (const void *pointer, void *data,
+                               const char *completion_item,
                                struct t_gui_buffer *buffer,
                                struct t_gui_completion *completion)
 {
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -112,7 +118,8 @@ trigger_completion_options_cb (void *data, const char *completion_item,
  */
 
 int
-trigger_completion_option_value_cb (void *data, const char *completion_item,
+trigger_completion_option_value_cb (const void *pointer, void *data,
+                                    const char *completion_item,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_completion *completion)
 {
@@ -122,6 +129,7 @@ trigger_completion_option_value_cb (void *data, const char *completion_item,
     struct t_trigger *ptr_trigger;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -170,13 +178,15 @@ trigger_completion_option_value_cb (void *data, const char *completion_item,
  */
 
 int
-trigger_completion_hooks_cb (void *data, const char *completion_item,
+trigger_completion_hooks_cb (const void *pointer, void *data,
+                             const char *completion_item,
                              struct t_gui_buffer *buffer,
                              struct t_gui_completion *completion)
 {
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -196,7 +206,8 @@ trigger_completion_hooks_cb (void *data, const char *completion_item,
  */
 
 int
-trigger_completion_hooks_filter_cb (void *data, const char *completion_item,
+trigger_completion_hooks_filter_cb (const void *pointer, void *data,
+                                    const char *completion_item,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_completion *completion)
 {
@@ -204,6 +215,7 @@ trigger_completion_hooks_filter_cb (void *data, const char *completion_item,
     char str_hook[128];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -300,11 +312,13 @@ trigger_completion_add_default_for_hook (struct t_gui_completion *completion,
  */
 
 int
-trigger_completion_hook_arguments_cb (void *data, const char *completion_item,
+trigger_completion_hook_arguments_cb (const void *pointer, void *data,
+                                      const char *completion_item,
                                       struct t_gui_buffer *buffer,
                                       struct t_gui_completion *completion)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -323,11 +337,13 @@ trigger_completion_hook_arguments_cb (void *data, const char *completion_item,
  */
 
 int
-trigger_completion_hook_conditions_cb (void *data, const char *completion_item,
+trigger_completion_hook_conditions_cb (const void *pointer, void *data,
+                                       const char *completion_item,
                                        struct t_gui_buffer *buffer,
                                        struct t_gui_completion *completion)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -347,11 +363,13 @@ trigger_completion_hook_conditions_cb (void *data, const char *completion_item,
  */
 
 int
-trigger_completion_hook_regex_cb (void *data, const char *completion_item,
+trigger_completion_hook_regex_cb (const void *pointer, void *data,
+                                  const char *completion_item,
                                   struct t_gui_buffer *buffer,
                                   struct t_gui_completion *completion)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -371,11 +389,13 @@ trigger_completion_hook_regex_cb (void *data, const char *completion_item,
  */
 
 int
-trigger_completion_hook_command_cb (void *data, const char *completion_item,
+trigger_completion_hook_command_cb (const void *pointer, void *data,
+                                    const char *completion_item,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_completion *completion)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -395,11 +415,13 @@ trigger_completion_hook_command_cb (void *data, const char *completion_item,
  */
 
 int
-trigger_completion_hook_rc_cb (void *data, const char *completion_item,
+trigger_completion_hook_rc_cb (const void *pointer, void *data,
+                               const char *completion_item,
                                struct t_gui_buffer *buffer,
                                struct t_gui_completion *completion)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -420,35 +442,35 @@ trigger_completion_init ()
 {
     weechat_hook_completion ("trigger_names",
                              N_("triggers"),
-                             &trigger_completion_triggers_cb, NULL);
+                             &trigger_completion_triggers_cb, NULL, NULL);
     weechat_hook_completion ("trigger_names_default",
                              N_("default triggers"),
-                             &trigger_completion_triggers_default_cb, NULL);
+                             &trigger_completion_triggers_default_cb, NULL, NULL);
     weechat_hook_completion ("trigger_options",
                              N_("options for triggers"),
-                             &trigger_completion_options_cb, NULL);
+                             &trigger_completion_options_cb, NULL, NULL);
     weechat_hook_completion ("trigger_option_value",
                              N_("value of a trigger option"),
-                             &trigger_completion_option_value_cb, NULL);
+                             &trigger_completion_option_value_cb, NULL, NULL);
     weechat_hook_completion ("trigger_hooks",
                              N_("hooks for triggers"),
-                             &trigger_completion_hooks_cb, NULL);
+                             &trigger_completion_hooks_cb, NULL, NULL);
     weechat_hook_completion ("trigger_hooks_filter",
                              N_("hooks for triggers (for filter in monitor buffer)"),
-                             &trigger_completion_hooks_filter_cb, NULL);
+                             &trigger_completion_hooks_filter_cb, NULL, NULL);
     weechat_hook_completion ("trigger_hook_arguments",
                              N_("default arguments for a hook"),
-                             &trigger_completion_hook_arguments_cb, NULL);
+                             &trigger_completion_hook_arguments_cb, NULL, NULL);
     weechat_hook_completion ("trigger_hook_conditions",
                              N_("default conditions for a hook"),
-                             &trigger_completion_hook_conditions_cb, NULL);
+                             &trigger_completion_hook_conditions_cb, NULL, NULL);
     weechat_hook_completion ("trigger_hook_regex",
                              N_("default regular expression for a hook"),
-                             &trigger_completion_hook_regex_cb, NULL);
+                             &trigger_completion_hook_regex_cb, NULL, NULL);
     weechat_hook_completion ("trigger_hook_command",
                              N_("default command for a hook"),
-                             &trigger_completion_hook_command_cb, NULL);
+                             &trigger_completion_hook_command_cb, NULL, NULL);
     weechat_hook_completion ("trigger_hook_rc",
                              N_("default return codes for hook callback"),
-                             &trigger_completion_hook_rc_cb, NULL);
+                             &trigger_completion_hook_rc_cb, NULL, NULL);
 }

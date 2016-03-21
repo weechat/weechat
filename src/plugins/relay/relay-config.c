@@ -84,9 +84,11 @@ struct t_hashtable *relay_config_hashtable_irc_backlog_tags = NULL;
  */
 
 void
-relay_config_refresh_cb (void *data, struct t_config_option *option)
+relay_config_refresh_cb (const void *pointer, void *data,
+                         struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -99,12 +101,13 @@ relay_config_refresh_cb (void *data, struct t_config_option *option)
  */
 
 void
-relay_config_change_network_allowed_ips (void *data,
+relay_config_change_network_allowed_ips (const void *pointer, void *data,
                                          struct t_config_option *option)
 {
     const char *allowed_ips;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -137,12 +140,13 @@ relay_config_change_network_allowed_ips (void *data,
  */
 
 void
-relay_config_change_network_bind_address_cb (void *data,
+relay_config_change_network_bind_address_cb (const void *pointer, void *data,
                                              struct t_config_option *option)
 {
     struct t_relay_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -159,11 +163,13 @@ relay_config_change_network_bind_address_cb (void *data,
  */
 
 void
-relay_config_change_network_ipv6_cb (void *data, struct t_config_option *option)
+relay_config_change_network_ipv6_cb (const void *pointer, void *data,
+                                     struct t_config_option *option)
 {
     struct t_relay_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -183,10 +189,11 @@ relay_config_change_network_ipv6_cb (void *data, struct t_config_option *option)
  */
 
 void
-relay_config_change_network_ssl_cert_key (void *data,
+relay_config_change_network_ssl_cert_key (const void *pointer, void *data,
                                           struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -199,7 +206,7 @@ relay_config_change_network_ssl_cert_key (void *data,
  */
 
 int
-relay_config_check_network_ssl_priorities (void *data,
+relay_config_check_network_ssl_priorities (const void *pointer, void *data,
                                            struct t_config_option *option,
                                            const char *value)
 {
@@ -209,6 +216,7 @@ relay_config_check_network_ssl_priorities (void *data,
     int rc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -246,10 +254,11 @@ relay_config_check_network_ssl_priorities (void *data,
  */
 
 void
-relay_config_change_network_ssl_priorities (void *data,
+relay_config_change_network_ssl_priorities (const void *pointer, void *data,
                                             struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -267,12 +276,13 @@ relay_config_change_network_ssl_priorities (void *data,
  */
 
 void
-relay_config_change_network_websocket_allowed_origins (void *data,
+relay_config_change_network_websocket_allowed_origins (const void *pointer, void *data,
                                                        struct t_config_option *option)
 {
     const char *allowed_origins;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -309,7 +319,7 @@ relay_config_change_network_websocket_allowed_origins (void *data,
  */
 
 int
-relay_config_check_irc_backlog_tags (void *data,
+relay_config_check_irc_backlog_tags (const void *pointer, void *data,
                                      struct t_config_option *option,
                                      const char *value)
 {
@@ -317,6 +327,7 @@ relay_config_check_irc_backlog_tags (void *data,
     int num_tags, i, rc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -349,23 +360,24 @@ relay_config_check_irc_backlog_tags (void *data,
  */
 
 void
-relay_config_change_irc_backlog_tags (void *data,
+relay_config_change_irc_backlog_tags (const void *pointer, void *data,
                                       struct t_config_option *option)
 {
     char **items;
     int num_items, i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
     if (!relay_config_hashtable_irc_backlog_tags)
     {
-        relay_config_hashtable_irc_backlog_tags = weechat_hashtable_new (32,
-                                                                         WEECHAT_HASHTABLE_STRING,
-                                                                         WEECHAT_HASHTABLE_STRING,
-                                                                         NULL,
-                                                                         NULL);
+        relay_config_hashtable_irc_backlog_tags = weechat_hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
     }
     else
         weechat_hashtable_remove_all (relay_config_hashtable_irc_backlog_tags);
@@ -393,7 +405,8 @@ relay_config_change_irc_backlog_tags (void *data,
  */
 
 int
-relay_config_check_port_cb (void *data, struct t_config_option *option,
+relay_config_check_port_cb (const void *pointer, void *data,
+                            struct t_config_option *option,
                             const char *value)
 {
     char *error;
@@ -401,6 +414,7 @@ relay_config_check_port_cb (void *data, struct t_config_option *option,
     struct t_relay_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -423,11 +437,13 @@ relay_config_check_port_cb (void *data, struct t_config_option *option,
  */
 
 void
-relay_config_change_port_cb (void *data, struct t_config_option *option)
+relay_config_change_port_cb (const void *pointer, void *data,
+                             struct t_config_option *option)
 {
     struct t_relay_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_server = relay_server_search (weechat_config_option_get_pointer (option, "name"));
@@ -443,11 +459,13 @@ relay_config_change_port_cb (void *data, struct t_config_option *option)
  */
 
 void
-relay_config_delete_port_cb (void *data, struct t_config_option *option)
+relay_config_delete_port_cb (const void *pointer, void *data,
+                             struct t_config_option *option)
 {
     struct t_relay_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_server = relay_server_search (weechat_config_option_get_pointer (option, "name"));
@@ -460,7 +478,7 @@ relay_config_delete_port_cb (void *data, struct t_config_option *option)
  */
 
 int
-relay_config_create_option_port (void *data,
+relay_config_create_option_port (const void *pointer, void *data,
                                  struct t_config_file *config_file,
                                  struct t_config_section *section,
                                  const char *option_name,
@@ -472,6 +490,7 @@ relay_config_create_option_port (void *data,
     struct t_relay_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
@@ -551,9 +570,9 @@ relay_config_create_option_port (void *data,
                 config_file, section,
                 option_name, "integer", NULL,
                 NULL, 0, 65535, "", value, 0,
-                &relay_config_check_port_cb, NULL,
-                &relay_config_change_port_cb, NULL,
-                &relay_config_delete_port_cb, NULL);
+                &relay_config_check_port_cb, NULL, NULL,
+                &relay_config_change_port_cb, NULL, NULL,
+                &relay_config_delete_port_cb, NULL, NULL);
             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
         }
         else
@@ -573,9 +592,11 @@ relay_config_create_option_port (void *data,
  */
 
 int
-relay_config_reload (void *data, struct t_config_file *config_file)
+relay_config_reload (const void *pointer, void *data,
+                     struct t_config_file *config_file)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     weechat_config_section_free_options (relay_config_section_port);
@@ -598,16 +619,18 @@ relay_config_init ()
     struct t_config_section *ptr_section;
 
     relay_config_file = weechat_config_new (RELAY_CONFIG_NAME,
-                                            &relay_config_reload, NULL);
+                                            &relay_config_reload, NULL, NULL);
     if (!relay_config_file)
         return 0;
 
     /* section look */
     ptr_section = weechat_config_new_section (relay_config_file, "look",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (relay_config_file);
@@ -618,20 +641,24 @@ relay_config_init ()
         relay_config_file, ptr_section,
         "auto_open_buffer", "boolean",
         N_("auto open relay buffer when a new client is connecting"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_look_raw_messages = weechat_config_new_option (
         relay_config_file, ptr_section,
         "raw_messages", "integer",
         N_("number of raw messages to save in memory when raw data buffer is "
            "closed (messages will be displayed when opening raw data buffer)"),
-        NULL, 0, 65535, "256", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 65535, "256", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* section color */
     ptr_section = weechat_config_new_section (relay_config_file, "color",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (relay_config_file);
@@ -643,62 +670,80 @@ relay_config_init ()
         "client", "color",
         N_("text color for client description"),
         NULL, 0, 0, "cyan", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_CONNECTING] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_connecting", "color",
         N_("text color for \"connecting\" status"),
         NULL, 0, 0, "yellow", NULL, 0,
-        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &relay_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_WAITING_AUTH] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_waiting_auth", "color",
         N_("text color for \"waiting authentication\" status"),
         NULL, 0, 0, "brown", NULL, 0,
-        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &relay_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_CONNECTED] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_active", "color",
         N_("text color for \"connected\" status"),
         NULL, 0, 0, "lightblue", NULL, 0,
-        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &relay_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_AUTH_FAILED] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_auth_failed", "color",
         N_("text color for \"authentication failed\" status"),
         NULL, 0, 0, "lightred", NULL, 0,
-        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &relay_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_DISCONNECTED] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_disconnected", "color",
         N_("text color for \"disconnected\" status"),
         NULL, 0, 0, "lightred", NULL, 0,
-        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &relay_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_color_text = weechat_config_new_option (
         relay_config_file, ptr_section,
         "text", "color",
         N_("text color in relay buffer"),
         NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &relay_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_color_text_bg = weechat_config_new_option (
         relay_config_file, ptr_section,
         "text_bg", "color",
         N_("background color in relay buffer"),
         NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &relay_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_color_text_selected = weechat_config_new_option (
         relay_config_file, ptr_section,
         "text_selected", "color",
         N_("text color of selected line in relay buffer"),
         NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &relay_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
 
     /* section network */
     ptr_section = weechat_config_new_section (relay_config_file, "network",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (relay_config_file);
@@ -712,23 +757,27 @@ relay_config_init ()
            "(case insensitive, use \"(?-i)\" at beginning to make it case "
            "sensitive), example: "
            "\"^(123.45.67.89|192.160.*)$\""),
-        NULL, 0, 0, "", NULL, 0, NULL, NULL,
-        &relay_config_change_network_allowed_ips, NULL, NULL, NULL);
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL,
+        &relay_config_change_network_allowed_ips, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_network_bind_address = weechat_config_new_option (
         relay_config_file, ptr_section,
         "bind_address", "string",
         N_("address for bind (if empty, connection is possible on all "
            "interfaces, use \"127.0.0.1\" to allow connections from "
             "local machine only)"),
-        NULL, 0, 0, "", NULL, 0, NULL, NULL,
-        &relay_config_change_network_bind_address_cb, NULL, NULL, NULL);
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL,
+        &relay_config_change_network_bind_address_cb, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_network_clients_purge_delay = weechat_config_new_option (
         relay_config_file, ptr_section,
         "clients_purge_delay", "integer",
         N_("delay for purging disconnected clients (in minutes, 0 = purge "
            "clients immediately, -1 = never purge)"),
         NULL, -1, 60 * 24 * 30, "0", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_compression_level = weechat_config_new_option (
         relay_config_file, ptr_section,
         "compression_level", "integer",
@@ -736,35 +785,40 @@ relay_config_init ()
            "(0 = disable compression, 1 = low compression ... 9 = best "
            "compression)"),
         NULL, 0, 9, "6", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_ipv6 = weechat_config_new_option (
         relay_config_file, ptr_section,
         "ipv6", "boolean",
         N_("listen on IPv6 socket by default (in addition to IPv4 which is "
             "default); protocols IPv4 and IPv6 can be forced (individually or "
            "together) in the protocol name (see /help relay)"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
-        &relay_config_change_network_ipv6_cb, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        &relay_config_change_network_ipv6_cb, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_network_max_clients = weechat_config_new_option (
         relay_config_file, ptr_section,
         "max_clients", "integer",
         N_("maximum number of clients connecting to a port (0 = no limit)"),
         NULL, 0, INT_MAX, "5", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_password = weechat_config_new_option (
         relay_config_file, ptr_section,
         "password", "string",
         N_("password required by clients to access this relay (empty value "
             "means no password required) (note: content is evaluated, see "
            "/help eval)"),
-        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_ssl_cert_key = weechat_config_new_option (
         relay_config_file, ptr_section,
         "ssl_cert_key", "string",
         N_("file with SSL certificate and private key (for serving clients "
            "with SSL)"),
-        NULL, 0, 0, "%h/ssl/relay.pem", NULL, 0, NULL, NULL,
-        &relay_config_change_network_ssl_cert_key, NULL, NULL, NULL);
+        NULL, 0, 0, "%h/ssl/relay.pem", NULL, 0,
+        NULL, NULL, NULL,
+        &relay_config_change_network_ssl_cert_key, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_network_ssl_priorities = weechat_config_new_option (
         relay_config_file, ptr_section,
         "ssl_priorities", "string",
@@ -773,8 +827,9 @@ relay_config_init ()
            "manual, common strings are: \"PERFORMANCE\", \"NORMAL\", "
            "\"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"),
         NULL, 0, 0, "NORMAL:-VERS-SSL3.0", NULL, 0,
-        &relay_config_check_network_ssl_priorities, NULL,
-        &relay_config_change_network_ssl_priorities, NULL, NULL, NULL);
+        &relay_config_check_network_ssl_priorities, NULL, NULL,
+        &relay_config_change_network_ssl_priorities, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_network_websocket_allowed_origins = weechat_config_new_option (
         relay_config_file, ptr_section,
         "websocket_allowed_origins", "string",
@@ -782,15 +837,19 @@ relay_config_init ()
            "websockets (case insensitive, use \"(?-i)\" at beginning to make "
            "it case sensitive), example: "
            "\"^http://(www\\.)?example\\.(com|org)\""),
-        NULL, 0, 0, "", NULL, 0, NULL, NULL,
-        &relay_config_change_network_websocket_allowed_origins, NULL, NULL, NULL);
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL,
+        &relay_config_change_network_websocket_allowed_origins, NULL, NULL,
+        NULL, NULL, NULL);
 
     /* section irc */
     ptr_section = weechat_config_new_section (relay_config_file, "irc",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (relay_config_file);
@@ -804,24 +863,26 @@ relay_config_init ()
            "(0 = unlimited, examples: 1440 = one day, 10080 = one week, "
            "43200 = one month, 525600 = one year)"),
         NULL, 0, INT_MAX, "1440", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_irc_backlog_max_number = weechat_config_new_option (
         relay_config_file, ptr_section,
         "backlog_max_number", "integer",
         N_("maximum number of lines in backlog per IRC channel "
            "(0 = unlimited)"),
         NULL, 0, INT_MAX, "256", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_irc_backlog_since_last_disconnect = weechat_config_new_option (
         relay_config_file, ptr_section,
         "backlog_since_last_disconnect", "boolean",
         N_("display backlog starting from last client disconnect"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_irc_backlog_since_last_message = weechat_config_new_option (
         relay_config_file, ptr_section,
         "backlog_since_last_message", "boolean",
         N_("display backlog starting from your last message"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_irc_backlog_tags = weechat_config_new_option (
         relay_config_file, ptr_section,
         "backlog_tags", "string",
@@ -830,8 +891,9 @@ relay_config_init ()
            "\"irc_part\", \"irc_quit\", \"irc_nick\", \"irc_privmsg\"), "
            "\"*\" = all supported tags"),
         NULL, 0, 0, "irc_privmsg", NULL, 0,
-        &relay_config_check_irc_backlog_tags, NULL,
-        &relay_config_change_irc_backlog_tags, NULL, NULL, NULL);
+        &relay_config_check_irc_backlog_tags, NULL, NULL,
+        &relay_config_change_irc_backlog_tags, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_irc_backlog_time_format = weechat_config_new_option (
         relay_config_file, ptr_section,
         "backlog_time_format", "string",
@@ -839,16 +901,18 @@ relay_config_init ()
            "(not used if server capability \"server-time\" was enabled by "
            "client, because time is sent as irc tag); empty string = disable "
            "time in backlog messages"),
-        NULL, 0, 0, "[%H:%M] ", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "[%H:%M] ", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* section port */
-    ptr_section = weechat_config_new_section (relay_config_file, "port",
-                                              1, 1,
-                                              NULL, NULL,
-                                              NULL, NULL,
-                                              NULL, NULL,
-                                              &relay_config_create_option_port, NULL,
-                                              NULL, NULL);
+    ptr_section = weechat_config_new_section (
+        relay_config_file, "port",
+        1, 1,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        &relay_config_create_option_port, NULL, NULL,
+        NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (relay_config_file);
@@ -872,8 +936,8 @@ relay_config_read ()
     rc = weechat_config_read (relay_config_file);
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
-        relay_config_change_network_allowed_ips (NULL, NULL);
-        relay_config_change_irc_backlog_tags (NULL, NULL);
+        relay_config_change_network_allowed_ips (NULL, NULL, NULL);
+        relay_config_change_irc_backlog_tags (NULL, NULL, NULL);
     }
     return rc;
 }

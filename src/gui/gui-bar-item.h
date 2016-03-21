@@ -55,13 +55,15 @@ struct t_gui_bar_item
 {
     struct t_weechat_plugin *plugin; /* plugin                              */
     char *name;                      /* bar item name                       */
-    char *(*build_callback)(void *data,
+    char *(*build_callback)(const void *pointer,
+                            void *data,
                             struct t_gui_bar_item *item,
                             struct t_gui_window *window,
                             struct t_gui_buffer *buffer,
                             struct t_hashtable *extra_info);
                                      /* callback called for building item   */
-    void *build_callback_data;       /* data for callback                   */
+    const void *build_callback_pointer; /* pointer for callback             */
+    void *build_callback_data;          /* data for callback                */
     struct t_gui_bar_item *prev_item; /* link to previous bar item          */
     struct t_gui_bar_item *next_item; /* link to next bar item              */
 };
@@ -98,11 +100,13 @@ extern char *gui_bar_item_get_value (struct t_gui_bar *bar,
 extern int gui_bar_item_count_lines (char *string);
 extern struct t_gui_bar_item *gui_bar_item_new (struct t_weechat_plugin *plugin,
                                                 const char *name,
-                                                char *(*build_callback)(void *data,
+                                                char *(*build_callback)(const void *pointer,
+                                                                        void *data,
                                                                         struct t_gui_bar_item *item,
                                                                         struct t_gui_window *window,
                                                                         struct t_gui_buffer *buffer,
                                                                         struct t_hashtable *extra_info),
+                                                const void *build_callback_pointer,
                                                 void *build_callback_data);
 extern void gui_bar_item_update (const char *name);
 extern void gui_bar_item_free (struct t_gui_bar_item *item);
@@ -110,7 +114,8 @@ extern void gui_bar_item_free_all ();
 extern void gui_bar_item_free_all_plugin (struct t_weechat_plugin *plugin);
 extern void gui_bar_item_init ();
 extern void gui_bar_item_end ();
-extern struct t_hdata *gui_bar_item_hdata_bar_item_cb (void *data,
+extern struct t_hdata *gui_bar_item_hdata_bar_item_cb (const void *pointer,
+                                                       void *data,
                                                        const char *hdata_name);
 extern int gui_bar_item_add_to_infolist (struct t_infolist *infolist,
                                          struct t_gui_bar_item *bar_item);

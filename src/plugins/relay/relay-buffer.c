@@ -152,12 +152,14 @@ relay_buffer_refresh (const char *hotlist)
  */
 
 int
-relay_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
+relay_buffer_input_cb (const void *pointer, void *data,
+                       struct t_gui_buffer *buffer,
                        const char *input_data)
 {
     struct t_relay_client *client, *ptr_client, *next_client;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (buffer == relay_raw_buffer)
@@ -215,9 +217,11 @@ relay_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-relay_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+relay_buffer_close_cb (const void *pointer, void *data,
+                       struct t_gui_buffer *buffer)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (buffer == relay_raw_buffer)
@@ -242,8 +246,8 @@ relay_buffer_open ()
     if (!relay_buffer)
     {
         relay_buffer = weechat_buffer_new (RELAY_BUFFER_NAME,
-                                           &relay_buffer_input_cb, NULL,
-                                           &relay_buffer_close_cb, NULL);
+                                           &relay_buffer_input_cb, NULL, NULL,
+                                           &relay_buffer_close_cb, NULL, NULL);
 
         /* failed to create buffer ? then exit */
         if (!relay_buffer)

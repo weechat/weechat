@@ -81,22 +81,27 @@ struct t_relay_weechat_protocol_cb
     t_relay_weechat_cmd_func *cmd_function; /* callback                     */
 };
 
-extern int relay_weechat_protocol_signal_buffer_cb (void *data,
+extern int relay_weechat_protocol_signal_buffer_cb (const void *pointer,
+                                                    void *data,
                                                     const char *signal,
                                                     const char *type_data,
                                                     void *signal_data);
-extern int relay_weechat_protocol_signal_nicklist_cb (void *data,
+extern int relay_weechat_protocol_signal_nicklist_cb (const void *pointer,
+                                                      void *data,
                                                       const char *signal,
                                                       const char *type_data,
                                                       void *signal_data);
-extern int relay_weechat_protocol_hsignal_nicklist_cb (void *data,
+extern int relay_weechat_protocol_hsignal_nicklist_cb (const void *pointer,
+                                                       void *data,
                                                        const char *signal,
                                                        struct t_hashtable *hashtable);
-extern int relay_weechat_protocol_signal_upgrade_cb (void *data,
+extern int relay_weechat_protocol_signal_upgrade_cb (const void *pointer,
+                                                     void *data,
                                                      const char *signal,
                                                      const char *type_data,
                                                      void *signal_data);
-extern int relay_weechat_protocol_timer_nicklist_cb (void *data,
+extern int relay_weechat_protocol_timer_nicklist_cb (const void *pointer,
+                                                     void *data,
                                                      int remaining_calls);
 extern void relay_weechat_protocol_recv (struct t_relay_client *client,
                                          const char *data);

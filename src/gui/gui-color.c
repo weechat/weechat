@@ -760,11 +760,10 @@ gui_color_decode (const char *string, const char *replacement)
 char *
 gui_color_decode_ansi_cb (void *data, const char *text)
 {
-    unsigned long keep_colors;
     char *text2, **items, *output, str_color[128];
-    int i, length, num_items, value;
+    int i, keep_colors, length, num_items, value;
 
-    keep_colors = (unsigned long)data;
+    keep_colors = (data) ? 1 : 0;;
 
     /* if we don't keep colors of if text is empty, just return empty string */
     if (!keep_colors || !text || !text[0])
@@ -1186,20 +1185,20 @@ gui_color_palette_alloc_structs ()
 {
     if (!gui_color_hash_palette_color)
     {
-        gui_color_hash_palette_color = hashtable_new (32,
-                                                      WEECHAT_HASHTABLE_STRING,
-                                                      WEECHAT_HASHTABLE_POINTER,
-                                                      NULL,
-                                                      NULL);
+        gui_color_hash_palette_color = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_POINTER,
+            NULL, NULL);
         gui_color_hash_palette_color->callback_free_value = &gui_color_palette_free_value_cb;
     }
     if (!gui_color_hash_palette_alias)
     {
-        gui_color_hash_palette_alias = hashtable_new (32,
-                                                      WEECHAT_HASHTABLE_STRING,
-                                                      WEECHAT_HASHTABLE_INTEGER,
-                                                      NULL,
-                                                      NULL);
+        gui_color_hash_palette_alias = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_INTEGER,
+            NULL, NULL);
     }
     if (!gui_color_list_with_alias)
     {

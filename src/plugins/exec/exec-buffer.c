@@ -35,13 +35,15 @@
  */
 
 int
-exec_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
+exec_buffer_input_cb (const void *pointer, void *data,
+                      struct t_gui_buffer *buffer,
                       const char *input_data)
 {
     char **argv, **argv_eol;
     int argc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     /* close buffer */
@@ -70,12 +72,14 @@ exec_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-exec_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+exec_buffer_close_cb (const void *pointer, void *data,
+                      struct t_gui_buffer *buffer)
 {
     const char *full_name;
     struct t_exec_cmd *ptr_exec_cmd;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     /* kill any command whose output is on this buffer */
@@ -153,8 +157,8 @@ exec_buffer_new (const char *name, int free_content, int clear_buffer,
     }
 
     new_buffer = weechat_buffer_new (name,
-                                     &exec_buffer_input_cb, NULL,
-                                     &exec_buffer_close_cb, NULL);
+                                     &exec_buffer_input_cb, NULL, NULL,
+                                     &exec_buffer_close_cb, NULL, NULL);
 
     /* failed to create buffer ? then return */
     if (!new_buffer)

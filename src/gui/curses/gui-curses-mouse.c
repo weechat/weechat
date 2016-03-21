@@ -218,9 +218,10 @@ gui_mouse_grab_end (const char *mouse_key)
  */
 
 int
-gui_mouse_event_timer_cb (void *data, int remaining_calls)
+gui_mouse_event_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) remaining_calls;
 
@@ -244,7 +245,7 @@ gui_mouse_event_init ()
     gui_mouse_event_timer = hook_timer (NULL,
                                         CONFIG_INTEGER(config_look_mouse_timer_delay),
                                         0, 1,
-                                        &gui_mouse_event_timer_cb, NULL);
+                                        &gui_mouse_event_timer_cb, NULL, NULL);
 }
 
 /*

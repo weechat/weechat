@@ -49,8 +49,10 @@ struct t_config_file
                                            /* (example: "weechat.conf")     */
     FILE *file;                            /* file pointer                  */
     int (*callback_reload)                 /* callback for reloading file   */
-    (void *data,
+    (const void *pointer,
+     void *data,
      struct t_config_file *config_file);
+    const void *callback_reload_pointer;   /* pointer sent to callback      */
     void *callback_reload_data;            /* data sent to callback         */
     struct t_config_section *sections;     /* config sections               */
     struct t_config_section *last_section; /* last config section           */
@@ -65,34 +67,44 @@ struct t_config_section
     int user_can_add_options;              /* user can add with /set ?      */
     int user_can_delete_options;           /* user can del with /unset ?    */
     int (*callback_read)                   /* called to read a line from    */
-    (void *data,                           /* config file (only for some    */
-     struct t_config_file *config_file,    /* special sections)             */
+    (const void *pointer,                  /* config file (only for some    */
+     void *data,                           /* special sections)             */
+     struct t_config_file *config_file,
      struct t_config_section *section,
      const char *option_name,
      const char *value);
+    const void *callback_read_pointer;     /* pointer sent to read callback */
     void *callback_read_data;              /* data sent to read callback    */
     int (*callback_write)                  /* called to write options       */
-    (void *data,                           /* in config file (only for some */
-     struct t_config_file *config_file,    /* special sections)             */
-     const char *section_name);
-    void *callback_write_data;             /* data sent to write callback   */
-    int (*callback_write_default)          /* called to write default       */
-    (void *data,                           /* options in config file        */
+    (const void *pointer,                  /* in config file (only for some */
+     void *data,                           /* special sections)             */
      struct t_config_file *config_file,
      const char *section_name);
+    const void *callback_write_pointer;    /* pointer sent to write cb      */
+    void *callback_write_data;             /* data sent to write callback   */
+    int (*callback_write_default)          /* called to write default       */
+    (const void *pointer,                  /* options in config file        */
+     void *data,
+     struct t_config_file *config_file,
+     const char *section_name);
+    const void *callback_write_default_pointer; /* ptr sent to write def.cb */
     void *callback_write_default_data;     /* data sent to write def. callb.*/
     int (*callback_create_option)          /* called to create option in    */
-    (void *data,                           /* section                       */
+    (const void *pointer,                  /* section                       */
+     void *data,
      struct t_config_file *config_file,
      struct t_config_section *section,
      const char *option_name,
      const char *value);
+    const void *callback_create_option_pointer; /* ptr sent to create cb    */
     void *callback_create_option_data;     /* data sent to create callback  */
     int (*callback_delete_option)          /* called to delete option in    */
-    (void *data,                           /* section                       */
+    (const void *pointer,                  /* section                       */
+     void *data,
      struct t_config_file *config_file,
      struct t_config_section *section,
      struct t_config_option *option);
+    const void *callback_delete_option_pointer; /* ptr sent to delete cb    */
     void *callback_delete_option_data;     /* data sent to delete callback  */
     struct t_config_option *options;       /* options in section            */
     struct t_config_option *last_option;   /* last option in section        */
@@ -125,17 +137,23 @@ struct t_config_option
     void *value;                           /* value                         */
     int null_value_allowed;                /* null value allowed ?          */
     int (*callback_check_value)            /* called to check value before  */
-    (void *data,                           /* assigning new value           */
+    (const void *pointer,                  /* assigning new value           */
+     void *data,
      struct t_config_option *option,
      const char *value);
+    const void *callback_check_value_pointer; /* pointer sent to check cb   */
     void *callback_check_value_data;       /* data sent to check callback   */
     void (*callback_change)                /* called when value is changed  */
-    (void *data,
+    (const void *pointer,
+     void *data,
      struct t_config_option *option);
+    const void *callback_change_pointer;   /* pointer sent to change cb     */
     void *callback_change_data;            /* data sent to change callback  */
     void (*callback_delete)                /* called when option is deleted */
-    (void *data,
+    (const void *pointer,
+     void *data,
      struct t_config_option *option);
+    const void *callback_delete_pointer;   /* pointer sent to delete cb     */
     void *callback_delete_data;            /* data sent to delete callback  */
     int loaded;                            /* 1 if opt was found in config  */
     struct t_config_option *prev_option;   /* link to previous option       */
@@ -148,37 +166,49 @@ extern struct t_config_file *last_config_file;
 extern struct t_config_file *config_file_search (const char *name);
 extern struct t_config_file *config_file_new (struct t_weechat_plugin *plugin,
                                               const char *name,
-                                              int (*callback_reload)(void *data,
+                                              int (*callback_reload)(const void *pointer,
+                                                                     void *data,
                                                                      struct t_config_file *config_file),
-                                              void *callback_data);
+                                              const void *callback_reload_pointer,
+                                              void *callback_reload_data);
 extern struct t_config_section *config_file_new_section (struct t_config_file *config_file,
                                                          const char *name,
                                                          int user_can_add_options,
                                                          int user_can_delete_options,
-                                                         int (*callback_read)(void *data,
+                                                         int (*callback_read)(const void *pointer,
+                                                                              void *data,
                                                                               struct t_config_file *config_file,
                                                                               struct t_config_section *section,
                                                                               const char *option_name,
                                                                               const char *value),
+                                                         const void *callback_read_pointer,
                                                          void *callback_read_data,
-                                                         int (*callback_write)(void *data,
+                                                         int (*callback_write)(const void *pointer,
+                                                                               void *data,
                                                                                struct t_config_file *config_file,
                                                                                const char *section_name),
+                                                         const void *callback_write_pointer,
                                                          void *callback_write_data,
-                                                         int (*callback_write_default)(void *data,
+                                                         int (*callback_write_default)(const void *pointer,
+                                                                                       void *data,
                                                                                        struct t_config_file *config_file,
                                                                                        const char *section_name),
+                                                         const void *callback_write_default_pointer,
                                                          void *callback_write_default_data,
-                                                         int (*callback_create_option)(void *data,
+                                                         int (*callback_create_option)(const void *pointer,
+                                                                                       void *data,
                                                                                        struct t_config_file *config_file,
                                                                                        struct t_config_section *section,
                                                                                        const char *option_name,
                                                                                        const char *value),
+                                                         const void *callback_create_option_pointer,
                                                          void *callback_create_option_data,
-                                                         int (*callback_delete_option)(void *data,
+                                                         int (*callback_delete_option)(const void *pointer,
+                                                                                       void *data,
                                                                                        struct t_config_file *config_file,
                                                                                        struct t_config_section *section,
                                                                                        struct t_config_option *option),
+                                                         const void *callback_delete_option_pointer,
                                                          void *callback_delete_option_data);
 extern struct t_config_section *config_file_search_section (struct t_config_file *config_file,
                                                             const char *section_name);
@@ -191,15 +221,21 @@ extern struct t_config_option *config_file_new_option (struct t_config_file *con
                                                        const char *default_value,
                                                        const char *value,
                                                        int null_value_allowed,
-                                                       int (*callback_check_value)(void *data,
+                                                       int (*callback_check_value)(const void *pointer,
+                                                                                   void *data,
                                                                                    struct t_config_option *option,
                                                                                    const char *value),
+                                                       const void *callback_check_value_pointer,
                                                        void *callback_check_value_data,
-                                                       void (*callback_change)(void *data,
+                                                       void (*callback_change)(const void *pointer,
+                                                                               void *data,
                                                                                struct t_config_option *option),
+                                                       const void *callback_change_pointer,
                                                        void *callback_change_data,
-                                                       void (*callback_delete)(void *data,
+                                                       void (*callback_delete)(const void *pointer,
+                                                                               void *data,
                                                                                struct t_config_option *option),
+                                                       const void *callback_delete_pointer,
                                                        void *callback_delete_data);
 extern struct t_config_option *config_file_search_option (struct t_config_file *config_file,
                                                           struct t_config_section *section,
@@ -255,11 +291,14 @@ extern void config_file_section_free (struct t_config_section *section);
 extern void config_file_free (struct t_config_file *config_file);
 extern void config_file_free_all ();
 extern void config_file_free_all_plugin (struct t_weechat_plugin *plugin);
-extern struct t_hdata *config_file_hdata_config_file_cb (void *data,
+extern struct t_hdata *config_file_hdata_config_file_cb (const void *pointer,
+                                                         void *data,
                                                          const char *hdata_name);
-extern struct t_hdata *config_file_hdata_config_section_cb (void *data,
+extern struct t_hdata *config_file_hdata_config_section_cb (const void *pointer,
+                                                            void *data,
                                                             const char *hdata_name);
-extern struct t_hdata *config_file_hdata_config_option_cb (void *data,
+extern struct t_hdata *config_file_hdata_config_option_cb (const void *pointer,
+                                                           void *data,
                                                            const char *hdata_name);
 extern int config_file_add_to_infolist (struct t_infolist *infolist,
                                         const char *option_name);

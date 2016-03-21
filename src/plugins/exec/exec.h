@@ -80,7 +80,8 @@ extern int exec_cmds_count;
 extern int exec_search_color (const char *color);
 extern struct t_exec_cmd *exec_search_by_id (const char *id);
 extern struct t_exec_cmd *exec_add ();
-extern int exec_process_cb (void *data, const char *command, int return_code,
+extern int exec_process_cb (const void *pointer, void *data,
+                            const char *command, int return_code,
                             const char *out, const char *err);
 extern void exec_free (struct t_exec_cmd *exec_cmd);
 extern void exec_free_all ();

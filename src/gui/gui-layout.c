@@ -883,11 +883,13 @@ gui_layout_remove_all ()
  */
 
 struct t_hdata *
-gui_layout_hdata_layout_buffer_cb (void *data, const char *hdata_name)
+gui_layout_hdata_layout_buffer_cb (const void *pointer, void *data,
+                                   const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_layout", "next_layout",
@@ -908,11 +910,13 @@ gui_layout_hdata_layout_buffer_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-gui_layout_hdata_layout_window_cb (void *data, const char *hdata_name)
+gui_layout_hdata_layout_window_cb (const void *pointer, void *data,
+                                   const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
@@ -935,11 +939,13 @@ gui_layout_hdata_layout_window_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-gui_layout_hdata_layout_cb (void *data, const char *hdata_name)
+gui_layout_hdata_layout_cb (const void *pointer, void *data,
+                            const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_layout", "next_layout",

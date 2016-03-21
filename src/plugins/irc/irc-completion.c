@@ -41,13 +41,15 @@
  */
 
 int
-irc_completion_server_cb (void *data, const char *completion_item,
+irc_completion_server_cb (const void *pointer, void *data,
+                          const char *completion_item,
                           struct t_gui_buffer *buffer,
                           struct t_gui_completion *completion)
 {
     IRC_BUFFER_GET_SERVER(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -65,13 +67,15 @@ irc_completion_server_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_server_nick_cb (void *data, const char *completion_item,
+irc_completion_server_nick_cb (const void *pointer, void *data,
+                               const char *completion_item,
                                struct t_gui_buffer *buffer,
                                struct t_gui_completion *completion)
 {
     IRC_BUFFER_GET_SERVER(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -89,7 +93,8 @@ irc_completion_server_nick_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_server_channels_cb (void *data, const char *completion_item,
+irc_completion_server_channels_cb (const void *pointer, void *data,
+                                   const char *completion_item,
                                    struct t_gui_buffer *buffer,
                                    struct t_gui_completion *completion)
 {
@@ -98,6 +103,7 @@ irc_completion_server_channels_cb (void *data, const char *completion_item,
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -129,7 +135,8 @@ irc_completion_server_channels_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_server_privates_cb (void *data, const char *completion_item,
+irc_completion_server_privates_cb (const void *pointer, void *data,
+                                   const char *completion_item,
                                    struct t_gui_buffer *buffer,
                                    struct t_gui_completion *completion)
 {
@@ -138,6 +145,7 @@ irc_completion_server_privates_cb (void *data, const char *completion_item,
     IRC_BUFFER_GET_SERVER(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -162,7 +170,8 @@ irc_completion_server_privates_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_server_nicks_cb (void *data, const char *completion_item,
+irc_completion_server_nicks_cb (const void *pointer, void *data,
+                                const char *completion_item,
                                 struct t_gui_buffer *buffer,
                                 struct t_gui_completion *completion)
 {
@@ -172,6 +181,7 @@ irc_completion_server_nicks_cb (void *data, const char *completion_item,
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -204,13 +214,15 @@ irc_completion_server_nicks_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_servers_cb (void *data, const char *completion_item,
+irc_completion_servers_cb (const void *pointer, void *data,
+                           const char *completion_item,
                            struct t_gui_buffer *buffer,
                            struct t_gui_completion *completion)
 {
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -230,13 +242,15 @@ irc_completion_servers_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_channel_cb (void *data, const char *completion_item,
+irc_completion_channel_cb (const void *pointer, void *data,
+                           const char *completion_item,
                            struct t_gui_buffer *buffer,
                            struct t_gui_completion *completion)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -285,7 +299,8 @@ irc_completion_channel_nicks_add_speakers (struct t_gui_completion *completion,
  */
 
 int
-irc_completion_channel_nicks_cb (void *data, const char *completion_item,
+irc_completion_channel_nicks_cb (const void *pointer, void *data,
+                                 const char *completion_item,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
 {
@@ -294,6 +309,7 @@ irc_completion_channel_nicks_cb (void *data, const char *completion_item,
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -350,7 +366,8 @@ irc_completion_channel_nicks_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_channel_nicks_hosts_cb (void *data, const char *completion_item,
+irc_completion_channel_nicks_hosts_cb (const void *pointer, void *data,
+                                       const char *completion_item,
                                        struct t_gui_buffer *buffer,
                                        struct t_gui_completion *completion)
 {
@@ -361,6 +378,7 @@ irc_completion_channel_nicks_hosts_cb (void *data, const char *completion_item,
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -407,7 +425,8 @@ irc_completion_channel_nicks_hosts_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_channel_topic_cb (void *data, const char *completion_item,
+irc_completion_channel_topic_cb (const void *pointer, void *data,
+                                 const char *completion_item,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
 {
@@ -417,6 +436,7 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -459,7 +479,8 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_channels_cb (void *data, const char *completion_item,
+irc_completion_channels_cb (const void *pointer, void *data,
+                            const char *completion_item,
                             struct t_gui_buffer *buffer,
                             struct t_gui_completion *completion)
 {
@@ -471,6 +492,7 @@ irc_completion_channels_cb (void *data, const char *completion_item,
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -530,7 +552,8 @@ irc_completion_channels_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_privates_cb (void *data, const char *completion_item,
+irc_completion_privates_cb (const void *pointer, void *data,
+                            const char *completion_item,
                             struct t_gui_buffer *buffer,
                             struct t_gui_completion *completion)
 {
@@ -538,6 +561,7 @@ irc_completion_privates_cb (void *data, const char *completion_item,
     struct t_irc_channel *ptr_channel;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -564,7 +588,8 @@ irc_completion_privates_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_msg_kick_cb (void *data, const char *completion_item,
+irc_completion_msg_kick_cb (const void *pointer, void *data,
+                            const char *completion_item,
                             struct t_gui_buffer *buffer,
                             struct t_gui_completion *completion)
 {
@@ -573,6 +598,7 @@ irc_completion_msg_kick_cb (void *data, const char *completion_item,
     IRC_BUFFER_GET_SERVER(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -595,7 +621,8 @@ irc_completion_msg_kick_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_msg_part_cb (void *data, const char *completion_item,
+irc_completion_msg_part_cb (const void *pointer, void *data,
+                            const char *completion_item,
                             struct t_gui_buffer *buffer,
                             struct t_gui_completion *completion)
 {
@@ -604,6 +631,7 @@ irc_completion_msg_part_cb (void *data, const char *completion_item,
     IRC_BUFFER_GET_SERVER(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -626,7 +654,8 @@ irc_completion_msg_part_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_ignores_numbers_cb (void *data, const char *completion_item,
+irc_completion_ignores_numbers_cb (const void *pointer, void *data,
+                                   const char *completion_item,
                                    struct t_gui_buffer *buffer,
                                    struct t_gui_completion *completion)
 {
@@ -634,6 +663,7 @@ irc_completion_ignores_numbers_cb (void *data, const char *completion_item,
     char str_number[32];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -654,7 +684,8 @@ irc_completion_ignores_numbers_cb (void *data, const char *completion_item,
  */
 
 int
-irc_completion_notify_nicks_cb (void *data, const char *completion_item,
+irc_completion_notify_nicks_cb (const void *pointer, void *data,
+                                const char *completion_item,
                                 struct t_gui_buffer *buffer,
                                 struct t_gui_completion *completion)
 {
@@ -663,6 +694,7 @@ irc_completion_notify_nicks_cb (void *data, const char *completion_item,
     IRC_BUFFER_GET_SERVER(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -701,50 +733,50 @@ irc_completion_init ()
 {
     weechat_hook_completion ("irc_server",
                              N_("current IRC server"),
-                             &irc_completion_server_cb, NULL);
+                             &irc_completion_server_cb, NULL, NULL);
     weechat_hook_completion ("irc_server_nick",
                              N_("nick on current IRC server"),
-                             &irc_completion_server_nick_cb, NULL);
+                             &irc_completion_server_nick_cb, NULL, NULL);
     weechat_hook_completion ("irc_server_channels",
                              N_("channels on current IRC server"),
-                             &irc_completion_server_channels_cb, NULL);
+                             &irc_completion_server_channels_cb, NULL, NULL);
     weechat_hook_completion ("irc_server_privates",
                              N_("privates on current IRC server"),
-                             &irc_completion_server_privates_cb, NULL);
+                             &irc_completion_server_privates_cb, NULL, NULL);
     weechat_hook_completion ("irc_server_nicks",
                              N_("nicks on all channels of current IRC server"),
-                             &irc_completion_server_nicks_cb, NULL);
+                             &irc_completion_server_nicks_cb, NULL, NULL);
     weechat_hook_completion ("irc_servers",
                              N_("IRC servers (internal names)"),
-                             &irc_completion_servers_cb, NULL);
+                             &irc_completion_servers_cb, NULL, NULL);
     weechat_hook_completion ("irc_channel",
                              N_("current IRC channel"),
-                             &irc_completion_channel_cb, NULL);
+                             &irc_completion_channel_cb, NULL, NULL);
     weechat_hook_completion ("nick",
                              N_("nicks of current IRC channel"),
-                             &irc_completion_channel_nicks_cb, NULL);
+                             &irc_completion_channel_nicks_cb, NULL, NULL);
     weechat_hook_completion ("irc_channel_nicks_hosts",
                              N_("nicks and hostnames of current IRC channel"),
-                             &irc_completion_channel_nicks_hosts_cb, NULL);
+                             &irc_completion_channel_nicks_hosts_cb, NULL, NULL);
     weechat_hook_completion ("irc_channel_topic",
                              N_("topic of current IRC channel"),
-                             &irc_completion_channel_topic_cb, NULL);
+                             &irc_completion_channel_topic_cb, NULL, NULL);
     weechat_hook_completion ("irc_channels",
                              N_("channels on all IRC servers"),
-                             &irc_completion_channels_cb, NULL);
+                             &irc_completion_channels_cb, NULL, NULL);
     weechat_hook_completion ("irc_privates",
                              N_("privates on all IRC servers"),
-                             &irc_completion_privates_cb, NULL);
+                             &irc_completion_privates_cb, NULL, NULL);
     weechat_hook_completion ("irc_msg_kick",
                              N_("default kick message"),
-                             &irc_completion_msg_kick_cb, NULL);
+                             &irc_completion_msg_kick_cb, NULL, NULL);
     weechat_hook_completion ("irc_msg_part",
                              N_("default part message for IRC channel"),
-                             &irc_completion_msg_part_cb, NULL);
+                             &irc_completion_msg_part_cb, NULL, NULL);
     weechat_hook_completion ("irc_ignores_numbers",
                              N_("numbers for defined ignores"),
-                             &irc_completion_ignores_numbers_cb, NULL);
+                             &irc_completion_ignores_numbers_cb, NULL, NULL);
     weechat_hook_completion ("irc_notify_nicks",
                              N_("nicks in notify list"),
-                             &irc_completion_notify_nicks_cb, NULL);
+                             &irc_completion_notify_nicks_cb, NULL, NULL);
 }

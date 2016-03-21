@@ -45,9 +45,9 @@ extern int util_mkdir_home (const char *directory, int mode);
 extern int util_mkdir (const char *directory, int mode);
 extern int util_mkdir_parents (const char *directory, int mode);
 extern void util_exec_on_files (const char *directory, int hidden_files,
-                                void *data,
                                 void (*callback)(void *data,
-                                                 const char *filename));
+                                                 const char *filename),
+                                void *callback_data);
 extern char *util_search_full_lib_name (const char *filename,
                                         const char *sys_directory);
 extern char *util_file_get_content (const char *filename);

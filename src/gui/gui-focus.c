@@ -134,7 +134,8 @@ gui_focus_free_info (struct t_gui_focus_info *focus_info)
  */
 
 void
-gui_focus_buffer_localvar_map_cb (void *data, struct t_hashtable *hashtable,
+gui_focus_buffer_localvar_map_cb (void *data,
+                                  struct t_hashtable *hashtable,
                                   const void *key, const void *value)
 {
     struct t_hashtable *hashtable_focus;
@@ -171,8 +172,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     hashtable = hashtable_new (32,
                                WEECHAT_HASHTABLE_STRING,
                                WEECHAT_HASHTABLE_STRING,
-                               NULL,
-                               NULL);
+                               NULL, NULL);
     if (!hashtable)
         return NULL;
 

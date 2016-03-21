@@ -1233,19 +1233,22 @@ end:
  */
 
 int
-network_connect_child_timer_cb (void *arg_hook_connect, int remaining_calls)
+network_connect_child_timer_cb (const void *pointer, void *data,
+                                int remaining_calls)
 {
     struct t_hook *hook_connect;
 
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    hook_connect = (struct t_hook *)arg_hook_connect;
+    hook_connect = (struct t_hook *)pointer;
 
     HOOK_CONNECT(hook_connect, hook_child_timer) = NULL;
 
     (void) (HOOK_CONNECT(hook_connect, callback))
-        (hook_connect->callback_data,
+        (hook_connect->callback_pointer,
+         hook_connect->callback_data,
          WEECHAT_HOOK_CONNECT_TIMEOUT,
          0, -1, NULL, NULL);
     unhook (hook_connect);
@@ -1262,15 +1265,17 @@ network_connect_child_timer_cb (void *arg_hook_connect, int remaining_calls)
 
 #ifdef HAVE_GNUTLS
 int
-network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
+network_connect_gnutls_handshake_fd_cb (const void *pointer, void *data,
+                                        int fd)
 {
     struct t_hook *hook_connect;
     int rc, direction, flags;
 
     /* make C compiler happy */
+    (void) data;
     (void) fd;
 
-    hook_connect = (struct t_hook *)arg_hook_connect;
+    hook_connect = (struct t_hook *)pointer;
 
     rc = gnutls_handshake (*HOOK_CONNECT(hook_connect, gnutls_sess));
 
@@ -1290,7 +1295,8 @@ network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
     else if (rc != GNUTLS_E_SUCCESS)
     {
         (void) (HOOK_CONNECT(hook_connect, callback))
-            (hook_connect->callback_data,
+            (hook_connect->callback_pointer,
+             hook_connect->callback_data,
              WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR, rc,
              HOOK_CONNECT(hook_connect, sock),
              gnutls_strerror (rc),
@@ -1321,10 +1327,11 @@ network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
 #endif /* LIBGNUTLS_VERSION_NUMBER < 0x02090a */
         unhook (HOOK_CONNECT(hook_connect, handshake_hook_fd));
         (void) (HOOK_CONNECT(hook_connect, callback))
-                (hook_connect->callback_data,
-                 WEECHAT_HOOK_CONNECT_OK, 0,
-                 HOOK_CONNECT(hook_connect, sock),
-                 NULL, HOOK_CONNECT(hook_connect, handshake_ip_address));
+            (hook_connect->callback_pointer,
+             hook_connect->callback_data,
+             WEECHAT_HOOK_CONNECT_OK, 0,
+             HOOK_CONNECT(hook_connect, sock),
+             NULL, HOOK_CONNECT(hook_connect, handshake_ip_address));
         unhook (hook_connect);
     }
 
@@ -1338,25 +1345,28 @@ network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
 
 #ifdef HAVE_GNUTLS
 int
-network_connect_gnutls_handshake_timer_cb (void *arg_hook_connect,
+network_connect_gnutls_handshake_timer_cb (const void *pointer,
+                                           void *data,
                                            int remaining_calls)
 {
     struct t_hook *hook_connect;
 
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    hook_connect = (struct t_hook *)arg_hook_connect;
+    hook_connect = (struct t_hook *)pointer;
 
     HOOK_CONNECT(hook_connect, handshake_hook_timer) = NULL;
 
     (void) (HOOK_CONNECT(hook_connect, callback))
-            (hook_connect->callback_data,
-             WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
-             GNUTLS_E_EXPIRED,
-             HOOK_CONNECT(hook_connect, sock),
-             gnutls_strerror (GNUTLS_E_EXPIRED),
-             HOOK_CONNECT(hook_connect, handshake_ip_address));
+        (hook_connect->callback_pointer,
+         hook_connect->callback_data,
+         WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
+         GNUTLS_E_EXPIRED,
+         HOOK_CONNECT(hook_connect, sock),
+         gnutls_strerror (GNUTLS_E_EXPIRED),
+         HOOK_CONNECT(hook_connect, handshake_ip_address));
     unhook (hook_connect);
 
     return WEECHAT_RC_OK;
@@ -1368,7 +1378,7 @@ network_connect_gnutls_handshake_timer_cb (void *arg_hook_connect,
  */
 
 int
-network_connect_child_read_cb (void *arg_hook_connect, int fd)
+network_connect_child_read_cb (const void *pointer, void *data, int fd)
 {
     struct t_hook *hook_connect;
     char buffer[1], buf_size[6], *cb_error, *cb_ip_address, *error;
@@ -1389,9 +1399,10 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
 #endif /* HOOK_CONNECT_MAX_SOCKETS */
 
     /* make C compiler happy */
+    (void) data;
     (void) fd;
 
-    hook_connect = (struct t_hook *)arg_hook_connect;
+    hook_connect = (struct t_hook *)pointer;
 
     cb_error = NULL;
     cb_ip_address = NULL;
@@ -1507,19 +1518,20 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                                  HOOK_CONNECT(hook_connect, sock),
                                  (!direction ? 1 : 0), (direction  ? 1 : 0), 0,
                                  &network_connect_gnutls_handshake_fd_cb,
-                                 hook_connect);
+                                 hook_connect, NULL);
                     HOOK_CONNECT(hook_connect, handshake_hook_timer) =
                         hook_timer (hook_connect->plugin,
                                     CONFIG_INTEGER(config_network_gnutls_handshake_timeout) * 1000,
                                     0, 1,
                                     &network_connect_gnutls_handshake_timer_cb,
-                                    hook_connect);
+                                    hook_connect, NULL);
                     return WEECHAT_RC_OK;
                 }
                 else if (rc != GNUTLS_E_SUCCESS)
                 {
                     (void) (HOOK_CONNECT(hook_connect, callback))
-                        (hook_connect->callback_data,
+                        (hook_connect->callback_pointer,
+                         hook_connect->callback_data,
                          WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
                          rc, sock,
                          gnutls_strerror (rc),
@@ -1583,14 +1595,18 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
             }
         }
         (void) (HOOK_CONNECT(hook_connect, callback))
-            (hook_connect->callback_data, buffer[0] - '0', 0,
+            (hook_connect->callback_pointer,
+             hook_connect->callback_data,
+             buffer[0] - '0', 0,
              sock, cb_error, cb_ip_address);
         unhook (hook_connect);
     }
     else
     {
         (void) (HOOK_CONNECT(hook_connect, callback))
-            (hook_connect->callback_data, WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
+            (hook_connect->callback_pointer,
+             hook_connect->callback_data,
+             WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
              0, sock, cb_error, cb_ip_address);
         unhook (hook_connect);
     }
@@ -1628,7 +1644,8 @@ network_connect_with_fork (struct t_hook *hook_connect)
         if (gnutls_init (HOOK_CONNECT(hook_connect, gnutls_sess), GNUTLS_CLIENT) != GNUTLS_E_SUCCESS)
         {
             (void) (HOOK_CONNECT(hook_connect, callback))
-                (hook_connect->callback_data,
+                (hook_connect->callback_pointer,
+                 hook_connect->callback_data,
                  WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
                  0, -1, NULL, NULL);
             unhook (hook_connect);
@@ -1641,7 +1658,8 @@ network_connect_with_fork (struct t_hook *hook_connect)
         if (rc != GNUTLS_E_SUCCESS)
         {
             (void) (HOOK_CONNECT(hook_connect, callback))
-                (hook_connect->callback_data,
+                (hook_connect->callback_pointer,
+                 hook_connect->callback_data,
                  WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
                  0, -1, _("set server name indication (SNI) failed"), NULL);
             unhook (hook_connect);
@@ -1653,7 +1671,8 @@ network_connect_with_fork (struct t_hook *hook_connect)
         if (rc != GNUTLS_E_SUCCESS)
         {
             (void) (HOOK_CONNECT(hook_connect, callback))
-                (hook_connect->callback_data,
+                (hook_connect->callback_pointer,
+                 hook_connect->callback_data,
                  WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
                  0, -1, _("invalid priorities"), NULL);
             unhook (hook_connect);
@@ -1671,7 +1690,8 @@ network_connect_with_fork (struct t_hook *hook_connect)
     if (pipe (child_pipe) < 0)
     {
         (void) (HOOK_CONNECT(hook_connect, callback))
-            (hook_connect->callback_data,
+            (hook_connect->callback_pointer,
+             hook_connect->callback_data,
              WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
              0, -1, NULL, NULL);
         unhook (hook_connect);
@@ -1685,7 +1705,8 @@ network_connect_with_fork (struct t_hook *hook_connect)
     if (socketpair (AF_LOCAL, SOCK_DGRAM, 0, child_socket) < 0)
     {
         (void) (HOOK_CONNECT(hook_connect, callback))
-            (hook_connect->callback_data,
+            (hook_connect->callback_pointer,
+             hook_connect->callback_data,
              WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
              0, -1, NULL, NULL);
         unhook (hook_connect);
@@ -1706,7 +1727,8 @@ network_connect_with_fork (struct t_hook *hook_connect)
         /* fork failed */
         case -1:
             (void) (HOOK_CONNECT(hook_connect, callback))
-                (hook_connect->callback_data,
+                (hook_connect->callback_pointer,
+                 hook_connect->callback_data,
                  WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
                  0, -1, NULL, NULL);
             unhook (hook_connect);
@@ -1734,10 +1756,11 @@ network_connect_with_fork (struct t_hook *hook_connect)
                                                                CONFIG_INTEGER(config_network_connection_timeout) * 1000,
                                                                0, 1,
                                                                &network_connect_child_timer_cb,
-                                                               hook_connect);
+                                                               hook_connect,
+                                                               NULL);
     HOOK_CONNECT(hook_connect, hook_fd) = hook_fd (hook_connect->plugin,
                                                    HOOK_CONNECT(hook_connect, child_read),
                                                    1, 0, 0,
                                                    &network_connect_child_read_cb,
-                                                   hook_connect);
+                                                   hook_connect, NULL);
 }

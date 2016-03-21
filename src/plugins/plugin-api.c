@@ -285,12 +285,13 @@ plugin_api_command (struct t_weechat_plugin *plugin,
  */
 
 char *
-plugin_api_modifier_color_decode_ansi_cb (void *data,
+plugin_api_modifier_color_decode_ansi_cb (const void *pointer, void *data,
                                           const char *modifier,
                                           const char *modifier_data,
                                           const char *string)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) modifier;
 
@@ -305,10 +306,12 @@ plugin_api_modifier_color_decode_ansi_cb (void *data,
  */
 
 const char *
-plugin_api_info_version_cb (void *data, const char *info_name,
+plugin_api_info_version_cb (const void *pointer, void *data,
+                            const char *info_name,
                             const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -321,12 +324,14 @@ plugin_api_info_version_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_version_number_cb (void *data, const char *info_name,
+plugin_api_info_version_number_cb (const void *pointer, void *data,
+                                   const char *info_name,
                                    const char *arguments)
 {
     static char version_number[32] = { '\0' };
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -344,10 +349,12 @@ plugin_api_info_version_number_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_version_git_cb (void *data, const char *info_name,
+plugin_api_info_version_git_cb (const void *pointer, void *data,
+                                const char *info_name,
                                 const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -360,10 +367,12 @@ plugin_api_info_version_git_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_date_cb (void *data, const char *info_name,
+plugin_api_info_date_cb (const void *pointer, void *data,
+                         const char *info_name,
                          const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -376,10 +385,12 @@ plugin_api_info_date_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_dir_separator_cb (void *data, const char *info_name,
+plugin_api_info_dir_separator_cb (const void *pointer, void *data,
+                                  const char *info_name,
                                   const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -392,12 +403,14 @@ plugin_api_info_dir_separator_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_weechat_dir_cb (void *data, const char *info_name,
+plugin_api_info_weechat_dir_cb (const void *pointer, void *data,
+                                const char *info_name,
                                 const char *arguments)
 {
     static char weechat_dir_absolute_path[PATH_MAX] = { '\0' };
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -416,10 +429,12 @@ plugin_api_info_weechat_dir_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_weechat_libdir_cb (void *data, const char *info_name,
+plugin_api_info_weechat_libdir_cb (const void *pointer, void *data,
+                                   const char *info_name,
                                    const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -432,10 +447,12 @@ plugin_api_info_weechat_libdir_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_weechat_sharedir_cb (void *data, const char *info_name,
+plugin_api_info_weechat_sharedir_cb (const void *pointer, void *data,
+                                     const char *info_name,
                                      const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -448,10 +465,12 @@ plugin_api_info_weechat_sharedir_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_weechat_localedir_cb (void *data, const char *info_name,
+plugin_api_info_weechat_localedir_cb (const void *pointer, void *data,
+                                      const char *info_name,
                                       const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -464,10 +483,12 @@ plugin_api_info_weechat_localedir_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_weechat_site_cb (void *data, const char *info_name,
+plugin_api_info_weechat_site_cb (const void *pointer, void *data,
+                                 const char *info_name,
                                  const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -480,10 +501,12 @@ plugin_api_info_weechat_site_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_weechat_site_download_cb (void *data, const char *info_name,
+plugin_api_info_weechat_site_download_cb (const void *pointer, void *data,
+                                          const char *info_name,
                                           const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -496,12 +519,14 @@ plugin_api_info_weechat_site_download_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_weechat_upgrading_cb (void *data, const char *info_name,
+plugin_api_info_weechat_upgrading_cb (const void *pointer, void *data,
+                                      const char *info_name,
                                       const char *arguments)
 {
     static char value[32];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -515,10 +540,12 @@ plugin_api_info_weechat_upgrading_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_charset_terminal_cb (void *data, const char *info_name,
+plugin_api_info_charset_terminal_cb (const void *pointer, void *data,
+                                     const char *info_name,
                                      const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -531,10 +558,12 @@ plugin_api_info_charset_terminal_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_charset_internal_cb (void *data, const char *info_name,
+plugin_api_info_charset_internal_cb (const void *pointer, void *data,
+                                     const char *info_name,
                                      const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -547,10 +576,12 @@ plugin_api_info_charset_internal_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_locale_cb (void *data, const char *info_name,
+plugin_api_info_locale_cb (const void *pointer, void *data,
+                           const char *info_name,
                            const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -563,13 +594,15 @@ plugin_api_info_locale_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_inactivity_cb (void *data, const char *info_name,
+plugin_api_info_inactivity_cb (const void *pointer, void *data,
+                               const char *info_name,
                                const char *arguments)
 {
     time_t inactivity;
     static char value[32];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -587,12 +620,14 @@ plugin_api_info_inactivity_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_filters_enabled_cb (void *data, const char *info_name,
+plugin_api_info_filters_enabled_cb (const void *pointer, void *data,
+                                    const char *info_name,
                                     const char *arguments)
 {
     static char value[32];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -606,12 +641,14 @@ plugin_api_info_filters_enabled_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_cursor_mode_cb (void *data, const char *info_name,
+plugin_api_info_cursor_mode_cb (const void *pointer, void *data,
+                                const char *info_name,
                                 const char *arguments)
 {
     static char value[32];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -625,12 +662,14 @@ plugin_api_info_cursor_mode_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_term_width_cb (void *data, const char *info_name,
+plugin_api_info_term_width_cb (const void *pointer, void *data,
+                               const char *info_name,
                                const char *arguments)
 {
     static char value[32];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -644,12 +683,14 @@ plugin_api_info_term_width_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_term_height_cb (void *data, const char *info_name,
+plugin_api_info_term_height_cb (const void *pointer, void *data,
+                                const char *info_name,
                                 const char *arguments)
 {
     static char value[32];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -663,10 +704,12 @@ plugin_api_info_term_height_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_color_ansi_regex_cb (void *data, const char *info_name,
+plugin_api_info_color_ansi_regex_cb (const void *pointer, void *data,
+                                     const char *info_name,
                                      const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -679,12 +722,14 @@ plugin_api_info_color_ansi_regex_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_color_term2rgb_cb (void *data, const char *info_name,
+plugin_api_info_color_term2rgb_cb (const void *pointer, void *data,
+                                   const char *info_name,
                                    const char *arguments)
 {
     static char value[32];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -702,7 +747,8 @@ plugin_api_info_color_term2rgb_cb (void *data, const char *info_name,
  */
 
 const char *
-plugin_api_info_color_rgb2term_cb (void *data, const char *info_name,
+plugin_api_info_color_rgb2term_cb (const void *pointer, void *data,
+                                   const char *info_name,
                                    const char *arguments)
 {
     static char value[32];
@@ -710,6 +756,7 @@ plugin_api_info_color_rgb2term_cb (void *data, const char *info_name,
     char *pos, *color;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -745,28 +792,30 @@ plugin_api_info_color_rgb2term_cb (void *data, const char *info_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_bar_cb (void *data, const char *infolist_name,
-                            void *pointer, const char *arguments)
+plugin_api_infolist_bar_cb (const void *pointer, void *data,
+                            const char *infolist_name,
+                            void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_bar *ptr_bar;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
     /* invalid bar pointer ? */
-    if (pointer && (!gui_bar_valid (pointer)))
+    if (obj_pointer && (!gui_bar_valid (obj_pointer)))
         return NULL;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one bar */
-        if (!gui_bar_add_to_infolist (ptr_infolist, pointer))
+        if (!gui_bar_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
             return NULL;
@@ -801,28 +850,30 @@ plugin_api_infolist_bar_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_bar_item_cb (void *data, const char *infolist_name,
-                                 void *pointer, const char *arguments)
+plugin_api_infolist_bar_item_cb (const void *pointer, void *data,
+                                 const char *infolist_name,
+                                 void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_bar_item *ptr_bar_item;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
     /* invalid bar item pointer ? */
-    if (pointer && (!gui_bar_item_valid (pointer)))
+    if (obj_pointer && (!gui_bar_item_valid (obj_pointer)))
         return NULL;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one bar item */
-        if (!gui_bar_item_add_to_infolist (ptr_infolist, pointer))
+        if (!gui_bar_item_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
             return NULL;
@@ -858,8 +909,9 @@ plugin_api_infolist_bar_item_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_bar_window_cb (void *data, const char *infolist_name,
-                                   void *pointer, const char *arguments)
+plugin_api_infolist_bar_window_cb (const void *pointer, void *data,
+                                   const char *infolist_name,
+                                   void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_bar *ptr_bar;
@@ -867,22 +919,23 @@ plugin_api_infolist_bar_window_cb (void *data, const char *infolist_name,
     struct t_gui_window *ptr_window;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
     (void) arguments;
 
     /* invalid bar window pointer ? */
-    if (pointer && (!gui_bar_window_valid (pointer)))
+    if (obj_pointer && (!gui_bar_window_valid (obj_pointer)))
         return NULL;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one bar window */
-        if (!gui_bar_window_add_to_infolist (ptr_infolist, pointer))
+        if (!gui_bar_window_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
             return NULL;
@@ -930,28 +983,30 @@ plugin_api_infolist_bar_window_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_buffer_cb (void *data, const char *infolist_name,
-                               void *pointer, const char *arguments)
+plugin_api_infolist_buffer_cb (const void *pointer, void *data,
+                               const char *infolist_name,
+                               void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
     /* invalid buffer pointer ? */
-    if (pointer && (!gui_buffer_valid (pointer)))
+    if (obj_pointer && (!gui_buffer_valid (obj_pointer)))
         return NULL;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one buffer */
-        if (!gui_buffer_add_to_infolist (ptr_infolist, pointer))
+        if (!gui_buffer_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
             return NULL;
@@ -987,23 +1042,25 @@ plugin_api_infolist_buffer_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_buffer_lines_cb (void *data, const char *infolist_name,
-                                     void *pointer, const char *arguments)
+plugin_api_infolist_buffer_lines_cb (const void *pointer, void *data,
+                                     const char *infolist_name,
+                                     void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_line *ptr_line;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
     (void) arguments;
 
-    if (!pointer)
-        pointer = gui_buffers;
+    if (!obj_pointer)
+        obj_pointer = gui_buffers;
     else
     {
         /* invalid buffer pointer ? */
-        if (!gui_buffer_valid (pointer))
+        if (!gui_buffer_valid (obj_pointer))
             return NULL;
     }
 
@@ -1011,11 +1068,11 @@ plugin_api_infolist_buffer_lines_cb (void *data, const char *infolist_name,
     if (!ptr_infolist)
         return NULL;
 
-    for (ptr_line = ((struct t_gui_buffer *)pointer)->own_lines->first_line;
+    for (ptr_line = ((struct t_gui_buffer *)obj_pointer)->own_lines->first_line;
          ptr_line; ptr_line = ptr_line->next_line)
     {
         if (!gui_line_add_to_infolist (ptr_infolist,
-                                       ((struct t_gui_buffer *)pointer)->own_lines,
+                                       ((struct t_gui_buffer *)obj_pointer)->own_lines,
                                        ptr_line))
         {
             infolist_free (ptr_infolist);
@@ -1032,16 +1089,18 @@ plugin_api_infolist_buffer_lines_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_filter_cb (void *data, const char *infolist_name,
-                               void *pointer, const char *arguments)
+plugin_api_infolist_filter_cb (const void *pointer, void *data,
+                               const char *infolist_name,
+                               void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_filter *ptr_filter;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
-    (void) pointer;
+    (void) obj_pointer;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
@@ -1070,27 +1129,29 @@ plugin_api_infolist_filter_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_history_cb (void *data, const char *infolist_name,
-                                void *pointer, const char *arguments)
+plugin_api_infolist_history_cb (const void *pointer, void *data,
+                                const char *infolist_name,
+                                void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_history *ptr_history;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
     (void) arguments;
 
     /* invalid buffer pointer ? */
-    if (pointer && (!gui_buffer_valid (pointer)))
+    if (obj_pointer && (!gui_buffer_valid (obj_pointer)))
         return NULL;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return NULL;
 
-    for (ptr_history = (pointer) ?
-             ((struct t_gui_buffer *)pointer)->history : gui_history;
+    for (ptr_history = (obj_pointer) ?
+             ((struct t_gui_buffer *)obj_pointer)->history : gui_history;
          ptr_history; ptr_history = ptr_history->next_history)
     {
         if (!gui_history_add_to_infolist (ptr_infolist, ptr_history))
@@ -1109,24 +1170,26 @@ plugin_api_infolist_history_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_hook_cb (void *data, const char *infolist_name,
-                             void *pointer, const char *arguments)
+plugin_api_infolist_hook_cb (const void *pointer, void *data,
+                             const char *infolist_name,
+                             void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
     /* invalid hook pointer ? */
-    if (pointer && !hook_valid (pointer))
+    if (obj_pointer && !hook_valid (obj_pointer))
         return NULL;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return NULL;
 
-    if (!hook_add_to_infolist (ptr_infolist, pointer, arguments))
+    if (!hook_add_to_infolist (ptr_infolist, obj_pointer, arguments))
     {
         infolist_free (ptr_infolist);
         return NULL;
@@ -1141,16 +1204,18 @@ plugin_api_infolist_hook_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_hotlist_cb (void *data, const char *infolist_name,
-                                void *pointer, const char *arguments)
+plugin_api_infolist_hotlist_cb (const void *pointer, void *data,
+                                const char *infolist_name,
+                                void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_hotlist *ptr_hotlist;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
-    (void) pointer;
+    (void) obj_pointer;
     (void) arguments;
 
     ptr_infolist = infolist_new (NULL);
@@ -1176,17 +1241,19 @@ plugin_api_infolist_hotlist_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_key_cb (void *data, const char *infolist_name,
-                            void *pointer, const char *arguments)
+plugin_api_infolist_key_cb (const void *pointer, void *data,
+                            const char *infolist_name,
+                            void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_key *ptr_key;
     int context;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
-    (void) pointer;
+    (void) obj_pointer;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
@@ -1218,16 +1285,18 @@ plugin_api_infolist_key_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_layout_cb (void *data, const char *infolist_name,
-                               void *pointer, const char *arguments)
+plugin_api_infolist_layout_cb (const void *pointer, void *data,
+                               const char *infolist_name,
+                               void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_layout *ptr_layout;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
-    (void) pointer;
+    (void) obj_pointer;
     (void) arguments;
 
     ptr_infolist = infolist_new (NULL);
@@ -1253,24 +1322,26 @@ plugin_api_infolist_layout_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_nicklist_cb (void *data, const char *infolist_name,
-                                 void *pointer, const char *arguments)
+plugin_api_infolist_nicklist_cb (const void *pointer, void *data,
+                                 const char *infolist_name,
+                                 void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
     /* invalid buffer pointer ? */
-    if (!pointer || (!gui_buffer_valid (pointer)))
+    if (!obj_pointer || (!gui_buffer_valid (obj_pointer)))
         return NULL;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return NULL;
 
-    if (!gui_nicklist_add_to_infolist (ptr_infolist, pointer, arguments))
+    if (!gui_nicklist_add_to_infolist (ptr_infolist, obj_pointer, arguments))
     {
         infolist_free (ptr_infolist);
         return NULL;
@@ -1285,15 +1356,17 @@ plugin_api_infolist_nicklist_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_option_cb (void *data, const char *infolist_name,
-                               void *pointer, const char *arguments)
+plugin_api_infolist_option_cb (const void *pointer, void *data,
+                               const char *infolist_name,
+                               void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
-    (void) pointer;
+    (void) obj_pointer;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
@@ -1314,28 +1387,30 @@ plugin_api_infolist_option_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_plugin_cb (void *data, const char *infolist_name,
-                               void *pointer, const char *arguments)
+plugin_api_infolist_plugin_cb (const void *pointer, void *data,
+                               const char *infolist_name,
+                               void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_weechat_plugin *ptr_plugin;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
     /* invalid plugin pointer ? */
-    if (pointer && (!plugin_valid (pointer)))
+    if (obj_pointer && (!plugin_valid (obj_pointer)))
         return NULL;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one plugin */
-        if (!plugin_add_to_infolist (ptr_infolist, pointer))
+        if (!plugin_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
             return NULL;
@@ -1371,28 +1446,30 @@ plugin_api_infolist_plugin_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_proxy_cb (void *data, const char *infolist_name,
-                              void *pointer, const char *arguments)
+plugin_api_infolist_proxy_cb (const void *pointer, void *data,
+                              const char *infolist_name,
+                              void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_proxy *ptr_proxy;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
     /* invalid proxy pointer ? */
-    if (pointer && (!proxy_valid (pointer)))
+    if (obj_pointer && (!proxy_valid (obj_pointer)))
         return NULL;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one proxy */
-        if (!proxy_add_to_infolist (ptr_infolist, pointer))
+        if (!proxy_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
             return NULL;
@@ -1428,16 +1505,18 @@ plugin_api_infolist_proxy_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_url_options_cb (void *data, const char *infolist_name,
-                                    void *pointer, const char *arguments)
+plugin_api_infolist_url_options_cb (const void *pointer, void *data,
+                                    const char *infolist_name,
+                                    void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
-    (void) pointer;
+    (void) obj_pointer;
     (void) arguments;
 
     ptr_infolist = infolist_new (NULL);
@@ -1462,8 +1541,9 @@ plugin_api_infolist_url_options_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-plugin_api_infolist_window_cb (void *data, const char *infolist_name,
-                               void *pointer, const char *arguments)
+plugin_api_infolist_window_cb (const void *pointer, void *data,
+                               const char *infolist_name,
+                               void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_window *ptr_window;
@@ -1471,21 +1551,22 @@ plugin_api_infolist_window_cb (void *data, const char *infolist_name,
     char *error;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
     /* invalid window pointer ? */
-    if (pointer && (!gui_window_valid (pointer)))
+    if (obj_pointer && (!gui_window_valid (obj_pointer)))
         return NULL;
 
     ptr_infolist = infolist_new (NULL);
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one window */
-        if (!gui_window_add_to_infolist (ptr_infolist, pointer))
+        if (!gui_window_add_to_infolist (ptr_infolist, obj_pointer))
         {
             infolist_free (ptr_infolist);
             return NULL;
@@ -1697,228 +1778,228 @@ plugin_api_init ()
 {
     /* WeeChat core modifiers */
     hook_modifier (NULL, "color_decode_ansi",
-                   &plugin_api_modifier_color_decode_ansi_cb, NULL);
+                   &plugin_api_modifier_color_decode_ansi_cb, NULL, NULL);
 
     /* WeeChat core info hooks */
     hook_info (NULL, "version",
                N_("WeeChat version"),
-               NULL, &plugin_api_info_version_cb, NULL);
+               NULL, &plugin_api_info_version_cb, NULL, NULL);
     hook_info (NULL, "version_number",
                N_("WeeChat version (as number)"),
-               NULL, &plugin_api_info_version_number_cb, NULL);
+               NULL, &plugin_api_info_version_number_cb, NULL, NULL);
     hook_info (NULL, "version_git",
                N_("WeeChat git version (output of command \"git describe\" "
                   "for a development version only, empty for a stable "
                   "release)"),
-               NULL, &plugin_api_info_version_git_cb, NULL);
+               NULL, &plugin_api_info_version_git_cb, NULL, NULL);
     hook_info (NULL, "date",
                N_("WeeChat compilation date"),
-               NULL, &plugin_api_info_date_cb, NULL);
+               NULL, &plugin_api_info_date_cb, NULL, NULL);
     hook_info (NULL, "dir_separator",
                N_("directory separator"),
-               NULL, &plugin_api_info_dir_separator_cb, NULL);
+               NULL, &plugin_api_info_dir_separator_cb, NULL, NULL);
     hook_info (NULL, "weechat_dir",
                N_("WeeChat directory"),
-               NULL, &plugin_api_info_weechat_dir_cb, NULL);
+               NULL, &plugin_api_info_weechat_dir_cb, NULL, NULL);
     hook_info (NULL, "weechat_libdir",
                N_("WeeChat \"lib\" directory"),
-               NULL, &plugin_api_info_weechat_libdir_cb, NULL);
+               NULL, &plugin_api_info_weechat_libdir_cb, NULL, NULL);
     hook_info (NULL, "weechat_sharedir",
                N_("WeeChat \"share\" directory"),
-               NULL, &plugin_api_info_weechat_sharedir_cb, NULL);
+               NULL, &plugin_api_info_weechat_sharedir_cb, NULL, NULL);
     hook_info (NULL, "weechat_localedir",
                N_("WeeChat \"locale\" directory"),
-               NULL, &plugin_api_info_weechat_localedir_cb, NULL);
+               NULL, &plugin_api_info_weechat_localedir_cb, NULL, NULL);
     hook_info (NULL, "weechat_site",
                N_("WeeChat site"),
-               NULL, &plugin_api_info_weechat_site_cb, NULL);
+               NULL, &plugin_api_info_weechat_site_cb, NULL, NULL);
     hook_info (NULL, "weechat_site_download",
                N_("WeeChat site, download page"),
-               NULL, &plugin_api_info_weechat_site_download_cb, NULL);
+               NULL, &plugin_api_info_weechat_site_download_cb, NULL, NULL);
     hook_info (NULL, "weechat_upgrading",
                N_("1 if WeeChat is upgrading (command `/upgrade`)"),
-               NULL, &plugin_api_info_weechat_upgrading_cb, NULL);
+               NULL, &plugin_api_info_weechat_upgrading_cb, NULL, NULL);
     hook_info (NULL, "charset_terminal",
                N_("terminal charset"),
-               NULL, &plugin_api_info_charset_terminal_cb, NULL);
+               NULL, &plugin_api_info_charset_terminal_cb, NULL, NULL);
     hook_info (NULL, "charset_internal",
                N_("WeeChat internal charset"),
-               NULL, &plugin_api_info_charset_internal_cb, NULL);
+               NULL, &plugin_api_info_charset_internal_cb, NULL, NULL);
     hook_info (NULL, "locale",
                N_("locale used for translating messages"),
-               NULL, &plugin_api_info_locale_cb, NULL);
+               NULL, &plugin_api_info_locale_cb, NULL, NULL);
     hook_info (NULL, "inactivity",
                N_("keyboard inactivity (seconds)"),
-               NULL, &plugin_api_info_inactivity_cb, NULL);
+               NULL, &plugin_api_info_inactivity_cb, NULL, NULL);
     hook_info (NULL, "filters_enabled",
                N_("1 if filters are enabled"),
-               NULL, &plugin_api_info_filters_enabled_cb, NULL);
+               NULL, &plugin_api_info_filters_enabled_cb, NULL, NULL);
     hook_info (NULL, "cursor_mode",
                N_("1 if cursor mode is enabled"),
-               NULL, &plugin_api_info_cursor_mode_cb, NULL);
+               NULL, &plugin_api_info_cursor_mode_cb, NULL, NULL);
     hook_info (NULL, "term_width",
                N_("width of terminal"),
-               NULL, &plugin_api_info_term_width_cb, NULL);
+               NULL, &plugin_api_info_term_width_cb, NULL, NULL);
     hook_info (NULL, "term_height",
                N_("height of terminal"),
-               NULL, &plugin_api_info_term_height_cb, NULL);
+               NULL, &plugin_api_info_term_height_cb, NULL, NULL);
     hook_info (NULL, "color_ansi_regex",
                N_("POSIX extended regular expression to search ANSI escape "
                   "codes"),
-               NULL, &plugin_api_info_color_ansi_regex_cb, NULL);
+               NULL, &plugin_api_info_color_ansi_regex_cb, NULL, NULL);
     hook_info (NULL, "color_term2rgb",
                N_("terminal color (0-255) converted to RGB color"),
                N_("color (terminal color: 0-255)"),
-               &plugin_api_info_color_term2rgb_cb, NULL);
+               &plugin_api_info_color_term2rgb_cb, NULL, NULL);
     hook_info (NULL, "color_rgb2term",
                N_("RGB color converted to terminal color (0-255)"),
                N_("rgb,limit (limit is optional and is set to 256 by default)"),
-               &plugin_api_info_color_rgb2term_cb, NULL);
+               &plugin_api_info_color_rgb2term_cb, NULL, NULL);
 
     /* WeeChat core infolist hooks */
     hook_infolist (NULL, "bar",
                    N_("list of bars"),
                    N_("bar pointer (optional)"),
                    N_("bar name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_bar_cb, NULL);
+                   &plugin_api_infolist_bar_cb, NULL, NULL);
     hook_infolist (NULL, "bar_item",
                    N_("list of bar items"),
                    N_("bar item pointer (optional)"),
                    N_("bar item name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_bar_item_cb, NULL);
+                   &plugin_api_infolist_bar_item_cb, NULL, NULL);
     hook_infolist (NULL, "bar_window",
                    N_("list of bar windows"),
                    N_("bar window pointer (optional)"),
                    NULL,
-                   &plugin_api_infolist_bar_window_cb, NULL);
+                   &plugin_api_infolist_bar_window_cb, NULL, NULL);
     hook_infolist (NULL, "buffer",
                    N_("list of buffers"),
                    N_("buffer pointer (optional)"),
                    N_("buffer name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_buffer_cb, NULL);
+                   &plugin_api_infolist_buffer_cb, NULL, NULL);
     hook_infolist (NULL, "buffer_lines",
                    N_("lines of a buffer"),
                    N_("buffer pointer"),
                    NULL,
-                   &plugin_api_infolist_buffer_lines_cb, NULL);
+                   &plugin_api_infolist_buffer_lines_cb, NULL, NULL);
     hook_infolist (NULL, "filter",
                    N_("list of filters"),
                    NULL,
                    N_("filter name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_filter_cb, NULL);
+                   &plugin_api_infolist_filter_cb, NULL, NULL);
     hook_infolist (NULL, "history",
                    N_("history of commands"),
                    N_("buffer pointer (if not set, return global history) (optional)"),
                    NULL,
-                   &plugin_api_infolist_history_cb, NULL);
+                   &plugin_api_infolist_history_cb, NULL, NULL);
     hook_infolist (NULL, "hook",
                    N_("list of hooks"),
                    N_("hook pointer (optional)"),
                    N_("type,arguments (type is command/timer/.., arguments to "
                       "get only some hooks (wildcard \"*\" is allowed), "
                       "both are optional)"),
-                   &plugin_api_infolist_hook_cb, NULL);
+                   &plugin_api_infolist_hook_cb, NULL, NULL);
     hook_infolist (NULL, "hotlist",
                    N_("list of buffers in hotlist"),
                    NULL,
                    NULL,
-                   &plugin_api_infolist_hotlist_cb, NULL);
+                   &plugin_api_infolist_hotlist_cb, NULL, NULL);
     hook_infolist (NULL, "key",
                    N_("list of key bindings"),
                    NULL,
                    N_("context (\"default\", \"search\", \"cursor\" or "
                       "\"mouse\") (optional)"),
-                   &plugin_api_infolist_key_cb, NULL);
+                   &plugin_api_infolist_key_cb, NULL, NULL);
     hook_infolist (NULL, "layout",
                    N_("list of layouts"),
                    NULL,
                    NULL,
-                   &plugin_api_infolist_layout_cb, NULL);
+                   &plugin_api_infolist_layout_cb, NULL, NULL);
     hook_infolist (NULL, "nicklist",
                    N_("nicks in nicklist for a buffer"),
                    N_("buffer pointer"),
                    N_("nick_xxx or group_xxx to get only nick/group xxx "
                       "(optional)"),
-                   &plugin_api_infolist_nicklist_cb, NULL);
+                   &plugin_api_infolist_nicklist_cb, NULL, NULL);
     hook_infolist (NULL, "option",
                    N_("list of options"),
                    NULL,
                    N_("option name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_option_cb, NULL);
+                   &plugin_api_infolist_option_cb, NULL, NULL);
     hook_infolist (NULL, "plugin",
                    N_("list of plugins"),
                    N_("plugin pointer (optional)"),
                    N_("plugin name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_plugin_cb, NULL);
+                   &plugin_api_infolist_plugin_cb, NULL, NULL);
     hook_infolist (NULL, "proxy",
                    N_("list of proxies"),
                    N_("proxy pointer (optional)"),
                    N_("proxy name (wildcard \"*\" is allowed) (optional)"),
-                   &plugin_api_infolist_proxy_cb, NULL);
+                   &plugin_api_infolist_proxy_cb, NULL, NULL);
     hook_infolist (NULL, "url_options",
                    N_("options for URL"),
                    NULL,
                    NULL,
-                   &plugin_api_infolist_url_options_cb, NULL);
+                   &plugin_api_infolist_url_options_cb, NULL, NULL);
     hook_infolist (NULL, "window",
                    N_("list of windows"),
                    N_("window pointer (optional)"),
                    N_("\"current\" for current window or a window number (optional)"),
-                   &plugin_api_infolist_window_cb, NULL);
+                   &plugin_api_infolist_window_cb, NULL, NULL);
 
     /* WeeChat core hdata */
     hook_hdata (NULL, "bar", N_("bar"),
-                &gui_bar_hdata_bar_cb, NULL);
+                &gui_bar_hdata_bar_cb, NULL, NULL);
     hook_hdata (NULL, "bar_item", N_("bar item"),
-                &gui_bar_item_hdata_bar_item_cb, NULL);
+                &gui_bar_item_hdata_bar_item_cb, NULL, NULL);
     hook_hdata (NULL, "bar_window", N_("bar window"),
-                &gui_bar_window_hdata_bar_window_cb, NULL);
+                &gui_bar_window_hdata_bar_window_cb, NULL, NULL);
     hook_hdata (NULL, "buffer", N_("buffer"),
-                &gui_buffer_hdata_buffer_cb, NULL);
+                &gui_buffer_hdata_buffer_cb, NULL, NULL);
     hook_hdata (NULL, "buffer_visited", N_("visited buffer"),
-                &gui_buffer_hdata_buffer_visited_cb, NULL);
+                &gui_buffer_hdata_buffer_visited_cb, NULL, NULL);
     hook_hdata (NULL, "completion", N_("structure with completion"),
-                &gui_completion_hdata_completion_cb, NULL);
+                &gui_completion_hdata_completion_cb, NULL, NULL);
     hook_hdata (NULL, "config_file", N_("config file"),
-                &config_file_hdata_config_file_cb, NULL);
+                &config_file_hdata_config_file_cb, NULL, NULL);
     hook_hdata (NULL, "config_section", N_("config section"),
-                &config_file_hdata_config_section_cb, NULL);
+                &config_file_hdata_config_section_cb, NULL, NULL);
     hook_hdata (NULL, "config_option", N_("config option"),
-                &config_file_hdata_config_option_cb, NULL);
+                &config_file_hdata_config_option_cb, NULL, NULL);
     hook_hdata (NULL, "filter", N_("filter"),
-                &gui_filter_hdata_filter_cb, NULL);
+                &gui_filter_hdata_filter_cb, NULL, NULL);
     hook_hdata (NULL, "history", N_("history of commands in buffer"),
-                &gui_history_hdata_history_cb, NULL);
+                &gui_history_hdata_history_cb, NULL, NULL);
     hook_hdata (NULL, "hotlist", N_("hotlist"),
-                &gui_hotlist_hdata_hotlist_cb, NULL);
+                &gui_hotlist_hdata_hotlist_cb, NULL, NULL);
     hook_hdata (NULL, "input_undo", N_("structure with undo for input line"),
-                &gui_buffer_hdata_input_undo_cb, NULL);
+                &gui_buffer_hdata_input_undo_cb, NULL, NULL);
     hook_hdata (NULL, "key", N_("a key (keyboard shortcut)"),
-                &gui_key_hdata_key_cb, NULL);
+                &gui_key_hdata_key_cb, NULL, NULL);
     hook_hdata (NULL, "layout", N_("layout"),
-                &gui_layout_hdata_layout_cb, NULL);
+                &gui_layout_hdata_layout_cb, NULL, NULL);
     hook_hdata (NULL, "layout_buffer", N_("buffer layout"),
-                &gui_layout_hdata_layout_buffer_cb, NULL);
+                &gui_layout_hdata_layout_buffer_cb, NULL, NULL);
     hook_hdata (NULL, "layout_window", N_("window layout"),
-                &gui_layout_hdata_layout_window_cb, NULL);
+                &gui_layout_hdata_layout_window_cb, NULL, NULL);
     hook_hdata (NULL, "lines", N_("structure with lines"),
-                &gui_line_hdata_lines_cb, NULL);
+                &gui_line_hdata_lines_cb, NULL, NULL);
     hook_hdata (NULL, "line", N_("structure with one line"),
-                &gui_line_hdata_line_cb, NULL);
+                &gui_line_hdata_line_cb, NULL, NULL);
     hook_hdata (NULL, "line_data", N_("structure with one line data"),
-                &gui_line_hdata_line_data_cb, NULL);
+                &gui_line_hdata_line_data_cb, NULL, NULL);
     hook_hdata (NULL, "nick_group", N_("group in nicklist"),
-                &gui_nicklist_hdata_nick_group_cb, NULL);
+                &gui_nicklist_hdata_nick_group_cb, NULL, NULL);
     hook_hdata (NULL, "nick", N_("nick in nicklist"),
-                &gui_nicklist_hdata_nick_cb, NULL);
+                &gui_nicklist_hdata_nick_cb, NULL, NULL);
     hook_hdata (NULL, "plugin", N_("plugin"),
-                &plugin_hdata_plugin_cb, NULL);
+                &plugin_hdata_plugin_cb, NULL, NULL);
     hook_hdata (NULL, "proxy", N_("proxy"),
-                &proxy_hdata_proxy_cb, NULL);
+                &proxy_hdata_proxy_cb, NULL, NULL);
     hook_hdata (NULL, "window", N_("window"),
-                &gui_window_hdata_window_cb, NULL);
+                &gui_window_hdata_window_cb, NULL, NULL);
     hook_hdata (NULL, "window_scroll", N_("scroll info in window"),
-                &gui_window_hdata_window_scroll_cb, NULL);
+                &gui_window_hdata_window_scroll_cb, NULL, NULL);
     hook_hdata (NULL, "window_tree", N_("tree of windows"),
-                &gui_window_hdata_window_tree_cb, NULL);
+                &gui_window_hdata_window_tree_cb, NULL, NULL);
 }

@@ -93,16 +93,17 @@ xfer_network_write_pipe (struct t_xfer *xfer, int status, int error)
  */
 
 int
-xfer_network_child_read_cb (void *arg_xfer, int fd)
+xfer_network_child_read_cb (const void *pointer, void *data, int fd)
 {
     struct t_xfer *xfer;
     char bufpipe[1 + 1 + 32 + 1];
     int num_read;
 
     /* make C compiler happy */
+    (void) data;
     (void) fd;
 
-    xfer = (struct t_xfer *)arg_xfer;
+    xfer = (struct t_xfer *)pointer;
 
     num_read = read (xfer->child_read, bufpipe, sizeof (bufpipe));
     if (num_read > 0)
@@ -270,7 +271,7 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
     xfer->hook_fd = weechat_hook_fd (xfer->child_read,
                                      1, 0, 0,
                                      &xfer_network_child_read_cb,
-                                     xfer);
+                                     xfer, NULL);
 }
 
 /*
@@ -328,7 +329,7 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
     xfer->hook_fd = weechat_hook_fd (xfer->child_read,
                                      1, 0, 0,
                                      &xfer_network_child_read_cb,
-                                     xfer);
+                                     xfer, NULL);
 }
 
 /*
@@ -364,7 +365,7 @@ xfer_network_child_kill (struct t_xfer *xfer)
  */
 
 int
-xfer_network_fd_cb (void *arg_xfer, int fd)
+xfer_network_fd_cb (const void *pointer, void *data, int fd)
 {
     struct t_xfer *xfer;
     int sock, flags, error;
@@ -373,11 +374,12 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
     char str_address[NI_MAXHOST];
 
     /* make C compiler happy */
+    (void) data;
     (void) fd;
 
     length = sizeof (addr);
     memset (&addr, 0, length);
-    xfer = (struct t_xfer *)arg_xfer;
+    xfer = (struct t_xfer *)pointer;
 
     if (xfer->status == XFER_STATUS_CONNECTING)
     {
@@ -484,7 +486,7 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
             xfer->hook_fd = weechat_hook_fd (xfer->sock,
                                              1, 0, 0,
                                              &xfer_chat_recv_cb,
-                                             xfer);
+                                             xfer, NULL);
             xfer_chat_open_buffer (xfer);
         }
     }
@@ -498,14 +500,15 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
  */
 
 int
-xfer_network_timer_cb (void *arg_xfer, int remaining_calls)
+xfer_network_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_xfer *xfer;
 
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    xfer = (struct t_xfer *)arg_xfer;
+    xfer = (struct t_xfer *)pointer;
 
     if ((xfer->status == XFER_STATUS_WAITING)
         || (xfer->status == XFER_STATUS_CONNECTING))
@@ -526,7 +529,8 @@ xfer_network_timer_cb (void *arg_xfer, int remaining_calls)
  */
 
 int
-xfer_network_connect_chat_recv_cb (void *data, int status, int gnutls_rc,
+xfer_network_connect_chat_recv_cb (const void *pointer, void *data,
+                                   int status, int gnutls_rc,
                                    int sock, const char *error,
                                    const char *ip_address)
 {
@@ -534,10 +538,11 @@ xfer_network_connect_chat_recv_cb (void *data, int status, int gnutls_rc,
     int flags;
 
     /* make C compiler happy */
+    (void) data;
     (void) gnutls_rc;
     (void) ip_address;
 
-    xfer = (struct t_xfer*)data;
+    xfer = (struct t_xfer*)pointer;
 
     weechat_unhook (xfer->hook_connect);
     xfer->hook_connect = NULL;
@@ -567,7 +572,7 @@ xfer_network_connect_chat_recv_cb (void *data, int status, int gnutls_rc,
         xfer->hook_fd = weechat_hook_fd (xfer->sock,
                                          1, 0, 0,
                                          &xfer_chat_recv_cb,
-                                         xfer);
+                                         xfer, NULL);
 
         xfer_chat_open_buffer (xfer);
         xfer->status = XFER_STATUS_ACTIVE;
@@ -691,7 +696,7 @@ xfer_network_connect (struct t_xfer *xfer)
         xfer->hook_fd = weechat_hook_fd (xfer->sock,
                                          1, 0, 0,
                                          &xfer_network_fd_cb,
-                                         xfer);
+                                         xfer, NULL);
 
         /* add timeout */
         if (weechat_config_integer (xfer_config_network_timeout) > 0)
@@ -699,7 +704,7 @@ xfer_network_connect (struct t_xfer *xfer)
             xfer->hook_timer = weechat_hook_timer (weechat_config_integer (xfer_config_network_timeout) * 1000,
                                                    0, 1,
                                                    &xfer_network_timer_cb,
-                                                   xfer);
+                                                   xfer, NULL);
         }
     }
 
@@ -711,7 +716,7 @@ xfer_network_connect (struct t_xfer *xfer)
                                                    xfer->port, 1, 0, NULL, NULL,
                                                    0, "NONE", NULL,
                                                    &xfer_network_connect_chat_recv_cb,
-                                                   xfer);
+                                                   xfer, NULL);
     }
 
     /* for file receiving, connection is made in child process (blocking) */

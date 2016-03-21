@@ -458,8 +458,7 @@ exec_command_run (struct t_gui_buffer *buffer,
     process_options = weechat_hashtable_new (32,
                                              WEECHAT_HASHTABLE_STRING,
                                              WEECHAT_HASHTABLE_STRING,
-                                             NULL,
-                                             NULL);
+                                             NULL, NULL);
     if (!process_options)
     {
         exec_free (new_exec_cmd);
@@ -570,7 +569,8 @@ exec_command_run (struct t_gui_buffer *buffer,
         process_options,
         cmd_options.timeout * 1000,
         &exec_process_cb,
-        new_exec_cmd);
+        new_exec_cmd,
+        NULL);
 
     if (new_exec_cmd->hook)
     {
@@ -605,7 +605,8 @@ exec_command_run (struct t_gui_buffer *buffer,
  */
 
 int
-exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
+exec_command_exec (const void *pointer, void *data,
+                   struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
     int i, length, count;
@@ -613,6 +614,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     struct t_exec_cmd *ptr_exec_cmd, *ptr_next_exec_cmd;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -878,5 +880,5 @@ exec_command_init ()
         " || -killall"
         " || -set %(exec_commands_ids) stdin|stdin_close|signal"
         " || -del %(exec_commands_ids)|-all %(exec_commands_ids)|%*",
-        &exec_command_exec, NULL);
+        &exec_command_exec, NULL, NULL);
 }

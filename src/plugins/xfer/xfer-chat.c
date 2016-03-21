@@ -104,7 +104,7 @@ xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
  */
 
 int
-xfer_chat_recv_cb (void *arg_xfer, int fd)
+xfer_chat_recv_cb (const void *pointer, void *data, int fd)
 {
     struct t_xfer *xfer;
     static char buffer[4096 + 2];
@@ -115,9 +115,10 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
     int num_read, length, ctcp_action;
 
     /* make C compiler happy */
+    (void) data;
     (void) fd;
 
-    xfer = (struct t_xfer *)arg_xfer;
+    xfer = (struct t_xfer *)pointer;
 
     num_read = recv (xfer->sock, buffer, sizeof (buffer) - 2, 0);
     if (num_read > 0)
@@ -259,13 +260,15 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
  */
 
 int
-xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
+xfer_chat_buffer_input_cb (const void *pointer, void *data,
+                           struct t_gui_buffer *buffer,
                            const char *input_data)
 {
     struct t_xfer *ptr_xfer;
     char *input_data_color, str_tags[256], *str_color;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_xfer = xfer_search_by_buffer (buffer);
@@ -307,11 +310,13 @@ xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-xfer_chat_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+xfer_chat_buffer_close_cb (const void *pointer, void *data,
+                           struct t_gui_buffer *buffer)
 {
     struct t_xfer *ptr_xfer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -353,9 +358,10 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
         xfer->buffer = weechat_buffer_search (XFER_PLUGIN_NAME, name);
         if (!xfer->buffer)
         {
-            xfer->buffer = weechat_buffer_new (name,
-                                               &xfer_chat_buffer_input_cb, NULL,
-                                               &xfer_chat_buffer_close_cb, NULL);
+            xfer->buffer = weechat_buffer_new (
+                name,
+                &xfer_chat_buffer_input_cb, NULL, NULL,
+                &xfer_chat_buffer_close_cb, NULL, NULL);
             buffer_created = 1;
 
             /* failed to create buffer ? then return */

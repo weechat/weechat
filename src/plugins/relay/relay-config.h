@@ -58,7 +58,7 @@ extern regex_t *relay_config_regex_allowed_ips;
 extern regex_t *relay_config_regex_websocket_allowed_origins;
 extern struct t_hashtable *relay_config_hashtable_irc_backlog_tags;
 
-extern int relay_config_create_option_port (void *data,
+extern int relay_config_create_option_port (const void *pointer, void *data,
                                             struct t_config_file *config_file,
                                             struct t_config_section *section,
                                             const char *option_name,

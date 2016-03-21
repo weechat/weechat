@@ -184,7 +184,14 @@ upgrade_file_write_buffer (struct t_upgrade_file *upgrade_file, void *pointer,
  */
 
 struct t_upgrade_file *
-upgrade_file_new (const char *filename, int write)
+upgrade_file_new (const char *filename,
+                  int (*callback_read)(const void *pointer,
+                                       void *data,
+                                       struct t_upgrade_file *upgrade_file,
+                                       int object_id,
+                                       struct t_infolist *infolist),
+                  const void *callback_read_pointer,
+                  void *callback_read_data)
 {
     int length;
     struct t_upgrade_file *new_upgrade_file;
@@ -205,12 +212,15 @@ upgrade_file_new (const char *filename, int write)
         }
         snprintf (new_upgrade_file->filename, length, "%s/%s.upgrade",
                   weechat_home, filename);
+        new_upgrade_file->callback_read = callback_read;
+        new_upgrade_file->callback_read_pointer = callback_read_pointer;
+        new_upgrade_file->callback_read_data = callback_read_data;
 
         /* open file in read or write mode */
-        if (write)
-            new_upgrade_file->file = fopen (new_upgrade_file->filename, "wb");
-        else
+        if (callback_read)
             new_upgrade_file->file = fopen (new_upgrade_file->filename, "rb");
+        else
+            new_upgrade_file->file = fopen (new_upgrade_file->filename, "wb");
 
         if (!new_upgrade_file->file)
         {
@@ -220,7 +230,7 @@ upgrade_file_new (const char *filename, int write)
         }
 
         /* change permissions if write mode */
-        if (write)
+        if (!callback_read)
         {
             chmod (new_upgrade_file->filename, 0600);
 
@@ -241,6 +251,7 @@ upgrade_file_new (const char *filename, int write)
             upgrade_files = new_upgrade_file;
         last_upgrade_file = new_upgrade_file;
     }
+
     return new_upgrade_file;
 }
 
@@ -704,11 +715,15 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
 
     if (upgrade_file->callback_read)
     {
-        if ((int)(upgrade_file->callback_read) (upgrade_file->callback_read_data,
-                                                upgrade_file,
-                                                object_id,
-                                                infolist) == WEECHAT_RC_ERROR)
+        if ((int)(upgrade_file->callback_read) (
+                upgrade_file->callback_read_pointer,
+                upgrade_file->callback_read_data,
+                upgrade_file,
+                object_id,
+                infolist) == WEECHAT_RC_ERROR)
+        {
             rc = 0;
+        }
     }
 
 end:
@@ -733,20 +748,12 @@ end:
  */
 
 int
-upgrade_file_read (struct t_upgrade_file *upgrade_file,
-                   int (*callback_read)(void *data,
-                                        struct t_upgrade_file *upgrade_file,
-                                        int object_id,
-                                        struct t_infolist *infolist),
-                   void *callback_read_data)
+upgrade_file_read (struct t_upgrade_file *upgrade_file)
 {
     char *signature;
 
-    if (!upgrade_file)
+    if (!upgrade_file || !upgrade_file->callback_read)
         return 0;
-
-    upgrade_file->callback_read = callback_read;
-    upgrade_file->callback_read_data = callback_read_data;
 
     signature = NULL;
     if (!upgrade_file_read_string (upgrade_file, &signature))
@@ -776,12 +783,31 @@ upgrade_file_read (struct t_upgrade_file *upgrade_file,
 }
 
 /*
- * Closes an upgrade file.
+ * Closes and frees an upgrade file.
  */
 
 void
 upgrade_file_close (struct t_upgrade_file *upgrade_file)
 {
-    if (upgrade_file && upgrade_file->file)
+    if (!upgrade_file)
+        return;
+
+    if (upgrade_file->filename)
+        free (upgrade_file->filename);
+    if (upgrade_file->file)
         fclose (upgrade_file->file);
+    if (upgrade_file->callback_read_data)
+        free (upgrade_file->callback_read_data);
+
+    /* remove upgrade file list */
+    if (upgrade_file->prev_upgrade)
+        (upgrade_file->prev_upgrade)->next_upgrade = upgrade_file->next_upgrade;
+    if (upgrade_file->next_upgrade)
+        (upgrade_file->next_upgrade)->prev_upgrade = upgrade_file->prev_upgrade;
+    if (upgrade_files == upgrade_file)
+        upgrade_files = upgrade_file->next_upgrade;
+    if (last_upgrade_file == upgrade_file)
+        last_upgrade_file = upgrade_file->prev_upgrade;
+
+    free (upgrade_file);
 }

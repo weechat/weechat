@@ -32,7 +32,8 @@
  */
 
 const char *
-relay_info_info_relay_client_count_cb (void *data, const char *info_name,
+relay_info_info_relay_client_count_cb (const void *pointer, void *data,
+                                       const char *info_name,
                                        const char *arguments)
 {
     static char str_count[32];
@@ -40,6 +41,7 @@ relay_info_info_relay_client_count_cb (void *data, const char *info_name,
     struct t_relay_client *ptr_client;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -69,28 +71,30 @@ relay_info_info_relay_client_count_cb (void *data, const char *info_name,
  */
 
 struct t_infolist *
-relay_info_infolist_relay_cb (void *data, const char *infolist_name,
-                              void *pointer, const char *arguments)
+relay_info_infolist_relay_cb (const void *pointer, void *data,
+                              const char *infolist_name,
+                              void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_relay_client *ptr_client;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
     (void) arguments;
 
-    if (pointer && !relay_client_valid (pointer))
+    if (obj_pointer && !relay_client_valid (obj_pointer))
         return NULL;
 
     ptr_infolist = weechat_infolist_new ();
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one relay */
-        if (!relay_client_add_to_infolist (ptr_infolist, pointer))
+        if (!relay_client_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
             return NULL;
@@ -129,12 +133,12 @@ relay_info_init ()
         /* TRANSLATORS: please do not translate the status names, they must be used in English */
         N_("status name (optional): connecting, waiting_auth, "
            "connected, auth_failed, disconnected"),
-        &relay_info_info_relay_client_count_cb, NULL);
+        &relay_info_info_relay_client_count_cb, NULL, NULL);
 
     /* infolist hooks */
     weechat_hook_infolist (
         "relay", N_("list of relay clients"),
         N_("relay pointer (optional)"),
         NULL,
-        &relay_info_infolist_relay_cb, NULL);
+        &relay_info_infolist_relay_cb, NULL, NULL);
 }

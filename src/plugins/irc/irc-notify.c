@@ -769,7 +769,7 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
  */
 
 int
-irc_notify_hsignal_cb (void *data, const char *signal,
+irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
                        struct t_hashtable *hashtable)
 {
     const char *error, *server, *pattern, *command, *output;
@@ -781,6 +781,7 @@ irc_notify_hsignal_cb (void *data, const char *signal,
     struct t_irc_notify *ptr_notify;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
 
@@ -962,7 +963,7 @@ irc_notify_hsignal_cb (void *data, const char *signal,
  */
 
 int
-irc_notify_timer_ison_cb (void *data, int remaining_calls)
+irc_notify_timer_ison_cb (const void *pointer, void *data, int remaining_calls)
 {
     char *message, hash_key[32];
     const char *str_message;
@@ -971,6 +972,7 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
     struct t_hashtable *hashtable;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) remaining_calls;
 
@@ -1021,12 +1023,14 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
  */
 
 int
-irc_notify_timer_whois_cb (void *data, int remaining_calls)
+irc_notify_timer_whois_cb (const void *pointer, void *data,
+                           int remaining_calls)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_notify *ptr_notify, *ptr_next_notify;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) remaining_calls;
 
@@ -1067,11 +1071,13 @@ irc_notify_timer_whois_cb (void *data, int remaining_calls)
  */
 
 struct t_hdata *
-irc_notify_hdata_notify_cb (void *data, const char *hdata_name)
+irc_notify_hdata_notify_cb (const void *pointer, void *data,
+                            const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_notify", "next_notify",
@@ -1164,7 +1170,7 @@ irc_notify_hook_timer_ison ()
 
     irc_notify_timer_ison = weechat_hook_timer (
         60 * 1000 * weechat_config_integer (irc_config_network_notify_check_ison),
-        0, 0, &irc_notify_timer_ison_cb, NULL);
+        0, 0, &irc_notify_timer_ison_cb, NULL, NULL);
 }
 
 /*
@@ -1179,7 +1185,7 @@ irc_notify_hook_timer_whois ()
 
     irc_notify_timer_whois = weechat_hook_timer (
         60 * 1000 * weechat_config_integer (irc_config_network_notify_check_whois),
-        0, 0, &irc_notify_timer_whois_cb, NULL);
+        0, 0, &irc_notify_timer_whois_cb, NULL, NULL);
 }
 
 /*
@@ -1194,7 +1200,7 @@ irc_notify_init ()
 
     irc_notify_hsignal = weechat_hook_hsignal ("irc_redirection_notify_*",
                                                &irc_notify_hsignal_cb,
-                                               NULL);
+                                               NULL, NULL);
 }
 
 /*

@@ -270,8 +270,8 @@ irc_channel_create_buffer (struct t_irc_server *server,
             weechat_current_buffer (), "number");
 
         ptr_buffer = weechat_buffer_new (buffer_name,
-                                         &irc_input_data_cb, NULL,
-                                         &irc_buffer_close_cb, NULL);
+                                         &irc_input_data_cb, NULL, NULL,
+                                         &irc_buffer_close_cb, NULL, NULL);
         if (!ptr_buffer)
             return NULL;
 
@@ -351,7 +351,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
             weechat_buffer_set (ptr_buffer, "nicklist_display_groups", "0");
             weechat_buffer_set_pointer (ptr_buffer, "nickcmp_callback",
                                         &irc_buffer_nickcmp_cb);
-            weechat_buffer_set_pointer (ptr_buffer, "nickcmp_callback_data",
+            weechat_buffer_set_pointer (ptr_buffer, "nickcmp_callback_pointer",
                                         server);
         }
 
@@ -463,8 +463,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         32,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING,
-        NULL,
-        NULL);
+        NULL, NULL);
     new_channel->checking_whox = 0;
     new_channel->away_message = NULL;
     new_channel->has_quit_server = 0;
@@ -1024,8 +1023,7 @@ irc_channel_join_smart_filtered_add (struct t_irc_channel *channel,
             64,
             WEECHAT_HASHTABLE_STRING,
             WEECHAT_HASHTABLE_TIME,
-            NULL,
-            NULL);
+            NULL, NULL);
     }
     if (!channel->join_smart_filtered)
         return;
@@ -1224,8 +1222,7 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
                     hashtable = weechat_hashtable_new (4,
                                                        WEECHAT_HASHTABLE_STRING,
                                                        WEECHAT_HASHTABLE_STRING,
-                                                       NULL,
-                                                       NULL);
+                                                       NULL, NULL);
                     if (hashtable)
                     {
                         /* update tags in line (remove tag "irc_smart_filter") */
@@ -1280,15 +1277,17 @@ irc_channel_rejoin (struct t_irc_server *server, struct t_irc_channel *channel)
  */
 
 int
-irc_channel_autorejoin_cb (void *data, int remaining_calls)
+irc_channel_autorejoin_cb (const void *pointer, void *data,
+                           int remaining_calls)
 {
     struct t_irc_server *ptr_server, *ptr_server_found;
     struct t_irc_channel *ptr_channel_arg, *ptr_channel;
 
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    ptr_channel_arg = (struct t_irc_channel *)data;
+    ptr_channel_arg = (struct t_irc_channel *)pointer;
 
     ptr_server_found = NULL;
     for (ptr_server = irc_servers; ptr_server;
@@ -1435,11 +1434,13 @@ irc_channel_free_all (struct t_irc_server *server)
  */
 
 struct t_hdata *
-irc_channel_hdata_channel_cb (void *data, const char *hdata_name)
+irc_channel_hdata_channel_cb (const void *pointer, void *data,
+                              const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_channel", "next_channel",
@@ -1481,11 +1482,13 @@ irc_channel_hdata_channel_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-irc_channel_hdata_channel_speaking_cb (void *data, const char *hdata_name)
+irc_channel_hdata_channel_speaking_cb (const void *pointer, void *data,
+                                       const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_nick", "next_nick",

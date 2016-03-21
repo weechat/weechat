@@ -98,8 +98,7 @@ gui_nicklist_send_hsignal (const char *signal, struct t_gui_buffer *buffer,
         gui_nicklist_hsignal = hashtable_new (32,
                                               WEECHAT_HASHTABLE_STRING,
                                               WEECHAT_HASHTABLE_POINTER,
-                                              NULL,
-                                              NULL);
+                                              NULL, NULL);
     }
 
     if (!gui_nicklist_hsignal)
@@ -394,7 +393,8 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
     {
         if (buffer->nickcmp_callback)
         {
-            if ((buffer->nickcmp_callback) (buffer->nickcmp_callback_data,
+            if ((buffer->nickcmp_callback) (buffer->nickcmp_callback_pointer,
+                                            buffer->nickcmp_callback_data,
                                             buffer,
                                             ptr_nick->name,
                                             name) == 0)
@@ -1036,11 +1036,13 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
  */
 
 struct t_hdata *
-gui_nicklist_hdata_nick_group_cb (void *data, const char *hdata_name)
+gui_nicklist_hdata_nick_group_cb (const void *pointer, void *data,
+                                  const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_group", "next_group",
@@ -1067,11 +1069,13 @@ gui_nicklist_hdata_nick_group_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-gui_nicklist_hdata_nick_cb (void *data, const char *hdata_name)
+gui_nicklist_hdata_nick_cb (const void *pointer, void *data,
+                            const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_nick", "next_nick",

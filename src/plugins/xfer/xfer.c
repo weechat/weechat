@@ -116,10 +116,12 @@ xfer_valid (struct t_xfer *xfer)
  */
 
 int
-xfer_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
+xfer_signal_upgrade_cb (const void *pointer, void *data,
+                        const char *signal, const char *type_data,
                         void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -997,7 +999,8 @@ xfer_resolve_addr (const char *str_address, const char *str_port,
  */
 
 int
-xfer_add_cb (void *data, const char *signal, const char *type_data,
+xfer_add_cb (const void *pointer, void *data,
+             const char *signal, const char *type_data,
              void *signal_data)
 {
     struct t_infolist *infolist;
@@ -1014,6 +1017,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     struct t_xfer *ptr_xfer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1367,7 +1371,8 @@ error:
  */
 
 int
-xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
+xfer_start_resume_cb (const void *pointer, void *data,
+                      const char *signal, const char *type_data,
                       void *signal_data)
 {
     struct t_infolist *infolist;
@@ -1377,6 +1382,7 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
     unsigned long long start_resume;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1451,7 +1457,8 @@ error:
  */
 
 int
-xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
+xfer_accept_resume_cb (const void *pointer, void *data,
+                       const char *signal, const char *type_data,
                        void *signal_data)
 {
     struct t_infolist *infolist;
@@ -1461,6 +1468,7 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
     unsigned long long start_resume;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1737,10 +1745,12 @@ xfer_print_log ()
  */
 
 int
-xfer_debug_dump_cb (void *data, const char *signal, const char *type_data,
+xfer_debug_dump_cb (const void *pointer, void *data,
+                    const char *signal, const char *type_data,
                     void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1783,11 +1793,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     xfer_command_init ();
 
     /* hook some signals */
-    weechat_hook_signal ("upgrade", &xfer_signal_upgrade_cb, NULL);
-    weechat_hook_signal ("xfer_add", &xfer_add_cb, NULL);
-    weechat_hook_signal ("xfer_start_resume", &xfer_start_resume_cb, NULL);
-    weechat_hook_signal ("xfer_accept_resume", &xfer_accept_resume_cb, NULL);
-    weechat_hook_signal ("debug_dump", &xfer_debug_dump_cb, NULL);
+    weechat_hook_signal ("upgrade",
+                         &xfer_signal_upgrade_cb, NULL, NULL);
+    weechat_hook_signal ("xfer_add",
+                         &xfer_add_cb, NULL, NULL);
+    weechat_hook_signal ("xfer_start_resume",
+                         &xfer_start_resume_cb, NULL, NULL);
+    weechat_hook_signal ("xfer_accept_resume",
+                         &xfer_accept_resume_cb, NULL, NULL);
+    weechat_hook_signal ("debug_dump",
+                         &xfer_debug_dump_cb, NULL, NULL);
 
     /* hook completions */
     xfer_completion_init ();

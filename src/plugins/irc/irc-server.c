@@ -1056,21 +1056,21 @@ irc_server_alloc (const char *name)
     new_server->notify_list = NULL;
     new_server->last_notify = NULL;
     new_server->notify_count = 0;
-    new_server->join_manual = weechat_hashtable_new (32,
-                                                     WEECHAT_HASHTABLE_STRING,
-                                                     WEECHAT_HASHTABLE_TIME,
-                                                     NULL,
-                                                     NULL);
-    new_server->join_channel_key = weechat_hashtable_new (32,
-                                                          WEECHAT_HASHTABLE_STRING,
-                                                          WEECHAT_HASHTABLE_STRING,
-                                                          NULL,
-                                                          NULL);
-    new_server->join_noswitch = weechat_hashtable_new (32,
-                                                       WEECHAT_HASHTABLE_STRING,
-                                                       WEECHAT_HASHTABLE_TIME,
-                                                       NULL,
-                                                       NULL);
+    new_server->join_manual = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_TIME,
+        NULL, NULL);
+    new_server->join_channel_key = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    new_server->join_noswitch = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_TIME,
+        NULL, NULL);
     new_server->buffer = NULL;
     new_server->buffer_as_string = NULL;
     new_server->channels = NULL;
@@ -1100,9 +1100,11 @@ irc_server_alloc (const char *name)
                 1,
                 &irc_config_server_check_value_cb,
                 irc_server_options[i][0],
+                NULL,
                 &irc_config_server_change_cb,
-                irc_server_options[i][0]);
-            irc_config_server_change_cb (irc_server_options[i][0],
+                irc_server_options[i][0],
+                NULL);
+            irc_config_server_change_cb (irc_server_options[i][0], NULL,
                                          new_server->options[i]);
             free (option_name);
         }
@@ -2289,8 +2291,7 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
         ret_hashtable = weechat_hashtable_new (32,
                                                WEECHAT_HASHTABLE_STRING,
                                                WEECHAT_HASHTABLE_STRING,
-                                               NULL,
-                                               NULL);
+                                               NULL, NULL);
     }
 
     rc = 1;
@@ -2762,16 +2763,17 @@ irc_server_msgq_flush ()
  */
 
 int
-irc_server_recv_cb (void *data, int fd)
+irc_server_recv_cb (const void *pointer, void *data, int fd)
 {
     struct t_irc_server *server;
     static char buffer[4096 + 2];
     int num_read, msgq_flush, end_recv;
 
     /* make C compiler happy */
+    (void) data;
     (void) fd;
 
-    server = (struct t_irc_server *)data;
+    server = (struct t_irc_server *)pointer;
     if (!server)
         return WEECHAT_RC_ERROR;
 
@@ -2865,14 +2867,16 @@ irc_server_recv_cb (void *data, int fd)
  */
 
 int
-irc_server_timer_connection_cb (void *data, int remaining_calls)
+irc_server_timer_connection_cb (const void *pointer, void *data,
+                                int remaining_calls)
 {
     struct t_irc_server *server;
 
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    server = (struct t_irc_server *)data;
+    server = (struct t_irc_server *)pointer;
 
     if (!server)
         return WEECHAT_RC_ERROR;
@@ -2898,15 +2902,16 @@ irc_server_timer_connection_cb (void *data, int remaining_calls)
  */
 
 int
-irc_server_timer_sasl_cb (void *data, int remaining_calls)
+irc_server_timer_sasl_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_irc_server *server;
     int sasl_fail;
 
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    server = (struct t_irc_server *)data;
+    server = (struct t_irc_server *)pointer;
 
     if (!server)
         return WEECHAT_RC_ERROR;
@@ -2940,7 +2945,8 @@ irc_server_timer_sasl_cb (void *data, int remaining_calls)
  */
 
 void
-irc_server_check_join_manual_cb (void *data, struct t_hashtable *hashtable,
+irc_server_check_join_manual_cb (void *data,
+                                 struct t_hashtable *hashtable,
                                  const void *key, const void *value)
 {
     /* make C compiler happy */
@@ -2956,7 +2962,8 @@ irc_server_check_join_manual_cb (void *data, struct t_hashtable *hashtable,
  */
 
 void
-irc_server_check_join_noswitch_cb (void *data, struct t_hashtable *hashtable,
+irc_server_check_join_noswitch_cb (void *data,
+                                   struct t_hashtable *hashtable,
                                    const void *key, const void *value)
 {
     /* make C compiler happy */
@@ -2994,7 +3001,7 @@ irc_server_check_join_smart_filtered_cb (void *data,
  */
 
 int
-irc_server_timer_cb (void *data, int remaining_calls)
+irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
@@ -3004,6 +3011,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
     int away_check;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) remaining_calls;
 
@@ -3381,7 +3389,7 @@ irc_server_login (struct t_irc_server *server)
         IRC_SERVER_OPTION_INTEGER (server, IRC_SERVER_OPTION_CONNECTION_TIMEOUT) * 1000,
         0, 1,
         &irc_server_timer_connection_cb,
-        server);
+        server, NULL);
 
     if (password)
         free (password);
@@ -3431,13 +3439,17 @@ irc_server_switch_address (struct t_irc_server *server, int connection)
  */
 
 int
-irc_server_connect_cb (void *data, int status, int gnutls_rc, int sock,
+irc_server_connect_cb (const void *pointer, void *data,
+                       int status, int gnutls_rc, int sock,
                        const char *error, const char *ip_address)
 {
     struct t_irc_server *server;
     const char *proxy;
 
-    server = (struct t_irc_server *)data;
+    /* make C compiler happy */
+    (void) data;
+
+    server = (struct t_irc_server *)pointer;
 
     proxy = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY);
 
@@ -3462,7 +3474,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc, int sock,
             server->hook_fd = weechat_hook_fd (server->sock,
                                                1, 0, 0,
                                                &irc_server_recv_cb,
-                                               server);
+                                               server, NULL);
             /* login to server */
             irc_server_login (server);
             break;
@@ -3719,8 +3731,8 @@ irc_server_create_buffer (struct t_irc_server *server)
     snprintf (buffer_name, sizeof (buffer_name),
               "server.%s", server->name);
     server->buffer = weechat_buffer_new (buffer_name,
-                                         &irc_input_data_cb, NULL,
-                                         &irc_buffer_close_cb, NULL);
+                                         &irc_input_data_cb, NULL, NULL,
+                                         &irc_buffer_close_cb, NULL, NULL);
     if (!server->buffer)
         return NULL;
 
@@ -4549,7 +4561,8 @@ irc_server_connect (struct t_irc_server *server)
         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES),
         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
         &irc_server_connect_cb,
-        server);
+        server,
+        NULL);
 #else
     server->hook_connect = weechat_hook_connect (
         proxy,
@@ -4560,7 +4573,8 @@ irc_server_connect (struct t_irc_server *server)
         NULL, NULL, 0, NULL,
         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
         &irc_server_connect_cb,
-        server);
+        server,
+        NULL);
 #endif /* HAVE_GNUTLS */
 
     /* send signal "irc_server_connecting" with server name */
@@ -4595,15 +4609,17 @@ irc_server_reconnect (struct t_irc_server *server)
  */
 
 int
-irc_server_auto_connect_timer_cb (void *data, int remaining_calls)
+irc_server_auto_connect_timer_cb (const void *pointer, void *data,
+                                  int remaining_calls)
 {
     struct t_irc_server *ptr_server;
-    void *auto_connect;
+    int auto_connect;
 
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    auto_connect = data;
+    auto_connect = (pointer) ? 1 : 0;
 
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
@@ -4629,8 +4645,10 @@ irc_server_auto_connect_timer_cb (void *data, int remaining_calls)
 void
 irc_server_auto_connect (int auto_connect)
 {
-    weechat_hook_timer (1, 0, 1, &irc_server_auto_connect_timer_cb,
-                        (auto_connect) ? (void *)1 : (void *)0);
+    weechat_hook_timer (1, 0, 1,
+                        &irc_server_auto_connect_timer_cb,
+                        (auto_connect) ? (void *)1 : (void *)0,
+                        NULL);
 }
 
 /*
@@ -5026,7 +5044,8 @@ irc_server_set_away (struct t_irc_server *server, const char *nick, int is_away)
  */
 
 int
-irc_server_xfer_send_ready_cb (void *data, const char *signal,
+irc_server_xfer_send_ready_cb (const void *pointer, void *data,
+                               const char *signal,
                                const char *type_data, void *signal_data)
 {
     struct t_infolist *infolist;
@@ -5038,6 +5057,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
     int spaces_in_name, rc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -5127,7 +5147,8 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
  */
 
 int
-irc_server_xfer_resume_ready_cb (void *data, const char *signal,
+irc_server_xfer_resume_ready_cb (const void *pointer, void *data,
+                                 const char *signal,
                                  const char *type_data, void *signal_data)
 {
     struct t_infolist *infolist;
@@ -5136,6 +5157,7 @@ irc_server_xfer_resume_ready_cb (void *data, const char *signal,
     int spaces_in_name;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -5180,7 +5202,8 @@ irc_server_xfer_resume_ready_cb (void *data, const char *signal,
  */
 
 int
-irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
+irc_server_xfer_send_accept_resume_cb (const void *pointer, void *data,
+                                       const char *signal,
                                        const char *type_data,
                                        void *signal_data)
 {
@@ -5190,6 +5213,7 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
     int spaces_in_name;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -5231,11 +5255,13 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
  */
 
 struct t_hdata *
-irc_server_hdata_server_cb (void *data, const char *hdata_name)
+irc_server_hdata_server_cb (const void *pointer, void *data,
+                            const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_server", "next_server",

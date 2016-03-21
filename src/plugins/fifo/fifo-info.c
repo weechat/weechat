@@ -30,10 +30,12 @@
  */
 
 const char *
-fifo_info_info_fifo_filename_cb (void *data, const char *info_name,
+fifo_info_info_fifo_filename_cb (const void *pointer, void *data,
+                                 const char *info_name,
                                  const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
@@ -49,5 +51,5 @@ void
 fifo_info_init ()
 {
     weechat_hook_info ("fifo_filename", N_("name of FIFO pipe"), NULL,
-                       &fifo_info_info_fifo_filename_cb, NULL);
+                       &fifo_info_info_fifo_filename_cb, NULL, NULL);
 }

@@ -35,12 +35,14 @@
  */
 
 int
-xfer_command_me (void *data, struct t_gui_buffer *buffer, int argc,
+xfer_command_me (const void *pointer, void *data,
+                 struct t_gui_buffer *buffer, int argc,
                  char **argv, char **argv_eol)
 {
     struct t_xfer *ptr_xfer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) argc;
     (void) argv;
@@ -192,10 +194,12 @@ xfer_command_xfer_list (int full)
  */
 
 int
-xfer_command_xfer (void *data, struct t_gui_buffer *buffer, int argc,
+xfer_command_xfer (const void *pointer, void *data,
+                   struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) argv_eol;
@@ -251,7 +255,8 @@ xfer_command_init ()
         N_("send a CTCP action to remote host"),
         N_("<message>"),
         N_("message: message to send"),
-        NULL, &xfer_command_me, NULL);
+        NULL,
+        &xfer_command_me, NULL, NULL);
     weechat_hook_command (
         "xfer",
         N_("xfer control"),
@@ -260,5 +265,6 @@ xfer_command_init ()
            "listfull: list xfer (verbose)\n"
            "\n"
            "Without argument, this command opens buffer with xfer list."),
-        "list|listfull", &xfer_command_xfer, NULL);
+        "list|listfull",
+        &xfer_command_xfer, NULL, NULL);
 }

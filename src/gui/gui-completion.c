@@ -56,7 +56,8 @@ int gui_completion_freeze = 0;         /* 1 to freeze completions (do not   */
  */
 
 int
-gui_completion_word_compare_cb (void *data, struct t_arraylist *arraylist,
+gui_completion_word_compare_cb (void *data,
+                                struct t_arraylist *arraylist,
                                 void *pointer1, void *pointer2)
 {
     struct t_gui_completion_word *completion_word1, *completion_word2;
@@ -76,7 +77,8 @@ gui_completion_word_compare_cb (void *data, struct t_arraylist *arraylist,
  */
 
 void
-gui_completion_word_free_cb (void *data, struct t_arraylist *arraylist,
+gui_completion_word_free_cb (void *data,
+                             struct t_arraylist *arraylist,
                              void *pointer)
 {
     struct t_gui_completion_word *completion_word;
@@ -113,9 +115,10 @@ gui_completion_buffer_init (struct t_gui_completion *completion,
     completion->add_space = 1;
     completion->force_partial_completion = 0;
 
-    completion->list = arraylist_new (32, 1, 0,
-                                      &gui_completion_word_compare_cb, NULL,
-                                      &gui_completion_word_free_cb, NULL);
+    completion->list = arraylist_new (
+        32, 1, 0,
+        &gui_completion_word_compare_cb, NULL,
+        &gui_completion_word_free_cb, NULL);
 
     completion->word_found = NULL;
     completion->word_found_is_nick = 0;
@@ -1239,7 +1242,8 @@ gui_completion_auto (struct t_gui_completion *completion)
         || (completion->base_word[0] == '~'))
     {
         if (completion->list->size == 0)
-            completion_list_add_filename_cb (NULL, NULL, NULL, completion);
+            completion_list_add_filename_cb (NULL, NULL, NULL, NULL,
+                                             completion);
         gui_completion_complete (completion);
         return;
     }
@@ -1349,15 +1353,16 @@ gui_completion_get_string (struct t_gui_completion *completion,
  */
 
 struct t_hdata *
-gui_completion_hdata_completion_cb (void *data, const char *hdata_name)
+gui_completion_hdata_completion_cb (const void *pointer, void *data,
+                                    const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, NULL, NULL,
-                       0, 0, NULL, NULL);
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_completion, buffer, POINTER, 0, NULL, "buffer");
@@ -1387,11 +1392,13 @@ gui_completion_hdata_completion_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-gui_completion_hdata_completion_word_cb (void *data, const char *hdata_name)
+gui_completion_hdata_completion_word_cb (const void *pointer, void *data,
+                                         const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_item", "next_item",

@@ -351,9 +351,11 @@ error:
  */
 
 int
-gui_color_timer_warning_pairs_full (void *data, int remaining_calls)
+gui_color_timer_warning_pairs_full (const void *pointer, void *data,
+                                    int remaining_calls)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) remaining_calls;
 
@@ -402,7 +404,7 @@ gui_color_get_pair (int fg, int bg)
             {
                 /* display warning if auto reset of pairs is disabled */
                 hook_timer (NULL, 1, 0, 1,
-                            &gui_color_timer_warning_pairs_full, NULL);
+                            &gui_color_timer_warning_pairs_full, NULL, NULL);
                 gui_color_warning_pairs_full = 1;
             }
             return 1;
@@ -1034,9 +1036,10 @@ gui_color_buffer_display ()
  */
 
 int
-gui_color_timer_cb (void *data, int remaining_calls)
+gui_color_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) remaining_calls;
 
@@ -1101,7 +1104,7 @@ gui_color_switch_colors ()
     if (gui_color_use_term_colors)
     {
         gui_color_hook_timer = hook_timer (NULL, 1000, 0, 0,
-                                           &gui_color_timer_cb, NULL);
+                                           &gui_color_timer_cb, NULL, NULL);
     }
 }
 
@@ -1132,10 +1135,12 @@ gui_color_reset_pairs ()
  */
 
 int
-gui_color_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
+gui_color_buffer_input_cb (const void *pointer, void *data,
+                           struct t_gui_buffer *buffer,
                            const char *input_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (string_strcasecmp (input_data, "e") == 0)
@@ -1164,9 +1169,11 @@ gui_color_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-gui_color_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+gui_color_buffer_close_cb (const void *pointer, void *data,
+                           struct t_gui_buffer *buffer)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -1203,9 +1210,10 @@ gui_color_buffer_open ()
 {
     if (!gui_color_buffer)
     {
-        gui_color_buffer = gui_buffer_new (NULL, GUI_COLOR_BUFFER_NAME,
-                                           &gui_color_buffer_input_cb, NULL,
-                                           &gui_color_buffer_close_cb, NULL);
+        gui_color_buffer = gui_buffer_new (
+            NULL, GUI_COLOR_BUFFER_NAME,
+            &gui_color_buffer_input_cb, NULL, NULL,
+            &gui_color_buffer_close_cb, NULL, NULL);
         if (gui_color_buffer)
         {
             if (!gui_color_buffer->short_name)

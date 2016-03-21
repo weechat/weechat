@@ -317,8 +317,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
             32,
             WEECHAT_HASHTABLE_STRING,
             WEECHAT_HASHTABLE_POINTER,
-            NULL,
-            NULL);
+            NULL, NULL);
         if (!gui_hotlist_hashtable_add_conditions_pointers)
             return NULL;
     }
@@ -328,8 +327,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
             32,
             WEECHAT_HASHTABLE_STRING,
             WEECHAT_HASHTABLE_STRING,
-            NULL,
-            NULL);
+            NULL, NULL);
         if (!gui_hotlist_hashtable_add_conditions_vars)
             return NULL;
     }
@@ -339,8 +337,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
             32,
             WEECHAT_HASHTABLE_STRING,
             WEECHAT_HASHTABLE_STRING,
-            NULL,
-            NULL);
+            NULL, NULL);
         if (!gui_hotlist_hashtable_add_conditions_options)
             return NULL;
         hashtable_set (gui_hotlist_hashtable_add_conditions_options,
@@ -539,11 +536,13 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer,
  */
 
 struct t_hdata *
-gui_hotlist_hdata_hotlist_cb (void *data, const char *hdata_name)
+gui_hotlist_hdata_hotlist_cb (const void *pointer, void *data,
+                              const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_hotlist", "next_hotlist",

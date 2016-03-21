@@ -507,12 +507,13 @@ gui_key_flush (int paste)
  */
 
 int
-gui_key_read_cb (void *data, int fd)
+gui_key_read_cb (const void *pointer, void *data, int fd)
 {
     int ret, i, accept_paste, cancel_paste, text_added_to_buffer, pos;
     unsigned char buffer[4096];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) fd;
 

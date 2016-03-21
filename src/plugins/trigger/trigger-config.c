@@ -102,9 +102,11 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
  */
 
 void
-trigger_config_change_enabled (void *data, struct t_config_option *option)
+trigger_config_change_enabled (const void *pointer, void *data,
+                               struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     trigger_enabled = weechat_config_boolean (option);
@@ -115,12 +117,13 @@ trigger_config_change_enabled (void *data, struct t_config_option *option)
  */
 
 void
-trigger_config_change_trigger_enabled (void *data,
+trigger_config_change_trigger_enabled (const void *pointer, void *data,
                                        struct t_config_option *option)
 {
     struct t_trigger *ptr_trigger;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_trigger = trigger_search_with_option (option);
@@ -138,11 +141,13 @@ trigger_config_change_trigger_enabled (void *data,
  */
 
 void
-trigger_config_change_trigger_hook (void *data, struct t_config_option *option)
+trigger_config_change_trigger_hook (const void *pointer, void *data,
+                                    struct t_config_option *option)
 {
     struct t_trigger *ptr_trigger;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_trigger = trigger_search_with_option (option);
@@ -158,12 +163,13 @@ trigger_config_change_trigger_hook (void *data, struct t_config_option *option)
  */
 
 void
-trigger_config_change_trigger_arguments (void *data,
+trigger_config_change_trigger_arguments (const void *pointer, void *data,
                                          struct t_config_option *option)
 {
     struct t_trigger *ptr_trigger;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_trigger = trigger_search_with_option (option);
@@ -179,11 +185,13 @@ trigger_config_change_trigger_arguments (void *data,
  */
 
 void
-trigger_config_change_trigger_regex (void *data, struct t_config_option *option)
+trigger_config_change_trigger_regex (const void *pointer, void *data,
+                                     struct t_config_option *option)
 {
     struct t_trigger *ptr_trigger;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_trigger = trigger_search_with_option (option);
@@ -223,12 +231,13 @@ trigger_config_change_trigger_regex (void *data, struct t_config_option *option)
  */
 
 void
-trigger_config_change_trigger_command (void *data,
+trigger_config_change_trigger_command (const void *pointer, void *data,
                                        struct t_config_option *option)
 {
     struct t_trigger *ptr_trigger;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_trigger = trigger_search_with_option (option);
@@ -273,8 +282,10 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                 option_name, "boolean",
                 N_("if disabled, the hooks are removed from trigger, so it is "
                    "not called any more"),
-                NULL, 0, 0, value, NULL, 0, NULL, NULL,
-                &trigger_config_change_trigger_enabled, NULL, NULL, NULL);
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL,
+                &trigger_config_change_trigger_enabled, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_HOOK:
             ptr_option = weechat_config_new_option (
@@ -282,8 +293,10 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                 option_name, "integer",
                 N_("type of hook used"),
                 trigger_hook_option_values,
-                0, 0, value, NULL, 0, NULL, NULL,
-                &trigger_config_change_trigger_hook, NULL, NULL, NULL);
+                0, 0, value, NULL, 0,
+                NULL, NULL, NULL,
+                &trigger_config_change_trigger_hook, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_ARGUMENTS:
             ptr_option = weechat_config_new_option (
@@ -291,8 +304,10 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                 option_name, "string",
                 N_("arguments for the hook (depend on the hook type, see /help "
                    "trigger)"),
-                NULL, 0, 0, value, NULL, 0, NULL, NULL,
-                &trigger_config_change_trigger_arguments, NULL, NULL, NULL);
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL,
+                &trigger_config_change_trigger_arguments, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_CONDITIONS:
             ptr_option = weechat_config_new_option (
@@ -302,7 +317,7 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                    "hook callback) (note: content is evaluated when trigger is "
                    "run, see /help eval)"),
                 NULL, 0, 0, value, NULL, 0,
-                NULL, NULL, NULL, NULL, NULL, NULL);
+                NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_REGEX:
             ptr_option = weechat_config_new_option (
@@ -321,8 +336,10 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                    "replace: ${re:0} to ${re:99}, ${re:+} for last match and "
                    "${hide:c,${re:N}} to replace all chars of group N by "
                    "char 'c'"),
-                NULL, 0, 0, value, NULL, 0, NULL, NULL,
-                &trigger_config_change_trigger_regex, NULL, NULL, NULL);
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL,
+                &trigger_config_change_trigger_regex, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_COMMAND:
             ptr_option = weechat_config_new_option (
@@ -330,8 +347,10 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                 option_name, "string",
                 N_("command(s) to run if conditions are OK, after regex "
                    "replacements (many commands can be separated by semicolons)"),
-                NULL, 0, 0, value, NULL, 0, NULL, NULL,
-                &trigger_config_change_trigger_command, NULL, NULL, NULL);
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL,
+                &trigger_config_change_trigger_command, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_RETURN_CODE:
             ptr_option = weechat_config_new_option (
@@ -340,7 +359,7 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                 N_("return code for hook callback (see plugin API reference to "
                    "know where ok_eat/error can be used efficiently)"),
                 "ok|ok_eat|error", 0, 0, value, NULL, 0,
-                NULL, NULL, NULL, NULL, NULL, NULL);
+                NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             break;
         case TRIGGER_NUM_OPTIONS:
             break;
@@ -434,7 +453,8 @@ trigger_config_use_temp_triggers ()
  */
 
 int
-trigger_config_trigger_read_cb (void *data, struct t_config_file *config_file,
+trigger_config_trigger_read_cb (const void *pointer, void *data,
+                                struct t_config_file *config_file,
                                 struct t_config_section *section,
                                 const char *option_name, const char *value)
 {
@@ -443,6 +463,7 @@ trigger_config_trigger_read_cb (void *data, struct t_config_file *config_file,
     int index_option;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) config_file;
     (void) section;
@@ -504,7 +525,7 @@ trigger_config_trigger_read_cb (void *data, struct t_config_file *config_file,
  */
 
 int
-trigger_config_trigger_write_default_cb (void *data,
+trigger_config_trigger_write_default_cb (const void *pointer, void *data,
                                          struct t_config_file *config_file,
                                          const char *section_name)
 {
@@ -512,6 +533,7 @@ trigger_config_trigger_write_default_cb (void *data,
     char option_name[512];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (!weechat_config_write_line (config_file, section_name, NULL))
@@ -545,11 +567,13 @@ trigger_config_trigger_write_default_cb (void *data,
  */
 
 int
-trigger_config_reload_cb (void *data, struct t_config_file *config_file)
+trigger_config_reload_cb (const void *pointer, void *data,
+                          struct t_config_file *config_file)
 {
     int rc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     trigger_free_all ();
@@ -574,17 +598,19 @@ trigger_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    trigger_config_file = weechat_config_new (TRIGGER_CONFIG_NAME,
-                                              &trigger_config_reload_cb, NULL);
+    trigger_config_file = weechat_config_new (
+        TRIGGER_CONFIG_NAME, &trigger_config_reload_cb, NULL, NULL);
     if (!trigger_config_file)
         return 0;
 
     /* look */
     ptr_section = weechat_config_new_section (trigger_config_file, "look",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (trigger_config_file);
@@ -595,21 +621,25 @@ trigger_config_init ()
         trigger_config_file, ptr_section,
         "enabled", "boolean",
         N_("enable trigger support"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
-        &trigger_config_change_enabled, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        &trigger_config_change_enabled, NULL, NULL,
+        NULL, NULL, NULL);
     trigger_config_look_monitor_strip_colors = weechat_config_new_option (
         trigger_config_file, ptr_section,
         "monitor_strip_colors", "boolean",
         N_("strip colors in hashtable values displayed on monitor buffer"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
-        NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* color */
     ptr_section = weechat_config_new_section (trigger_config_file, "color",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (trigger_config_file);
@@ -621,59 +651,60 @@ trigger_config_init ()
         "flag_command", "color",
         N_("text color for command flag (in /trigger list)"),
         NULL, 0, 0, "lightgreen", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     trigger_config_color_flag_conditions = weechat_config_new_option (
         trigger_config_file, ptr_section,
         "flag_conditions", "color",
         N_("text color for conditions flag (in /trigger list)"),
         NULL, 0, 0, "yellow", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     trigger_config_color_flag_regex = weechat_config_new_option (
         trigger_config_file, ptr_section,
         "flag_regex", "color",
         N_("text color for regex flag (in /trigger list)"),
         NULL, 0, 0, "lightcyan", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     trigger_config_color_flag_return_code = weechat_config_new_option (
         trigger_config_file, ptr_section,
         "flag_return_code", "color",
         N_("text color for return code flag (in /trigger list)"),
         NULL, 0, 0, "lightmagenta", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     trigger_config_color_regex = weechat_config_new_option (
         trigger_config_file, ptr_section,
         "regex", "color",
         N_("text color for regular expressions"),
         NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     trigger_config_color_replace = weechat_config_new_option (
         trigger_config_file, ptr_section,
         "replace", "color",
         N_("text color for replacement text (for regular expressions)"),
         NULL, 0, 0, "cyan", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     trigger_config_color_trigger = weechat_config_new_option (
         trigger_config_file, ptr_section,
         "trigger", "color",
         N_("text color for trigger name"),
         NULL, 0, 0, "green", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     trigger_config_color_trigger_disabled = weechat_config_new_option (
         trigger_config_file, ptr_section,
         "trigger_disabled", "color",
         N_("text color for disabled trigger name"),
         NULL, 0, 0, "red", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* trigger */
-    ptr_section = weechat_config_new_section (trigger_config_file,
-                                              TRIGGER_CONFIG_SECTION_TRIGGER,
-                                              0, 0,
-                                              &trigger_config_trigger_read_cb, NULL,
-                                              NULL, NULL,
-                                              &trigger_config_trigger_write_default_cb, NULL,
-                                              NULL, NULL,
-                                              NULL, NULL);
+    ptr_section = weechat_config_new_section (
+        trigger_config_file,
+        TRIGGER_CONFIG_SECTION_TRIGGER,
+        0, 0,
+        &trigger_config_trigger_read_cb, NULL, NULL,
+        NULL, NULL, NULL,
+        &trigger_config_trigger_write_default_cb, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (trigger_config_file);

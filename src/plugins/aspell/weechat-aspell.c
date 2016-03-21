@@ -604,7 +604,8 @@ weechat_aspell_get_suggestions (struct t_aspell_speller_buffer *speller_buffer,
  */
 
 char *
-weechat_aspell_modifier_cb (void *data, const char *modifier,
+weechat_aspell_modifier_cb (const void *pointer, void *data,
+                            const char *modifier,
                             const char *modifier_data, const char *string)
 {
     long unsigned int value;
@@ -621,6 +622,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
     int input_pos, current_pos, word_start_pos, word_end_pos, word_end_pos_valid;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) modifier;
 
@@ -932,10 +934,12 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
  */
 
 int
-weechat_aspell_buffer_switch_cb (void *data, const char *signal,
-                                 const char *type_data, void *signal_data)
+weechat_aspell_buffer_switch_cb (const void *pointer, void *data,
+                                 const char *signal, const char *type_data,
+                                 void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -953,10 +957,12 @@ weechat_aspell_buffer_switch_cb (void *data, const char *signal,
  */
 
 int
-weechat_aspell_window_switch_cb (void *data, const char *signal,
+weechat_aspell_window_switch_cb (const void *pointer, void *data,
+                                 const char *signal,
                                  const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -975,10 +981,12 @@ weechat_aspell_window_switch_cb (void *data, const char *signal,
  */
 
 int
-weechat_aspell_buffer_closed_cb (void *data, const char *signal,
+weechat_aspell_buffer_closed_cb (const void *pointer, void *data,
+                                 const char *signal,
                                  const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -993,10 +1001,12 @@ weechat_aspell_buffer_closed_cb (void *data, const char *signal,
  */
 
 int
-weechat_aspell_debug_libs_cb (void *data, const char *signal,
+weechat_aspell_debug_libs_cb (const void *pointer, void *data,
+                              const char *signal,
                               const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1059,20 +1069,20 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
      * (from other plugins) will be called before this one
      */
     weechat_hook_modifier ("500|input_text_display",
-                           &weechat_aspell_modifier_cb, NULL);
+                           &weechat_aspell_modifier_cb, NULL, NULL);
 
     weechat_aspell_bar_item_init ();
 
     weechat_aspell_info_init ();
 
     weechat_hook_signal ("buffer_switch",
-                         &weechat_aspell_buffer_switch_cb, NULL);
+                         &weechat_aspell_buffer_switch_cb, NULL, NULL);
     weechat_hook_signal ("window_switch",
-                         &weechat_aspell_window_switch_cb, NULL);
+                         &weechat_aspell_window_switch_cb, NULL, NULL);
     weechat_hook_signal ("buffer_closed",
-                         &weechat_aspell_buffer_closed_cb, NULL);
+                         &weechat_aspell_buffer_closed_cb, NULL, NULL);
     weechat_hook_signal ("debug_libs",
-                         &weechat_aspell_debug_libs_cb, NULL);
+                         &weechat_aspell_debug_libs_cb, NULL, NULL);
 
     return WEECHAT_RC_OK;
 }

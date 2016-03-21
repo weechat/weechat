@@ -64,7 +64,7 @@ extern char **environ;
  */
 
 int
-completion_list_add_bars_names_cb (void *data,
+completion_list_add_bars_names_cb (const void *pointer, void *data,
                                    const char *completion_item,
                                    struct t_gui_buffer *buffer,
                                    struct t_gui_completion *completion)
@@ -72,6 +72,7 @@ completion_list_add_bars_names_cb (void *data,
     struct t_gui_bar *ptr_bar;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -90,7 +91,7 @@ completion_list_add_bars_names_cb (void *data,
  */
 
 int
-completion_list_add_bars_options_cb (void *data,
+completion_list_add_bars_options_cb (const void *pointer, void *data,
                                      const char *completion_item,
                                      struct t_gui_buffer *buffer,
                                      struct t_gui_completion *completion)
@@ -98,6 +99,7 @@ completion_list_add_bars_options_cb (void *data,
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -116,7 +118,7 @@ completion_list_add_bars_options_cb (void *data,
  */
 
 int
-completion_list_add_buffers_names_cb (void *data,
+completion_list_add_buffers_names_cb (const void *pointer, void *data,
                                       const char *completion_item,
                                       struct t_gui_buffer *buffer,
                                       struct t_gui_completion *completion)
@@ -124,6 +126,7 @@ completion_list_add_buffers_names_cb (void *data,
     struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -143,7 +146,7 @@ completion_list_add_buffers_names_cb (void *data,
  */
 
 int
-completion_list_add_buffers_numbers_cb (void *data,
+completion_list_add_buffers_numbers_cb (const void *pointer, void *data,
                                         const char *completion_item,
                                         struct t_gui_buffer *buffer,
                                         struct t_gui_completion *completion)
@@ -152,6 +155,7 @@ completion_list_add_buffers_numbers_cb (void *data,
     char str_number[32];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -172,7 +176,7 @@ completion_list_add_buffers_numbers_cb (void *data,
  */
 
 int
-completion_list_add_buffers_plugins_names_cb (void *data,
+completion_list_add_buffers_plugins_names_cb (const void *pointer, void *data,
                                               const char *completion_item,
                                               struct t_gui_buffer *buffer,
                                               struct t_gui_completion *completion)
@@ -180,6 +184,7 @@ completion_list_add_buffers_plugins_names_cb (void *data,
     struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -199,7 +204,7 @@ completion_list_add_buffers_plugins_names_cb (void *data,
  */
 
 int
-completion_list_add_buffer_properties_set_cb (void *data,
+completion_list_add_buffer_properties_set_cb (const void *pointer, void *data,
                                               const char *completion_item,
                                               struct t_gui_buffer *buffer,
                                               struct t_gui_completion *completion)
@@ -207,6 +212,7 @@ completion_list_add_buffer_properties_set_cb (void *data,
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -226,7 +232,7 @@ completion_list_add_buffer_properties_set_cb (void *data,
  */
 
 int
-completion_list_add_buffer_properties_get_cb (void *data,
+completion_list_add_buffer_properties_get_cb (const void *pointer, void *data,
                                               const char *completion_item,
                                               struct t_gui_buffer *buffer,
                                               struct t_gui_completion *completion)
@@ -234,6 +240,7 @@ completion_list_add_buffer_properties_get_cb (void *data,
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -265,7 +272,7 @@ completion_list_add_buffer_properties_get_cb (void *data,
  */
 
 int
-completion_list_add_windows_numbers_cb (void *data,
+completion_list_add_windows_numbers_cb (const void *pointer, void *data,
                                         const char *completion_item,
                                         struct t_gui_buffer *buffer,
                                         struct t_gui_completion *completion)
@@ -274,6 +281,7 @@ completion_list_add_windows_numbers_cb (void *data,
     char str_number[32];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -293,7 +301,7 @@ completion_list_add_windows_numbers_cb (void *data,
  */
 
 int
-completion_list_add_colors_cb (void *data,
+completion_list_add_colors_cb (const void *pointer, void *data,
                                const char *completion_item,
                                struct t_gui_buffer *buffer,
                                struct t_gui_completion *completion)
@@ -304,6 +312,7 @@ completion_list_add_colors_cb (void *data,
     struct t_gui_color_palette *color_palette;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -367,12 +376,13 @@ completion_list_map_add_palette_color_cb (void *data,
  */
 
 int
-completion_list_add_palette_colors_cb (void *data,
+completion_list_add_palette_colors_cb (const void *pointer, void *data,
                                        const char *completion_item,
                                        struct t_gui_buffer *buffer,
                                        struct t_gui_completion *completion)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -389,7 +399,7 @@ completion_list_add_palette_colors_cb (void *data,
  */
 
 int
-completion_list_add_config_files_cb (void *data,
+completion_list_add_config_files_cb (const void *pointer, void *data,
                                      const char *completion_item,
                                      struct t_gui_buffer *buffer,
                                      struct t_gui_completion *completion)
@@ -397,6 +407,7 @@ completion_list_add_config_files_cb (void *data,
     struct t_config_file *ptr_config_file;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -416,7 +427,7 @@ completion_list_add_config_files_cb (void *data,
  */
 
 int
-completion_list_add_filename_cb (void *data,
+completion_list_add_filename_cb (const void *pointer, void *data,
                                  const char *completion_item,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
@@ -430,6 +441,7 @@ completion_list_add_filename_cb (void *data,
     struct stat statbuf;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -549,7 +561,7 @@ end:
  */
 
 int
-completion_list_add_filters_cb (void *data,
+completion_list_add_filters_cb (const void *pointer, void *data,
                                 const char *completion_item,
                                 struct t_gui_buffer *buffer,
                                 struct t_gui_completion *completion)
@@ -557,6 +569,7 @@ completion_list_add_filters_cb (void *data,
     struct t_gui_filter *ptr_filter;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -576,7 +589,7 @@ completion_list_add_filters_cb (void *data,
  */
 
 int
-completion_list_add_commands_cb (void *data,
+completion_list_add_commands_cb (const void *pointer, void *data,
                                  const char *completion_item,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
@@ -584,6 +597,7 @@ completion_list_add_commands_cb (void *data,
     struct t_hook *ptr_hook;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -607,7 +621,7 @@ completion_list_add_commands_cb (void *data,
  */
 
 int
-completion_list_add_infos_cb (void *data,
+completion_list_add_infos_cb (const void *pointer, void *data,
                               const char *completion_item,
                               struct t_gui_buffer *buffer,
                               struct t_gui_completion *completion)
@@ -615,6 +629,7 @@ completion_list_add_infos_cb (void *data,
     struct t_hook *ptr_hook;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -638,7 +653,7 @@ completion_list_add_infos_cb (void *data,
  */
 
 int
-completion_list_add_infolists_cb (void *data,
+completion_list_add_infolists_cb (const void *pointer, void *data,
                                   const char *completion_item,
                                   struct t_gui_buffer *buffer,
                                   struct t_gui_completion *completion)
@@ -646,6 +661,7 @@ completion_list_add_infolists_cb (void *data,
     struct t_hook *ptr_hook;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -669,7 +685,7 @@ completion_list_add_infolists_cb (void *data,
  */
 
 int
-completion_list_add_nicks_cb (void *data,
+completion_list_add_nicks_cb (const void *pointer, void *data,
                               const char *completion_item,
                               struct t_gui_buffer *buffer,
                               struct t_gui_completion *completion)
@@ -679,6 +695,7 @@ completion_list_add_nicks_cb (void *data,
     int count_before;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -719,7 +736,7 @@ completion_list_add_nicks_cb (void *data,
  */
 
 int
-completion_list_add_config_options_cb (void *data,
+completion_list_add_config_options_cb (const void *pointer, void *data,
                                        const char *completion_item,
                                        struct t_gui_buffer *buffer,
                                        struct t_gui_completion *completion)
@@ -731,6 +748,7 @@ completion_list_add_config_options_cb (void *data,
     char *option_full_name;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -770,7 +788,7 @@ completion_list_add_config_options_cb (void *data,
  */
 
 int
-completion_list_add_plugins_cb (void *data,
+completion_list_add_plugins_cb (const void *pointer, void *data,
                                 const char *completion_item,
                                 struct t_gui_buffer *buffer,
                                 struct t_gui_completion *completion)
@@ -778,6 +796,7 @@ completion_list_add_plugins_cb (void *data,
     struct t_weechat_plugin *ptr_plugin;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -797,7 +816,8 @@ completion_list_add_plugins_cb (void *data,
  */
 
 void
-completion_list_add_plugins_installed_exec_cb (void *data, const char *filename)
+completion_list_add_plugins_installed_exec_cb (void *data,
+                                               const char *filename)
 {
     struct t_gui_completion *completion;
     const char *pos, *pos2;
@@ -831,7 +851,7 @@ completion_list_add_plugins_installed_exec_cb (void *data, const char *filename)
  */
 
 int
-completion_list_add_plugins_installed_cb (void *data,
+completion_list_add_plugins_installed_cb (const void *pointer, void *data,
                                           const char *completion_item,
                                           struct t_gui_buffer *buffer,
                                           struct t_gui_completion *completion)
@@ -840,6 +860,7 @@ completion_list_add_plugins_installed_cb (void *data,
     int length;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -858,8 +879,8 @@ completion_list_add_plugins_installed_cb (void *data,
             plugin_path2 : ((plugin_path) ?
                             plugin_path : CONFIG_STRING(config_plugin_path)),
             0,
-            completion,
-            &completion_list_add_plugins_installed_exec_cb);
+            &completion_list_add_plugins_installed_exec_cb,
+            completion);
         if (plugin_path)
             free (plugin_path);
         if (plugin_path2)
@@ -872,8 +893,9 @@ completion_list_add_plugins_installed_cb (void *data,
     if (dir_name)
     {
         snprintf (dir_name, length, "%s/plugins", WEECHAT_LIBDIR);
-        util_exec_on_files (dir_name, 0, completion,
-                            &completion_list_add_plugins_installed_exec_cb);
+        util_exec_on_files (dir_name, 0,
+                            &completion_list_add_plugins_installed_exec_cb,
+                            completion);
         free (dir_name);
     }
 
@@ -887,7 +909,7 @@ completion_list_add_plugins_installed_cb (void *data,
  */
 
 int
-completion_list_add_plugins_commands_cb (void *data,
+completion_list_add_plugins_commands_cb (const void *pointer, void *data,
                                          const char *completion_item,
                                          struct t_gui_buffer *buffer,
                                          struct t_gui_completion *completion)
@@ -898,6 +920,7 @@ completion_list_add_plugins_commands_cb (void *data,
     struct t_hook *ptr_hook;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -951,7 +974,7 @@ completion_list_add_plugins_commands_cb (void *data,
  */
 
 int
-completion_list_add_config_option_values_cb (void *data,
+completion_list_add_config_option_values_cb (const void *pointer, void *data,
                                              const char *completion_item,
                                              struct t_gui_buffer *buffer,
                                              struct t_gui_completion *completion)
@@ -965,7 +988,6 @@ completion_list_add_config_option_values_cb (void *data,
     struct t_config_option *option_found;
 
     /* make C compiler happy */
-    (void) data;
     (void) completion_item;
     (void) buffer;
 
@@ -1122,7 +1144,8 @@ completion_list_add_config_option_values_cb (void *data,
                             break;
                         case CONFIG_OPTION_TYPE_COLOR:
                             completion_list_add_colors_cb (
-                                data, completion_item, buffer, completion);
+                                pointer, data, completion_item, buffer,
+                                completion);
                             gui_completion_list_add (completion, "++1",
                                                      0, WEECHAT_LIST_POS_END);
                             gui_completion_list_add (completion, "--1",
@@ -1175,7 +1198,7 @@ completion_list_add_config_option_values_cb (void *data,
  */
 
 int
-completion_list_add_weechat_commands_cb (void *data,
+completion_list_add_weechat_commands_cb (const void *pointer, void *data,
                                          const char *completion_item,
                                          struct t_gui_buffer *buffer,
                                          struct t_gui_completion *completion)
@@ -1183,6 +1206,7 @@ completion_list_add_weechat_commands_cb (void *data,
     struct t_hook *ptr_hook;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -1209,7 +1233,7 @@ completion_list_add_weechat_commands_cb (void *data,
  */
 
 int
-completion_list_add_proxies_names_cb (void *data,
+completion_list_add_proxies_names_cb (const void *pointer, void *data,
                                       const char *completion_item,
                                       struct t_gui_buffer *buffer,
                                       struct t_gui_completion *completion)
@@ -1217,6 +1241,7 @@ completion_list_add_proxies_names_cb (void *data,
     struct t_proxy *ptr_proxy;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -1236,7 +1261,7 @@ completion_list_add_proxies_names_cb (void *data,
  */
 
 int
-completion_list_add_proxies_options_cb (void *data,
+completion_list_add_proxies_options_cb (const void *pointer, void *data,
                                         const char *completion_item,
                                         struct t_gui_buffer *buffer,
                                         struct t_gui_completion *completion)
@@ -1244,6 +1269,7 @@ completion_list_add_proxies_options_cb (void *data,
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -1262,7 +1288,7 @@ completion_list_add_proxies_options_cb (void *data,
  */
 
 int
-completion_list_add_keys_contexts_cb (void *data,
+completion_list_add_keys_contexts_cb (const void *pointer, void *data,
                                       const char *completion_item,
                                       struct t_gui_buffer *buffer,
                                       struct t_gui_completion *completion)
@@ -1270,6 +1296,7 @@ completion_list_add_keys_contexts_cb (void *data,
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -1288,7 +1315,7 @@ completion_list_add_keys_contexts_cb (void *data,
  */
 
 int
-completion_list_add_keys_codes_cb (void *data,
+completion_list_add_keys_codes_cb (const void *pointer, void *data,
                                    const char *completion_item,
                                    struct t_gui_buffer *buffer,
                                    struct t_gui_completion *completion)
@@ -1298,6 +1325,7 @@ completion_list_add_keys_codes_cb (void *data,
     char *expanded_name;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -1325,7 +1353,7 @@ completion_list_add_keys_codes_cb (void *data,
  */
 
 int
-completion_list_add_keys_codes_for_reset_cb (void *data,
+completion_list_add_keys_codes_for_reset_cb (const void *pointer, void *data,
                                              const char *completion_item,
                                              struct t_gui_buffer *buffer,
                                              struct t_gui_completion *completion)
@@ -1335,6 +1363,7 @@ completion_list_add_keys_codes_for_reset_cb (void *data,
     char *expanded_name;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -1385,7 +1414,7 @@ completion_list_add_keys_codes_for_reset_cb (void *data,
  */
 
 int
-completion_list_add_cursor_areas_cb (void *data,
+completion_list_add_cursor_areas_cb (const void *pointer, void *data,
                                      const char *completion_item,
                                      struct t_gui_buffer *buffer,
                                      struct t_gui_completion *completion)
@@ -1394,6 +1423,7 @@ completion_list_add_cursor_areas_cb (void *data,
     struct t_gui_bar *ptr_bar;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -1425,7 +1455,7 @@ completion_list_add_cursor_areas_cb (void *data,
  */
 
 int
-completion_list_add_layouts_names_cb (void *data,
+completion_list_add_layouts_names_cb (const void *pointer, void *data,
                                       const char *completion_item,
                                       struct t_gui_buffer *buffer,
                                       struct t_gui_completion *completion)
@@ -1433,6 +1463,7 @@ completion_list_add_layouts_names_cb (void *data,
     struct t_gui_layout *ptr_layout;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -1470,12 +1501,13 @@ completion_list_map_add_secured_data_cb (void *data,
  */
 
 int
-completion_list_add_secured_data_cb (void *data,
+completion_list_add_secured_data_cb (const void *pointer, void *data,
                                      const char *completion_item,
                                      struct t_gui_buffer *buffer,
                                      struct t_gui_completion *completion)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -1492,7 +1524,7 @@ completion_list_add_secured_data_cb (void *data,
  */
 
 int
-completion_list_add_env_vars_cb (void *data,
+completion_list_add_env_vars_cb (const void *pointer, void *data,
                                  const char *completion_item,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
@@ -1501,6 +1533,7 @@ completion_list_add_env_vars_cb (void *data,
     char *pos, *name;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -1528,7 +1561,7 @@ completion_list_add_env_vars_cb (void *data,
  */
 
 int
-completion_list_add_env_value_cb (void *data,
+completion_list_add_env_value_cb (const void *pointer, void *data,
                                   const char *completion_item,
                                   struct t_gui_buffer *buffer,
                                   struct t_gui_completion *completion)
@@ -1537,6 +1570,7 @@ completion_list_add_env_value_cb (void *data,
     int argc, arg_index;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -1574,106 +1608,106 @@ completion_init ()
 {
     hook_completion (NULL, "buffers_names", /* formerly "%b" */
                      N_("names of buffers"),
-                     &completion_list_add_buffers_names_cb, NULL);
+                     &completion_list_add_buffers_names_cb, NULL, NULL);
     hook_completion (NULL, "buffers_numbers",
                      N_("numbers of buffers"),
-                     &completion_list_add_buffers_numbers_cb, NULL);
+                     &completion_list_add_buffers_numbers_cb, NULL, NULL);
     hook_completion (NULL, "buffers_plugins_names", /* formerly "%B" */
                      N_("names of buffers (including plugins names)"),
-                     &completion_list_add_buffers_plugins_names_cb, NULL);
+                     &completion_list_add_buffers_plugins_names_cb, NULL, NULL);
     hook_completion (NULL, "buffer_properties_set",
                      N_("properties that can be set on a buffer"),
-                     &completion_list_add_buffer_properties_set_cb, NULL);
+                     &completion_list_add_buffer_properties_set_cb, NULL, NULL);
     hook_completion (NULL, "buffer_properties_get",
                      N_("properties that can be read on a buffer"),
-                     &completion_list_add_buffer_properties_get_cb, NULL);
+                     &completion_list_add_buffer_properties_get_cb, NULL, NULL);
     hook_completion (NULL, "windows_numbers",
                      N_("numbers of windows"),
-                     &completion_list_add_windows_numbers_cb, NULL);
+                     &completion_list_add_windows_numbers_cb, NULL, NULL);
     hook_completion (NULL, "colors",
                      N_("color names"),
-                     &completion_list_add_colors_cb, NULL);
+                     &completion_list_add_colors_cb, NULL, NULL);
     hook_completion (NULL, "palette_colors",
                      N_("palette colors"),
-                     &completion_list_add_palette_colors_cb, NULL);
+                     &completion_list_add_palette_colors_cb, NULL, NULL);
     hook_completion (NULL, "config_files", /* formerly "%c" */
                      N_("configuration files"),
-                     &completion_list_add_config_files_cb, NULL);
+                     &completion_list_add_config_files_cb, NULL, NULL);
     hook_completion (NULL, "filename", /* formerly "%f" */
                      N_("filename"),
-                     &completion_list_add_filename_cb, NULL);
+                     &completion_list_add_filename_cb, NULL, NULL);
     hook_completion (NULL, "filters_names", /* formerly "%F" */
                      N_("names of filters"),
-                     &completion_list_add_filters_cb, NULL);
+                     &completion_list_add_filters_cb, NULL, NULL);
     hook_completion (NULL, "commands", /* formerly "%h" */
                      N_("commands (weechat and plugins)"),
-                     &completion_list_add_commands_cb, NULL);
+                     &completion_list_add_commands_cb, NULL, NULL);
     hook_completion (NULL, "infos", /* formerly "%i" */
                      N_("names of infos hooked"),
-                     &completion_list_add_infos_cb, NULL);
+                     &completion_list_add_infos_cb, NULL, NULL);
     hook_completion (NULL, "infolists", /* formerly "%I" */
                      N_("names of infolists hooked"),
-                     &completion_list_add_infolists_cb, NULL);
+                     &completion_list_add_infolists_cb, NULL, NULL);
     hook_completion (NULL, "nicks", /* formerly "%n" */
                      N_("nicks in nicklist of current buffer"),
-                     &completion_list_add_nicks_cb, NULL);
+                     &completion_list_add_nicks_cb, NULL, NULL);
     hook_completion (NULL, "config_options", /* formerly "%o" */
                      N_("configuration options"),
-                     &completion_list_add_config_options_cb, NULL);
+                     &completion_list_add_config_options_cb, NULL, NULL);
     hook_completion (NULL, "plugins_names", /* formerly "%p" */
                      N_("names of plugins"),
-                     &completion_list_add_plugins_cb, NULL);
+                     &completion_list_add_plugins_cb, NULL, NULL);
     hook_completion (NULL, "plugins_installed",
                      N_("names of plugins installed"),
-                     &completion_list_add_plugins_installed_cb, NULL);
+                     &completion_list_add_plugins_installed_cb, NULL, NULL);
     hook_completion (NULL, "plugins_commands", /* formerly "%P" */
                      N_("commands defined by plugins"),
-                     &completion_list_add_plugins_commands_cb, NULL);
+                     &completion_list_add_plugins_commands_cb, NULL, NULL);
     hook_completion (NULL, "bars_names", /* formerly "%r" */
                      N_("names of bars"),
-                     &completion_list_add_bars_names_cb, NULL);
+                     &completion_list_add_bars_names_cb, NULL, NULL);
     hook_completion (NULL, "config_option_values", /* formerly "%v" */
                      N_("values for a configuration option"),
-                     &completion_list_add_config_option_values_cb, NULL);
+                     &completion_list_add_config_option_values_cb, NULL, NULL);
     hook_completion (NULL, "weechat_commands", /* formerly "%w" */
                      N_("weechat commands"),
-                     &completion_list_add_weechat_commands_cb, NULL);
+                     &completion_list_add_weechat_commands_cb, NULL, NULL);
     hook_completion (NULL, "proxies_names", /* formerly "%y" */
                      N_("names of proxies"),
-                     &completion_list_add_proxies_names_cb, NULL);
+                     &completion_list_add_proxies_names_cb, NULL, NULL);
     hook_completion (NULL, "proxies_options",
                      N_("options for proxies"),
-                     &completion_list_add_proxies_options_cb, NULL);
+                     &completion_list_add_proxies_options_cb, NULL, NULL);
     hook_completion (NULL, "bars_options",
                      N_("options for bars"),
-                     &completion_list_add_bars_options_cb, NULL);
+                     &completion_list_add_bars_options_cb, NULL, NULL);
     hook_completion (NULL, "keys_contexts",
                      /* TRANSLATORS: "key" means "key on the keyboard" */
                      N_("key contexts"),
-                     &completion_list_add_keys_contexts_cb, NULL);
+                     &completion_list_add_keys_contexts_cb, NULL, NULL);
     hook_completion (NULL, "keys_codes",
                      /* TRANSLATORS: "key" means "key on the keyboard" */
                      N_("key codes"),
-                     &completion_list_add_keys_codes_cb, NULL);
+                     &completion_list_add_keys_codes_cb, NULL, NULL);
     hook_completion (NULL, "keys_codes_for_reset",
                      /* TRANSLATORS: "key" means "key on the keyboard" */
                      N_("key codes that can be reset (keys added, redefined "
                         "or removed)"),
-                     &completion_list_add_keys_codes_for_reset_cb, NULL);
+                     &completion_list_add_keys_codes_for_reset_cb, NULL, NULL);
     hook_completion (NULL, "cursor_areas",
                      N_("areas (\"chat\" or bar name) for free cursor "
                         "movement"),
-                     &completion_list_add_cursor_areas_cb, NULL);
+                     &completion_list_add_cursor_areas_cb, NULL, NULL);
     hook_completion (NULL, "layouts_names",
                      N_("names of layouts"),
-                     &completion_list_add_layouts_names_cb, NULL);
+                     &completion_list_add_layouts_names_cb, NULL, NULL);
     hook_completion (NULL, "secured_data",
                      N_("names of secured data (file sec.conf, section data)"),
-                     &completion_list_add_secured_data_cb, NULL);
+                     &completion_list_add_secured_data_cb, NULL, NULL);
     hook_completion (NULL, "env_vars",
                      N_("environment variables"),
-                     &completion_list_add_env_vars_cb, NULL);
+                     &completion_list_add_env_vars_cb, NULL, NULL);
     hook_completion (NULL, "env_value",
                      N_("value of an environment variable"),
-                     &completion_list_add_env_value_cb, NULL);
+                     &completion_list_add_env_value_cb, NULL, NULL);
 }

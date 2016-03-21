@@ -81,7 +81,8 @@ relay_protocol_search (const char *name)
  */
 
 int
-relay_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
+relay_signal_upgrade_cb (const void *pointer, void *data,
+                         const char *signal, const char *type_data,
                          void *signal_data)
 {
     struct t_relay_server *ptr_server;
@@ -89,6 +90,7 @@ relay_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
     int quit, ssl_disconnected;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -150,10 +152,12 @@ relay_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
  */
 
 int
-relay_debug_dump_cb (void *data, const char *signal, const char *type_data,
+relay_debug_dump_cb (const void *pointer, void *data,
+                     const char *signal, const char *type_data,
                      void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -203,8 +207,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* hook completions */
     relay_completion_init ();
 
-    weechat_hook_signal ("upgrade", &relay_signal_upgrade_cb, NULL);
-    weechat_hook_signal ("debug_dump", &relay_debug_dump_cb, NULL);
+    weechat_hook_signal ("upgrade", &relay_signal_upgrade_cb, NULL, NULL);
+    weechat_hook_signal ("debug_dump", &relay_debug_dump_cb, NULL, NULL);
 
     relay_info_init ();
 
@@ -222,7 +226,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         relay_upgrade_load ();
 
     relay_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
-                                           &relay_client_timer_cb, NULL);
+                                           &relay_client_timer_cb, NULL, NULL);
 
     return WEECHAT_RC_OK;
 }

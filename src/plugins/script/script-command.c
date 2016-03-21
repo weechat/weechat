@@ -121,7 +121,8 @@ script_command_action (struct t_gui_buffer *buffer, const char *action,
  */
 
 int
-script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
+script_command_script (const void *pointer, void *data,
+                       struct t_gui_buffer *buffer, int argc,
                        char **argv, char **argv_eol)
 {
     char *error, command[128];
@@ -129,6 +130,7 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
     int line;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (argc == 1)
@@ -383,5 +385,5 @@ script_command_init ()
         " || hold %(script_scripts)|%*"
         " || update"
         " || upgrade",
-        &script_command_script, NULL);
+        &script_command_script, NULL, NULL);
 }

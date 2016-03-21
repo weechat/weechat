@@ -205,9 +205,11 @@ script_config_get_script_download_filename (struct t_script_repo *script,
  */
 
 void
-script_config_refresh_cb (void *data, struct t_config_option *option)
+script_config_refresh_cb (const void *pointer, void *data,
+                          struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -221,9 +223,11 @@ script_config_refresh_cb (void *data, struct t_config_option *option)
  */
 
 void
-script_config_reload_scripts_cb (void *data, struct t_config_option *option)
+script_config_reload_scripts_cb (const void *pointer, void *data,
+                                 struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -240,9 +244,11 @@ script_config_reload_scripts_cb (void *data, struct t_config_option *option)
  */
 
 void
-script_config_change_use_keys_cb (void *data, struct t_config_option *option)
+script_config_change_use_keys_cb (const void *pointer, void *data,
+                                  struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -255,9 +261,11 @@ script_config_change_use_keys_cb (void *data, struct t_config_option *option)
  */
 
 void
-script_config_change_hold_cb (void *data, struct t_config_option *option)
+script_config_change_hold_cb (const void *pointer, void *data,
+                              struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -355,9 +363,11 @@ script_config_unhold (const char *name_with_extension)
  */
 
 int
-script_config_reload (void *data, struct t_config_file *config_file)
+script_config_reload (const void *pointer, void *data,
+                      struct t_config_file *config_file)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     return weechat_config_reload (config_file);
@@ -377,16 +387,18 @@ script_config_init ()
     struct t_config_section *ptr_section;
 
     script_config_file = weechat_config_new (SCRIPT_CONFIG_NAME,
-                                             &script_config_reload, NULL);
+                                             &script_config_reload, NULL, NULL);
     if (!script_config_file)
         return 0;
 
     /* look */
     ptr_section = weechat_config_new_section (script_config_file, "look",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (script_config_file);
@@ -403,13 +415,15 @@ script_config_init ()
            "%u=date updated, %v=version, %V=version loaded, %w=min_weechat, "
            "%W=max_weechat)"),
         NULL, 0, 0, "%s %n %V %v %u | %d | %t", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_look_diff_color = weechat_config_new_option (
         script_config_file, ptr_section,
         "diff_color", "boolean",
         N_("colorize output of diff"),
         NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_look_diff_command = weechat_config_new_option (
         script_config_file, ptr_section,
         "diff_command", "string",
@@ -418,7 +432,7 @@ script_config_init ()
            "or diff), empty value = disable diff, other string = name of "
            "command, for example \"diff\")"),
         NULL, 0, 0, "auto", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_look_display_source = weechat_config_new_option (
         script_config_file, ptr_section,
         "display_source", "boolean",
@@ -426,7 +440,7 @@ script_config_init ()
            "(script is downloaded in a temporary file when detail on script "
            "is displayed)"),
         NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_look_quiet_actions = weechat_config_new_option (
         script_config_file, ptr_section,
         "quiet_actions", "boolean",
@@ -434,7 +448,7 @@ script_config_init ()
            "buffer when scripts are installed/removed/loaded/unloaded (only "
            "errors are displayed)"),
         NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_look_sort = weechat_config_new_option (
         script_config_file, ptr_section,
         "sort", "string",
@@ -445,14 +459,18 @@ script_config_init ()
            "order; example: \"i,u\": installed scripts first, sorted by update "
            "date"),
         NULL, 0, 0, "p,n", NULL, 0,
-        NULL, NULL, &script_config_reload_scripts_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_reload_scripts_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_look_translate_description = weechat_config_new_option (
         script_config_file, ptr_section,
         "translate_description", "boolean",
         N_("translate description of scripts (if translation is available in "
            "your language, otherwise English version is used)"),
         NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, &script_config_reload_scripts_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_reload_scripts_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_look_use_keys = weechat_config_new_option (
         script_config_file, ptr_section,
         "use_keys", "boolean",
@@ -460,14 +478,18 @@ script_config_init ()
            "install, alt+r = remove, ...); if disabled, only the input is "
            "allowed: i, r, ..."),
         NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, &script_config_change_use_keys_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_change_use_keys_cb, NULL, NULL,
+        NULL, NULL, NULL);
 
     /* color */
     ptr_section = weechat_config_new_section (script_config_file, "color",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (script_config_file);
@@ -479,164 +501,218 @@ script_config_init ()
         "status_autoloaded", "color",
         N_("color for status \"autoloaded\" (\"a\")"),
         NULL, 0, 0, "cyan", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_status_held = weechat_config_new_option (
         script_config_file, ptr_section,
         "status_held", "color",
         N_("color for status \"held\" (\"H\")"),
         NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_status_installed = weechat_config_new_option (
         script_config_file, ptr_section,
         "status_installed", "color",
         N_("color for status \"installed\" (\"i\")"),
         NULL, 0, 0, "lightcyan", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_status_obsolete = weechat_config_new_option (
         script_config_file, ptr_section,
         "status_obsolete", "color",
         N_("color for status \"obsolete\" (\"N\")"),
         NULL, 0, 0, "lightmagenta", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_status_popular = weechat_config_new_option (
         script_config_file, ptr_section,
         "status_popular", "color",
         N_("color for status \"popular\" (\"*\")"),
         NULL, 0, 0, "yellow", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_status_running = weechat_config_new_option (
         script_config_file, ptr_section,
         "status_running", "color",
         N_("color for status \"running\" (\"r\")"),
         NULL, 0, 0, "lightgreen", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_status_unknown = weechat_config_new_option (
         script_config_file, ptr_section,
         "status_unknown", "color",
         N_("color for status \"unknown\" (\"?\")"),
         NULL, 0, 0, "lightred", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text = weechat_config_new_option (
         script_config_file, ptr_section,
         "text", "color",
         N_("text color in script buffer"),
         NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_bg = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_bg", "color",
         N_("background color in script buffer"),
         NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_bg_selected = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_bg_selected", "color",
         N_("background color for selected line in script buffer"),
         NULL, 0, 0, "red", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_date = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_date", "color",
         N_("text color of dates in script buffer"),
         NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_date_selected = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_date_selected", "color",
         N_("text color of dates for selected line in script buffer"),
         NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_delimiters = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_delimiters", "color",
         N_("text color of delimiters in script buffer"),
         NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_description = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_description", "color",
         N_("text color of description in script buffer"),
         NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_description_selected = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_description_selected", "color",
         N_("text color of description for selected line in script buffer"),
         NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_extension = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_extension", "color",
         N_("text color of extension in script buffer"),
         NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_extension_selected = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_extension_selected", "color",
         N_("text color of extension for selected line in script buffer"),
         NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_name = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_name", "color",
         N_("text color of script name in script buffer"),
         NULL, 0, 0, "cyan", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_name_selected = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_name_selected", "color",
         N_("text color of script name for selected line in script buffer"),
         NULL, 0, 0, "lightcyan", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_selected = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_selected", "color",
         N_("text color for selected line in script buffer"),
         NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_tags = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_tags", "color",
         N_("text color of tags in script buffer"),
         NULL, 0, 0, "brown", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_tags_selected = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_tags_selected", "color",
         N_("text color of tags for selected line in script buffer"),
         NULL, 0, 0, "yellow", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_version = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_version", "color",
         N_("text color of version in script buffer"),
         NULL, 0, 0, "magenta", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_version_loaded = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_version_loaded", "color",
         N_("text color of version loaded in script buffer"),
         NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_version_loaded_selected = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_version_loaded_selected", "color",
         N_("text color of version loaded for selected line in script buffer"),
         NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_color_text_version_selected = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_version_selected", "color",
         N_("text color of version for selected line in script buffer"),
         NULL, 0, 0, "lightmagenta", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &script_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
 
     /* scripts */
     ptr_section = weechat_config_new_section (script_config_file, "scripts",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (script_config_file);
@@ -649,51 +725,53 @@ script_config_init ()
         N_("autoload scripts installed (make a link in \"autoload\" directory "
            "to script in parent directory)"),
         NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_scripts_cache_expire = weechat_config_new_option (
         script_config_file, ptr_section,
         "cache_expire", "integer",
         N_("local cache expiration time, in minutes (-1 = never expires, "
            "0 = always expire)"),
-        NULL, -1, 525600, "1440", NULL, 0, NULL, NULL,
-        NULL, NULL, NULL, NULL);
+        NULL, -1, 525600, "1440", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_scripts_download_timeout = weechat_config_new_option (
         script_config_file, ptr_section,
         "download_timeout", "integer",
         N_("timeout (in seconds) for download of scripts and list of scripts"),
-        NULL, 1, 3600, "30", NULL, 0, NULL, NULL,
-        NULL, NULL, NULL, NULL);
+        NULL, 1, 3600, "30", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_scripts_path = weechat_config_new_option (
         script_config_file, ptr_section,
         "path", "string",
         N_("local cache directory for scripts; \"%h\" at beginning of string "
            "is replaced by WeeChat home (\"~/.weechat\" by default) "
            "(note: content is evaluated, see /help eval)"),
-        NULL, 0, 0, "%h/script", NULL, 0, NULL, NULL,
-        NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "%h/script", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_scripts_hold = weechat_config_new_option (
         script_config_file, ptr_section,
         "hold", "string",
         N_("scripts to \"hold\": comma-separated list of scripts which will "
            "never been upgraded and can not be removed, for example: "
            "\"buffers.pl,iset.pl\""),
-        NULL, 0, 0, "", NULL, 0, NULL, NULL,
-        &script_config_change_hold_cb, NULL, NULL, NULL);
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL,
+        &script_config_change_hold_cb, NULL, NULL,
+        NULL, NULL, NULL);
     script_config_scripts_url = weechat_config_new_option (
         script_config_file, ptr_section,
         "url", "string",
         N_("URL for file with list of scripts; by default HTTPS is forced, "
            "see option script.scripts.url_force_https"),
-        NULL, 0, 0, "http://weechat.org/files/plugins.xml.gz", NULL, 0, NULL, NULL,
-        NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "http://weechat.org/files/plugins.xml.gz", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_scripts_url_force_https = weechat_config_new_option (
         script_config_file, ptr_section,
         "url_force_https", "boolean",
         N_("force use of HTTPS for downloads (index and scripts); "
            "you should disable this option only if you have problems with "
            "the downloads"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
-        NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     return 1;
 }

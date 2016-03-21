@@ -553,12 +553,16 @@ gui_buffer_input_buffer_init (struct t_gui_buffer *buffer)
 struct t_gui_buffer *
 gui_buffer_new (struct t_weechat_plugin *plugin,
                 const char *name,
-                int (*input_callback)(void *data,
+                int (*input_callback)(const void *pointer,
+                                      void *data,
                                       struct t_gui_buffer *buffer,
                                       const char *input_data),
+                const void *input_callback_pointer,
                 void *input_callback_data,
-                int (*close_callback)(void *data,
+                int (*close_callback)(const void *pointer,
+                                      void *data,
                                       struct t_gui_buffer *buffer),
+                const void *close_callback_pointer,
                 void *close_callback_data)
 {
     struct t_gui_buffer *new_buffer;
@@ -620,6 +624,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
 
     /* close callback */
     new_buffer->close_callback = close_callback;
+    new_buffer->close_callback_pointer = close_callback_pointer;
     new_buffer->close_callback_data = close_callback_data;
     new_buffer->closing = 0;
 
@@ -644,12 +649,14 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->nicklist_nicks_count = 0;
     new_buffer->nicklist_visible_count = 0;
     new_buffer->nickcmp_callback = NULL;
+    new_buffer->nickcmp_callback_pointer = NULL;
     new_buffer->nickcmp_callback_data = NULL;
     gui_nicklist_add_group (new_buffer, NULL, "root", NULL, 0);
 
     /* input */
     new_buffer->input = 1;
     new_buffer->input_callback = input_callback;
+    new_buffer->input_callback_pointer = input_callback_pointer;
     new_buffer->input_callback_data = input_callback_data;
     new_buffer->input_get_unknown_commands = 0;
     gui_buffer_input_buffer_init (new_buffer);
@@ -700,11 +707,11 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->highlight_tags_array = NULL;
 
     /* hotlist */
-    new_buffer->hotlist_max_level_nicks = hashtable_new (32,
-                                                         WEECHAT_HASHTABLE_STRING,
-                                                         WEECHAT_HASHTABLE_INTEGER,
-                                                         NULL,
-                                                         NULL);
+    new_buffer->hotlist_max_level_nicks = hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_INTEGER,
+        NULL, NULL);
 
     /* keys */
     new_buffer->keys = NULL;
@@ -715,8 +722,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->local_variables = hashtable_new (32,
                                                  WEECHAT_HASHTABLE_STRING,
                                                  WEECHAT_HASHTABLE_STRING,
-                                                 NULL,
-                                                 NULL);
+                                                 NULL, NULL);
     hashtable_set (new_buffer->local_variables,
                    "plugin", plugin_get_name (plugin));
     hashtable_set (new_buffer->local_variables, "name", name);
@@ -2034,6 +2040,10 @@ gui_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
     {
         buffer->close_callback = pointer;
     }
+    else if (string_strcasecmp (property, "close_callback_pointer") == 0)
+    {
+        buffer->close_callback_pointer = pointer;
+    }
     else if (string_strcasecmp (property, "close_callback_data") == 0)
     {
         buffer->close_callback_data = pointer;
@@ -2042,6 +2052,10 @@ gui_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
     {
         buffer->nickcmp_callback = pointer;
     }
+    else if (string_strcasecmp (property, "nickcmp_callback_pointer") == 0)
+    {
+        buffer->nickcmp_callback_pointer = pointer;
+    }
     else if (string_strcasecmp (property, "nickcmp_callback_data") == 0)
     {
         buffer->nickcmp_callback_data = pointer;
@@ -2049,6 +2063,10 @@ gui_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "input_callback") == 0)
     {
         buffer->input_callback = pointer;
+    }
+    else if (string_strcasecmp (property, "input_callback_pointer") == 0)
+    {
+        buffer->input_callback_pointer = pointer;
     }
     else if (string_strcasecmp (property, "input_callback_data") == 0)
     {
@@ -2581,7 +2599,9 @@ gui_buffer_close (struct t_gui_buffer *buffer)
 
     if (buffer->close_callback)
     {
-        (void)(buffer->close_callback) (buffer->close_callback_data, buffer);
+        (void)(buffer->close_callback) (buffer->close_callback_pointer,
+                                        buffer->close_callback_data,
+                                        buffer);
     }
 
     ptr_back_to_buffer = NULL;
@@ -2743,6 +2763,12 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         }
         free (buffer->highlight_tags_array);
     }
+    if (buffer->input_callback_data)
+        free (buffer->input_callback_data);
+    if (buffer->close_callback_data)
+        free (buffer->close_callback_data);
+    if (buffer->nickcmp_callback_data)
+        free (buffer->nickcmp_callback_data);
 
     /* remove buffer from buffers list */
     if (buffer->prev_buffer)
@@ -4030,11 +4056,13 @@ gui_buffer_visited_get_index_next ()
  */
 
 struct t_hdata *
-gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
+gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
+                            const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_buffer", "next_buffer",
@@ -4060,6 +4088,7 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, clear, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, filter, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, close_callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, close_callback_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, close_callback_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, closing, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, title, STRING, 0, NULL, NULL);
@@ -4078,9 +4107,11 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, nicklist_nicks_count, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nicklist_visible_count, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nickcmp_callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, nickcmp_callback_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nickcmp_callback_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_callback_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_callback_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_get_unknown_commands, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_buffer, STRING, 0, NULL, NULL);
@@ -4134,11 +4165,13 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-gui_buffer_hdata_input_undo_cb (void *data, const char *hdata_name)
+gui_buffer_hdata_input_undo_cb (const void *pointer, void *data,
+                                const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_undo", "next_undo",
@@ -4158,11 +4191,13 @@ gui_buffer_hdata_input_undo_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-gui_buffer_hdata_buffer_visited_cb (void *data, const char *hdata_name)
+gui_buffer_hdata_buffer_visited_cb (const void *pointer, void *data,
+                                    const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_buffer", "next_buffer",
@@ -4457,6 +4492,7 @@ gui_buffer_print_log ()
         log_printf ("  clear . . . . . . . . . : %d",    ptr_buffer->clear);
         log_printf ("  filter. . . . . . . . . : %d",    ptr_buffer->filter);
         log_printf ("  close_callback. . . . . : 0x%lx", ptr_buffer->close_callback);
+        log_printf ("  close_callback_pointer. : 0x%lx", ptr_buffer->close_callback_pointer);
         log_printf ("  close_callback_data . . : 0x%lx", ptr_buffer->close_callback_data);
         log_printf ("  closing . . . . . . . . : %d",    ptr_buffer->closing);
         log_printf ("  title . . . . . . . . . : '%s'",  ptr_buffer->title);
@@ -4477,9 +4513,11 @@ gui_buffer_print_log ()
         log_printf ("  nicklist_nicks_count. . : %d",    ptr_buffer->nicklist_nicks_count);
         log_printf ("  nicklist_visible_count. : %d",    ptr_buffer->nicklist_visible_count);
         log_printf ("  nickcmp_callback. . . . : 0x%lx", ptr_buffer->nickcmp_callback);
+        log_printf ("  nickcmp_callback_pointer: 0x%lx", ptr_buffer->nickcmp_callback_pointer);
         log_printf ("  nickcmp_callback_data . : 0x%lx", ptr_buffer->nickcmp_callback_data);
         log_printf ("  input . . . . . . . . . : %d",    ptr_buffer->input);
         log_printf ("  input_callback. . . . . : 0x%lx", ptr_buffer->input_callback);
+        log_printf ("  input_callback_pointer. : 0x%lx", ptr_buffer->input_callback_pointer);
         log_printf ("  input_callback_data . . : 0x%lx", ptr_buffer->input_callback_data);
         log_printf ("  input_get_unknown_cmd . : %d",    ptr_buffer->input_get_unknown_commands);
         log_printf ("  input_buffer. . . . . . : '%s'",  ptr_buffer->input_buffer);

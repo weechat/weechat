@@ -106,8 +106,10 @@ struct t_gui_buffer
     int filter;                        /* 1 if filters enabled for buffer   */
 
     /* close callback */
-    int (*close_callback)(void *data,  /* called when buffer is closed      */
+    int (*close_callback)(const void *pointer, /* called when buffer is     */
+                          void *data,          /* closed                    */
                           struct t_gui_buffer *buffer);
+    const void *close_callback_pointer; /* pointer for callback             */
     void *close_callback_data;         /* data for callback                 */
     int closing;                       /* 1 if the buffer is being closed   */
 
@@ -133,17 +135,21 @@ struct t_gui_buffer
     int nicklist_groups_count;         /* number of groups                  */
     int nicklist_nicks_count;          /* number of nicks                   */
     int nicklist_visible_count;        /* number of nicks/groups to display */
-    int (*nickcmp_callback)(void *data, /* called to compare nicks (search  */
-                            struct t_gui_buffer *buffer,  /* in nicklist)   */
+    int (*nickcmp_callback)(const void *pointer, /* called to compare nicks */
+                            void *data,          /* (search in nicklist)    */
+                            struct t_gui_buffer *buffer,
                             const char *nick1,
                             const char *nick2);
+    const void *nickcmp_callback_pointer; /* pointer for callback           */
     void *nickcmp_callback_data;       /* data for callback                 */
 
     /* input */
     int input;                         /* = 1 if input is enabled           */
-    int (*input_callback)(void *data,  /* called when user send data        */
+    int (*input_callback)(const void *pointer, /* called when user sends    */
+                          void *data,          /* data                      */
                           struct t_gui_buffer *buffer,
                           const char *input_data);
+    const void *input_callback_pointer; /* pointer for callback             */
     void *input_callback_data;         /* data for callback                 */
                                        /* to this buffer                    */
     int input_get_unknown_commands;    /* 1 if unknown commands are sent to */
@@ -241,12 +247,16 @@ extern void gui_buffer_notify_set_all ();
 extern void gui_buffer_input_buffer_init (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
                                             const char *name,
-                                            int (*input_callback)(void *data,
+                                            int (*input_callback)(const void *pointer,
+                                                                  void *data,
                                                                   struct t_gui_buffer *buffer,
                                                                   const char *input_data),
+                                            const void *input_callback_pointer,
                                             void *input_callback_data,
-                                            int (*close_callback)(void *data,
+                                            int (*close_callback)(const void *pointer,
+                                                                  void *data,
                                                                   struct t_gui_buffer *buffer),
+                                            const void *close_callback_pointer,
                                             void *close_callback_data);
 extern int gui_buffer_valid (struct t_gui_buffer *buffer);
 extern char *gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
@@ -333,11 +343,14 @@ extern void gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer_visited *gui_buffer_visited_add (struct t_gui_buffer *buffer);
 extern int gui_buffer_visited_get_index_previous ();
 extern int gui_buffer_visited_get_index_next ();
-extern struct t_hdata *gui_buffer_hdata_buffer_cb (void *data,
+extern struct t_hdata *gui_buffer_hdata_buffer_cb (const void *pointer,
+                                                   void *data,
                                                    const char *hdata_name);
-extern struct t_hdata *gui_buffer_hdata_input_undo_cb (void *data,
+extern struct t_hdata *gui_buffer_hdata_input_undo_cb (const void *pointer,
+                                                       void *data,
                                                        const char *hdata_name);
-extern struct t_hdata *gui_buffer_hdata_buffer_visited_cb (void *data,
+extern struct t_hdata *gui_buffer_hdata_buffer_visited_cb (const void *pointer,
+                                                           void *data,
                                                            const char *hdata_name);
 extern int gui_buffer_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_buffer *buffer);

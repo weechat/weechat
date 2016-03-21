@@ -220,8 +220,6 @@ SET(WEECHAT_SOURCES
 ./src/plugins/plugin-script-api.c
 ./src/plugins/plugin-script-api.h
 ./src/plugins/plugin-script.c
-./src/plugins/plugin-script-callback.c
-./src/plugins/plugin-script-callback.h
 ./src/plugins/plugin-script.h
 ./src/plugins/python/weechat-python-api.c
 ./src/plugins/python/weechat-python-api.h

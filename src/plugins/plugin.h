@@ -46,7 +46,8 @@ extern void plugin_unload_all ();
 extern void plugin_reload_name (const char *name, int argc, char **argv);
 extern void plugin_init (int auto_load, int argc, char *argv[]);
 extern void plugin_end ();
-extern struct t_hdata *plugin_hdata_plugin_cb (void *data,
+extern struct t_hdata *plugin_hdata_plugin_cb (const void *pointer,
+                                               void *data,
                                                const char *hdata_name);
 extern int plugin_add_to_infolist (struct t_infolist *infolist,
                                    struct t_weechat_plugin *plugin);

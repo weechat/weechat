@@ -76,15 +76,15 @@ relay_weechat_hook_signals (struct t_relay_client *client)
     RELAY_WEECHAT_DATA(client, hook_signal_buffer) =
         weechat_hook_signal ("buffer_*",
                              &relay_weechat_protocol_signal_buffer_cb,
-                             client);
+                             client, NULL);
     RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist) =
         weechat_hook_hsignal ("nicklist_*",
                               &relay_weechat_protocol_hsignal_nicklist_cb,
-                              client);
+                              client, NULL);
     RELAY_WEECHAT_DATA(client, hook_signal_upgrade) =
         weechat_hook_signal ("upgrade*",
                              &relay_weechat_protocol_signal_upgrade_cb,
-                             client);
+                             client, NULL);
 }
 
 /*
@@ -121,7 +121,7 @@ relay_weechat_hook_timer_nicklist (struct t_relay_client *client)
     RELAY_WEECHAT_DATA(client, hook_timer_nicklist) =
         weechat_hook_timer (100, 0, 1,
                             &relay_weechat_protocol_timer_nicklist_cb,
-                            client);
+                            client, NULL);
 }
 
 /*
@@ -181,8 +181,7 @@ relay_weechat_alloc (struct t_relay_client *client)
             weechat_hashtable_new (32,
                                    WEECHAT_HASHTABLE_STRING,
                                    WEECHAT_HASHTABLE_INTEGER,
-                                   NULL,
-                                   NULL);
+                                   NULL, NULL);
         RELAY_WEECHAT_DATA(client, hook_signal_buffer) = NULL;
         RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist) = NULL;
         RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
@@ -190,8 +189,7 @@ relay_weechat_alloc (struct t_relay_client *client)
             weechat_hashtable_new (32,
                                    WEECHAT_HASHTABLE_POINTER,
                                    WEECHAT_HASHTABLE_POINTER,
-                                   NULL,
-                                   NULL);
+                                   NULL, NULL);
         weechat_hashtable_set_pointer (RELAY_WEECHAT_DATA(client, buffers_nicklist),
                                        "callback_free_value",
                                        &relay_weechat_free_buffers_nicklist);
@@ -223,15 +221,17 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
     if (client->protocol_data)
     {
         /* general stuff */
-        RELAY_WEECHAT_DATA(client, password_ok) = weechat_infolist_integer (infolist, "password_ok");
-        RELAY_WEECHAT_DATA(client, compression) = weechat_infolist_integer (infolist, "compression");
+        RELAY_WEECHAT_DATA(client, password_ok) = weechat_infolist_integer (
+            infolist, "password_ok");
+        RELAY_WEECHAT_DATA(client, compression) = weechat_infolist_integer (
+            infolist, "compression");
 
         /* sync of buffers */
-        RELAY_WEECHAT_DATA(client, buffers_sync) = weechat_hashtable_new (32,
-                                                                          WEECHAT_HASHTABLE_STRING,
-                                                                          WEECHAT_HASHTABLE_INTEGER,
-                                                                          NULL,
-                                                                          NULL);
+        RELAY_WEECHAT_DATA(client, buffers_sync) = weechat_hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_INTEGER,
+            NULL, NULL);
         index = 0;
         while (1)
         {
@@ -253,8 +253,7 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
             weechat_hashtable_new (32,
                                    WEECHAT_HASHTABLE_POINTER,
                                    WEECHAT_HASHTABLE_POINTER,
-                                   NULL,
-                                   NULL);
+                                   NULL, NULL);
         weechat_hashtable_set_pointer (RELAY_WEECHAT_DATA(client, buffers_nicklist),
                                        "callback_free_value",
                                        &relay_weechat_free_buffers_nicklist);

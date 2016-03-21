@@ -330,7 +330,8 @@ end:
  */
 
 int
-weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
+weechat_aspell_command_cb (const void *pointer, void *data,
+                           struct t_gui_buffer *buffer,
                            int argc, char **argv, char **argv_eol)
 {
     char *dicts;
@@ -339,6 +340,7 @@ weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
     int number;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (argc == 1)
@@ -499,5 +501,5 @@ weechat_aspell_command_init ()
         " || setdict %(aspell_dicts)"
         " || deldict"
         " || addword",
-        &weechat_aspell_command_cb, NULL);
+        &weechat_aspell_command_cb, NULL, NULL);
 }

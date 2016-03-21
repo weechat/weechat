@@ -55,7 +55,7 @@ char *fifo_filename;
 char *fifo_unterminated = NULL;
 
 
-int fifo_read();
+int fifo_fd_cb ();
 
 
 /*
@@ -164,7 +164,7 @@ fifo_create ()
                                         fifo_filename);
                     }
                     fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0,
-                                                    &fifo_read, NULL);
+                                                    &fifo_fd_cb, NULL, NULL);
                 }
                 else
                     weechat_printf (NULL,
@@ -290,13 +290,14 @@ fifo_exec (const char *text)
  */
 
 int
-fifo_read (void *data, int fd)
+fifo_fd_cb (const void *pointer, void *data, int fd)
 {
     static char buffer[4096 + 2];
     char *buf2, *pos, *ptr_buf, *next_ptr_buf;
     int num_read;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) fd;
 
@@ -386,8 +387,10 @@ fifo_read (void *data, int fd)
                 fifo_remove ();
             }
             else
+            {
                 fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0,
-                                                &fifo_read, NULL);
+                                                &fifo_fd_cb, NULL, NULL);
+            }
         }
     }
 
@@ -399,9 +402,11 @@ fifo_read (void *data, int fd)
  */
 
 int
-fifo_config_cb (void *data, const char *option, const char *value)
+fifo_config_cb (const void *pointer, void *data,
+                const char *option, const char *value)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -440,7 +445,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     snprintf (str_option, sizeof (str_option),
               "plugins.var.fifo.%s", FIFO_OPTION_NAME);
-    weechat_hook_config (str_option, &fifo_config_cb, NULL);
+    weechat_hook_config (str_option, &fifo_config_cb, NULL, NULL);
 
     fifo_command_init ();
     fifo_info_init ();

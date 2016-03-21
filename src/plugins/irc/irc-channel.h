@@ -151,13 +151,16 @@ extern void irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channe
                                                     const char *nick);
 extern void irc_channel_rejoin (struct t_irc_server *server,
                                 struct t_irc_channel *channel);
-extern int irc_channel_autorejoin_cb (void *data, int remaining_calls);
+extern int irc_channel_autorejoin_cb (const void *pointer, void *data,
+                                      int remaining_calls);
 extern void irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
                                                  struct t_irc_nick *nick,
                                                  const char *nickname);
-extern struct t_hdata *irc_channel_hdata_channel_cb (void *data,
+extern struct t_hdata *irc_channel_hdata_channel_cb (const void *pointer,
+                                                     void *data,
                                                      const char *hdata_name);
-extern struct t_hdata *irc_channel_hdata_channel_speaking_cb (void *data,
+extern struct t_hdata *irc_channel_hdata_channel_speaking_cb (const void *pointer,
+                                                              void *data,
                                                               const char *hdata_name);
 extern int irc_channel_add_to_infolist (struct t_infolist *infolist,
                                         struct t_irc_channel *channel);

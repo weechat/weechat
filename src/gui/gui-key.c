@@ -196,12 +196,14 @@ gui_key_grab_init (int grab_command, const char *delay)
  */
 
 int
-gui_key_grab_end_timer_cb (void *data, int remaining_calls)
+gui_key_grab_end_timer_cb (const void *pointer, void *data,
+                           int remaining_calls)
 {
     char *expanded_key, *expanded_key2;
     struct t_gui_key *ptr_key;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) remaining_calls;
 
@@ -1292,7 +1294,7 @@ gui_key_pressed (const char *key_str)
         if (gui_key_grab_count == 0)
         {
             hook_timer (NULL, gui_key_grab_delay, 0, 1,
-                        &gui_key_grab_end_timer_cb, NULL);
+                        &gui_key_grab_end_timer_cb, NULL, NULL);
         }
         gui_key_grab_count++;
         return 0;
@@ -1740,9 +1742,11 @@ gui_key_paste_check (int bracketed_paste)
  */
 
 int
-gui_key_paste_bracketed_timer_cb (void *data, int remaining_calls)
+gui_key_paste_bracketed_timer_cb (const void *pointer, void *data,
+                                  int remaining_calls)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) remaining_calls;
 
@@ -1776,10 +1780,11 @@ void
 gui_key_paste_bracketed_timer_add ()
 {
     gui_key_paste_bracketed_timer_remove ();
-    gui_key_paste_bracketed_timer = hook_timer (NULL,
-                                                CONFIG_INTEGER(config_look_paste_bracketed_timer_delay) * 1000,
-                                                0, 1,
-                                                &gui_key_paste_bracketed_timer_cb, NULL);
+    gui_key_paste_bracketed_timer = hook_timer (
+        NULL,
+        CONFIG_INTEGER(config_look_paste_bracketed_timer_delay) * 1000,
+        0, 1,
+        &gui_key_paste_bracketed_timer_cb, NULL, NULL);
 }
 
 /*
@@ -1870,13 +1875,15 @@ gui_key_end ()
  */
 
 struct t_hdata *
-gui_key_hdata_key_cb (void *data, const char *hdata_name)
+gui_key_hdata_key_cb (const void *pointer, void *data,
+                      const char *hdata_name)
 {
     struct t_hdata *hdata;
     int i;
     char str_list[128];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_key", "next_key",

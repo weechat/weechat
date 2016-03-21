@@ -23,10 +23,12 @@
 
 extern PyMethodDef weechat_python_funcs[];
 
-extern int weechat_python_api_buffer_input_data_cb (void *data,
+extern int weechat_python_api_buffer_input_data_cb (const void *pointer,
+                                                    void *data,
                                                     struct t_gui_buffer *buffer,
                                                     const char *input_data);
-extern int weechat_python_api_buffer_close_cb (void *data,
+extern int weechat_python_api_buffer_close_cb (const void *pointer,
+                                               void *data,
                                                struct t_gui_buffer *buffer);
 
 #endif /* WEECHAT_PYTHON_API_H */

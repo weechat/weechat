@@ -337,7 +337,8 @@ alias_run_command (struct t_gui_buffer **buffer, const char *command)
  */
 
 int
-alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
+alias_cb (const void *pointer, void *data,
+          struct t_gui_buffer *buffer, int argc, char **argv,
           char **argv_eol)
 {
     struct t_alias *ptr_alias;
@@ -346,9 +347,10 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
     int some_args_replaced, length1, length2;
 
     /* make C compiler happy */
+    (void) data;
     (void) argv;
 
-    ptr_alias = (struct t_alias *)data;
+    ptr_alias = (struct t_alias *)pointer;
 
     if (ptr_alias->running)
     {
@@ -545,7 +547,7 @@ alias_hook_command (struct t_alias *alias)
                                         alias->command,
                                         NULL, NULL,
                                         (str_completion) ? str_completion : alias->completion,
-                                        &alias_cb, alias);
+                                        &alias_cb, alias, NULL);
 
     if (str_priority_name)
         free (str_priority_name);

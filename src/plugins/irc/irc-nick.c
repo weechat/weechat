@@ -1128,11 +1128,13 @@ irc_nick_default_ban_mask (struct t_irc_nick *nick)
  */
 
 struct t_hdata *
-irc_nick_hdata_nick_cb (void *data, const char *hdata_name)
+irc_nick_hdata_nick_cb (const void *pointer, void *data,
+                        const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_nick", "next_nick",

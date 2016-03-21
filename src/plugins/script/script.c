@@ -179,8 +179,7 @@ script_get_scripts ()
         script_loaded = weechat_hashtable_new (32,
                                                WEECHAT_HASHTABLE_STRING,
                                                WEECHAT_HASHTABLE_STRING,
-                                               NULL,
-                                               NULL);
+                                               NULL, NULL);
     }
     else
         weechat_hashtable_remove_all (script_loaded);
@@ -217,10 +216,12 @@ script_get_scripts ()
  */
 
 int
-script_debug_dump_cb (void *data, const char *signal, const char *type_data,
+script_debug_dump_cb (const void *pointer, void *data,
+                      const char *signal, const char *type_data,
                       void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -247,9 +248,10 @@ script_debug_dump_cb (void *data, const char *signal, const char *type_data,
  */
 
 int
-script_timer_refresh_cb (void *data, int remaining_calls)
+script_timer_refresh_cb (const void *pointer, void *data, int remaining_calls)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     script_get_loaded_plugins ();
@@ -268,10 +270,12 @@ script_timer_refresh_cb (void *data, int remaining_calls)
  */
 
 int
-script_signal_plugin_cb (void *data, const char *signal, const char *type_data,
+script_signal_plugin_cb (const void *pointer, void *data,
+                         const char *signal, const char *type_data,
                          void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) type_data;
 
@@ -285,7 +289,8 @@ script_signal_plugin_cb (void *data, const char *signal, const char *type_data,
     if (!script_timer_refresh)
     {
         script_timer_refresh = weechat_hook_timer (50, 0, 1,
-                                                   &script_timer_refresh_cb, NULL);
+                                                   &script_timer_refresh_cb,
+                                                   NULL, NULL);
     }
 
     return WEECHAT_RC_OK;
@@ -296,10 +301,12 @@ script_signal_plugin_cb (void *data, const char *signal, const char *type_data,
  */
 
 int
-script_signal_script_cb (void *data, const char *signal, const char *type_data,
+script_signal_script_cb (const void *pointer, void *data,
+                         const char *signal, const char *type_data,
                          void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) type_data;
 
@@ -313,7 +320,8 @@ script_signal_script_cb (void *data, const char *signal, const char *type_data,
     if (!script_timer_refresh)
     {
         script_timer_refresh = weechat_hook_timer (50, 0, 1,
-                                                   &script_timer_refresh_cb, NULL);
+                                                   &script_timer_refresh_cb,
+                                                   NULL, NULL);
     }
 
     return WEECHAT_RC_OK;
@@ -324,7 +332,8 @@ script_signal_script_cb (void *data, const char *signal, const char *type_data,
  */
 
 struct t_hashtable *
-script_focus_chat_cb (void *data, struct t_hashtable *info)
+script_focus_chat_cb (const void *pointer, void *data,
+                      struct t_hashtable *info)
 {
     const char *buffer;
     int rc;
@@ -336,6 +345,7 @@ script_focus_chat_cb (void *data, struct t_hashtable *info)
     struct tm *tm;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (!script_buffer)
@@ -429,12 +439,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     script_completion_init ();
     script_info_init ();
 
-    weechat_hook_signal ("debug_dump", &script_debug_dump_cb, NULL);
-    weechat_hook_signal ("window_scrolled", &script_buffer_window_scrolled_cb, NULL);
-    weechat_hook_signal ("plugin_*", &script_signal_plugin_cb, NULL);
-    weechat_hook_signal ("*_script_*", &script_signal_script_cb, NULL);
+    weechat_hook_signal ("debug_dump",
+                         &script_debug_dump_cb, NULL, NULL);
+    weechat_hook_signal ("window_scrolled",
+                         &script_buffer_window_scrolled_cb, NULL, NULL);
+    weechat_hook_signal ("plugin_*",
+                         &script_signal_plugin_cb, NULL, NULL);
+    weechat_hook_signal ("*_script_*",
+                         &script_signal_script_cb, NULL, NULL);
 
-    weechat_hook_focus ("chat", &script_focus_chat_cb, NULL);
+    weechat_hook_focus ("chat", &script_focus_chat_cb, NULL, NULL);
 
     if (script_repo_file_exists ())
     {

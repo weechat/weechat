@@ -410,8 +410,7 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
         pointers = hashtable_new (32,
                                   WEECHAT_HASHTABLE_STRING,
                                   WEECHAT_HASHTABLE_POINTER,
-                                  NULL,
-                                  NULL);
+                                  NULL, NULL);
         if (pointers)
         {
             hashtable_set (pointers, "window", window);
@@ -421,8 +420,7 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
         extra_vars = hashtable_new (32,
                                     WEECHAT_HASHTABLE_STRING,
                                     WEECHAT_HASHTABLE_POINTER,
-                                    NULL,
-                                    NULL);
+                                    NULL, NULL);
         if (extra_vars)
         {
             hashtable_set (extra_vars, "active",
@@ -435,8 +433,7 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
         options = hashtable_new (32,
                                  WEECHAT_HASHTABLE_STRING,
                                  WEECHAT_HASHTABLE_POINTER,
-                                 NULL,
-                                 NULL);
+                                 NULL, NULL);
         if (options)
             hashtable_set (options, "type", "condition");
 
@@ -827,10 +824,12 @@ gui_bar_set_items_array (struct t_gui_bar *bar, const char *items)
  */
 
 int
-gui_bar_config_check_type (void *data, struct t_config_option *option,
+gui_bar_config_check_type (const void *pointer, void *data,
+                           struct t_config_option *option,
                            const char *value)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
     (void) value;
@@ -847,7 +846,8 @@ gui_bar_config_check_type (void *data, struct t_config_option *option,
  */
 
 void
-gui_bar_config_change_hidden (void *data, struct t_config_option *option)
+gui_bar_config_change_hidden (const void *pointer, void *data,
+                              struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
     struct t_gui_window *ptr_win;
@@ -855,6 +855,7 @@ gui_bar_config_change_hidden (void *data, struct t_config_option *option)
     int bar_window_exists;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_bar = gui_bar_search_with_option_name (option->name);
@@ -909,13 +910,15 @@ gui_bar_config_change_hidden (void *data, struct t_config_option *option)
  */
 
 void
-gui_bar_config_change_priority (void *data, struct t_config_option *option)
+gui_bar_config_change_priority (const void *pointer, void *data,
+                                struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *bar_windows, *ptr_bar_win, *next_bar_win;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_bar = gui_bar_search_with_option_name (option->name);
@@ -964,9 +967,11 @@ gui_bar_config_change_priority (void *data, struct t_config_option *option)
  */
 
 void
-gui_bar_config_change_conditions (void *data, struct t_config_option *option)
+gui_bar_config_change_conditions (const void *pointer, void *data,
+                                  struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -978,11 +983,13 @@ gui_bar_config_change_conditions (void *data, struct t_config_option *option)
  */
 
 void
-gui_bar_config_change_position (void *data, struct t_config_option *option)
+gui_bar_config_change_position (const void *pointer, void *data,
+                                struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_bar = gui_bar_search_with_option_name (option->name);
@@ -997,11 +1004,13 @@ gui_bar_config_change_position (void *data, struct t_config_option *option)
  */
 
 void
-gui_bar_config_change_filling (void *data, struct t_config_option *option)
+gui_bar_config_change_filling (const void *pointer, void *data,
+                               struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_bar = gui_bar_search_with_option_name (option->name);
@@ -1020,7 +1029,8 @@ gui_bar_config_change_filling (void *data, struct t_config_option *option)
  */
 
 int
-gui_bar_config_check_size (void *data, struct t_config_option *option,
+gui_bar_config_check_size (const void *pointer, void *data,
+                           struct t_config_option *option,
                            const char *value)
 {
     struct t_gui_bar *ptr_bar;
@@ -1029,6 +1039,7 @@ gui_bar_config_check_size (void *data, struct t_config_option *option,
     int new_value;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_bar = gui_bar_search_with_option_name (option->name);
@@ -1086,11 +1097,13 @@ gui_bar_config_check_size (void *data, struct t_config_option *option,
  */
 
 void
-gui_bar_config_change_size (void *data, struct t_config_option *option)
+gui_bar_config_change_size (const void *pointer, void *data,
+                            struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_bar = gui_bar_search_with_option_name (option->name);
@@ -1106,12 +1119,14 @@ gui_bar_config_change_size (void *data, struct t_config_option *option)
  */
 
 void
-gui_bar_config_change_size_max (void *data, struct t_config_option *option)
+gui_bar_config_change_size_max (const void *pointer, void *data,
+                                struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
     char value[32];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -1135,11 +1150,13 @@ gui_bar_config_change_size_max (void *data, struct t_config_option *option)
  */
 
 void
-gui_bar_config_change_color (void *data, struct t_config_option *option)
+gui_bar_config_change_color (const void *pointer, void *data,
+                             struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_bar = gui_bar_search_with_option_name (option->name);
@@ -1152,11 +1169,13 @@ gui_bar_config_change_color (void *data, struct t_config_option *option)
  */
 
 void
-gui_bar_config_change_separator (void *data, struct t_config_option *option)
+gui_bar_config_change_separator (const void *pointer, void *data,
+                                 struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_bar = gui_bar_search_with_option_name (option->name);
@@ -1169,11 +1188,13 @@ gui_bar_config_change_separator (void *data, struct t_config_option *option)
  */
 
 void
-gui_bar_config_change_items (void *data, struct t_config_option *option)
+gui_bar_config_change_items (const void *pointer, void *data,
+                             struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_bar = gui_bar_search_with_option_name (option->name);
@@ -1390,7 +1411,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "boolean",
                 N_("true if bar is hidden, false if it is displayed"),
                 NULL, 0, 0, value, NULL, 0,
-                NULL, NULL, &gui_bar_config_change_hidden, NULL, NULL, NULL);
+                NULL, NULL, NULL,
+                &gui_bar_config_change_hidden, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_PRIORITY:
             ptr_option = config_file_new_option (
@@ -1398,7 +1421,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "integer",
                 N_("bar priority (high number means bar displayed first)"),
                 NULL, 0, INT_MAX, value, NULL, 0,
-                NULL, NULL, &gui_bar_config_change_priority, NULL, NULL, NULL);
+                NULL, NULL, NULL,
+                &gui_bar_config_change_priority, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_TYPE:
             ptr_option = config_file_new_option (
@@ -1406,7 +1431,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "integer",
                 N_("bar type (root, window, window_active, window_inactive)"),
                 "root|window|window_active|window_inactive", 0, 0, value, NULL, 0,
-                &gui_bar_config_check_type, NULL, NULL, NULL, NULL, NULL);
+                &gui_bar_config_check_type, NULL, NULL,
+                NULL, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_CONDITIONS:
             ptr_option = config_file_new_option (
@@ -1420,7 +1447,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                    "(local variables for expression are ${active}, "
                    "${inactive} and ${nicklist})"),
                 NULL, 0, 0, value, NULL, 0,
-                NULL, NULL, &gui_bar_config_change_conditions, NULL, NULL, NULL);
+                NULL, NULL, NULL,
+                &gui_bar_config_change_conditions, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_POSITION:
             ptr_option = config_file_new_option (
@@ -1428,7 +1457,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "integer",
                 N_("bar position (bottom, top, left, right)"),
                 "bottom|top|left|right", 0, 0, value, NULL, 0,
-                NULL, NULL, &gui_bar_config_change_position, NULL, NULL, NULL);
+                NULL, NULL, NULL,
+                &gui_bar_config_change_position, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_FILLING_TOP_BOTTOM:
             ptr_option = config_file_new_option (
@@ -1439,7 +1470,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                    "top or bottom"),
                 "horizontal|vertical|columns_horizontal|columns_vertical",
                 0, 0, value, NULL, 0,
-                NULL, NULL, &gui_bar_config_change_filling, NULL, NULL, NULL);
+                NULL, NULL, NULL,
+                &gui_bar_config_change_filling, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_FILLING_LEFT_RIGHT:
             ptr_option = config_file_new_option (
@@ -1450,7 +1483,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                    "left or right"),
                 "horizontal|vertical|columns_horizontal|columns_vertical",
                 0, 0, value, NULL, 0,
-                NULL, NULL, &gui_bar_config_change_filling, NULL, NULL, NULL);
+                NULL, NULL, NULL,
+                &gui_bar_config_change_filling, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_SIZE:
             ptr_option = config_file_new_option (
@@ -1458,9 +1493,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "integer",
                 N_("bar size in chars (0 = auto size)"),
                 NULL, 0, INT_MAX, value, NULL, 0,
-                &gui_bar_config_check_size, NULL,
-                &gui_bar_config_change_size, NULL,
-                NULL, NULL);
+                &gui_bar_config_check_size, NULL, NULL,
+                &gui_bar_config_change_size, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_SIZE_MAX:
             ptr_option = config_file_new_option (
@@ -1468,9 +1503,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "integer",
                 N_("max bar size in chars (0 = no limit)"),
                 NULL, 0, INT_MAX, value, NULL, 0,
-                NULL, NULL,
-                &gui_bar_config_change_size_max, NULL,
-                NULL, NULL);
+                NULL, NULL, NULL,
+                &gui_bar_config_change_size_max, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_COLOR_FG:
             ptr_option = config_file_new_option (
@@ -1478,9 +1513,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "color",
                 N_("default text color for bar"),
                 NULL, 0, 0, value, NULL, 0,
-                NULL, NULL,
-                &gui_bar_config_change_color, NULL,
-                NULL, NULL);
+                NULL, NULL, NULL,
+                &gui_bar_config_change_color, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_COLOR_DELIM:
             ptr_option = config_file_new_option (
@@ -1488,9 +1523,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "color",
                 N_("default delimiter color for bar"),
                 NULL, 0, 0, value, NULL, 0,
-                NULL, NULL,
-                &gui_bar_config_change_color, NULL,
-                NULL, NULL);
+                NULL, NULL, NULL,
+                &gui_bar_config_change_color, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_COLOR_BG:
             ptr_option = config_file_new_option (
@@ -1498,9 +1533,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "color",
                 N_("default background color for bar"),
                 NULL, 0, 0, value, NULL, 0,
-                NULL, NULL,
-                &gui_bar_config_change_color, NULL,
-                NULL, NULL);
+                NULL, NULL, NULL,
+                &gui_bar_config_change_color, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_SEPARATOR:
             ptr_option = config_file_new_option (
@@ -1508,7 +1543,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 option_name, "boolean",
                 N_("separator line between bar and other bars/windows"),
                 NULL, 0, 0, value, NULL, 0,
-                NULL, NULL, &gui_bar_config_change_separator, NULL, NULL, NULL);
+                NULL, NULL, NULL,
+                &gui_bar_config_change_separator, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_OPTION_ITEMS:
             ptr_option = config_file_new_option (
@@ -1519,7 +1556,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                    "\"@buffer:item\" can be used to force buffer used when "
                    "displaying the bar item"),
                 NULL, 0, 0, gui_bar_default_items (bar_name), value, 0,
-                NULL, NULL, &gui_bar_config_change_items, NULL, NULL, NULL);
+                NULL, NULL, NULL,
+                &gui_bar_config_change_items, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case GUI_BAR_NUM_OPTIONS:
             break;
@@ -2263,11 +2302,12 @@ gui_bar_free_bar_windows (struct t_gui_bar *bar)
  */
 
 struct t_hdata *
-gui_bar_hdata_bar_cb (void *data, const char *hdata_name)
+gui_bar_hdata_bar_cb (const void *pointer, void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_bar", "next_bar",

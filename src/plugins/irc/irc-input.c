@@ -259,10 +259,12 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags,
  */
 
 int
-irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
+irc_input_data_cb (const void *pointer, void *data,
+                   struct t_gui_buffer *buffer,
                    const char *input_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     return irc_input_data (buffer, input_data,
@@ -287,7 +289,8 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-irc_input_send_cb (void *data, const char *signal,
+irc_input_send_cb (const void *pointer, void *data,
+                   const char *signal,
                    const char *type_data, void *signal_data)
 {
     const char *ptr_string, *ptr_message;
@@ -299,6 +302,7 @@ irc_input_send_cb (void *data, const char *signal,
     struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;

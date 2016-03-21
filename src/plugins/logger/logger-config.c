@@ -62,10 +62,11 @@ struct t_config_option *logger_config_file_time_format;
  */
 
 void
-logger_config_change_file_option_restart_log (void *data,
+logger_config_change_file_option_restart_log (const void *pointer, void *data,
                                               struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -78,10 +79,11 @@ logger_config_change_file_option_restart_log (void *data,
  */
 
 void
-logger_config_flush_delay_change (void *data,
+logger_config_flush_delay_change (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -112,7 +114,7 @@ logger_config_flush_delay_change (void *data,
         }
         logger_timer = weechat_hook_timer (weechat_config_integer (logger_config_file_flush_delay) * 1000,
                                            0, 0,
-                                           &logger_timer_cb, NULL);
+                                           &logger_timer_cb, NULL, NULL);
     }
 }
 
@@ -121,10 +123,11 @@ logger_config_flush_delay_change (void *data,
  */
 
 void
-logger_config_level_change (void *data,
+logger_config_level_change (const void *pointer, void *data,
                             struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -137,12 +140,13 @@ logger_config_level_change (void *data,
  */
 
 int
-logger_config_level_delete_option (void *data,
+logger_config_level_delete_option (const void *pointer, void *data,
                                    struct t_config_file *config_file,
                                    struct t_config_section *section,
                                    struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) config_file;
     (void) section;
@@ -159,7 +163,7 @@ logger_config_level_delete_option (void *data,
  */
 
 int
-logger_config_level_create_option (void *data,
+logger_config_level_create_option (const void *pointer, void *data,
                                    struct t_config_file *config_file,
                                    struct t_config_section *section,
                                    const char *option_name,
@@ -169,6 +173,7 @@ logger_config_level_create_option (void *data,
     int rc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -196,9 +201,10 @@ logger_config_level_create_option (void *data,
                     option_name, "integer",
                     _("logging level for this buffer (0 = logging disabled, "
                       "1 = a few messages (most important) .. 9 = all messages)"),
-                      NULL, 0, 9, "9", value, 0, NULL, NULL,
-                    &logger_config_level_change, NULL,
-                    NULL, NULL);
+                      NULL, 0, 9, "9", value, 0,
+                    NULL, NULL, NULL,
+                    &logger_config_level_change, NULL,  NULL,
+                    NULL, NULL, NULL);
                 rc = (ptr_option) ?
                     WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
             }
@@ -232,7 +238,7 @@ logger_config_get_level (const char *name)
 int
 logger_config_set_level (const char *name, const char *value)
 {
-    return logger_config_level_create_option (NULL,
+    return logger_config_level_create_option (NULL, NULL,
                                               logger_config_file,
                                               logger_config_section_level,
                                               name,
@@ -244,10 +250,11 @@ logger_config_set_level (const char *name, const char *value)
  */
 
 void
-logger_config_mask_change (void *data,
+logger_config_mask_change (const void *pointer, void *data,
                            struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -260,12 +267,13 @@ logger_config_mask_change (void *data,
  */
 
 int
-logger_config_mask_delete_option (void *data,
+logger_config_mask_delete_option (const void *pointer, void *data,
                                   struct t_config_file *config_file,
                                   struct t_config_section *section,
                                   struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) config_file;
     (void) section;
@@ -282,7 +290,7 @@ logger_config_mask_delete_option (void *data,
  */
 
 int
-logger_config_mask_create_option (void *data,
+logger_config_mask_create_option (const void *pointer, void *data,
                                   struct t_config_file *config_file,
                                   struct t_config_section *section,
                                   const char *option_name,
@@ -292,6 +300,7 @@ logger_config_mask_create_option (void *data,
     int rc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -319,9 +328,10 @@ logger_config_mask_create_option (void *data,
                     option_name, "string",
                     _("file mask for log file; local buffer variables are "
                       "permitted"),
-                    NULL, 0, 0, "", value, 0, NULL, NULL,
-                    &logger_config_mask_change, NULL,
-                    NULL, NULL);
+                    NULL, 0, 0, "", value, 0,
+                    NULL, NULL, NULL,
+                    &logger_config_mask_change, NULL, NULL,
+                    NULL, NULL, NULL);
                 rc = (ptr_option) ?
                     WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
             }
@@ -362,16 +372,18 @@ logger_config_init ()
     struct t_config_section *ptr_section;
 
     logger_config_file = weechat_config_new (LOGGER_CONFIG_NAME,
-                                             NULL, NULL);
+                                             NULL, NULL, NULL);
     if (!logger_config_file)
         return 0;
 
     /* look */
     ptr_section = weechat_config_new_section (logger_config_file, "look",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (logger_config_file);
@@ -383,14 +395,17 @@ logger_config_init ()
         "backlog", "integer",
         N_("maximum number of lines to display from log file when creating "
            "new buffer (0 = no backlog)"),
-        NULL, 0, INT_MAX, "20", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, INT_MAX, "20", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* color */
     ptr_section = weechat_config_new_section (logger_config_file, "color",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (logger_config_file);
@@ -401,19 +416,23 @@ logger_config_init ()
         logger_config_file, ptr_section,
         "backlog_end", "color",
         N_("color for line ending the backlog"),
-        NULL, -1, 0, "default", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, -1, 0, "default", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     logger_config_color_backlog_line = weechat_config_new_option (
         logger_config_file, ptr_section,
         "backlog_line", "color",
         N_("color for backlog lines"),
-        NULL, -1, 0, "default", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, -1, 0, "default", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* file */
     ptr_section = weechat_config_new_section (logger_config_file, "file",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (logger_config_file);
@@ -425,20 +444,24 @@ logger_config_init ()
         "auto_log", "boolean",
         N_("automatically save content of buffers to files (unless a buffer "
            "disables log)"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     logger_config_file_flush_delay = weechat_config_new_option (
         logger_config_file, ptr_section,
         "flush_delay", "integer",
         N_("number of seconds between flush of log files (0 = write in log "
            "files immediately for each line printed)"),
-        NULL, 0, 3600, "120", NULL, 0, NULL, NULL,
-        &logger_config_flush_delay_change, NULL, NULL, NULL);
+        NULL, 0, 3600, "120", NULL, 0,
+        NULL, NULL, NULL,
+        &logger_config_flush_delay_change, NULL, NULL,
+        NULL, NULL, NULL);
     logger_config_file_info_lines = weechat_config_new_option (
         logger_config_file, ptr_section,
         "info_lines", "boolean",
         N_("write information line in log file when log starts or ends for a "
            "buffer"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     logger_config_file_mask = weechat_config_new_option (
         logger_config_file, ptr_section,
         "mask", "string",
@@ -449,24 +472,30 @@ logger_config_init ()
            "that are defined on all buffers, so for example you should NOT "
            "use $server nor $channel); date specifiers are permitted "
            "(see man strftime)"),
-        NULL, 0, 0, "$plugin.$name.weechatlog", NULL, 0, NULL, NULL,
-        &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
+        NULL, 0, 0, "$plugin.$name.weechatlog", NULL, 0,
+        NULL, NULL, NULL,
+        &logger_config_change_file_option_restart_log, NULL, NULL,
+        NULL, NULL, NULL);
     logger_config_file_name_lower_case = weechat_config_new_option (
         logger_config_file, ptr_section,
         "name_lower_case", "boolean",
         N_("use only lower case for log filenames"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
-        &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        &logger_config_change_file_option_restart_log, NULL, NULL,
+        NULL, NULL, NULL);
     logger_config_file_nick_prefix = weechat_config_new_option (
         logger_config_file, ptr_section,
         "nick_prefix", "string",
         N_("text to write before nick in prefix of message, example: \"<\""),
-        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     logger_config_file_nick_suffix = weechat_config_new_option (
         logger_config_file, ptr_section,
         "nick_suffix", "string",
         N_("text to write after nick in prefix of message, example: \">\""),
-        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     logger_config_file_path = weechat_config_new_option (
         logger_config_file, ptr_section,
         "path", "string",
@@ -474,29 +503,36 @@ logger_config_init ()
            "replaced by WeeChat home (\"~/.weechat\" by default); date "
            "specifiers are permitted (see man strftime) "
            "(note: content is evaluated, see /help eval)"),
-        NULL, 0, 0, "%h/logs/", NULL, 0, NULL, NULL,
-        &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
+        NULL, 0, 0, "%h/logs/", NULL, 0,
+        NULL, NULL, NULL,
+        &logger_config_change_file_option_restart_log, NULL, NULL,
+        NULL, NULL, NULL);
     logger_config_file_replacement_char = weechat_config_new_option (
         logger_config_file, ptr_section,
         "replacement_char", "string",
         N_("replacement char for special chars in filename built with mask "
            "(like directory delimiter)"),
-        NULL, 0, 0, "_", NULL, 0, NULL, NULL,
-        &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
+        NULL, 0, 0, "_", NULL, 0,
+        NULL, NULL, NULL,
+        &logger_config_change_file_option_restart_log, NULL, NULL,
+        NULL, NULL, NULL);
     logger_config_file_time_format = weechat_config_new_option (
         logger_config_file, ptr_section,
         "time_format", "string",
         N_("timestamp used in log files (see man strftime for date/time "
            "specifiers)"),
-        NULL, 0, 0, "%Y-%m-%d %H:%M:%S", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "%Y-%m-%d %H:%M:%S", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* level */
-    ptr_section = weechat_config_new_section (logger_config_file, "level",
-                                              1, 1,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL,
-                                              &logger_config_level_create_option, NULL,
-                                              &logger_config_level_delete_option, NULL);
+    ptr_section = weechat_config_new_section (
+        logger_config_file, "level",
+        1, 1,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        &logger_config_level_create_option, NULL, NULL,
+        &logger_config_level_delete_option, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (logger_config_file);
@@ -506,12 +542,14 @@ logger_config_init ()
     logger_config_section_level = ptr_section;
 
     /* mask */
-    ptr_section = weechat_config_new_section (logger_config_file, "mask",
-                                              1, 1,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL,
-                                              &logger_config_mask_create_option, NULL,
-                                              &logger_config_mask_delete_option, NULL);
+    ptr_section = weechat_config_new_section (
+        logger_config_file, "mask",
+        1, 1,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        &logger_config_mask_create_option, NULL, NULL,
+        &logger_config_mask_delete_option, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (logger_config_file);
@@ -536,7 +574,7 @@ logger_config_read ()
     rc = weechat_config_read (logger_config_file);
     logger_config_loading = 0;
 
-    logger_config_flush_delay_change (NULL, NULL);
+    logger_config_flush_delay_change (NULL, NULL, NULL);
 
     return rc;
 }

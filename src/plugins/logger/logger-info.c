@@ -32,28 +32,31 @@
  */
 
 struct t_infolist *
-logger_info_infolist_logger_buffer_cb (void *data, const char *infolist_name,
-                                       void *pointer, const char *arguments)
+logger_info_infolist_logger_buffer_cb (const void *pointer, void *data,
+                                       const char *infolist_name,
+                                       void *obj_pointer,
+                                       const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_logger_buffer *ptr_logger_buffer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
     (void) arguments;
 
-    if (pointer && !logger_buffer_valid (pointer))
+    if (obj_pointer && !logger_buffer_valid (obj_pointer))
         return NULL;
 
     ptr_infolist = weechat_infolist_new ();
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one logger buffer */
-        if (!logger_buffer_add_to_infolist (ptr_infolist, pointer))
+        if (!logger_buffer_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
             return NULL;
@@ -90,5 +93,5 @@ logger_info_init ()
         "logger_buffer", N_("list of logger buffers"),
         N_("logger pointer (optional)"),
         NULL,
-        &logger_info_infolist_logger_buffer_cb, NULL);
+        &logger_info_infolist_logger_buffer_cb, NULL, NULL);
 }

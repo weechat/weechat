@@ -61,7 +61,6 @@ struct t_plugin_script
     char *description;                   /* plugin description              */
     char *shutdown_func;                 /* function when script is unloaded*/
     char *charset;                       /* script charset                  */
-    struct t_plugin_script_cb *callbacks; /* callbacks for script           */
     int unloading;                       /* script is being unloaded        */
     struct t_plugin_script *prev_script; /* link to previous script         */
     struct t_plugin_script *next_script; /* link to next script             */
@@ -69,27 +68,31 @@ struct t_plugin_script
 
 struct t_plugin_script_init
 {
-    int (*callback_command)(void *data, struct t_gui_buffer *buffer,
+    int (*callback_command)(const void *pointer, void *data,
+                            struct t_gui_buffer *buffer,
                             int argc, char **argv, char **argv_eol);
-    int (*callback_completion)(void *data, const char *completion_item,
+    int (*callback_completion)(const void *pointer, void *data,
+                               const char *completion_item,
                                struct t_gui_buffer *buffer,
                                struct t_gui_completion *completion);
-    struct t_hdata *(*callback_hdata)(void *data,
+    struct t_hdata *(*callback_hdata)(const void *pointer,
+                                      void *data,
                                       const char *hdata_name);
-    struct t_infolist *(*callback_infolist)(void *data,
+    struct t_infolist *(*callback_infolist)(const void *pointer,
+                                            void *data,
                                             const char *infolist_name,
-                                            void *pointer,
+                                            void *obj_pointer,
                                             const char *arguments);
-    int (*callback_signal_debug_dump)(void *data, const char *signal,
+    int (*callback_signal_debug_dump)(const void *pointer, void *data,
+                                      const char *signal,
                                       const char *type_data,
                                       void *signal_data);
-    int (*callback_signal_debug_libs)(void *data, const char *signal,
+    int (*callback_signal_debug_libs)(const void *pointer, void *data,
+                                      const char *signal,
                                       const char *type_data,
                                       void *signal_data);
-    int (*callback_signal_buffer_closed)(void *data, const char *signal,
-                                         const char *type_data,
-                                         void *signal_data);
-    int (*callback_signal_script_action)(void *data, const char *signal,
+    int (*callback_signal_script_action)(const void *pointer, void *data,
+                                         const char *signal,
                                          const char *type_data,
                                          void *signal_data);
     void (*callback_load_file)(void *data, const char *filename);
@@ -105,8 +108,14 @@ extern void *plugin_script_str2ptr (struct t_weechat_plugin *weechat_plugin,
                                     const char *script_name,
                                     const char *function_name,
                                     const char *pointer_str);
+extern char *plugin_script_build_function_and_data (const char *function,
+                                                    const char *data);
+extern void plugin_script_get_function_and_data (void *callback_data,
+                                                 const char **function,
+                                                 const char **data);
 extern void plugin_script_auto_load (struct t_weechat_plugin *weechat_plugin,
-                                     void (*callback)(void *data, const char *filename));
+                                     void (*callback)(void *data,
+                                                      const char *filename));
 extern struct t_plugin_script *plugin_script_search (struct t_weechat_plugin *weechat_plugin,
                                                      struct t_plugin_script *scripts,
                                                      const char *name);
@@ -122,13 +131,13 @@ extern struct t_plugin_script *plugin_script_add (struct t_weechat_plugin *weech
 extern void plugin_script_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
                                                 struct t_plugin_script *scripts,
                                                 struct t_plugin_script *script,
-                                                int (*callback_buffer_input) (void *data,
+                                                int (*callback_buffer_input) (const void *pointer,
+                                                                              void *data,
                                                                               struct t_gui_buffer *buffer,
                                                                               const char *input_data),
-                                                int (*callback_buffer_close) (void *data,
+                                                int (*callback_buffer_close) (const void *pointer,
+                                                                              void *data,
                                                                               struct t_gui_buffer *buffer));
-extern void plugin_script_remove_buffer_callbacks (struct t_plugin_script *scripts,
-                                                   struct t_gui_buffer *buffer);
 extern void plugin_script_remove (struct t_weechat_plugin *weechat_plugin,
                                   struct t_plugin_script **scripts,
                                   struct t_plugin_script **last_script,

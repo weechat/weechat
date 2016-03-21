@@ -176,7 +176,6 @@ WeeChat "core" is located in following directories:
 |    plugin-config.c                | Plugin configuration options (file plugins.conf)
 |    plugin-script.c                | Common functions used by script plugins
 |    plugin-script-api.c            | Script API functions: wrappers around some plugin API functions
-|    plugin-script-callback.c       | Callback management for scripts
 |    weechat-plugin.h               | Header designed to be distributed with WeeChat plugins, in order to compile them
 |    alias/                         | Alias plugin
 |       alias.c                     | Main alias functions

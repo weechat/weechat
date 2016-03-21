@@ -30,10 +30,12 @@
  */
 
 int
-fifo_command_fifo (void *data, struct t_gui_buffer *buffer, int argc,
+fifo_command_fifo (const void *pointer, void *data,
+                   struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) argv_eol;
@@ -113,5 +115,5 @@ fifo_command_init ()
            "Examples:\n"
            "  /fifo toggle"),
         "enable|disable|toggle",
-        &fifo_command_fifo, NULL);
+        &fifo_command_fifo, NULL, NULL);
 }

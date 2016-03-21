@@ -1140,11 +1140,11 @@ script_repo_file_read (int quiet)
 
     if (!script_repo_max_length_field)
     {
-        script_repo_max_length_field = weechat_hashtable_new (32,
-                                                              WEECHAT_HASHTABLE_STRING,
-                                                              WEECHAT_HASHTABLE_INTEGER,
-                                                              NULL,
-                                                              NULL);
+        script_repo_max_length_field = weechat_hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_INTEGER,
+            NULL, NULL);
     }
     else
         weechat_hashtable_remove_all (script_repo_max_length_field);
@@ -1201,8 +1201,7 @@ script_repo_file_read (int quiet)
     descriptions = weechat_hashtable_new (32,
                                           WEECHAT_HASHTABLE_STRING,
                                           WEECHAT_HASHTABLE_STRING,
-                                          NULL,
-                                          NULL);
+                                          NULL, NULL);
 
     /* read plugins.xml.gz */
     while (!gzeof (file))
@@ -1422,17 +1421,19 @@ script_repo_file_read (int quiet)
  */
 
 int
-script_repo_file_update_process_cb (void *data, const char *command,
+script_repo_file_update_process_cb (const void *pointer, void *data,
+                                    const char *command,
                                     int return_code, const char *out,
                                     const char *err)
 {
     int quiet;
 
     /* make C compiler happy */
+    (void) data;
     (void) command;
     (void) out;
 
-    quiet = (data == 0) ? 0 : 1;
+    quiet = (pointer) ? 1 : 0;
 
     if (return_code >= 0)
     {
@@ -1479,8 +1480,7 @@ script_repo_file_update (int quiet)
     options = weechat_hashtable_new (32,
                                      WEECHAT_HASHTABLE_STRING,
                                      WEECHAT_HASHTABLE_STRING,
-                                     NULL,
-                                     NULL);
+                                     NULL, NULL);
     if (options)
     {
         url = script_build_download_url (
@@ -1499,7 +1499,8 @@ script_repo_file_update (int quiet)
                 options,
                 weechat_config_integer (script_config_scripts_download_timeout) * 1000,
                 &script_repo_file_update_process_cb,
-                (quiet) ? (void *)1 : (void *)0);
+                (quiet) ? (void *)1 : (void *)0,
+                NULL);
             free (url);
         }
         weechat_hashtable_free (options);
@@ -1513,11 +1514,13 @@ script_repo_file_update (int quiet)
  */
 
 struct t_hdata *
-script_repo_hdata_script_cb (void *data, const char *hdata_name)
+script_repo_hdata_script_cb (const void *pointer, void *data,
+                             const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_script", "next_script",

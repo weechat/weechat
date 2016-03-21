@@ -26,8 +26,7 @@ plugin-config.h plugin-config.c)
 
 set(LIB_PLUGINS_SCRIPTS_SRC
 plugin-script.c plugin-script.h
-plugin-script-api.c plugin-script-api.h
-plugin-script-callback.c plugin-script-callback.h)
+plugin-script-api.c plugin-script-api.h)
 
 include_directories(${CMAKE_BINARY_DIR})
 add_library(weechat_plugins STATIC ${LIB_PLUGINS_SRC})

@@ -114,10 +114,12 @@ trigger_buffer_set_title ()
  */
 
 int
-trigger_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
-                        const char *input_data)
+trigger_buffer_input_cb (const void *pointer, void *data,
+                         struct t_gui_buffer *buffer,
+                         const char *input_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     /* close buffer */
@@ -144,9 +146,11 @@ trigger_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-trigger_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+trigger_buffer_close_cb (const void *pointer, void *data,
+                         struct t_gui_buffer *buffer)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -188,9 +192,10 @@ trigger_buffer_open (const char *filter, int switch_to_buffer)
 {
     if (!trigger_buffer)
     {
-        trigger_buffer = weechat_buffer_new (TRIGGER_BUFFER_NAME,
-                                             &trigger_buffer_input_cb, NULL,
-                                             &trigger_buffer_close_cb, NULL);
+        trigger_buffer = weechat_buffer_new (
+            TRIGGER_BUFFER_NAME,
+            &trigger_buffer_input_cb, NULL, NULL,
+            &trigger_buffer_close_cb, NULL, NULL);
 
         /* failed to create buffer ? then return */
         if (!trigger_buffer)

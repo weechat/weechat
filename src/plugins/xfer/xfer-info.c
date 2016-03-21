@@ -31,28 +31,30 @@
  */
 
 struct t_infolist *
-xfer_info_infolist_xfer_cb (void *data, const char *infolist_name,
-                            void *pointer, const char *arguments)
+xfer_info_infolist_xfer_cb (const void *pointer, void *data,
+                            const char *infolist_name,
+                            void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_xfer *ptr_xfer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
     (void) arguments;
 
-    if (pointer && !xfer_valid (pointer))
+    if (obj_pointer && !xfer_valid (obj_pointer))
         return NULL;
 
     ptr_infolist = weechat_infolist_new ();
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one xfer */
-        if (!xfer_add_to_infolist (ptr_infolist, pointer))
+        if (!xfer_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
             return NULL;
@@ -88,5 +90,5 @@ xfer_info_init ()
         "xfer", N_("list of xfer"),
         N_("xfer pointer (optional)"),
         NULL,
-        &xfer_info_infolist_xfer_cb, NULL);
+        &xfer_info_infolist_xfer_cb, NULL, NULL);
 }

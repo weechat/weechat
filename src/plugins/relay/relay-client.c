@@ -231,12 +231,16 @@ relay_client_set_desc (struct t_relay_client *client)
 
 #ifdef HAVE_GNUTLS
 int
-relay_client_handshake_timer_cb (void *data, int remaining_calls)
+relay_client_handshake_timer_cb (const void *pointer, void *data,
+                                 int remaining_calls)
 {
     struct t_relay_client *client;
     int rc;
 
-    client = (struct t_relay_client *)data;
+    /* make C compiler happy */
+    (void) data;
+
+    client = (struct t_relay_client *)pointer;
 
     rc = gnutls_handshake (client->gnutls_sess);
 
@@ -528,7 +532,7 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
  */
 
 int
-relay_client_recv_cb (void *arg_client, int fd)
+relay_client_recv_cb (const void *pointer, void *data, int fd)
 {
     struct t_relay_client *client;
     static char buffer[4096], decoded[8192 + 1];
@@ -537,9 +541,10 @@ relay_client_recv_cb (void *arg_client, int fd)
     unsigned long long decoded_length, length_buffer;
 
     /* make C compiler happy */
+    (void) data;
     (void) fd;
 
-    client = (struct t_relay_client *)arg_client;
+    client = (struct t_relay_client *)pointer;
 
     if (client->status != RELAY_STATUS_CONNECTED)
         return WEECHAT_RC_OK;
@@ -572,11 +577,11 @@ relay_client_recv_cb (void *arg_client, int fd)
                  * valid or not)
                  */
                 client->websocket = 1;
-                client->http_headers = weechat_hashtable_new (32,
-                                                              WEECHAT_HASHTABLE_STRING,
-                                                              WEECHAT_HASHTABLE_STRING,
-                                                              NULL,
-                                                              NULL);
+                client->http_headers = weechat_hashtable_new (
+                    32,
+                    WEECHAT_HASHTABLE_STRING,
+                    WEECHAT_HASHTABLE_STRING,
+                    NULL, NULL);
             }
         }
 
@@ -1003,7 +1008,7 @@ relay_client_send (struct t_relay_client *client,
  */
 
 int
-relay_client_timer_cb (void *data, int remaining_calls)
+relay_client_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_relay_client *ptr_client, *ptr_next_client;
     int num_sent, i, purge_delay;
@@ -1011,6 +1016,7 @@ relay_client_timer_cb (void *data, int remaining_calls)
     time_t current_time;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) remaining_calls;
 
@@ -1275,7 +1281,8 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                                                                    (ptr_option) ?
                                                                    weechat_config_integer (ptr_option) * 10 : 30 * 10,
                                                                    &relay_client_handshake_timer_cb,
-                                                                   new_client);
+                                                                   new_client,
+                                                                   NULL);
         }
 #endif /* HAVE_GNUTLS */
 
@@ -1314,7 +1321,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->hook_fd = weechat_hook_fd (new_client->sock,
                                                1, 0, 0,
                                                &relay_client_recv_cb,
-                                               new_client);
+                                               new_client, NULL);
 
         relay_client_count++;
 
@@ -1380,7 +1387,8 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
             new_client->hook_fd = weechat_hook_fd (new_client->sock,
                                                    1, 0, 0,
                                                    &relay_client_recv_cb,
-                                                   new_client);
+                                                   new_client,
+                                                   NULL);
         }
         else
             new_client->hook_fd = NULL;

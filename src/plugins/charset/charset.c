@@ -59,9 +59,11 @@ const char *charset_internal = NULL;
  */
 
 int
-charset_config_reload (void *data, struct t_config_file *config_file)
+charset_config_reload (const void *pointer, void *data,
+                       struct t_config_file *config_file)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     /* free all decode/encode charsets */
@@ -107,10 +109,12 @@ charset_decode_is_allowed (const char *charset)
  */
 
 int
-charset_check_charset_decode_cb (void *data, struct t_config_option *option,
+charset_check_charset_decode_cb (const void *pointer, void *data,
+                                 struct t_config_option *option,
                                  const char *value)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -122,7 +126,8 @@ charset_check_charset_decode_cb (void *data, struct t_config_option *option,
  */
 
 int
-charset_config_create_option (void *data, struct t_config_file *config_file,
+charset_config_create_option (const void *pointer, void *data,
+                              struct t_config_file *config_file,
                               struct t_config_section *section,
                               const char *option_name, const char *value)
 {
@@ -130,6 +135,7 @@ charset_config_create_option (void *data, struct t_config_file *config_file,
     int rc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -159,8 +165,9 @@ charset_config_create_option (void *data, struct t_config_file *config_file,
                         config_file, section,
                         option_name, "string", NULL,
                         NULL, 0, 0, "", value, 0,
-                        (section == charset_config_section_decode) ? &charset_check_charset_decode_cb : NULL, NULL,
-                        NULL, NULL, NULL, NULL);
+                        (section == charset_config_section_decode) ? &charset_check_charset_decode_cb : NULL, NULL, NULL,
+                        NULL, NULL, NULL,
+                        NULL, NULL, NULL);
                     rc = (ptr_option) ?
                         WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
                 }
@@ -195,15 +202,17 @@ charset_config_init ()
     struct t_config_section *ptr_section;
 
     charset_config_file = weechat_config_new (CHARSET_CONFIG_NAME,
-                                              &charset_config_reload, NULL);
+                                              &charset_config_reload, NULL, NULL);
     if (!charset_config_file)
         return 0;
 
     ptr_section = weechat_config_new_section (charset_config_file, "default",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (charset_config_file);
@@ -220,7 +229,9 @@ charset_config_init ()
          && (weechat_strcasecmp (charset_terminal,
                                  charset_internal) != 0)) ?
         charset_terminal : "iso-8859-1", NULL, 0,
-        &charset_check_charset_decode_cb, NULL, NULL, NULL, NULL, NULL);
+        &charset_check_charset_decode_cb, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     charset_default_encode = weechat_config_new_option (
         charset_config_file, ptr_section,
         "encode", "string",
@@ -228,14 +239,16 @@ charset_config_init ()
            "(if empty, default is UTF-8 because it is the WeeChat internal "
            "charset)"),
         NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
-    ptr_section = weechat_config_new_section (charset_config_file, "decode",
-                                              1, 1,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL,
-                                              &charset_config_create_option, NULL,
-                                              NULL, NULL);
+    ptr_section = weechat_config_new_section (
+        charset_config_file, "decode",
+        1, 1,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        &charset_config_create_option, NULL, NULL,
+        NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (charset_config_file);
@@ -244,12 +257,14 @@ charset_config_init ()
 
     charset_config_section_decode = ptr_section;
 
-    ptr_section = weechat_config_new_section (charset_config_file, "encode",
-                                              1, 1,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL,
-                                              &charset_config_create_option, NULL,
-                                              NULL, NULL);
+    ptr_section = weechat_config_new_section (
+        charset_config_file, "encode",
+        1, 1,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        &charset_config_create_option, NULL, NULL,
+        NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (charset_config_file);
@@ -365,12 +380,14 @@ charset_get (struct t_config_section *section, const char *name,
  */
 
 char *
-charset_decode_cb (void *data, const char *modifier, const char *modifier_data,
+charset_decode_cb (const void *pointer, void *data,
+                   const char *modifier, const char *modifier_data,
                    const char *string)
 {
     const char *charset;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) modifier;
 
@@ -394,12 +411,14 @@ charset_decode_cb (void *data, const char *modifier, const char *modifier_data,
  */
 
 char *
-charset_encode_cb (void *data, const char *modifier, const char *modifier_data,
+charset_encode_cb (const void *pointer, void *data,
+                   const char *modifier, const char *modifier_data,
                    const char *string)
 {
     const char *charset;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) modifier;
 
@@ -426,7 +445,7 @@ void
 charset_set (struct t_config_section *section, const char *type,
              const char *name, const char *value)
 {
-    if (charset_config_create_option (NULL,
+    if (charset_config_create_option (NULL, NULL,
                                       charset_config_file,
                                       section,
                                       name,
@@ -458,7 +477,8 @@ charset_display_charsets ()
  */
 
 int
-charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
+charset_command_cb (const void *pointer, void *data,
+                    struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
     struct t_config_section *ptr_section;
@@ -467,6 +487,7 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     const char *plugin_name, *name, *charset_modifier;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (argc < 2)
@@ -594,11 +615,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
            "charset: new charset for current buffer\n"
            "  reset: reset charsets for current buffer"),
         "decode|encode|reset",
-        &charset_command_cb, NULL);
+        &charset_command_cb, NULL, NULL);
 
     /* modifiers hooks */
-    weechat_hook_modifier ("charset_decode", &charset_decode_cb, NULL);
-    weechat_hook_modifier ("charset_encode", &charset_encode_cb, NULL);
+    weechat_hook_modifier ("charset_decode", &charset_decode_cb, NULL, NULL);
+    weechat_hook_modifier ("charset_encode", &charset_encode_cb, NULL, NULL);
 
     return WEECHAT_RC_OK;
 }

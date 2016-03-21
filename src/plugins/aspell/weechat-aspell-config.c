@@ -61,13 +61,14 @@ int *weechat_aspell_length_commands_to_check = NULL;
  */
 
 void
-weechat_aspell_config_change_commands (void *data,
+weechat_aspell_config_change_commands (const void *pointer, void *data,
                                        struct t_config_option *option)
 {
     const char *value;
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (weechat_aspell_commands_to_check)
@@ -106,10 +107,11 @@ weechat_aspell_config_change_commands (void *data,
  */
 
 void
-weechat_aspell_config_change_default_dict (void *data,
+weechat_aspell_config_change_default_dict (const void *pointer, void *data,
                                            struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -123,9 +125,11 @@ weechat_aspell_config_change_default_dict (void *data,
  */
 
 void
-weechat_aspell_config_change_enabled (void *data, struct t_config_option *option)
+weechat_aspell_config_change_enabled (const void *pointer, void *data,
+                                      struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     aspell_enabled = weechat_config_boolean (option);
@@ -140,10 +144,11 @@ weechat_aspell_config_change_enabled (void *data, struct t_config_option *option
  */
 
 void
-weechat_aspell_config_change_suggestions (void *data,
+weechat_aspell_config_change_suggestions (const void *pointer, void *data,
                                           struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -155,10 +160,11 @@ weechat_aspell_config_change_suggestions (void *data,
  */
 
 void
-weechat_aspell_config_dict_change (void *data,
+weechat_aspell_config_dict_change (const void *pointer, void *data,
                                    struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -172,12 +178,13 @@ weechat_aspell_config_dict_change (void *data,
  */
 
 int
-weechat_aspell_config_dict_delete_option (void *data,
+weechat_aspell_config_dict_delete_option (const void *pointer, void *data,
                                           struct t_config_file *config_file,
                                           struct t_config_section *section,
                                           struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) config_file;
     (void) section;
@@ -196,7 +203,7 @@ weechat_aspell_config_dict_delete_option (void *data,
  */
 
 int
-weechat_aspell_config_dict_create_option (void *data,
+weechat_aspell_config_dict_create_option (const void *pointer, void *data,
                                           struct t_config_file *config_file,
                                           struct t_config_section *section,
                                           const char *option_name,
@@ -206,6 +213,7 @@ weechat_aspell_config_dict_create_option (void *data,
     int rc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -236,9 +244,9 @@ weechat_aspell_config_dict_create_option (void *data,
                     option_name, "string",
                     _("comma separated list of dictionaries to use on this buffer"),
                     NULL, 0, 0, "", value, 0,
-                    NULL, NULL,
-                    &weechat_aspell_config_dict_change, NULL,
-                    NULL, NULL);
+                    NULL, NULL, NULL,
+                    &weechat_aspell_config_dict_change, NULL, NULL,
+                    NULL, NULL, NULL);
                 rc = (ptr_option) ?
                     WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
             }
@@ -269,10 +277,11 @@ weechat_aspell_config_dict_create_option (void *data,
  */
 
 void
-weechat_aspell_config_option_change (void *data,
+weechat_aspell_config_option_change (const void *pointer, void *data,
                                      struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -286,12 +295,13 @@ weechat_aspell_config_option_change (void *data,
  */
 
 int
-weechat_aspell_config_option_delete_option (void *data,
+weechat_aspell_config_option_delete_option (const void *pointer, void *data,
                                             struct t_config_file *config_file,
                                             struct t_config_section *section,
                                             struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) config_file;
     (void) section;
@@ -310,7 +320,7 @@ weechat_aspell_config_option_delete_option (void *data,
  */
 
 int
-weechat_aspell_config_option_create_option (void *data,
+weechat_aspell_config_option_create_option (const void *pointer, void *data,
                                             struct t_config_file *config_file,
                                             struct t_config_section *section,
                                             const char *option_name,
@@ -320,6 +330,7 @@ weechat_aspell_config_option_create_option (void *data,
     int rc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -348,9 +359,9 @@ weechat_aspell_config_option_create_option (void *data,
                     _("option for aspell (for list of available options and "
                       "format, run command \"aspell config\" in a shell)"),
                     NULL, 0, 0, "", value, 0,
-                    NULL, NULL,
-                    &weechat_aspell_config_option_change, NULL,
-                    NULL, NULL);
+                    NULL, NULL, NULL,
+                    &weechat_aspell_config_option_change, NULL, NULL,
+                    NULL, NULL, NULL);
                 rc = (ptr_option) ?
                     WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
             }
@@ -395,7 +406,7 @@ weechat_aspell_config_get_dict (const char *name)
 int
 weechat_aspell_config_set_dict (const char *name, const char *value)
 {
-    return weechat_aspell_config_dict_create_option (NULL,
+    return weechat_aspell_config_dict_create_option (NULL, NULL,
                                                      weechat_aspell_config_file,
                                                      weechat_aspell_config_section_dict,
                                                      name,
@@ -416,16 +427,19 @@ weechat_aspell_config_init ()
     struct t_config_section *ptr_section;
 
     weechat_aspell_config_file = weechat_config_new (ASPELL_CONFIG_NAME,
-                                                     NULL, NULL);
+                                                     NULL, NULL, NULL);
     if (!weechat_aspell_config_file)
         return 0;
 
     /* color */
-    ptr_section = weechat_config_new_section (weechat_aspell_config_file, "color",
-                                              0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+    ptr_section = weechat_config_new_section (
+        weechat_aspell_config_file, "color",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (weechat_aspell_config_file);
@@ -436,19 +450,24 @@ weechat_aspell_config_init ()
         weechat_aspell_config_file, ptr_section,
         "misspelled", "color",
         N_("text color for misspelled words (input bar)"),
-        NULL, 0, 0, "lightred", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "lightred", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     weechat_aspell_config_color_suggestions = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "suggestions", "color",
         N_("text color for suggestions on a misspelled word (status bar)"),
-        NULL, 0, 0, "default", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* check */
-    ptr_section = weechat_config_new_section (weechat_aspell_config_file, "check",
-                                              0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+    ptr_section = weechat_config_new_section (
+        weechat_aspell_config_file, "check",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (weechat_aspell_config_file);
@@ -463,7 +482,9 @@ weechat_aspell_config_init ()
         NULL, 0, 0,
         "ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,"
         "quit,topic", NULL, 0,
-        NULL, NULL, &weechat_aspell_config_change_commands, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &weechat_aspell_config_change_commands, NULL, NULL,
+        NULL, NULL, NULL);
     weechat_aspell_config_check_default_dict = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "default_dict", "string",
@@ -471,24 +492,30 @@ weechat_aspell_config_init ()
            "use when buffer has no dictionary defined (leave blank to disable "
            "aspell on buffers for which you didn't explicitly enabled it)"),
         NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, &weechat_aspell_config_change_default_dict, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &weechat_aspell_config_change_default_dict, NULL, NULL,
+        NULL, NULL, NULL);
     weechat_aspell_config_check_during_search = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "during_search", "boolean",
         N_("check words during text search in buffer"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     weechat_aspell_config_check_enabled = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "enabled", "boolean",
         N_("enable aspell check for command line"),
         NULL, 0, 0, "off", NULL, 0,
-        NULL, NULL, &weechat_aspell_config_change_enabled, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &weechat_aspell_config_change_enabled, NULL, NULL,
+        NULL, NULL, NULL);
     weechat_aspell_config_check_real_time = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "real_time", "boolean",
         N_("real-time spell checking of words (slower, disabled by default: "
            "words are checked only if there's delimiter after)"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     weechat_aspell_config_check_suggestions = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "suggestions", "integer",
@@ -496,22 +523,26 @@ weechat_aspell_config_init ()
            "for each dictionary set in buffer (-1 = disable suggestions, "
            "0 = display all possible suggestions in all languages)"),
         NULL, -1, INT_MAX, "-1", NULL, 0,
-        NULL, NULL, &weechat_aspell_config_change_suggestions, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &weechat_aspell_config_change_suggestions, NULL, NULL,
+        NULL, NULL, NULL);
     weechat_aspell_config_check_word_min_length = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "word_min_length", "integer",
         N_("minimum length for a word to be spell checked (use 0 to check all "
            "words)"),
-        NULL, 0, INT_MAX, "2", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, INT_MAX, "2", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* dict */
-    ptr_section = weechat_config_new_section (weechat_aspell_config_file, "dict",
-                                              1, 1,
-                                              NULL, NULL,
-                                              NULL, NULL,
-                                              NULL, NULL,
-                                              &weechat_aspell_config_dict_create_option, NULL,
-                                              &weechat_aspell_config_dict_delete_option, NULL);
+    ptr_section = weechat_config_new_section (
+        weechat_aspell_config_file, "dict",
+        1, 1,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        &weechat_aspell_config_dict_create_option, NULL, NULL,
+        &weechat_aspell_config_dict_delete_option, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (weechat_aspell_config_file);
@@ -521,13 +552,14 @@ weechat_aspell_config_init ()
     weechat_aspell_config_section_dict = ptr_section;
 
     /* option */
-    ptr_section = weechat_config_new_section (weechat_aspell_config_file, "option",
-                                              1, 1,
-                                              NULL, NULL,
-                                              NULL, NULL,
-                                              NULL, NULL,
-                                              &weechat_aspell_config_option_create_option, NULL,
-                                              &weechat_aspell_config_option_delete_option, NULL);
+    ptr_section = weechat_config_new_section (
+        weechat_aspell_config_file, "option",
+        1, 1,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        &weechat_aspell_config_option_create_option, NULL, NULL,
+        &weechat_aspell_config_option_delete_option, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (weechat_aspell_config_file);
@@ -551,8 +583,8 @@ weechat_aspell_config_read ()
     weechat_aspell_config_loading = 0;
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
-        weechat_aspell_config_change_commands (NULL,
-                                               weechat_aspell_config_check_commands);
+        weechat_aspell_config_change_commands (
+            NULL, NULL, weechat_aspell_config_check_commands);
     }
     weechat_aspell_speller_remove_unused ();
 

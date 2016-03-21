@@ -330,9 +330,11 @@ char *irc_server_fingerprint_str_sizes ();
 extern int irc_server_connect (struct t_irc_server *server);
 extern void irc_server_auto_connect (int auto_connect);
 extern void irc_server_autojoin_channels ();
-extern int irc_server_recv_cb (void *data, int fd);
-extern int irc_server_timer_sasl_cb (void *data, int remaining_calls);
-extern int irc_server_timer_cb (void *data, int remaining_calls);
+extern int irc_server_recv_cb (const void *pointer, void *data, int fd);
+extern int irc_server_timer_sasl_cb (const void *pointer, void *data,
+                                     int remaining_calls);
+extern int irc_server_timer_cb (const void *pointer, void *data,
+                                int remaining_calls);
 extern void irc_server_outqueue_free_all (struct t_irc_server *server,
                                           int priority);
 extern int irc_server_get_channel_count (struct t_irc_server *server);
@@ -347,14 +349,21 @@ extern void irc_server_disconnect (struct t_irc_server *server,
                                    int switch_address, int reconnect);
 extern void irc_server_disconnect_all ();
 extern void irc_server_free (struct t_irc_server *server);
-extern int irc_server_xfer_send_ready_cb (void *data, const char *signal,
-                                          const char *type_data, void *signal_data);
-extern int irc_server_xfer_resume_ready_cb (void *data, const char *signal,
-                                            const char *type_data, void *signal_data);
-extern int irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
+extern int irc_server_xfer_send_ready_cb (const void *pointer, void *data,
+                                          const char *signal,
+                                          const char *type_data,
+                                          void *signal_data);
+extern int irc_server_xfer_resume_ready_cb (const void *pointer, void *data,
+                                            const char *signal,
+                                            const char *type_data,
+                                            void *signal_data);
+extern int irc_server_xfer_send_accept_resume_cb (const void *pointer,
+                                                  void *data,
+                                                  const char *signal,
                                                   const char *type_data,
                                                   void *signal_data);
-extern struct t_hdata *irc_server_hdata_server_cb (void *data,
+extern struct t_hdata *irc_server_hdata_server_cb (const void *pointer,
+                                                   void *data,
                                                    const char *hdata_name);
 extern int irc_server_add_to_infolist (struct t_infolist *infolist,
                                        struct t_irc_server *server);

@@ -180,6 +180,7 @@ COMMAND_CALLBACK(bar)
     struct t_gui_window *ptr_window;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -547,6 +548,7 @@ COMMAND_CALLBACK(buffer)
     int i, error_main_buffer, num_buffers, count, prev_number, clear_number;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if ((argc == 1)
@@ -1293,6 +1295,7 @@ COMMAND_CALLBACK(color)
     struct t_gui_color_palette *color_palette;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) argv_eol;
 
@@ -1484,6 +1487,7 @@ COMMAND_CALLBACK(command)
     struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     COMMAND_MIN_ARGS(3, "");
@@ -1548,6 +1552,7 @@ COMMAND_CALLBACK(cursor)
     int x, y;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) argv_eol;
@@ -1636,6 +1641,7 @@ COMMAND_CALLBACK(debug)
     int debug;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if ((argc == 1)
@@ -1820,6 +1826,7 @@ COMMAND_CALLBACK(eval)
     struct t_hashtable *pointers, *options;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) argv;
 
@@ -1996,6 +2003,7 @@ COMMAND_CALLBACK(filter)
     struct t_gui_filter *ptr_filter;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if ((argc == 1)
@@ -2466,6 +2474,7 @@ COMMAND_CALLBACK(help)
     char empty_string[1] = { '\0' }, str_format[64];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) argv_eol;
@@ -2856,6 +2865,7 @@ COMMAND_CALLBACK(history)
     int n, n_total, n_user, displayed;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) argv_eol;
 
@@ -2908,6 +2918,7 @@ COMMAND_CALLBACK(history)
 COMMAND_CALLBACK(input)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     COMMAND_MIN_ARGS(2, "");
@@ -3280,6 +3291,7 @@ COMMAND_CALLBACK(key)
     int old_keys_count, keys_added, i, context, rc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -3697,6 +3709,7 @@ COMMAND_CALLBACK(layout)
     int flag_buffers, flag_windows, layout_is_current;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) argv_eol;
@@ -3884,9 +3897,10 @@ COMMAND_CALLBACK(layout)
  */
 
 int
-command_mouse_timer_cb (void *data, int remaining_calls)
+command_mouse_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) remaining_calls;
 
@@ -3911,7 +3925,8 @@ command_mouse_timer (const char *delay)
     seconds = strtol (delay, &error, 10);
     if (error && !error[0] && (seconds > 0))
     {
-        hook_timer (NULL, seconds * 1000, 0, 1, &command_mouse_timer_cb, NULL);
+        hook_timer (NULL, seconds * 1000, 0, 1,
+                    &command_mouse_timer_cb, NULL, NULL);
     }
 }
 
@@ -3922,6 +3937,7 @@ command_mouse_timer (const char *delay)
 COMMAND_CALLBACK(mouse)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) argv_eol;
@@ -3984,6 +4000,7 @@ COMMAND_CALLBACK(mute)
     struct t_gui_buffer *mute_buffer, *ptr_buffer, *gui_chat_mute_buffer_old;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (argc < 2)
@@ -4369,6 +4386,7 @@ COMMAND_CALLBACK(plugin)
     char **plugin_argv, *full_name;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -4481,6 +4499,7 @@ COMMAND_CALLBACK(print)
     long value;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     ptr_buffer = buffer;
@@ -4711,6 +4730,7 @@ COMMAND_CALLBACK(proxy)
     struct t_proxy *ptr_proxy;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -4833,6 +4853,7 @@ COMMAND_CALLBACK(quit)
     char *pos_args;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -4884,7 +4905,9 @@ command_reload_file (struct t_config_file *config_file)
 
     if (config_file->callback_reload)
         rc = (int) (config_file->callback_reload)
-            (config_file->callback_reload_data, config_file);
+            (config_file->callback_reload_pointer,
+             config_file->callback_reload_data,
+             config_file);
     else
         rc = config_file_reload (config_file);
 
@@ -4913,6 +4936,7 @@ COMMAND_CALLBACK(reload)
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) argv_eol;
@@ -4951,13 +4975,16 @@ COMMAND_CALLBACK(reload)
  */
 
 int
-command_repeat_timer_cb (void *data, int remaining_calls)
+command_repeat_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     char **repeat_args;
     int i;
     struct t_gui_buffer *ptr_buffer;
 
-    repeat_args = (char **)data;
+    /* make C compiler happy */
+    (void) data;
+
+    repeat_args = (char **)pointer;
 
     if (!repeat_args)
         return WEECHAT_RC_ERROR;
@@ -4997,6 +5024,7 @@ COMMAND_CALLBACK(repeat)
     char *error, *command, **repeat_args;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     COMMAND_MIN_ARGS(3, "");
@@ -5060,7 +5088,7 @@ COMMAND_CALLBACK(repeat)
                 repeat_args[0] = strdup (buffer->full_name);
                 repeat_args[1] = command;
                 hook_timer (NULL, interval, 0, count - 1,
-                            &command_repeat_timer_cb, repeat_args);
+                            &command_repeat_timer_cb, repeat_args, NULL);
             }
         }
         else
@@ -5104,6 +5132,7 @@ COMMAND_CALLBACK(save)
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) argv_eol;
@@ -5166,6 +5195,7 @@ COMMAND_CALLBACK(secure)
     int passphrase_was_set, count_encrypted;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -5587,6 +5617,7 @@ COMMAND_CALLBACK(set)
     struct t_weelist_item *item;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -5817,6 +5848,7 @@ COMMAND_CALLBACK(unset)
     int mask, length, number_reset, number_removed;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -5912,6 +5944,7 @@ COMMAND_CALLBACK(upgrade)
     int confirm_ok, index_args, rc, quit;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -6090,6 +6123,7 @@ COMMAND_CALLBACK(uptime)
     char string[512];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) argv_eol;
 
@@ -6239,6 +6273,7 @@ COMMAND_CALLBACK(version)
     int send_to_buffer_as_input, translated_string;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) argv_eol;
 
@@ -6267,16 +6302,17 @@ COMMAND_CALLBACK(version)
  */
 
 int
-command_wait_timer_cb (void *data, int remaining_calls)
+command_wait_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     char **timer_args;
     int i;
     struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    timer_args = (char **)data;
+    timer_args = (char **)pointer;
 
     if (!timer_args)
         return WEECHAT_RC_ERROR;
@@ -6314,6 +6350,7 @@ COMMAND_CALLBACK(wait)
     char **timer_args;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     COMMAND_MIN_ARGS(3, "");
@@ -6372,7 +6409,7 @@ COMMAND_CALLBACK(wait)
 
     /* schedule command, execute it after "delay" milliseconds */
     hook_timer (NULL, delay, 0, 1,
-                &command_wait_timer_cb, timer_args);
+                &command_wait_timer_cb, timer_args, NULL);
 
     return WEECHAT_RC_OK;
 }
@@ -6389,6 +6426,7 @@ COMMAND_CALLBACK(window)
     int win_args;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) argv_eol;
@@ -6761,7 +6799,7 @@ command_init ()
         N_("   -all: set or remove away status on all connected servers\n"
            "message: message for away (if no message is given, away status is "
            "removed)"),
-        "-all", &command_away, NULL);
+        "-all", &command_away, NULL, NULL);
     hook_command (
         NULL, "bar",
         N_("manage bars"),
@@ -6833,7 +6871,7 @@ command_init ()
         " || show %(bars_names)"
         " || toggle %(bars_names)"
         " || scroll %(bars_names) %(windows_numbers)|*",
-        &command_bar, NULL);
+        &command_bar, NULL, NULL);
     hook_command (
         NULL, "buffer",
         N_("manage buffers"),
@@ -6930,7 +6968,7 @@ command_init ()
         " || get %(buffer_properties_get)"
         " || %(buffers_plugins_names)|%(buffers_names)|%(irc_channels)|"
         "%(irc_privates)|%(buffers_numbers)|-|-1|+|+1",
-        &command_buffer, NULL);
+        &command_buffer, NULL, NULL);
     hook_command (
         NULL, "color",
         N_("define color aliases and display palette of colors"),
@@ -6967,7 +7005,7 @@ command_init ()
         " || term2rgb"
         " || rgb2term"
         " || -o",
-        &command_color, NULL);
+        &command_color, NULL, NULL);
     /*
      * give high priority (50000) so that an alias will not take precedence
      * over this command
@@ -6985,7 +7023,7 @@ command_init ()
         "-buffer %(buffers_plugins_names) "
         "%(plugins_names)|" PLUGIN_CORE " %(plugins_commands)"
         " || %(plugins_names)|" PLUGIN_CORE " %(plugins_commands)",
-        &command_command, NULL);
+        &command_command, NULL, NULL);
     hook_command (
         NULL, "cursor",
         N_("free movement of cursor on screen to execute actions on specific "
@@ -7023,7 +7061,7 @@ command_init ()
         "go %(cursor_areas)"
         " || move up|down|left|right|area_up|area_down|area_left|area_right"
         " || stop",
-        &command_cursor, NULL);
+        &command_cursor, NULL, NULL);
     hook_command (
         NULL, "debug",
         N_("control debug for core/plugins"),
@@ -7069,7 +7107,7 @@ command_init ()
         " || tags"
         " || term"
         " || windows",
-        &command_debug, NULL);
+        &command_debug, NULL, NULL);
     hook_command (
         NULL, "eval",
         N_("evaluate expression"),
@@ -7160,7 +7198,7 @@ command_init ()
            "  /eval -n -c abcd =~ (?-i)^abc           ==> 1\n"
            "  /eval -n -c abcd !~ abc                 ==> 0"),
         "-n|-s|-c -n|-s|-c",
-        &command_eval, NULL);
+        &command_eval, NULL, NULL);
     hook_command (
         NULL, "filter",
         N_("filter messages in buffers, to hide/show them according to tags or "
@@ -7243,7 +7281,7 @@ command_init ()
         " || add %(filters_names) %(buffers_plugins_names)|*"
         " || rename %(filters_names) %(filters_names)"
         " || del %(filters_names)|-all",
-        &command_filter, NULL);
+        &command_filter, NULL, NULL);
     hook_command (
         NULL, "help",
         N_("display help about commands and options"),
@@ -7257,7 +7295,7 @@ command_init ()
         "-list %(plugins_names)|" PLUGIN_CORE "|%*"
         " || -listfull %(plugins_names)|" PLUGIN_CORE "|%*"
         " || %(commands)|%(config_options)",
-        &command_help, NULL);
+        &command_help, NULL, NULL);
     hook_command (
         NULL, "history",
         N_("show buffer command history"),
@@ -7265,7 +7303,7 @@ command_init ()
         N_("clear: clear history\n"
            "value: number of history entries to show"),
         "clear",
-        &command_history, NULL);
+        &command_history, NULL, NULL);
     /*
      * give high priority (50000) so that an alias will not take precedence
      * over this command
@@ -7348,7 +7386,7 @@ command_init ()
         "grab_mouse|grab_mouse_area|set_unread|set_unread_current_buffer|"
         "switch_active_buffer|switch_active_buffer_previous|"
         "zoom_merged_buffer|insert|send|paste_start|paste_stop",
-        &command_input, NULL);
+        &command_input, NULL, NULL);
     hook_command (
         NULL, "key",
         N_("bind/unbind keys"),
@@ -7426,7 +7464,7 @@ command_init ()
         " || resetctxt %(keys_contexts) %(keys_codes_for_reset)"
         " || resetall %- %(keys_contexts)"
         " || missing %(keys_contexts)",
-        &command_key, NULL);
+        &command_key, NULL, NULL);
     hook_command (
         NULL, "layout",
         N_("manage buffers/windows layouts"),
@@ -7456,7 +7494,7 @@ command_init ()
         " || leave"
         " || del %(layouts_names)|buffers|windows buffers|windows"
         " || rename %(layouts_names) %(layouts_names)",
-        &command_layout, NULL);
+        &command_layout, NULL, NULL);
     hook_command (
         NULL, "mouse",
         N_("mouse control"),
@@ -7475,7 +7513,7 @@ command_init ()
            "  toggle mouse for 5 seconds:\n"
            "    /mouse toggle 5"),
         "enable|disable|toggle",
-        &command_mouse, NULL);
+        &command_mouse, NULL, NULL);
     hook_command (
         NULL, "mute",
         N_("execute a command silently"),
@@ -7501,7 +7539,7 @@ command_init ()
         "-core|-current %(commands)|%*"
         " || -buffer %(buffers_plugins_names) %(commands)|%*"
         " || %(commands)|%*",
-        &command_mute, NULL);
+        &command_mute, NULL, NULL);
     hook_command (
         NULL, "plugin",
         N_("list/load/unload plugins"),
@@ -7528,7 +7566,7 @@ command_init ()
         " || autoload"
         " || reload %(plugins_names)|* -a|-s"
         " || unload %(plugins_names)",
-        &command_plugin, NULL);
+        &command_plugin, NULL, NULL);
     hook_command (
         NULL, "print",
         N_("display text on a buffer"),
@@ -7582,7 +7620,7 @@ command_init ()
         " || -stdout"
         " || -stderr"
         " || -beep",
-        &command_print, NULL);
+        &command_print, NULL, NULL);
     hook_command (
         NULL, "proxy",
         N_("manage proxies"),
@@ -7618,7 +7656,7 @@ command_init ()
         " || add %(proxies_names) http|socks4|socks5"
         " || del %(proxies_names)"
         " || set %(proxies_names) %(proxies_options)",
-        &command_proxy, NULL);
+        &command_proxy, NULL, NULL);
     hook_command (
         NULL, "quit",
         N_("quit WeeChat"),
@@ -7634,7 +7672,7 @@ command_init ()
            "layout can be saved (see option "
            "\"weechat.look.save_layout_on_exit\")."),
         "",
-        &command_quit, NULL);
+        &command_quit, NULL, NULL);
     hook_command (
         NULL, "reload",
         N_("reload configuration files from disk"),
@@ -7643,7 +7681,7 @@ command_init ()
            "\n"
            "Without argument, all files (WeeChat and plugins) are reloaded."),
         "%(config_files)|%*",
-        &command_reload, NULL);
+        &command_reload, NULL, NULL);
     hook_command (
         NULL, "repeat",
         N_("execute a command several times"),
@@ -7659,7 +7697,7 @@ command_init ()
            "  scroll 2 pages up:\n"
            "    /repeat 2 /window page_up"),
         "%- %(commands)",
-        &command_repeat, NULL);
+        &command_repeat, NULL, NULL);
     hook_command (
         NULL, "save",
         N_("save configuration files to disk"),
@@ -7671,7 +7709,7 @@ command_init ()
            "By default all configuration files are saved to disk on /quit "
            "command (see option \"weechat.look.save_config_on_exit\")."),
         "%(config_files)|%*",
-        &command_save, NULL);
+        &command_save, NULL, NULL);
     hook_command (
         NULL, "secure",
         N_("manage secured data (passwords or private data encrypted in file "
@@ -7723,7 +7761,7 @@ command_init ()
         " || decrypt -discard"
         " || set %(secured_data)"
         " || del %(secured_data)",
-        &command_secure, NULL);
+        &command_secure, NULL, NULL);
     hook_command (
         NULL, "set",
         N_("set config options and environment variables"),
@@ -7762,7 +7800,7 @@ command_init ()
         "%(config_options) %(config_option_values)"
         " || diff %(config_options)|%*"
         " || env %(env_vars) %(env_value)",
-        &command_set, NULL);
+        &command_set, NULL, NULL);
     hook_command (
         NULL, "unset",
         N_("unset/reset config options"),
@@ -7782,7 +7820,7 @@ command_init ()
            "    /unset -mask weechat.color.*"),
         "%(config_options)"
         " || -mask %(config_options)",
-        &command_unset, NULL);
+        &command_unset, NULL, NULL);
     hook_command (
         NULL, "upgrade",
         N_("upgrade WeeChat without disconnecting from servers"),
@@ -7823,7 +7861,7 @@ command_init ()
            "It is possible to restore WeeChat session on another machine if you "
            "copy the content of directory \"~/.weechat\"."),
         "%(filename)|-dummy|-quit",
-        &command_upgrade, NULL);
+        &command_upgrade, NULL, NULL);
     hook_command (
         NULL, "uptime",
         N_("show WeeChat uptime"),
@@ -7831,7 +7869,7 @@ command_init ()
         N_(" -o: send uptime to current buffer as input (English string)\n"
            "-ol: send uptime to current buffer as input (translated string)"),
         "-o|-ol",
-        &command_uptime, NULL);
+        &command_uptime, NULL, NULL);
     hook_command (
         NULL, "version",
         N_("show WeeChat version and compilation date"),
@@ -7843,7 +7881,7 @@ command_init ()
            "all buffers (otherwise the irc command /version is used on irc "
            "buffers)."),
         "-o|-ol",
-        &command_version, NULL);
+        &command_version, NULL, NULL);
     hook_command (
         NULL, "wait",
         N_("schedule a command execution in future"),
@@ -7870,7 +7908,7 @@ command_init ()
            "  say 'hello' in 2 minutes:\n"
            "    /wait 2m hello"),
         "%- %(commands)",
-        &command_wait, NULL);
+        &command_wait, NULL, NULL);
     hook_command (
         NULL, "window",
         N_("manage windows"),
@@ -7976,7 +8014,7 @@ command_init ()
         " || merge all|-window %(windows_numbers)"
         " || bare"
         " || %(windows_numbers)",
-        &command_window, NULL);
+        &command_window, NULL, NULL);
 }
 
 /*

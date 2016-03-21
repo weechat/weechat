@@ -64,7 +64,8 @@ irc_info_create_string_with_pointer (char **string, void *pointer)
  */
 
 const char *
-irc_info_info_irc_is_channel_cb (void *data, const char *info_name,
+irc_info_info_irc_is_channel_cb (const void *pointer, void *data,
+                                 const char *info_name,
                                  const char *arguments)
 {
     char *pos_comma, *server;
@@ -73,6 +74,7 @@ irc_info_info_irc_is_channel_cb (void *data, const char *info_name,
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -99,12 +101,14 @@ irc_info_info_irc_is_channel_cb (void *data, const char *info_name,
  */
 
 const char *
-irc_info_info_irc_is_nick_cb (void *data, const char *info_name,
+irc_info_info_irc_is_nick_cb (const void *pointer, void *data,
+                              const char *info_name,
                               const char *arguments)
 {
     static char str_true[2] = "1";
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -118,12 +122,14 @@ irc_info_info_irc_is_nick_cb (void *data, const char *info_name,
  */
 
 const char *
-irc_info_info_irc_nick_cb (void *data, const char *info_name,
+irc_info_info_irc_nick_cb (const void *pointer, void *data,
+                           const char *info_name,
                            const char *arguments)
 {
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -142,10 +148,12 @@ irc_info_info_irc_nick_cb (void *data, const char *info_name,
  */
 
 const char *
-irc_info_info_irc_nick_from_host_cb (void *data, const char *info_name,
+irc_info_info_irc_nick_from_host_cb (const void *pointer, void *data,
+                                     const char *info_name,
                                      const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -158,10 +166,12 @@ irc_info_info_irc_nick_from_host_cb (void *data, const char *info_name,
  */
 
 const char *
-irc_info_info_irc_nick_color_cb (void *data, const char *info_name,
+irc_info_info_irc_nick_color_cb (const void *pointer, void *data,
+                                 const char *info_name,
                                  const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -174,10 +184,12 @@ irc_info_info_irc_nick_color_cb (void *data, const char *info_name,
  */
 
 const char *
-irc_info_info_irc_nick_color_name_cb (void *data, const char *info_name,
+irc_info_info_irc_nick_color_name_cb (const void *pointer, void *data,
+                                      const char *info_name,
                                       const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -190,7 +202,8 @@ irc_info_info_irc_nick_color_name_cb (void *data, const char *info_name,
  */
 
 const char *
-irc_info_info_irc_buffer_cb (void *data, const char *info_name,
+irc_info_info_irc_buffer_cb (const void *pointer, void *data,
+                             const char *info_name,
                              const char *arguments)
 {
     char *pos_comma, *pos_comma2, *server, *channel, *host;
@@ -199,6 +212,7 @@ irc_info_info_irc_buffer_cb (void *data, const char *info_name,
     struct t_irc_channel *ptr_channel;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -282,7 +296,8 @@ irc_info_info_irc_buffer_cb (void *data, const char *info_name,
  */
 
 const char *
-irc_info_info_irc_server_isupport_cb (void *data, const char *info_name,
+irc_info_info_irc_server_isupport_cb (const void *pointer, void *data,
+                                      const char *info_name,
                                       const char *arguments)
 {
     char *pos_comma, *server;
@@ -291,6 +306,7 @@ irc_info_info_irc_server_isupport_cb (void *data, const char *info_name,
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -317,7 +333,8 @@ irc_info_info_irc_server_isupport_cb (void *data, const char *info_name,
  */
 
 const char *
-irc_info_info_irc_server_isupport_value_cb (void *data, const char *info_name,
+irc_info_info_irc_server_isupport_value_cb (const void *pointer, void *data,
+                                            const char *info_name,
                                             const char *arguments)
 {
     char *pos_comma, *server;
@@ -325,6 +342,7 @@ irc_info_info_irc_server_isupport_value_cb (void *data, const char *info_name,
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -351,7 +369,7 @@ irc_info_info_irc_server_isupport_value_cb (void *data, const char *info_name,
  */
 
 struct t_hashtable *
-irc_info_info_hashtable_irc_message_parse_cb (void *data,
+irc_info_info_hashtable_irc_message_parse_cb (const void *pointer, void *data,
                                               const char *info_name,
                                               struct t_hashtable *hashtable)
 {
@@ -360,6 +378,7 @@ irc_info_info_hashtable_irc_message_parse_cb (void *data,
     struct t_hashtable *value;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -383,7 +402,7 @@ irc_info_info_hashtable_irc_message_parse_cb (void *data,
  */
 
 struct t_hashtable *
-irc_info_info_hashtable_irc_message_split_cb (void *data,
+irc_info_info_hashtable_irc_message_split_cb (const void *pointer, void *data,
                                               const char *info_name,
                                               struct t_hashtable *hashtable)
 {
@@ -392,6 +411,7 @@ irc_info_info_hashtable_irc_message_split_cb (void *data,
     struct t_hashtable *value;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -415,27 +435,29 @@ irc_info_info_hashtable_irc_message_split_cb (void *data,
  */
 
 struct t_infolist *
-irc_info_infolist_irc_server_cb (void *data, const char *infolist_name,
-                                 void *pointer, const char *arguments)
+irc_info_infolist_irc_server_cb (const void *pointer, void *data,
+                                 const char *infolist_name,
+                                 void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
-    if (pointer && !irc_server_valid (pointer))
+    if (obj_pointer && !irc_server_valid (obj_pointer))
         return NULL;
 
     ptr_infolist = weechat_infolist_new ();
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one server */
-        if (!irc_server_add_to_infolist (ptr_infolist, pointer))
+        if (!irc_server_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
             return NULL;
@@ -469,8 +491,9 @@ irc_info_infolist_irc_server_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-irc_info_infolist_irc_channel_cb (void *data, const char *infolist_name,
-                                  void *pointer, const char *arguments)
+irc_info_infolist_irc_channel_cb (const void *pointer, void *data,
+                                  const char *infolist_name,
+                                  void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_irc_server *ptr_server;
@@ -479,6 +502,7 @@ irc_info_infolist_irc_channel_cb (void *data, const char *infolist_name,
     int argc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
@@ -499,10 +523,10 @@ irc_info_infolist_irc_channel_cb (void *data, const char *infolist_name,
             weechat_string_free_split (argv);
             return NULL;
         }
-        if (!pointer && (argc >= 2))
+        if (!obj_pointer && (argc >= 2))
         {
-            pointer = irc_channel_search (ptr_server, argv[1]);
-            if (!pointer)
+            obj_pointer = irc_channel_search (ptr_server, argv[1]);
+            if (!obj_pointer)
             {
                 weechat_string_free_split (argv);
                 return NULL;
@@ -514,17 +538,17 @@ irc_info_infolist_irc_channel_cb (void *data, const char *infolist_name,
     if (!ptr_server)
         return NULL;
 
-    if (pointer && !irc_channel_valid (ptr_server, pointer))
+    if (obj_pointer && !irc_channel_valid (ptr_server, obj_pointer))
         return NULL;
 
     ptr_infolist = weechat_infolist_new ();
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one channel */
-        if (!irc_channel_add_to_infolist (ptr_infolist, pointer))
+        if (!irc_channel_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
             return NULL;
@@ -554,8 +578,9 @@ irc_info_infolist_irc_channel_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-irc_info_infolist_irc_nick_cb (void *data, const char *infolist_name,
-                               void *pointer, const char *arguments)
+irc_info_infolist_irc_nick_cb (const void *pointer, void *data,
+                               const char *infolist_name,
+                               void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_irc_server *ptr_server;
@@ -565,6 +590,7 @@ irc_info_infolist_irc_nick_cb (void *data, const char *infolist_name,
     int argc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
@@ -591,11 +617,11 @@ irc_info_infolist_irc_nick_cb (void *data, const char *infolist_name,
             weechat_string_free_split (argv);
             return NULL;
         }
-        if (!pointer && (argc >= 3))
+        if (!obj_pointer && (argc >= 3))
         {
-            pointer = irc_nick_search (ptr_server, ptr_channel,
+            obj_pointer = irc_nick_search (ptr_server, ptr_channel,
                                        argv[2]);
-            if (!pointer)
+            if (!obj_pointer)
             {
                 weechat_string_free_split (argv);
                 return NULL;
@@ -607,18 +633,18 @@ irc_info_infolist_irc_nick_cb (void *data, const char *infolist_name,
     if (!ptr_server || !ptr_channel)
         return NULL;
 
-    if (pointer && !irc_nick_valid (ptr_channel, pointer))
+    if (obj_pointer && !irc_nick_valid (ptr_channel, obj_pointer))
         return NULL;
 
     ptr_infolist = weechat_infolist_new ();
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one nick */
         if (!irc_nick_add_to_infolist (ptr_infolist,
-                                       pointer))
+                                       obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
             return NULL;
@@ -649,28 +675,30 @@ irc_info_infolist_irc_nick_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-irc_info_infolist_irc_ignore_cb (void *data, const char *infolist_name,
-                                 void *pointer, const char *arguments)
+irc_info_infolist_irc_ignore_cb (const void *pointer, void *data,
+                                 const char *infolist_name,
+                                 void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_irc_ignore *ptr_ignore;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
     (void) arguments;
 
-    if (pointer && !irc_ignore_valid (pointer))
+    if (obj_pointer && !irc_ignore_valid (obj_pointer))
         return NULL;
 
     ptr_infolist = weechat_infolist_new ();
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one ignore */
-        if (!irc_ignore_add_to_infolist (ptr_infolist, pointer))
+        if (!irc_ignore_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
             return NULL;
@@ -700,28 +728,30 @@ irc_info_infolist_irc_ignore_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-irc_info_infolist_irc_notify_cb (void *data, const char *infolist_name,
-                                 void *pointer, const char *arguments)
+irc_info_infolist_irc_notify_cb (const void *pointer, void *data,
+                                 const char *infolist_name,
+                                 void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_irc_server *ptr_server;
     struct t_irc_notify *ptr_notify;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
-    if (pointer && !irc_notify_valid (NULL, pointer))
+    if (obj_pointer && !irc_notify_valid (NULL, obj_pointer))
         return NULL;
 
     ptr_infolist = weechat_infolist_new ();
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one notify */
-        if (!irc_notify_add_to_infolist (ptr_infolist, pointer))
+        if (!irc_notify_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
             return NULL;
@@ -760,15 +790,18 @@ irc_info_infolist_irc_notify_cb (void *data, const char *infolist_name,
  */
 
 struct t_infolist *
-irc_info_infolist_irc_color_weechat_cb (void *data, const char *infolist_name,
-                                        void *pointer, const char *arguments)
+irc_info_infolist_irc_color_weechat_cb (const void *pointer, void *data,
+                                        const char *infolist_name,
+                                        void *obj_pointer,
+                                        const char *arguments)
 {
     struct t_infolist *ptr_infolist;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
-    (void) pointer;
+    (void) obj_pointer;
     (void) arguments;
 
     ptr_infolist = weechat_infolist_new ();
@@ -796,47 +829,47 @@ irc_info_init ()
         "irc_is_channel",
         N_("1 if string is a valid IRC channel name for server"),
         N_("server,channel (server is optional)"),
-        &irc_info_info_irc_is_channel_cb, NULL);
+        &irc_info_info_irc_is_channel_cb, NULL, NULL);
     weechat_hook_info (
         "irc_is_nick",
         N_("1 if string is a valid IRC nick name"),
         N_("nickname"),
-        &irc_info_info_irc_is_nick_cb, NULL);
+        &irc_info_info_irc_is_nick_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick",
         N_("get current nick on a server"),
         N_("server name"),
-        &irc_info_info_irc_nick_cb, NULL);
+        &irc_info_info_irc_nick_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick_from_host",
         N_("get nick from IRC host"),
         N_("IRC host (like `:nick!name@server.com`)"),
-        &irc_info_info_irc_nick_from_host_cb, NULL);
+        &irc_info_info_irc_nick_from_host_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick_color",
         N_("get nick color code"),
         N_("nickname"),
-        &irc_info_info_irc_nick_color_cb, NULL);
+        &irc_info_info_irc_nick_color_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick_color_name",
         N_("get nick color name"),
         N_("nickname"),
-        &irc_info_info_irc_nick_color_name_cb, NULL);
+        &irc_info_info_irc_nick_color_name_cb, NULL, NULL);
     weechat_hook_info (
         "irc_buffer",
         N_("get buffer pointer for an IRC server/channel/nick"),
         N_("server,channel,nick (channel and nicks are optional)"),
-        &irc_info_info_irc_buffer_cb, NULL);
+        &irc_info_info_irc_buffer_cb, NULL, NULL);
     weechat_hook_info (
         "irc_server_isupport",
         N_("1 if server supports this feature (from IRC message 005)"),
         N_("server,feature"),
-        &irc_info_info_irc_server_isupport_cb, NULL);
+        &irc_info_info_irc_server_isupport_cb, NULL, NULL);
     weechat_hook_info (
         "irc_server_isupport_value",
         N_("value of feature, if supported by server (from IRC message 005)"),
         N_("server,feature"),
-        &irc_info_info_irc_server_isupport_value_cb, NULL);
+        &irc_info_info_irc_server_isupport_value_cb, NULL, NULL);
 
     /* info_hashtable hooks */
     weechat_hook_info_hashtable (
@@ -860,7 +893,7 @@ irc_info_init ()
            "\"channel\" was not found), "
            "\"pos_text\": index of \"text\" message (\"-1\" if "
            "\"text\" was not found)"),
-        &irc_info_info_hashtable_irc_message_parse_cb, NULL);
+        &irc_info_info_hashtable_irc_message_parse_cb, NULL, NULL);
     weechat_hook_info_hashtable (
         "irc_message_split",
         N_("split an IRC message (to fit in 512 bytes)"),
@@ -869,7 +902,7 @@ irc_info_init ()
         N_("\"msg1\" ... \"msgN\": messages to send (without final \"\\r\\n\"), "
            "\"args1\" ... \"argsN\": arguments of messages, \"count\": number "
            "of messages"),
-        &irc_info_info_hashtable_irc_message_split_cb, NULL);
+        &irc_info_info_hashtable_irc_message_split_cb, NULL, NULL);
 
     /* infolist hooks */
     weechat_hook_infolist (
@@ -877,61 +910,61 @@ irc_info_init ()
         N_("list of IRC servers"),
         N_("server pointer (optional)"),
         N_("server name (wildcard \"*\" is allowed) (optional)"),
-        &irc_info_infolist_irc_server_cb, NULL);
+        &irc_info_infolist_irc_server_cb, NULL, NULL);
     weechat_hook_infolist (
         "irc_channel",
         N_("list of channels for an IRC server"),
         N_("channel pointer (optional)"),
         N_("server,channel (channel is optional)"),
-        &irc_info_infolist_irc_channel_cb, NULL);
+        &irc_info_infolist_irc_channel_cb, NULL, NULL);
     weechat_hook_infolist (
         "irc_nick",
         N_("list of nicks for an IRC channel"),
         N_("nick pointer (optional)"),
         N_("server,channel,nick (nick is optional)"),
-        &irc_info_infolist_irc_nick_cb, NULL);
+        &irc_info_infolist_irc_nick_cb, NULL, NULL);
     weechat_hook_infolist (
         "irc_ignore",
         N_("list of IRC ignores"),
         N_("ignore pointer (optional)"),
         NULL,
-        &irc_info_infolist_irc_ignore_cb, NULL);
+        &irc_info_infolist_irc_ignore_cb, NULL, NULL);
     weechat_hook_infolist (
         "irc_notify",
         N_("list of notify"),
         N_("notify pointer (optional)"),
         N_("server name (wildcard \"*\" is allowed) (optional)"),
-        &irc_info_infolist_irc_notify_cb, NULL);
+        &irc_info_infolist_irc_notify_cb, NULL, NULL);
     weechat_hook_infolist (
         "irc_color_weechat",
         N_("mapping between IRC color codes and WeeChat color names"),
         NULL,
         NULL,
-        &irc_info_infolist_irc_color_weechat_cb, NULL);
+        &irc_info_infolist_irc_color_weechat_cb, NULL, NULL);
 
     /* hdata hooks */
     weechat_hook_hdata (
         "irc_nick", N_("irc nick"),
-        &irc_nick_hdata_nick_cb, NULL);
+        &irc_nick_hdata_nick_cb, NULL, NULL);
     weechat_hook_hdata (
         "irc_channel", N_("irc channel"),
-        &irc_channel_hdata_channel_cb, NULL);
+        &irc_channel_hdata_channel_cb, NULL, NULL);
     weechat_hook_hdata (
         "irc_channel_speaking", N_("irc channel_speaking"),
-        &irc_channel_hdata_channel_speaking_cb, NULL);
+        &irc_channel_hdata_channel_speaking_cb, NULL, NULL);
     weechat_hook_hdata (
         "irc_ignore", N_("irc ignore"),
-        &irc_ignore_hdata_ignore_cb, NULL);
+        &irc_ignore_hdata_ignore_cb, NULL, NULL);
     weechat_hook_hdata (
         "irc_notify", N_("irc notify"),
-        &irc_notify_hdata_notify_cb, NULL);
+        &irc_notify_hdata_notify_cb, NULL, NULL);
     weechat_hook_hdata (
         "irc_redirect_pattern", N_("pattern for irc redirect"),
-        &irc_redirect_hdata_redirect_pattern_cb, NULL);
+        &irc_redirect_hdata_redirect_pattern_cb, NULL, NULL);
     weechat_hook_hdata (
         "irc_redirect", N_("irc redirect"),
-        &irc_redirect_hdata_redirect_cb, NULL);
+        &irc_redirect_hdata_redirect_cb, NULL, NULL);
     weechat_hook_hdata (
         "irc_server", N_("irc server"),
-        &irc_server_hdata_server_cb, NULL);
+        &irc_server_hdata_server_cb, NULL, NULL);
 }

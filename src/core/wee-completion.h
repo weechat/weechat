@@ -23,7 +23,8 @@
 struct t_gui_buffer;
 struct t_gui_completion;
 
-extern int completion_list_add_filename_cb (void *data,
+extern int completion_list_add_filename_cb (const void *pointer,
+                                            void *data,
                                             const char *completion_item,
                                             struct t_gui_buffer *buffer,
                                             struct t_gui_completion *completion);

@@ -35,7 +35,8 @@
  */
 
 char *
-weechat_aspell_bar_item_dict (void *data, struct t_gui_bar_item *item,
+weechat_aspell_bar_item_dict (const void *pointer, void *data,
+                              struct t_gui_bar_item *item,
                               struct t_gui_window *window,
                               struct t_gui_buffer *buffer,
                               struct t_hashtable *extra_info)
@@ -43,6 +44,7 @@ weechat_aspell_bar_item_dict (void *data, struct t_gui_bar_item *item,
     const char *dict_list;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) item;
     (void) window;
@@ -61,7 +63,8 @@ weechat_aspell_bar_item_dict (void *data, struct t_gui_bar_item *item,
  */
 
 char *
-weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
+weechat_aspell_bar_item_suggest (const void *pointer, void *data,
+                                 struct t_gui_bar_item *item,
                                  struct t_gui_window *window,
                                  struct t_gui_buffer *buffer,
                                  struct t_hashtable *extra_info)
@@ -71,6 +74,7 @@ weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
     int i, num_suggestions, length;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) item;
     (void) window;
@@ -132,6 +136,8 @@ weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
 void
 weechat_aspell_bar_item_init ()
 {
-    weechat_bar_item_new ("aspell_dict", &weechat_aspell_bar_item_dict, NULL);
-    weechat_bar_item_new ("aspell_suggest", &weechat_aspell_bar_item_suggest, NULL);
+    weechat_bar_item_new ("aspell_dict",
+                          &weechat_aspell_bar_item_dict, NULL, NULL);
+    weechat_bar_item_new ("aspell_suggest",
+                          &weechat_aspell_bar_item_suggest, NULL, NULL);
 }

@@ -224,7 +224,8 @@ irc_upgrade_save ()
     int rc;
     struct t_upgrade_file *upgrade_file;
 
-    upgrade_file = weechat_upgrade_new (IRC_UPGRADE_FILENAME, 1);
+    upgrade_file = weechat_upgrade_new (IRC_UPGRADE_FILENAME,
+                                        NULL, NULL, NULL);
     if (!upgrade_file)
         return 0;
 
@@ -269,7 +270,7 @@ irc_upgrade_set_buffer_callbacks ()
                     if (ptr_server)
                     {
                         weechat_buffer_set_pointer (ptr_buffer,
-                                                    "nickcmp_callback_data",
+                                                    "nickcmp_callback_pointer",
                                                     ptr_server);
                     }
                 }
@@ -289,7 +290,7 @@ irc_upgrade_set_buffer_callbacks ()
  */
 
 int
-irc_upgrade_read_cb (void *data,
+irc_upgrade_read_cb (const void *pointer, void *data,
                      struct t_upgrade_file *upgrade_file,
                      int object_id,
                      struct t_infolist *infolist)
@@ -306,6 +307,7 @@ irc_upgrade_read_cb (void *data,
     struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) upgrade_file;
 
@@ -354,10 +356,12 @@ irc_upgrade_read_cb (void *data,
                     if (sock >= 0)
                     {
                         irc_upgrade_current_server->sock = sock;
-                        irc_upgrade_current_server->hook_fd = weechat_hook_fd (irc_upgrade_current_server->sock,
-                                                                               1, 0, 0,
-                                                                               &irc_server_recv_cb,
-                                                                               irc_upgrade_current_server);
+                        irc_upgrade_current_server->hook_fd = weechat_hook_fd (
+                            irc_upgrade_current_server->sock,
+                            1, 0, 0,
+                            &irc_server_recv_cb,
+                            irc_upgrade_current_server,
+                            NULL);
                     }
                     irc_upgrade_current_server->is_connected = weechat_infolist_integer (infolist, "is_connected");
                     irc_upgrade_current_server->ssl_connected = weechat_infolist_integer (infolist, "ssl_connected");
@@ -734,10 +738,13 @@ irc_upgrade_load ()
 
     irc_upgrade_set_buffer_callbacks ();
 
-    upgrade_file = weechat_upgrade_new (IRC_UPGRADE_FILENAME, 0);
+    upgrade_file = weechat_upgrade_new (IRC_UPGRADE_FILENAME,
+                                        &irc_upgrade_read_cb, NULL, NULL);
     if (!upgrade_file)
         return 0;
-    rc = weechat_upgrade_read (upgrade_file, &irc_upgrade_read_cb, NULL);
+
+    rc = weechat_upgrade_read (upgrade_file);
+
     weechat_upgrade_close (upgrade_file);
 
     return rc;

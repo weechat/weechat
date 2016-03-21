@@ -266,7 +266,7 @@ trigger_hook (struct t_trigger *trigger)
                         trigger->hooks[i] = weechat_hook_signal (
                             argv[i],
                             &trigger_callback_signal_cb,
-                            trigger);
+                            trigger, NULL);
                     }
                 }
             }
@@ -283,7 +283,7 @@ trigger_hook (struct t_trigger *trigger)
                         trigger->hooks[i] = weechat_hook_hsignal (
                             argv[i],
                             &trigger_callback_hsignal_cb,
-                            trigger);
+                            trigger, NULL);
                     }
                 }
             }
@@ -300,7 +300,7 @@ trigger_hook (struct t_trigger *trigger)
                         trigger->hooks[i] = weechat_hook_modifier (
                             argv[i],
                             &trigger_callback_modifier_cb,
-                            trigger);
+                            trigger, NULL);
                     }
                 }
             }
@@ -330,7 +330,7 @@ trigger_hook (struct t_trigger *trigger)
                     message,
                     strip_colors,
                     &trigger_callback_print_cb,
-                    trigger);
+                    trigger, NULL);
             }
             break;
         case TRIGGER_HOOK_COMMAND:
@@ -347,7 +347,7 @@ trigger_hook (struct t_trigger *trigger)
                         (argc > 3) ? argv[3] : "",  /* description of args */
                         (argc > 4) ? argv[4] : "",  /* completion */
                         &trigger_callback_command_cb,
-                        trigger);
+                        trigger, NULL);
                 }
             }
             break;
@@ -363,7 +363,7 @@ trigger_hook (struct t_trigger *trigger)
                         trigger->hooks[i] = weechat_hook_command_run (
                             argv[i],
                             &trigger_callback_command_run_cb,
-                            trigger);
+                            trigger, NULL);
                     }
                 }
             }
@@ -393,7 +393,7 @@ trigger_hook (struct t_trigger *trigger)
                             (int)align_second,
                             (int)max_calls,
                             &trigger_callback_timer_cb,
-                            trigger);
+                            trigger, NULL);
                     }
                 }
             }
@@ -410,7 +410,7 @@ trigger_hook (struct t_trigger *trigger)
                         trigger->hooks[i] = weechat_hook_config (
                             argv[i],
                             &trigger_callback_config_cb,
-                            trigger);
+                            trigger, NULL);
                     }
                 }
             }
@@ -427,7 +427,7 @@ trigger_hook (struct t_trigger *trigger)
                         trigger->hooks[i] = weechat_hook_focus (
                             argv[i],
                             &trigger_callback_focus_cb,
-                            trigger);
+                            trigger, NULL);
                     }
                 }
             }
@@ -1151,10 +1151,12 @@ trigger_print_log ()
  */
 
 int
-trigger_debug_dump_cb (void *data, const char *signal, const char *type_data,
+trigger_debug_dump_cb (const void *pointer, void *data,
+                       const char *signal, const char *type_data,
                        void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1197,7 +1199,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     trigger_config_read ();
 
     /* hook some signals */
-    weechat_hook_signal ("debug_dump", &trigger_debug_dump_cb, NULL);
+    weechat_hook_signal ("debug_dump", &trigger_debug_dump_cb, NULL, NULL);
 
     /* hook completions */
     trigger_completion_init ();

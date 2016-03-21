@@ -32,7 +32,8 @@
  */
 
 int
-exec_completion_commands_ids_cb (void *data, const char *completion_item,
+exec_completion_commands_ids_cb (const void *pointer, void *data,
+                                 const char *completion_item,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
 {
@@ -40,6 +41,7 @@ exec_completion_commands_ids_cb (void *data, const char *completion_item,
     char str_number[32];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -69,5 +71,5 @@ exec_completion_init ()
 {
     weechat_hook_completion ("exec_commands_ids",
                              N_("ids (numbers and names) of executed commands"),
-                             &exec_completion_commands_ids_cb, NULL);
+                             &exec_completion_commands_ids_cb, NULL, NULL);
 }

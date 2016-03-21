@@ -30,28 +30,30 @@
  */
 
 struct t_infolist *
-alias_info_infolist_alias_cb (void *data, const char *infolist_name,
-                              void *pointer, const char *arguments)
+alias_info_infolist_alias_cb (const void *pointer, void *data,
+                              const char *infolist_name,
+                              void *obj_pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_alias *ptr_alias;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
     (void) arguments;
 
-    if (pointer && !alias_valid (pointer))
+    if (obj_pointer && !alias_valid (obj_pointer))
         return NULL;
 
     ptr_infolist = weechat_infolist_new ();
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one alias */
-        if (!alias_add_to_infolist (ptr_infolist, pointer))
+        if (!alias_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
             return NULL;
@@ -90,5 +92,5 @@ alias_info_init ()
         "alias", N_("list of aliases"),
         N_("alias pointer (optional)"),
         N_("alias name (wildcard \"*\" is allowed) (optional)"),
-        &alias_info_infolist_alias_cb, NULL);
+        &alias_info_infolist_alias_cb, NULL, NULL);
 }

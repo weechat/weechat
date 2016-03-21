@@ -33,13 +33,15 @@
  */
 
 int
-xfer_completion_nick_cb (void *data, const char *completion_item,
+xfer_completion_nick_cb (const void *pointer, void *data,
+                         const char *completion_item,
                          struct t_gui_buffer *buffer,
                          struct t_gui_completion *completion)
 {
     struct t_xfer *ptr_xfer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
 
@@ -70,5 +72,5 @@ xfer_completion_init ()
 {
     weechat_hook_completion ("nick",
                              N_("nicks of DCC chat"),
-                             &xfer_completion_nick_cb, NULL);
+                             &xfer_completion_nick_cb, NULL, NULL);
 }

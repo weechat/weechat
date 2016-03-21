@@ -259,12 +259,14 @@ xfer_buffer_refresh (const char *hotlist)
  */
 
 int
-xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
+xfer_buffer_input_cb (const void *pointer, void *data,
+                      struct t_gui_buffer *buffer,
                       const char *input_data)
 {
     struct t_xfer *xfer, *ptr_xfer, *next_xfer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     xfer = xfer_search_by_number (xfer_buffer_selected_line);
@@ -323,9 +325,11 @@ xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-xfer_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+xfer_buffer_close_cb (const void *pointer, void *data,
+                      struct t_gui_buffer *buffer)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -344,8 +348,8 @@ xfer_buffer_open ()
     if (!xfer_buffer)
     {
         xfer_buffer = weechat_buffer_new (XFER_BUFFER_NAME,
-                                          &xfer_buffer_input_cb, NULL,
-                                          &xfer_buffer_close_cb, NULL);
+                                          &xfer_buffer_input_cb, NULL, NULL,
+                                          &xfer_buffer_close_cb, NULL, NULL);
 
         /* failed to create buffer ? then exit */
         if (!xfer_buffer)

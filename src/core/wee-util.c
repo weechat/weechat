@@ -484,8 +484,9 @@ util_mkdir_parents (const char *directory, int mode)
  */
 
 void
-util_exec_on_files (const char *directory, int hidden_files, void *data,
-                    void (*callback)(void *data, const char *filename))
+util_exec_on_files (const char *directory, int hidden_files,
+                    void (*callback)(void *data, const char *filename),
+                    void *callback_data)
 {
     char complete_filename[1024];
     DIR *dir;
@@ -507,7 +508,7 @@ util_exec_on_files (const char *directory, int hidden_files, void *data,
                 lstat (complete_filename, &statbuf);
                 if (!S_ISDIR(statbuf.st_mode))
                 {
-                    (*callback) (data, complete_filename);
+                    (*callback) (callback_data, complete_filename);
                 }
             }
         }

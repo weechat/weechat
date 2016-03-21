@@ -1562,11 +1562,13 @@ gui_line_mix_buffers (struct t_gui_buffer *buffer)
  */
 
 struct t_hdata *
-gui_line_hdata_lines_cb (void *data, const char *hdata_name)
+gui_line_hdata_lines_cb (const void *pointer, void *data,
+                         const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
@@ -1591,11 +1593,13 @@ gui_line_hdata_lines_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-gui_line_hdata_line_cb (void *data, const char *hdata_name)
+gui_line_hdata_line_cb (const void *pointer, void *data,
+                        const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_line", "next_line",
@@ -1704,11 +1708,13 @@ gui_line_hdata_line_data_update_cb (void *data,
  */
 
 struct t_hdata *
-gui_line_hdata_line_data_cb (void *data, const char *hdata_name)
+gui_line_hdata_line_data_cb (const void *pointer, void *data,
+                             const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, NULL, NULL,

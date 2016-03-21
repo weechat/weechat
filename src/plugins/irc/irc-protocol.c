@@ -518,7 +518,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                         timeout * 1000,
                         0, 1,
                         &irc_server_timer_sasl_cb,
-                        server);
+                        server, NULL);
                 }
             }
         }
@@ -1035,7 +1035,7 @@ IRC_PROTOCOL_CALLBACK(kick)
                                                   IRC_SERVER_OPTION_AUTOREJOIN_DELAY) * 1000,
                         0, 1,
                         &irc_channel_autorejoin_cb,
-                        ptr_channel);
+                        ptr_channel, NULL);
             }
         }
 
@@ -5531,8 +5531,7 @@ irc_protocol_get_message_tags (const char *tags)
     hashtable = weechat_hashtable_new (32,
                                        WEECHAT_HASHTABLE_STRING,
                                        WEECHAT_HASHTABLE_STRING,
-                                       NULL,
-                                       NULL);
+                                       NULL, NULL);
     if (!hashtable)
         return NULL;
 

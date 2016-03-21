@@ -64,12 +64,14 @@ int irc_signal_upgrade_received = 0;   /* signal "upgrade" received ?       */
  */
 
 int
-irc_signal_quit_cb (void *data, const char *signal, const char *type_data,
+irc_signal_quit_cb (const void *pointer, void *data,
+                    const char *signal, const char *type_data,
                     void *signal_data)
 {
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
 
@@ -92,13 +94,15 @@ irc_signal_quit_cb (void *data, const char *signal, const char *type_data,
  */
 
 int
-irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
+irc_signal_upgrade_cb (const void *pointer, void *data,
+                       const char *signal, const char *type_data,
                        void *signal_data)
 {
     struct t_irc_server *ptr_server;
     int quit, ssl_disconnected;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -179,21 +183,32 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     /* hook some signals */
     irc_debug_init ();
-    weechat_hook_signal ("quit", &irc_signal_quit_cb, NULL);
-    weechat_hook_signal ("upgrade", &irc_signal_upgrade_cb, NULL);
-    weechat_hook_signal ("xfer_send_ready", &irc_server_xfer_send_ready_cb, NULL);
-    weechat_hook_signal ("xfer_resume_ready", &irc_server_xfer_resume_ready_cb, NULL);
-    weechat_hook_signal ("xfer_send_accept_resume", &irc_server_xfer_send_accept_resume_cb, NULL);
-    weechat_hook_signal ("irc_input_send", &irc_input_send_cb, NULL);
+    weechat_hook_signal ("quit",
+                         &irc_signal_quit_cb, NULL, NULL);
+    weechat_hook_signal ("upgrade",
+                         &irc_signal_upgrade_cb, NULL, NULL);
+    weechat_hook_signal ("xfer_send_ready",
+                         &irc_server_xfer_send_ready_cb, NULL, NULL);
+    weechat_hook_signal ("xfer_resume_ready",
+                         &irc_server_xfer_resume_ready_cb, NULL, NULL);
+    weechat_hook_signal ("xfer_send_accept_resume",
+                         &irc_server_xfer_send_accept_resume_cb, NULL, NULL);
+    weechat_hook_signal ("irc_input_send",
+                         &irc_input_send_cb, NULL, NULL);
 
     /* hook hsignals for redirection */
-    weechat_hook_hsignal ("irc_redirect_pattern", &irc_redirect_pattern_hsignal_cb, NULL);
-    weechat_hook_hsignal ("irc_redirect_command", &irc_redirect_command_hsignal_cb, NULL);
+    weechat_hook_hsignal ("irc_redirect_pattern",
+                          &irc_redirect_pattern_hsignal_cb, NULL, NULL);
+    weechat_hook_hsignal ("irc_redirect_command",
+                          &irc_redirect_command_hsignal_cb, NULL, NULL);
 
     /* modifiers */
-    weechat_hook_modifier ("irc_color_decode", &irc_color_modifier_cb, NULL);
-    weechat_hook_modifier ("irc_color_encode", &irc_color_modifier_cb, NULL);
-    weechat_hook_modifier ("irc_color_decode_ansi", &irc_color_modifier_cb, NULL);
+    weechat_hook_modifier ("irc_color_decode",
+                           &irc_color_modifier_cb, NULL, NULL);
+    weechat_hook_modifier ("irc_color_encode",
+                           &irc_color_modifier_cb, NULL, NULL);
+    weechat_hook_modifier ("irc_color_decode_ansi",
+                           &irc_color_modifier_cb, NULL, NULL);
 
     /* hook completions */
     irc_completion_init ();
@@ -245,7 +260,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     }
 
     irc_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
-                                         &irc_server_timer_cb, NULL);
+                                         &irc_server_timer_cb,
+                                         NULL, NULL);
 
     return WEECHAT_RC_OK;
 }

@@ -364,7 +364,8 @@ hook_get_priority_and_name (const char *string,
 
 void
 hook_init_data (struct t_hook *hook, struct t_weechat_plugin *plugin,
-                int type, int priority, void *callback_data)
+                int type, int priority,
+                const void *callback_pointer, void *callback_data)
 {
     hook->plugin = plugin;
     hook->subplugin = NULL;
@@ -372,6 +373,7 @@ hook_init_data (struct t_hook *hook, struct t_weechat_plugin *plugin,
     hook->deleted = 0;
     hook->running = 0;
     hook->priority = priority;
+    hook->callback_pointer = callback_pointer;
     hook->callback_data = callback_data;
     hook->hook_data = NULL;
 
@@ -648,7 +650,9 @@ hook_command (struct t_weechat_plugin *plugin, const char *command,
               const char *description,
               const char *args, const char *args_description,
               const char *completion,
-              t_hook_callback_command *callback, void *callback_data)
+              t_hook_callback_command *callback,
+              const void *callback_pointer,
+              void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_command *new_hook_command;
@@ -681,7 +685,7 @@ hook_command (struct t_weechat_plugin *plugin, const char *command,
 
     hook_get_priority_and_name (command, &priority, &ptr_command);
     hook_init_data (new_hook, plugin, HOOK_TYPE_COMMAND, priority,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_command;
     new_hook_command->callback = callback;
@@ -859,7 +863,12 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
             /* execute the command! */
             ptr_hook->running++;
             rc = (int) (HOOK_COMMAND(ptr_hook, callback))
-                (ptr_hook->callback_data, buffer, argc, argv, argv_eol);
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
+                 buffer,
+                 argc,
+                 argv,
+                 argv_eol);
             ptr_hook->running--;
             if (rc == WEECHAT_RC_ERROR)
                 rc = HOOK_COMMAND_EXEC_ERROR;
@@ -883,8 +892,11 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
  */
 
 struct t_hook *
-hook_command_run (struct t_weechat_plugin *plugin, const char *command,
-                  t_hook_callback_command_run *callback, void *callback_data)
+hook_command_run (struct t_weechat_plugin *plugin,
+                  const char *command,
+                  t_hook_callback_command_run *callback,
+                  const void *callback_pointer,
+                  void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_command_run *new_hook_command_run;
@@ -906,7 +918,7 @@ hook_command_run (struct t_weechat_plugin *plugin, const char *command,
 
     hook_get_priority_and_name (command, &priority, &ptr_command);
     hook_init_data (new_hook, plugin, HOOK_TYPE_COMMAND_RUN, priority,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_command_run;
     new_hook_command_run->callback = callback;
@@ -968,9 +980,11 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
             if (hook_matching)
             {
                 ptr_hook->running = 1;
-                rc = (HOOK_COMMAND_RUN(ptr_hook, callback)) (ptr_hook->callback_data,
-                                                             buffer,
-                                                             ptr_command);
+                rc = (HOOK_COMMAND_RUN(ptr_hook, callback)) (
+                    ptr_hook->callback_pointer,
+                    ptr_hook->callback_data,
+                    buffer,
+                    ptr_command);
                 ptr_hook->running = 0;
                 if (rc == WEECHAT_RC_OK_EAT)
                 {
@@ -1055,6 +1069,7 @@ hook_timer_init (struct t_hook *hook)
 struct t_hook *
 hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
             int max_calls, t_hook_callback_timer *callback,
+            const void *callback_pointer,
             void *callback_data)
 {
     struct t_hook *new_hook;
@@ -1074,7 +1089,7 @@ hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
     }
 
     hook_init_data (new_hook, plugin, HOOK_TYPE_TIMER, HOOK_PRIORITY_DEFAULT,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_timer;
     new_hook_timer->callback = callback;
@@ -1237,7 +1252,8 @@ hook_timer_exec ()
         {
             ptr_hook->running = 1;
             (void) (HOOK_TIMER(ptr_hook, callback))
-                (ptr_hook->callback_data,
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
                  (HOOK_TIMER(ptr_hook, remaining_calls) > 0) ?
                   HOOK_TIMER(ptr_hook, remaining_calls) - 1 : -1);
             ptr_hook->running = 0;
@@ -1296,7 +1312,9 @@ hook_search_fd (int fd)
 struct t_hook *
 hook_fd (struct t_weechat_plugin *plugin, int fd, int flag_read,
          int flag_write, int flag_exception,
-         t_hook_callback_fd *callback, void *callback_data)
+         t_hook_callback_fd *callback,
+         const void *callback_pointer,
+         void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_fd *new_hook_fd;
@@ -1315,7 +1333,7 @@ hook_fd (struct t_weechat_plugin *plugin, int fd, int flag_read,
     }
 
     hook_init_data (new_hook, plugin, HOOK_TYPE_FD, HOOK_PRIORITY_DEFAULT,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_fd;
     new_hook_fd->callback = callback;
@@ -1415,8 +1433,10 @@ hook_fd_exec ()
             if (found)
             {
                 ptr_hook->running = 1;
-                (void) (HOOK_FD(ptr_hook, callback)) (ptr_hook->callback_data,
-                                                      HOOK_FD(ptr_hook, fd));
+                (void) (HOOK_FD(ptr_hook, callback)) (
+                    ptr_hook->callback_pointer,
+                    ptr_hook->callback_data,
+                    HOOK_FD(ptr_hook, fd));
                 ptr_hook->running = 0;
             }
         }
@@ -1435,9 +1455,12 @@ hook_fd_exec ()
 
 struct t_hook *
 hook_process_hashtable (struct t_weechat_plugin *plugin,
-                        const char *command, struct t_hashtable *options,
+                        const char *command,
+                        struct t_hashtable *options,
                         int timeout,
-                        t_hook_callback_process *callback, void *callback_data)
+                        t_hook_callback_process *callback,
+                        const void *callback_pointer,
+                        void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_process *new_hook_process;
@@ -1470,7 +1493,7 @@ hook_process_hashtable (struct t_weechat_plugin *plugin,
         goto error;
 
     hook_init_data (new_hook, plugin, HOOK_TYPE_PROCESS, HOOK_PRIORITY_DEFAULT,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_process;
     new_hook_process->callback = callback;
@@ -1548,11 +1571,14 @@ error:
 
 struct t_hook *
 hook_process (struct t_weechat_plugin *plugin,
-              const char *command, int timeout,
-              t_hook_callback_process *callback, void *callback_data)
+              const char *command,
+              int timeout,
+              t_hook_callback_process *callback,
+              const void *callback_pointer,
+              void *callback_data)
 {
     return hook_process_hashtable (plugin, command, NULL, timeout,
-                                   callback, callback_data);
+                                   callback, callback_pointer, callback_data);
 }
 
 /*
@@ -1733,7 +1759,8 @@ hook_process_send_buffers (struct t_hook *hook_process, int callback_rc)
 
     /* send buffers to callback */
     (void) (HOOK_PROCESS(hook_process, callback))
-        (hook_process->callback_data,
+        (hook_process->callback_pointer,
+         hook_process->callback_data,
          HOOK_PROCESS(hook_process, command),
          callback_rc,
          (HOOK_PROCESS(hook_process, buffer_size[HOOK_PROCESS_STDOUT]) > 0) ?
@@ -1801,11 +1828,15 @@ hook_process_child_read (struct t_hook *hook_process, int fd,
  */
 
 int
-hook_process_child_read_stdout_cb (void *arg_hook_process, int fd)
+hook_process_child_read_stdout_cb (const void *pointer, void *data, int fd)
 {
     struct t_hook *hook_process;
 
-    hook_process = (struct t_hook *)arg_hook_process;
+    /* make C compiler happy */
+    (void) data;
+
+    hook_process = (struct t_hook *)pointer;
+
     hook_process_child_read (hook_process, fd, HOOK_PROCESS_STDOUT,
                              &(HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDOUT])));
     return WEECHAT_RC_OK;
@@ -1816,11 +1847,15 @@ hook_process_child_read_stdout_cb (void *arg_hook_process, int fd)
  */
 
 int
-hook_process_child_read_stderr_cb (void *arg_hook_process, int fd)
+hook_process_child_read_stderr_cb (const void *pointer, void *data, int fd)
 {
     struct t_hook *hook_process;
 
-    hook_process = (struct t_hook *)arg_hook_process;
+    /* make C compiler happy */
+    (void) data;
+
+    hook_process = (struct t_hook *)pointer;
+
     hook_process_child_read (hook_process, fd, HOOK_PROCESS_STDERR,
                              &(HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDERR])));
     return WEECHAT_RC_OK;
@@ -1883,6 +1918,7 @@ hook_process_child_read_until_eof (struct t_hook *hook_process)
                 {
                     (void) hook_process_child_read_stdout_cb (
                         hook_process,
+                        NULL,
                         HOOK_PROCESS(hook_process,
                                      child_read[HOOK_PROCESS_STDOUT]));
                 }
@@ -1890,6 +1926,7 @@ hook_process_child_read_until_eof (struct t_hook *hook_process)
                 {
                     (void) hook_process_child_read_stderr_cb (
                         hook_process,
+                        NULL,
                         HOOK_PROCESS(hook_process,
                                      child_read[HOOK_PROCESS_STDERR]));
                 }
@@ -1905,15 +1942,16 @@ hook_process_child_read_until_eof (struct t_hook *hook_process)
  */
 
 int
-hook_process_timer_cb (void *arg_hook_process, int remaining_calls)
+hook_process_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_hook *hook_process;
     int status, rc;
 
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    hook_process = (struct t_hook *)arg_hook_process;
+    hook_process = (struct t_hook *)pointer;
 
     if (hook_process->deleted)
         return WEECHAT_RC_OK;
@@ -2007,7 +2045,8 @@ hook_process_run (struct t_hook *hook_process)
         /* fork failed */
         case -1:
             (void) (HOOK_PROCESS(hook_process, callback))
-                (hook_process->callback_data,
+                (hook_process->callback_pointer,
+                 hook_process->callback_data,
                  HOOK_PROCESS(hook_process, command),
                  WEECHAT_HOOK_PROCESS_ERROR,
                  NULL, NULL);
@@ -2048,7 +2087,7 @@ hook_process_run (struct t_hook *hook_process)
                      HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]),
                      1, 0, 0,
                      &hook_process_child_read_stdout_cb,
-                     hook_process);
+                     hook_process, NULL);
     }
 
     if (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDERR]) >= 0)
@@ -2058,7 +2097,7 @@ hook_process_run (struct t_hook *hook_process)
                      HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDERR]),
                      1, 0, 0,
                      &hook_process_child_read_stderr_cb,
-                     hook_process);
+                     hook_process, NULL);
     }
 
     timeout = HOOK_PROCESS(hook_process, timeout);
@@ -2082,7 +2121,8 @@ hook_process_run (struct t_hook *hook_process)
     HOOK_PROCESS(hook_process, hook_timer) = hook_timer (hook_process->plugin,
                                                          interval, 0, max_calls,
                                                          &hook_process_timer_cb,
-                                                         hook_process);
+                                                         hook_process,
+                                                         NULL);
     return;
 
 error:
@@ -2094,7 +2134,8 @@ error:
             close (pipes[i][1]);
     }
     (void) (HOOK_PROCESS(hook_process, callback))
-        (hook_process->callback_data,
+        (hook_process->callback_pointer,
+         hook_process->callback_data,
          HOOK_PROCESS(hook_process, command),
          WEECHAT_HOOK_PROCESS_ERROR,
          NULL, NULL);
@@ -2112,7 +2153,9 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
               const char *address, int port, int ipv6, int retry,
               void *gnutls_sess, void *gnutls_cb, int gnutls_dhkey_size,
               const char *gnutls_priorities, const char *local_hostname,
-              t_hook_callback_connect *callback, void *callback_data)
+              t_hook_callback_connect *callback,
+              const void *callback_pointer,
+              void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_connect *new_hook_connect;
@@ -2142,7 +2185,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     }
 
     hook_init_data (new_hook, plugin, HOOK_TYPE_CONNECT, HOOK_PRIORITY_DEFAULT,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_connect;
     new_hook_connect->callback = callback;
@@ -2208,7 +2251,9 @@ hook_connect_gnutls_verify_certificates (gnutls_session_t tls_session)
             && (*(HOOK_CONNECT(ptr_hook, gnutls_sess)) == tls_session))
         {
             rc = (int) (HOOK_CONNECT(ptr_hook, gnutls_cb))
-                (ptr_hook->callback_data, tls_session, NULL, 0,
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
+                 tls_session, NULL, 0,
                  NULL, 0, NULL,
                  WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT);
             break;
@@ -2249,7 +2294,9 @@ hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
             && (*(HOOK_CONNECT(ptr_hook, gnutls_sess)) == tls_session))
         {
             rc = (int) (HOOK_CONNECT(ptr_hook, gnutls_cb))
-                (ptr_hook->callback_data, tls_session, req_ca, nreq,
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
+                 tls_session, req_ca, nreq,
                  pk_algos, pk_algos_len, answer,
                  WEECHAT_HOOK_CONNECT_GNUTLS_CB_SET_CERT);
             break;
@@ -2270,7 +2317,9 @@ hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
 struct t_hook *
 hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
             const char *tags, const char *message, int strip_colors,
-            t_hook_callback_print *callback, void *callback_data)
+            t_hook_callback_print *callback,
+            const void *callback_pointer,
+            void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_print *new_hook_print;
@@ -2291,7 +2340,7 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
     }
 
     hook_init_data (new_hook, plugin, HOOK_TYPE_PRINT, HOOK_PRIORITY_DEFAULT,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_print;
     new_hook_print->callback = callback;
@@ -2375,7 +2424,8 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
                 /* run callback */
                 ptr_hook->running = 1;
                 (void) (HOOK_PRINT(ptr_hook, callback))
-                    (ptr_hook->callback_data, buffer, line->data->date,
+                    (ptr_hook->callback_pointer,
+                     ptr_hook->callback_data, buffer, line->data->date,
                      line->data->tags_count,
                      (const char **)line->data->tags_array,
                      (int)line->data->displayed, (int)line->data->highlight,
@@ -2404,7 +2454,9 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
 
 struct t_hook *
 hook_signal (struct t_weechat_plugin *plugin, const char *signal,
-             t_hook_callback_signal *callback, void *callback_data)
+             t_hook_callback_signal *callback,
+             const void *callback_pointer,
+             void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_signal *new_hook_signal;
@@ -2426,7 +2478,7 @@ hook_signal (struct t_weechat_plugin *plugin, const char *signal,
 
     hook_get_priority_and_name (signal, &priority, &ptr_signal);
     hook_init_data (new_hook, plugin, HOOK_TYPE_SIGNAL, priority,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_signal;
     new_hook_signal->callback = callback;
@@ -2462,7 +2514,11 @@ hook_signal_send (const char *signal, const char *type_data, void *signal_data)
         {
             ptr_hook->running = 1;
             rc = (HOOK_SIGNAL(ptr_hook, callback))
-                (ptr_hook->callback_data, signal, type_data, signal_data);
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
+                 signal,
+                 type_data,
+                 signal_data);
             ptr_hook->running = 0;
 
             if (rc == WEECHAT_RC_OK_EAT)
@@ -2485,7 +2541,9 @@ hook_signal_send (const char *signal, const char *type_data, void *signal_data)
 
 struct t_hook *
 hook_hsignal (struct t_weechat_plugin *plugin, const char *signal,
-              t_hook_callback_hsignal *callback, void *callback_data)
+              t_hook_callback_hsignal *callback,
+              const void *callback_pointer,
+              void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_hsignal *new_hook_hsignal;
@@ -2507,7 +2565,7 @@ hook_hsignal (struct t_weechat_plugin *plugin, const char *signal,
 
     hook_get_priority_and_name (signal, &priority, &ptr_signal);
     hook_init_data (new_hook, plugin, HOOK_TYPE_HSIGNAL, priority,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_hsignal;
     new_hook_hsignal->callback = callback;
@@ -2543,7 +2601,10 @@ hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
         {
             ptr_hook->running = 1;
             rc = (HOOK_HSIGNAL(ptr_hook, callback))
-                (ptr_hook->callback_data, signal, hashtable);
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
+                 signal,
+                 hashtable);
             ptr_hook->running = 0;
 
             if (rc == WEECHAT_RC_OK_EAT)
@@ -2566,7 +2627,9 @@ hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
 
 struct t_hook *
 hook_config (struct t_weechat_plugin *plugin, const char *option,
-             t_hook_callback_config *callback, void *callback_data)
+             t_hook_callback_config *callback,
+             const void *callback_pointer,
+             void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_config *new_hook_config;
@@ -2588,7 +2651,7 @@ hook_config (struct t_weechat_plugin *plugin, const char *option,
 
     hook_get_priority_and_name (option, &priority, &ptr_option);
     hook_init_data (new_hook, plugin, HOOK_TYPE_CONFIG, priority,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_config;
     new_hook_config->callback = callback;
@@ -2623,7 +2686,10 @@ hook_config_exec (const char *option, const char *value)
         {
             ptr_hook->running = 1;
             (void) (HOOK_CONFIG(ptr_hook, callback))
-                (ptr_hook->callback_data, option, value);
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
+                 option,
+                 value);
             ptr_hook->running = 0;
         }
 
@@ -2642,7 +2708,9 @@ hook_config_exec (const char *option, const char *value)
 struct t_hook *
 hook_completion (struct t_weechat_plugin *plugin, const char *completion_item,
                  const char *description,
-                 t_hook_callback_completion *callback, void *callback_data)
+                 t_hook_callback_completion *callback,
+                 const void *callback_pointer,
+                 void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_completion *new_hook_completion;
@@ -2665,7 +2733,7 @@ hook_completion (struct t_weechat_plugin *plugin, const char *completion_item,
 
     hook_get_priority_and_name (completion_item, &priority, &ptr_completion_item);
     hook_init_data (new_hook, plugin, HOOK_TYPE_COMPLETION, priority,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_completion;
     new_hook_completion->callback = callback;
@@ -2731,7 +2799,11 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
         {
             ptr_hook->running = 1;
             (void) (HOOK_COMPLETION(ptr_hook, callback))
-                (ptr_hook->callback_data, completion_item, buffer, completion);
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
+                 completion_item,
+                 buffer,
+                 completion);
             ptr_hook->running = 0;
         }
 
@@ -2749,7 +2821,9 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
 
 struct t_hook *
 hook_modifier (struct t_weechat_plugin *plugin, const char *modifier,
-               t_hook_callback_modifier *callback, void *callback_data)
+               t_hook_callback_modifier *callback,
+               const void *callback_pointer,
+               void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_modifier *new_hook_modifier;
@@ -2771,7 +2845,7 @@ hook_modifier (struct t_weechat_plugin *plugin, const char *modifier,
 
     hook_get_priority_and_name (modifier, &priority, &ptr_modifier);
     hook_init_data (new_hook, plugin, HOOK_TYPE_MODIFIER, priority,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_modifier;
     new_hook_modifier->callback = callback;
@@ -2820,7 +2894,10 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
         {
             ptr_hook->running = 1;
             new_msg = (HOOK_MODIFIER(ptr_hook, callback))
-                (ptr_hook->callback_data, modifier, modifier_data,
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
+                 modifier,
+                 modifier_data,
                  message_modified);
             ptr_hook->running = 0;
 
@@ -2857,7 +2934,9 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
 struct t_hook *
 hook_info (struct t_weechat_plugin *plugin, const char *info_name,
            const char *description, const char *args_description,
-           t_hook_callback_info *callback, void *callback_data)
+           t_hook_callback_info *callback,
+           const void *callback_pointer,
+           void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_info *new_hook_info;
@@ -2878,7 +2957,8 @@ hook_info (struct t_weechat_plugin *plugin, const char *info_name,
     }
 
     hook_get_priority_and_name (info_name, &priority, &ptr_info_name);
-    hook_init_data (new_hook, plugin, HOOK_TYPE_INFO, priority, callback_data);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_INFO, priority,
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_info;
     new_hook_info->callback = callback;
@@ -2924,7 +3004,10 @@ hook_info_get (struct t_weechat_plugin *plugin, const char *info_name,
         {
             ptr_hook->running = 1;
             value = (HOOK_INFO(ptr_hook, callback))
-                (ptr_hook->callback_data, info_name, arguments);
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
+                 info_name,
+                 arguments);
             ptr_hook->running = 0;
 
             hook_exec_end ();
@@ -2951,6 +3034,7 @@ hook_info_hashtable (struct t_weechat_plugin *plugin, const char *info_name,
                      const char *description, const char *args_description,
                      const char *output_description,
                      t_hook_callback_info_hashtable *callback,
+                     const void *callback_pointer,
                      void *callback_data)
 {
     struct t_hook *new_hook;
@@ -2973,7 +3057,7 @@ hook_info_hashtable (struct t_weechat_plugin *plugin, const char *info_name,
 
     hook_get_priority_and_name (info_name, &priority, &ptr_info_name);
     hook_init_data (new_hook, plugin, HOOK_TYPE_INFO_HASHTABLE, priority,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_info_hashtable;
     new_hook_info_hashtable->callback = callback;
@@ -3021,7 +3105,10 @@ hook_info_get_hashtable (struct t_weechat_plugin *plugin, const char *info_name,
         {
             ptr_hook->running = 1;
             value = (HOOK_INFO_HASHTABLE(ptr_hook, callback))
-                (ptr_hook->callback_data, info_name, hashtable);
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
+                 info_name,
+                 hashtable);
             ptr_hook->running = 0;
 
             hook_exec_end ();
@@ -3047,7 +3134,9 @@ struct t_hook *
 hook_infolist (struct t_weechat_plugin *plugin, const char *infolist_name,
                const char *description, const char *pointer_description,
                const char *args_description,
-               t_hook_callback_infolist *callback, void *callback_data)
+               t_hook_callback_infolist *callback,
+               const void *callback_pointer,
+               void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_infolist *new_hook_infolist;
@@ -3069,7 +3158,7 @@ hook_infolist (struct t_weechat_plugin *plugin, const char *infolist_name,
 
     hook_get_priority_and_name (infolist_name, &priority, &ptr_infolist_name);
     hook_init_data (new_hook, plugin, HOOK_TYPE_INFOLIST, priority,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_infolist;
     new_hook_infolist->callback = callback;
@@ -3117,7 +3206,11 @@ hook_infolist_get (struct t_weechat_plugin *plugin, const char *infolist_name,
         {
             ptr_hook->running = 1;
             value = (HOOK_INFOLIST(ptr_hook, callback))
-                (ptr_hook->callback_data, infolist_name, pointer, arguments);
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
+                 infolist_name,
+                 pointer,
+                 arguments);
             ptr_hook->running = 0;
 
             hook_exec_end ();
@@ -3142,7 +3235,9 @@ hook_infolist_get (struct t_weechat_plugin *plugin, const char *infolist_name,
 struct t_hook *
 hook_hdata (struct t_weechat_plugin *plugin, const char *hdata_name,
             const char *description,
-            t_hook_callback_hdata *callback, void *callback_data)
+            t_hook_callback_hdata *callback,
+            const void *callback_pointer,
+            void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_hdata *new_hook_hdata;
@@ -3164,7 +3259,7 @@ hook_hdata (struct t_weechat_plugin *plugin, const char *hdata_name,
 
     hook_get_priority_and_name (hdata_name, &priority, &ptr_hdata_name);
     hook_init_data (new_hook, plugin, HOOK_TYPE_HDATA, priority,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_hdata;
     new_hook_hdata->callback = callback;
@@ -3213,7 +3308,8 @@ hook_hdata_get (struct t_weechat_plugin *plugin, const char *hdata_name)
         {
             ptr_hook->running = 1;
             value = (HOOK_HDATA(ptr_hook, callback))
-                (ptr_hook->callback_data,
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
                  HOOK_HDATA(ptr_hook, hdata_name));
             ptr_hook->running = 0;
 
@@ -3237,8 +3333,11 @@ hook_hdata_get (struct t_weechat_plugin *plugin, const char *hdata_name)
  */
 
 struct t_hook *
-hook_focus (struct t_weechat_plugin *plugin, const char *area,
-            t_hook_callback_focus *callback, void *callback_data)
+hook_focus (struct t_weechat_plugin *plugin,
+            const char *area,
+            t_hook_callback_focus *callback,
+            const void *callback_pointer,
+            void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_focus *new_hook_focus;
@@ -3260,7 +3359,7 @@ hook_focus (struct t_weechat_plugin *plugin, const char *area,
 
     hook_get_priority_and_name (area, &priority, &ptr_area);
     hook_init_data (new_hook, plugin, HOOK_TYPE_FOCUS, priority,
-                    callback_data);
+                    callback_pointer, callback_data);
 
     new_hook->hook_data = new_hook_focus;
     new_hook_focus->callback = callback;
@@ -3276,7 +3375,8 @@ hook_focus (struct t_weechat_plugin *plugin, const char *area,
  */
 
 void
-hook_focus_hashtable_map_cb (void *data, struct t_hashtable *hashtable,
+hook_focus_hashtable_map_cb (void *data,
+                             struct t_hashtable *hashtable,
                              const void *key, const void *value)
 {
     struct t_hashtable *hashtable1;
@@ -3295,7 +3395,8 @@ hook_focus_hashtable_map_cb (void *data, struct t_hashtable *hashtable,
  */
 
 void
-hook_focus_hashtable_map2_cb (void *data, struct t_hashtable *hashtable,
+hook_focus_hashtable_map2_cb (void *data,
+                              struct t_hashtable *hashtable,
                               const void *key, const void *value)
 {
     struct t_hashtable *hashtable1;
@@ -3364,7 +3465,9 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
             /* run callback for focus #1 */
             ptr_hook->running = 1;
             hashtable_ret = (HOOK_FOCUS(ptr_hook, callback))
-                (ptr_hook->callback_data, hashtable1);
+                (ptr_hook->callback_pointer,
+                 ptr_hook->callback_data,
+                 hashtable1);
             ptr_hook->running = 0;
             if (hashtable_ret)
             {
@@ -3386,7 +3489,9 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
             {
                 ptr_hook->running = 1;
                 hashtable_ret = (HOOK_FOCUS(ptr_hook, callback))
-                    (ptr_hook->callback_data, hashtable2);
+                    (ptr_hook->callback_pointer,
+                     ptr_hook->callback_data,
+                     hashtable2);
                 ptr_hook->running = 0;
                 if (hashtable_ret)
                 {
@@ -3410,7 +3515,8 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
 
     if (hashtable2)
     {
-        hashtable_map (hashtable2, &hook_focus_hashtable_map2_cb, hashtable1);
+        hashtable_map (hashtable2,
+                       &hook_focus_hashtable_map2_cb, hashtable1);
         hashtable_free (hashtable2);
     }
     else
@@ -3545,12 +3651,7 @@ unhook (struct t_hook *hook)
                          plugin_get_name (hook->plugin));
     }
 
-    /* free data */
-    if (hook->subplugin)
-    {
-        free (hook->subplugin);
-        hook->subplugin = NULL;
-    }
+    /* free data specific to the hook */
     if (hook->hook_data)
     {
         switch (hook->type)
@@ -3951,6 +4052,18 @@ unhook (struct t_hook *hook)
         hook->hook_data = NULL;
     }
 
+    /* free data common to all hooks */
+    if (hook->subplugin)
+    {
+        free (hook->subplugin);
+        hook->subplugin = NULL;
+    }
+    if (hook->callback_data)
+    {
+        free (hook->callback_data);
+        hook->callback_data = NULL;
+    }
+
     /* remove hook from list (if there's no hook exec pending) */
     if (hook_exec_recursion == 0)
     {
@@ -3965,11 +4078,11 @@ unhook (struct t_hook *hook)
 }
 
 /*
- * Unhooks everything for a plugin.
+ * Unhooks everything for a plugin/subplugin.
  */
 
 void
-unhook_all_plugin (struct t_weechat_plugin *plugin)
+unhook_all_plugin (struct t_weechat_plugin *plugin, const char *subplugin)
 {
     int type;
     struct t_hook *ptr_hook, *next_hook;
@@ -3981,7 +4094,14 @@ unhook_all_plugin (struct t_weechat_plugin *plugin)
         {
             next_hook = ptr_hook->next_hook;
             if (ptr_hook->plugin == plugin)
-                unhook (ptr_hook);
+            {
+                if (!subplugin
+                    || (ptr_hook->subplugin &&
+                        strcmp (ptr_hook->subplugin, subplugin) == 0))
+                {
+                    unhook (ptr_hook);
+                }
+            }
             ptr_hook = next_hook;
         }
     }
@@ -4044,6 +4164,10 @@ hook_add_to_infolist_pointer (struct t_infolist *infolist, struct t_hook *hook)
     if (!infolist_new_var_integer (ptr_item, "running", hook->running))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "priority", hook->priority))
+        return 0;
+    if (!infolist_new_var_pointer (ptr_item, "callback_pointer", (void *)hook->callback_pointer))
+        return 0;
+    if (!infolist_new_var_pointer (ptr_item, "callback_data", (void *)hook->callback_data))
         return 0;
     switch (hook->type)
     {
@@ -4521,6 +4645,7 @@ hook_print_log ()
             log_printf ("  deleted . . . . . . . . : %d",    ptr_hook->deleted);
             log_printf ("  running . . . . . . . . : %d",    ptr_hook->running);
             log_printf ("  priority. . . . . . . . : %d",    ptr_hook->priority);
+            log_printf ("  callback_pointer. . . . : 0x%lx", ptr_hook->callback_pointer);
             log_printf ("  callback_data . . . . . : 0x%lx", ptr_hook->callback_data);
             if (ptr_hook->deleted)
                 continue;

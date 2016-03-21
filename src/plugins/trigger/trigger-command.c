@@ -449,7 +449,8 @@ end:
  */
 
 int
-trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
+trigger_command_trigger (const void *pointer, void *data,
+                         struct t_gui_buffer *buffer, int argc,
                          char **argv, char **argv_eol)
 {
     struct t_trigger *ptr_trigger, *ptr_trigger2;
@@ -459,6 +460,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     int regex_count, regex_rc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     rc = WEECHAT_RC_OK;
@@ -1180,5 +1182,5 @@ trigger_command_init ()
         " || restore %(trigger_names_default)|%*"
         " || default"
         " || monitor %(trigger_names)|%(trigger_hooks_filter)",
-        &trigger_command_trigger, NULL);
+        &trigger_command_trigger, NULL, NULL);
 }

@@ -34,8 +34,6 @@ noinst_LTLIBRARIES = lib_weechat_plugins_scripts.la
 
 lib_weechat_plugins_scripts_la_SOURCES = plugin-script.c \
                                          plugin-script.h \
-                                         plugin-script-callback.c \
-                                         plugin-script-callback.h \
                                          plugin-script-api.c \
                                          plugin-script-api.h
 

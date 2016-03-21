@@ -126,7 +126,8 @@ relay_upgrade_save ()
     int rc;
     struct t_upgrade_file *upgrade_file;
 
-    upgrade_file = weechat_upgrade_new (RELAY_UPGRADE_FILENAME, 1);
+    upgrade_file = weechat_upgrade_new (RELAY_UPGRADE_FILENAME,
+                                        NULL, NULL, NULL);
     if (!upgrade_file)
         return 0;
 
@@ -179,7 +180,7 @@ relay_upgrade_set_buffer_callbacks ()
  */
 
 int
-relay_upgrade_read_cb (void *data,
+relay_upgrade_read_cb (const void *pointer, void *data,
                        struct t_upgrade_file *upgrade_file,
                        int object_id,
                        struct t_infolist *infolist)
@@ -188,6 +189,7 @@ relay_upgrade_read_cb (void *data,
     struct t_relay_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) upgrade_file;
 
@@ -239,10 +241,13 @@ relay_upgrade_load ()
 
     relay_upgrade_set_buffer_callbacks ();
 
-    upgrade_file = weechat_upgrade_new (RELAY_UPGRADE_FILENAME, 0);
+    upgrade_file = weechat_upgrade_new (RELAY_UPGRADE_FILENAME,
+                                        &relay_upgrade_read_cb, NULL, NULL);
     if (!upgrade_file)
         return 0;
-    rc = weechat_upgrade_read (upgrade_file, &relay_upgrade_read_cb, NULL);
+
+    rc = weechat_upgrade_read (upgrade_file);
+
     weechat_upgrade_close (upgrade_file);
 
     return rc;

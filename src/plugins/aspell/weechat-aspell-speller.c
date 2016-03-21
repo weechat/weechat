@@ -272,8 +272,7 @@ weechat_aspell_speller_remove_unused ()
     used_spellers = weechat_hashtable_new (32,
                                            WEECHAT_HASHTABLE_STRING,
                                            WEECHAT_HASHTABLE_STRING,
-                                           NULL,
-                                           NULL);
+                                           NULL, NULL);
     if (!used_spellers)
         return;
 
@@ -448,8 +447,7 @@ weechat_aspell_speller_init ()
     weechat_aspell_spellers = weechat_hashtable_new (32,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      WEECHAT_HASHTABLE_POINTER,
-                                                     NULL,
-                                                     NULL);
+                                                     NULL, NULL);
     if (!weechat_aspell_spellers)
         return 0;
     weechat_hashtable_set_pointer (weechat_aspell_spellers,
@@ -459,8 +457,7 @@ weechat_aspell_speller_init ()
     weechat_aspell_speller_buffer = weechat_hashtable_new (32,
                                                            WEECHAT_HASHTABLE_POINTER,
                                                            WEECHAT_HASHTABLE_POINTER,
-                                                           NULL,
-                                                           NULL);
+                                                           NULL, NULL);
     if (!weechat_aspell_speller_buffer)
     {
         weechat_hashtable_free (weechat_aspell_spellers);

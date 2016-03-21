@@ -34,13 +34,15 @@
  */
 
 int
-script_completion_languages_cb (void *data, const char *completion_item,
+script_completion_languages_cb (const void *pointer, void *data,
+                                const char *completion_item,
                                 struct t_gui_buffer *buffer,
                                 struct t_gui_completion *completion)
 {
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -60,13 +62,15 @@ script_completion_languages_cb (void *data, const char *completion_item,
  */
 
 int
-script_completion_extensions_cb (void *data, const char *completion_item,
+script_completion_extensions_cb (const void *pointer, void *data,
+                                 const char *completion_item,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
 {
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -86,13 +90,15 @@ script_completion_extensions_cb (void *data, const char *completion_item,
  */
 
 int
-script_completion_scripts_cb (void *data, const char *completion_item,
+script_completion_scripts_cb (const void *pointer, void *data,
+                              const char *completion_item,
                               struct t_gui_buffer *buffer,
                               struct t_gui_completion *completion)
 {
     struct t_script_repo *ptr_script;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -113,13 +119,15 @@ script_completion_scripts_cb (void *data, const char *completion_item,
  */
 
 int
-script_completion_scripts_installed_cb (void *data, const char *completion_item,
+script_completion_scripts_installed_cb (const void *pointer, void *data,
+                                        const char *completion_item,
                                         struct t_gui_buffer *buffer,
                                         struct t_gui_completion *completion)
 {
     struct t_script_repo *ptr_script;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -176,7 +184,8 @@ script_completion_exec_file_cb (void *data, const char *filename)
  */
 
 int
-script_completion_scripts_files_cb (void *data, const char *completion_item,
+script_completion_scripts_files_cb (const void *pointer, void *data,
+                                    const char *completion_item,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_completion *completion)
 {
@@ -186,6 +195,7 @@ script_completion_scripts_files_cb (void *data, const char *completion_item,
     void *pointers[2];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -205,13 +215,15 @@ script_completion_scripts_files_cb (void *data, const char *completion_item,
             snprintf (directory, length,
                       "%s/%s", weechat_home, script_language[i]);
             weechat_exec_on_files (directory, 0,
-                                   pointers, &script_completion_exec_file_cb);
+                                   &script_completion_exec_file_cb,
+                                   pointers);
 
             /* look for files in "~/.weechat/<language>/autoload/" */
             snprintf (directory, length,
                       "%s/%s/autoload", weechat_home, script_language[i]);
             weechat_exec_on_files (directory, 0,
-                                   pointers, &script_completion_exec_file_cb);
+                                   &script_completion_exec_file_cb,
+                                   pointers);
         }
         free (directory);
     }
@@ -224,7 +236,8 @@ script_completion_scripts_files_cb (void *data, const char *completion_item,
  */
 
 int
-script_completion_tags_cb (void *data, const char *completion_item,
+script_completion_tags_cb (const void *pointer, void *data,
+                           const char *completion_item,
                            struct t_gui_buffer *buffer,
                            struct t_gui_completion *completion)
 {
@@ -233,6 +246,7 @@ script_completion_tags_cb (void *data, const char *completion_item,
     int num_tags, i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -269,20 +283,20 @@ script_completion_init ()
 {
     weechat_hook_completion ("script_languages",
                              N_("list of script languages"),
-                             &script_completion_languages_cb, NULL);
+                             &script_completion_languages_cb, NULL, NULL);
     weechat_hook_completion ("script_extensions",
                              N_("list of script extensions"),
-                             &script_completion_extensions_cb, NULL);
+                             &script_completion_extensions_cb, NULL, NULL);
     weechat_hook_completion ("script_scripts",
                              N_("list of scripts in repository"),
-                             &script_completion_scripts_cb, NULL);
+                             &script_completion_scripts_cb, NULL, NULL);
     weechat_hook_completion ("script_scripts_installed",
                              N_("list of scripts installed (from repository)"),
-                             &script_completion_scripts_installed_cb, NULL);
+                             &script_completion_scripts_installed_cb, NULL, NULL);
     weechat_hook_completion ("script_files",
                              N_("files in script directories"),
-                             &script_completion_scripts_files_cb, NULL);
+                             &script_completion_scripts_files_cb, NULL, NULL);
     weechat_hook_completion ("script_tags",
                              N_("tags of scripts in repository"),
-                             &script_completion_tags_cb, NULL);
+                             &script_completion_tags_cb, NULL, NULL);
 }

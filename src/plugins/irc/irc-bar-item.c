@@ -38,7 +38,8 @@
  */
 
 char *
-irc_bar_item_buffer_plugin (void *data, struct t_gui_bar_item *item,
+irc_bar_item_buffer_plugin (const void *pointer, void *data,
+                            struct t_gui_bar_item *item,
                             struct t_gui_window *window,
                             struct t_gui_buffer *buffer,
                             struct t_hashtable *extra_info)
@@ -50,6 +51,7 @@ irc_bar_item_buffer_plugin (void *data, struct t_gui_bar_item *item,
     struct t_irc_channel *channel;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) item;
     (void) window;
@@ -198,12 +200,14 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
  */
 
 char *
-irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
+irc_bar_item_buffer_name (const void *pointer, void *data,
+                          struct t_gui_bar_item *item,
                           struct t_gui_window *window,
                           struct t_gui_buffer *buffer,
                           struct t_hashtable *extra_info)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) item;
     (void) window;
@@ -218,12 +222,14 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
  */
 
 char *
-irc_bar_item_buffer_short_name (void *data, struct t_gui_bar_item *item,
+irc_bar_item_buffer_short_name (const void *pointer, void *data,
+                                struct t_gui_bar_item *item,
                                 struct t_gui_window *window,
                                 struct t_gui_buffer *buffer,
                                 struct t_hashtable *extra_info)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) item;
     (void) window;
@@ -237,7 +243,8 @@ irc_bar_item_buffer_short_name (void *data, struct t_gui_bar_item *item,
  */
 
 char *
-irc_bar_item_buffer_modes (void *data, struct t_gui_bar_item *item,
+irc_bar_item_buffer_modes (const void *pointer, void *data,
+                           struct t_gui_bar_item *item,
                            struct t_gui_window *window,
                            struct t_gui_buffer *buffer,
                            struct t_hashtable *extra_info)
@@ -249,6 +256,7 @@ irc_bar_item_buffer_modes (void *data, struct t_gui_bar_item *item,
     struct t_irc_channel *channel;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) item;
     (void) window;
@@ -297,7 +305,8 @@ irc_bar_item_buffer_modes (void *data, struct t_gui_bar_item *item,
  */
 
 char *
-irc_bar_item_channel (void *data, struct t_gui_bar_item *item,
+irc_bar_item_channel (const void *pointer, void *data,
+                      struct t_gui_bar_item *item,
                       struct t_gui_window *window, struct t_gui_buffer *buffer,
                       struct t_hashtable *extra_info)
 {
@@ -308,6 +317,7 @@ irc_bar_item_channel (void *data, struct t_gui_bar_item *item,
     struct t_irc_channel *channel;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) item;
     (void) window;
@@ -374,7 +384,8 @@ irc_bar_item_channel (void *data, struct t_gui_bar_item *item,
  */
 
 char *
-irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
+irc_bar_item_lag (const void *pointer, void *data,
+                  struct t_gui_bar_item *item,
                   struct t_gui_window *window, struct t_gui_buffer *buffer,
                   struct t_hashtable *extra_info)
 {
@@ -382,6 +393,7 @@ irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
     struct t_irc_server *server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) item;
     (void) window;
@@ -413,7 +425,8 @@ irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
  */
 
 char *
-irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
+irc_bar_item_input_prompt (const void *pointer, void *data,
+                           struct t_gui_bar_item *item,
                            struct t_gui_window *window,
                            struct t_gui_buffer *buffer,
                            struct t_hashtable *extra_info)
@@ -425,6 +438,7 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
     int length;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) item;
     (void) window;
@@ -494,7 +508,8 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
  */
 
 char *
-irc_bar_item_nick_modes (void *data, struct t_gui_bar_item *item,
+irc_bar_item_nick_modes (const void *pointer, void *data,
+                         struct t_gui_bar_item *item,
                          struct t_gui_window *window,
                          struct t_gui_buffer *buffer,
                          struct t_hashtable *extra_info)
@@ -504,6 +519,7 @@ irc_bar_item_nick_modes (void *data, struct t_gui_bar_item *item,
     int length;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) item;
     (void) window;
@@ -533,7 +549,7 @@ irc_bar_item_nick_modes (void *data, struct t_gui_bar_item *item,
  */
 
 struct t_hashtable *
-irc_bar_item_focus_buffer_nicklist (void *data,
+irc_bar_item_focus_buffer_nicklist (const void *pointer, void *data,
                                     struct t_hashtable *info)
 {
     long unsigned int value;
@@ -555,6 +571,7 @@ irc_bar_item_focus_buffer_nicklist (void *data,
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (ptr_server && ptr_channel)
@@ -579,10 +596,12 @@ irc_bar_item_focus_buffer_nicklist (void *data,
  */
 
 int
-irc_bar_item_buffer_switch (void *data, const char *signal,
+irc_bar_item_buffer_switch (const void *pointer, void *data,
+                            const char *signal,
                             const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -619,16 +638,26 @@ irc_bar_item_update_channel ()
 void
 irc_bar_item_init ()
 {
-    weechat_bar_item_new ("buffer_plugin", &irc_bar_item_buffer_plugin, NULL);
-    weechat_bar_item_new ("buffer_name", &irc_bar_item_buffer_name, NULL);
-    weechat_bar_item_new ("buffer_short_name", &irc_bar_item_buffer_short_name, NULL);
-    weechat_bar_item_new ("buffer_modes", &irc_bar_item_buffer_modes, NULL);
-    weechat_bar_item_new ("irc_channel", &irc_bar_item_channel, NULL);
-    weechat_bar_item_new ("lag", &irc_bar_item_lag, NULL);
-    weechat_bar_item_new ("input_prompt", &irc_bar_item_input_prompt, NULL);
-    weechat_bar_item_new ("irc_nick_modes", &irc_bar_item_nick_modes, NULL);
+    weechat_bar_item_new ("buffer_plugin",
+                          &irc_bar_item_buffer_plugin, NULL, NULL);
+    weechat_bar_item_new ("buffer_name",
+                          &irc_bar_item_buffer_name, NULL, NULL);
+    weechat_bar_item_new ("buffer_short_name",
+                          &irc_bar_item_buffer_short_name, NULL, NULL);
+    weechat_bar_item_new ("buffer_modes",
+                          &irc_bar_item_buffer_modes, NULL, NULL);
+    weechat_bar_item_new ("irc_channel",
+                          &irc_bar_item_channel, NULL, NULL);
+    weechat_bar_item_new ("lag",
+                          &irc_bar_item_lag, NULL, NULL);
+    weechat_bar_item_new ("input_prompt",
+                          &irc_bar_item_input_prompt, NULL, NULL);
+    weechat_bar_item_new ("irc_nick_modes",
+                          &irc_bar_item_nick_modes, NULL, NULL);
+
     weechat_hook_focus ("buffer_nicklist",
-                        &irc_bar_item_focus_buffer_nicklist, NULL);
+                        &irc_bar_item_focus_buffer_nicklist, NULL, NULL);
+
     weechat_hook_signal ("buffer_switch",
-                         &irc_bar_item_buffer_switch, NULL);
+                         &irc_bar_item_buffer_switch, NULL, NULL);
 }

@@ -28,7 +28,6 @@
 #include "weechat-plugin.h"
 #include "plugin-script.h"
 #include "plugin-script-api.h"
-#include "plugin-script-callback.h"
 
 
 /*
@@ -55,24 +54,25 @@ struct t_config_file *
 plugin_script_api_config_new (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *script,
                               const char *name,
-                              int (*callback_reload)(void *data,
+                              int (*callback_reload)(const void *pointer,
+                                                     void *data,
                                                      struct t_config_file *config_file),
                               const char *function,
                               const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_config_file *new_config_file;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
-        return NULL;
+    function_and_data = plugin_script_build_function_and_data (function, data);
 
-    new_config_file = weechat_config_new (name, callback_reload,
-                                          (function && function[0]) ? script_cb : NULL);
-    if (new_config_file)
-        script_cb->config_file = new_config_file;
-    else
-        plugin_script_callback_remove (script, script_cb);
+    new_config_file = weechat_config_new
+        (name,
+         (function_and_data) ? callback_reload : NULL,
+         script,
+         function_and_data);
+
+    if (!new_config_file && function_and_data)
+        free (function_and_data);
 
     return new_config_file;
 }
@@ -90,97 +90,91 @@ plugin_script_api_config_new_section (struct t_weechat_plugin *weechat_plugin,
                                       const char *name,
                                       int user_can_add_options,
                                       int user_can_delete_options,
-                                      int (*callback_read)(void *data,
+                                      int (*callback_read)(const void *pointer,
+                                                           void *data,
                                                            struct t_config_file *config_file,
                                                            struct t_config_section *section,
                                                            const char *option_name,
                                                            const char *value),
                                       const char *function_read,
                                       const char *data_read,
-                                      int (*callback_write)(void *data,
+                                      int (*callback_write)(const void *pointer,
+                                                            void *data,
                                                             struct t_config_file *config_file,
                                                             const char *section_name),
                                       const char *function_write,
                                       const char *data_write,
-                                      int (*callback_write_default)(void *data,
+                                      int (*callback_write_default)(const void *pointer,
+                                                                    void *data,
                                                                     struct t_config_file *config_file,
                                                                     const char *section_name),
                                       const char *function_write_default,
                                       const char *data_write_default,
-                                      int (*callback_create_option)(void *data,
+                                      int (*callback_create_option)(const void *pointer,
+                                                                    void *data,
                                                                     struct t_config_file *config_file,
                                                                     struct t_config_section *section,
                                                                     const char *option_name,
                                                                     const char *value),
                                       const char *function_create_option,
                                       const char *data_create_option,
-                                      int (*callback_delete_option)(void *data,
+                                      int (*callback_delete_option)(const void *pointer,
+                                                                    void *data,
                                                                     struct t_config_file *config_file,
                                                                     struct t_config_section *section,
                                                                     struct t_config_option *option),
                                       const char *function_delete_option,
                                       const char *data_delete_option)
 {
-    struct t_plugin_script_cb *script_cb_read, *script_cb_write;
-    struct t_plugin_script_cb *script_cb_write_default, *script_cb_create_option;
-    struct t_plugin_script_cb *script_cb_delete_option;
+    char *function_and_data_read, *function_and_data_write;
+    char *function_and_data_write_default, *function_and_data_create_option;
+    char *function_and_data_delete_option;
     struct t_config_section *new_section;
 
-    script_cb_read = plugin_script_callback_add (script, function_read, data_read);
-    script_cb_write = plugin_script_callback_add (script, function_write, data_write);
-    script_cb_write_default = plugin_script_callback_add (script, function_write_default, data_write_default);
-    script_cb_create_option = plugin_script_callback_add (script, function_create_option, data_create_option);
-    script_cb_delete_option = plugin_script_callback_add (script, function_delete_option, data_delete_option);
-    if (!script_cb_read || !script_cb_write || !script_cb_write_default
-        || !script_cb_create_option || !script_cb_delete_option)
-    {
-        if (script_cb_read)
-            plugin_script_callback_remove (script, script_cb_read);
-        if (script_cb_write)
-            plugin_script_callback_remove (script, script_cb_write);
-        if (script_cb_write_default)
-            plugin_script_callback_remove (script, script_cb_write_default);
-        if (script_cb_create_option)
-            plugin_script_callback_remove (script, script_cb_create_option);
-        if (script_cb_delete_option)
-            plugin_script_callback_remove (script, script_cb_delete_option);
-        return NULL;
-    }
+    function_and_data_read = plugin_script_build_function_and_data (
+        function_read, data_read);
+    function_and_data_write = plugin_script_build_function_and_data (
+        function_write, data_write);
+    function_and_data_write_default = plugin_script_build_function_and_data (
+        function_write_default, data_write_default);
+    function_and_data_create_option = plugin_script_build_function_and_data (
+        function_create_option, data_create_option);
+    function_and_data_delete_option = plugin_script_build_function_and_data (
+        function_delete_option, data_delete_option);
 
-    new_section = weechat_config_new_section (config_file,
-                                              name,
-                                              user_can_add_options,
-                                              user_can_delete_options,
-                                              (function_read && function_read[0]) ? callback_read : NULL,
-                                              (function_read && function_read[0]) ? script_cb_read : NULL,
-                                              (function_write && function_write[0]) ? callback_write : NULL,
-                                              (function_write && function_write[0]) ? script_cb_write : NULL,
-                                              (function_write_default && function_write_default[0]) ? callback_write_default : NULL,
-                                              (function_write_default && function_write_default[0]) ? script_cb_write_default : NULL,
-                                              (function_create_option && function_create_option[0]) ? callback_create_option : NULL,
-                                              (function_create_option && function_create_option[0]) ? script_cb_create_option : NULL,
-                                              (function_delete_option && function_delete_option[0]) ? callback_delete_option : NULL,
-                                              (function_delete_option && function_delete_option[0]) ? script_cb_delete_option : NULL);
-    if (new_section)
+    new_section = weechat_config_new_section (
+        config_file,
+        name,
+        user_can_add_options,
+        user_can_delete_options,
+        (function_and_data_read) ? callback_read : NULL,
+        script,
+        function_and_data_read,
+        (function_and_data_write) ? callback_write : NULL,
+        script,
+        function_and_data_write,
+        (function_and_data_write_default) ? callback_write_default : NULL,
+        script,
+        function_and_data_write_default,
+        (function_and_data_create_option) ? callback_create_option : NULL,
+        script,
+        function_and_data_create_option,
+        (function_and_data_delete_option) ? callback_delete_option : NULL,
+        script,
+        function_and_data_delete_option);;
+
+    if (!new_section)
     {
-        script_cb_read->config_file = config_file;
-        script_cb_read->config_section = new_section;
-        script_cb_write->config_file = config_file;
-        script_cb_write->config_section = new_section;
-        script_cb_write_default->config_file = config_file;
-        script_cb_write_default->config_section = new_section;
-        script_cb_create_option->config_file = config_file;
-        script_cb_create_option->config_section = new_section;
-        script_cb_delete_option->config_file = config_file;
-        script_cb_delete_option->config_section = new_section;
-    }
-    else
-    {
-        plugin_script_callback_remove (script, script_cb_read);
-        plugin_script_callback_remove (script, script_cb_write);
-        plugin_script_callback_remove (script, script_cb_write_default);
-        plugin_script_callback_remove (script, script_cb_create_option);
-        plugin_script_callback_remove (script, script_cb_delete_option);
+        if (function_and_data_read)
+            free (function_and_data_read);
+        if (function_and_data_write)
+            free (function_and_data_write);
+        if (function_and_data_write_default)
+            free (function_and_data_write_default);
+        if (function_and_data_create_option)
+            free (function_and_data_create_option);
+        if (function_and_data_delete_option)
+            free (function_and_data_delete_option);
     }
 
     return new_section;
@@ -203,181 +197,60 @@ plugin_script_api_config_new_option (struct t_weechat_plugin *weechat_plugin,
                                      const char *default_value,
                                      const char *value,
                                      int null_value_allowed,
-                                     int (*callback_check_value)(void *data,
+                                     int (*callback_check_value)(const void *pointer,
+                                                                 void *data,
                                                                  struct t_config_option *option,
                                                                  const char *value),
                                      const char *function_check_value,
                                      const char *data_check_value,
-                                     void (*callback_change)(void *data,
+                                     void (*callback_change)(const void *pointer,
+                                                             void *data,
                                                              struct t_config_option *option),
                                      const char *function_change,
                                      const char *data_change,
-                                     void (*callback_delete)(void *data,
+                                     void (*callback_delete)(const void *pointer,
+                                                             void *data,
                                                              struct t_config_option *option),
                                      const char *function_delete,
                                      const char *data_delete)
 {
-    struct t_plugin_script_cb *script_cb_check_value, *script_cb_change;
-    struct t_plugin_script_cb *script_cb_delete;
+    char *function_and_data_check_value, *function_and_data_change;
+    char *function_and_data_delete;
     struct t_config_option *new_option;
 
-    script_cb_check_value = plugin_script_callback_add (script, function_check_value, data_check_value);
-    script_cb_change = plugin_script_callback_add (script, function_change, data_change);
-    script_cb_delete = plugin_script_callback_add (script, function_delete, data_delete);
-    if (!script_cb_check_value || !script_cb_change || !script_cb_delete)
-    {
-        if (script_cb_check_value)
-            plugin_script_callback_remove (script, script_cb_check_value);
-        if (script_cb_change)
-            plugin_script_callback_remove (script, script_cb_change);
-        if (script_cb_delete)
-            plugin_script_callback_remove (script, script_cb_delete);
-        return NULL;
-    }
+    function_and_data_check_value = plugin_script_build_function_and_data (
+        function_check_value, data_check_value);
+    function_and_data_change = plugin_script_build_function_and_data (
+        function_change, data_change);
+    function_and_data_delete = plugin_script_build_function_and_data (
+        function_delete, data_delete);
 
-    new_option = weechat_config_new_option (config_file, section, name, type,
-                                            description, string_values, min,
-                                            max, default_value, value,
-                                            null_value_allowed,
-                                            (function_check_value && function_check_value[0]) ? callback_check_value : NULL,
-                                            (function_check_value && function_check_value[0]) ? script_cb_check_value : NULL,
-                                            (function_change && function_change[0]) ? callback_change : NULL,
-                                            (function_change && function_change[0]) ? script_cb_change : NULL,
-                                            (function_delete && function_delete[0]) ? callback_delete : NULL,
-                                            (function_delete && function_delete[0]) ? script_cb_delete : NULL);
-    if (new_option)
+    new_option = weechat_config_new_option (
+        config_file, section, name, type,
+        description, string_values, min,
+        max, default_value, value,
+        null_value_allowed,
+        (function_and_data_check_value) ? callback_check_value : NULL,
+        script,
+        function_and_data_check_value,
+        (function_and_data_change) ? callback_change : NULL,
+        script,
+        function_and_data_change,
+        (function_and_data_delete) ? callback_delete : NULL,
+        script,
+        function_and_data_delete);
+
+    if (!new_option)
     {
-        script_cb_check_value->config_file = config_file;
-        script_cb_check_value->config_section = section;
-        script_cb_check_value->config_option = new_option;
-        script_cb_change->config_file = config_file;
-        script_cb_change->config_section = section;
-        script_cb_change->config_option = new_option;
-        script_cb_delete->config_file = config_file;
-        script_cb_delete->config_section = section;
-        script_cb_delete->config_option = new_option;
-    }
-    else
-    {
-        plugin_script_callback_remove (script, script_cb_check_value);
-        plugin_script_callback_remove (script, script_cb_change);
-        plugin_script_callback_remove (script, script_cb_delete);
+        if (function_and_data_check_value)
+            free (function_and_data_check_value);
+        if (function_and_data_change)
+            free (function_and_data_change);
+        if (function_and_data_delete)
+            free (function_and_data_delete);
     }
 
     return new_option;
-}
-
-/*
- * Frees an option in configuration file.
- */
-
-void
-plugin_script_api_config_option_free (struct t_weechat_plugin *weechat_plugin,
-                                      struct t_plugin_script *script,
-                                      struct t_config_option *option)
-{
-    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
-
-    if (!weechat_plugin || !script || !option)
-        return;
-
-    weechat_config_option_free (option);
-
-    ptr_script_cb = script->callbacks;
-    while (ptr_script_cb)
-    {
-        next_callback = ptr_script_cb->next_callback;
-
-        if (ptr_script_cb->config_option == option)
-            plugin_script_callback_remove (script, ptr_script_cb);
-
-        ptr_script_cb = next_callback;
-    }
-}
-
-/*
- * Frees all option of a section in configuration file.
- */
-
-void
-plugin_script_api_config_section_free_options (struct t_weechat_plugin *weechat_plugin,
-                                               struct t_plugin_script *script,
-                                               struct t_config_section *section)
-{
-    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
-
-    if (!weechat_plugin || !script || !section)
-        return;
-
-    weechat_config_section_free_options (section);
-
-    ptr_script_cb = script->callbacks;
-    while (ptr_script_cb)
-    {
-        next_callback = ptr_script_cb->next_callback;
-
-        if ((ptr_script_cb->config_section == section)
-            && ptr_script_cb->config_option)
-            plugin_script_callback_remove (script, ptr_script_cb);
-
-        ptr_script_cb = next_callback;
-    }
-}
-
-/*
- * Frees a section in configuration file.
- */
-
-void
-plugin_script_api_config_section_free (struct t_weechat_plugin *weechat_plugin,
-                                       struct t_plugin_script *script,
-                                       struct t_config_section *section)
-{
-    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
-
-    if (!weechat_plugin || !script || !section)
-        return;
-
-    weechat_config_section_free (section);
-
-    ptr_script_cb = script->callbacks;
-    while (ptr_script_cb)
-    {
-        next_callback = ptr_script_cb->next_callback;
-
-        if (ptr_script_cb->config_section == section)
-            plugin_script_callback_remove (script, ptr_script_cb);
-
-        ptr_script_cb = next_callback;
-    }
-}
-
-/*
- * Frees a configuration file.
- */
-
-void
-plugin_script_api_config_free (struct t_weechat_plugin *weechat_plugin,
-                               struct t_plugin_script *script,
-                               struct t_config_file *config_file)
-{
-    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
-
-    if (!weechat_plugin || !script || !config_file)
-        return;
-
-    weechat_config_free (config_file);
-
-    ptr_script_cb = script->callbacks;
-    while (ptr_script_cb)
-    {
-        next_callback = ptr_script_cb->next_callback;
-
-        if (ptr_script_cb->config_file == config_file)
-            plugin_script_callback_remove (script, ptr_script_cb);
-
-        ptr_script_cb = next_callback;
-    }
 }
 
 /*
@@ -492,30 +365,35 @@ plugin_script_api_hook_command (struct t_weechat_plugin *weechat_plugin,
                                 const char *command, const char *description,
                                 const char *args, const char *args_description,
                                 const char *completion,
-                                int (*callback)(void *data,
+                                int (*callback)(const void *pointer,
+                                                void *data,
                                                 struct t_gui_buffer *buffer,
                                                 int argc, char **argv,
                                                 char **argv_eol),
                                 const char *function,
                                 const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
+
+    function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_command (command, description, args,
                                      args_description, completion,
-                                     callback, script_cb);
+                                     callback, script, function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -530,28 +408,33 @@ struct t_hook *
 plugin_script_api_hook_command_run (struct t_weechat_plugin *weechat_plugin,
                                     struct t_plugin_script *script,
                                     const char *command,
-                                    int (*callback)(void *data,
+                                    int (*callback)(const void *pointer,
+                                                    void *data,
                                                     struct t_gui_buffer *buffer,
                                                     const char *command),
                                     const char *function,
                                     const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
 
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
     new_hook = weechat_hook_command_run (command,
-                                         callback, script_cb);
+                                         callback, script, function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -566,27 +449,32 @@ struct t_hook *
 plugin_script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *script,
                               int interval, int align_second, int max_calls,
-                              int (*callback)(void *data,
+                              int (*callback)(const void *pointer,
+                                              void *data,
                                               int remaining_calls),
                               const char *function,
                               const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
 
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
     new_hook = weechat_hook_timer (interval, align_second, max_calls,
-                                   callback, script_cb);
+                                   callback, script, function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -602,26 +490,32 @@ plugin_script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
                            struct t_plugin_script *script,
                            int fd, int flag_read, int flag_write,
                            int flag_exception,
-                           int (*callback)(void *data, int fd),
+                           int (*callback)(const void *pointer,
+                                           void *data,
+                                           int fd),
                            const char *function,
                            const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
 
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
     new_hook = weechat_hook_fd (fd, flag_read, flag_write, flag_exception,
-                                callback, script_cb);
+                                callback, script, function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -638,7 +532,8 @@ plugin_script_api_hook_process_hashtable (struct t_weechat_plugin *weechat_plugi
                                           const char *command,
                                           struct t_hashtable *options,
                                           int timeout,
-                                          int (*callback)(void *data,
+                                          int (*callback)(const void *pointer,
+                                                          void *data,
                                                           const char *command,
                                                           int return_code,
                                                           const char *out,
@@ -646,22 +541,27 @@ plugin_script_api_hook_process_hashtable (struct t_weechat_plugin *weechat_plugi
                                           const char *function,
                                           const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
 
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
     new_hook = weechat_hook_process_hashtable (command, options, timeout,
-                                               callback, script_cb);
+                                               callback, script,
+                                               function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -677,7 +577,8 @@ plugin_script_api_hook_process (struct t_weechat_plugin *weechat_plugin,
                                 struct t_plugin_script *script,
                                 const char *command,
                                 int timeout,
-                                int (*callback)(void *data,
+                                int (*callback)(const void *pointer,
+                                                void *data,
                                                 const char *command,
                                                 int return_code,
                                                 const char *out,
@@ -699,37 +600,44 @@ plugin_script_api_hook_process (struct t_weechat_plugin *weechat_plugin,
 struct t_hook *
 plugin_script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
                                 struct t_plugin_script *script,
-                                const char *proxy, const char *address, int port,
+                                const char *proxy,
+                                const char *address, int port,
                                 int ipv6, int retry,
                                 void *gnutls_sess, void *gnutls_cb,
                                 int gnutls_dhkey_size,
                                 const char *gnutls_priorities,
                                 const char *local_hostname,
-                                int (*callback)(void *data, int status,
-                                                int gnutls_rc, int sock,
+                                int (*callback)(const void *pointer,
+                                                void *data,
+                                                int status, int gnutls_rc,
+                                                int sock,
                                                 const char *error,
                                                 const char *ip_address),
                                 const char *function,
                                 const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
+
+    function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_connect (proxy, address, port, ipv6, retry,
                                      gnutls_sess, gnutls_cb, gnutls_dhkey_size,
                                      gnutls_priorities, local_hostname,
-                                     callback, script_cb);
+                                     callback, script, function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -746,32 +654,38 @@ plugin_script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
                               struct t_gui_buffer *buffer,
                               const char *tags, const char *message,
                               int strip_colors,
-                              int (*callback)(void *data,
+                              int (*callback)(const void *pointer,
+                                              void *data,
                                               struct t_gui_buffer *buffer,
                                               time_t date,
-                                              int tags_count, const char **tags,
+                                              int tags_count,
+                                              const char **tags,
                                               int displayed, int highlight,
                                               const char *prefix,
                                               const char *message),
                               const char *function,
                               const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
 
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
     new_hook = weechat_hook_print (buffer, tags, message, strip_colors,
-                                   callback, script_cb);
+                                   callback, script, function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -786,27 +700,34 @@ struct t_hook *
 plugin_script_api_hook_signal (struct t_weechat_plugin *weechat_plugin,
                                struct t_plugin_script *script,
                                const char *signal,
-                               int (*callback)(void *data, const char *signal,
+                               int (*callback)(const void *pointer,
+                                               void *data,
+                                               const char *signal,
                                                const char *type_data,
                                                void *signal_data),
                                const char *function,
                                const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
 
-    new_hook = weechat_hook_signal (signal, callback, script_cb);
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
+    new_hook = weechat_hook_signal (signal, callback, script,
+                                    function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -821,26 +742,33 @@ struct t_hook *
 plugin_script_api_hook_hsignal (struct t_weechat_plugin *weechat_plugin,
                                 struct t_plugin_script *script,
                                 const char *signal,
-                                int (*callback)(void *data, const char *signal,
+                                int (*callback)(const void *pointer,
+                                                void *data,
+                                                const char *signal,
                                                 struct t_hashtable *hashtable),
                                 const char *function,
                                 const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
 
-    new_hook = weechat_hook_hsignal (signal, callback, script_cb);
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
+    new_hook = weechat_hook_hsignal (signal, callback, script,
+                                     function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -855,26 +783,33 @@ struct t_hook *
 plugin_script_api_hook_config (struct t_weechat_plugin *weechat_plugin,
                                struct t_plugin_script *script,
                                const char *option,
-                               int (*callback)(void *data, const char *option,
+                               int (*callback)(const void *pointer,
+                                               void *data,
+                                               const char *option,
                                                const char *value),
                                const char *function,
                                const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
 
-    new_hook = weechat_hook_config (option, callback, script_cb);
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
+    new_hook = weechat_hook_config (option, callback, script,
+                                    function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -890,29 +825,34 @@ plugin_script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
                                    struct t_plugin_script *script,
                                    const char *completion,
                                    const char *description,
-                                   int (*callback)(void *data,
+                                   int (*callback)(const void *pointer,
+                                                   void *data,
                                                    const char *completion_item,
                                                    struct t_gui_buffer *buffer,
                                                    struct t_gui_completion *completion),
                                    const char *function,
                                    const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
 
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
     new_hook = weechat_hook_completion (completion, description,
-                                        callback, script_cb);
+                                        callback, script, function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -927,27 +867,34 @@ struct t_hook *
 plugin_script_api_hook_modifier (struct t_weechat_plugin *weechat_plugin,
                                  struct t_plugin_script *script,
                                  const char *modifier,
-                                 char *(*callback)(void *data, const char *modifier,
+                                 char *(*callback)(const void *pointer,
+                                                   void *data,
+                                                   const char *modifier,
                                                    const char *modifier_data,
                                                    const char *string),
                                  const char *function,
                                  const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
 
-    new_hook = weechat_hook_modifier (modifier, callback, script_cb);
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
+    new_hook = weechat_hook_modifier (modifier,
+                                      callback, script, function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -964,28 +911,33 @@ plugin_script_api_hook_info (struct t_weechat_plugin *weechat_plugin,
                              const char *info_name,
                              const char *description,
                              const char *args_description,
-                             const char *(*callback)(void *data,
+                             const char *(*callback)(const void *pointer,
+                                                     void *data,
                                                      const char *info_name,
                                                      const char *arguments),
                              const char *function,
                              const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
 
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
     new_hook = weechat_hook_info (info_name, description, args_description,
-                                  callback, script_cb);
+                                  callback, script, function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -1003,30 +955,36 @@ plugin_script_api_hook_info_hashtable (struct t_weechat_plugin *weechat_plugin,
                                        const char *description,
                                        const char *args_description,
                                        const char *output_description,
-                                       struct t_hashtable *(*callback)(void *data,
+                                       struct t_hashtable *(*callback)(const void *pointer,
+                                                                       void *data,
                                                                        const char *info_name,
                                                                        struct t_hashtable *hashtable),
                                        const char *function,
                                        const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
+
+    function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_info_hashtable (info_name, description,
                                             args_description,
                                             output_description,
-                                            callback, script_cb);
+                                            callback, script,
+                                            function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -1044,30 +1002,35 @@ plugin_script_api_hook_infolist (struct t_weechat_plugin *weechat_plugin,
                                  const char *description,
                                  const char *pointer_description,
                                  const char *args_description,
-                                 struct t_infolist *(*callback)(void *data,
+                                 struct t_infolist *(*callback)(const void *pointer,
+                                                                void *data,
                                                                 const char *infolist_name,
-                                                                void *pointer,
+                                                                void *obj_pointer,
                                                                 const char *arguments),
                                  const char *function,
                                  const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
+
+    function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_infolist (infolist_name, description,
                                       pointer_description, args_description,
-                                      callback, script_cb);
+                                      callback, script, function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
 }
@@ -1082,81 +1045,33 @@ struct t_hook *
 plugin_script_api_hook_focus (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *script,
                               const char *area,
-                              struct t_hashtable *(*callback)(void *data,
+                              struct t_hashtable *(*callback)(const void *pointer,
+                                                              void *data,
                                                               struct t_hashtable *info),
                               const char *function,
                               const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
+    char *function_and_data;
     struct t_hook *new_hook;
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
+    if (!function || !function[0])
         return NULL;
 
-    new_hook = weechat_hook_focus (area, callback, script_cb);
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
+    new_hook = weechat_hook_focus (area, callback, script, function_and_data);
+
     if (new_hook)
     {
         weechat_hook_set (new_hook, "subplugin", script->name);
-        script_cb->hook = new_hook;
     }
     else
-        plugin_script_callback_remove (script, script_cb);
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_hook;
-}
-
-/*
- * Unhooks something.
- */
-
-void
-plugin_script_api_unhook (struct t_weechat_plugin *weechat_plugin,
-                          struct t_plugin_script *script,
-                          struct t_hook *hook)
-{
-    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
-
-    if (!weechat_plugin || !script || !hook)
-        return;
-
-    weechat_unhook (hook);
-
-    ptr_script_cb = script->callbacks;
-    while (ptr_script_cb)
-    {
-        next_callback = ptr_script_cb->next_callback;
-
-        if (ptr_script_cb->hook == hook)
-            plugin_script_callback_remove (script, ptr_script_cb);
-
-        ptr_script_cb = next_callback;
-    }
-}
-
-/*
- * Unhooks everything for a script.
- */
-
-void
-plugin_script_api_unhook_all (struct t_weechat_plugin *weechat_plugin,
-                              struct t_plugin_script *script)
-{
-    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
-
-    ptr_script_cb = script->callbacks;
-    while (ptr_script_cb)
-    {
-        next_callback = ptr_script_cb->next_callback;
-
-        if (ptr_script_cb->hook)
-        {
-            weechat_unhook (ptr_script_cb->hook);
-            plugin_script_callback_remove (script, ptr_script_cb);
-        }
-
-        ptr_script_cb = next_callback;
-    }
 }
 
 /*
@@ -1167,83 +1082,58 @@ struct t_gui_buffer *
 plugin_script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *script,
                               const char *name,
-                              int (*input_callback)(void *data,
+                              int (*input_callback)(const void *pointer,
+                                                    void *data,
                                                     struct t_gui_buffer *buffer,
                                                     const char *input_data),
                               const char *function_input,
                               const char *data_input,
-                              int (*close_callback)(void *data,
+                              int (*close_callback)(const void *pointer,
+                                                    void *data,
                                                     struct t_gui_buffer *buffer),
                               const char *function_close,
                               const char *data_close)
 {
-    struct t_plugin_script_cb *script_cb_input;
-    struct t_plugin_script_cb *script_cb_close;
+    char *function_and_data_input, *function_and_data_close;
     struct t_gui_buffer *new_buffer;
 
-    script_cb_input = plugin_script_callback_add (script, function_input, data_input);
-    script_cb_close = plugin_script_callback_add (script, function_close, data_close);
-    if (!script_cb_input || !script_cb_close)
-    {
-        if (script_cb_input)
-            plugin_script_callback_remove (script, script_cb_input);
-        if (script_cb_close)
-            plugin_script_callback_remove (script, script_cb_close);
-        return NULL;
-    }
+    function_and_data_input = plugin_script_build_function_and_data (
+        function_input, data_input);
+    function_and_data_close = plugin_script_build_function_and_data (
+        function_close, data_close);
 
-    new_buffer = weechat_buffer_new (name,
-                                     (function_input && function_input[0]) ? input_callback : NULL,
-                                     (function_input && function_input[0]) ? script_cb_input : NULL,
-                                     (function_close && function_close[0]) ? close_callback : NULL,
-                                     (function_close && function_close[0]) ? script_cb_close : NULL);
+    new_buffer = weechat_buffer_new (
+        name,
+        (function_and_data_input) ? input_callback : NULL,
+        script,
+        function_and_data_input,
+        (function_and_data_close) ? close_callback : NULL,
+        script,
+        function_and_data_close);
+
     if (new_buffer)
     {
-        script_cb_input->buffer = new_buffer;
-        script_cb_close->buffer = new_buffer;
-
         /* used when upgrading weechat, to set callbacks */
-        weechat_buffer_set (new_buffer, "localvar_set_script_name", script->name);
-        weechat_buffer_set (new_buffer, "localvar_set_script_input_cb", function_input);
-        weechat_buffer_set (new_buffer, "localvar_set_script_input_cb_data", data_input);
-        weechat_buffer_set (new_buffer, "localvar_set_script_close_cb", function_close);
-        weechat_buffer_set (new_buffer, "localvar_set_script_close_cb_data", data_close);
+        weechat_buffer_set (new_buffer,
+                            "localvar_set_script_name", script->name);
+        weechat_buffer_set (new_buffer,
+                            "localvar_set_script_input_cb", function_input);
+        weechat_buffer_set (new_buffer,
+                            "localvar_set_script_input_cb_data", data_input);
+        weechat_buffer_set (new_buffer,
+                            "localvar_set_script_close_cb", function_close);
+        weechat_buffer_set (new_buffer,
+                            "localvar_set_script_close_cb_data", data_close);
     }
     else
     {
-        plugin_script_callback_remove (script, script_cb_input);
-        plugin_script_callback_remove (script, script_cb_close);
+        if (function_and_data_input)
+            free (function_and_data_input);
+        if (function_and_data_close)
+            free (function_and_data_close);
     }
 
     return new_buffer;
-}
-
-/*
- * Closes a buffer.
- */
-
-void
-plugin_script_api_buffer_close (struct t_weechat_plugin *weechat_plugin,
-                                struct t_plugin_script *script,
-                                struct t_gui_buffer *buffer)
-{
-    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
-
-    if (!weechat_plugin || !script || !buffer)
-        return;
-
-    weechat_buffer_close (buffer);
-
-    ptr_script_cb = script->callbacks;
-    while (ptr_script_cb)
-    {
-        next_callback = ptr_script_cb->next_callback;
-
-        if (ptr_script_cb->buffer == buffer)
-            plugin_script_callback_remove (script, ptr_script_cb);
-
-        ptr_script_cb = next_callback;
-    }
 }
 
 /*
@@ -1256,7 +1146,8 @@ struct t_gui_bar_item *
 plugin_script_api_bar_item_new (struct t_weechat_plugin *weechat_plugin,
                                 struct t_plugin_script *script,
                                 const char *name,
-                                char *(*build_callback)(void *data,
+                                char *(*build_callback)(const void *pointer,
+                                                        void *data,
                                                         struct t_gui_bar_item *item,
                                                         struct t_gui_window *window,
                                                         struct t_gui_buffer *buffer,
@@ -1264,9 +1155,8 @@ plugin_script_api_bar_item_new (struct t_weechat_plugin *weechat_plugin,
                                 const char *function,
                                 const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
     struct t_gui_bar_item *new_item;
-    char str_function[1024];
+    char str_function[1024], *function_and_data;;
     int new_callback;
 
     new_callback = 0;
@@ -1284,47 +1174,16 @@ plugin_script_api_bar_item_new (struct t_weechat_plugin *weechat_plugin,
                   function);
     }
 
-    script_cb = plugin_script_callback_add (script, str_function, data);
-    if (!script_cb)
-        return NULL;
+    function_and_data = plugin_script_build_function_and_data (str_function,
+                                                               data);
 
-    new_item = weechat_bar_item_new (name,
-                                     (str_function[0]) ? build_callback : NULL,
-                                     (str_function[0]) ? script_cb : NULL);
-    if (new_item)
-        script_cb->bar_item = new_item;
-    else
-        plugin_script_callback_remove (script, script_cb);
+    new_item = weechat_bar_item_new (name, build_callback, script,
+                                     function_and_data);
+
+    if (!new_item && function_and_data)
+        free (function_and_data);
 
     return new_item;
-}
-
-/*
- * Removes a bar item.
- */
-
-void
-plugin_script_api_bar_item_remove (struct t_weechat_plugin *weechat_plugin,
-                                   struct t_plugin_script *script,
-                                   struct t_gui_bar_item *item)
-{
-    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
-
-    if (!weechat_plugin || !script || !item)
-        return;
-
-    weechat_bar_item_remove (item);
-
-    ptr_script_cb = script->callbacks;
-    while (ptr_script_cb)
-    {
-        next_callback = ptr_script_cb->next_callback;
-
-        if (ptr_script_cb->bar_item == item)
-            plugin_script_callback_remove (script, ptr_script_cb);
-
-        ptr_script_cb = next_callback;
-    }
 }
 
 /*
@@ -1372,6 +1231,7 @@ plugin_script_api_config_get_plugin (struct t_weechat_plugin *weechat_plugin,
     strcat (option_fullname, option);
 
     return_value = weechat_config_get_plugin (option_fullname);
+
     free (option_fullname);
 
     return return_value;
@@ -1403,6 +1263,7 @@ plugin_script_api_config_is_set_plugin (struct t_weechat_plugin *weechat_plugin,
     strcat (option_fullname, option);
 
     return_code = weechat_config_is_set_plugin (option_fullname);
+
     free (option_fullname);
 
     return return_code;
@@ -1430,6 +1291,7 @@ plugin_script_api_config_set_plugin (struct t_weechat_plugin *weechat_plugin,
     strcat (option_fullname, option);
 
     return_code = weechat_config_set_plugin (option_fullname, value);
+
     free (option_fullname);
 
     return return_code;
@@ -1456,6 +1318,7 @@ plugin_script_api_config_set_desc_plugin (struct t_weechat_plugin *weechat_plugi
     strcat (option_fullname, option);
 
     weechat_config_set_desc_plugin (option_fullname, description);
+
     free (option_fullname);
 }
 
@@ -1481,46 +1344,45 @@ plugin_script_api_config_unset_plugin (struct t_weechat_plugin *weechat_plugin,
     strcat (option_fullname, option);
 
     return_code = weechat_config_unset_plugin (option_fullname);
+
     free (option_fullname);
 
     return return_code;
 }
 
 /*
- * Reads upgrade file.
+ * Creates an upgrade file.
  *
  * Returns:
  *   1: OK
  *   0: error
  */
 
-int
-plugin_script_api_upgrade_read (struct t_weechat_plugin *weechat_plugin,
-                                struct t_plugin_script *script,
-                                struct t_upgrade_file *upgrade_file,
-                                int (*callback_read)(void *data,
-                                                     struct t_upgrade_file *upgrade_file,
-                                                     int object_id,
-                                                     struct t_infolist *infolist),
-                                const char *function,
-                                const char *data)
+struct t_upgrade_file *
+plugin_script_api_upgrade_new (struct t_weechat_plugin *weechat_plugin,
+                               struct t_plugin_script *script,
+                               const char *filename,
+                               int (*callback_read)(const void *pointer,
+                                       void *data,
+                                       struct t_upgrade_file *upgrade_file,
+                                       int object_id,
+                                       struct t_infolist *infolist),
+                               const char *function,
+                               const char *data)
 {
-    struct t_plugin_script_cb *script_cb;
-    int rc;
+    char *function_and_data;
+    struct t_upgrade_file *new_upgrade_file;
 
-    if (!function || !function[0])
-        return 0;
+    function_and_data = plugin_script_build_function_and_data (function, data);
 
-    script_cb = plugin_script_callback_add (script, function, data);
-    if (!script_cb)
-        return 0;
-    script_cb->upgrade_file = upgrade_file;
+    new_upgrade_file = weechat_upgrade_new (
+        filename,
+        (function_and_data) ? callback_read : NULL,
+        script,
+        function_and_data);
 
-    rc = weechat_upgrade_read (upgrade_file,
-                               callback_read,
-                               script_cb);
+    if (!new_upgrade_file && function_and_data)
+        free (function_and_data);
 
-    plugin_script_callback_remove (script, script_cb);
-
-    return rc;
+    return new_upgrade_file;
 }

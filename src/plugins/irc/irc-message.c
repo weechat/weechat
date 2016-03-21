@@ -362,8 +362,7 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
     hashtable = weechat_hashtable_new (32,
                                        WEECHAT_HASHTABLE_STRING,
                                        WEECHAT_HASHTABLE_STRING,
-                                       NULL,
-                                       NULL);
+                                       NULL, NULL);
     if (!hashtable)
         return NULL;
 
@@ -1008,8 +1007,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
     hashtable = weechat_hashtable_new (32,
                                        WEECHAT_HASHTABLE_STRING,
                                        WEECHAT_HASHTABLE_STRING,
-                                       NULL,
-                                       NULL);
+                                       NULL, NULL);
     if (!hashtable)
         return NULL;
 

@@ -24,10 +24,12 @@
 extern struct luaL_Reg weechat_lua_api_funcs[];
 extern struct t_lua_const weechat_lua_api_consts[];
 
-extern int weechat_lua_api_buffer_input_data_cb (void *data,
+extern int weechat_lua_api_buffer_input_data_cb (const void *pointer,
+                                                 void *data,
                                                  struct t_gui_buffer *buffer,
                                                  const char *input_data);
-extern int weechat_lua_api_buffer_close_cb (void *data,
+extern int weechat_lua_api_buffer_close_cb (const void *pointer,
+                                            void *data,
                                             struct t_gui_buffer *buffer);
 
 #endif /* WEECHAT_LUA_API_H */

@@ -26,10 +26,11 @@
     int trigger_rc;                                             \
     pointers = NULL;                                            \
     extra_vars = NULL;                                          \
+    (void) data;                                                \
     (void) trigger_rc;                                          \
     if (!trigger_enabled)                                       \
         return __rc;                                            \
-    trigger = (struct t_trigger *)data;                         \
+    trigger = (struct t_trigger *)pointer;                      \
     if (!trigger || trigger->hook_running)                      \
         return __rc;                                            \
     trigger->hook_count_cb++;                                   \
@@ -43,8 +44,7 @@
         32,                                                     \
         WEECHAT_HASHTABLE_STRING,                               \
         WEECHAT_HASHTABLE_POINTER,                              \
-        NULL,                                                   \
-        NULL);                                                  \
+        NULL, NULL);                                            \
     if (!pointers)                                              \
         goto end;
 
@@ -53,8 +53,7 @@
         32,                                                     \
         WEECHAT_HASHTABLE_STRING,                               \
         WEECHAT_HASHTABLE_STRING,                               \
-        NULL,                                                   \
-        NULL);                                                  \
+        NULL, NULL);                                            \
     if (!extra_vars)                                            \
         goto end;
 
@@ -66,27 +65,38 @@
     trigger->hook_running = 0;                                  \
     return __rc;
 
-extern int trigger_callback_signal_cb (void *data, const char *signal,
-                                       const char *type_data, void *signal_data);
-extern int trigger_callback_hsignal_cb (void *data, const char *signal,
+extern int trigger_callback_signal_cb (const void *pointer, void *data,
+                                       const char *signal,
+                                       const char *type_data,
+                                       void *signal_data);
+extern int trigger_callback_hsignal_cb (const void *pointer, void *data,
+                                        const char *signal,
                                         struct t_hashtable *hashtable);
-extern char *trigger_callback_modifier_cb (void *data, const char *modifier,
+extern char *trigger_callback_modifier_cb (const void *pointer, void *data,
+                                           const char *modifier,
                                            const char *modifier_data,
                                            const char *string);
-extern int trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
+extern int trigger_callback_print_cb  (const void *pointer, void *data,
+                                       struct t_gui_buffer *buffer,
                                        time_t date, int tags_count,
                                        const char **tags, int displayed,
                                        int highlight, const char *prefix,
                                        const char *message);
-extern int trigger_callback_command_cb  (void *data, struct t_gui_buffer *buffer,
-                                         int argc, char **argv, char **argv_eol);
-extern int trigger_callback_command_run_cb  (void *data,
+extern int trigger_callback_command_cb  (const void *pointer,
+                                         void *data,
+                                         struct t_gui_buffer *buffer,
+                                         int argc, char **argv,
+                                         char **argv_eol);
+extern int trigger_callback_command_run_cb  (const void *pointer,
+                                             void *data,
                                              struct t_gui_buffer *buffer,
                                              const char *command);
-extern int trigger_callback_timer_cb  (void *data, int remaining_calls);
-extern int trigger_callback_config_cb  (void *data, const char *option,
-                                        const char *value);
-extern struct t_hashtable *trigger_callback_focus_cb (void *data,
+extern int trigger_callback_timer_cb  (const void *pointer, void *data,
+                                       int remaining_calls);
+extern int trigger_callback_config_cb  (const void *pointer, void *data,
+                                        const char *option, const char *value);
+extern struct t_hashtable *trigger_callback_focus_cb (const void *pointer,
+                                                      void *data,
                                                       struct t_hashtable *info);
 extern void trigger_callback_init ();
 extern void trigger_callback_end ();

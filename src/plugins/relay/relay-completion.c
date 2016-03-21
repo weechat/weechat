@@ -33,7 +33,8 @@
  */
 
 int
-relay_completion_protocol_name_cb (void *data, const char *completion_item,
+relay_completion_protocol_name_cb (const void *pointer, void *data,
+                                   const char *completion_item,
                                    struct t_gui_buffer *buffer,
                                    struct t_gui_completion *completion)
 {
@@ -41,6 +42,7 @@ relay_completion_protocol_name_cb (void *data, const char *completion_item,
     char protocol_name[512];
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) completion_item;
@@ -75,13 +77,15 @@ relay_completion_protocol_name_cb (void *data, const char *completion_item,
  */
 
 int
-relay_completion_relays_cb (void *data, const char *completion_item,
+relay_completion_relays_cb (const void *pointer, void *data,
+                            const char *completion_item,
                             struct t_gui_buffer *buffer,
                             struct t_gui_completion *completion)
 {
     struct t_relay_server *ptr_server;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) completion_item;
@@ -102,7 +106,8 @@ relay_completion_relays_cb (void *data, const char *completion_item,
  */
 
 int
-relay_completion_free_port_cb (void *data, const char *completion_item,
+relay_completion_free_port_cb (const void *pointer, void *data,
+                               const char *completion_item,
                                struct t_gui_buffer *buffer,
                                struct t_gui_completion *completion)
 {
@@ -111,6 +116,7 @@ relay_completion_free_port_cb (void *data, const char *completion_item,
     int port_max;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) completion_item;
@@ -141,12 +147,12 @@ relay_completion_init ()
 {
     weechat_hook_completion ("relay_protocol_name",
                              N_("all possible protocol.name for relay plugin"),
-                             &relay_completion_protocol_name_cb, NULL);
+                             &relay_completion_protocol_name_cb, NULL, NULL);
     weechat_hook_completion ("relay_relays",
                              N_("protocol.name of current relays for relay "
                                 "plugin"),
-                             &relay_completion_relays_cb, NULL);
+                             &relay_completion_relays_cb, NULL, NULL);
     weechat_hook_completion ("relay_free_port",
                              N_("first free port for relay plugin"),
-                             &relay_completion_free_port_cb, NULL);
+                             &relay_completion_free_port_cb, NULL, NULL);
 }

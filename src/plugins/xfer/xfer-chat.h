@@ -21,7 +21,7 @@
 #define WEECHAT_XFER_CHAT_H 1
 
 extern void xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...);
-extern int xfer_chat_recv_cb (void *arg_xfer, int fd);
+extern int xfer_chat_recv_cb (const void *pointer, void *data, int fd);
 extern void xfer_chat_open_buffer (struct t_xfer *xfer);
 
 #endif /* WEECHAT_XFER_CHAT_H */

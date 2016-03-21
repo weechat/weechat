@@ -48,7 +48,8 @@ input_exec_data (struct t_gui_buffer *buffer, const char *data)
 {
     if (buffer->input_callback)
     {
-        (void)(buffer->input_callback) (buffer->input_callback_data,
+        (void)(buffer->input_callback) (buffer->input_callback_pointer,
+                                        buffer->input_callback_data,
                                         buffer,
                                         data);
     }

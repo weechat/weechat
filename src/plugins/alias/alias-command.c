@@ -76,7 +76,8 @@ alias_command_add (const char *alias_name, const char *command,
  */
 
 int
-alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
+alias_command_cb (const void *pointer, void *data,
+                  struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
     char *ptr_alias_name;
@@ -85,6 +86,7 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     int alias_found, i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -287,5 +289,5 @@ alias_command_init ()
         " || add %(alias) %(commands)|%(alias_value)"
         " || addcompletion %- %(alias) %(commands)|%(alias_value)"
         " || del %(alias)|%*",
-        &alias_command_cb, NULL);
+        &alias_command_cb, NULL, NULL);
 }

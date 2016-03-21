@@ -483,12 +483,14 @@ script_action_autoload (const char *name, int quiet, int autoload)
  */
 
 int
-script_action_installnext_timer_cb (void *data, int remaining_calls)
+script_action_installnext_timer_cb (const void *pointer, void *data,
+                                    int remaining_calls)
 {
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    script_action_install ((data) ? 1 : 0);
+    script_action_install ((pointer) ? 1 : 0);
 
     return WEECHAT_RC_OK;
 }
@@ -498,7 +500,8 @@ script_action_installnext_timer_cb (void *data, int remaining_calls)
  */
 
 int
-script_action_install_process_cb (void *data, const char *command,
+script_action_install_process_cb (const void *pointer, void *data,
+                                  const char *command,
                                   int return_code, const char *out,
                                   const char *err)
 {
@@ -507,9 +510,10 @@ script_action_install_process_cb (void *data, const char *command,
     struct t_script_repo *ptr_script;
 
     /* make C compiler happy */
+    (void) data;
     (void) out;
 
-    quiet = (data) ? 1 : 0;
+    quiet = (pointer) ? 1 : 0;
 
     if (return_code >= 0)
     {
@@ -558,7 +562,8 @@ script_action_install_process_cb (void *data, const char *command,
                 /* schedule install of next script */
                 weechat_hook_timer (10, 0, 1,
                                     &script_action_installnext_timer_cb,
-                                    (quiet) ? (void *)1 : (void *)0);
+                                    (quiet) ? (void *)1 : (void *)0,
+                                    NULL);
             }
         }
     }
@@ -633,8 +638,7 @@ script_action_install (int quiet)
         options = weechat_hashtable_new (32,
                                          WEECHAT_HASHTABLE_STRING,
                                          WEECHAT_HASHTABLE_STRING,
-                                         NULL,
-                                         NULL);
+                                         NULL, NULL);
         if (options)
         {
             url = script_build_download_url (ptr_script_to_install->url);
@@ -653,7 +657,8 @@ script_action_install (int quiet)
                     options,
                     weechat_config_integer (script_config_scripts_download_timeout) * 1000,
                     &script_action_install_process_cb,
-                    (quiet) ? (void *)1 : (void *)0);
+                    (quiet) ? (void *)1 : (void *)0,
+                    NULL);
                 free (url);
             }
             weechat_hashtable_free (options);
@@ -799,7 +804,8 @@ script_action_hold (const char *name, int quiet)
  */
 
 int
-script_action_show_diff_process_cb (void *data, const char *command,
+script_action_show_diff_process_cb (const void *pointer, void *data,
+                                    const char *command,
                                     int return_code, const char *out,
                                     const char *err)
 {
@@ -808,6 +814,7 @@ script_action_show_diff_process_cb (void *data, const char *command,
     int num_lines, i, diff_color;
 
     /* make C compiler happy */
+    (void) data;
     (void) command;
 
     if (script_buffer && script_buffer_detail_script
@@ -876,7 +883,7 @@ script_action_show_diff_process_cb (void *data, const char *command,
     if ((return_code == WEECHAT_HOOK_PROCESS_ERROR) || (return_code >= 0))
     {
         /* last call to this callback: delete temporary file */
-        filename = (char *)data;
+        filename = (char *)pointer;
         unlink (filename);
         free (filename);
     }
@@ -889,7 +896,8 @@ script_action_show_diff_process_cb (void *data, const char *command,
  */
 
 int
-script_action_show_source_process_cb (void *data, const char *command,
+script_action_show_source_process_cb (const void *pointer, void *data,
+                                      const char *command,
                                       int return_code, const char *out,
                                       const char *err)
 {
@@ -901,6 +909,7 @@ script_action_show_source_process_cb (void *data, const char *command,
     int length, diff_made;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) out;
 
@@ -999,7 +1008,7 @@ script_action_show_source_process_cb (void *data, const char *command,
                                                   weechat_color ("magenta"));
                                 weechat_hook_process (diff_command, 10000,
                                                       &script_action_show_diff_process_cb,
-                                                      filename);
+                                                      filename, NULL);
                                 diff_made = 1;
                                 free (diff_command);
                             }
@@ -1062,8 +1071,7 @@ script_action_show (const char *name, int quiet)
                     options = weechat_hashtable_new (32,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      WEECHAT_HASHTABLE_STRING,
-                                                     NULL,
-                                                     NULL);
+                                                     NULL, NULL);
                     if (options)
                     {
                         url = script_build_download_url (ptr_script->url);
@@ -1075,7 +1083,7 @@ script_action_show (const char *name, int quiet)
                                 options,
                                 weechat_config_integer (script_config_scripts_download_timeout) * 1000,
                                 &script_action_show_source_process_cb,
-                                NULL);
+                                NULL, NULL);
                             free (url);
                         }
                         weechat_hashtable_free (options);

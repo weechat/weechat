@@ -2362,9 +2362,11 @@ gui_window_refresh_screen (int full_refresh)
  */
 
 int
-gui_window_bare_display_timer_cb (void *data, int remaining_calls)
+gui_window_bare_display_timer_cb (const void *pointer, void *data,
+                                  int remaining_calls)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (gui_window_bare_display)
@@ -2408,7 +2410,7 @@ gui_window_bare_display_toggle (const char *delay)
                 gui_window_bare_display_timer = hook_timer (
                     NULL,
                     seconds * 1000, 0, 1,
-                    &gui_window_bare_display_timer_cb, NULL);
+                    &gui_window_bare_display_timer_cb, NULL, NULL);
             }
         }
     }

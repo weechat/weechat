@@ -181,7 +181,8 @@ gui_main_init ()
 
     /* create core buffer */
     ptr_buffer = gui_buffer_new (NULL, GUI_BUFFER_MAIN,
-                                 NULL, NULL, NULL, NULL);
+                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL);
     if (ptr_buffer)
     {
         gui_init_ok = 1;
@@ -388,7 +389,7 @@ gui_main_loop ()
 
     /* hook stdin (read keyboard) */
     hook_fd_keyboard = hook_fd (NULL, STDIN_FILENO, 1, 0, 0,
-                                &gui_key_read_cb, NULL);
+                                &gui_key_read_cb, NULL, NULL);
 
     gui_window_ask_refresh (1);
 

@@ -516,12 +516,14 @@ weechat_js_reload_name (const char *name)
  */
 
 int
-weechat_js_command_cb (void *data, struct t_gui_buffer *buffer,
+weechat_js_command_cb (const void *pointer, void *data,
+                       struct t_gui_buffer *buffer,
                        int argc, char **argv, char **argv_eol)
 {
     char *ptr_name, *path_script;
 
     /* make C++ compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -615,11 +617,13 @@ weechat_js_command_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-weechat_js_completion_cb (void *data, const char *completion_item,
+weechat_js_completion_cb (const void *pointer, void *data,
+                          const char *completion_item,
                           struct t_gui_buffer *buffer,
                           struct t_gui_completion *completion)
 {
     /* make C++ compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -634,9 +638,11 @@ weechat_js_completion_cb (void *data, const char *completion_item,
  */
 
 struct t_hdata *
-weechat_js_hdata_cb (void *data, const char *hdata_name)
+weechat_js_hdata_cb (const void *pointer, void *data,
+                     const char *hdata_name)
 {
     /* make C++ compiler happy */
+    (void) pointer;
     (void) data;
 
     return plugin_script_hdata_script (weechat_plugin,
@@ -649,10 +655,12 @@ weechat_js_hdata_cb (void *data, const char *hdata_name)
  */
 
 struct t_infolist *
-weechat_js_infolist_cb (void *data, const char *infolist_name,
-                        void *pointer, const char *arguments)
+weechat_js_infolist_cb (const void *pointer, void *data,
+                        const char *infolist_name,
+                        void *obj_pointer, const char *arguments)
 {
     /* make C++ compiler happy */
+    (void) pointer;
     (void) data;
 
     if (!infolist_name || !infolist_name[0])
@@ -661,7 +669,7 @@ weechat_js_infolist_cb (void *data, const char *infolist_name,
     if (weechat_strcasecmp (infolist_name, "javascript_script") == 0)
     {
         return plugin_script_infolist_list_scripts (weechat_js_plugin,
-                                                    js_scripts, pointer,
+                                                    js_scripts, obj_pointer,
                                                     arguments);
     }
 
@@ -673,10 +681,12 @@ weechat_js_infolist_cb (void *data, const char *infolist_name,
  */
 
 int
-weechat_js_signal_debug_dump_cb (void *data, const char *signal,
+weechat_js_signal_debug_dump_cb (const void *pointer, void *data,
+                                 const char *signal,
                                  const char *type_data, void *signal_data)
 {
     /* make C++ compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -695,10 +705,12 @@ weechat_js_signal_debug_dump_cb (void *data, const char *signal,
  */
 
 int
-weechat_js_signal_debug_libs_cb (void *data, const char *signal,
+weechat_js_signal_debug_libs_cb (const void *pointer, void *data,
+                                 const char *signal,
                                  const char *type_data, void *signal_data)
 {
     /* make C++ compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -711,40 +723,20 @@ weechat_js_signal_debug_libs_cb (void *data, const char *signal,
 }
 
 /*
- * Callback called when a buffer is closed.
- */
-
-int
-weechat_js_signal_buffer_closed_cb (void *data, const char *signal,
-                                    const char *type_data, void *signal_data)
-{
-    /* make C++ compiler happy */
-    (void) data;
-    (void) signal;
-    (void) type_data;
-
-    if (signal_data)
-    {
-        plugin_script_remove_buffer_callbacks (js_scripts,
-                                               (struct t_gui_buffer *)signal_data);
-    }
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Timer for executing actions.
  */
 
 int
-weechat_js_timer_action_cb (void *data, int remaining_calls)
+weechat_js_timer_action_cb (const void *pointer, void *data,
+                            int remaining_calls)
 {
     /* make C++ compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    if (data)
+    if (pointer)
     {
-        if (data == &js_action_install_list)
+        if (pointer == &js_action_install_list)
         {
             plugin_script_action_install (weechat_js_plugin,
                                           js_scripts,
@@ -753,7 +745,7 @@ weechat_js_timer_action_cb (void *data, int remaining_calls)
                                           &js_quiet,
                                           &js_action_install_list);
         }
-        else if (data == &js_action_remove_list)
+        else if (pointer == &js_action_remove_list)
         {
             plugin_script_action_remove (weechat_js_plugin,
                                          js_scripts,
@@ -761,7 +753,7 @@ weechat_js_timer_action_cb (void *data, int remaining_calls)
                                          &js_quiet,
                                          &js_action_remove_list);
         }
-        else if (data == &js_action_autoload_list)
+        else if (pointer == &js_action_autoload_list)
         {
             plugin_script_action_autoload (weechat_js_plugin,
                                            &js_quiet,
@@ -778,11 +770,13 @@ weechat_js_timer_action_cb (void *data, int remaining_calls)
  */
 
 int
-weechat_js_signal_script_action_cb (void *data, const char *signal,
+weechat_js_signal_script_action_cb (const void *pointer, void *data,
+                                    const char *signal,
                                     const char *type_data,
                                     void *signal_data)
 {
     /* make C++ compiler happy */
+    (void) pointer;
     (void) data;
 
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
@@ -793,7 +787,7 @@ weechat_js_signal_script_action_cb (void *data, const char *signal,
                                       (const char *)signal_data);
             weechat_hook_timer (1, 0, 1,
                                 &weechat_js_timer_action_cb,
-                                &js_action_install_list);
+                                &js_action_install_list, NULL);
         }
         else if (strcmp (signal, "javascript_script_remove") == 0)
         {
@@ -801,7 +795,7 @@ weechat_js_signal_script_action_cb (void *data, const char *signal,
                                       (const char *)signal_data);
             weechat_hook_timer (1, 0, 1,
                                 &weechat_js_timer_action_cb,
-                                &js_action_remove_list);
+                                &js_action_remove_list, NULL);
         }
         else if (strcmp (signal, "javascript_script_autoload") == 0)
         {
@@ -809,7 +803,7 @@ weechat_js_signal_script_action_cb (void *data, const char *signal,
                                       (const char *)signal_data);
             weechat_hook_timer (1, 0, 1,
                                 &weechat_js_timer_action_cb,
-                                &js_action_autoload_list);
+                                &js_action_autoload_list, NULL);
         }
     }
 
@@ -833,7 +827,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_infolist = &weechat_js_infolist_cb;
     init.callback_signal_debug_dump = &weechat_js_signal_debug_dump_cb;
     init.callback_signal_debug_libs = &weechat_js_signal_debug_libs_cb;
-    init.callback_signal_buffer_closed = &weechat_js_signal_buffer_closed_cb;
     init.callback_signal_script_action = &weechat_js_signal_script_action_cb;
     init.callback_load_file = &weechat_js_load_cb;
 

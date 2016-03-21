@@ -41,26 +41,29 @@ struct t_upgrade_file
     long last_read_pos;                    /* last read position            */
     int last_read_length;                  /* last read length              */
     int (*callback_read)                   /* callback called when reading  */
-    (void *data,                           /* file                          */
+    (const void *pointer,                  /* file                          */
+     void *data,
      struct t_upgrade_file *upgrade_file,
      int object_id,
      struct t_infolist *infolist);
+    const void *callback_read_pointer;     /* pointer sent to callback      */
     void *callback_read_data;              /* data sent to callback         */
     struct t_upgrade_file *prev_upgrade;   /* link to previous upgrade file */
     struct t_upgrade_file *next_upgrade;   /* link to next upgrade file     */
 };
 
 extern struct t_upgrade_file *upgrade_file_new (const char *filename,
-                                                int write);
+                                                int (*callback_read)(const void *pointer,
+                                                                     void *data,
+                                                                     struct t_upgrade_file *upgrade_file,
+                                                                     int object_id,
+                                                                     struct t_infolist *infolist),
+                                                const void *callback_read_pointer,
+                                                void *callback_read_data);
 extern int upgrade_file_write_object (struct t_upgrade_file *upgrade_file,
                                       int object_id,
                                       struct t_infolist *infolist);
-extern int upgrade_file_read (struct t_upgrade_file *upgrade_file,
-                              int (*callback_read)(void *data,
-                                                   struct t_upgrade_file *upgrade_file,
-                                                   int object_id,
-                                                   struct t_infolist *infolist),
-                              void *callback_read_data);
+extern int upgrade_file_read (struct t_upgrade_file *upgrade_file);
 extern void upgrade_file_close (struct t_upgrade_file *upgrade_file);
 
 #endif /* WEECHAT_UPGRADE_FILE_H */

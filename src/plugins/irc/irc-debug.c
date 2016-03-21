@@ -35,10 +35,12 @@
  */
 
 int
-irc_debug_signal_debug_dump_cb (void *data, const char *signal,
+irc_debug_signal_debug_dump_cb (const void *pointer, void *data,
+                                const char *signal,
                                 const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -69,5 +71,6 @@ irc_debug_signal_debug_dump_cb (void *data, const char *signal,
 void
 irc_debug_init ()
 {
-    weechat_hook_signal ("debug_dump", &irc_debug_signal_debug_dump_cb, NULL);
+    weechat_hook_signal ("debug_dump",
+                         &irc_debug_signal_debug_dump_cb, NULL, NULL);
 }

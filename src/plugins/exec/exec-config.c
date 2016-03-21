@@ -49,10 +49,11 @@ int exec_config_cmd_num_options = 0;
  */
 
 void
-exec_config_change_command_default_options (void *data,
+exec_config_change_command_default_options (const void *pointer, void *data,
                                             struct t_config_option *option)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -69,9 +70,11 @@ exec_config_change_command_default_options (void *data,
  */
 
 int
-exec_config_reload_cb (void *data, struct t_config_file *config_file)
+exec_config_reload_cb (const void *pointer, void *data,
+                       struct t_config_file *config_file)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     return weechat_config_reload (config_file);
@@ -91,16 +94,18 @@ exec_config_init ()
     struct t_config_section *ptr_section;
 
     exec_config_file = weechat_config_new (EXEC_CONFIG_NAME,
-                                           &exec_config_reload_cb, NULL);
+                                           &exec_config_reload_cb, NULL, NULL);
     if (!exec_config_file)
         return 0;
 
     /* command */
     ptr_section = weechat_config_new_section (exec_config_file, "command",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (exec_config_file);
@@ -113,22 +118,26 @@ exec_config_init ()
         N_("default options for command /exec (see /help exec); example: "
            "\"-nosh -bg\" to run all commands in background (no output), and "
            "without using the shell"),
-        NULL, 0, 0, "", NULL, 0, NULL, NULL,
-        &exec_config_change_command_default_options, NULL, NULL, NULL);
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL,
+        &exec_config_change_command_default_options, NULL, NULL,
+        NULL, NULL, NULL);
     exec_config_command_purge_delay = weechat_config_new_option (
         exec_config_file, ptr_section,
         "purge_delay", "integer",
         N_("delay for purging finished commands (in seconds, 0 = purge "
            "commands immediately, -1 = never purge)"),
         NULL, -1, 36000 * 24 * 30, "0", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* color */
     ptr_section = weechat_config_new_section (exec_config_file, "color",
                                               0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (exec_config_file);
@@ -140,13 +149,13 @@ exec_config_init ()
         "flag_running", "color",
         N_("text color for a running command flag in list of commands"),
         NULL, 0, 0, "lightgreen", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     exec_config_color_flag_finished = weechat_config_new_option (
         exec_config_file, ptr_section,
         "flag_finished", "color",
         N_("text color for a finished command flag in list of commands"),
         NULL, 0, 0, "lightred", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     return 1;
 }

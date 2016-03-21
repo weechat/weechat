@@ -83,11 +83,11 @@ gui_chat_init ()
 
     /* some hsignals */
     hook_hsignal (NULL, "chat_quote_time_prefix_message",
-                  &gui_chat_hsignal_quote_line_cb, NULL);
+                  &gui_chat_hsignal_quote_line_cb, NULL, NULL);
     hook_hsignal (NULL, "chat_quote_prefix_message",
-                  &gui_chat_hsignal_quote_line_cb, NULL);
+                  &gui_chat_hsignal_quote_line_cb, NULL, NULL);
     hook_hsignal (NULL, "chat_quote_message",
-                  &gui_chat_hsignal_quote_line_cb, NULL);
+                  &gui_chat_hsignal_quote_line_cb, NULL, NULL);
 }
 
 /*
@@ -980,7 +980,8 @@ gui_chat_print_lines_waiting_buffer (FILE *f)
  */
 
 int
-gui_chat_hsignal_quote_line_cb (void *data, const char *signal,
+gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
+                                const char *signal,
                                 struct t_hashtable *hashtable)
 {
     const char *date, *line, *prefix, *ptr_prefix, *message;
@@ -994,6 +995,7 @@ gui_chat_hsignal_quote_line_cb (void *data, const char *signal,
     char str_time[128], *str, *error;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (!gui_current_window->buffer->input)

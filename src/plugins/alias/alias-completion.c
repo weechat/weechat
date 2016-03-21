@@ -32,13 +32,15 @@
  */
 
 int
-alias_completion_alias_cb (void *data, const char *completion_item,
+alias_completion_alias_cb (const void *pointer, void *data,
+                           const char *completion_item,
                            struct t_gui_buffer *buffer,
                            struct t_gui_completion *completion)
 {
     struct t_alias *ptr_alias;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -58,7 +60,8 @@ alias_completion_alias_cb (void *data, const char *completion_item,
  */
 
 int
-alias_completion_alias_value_cb (void *data, const char *completion_item,
+alias_completion_alias_value_cb (const void *pointer, void *data,
+                                 const char *completion_item,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
 {
@@ -68,6 +71,7 @@ alias_completion_alias_value_cb (void *data, const char *completion_item,
     struct t_alias *ptr_alias;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -110,7 +114,7 @@ void
 alias_completion_init ()
 {
     weechat_hook_completion ("alias", N_("list of aliases"),
-                             &alias_completion_alias_cb, NULL);
+                             &alias_completion_alias_cb, NULL, NULL);
     weechat_hook_completion ("alias_value", N_("value of alias"),
-                             &alias_completion_alias_value_cb, NULL);
+                             &alias_completion_alias_value_cb, NULL, NULL);
 }

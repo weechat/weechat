@@ -775,7 +775,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hook_focus = &hook_focus;
         new_plugin->hook_set = &hook_set;
         new_plugin->unhook = &unhook;
-        new_plugin->unhook_all = &unhook_all_plugin;
+        new_plugin->unhook_all_plugin = &unhook_all_plugin;
 
         new_plugin->buffer_new = &gui_buffer_new;
         new_plugin->buffer_search = &gui_buffer_search_by_name;
@@ -939,11 +939,11 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
  */
 
 void
-plugin_auto_load_file (void *args, const char *filename)
+plugin_auto_load_file (void *data, const char *filename)
 {
     struct t_plugin_args *plugin_args;
 
-    plugin_args = (struct t_plugin_args *)args;
+    plugin_args = (struct t_plugin_args *)data;
 
     if (plugin_check_extension_allowed (filename))
         plugin_load (filename, 0, plugin_args->argc, plugin_args->argv);
@@ -954,7 +954,8 @@ plugin_auto_load_file (void *args, const char *filename)
  */
 
 int
-plugin_arraylist_cmp_cb (void *data, struct t_arraylist *arraylist,
+plugin_arraylist_cmp_cb (void *data,
+                         struct t_arraylist *arraylist,
                          void *pointer1, void *pointer2)
 {
     struct t_weechat_plugin *plugin1, *plugin2;
@@ -1009,8 +1010,7 @@ plugin_auto_load (int argc, char **argv)
                             plugin_path2 : ((plugin_path) ?
                                             plugin_path : CONFIG_STRING(config_plugin_path)),
                             0,
-                            &plugin_args,
-                            &plugin_auto_load_file);
+                            &plugin_auto_load_file, &plugin_args);
         if (plugin_path)
             free (plugin_path);
         if (plugin_path2)
@@ -1023,7 +1023,8 @@ plugin_auto_load (int argc, char **argv)
     if (dir_name)
     {
         snprintf (dir_name, length, "%s/plugins", WEECHAT_LIBDIR);
-        util_exec_on_files (dir_name, 0, &plugin_args, &plugin_auto_load_file);
+        util_exec_on_files (dir_name, 0,
+                            &plugin_auto_load_file, &plugin_args);
         free (dir_name);
     }
 
@@ -1106,7 +1107,7 @@ plugin_remove (struct t_weechat_plugin *plugin)
     config_file_free_all_plugin (plugin);
 
     /* remove all hooks */
-    unhook_all_plugin (plugin);
+    unhook_all_plugin (plugin, NULL);
 
     /* remove all infolists */
     infolist_free_all_plugin (plugin);
@@ -1342,11 +1343,13 @@ plugin_end ()
  */
 
 struct t_hdata *
-plugin_hdata_plugin_cb (void *data, const char *hdata_name)
+plugin_hdata_plugin_cb (const void *pointer, void *data,
+                        const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_plugin", "next_plugin",

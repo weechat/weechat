@@ -158,8 +158,7 @@ relay_irc_message_parse (const char *message)
     hash_msg = weechat_hashtable_new (32,
                                       WEECHAT_HASHTABLE_STRING,
                                       WEECHAT_HASHTABLE_STRING,
-                                      NULL,
-                                      NULL);
+                                      NULL, NULL);
     if (!hash_msg)
     {
         weechat_printf (NULL,
@@ -214,8 +213,7 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
     hashtable_in = weechat_hashtable_new (32,
                                           WEECHAT_HASHTABLE_STRING,
                                           WEECHAT_HASHTABLE_STRING,
-                                          NULL,
-                                          NULL);
+                                          NULL, NULL);
     if (hashtable_in)
     {
         weechat_hashtable_set (hashtable_in, "server", client->protocol_args);
@@ -258,7 +256,8 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
  */
 
 int
-relay_irc_signal_irc_in2_cb (void *data, const char *signal,
+relay_irc_signal_irc_in2_cb (const void *pointer, void *data,
+                             const char *signal,
                              const char *type_data, void *signal_data)
 {
     struct t_relay_client *client;
@@ -266,10 +265,11 @@ relay_irc_signal_irc_in2_cb (void *data, const char *signal,
     struct t_hashtable *hash_parsed;
 
     /* make C compiler happy */
+    (void) data;
     (void) signal;
     (void) type_data;
 
-    client = (struct t_relay_client *)data;
+    client = (struct t_relay_client *)pointer;
     ptr_msg = (const char *)signal_data;
 
     if (weechat_relay_plugin->debug >= 2)
@@ -368,7 +368,8 @@ relay_irc_tag_relay_client_id (const char *tags)
  */
 
 int
-relay_irc_signal_irc_outtags_cb (void *data, const char *signal,
+relay_irc_signal_irc_outtags_cb (const void *pointer, void *data,
+                                 const char *signal,
                                  const char *type_data,
                                  void *signal_data)
 {
@@ -380,10 +381,11 @@ relay_irc_signal_irc_outtags_cb (void *data, const char *signal,
     char str_infolist_args[256];
 
     /* make C compiler happy */
+    (void) data;
     (void) signal;
     (void) type_data;
 
-    client = (struct t_relay_client *)data;
+    client = (struct t_relay_client *)pointer;
 
     tags = NULL;
 
@@ -483,17 +485,19 @@ end:
  */
 
 int
-relay_irc_signal_irc_disc_cb (void *data, const char *signal,
+relay_irc_signal_irc_disc_cb (const void *pointer, void *data,
+                              const char *signal,
                               const char *type_data, void *signal_data)
 {
     struct t_relay_client *client;
 
     /* make C compiler happy */
+    (void) data;
     (void) signal;
     (void) type_data;
     (void) signal_data;
 
-    client = (struct t_relay_client *)data;
+    client = (struct t_relay_client *)pointer;
 
     if (weechat_relay_plugin->debug >= 2)
     {
@@ -516,7 +520,8 @@ relay_irc_signal_irc_disc_cb (void *data, const char *signal,
  */
 
 int
-relay_irc_hsignal_irc_redir_cb (void *data, const char *signal,
+relay_irc_hsignal_irc_redir_cb (const void *pointer, void *data,
+                                const char *signal,
                                 struct t_hashtable *hashtable)
 {
     struct t_relay_client *client;
@@ -524,7 +529,10 @@ relay_irc_hsignal_irc_redir_cb (void *data, const char *signal,
     char pattern[128], **messages;
     const char *output;
 
-    client = (struct t_relay_client *)data;
+    /* make C compiler happy */
+    (void) data;
+
+    client = (struct t_relay_client *)pointer;
 
     if (weechat_relay_plugin->debug >= 2)
     {
@@ -1179,7 +1187,7 @@ relay_irc_hook_signals (struct t_relay_client *client)
     RELAY_IRC_DATA(client, hook_signal_irc_in2) =
         weechat_hook_signal (str_signal_name,
                              &relay_irc_signal_irc_in2_cb,
-                             client);
+                             client, NULL);
 
     /*
      * hook signal "xxx,irc_outtags_*" to catch IRC data sent to
@@ -1191,7 +1199,7 @@ relay_irc_hook_signals (struct t_relay_client *client)
     RELAY_IRC_DATA(client, hook_signal_irc_outtags) =
         weechat_hook_signal (str_signal_name,
                              &relay_irc_signal_irc_outtags_cb,
-                             client);
+                             client, NULL);
 
     /*
      * hook signal "irc_server_disconnected" to disconnect client if
@@ -1200,7 +1208,7 @@ relay_irc_hook_signals (struct t_relay_client *client)
     RELAY_IRC_DATA(client, hook_signal_irc_disc) =
         weechat_hook_signal ("irc_server_disconnected",
                              &relay_irc_signal_irc_disc_cb,
-                             client);
+                             client, NULL);
 
     /*
      * hook hsignal "irc_redirection_*" to redirect some messages
@@ -1208,7 +1216,7 @@ relay_irc_hook_signals (struct t_relay_client *client)
     RELAY_IRC_DATA(client, hook_hsignal_irc_redir) =
         weechat_hook_hsignal ("irc_redirection_relay_*",
                               &relay_irc_hsignal_irc_redir_cb,
-                              client);
+                              client, NULL);
 }
 
 /*
@@ -1609,8 +1617,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
             hash_redirect = weechat_hashtable_new (32,
                                                    WEECHAT_HASHTABLE_STRING,
                                                    WEECHAT_HASHTABLE_STRING,
-                                                   NULL,
-                                                   NULL);
+                                                   NULL, NULL);
             if (hash_redirect)
             {
                 redirect_msg = 0;

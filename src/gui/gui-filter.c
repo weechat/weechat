@@ -533,11 +533,13 @@ gui_filter_free_all ()
  */
 
 struct t_hdata *
-gui_filter_hdata_filter_cb (void *data, const char *hdata_name)
+gui_filter_hdata_filter_cb (const void *pointer, void *data,
+                            const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_filter", "next_filter",

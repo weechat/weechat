@@ -359,7 +359,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
  */
 
 int
-relay_weechat_protocol_input_timer_cb (void *data,
+relay_weechat_protocol_input_timer_cb (const void *pointer,
+                                       void *data,
                                        int remaining_calls)
 {
     char **timer_args;
@@ -367,9 +368,10 @@ relay_weechat_protocol_input_timer_cb (void *data,
     struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    timer_args = (char **)data;
+    timer_args = (char **)pointer;
 
     if (!timer_args)
         return WEECHAT_RC_ERROR;
@@ -438,7 +440,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
             timer_args[1] = strdup (pos + 1);
             weechat_hook_timer (1, 0, 1,
                                 &relay_weechat_protocol_input_timer_cb,
-                                timer_args);
+                                timer_args,
+                                NULL);
         }
     }
 
@@ -450,7 +453,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
  */
 
 int
-relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
+relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
+                                         const char *signal,
                                          const char *type_data,
                                          void *signal_data)
 {
@@ -463,9 +467,10 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
     char cmd_hdata[64], str_signal[128];
 
     /* make C compiler happy */
+    (void) data;
     (void) type_data;
 
-    ptr_client = (struct t_relay_client *)data;
+    ptr_client = (struct t_relay_client *)pointer;
     if (!ptr_client || !relay_client_valid (ptr_client))
         return WEECHAT_RC_OK;
 
@@ -815,14 +820,16 @@ relay_weechat_protocol_nicklist_map_cb (void *data,
  */
 
 int
-relay_weechat_protocol_timer_nicklist_cb (void *data, int remaining_calls)
+relay_weechat_protocol_timer_nicklist_cb (const void *pointer, void *data,
+                                          int remaining_calls)
 {
     struct t_relay_client *ptr_client;
 
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    ptr_client = (struct t_relay_client *)data;
+    ptr_client = (struct t_relay_client *)pointer;
     if (!ptr_client || !relay_client_valid (ptr_client))
         return WEECHAT_RC_OK;
 
@@ -842,7 +849,8 @@ relay_weechat_protocol_timer_nicklist_cb (void *data, int remaining_calls)
  */
 
 int
-relay_weechat_protocol_hsignal_nicklist_cb (void *data, const char *signal,
+relay_weechat_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
+                                            const char *signal,
                                             struct t_hashtable *hashtable)
 {
     struct t_relay_client *ptr_client;
@@ -852,7 +860,10 @@ relay_weechat_protocol_hsignal_nicklist_cb (void *data, const char *signal,
     struct t_relay_weechat_nicklist *ptr_nicklist;
     char diff;
 
-    ptr_client = (struct t_relay_client *)data;
+    /* make C compiler happy */
+    (void) data;
+
+    ptr_client = (struct t_relay_client *)pointer;
     if (!ptr_client || !relay_client_valid (ptr_client))
         return WEECHAT_RC_OK;
 
@@ -935,7 +946,8 @@ relay_weechat_protocol_hsignal_nicklist_cb (void *data, const char *signal,
  */
 
 int
-relay_weechat_protocol_signal_upgrade_cb (void *data, const char *signal,
+relay_weechat_protocol_signal_upgrade_cb (const void *pointer, void *data,
+                                          const char *signal,
                                           const char *type_data,
                                           void *signal_data)
 {
@@ -944,10 +956,11 @@ relay_weechat_protocol_signal_upgrade_cb (void *data, const char *signal,
     char str_signal[128];
 
     /* make C compiler happy */
+    (void) data;
     (void) type_data;
     (void) signal_data;
 
-    ptr_client = (struct t_relay_client *)data;
+    ptr_client = (struct t_relay_client *)pointer;
     if (!ptr_client || !relay_client_valid (ptr_client))
         return WEECHAT_RC_OK;
 

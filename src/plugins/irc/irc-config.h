@@ -201,10 +201,10 @@ extern int irc_config_num_nicks_hide_password;
 
 extern void irc_config_set_nick_colors ();
 extern int irc_config_display_channel_modes_arguments (const char *modes);
-extern int irc_config_server_check_value_cb (void *data,
+extern int irc_config_server_check_value_cb (const void *pointer, void *data,
                                              struct t_config_option *option,
                                              const char *value);
-extern void irc_config_server_change_cb (void *data,
+extern void irc_config_server_change_cb (const void *pointer, void *data,
                                          struct t_config_option *option);
 struct t_config_option *irc_config_server_new_option (struct t_config_file *config_file,
                                                       struct t_config_section *section,
@@ -213,12 +213,16 @@ struct t_config_option *irc_config_server_new_option (struct t_config_file *conf
                                                       const char *default_value,
                                                       const char *value,
                                                       int null_value_allowed,
-                                                      int (*callback_check_value)(void *data,
+                                                      int (*callback_check_value)(const void *pointer,
+                                                                                  void *data,
                                                                                   struct t_config_option *option,
                                                                                   const char *value),
+                                                      const void *callback_check_value_pointer,
                                                       void *callback_check_value_data,
-                                                      void (*callback_change)(void *data,
+                                                      void (*callback_change)(const void *pointer,
+                                                                              void *data,
                                                                               struct t_config_option *option),
+                                                      const void *callback_change_pointer,
                                                       void *callback_change_data);
 extern int irc_config_init ();
 extern int irc_config_read ();

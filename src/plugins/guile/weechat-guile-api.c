@@ -28,7 +28,6 @@
 #include "../weechat-plugin.h"
 #include "../plugin-script.h"
 #include "../plugin-script-api.h"
-#include "../plugin-script-callback.h"
 #include "weechat-guile.h"
 
 
@@ -773,24 +772,26 @@ weechat_guile_api_list_free (SCM weelist)
 }
 
 int
-weechat_guile_api_config_reload_cb (void *data,
+weechat_guile_api_config_reload_cb (const void *pointer, void *data,
                                     struct t_config_file *config_file)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[2];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(config_file);
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "ss", func_argv);
 
         if (!rc)
@@ -831,29 +832,31 @@ weechat_guile_api_config_new (SCM name, SCM function, SCM data)
 }
 
 int
-weechat_guile_api_config_read_cb (void *data,
+weechat_guile_api_config_read_cb (const void *pointer, void *data,
                                   struct t_config_file *config_file,
                                   struct t_config_section *section,
                                   const char *option_name, const char *value)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[5];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(config_file);
         func_argv[2] = API_PTR2STR(section);
         func_argv[3] = (option_name) ? (char *)option_name : empty_arg;
         func_argv[4] = (value) ? (char *)value : empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "sssss", func_argv);
 
         if (!rc)
@@ -875,26 +878,28 @@ weechat_guile_api_config_read_cb (void *data,
 }
 
 int
-weechat_guile_api_config_section_write_cb (void *data,
+weechat_guile_api_config_section_write_cb (const void *pointer, void *data,
                                            struct t_config_file *config_file,
                                            const char *section_name)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(config_file);
         func_argv[2] = (section_name) ? (char *)section_name : empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "sss", func_argv);
 
         if (!rc)
@@ -914,26 +919,28 @@ weechat_guile_api_config_section_write_cb (void *data,
 }
 
 int
-weechat_guile_api_config_section_write_default_cb (void *data,
+weechat_guile_api_config_section_write_default_cb (const void *pointer, void *data,
                                                    struct t_config_file *config_file,
                                                    const char *section_name)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(config_file);
         func_argv[2] = (section_name) ? (char *)section_name : empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "sss", func_argv);
 
         if (!rc)
@@ -953,30 +960,32 @@ weechat_guile_api_config_section_write_default_cb (void *data,
 }
 
 int
-weechat_guile_api_config_section_create_option_cb (void *data,
+weechat_guile_api_config_section_create_option_cb (const void *pointer, void *data,
                                                    struct t_config_file *config_file,
                                                    struct t_config_section *section,
                                                    const char *option_name,
                                                    const char *value)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[5];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(config_file);
         func_argv[2] = API_PTR2STR(section);
         func_argv[3] = (option_name) ? (char *)option_name : empty_arg;
         func_argv[4] = (value) ? (char *)value : empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "sssss", func_argv);
 
         if (!rc)
@@ -998,28 +1007,30 @@ weechat_guile_api_config_section_create_option_cb (void *data,
 }
 
 int
-weechat_guile_api_config_section_delete_option_cb (void *data,
+weechat_guile_api_config_section_delete_option_cb (const void *pointer, void *data,
                                                    struct t_config_file *config_file,
                                                    struct t_config_section *section,
                                                    struct t_config_option *option)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[4];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(config_file);
         func_argv[2] = API_PTR2STR(section);
         func_argv[3] = API_PTR2STR(option);
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "ssss", func_argv);
 
         if (!rc)
@@ -1080,27 +1091,29 @@ weechat_guile_api_config_new_section (SCM args)
         || !scm_is_string (function_delete_option) || !scm_is_string (data_delete_option))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(plugin_script_api_config_new_section (weechat_guile_plugin,
-                                                               guile_current_script,
-                                                               API_STR2PTR(API_SCM_TO_STRING(config_file)),
-                                                               API_SCM_TO_STRING(name),
-                                                               scm_to_int (user_can_add_options),
-                                                               scm_to_int (user_can_delete_options),
-                                                               &weechat_guile_api_config_read_cb,
-                                                               API_SCM_TO_STRING(function_read),
-                                                               API_SCM_TO_STRING(data_read),
-                                                               &weechat_guile_api_config_section_write_cb,
-                                                               API_SCM_TO_STRING(function_write),
-                                                               API_SCM_TO_STRING(data_write),
-                                                               &weechat_guile_api_config_section_write_default_cb,
-                                                               API_SCM_TO_STRING(function_write_default),
-                                                               API_SCM_TO_STRING(data_write_default),
-                                                               &weechat_guile_api_config_section_create_option_cb,
-                                                               API_SCM_TO_STRING(function_create_option),
-                                                               API_SCM_TO_STRING(data_create_option),
-                                                               &weechat_guile_api_config_section_delete_option_cb,
-                                                               API_SCM_TO_STRING(function_delete_option),
-                                                               API_SCM_TO_STRING(data_delete_option)));
+    result = API_PTR2STR(
+        plugin_script_api_config_new_section (
+            weechat_guile_plugin,
+            guile_current_script,
+            API_STR2PTR(API_SCM_TO_STRING(config_file)),
+            API_SCM_TO_STRING(name),
+            scm_to_int (user_can_add_options),
+            scm_to_int (user_can_delete_options),
+            &weechat_guile_api_config_read_cb,
+            API_SCM_TO_STRING(function_read),
+            API_SCM_TO_STRING(data_read),
+            &weechat_guile_api_config_section_write_cb,
+            API_SCM_TO_STRING(function_write),
+            API_SCM_TO_STRING(data_write),
+            &weechat_guile_api_config_section_write_default_cb,
+            API_SCM_TO_STRING(function_write_default),
+            API_SCM_TO_STRING(data_write_default),
+            &weechat_guile_api_config_section_create_option_cb,
+            API_SCM_TO_STRING(function_create_option),
+            API_SCM_TO_STRING(data_create_option),
+            &weechat_guile_api_config_section_delete_option_cb,
+            API_SCM_TO_STRING(function_delete_option),
+            API_SCM_TO_STRING(data_delete_option)));
 
     API_RETURN_STRING_FREE(result);
 }
@@ -1122,26 +1135,28 @@ weechat_guile_api_config_search_section (SCM config_file, SCM section_name)
 }
 
 int
-weechat_guile_api_config_option_check_value_cb (void *data,
+weechat_guile_api_config_option_check_value_cb (const void *pointer, void *data,
                                                 struct t_config_option *option,
                                                 const char *value)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(option);
         func_argv[2] = (value) ? (char *)value : empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "sss", func_argv);
 
         if (!rc)
@@ -1161,24 +1176,26 @@ weechat_guile_api_config_option_check_value_cb (void *data,
 }
 
 void
-weechat_guile_api_config_option_change_cb (void *data,
+weechat_guile_api_config_option_change_cb (const void *pointer, void *data,
                                            struct t_config_option *option)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[2];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(option);
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "ss", func_argv);
 
         if (func_argv[1])
@@ -1190,24 +1207,26 @@ weechat_guile_api_config_option_change_cb (void *data,
 }
 
 void
-weechat_guile_api_config_option_delete_cb (void *data,
+weechat_guile_api_config_option_delete_cb (const void *pointer, void *data,
                                            struct t_config_option *option)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[2];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(option);
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "ss", func_argv);
 
         if (func_argv[1])
@@ -1614,9 +1633,7 @@ weechat_guile_api_config_option_free (SCM option)
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    plugin_script_api_config_option_free (weechat_guile_plugin,
-                                          guile_current_script,
-                                          API_STR2PTR(API_SCM_TO_STRING(option)));
+    weechat_config_option_free (API_STR2PTR(API_SCM_TO_STRING(option)));
 
     API_RETURN_OK;
 }
@@ -1628,9 +1645,8 @@ weechat_guile_api_config_section_free_options (SCM section)
     if (!scm_is_string (section))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    plugin_script_api_config_section_free_options (weechat_guile_plugin,
-                                                   guile_current_script,
-                                                   API_STR2PTR(API_SCM_TO_STRING(section)));
+    weechat_config_section_free_options (
+        API_STR2PTR(API_SCM_TO_STRING(section)));
 
     API_RETURN_OK;
 }
@@ -1642,9 +1658,7 @@ weechat_guile_api_config_section_free (SCM section)
     if (!scm_is_string (section))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    plugin_script_api_config_section_free (weechat_guile_plugin,
-                                           guile_current_script,
-                                           API_STR2PTR(API_SCM_TO_STRING(section)));
+    weechat_config_section_free (API_STR2PTR(API_SCM_TO_STRING(section)));
 
     API_RETURN_OK;
 }
@@ -1656,9 +1670,7 @@ weechat_guile_api_config_free (SCM config_file)
     if (!scm_is_string (config_file))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    plugin_script_api_config_free (weechat_guile_plugin,
-                                   guile_current_script,
-                                   API_STR2PTR(API_SCM_TO_STRING(config_file)));
+    weechat_config_free (API_STR2PTR(API_SCM_TO_STRING(config_file)));
 
     API_RETURN_OK;
 }
@@ -1889,28 +1901,31 @@ weechat_guile_api_log_print (SCM message)
 }
 
 int
-weechat_guile_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
+weechat_guile_api_hook_command_cb (const void *pointer, void *data,
+                                   struct t_gui_buffer *buffer,
                                    int argc, char **argv, char **argv_eol)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
     /* make C compiler happy */
     (void) argv;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(buffer);
         func_argv[2] = (argc > 1) ? argv_eol[1] : empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "sss", func_argv);
 
         if (!rc)
@@ -1959,25 +1974,28 @@ weechat_guile_api_hook_command (SCM command, SCM description, SCM args,
 }
 
 int
-weechat_guile_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
+weechat_guile_api_hook_command_run_cb (const void *pointer, void *data,
+                                       struct t_gui_buffer *buffer,
                                        const char *command)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(buffer);
         func_argv[2] = (command) ? (char *)command : empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "sss", func_argv);
 
         if (!rc)
@@ -2018,26 +2036,29 @@ weechat_guile_api_hook_command_run (SCM command, SCM function, SCM data)
 }
 
 int
-weechat_guile_api_hook_timer_cb (void *data, int remaining_calls)
+weechat_guile_api_hook_timer_cb (const void *pointer, void *data,
+                                 int remaining_calls)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[2];
     char str_remaining_calls[32], empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
         snprintf (str_remaining_calls, sizeof (str_remaining_calls),
                   "%d", remaining_calls);
 
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = str_remaining_calls;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "ss", func_argv);
 
         if (!rc)
@@ -2080,25 +2101,27 @@ weechat_guile_api_hook_timer (SCM interval, SCM align_second, SCM max_calls,
 }
 
 int
-weechat_guile_api_hook_fd_cb (void *data, int fd)
+weechat_guile_api_hook_fd_cb (const void *pointer, void *data, int fd)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[2];
     char str_fd[32], empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
         snprintf (str_fd, sizeof (str_fd), "%d", fd);
 
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = str_fd;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "ss", func_argv);
 
         if (!rc)
@@ -2142,28 +2165,30 @@ weechat_guile_api_hook_fd (SCM fd, SCM read, SCM write, SCM exception,
 }
 
 int
-weechat_guile_api_hook_process_cb (void *data,
+weechat_guile_api_hook_process_cb (const void *pointer, void *data,
                                    const char *command, int return_code,
                                    const char *out, const char *err)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[5];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (command) ? (char *)command : empty_arg;
         func_argv[2] = &return_code;
         func_argv[3] = (out) ? (char *)out : empty_arg;
         func_argv[4] = (err) ? (char *)err : empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "ssiss", func_argv);
 
         if (!rc)
@@ -2238,34 +2263,37 @@ weechat_guile_api_hook_process_hashtable (SCM command, SCM options, SCM timeout,
 }
 
 int
-weechat_guile_api_hook_connect_cb (void *data, int status, int gnutls_rc,
+weechat_guile_api_hook_connect_cb (const void *pointer, void *data,
+                                   int status, int gnutls_rc,
                                    int sock, const char *error,
                                    const char *ip_address)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[6];
     char str_status[32], str_gnutls_rc[32], str_sock[32];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
         snprintf (str_status, sizeof (str_status), "%d", status);
         snprintf (str_gnutls_rc, sizeof (str_gnutls_rc), "%d", gnutls_rc);
         snprintf (str_sock, sizeof (str_sock), "%d", sock);
 
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = str_status;
         func_argv[2] = str_gnutls_rc;
         func_argv[3] = str_sock;
         func_argv[4] = (ip_address) ? (char *)ip_address : empty_arg;
         func_argv[5] = (error) ? (char *)error : empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "ssssss", func_argv);
 
         if (!rc)
@@ -2317,28 +2345,31 @@ weechat_guile_api_hook_connect (SCM proxy, SCM address, SCM port, SCM ipv6,
 }
 
 int
-weechat_guile_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
+weechat_guile_api_hook_print_cb (const void *pointer, void *data,
+                                 struct t_gui_buffer *buffer,
                                  time_t date,
                                  int tags_count, const char **tags,
                                  int displayed, int highlight,
                                  const char *prefix, const char *message)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[8];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     static char timebuffer[64];
     int *rc, ret;
 
     /* make C compiler happy */
     (void) tags_count;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
         snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)date);
 
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(buffer);
         func_argv[2] = timebuffer;
         func_argv[3] = weechat_string_build_with_split_string (tags, ",");
@@ -2349,9 +2380,9 @@ weechat_guile_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         func_argv[6] = (prefix) ? (char *)prefix : empty_arg;
         func_argv[7] = (message) ? (char *)message : empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "ssssiiss", func_argv);
 
         if (!rc)
@@ -2399,20 +2430,23 @@ weechat_guile_api_hook_print (SCM buffer, SCM tags, SCM message,
 }
 
 int
-weechat_guile_api_hook_signal_cb (void *data, const char *signal,
+weechat_guile_api_hook_signal_cb (const void *pointer, void *data,
+                                  const char *signal,
                                  const char *type_data, void *signal_data)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     static char str_value[64];
     int *rc, ret, free_needed;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (signal) ? (char *)signal : empty_arg;
         free_needed = 0;
         if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
@@ -2437,9 +2471,9 @@ weechat_guile_api_hook_signal_cb (void *data, const char *signal,
         else
             func_argv[2] = empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "sss", func_argv);
 
         if (!rc)
@@ -2521,25 +2555,28 @@ weechat_guile_api_hook_signal_send (SCM signal, SCM type_data,
 }
 
 int
-weechat_guile_api_hook_hsignal_cb (void *data, const char *signal,
+weechat_guile_api_hook_hsignal_cb (const void *pointer, void *data,
+                                   const char *signal,
                                    struct t_hashtable *hashtable)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (signal) ? (char *)signal : empty_arg;
         func_argv[2] = hashtable;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "ssh", func_argv);
 
         if (!rc)
@@ -2601,24 +2638,27 @@ weechat_guile_api_hook_hsignal_send (SCM signal, SCM hashtable)
 }
 
 int
-weechat_guile_api_hook_config_cb (void *data, const char *option, const char *value)
+weechat_guile_api_hook_config_cb (const void *pointer, void *data,
+                                  const char *option, const char *value)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (option) ? (char *)option : empty_arg;
         func_argv[2] = (value) ? (char *)value : empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "sss", func_argv);
 
         if (!rc)
@@ -2657,27 +2697,30 @@ weechat_guile_api_hook_config (SCM option, SCM function, SCM data)
 }
 
 int
-weechat_guile_api_hook_completion_cb (void *data, const char *completion_item,
+weechat_guile_api_hook_completion_cb (const void *pointer, void *data,
+                                      const char *completion_item,
                                       struct t_gui_buffer *buffer,
                                       struct t_gui_completion *completion)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[4];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
         func_argv[2] = API_PTR2STR(buffer);
         func_argv[3] = API_PTR2STR(completion);
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "ssss", func_argv);
 
         if (!rc)
@@ -2755,25 +2798,29 @@ weechat_guile_api_hook_completion_list_add (SCM completion, SCM word,
 }
 
 char *
-weechat_guile_api_hook_modifier_cb (void *data, const char *modifier,
-                                    const char *modifier_data,  const char *string)
+weechat_guile_api_hook_modifier_cb (const void *pointer, void *data,
+                                    const char *modifier,
+                                    const char *modifier_data,
+                                    const char *string)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[4];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (modifier) ? (char *)modifier : empty_arg;
         func_argv[2] = (modifier_data) ? (char *)modifier_data : empty_arg;
         func_argv[3] = (string) ? (char *)string : empty_arg;
 
-        return (char *)weechat_guile_exec (script_callback->script,
+        return (char *)weechat_guile_exec (script,
                                            WEECHAT_SCRIPT_EXEC_STRING,
-                                           script_callback->function,
+                                           ptr_function,
                                            "ssss", func_argv);
     }
 
@@ -2821,24 +2868,27 @@ weechat_guile_api_hook_modifier_exec (SCM modifier, SCM modifier_data,
 }
 
 const char *
-weechat_guile_api_hook_info_cb (void *data, const char *info_name,
+weechat_guile_api_hook_info_cb (const void *pointer, void *data,
+                                const char *info_name,
                                 const char *arguments)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (info_name) ? (char *)info_name : empty_arg;
         func_argv[2] = (arguments) ? (char *)arguments : empty_arg;
 
-        return (const char *)weechat_guile_exec (script_callback->script,
+        return (const char *)weechat_guile_exec (script,
                                                  WEECHAT_SCRIPT_EXEC_STRING,
-                                                 script_callback->function,
+                                                 ptr_function,
                                                  "sss", func_argv);
     }
 
@@ -2871,25 +2921,29 @@ weechat_guile_api_hook_info (SCM info_name, SCM description,
 }
 
 struct t_hashtable *
-weechat_guile_api_hook_info_hashtable_cb (void *data, const char *info_name,
+weechat_guile_api_hook_info_hashtable_cb (const void *pointer, void *data,
+                                          const char *info_name,
                                           struct t_hashtable *hashtable)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (info_name) ? (char *)info_name : empty_arg;
         func_argv[2] = hashtable;
 
-        return (struct t_hashtable *)weechat_guile_exec (script_callback->script,
-                                                         WEECHAT_SCRIPT_EXEC_HASHTABLE,
-                                                         script_callback->function,
-                                                         "ssh", func_argv);
+        return (struct t_hashtable *)weechat_guile_exec (
+            script,
+            WEECHAT_SCRIPT_EXEC_HASHTABLE,
+            ptr_function,
+            "ssh", func_argv);
     }
 
     return NULL;
@@ -2924,27 +2978,31 @@ weechat_guile_api_hook_info_hashtable (SCM info_name, SCM description,
 }
 
 struct t_infolist *
-weechat_guile_api_hook_infolist_cb (void *data, const char *infolist_name,
-                                    void *pointer, const char *arguments)
+weechat_guile_api_hook_infolist_cb (const void *pointer, void *data,
+                                    const char *infolist_name,
+                                    void *obj_pointer, const char *arguments)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[4];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     struct t_infolist *result;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (infolist_name) ? (char *)infolist_name : empty_arg;
-        func_argv[2] = API_PTR2STR(pointer);
+        func_argv[2] = API_PTR2STR(obj_pointer);
         func_argv[3] = (arguments) ? (char *)arguments : empty_arg;
 
-        result = (struct t_infolist *)weechat_guile_exec (script_callback->script,
-                                                          WEECHAT_SCRIPT_EXEC_STRING,
-                                                          script_callback->function,
-                                                          "ssss", func_argv);
+        result = (struct t_infolist *)weechat_guile_exec (
+            script,
+            WEECHAT_SCRIPT_EXEC_STRING,
+            ptr_function,
+            "ssss", func_argv);
 
         if (func_argv[2])
             free (func_argv[2]);
@@ -2983,23 +3041,27 @@ weechat_guile_api_hook_infolist (SCM infolist_name, SCM description,
 }
 
 struct t_hashtable *
-weechat_guile_api_hook_focus_cb (void *data, struct t_hashtable *info)
+weechat_guile_api_hook_focus_cb (const void *pointer, void *data,
+                                 struct t_hashtable *info)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[2];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = info;
 
-        return (struct t_hashtable *)weechat_guile_exec (script_callback->script,
-                                                         WEECHAT_SCRIPT_EXEC_HASHTABLE,
-                                                         script_callback->function,
-                                                         "sh", func_argv);
+        return (struct t_hashtable *)weechat_guile_exec (
+            script,
+            WEECHAT_SCRIPT_EXEC_HASHTABLE,
+            ptr_function,
+            "sh", func_argv);
     }
 
     return NULL;
@@ -3048,9 +3110,7 @@ weechat_guile_api_unhook (SCM hook)
     if (!scm_is_string (hook))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    plugin_script_api_unhook (weechat_guile_plugin,
-                              guile_current_script,
-                              API_STR2PTR(API_SCM_TO_STRING(hook)));
+    weechat_unhook (API_STR2PTR(API_SCM_TO_STRING(hook)));
 
     API_RETURN_OK;
 }
@@ -3060,31 +3120,34 @@ weechat_guile_api_unhook_all ()
 {
     API_INIT_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
-    plugin_script_api_unhook_all (weechat_guile_plugin, guile_current_script);
+    weechat_unhook_all_plugin (guile_current_script->name);
 
     API_RETURN_OK;
 }
 
 int
-weechat_guile_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
+weechat_guile_api_buffer_input_data_cb (const void *pointer, void *data,
+                                        struct t_gui_buffer *buffer,
                                         const char *input_data)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(buffer);
         func_argv[2] = (input_data) ? (char *)input_data : empty_arg;
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "sss", func_argv);
 
         if (!rc)
@@ -3104,23 +3167,26 @@ weechat_guile_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 int
-weechat_guile_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+weechat_guile_api_buffer_close_cb (const void *pointer, void *data,
+                                   struct t_gui_buffer *buffer)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[2];
     char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
     int *rc, ret;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(buffer);
 
-        rc = (int *) weechat_guile_exec (script_callback->script,
+        rc = (int *) weechat_guile_exec (script,
                                          WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
+                                         ptr_function,
                                          "ss", func_argv);
 
         if (!rc)
@@ -3226,9 +3292,7 @@ weechat_guile_api_buffer_close (SCM buffer)
     if (!scm_is_string (buffer))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    plugin_script_api_buffer_close (weechat_guile_plugin,
-                                    guile_current_script,
-                                    API_STR2PTR(API_SCM_TO_STRING(buffer)));
+    weechat_buffer_close (API_STR2PTR(API_SCM_TO_STRING(buffer)));
 
     API_RETURN_OK;
 }
@@ -3715,31 +3779,34 @@ weechat_guile_api_bar_item_search (SCM name)
 }
 
 char *
-weechat_guile_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
+weechat_guile_api_bar_item_build_cb (const void *pointer, void *data,
+                                     struct t_gui_bar_item *item,
                                      struct t_gui_window *window,
                                      struct t_gui_buffer *buffer,
                                      struct t_hashtable *extra_info)
 {
-    struct t_plugin_script_cb *script_callback;
+    struct t_plugin_script *script;
     void *func_argv[5];
     char empty_arg[1] = { '\0' }, *ret;
+    const char *ptr_function, *ptr_data;
 
-    script_callback = (struct t_plugin_script_cb *)data;
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (script_callback && script_callback->function && script_callback->function[0])
+    if (ptr_function && ptr_function[0])
     {
-        if (strncmp (script_callback->function, "(extra)", 7) == 0)
+        if (strncmp (ptr_function, "(extra)", 7) == 0)
         {
             /* new callback: data, item, window, buffer, extra_info */
-            func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+            func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = API_PTR2STR(item);
             func_argv[2] = API_PTR2STR(window);
             func_argv[3] = API_PTR2STR(buffer);
             func_argv[4] = extra_info;
 
-            ret = (char *)weechat_guile_exec (script_callback->script,
+            ret = (char *)weechat_guile_exec (script,
                                               WEECHAT_SCRIPT_EXEC_STRING,
-                                              script_callback->function + 7,
+                                              ptr_function + 7,
                                               "ssssh", func_argv);
 
             if (func_argv[1])
@@ -3752,13 +3819,13 @@ weechat_guile_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
         else
         {
             /* old callback: data, item, window */
-            func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+            func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
             func_argv[1] = API_PTR2STR(item);
             func_argv[2] = API_PTR2STR(window);
 
-            ret = (char *)weechat_guile_exec (script_callback->script,
+            ret = (char *)weechat_guile_exec (script,
                                               WEECHAT_SCRIPT_EXEC_STRING,
-                                              script_callback->function,
+                                              ptr_function,
                                               "sss", func_argv);
 
             if (func_argv[1])
@@ -3813,9 +3880,7 @@ weechat_guile_api_bar_item_remove (SCM item)
     if (!scm_is_string (item))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    plugin_script_api_bar_item_remove (weechat_guile_plugin,
-                                       guile_current_script,
-                                       API_STR2PTR(API_SCM_TO_STRING(item)));
+    weechat_bar_item_remove (API_STR2PTR(API_SCM_TO_STRING(item)));
 
     API_RETURN_OK;
 }
@@ -4587,18 +4652,72 @@ weechat_guile_api_hdata_get_string (SCM hdata, SCM property)
     API_RETURN_STRING(result);
 }
 
+int
+weechat_guile_api_upgrade_read_cb (const void *pointer, void *data,
+                                   struct t_upgrade_file *upgrade_file,
+                                   int object_id,
+                                   struct t_infolist *infolist)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' }, str_object_id[32];
+    const char *ptr_function, *ptr_data;
+    int *rc, ret;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
+
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = API_PTR2STR(upgrade_file);
+        func_argv[2] = str_object_id;
+        func_argv[3] = API_PTR2STR(infolist);
+
+        rc = (int *) weechat_guile_exec (script,
+                                         WEECHAT_SCRIPT_EXEC_INT,
+                                         ptr_function,
+                                         "ssss", func_argv);
+
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (func_argv[1])
+            free (func_argv[1]);
+        if (func_argv[3])
+            free (func_argv[3]);
+
+        return ret;
+    }
+
+    return WEECHAT_RC_ERROR;
+}
+
 SCM
-weechat_guile_api_upgrade_new (SCM filename, SCM write)
+weechat_guile_api_upgrade_new (SCM filename, SCM function, SCM data)
 {
     char *result;
     SCM return_value;
 
     API_INIT_FUNC(1, "upgrade_new", API_RETURN_EMPTY);
-    if (!scm_is_string (filename) || !scm_is_integer (write))
+    if (!scm_is_string (filename) || !scm_is_string (function)
+        || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_upgrade_new (API_SCM_TO_STRING(filename),
-                                              scm_to_int (write)));
+    result = API_PTR2STR(
+        plugin_script_api_upgrade_new (
+            weechat_guile_plugin,
+            guile_current_script,
+            API_SCM_TO_STRING(filename),
+            &weechat_guile_api_upgrade_read_cb,
+            API_SCM_TO_STRING(function),
+            API_SCM_TO_STRING(data)));
 
     API_RETURN_STRING_FREE(result);
 }
@@ -4621,67 +4740,16 @@ weechat_guile_api_upgrade_write_object (SCM upgrade_file, SCM object_id,
     API_RETURN_INT(rc);
 }
 
-int
-weechat_guile_api_upgrade_read_cb (void *data,
-                                   struct t_upgrade_file *upgrade_file,
-                                   int object_id,
-                                   struct t_infolist *infolist)
-{
-    struct t_plugin_script_cb *script_callback;
-    void *func_argv[4];
-    char empty_arg[1] = { '\0' }, str_object_id[32];
-    int *rc, ret;
-
-    script_callback = (struct t_plugin_script_cb *)data;
-
-    if (script_callback && script_callback->function && script_callback->function[0])
-    {
-        snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
-
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
-        func_argv[1] = API_PTR2STR(upgrade_file);
-        func_argv[2] = str_object_id;
-        func_argv[3] = API_PTR2STR(infolist);
-
-        rc = (int *) weechat_guile_exec (script_callback->script,
-                                         WEECHAT_SCRIPT_EXEC_INT,
-                                         script_callback->function,
-                                         "ssss", func_argv);
-
-        if (!rc)
-            ret = WEECHAT_RC_ERROR;
-        else
-        {
-            ret = *rc;
-            free (rc);
-        }
-        if (func_argv[1])
-            free (func_argv[1]);
-        if (func_argv[3])
-            free (func_argv[3]);
-
-        return ret;
-    }
-
-    return WEECHAT_RC_ERROR;
-}
-
 SCM
-weechat_guile_api_upgrade_read (SCM upgrade_file, SCM function, SCM data)
+weechat_guile_api_upgrade_read (SCM upgrade_file)
 {
     int rc;
 
     API_INIT_FUNC(1, "upgrade_read", API_RETURN_INT(0));
-    if (!scm_is_string (upgrade_file) || !scm_is_string (function)
-        || !scm_is_string (data))
+    if (!scm_is_string (upgrade_file))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
-    rc = plugin_script_api_upgrade_read (weechat_guile_plugin,
-                                         guile_current_script,
-                                         API_STR2PTR(API_SCM_TO_STRING(upgrade_file)),
-                                         &weechat_guile_api_upgrade_read_cb,
-                                         API_SCM_TO_STRING(function),
-                                         API_SCM_TO_STRING(data));
+    rc = weechat_upgrade_read (API_STR2PTR(API_SCM_TO_STRING(upgrade_file)));
 
     API_RETURN_INT(rc);
 }
@@ -4906,9 +4974,9 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(hdata_hashtable, 3);
     API_DEF_FUNC(hdata_update, 3);
     API_DEF_FUNC(hdata_get_string, 2);
-    API_DEF_FUNC(upgrade_new, 2);
+    API_DEF_FUNC(upgrade_new, 3);
     API_DEF_FUNC(upgrade_write_object, 3);
-    API_DEF_FUNC(upgrade_read, 3);
+    API_DEF_FUNC(upgrade_read, 1);
     API_DEF_FUNC(upgrade_close, 1);
 
     /* interface constants */

@@ -21,10 +21,12 @@
 #ifndef WEECHAT_RUBY_API_H
 #define WEECHAT_RUBY_API_H 1
 
-extern int weechat_ruby_api_buffer_input_data_cb (void *data,
+extern int weechat_ruby_api_buffer_input_data_cb (const void *pointer,
+                                                  void *data,
                                                   struct t_gui_buffer *buffer,
                                                   const char *input_data);
-extern int weechat_ruby_api_buffer_close_cb (void *data,
+extern int weechat_ruby_api_buffer_close_cb (const void *pointer,
+                                             void *data,
                                              struct t_gui_buffer *buffer);
 extern void weechat_ruby_api_init (VALUE ruby_mWeechat);
 

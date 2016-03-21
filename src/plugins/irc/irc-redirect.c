@@ -436,8 +436,7 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
             hash_cmd[i] = weechat_hashtable_new (32,
                                                  WEECHAT_HASHTABLE_STRING,
                                                  WEECHAT_HASHTABLE_INTEGER,
-                                                 NULL,
-                                                 NULL);
+                                                 NULL, NULL);
             for (j = 0; j < num_items[i]; j++)
             {
                 if (i < 3)
@@ -732,8 +731,7 @@ irc_redirect_stop (struct t_irc_redirect *redirect, const char *error)
         hashtable = weechat_hashtable_new (32,
                                            WEECHAT_HASHTABLE_STRING,
                                            WEECHAT_HASHTABLE_STRING,
-                                           NULL,
-                                           NULL);
+                                           NULL, NULL);
         if (hashtable)
         {
             /* set error and output (main fields) */
@@ -993,11 +991,13 @@ irc_redirect_free_all (struct t_irc_server *server)
  */
 
 struct t_hdata *
-irc_redirect_hdata_redirect_pattern_cb (void *data, const char *hdata_name)
+irc_redirect_hdata_redirect_pattern_cb (const void *pointer, void *data,
+                                        const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_redirect", "next_redirect",
@@ -1023,11 +1023,13 @@ irc_redirect_hdata_redirect_pattern_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-irc_redirect_hdata_redirect_cb (void *data, const char *hdata_name)
+irc_redirect_hdata_redirect_cb (const void *pointer, void *data,
+                                const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_redirect", "next_redirect",
@@ -1237,7 +1239,8 @@ irc_redirect_print_log (struct t_irc_server *server)
  */
 
 int
-irc_redirect_pattern_hsignal_cb (void *data, const char *signal,
+irc_redirect_pattern_hsignal_cb (const void *pointer, void *data,
+                                 const char *signal,
                                  struct t_hashtable *hashtable)
 {
     const char *pattern, *str_timeout, *cmd_start, *cmd_stop, *cmd_extra;
@@ -1245,6 +1248,7 @@ irc_redirect_pattern_hsignal_cb (void *data, const char *signal,
     int number, timeout;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
 
@@ -1301,7 +1305,8 @@ irc_redirect_pattern_hsignal_cb (void *data, const char *signal,
  */
 
 int
-irc_redirect_command_hsignal_cb (void *data, const char *signal,
+irc_redirect_command_hsignal_cb (const void *pointer, void *data,
+                                 const char *signal,
                                  struct t_hashtable *hashtable)
 {
     const char *server, *pattern, *redirect_signal, *str_count, *string;
@@ -1311,6 +1316,7 @@ irc_redirect_command_hsignal_cb (void *data, const char *signal,
     int number, count, timeout;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
 

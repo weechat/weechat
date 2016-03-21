@@ -657,13 +657,14 @@ secure_get_passphrase_from_file (const char *filename)
  */
 
 int
-secure_check_crypt_passphrase_file (void *data,
+secure_check_crypt_passphrase_file (const void *pointer, void *data,
                                     struct t_config_option *option,
                                     const char *value)
 {
     char *passphrase;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
 
@@ -696,9 +697,11 @@ secure_check_crypt_passphrase_file (void *data,
  */
 
 int
-secure_reload_cb (void *data, struct t_config_file *config_file)
+secure_reload_cb (const void *pointer, void *data,
+                  struct t_config_file *config_file)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (secure_hashtable_data_encrypted->items_count > 0)
@@ -724,7 +727,7 @@ secure_reload_cb (void *data, struct t_config_file *config_file)
  */
 
 int
-secure_data_read_cb (void *data,
+secure_data_read_cb (const void *pointer, void *data,
                      struct t_config_file *config_file,
                      struct t_config_section *section,
                      const char *option_name, const char *value)
@@ -733,6 +736,7 @@ secure_data_read_cb (void *data,
     int length_buffer, length_decrypted, rc;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) config_file;
     (void) section;
@@ -924,10 +928,12 @@ secure_data_write_map_encrypted_cb (void *data,
  */
 
 int
-secure_data_write_cb (void *data, struct t_config_file *config_file,
+secure_data_write_cb (const void *pointer, void *data,
+                      struct t_config_file *config_file,
                       const char *section_name)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     /* write name of section */
@@ -983,15 +989,18 @@ secure_init_options ()
     struct t_config_section *ptr_section;
 
     secure_config_file = config_file_new (NULL, SECURE_CONFIG_NAME,
-                                          &secure_reload_cb, NULL);
+                                          &secure_reload_cb, NULL, NULL);
     if (!secure_config_file)
         return 0;
 
     /* crypt */
     ptr_section = config_file_new_section (secure_config_file, "crypt",
                                            0, 0,
-                                           NULL, NULL, NULL, NULL, NULL, NULL,
-                                           NULL, NULL, NULL, NULL);
+                                           NULL, NULL, NULL,
+                                           NULL, NULL, NULL,
+                                           NULL, NULL, NULL,
+                                           NULL, NULL, NULL,
+                                           NULL, NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (secure_config_file);
@@ -1004,13 +1013,13 @@ secure_init_options ()
         N_("cipher used to crypt data (the number after algorithm is the size "
            "of the key in bits)"),
         "aes128|aes192|aes256", 0, 0, "aes256", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     secure_config_crypt_hash_algo = config_file_new_option (
         secure_config_file, ptr_section,
         "hash_algo", "integer",
         N_("hash algorithm used to check the decrypted data"),
         "sha224|sha256|sha384|sha512", 0, 0, "sha256", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     secure_config_crypt_passphrase_file = config_file_new_option (
         secure_config_file, ptr_section,
         "passphrase_file", "string",
@@ -1023,7 +1032,9 @@ secure_init_options ()
            "outside WeeChat home (for example in your home); example: "
            "\"~/.weechat-passphrase\""),
         NULL, 0, 0, "", NULL, 0,
-        &secure_check_crypt_passphrase_file, NULL, NULL, NULL, NULL, NULL);
+        &secure_check_crypt_passphrase_file, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     secure_config_crypt_salt = config_file_new_option (
         secure_config_file, ptr_section,
         "salt", "boolean",
@@ -1032,15 +1043,18 @@ secure_init_options ()
            "file sec.conf will be different on each write of the file; if you "
            "put the file sec.conf in a version control system, then you "
            "can turn off this option to have always same content in file"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* data */
-    ptr_section = config_file_new_section (secure_config_file, "data",
-                                           0, 0,
-                                           &secure_data_read_cb, NULL,
-                                           &secure_data_write_cb, NULL,
-                                           &secure_data_write_cb, NULL,
-                                           NULL, NULL, NULL, NULL);
+    ptr_section = config_file_new_section (
+        secure_config_file, "data",
+        0, 0,
+        &secure_data_read_cb, NULL, NULL,
+        &secure_data_write_cb, NULL, NULL,
+        &secure_data_write_cb, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (secure_config_file);
@@ -1079,16 +1093,14 @@ secure_init ()
     secure_hashtable_data = hashtable_new (32,
                                            WEECHAT_HASHTABLE_STRING,
                                            WEECHAT_HASHTABLE_STRING,
-                                           NULL,
-                                           NULL);
+                                           NULL, NULL);
     if (!secure_hashtable_data)
         return 0;
 
     secure_hashtable_data_encrypted = hashtable_new (32,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      WEECHAT_HASHTABLE_STRING,
-                                                     NULL,
-                                                     NULL);
+                                                     NULL, NULL);
     if (!secure_hashtable_data_encrypted)
     {
         hashtable_free (secure_hashtable_data);
@@ -1264,10 +1276,12 @@ secure_buffer_display ()
  */
 
 int
-secure_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
+secure_buffer_input_cb (const void *pointer, void *data,
+                        struct t_gui_buffer *buffer,
                         const char *input_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (string_strcasecmp (input_data, "q") == 0)
@@ -1283,9 +1297,11 @@ secure_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-secure_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+secure_buffer_close_cb (const void *pointer, void *data,
+                        struct t_gui_buffer *buffer)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -1322,8 +1338,8 @@ secure_buffer_open ()
     if (!secure_buffer)
     {
         secure_buffer = gui_buffer_new (NULL, SECURE_BUFFER_NAME,
-                                        &secure_buffer_input_cb, NULL,
-                                        &secure_buffer_close_cb, NULL);
+                                        &secure_buffer_input_cb, NULL, NULL,
+                                        &secure_buffer_close_cb, NULL, NULL);
         if (secure_buffer)
         {
             if (!secure_buffer->short_name)

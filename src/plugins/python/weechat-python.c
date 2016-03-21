@@ -232,8 +232,7 @@ weechat_python_hashtable_to_dict (struct t_hashtable *hashtable)
         return Py_None;
     }
 
-    weechat_hashtable_map_string (hashtable,
-                                  &weechat_python_hashtable_map_cb,
+    weechat_hashtable_map_string (hashtable, &weechat_python_hashtable_map_cb,
                                   dict);
 
     return dict;
@@ -927,12 +926,14 @@ weechat_python_reload_name (const char *name)
  */
 
 int
-weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
+weechat_python_command_cb (const void *pointer, void *data,
+                           struct t_gui_buffer *buffer,
                            int argc, char **argv, char **argv_eol)
 {
     char *ptr_name, *path_script;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -1028,11 +1029,13 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-weechat_python_completion_cb (void *data, const char *completion_item,
+weechat_python_completion_cb (const void *pointer, void *data,
+                              const char *completion_item,
                               struct t_gui_buffer *buffer,
                               struct t_gui_completion *completion)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) completion_item;
     (void) buffer;
@@ -1047,13 +1050,15 @@ weechat_python_completion_cb (void *data, const char *completion_item,
  */
 
 const char *
-weechat_python_info_cb (void *data, const char *info_name,
+weechat_python_info_cb (const void *pointer, void *data,
+                        const char *info_name,
                         const char *arguments)
 {
     int rc;
     struct stat stat_buf;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) arguments;
 
@@ -1079,9 +1084,11 @@ weechat_python_info_cb (void *data, const char *info_name,
  */
 
 struct t_hdata *
-weechat_python_hdata_cb (void *data, const char *hdata_name)
+weechat_python_hdata_cb (const void *pointer, void *data,
+                         const char *hdata_name)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     return plugin_script_hdata_script (weechat_plugin,
@@ -1094,10 +1101,12 @@ weechat_python_hdata_cb (void *data, const char *hdata_name)
  */
 
 struct t_infolist *
-weechat_python_infolist_cb (void *data, const char *infolist_name,
-                            void *pointer, const char *arguments)
+weechat_python_infolist_cb (const void *pointer, void *data,
+                            const char *infolist_name,
+                            void *obj_pointer, const char *arguments)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (!infolist_name || !infolist_name[0])
@@ -1106,7 +1115,8 @@ weechat_python_infolist_cb (void *data, const char *infolist_name,
     if (weechat_strcasecmp (infolist_name, "python_script") == 0)
     {
         return plugin_script_infolist_list_scripts (weechat_python_plugin,
-                                                    python_scripts, pointer,
+                                                    python_scripts,
+                                                    obj_pointer,
                                                     arguments);
     }
 
@@ -1118,10 +1128,12 @@ weechat_python_infolist_cb (void *data, const char *infolist_name,
  */
 
 int
-weechat_python_signal_debug_dump_cb (void *data, const char *signal,
+weechat_python_signal_debug_dump_cb (const void *pointer, void *data,
+                                     const char *signal,
                                      const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1140,10 +1152,12 @@ weechat_python_signal_debug_dump_cb (void *data, const char *signal,
  */
 
 int
-weechat_python_signal_debug_libs_cb (void *data, const char *signal,
+weechat_python_signal_debug_libs_cb (const void *pointer, void *data,
+                                     const char *signal,
                                      const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1159,38 +1173,20 @@ weechat_python_signal_debug_libs_cb (void *data, const char *signal,
 }
 
 /*
- * Callback called when a buffer is closed.
- */
-
-int
-weechat_python_signal_buffer_closed_cb (void *data, const char *signal,
-                                        const char *type_data,
-                                        void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-    (void) type_data;
-
-    if (signal_data)
-        plugin_script_remove_buffer_callbacks (python_scripts, signal_data);
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Timer for executing actions.
  */
 
 int
-weechat_python_timer_action_cb (void *data, int remaining_calls)
+weechat_python_timer_action_cb (const void *pointer, void *data,
+                                int remaining_calls)
 {
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    if (data)
+    if (pointer)
     {
-        if (data == &python_action_install_list)
+        if (pointer == &python_action_install_list)
         {
             plugin_script_action_install (weechat_python_plugin,
                                           python_scripts,
@@ -1199,7 +1195,7 @@ weechat_python_timer_action_cb (void *data, int remaining_calls)
                                           &python_quiet,
                                           &python_action_install_list);
         }
-        else if (data == &python_action_remove_list)
+        else if (pointer == &python_action_remove_list)
         {
             plugin_script_action_remove (weechat_python_plugin,
                                          python_scripts,
@@ -1207,7 +1203,7 @@ weechat_python_timer_action_cb (void *data, int remaining_calls)
                                          &python_quiet,
                                          &python_action_remove_list);
         }
-        else if (data == &python_action_autoload_list)
+        else if (pointer == &python_action_autoload_list)
         {
             plugin_script_action_autoload (weechat_python_plugin,
                                            &python_quiet,
@@ -1224,11 +1220,13 @@ weechat_python_timer_action_cb (void *data, int remaining_calls)
  */
 
 int
-weechat_python_signal_script_action_cb (void *data, const char *signal,
+weechat_python_signal_script_action_cb (const void *pointer, void *data,
+                                        const char *signal,
                                         const char *type_data,
                                         void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
@@ -1239,7 +1237,7 @@ weechat_python_signal_script_action_cb (void *data, const char *signal,
                                       (const char *)signal_data);
             weechat_hook_timer (1, 0, 1,
                                 &weechat_python_timer_action_cb,
-                                &python_action_install_list);
+                                &python_action_install_list, NULL);
         }
         else if (strcmp (signal, "python_script_remove") == 0)
         {
@@ -1247,7 +1245,7 @@ weechat_python_signal_script_action_cb (void *data, const char *signal,
                                       (const char *)signal_data);
             weechat_hook_timer (1, 0, 1,
                                 &weechat_python_timer_action_cb,
-                                &python_action_remove_list);
+                                &python_action_remove_list, NULL);
         }
         else if (strcmp (signal, "python_script_autoload") == 0)
         {
@@ -1255,7 +1253,7 @@ weechat_python_signal_script_action_cb (void *data, const char *signal,
                                       (const char *)signal_data);
             weechat_hook_timer (1, 0, 1,
                                 &weechat_python_timer_action_cb,
-                                &python_action_autoload_list);
+                                &python_action_autoload_list, NULL);
         }
     }
 
@@ -1281,7 +1279,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_info ("python2_bin",
                        N_("path to python 2.x interpreter"),
                        NULL,
-                       &weechat_python_info_cb, NULL);
+                       &weechat_python_info_cb, NULL, NULL);
 
     /* init stdout/stderr buffer */
     python_buffer_output[0] = '\0';
@@ -1319,7 +1317,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_infolist = &weechat_python_infolist_cb;
     init.callback_signal_debug_dump = &weechat_python_signal_debug_dump_cb;
     init.callback_signal_debug_libs = &weechat_python_signal_debug_libs_cb;
-    init.callback_signal_buffer_closed = &weechat_python_signal_buffer_closed_cb;
     init.callback_signal_script_action = &weechat_python_signal_script_action_cb;
     init.callback_load_file = &weechat_python_load_cb;
 

@@ -20,6 +20,50 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[1.5]]
 == Version 1.5 (under dev)
 
+[[1.5_callbacks_pointer]]
+=== Pointer in callbacks
+
+A pointer has been added in all callbacks used by scripts, so the callbacks
+will receive an extra 'const void *pointer' before the 'void *data'
+(in the C API only, not scripting API).
+
+This is used to remove linked list of callbacks in scrips (improve speed,
+reduce memory usage).
+
+Following functions are changed in the C API:
+
+* exec_on_files
+* config_new
+* config_new_section
+* config_new_option
+* hook_command
+* hook_command_run
+* hook_timer
+* hook_fd
+* hook_process
+* hook_process_hashtable
+* hook_connect
+* hook_print
+* hook_signal
+* hook_hsignal
+* hook_config
+* hook_completion
+* hook_modifier
+* hook_info
+* hook_info_hashtable
+* hook_infolist
+* hook_hdata
+* hook_focus
+* unhook_all_plugin
+* buffer_new
+* bar_item_new
+* upgrade_new
+* upgrade_read
+
+The function `unhook_all` is renamed to `unhook_all_plugin` (in C API only, not
+scripting API) and has a new argument `const char *subplugin` to remove only
+hooks created by this "subplugin" (script).
+
 [[1.5_bar_item_away]]
 === Bar item "away"
 

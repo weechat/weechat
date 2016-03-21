@@ -379,7 +379,8 @@ upgrade_weechat_save ()
     int rc;
     struct t_upgrade_file *upgrade_file;
 
-    upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME, 1);
+    upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME,
+                                     NULL, NULL, NULL);
     if (!upgrade_file)
         return 0;
 
@@ -425,8 +426,8 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
         upgrade_current_buffer = gui_buffer_new (NULL,
                                                  infolist_string (infolist,
                                                                   "name"),
-                                                 NULL, NULL,
-                                                 NULL, NULL);
+                                                 NULL, NULL, NULL,
+                                                 NULL, NULL, NULL);
     }
     if (!upgrade_current_buffer)
         return;
@@ -760,12 +761,13 @@ upgrade_weechat_read_hotlist (struct t_infolist *infolist)
  */
 
 int
-upgrade_weechat_read_cb (void *data,
+upgrade_weechat_read_cb (const void *pointer, void *data,
                          struct t_upgrade_file *upgrade_file,
                          int object_id,
                          struct t_infolist *infolist)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) upgrade_file;
 
@@ -834,10 +836,13 @@ upgrade_weechat_load ()
 
     upgrade_layout = gui_layout_alloc (GUI_LAYOUT_UPGRADE);
 
-    upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME, 0);
+    upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME,
+                                     &upgrade_weechat_read_cb, NULL, NULL);
     if (!upgrade_file)
         return 0;
-    rc = upgrade_file_read (upgrade_file, &upgrade_weechat_read_cb, NULL);
+
+    rc = upgrade_file_read (upgrade_file);
+
     upgrade_file_close (upgrade_file);
 
     if (!hotlist_reset)
@@ -903,8 +908,7 @@ upgrade_weechat_end ()
     /* remove .upgrade files */
     util_exec_on_files (weechat_home,
                         0,
-                        NULL,
-                        &upgrade_weechat_remove_file_cb);
+                        &upgrade_weechat_remove_file_cb, NULL);
 
     /* display message for end of /upgrade with duration */
     gettimeofday (&tv_now, NULL);

@@ -106,7 +106,8 @@ struct t_irc_color_ansi_state
 
 extern char *irc_color_decode (const char *string, int keep_colors);
 extern char *irc_color_encode (const char *string, int keep_colors);
-extern char *irc_color_modifier_cb (void *data, const char *modifier,
+extern char *irc_color_modifier_cb (const void *pointer, void *data,
+                                    const char *modifier,
                                     const char *modifier_data,
                                     const char *string);
 extern char *irc_color_for_tags (const char *color);

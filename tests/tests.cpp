@@ -65,13 +65,14 @@ IMPORT_TEST_GROUP(Util);
  */
 
 int
-test_print_cb (void *data, struct t_gui_buffer *buffer,
+test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
                time_t date, int tags_count,
                const char **tags, int displayed,
                int highlight, const char *prefix,
                const char *message)
 {
-    /* make C compiler happy */
+    /* make C++ compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) date;
@@ -105,6 +106,7 @@ test_gui_init ()
                 NULL,  /* message */
                 1,     /* strip colors */
                 &test_print_cb,
+                NULL,
                 NULL);
 
     /*

@@ -175,14 +175,15 @@ exec_add ()
  */
 
 int
-exec_timer_delete_cb (void *data, int remaining_calls)
+exec_timer_delete_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_exec_cmd *exec_cmd, *ptr_exec_cmd;
 
     /* make C compiler happy */
+    (void) data;
     (void) remaining_calls;
 
-    exec_cmd = (struct t_exec_cmd *)data;
+    exec_cmd = (struct t_exec_cmd *)pointer;
     if (!exec_cmd)
         return WEECHAT_RC_OK;
 
@@ -424,8 +425,7 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
         hashtable = weechat_hashtable_new (32,
                                            WEECHAT_HASHTABLE_STRING,
                                            WEECHAT_HASHTABLE_STRING,
-                                           NULL,
-                                           NULL);
+                                           NULL, NULL);
         if (hashtable)
         {
             weechat_hashtable_set (hashtable, "command", exec_cmd->command);
@@ -526,7 +526,7 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
     {
         weechat_hook_timer (1 + (1000 * weechat_config_integer (exec_config_command_purge_delay)),
                             0, 1,
-                            &exec_timer_delete_cb, exec_cmd);
+                            &exec_timer_delete_cb, exec_cmd, NULL);
     }
 }
 
@@ -535,16 +535,17 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
  */
 
 int
-exec_process_cb (void *data, const char *command, int return_code,
-                 const char *out, const char *err)
+exec_process_cb (const void *pointer, void *data, const char *command,
+                 int return_code, const char *out, const char *err)
 {
     struct t_exec_cmd *ptr_exec_cmd;
     struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
+    (void) data;
     (void) command;
 
-    ptr_exec_cmd = (struct t_exec_cmd *)data;
+    ptr_exec_cmd = (struct t_exec_cmd *)pointer;
     if (!ptr_exec_cmd)
         return WEECHAT_RC_ERROR;
 
@@ -681,10 +682,12 @@ exec_print_log ()
  */
 
 int
-exec_debug_dump_cb (void *data, const char *signal, const char *type_data,
+exec_debug_dump_cb (const void *pointer, void *data,
+                    const char *signal, const char *type_data,
                     void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -725,7 +728,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     exec_config_read ();
 
     /* hook some signals */
-    weechat_hook_signal ("debug_dump", &exec_debug_dump_cb, NULL);
+    weechat_hook_signal ("debug_dump", &exec_debug_dump_cb, NULL, NULL);
 
     /* hook completions */
     exec_completion_init ();

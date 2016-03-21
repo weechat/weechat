@@ -277,11 +277,13 @@ gui_history_hdata_history_update_cb (void *data,
  */
 
 struct t_hdata *
-gui_history_hdata_history_cb (void *data, const char *hdata_name)
+gui_history_hdata_history_cb (const void *pointer, void *data,
+                              const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_history", "next_history",

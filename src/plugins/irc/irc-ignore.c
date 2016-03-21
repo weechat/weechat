@@ -308,11 +308,13 @@ irc_ignore_free_all ()
  */
 
 struct t_hdata *
-irc_ignore_hdata_ignore_cb (void *data, const char *hdata_name)
+irc_ignore_hdata_ignore_cb (const void *pointer, void *data,
+                            const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_ignore", "next_ignore",

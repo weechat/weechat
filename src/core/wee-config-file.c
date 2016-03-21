@@ -160,8 +160,10 @@ config_file_config_insert (struct t_config_file *config_file)
 
 struct t_config_file *
 config_file_new (struct t_weechat_plugin *plugin, const char *name,
-                 int (*callback_reload)(void *data,
+                 int (*callback_reload)(const void *pointer,
+                                        void *data,
                                         struct t_config_file *config_file),
+                 const void *callback_reload_pointer,
                  void *callback_reload_data)
 {
     struct t_config_file *new_config_file;
@@ -203,6 +205,7 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
         }
         new_config_file->file = NULL;
         new_config_file->callback_reload = callback_reload;
+        new_config_file->callback_reload_pointer = callback_reload_pointer;
         new_config_file->callback_reload_data = callback_reload_data;
         new_config_file->sections = NULL;
         new_config_file->last_section = NULL;
@@ -299,30 +302,40 @@ config_file_section_insert_in_config (struct t_config_section *section)
 struct t_config_section *
 config_file_new_section (struct t_config_file *config_file, const char *name,
                          int user_can_add_options, int user_can_delete_options,
-                         int (*callback_read)(void *data,
+                         int (*callback_read)(const void *pointer,
+                                              void *data,
                                               struct t_config_file *config_file,
                                               struct t_config_section *section,
                                               const char *option_name,
                                               const char *value),
+                         const void *callback_read_pointer,
                          void *callback_read_data,
-                         int (*callback_write)(void *data,
+                         int (*callback_write)(const void *pointer,
+                                               void *data,
                                                struct t_config_file *config_file,
                                                const char *section_name),
+                         const void *callback_write_pointer,
                          void *callback_write_data,
-                         int (*callback_write_default)(void *data,
+                         int (*callback_write_default)(const void *pointer,
+                                                       void *data,
                                                        struct t_config_file *config_file,
                                                        const char *section_name),
+                         const void *callback_write_default_pointer,
                          void *callback_write_default_data,
-                         int (*callback_create_option)(void *data,
+                         int (*callback_create_option)(const void *pointer,
+                                                       void *data,
                                                        struct t_config_file *config_file,
                                                        struct t_config_section *section,
                                                        const char *option_name,
                                                        const char *value),
+                         const void *callback_create_option_pointer,
                          void *callback_create_option_data,
-                         int (*callback_delete_option)(void *data,
+                         int (*callback_delete_option)(const void *pointer,
+                                                       void *data,
                                                        struct t_config_file *config_file,
                                                        struct t_config_section *section,
                                                        struct t_config_option *option),
+                         const void *callback_delete_option_pointer,
                          void *callback_delete_option_data)
 {
     struct t_config_section *new_section;
@@ -346,14 +359,19 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
         new_section->user_can_add_options = user_can_add_options;
         new_section->user_can_delete_options = user_can_delete_options;
         new_section->callback_read = callback_read;
+        new_section->callback_read_pointer = callback_read_pointer;
         new_section->callback_read_data = callback_read_data;
         new_section->callback_write = callback_write;
+        new_section->callback_write_pointer = callback_write_pointer;
         new_section->callback_write_data = callback_write_data;
         new_section->callback_write_default = callback_write_default;
+        new_section->callback_write_default_pointer = callback_write_default_pointer;
         new_section->callback_write_default_data = callback_write_default_data;
         new_section->callback_create_option = callback_create_option;
+        new_section->callback_create_option_pointer = callback_create_option_pointer;
         new_section->callback_create_option_data = callback_create_option_data;
         new_section->callback_delete_option = callback_delete_option;
+        new_section->callback_delete_option_pointer = callback_delete_option_pointer;
         new_section->callback_delete_option_data = callback_delete_option_data;
         new_section->options = NULL;
         new_section->last_option = NULL;
@@ -575,10 +593,13 @@ config_file_option_malloc ()
         new_option->value = NULL;
         new_option->null_value_allowed = 0;
         new_option->callback_check_value = NULL;
+        new_option->callback_check_value_pointer = NULL;
         new_option->callback_check_value_data = NULL;
         new_option->callback_change = NULL;
+        new_option->callback_change_pointer = NULL;
         new_option->callback_change_data = NULL;
         new_option->callback_delete = NULL;
+        new_option->callback_delete_pointer = NULL;
         new_option->callback_delete_data = NULL;
         new_option->loaded = 0;
         new_option->prev_option = NULL;
@@ -602,15 +623,21 @@ config_file_new_option (struct t_config_file *config_file,
                         const char *default_value,
                         const char *value,
                         int null_value_allowed,
-                        int (*callback_check_value)(void *data,
+                        int (*callback_check_value)(const void *pointer,
+                                                    void *data,
                                                     struct t_config_option *option,
                                                     const char *value),
+                        const void *callback_check_value_pointer,
                         void *callback_check_value_data,
-                        void (*callback_change)(void *data,
+                        void (*callback_change)(const void *pointer,
+                                                void *data,
                                                 struct t_config_option *option),
+                        const void *callback_change_pointer,
                         void *callback_change_data,
-                        void (*callback_delete)(void *data,
+                        void (*callback_delete)(const void *pointer,
+                                                void *data,
                                                 struct t_config_option *option),
+                        const void *callback_delete_pointer,
                         void *callback_delete_data)
 {
     struct t_config_option *new_option;
@@ -833,10 +860,13 @@ config_file_new_option (struct t_config_file *config_file,
         }
         new_option->null_value_allowed = null_value_allowed;
         new_option->callback_check_value = callback_check_value;
+        new_option->callback_check_value_pointer = callback_check_value_pointer;
         new_option->callback_check_value_data = callback_check_value_data;
         new_option->callback_change = callback_change;
+        new_option->callback_change_pointer = callback_change_pointer;
         new_option->callback_change_data = callback_change_data;
         new_option->callback_delete = callback_delete;
+        new_option->callback_delete_pointer = callback_delete_pointer;
         new_option->callback_delete_data = callback_delete_data;
         new_option->loaded = 1;
 
@@ -1216,7 +1246,10 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
     if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
         && run_callback && option->callback_change)
     {
-        (void)(option->callback_change)(option->callback_change_data, option);
+        (void) (option->callback_change) (
+            option->callback_change_pointer,
+            option->callback_change_data,
+            option);
     }
 
     /* run config hook(s) */
@@ -1253,11 +1286,14 @@ config_file_option_set (struct t_config_option *option, const char *value,
 
     if (option->callback_check_value)
     {
-        if (!(int)(option->callback_check_value)
-            (option->callback_check_value_data,
-             option,
-             value))
+        if (!(int)(option->callback_check_value) (
+                option->callback_check_value_pointer,
+                option->callback_check_value_data,
+                option,
+                value))
+        {
             return WEECHAT_CONFIG_OPTION_SET_ERROR;
+        }
     }
 
     if (value)
@@ -1529,7 +1565,10 @@ config_file_option_set (struct t_config_option *option, const char *value,
     if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
         && run_callback && option->callback_change)
     {
-        (void)(option->callback_change)(option->callback_change_data, option);
+        (void) (option->callback_change) (
+            option->callback_change_pointer,
+            option->callback_change_data,
+            option);
     }
 
     /* run config hook(s) */
@@ -1580,7 +1619,10 @@ config_file_option_set_null (struct t_config_option *option, int run_callback)
     if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
         && run_callback && option->callback_change)
     {
-        (void)(option->callback_change)(option->callback_change_data, option);
+        (void) (option->callback_change) (
+            option->callback_change_pointer,
+            option->callback_change_data,
+            option);
     }
 
     /* run config hook(s) */
@@ -1619,20 +1661,22 @@ config_file_option_unset (struct t_config_option *option)
         /* delete option */
         if (option->callback_delete)
         {
-            (void)(option->callback_delete)
-                (option->callback_delete_data,
-                 option);
+            (void) (option->callback_delete) (
+                option->callback_delete_pointer,
+                option->callback_delete_data,
+                option);
         }
 
         option_full_name = config_file_option_full_name (option);
 
         if (option->section->callback_delete_option)
         {
-            rc = (int)(option->section->callback_delete_option)
-                (option->section->callback_delete_option_data,
-                 option->config_file,
-                 option->section,
-                 option);
+            rc = (int) (option->section->callback_delete_option) (
+                option->section->callback_delete_option_pointer,
+                option->section->callback_delete_option_data,
+                option->config_file,
+                option->section,
+                option);
         }
         else
         {
@@ -2015,12 +2059,13 @@ config_file_option_set_with_string (const char *option_name, const char *value)
             if (ptr_section->user_can_add_options
                 && ptr_section->callback_create_option)
             {
-                rc = (int)(ptr_section->callback_create_option)
-                    (ptr_section->callback_create_option_data,
-                     ptr_config,
-                     ptr_section,
-                     pos_option,
-                     value);
+                rc = (int) (ptr_section->callback_create_option) (
+                    ptr_section->callback_create_option_pointer,
+                    ptr_section->callback_create_option_data,
+                    ptr_config,
+                    ptr_section,
+                    pos_option,
+                    value);
             }
         }
     }
@@ -2429,16 +2474,20 @@ config_file_write_internal (struct t_config_file *config_file,
         /* call write callback if defined for section */
         if (default_options && ptr_section->callback_write_default)
         {
-            if ((ptr_section->callback_write_default) (ptr_section->callback_write_default_data,
-                                                       config_file,
-                                                       ptr_section->name) != WEECHAT_CONFIG_WRITE_OK)
+            if ((ptr_section->callback_write_default) (
+                    ptr_section->callback_write_default_pointer,
+                    ptr_section->callback_write_default_data,
+                    config_file,
+                    ptr_section->name) != WEECHAT_CONFIG_WRITE_OK)
                 goto error;
         }
         else if (!default_options && ptr_section->callback_write)
         {
-            if ((ptr_section->callback_write) (ptr_section->callback_write_data,
-                                               config_file,
-                                               ptr_section->name) != WEECHAT_CONFIG_WRITE_OK)
+            if ((ptr_section->callback_write) (
+                    ptr_section->callback_write_pointer,
+                    ptr_section->callback_write_data,
+                    config_file,
+                    ptr_section->name) != WEECHAT_CONFIG_WRITE_OK)
                 goto error;
         }
         else
@@ -2688,7 +2737,8 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                     {
                         ptr_option = NULL;
                         rc = (ptr_section->callback_read)
-                            (ptr_section->callback_read_data,
+                            (ptr_section->callback_read_pointer,
+                             ptr_section->callback_read_data,
                              config_file,
                              ptr_section,
                              ptr_option_name,
@@ -2713,12 +2763,13 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                             if (ptr_section
                                 && ptr_section->callback_create_option)
                             {
-                                rc = (int)(ptr_section->callback_create_option)
-                                    (ptr_section->callback_create_option_data,
-                                     config_file,
-                                     ptr_section,
-                                     ptr_option_name,
-                                     (undefined_value) ? NULL : pos);
+                                rc = (int) (ptr_section->callback_create_option) (
+                                    ptr_section->callback_create_option_pointer,
+                                    ptr_section->callback_create_option_data,
+                                    config_file,
+                                    ptr_section,
+                                    ptr_option_name,
+                                    (undefined_value) ? NULL : pos);
                             }
                         }
                     }
@@ -2859,6 +2910,12 @@ config_file_option_free_data (struct t_config_option *option)
         free (option->default_value);
     if (option->value)
         free (option->value);
+    if (option->callback_check_value_data)
+        free (option->callback_check_value_data);
+    if (option->callback_change_data)
+        free (option->callback_change_data);
+    if (option->callback_delete_data)
+        free (option->callback_delete_data);
 }
 
 /*
@@ -2934,6 +2991,16 @@ config_file_section_free (struct t_config_section *section)
     config_file_section_free_options (section);
     if (section->name)
         free (section->name);
+    if (section->callback_read_data)
+        free (section->callback_read_data);
+    if (section->callback_write_data)
+        free (section->callback_write_data);
+    if (section->callback_write_default_data)
+        free (section->callback_write_default_data);
+    if (section->callback_create_option_data)
+        free (section->callback_create_option_data);
+    if (section->callback_delete_option_data)
+        free (section->callback_delete_option_data);
 
     /* remove section from list */
     if (ptr_config->last_section == section)
@@ -2990,6 +3057,10 @@ config_file_free (struct t_config_file *config_file)
     if (config_file->next_config)
         (config_file->next_config)->prev_config = config_file->prev_config;
 
+    /* free data */
+    if (config_file->callback_reload_data)
+        free (config_file->callback_reload_data);
+
     free (config_file);
 
     config_files = new_config_files;
@@ -3034,11 +3105,13 @@ config_file_free_all_plugin (struct t_weechat_plugin *plugin)
  */
 
 struct t_hdata *
-config_file_hdata_config_file_cb (void *data, const char *hdata_name)
+config_file_hdata_config_file_cb (const void *pointer, void *data,
+                                  const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_config", "next_config",
@@ -3050,6 +3123,7 @@ config_file_hdata_config_file_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_config_file, filename, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, file, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, callback_reload, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_file, callback_reload_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, callback_reload_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_file, sections, POINTER, 0, NULL, "config_section");
         HDATA_VAR(struct t_config_file, last_section, POINTER, 0, NULL, "config_section");
@@ -3066,11 +3140,13 @@ config_file_hdata_config_file_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-config_file_hdata_config_section_cb (void *data, const char *hdata_name)
+config_file_hdata_config_section_cb (const void *pointer, void *data,
+                                     const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_section", "next_section",
@@ -3082,14 +3158,19 @@ config_file_hdata_config_section_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_config_section, user_can_add_options, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_section, user_can_delete_options, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_section, callback_read, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_read_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_section, callback_read_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_section, callback_write, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_write_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_section, callback_write_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_section, callback_write_default, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_write_default_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_section, callback_write_default_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_section, callback_create_option, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_create_option_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_section, callback_create_option_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_section, callback_delete_option, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_delete_option_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_section, callback_delete_option_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_section, options, POINTER, 0, NULL, "config_option");
         HDATA_VAR(struct t_config_section, last_option, POINTER, 0, NULL, "config_option");
@@ -3104,11 +3185,13 @@ config_file_hdata_config_section_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-config_file_hdata_config_option_cb (void *data, const char *hdata_name)
+config_file_hdata_config_option_cb (const void *pointer, void *data,
+                                    const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_option", "next_option",
@@ -3128,10 +3211,13 @@ config_file_hdata_config_option_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_config_option, value, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, null_value_allowed, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, callback_check_value, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, callback_check_value_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, callback_check_value_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, callback_change, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, callback_change_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, callback_change_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, callback_delete, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, callback_delete_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, callback_delete_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, loaded, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, prev_option, POINTER, 0, NULL, hdata_name);
@@ -3350,6 +3436,7 @@ config_file_print_log ()
         log_printf ("  filename . . . . . . . : '%s'",  ptr_config_file->filename);
         log_printf ("  file . . . . . . . . . : 0x%lx", ptr_config_file->file);
         log_printf ("  callback_reload. . . . : 0x%lx", ptr_config_file->callback_reload);
+        log_printf ("  callback_reload_pointer: 0x%lx", ptr_config_file->callback_reload_pointer);
         log_printf ("  callback_reload_data . : 0x%lx", ptr_config_file->callback_reload_data);
         log_printf ("  sections . . . . . . . : 0x%lx", ptr_config_file->sections);
         log_printf ("  last_section . . . . . : 0x%lx", ptr_config_file->last_section);
@@ -3361,45 +3448,50 @@ config_file_print_log ()
         {
             log_printf ("");
             log_printf ("    [section (addr:0x%lx)]", ptr_section);
-            log_printf ("      config_file. . . . . . . . : 0x%lx", ptr_section->config_file);
-            log_printf ("      name . . . . . . . . . . . : '%s'",  ptr_section->name);
-            log_printf ("      callback_read. . . . . . . : 0x%lx", ptr_section->callback_read);
-            log_printf ("      callback_read_data . . . . : 0x%lx", ptr_section->callback_read_data);
-            log_printf ("      callback_write . . . . . . : 0x%lx", ptr_section->callback_write);
-            log_printf ("      callback_write_data. . . . : 0x%lx", ptr_section->callback_write_data);
-            log_printf ("      callback_write_default . . : 0x%lx", ptr_section->callback_write_default);
-            log_printf ("      callback_write_default_data: 0x%lx", ptr_section->callback_write_default_data);
-            log_printf ("      callback_create_option. . .: 0x%lx", ptr_section->callback_create_option);
-            log_printf ("      callback_create_option_data: 0x%lx", ptr_section->callback_create_option_data);
-            log_printf ("      callback_delete_option. . .: 0x%lx", ptr_section->callback_delete_option);
-            log_printf ("      callback_delete_option_data: 0x%lx", ptr_section->callback_delete_option_data);
-            log_printf ("      options. . . . . . . . . . : 0x%lx", ptr_section->options);
-            log_printf ("      last_option. . . . . . . . : 0x%lx", ptr_section->last_option);
-            log_printf ("      prev_section . . . . . . . : 0x%lx", ptr_section->prev_section);
-            log_printf ("      next_section . . . . . . . : 0x%lx", ptr_section->next_section);
+            log_printf ("      config_file . . . . . . . . . : 0x%lx", ptr_section->config_file);
+            log_printf ("      name. . . . . . . . . . . . . : '%s'",  ptr_section->name);
+            log_printf ("      callback_read . . . . . . . . : 0x%lx", ptr_section->callback_read);
+            log_printf ("      callback_read_pointer . . . . : 0x%lx", ptr_section->callback_read_pointer);
+            log_printf ("      callback_read_data. . . . . . : 0x%lx", ptr_section->callback_read_data);
+            log_printf ("      callback_write. . . . . . . . : 0x%lx", ptr_section->callback_write);
+            log_printf ("      callback_write_pointer. . . . : 0x%lx", ptr_section->callback_write_pointer);
+            log_printf ("      callback_write_data . . . . . : 0x%lx", ptr_section->callback_write_data);
+            log_printf ("      callback_write_default. . . . : 0x%lx", ptr_section->callback_write_default);
+            log_printf ("      callback_write_default_pointer: 0x%lx", ptr_section->callback_write_default_pointer);
+            log_printf ("      callback_write_default_data . : 0x%lx", ptr_section->callback_write_default_data);
+            log_printf ("      callback_create_option. . . . : 0x%lx", ptr_section->callback_create_option);
+            log_printf ("      callback_create_option_pointer: 0x%lx", ptr_section->callback_create_option_pointer);
+            log_printf ("      callback_create_option_data . : 0x%lx", ptr_section->callback_create_option_data);
+            log_printf ("      callback_delete_option. . . . : 0x%lx", ptr_section->callback_delete_option);
+            log_printf ("      callback_delete_option_pointer: 0x%lx", ptr_section->callback_delete_option_pointer);
+            log_printf ("      callback_delete_option_data . : 0x%lx", ptr_section->callback_delete_option_data);
+            log_printf ("      options . . . . . . . . . . . : 0x%lx", ptr_section->options);
+            log_printf ("      last_option . . . . . . . . . : 0x%lx", ptr_section->last_option);
+            log_printf ("      prev_section. . . . . . . . . : 0x%lx", ptr_section->prev_section);
+            log_printf ("      next_section. . . . . . . . . : 0x%lx", ptr_section->next_section);
 
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {
                 log_printf ("");
                 log_printf ("      [option (addr:0x%lx)]", ptr_option);
-                log_printf ("        config_file. . . . . : 0x%lx", ptr_option->config_file);
-                log_printf ("        section. . . . . . . : 0x%lx", ptr_option->section);
-                log_printf ("        name . . . . . . . . : '%s'",  ptr_option->name);
-                log_printf ("        parent_name. . . . . : '%s'",  ptr_option->parent_name);
-                log_printf ("        type . . . . . . . . : %d",    ptr_option->type);
-                log_printf ("        description. . . . . : '%s'",  ptr_option->description);
-                log_printf ("        string_values. . . . : 0x%lx", ptr_option->string_values);
-                log_printf ("        min. . . . . . . . . : %d",    ptr_option->min);
-                log_printf ("        max. . . . . . . . . : %d",    ptr_option->max);
+                log_printf ("        config_file. . . . . . . . . : 0x%lx", ptr_option->config_file);
+                log_printf ("        section. . . . . . . . . . . : 0x%lx", ptr_option->section);
+                log_printf ("        name . . . . . . . . . . . . : '%s'",  ptr_option->name);
+                log_printf ("        parent_name. . . . . . . . . : '%s'",  ptr_option->parent_name);
+                log_printf ("        type . . . . . . . . . . . . : %d",    ptr_option->type);
+                log_printf ("        description. . . . . . . . . : '%s'",  ptr_option->description);
+                log_printf ("        string_values. . . . . . . . : 0x%lx", ptr_option->string_values);
+                log_printf ("        min. . . . . . . . . . . . . : %d",    ptr_option->min);
+                log_printf ("        max. . . . . . . . . . . . . : %d",    ptr_option->max);
                 switch (ptr_option->type)
                 {
                     case CONFIG_OPTION_TYPE_BOOLEAN:
-                        log_printf ("        default value. . . . : %s",
+                        log_printf ("        default value. . . . . . . . : %s",
                                     (ptr_option->default_value) ?
                                     ((CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
                                      "on" : "off") : "null");
-                        log_printf ("        value (boolean). . . : %s",
+                        log_printf ("        value (boolean). . . . . . . : %s",
                                     (ptr_option->value) ?
                                     ((CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
                                      "on" : "off") : "null");
@@ -3407,61 +3499,69 @@ config_file_print_log ()
                     case CONFIG_OPTION_TYPE_INTEGER:
                         if (ptr_option->string_values)
                         {
-                            log_printf ("        default value. . . . : '%s'",
+                            log_printf ("        default value. . . . . . . . : '%s'",
                                         (ptr_option->default_value) ?
                                         ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)] : "null");
-                            log_printf ("        value (integer/str). : '%s'",
+                            log_printf ("        value (integer/str). . . . . : '%s'",
                                         (ptr_option->value) ?
                                         ptr_option->string_values[CONFIG_INTEGER(ptr_option)] : "null");
                         }
                         else
                         {
                             if (ptr_option->default_value)
-                                log_printf ("        default value. . . . : %d",
+                                log_printf ("        default value. . . . . . . . : %d",
                                             CONFIG_INTEGER_DEFAULT(ptr_option));
                             else
-                                log_printf ("        default value. . . . : null");
+                                log_printf ("        default value. . . . . . . . : null");
                             if (ptr_option->value)
-                                log_printf ("        value (integer). . . : %d",
+                                log_printf ("        value (integer). . . . . . . : %d",
                                             CONFIG_INTEGER(ptr_option));
                             else
-                                log_printf ("        value (integer). . . : null");
+                                log_printf ("        value (integer). . . . . . . : null");
                         }
                         break;
                     case CONFIG_OPTION_TYPE_STRING:
                         if (ptr_option->default_value)
-                            log_printf ("        default value. . . . : '%s'",
+                            log_printf ("        default value. . . . . . . . : '%s'",
                                         CONFIG_STRING_DEFAULT(ptr_option));
                         else
-                            log_printf ("        default value. . . . : null");
+                            log_printf ("        default value. . . . . . . . : null");
                         if (ptr_option->value)
-                            log_printf ("        value (string) . . . : '%s'",
+                            log_printf ("        value (string) . . . . . . . : '%s'",
                                         CONFIG_STRING(ptr_option));
                         else
-                            log_printf ("        value (string) . . . : null");
+                            log_printf ("        value (string) . . . . . . . : null");
                         break;
                     case CONFIG_OPTION_TYPE_COLOR:
                         if (ptr_option->default_value)
-                            log_printf ("        default value. . . . : %d ('%s')",
+                            log_printf ("        default value. . . . . . . . : %d ('%s')",
                                         CONFIG_COLOR_DEFAULT(ptr_option),
                                         gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option)));
                         else
-                            log_printf ("        default value. . . . : null");
+                            log_printf ("        default value. . . . . . . . : null");
                         if (ptr_option->value)
-                            log_printf ("        value (color). . . . : %d ('%s')",
+                            log_printf ("        value (color). . . . . . . . : %d ('%s')",
                                         CONFIG_COLOR(ptr_option),
                                         gui_color_get_name (CONFIG_COLOR(ptr_option)));
                         else
-                            log_printf ("        value (color). . . . : null");
+                            log_printf ("        value (color). . . . . . . . : null");
                         break;
                     case CONFIG_NUM_OPTION_TYPES:
                         break;
                 }
-                log_printf ("        null_value_allowed . : %d",    ptr_option->null_value_allowed);
-                log_printf ("        callback_change. . . : 0x%lx", ptr_option->callback_change);
-                log_printf ("        loaded . . . . . . . : %d",    ptr_option->loaded);
-                log_printf ("        prev_option. . . . . : 0x%lx", ptr_option->prev_option);
-                log_printf ("        next_option. . . . . : 0x%lx", ptr_option->next_option);
+                log_printf ("        null_value_allowed . . . . . : %d",    ptr_option->null_value_allowed);
+                log_printf ("        callback_check_value . . . . : 0x%lx", ptr_option->callback_check_value);
+                log_printf ("        callback_check_value_pointer : 0x%lx", ptr_option->callback_check_value_pointer);
+                log_printf ("        callback_check_value_data. . : 0x%lx", ptr_option->callback_check_value_data);
+                log_printf ("        callback_change. . . . . . . : 0x%lx", ptr_option->callback_change);
+                log_printf ("        callback_change_pointer. . . : 0x%lx", ptr_option->callback_change_pointer);
+                log_printf ("        callback_change_data . . . . : 0x%lx", ptr_option->callback_change_data);
+                log_printf ("        callback_delete. . . . . . . : 0x%lx", ptr_option->callback_delete);
+                log_printf ("        callback_delete_pointer. . . : 0x%lx", ptr_option->callback_delete_pointer);
+                log_printf ("        callback_delete_data . . . . : 0x%lx", ptr_option->callback_delete_data);
+                log_printf ("        loaded . . . . . . . . . . . : %d",    ptr_option->loaded);
+                log_printf ("        prev_option. . . . . . . . . : 0x%lx", ptr_option->prev_option);
+                log_printf ("        next_option. . . . . . . . . : 0x%lx", ptr_option->next_option);
             }
         }
     }

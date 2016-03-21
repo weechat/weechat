@@ -72,9 +72,10 @@ irc_raw_open (int switch_to_buffer)
                                                 IRC_RAW_BUFFER_NAME);
         if (!irc_raw_buffer)
         {
-            irc_raw_buffer = weechat_buffer_new (IRC_RAW_BUFFER_NAME,
-                                                 &irc_input_data_cb, NULL,
-                                                 &irc_buffer_close_cb, NULL);
+            irc_raw_buffer = weechat_buffer_new (
+                IRC_RAW_BUFFER_NAME,
+                &irc_input_data_cb, NULL, NULL,
+                &irc_buffer_close_cb, NULL, NULL);
 
             /* failed to create buffer ? then return */
             if (!irc_raw_buffer)

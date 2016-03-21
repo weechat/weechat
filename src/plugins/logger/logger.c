@@ -856,10 +856,12 @@ logger_flush ()
  */
 
 int
-logger_command_cb (void *data, struct t_gui_buffer *buffer,
+logger_command_cb (const void *pointer, void *data,
+                   struct t_gui_buffer *buffer,
                    int argc, char **argv, char **argv_eol)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) argv_eol;
 
@@ -897,10 +899,12 @@ logger_command_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-logger_buffer_opened_signal_cb (void *data, const char *signal,
+logger_buffer_opened_signal_cb (const void *pointer, void *data,
+                                const char *signal,
                                 const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -915,10 +919,12 @@ logger_buffer_opened_signal_cb (void *data, const char *signal,
  */
 
 int
-logger_buffer_closing_signal_cb (void *data, const char *signal,
+logger_buffer_closing_signal_cb (const void *pointer, void *data,
+                                 const char *signal,
                                  const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -933,10 +939,12 @@ logger_buffer_closing_signal_cb (void *data, const char *signal,
  */
 
 int
-logger_buffer_renamed_signal_cb (void *data, const char *signal,
+logger_buffer_renamed_signal_cb (const void *pointer, void *data,
+                                 const char *signal,
                                  const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1035,12 +1043,14 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
  */
 
 int
-logger_backlog_signal_cb (void *data, const char *signal,
+logger_backlog_signal_cb (const void *pointer, void *data,
+                          const char *signal,
                           const char *type_data, void *signal_data)
 {
     struct t_logger_buffer *ptr_logger_buffer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1074,10 +1084,12 @@ logger_backlog_signal_cb (void *data, const char *signal,
  */
 
 int
-logger_start_signal_cb (void *data, const char *signal, const char *type_data,
+logger_start_signal_cb (const void *pointer, void *data,
+                        const char *signal, const char *type_data,
                         void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1092,12 +1104,14 @@ logger_start_signal_cb (void *data, const char *signal, const char *type_data,
  */
 
 int
-logger_stop_signal_cb (void *data, const char *signal, const char *type_data,
+logger_stop_signal_cb (const void *pointer, void *data,
+                       const char *signal, const char *type_data,
                        void *signal_data)
 {
     struct t_logger_buffer *ptr_logger_buffer;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1158,10 +1172,12 @@ logger_adjust_log_filenames ()
  */
 
 int
-logger_day_changed_signal_cb (void *data, const char *signal,
+logger_day_changed_signal_cb (const void *pointer, void *data,
+                              const char *signal,
                               const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -1226,7 +1242,8 @@ logger_get_line_tag_info (int tags_count, const char **tags,
  */
 
 int
-logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
+logger_print_cb (const void *pointer, void *data,
+                 struct t_gui_buffer *buffer, time_t date,
                  int tags_count, const char **tags,
                  int displayed, int highlight,
                  const char *prefix, const char *message)
@@ -1237,6 +1254,7 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
     int line_log_level, prefix_is_nick;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) displayed;
     (void) highlight;
@@ -1278,9 +1296,10 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
  */
 
 int
-logger_timer_cb (void *data, int remaining_calls)
+logger_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) remaining_calls;
 
@@ -1347,19 +1366,26 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         " || set 1|2|3|4|5|6|7|8|9"
         " || flush"
         " || disable",
-        &logger_command_cb, NULL);
+        &logger_command_cb, NULL, NULL);
 
     logger_start_buffer_all (1);
 
-    weechat_hook_signal ("buffer_opened", &logger_buffer_opened_signal_cb, NULL);
-    weechat_hook_signal ("buffer_closing", &logger_buffer_closing_signal_cb, NULL);
-    weechat_hook_signal ("buffer_renamed", &logger_buffer_renamed_signal_cb, NULL);
-    weechat_hook_signal ("logger_backlog", &logger_backlog_signal_cb, NULL);
-    weechat_hook_signal ("logger_start", &logger_start_signal_cb, NULL);
-    weechat_hook_signal ("logger_stop", &logger_stop_signal_cb, NULL);
-    weechat_hook_signal ("day_changed", &logger_day_changed_signal_cb, NULL);
+    weechat_hook_signal ("buffer_opened",
+                         &logger_buffer_opened_signal_cb, NULL, NULL);
+    weechat_hook_signal ("buffer_closing",
+                         &logger_buffer_closing_signal_cb, NULL, NULL);
+    weechat_hook_signal ("buffer_renamed",
+                         &logger_buffer_renamed_signal_cb, NULL, NULL);
+    weechat_hook_signal ("logger_backlog",
+                         &logger_backlog_signal_cb, NULL, NULL);
+    weechat_hook_signal ("logger_start",
+                         &logger_start_signal_cb, NULL, NULL);
+    weechat_hook_signal ("logger_stop",
+                         &logger_stop_signal_cb, NULL, NULL);
+    weechat_hook_signal ("day_changed",
+                         &logger_day_changed_signal_cb, NULL, NULL);
 
-    weechat_hook_print (NULL, NULL, NULL, 1, &logger_print_cb, NULL);
+    weechat_hook_print (NULL, NULL, NULL, 1, &logger_print_cb, NULL, NULL);
 
     logger_info_init ();
 

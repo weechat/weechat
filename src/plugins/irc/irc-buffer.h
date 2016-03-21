@@ -53,11 +53,11 @@ extern void irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
                                                struct t_irc_channel **channel);
 extern const char *irc_buffer_build_name (const char *server,
                                           const char *channel);
-extern int irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer);
-extern int irc_buffer_nickcmp_cb (void *data,
+extern int irc_buffer_close_cb (const void *pointer, void *data,
+                                struct t_gui_buffer *buffer);
+extern int irc_buffer_nickcmp_cb (const void *pointer, void *data,
                                   struct t_gui_buffer *buffer,
-                                  const char *nick1,
-                                  const char *nick2);
+                                  const char *nick1, const char *nick2);
 extern struct t_gui_buffer *irc_buffer_search_server_lowest_number ();
 extern struct t_gui_buffer *irc_buffer_search_private_lowest_number (struct t_irc_server *server);
 

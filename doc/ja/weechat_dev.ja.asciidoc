@@ -181,7 +181,6 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    plugin-config.c                | プラグイン設定オプション (plugins.conf ファイル)
 |    plugin-script.c                | スクリプトプラグインの共用関数
 |    plugin-script-api.c            | スクリプト API 関数: 一部のプラグイン API 関数のラッパー
-|    plugin-script-callback.c       | スクリプト用のコールバック管理
 |    weechat-plugin.h               | WeeChat プラグインと一緒に配布されるヘッダファイル、プラグインのコンパイルに必要
 |    alias/                         | alias プラグイン
 |       alias.c                     | alias の主要関数

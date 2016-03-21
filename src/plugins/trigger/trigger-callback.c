@@ -56,8 +56,7 @@ trigger_callback_irc_message_parse (const char *irc_message,
     hashtable_in = weechat_hashtable_new (32,
                                           WEECHAT_HASHTABLE_STRING,
                                           WEECHAT_HASHTABLE_STRING,
-                                          NULL,
-                                          NULL);
+                                          NULL, NULL);
     if (hashtable_in)
     {
         weechat_hashtable_set (hashtable_in, "message", irc_message);
@@ -187,8 +186,7 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
         pointers = weechat_hashtable_new (32,
                                           WEECHAT_HASHTABLE_STRING,
                                           WEECHAT_HASHTABLE_POINTER,
-                                          NULL,
-                                          NULL);
+                                          NULL, NULL);
         if (!pointers)
             return;
         pointers_allocated = 1;
@@ -366,8 +364,9 @@ trigger_callback_execute (struct t_trigger *trigger,
  */
 
 int
-trigger_callback_signal_cb (void *data, const char *signal,
-                            const char *type_data, void *signal_data)
+trigger_callback_signal_cb (const void *pointer, void *data,
+                            const char *signal, const char *type_data,
+                            void *signal_data)
 {
     const char *ptr_signal_data;
     char str_data[128], *irc_server;
@@ -463,7 +462,8 @@ end:
  */
 
 int
-trigger_callback_hsignal_cb (void *data, const char *signal,
+trigger_callback_hsignal_cb (const void *pointer, void *data,
+                             const char *signal,
                              struct t_hashtable *hashtable)
 {
     const char *type_values;
@@ -510,8 +510,9 @@ end:
  */
 
 char *
-trigger_callback_modifier_cb (void *data, const char *modifier,
-                              const char *modifier_data, const char *string)
+trigger_callback_modifier_cb (const void *pointer, void *data,
+                              const char *modifier, const char *modifier_data,
+                              const char *string)
 {
     struct t_gui_buffer *buffer;
     const char *ptr_string;
@@ -691,7 +692,8 @@ end:
  */
 
 int
-trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
+trigger_callback_print_cb  (const void *pointer, void *data,
+                            struct t_gui_buffer *buffer,
                             time_t date, int tags_count, const char **tags,
                             int displayed, int highlight, const char *prefix,
                             const char *message)
@@ -766,7 +768,8 @@ end:
  */
 
 int
-trigger_callback_command_cb  (void *data, struct t_gui_buffer *buffer,
+trigger_callback_command_cb  (const void *pointer, void *data,
+                              struct t_gui_buffer *buffer,
                               int argc, char **argv, char **argv_eol)
 {
     char str_name[32];
@@ -799,7 +802,8 @@ end:
  */
 
 int
-trigger_callback_command_run_cb  (void *data, struct t_gui_buffer *buffer,
+trigger_callback_command_run_cb  (const void *pointer, void *data,
+                                  struct t_gui_buffer *buffer,
                                   const char *command)
 {
     TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
@@ -823,7 +827,8 @@ end:
  */
 
 int
-trigger_callback_timer_cb  (void *data, int remaining_calls)
+trigger_callback_timer_cb  (const void *pointer, void *data,
+                            int remaining_calls)
 {
     char str_temp[128];
     int i;
@@ -870,7 +875,8 @@ end:
  */
 
 int
-trigger_callback_config_cb  (void *data, const char *option, const char *value)
+trigger_callback_config_cb  (const void *pointer, void *data,
+                             const char *option, const char *value)
 {
     TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
@@ -892,7 +898,8 @@ end:
  */
 
 struct t_hashtable *
-trigger_callback_focus_cb (void *data, struct t_hashtable *info)
+trigger_callback_focus_cb (const void *pointer, void *data,
+                           struct t_hashtable *info)
 {
     const char *ptr_value;
     long unsigned int value;
@@ -936,8 +943,7 @@ trigger_callback_init ()
         32,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING,
-        NULL,
-        NULL);
+        NULL, NULL);
     if (trigger_callback_hashtable_options_conditions)
     {
         weechat_hashtable_set (trigger_callback_hashtable_options_conditions,
@@ -948,8 +954,7 @@ trigger_callback_init ()
         32,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING,
-        NULL,
-        NULL);
+        NULL, NULL);
 }
 
 /*

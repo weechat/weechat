@@ -219,7 +219,7 @@ relay_server_close_socket (struct t_relay_server *server)
  */
 
 int
-relay_server_sock_cb (void *data, int fd)
+relay_server_sock_cb (const void *pointer, void *data, int fd)
 {
     struct t_relay_server *server;
     struct sockaddr_in client_addr;
@@ -231,9 +231,10 @@ relay_server_sock_cb (void *data, int fd)
     char *ptr_ip_address;
 
     /* make C compiler happy */
+    (void) data;
     (void) fd;
 
-    server = (struct t_relay_server *)data;
+    server = (struct t_relay_server *)pointer;
 
     if (server->ipv6)
     {
@@ -539,7 +540,7 @@ relay_server_create_socket (struct t_relay_server *server)
     server->hook_fd = weechat_hook_fd (server->sock,
                                        1, 0, 0,
                                        &relay_server_sock_cb,
-                                       server);
+                                       server, NULL);
 
     server->start_time = time (NULL);
 

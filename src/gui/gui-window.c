@@ -1797,11 +1797,13 @@ gui_window_zoom (struct t_gui_window *window)
  */
 
 struct t_hdata *
-gui_window_hdata_window_cb (void *data, const char *hdata_name)
+gui_window_hdata_window_cb (const void *pointer, void *data,
+                            const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_window", "next_window",
@@ -1844,11 +1846,13 @@ gui_window_hdata_window_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-gui_window_hdata_window_scroll_cb (void *data, const char *hdata_name)
+gui_window_hdata_window_scroll_cb (const void *pointer, void *data,
+                                   const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_scroll", "next_scroll",
@@ -1874,11 +1878,13 @@ gui_window_hdata_window_scroll_cb (void *data, const char *hdata_name)
  */
 
 struct t_hdata *
-gui_window_hdata_window_tree_cb (void *data, const char *hdata_name)
+gui_window_hdata_window_tree_cb (const void *pointer, void *data,
+                                 const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);

@@ -23,7 +23,8 @@
 
 #define COMMAND_CALLBACK(__command)                                     \
     int                                                                 \
-    command_##__command (void *data, struct t_gui_buffer *buffer,       \
+    command_##__command (const void *pointer, void *data,               \
+                         struct t_gui_buffer *buffer,                   \
                          int argc, char **argv, char **argv_eol)
 
 /*
@@ -34,9 +35,11 @@
  */
 #define COMMAND_EMPTY(__command)                                        \
     int                                                                 \
-    command_##__command (void *data, struct t_gui_buffer *buffer,       \
+    command_##__command (const void *pointer, void *data,               \
+                         struct t_gui_buffer *buffer,                   \
                          int argc, char **argv, char **argv_eol)        \
     {                                                                   \
+        (void) pointer;                                                 \
         (void) data;                                                    \
         (void) buffer;                                                  \
         (void) argc;                                                    \
@@ -80,8 +83,6 @@
 
 struct t_gui_buffer;
 
-extern int command_reload (void *data, struct t_gui_buffer *buffer,
-                           int argc, char **argv, char **argv_eol);
 extern void command_init ();
 extern void command_startup (int plugins_loaded);
 extern void command_version_display (struct t_gui_buffer *buffer,

@@ -127,10 +127,12 @@ debug_dump (int crash)
  */
 
 int
-debug_dump_cb (void *data, const char *signal, const char *type_data,
+debug_dump_cb (const void *pointer, void *data,
+               const char *signal, const char *type_data,
                void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -324,7 +326,8 @@ debug_hdata_hash_list_map_cb (void *data,
  */
 
 void
-debug_hdata_map_cb (void *data, struct t_hashtable *hashtable,
+debug_hdata_map_cb (void *data,
+                    struct t_hashtable *hashtable,
                     const void *key, const void *value)
 {
     struct t_hdata *ptr_hdata;
@@ -345,13 +348,11 @@ debug_hdata_map_cb (void *data, struct t_hashtable *hashtable,
                      ptr_hdata->hash_list->items_count);
 
     /* display lists */
-    hashtable_map (ptr_hdata->hash_list,
-                   &debug_hdata_hash_list_map_cb, NULL);
+    hashtable_map (ptr_hdata->hash_list, &debug_hdata_hash_list_map_cb, NULL);
 
     /* display vars */
     list = weelist_new ();
-    hashtable_map (ptr_hdata->hash_var,
-                   &debug_hdata_hash_var_map_cb, list);
+    hashtable_map (ptr_hdata->hash_var, &debug_hdata_hash_var_map_cb, list);
     for (ptr_item = list->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {
@@ -510,10 +511,12 @@ debug_infolists ()
  */
 
 int
-debug_libs_cb (void *data, const char *signal, const char *type_data,
+debug_libs_cb (const void *pointer, void *data,
+               const char *signal, const char *type_data,
                void *signal_data)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -648,8 +651,8 @@ debug_init ()
      * plugins (they should anyway because this function is called before load
      * of plugins)
      */
-    hook_signal (NULL, "2000|debug_dump", &debug_dump_cb, NULL);
-    hook_signal (NULL, "2000|debug_libs", &debug_libs_cb, NULL);
+    hook_signal (NULL, "2000|debug_dump", &debug_dump_cb, NULL, NULL);
+    hook_signal (NULL, "2000|debug_libs", &debug_libs_cb, NULL, NULL);
 }
 
 /*

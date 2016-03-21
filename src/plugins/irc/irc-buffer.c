@@ -112,13 +112,15 @@ irc_buffer_build_name (const char *server, const char *channel)
  */
 
 int
-irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+irc_buffer_close_cb (const void *pointer, void *data,
+                     struct t_gui_buffer *buffer)
 {
     struct t_irc_channel *next_channel;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     if (buffer == irc_raw_buffer)
@@ -175,15 +177,18 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
  */
 
 int
-irc_buffer_nickcmp_cb (void *data,
+irc_buffer_nickcmp_cb (const void *pointer, void *data,
                        struct t_gui_buffer *buffer,
                        const char *nick1,
                        const char *nick2)
 {
     struct t_irc_server *server;
 
-    if (data)
-        server = (struct t_irc_server *)data;
+    /* make C compiler happy */
+    (void) data;
+
+    if (pointer)
+        server = (struct t_irc_server *)pointer;
     else
         irc_buffer_get_server_and_channel (buffer, &server, NULL);
 

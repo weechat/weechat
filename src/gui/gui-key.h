@@ -129,7 +129,8 @@ extern void gui_key_paste_bracketed_stop ();
 extern void gui_key_paste_accept ();
 extern void gui_key_paste_cancel ();
 extern void gui_key_end ();
-extern struct t_hdata *gui_key_hdata_key_cb (void *data,
+extern struct t_hdata *gui_key_hdata_key_cb (const void *pointer,
+                                             void *data,
                                              const char *hdata_name);
 extern int gui_key_add_to_infolist (struct t_infolist *infolist,
                                     struct t_gui_key *key);

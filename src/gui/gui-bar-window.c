@@ -1524,11 +1524,13 @@ gui_bar_window_scroll (struct t_gui_bar_window *bar_window,
  */
 
 struct t_hdata *
-gui_bar_window_hdata_bar_window_cb (void *data, const char *hdata_name)
+gui_bar_window_hdata_bar_window_cb (const void *pointer, void *data,
+                                    const char *hdata_name)
 {
     struct t_hdata *hdata;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_bar_window", "next_bar_window",

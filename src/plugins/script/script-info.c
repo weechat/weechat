@@ -33,27 +33,30 @@
  */
 
 struct t_infolist *
-script_info_infolist_script_script_cb (void *data, const char *infolist_name,
-                                       void *pointer, const char *arguments)
+script_info_infolist_script_script_cb (const void *pointer, void *data,
+                                       const char *infolist_name,
+                                       void *obj_pointer,
+                                       const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_script_repo *ptr_script;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) infolist_name;
 
-    if (pointer && !script_repo_script_valid (pointer))
+    if (obj_pointer && !script_repo_script_valid (obj_pointer))
         return NULL;
 
     ptr_infolist = weechat_infolist_new ();
     if (!ptr_infolist)
         return NULL;
 
-    if (pointer)
+    if (obj_pointer)
     {
         /* build list with only one script */
-        if (!script_repo_add_to_infolist (ptr_infolist, pointer))
+        if (!script_repo_add_to_infolist (ptr_infolist, obj_pointer))
         {
             weechat_infolist_free (ptr_infolist);
             return NULL;
@@ -97,10 +100,10 @@ script_info_init ()
         N_("script pointer (optional)"),
         N_("script name with extension "
            "(wildcard \"*\" is allowed) (optional)"),
-        &script_info_infolist_script_script_cb, NULL);
+        &script_info_infolist_script_script_cb, NULL, NULL);
 
     /* hdata hooks */
     weechat_hook_hdata (
         "script_script", N_("scripts from repository"),
-        &script_repo_hdata_script_cb, NULL);
+        &script_repo_hdata_script_cb, NULL, NULL);
 }

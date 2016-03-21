@@ -58,7 +58,8 @@ xfer_upgrade_save ()
     int rc;
     struct t_upgrade_file *upgrade_file;
 
-    upgrade_file = weechat_upgrade_new (XFER_UPGRADE_FILENAME, 1);
+    upgrade_file = weechat_upgrade_new (XFER_UPGRADE_FILENAME,
+                                        NULL, NULL, NULL);
     if (!upgrade_file)
         return 0;
 
@@ -106,17 +107,19 @@ xfer_upgrade_set_buffer_callbacks ()
  */
 
 int
-xfer_upgrade_read_cb (void *data,
+xfer_upgrade_read_cb (const void *pointer, void *data,
                       struct t_upgrade_file *upgrade_file,
                       int object_id,
                       struct t_infolist *infolist)
 {
-    /* TODO: write xfer read cb */
+    /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) upgrade_file;
     (void) object_id;
     (void) infolist;
 
+    /* TODO: write xfer read cb */
     return WEECHAT_RC_OK;
 }
 
@@ -136,10 +139,13 @@ xfer_upgrade_load ()
 
     xfer_upgrade_set_buffer_callbacks ();
 
-    upgrade_file = weechat_upgrade_new (XFER_UPGRADE_FILENAME, 0);
+    upgrade_file = weechat_upgrade_new (XFER_UPGRADE_FILENAME,
+                                        &xfer_upgrade_read_cb, NULL, NULL);
     if (!upgrade_file)
         return 0;
-    rc = weechat_upgrade_read (upgrade_file, &xfer_upgrade_read_cb, NULL);
+
+    rc = weechat_upgrade_read (upgrade_file);
+
     weechat_upgrade_close (upgrade_file);
 
     return rc;

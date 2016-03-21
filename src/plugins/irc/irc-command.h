@@ -23,6 +23,12 @@
 struct t_irc_server;
 struct t_irc_channel;
 
+#define IRC_COMMAND_CALLBACK(__command)                                 \
+    int                                                                 \
+    irc_command_##__command (const void *pointer, void *data,           \
+                             struct t_gui_buffer *buffer,               \
+                             int argc, char **argv, char **argv_eol)
+
 #define IRC_COMMAND_CHECK_SERVER(__command, __check_connection)         \
     if (!ptr_server)                                                    \
     {                                                                   \

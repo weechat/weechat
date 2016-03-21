@@ -32,7 +32,8 @@
  */
 
 const char *
-weechat_aspell_info_info_aspell_dict_cb (void *data, const char *info_name,
+weechat_aspell_info_info_aspell_dict_cb (const void *pointer, void *data,
+                                         const char *info_name,
                                          const char *arguments)
 {
     int rc;
@@ -41,6 +42,7 @@ weechat_aspell_info_info_aspell_dict_cb (void *data, const char *info_name,
     const char *buffer_full_name;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) info_name;
 
@@ -83,5 +85,5 @@ weechat_aspell_info_init ()
         N_("comma-separated list of dictionaries used in buffer"),
         N_("buffer pointer (\"0x12345678\") or buffer full name "
            "(\"irc.freenode.#weechat\")"),
-        &weechat_aspell_info_info_aspell_dict_cb, NULL);
+        &weechat_aspell_info_info_aspell_dict_cb, NULL, NULL);
 }

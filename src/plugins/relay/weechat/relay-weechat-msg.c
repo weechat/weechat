@@ -253,7 +253,8 @@ relay_weechat_msg_add_time (struct t_relay_weechat_msg *msg, time_t time)
  */
 
 void
-relay_weechat_msg_hashtable_map_cb (void *data, struct t_hashtable *hashtable,
+relay_weechat_msg_hashtable_map_cb (void *data,
+                                    struct t_hashtable *hashtable,
                                     const void *key, const void *value)
 {
     struct t_relay_weechat_msg *msg;

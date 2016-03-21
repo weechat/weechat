@@ -72,9 +72,10 @@ relay_raw_open (int switch_to_buffer)
                                                   RELAY_RAW_BUFFER_NAME);
         if (!relay_raw_buffer)
         {
-            relay_raw_buffer = weechat_buffer_new (RELAY_RAW_BUFFER_NAME,
-                                                   &relay_buffer_input_cb, NULL,
-                                                   &relay_buffer_close_cb, NULL);
+            relay_raw_buffer = weechat_buffer_new (
+                RELAY_RAW_BUFFER_NAME,
+                &relay_buffer_input_cb, NULL, NULL,
+                &relay_buffer_close_cb, NULL, NULL);
 
             /* failed to create buffer ? then return */
             if (!relay_raw_buffer)

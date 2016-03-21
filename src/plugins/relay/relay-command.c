@@ -183,7 +183,8 @@ relay_command_server_list ()
  */
 
 int
-relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
+relay_command_relay (const void *pointer, void *data,
+                     struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
     struct t_relay_server *ptr_server;
@@ -191,6 +192,7 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
     int port;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -217,11 +219,12 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
         if (weechat_strcasecmp (argv[1], "add") == 0)
         {
             WEECHAT_COMMAND_MIN_ARGS(4, "add");
-            if (relay_config_create_option_port (NULL,
-                                                 relay_config_file,
-                                                 relay_config_section_port,
-                                                 argv[2],
-                                                 argv_eol[3]) != WEECHAT_CONFIG_OPTION_SET_ERROR)
+            if (relay_config_create_option_port (
+                    NULL, NULL,
+                    relay_config_file,
+                    relay_config_section_port,
+                    argv[2],
+                    argv_eol[3]) != WEECHAT_CONFIG_OPTION_SET_ERROR)
             {
                 weechat_printf (NULL,
                                 _("%s: relay \"%s\" (port %s) added"),
@@ -420,5 +423,5 @@ relay_command_init ()
         " || restart %(relay_relays)"
         " || raw"
         " || sslcertkey",
-        &relay_command_relay, NULL);
+        &relay_command_relay, NULL, NULL);
 }

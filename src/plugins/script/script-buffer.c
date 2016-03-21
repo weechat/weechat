@@ -403,12 +403,9 @@ script_buffer_get_script_usage (struct t_script_repo *script)
     struct t_weelist *list;
     char hdata_name[128], str_option[256], str_info[1024];
     int config_files;
-    const char *ptr_name_hdata_callback, *type;
-    struct t_hdata *ptr_hdata_script, *ptr_hdata_callback;
-    struct t_hdata *ptr_hdata_config_file, *ptr_hdata_bar_item;
-    void *ptr_script, *ptr_callback;
-    struct t_config_file *ptr_config_file;
-    struct t_hook *ptr_hook;
+    struct t_hdata *hdata_script, *hdata_config, *hdata_bar_item;
+    void *ptr_script, *callback_pointer;
+    struct t_config_file *ptr_config;
     struct t_gui_bar_item *ptr_bar_item;
     struct t_infolist *infolist;
 
@@ -416,126 +413,161 @@ script_buffer_get_script_usage (struct t_script_repo *script)
 
     snprintf (hdata_name, sizeof (hdata_name),
               "%s_script", script_language[script->language]);
-    ptr_hdata_script = weechat_hdata_get (hdata_name);
-    if (!ptr_hdata_script)
+    hdata_script = weechat_hdata_get (hdata_name);
+    if (!hdata_script)
         return NULL;
 
-    ptr_script = script_buffer_get_script_pointer (script, ptr_hdata_script);
+    ptr_script = script_buffer_get_script_pointer (script, hdata_script);
     if (!ptr_script)
-        return NULL;
-
-    ptr_name_hdata_callback = weechat_hdata_get_var_hdata (ptr_hdata_script,
-                                                           "callbacks");
-    if (!ptr_name_hdata_callback)
-        return NULL;
-    ptr_hdata_callback = weechat_hdata_get (ptr_name_hdata_callback);
-    if (!ptr_hdata_callback)
         return NULL;
 
     list = weechat_list_new ();
 
-    ptr_hdata_config_file = weechat_hdata_get ("config_file");
-    ptr_hdata_bar_item = weechat_hdata_get ("bar_item");
-
-    ptr_callback = weechat_hdata_pointer (ptr_hdata_script,
-                                          ptr_script,
-                                          "callbacks");
-    while (ptr_callback)
+    /* get configuration files created by the script */
+    hdata_config = weechat_hdata_get ("config_file");
+    ptr_config = weechat_hdata_get_list (hdata_config, "config_files");
+    while (ptr_config)
     {
-        str_info[0] = '\0';
-        ptr_config_file = weechat_hdata_pointer (ptr_hdata_callback,
-                                                 ptr_callback,
-                                                 "config_file");
-        ptr_hook = weechat_hdata_pointer (ptr_hdata_callback,
-                                          ptr_callback,
-                                          "hook");
-        ptr_bar_item = weechat_hdata_pointer (ptr_hdata_callback,
-                                              ptr_callback,
-                                              "bar_item");
-        if (ptr_config_file)
+        callback_pointer = weechat_hdata_pointer (
+            hdata_config, ptr_config, "callback_reload_pointer");
+        if (callback_pointer == ptr_script)
         {
             snprintf (str_info, sizeof (str_info),
                       _("configuration file \"%s\" (options %s.*)"),
-                      weechat_hdata_string (ptr_hdata_config_file,
-                                            ptr_config_file,
+                      weechat_hdata_string (hdata_config, ptr_config,
                                             "filename"),
-                      weechat_hdata_string (ptr_hdata_config_file,
-                                            ptr_config_file,
+                      weechat_hdata_string (hdata_config, ptr_config,
                                             "name"));
+            weechat_list_add (list, str_info, WEECHAT_LIST_POS_END, NULL);
             config_files++;
         }
-        else if (ptr_hook)
+        ptr_config = weechat_hdata_move (hdata_config, ptr_config, 1);
+    }
+
+    /* get the commands created by the script */
+    infolist = weechat_infolist_get ("hook", NULL, "command");
+    if (infolist)
+    {
+        while (weechat_infolist_next (infolist))
         {
-            infolist = weechat_infolist_get ("hook", ptr_hook, NULL);
-            if (infolist)
+            callback_pointer = weechat_infolist_pointer (infolist,
+                                                         "callback_pointer");
+            if (callback_pointer == ptr_script)
             {
-                if (weechat_infolist_next (infolist))
-                {
-                    type = weechat_infolist_string (infolist, "type");
-                    if (type)
-                    {
-                        if (strcmp (type, "command") == 0)
-                        {
-                            snprintf (str_info, sizeof (str_info),
-                                      _("command /%s"),
-                                      weechat_infolist_string (infolist,
-                                                               "command"));
-                        }
-                        else if (strcmp (type, "completion") == 0)
-                        {
-                            snprintf (str_info, sizeof (str_info),
-                                      _("completion %%(%s)"),
-                                      weechat_infolist_string (infolist,
-                                                               "completion_item"));
-                        }
-                        else if (strcmp (type, "info") == 0)
-                        {
-                            snprintf (str_info, sizeof (str_info),
-                                      "info \"%s\"",
-                                      weechat_infolist_string (infolist,
-                                                               "info_name"));
-                        }
-                        else if (strcmp (type, "info_hashtable") == 0)
-                        {
-                            snprintf (str_info, sizeof (str_info),
-                                      "info_hashtable \"%s\"",
-                                      weechat_infolist_string (infolist,
-                                                               "info_name"));
-                        }
-                        else if (strcmp (type, "infolist") == 0)
-                        {
-                            snprintf (str_info, sizeof (str_info),
-                                      "infolist \"%s\"",
-                                      weechat_infolist_string (infolist,
-                                                               "infolist_name"));
-                        }
-                    }
-                }
-                weechat_infolist_free (infolist);
+                snprintf (str_info, sizeof (str_info),
+                          _("command /%s"),
+                          weechat_infolist_string (infolist,
+                                                   "command"));
+                weechat_list_add (list, str_info, WEECHAT_LIST_POS_END, NULL);
             }
         }
-        else if (ptr_bar_item)
+        weechat_infolist_free (infolist);
+    }
+
+    /* get the completions created by the script */
+    infolist = weechat_infolist_get ("hook", NULL, "completion");
+    if (infolist)
+    {
+        while (weechat_infolist_next (infolist))
+        {
+            callback_pointer = weechat_infolist_pointer (infolist,
+                                                         "callback_pointer");
+            if (callback_pointer == ptr_script)
+            {
+                snprintf (str_info, sizeof (str_info),
+                          _("completion %%(%s)"),
+                          weechat_infolist_string (infolist,
+                                                   "completion_item"));
+                weechat_list_add (list, str_info, WEECHAT_LIST_POS_END, NULL);
+            }
+        }
+        weechat_infolist_free (infolist);
+    }
+
+    /* get the infos created by the script */
+    infolist = weechat_infolist_get ("hook", NULL, "info");
+    if (infolist)
+    {
+        while (weechat_infolist_next (infolist))
+        {
+            callback_pointer = weechat_infolist_pointer (infolist,
+                                                         "callback_pointer");
+            if (callback_pointer == ptr_script)
+            {
+                snprintf (str_info, sizeof (str_info),
+                          "info \"%s\"",
+                          weechat_infolist_string (infolist,
+                                                   "info_name"));
+                weechat_list_add (list, str_info, WEECHAT_LIST_POS_END, NULL);
+            }
+        }
+        weechat_infolist_free (infolist);
+    }
+
+    /* get the infos (hashtable) created by the script */
+    infolist = weechat_infolist_get ("hook", NULL, "info_hashtable");
+    if (infolist)
+    {
+        while (weechat_infolist_next (infolist))
+        {
+            callback_pointer = weechat_infolist_pointer (infolist,
+                                                         "callback_pointer");
+            if (callback_pointer == ptr_script)
+            {
+                snprintf (str_info, sizeof (str_info),
+                          "info_hashtable \"%s\"",
+                          weechat_infolist_string (infolist,
+                                                   "info_name"));
+                weechat_list_add (list, str_info, WEECHAT_LIST_POS_END, NULL);
+            }
+        }
+        weechat_infolist_free (infolist);
+    }
+
+    /* get the infolists created by the script */
+    infolist = weechat_infolist_get ("hook", NULL, "infolist");
+    if (infolist)
+    {
+        while (weechat_infolist_next (infolist))
+        {
+            callback_pointer = weechat_infolist_pointer (infolist,
+                                                         "callback_pointer");
+            if (callback_pointer == ptr_script)
+            {
+                snprintf (str_info, sizeof (str_info),
+                          "infolist \"%s\"",
+                          weechat_infolist_string (infolist,
+                                                   "infolist_name"));
+                weechat_list_add (list, str_info, WEECHAT_LIST_POS_END, NULL);
+            }
+        }
+        weechat_infolist_free (infolist);
+    }
+
+    /* get the bar items created by the script */
+    hdata_bar_item = weechat_hdata_get ("bar_item");
+    ptr_bar_item = weechat_hdata_get_list (hdata_bar_item, "gui_bar_items");
+    while (ptr_bar_item)
+    {
+        callback_pointer = weechat_hdata_pointer (hdata_bar_item, ptr_bar_item,
+                                                  "build_callback_pointer");
+        if (callback_pointer == ptr_script)
         {
             snprintf (str_info, sizeof (str_info),
                       _("bar item \"%s\""),
-                      weechat_hdata_string (ptr_hdata_bar_item,
+                      weechat_hdata_string (hdata_bar_item,
                                             ptr_bar_item,
                                             "name"));
+            weechat_list_add (list, str_info, WEECHAT_LIST_POS_END, NULL);
         }
-        if (str_info[0])
-        {
-            weechat_list_add (list, str_info,
-                              WEECHAT_LIST_POS_END, NULL);
-        }
-        ptr_callback = weechat_hdata_move (ptr_hdata_callback,
-                                           ptr_callback,
-                                           1);
+        ptr_bar_item = weechat_hdata_move (hdata_bar_item, ptr_bar_item, 1);
     }
 
+    /* get the script options (in plugins.var) */
     snprintf (str_option, sizeof (str_option),
               "plugins.var.%s.%s.*",
               script_language[script->language],
-              weechat_hdata_string (ptr_hdata_script, ptr_script, "name"));
+              weechat_hdata_string (hdata_script, ptr_script, "name"));
     infolist = weechat_infolist_get ("option", NULL, str_option);
     if (infolist)
     {
@@ -892,13 +924,14 @@ script_buffer_check_line_outside_window ()
  */
 
 int
-script_buffer_window_scrolled_cb (void *data, const char *signal,
-                                  const char *type_data,
+script_buffer_window_scrolled_cb (const void *pointer, void *data,
+                                  const char *signal, const char *type_data,
                                   void *signal_data)
 {
     int start_line_y, chat_height, line;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) signal;
     (void) type_data;
@@ -936,7 +969,8 @@ script_buffer_window_scrolled_cb (void *data, const char *signal,
  */
 
 int
-script_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
+script_buffer_input_cb (const void *pointer, void *data,
+                        struct t_gui_buffer *buffer,
                         const char *input_data)
 {
     char *actions[][2] = { { "A", "toggleautoload" },
@@ -953,6 +987,7 @@ script_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
     int i;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
     /* close buffer */
@@ -1010,9 +1045,11 @@ script_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-script_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+script_buffer_close_cb (const void *pointer, void *data,
+                        struct t_gui_buffer *buffer)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
 
@@ -1089,9 +1126,10 @@ script_buffer_open ()
 {
     if (!script_buffer)
     {
-        script_buffer = weechat_buffer_new (SCRIPT_BUFFER_NAME,
-                                            &script_buffer_input_cb, NULL,
-                                            &script_buffer_close_cb, NULL);
+        script_buffer = weechat_buffer_new (
+            SCRIPT_BUFFER_NAME,
+            &script_buffer_input_cb, NULL, NULL,
+            &script_buffer_close_cb, NULL, NULL);
 
         /* failed to create buffer ? then exit */
         if (!script_buffer)
