@@ -3980,7 +3980,8 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
 
 #ifdef HAVE_GNUTLS
 int
-irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
+irc_server_gnutls_callback (const void *pointer, void *data,
+                            gnutls_session_t tls_session,
                             const gnutls_datum_t *req_ca, int nreq,
                             const gnutls_pk_algorithm_t *pk_algos,
                             int pk_algos_len,
@@ -4011,6 +4012,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
 #endif /* LIBGNUTLS_VERSION_NUMBER >= 0x010706 */
 
     /* make C compiler happy */
+    (void) data;
     (void) req_ca;
     (void) nreq;
     (void) pk_algos;
@@ -4018,10 +4020,10 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
 
     rc = 0;
 
-    if (!data)
+    if (!pointer)
         return -1;
 
-    server = (struct t_irc_server *) data;
+    server = (struct t_irc_server *) pointer;
     cert_temp_init = 0;
     cert_list = NULL;
     cert_list_len = 0;
@@ -4556,7 +4558,7 @@ irc_server_connect (struct t_irc_server *server)
         proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
         server->current_retry,
         (server->ssl_connected) ? &server->gnutls_sess : NULL,
-        (server->ssl_connected) ? irc_server_gnutls_callback : NULL,
+        (server->ssl_connected) ? &irc_server_gnutls_callback : NULL,
         IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES),
         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
