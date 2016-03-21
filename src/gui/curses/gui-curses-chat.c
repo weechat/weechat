@@ -490,6 +490,25 @@ gui_chat_display_word (struct t_gui_window *window,
     {
         /* insert spaces for aligning text under time/nick */
         length_align = gui_line_get_align (window->buffer, line, 0, 0);
+
+        int temporarily_disable_prefix_suffix = 0;
+        if (CONFIG_BOOLEAN(config_look_prefix_unalign_multiline_words))
+        {
+            int max_normal_length = gui_chat_get_real_width (window) - length_align;
+            if (CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE)
+            {
+                max_normal_length -= 1;
+                max_normal_length -= gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_suffix));
+            }
+
+            if (*lines_displayed > 0 && end_line - data >= max_normal_length
+                && chars_displayed >= max_normal_length)
+            {
+                length_align = 0;
+                temporarily_disable_prefix_suffix = 1;
+            }
+        }
+
         if ((window->win_chat_cursor_x == 0)
             && (*lines_displayed > pre_lines_displayed)
             /* FIXME: modify arbitrary value for non aligning messages on time/nick? */
@@ -500,7 +519,8 @@ gui_chat_display_word (struct t_gui_window *window,
                 && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
                 && CONFIG_STRING(config_look_prefix_suffix)
                 && CONFIG_STRING(config_look_prefix_suffix)[0]
-                && line->data->date > 0)
+                && line->data->date > 0
+                && !temporarily_disable_prefix_suffix)
             {
                 if (!simulate)
                 {
