@@ -210,7 +210,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin,
                           "message: message to display two times\n"
                           "command: command to execute two times",
                           NULL,
-                          &command_double_cb, NULL);
+                          &command_double_cb, NULL, NULL);
 
     return WEECHAT_RC_OK;
 }
@@ -7004,7 +7004,7 @@ C 言語での使用例:
 [source,C]
 ----
 /* hook modifier with priority = 2000 */
-weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
+weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
 ----
 
 以下のフック型に対して優先度を設定できます:
@@ -7023,7 +7023,8 @@ struct t_hook *weechat_hook_command (const char *command,
                                      const char *args,
                                      const char *args_description,
                                      const char *completion,
-                                     int (*callback)(void *data,
+                                     int (*callback)(const void *pointer,
+                                                     void *data,
                                                      struct t_gui_buffer *buffer,
                                                      int argc,
                                                      char **argv,
@@ -7043,7 +7044,11 @@ struct t_hook *weechat_hook_command (const char *command,
   で区切ってください。1 つのコマンドに対して複数のテンプレートを設定するにはテンプレート同士を
   "||" で区切ってください。
 * 'callback': コマンドが使用された際に呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'struct t_gui_buffer *buffer': コマンドを実行するバッファ
 ** 'int argc': コマンドに渡す引数の個数
 ** 'char **argv': コマンドに渡す引数
@@ -7102,7 +7107,7 @@ struct t_hook *my_command_hook =
                           /* callback */
                           &my_command_cb,
                           /* callback_data */
-                          NULL);
+                          NULL, NULL);
 ----
 
 例えば、コマンドが `/command abc def ghi`
@@ -7155,7 +7160,8 @@ WeeChat がコマンドを実行する際にこれをフック。
 [source,C]
 ----
 struct t_hook *weechat_hook_command_run (const char *command,
-                                         int (*callback)(void *data,
+                                         int (*callback)(const void *pointer,
+                                                         void *data,
                                                          struct t_gui_buffer *buffer,
                                                          const char *command),
                                          void *callback_data);
@@ -7166,7 +7172,11 @@ struct t_hook *weechat_hook_command_run (const char *command,
 * 'command': フックするコマンド (ワイルドカード "*" を使うことができます)
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'callback': コマンドが実行される際に呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'struct t_gui_buffer *buffer': コマンドを実行するバッファ
 ** 'const char *command': 実行するコマンド、引数付き
 ** 戻り値:
@@ -7197,7 +7207,7 @@ my_command_run_cb (void *data, struct t_gui_buffer *buffer,
 
 struct t_hook *my_command_run_hook =
     weechat_hook_command_run ("/input complete*",
-                              &my_command_run_cb, NULL);
+                              &my_command_run_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -7226,7 +7236,8 @@ hook = weechat.hook_command_run("/input complete*", "my_command_run_cb", "")
 struct t_hook *weechat_hook_timer (long interval,
                                    int align_second,
                                    int max_calls,
-                                   int (*callback)(void *data,
+                                   int (*callback)(const void *pointer,
+                                                   void *data,
                                                    int remaining_calls),
                                    void *callback_data);
 ----
@@ -7239,7 +7250,11 @@ struct t_hook *weechat_hook_timer (long interval,
   の場合、毎分 0 秒時にタイマを呼び出す
 * 'max_calls': タイマを呼び出す回数 (0 の場合、タイマを無限に呼び出す)
 * 'callback': 時間が来たら呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'int remaining_calls': 呼び出し残り回数 (タイマを無限に呼び出す場合は -1)
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
@@ -7263,7 +7278,7 @@ my_timer_cb (void *data, int remaining_calls)
 
 /* timer called each 20 seconds */
 struct t_hook *my_timer_hook =
-    weechat_hook_timer (20 * 1000, 0, 0, &my_timer_cb, NULL);
+    weechat_hook_timer (20 * 1000, 0, 0, &my_timer_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -7296,7 +7311,8 @@ struct t_hook *weechat_hook_fd (int fd,
                                 int flag_read,
                                 int flag_write,
                                 int flag_exception,
-                                int (*callback)(void *data,
+                                int (*callback)(const void *pointer,
+                                                void *data,
                                                 int fd),
                                 void *callback_data);
 ----
@@ -7310,7 +7326,11 @@ struct t_hook *weechat_hook_fd (int fd,
   (_WeeChat バージョン 1.3 以上の場合_: この引数は無視され、使われません)
 * 'callback': ファイル (またはソケット) に対してキャッチしたいイベントが発生した場合に実行する関数、
   引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'int fd': ファイルディスクリプタ
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
@@ -7335,7 +7355,7 @@ my_fd_cb (void *data, int fd)
 int sock = socket (AF_INET, SOCK_STREAM, 0);
 /* set socket options */
 /* ... */
-struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL);
+struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -7373,7 +7393,8 @@ hook = weechat.hook_fd(sock, 1, 0, 0, "my_fd_cb", "")
 ----
 struct t_hook *weechat_hook_process (const char *command,
                                      int timeout,
-                                     int (*callback)(void *data,
+                                     int (*callback)(const void *pointer,
+                                                     void *data,
                                                      const char *command,
                                                      int return_code,
                                                      const char *out,
@@ -7390,7 +7411,11 @@ struct t_hook *weechat_hook_process (const char *command,
   このタイムアウトを過ぎたら、子プロセスを kill します (タイムアウトさせない場合は 0)
 * 'callback':
   子プロセスからのデータが利用可能になるか、子プロセスが終了したら呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'const char *command': 子プロセスが実行するコマンド
 ** 'int return_code': リターンコード:
 *** '>= 0': コマンドを実行した子プロセスのまたは URL に対するリターンコード。URL の場合取取り得る値は:
@@ -7467,7 +7492,7 @@ my_process_cb (void *data, const char *command, int return_code,
 }
 
 struct t_hook *my_process_hook = weechat_hook_process ("ls", 5000,
-                                                       &my_process_cb, NULL);
+                                                       &my_process_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -7507,7 +7532,8 @@ _WeeChat バージョン 0.3.7 以上で利用可。_
 struct t_hook *weechat_hook_process_hashtable (const char *command,
                                                struct t_hashtable *options,
                                                int timeout,
-                                               int (*callback)(void *data,
+                                               int (*callback)(const void *pointer,
+                                                               void *data,
                                                                const char *command,
                                                                int return_code,
                                                                const char *out,
@@ -7617,7 +7643,7 @@ if (options)
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:https://weechat.org/",
                                                                      options,
                                                                      20000,
-                                                                     &my_process_cb, NULL);
+                                                                     &my_process_cb, NULL, NULL);
     weechat_hashtable_free (options);
 }
 
@@ -7636,7 +7662,7 @@ if (options_cmd1)
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("my-notify-command",
                                                                      options_cmd1,
                                                                      20000,
-                                                                     &my_process_cb, NULL);
+                                                                     &my_process_cb, NULL, NULL);
     weechat_hashtable_free (options_cmd1);
 }
 
@@ -7653,7 +7679,7 @@ if (options_cmd2)
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("sh",
                                                                      options_cmd2,
                                                                      20000,
-                                                                     &my_process_cb, NULL);
+                                                                     &my_process_cb, NULL, NULL);
     weechat_hashtable_free (options_cmd2);
 }
 ----
@@ -7716,7 +7742,8 @@ struct t_hook *weechat_hook_connect (const char *proxy,
                                      int gnutls_dhkey_size,
                                      const char *gnutls_priorities,
                                      const char *local_hostname,
-                                     int (*callback)(void *data,
+                                     int (*callback)(const void *pointer,
+                                                     void *data,
                                                      int status,
                                                      int gnutls_rc,
                                                      int sock,
@@ -7749,7 +7776,11 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 * 'local_hostname': 接続に使うローカルのホスト名前 (任意)
 * 'callback':
   接続に成功および失敗した際に呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'int status': 接続状態:
 *** 'WEECHAT_HOOK_CONNECT_OK': 接続成功
 *** 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND': アドレスが見つかりません
@@ -7827,7 +7858,7 @@ struct t_hook *my_connect_hook = weechat_hook_connect (NULL,
                                                        1, 0,
                                                        NULL, NULL, 0,  /* GnuTLS */
                                                        NULL,
-                                                       &my_connect_cb, NULL);
+                                                       &my_connect_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -7882,7 +7913,8 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
                                    const char *tags,
                                    const char *message,
                                    int strip_colors,
-                                   int (*callback)(void *data,
+                                   int (*callback)(const void *pointer,
+                                                   void *data,
                                                    struct t_gui_buffer *buffer,
                                                    time_t date,
                                                    int tags_count,
@@ -7909,7 +7941,11 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
   の場合、表示されるメッセージから色を削除する、コールバックを呼ぶ前
 * 'callback':
   メッセージが表示される際に呼び出すコールバック、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'struct t_gui_buffer *buffer': バッファへのポインタ
 ** 'time_t date': 日付
 ** 'int tags_count': 行に付けられたタグの個数
@@ -7949,7 +7985,7 @@ my_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
 
 /* catch all messages, on all buffers, without color */
 struct t_hook *my_print_hook =
-    weechat_hook_print (NULL, NULL, NULL, 1, &my_print_cb, NULL);
+    weechat_hook_print (NULL, NULL, NULL, 1, &my_print_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -7978,7 +8014,8 @@ hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 [source,C]
 ----
 struct t_hook *weechat_hook_signal (const char *signal,
-                                    int (*callback)(void *data,
+                                    int (*callback)(const void *pointer,
+                                                    void *data,
                                                     const char *signal,
                                                     const char *type_data,
                                                     void *signal_data),
@@ -7992,7 +8029,11 @@ struct t_hook *weechat_hook_signal (const char *signal,
   (以下の表を参照)
 * 'callback':
   シグナルを受信した際に呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'const char *signal': 受信したシグナル
 ** 'const char *type_data': シグナルが送信したデータの型
 *** 'WEECHAT_HOOK_SIGNAL_STRING': 文字列
@@ -8664,7 +8705,7 @@ my_signal_cb (void *data, const char *signal, const char *type_data,
 
 /* catch signal "quit" */
 struct t_hook *my_signal_hook = weechat_hook_signal ("quit",
-                                                     &my_signal_cb, NULL);
+                                                     &my_signal_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -8892,7 +8933,8 @@ hsignal (ハッシュテーブルを持つシグナル) をフック。
 [source,C]
 ----
 struct t_hook *weechat_hook_hsignal (const char *signal,
-                                     int (*callback)(void *data,
+                                     int (*callback)(const void *pointer,
+                                                     void *data,
                                                      const char *signal,
                                                      struct t_hashtable *hashtable),
                                      void *callback_data);
@@ -8905,7 +8947,11 @@ Arguments:
   (以下の表を参照)
 * 'callback':
   シグナルを受信した際に呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'const char *signal': 受信したシグナル
 ** 'struct t_hashtable *hashtable': ハッシュテーブル
 ** 戻り値:
@@ -8989,7 +9035,7 @@ my_hsignal_cb (void *data, const char *signal, struct t_hashtable *hashtable)
 }
 
 struct t_hook *my_hsignal_hook = weechat_hook_hsignal ("test",
-                                                       &my_hsignal_cb, NULL);
+                                                       &my_hsignal_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -9130,7 +9176,7 @@ test_whois_cb (void *data, const char *signal, struct t_hashtable *hashtable)
     return WEECHAT_RC_OK;
 }
 
-weechat_hook_hsignal ("irc_redirection_test_whois", &test_whois_cb, NULL);
+weechat_hook_hsignal ("irc_redirection_test_whois", &test_whois_cb, NULL, NULL);
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
                                                        WEECHAT_HASHTABLE_STRING,
@@ -9247,7 +9293,8 @@ weechat.hook_hsignal_send("irc_redirect_pattern",
 [source,C]
 ----
 struct t_hook *weechat_hook_config (const char *option,
-                                    int (*callback)(void *data,
+                                    int (*callback)(const void *pointer,
+                                                    void *data,
                                                     const char *option,
                                                     const char *value),
                                     void *callback_data);
@@ -9260,7 +9307,11 @@ struct t_hook *weechat_hook_config (const char *option,
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'callback':
   設定オプションが変更されたら呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'const char *option': オプションの名前
 ** 'const char *value': オプションの新しい値
 ** 戻り値:
@@ -9285,7 +9336,7 @@ my_config_cb (void *data, const char *option, const char *value)
 
 /* catch changes to option "weechat.look.item_time_format" */
 struct t_hook *my_config_hook = weechat_hook_config ("weechat.look.item_time_format",
-                                                     &my_config_cb, NULL);
+                                                     &my_config_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -9314,7 +9365,8 @@ hook = weechat.hook_config("weechat.look.item_time_format", "my_config_cb", "")
 ----
 struct t_hook *weechat_hook_completion (const char *completion_item,
                                         const char *description,
-                                        int (*callback)(void *data,
+                                        int (*callback)(const void *pointer,
+                                                        void *data,
                                                         const char *completion_item,
                                                         struct t_gui_buffer *buffer,
                                                         struct t_gui_completion *completion),
@@ -9329,7 +9381,11 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 * 'description': 補完の説明
 * 'callback': 補完要素 (ユーザはこの要素を使って何かを補完している)
   が使われた場合に呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'const char *completion_item': 補完要素の名前
 ** 'struct t_gui_buffer *buffer': 補完が行われたバッファ
 ** 'struct t_gui_completion *completion':
@@ -9376,7 +9432,7 @@ my_completion_cb (void *data, const char *completion_item,
 
 struct t_hook *my_completion_hook = weechat_hook_completion ("plugin_item",
                                                              "my custom completion!",
-                                                             &my_completion_cb, NULL);
+                                                             &my_completion_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -9498,7 +9554,8 @@ weechat.hook_completion_list_add(completion, word, nick_completion, where)
 [source,C]
 ----
 struct t_hook *weechat_hook_modifier (const char *modifier,
-                                      char *(*callback)(void *data,
+                                      char *(*callback)(const void *pointer,
+                                                        void *data,
                                                         const char *modifier,
                                                         const char *modifier_data,
                                                         const char *string),
@@ -9511,7 +9568,11 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
   (以下の表を参照)
 * 'callback': 修飾子が使われた際に呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'const char *modifier': 修飾子の名前
 ** 'const char *modifier_data': 修飾子に渡すデータ
 ** 'const char *string': 修飾子に渡す文字列
@@ -9663,7 +9724,7 @@ my_modifier_cb (void *data, const char *modifier,
 }
 
 struct t_hook *my_modifier_hook = weechat_hook_modifier ("weechat_print",
-                                                         &my_modifier_cb, NULL);
+                                                         &my_modifier_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -9733,7 +9794,8 @@ weechat.hook_modifier_exec("my_modifier", my_data, my_string)
 struct t_hook *weechat_hook_info (const char *info_name,
                                   const char *description,
                                   const char *args_description,
-                                  const char *(*callback)(void *data,
+                                  const char *(*callback)(const void *pointer,
+                                                          void *data,
                                                           const char *info_name,
                                                           const char *arguments),
                                   void *callback_data);
@@ -9746,7 +9808,11 @@ struct t_hook *weechat_hook_info (const char *info_name,
 * 'description': 説明
 * 'args_description': 引数の説明 (任意、NULL にすることも可)
 * 'callback': 情報が要求されたら呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'const char *info_name': 情報の名前
 ** 'const char *arguments': 追加の引数、情報に依存
 ** 戻り値: 要求された情報の値
@@ -9771,7 +9837,7 @@ my_info_cb (void *data, const char *info_name, const char *arguments)
 struct t_hook *my_info_hook = weechat_hook_info ("my_info",
                                                  "Some info",
                                                  "Info about arguments",
-                                                 &my_info_cb, NULL);
+                                                 &my_info_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -9803,7 +9869,8 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
                                             const char *description,
                                             const char *args_description,
                                             const char *output_description,
-                                            struct t_hashtable *(*callback)(void *data,
+                                            struct t_hashtable *(*callback)(const void *pointer,
+                                                                            void *data,
                                                                             const char *info_name,
                                                                             struct t_hashtable *hashtable),
                                             void *callback_data);
@@ -9818,7 +9885,11 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 * 'output_description': コールバックが返すハッシュテーブルの説明
   (任意、NULL でも可)
 * 'callback': 情報を要求する際に呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'const char *info_name': 情報の名前
 ** 'struct t_hashtable *hashtable': ハッシュテーブル、情報に依存
 ** 戻り値: 要求したハッシュテーブル
@@ -9844,7 +9915,7 @@ struct t_hook *my_info_hook = weechat_hook_info_hashtable ("my_info_hashtable",
                                                            "Some info",
                                                            "Info about input hashtable",
                                                            "Info about output hashtable",
-                                                           &my_info_hashtable_cb, NULL);
+                                                           &my_info_hashtable_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -9877,7 +9948,8 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
                                       const char *description,
                                       const char *pointer_description,
                                       const char *args_description,
-                                      struct t_infolist *(*callback)(void *data,
+                                      struct t_infolist *(*callback)(const void *pointer,
+                                                                     void *data,
                                                                      const char *infolist_name,
                                                                      void *pointer,
                                                                      const char *arguments),
@@ -9893,7 +9965,11 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 * 'args_description': 引数の説明 (任意、NULL でも可)
 * 'callback':
   インフォリストが要求された際に呼び出すコールバック、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'const char *infolist_name': インフォリストの名前
 ** 'void *pointer': インフォリストが返すオブジェクトへのポインタ
    (インフォリストの要素を 1 つだけ返す)
@@ -9926,7 +10002,7 @@ struct t_hook *my_infolist = weechat_hook_infolist ("my_infolist",
                                                     "Infolist with some data",
                                                     "Info about pointer",
                                                     "Info about arguments",
-                                                    &my_infolist_cb, NULL);
+                                                    &my_infolist_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -9958,7 +10034,8 @@ hdata をフック: コールバックは要求した hdata へのポインタ�
 ----
 struct t_hook *weechat_hook_hdata (const char *hdata_name,
                                    const char *description,
-                                   struct t_hdata *(*callback)(void *data,
+                                   struct t_hdata *(*callback)(const void *pointer,
+                                                               void *data,
                                                                const char *hdata_name),
                                    void *callback_data);
 ----
@@ -9970,7 +10047,11 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 * 'description': 説明
 * 'callback':
   hdata が要求された際に呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'const char *hdata_name': hdata の名前
 ** 戻り値: 要求された hdata
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
@@ -9997,7 +10078,7 @@ my_hdata_cb (void *data, const char *hdata_name)
 /* add hdata "my_hdata" */
 struct t_hook *my_hdata = weechat_hook_hdata ("my_hdata",
                                               "Hdata for my structure",
-                                              &my_hdata_cb, NULL);
+                                              &my_hdata_cb, NULL, NULL);
 ----
 
 [NOTE]
@@ -10013,7 +10094,8 @@ struct t_hook *my_hdata = weechat_hook_hdata ("my_hdata",
 [source,C]
 ----
 struct t_hook *weechat_hook_focus (const char *area,
-                                   struct t_hashtable *(*callback)(void *data,
+                                   struct t_hashtable *(*callback)(const void *pointer,
+                                                                   void *data,
                                                                    struct t_hashtable *info),
                                    void *callback_data);
 ----
@@ -10024,7 +10106,11 @@ struct t_hook *weechat_hook_focus (const char *area,
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'callback':
   フォーカスが当たったら呼び出す関数、引数と戻り値:
-** 'void *data': ポインタ
+** 'const void *pointer': ポインタ
+// TRANSLATION MISSING
+** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
+   (or similar function) and it will be automatically freed when the hook is
+   deleted
 ** 'struct t_hashtable *info': フォーカスの情報を含むハッシュテーブルと、他の
    (より高い優先度を持つ) フォーカスコールバックを呼び出して返された文字列 (以下のテーブルを参照)
 ** 戻り値: "info" ポインタ (完全なハッシュテーブル)
@@ -10182,7 +10268,7 @@ my_focus_nicklist_cb (void *data, struct t_hashtable *info)
 
 /* add focus on nicklist */
 struct t_hook *my_focus = weechat_hook_focus ("buffer_nicklist",
-                                              &my_focus_nicklist_cb, NULL);
+                                              &my_focus_nicklist_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -10256,7 +10342,7 @@ C 言語での使用例:
 struct t_hook *my_command_hook =
     weechat_hook_command ("abcd", "description",
                           "args", "description args",
-                          "", &my_command_cb, NULL);
+                          "", &my_command_cb, NULL, NULL);
 weechat_hook_set (my_command_hook, "subplugin", "test");
 ----
 

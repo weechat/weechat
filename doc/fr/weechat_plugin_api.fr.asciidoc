@@ -209,7 +209,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin,
                           "message : message à afficher deux fois\n"
                           "commande : commande à exécuter deux fois",
                           NULL,
-                          &commande_double_cb, NULL);
+                          &commande_double_cb, NULL, NULL);
 
     return WEECHAT_RC_OK;
 }
@@ -7119,7 +7119,7 @@ Exemple en C :
 [source,C]
 ----
 /* accroche un modificateur avec priorité = 2000 */
-weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
+weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
 ----
 
 Les types de "hooks" suivants autorisent une priorité : command, command_run,
@@ -7139,7 +7139,8 @@ struct t_hook *weechat_hook_command (const char *command,
                                      const char *args,
                                      const char *args_description,
                                      const char *completion,
-                                     int (*callback)(void *data,
+                                     int (*callback)(const void *pointer,
+                                                     void *data,
                                                      struct t_gui_buffer *buffer,
                                                      int argc,
                                                      char **argv,
@@ -7162,7 +7163,10 @@ Paramètres :
   "||".
 * 'callback' : fonction appelée lorsque la commande est utilisée, paramètres et
   valeur de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'struct t_gui_buffer *buffer' : tampon où la commande est exécutée
 ** 'int argc' : nombre de paramètres passés à la commande
 ** 'char **argv' : paramètres pour la commande
@@ -7222,7 +7226,7 @@ struct t_hook *my_command_hook =
                           /* callback */
                           &my_command_cb,
                           /* callback_data */
-                          NULL);
+                          NULL, NULL);
 ----
 
 Par exemple, si la commande appelée est `/command abc def ghi`, alors 'argv' et
@@ -7275,7 +7279,8 @@ Prototype :
 [source,C]
 ----
 struct t_hook *weechat_hook_command_run (const char *command,
-                                         int (*callback)(void *data,
+                                         int (*callback)(const void *pointer,
+                                                         void *data,
                                                          struct t_gui_buffer *buffer,
                                                          const char *command),
                                          void *callback_data);
@@ -7287,7 +7292,10 @@ Paramètres :
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
 * 'callback' : fonction appelée lorsque la commande est exécutée, paramètres et
   valeur de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'struct t_gui_buffer *buffer' : tampon où la commande est exécutée
 ** 'const char *command' : la commande exécutée, avec ses paramètres
 ** valeur de retour :
@@ -7318,7 +7326,7 @@ my_command_run_cb (void *data, struct t_gui_buffer *buffer, const char *command)
 
 struct t_hook *my_command_run_hook =
     weechat_hook_command_run ("/input complete*",
-                              &my_command_run_cb, NULL);
+                              &my_command_run_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -7347,7 +7355,8 @@ Prototype :
 struct t_hook *weechat_hook_timer (long interval,
                                    int align_second,
                                    int max_calls,
-                                   int (*callback)(void *data,
+                                   int (*callback)(const void *pointer,
+                                                   void *data,
                                                    int remaining_calls),
                                    void *callback_data);
 ----
@@ -7363,7 +7372,10 @@ Paramètres :
   de fin)
 * 'callback' : fonction appelée quand le délai est atteint, paramètres et valeur
   de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'int remaining_calls' : nombre d'appels restants (-1 si le minuteur n'a pas
    de fin)
 ** valeur de retour :
@@ -7389,7 +7401,7 @@ my_timer_cb (void *data, int remaining_calls)
 
 /* minuteur appelé toutes les 20 secondes */
 struct t_hook *my_timer_hook =
-    weechat_hook_timer (20 * 1000, 0, 0, &my_timer_cb, NULL);
+    weechat_hook_timer (20 * 1000, 0, 0, &my_timer_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -7422,7 +7434,8 @@ struct t_hook *weechat_hook_fd (int fd,
                                 int flag_read,
                                 int flag_write,
                                 int flag_exception,
-                                int (*callback)(void *data,
+                                int (*callback)(const void *pointer,
+                                                void *data,
                                                 int fd),
                                 void *callback_data);
 ----
@@ -7436,7 +7449,10 @@ Paramètres :
   (_WeeChat ≥ 1.3_ : ce paramètre est ignoré et n'est plus utilisé)
 * 'callback' : fonction appelée lorsqu'un des évènements sélectionnés se
   produit pour le fichier (ou le socket), paramètres et valeur de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'int fd' : descripteur de fichier
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
@@ -7462,7 +7478,7 @@ my_fd_cb (void *data, int fd)
 int sock = socket (AF_INET, SOCK_STREAM, 0);
 /* définir les options du socket */
 /* ... */
-struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL);
+struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -7500,7 +7516,8 @@ Prototype :
 ----
 struct t_hook *weechat_hook_process (const char *command,
                                      int timeout,
-                                     int (*callback)(void *data,
+                                     int (*callback)(const void *pointer,
+                                                     void *data,
                                                      const char *command,
                                                      int return_code,
                                                      const char *out,
@@ -7517,7 +7534,10 @@ Paramètres :
   processus fils est tué (0 signifie pas de limite)
 * 'callback' : fonction appelée quand des données du fils sont disponibles, or
   ou quand le fils s'est terminé, paramètres et valeur de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'const char *command' : commande exécutée par le fils
 ** 'int return_code' : code retour :
 *** '>= 0' : code retour du fils pour une commande, et pour l'URL, les valeurs
@@ -7601,7 +7621,7 @@ my_process_cb (void *data, const char *command, int return_code,
 }
 
 struct t_hook *my_process_hook = weechat_hook_process ("ls", 5000,
-                                                       &my_process_cb, NULL);
+                                                       &my_process_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -7641,7 +7661,8 @@ Prototype :
 struct t_hook *weechat_hook_process_hashtable (const char *command,
                                                struct t_hashtable *options,
                                                int timeout,
-                                               int (*callback)(void *data,
+                                               int (*callback)(const void *pointer,
+                                                               void *data,
                                                                const char *command,
                                                                int return_code,
                                                                const char *out,
@@ -7756,7 +7777,7 @@ if (options)
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:https://weechat.org/",
                                                                      options,
                                                                      20000,
-                                                                     &my_process_cb, NULL);
+                                                                     &my_process_cb, NULL, NULL);
     weechat_hashtable_free (options);
 }
 
@@ -7775,7 +7796,7 @@ if (options_cmd1)
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("my-notify-command",
                                                                      options_cmd1,
                                                                      20000,
-                                                                     &my_process_cb, NULL);
+                                                                     &my_process_cb, NULL, NULL);
     weechat_hashtable_free (options_cmd1);
 }
 
@@ -7792,7 +7813,7 @@ if (options_cmd2)
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("sh",
                                                                      options_cmd2,
                                                                      20000,
-                                                                     &my_process_cb, NULL);
+                                                                     &my_process_cb, NULL, NULL);
     weechat_hashtable_free (options_cmd2);
 }
 ----
@@ -7855,7 +7876,8 @@ struct t_hook *weechat_hook_connect (const char *proxy,
                                      int gnutls_dhkey_size,
                                      const char *gnutls_priorities,
                                      const char *local_hostname,
-                                     int (*callback)(void *data,
+                                     int (*callback)(const void *pointer,
+                                                     void *data,
                                                      int status,
                                                      int gnutls_rc,
                                                      int sock,
@@ -7891,7 +7913,10 @@ Paramètres :
   (optionnel)
 * 'callback' : fonction appelée lorsque la connexion est ok ou a échoué,
   paramètres et valeur de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'int status' : statut de connexion :
 *** 'WEECHAT_HOOK_CONNECT_OK' : connexion ok
 *** 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND' : adresse non trouvée
@@ -7971,7 +7996,7 @@ struct t_hook *my_connect_hook = weechat_hook_connect (NULL,
                                                        1, 0,
                                                        NULL, NULL, 0,  /* GnuTLS */
                                                        NULL,
-                                                       &my_connect_cb, NULL);
+                                                       &my_connect_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -8026,7 +8051,8 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
                                    const char *tags,
                                    const char *message,
                                    int strip_colors,
-                                   int (*callback)(void *data,
+                                   int (*callback)(const void *pointer,
+                                                   void *data,
                                                    struct t_gui_buffer *buffer,
                                                    time_t date,
                                                    int tags_count,
@@ -8055,7 +8081,10 @@ Paramètres :
   avant d'appeler le "callback"
 * 'callback' : fonction appelée lorsqu'un message est affiché, paramètres et
   valeur de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'struct t_gui_buffer *buffer' : pointeur vers le tampon
 ** 'time_t date' : date
 ** 'int tags_count' : nombre d'étiquettes de la ligne
@@ -8097,7 +8126,7 @@ my_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
 
 /* intercepter tous les messages, de tous les tampons, sans couleur */
 struct t_hook *my_print_hook =
-    weechat_hook_print (NULL, NULL, NULL, 1, &my_print_cb, NULL);
+    weechat_hook_print (NULL, NULL, NULL, 1, &my_print_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -8126,7 +8155,8 @@ Prototype :
 [source,C]
 ----
 struct t_hook *weechat_hook_signal (const char *signal,
-                                    int (*callback)(void *data,
+                                    int (*callback)(const void *pointer,
+                                                    void *data,
                                                     const char *signal,
                                                     const char *type_data,
                                                     void *signal_data),
@@ -8140,7 +8170,10 @@ Paramètres :
   (voir le tableau ci-dessous)
 * 'callback' : fonction appelée quand le signal est reçu, paramètres et valeur
   de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'const char *signal' : signal reçu
 ** 'const char *type_data' : type de donnée reçu avec le signal :
 *** 'WEECHAT_HOOK_SIGNAL_STRING' : chaîne de caractères
@@ -8817,7 +8850,7 @@ my_signal_cb (void *data, const char *signal, const char *type_data,
 
 /* intercepter le signal "quit" */
 struct t_hook *my_signal_hook = weechat_hook_signal ("quit",
-                                                     &my_signal_cb, NULL);
+                                                     &my_signal_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -9051,7 +9084,8 @@ Prototype :
 [source,C]
 ----
 struct t_hook *weechat_hook_hsignal (const char *signal,
-                                     int (*callback)(void *data,
+                                     int (*callback)(const void *pointer,
+                                                     void *data,
                                                      const char *signal,
                                                      struct t_hashtable *hashtable),
                                      void *callback_data);
@@ -9064,7 +9098,10 @@ Paramètres :
   (voir le tableau ci-dessous)
 * 'callback' : fonction appelée quand le signal est reçu, paramètres et valeur
   de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'const char *signal' : signal reçu
 ** 'struct t_hashtable *hashtable' : table de hachage
 ** valeur de retour :
@@ -9149,7 +9186,7 @@ my_hsignal_cb (void *data, const char *signal, struct t_hashtable *hashtable)
 }
 
 struct t_hook *my_hsignal_hook = weechat_hook_hsignal ("test",
-                                                       &my_hsignal_cb, NULL);
+                                                       &my_hsignal_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -9295,7 +9332,7 @@ test_whois_cb (void *data, const char *signal, struct t_hashtable *hashtable)
     return WEECHAT_RC_OK;
 }
 
-weechat_hook_hsignal ("irc_redirection_test_whois", &test_whois_cb, NULL);
+weechat_hook_hsignal ("irc_redirection_test_whois", &test_whois_cb, NULL, NULL);
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
                                                        WEECHAT_HASHTABLE_STRING,
@@ -9417,7 +9454,8 @@ Prototype :
 [source,C]
 ----
 struct t_hook *weechat_hook_config (const char *option,
-                                    int (*callback)(void *data,
+                                    int (*callback)(const void *pointer,
+                                                    void *data,
                                                     const char *option,
                                                     const char *value),
                                     void *callback_data);
@@ -9431,7 +9469,10 @@ Paramètres :
   <<hook_priority,priorité>>)
 * 'callback' : fonction appelée lorsque l'option de configuration est modifiée,
   paramètres et valeur de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'const char *option' : nom de l'option
 ** 'const char *value' : nouvelle valeur pour l'option
 ** valeur de retour :
@@ -9457,7 +9498,7 @@ my_config_cb (void *data, const char *option, const char *value)
 
 /* intercepter les changements de l'option "weechat.look.item_time_format" */
 struct t_hook *my_config_hook = weechat_hook_config ("weechat.look.item_time_format",
-                                                     &my_config_cb, NULL);
+                                                     &my_config_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -9486,7 +9527,8 @@ Prototype :
 ----
 struct t_hook *weechat_hook_completion (const char *completion_item,
                                         const char *description,
-                                        int (*callback)(void *data,
+                                        int (*callback)(const void *pointer,
+                                                        void *data,
                                                         const char *completion_item,
                                                         struct t_gui_buffer *buffer,
                                                         struct t_gui_completion *completion),
@@ -9502,7 +9544,10 @@ Paramètres :
 * 'callback' : fonction appelée lorsque la complétion est utilisée
   (l'utilisateur est en train de compléter quelque chose qui fait appel à cette
   complétion), paramètres et valeur de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'const char *completion_item' : nom de la complétion
 ** 'struct t_gui_buffer *buffer' : tampon où la complétion est effectuée
 ** 'struct t_gui_completion *completion' : structure utilisée pour ajouter
@@ -9551,7 +9596,7 @@ my_completion_cb (void *data, const char *completion_item,
 
 struct t_hook *my_completion_hook = weechat_hook_completion ("extension_item",
                                                              "ma complétion !",
-                                                             &my_completion_cb, NULL);
+                                                             &my_completion_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -9673,7 +9718,8 @@ Prototype :
 [source,C]
 ----
 struct t_hook *weechat_hook_modifier (const char *modifier,
-                                      char *(*callback)(void *data,
+                                      char *(*callback)(const void *pointer,
+                                                        void *data,
                                                         const char *modifier,
                                                         const char *modifier_data,
                                                         const char *string),
@@ -9688,7 +9734,10 @@ Paramètres :
   (voir le tableau ci-dessous)
 * 'callback' : fonction appelée lorsque le modificateur est utilisé, paramètres
   et valeur de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'const char *modifier' : nom du modificateur
 ** 'const char *modifier_data' : données pour le modificateur
 ** 'const char *string' : chaîne à modifier
@@ -9851,7 +9900,7 @@ my_modifier_cb (void *data, const char *modifier,
 }
 
 struct t_hook *my_modifier_hook = weechat_hook_modifier ("weechat_print",
-                                                         &my_modifier_cb, NULL);
+                                                         &my_modifier_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -9921,7 +9970,8 @@ Prototype :
 struct t_hook *weechat_hook_info (const char *info_name,
                                   const char *description,
                                   const char *args_description,
-                                  const char *(*callback)(void *data,
+                                  const char *(*callback)(const void *pointer,
+                                                          void *data,
                                                           const char *info_name,
                                                           const char *arguments),
                                   void *callback_data);
@@ -9935,7 +9985,10 @@ Paramètres :
 * 'args_description' : description des paramètres (optionnel, peut être NULL)
 * 'callback' : fonction appelée quand l'information est demandée, paramètres et
   valeur de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'const char *info_name' : nom de l'information
 ** 'const char *arguments' : paramètres additionnels, dépendant de
    l'information
@@ -9962,7 +10015,7 @@ my_info_cb (void *data, const char *info_name, const char *arguments)
 struct t_hook *my_info_hook = weechat_hook_info ("mon_info",
                                                  "Une information",
                                                  "Info sur les paramètres",
-                                                 &my_info_cb, NULL);
+                                                 &my_info_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -9996,7 +10049,8 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
                                             const char *description,
                                             const char *args_description,
                                             const char *output_description,
-                                            struct t_hashtable *(*callback)(void *data,
+                                            struct t_hashtable *(*callback)(const void *pointer,
+                                                                            void *data,
                                                                             const char *info_name,
                                                                             struct t_hashtable *hashtable),
                                             void *callback_data);
@@ -10013,7 +10067,10 @@ Paramètres :
   "callback" (optionnel, peut être NULL)
 * 'callback' : fonction appelée quand l'information est demandée, paramètres et
   valeur de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'const char *info_name' : nom de l'information
 ** 'struct t_hashtable *hashtable' : table de hachage, dépendant de
    l'information
@@ -10041,7 +10098,7 @@ struct t_hook *my_info_hook = weechat_hook_info_hashtable ("mon_info_hashtable",
                                                            "Une information",
                                                            "Info sur la table de hachage en entrée",
                                                            "Info sur la table de hachage en sortie",
-                                                           &my_info_hashtable_cb, NULL);
+                                                           &my_info_hashtable_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -10075,7 +10132,8 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
                                       const char *description,
                                       const char *pointer_description,
                                       const char *args_description,
-                                      struct t_infolist *(*callback)(void *data,
+                                      struct t_infolist *(*callback)(const void *pointer,
+                                                                     void *data,
                                                                      const char *infolist_name,
                                                                      void *pointer,
                                                                      const char *arguments),
@@ -10091,7 +10149,10 @@ Paramètres :
 * 'args_description' : description des paramètres (optionnel, peut être NULL)
 * 'callback' : fonction appelée quand l'infolist est demandée, paramètres et
   valeur de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'const char *infolist_name' : nom de l'infolist
 ** 'void *pointer' : pointeur vers un objet que l'infolist doit retourner (pour
    obtenir uniquement cet objet dans l'infolist)
@@ -10125,7 +10186,7 @@ struct t_hook *my_infolist = weechat_hook_infolist ("mon_infolist",
                                                     "Mon infolist",
                                                     "Info sur le pointeur",
                                                     "Info sur les paramètres",
-                                                    &my_infolist_cb, NULL);
+                                                    &my_infolist_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -10157,7 +10218,8 @@ Prototype :
 ----
 struct t_hook *weechat_hook_hdata (const char *hdata_name,
                                    const char *description,
-                                   struct t_hdata *(*callback)(void *data,
+                                   struct t_hdata *(*callback)(const void *pointer,
+                                                               void *data,
                                                                const char *hdata_name),
                                    void *callback_data);
 ----
@@ -10169,7 +10231,10 @@ Paramètres :
 * 'description' : description
 * 'callback' : fonction appelée quand le hdata est demandé, paramètres et valeur
   de retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'const char *hdata_name' : nom du hdata
 ** valeur de retour : hdata demandé
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
@@ -10197,7 +10262,7 @@ my_hdata_cb (void *data, const char *hdata_name)
 /* ajoute le hdata "mon_hdata" */
 struct t_hook *my_hdata = weechat_hook_hdata ("mon_hdata",
                                               "Hdata pour ma structure",
-                                              &my_hdata_cb, NULL);
+                                              &my_hdata_cb, NULL, NULL);
 ----
 
 [NOTE]
@@ -10213,7 +10278,8 @@ Prototype :
 [source,C]
 ----
 struct t_hook *weechat_hook_focus (const char *area,
-                                   struct t_hashtable *(*callback)(void *data,
+                                   struct t_hashtable *(*callback)(const void *pointer,
+                                                                   void *data,
                                                                    struct t_hashtable *info),
                                    void *callback_data);
 ----
@@ -10224,7 +10290,10 @@ Paramètres :
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
 * 'callback' : fonction appelée quand le focus est fait, paramètres et valeur de
   retour :
-** 'void *data' : pointeur
+** 'const void *pointer' : pointeur
+** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
+   (ou une fonction similaire) et sera automatiquement libéré (par free)
+   lorsque le "hook" est supprimé
 ** 'struct t_hashtable *info' : table de hachage avec les informations sur le
    focus et les chaînes retournées par les autres appels aux "callbacks" de
    focus (avec plus haute priorité) (voir le tableau ci-dessous)
@@ -10387,7 +10456,7 @@ my_focus_nicklist_cb (void *data, struct t_hashtable *info)
 
 /* ajoute le focus sur la liste des pseudos */
 struct t_hook *my_focus = weechat_hook_focus ("buffer_nicklist",
-                                              &my_focus_nicklist_cb, NULL);
+                                              &my_focus_nicklist_cb, NULL, NULL);
 ----
 
 Script (Python) :
@@ -10462,7 +10531,7 @@ Exemple en C :
 struct t_hook *my_command_hook =
     weechat_hook_command ("abcd", "description",
                           "args", "description args",
-                          "", &my_command_cb, NULL);
+                          "", &my_command_cb, NULL, NULL);
 weechat_hook_set (my_command_hook, "subplugin", "test");
 ----
 
