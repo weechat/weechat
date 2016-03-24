@@ -10596,14 +10596,19 @@ Prototype :
 
 [source,C]
 ----
-void weechat_unhook_all ();
+void weechat_unhook_all (const char *subplugin);
 ----
+
+Paramètres :
+
+* 'subplugin' : si non NULL, décrocher uniquement les "hooks" qui ont ce
+  "subplugin" défini (ce paramètre n'est pas disponible dans l'API script)
 
 Exemple en C :
 
 [source,C]
 ----
-weechat_unhook_all ();
+weechat_unhook_all (NULL);
 ----
 
 Script (Python) :

@@ -10742,14 +10742,20 @@ Prototipo:
 
 [source,C]
 ----
-void weechat_unhook_all ();
+void weechat_unhook_all (const char *subplugin);
 ----
+
+Argomenti:
+
+// TRANSLATION MISSING
+* 'subplugin': if not NULL, unhook only hooks with this "subplugin" set
+  (this argument is not available in scripting API)
 
 Esempio in C:
 
 [source,C]
 ----
-weechat_unhook_all ();
+weechat_unhook_all (NULL);
 ----
 
 Script (Python):
