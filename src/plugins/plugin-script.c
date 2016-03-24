@@ -928,7 +928,7 @@ plugin_script_remove (struct t_weechat_plugin *weechat_plugin,
     plugin_script_remove_configs (weechat_plugin, script);
 
     /* remove all hooks created by this script */
-    weechat_unhook_all_plugin (script->name);
+    weechat_unhook_all (script->name);
 
     /* free data */
     if (script->filename)

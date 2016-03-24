@@ -3254,7 +3254,7 @@ API_FUNC(unhook_all)
 {
     API_INIT_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
-    weechat_unhook_all_plugin (lua_current_script->name);
+    weechat_unhook_all (lua_current_script->name);
 
     API_RETURN_OK;
 }

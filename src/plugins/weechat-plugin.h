@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20160321-01"
+#define WEECHAT_PLUGIN_API_VERSION "20160324-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -785,8 +785,8 @@ struct t_weechat_plugin
     void (*hook_set) (struct t_hook *hook, const char *property,
                       const char *value);
     void (*unhook) (struct t_hook *hook);
-    void (*unhook_all_plugin) (struct t_weechat_plugin *plugin,
-                               const char *subplugin);
+    void (*unhook_all) (struct t_weechat_plugin *plugin,
+                        const char *subplugin);
 
     /* buffers */
     struct t_gui_buffer *(*buffer_new) (struct t_weechat_plugin *plugin,
@@ -1632,8 +1632,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->hook_set)(__hook, __property, __value)
 #define weechat_unhook(__hook)                                          \
     (weechat_plugin->unhook)( __hook)
-#define weechat_unhook_all_plugin(__subplugin)                          \
-    (weechat_plugin->unhook_all_plugin)(weechat_plugin, __subplugin)
+#define weechat_unhook_all(__subplugin)                                 \
+    (weechat_plugin->unhook_all)(weechat_plugin, __subplugin)
 
 /* buffers */
 #define weechat_buffer_new(__name, __input_callback,                    \

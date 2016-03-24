@@ -3047,7 +3047,7 @@ API_FUNC(unhook_all)
 
     v8::String::Utf8Value hook(args[0]);
 
-    weechat_unhook_all_plugin (js_current_script->name);
+    weechat_unhook_all (js_current_script->name);
 
     API_RETURN_OK;
 }
