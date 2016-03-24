@@ -7030,6 +7030,7 @@ struct t_hook *weechat_hook_command (const char *command,
                                                      int argc,
                                                      char **argv,
                                                      char **argv_eol),
+                                     const void *callback_pointer,
                                      void *callback_data);
 ----
 
@@ -7046,9 +7047,7 @@ Arguments:
   separated by "||".
 * 'callback': function called when command is used, arguments and return value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer where command is executed
 ** 'int argc': number of arguments given for command
 ** 'char **argv': arguments given for command
@@ -7057,7 +7056,10 @@ Arguments:
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Default completion codes are:
 
@@ -7173,16 +7175,17 @@ Arguments:
   (priority allowed, see note about <<hook_priority,priority>>)
 * 'callback': function called when command is run, arguments and return value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer where command is executed
 ** 'const char *command': the command executed, with its arguments
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_OK_EAT'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 [NOTE]
 Callback can return 'WEECHAT_RC_OK' or 'WEECHAT_RC_OK_EAT' (command will not
@@ -7250,14 +7253,15 @@ Arguments:
 * 'max_calls': number of calls to timer (if 0, then timer has no end)
 * 'callback': function called when time is reached, arguments and return value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'int remaining_calls': remaining calls (-1 if timer has no end)
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -7325,14 +7329,15 @@ Arguments:
 * 'callback': function called a selected event occurs for file (or socket),
   arguments and return value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'int fd': file descriptor
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -7409,9 +7414,7 @@ Arguments:
 * 'callback': function called when data from child is available, or when child
   has ended, arguments and return value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'const char *command': command executed by child
 ** 'int return_code': return code:
 *** '>= 0': child return code for a command, and for URL possible values are:
@@ -7427,7 +7430,10 @@ Arguments:
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -7773,9 +7779,7 @@ Arguments:
 * 'callback': function called when connection is OK or failed, arguments and
   return value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'int status': connection status:
 *** 'WEECHAT_HOOK_CONNECT_OK': connection OK
 *** 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND': address not found
@@ -7795,7 +7799,10 @@ Arguments:
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -7937,9 +7944,7 @@ Arguments:
 * 'callback': function called when a message is printed, arguments and return
   value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer pointer
 ** 'time_t date': date
 ** 'int tags_count': number of tags for line
@@ -7951,7 +7956,10 @@ Arguments:
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -8024,9 +8032,7 @@ Arguments:
 * 'callback': function called when signal is received, arguments and return
   value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'const char *signal': signal received
 ** 'const char *type_data': type of data sent with signal:
 *** 'WEECHAT_HOOK_SIGNAL_STRING': string
@@ -8038,7 +8044,10 @@ Arguments:
 *** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
     _(WeeChat ≥ 0.4.0)_
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -8941,9 +8950,7 @@ Arguments:
 * 'callback': function called when signal is received, arguments and return
   value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'const char *signal': signal received
 ** 'struct t_hashtable *hashtable': hashtable
 ** return value:
@@ -8951,7 +8958,10 @@ Arguments:
 *** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
     _(WeeChat ≥ 0.4.0)_
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -9300,15 +9310,16 @@ Arguments:
 * 'callback': function called when configuration option is changed, arguments
   and return value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'const char *option': name of option
 ** 'const char *value': new value for option
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -9373,9 +9384,7 @@ Arguments:
 * 'callback': function called when completion item is used (user is completing
   something using this item), arguments and return value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'const char *completion_item': name of completion item
 ** 'struct t_gui_buffer *buffer': buffer where completion is made
 ** 'struct t_gui_completion *completion': structure used to add words for
@@ -9384,7 +9393,10 @@ Arguments:
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 [NOTE]
 Completion names are global (shared across WeeChat and plugins). So it is
@@ -9559,14 +9571,15 @@ Arguments:
   (see table below)
 * 'callback': function called when modifier is used, arguments and return value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'const char *modifier': name of modifier
 ** 'const char *modifier_data': data for modifier
 ** 'const char *string': string to modify
 ** return value: new string
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -9800,13 +9813,14 @@ Arguments:
 * 'args_description': description of arguments (optional, can be NULL)
 * 'callback': function called when info is asked, arguments and return value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'const char *info_name': name of info
 ** 'const char *arguments': additional arguments, depending on info
 ** return value: value of info asked
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -9876,13 +9890,14 @@ Arguments:
   (optional, can be NULL)
 * 'callback': function called when info is asked, arguments and return value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'const char *info_name': name of info
 ** 'struct t_hashtable *hashtable': hashtable, depending on info
 ** return value: hashtable asked
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -9955,15 +9970,16 @@ Arguments:
 * 'callback': function called when infolist is asked, arguments and return
   value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'const char *infolist_name': name of infolist
 ** 'void *pointer': pointer to an object that infolist must return (to get only
    one item in infolist)
 ** 'const char *arguments': additional arguments, depending on infolist
 ** return value: infolist asked
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -10036,12 +10052,13 @@ Arguments:
 * 'callback': function called when hdata is asked, arguments and return
   value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'const char *hdata_name': name of hdata
 ** return value: hdata asked
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Return value:
 
@@ -10094,16 +10111,17 @@ Arguments:
 * 'callback': function called when focus is made, arguments and return
   value:
 ** 'const void *pointer': pointer
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': pointer
 ** 'struct t_hashtable *info': hashtable with info on focus and strings returned
    by other calls to focus callbacks (with higher priority) (see table below)
 ** return value: either "info" pointer (hashtable completed), or pointer to a
    new hashtable (created by callback, with keys and values of type "string"),
    this new hashtable content will be added to 'info' for other calls to focus
    callbacks
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': pointer given to callback when it is called by WeeChat
+* 'callback_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 [IMPORTANT]
 For a mouse gesture, your callback will be called two times: first time when

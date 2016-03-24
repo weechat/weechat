@@ -7164,9 +7164,7 @@ Paramètres :
 * 'callback' : fonction appelée lorsque la commande est utilisée, paramètres et
   valeur de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'struct t_gui_buffer *buffer' : tampon où la commande est exécutée
 ** 'int argc' : nombre de paramètres passés à la commande
 ** 'char **argv' : paramètres pour la commande
@@ -7175,8 +7173,12 @@ Paramètres :
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Les codes complétions par défaut sont :
 
@@ -7293,17 +7295,19 @@ Paramètres :
 * 'callback' : fonction appelée lorsque la commande est exécutée, paramètres et
   valeur de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'struct t_gui_buffer *buffer' : tampon où la commande est exécutée
 ** 'const char *command' : la commande exécutée, avec ses paramètres
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_OK_EAT'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 [NOTE]
 Le "callback" peut retourner 'WEECHAT_RC_OK' ou 'WEECHAT_RC_OK_EAT' (la
@@ -7373,16 +7377,18 @@ Paramètres :
 * 'callback' : fonction appelée quand le délai est atteint, paramètres et valeur
   de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'int remaining_calls' : nombre d'appels restants (-1 si le minuteur n'a pas
    de fin)
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -7450,15 +7456,17 @@ Paramètres :
 * 'callback' : fonction appelée lorsqu'un des évènements sélectionnés se
   produit pour le fichier (ou le socket), paramètres et valeur de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'int fd' : descripteur de fichier
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -7535,9 +7543,7 @@ Paramètres :
 * 'callback' : fonction appelée quand des données du fils sont disponibles, or
   ou quand le fils s'est terminé, paramètres et valeur de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'const char *command' : commande exécutée par le fils
 ** 'int return_code' : code retour :
 *** '>= 0' : code retour du fils pour une commande, et pour l'URL, les valeurs
@@ -7555,8 +7561,12 @@ Paramètres :
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -7914,9 +7924,7 @@ Paramètres :
 * 'callback' : fonction appelée lorsque la connexion est ok ou a échoué,
   paramètres et valeur de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'int status' : statut de connexion :
 *** 'WEECHAT_HOOK_CONNECT_OK' : connexion ok
 *** 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND' : adresse non trouvée
@@ -7937,8 +7945,12 @@ Paramètres :
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -8082,9 +8094,7 @@ Paramètres :
 * 'callback' : fonction appelée lorsqu'un message est affiché, paramètres et
   valeur de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'struct t_gui_buffer *buffer' : pointeur vers le tampon
 ** 'time_t date' : date
 ** 'int tags_count' : nombre d'étiquettes de la ligne
@@ -8096,8 +8106,12 @@ Paramètres :
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -8171,9 +8185,7 @@ Paramètres :
 * 'callback' : fonction appelée quand le signal est reçu, paramètres et valeur
   de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'const char *signal' : signal reçu
 ** 'const char *type_data' : type de donnée reçu avec le signal :
 *** 'WEECHAT_HOOK_SIGNAL_STRING' : chaîne de caractères
@@ -8185,8 +8197,12 @@ Paramètres :
 *** 'WEECHAT_RC_OK_EAT' (arrêter l'envoi du signal immédiatement)
     _(WeeChat ≥ 0.4.0)_
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -9099,9 +9115,7 @@ Paramètres :
 * 'callback' : fonction appelée quand le signal est reçu, paramètres et valeur
   de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'const char *signal' : signal reçu
 ** 'struct t_hashtable *hashtable' : table de hachage
 ** valeur de retour :
@@ -9109,8 +9123,12 @@ Paramètres :
 *** 'WEECHAT_RC_OK_EAT' (arrêter l'envoi du signal immédiatement)
     _(WeeChat ≥ 0.4.0)_
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -9470,16 +9488,18 @@ Paramètres :
 * 'callback' : fonction appelée lorsque l'option de configuration est modifiée,
   paramètres et valeur de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'const char *option' : nom de l'option
 ** 'const char *value' : nouvelle valeur pour l'option
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -9545,9 +9565,7 @@ Paramètres :
   (l'utilisateur est en train de compléter quelque chose qui fait appel à cette
   complétion), paramètres et valeur de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'const char *completion_item' : nom de la complétion
 ** 'struct t_gui_buffer *buffer' : tampon où la complétion est effectuée
 ** 'struct t_gui_completion *completion' : structure utilisée pour ajouter
@@ -9556,8 +9574,12 @@ Paramètres :
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 [NOTE]
 Les noms de complétion sont globaux (partagés entre WeeChat et les extensions).
@@ -9735,15 +9757,17 @@ Paramètres :
 * 'callback' : fonction appelée lorsque le modificateur est utilisé, paramètres
   et valeur de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'const char *modifier' : nom du modificateur
 ** 'const char *modifier_data' : données pour le modificateur
 ** 'const char *string' : chaîne à modifier
 ** valeur de retour : nouvelle chaîne
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -9986,15 +10010,17 @@ Paramètres :
 * 'callback' : fonction appelée quand l'information est demandée, paramètres et
   valeur de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'const char *info_name' : nom de l'information
 ** 'const char *arguments' : paramètres additionnels, dépendant de
    l'information
 ** valeur de retour : valeur de l'information demandée
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -10068,15 +10094,17 @@ Paramètres :
 * 'callback' : fonction appelée quand l'information est demandée, paramètres et
   valeur de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'const char *info_name' : nom de l'information
 ** 'struct t_hashtable *hashtable' : table de hachage, dépendant de
    l'information
 ** valeur de retour : table de hachage demandée
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -10150,16 +10178,18 @@ Paramètres :
 * 'callback' : fonction appelée quand l'infolist est demandée, paramètres et
   valeur de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'const char *infolist_name' : nom de l'infolist
 ** 'void *pointer' : pointeur vers un objet que l'infolist doit retourner (pour
    obtenir uniquement cet objet dans l'infolist)
 ** 'const char *arguments' : paramètres additionnels, dépendant de l'infolist
 ** valeur de retour : infolist demandée
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -10232,13 +10262,15 @@ Paramètres :
 * 'callback' : fonction appelée quand le hdata est demandé, paramètres et valeur
   de retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'const char *hdata_name' : nom du hdata
 ** valeur de retour : hdata demandé
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 Valeur de retour :
 
@@ -10291,9 +10323,7 @@ Paramètres :
 * 'callback' : fonction appelée quand le focus est fait, paramètres et valeur de
   retour :
 ** 'const void *pointer' : pointeur
-** 'void *data' : pointeur ; si non NULL, doit avoir été alloué par malloc
-   (ou une fonction similaire) et sera automatiquement libéré (par free)
-   lorsque le "hook" est supprimé
+** 'void *data' : pointeur
 ** 'struct t_hashtable *info' : table de hachage avec les informations sur le
    focus et les chaînes retournées par les autres appels aux "callbacks" de
    focus (avec plus haute priorité) (voir le tableau ci-dessous)
@@ -10302,8 +10332,12 @@ Paramètres :
    hachage (créée par le "callback", avec clés et valeurs de type "string"), le
    contenu de cette nouvelle table de hachage sera ajouté à 'info' pour les
    autres appels aux "callbacks" focus
+* 'callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
-   WeeChat
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le "hook" est
+  supprimé
 
 [IMPORTANT]
 Pour un geste de souris, votre "callback" sera appelé deux fois : la première

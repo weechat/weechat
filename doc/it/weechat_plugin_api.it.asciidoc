@@ -7207,10 +7207,7 @@ Argomenti:
 * 'callback': funzione chiamata quando viene utilizzato il comando, argomenti e
   valore restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'struct t_gui_buffer *buffer': buffer quando il comando viene eseguito
 ** 'int argc': numero di argomenti forniti per un comando
 ** 'char **argv': argomenti forniti per un comando
@@ -7219,7 +7216,11 @@ Argomenti:
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito dalla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito dalla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 I codici predefiniti per il completamento sono:
 
@@ -7340,17 +7341,18 @@ Argomenti:
 * 'callback': funzione chiamata quando il comando è in esecuzione, argomenti e
   valore restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'struct t_gui_buffer *buffer': buffer dove viene eseguito il comando
 ** 'const char *command': il comando eseguito, con i propri argomenti
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_OK_EAT'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 [NOTE]
 La callback può restituire 'WEECHAT_RC_OK' o 'WEECHAT_RC_OK_EAT' (il comando
@@ -7422,15 +7424,16 @@ Argomenti:
 * 'callback': function called when time is reached, argomenti e valore
   restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': pointer; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'int remaining_calls': remaining calls (-1 if timer has no end)
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -7500,15 +7503,16 @@ Argomenti:
 * 'callback': funzione che chiama un evento selezionato che si verifica
   per un file (o un socket), argomenti e valore restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'int fd': descrittore file
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -7585,10 +7589,7 @@ Argomenti:
 * 'callback': funzione chiamata quando i dati dal processo figlio sono disponibili,
   oppure quando è terminato, argomenti e valore restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'const char *command': comando eseguito dal processo figlio
 ** 'int return_code': codice restituito:
 *** '>= 0': codice ritorno figlio per un comando, e per un URL i valori
@@ -7606,7 +7607,11 @@ Argomenti:
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -7967,10 +7972,7 @@ Argomenti:
 * 'callback': funzione chiamata quando la connessione è avvenuta con
   successo oppure no, argomenti e valore restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'int status': stato della connessione:
 *** 'WEECHAT_HOOK_CONNECT_OK': connessione avvenuta con successo
 *** 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND': indirizzo non trovato
@@ -7990,7 +7992,11 @@ Argomenti:
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -8137,10 +8143,7 @@ Argomenti:
 * 'callback': funzione chiamata quando viene stampato un messaggio, argomenti e
   valore restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'struct t_gui_buffer *buffer': puntatore al buffer
 ** 'time_t date': data
 ** 'int tags_count': numero di tag per riga
@@ -8152,7 +8155,11 @@ Argomenti:
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -8227,10 +8234,7 @@ Argomenti:
 * 'callback': funzione chiamata a segnale ricevuto, argomenti e valore
   restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'const char *signal': segnale ricevuto
 ** 'const char *type_data': tipo di dati inviati con il segnale:
 *** 'WEECHAT_HOOK_SIGNAL_STRING': stringa
@@ -8243,7 +8247,11 @@ Argomenti:
 *** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
     _(WeeChat ≥ 0.4.0)_
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -9234,10 +9242,7 @@ Argomenti:
 * 'callback': funzione chiamata a segnale ricevuto, argomenti e valore
   restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'const char *signal': segnale ricevuto
 ** 'struct t_hashtable *hashtable': tabella hash
 ** valore restituito:
@@ -9246,7 +9251,11 @@ Argomenti:
 *** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
     _(WeeChat ≥ 0.4.0)_
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -9610,16 +9619,17 @@ Argomenti:
 * 'callback': funzione chiamata quando l'opzione di configurazione è cambiata,
   argomenti e valore restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'const char *option': nome dell'opzione
 ** 'const char *value': nuovo valore per l'opzione
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -9685,10 +9695,7 @@ Argomenti:
   (l'utente sta completando qualcosa usando questo elemento), argomenti e valore
   restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'const char *completion_item': nome dell'elemento del completamento
 ** 'struct t_gui_buffer *buffer': buffer dove viene eseguito il completamento
 ** 'struct t_gui_completion *completion': struttura usata per aggiungere
@@ -9697,7 +9704,11 @@ Argomenti:
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 [NOTE]
 I nomi del completamento sono globali (condivisi tra WeeChat e plugin). Si
@@ -9877,15 +9888,16 @@ Argomenti:
 * 'callback': funzione chiamata quando viene usato il modificatore,
   argomenti e valore restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'const char *modifier': nome del modificatore
 ** 'const char *modifier_data': dati per il modificatore
 ** 'const char *string': stringa da modificare
 ** valore restituito: nuova stringa
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -10125,14 +10137,15 @@ Argomenti:
 * 'callback': funzione chiamata alla richiesta di una info, argomenti e valore
   restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'const char *info_name': nome della info
 ** 'const char *arguments': argomenti addizionali, dipendono dalle info
 ** valore restituito: valore dell'info richiesta
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -10205,14 +10218,15 @@ Argomenti:
 * 'callback': funzione chiamata alla richiesta della info, argomenti e valore
   restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'const char *info_name': nome della info
 ** 'struct t_hashtable *hashtable': tabella hash, in base alla info
 ** valore restituito: tabella hash richiesta
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -10287,16 +10301,17 @@ Argomenti:
 * 'callback': funzione chiamata alla richiesta della lista info, argomenti e
   valore restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'const char *infolist_name': nome della lista info
 ** 'void *pointer': puntatore ad un oggetto che la lista info deve restituire
    (per ricevere un solo elemento della lista info)
 ** 'const char *arguments': argomento aggiuntivo, dipende dalla lista info
 ** valore restituito: lista info richiesta
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -10368,13 +10383,14 @@ Argomenti:
 * 'description': descrizione
 * 'callback': funzione chiamata alla richiesta di hdata, argomenti e valore restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'const char *hdata_name': nome dell'hdata
 ** return value: hdata richiesto
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -10426,10 +10442,7 @@ Argomenti:
   (priorità consentita, consultare la nota a riguardo di <<hook_priority,priority>>)
 * 'callback': funzione chiamata al momento del focus, argomenti e valore restituito:
 ** 'const void *pointer': puntatore
-// TRANSLATION MISSING
-** 'void *data': puntatore; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': puntatore
 ** 'struct t_hashtable *info': tabella hash con informazioni sul focus e
    stringhe restituite da altre chiamate alle callback sul focus (con la
    priorità più alta) (consultare la tabella in basso)
@@ -10437,7 +10450,11 @@ Argomenti:
    puntatore ad una nuova tabella hash (creata dalla callback, con chiavi e
    valori di tipo "string), questa nuovo contenuto della tabella hash verrà
    aggiunto ad 'info' per le altre chiamate alle callback del focus
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 [IMPORTANT]
 Per l'azione di un mouse, la callback verrà chiamata due volte: la prima quando

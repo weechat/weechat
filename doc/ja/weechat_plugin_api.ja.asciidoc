@@ -7045,10 +7045,7 @@ struct t_hook *weechat_hook_command (const char *command,
   "||" で区切ってください。
 * 'callback': コマンドが使用された際に呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'struct t_gui_buffer *buffer': コマンドを実行するバッファ
 ** 'int argc': コマンドに渡す引数の個数
 ** 'char **argv': コマンドに渡す引数
@@ -7057,7 +7054,11 @@ struct t_hook *weechat_hook_command (const char *command,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 デフォルトの補完候補コードは:
 
@@ -7173,17 +7174,18 @@ struct t_hook *weechat_hook_command_run (const char *command,
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'callback': コマンドが実行される際に呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'struct t_gui_buffer *buffer': コマンドを実行するバッファ
 ** 'const char *command': 実行するコマンド、引数付き
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_OK_EAT'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 [NOTE]
 コールバックは 'WEECHAT_RC_OK' または 'WEECHAT_RC_OK_EAT'
@@ -7251,15 +7253,16 @@ struct t_hook *weechat_hook_timer (long interval,
 * 'max_calls': タイマを呼び出す回数 (0 の場合、タイマを無限に呼び出す)
 * 'callback': 時間が来たら呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'int remaining_calls': 呼び出し残り回数 (タイマを無限に呼び出す場合は -1)
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -7327,15 +7330,16 @@ struct t_hook *weechat_hook_fd (int fd,
 * 'callback': ファイル (またはソケット) に対してキャッチしたいイベントが発生した場合に実行する関数、
   引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'int fd': ファイルディスクリプタ
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -7412,10 +7416,7 @@ struct t_hook *weechat_hook_process (const char *command,
 * 'callback':
   子プロセスからのデータが利用可能になるか、子プロセスが終了したら呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'const char *command': 子プロセスが実行するコマンド
 ** 'int return_code': リターンコード:
 *** '>= 0': コマンドを実行した子プロセスのまたは URL に対するリターンコード。URL の場合取取り得る値は:
@@ -7431,7 +7432,11 @@ struct t_hook *weechat_hook_process (const char *command,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -7777,10 +7782,7 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 * 'callback':
   接続に成功および失敗した際に呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'int status': 接続状態:
 *** 'WEECHAT_HOOK_CONNECT_OK': 接続成功
 *** 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND': アドレスが見つかりません
@@ -7800,7 +7802,11 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -7942,10 +7948,7 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 * 'callback':
   メッセージが表示される際に呼び出すコールバック、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'struct t_gui_buffer *buffer': バッファへのポインタ
 ** 'time_t date': 日付
 ** 'int tags_count': 行に付けられたタグの個数
@@ -7957,7 +7960,11 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -8030,10 +8037,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 * 'callback':
   シグナルを受信した際に呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'const char *signal': 受信したシグナル
 ** 'const char *type_data': シグナルが送信したデータの型
 *** 'WEECHAT_HOOK_SIGNAL_STRING': 文字列
@@ -8045,7 +8049,11 @@ struct t_hook *weechat_hook_signal (const char *signal,
 *** 'WEECHAT_RC_OK_EAT' (直ちにシグナルの送信を止める)
     _(WeeChat バージョン 0.4.0 以上で利用可)_
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -8948,10 +8956,7 @@ Arguments:
 * 'callback':
   シグナルを受信した際に呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'const char *signal': 受信したシグナル
 ** 'struct t_hashtable *hashtable': ハッシュテーブル
 ** 戻り値:
@@ -8959,7 +8964,11 @@ Arguments:
 *** 'WEECHAT_RC_OK_EAT' (直ちにシグナルの送信を止める)
     _(WeeChat バージョン 0.4.0 以上で利用可)_
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -9308,16 +9317,17 @@ struct t_hook *weechat_hook_config (const char *option,
 * 'callback':
   設定オプションが変更されたら呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'const char *option': オプションの名前
 ** 'const char *value': オプションの新しい値
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -9382,10 +9392,7 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 * 'callback': 補完要素 (ユーザはこの要素を使って何かを補完している)
   が使われた場合に呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'const char *completion_item': 補完要素の名前
 ** 'struct t_gui_buffer *buffer': 補完が行われたバッファ
 ** 'struct t_gui_completion *completion':
@@ -9394,7 +9401,11 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 [NOTE]
 補完名はグローバルです (WeeChat
@@ -9569,15 +9580,16 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
   (以下の表を参照)
 * 'callback': 修飾子が使われた際に呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'const char *modifier': 修飾子の名前
 ** 'const char *modifier_data': 修飾子に渡すデータ
 ** 'const char *string': 修飾子に渡す文字列
 ** 戻り値: 新しい文字列
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -9809,14 +9821,15 @@ struct t_hook *weechat_hook_info (const char *info_name,
 * 'args_description': 引数の説明 (任意、NULL にすることも可)
 * 'callback': 情報が要求されたら呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'const char *info_name': 情報の名前
 ** 'const char *arguments': 追加の引数、情報に依存
 ** 戻り値: 要求された情報の値
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -9886,14 +9899,15 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
   (任意、NULL でも可)
 * 'callback': 情報を要求する際に呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'const char *info_name': 情報の名前
 ** 'struct t_hashtable *hashtable': ハッシュテーブル、情報に依存
 ** 戻り値: 要求したハッシュテーブル
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -9966,16 +9980,17 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 * 'callback':
   インフォリストが要求された際に呼び出すコールバック、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'const char *infolist_name': インフォリストの名前
 ** 'void *pointer': インフォリストが返すオブジェクトへのポインタ
    (インフォリストの要素を 1 つだけ返す)
 ** 'const char *arguments': 追加の引数、インフォリストに依存
 ** 戻り値: 要求したインフォリスト
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -10048,13 +10063,14 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 * 'callback':
   hdata が要求された際に呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'const char *hdata_name': hdata の名前
 ** 戻り値: 要求された hdata
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 戻り値:
 
@@ -10107,17 +10123,18 @@ struct t_hook *weechat_hook_focus (const char *area,
 * 'callback':
   フォーカスが当たったら呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
-// TRANSLATION MISSING
-** 'void *data': ポインタ; if not NULL, it must have been allocated with malloc
-   (or similar function) and it will be automatically freed when the hook is
-   deleted
+** 'void *data': ポインタ
 ** 'struct t_hashtable *info': フォーカスの情報を含むハッシュテーブルと、他の
    (より高い優先度を持つ) フォーカスコールバックを呼び出して返された文字列 (以下のテーブルを参照)
 ** 戻り値: "info" ポインタ (完全なハッシュテーブル)
    または新しいハッシュテーブル (コールバックが作成、キーと値は
    "string" 型) へのポインタ、この新しいハッシュテーブルの内容は
    'info' に追加され、他のフォーカスコールバックに渡されます
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the hook is deleted
 
 [IMPORTANT]
 マウスジェスチャの場合、コールバックを 2 回呼び出します: 1
