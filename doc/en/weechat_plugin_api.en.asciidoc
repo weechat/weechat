@@ -7080,8 +7080,8 @@ C example:
 [source,C]
 ----
 int
-my_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
-               char **argv, char **argv_eol)
+my_command_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
+               int argc, char **argv, char **argv_eol)
 {
     /* ... */
     return WEECHAT_RC_OK;
@@ -7200,8 +7200,8 @@ C example:
 [source,C]
 ----
 int
-my_command_run_cb (void *data, struct t_gui_buffer *buffer,
-                   const char *command)
+my_command_run_cb (const void *pointer, void *data,
+                   struct t_gui_buffer *buffer, const char *command)
 {
     weechat_printf (NULL, "I'm eating the completion!");
     return WEECHAT_RC_OK_EAT;
@@ -7272,7 +7272,7 @@ C example:
 [source,C]
 ----
 int
-my_timer_cb (void *data, int remaining_calls)
+my_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     /* ... */
     return WEECHAT_RC_OK;
@@ -7348,7 +7348,7 @@ C example:
 [source,C]
 ----
 int
-my_fd_cb (void *data, int fd)
+my_fd_cb (const void *pointer, void *data, int fd)
 {
     /* ... */
     return WEECHAT_RC_OK;
@@ -7466,8 +7466,8 @@ C example:
 [source,C]
 ----
 int
-my_process_cb (void *data, const char *command, int return_code,
-               const char *out, const char *err)
+my_process_cb (const void *pointer, void *data, const char *command,
+               int return_code, const char *out, const char *err)
 {
     if (return_code == WEECHAT_HOOK_PROCESS_ERROR)
     {
@@ -7606,8 +7606,8 @@ C example:
 [source,C]
 ----
 int
-my_process_cb (void *data, const char *command, int return_code,
-               const char *out, const char *err)
+my_process_cb (const void *pointer, void *data, const char *command,
+               int return_code, const char *out, const char *err)
 {
     if (return_code == WEECHAT_HOOK_PROCESS_ERROR)
     {
@@ -7813,8 +7813,8 @@ C example:
 [source,C]
 ----
 int
-my_connect_cb (void *data, int status, int gnutls_rc, int sock,
-               const char *error, const char *ip_address)
+my_connect_cb (const void *pointer, void *data, int status, int gnutls_rc,
+               int sock, const char *error, const char *ip_address)
 {
     switch (status)
     {
@@ -7976,8 +7976,8 @@ C example:
 [source,C]
 ----
 int
-my_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
-             int tags_count, const char **tags,
+my_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
+             time_t date, int tags_count, const char **tags,
              int displayed, int highlight,
              const char *prefix, const char *message)
 {
@@ -8698,8 +8698,8 @@ C example:
 [source,C]
 ----
 int
-my_signal_cb (void *data, const char *signal, const char *type_data,
-              void *signal_data)
+my_signal_cb (const void *pointer, void *data, const char *signal,
+              const char *type_data, void *signal_data)
 {
     /* ... */
     return WEECHAT_RC_OK;
@@ -9030,7 +9030,8 @@ C example:
 [source,C]
 ----
 int
-my_hsignal_cb (void *data, const char *signal, struct t_hashtable *hashtable)
+my_hsignal_cb (const void *pointer, void *data, const char *signal,
+               struct t_hashtable *hashtable)
 {
     /* ... */
     return WEECHAT_RC_OK;
@@ -9171,7 +9172,8 @@ C example:
 [source,C]
 ----
 int
-test_whois_cb (void *data, const char *signal, struct t_hashtable *hashtable)
+test_whois_cb (const void *pointer, void *data, const char *signal,
+               struct t_hashtable *hashtable)
 {
     weechat_printf (NULL, "error = %s", weechat_hashtable_get (hashtable, "error"));
     weechat_printf (NULL, "output = %s", weechat_hashtable_get (hashtable, "output"));
@@ -9330,7 +9332,8 @@ C example:
 [source,C]
 ----
 int
-my_config_cb (void *data, const char *option, const char *value)
+my_config_cb (const void *pointer, void *data, const char *option,
+              const char *value)
 {
     /* ... */
     return WEECHAT_RC_OK;
@@ -9421,7 +9424,7 @@ C example:
 [source,C]
 ----
 int
-my_completion_cb (void *data, const char *completion_item,
+my_completion_cb (const void *pointer, void *data, const char *completion_item,
                   struct t_gui_buffer *buffer,
                   struct t_gui_completion *completion)
 {
@@ -9481,7 +9484,7 @@ C example:
 [source,C]
 ----
 int
-my_completion_cb (void *data, const char *completion_item,
+my_completion_cb (const void *pointer, void *data, const char *completion_item,
                   struct t_gui_buffer *buffer,
                   struct t_gui_completion *completion)
 {
@@ -9706,7 +9709,7 @@ C example:
 [source,C]
 ----
 char *
-my_modifier_cb (void *data, const char *modifier,
+my_modifier_cb (const void *pointer, void *data, const char *modifier,
                 const char *modifier_data,
                 const char *string)
 {
@@ -9831,7 +9834,8 @@ C example:
 [source,C]
 ----
 const char *
-my_info_cb (void *data, const char *info_name, const char *arguments)
+my_info_cb (const void *pointer, void *data, const char *info_name,
+            const char *arguments)
 {
     /* ... */
     return pointer_to_string;
@@ -9908,7 +9912,8 @@ C example:
 [source,C]
 ----
 struct t_hashtable *
-my_info_hashtable_cb (void *data, const char *info_name, struct t_hashtable *hashtable)
+my_info_hashtable_cb (const void *pointer, void *data, const char *info_name,
+                      struct t_hashtable *hashtable)
 {
     /* ... */
     return pointer_to_new_hashtable;
@@ -9955,7 +9960,7 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
                                       struct t_infolist *(*callback)(const void *pointer,
                                                                      void *data,
                                                                      const char *infolist_name,
-                                                                     void *pointer,
+                                                                     void *obj_pointer,
                                                                      const char *arguments),
                                       void *callback_data);
 ----
@@ -9990,8 +9995,8 @@ C example:
 [source,C]
 ----
 struct t_infolist *
-my_infolist_cb (void *data, const char *infolist_name, void *pointer,
-                const char *arguments)
+my_infolist_cb (const void *pointer, void *data, const char *infolist_name,
+                void *obj_pointer, const char *arguments)
 {
     struct t_infolist *my_infolist;
 
@@ -10069,7 +10074,7 @@ C example:
 [source,C]
 ----
 struct t_hdata *
-my_hdata_cb (void *data, const char *hdata_name)
+my_hdata_cb (const void *pointer, void *data, const char *hdata_name)
 {
     struct t_hdata *my_hdata;
 
@@ -10262,7 +10267,7 @@ C example:
 [source,C]
 ----
 struct t_hashtable *
-my_focus_nicklist_cb (void *data, struct t_hashtable *info)
+my_focus_nicklist_cb (const void *pointer, void *data, struct t_hashtable *info)
 {
     /* add strings in hashtable */
     /* ... */
