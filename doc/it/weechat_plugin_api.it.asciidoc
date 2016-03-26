@@ -4386,8 +4386,10 @@ Prototipo:
 [source,C]
 ----
 struct t_config_file *weechat_config_new (const char *name,
-                                          int (*callback_reload)(void *data,
+                                          int (*callback_reload)(const void *pointer,
+                                                                 void *data,
                                                                  struct t_config_file *config_file),
+                                          const void *callback_reload_pointer,
                                           void *callback_reload_data);
 ----
 
@@ -4397,14 +4399,20 @@ Argomenti:
 * 'callback_reload': funzione chiamata quando il file di configurazione viene
   ricaricato con `/reload` (opzionale, può essere NULL), argomenti e valore
   restituito:
+** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione
 ** valore restituito:
 *** 'WEECHAT_CONFIG_READ_OK'
 *** 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
 *** 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
-* 'callback_reload_data': puntatore fornito per ricaricare il callback
+* 'callback_reload_pointer': puntatore fornito per ricaricare il callback
   quando richiesto da WeeChat
+// TRANSLATION MISSING
+* 'callback_reload_data': puntatore fornito dalla callback quando chiamata da
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it will be automatically freed when the configuration file is
+  freed
 
 Valore restituito:
 
@@ -4422,7 +4430,8 @@ Esempio in C:
 [source,C]
 ----
 int
-my_config_reload_cb (void *data, struct t_config_file *config_file)
+my_config_reload_cb (const void *pointer, void *data,
+                     struct t_config_file *config_file)
 {
     /* ... */
 
@@ -4431,7 +4440,7 @@ my_config_reload_cb (void *data, struct t_config_file *config_file)
 
 struct t_config_file *config_file = weechat_config_new ("test",
                                                         &my_config_reload_cb,
-                                                        NULL);
+                                                        NULL, NULL);
 ----
 
 Script (Python):
@@ -4462,30 +4471,40 @@ struct t_config_section *weechat_config_new_section (
     const char *name,
     int user_can_add_options,
     int user_can_delete_options,
-    int (*callback_read)(void *data,
+    int (*callback_read)(const void *pointer,
+                         void *data,
                          struct t_config_file *config_file,
                          struct t_config_section *section,
                          const char *option_name,
                          const char *value),
+    const void *callback_read_pointer,
     void *callback_read_data,
-    int (*callback_write)(void *data,
+    int (*callback_write)(const void *pointer,
+                          void *data,
                           struct t_config_file *config_file,
                           const char *section_name),
+    const void *callback_write_pointer,
     void *callback_write_data,
-    int (*callback_write_default)(void *data,
+    int (*callback_write_default)(const void *pointer,
+                                  void *data,
                                   struct t_config_file *config_file,
-                                  const char *section_name);
+                                  const char *section_name),
+    const void *callback_write_default_pointer,
     void *callback_write_default_data,
-    int (*callback_create_option)(void *data,
+    int (*callback_create_option)(const void *pointer,
+                                  void *data,
                                   struct t_config_file *config_file,
                                   struct t_config_section *section,
                                   const char *option_name,
                                   const char *value),
+    const void *callback_create_option_pointer,
     void *callback_create_option_data,
-    int (*callback_delete_option)(void *data,
+    int (*callback_delete_option)(const void *pointer,
+                                  void *data,
                                   struct t_config_file *config_file,
                                   struct t_config_section *section,
                                   struct t_config_option *option),
+    const void *callback_delete_option_pointer,
     void *callback_delete_option_data);
 ----
 
@@ -4500,6 +4519,7 @@ Argomenti:
 * 'callback_read': funzione chiamata quando un'opzione nella sezione viene letta
   da disco (dovrebbe essere NULL in molti casi, tranne se l'opzione nella sezione
   necessita di una funzione personalizza), argomenti e valore restituito:
+** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione
 ** 'struct t_config_section *section': puntatore alla sezione
@@ -4509,10 +4529,16 @@ Argomenti:
 *** 'WEECHAT_CONFIG_READ_OK'
 *** 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
 *** 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
-* 'callback_read_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_read_pointer': puntatore fornito alla callback quando chiamata da
+  WeeChat
+// TRANSLATION MISSING
+* 'callback_read_data': puntatore fornito dalla callback quando chiamata da
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it will be automatically freed when the section is freed
 * 'callback_write': funzione chiamata quando la sezione è scritta nel file (dovrebbe
   essere NULL in molti casi, tranne se la sezione necessita di una funzione
   personalizzata), argomenti e valore restituito:
+** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione
 ** 'struct t_config_section *section': puntatore alla sezione
@@ -4521,9 +4547,15 @@ Argomenti:
 *** 'WEECHAT_CONFIG_WRITE_OK'
 *** 'WEECHAT_CONFIG_WRITE_ERROR'
 *** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
-* callback_write_data: puntatore fornito alla callback quando chiamata da WeeChat
+* 'callback_write_pointer': puntatore fornito alla callback quando chiamata da
+  WeeChat
+// TRANSLATION MISSING
+* 'callback_write_data': puntatore fornito dalla callback quando chiamata da
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it will be automatically freed when the section is freed
 * callback_write_default: funzione chiamata quando i valori predefiniti per la sezione
   devono essere scritti in un file, argomenti e valore restituito:
+** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione
 ** 'const char *section_name': nome della sezione
@@ -4531,11 +4563,17 @@ Argomenti:
 *** 'WEECHAT_CONFIG_WRITE_OK'
 *** 'WEECHAT_CONFIG_WRITE_ERROR'
 *** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
-* 'callback_write_default_data': puntatore fornito alla callback quando chiamata da
-  WeeChat
+* 'callback_write_default_pointer': puntatore fornito alla callback quando
+  chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_write_default_data': puntatore fornito dalla callback quando
+  chiamata da WeeChat; if not NULL, it must have been allocated with malloc
+  (or similar function) and it will be automatically freed when the section is
+  freed
 * 'callback_create_option': funzione chiamata quando viene creata una nuova
   opzione nella sezione (NULL se la sezione non consente di creare nuove
   opzioni), argomenti e valore restituito:
+** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione
 ** 'struct t_config_section *section': puntatore alla sezione
@@ -4546,11 +4584,17 @@ Argomenti:
 *** 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
 *** 'WEECHAT_CONFIG_OPTION_SET_ERROR'
 *** 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND'
-* 'callback_create_option_data': puntatore fornito alla callback quando chiamata
-  da WeeChat
+* 'callback_create_option_pointer': puntatore fornito alla callback quando
+  chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_create_option_data': puntatore fornito dalla callback quando
+  chiamata da WeeChat; if not NULL, it must have been allocated with malloc
+  (or similar function) and it will be automatically freed when the section is
+  freed
 * 'callback_delete_option': funzione chiamata quando un'opzione viene eliminata
   nella sezione (NULL se la sezione non consente di eliminare delle opzioni),
   argomenti e valore restituito:
+** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione
 ** 'struct t_config_section *section': puntatore alla sezione
@@ -4560,8 +4604,13 @@ Argomenti:
 *** 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET'
 *** 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED'
 *** 'WEECHAT_CONFIG_OPTION_UNSET_ERROR'
-* 'callback_delete_option_data': puntatore fornito alla callback quando chiamata
-  da WeeChat
+* 'callback_delete_option_pointer': puntatore fornito alla callback quando
+  chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_delete_option_data': puntatore fornito dalla callback quando
+  chiamata da WeeChat; if not NULL, it must have been allocated with malloc
+  (or similar function) and it will be automatically freed when the section is
+  freed
 
 Valore restituito:
 
@@ -4572,8 +4621,10 @@ Esempio in C:
 [source,C]
 ----
 int
-my_section_read_cb (void *data, struct t_config_file *config_file,
-                    struct t_config_section *section, const char *option_name,
+my_section_read_cb (const void *pointer, void *data,
+                    struct t_config_file *config_file,
+                    struct t_config_section *section,
+                    const char *option_name,
                     const char *value)
 {
     /* ... */
@@ -4585,7 +4636,8 @@ my_section_read_cb (void *data, struct t_config_file *config_file,
 }
 
 int
-my_section_write_cb (void *data, struct t_config_file *config_file,
+my_section_write_cb (const void *pointer, void *data,
+                     struct t_config_file *config_file,
                      const char *section_name)
 {
     /* ... */
@@ -4595,7 +4647,8 @@ my_section_write_cb (void *data, struct t_config_file *config_file,
 }
 
 int
-my_section_write_default_cb (void *data, struct t_config_file *config_file,
+my_section_write_default_cb (const void *pointer, void *data,
+                             struct t_config_file *config_file,
                              const char *section_name)
 {
     /* ... */
@@ -4605,9 +4658,11 @@ my_section_write_default_cb (void *data, struct t_config_file *config_file,
 }
 
 int
-my_section_create_option_cb (void *data, struct t_config_file *config_file,
+my_section_create_option_cb (const void *pointer, void *data,
+                             struct t_config_file *config_file,
                              struct t_config_section *section,
-                             const char *option_name, const char *value)
+                             const char *option_name,
+                             const char *value)
 {
     /* ... */
 
@@ -4616,7 +4671,8 @@ my_section_create_option_cb (void *data, struct t_config_file *config_file,
 }
 
 int
-my_section_delete_option_cb (void *data, struct t_config_file *config_file,
+my_section_delete_option_cb (const void *pointer, void *data,
+                             struct t_config_file *config_file,
                              struct t_config_section *section,
                              struct t_config_option *option)
 {
@@ -4629,21 +4685,21 @@ my_section_delete_option_cb (void *data, struct t_config_file *config_file,
 /* sezione standard, l'utente non può aggiungere/rimuovere opzioni */
 struct t_config_section *new_section1 =
     weechat_config_new_section (config_file, "section1", 0, 0,
-                                NULL, NULL,  /* read callback */
-                                NULL, NULL,  /* write callback */
-                                NULL, NULL,  /* write default callback */
-                                NULL, NULL,  /* create option callback */
-                                NULL, NULL);  /* delete option callback */
+                                NULL, NULL, NULL,
+                                NULL, NULL, NULL,
+                                NULL, NULL, NULL,
+                                NULL, NULL, NULL,
+                                NULL, NULL, NULL);
 
 /* sezione speciale, l'utente può aggiungere/eliminare opzioni, e le
    opzioni necessitano di un callback per essere lette/scritte */
 struct t_config_section *new_section2 =
     weechat_config_new_section (config_file, "section2", 1, 1,
-                                &my_section_read_cb, NULL,
-                                &my_section_write_cb, NULL,
-                                &my_section_write_default_cb, NULL,
-                                &my_section_create_option_cb, NULL,
-                                &my_section_delete_option_cb, NULL);
+                                &my_section_read_cb, NULL, NULL,
+                                &my_section_write_cb, NULL, NULL,
+                                &my_section_write_default_cb, NULL, NULL,
+                                &my_section_create_option_cb, NULL, NULL,
+                                &my_section_delete_option_cb, NULL, NULL);
 ----
 
 Script (Python):
@@ -4751,15 +4807,21 @@ struct t_config_option *weechat_config_new_option (
     const char *default_value,
     const char *value,
     int null_value_allowed,
-    int (*callback_check_value)(void *data,
+    int (*callback_check_value)(const void *pointer,
+                                void *data,
                                 struct t_config_option *option,
                                 const char *value),
+    const void *callback_check_value_pointer,
     void *callback_check_value_data,
-    void (*callback_change)(void *data,
+    void (*callback_change)(const void *pointer,
+                            void *data,
                             struct t_config_option *option),
+    const void *callback_change_pointer,
     void *callback_change_data,
-    void (*callback_delete)(void *data,
+    void (*callback_delete)(const void *pointer,
+                            void *data,
                             struct t_config_option *option),
+    const void *callback_delete_pointer,
     void *callback_delete_data);
 ----
 
@@ -4788,26 +4850,41 @@ Argomenti:
   altrimenti 0
 * 'callback_check_value': funzione chiamata per verificare il nuovo valore per
   l'opzione (ozionale), argomenti e valore restituito:
+** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_config_option *option': puntatore all'opzione
 ** 'const char *value': nuovo valore per l'opzione
 ** valore restituito:
 *** 1 se il valore è corretto
 *** 0 se il valore non è valido
-* 'callback_check_value_data': puntatore fornito alla callback check_value
+* 'callback_check_value_pointer': puntatore fornito alla callback check_value
   quando chiamata da WeeChat
+// TRANSLATION MISSING
+* 'callback_check_value_data': puntatore fornito dalla callback quando chiamata
+  da WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it will be automatically freed when the option is freed
 * 'callback_change': funzione chiamata quando il valore dell'opzione è stata
   cambiata (opzionale), argomenti:
+** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_config_option *option': puntatore all'opzione
-* 'callback_change_data': puntatore fornito per cambiare alla callback quando
-  chiamato da WeeChat
+* 'callback_change_pointer': puntatore fornito per cambiare alla callback
+  quando chiamato da WeeChat
+// TRANSLATION MISSING
+* 'callback_change_data': puntatore fornito dalla callback quando chiamata da
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it will be automatically freed when the option is freed
 * 'callback_delete': funzione chiamata quando l'opzione verrà eliminata
   (opzionale), argomenti:
+** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_config_option *option': puntatore all'opzione
-* 'callback_delete_data': puntatore fornito per eiliminare alla callback quando
-  chiamato da WeeChat
+* 'callback_delete_pointer': puntatore fornito per eiliminare alla callback
+  quando chiamato da WeeChat
+// TRANSLATION MISSING
+* 'callback_delete_data': puntatore fornito dalla callback quando chiamata da
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it will be automatically freed when the option is freed
 
 Valore restituito:
 
@@ -4820,67 +4897,67 @@ Esempio in C:
 /* booleano */
 struct t_config_option *option1 =
     weechat_config_new_option (config_file, section, "option1", "boolean",
-                               "My option, type boolean"
-                               NULL,  /* valori stringa */
-                               0, 0,  /* min, max */
-                               "on",  /* predefinito */
-                               "on",  /* valore */
-                               0,  /* null value allowed */
-                               NULL, NULL,  /* verifica callback */
-                               NULL, NULL,  /* modifica callback */
-                               NULL, NULL);  /* elimina callback */
+                               "My option, type boolean",
+                               NULL,
+                               0, 0,
+                               "on",
+                               "on",
+                               0,
+                               NULL, NULL, NULL,
+                               NULL, NULL, NULL,
+                               NULL, NULL, NULL);
 
 /* intero */
 struct t_config_option *option2 =
     weechat_config_new_option (config_file, section, "option2", "integer",
-                               "My option, type integer"
-                               NULL,  /* string values */
-                               0, 100,  /* min, max */
-                               "15",  /* default */
-                               "15",  /* value */
-                               0,  /* null value allowed */
-                               NULL, NULL,  /* verifica callback */
-                               NULL, NULL,  /* modifica callback */
-                               NULL, NULL);  /* elimina callback */
+                               "My option, type integer",
+                               NULL,
+                               0, 100,
+                               "15",
+                               "15",
+                               0,
+                               NULL, NULL, NULL,
+                               NULL, NULL, NULL,
+                               NULL, NULL, NULL);
 
 /* intero (con valori stringa) */
 struct t_config_option *option3 =
     weechat_config_new_option (config_file, section, "option3", "integer",
-                               "My option, type integer (with string values)"
-                               "top|bottom|left|right",  /* string values */
-                               0, 0,  /* min, max */
-                               "bottom",  /* predefinito */
-                               "bottom",  /* valoree */
-                               0,  /* null value allowed */
-                               NULL, NULL,  /* verifica callback */
-                               NULL, NULL,  /* modifica callback */
-                               NULL, NULL);  /* elimina callback */
+                               "My option, type integer (with string values)",
+                               "top|bottom|left|right",
+                               0, 0,
+                               "bottom",
+                               "bottom",
+                               0,
+                               NULL, NULL, NULL,
+                               NULL, NULL, NULL,
+                               NULL, NULL, NULL);
 
 /* stringa */
 struct t_config_option *option4 =
     weechat_config_new_option (config_file, section, "option4", "string",
-                               "My option, type string"
-                               NULL,  /* valori stringa */
-                               0, 0,  /* min, max */
-                               "test",  /* predefinito */
-                               "test",  /* valore */
-                               1,  /* valore null consentito */
-                               NULL, NULL,  /* verifica callback */
-                               NULL, NULL,  /* modifica callback */
-                               NULL, NULL);  /* elimina callback */
+                               "My option, type string",
+                               NULL,
+                               0, 0,
+                               "test",
+                               "test",
+                               1,
+                               NULL, NULL, NULL,
+                               NULL, NULL, NULL,
+                               NULL, NULL, NULL);
 
 /* colore */
 struct t_config_option *option5 =
     weechat_config_new_option (config_file, section, "option5", "color",
-                               "My option, type color"
-                               NULL,  /* valori stringa */
-                               0, 0,  /* min, max */
-                               "lightblue",  /* predefinito */
-                               "lightblue",  /* valore */
-                               0,  /* valore null consentito */
-                               NULL, NULL,  /* verifica callback */
-                               NULL, NULL,  /* modifica callback */
-                               NULL, NULL);  /* elimina callback */
+                               "My option, type color",
+                               NULL,
+                               0, 0,
+                               "lightblue",
+                               "lightblue",
+                               0,
+                               NULL, NULL, NULL,
+                               NULL, NULL, NULL,
+                               NULL, NULL, NULL);
 ----
 
 Script (Python):
