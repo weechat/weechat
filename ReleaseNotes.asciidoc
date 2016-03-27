@@ -54,15 +54,14 @@ Following functions are changed in the C API:
 * hook_infolist
 * hook_hdata
 * hook_focus
-* unhook_all_plugin
+* unhook_all
 * buffer_new
 * bar_item_new
 * upgrade_new
 * upgrade_read
 
-The function `unhook_all` is renamed to `unhook_all_plugin` (in C API only, not
-scripting API) and has a new argument `const char *subplugin` to remove only
-hooks created by this "subplugin" (script).
+The function `unhook_all` has a new argument `const char *subplugin` to remove
+only hooks created by this "subplugin" (script).
 
 [[1.5_bar_item_away]]
 === Bar item "away"
