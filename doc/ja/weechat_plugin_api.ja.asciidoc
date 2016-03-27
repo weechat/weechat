@@ -2835,6 +2835,8 @@ weechat.mkdir_parents("/tmp/my/dir", 0755)
 
 ==== exec_on_files
 
+_バージョン 1.5 で更新。_
+
 ディレクトリ中のファイルを探し、各ファイルに対してコールバックを実行。
 
 プロトタイプ:
@@ -2843,19 +2845,19 @@ weechat.mkdir_parents("/tmp/my/dir", 0755)
 ----
 void weechat_exec_on_files (const char *directory,
                             int hidden_files,
-                            void *data,
                             void (*callback)(void *data,
-                                             const char *filename));
+                                             const char *filename),
+                            void *callback_data);
 ----
 
 引数:
 
 * 'directory': ファイルを検索するディレクトリ
 * 'hidden_files': 検索対象に隠しファイルを含める場合は 1、含めない場合は 0
-* 'data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
 * 'callback': 各ファイルに対して呼び出す関数、引数:
 ** 'void *data': ポインタ
 ** 'const char *filename': 見つかったファイルの名前
+* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
 
 C 言語での使用例:
 
@@ -2866,7 +2868,7 @@ void callback (void *data, const char *filename)
     /* ... */
 }
 ...
-weechat_exec_on_files ("/tmp", 0, NULL, &callback);
+weechat_exec_on_files ("/tmp", 0, &callback, NULL);
 ----
 
 [NOTE]

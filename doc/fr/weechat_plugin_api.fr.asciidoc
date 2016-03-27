@@ -2888,6 +2888,8 @@ weechat.mkdir_parents("/tmp/my/dir", 0755)
 
 ==== exec_on_files
 
+_Mis à jour dans la 1.5._
+
 Balayer les fichiers dans un répertoire et exécuter un "callback" pour chaque
 fichier.
 
@@ -2897,19 +2899,20 @@ Prototype :
 ----
 void weechat_exec_on_files (const char *directory,
                             int hidden_files,
-                            void *data,
                             void (*callback)(void *data,
-                                             const char *filename));
+                                             const char *filename),
+                            void *callback_data);
 ----
 
 Paramètres :
 
 * 'directory' : répertoire où chercher les fichiers
 * 'hidden_files' : 1 pour inclure les fichiers cachés, sinon 0
-* 'data' : pointeur donné au "callback" lorsqu'il est appelé par WeeChat
 * 'callback' : fonction appelée pour chaque fichier trouvé, paramètres :
 ** 'void *data' : pointeur
 ** 'const char *filename' : nom de fichier trouvé
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat
 
 Exemple en C :
 
@@ -2920,7 +2923,7 @@ void callback (void *data, const char *filename)
     /* ... */
 }
 ...
-weechat_exec_on_files ("/tmp", 0, NULL, &callback);
+weechat_exec_on_files ("/tmp", 0, &callback, NULL);
 ----
 
 [NOTE]
