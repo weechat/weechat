@@ -10878,6 +10878,9 @@ Funzioni per creare/richiedere/chiudere buffer.
 
 ==== buffer_new
 
+// TRANSLATION MISSING
+_Updated in 1.5._
+
 Apre un nuovo buffer.
 
 Prototipo:
@@ -10885,12 +10888,16 @@ Prototipo:
 [source,C]
 ----
 struct t_gui_buffer *weechat_buffer_new (const char *name,
-                                         int (*input_callback)(void *data,
+                                         int (*input_callback)(const void *pointer,
+                                                               void *data,
                                                                struct t_gui_buffer *buffer,
                                                                const char *input_data),
+                                         const void *input_callback_pointer,
                                          void *input_callback_data,
-                                         int (*close_callback)(void *data,
+                                         int (*close_callback)(const void *pointer,
+                                                               void *data,
                                                                struct t_gui_buffer *buffer),
+                                         const void *close_callback_pointer,
                                          void *close_callback_data);
 ----
 
@@ -10899,21 +10906,33 @@ Argomenti:
 * 'name': nome del buffer (deve essere unico per il plugin)
 * 'input_callback': funzione chiamata quando il testo in input è stato
   inserito nel buffer, argomenti e valore restituito:
+** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_gui_buffer *buffer': puntatore al buffer
 ** 'const char *input_data': dati in input
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'input_callback_pointer': puntatore fornito alla callback quando chiamata da
+  WeeChat
+// TRANSLATION MISSING
+* 'input_callback_data': puntatore fornito dalla callback quando chiamata da
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it will be automatically freed when the buffer is closed
 * 'close_callback': funzione chiamata alla chiusura del buffer, argomenti e
   valore restituito:
+** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_gui_buffer *buffer': puntatore al buffer
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+* 'close_callback_pointer': puntatore fornito alla callback quando chiamata da
+  WeeChat
+// TRANSLATION MISSING
+* 'close_callback_data': puntatore fornito dalla callback quando chiamata da
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it will be automatically freed when the buffer is closed
 
 Valore restituito:
 
@@ -10924,14 +10943,15 @@ Esempio in C:
 [source,C]
 ----
 int
-my_input_cb (void *data, struct t_gui_buffer *buffer, const char *input_data)
+my_input_cb (const void *pointer, void *data,
+             struct t_gui_buffer *buffer, const char *input_data)
 {
     weechat_printf (buffer, "Testo: %s", input_data);
     return WEECHAT_RC_OK;
 }
 
 int
-my_close_cb (void *data, struct t_gui_buffer *buffer)
+my_close_cb (const void *pointer, void *data, struct t_gui_buffer *buffer)
 {
     weechat_printf (NULL, "Il buffer '%s' verrà chiuso!",
                     weechat_buffer_get_string (buffer, "name"));
@@ -10939,8 +10959,8 @@ my_close_cb (void *data, struct t_gui_buffer *buffer)
 }
 
 struct t_gui_buffer *my_buffer = weechat_buffer_new ("my_buffer",
-                                                     &my_input_cb, NULL,
-                                                     &my_close_cb, NULL);
+                                                     &my_input_cb, NULL, NULL,
+                                                     &my_close_cb, NULL, NULL);
 ----
 
 Script (Python):

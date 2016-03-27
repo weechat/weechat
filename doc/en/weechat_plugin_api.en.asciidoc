@@ -10516,6 +10516,8 @@ Functions to create/query/close buffers.
 
 ==== buffer_new
 
+_Updated in 1.5._
+
 Open a new buffer.
 
 Prototype:
@@ -10523,12 +10525,16 @@ Prototype:
 [source,C]
 ----
 struct t_gui_buffer *weechat_buffer_new (const char *name,
-                                         int (*input_callback)(void *data,
+                                         int (*input_callback)(const void *pointer,
+                                                               void *data,
                                                                struct t_gui_buffer *buffer,
                                                                const char *input_data),
+                                         const void *input_callback_pointer,
                                          void *input_callback_data,
-                                         int (*close_callback)(void *data,
+                                         int (*close_callback)(const void *pointer,
+                                                               void *data,
                                                                struct t_gui_buffer *buffer),
+                                         const void *close_callback_pointer,
                                          void *close_callback_data);
 ----
 
@@ -10537,21 +10543,31 @@ Arguments:
 * 'name': name of buffer (must be unique for plugin)
 * 'input_callback': function called when input text is entered on buffer,
   arguments and return value:
+** 'const void *pointer': pointer
 ** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer pointer
 ** 'const char *input_data': input data
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'input_callback_pointer': pointer given to callback when it is called by
+  WeeChat
+* 'input_callback_data': pointer given to callback when it is called by
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it will be automatically freed when the buffer is closed
 * 'close_callback': function called when buffer is closed, arguments and return
   value:
+** 'const void *pointer': pointer
 ** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer pointer
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'close_callback_pointer': pointer given to callback when it is called by
+  WeeChat
+* 'close_callback_data': pointer given to callback when it is called by
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it will be automatically freed when the buffer is closed
 
 Return value:
 
@@ -10562,14 +10578,15 @@ C example:
 [source,C]
 ----
 int
-my_input_cb (void *data, struct t_gui_buffer *buffer, const char *input_data)
+my_input_cb (const void *pointer, void *data,
+             struct t_gui_buffer *buffer, const char *input_data)
 {
     weechat_printf (buffer, "Text: %s", input_data);
     return WEECHAT_RC_OK;
 }
 
 int
-my_close_cb (void *data, struct t_gui_buffer *buffer)
+my_close_cb (const void *pointer, void *data, struct t_gui_buffer *buffer)
 {
     weechat_printf (NULL, "Buffer '%s' will be closed!",
                     weechat_buffer_get_string (buffer, "name"));
@@ -10577,8 +10594,8 @@ my_close_cb (void *data, struct t_gui_buffer *buffer)
 }
 
 struct t_gui_buffer *my_buffer = weechat_buffer_new ("my_buffer",
-                                                     &my_input_cb, NULL,
-                                                     &my_close_cb, NULL);
+                                                     &my_input_cb, NULL, NULL,
+                                                     &my_close_cb, NULL, NULL);
 ----
 
 Script (Python):

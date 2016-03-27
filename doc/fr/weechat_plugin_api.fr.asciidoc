@@ -10743,6 +10743,8 @@ Fonctions pour créer/interroger/fermer les tampons.
 
 ==== buffer_new
 
+_Mis à jour dans la 1.5._
+
 Ouvrir un nouveau tampon.
 
 Prototype :
@@ -10750,12 +10752,16 @@ Prototype :
 [source,C]
 ----
 struct t_gui_buffer *weechat_buffer_new (const char *name,
-                                         int (*input_callback)(void *data,
+                                         int (*input_callback)(const void *pointer,
+                                                               void *data,
                                                                struct t_gui_buffer *buffer,
                                                                const char *input_data),
+                                         const void *input_callback_pointer,
                                          void *input_callback_data,
-                                         int (*close_callback)(void *data,
+                                         int (*close_callback)(const void *pointer,
+                                                               void *data,
                                                                struct t_gui_buffer *buffer),
+                                         const void *close_callback_pointer,
                                          void *close_callback_data);
 ----
 
@@ -10764,23 +10770,33 @@ Paramètres :
 * 'name' : nom du tampon (doit être unique pour l'extension)
 * 'input_callback' : fonction appelée lorsque du texte saisi est envoyé au
   tampon, paramètres et valeur de retour :
+** 'const void *pointer' : pointeur
 ** 'void *data' : pointeur
 ** 'struct t_gui_buffer *buffer' : pointeur vers le tampon
 ** 'const char *input_data' : données en entrée
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
+* 'input_callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé
+  par WeeChat
+* 'input_callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le tampon est
+  fermé
 * 'close_callback' : fonction appelée lorsque le tampon est fermé, paramètres et
   valeur de retour :
+** 'const void *pointer' : pointeur
 ** 'void *data' : pointeur
 ** 'struct t_gui_buffer *buffer' : pointeur vers le tampon
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
+* 'close_callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé
+  par WeeChat
+* 'close_callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et sera automatiquement libéré (par free) lorsque le tampon est
+  fermé
 
 Valeur de retour :
 
@@ -10791,14 +10807,15 @@ Exemple en C :
 [source,C]
 ----
 int
-my_input_cb (void *data, struct t_gui_buffer *buffer, const char *input_data)
+my_input_cb (const void *pointer, void *data,
+             struct t_gui_buffer *buffer, const char *input_data)
 {
     weechat_printf (buffer, "Texte : %s", input_data);
     return WEECHAT_RC_OK;
 }
 
 int
-my_close_cb (void *data, struct t_gui_buffer *buffer)
+my_close_cb (const void *pointer, void *data, struct t_gui_buffer *buffer)
 {
     weechat_printf (NULL, "Le tampon '%s' va être fermé !",
                     weechat_buffer_get_string (buffer, "name"));
@@ -10806,8 +10823,8 @@ my_close_cb (void *data, struct t_gui_buffer *buffer)
 }
 
 struct t_gui_buffer *my_buffer = weechat_buffer_new ("mon_buffer",
-                                                     &my_input_cb, NULL,
-                                                     &my_close_cb, NULL);
+                                                     &my_input_cb, NULL, NULL,
+                                                     &my_close_cb, NULL, NULL);
 ----
 
 Script (Python) :

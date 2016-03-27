@@ -10529,6 +10529,8 @@ weechat.unhook_all()
 
 ==== buffer_new
 
+_バージョン 1.5 で更新。_
+
 新しいバッファを開く。
 
 プロトタイプ:
@@ -10536,12 +10538,16 @@ weechat.unhook_all()
 [source,C]
 ----
 struct t_gui_buffer *weechat_buffer_new (const char *name,
-                                         int (*input_callback)(void *data,
+                                         int (*input_callback)(const void *pointer,
+                                                               void *data,
                                                                struct t_gui_buffer *buffer,
                                                                const char *input_data),
+                                         const void *input_callback_pointer,
                                          void *input_callback_data,
-                                         int (*close_callback)(void *data,
+                                         int (*close_callback)(const void *pointer,
+                                                               void *data,
                                                                struct t_gui_buffer *buffer),
+                                         const void *close_callback_pointer,
                                          void *close_callback_data);
 ----
 
@@ -10550,21 +10556,31 @@ struct t_gui_buffer *weechat_buffer_new (const char *name,
 * 'name': バッファの名前 (プラグインに対して固有)
 * 'input_callback':
   入力テキストをバッファに挿入する際に呼び出す関数、引数と戻り値:
+** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_gui_buffer *buffer': バッファポインタ
 ** 'const char *input_data': 入力データ
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'input_callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'input_callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the buffer is closed
 * 'close_callback':
   バッファを閉じる際に呼び出す関数、引数と戻り値:
+** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_gui_buffer *buffer': バッファポインタ
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'close_callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'close_callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it will be automatically freed when the buffer is closed
 
 戻り値:
 
@@ -10575,14 +10591,15 @@ C 言語での使用例:
 [source,C]
 ----
 int
-my_input_cb (void *data, struct t_gui_buffer *buffer, const char *input_data)
+my_input_cb (const void *pointer, void *data,
+             struct t_gui_buffer *buffer, const char *input_data)
 {
     weechat_printf (buffer, "Text: %s", input_data);
     return WEECHAT_RC_OK;
 }
 
 int
-my_close_cb (void *data, struct t_gui_buffer *buffer)
+my_close_cb (const void *pointer, void *data, struct t_gui_buffer *buffer)
 {
     weechat_printf (NULL, "Buffer '%s' will be closed!",
                     weechat_buffer_get_string (buffer, "name"));
@@ -10590,8 +10607,8 @@ my_close_cb (void *data, struct t_gui_buffer *buffer)
 }
 
 struct t_gui_buffer *my_buffer = weechat_buffer_new ("my_buffer",
-                                                     &my_input_cb, NULL,
-                                                     &my_close_cb, NULL);
+                                                     &my_input_cb, NULL, NULL,
+                                                     &my_close_cb, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
