@@ -1384,13 +1384,13 @@ char *weechat_string_replace_regex (const char *string, void *regex,
 ** `$.*N`: `*` で全ての文字を置換した `N` 番目 (`+` または `0` から `99` を使うことができます)
    のマッチ部分 (`*` 文字は空白 (32) から `~` (126) までの任意の文字を使うことができます)
 * 'reference_char': マッチ部分を参照するための文字 (通常は '$')
-* 'callback': 'replace' に含まれる各リファレンスに対して呼び出される任意指定可能なコールバック
+* 'callback': 'replace' に含まれる各リファレンスに対して呼び出される任意指定可能なコールバック関数
   (マッチ部分を文字で置換する場合を除く); このコールバックは必ず以下の値を返してください:
 ** 新しく割り当てられた文字列: 文字列を置換先テキストとして使います
    (文字列は使用後に開放されます)
 ** NULL: コールバックに渡されたテキストを置換先テキストとして使います
    (文字列に変更を加えません)
-* 'callback_data': コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
 
 戻り値:
 
@@ -2854,10 +2854,10 @@ void weechat_exec_on_files (const char *directory,
 
 * 'directory': ファイルを検索するディレクトリ
 * 'hidden_files': 検索対象に隠しファイルを含める場合は 1、含めない場合は 0
-* 'callback': 各ファイルに対して呼び出す関数、引数:
+* 'callback': 各ファイルに対して呼び出すコールバック関数、引数:
 ** 'void *data': ポインタ
 ** 'const char *filename': 見つかったファイルの名前
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
 
 C 言語での使用例:
 
@@ -3689,12 +3689,12 @@ struct t_hashtable *weechat_hashtable_new (int size,
 ** 'WEECHAT_HASHTABLE_BUFFER'
 ** 'WEECHAT_HASHTABLE_TIME'
 * 'callback_hash_key': キーを"ハッシュ化"する (キーを整数値にする)
-  際のコールバック、キーの種類が "buffer" 以外の場合、コールバックは
+  際のコールバック関数、キーの種類が "buffer" 以外の場合、コールバックは
   NULL でも可 (デフォルトのハッシュ関数を使います)、引数と戻り値:
 ** 'struct t_hashtable *hashtable': ハッシュテーブルへのポインタ
 ** 'const void *key': キー
 ** 戻り値: キーのハッシュ値
-* 'callback_keycmp': 2 つのキーを比較する際のコールバック、キーの種類が
+* 'callback_keycmp': 2 つのキーを比較する際のコールバック関数、キーの種類が
   "buffer" 以外の場合、コールバックは NULL でも可
   (デフォルトの比較関数を使います)、引数と戻り値:
 ** 'struct t_hashtable *hashtable': ハッシュテーブルへのポインタ
@@ -3886,8 +3886,8 @@ void weechat_hashtable_map (struct t_hashtable *hashtable,
 引数:
 
 * 'hashtable': ハッシュテーブルへのポインタ
-* 'callback_map': ハッシュテーブルの各のエントリに対して呼び出す関数
-* 'callback_map_data': コールバックを呼び出す際のコールバックの結果保存先へのポインタ
+* 'callback_map': ハッシュテーブルの各のエントリに対して呼び出すコールバック関数
+* 'callback_map_data': 'callback_map' コールバックを呼び出す際のコールバックの結果保存先へのポインタ
 
 C 言語での使用例:
 
@@ -3930,8 +3930,8 @@ void weechat_hashtable_map_string (struct t_hashtable *hashtable,
 引数:
 
 * 'hashtable': ハッシュテーブルへのポインタ
-* 'callback_map': ハッシュテーブルの各のエントリに対して呼び出す関数
-* 'callback_map_data': コールバックを呼び出した際のコールバックの結果保存先へのポインタ
+* 'callback_map': ハッシュテーブルの各のエントリに対して呼び出すコールバック関数
+* 'callback_map_data': 'callback_map' コールバックを呼び出した際のコールバックの結果保存先へのポインタ
 
 [NOTE]
 コールバックに渡される文字列 'key' と 'value'
@@ -4274,7 +4274,7 @@ struct t_config_file *weechat_config_new (const char *name,
 引数:
 
 * 'name': 設定ファイルの名前 (パスと拡張子は不要)
-* 'callback_reload': `/reload` で設定ファイルを再読み込みする際に呼び出す関数
+* 'callback_reload': `/reload` で設定ファイルを再読み込みする際に呼び出すコールバック関数
   (任意、NULL でも可)、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
@@ -4283,12 +4283,11 @@ struct t_config_file *weechat_config_new (const char *name,
 *** 'WEECHAT_CONFIG_READ_OK'
 *** 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
 *** 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
-* 'callback_reload_pointer': WeeChat が reload
+* 'callback_reload_pointer': WeeChat が 'callback_reload'
   コールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_reload_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the configuration file is freed
+* 'callback_reload_data': WeeChat が 'callback_reload' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成した設定ファイルが開放された時点で自動的に開放されます
 
 戻り値:
 
@@ -4392,7 +4391,7 @@ struct t_config_section *weechat_config_new_section (
   ユーザがこのセクションに新しいオプションを作成することを許可する場合は 1、禁止する場合は 0
 * 'user_can_delete_options':
   ユーザがこのセクションからオプションを削除することを許可する場合は 1、禁止する場合は 0
-* 'callback_read': このセクションに含まれるオプションがディスクから読まれた際に呼び出す関数
+* 'callback_read': このセクションに含まれるオプションがディスクから読まれた際に呼び出すコールバック関数
   (特別な関数を使ってセクションを読み出す必要がある場合を除いて、殆どの場合は
   NULL を指定する)、引数と戻り値:
 ** 'const void *pointer': ポインタ
@@ -4405,12 +4404,12 @@ struct t_config_section *weechat_config_new_section (
 *** 'WEECHAT_CONFIG_READ_OK'
 *** 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
 *** 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
-* 'callback_read_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_read_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the section is freed
-* 'callback_write': セクションをファイルに書き込む際に呼び出す関数
+* 'callback_read_pointer': WeeChat が 'callback_read'
+  コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_read_data': WeeChat が 'callback_read' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したセクションが開放された時点で自動的に開放されます
+* 'callback_write': セクションをファイルに書き込む際に呼び出すコールバック関数
   (特別な関数を使ってセクションを書き込む必要がある場合を除いて、殆どの場合は
   NULL を指定する)、引数と戻り値:
 ** 'const void *pointer': ポインタ
@@ -4422,13 +4421,13 @@ struct t_config_section *weechat_config_new_section (
 *** 'WEECHAT_CONFIG_WRITE_OK'
 *** 'WEECHAT_CONFIG_WRITE_ERROR'
 *** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
-* 'callback_write_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_write_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the section is freed
-* callback_write_default:
-  セクションのデフォルト値が必ずファイルに書き込まれる際に呼び出す関数、引数と戻り値:
+* 'callback_write_pointer': WeeChat が 'callback_write'
+  コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_write_data': WeeChat が 'callback_write' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したセクションが開放された時点で自動的に開放されます
+* 'callback_write_default':
+  セクションのデフォルト値が必ずファイルに書き込まれる際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_config_file *config_file': 設定ファイルへのポインタ
@@ -4437,13 +4436,12 @@ struct t_config_section *weechat_config_new_section (
 *** 'WEECHAT_CONFIG_WRITE_OK'
 *** 'WEECHAT_CONFIG_WRITE_ERROR'
 *** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
-* 'callback_write_default_pointer': WeeChat
-  がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_write_default_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the section is freed
-* 'callback_create_option': セクションに新しいオプションを作成する際に呼び出す関数
+* 'callback_write_default_pointer': WeeChat が 'callback_write_default'
+  コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_write_default_data': WeeChat が 'callback_write_default' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したセクションが開放された時点で自動的に開放されます
+* 'callback_create_option': セクションに新しいオプションを作成する際に呼び出すコールバック関数
   (セクションに新しいオプションを作成することを禁止する場合は
   NULL)、引数と戻り値:
 ** 'const void *pointer': ポインタ
@@ -4457,13 +4455,12 @@ struct t_config_section *weechat_config_new_section (
 *** 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
 *** 'WEECHAT_CONFIG_OPTION_SET_ERROR'
 *** 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND'
-* 'callback_create_option_pointer': WeeChat
-  がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_create_option_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the section is freed
-* 'callback_delete_option': セクションからオプションを削除する際に呼び出す関数
+* 'callback_create_option_pointer': WeeChat が 'callback_create_option'
+  コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_create_option_data': WeeChat が 'callback_create_option' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したセクションが開放された時点で自動的に開放されます
+* 'callback_delete_option': セクションからオプションを削除する際に呼び出すコールバック関数
   (セクションからオプションを削除することを禁止する場合は
   NULL)、引数と戻り値:
 ** 'const void *pointer': ポインタ
@@ -4476,12 +4473,11 @@ struct t_config_section *weechat_config_new_section (
 *** 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET'
 *** 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED'
 *** 'WEECHAT_CONFIG_OPTION_UNSET_ERROR'
-* 'callback_delete_option_pointer': WeeChat
-  がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_delete_option_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the section is freed
+* 'callback_delete_option_pointer': WeeChat が 'callback_delete_option'
+  コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_delete_option_data': WeeChat が 'callback_delete_option' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、ポインタはここで作成したセクションが開放された時点で自動的に開放されます
 
 戻り値:
 
@@ -4492,56 +4488,69 @@ C 言語での使用例:
 [source,C]
 ----
 int
-my_section_read_cb (void *data, struct t_config_file *config_file,
-                    struct t_config_section *section, const char *option_name,
+my_section_read_cb (const void *pointer, void *data,
+                    struct t_config_file *config_file,
+                    struct t_config_section *section,
+                    const char *option_name,
                     const char *value)
 {
     /* ... */
 
-    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-    /* return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE; */
-    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
-    /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    return WEECHAT_CONFIG_READ_OK;
+    /* return WEECHAT_CONFIG_READ_MEMORY_ERROR; */
+    /* return WEECHAT_CONFIG_READ_FILE_NOT_FOUND; */
 }
 
 int
-my_section_write_cb (void *data, struct t_config_file *config_file,
-                     const char *section_name)
+my_section_write_cb (const void *pointer, void *data,
+                     struct t_config_file *config_file,
+                     struct t_config_section *section,
+                     const char *option_name)
 {
     /* ... */
 
     return WEECHAT_CONFIG_WRITE_OK;
     /* return WEECHAT_CONFIG_WRITE_ERROR; */
+    /* return WEECHAT_CONFIG_WRITE_MEMORY_ERROR; */
 }
 
 int
-my_section_write_default_cb (void *data, struct t_config_file *config_file,
+my_section_write_default_cb (const void *pointer, void *data,
+                             struct t_config_file *config_file,
                              const char *section_name)
 {
     /* ... */
 
     return WEECHAT_CONFIG_WRITE_OK;
     /* return WEECHAT_CONFIG_WRITE_ERROR; */
+    /* return WEECHAT_CONFIG_WRITE_MEMORY_ERROR; */
 }
 
 int
-my_section_create_option_cb (void *data, struct t_config_file *config_file,
+my_section_create_option_cb (const void *pointer, void *data,
+                             struct t_config_file *config_file,
                              struct t_config_section *section,
-                             const char *option_name, const char *value)
+                             const char *option_name,
+                             const char *value)
 {
     /* ... */
 
+    /* return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED; */
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
 }
 
 int
-my_section_delete_option_cb (void *data, struct t_config_file *config_file,
+my_section_delete_option_cb (const void *pointer, void *data,
+                             struct t_config_file *config_file,
                              struct t_config_section *section,
                              struct t_config_option *option)
 {
     /* ... */
 
+    /* return WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET; */
+    /* return WEECHAT_CONFIG_OPTION_UNSET_OK_RESET; */
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
     /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
@@ -4711,7 +4720,7 @@ struct t_config_option *weechat_config_new_option (
 * 'value': オプションの値
 * 'null_value_allowed': オプションに 'null' (未定義値)
   を設定することを許可する場合に 1、禁止する場合は 0
-* 'callback_check_value': オプションの新しい値をチェックする際に呼び出す関数
+* 'callback_check_value': オプションの新しい値をチェックする際に呼び出すコールバック関数
   (任意)、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
@@ -4722,32 +4731,29 @@ struct t_config_option *weechat_config_new_option (
 *** 値が無効の場合は 0
 * 'callback_check_value_pointer': WeeChat が check_value
   コールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_check_value_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the option is freed
-* 'callback_change': オプションの値を変更した際に呼び出す関数
+* 'callback_check_value_data': WeeChat が 'callback_check_value' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したオプションが開放された時点で自動的に開放されます
+* 'callback_change': オプションの値を変更した際に呼び出すコールバック関数
   (任意)、引数:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_config_option *option': オプションへのポインタ
 * 'callback_change_pointer': WeeChat が change
   コールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_change_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the option is freed
-* 'callback_delete': オプションを削除する前に際に呼び出す関数
+* 'callback_change_data': WeeChat が 'callback_change' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したオプションが開放された時点で自動的に開放されます
+* 'callback_delete': オプションを削除する前に際に呼び出すコールバック関数
   (任意)、引数:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_config_option *option': オプションへのポインタ
 * 'callback_delete_pointer': WeeChat が delete
   コールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_delete_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the option is freed
+* 'callback_delete_data': WeeChat が 'callback_delete' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したオプションが開放された時点で自動的に開放されます
 
 戻り値:
 
@@ -7095,6 +7101,7 @@ struct t_hook *weechat_hook_command (const char *command,
                                                      int argc,
                                                      char **argv,
                                                      char **argv_eol),
+                                     const void *callback_pointer,
                                      void *callback_data);
 ----
 
@@ -7109,7 +7116,7 @@ struct t_hook *weechat_hook_command (const char *command,
   つの引数に対して複数の補完候補を設定するには補完候補同士を "|"
   で区切ってください。1 つのコマンドに対して複数のテンプレートを設定するにはテンプレート同士を
   "||" で区切ってください。
-* 'callback': コマンドが使用された際に呼び出す関数、引数と戻り値:
+* 'callback': コマンドが使用された際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_gui_buffer *buffer': コマンドを実行するバッファ
@@ -7120,11 +7127,10 @@ struct t_hook *weechat_hook_command (const char *command,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 デフォルトの補完候補コードは:
 
@@ -7238,7 +7244,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 
 * 'command': フックするコマンド (ワイルドカード "*" を使うことができます)
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-* 'callback': コマンドが実行される際に呼び出す関数、引数と戻り値:
+* 'callback': コマンドが実行される際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_gui_buffer *buffer': コマンドを実行するバッファ
@@ -7247,11 +7253,10 @@ struct t_hook *weechat_hook_command_run (const char *command,
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_OK_EAT'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 [NOTE]
 コールバックは 'WEECHAT_RC_OK' または 'WEECHAT_RC_OK_EAT'
@@ -7317,18 +7322,17 @@ struct t_hook *weechat_hook_timer (long interval,
   interval = 60000 (60 秒)、align_second = 60
   の場合、毎分 0 秒時にタイマを呼び出す
 * 'max_calls': タイマを呼び出す回数 (0 の場合、タイマを無限に呼び出す)
-* 'callback': 時間が来たら呼び出す関数、引数と戻り値:
+* 'callback': 時間が来たら呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'int remaining_calls': 呼び出し残り回数 (タイマを無限に呼び出す場合は -1)
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -7393,7 +7397,7 @@ struct t_hook *weechat_hook_fd (int fd,
 * 'flag_write': 1 = 書き込みイベントをキャッチ、0 = 無視
 * 'flag_exception': 1 = 例外イベントをキャッチ、0 = 無視
   (_WeeChat バージョン 1.3 以上の場合_: この引数は無視され、使われません)
-* 'callback': ファイル (またはソケット) に対してキャッチしたいイベントが発生した場合に実行する関数、
+* 'callback': ファイル (またはソケット) に対してキャッチしたいイベントが発生した場合に実行するコールバック関数、
   引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
@@ -7401,11 +7405,10 @@ struct t_hook *weechat_hook_fd (int fd,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -7480,7 +7483,7 @@ struct t_hook *weechat_hook_process (const char *command,
 * 'timeout': コマンドのタイムアウト (ミリ秒):
   このタイムアウトを過ぎたら、子プロセスを kill します (タイムアウトさせない場合は 0)
 * 'callback':
-  子プロセスからのデータが利用可能になるか、子プロセスが終了したら呼び出す関数、引数と戻り値:
+  子プロセスからのデータが利用可能になるか、子プロセスが終了したら呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'const char *command': 子プロセスが実行するコマンド
@@ -7498,11 +7501,10 @@ struct t_hook *weechat_hook_process (const char *command,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -7846,7 +7848,7 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 ** 'NONE'
 * 'local_hostname': 接続に使うローカルのホスト名前 (任意)
 * 'callback':
-  接続に成功および失敗した際に呼び出す関数、引数と戻り値:
+  接続に成功および失敗した際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'int status': 接続状態:
@@ -7868,11 +7870,10 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -8010,9 +8011,9 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 * 'message': この文字列を含むメッセージだけをキャッチする
   (任意、大文字小文字を区別しない)
 * 'strip_colors': 1
-  の場合、表示されるメッセージから色を削除する、コールバックを呼ぶ前
+  の場合、コールバックを呼ぶ前に、表示されるメッセージから色を削除する
 * 'callback':
-  メッセージが表示される際に呼び出すコールバック、引数と戻り値:
+  メッセージが表示される際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_gui_buffer *buffer': バッファへのポインタ
@@ -8026,11 +8027,10 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -8101,7 +8101,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
   (以下の表を参照)
 * 'callback':
-  シグナルを受信した際に呼び出す関数、引数と戻り値:
+  シグナルを受信した際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'const char *signal': 受信したシグナル
@@ -8115,11 +8115,10 @@ struct t_hook *weechat_hook_signal (const char *signal,
 *** 'WEECHAT_RC_OK_EAT' (直ちにシグナルの送信を止める)
     _(WeeChat バージョン 0.4.0 以上で利用可)_
 *** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -9020,7 +9019,7 @@ Arguments:
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
   (以下の表を参照)
 * 'callback':
-  シグナルを受信した際に呼び出す関数、引数と戻り値:
+  シグナルを受信した際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'const char *signal': 受信したシグナル
@@ -9030,11 +9029,10 @@ Arguments:
 *** 'WEECHAT_RC_OK_EAT' (直ちにシグナルの送信を止める)
     _(WeeChat バージョン 0.4.0 以上で利用可)_
 *** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -9383,7 +9381,7 @@ struct t_hook *weechat_hook_config (const char *option,
   (例: `weechat.look.item_time_format`)、ワイルドカード "*" を使うことができます
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'callback':
-  設定オプションが変更されたら呼び出す関数、引数と戻り値:
+  設定オプションが変更されたら呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'const char *option': オプションの名前
@@ -9391,11 +9389,10 @@ struct t_hook *weechat_hook_config (const char *option,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -9459,7 +9456,7 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'description': 補完の説明
 * 'callback': 補完要素 (ユーザはこの要素を使って何かを補完している)
-  が使われた場合に呼び出す関数、引数と戻り値:
+  が使われた場合に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'const char *completion_item': 補完要素の名前
@@ -9470,11 +9467,10 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 [NOTE]
 補完名はグローバルです (WeeChat
@@ -9647,18 +9643,17 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 * 'modifier': 修飾子名、Weechat またはプラグインが使う修飾子のリスト
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
   (以下の表を参照)
-* 'callback': 修飾子が使われた際に呼び出す関数、引数と戻り値:
+* 'callback': 修飾子が使われた際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'const char *modifier': 修飾子の名前
 ** 'const char *modifier_data': 修飾子に渡すデータ
 ** 'const char *string': 修飾子に渡す文字列
 ** 戻り値: 新しい文字列
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -9888,17 +9883,16 @@ struct t_hook *weechat_hook_info (const char *info_name,
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'description': 説明
 * 'args_description': 引数の説明 (任意、NULL にすることも可)
-* 'callback': 情報が要求されたら呼び出す関数、引数と戻り値:
+* 'callback': 情報が要求されたら呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'const char *info_name': 情報の名前
 ** 'const char *arguments': 追加の引数、情報に依存
 ** 戻り値: 要求された情報の値
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -9967,17 +9961,16 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 * 'args_description': 引数ハッシュテーブルの説明 (任意、NULL でも可)
 * 'output_description': コールバックが返すハッシュテーブルの説明
   (任意、NULL でも可)
-* 'callback': 情報を要求する際に呼び出す関数、引数と戻り値:
+* 'callback': 情報を要求する際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'const char *info_name': 情報の名前
 ** 'struct t_hashtable *hashtable': ハッシュテーブル、情報に依存
 ** 戻り値: 要求したハッシュテーブル
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -10049,7 +10042,7 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 * 'pointer_description': ポインタの説明 (任意、NULL でも可)
 * 'args_description': 引数の説明 (任意、NULL でも可)
 * 'callback':
-  インフォリストが要求された際に呼び出すコールバック、引数と戻り値:
+  インフォリストが要求された際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'const char *infolist_name': インフォリストの名前
@@ -10057,11 +10050,10 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
    (インフォリストの要素を 1 つだけ返す)
 ** 'const char *arguments': 追加の引数、インフォリストに依存
 ** 戻り値: 要求したインフォリスト
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -10132,16 +10124,15 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'description': 説明
 * 'callback':
-  hdata が要求された際に呼び出す関数、引数と戻り値:
+  hdata が要求された際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'const char *hdata_name': hdata の名前
 ** 戻り値: 要求された hdata
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 戻り値:
 
@@ -10192,7 +10183,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 * 'area': チャットエリアの場合は "chat"、またはバー要素の名前
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'callback':
-  フォーカスが当たったら呼び出す関数、引数と戻り値:
+  フォーカスが当たったら呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_hashtable *info': フォーカスの情報を含むハッシュテーブルと、他の
@@ -10201,11 +10192,10 @@ struct t_hook *weechat_hook_focus (const char *area,
    または新しいハッシュテーブル (コールバックが作成、キーと値は
    "string" 型) へのポインタ、この新しいハッシュテーブルの内容は
    'info' に追加され、他のフォーカスコールバックに渡されます
-* 'callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 [IMPORTANT]
 マウスジェスチャの場合、コールバックを 2 回呼び出します: 1
@@ -10500,9 +10490,8 @@ void weechat_unhook_all (const char *subplugin);
 
 引数:
 
-// TRANSLATION MISSING
-* 'subplugin': if not NULL, unhook only hooks with this "subplugin" set
-  (this argument is not available in scripting API)
+* 'subplugin': これが NULL でない場合、ここで指定した "subplugin" を持つフックだけを解除します
+  (スクリプトから API を使う場合にはこの引数を指定できません)
 
 C 言語での使用例:
 
@@ -10555,7 +10544,7 @@ struct t_gui_buffer *weechat_buffer_new (const char *name,
 
 * 'name': バッファの名前 (プラグインに対して固有)
 * 'input_callback':
-  入力テキストをバッファに挿入する際に呼び出す関数、引数と戻り値:
+  入力テキストをバッファに挿入する際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_gui_buffer *buffer': バッファポインタ
@@ -10563,24 +10552,22 @@ struct t_gui_buffer *weechat_buffer_new (const char *name,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'input_callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'input_callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the buffer is closed
+* 'input_callback_pointer': WeeChat が 'input_callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'input_callback_data': WeeChat が 'input_callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したバッファが閉じられた時点で自動的に開放されます
 * 'close_callback':
-  バッファを閉じる際に呼び出す関数、引数と戻り値:
+  バッファを閉じる際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_gui_buffer *buffer': バッファポインタ
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'close_callback_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
-// TRANSLATION MISSING
-* 'close_callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the buffer is closed
+* 'close_callback_pointer': WeeChat が 'close_callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* 'close_callback_data': WeeChat が 'close_callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したバッファが閉じられた時点で自動的に開放されます
 
 戻り値:
 
@@ -11319,13 +11306,13 @@ void weechat_buffer_set_pointer (struct t_gui_buffer *buffer, const char *proper
 
 * 'buffer': バッファへのポインタ
 * 'property': プロパティ名:
-** 'close_callback': close コールバック関数を設定
-** 'close_callback_data': close コールバックデータを設定
-** 'input_callback': 入力コールバック関数を設定
-** 'input_callback_data': 入力コールバックデータを設定
+** 'close_callback': バッファを閉じる際に呼び出すコールバック関数を設定
+** 'close_callback_data': バッファを閉じる際に呼び出すコールバック関数に渡すデータを設定
+** 'input_callback': 入力テキストをバッファに挿入する際に呼び出すコールバック関数を設定
+** 'input_callback_data': 入力テキストをバッファに挿入する際に呼び出すコールバック関数に渡すデータを設定
 ** 'nickcmp_callback': ニックネーム比較コールバック関数を設定
   (ニックネームリストからニックネームを検索する際にこのコールバックを使用) _(WeeChat バージョン 0.3.9 以上で利用可)_
-** 'nickcmp_callback_data': ニックネーム比較コールバックデータを設定
+** 'nickcmp_callback_data': ニックネーム比較コールバック関数に渡すデータを設定
    _(WeeChat バージョン 0.3.9 以上で利用可)_
 * 'pointer': プロパティの新しいポインタ値
 
@@ -12568,7 +12555,7 @@ struct t_gui_bar_item *weechat_bar_item_new (const char *name,
 
 * 'name': バー要素の名前
 * 'build_callback':
-  バー要素を作成する際に呼び出す関数、引数と戻り値:
+  バー要素を作成する際に呼び出すコールバック関数、引数と戻り値:
 ** 'void *data': ポインタ
 ** 'struct t_gui_bar_item *item': 要素へのポインタ
 ** 'struct t_gui_window *window':
@@ -12579,8 +12566,8 @@ struct t_gui_bar_item *weechat_bar_item_new (const char *name,
 ** 'struct t_hashtable *extra_info': 常に NULL
    (この引数は将来のバージョン用に予約されています) _(WeeChat バージョン 0.4.2 以上で利用可)_
 ** 戻り値: バー要素の内容
-* 'build_callback_data': WeeChat
-  が build コールバックを呼び出す際にコールバックに渡すポインタ
+* 'build_callback_data': WeeChat が 'build_callback'
+  コールバックを呼び出す際にコールバックに渡すポインタ
 
 戻り値:
 
@@ -14087,14 +14074,14 @@ struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev,
   _(WeeChat バージョン 0.4.0 以上で利用可)_
 * 'delete_allowed': 構造体の削除を許可する場合は 1、それ以外の場合は 0
   _(WeeChat バージョン 0.3.9 以上で利用可)_
-* 'callback_update': hdata 内のデータを更新する際のコールバック、データの更新を禁止する場合は NULL
+* 'callback_update': hdata 内のデータを更新する際のコールバック関数、データの更新を禁止する場合は NULL
   _(WeeChat バージョン 0.3.9 以上で利用可)_ 、引数と戻り値:
 ** 'void *data': ポインタ
 ** 'struct t_hdata *hdata': hdata へのポインタ
 ** 'struct t_hashtable *hashtable': 更新する変数を含むハッシュテーブル
    (<<_hdata_update,weechat_hdata_update>> を参照)
 ** return value: 更新された変数の数
-* 'callback_update_data': WeeChat が update コールバックを呼び出す際にコールバックに渡すポインタ
+* 'callback_update_data': WeeChat が 'callback_update' コールバックを呼び出す際にコールバックに渡すポインタ
   _(WeeChat バージョン 0.3.9 以上で利用可)_
 
 戻り値:
@@ -15503,7 +15490,7 @@ int weechat_upgrade_read (struct t_upgrade_file *upgrade_file,
 引数:
 
 * 'upgrade_file': アップグレードファイルへのポインタ
-* 'callback_read': アップグレードファイル内の各オブジェクトを読み込む際に呼び出す関数
+* 'callback_read': アップグレードファイル内の各オブジェクトを読み込む際に呼び出すコールバック関数
   引数と戻り値:
 ** 'void *data': ポインタ
 ** 'struct t_upgrade_file *upgrade_file': アップグレードファイルへのポインタ
@@ -15512,7 +15499,7 @@ int weechat_upgrade_read (struct t_upgrade_file *upgrade_file,
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_read_data': WeeChat が read
+* 'callback_read_data': WeeChat が 'callback_read'
   コールバックを呼び出す際にコールバックに渡すポインタ
 
 戻り値:
