@@ -7092,6 +7092,8 @@ command、command_run、signal、hsignal、config、completion、modifier、info
 
 ==== hook_command
 
+_バージョン 1.5 で更新。_
+
 コマンドをフックする。
 
 プロトタイプ:
@@ -7227,6 +7229,8 @@ hook = weechat.hook_command("myfilter", "description of myfilter",
 
 ==== hook_command_run
 
+_バージョン 1.5 で更新。_
+
 WeeChat がコマンドを実行する際にこれをフック。
 
 プロトタイプ:
@@ -7303,6 +7307,8 @@ hook = weechat.hook_command_run("/input complete*", "my_command_run_cb", "")
 
 ==== hook_timer
 
+_バージョン 1.5 で更新。_
+
 タイマをフックする。
 
 プロトタイプ:
@@ -7377,7 +7383,8 @@ hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 
 ==== hook_fd
 
-_バージョン 1.3 で更新。_
+// TRANSLATION MISSING
+_Updated in 1.3, 1.5._
 
 ファイルディスクリプタ (ファイルやソケット) をフック。
 
@@ -7455,6 +7462,8 @@ hook = weechat.hook_fd(sock, 1, 0, 0, "my_fd_cb", "")
 ----
 
 ==== hook_process
+
+_バージョン 1.5 で更新。_
 
 プロセスをフックして (フォークして実行)、出力を受け取る。
 
@@ -7602,7 +7611,8 @@ hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
 
 ==== hook_process_hashtable
 
-_WeeChat バージョン 0.3.7 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.7, updated in 1.5._
 
 ハッシュテーブルに収めたオプションを使いプロセスをフックする
 (フォークして実行)、出力を受け取る。
@@ -7809,6 +7819,8 @@ hook3 = weechat.hook_process_hashtable("sh",
 
 ==== hook_connect
 
+_バージョン 1.5 で更新。_
+
 接続をフックする (リモートホストへのバックグラウンド接続)。
 
 プロトタイプ:
@@ -7986,7 +7998,8 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== hook_print
 
-_WeeChat バージョン 0.4.3 と 1.0 で更新_
+// TRANSLATION MISSING
+_Updated in 0.4.3, 1.0, 1.5._
 
 メッセージの表示をフックする。
 
@@ -8093,6 +8106,8 @@ hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 ----
 
 ==== hook_signal
+
+_バージョン 1.5 で更新。_
 
 シグナルをフックする。
 
@@ -9013,7 +9028,8 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
 
 ==== hook_hsignal
 
-_WeeChat バージョン 0.3.4 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.4, updated in 1.5._
 
 hsignal (ハッシュテーブルを持つシグナル) をフック。
 
@@ -9379,6 +9395,8 @@ weechat.hook_hsignal_send("irc_redirect_pattern",
 
 ==== hook_config
 
+_バージョン 1.5 で更新。_
+
 設定オプションをフック。
 
 プロトタイプ:
@@ -9452,6 +9470,8 @@ hook = weechat.hook_config("weechat.look.item_time_format", "my_config_cb", "")
 ----
 
 ==== hook_completion
+
+_バージョン 1.5 で更新。_
 
 補完をフック。
 
@@ -9644,6 +9664,8 @@ weechat.hook_completion_list_add(completion, word, nick_completion, where)
 ----
 
 ==== hook_modifier
+
+_バージョン 1.5 で更新。_
 
 修飾子をフック。
 
@@ -9885,6 +9907,8 @@ weechat.hook_modifier_exec("my_modifier", my_data, my_string)
 
 ==== hook_info
 
+_バージョン 1.5 で更新。_
+
 情報をフック (コールバックを呼び出し、文字列を返す)。
 
 プロトタイプ:
@@ -9960,7 +9984,8 @@ hook = weechat.hook_info("my_info", "Some info", "Info about arguments",
 
 ==== hook_info_hashtable
 
-_WeeChat バージョン 0.3.4 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.4, updated in 1.5._
 
 情報をフック (コールバックを呼び出し、ハッシュテーブルを返す)。
 
@@ -10043,6 +10068,8 @@ hook = weechat.hook_info_hashtable("my_info_hashtable", "Some info",
 ----
 
 ==== hook_infolist
+
+_バージョン 1.5 で更新。_
 
 インフォリストをフック: コールバックは要求したインフォリストへのポインタを返す。
 
@@ -10134,6 +10161,8 @@ hook = weechat.hook_infolist("my_infolist", "Infolist with some data",
 
 ==== hook_hdata
 
+_バージョン 1.5 で更新。_
+
 hdata をフック: コールバックは要求した hdata へのポインタを返す。
 
 プロトタイプ:
@@ -10195,6 +10224,8 @@ struct t_hook *my_hdata = weechat_hook_hdata ("my_hdata",
 スクリプト API ではこの関数を利用できません。
 
 ==== hook_focus
+
+_バージョン 1.5 で更新。_
 
 フォーカス (マウスイベントやカーソルモード
 (カーソルが自由に移動出来る状態) でキーが押されたこと) をフック。
@@ -10512,6 +10543,8 @@ weechat.unhook(my_hook)
 ----
 
 ==== unhook_all
+
+_バージョン 1.5 で更新。_
 
 現在のプラグインで設定したフックをすべて解除。
 

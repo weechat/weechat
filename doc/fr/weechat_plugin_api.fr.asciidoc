@@ -7209,6 +7209,8 @@ hdata, focus.
 
 ==== hook_command
 
+_Mis à jour dans la 1.5._
+
 Accrocher une commande.
 
 Prototype :
@@ -7348,6 +7350,8 @@ hook = weechat.hook_command("monfiltre", "description de monfiltre",
 
 ==== hook_command_run
 
+_Mis à jour dans la 1.5._
+
 Intercepter une commande lorsqu'elle est exécutée par WeeChat.
 
 Prototype :
@@ -7425,6 +7429,8 @@ hook = weechat.hook_command_run("/input complete*", "my_command_run_cb", "")
 ----
 
 ==== hook_timer
+
+_Mis à jour dans la 1.5._
 
 Accrocher un minuteur (fonction appelée à intervalles réguliers).
 
@@ -7505,7 +7511,7 @@ hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 
 ==== hook_fd
 
-_Mis à jour dans la 1.3._
+_Mis à jour dans la 1.3, 1.5._
 
 Accrocher un descripteur de fichier (fichier ou socket).
 
@@ -7584,6 +7590,8 @@ hook = weechat.hook_fd(sock, 1, 0, 0, "my_fd_cb", "")
 ----
 
 ==== hook_process
+
+_Mis à jour dans la 1.5._
 
 Accrocher un processus (lancé par un fork), et intercepter sa sortie.
 
@@ -7738,7 +7746,7 @@ hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
 
 ==== hook_process_hashtable
 
-_WeeChat ≥ 0.3.7._
+_WeeChat ≥ 0.3.7, mis à jour dans la 1.5._
 
 Accrocher un processus (lancé par un fork) en utilisant des options dans une
 table de hachage, et intercepter sa sortie.
@@ -7950,6 +7958,8 @@ hook3 = weechat.hook_process_hashtable("sh",
 
 ==== hook_connect
 
+_Mis à jour dans la 1.5._
+
 Accrocher une connexion (connexion à une machine distante en tâche de fond).
 
 Prototype :
@@ -8132,7 +8142,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== hook_print
 
-_Mis à jour dans la 0.4.3 et 1.0._
+_Mis à jour dans la 0.4.3, 1.0, 1.5._
 
 Intercepter un message affiché.
 
@@ -8243,6 +8253,8 @@ hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 ----
 
 ==== hook_signal
+
+_Mis à jour dans la 1.5._
 
 S'accrocher à un signal.
 
@@ -9174,7 +9186,7 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
 
 ==== hook_hsignal
 
-_WeeChat ≥ 0.3.4._
+_WeeChat ≥ 0.3.4, mis à jour dans la 1.5._
 
 S'accrocher à un hsignal (signal avec une table de hachage).
 
@@ -9551,6 +9563,8 @@ weechat.hook_hsignal_send("irc_redirect_pattern",
 
 ==== hook_config
 
+_Mis à jour dans la 1.5._
+
 S'accrocher à une option de configuration.
 
 Prototype :
@@ -9626,6 +9640,8 @@ hook = weechat.hook_config("weechat.look.item_time_format", "my_config_cb", "")
 ----
 
 ==== hook_completion
+
+_Mis à jour dans la 1.5._
 
 Accrocher une complétion.
 
@@ -9821,6 +9837,8 @@ weechat.hook_completion_list_add(completion, word, nick_completion, where)
 ----
 
 ==== hook_modifier
+
+_Mis à jour dans la 1.5._
 
 Accrocher un modificateur.
 
@@ -10075,6 +10093,8 @@ weechat.hook_modifier_exec("mon_modifier", mes_donnees, ma_chaine)
 
 ==== hook_info
 
+_Mis à jour dans la 1.5._
+
 Accrocher une information (le "callback" prend et retourne une chaîne).
 
 Prototype :
@@ -10154,7 +10174,7 @@ hook = weechat.hook_info("mon_info", "Une information", "Info sur les paramètre
 
 ==== hook_info_hashtable
 
-_WeeChat ≥ 0.3.4._
+_WeeChat ≥ 0.3.4, mis à jour dans la 1.5._
 
 Accrocher une information (le "callback" prend et retourne une table de
 hachage).
@@ -10242,6 +10262,8 @@ hook = weechat.hook_info_hashtable("mon_info_hashtable", "Une information",
 ----
 
 ==== hook_infolist
+
+_Mis à jour dans la 1.5._
 
 Accrocher une infolist : le "callback" retournera un pointeur vers l'infolist
 demandée.
@@ -10335,6 +10357,8 @@ hook = weechat.hook_infolist("mon_infolist", "Mon infolist",
 
 ==== hook_hdata
 
+_Mis à jour dans la 1.5._
+
 Accrocher un hdata : le "callback" retournera un pointeur vers le hdata demandé.
 
 Prototype :
@@ -10397,6 +10421,8 @@ struct t_hook *my_hdata = weechat_hook_hdata ("mon_hdata",
 Cette fonction n'est pas disponible dans l'API script.
 
 ==== hook_focus
+
+_Mis à jour dans la 1.5._
 
 Accrocher un focus : évènement souris ou touche du clavier pressée dans le mode
 "curseur" (mouvement libre du curseur).
@@ -10720,6 +10746,8 @@ weechat.unhook(my_hook)
 ----
 
 ==== unhook_all
+
+_Mis à jour dans la 1.5._
 
 Décrocher tout ce qui a été accroché par l'extension courante.
 

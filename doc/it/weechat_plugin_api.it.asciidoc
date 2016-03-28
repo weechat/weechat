@@ -7257,6 +7257,9 @@ hdata, focus.
 
 ==== hook_command
 
+// TRANSLATION MISSING
+_Updated in 1.5._
+
 Hook su un comando.
 
 Prototipo:
@@ -7395,6 +7398,9 @@ hook = weechat.hook_command("myfilter", "descrizione di myfilter",
 
 ==== hook_command_run
 
+// TRANSLATION MISSING
+_Updated in 1.5._
+
 Hook su un comando quando eseguito da WeeChat.
 
 Prototipo:
@@ -7473,6 +7479,9 @@ hook = weechat.hook_command_run("/input complete*", "my_command_run_cb", "")
 ----
 
 ==== hook_timer
+
+// TRANSLATION MISSING
+_Updated in 1.5._
 
 Hook sul timer.
 
@@ -7553,7 +7562,7 @@ hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 ==== hook_fd
 
 // TRANSLATION MISSING
-_Updated in 1.3._
+_Updated in 1.3, 1.5._
 
 Hook su un descrittore file (file oppure socket).
 
@@ -7632,6 +7641,9 @@ hook = weechat.hook_fd(sock, 1, 0, 0, "my_fd_cb", "")
 ----
 
 ==== hook_process
+
+// TRANSLATION MISSING
+_Updated in 1.5._
 
 Hook su un processo (lanciato con un fork), e cattura l'output.
 
@@ -7784,7 +7796,8 @@ hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
 
 ==== hook_process_hashtable
 
-_WeeChat ≥ 0.3.7._
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.7, updated in 1.5._
 
 Hook su un processo (avviato con un fork) usando le opzioni nella tabella hash,
 e cattura dell'output.
@@ -7999,6 +8012,9 @@ hook3 = weechat.hook_process_hashtable("sh",
 
 ==== hook_connect
 
+// TRANSLATION MISSING
+_Updated in 1.5._
+
 Hook su una connessione (connessione in secondo piano ad un host remoto).
 
 Prototipo:
@@ -8181,7 +8197,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 ==== hook_print
 
 // TRANSLATION MISSING
-_Updated in 0.4.3 and 1.0._
+_Updated in 0.4.3, 1.0, 1.5._
 
 Hook su un messaggio stampato.
 
@@ -8293,6 +8309,9 @@ hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 ----
 
 ==== hook_signal
+
+// TRANSLATION MISSING
+_Updated in 1.5._
 
 Hook su un segnale.
 
@@ -9302,7 +9321,7 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
 
 ==== hook_hsignal
 
-_WeeChat ≥ 0.3.4._
+_WeeChat ≥ 0.3.4, updated in 1.5._
 
 Hook su hsignal (segnale con tabella hash).
 
@@ -9683,6 +9702,9 @@ weechat.hook_hsignal_send("irc_redirect_pattern",
 
 ==== hook_config
 
+// TRANSLATION MISSING
+_Updated in 1.5._
+
 Hook su un'opzione di configurazione.
 
 Prototipo:
@@ -9758,6 +9780,9 @@ hook = weechat.hook_config("weechat.look.item_time_format", "my_config_cb", "")
 ----
 
 ==== hook_completion
+
+// TRANSLATION MISSING
+_Updated in 1.5._
 
 Hook su un completamento.
 
@@ -9953,6 +9978,9 @@ weechat.hook_completion_list_add(completion, word, nick_completion, where)
 ----
 
 ==== hook_modifier
+
+// TRANSLATION MISSING
+_Updated in 1.5._
 
 Hook su un modificatore.
 
@@ -10203,6 +10231,9 @@ weechat.hook_modifier_exec("my_modifier", my_data, my_string)
 
 ==== hook_info
 
+// TRANSLATION MISSING
+_Updated in 1.5._
+
 Hook su una informazione (la callback prende e restituisce una stringa).
 
 Prototipo:
@@ -10280,7 +10311,8 @@ hook = weechat.hook_info("my_info", "Some info", "Info about arguments",
 
 ==== hook_info_hashtable
 
-_WeeChat ≥ 0.3.4._
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.4, updated in 1.5._
 
 Hook su una informazione (la callback prende e restituisce una tabella hash).
 
@@ -10366,6 +10398,9 @@ hook = weechat.hook_info_hashtable("my_info_hashtable", "Some info",
 ----
 
 ==== hook_infolist
+
+// TRANSLATION MISSING
+_Updated in 1.5._
 
 Hook su una lista info: la callback restituisce il puntatore alla lista info
 richiesta.
@@ -10459,6 +10494,9 @@ hook = weechat.hook_infolist("my_infolist", "Infolist with some data",
 
 ==== hook_hdata
 
+// TRANSLATION MISSING
+_Updated in 1.5._
+
 Hook di un hdata: la callback restituisce il puntatore all'hdata richiesto.
 
 Prototipo:
@@ -10519,6 +10557,9 @@ struct t_hook *my_hdata = weechat_hook_hdata ("my_hdata",
 Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== hook_focus
+
+// TRANSLATION MISSING
+_Updated in 1.5._
 
 Hook sul foucus: evento del mouse o tasto premuto nella modalità cursore
 (movimento libero del cursore).
@@ -10850,6 +10891,9 @@ weechat.unhook(my_hook)
 ----
 
 ==== unhook_all
+
+// TRANSLATION MISSING
+_Updated in 1.5._
 
 Rimuove l'hook in qualsiasi punto in cui è stato attivato dal
 plugin corrente.
