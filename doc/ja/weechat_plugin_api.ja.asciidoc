@@ -4427,7 +4427,7 @@ struct t_config_section *weechat_config_new_section (
 * 'callback_write_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
   and it is automatically freed when the section is freed
-* callback_write_default:
+* 'callback_write_default':
   セクションのデフォルト値が必ずファイルに書き込まれる際に呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ

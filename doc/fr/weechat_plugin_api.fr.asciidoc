@@ -4504,7 +4504,7 @@ Paramètres :
   par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
   similaire) et est automatiquement libéré (par free) lorsque la section est
   libérée
-* callback_write_default : fonction appelée lorsque les valeurs par défaut
+* 'callback_write_default' : fonction appelée lorsque les valeurs par défaut
   doivent être écrites dans le fichier, paramètres et valeur de retour :
 ** 'const void *pointer' : pointeur
 ** 'void *data' : pointeur

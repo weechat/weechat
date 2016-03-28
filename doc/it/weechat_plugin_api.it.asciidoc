@@ -4556,8 +4556,8 @@ Argomenti:
 * 'callback_write_data': puntatore fornito dalla callback quando chiamata da
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
   function) and it is automatically freed when the section is freed
-* callback_write_default: funzione chiamata quando i valori predefiniti per la sezione
-  devono essere scritti in un file, argomenti e valore restituito:
+* 'callback_write_default': funzione chiamata quando i valori predefiniti per
+  la sezione devono essere scritti in un file, argomenti e valore restituito:
 ** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione

@@ -4425,8 +4425,8 @@ Arguments:
 * 'callback_write_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
   and it is automatically freed when the section is freed
-* callback_write_default: function called when default values for section must
-  be written in file, arguments and return value:
+* 'callback_write_default': function called when default values for section
+  must be written in file, arguments and return value:
 ** 'const void *pointer': pointer
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
