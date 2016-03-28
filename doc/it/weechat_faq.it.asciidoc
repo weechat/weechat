@@ -689,7 +689,7 @@ colore speciale per i nick assenti nella lista nick.
 Per versioni di Bitlbee ≥ 3, sul canale '&bitlbee' digitare:
 
 ----
-channel set show_users online,away
+channel [<channel id>] set show_users online,away
 ----
 
 Per versioni precedenti di Bitlbee, sul canale '&bitlbee' digitare:

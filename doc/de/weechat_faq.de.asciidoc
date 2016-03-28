@@ -683,7 +683,7 @@ in einer anderen Farbe darzustellen.
 Nutzt man Bitlbee ≥ 3, sollte man im '&bitlbee' Channel folgendes eingeben:
 
 ----
-channel set show_users online,away
+channel [<channel id>] set show_users online,away
 ----
 
 für ältere Versionen von Bitlbee gibt man im '&bitlbee' Channel ein:

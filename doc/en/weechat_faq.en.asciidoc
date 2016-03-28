@@ -644,7 +644,7 @@ that and let WeeChat use a special color for away nicks in nicklist.
 For Bitlbee ≥ 3, do that on channel '&bitlbee':
 
 ----
-channel set show_users online,away
+channel [<channel id>] set show_users online,away
 ----
 
 For older version of Bitlbee, do that on channel '&bitlbee':

@@ -673,7 +673,7 @@ couleur spéciale pour les pseudos absents dans la liste des pseudos.
 Pour Bitlbee ≥ 3, faites ceci sur le canal '&bitlbee' :
 
 ----
-channel set show_users online,away
+channel [<channel id>] set show_users online,away
 ----
 
 Pour une version plus ancienne de Bitlbee, faites ceci sur le canal '&bitlbee':
