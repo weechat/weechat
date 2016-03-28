@@ -179,8 +179,9 @@ struct t_weechat_plugin *weechat_plugin = NULL;
 /* callback pour la commande "/double" */
 
 int
-commande_double_cb (void *data, struct t_gui_buffer *buffer, int argc,
-                    char **argv, char **argv_eol)
+commande_double_cb (const void *pointer, void *data,
+                    struct t_gui_buffer *buffer,
+                    int argc, char **argv, char **argv_eol)
 {
     /* pour que le compilateur C soit content */
     (void) data;
@@ -5948,7 +5949,8 @@ Exemple en C :
 [source,C]
 ----
 int
-my_section_write_cb (void *data, struct t_config_file *config_file,
+my_section_write_cb (const void *pointer, void *data,
+                     struct t_config_file *config_file,
                      const char *section_name)
 {
     weechat_config_write_line (config_file, "ma_section", NULL);
@@ -6000,7 +6002,8 @@ Exemple en C :
 [source,C]
 ----
 int
-my_section_write_cb (void *data, struct t_config_file *config_file,
+my_section_write_cb (const void *pointer, void *data,
+                     struct t_config_file *config_file,
                      const char *section_name)
 {
     weechat_config_write_line (config_file, "ma_section", NULL);
@@ -11573,11 +11576,15 @@ Prototypes pour les "callbacks" :
 
 [source,C]
 ----
-int close_callback (void *data, struct t_gui_buffer *buffer);
+int close_callback (const void *pointer, void *data,
+                    struct t_gui_buffer *buffer);
 
-int input_callback (void *data, struct t_gui_buffer *buffer, const char *input_data);
+int input_callback (const void *pointer, void *data,
+                    struct t_gui_buffer *buffer, const char *input_data);
 
-int nickcmp_callback (void *data, struct t_gui_buffer *buffer, const char *nick1, const char *nick2);
+int nickcmp_callback (const void *pointer, void *data,
+                      struct t_gui_buffer *buffer,
+                      const char *nick1, const char *nick2);
 ----
 
 Exemple en C :
@@ -11585,7 +11592,7 @@ Exemple en C :
 [source,C]
 ----
 int
-my_close_cb (void *data, struct t_gui_buffer *buffer)
+my_close_cb (const void *pointer, void *data, struct t_gui_buffer *buffer)
 {
     /* ... */
     return WEECHAT_RC_OK;
