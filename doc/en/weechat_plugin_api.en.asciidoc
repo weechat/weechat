@@ -10490,7 +10490,7 @@ Prototype:
 
 [source,C]
 ----
-void weechat_unhook_all_plugin (const char *subplugin);
+void weechat_unhook_all (const char *subplugin);
 ----
 
 Arguments:
