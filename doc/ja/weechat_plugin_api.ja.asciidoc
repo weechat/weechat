@@ -4416,8 +4416,7 @@ struct t_config_section *weechat_config_new_section (
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_config_file *config_file': 設定ファイルへのポインタ
-** 'struct t_config_section *section': セクションへのポインタ
-** 'const char *option_name': オプションの名前
+** 'const char *section_name': セクションの名前
 ** 戻り値:
 *** 'WEECHAT_CONFIG_WRITE_OK'
 *** 'WEECHAT_CONFIG_WRITE_ERROR'
@@ -4498,10 +4497,9 @@ my_section_read_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
 
-    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-    /* return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE; */
-    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
-    /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    return WEECHAT_CONFIG_READ_OK;
+    /* return WEECHAT_CONFIG_READ_MEMORY_ERROR; */
+    /* return WEECHAT_CONFIG_READ_FILE_NOT_FOUND; */
 }
 
 int
@@ -4512,6 +4510,7 @@ my_section_write_cb (void *data, struct t_config_file *config_file,
 
     return WEECHAT_CONFIG_WRITE_OK;
     /* return WEECHAT_CONFIG_WRITE_ERROR; */
+    /* return WEECHAT_CONFIG_WRITE_MEMORY_ERROR; */
 }
 
 int
@@ -4522,6 +4521,7 @@ my_section_write_default_cb (void *data, struct t_config_file *config_file,
 
     return WEECHAT_CONFIG_WRITE_OK;
     /* return WEECHAT_CONFIG_WRITE_ERROR; */
+    /* return WEECHAT_CONFIG_WRITE_MEMORY_ERROR; */
 }
 
 int
@@ -4531,8 +4531,10 @@ my_section_create_option_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
 
-    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+    /* return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE; */
     /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
 }
 
 int
@@ -4543,6 +4545,8 @@ my_section_delete_option_cb (void *data, struct t_config_file *config_file,
     /* ... */
 
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+    /* return WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET; */
+    /* return WEECHAT_CONFIG_OPTION_UNSET_OK_RESET; */
     /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
 

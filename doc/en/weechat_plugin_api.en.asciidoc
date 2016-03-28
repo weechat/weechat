@@ -4415,7 +4415,7 @@ Arguments:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
 ** 'struct t_config_section *section': section pointer
-** 'const char *option_name': name of option
+** 'const char *section_name': name of section
 ** return value:
 *** 'WEECHAT_CONFIG_WRITE_OK'
 *** 'WEECHAT_CONFIG_WRITE_ERROR'
@@ -4495,10 +4495,9 @@ my_section_read_cb (const void *pointer, void *data,
 {
     /* ... */
 
-    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-    /* return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE; */
-    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
-    /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    return WEECHAT_CONFIG_READ_OK;
+    /* return WEECHAT_CONFIG_READ_MEMORY_ERROR; */
+    /* return WEECHAT_CONFIG_READ_FILE_NOT_FOUND; */
 }
 
 int
@@ -4510,6 +4509,7 @@ my_section_write_cb (const void *pointer, void *data,
 
     return WEECHAT_CONFIG_WRITE_OK;
     /* return WEECHAT_CONFIG_WRITE_ERROR; */
+    /* return WEECHAT_CONFIG_WRITE_MEMORY_ERROR; */
 }
 
 int
@@ -4521,6 +4521,7 @@ my_section_write_default_cb (const void *pointer, void *data,
 
     return WEECHAT_CONFIG_WRITE_OK;
     /* return WEECHAT_CONFIG_WRITE_ERROR; */
+    /* return WEECHAT_CONFIG_WRITE_MEMORY_ERROR; */
 }
 
 int
@@ -4532,8 +4533,10 @@ my_section_create_option_cb (const void *pointer, void *data,
 {
     /* ... */
 
-    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+    /* return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE; */
     /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
 }
 
 int
@@ -4545,6 +4548,8 @@ my_section_delete_option_cb (const void *pointer, void *data,
     /* ... */
 
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+    /* return WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET; */
+    /* return WEECHAT_CONFIG_OPTION_UNSET_OK_RESET; */
     /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
 
