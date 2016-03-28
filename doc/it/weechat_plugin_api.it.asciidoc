@@ -13024,7 +13024,7 @@ bar_item = weechat.bar_item_search("myitem")
 ==== bar_item_new
 
 // TRANSLATION MISSING
-_Updated in 0.4.2._
+_Updated in 0.4.2, 1.5._
 
 Crea un nuovo elemento barra.
 
@@ -13033,11 +13033,13 @@ Prototipo:
 [source,C]
 ----
 struct t_gui_bar_item *weechat_bar_item_new (const char *name,
-                                             char *(*build_callback)(void *data,
+                                             char *(*build_callback)(const void *pointer,
+                                                                     void *data,
                                                                      struct t_gui_bar_item *item,
                                                                      struct t_gui_window *window,
                                                                      struct t_gui_buffer *buffer,
                                                                      struct t_hashtable *extra_info),
+                                             const void *build_callback_pointer,
                                              void *build_callback_data);
 ----
 
@@ -13046,6 +13048,7 @@ Argomenti:
 * 'name': nome dell'elemento barra
 * 'build_callback': funzione chiamata quando l'elemento barra viene
   compilato, argomenti e valore restituito:
+** 'const void *pointer': puntatore
 ** 'void *data': puntatore
 ** 'struct t_gui_bar_item *item': puntatore all'elemento barra
 // TRANSLATION MISSING
@@ -13059,8 +13062,12 @@ Argomenti:
 ** 'struct t_hashtable *extra_info': always NULL (argument is reserved for a
    future version) _(WeeChat ≥ 0.4.2)_
 ** valore restituito: contenuto dell'elemento barra
-* 'build_callback_data': puntatore fornito alla callback quando
+* 'build_callback_pointer': puntatore fornito alla callback quando
   chiamata da WeeChat
+// TRANSLATION MISSING
+* 'build_callback_data': puntatore fornito dalla callback quando chiamata da
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it is automatically freed when the bar item is removed
 
 Valore restituito:
 
@@ -13071,7 +13078,7 @@ Esempio in C:
 [source,C]
 ----
 char *
-my_build_callback (void *data,
+my_build_callback (const void *pointer, void *data,
                    struct t_gui_bar_item *item,
                    struct t_gui_window *window,
                    struct t_gui_buffer *buffer,
@@ -13082,7 +13089,7 @@ my_build_callback (void *data,
 
 struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
                                                        &my_build_callback,
-                                                       NULL);
+                                                       NULL, NULL);
 ----
 
 Script (Python):

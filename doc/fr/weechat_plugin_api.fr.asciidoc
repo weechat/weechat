@@ -12845,7 +12845,7 @@ bar_item = weechat.bar_item_search("myitem")
 
 ==== bar_item_new
 
-_Mis à jour dans la 0.4.2._
+_Mis à jour dans la 0.4.2, 1.5._
 
 Créer un nouvel objet de barre.
 
@@ -12854,11 +12854,13 @@ Prototype :
 [source,C]
 ----
 struct t_gui_bar_item *weechat_bar_item_new (const char *name,
-                                             char *(*build_callback)(void *data,
+                                             char *(*build_callback)(const void *pointer,
+                                                                     void *data,
                                                                      struct t_gui_bar_item *item,
                                                                      struct t_gui_window *window,
                                                                      struct t_gui_buffer *buffer,
                                                                      struct t_hashtable *extra_info),
+                                             const void *build_callback_pointer,
                                              void *build_callback_data);
 ----
 
@@ -12867,6 +12869,7 @@ Paramètres :
 * 'name' : nom de l'objet de barre
 * 'build_callback' : fonction appelée lorsque l'objet est construit, paramètres
   et valeur de retour :
+** 'const void *pointer' : pointeur
 ** 'void *data' : pointeur
 ** 'struct t_gui_bar_item *item' : pointeur vers l'objet de barre
 ** 'struct t_gui_window *window' : pointeur vers la fenêtre (NULL lors d'un
@@ -12877,8 +12880,12 @@ Paramètres :
 ** 'struct t_hashtable *extra_info' : toujours NULL (le paramètre est réservé
    pour une version future) _(WeeChat ≥ 0.4.2)_
 ** valeur de retour : contenu de l'objet de barre
+* 'build_callback_pointer' : pointeur donné au "callback" lorsqu'il est appelé
+  par WeeChat
 * 'build_callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
+  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
+  similaire) et est automatiquement libéré (par free) lorsque l'objet de barre
+  est supprimé
 
 Valeur de retour :
 
@@ -12889,7 +12896,7 @@ Exemple en C :
 [source,C]
 ----
 char *
-my_build_callback (void *data,
+my_build_callback (const void *pointer, void *data,
                    struct t_gui_bar_item *item,
                    struct t_gui_window *window,
                    struct t_gui_buffer *buffer,
@@ -12900,7 +12907,7 @@ my_build_callback (void *data,
 
 struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
                                                        &my_build_callback,
-                                                       NULL);
+                                                       NULL, NULL);
 ----
 
 Script (Python) :

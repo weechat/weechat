@@ -12583,7 +12583,7 @@ bar_item = weechat.bar_item_search("myitem")
 
 ==== bar_item_new
 
-_Updated in 0.4.2._
+_Updated in 0.4.2, 1.5._
 
 Create a new bar item.
 
@@ -12592,11 +12592,13 @@ Prototype:
 [source,C]
 ----
 struct t_gui_bar_item *weechat_bar_item_new (const char *name,
-                                             char *(*build_callback)(void *data,
+                                             char *(*build_callback)(const void *pointer,
+                                                                     void *data,
                                                                      struct t_gui_bar_item *item,
                                                                      struct t_gui_window *window,
                                                                      struct t_gui_buffer *buffer,
                                                                      struct t_hashtable *extra_info),
+                                             const void *build_callback_pointer,
                                              void *build_callback_data);
 ----
 
@@ -12605,6 +12607,7 @@ Arguments:
 * 'name': bar item name
 * 'build_callback': function called when bar item is built, arguments and
   return value:
+** 'const void *pointer': pointer
 ** 'void *data': pointer
 ** 'struct t_gui_bar_item *item': item pointer
 ** 'struct t_gui_window *window': window pointer (NULL when called for a root
@@ -12615,8 +12618,11 @@ Arguments:
 ** 'struct t_hashtable *extra_info': always NULL (argument is reserved for a
    future version) _(WeeChat ≥ 0.4.2)_
 ** return value: content of bar item
-* 'build_callback_data': pointer given to build callback, when it is called by
-  WeeChat
+* 'build_callback_pointer': pointer given to build callback, when it is called
+  by WeeChat
+* 'build_callback_data': pointer given to callback when it is called by
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it is automatically freed when the bar item is removed
 
 Return value:
 
@@ -12627,7 +12633,7 @@ C example:
 [source,C]
 ----
 char *
-my_build_callback (void *data,
+my_build_callback (const void *pointer, void *data,
                    struct t_gui_bar_item *item,
                    struct t_gui_window *window,
                    struct t_gui_buffer *buffer,
@@ -12638,7 +12644,7 @@ my_build_callback (void *data,
 
 struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
                                                        &my_build_callback,
-                                                       NULL);
+                                                       NULL, NULL);
 ----
 
 Script (Python):

@@ -12608,7 +12608,8 @@ bar_item = weechat.bar_item_search("myitem")
 
 ==== bar_item_new
 
-_バージョン 0.4.2 で更新。_
+// TRANSLATION MISSING
+_Updated in 0.4.2, 1.5._
 
 新しいバー要素を作成。
 
@@ -12617,11 +12618,13 @@ _バージョン 0.4.2 で更新。_
 [source,C]
 ----
 struct t_gui_bar_item *weechat_bar_item_new (const char *name,
-                                             char *(*build_callback)(void *data,
+                                             char *(*build_callback)(const void *pointer,
+                                                                     void *data,
                                                                      struct t_gui_bar_item *item,
                                                                      struct t_gui_window *window,
                                                                      struct t_gui_buffer *buffer,
                                                                      struct t_hashtable *extra_info),
+                                             const void *build_callback_pointer,
                                              void *build_callback_data);
 ----
 
@@ -12630,6 +12633,7 @@ struct t_gui_bar_item *weechat_bar_item_new (const char *name,
 * 'name': バー要素の名前
 * 'build_callback':
   バー要素を作成する際に呼び出す関数、引数と戻り値:
+** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
 ** 'struct t_gui_bar_item *item': 要素へのポインタ
 ** 'struct t_gui_window *window':
@@ -12640,8 +12644,12 @@ struct t_gui_bar_item *weechat_bar_item_new (const char *name,
 ** 'struct t_hashtable *extra_info': 常に NULL
    (この引数は将来のバージョン用に予約されています) _(WeeChat バージョン 0.4.2 以上で利用可)_
 ** 戻り値: バー要素の内容
-* 'build_callback_data': WeeChat
+* 'build_callback_pointer': WeeChat
   が build コールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'build_callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it is automatically freed when the bar item is removed
 
 戻り値:
 
@@ -12652,7 +12660,7 @@ C 言語での使用例:
 [source,C]
 ----
 char *
-my_build_callback (void *data,
+my_build_callback (const void *pointer, void *data,
                    struct t_gui_bar_item *item,
                    struct t_gui_window *window,
                    struct t_gui_buffer *buffer,
@@ -12663,7 +12671,7 @@ my_build_callback (void *data,
 
 struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
                                                        &my_build_callback,
-                                                       NULL);
+                                                       NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
