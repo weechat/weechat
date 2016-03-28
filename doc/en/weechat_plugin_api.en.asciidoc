@@ -4426,7 +4426,7 @@ Arguments:
 * 'callback_write_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
   and it will be automatically freed when the section is freed
-* callback_write_default: function called when default values for section must
+* 'callback_write_default': function called when default values for section must
   be written in file, arguments and return value:
 ** 'const void *pointer': pointer
 ** 'void *data': pointer
@@ -4496,21 +4496,22 @@ my_section_read_cb (const void *pointer, void *data,
 {
     /* ... */
 
-    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-    /* return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE; */
-    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
-    /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    return WEECHAT_CONFIG_READ_OK;
+    /* return WEECHAT_CONFIG_READ_MEMORY_ERROR; */
+    /* return WEECHAT_CONFIG_READ_FILE_NOT_FOUND; */
 }
 
 int
 my_section_write_cb (const void *pointer, void *data,
                      struct t_config_file *config_file,
-                     const char *section_name)
+                     struct t_config_section *section,
+                     const char *option_name)
 {
     /* ... */
 
     return WEECHAT_CONFIG_WRITE_OK;
     /* return WEECHAT_CONFIG_WRITE_ERROR; */
+    /* return WEECHAT_CONFIG_WRITE_MEMORY_ERROR; */
 }
 
 int
@@ -4522,6 +4523,7 @@ my_section_write_default_cb (const void *pointer, void *data,
 
     return WEECHAT_CONFIG_WRITE_OK;
     /* return WEECHAT_CONFIG_WRITE_ERROR; */
+    /* return WEECHAT_CONFIG_WRITE_MEMORY_ERROR; */
 }
 
 int
@@ -4533,8 +4535,10 @@ my_section_create_option_cb (const void *pointer, void *data,
 {
     /* ... */
 
+    /* return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED; */
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
 }
 
 int
@@ -4545,6 +4549,8 @@ my_section_delete_option_cb (const void *pointer, void *data,
 {
     /* ... */
 
+    /* return WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET; */
+    /* return WEECHAT_CONFIG_OPTION_UNSET_OK_RESET; */
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
     /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
@@ -10483,7 +10489,7 @@ Prototype:
 
 [source,C]
 ----
-void weechat_unhook_all_plugin (const char *subplugin);
+void weechat_unhook_all (const char *subplugin);
 ----
 
 Arguments:

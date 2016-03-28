@@ -4426,7 +4426,7 @@ struct t_config_section *weechat_config_new_section (
 * 'callback_write_data': WeeChat が 'callback_write' コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したセクションが開放された時点で自動的に開放されます
-* callback_write_default:
+* 'callback_write_default':
   セクションのデフォルト値が必ずファイルに書き込まれる際に呼び出すコールバック関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
 ** 'void *data': ポインタ
@@ -4488,56 +4488,69 @@ C 言語での使用例:
 [source,C]
 ----
 int
-my_section_read_cb (void *data, struct t_config_file *config_file,
-                    struct t_config_section *section, const char *option_name,
+my_section_read_cb (const void *pointer, void *data,
+                    struct t_config_file *config_file,
+                    struct t_config_section *section,
+                    const char *option_name,
                     const char *value)
 {
     /* ... */
 
-    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-    /* return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE; */
-    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
-    /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    return WEECHAT_CONFIG_READ_OK;
+    /* return WEECHAT_CONFIG_READ_MEMORY_ERROR; */
+    /* return WEECHAT_CONFIG_READ_FILE_NOT_FOUND; */
 }
 
 int
-my_section_write_cb (void *data, struct t_config_file *config_file,
-                     const char *section_name)
+my_section_write_cb (const void *pointer, void *data,
+                     struct t_config_file *config_file,
+                     struct t_config_section *section,
+                     const char *option_name)
 {
     /* ... */
 
     return WEECHAT_CONFIG_WRITE_OK;
     /* return WEECHAT_CONFIG_WRITE_ERROR; */
+    /* return WEECHAT_CONFIG_WRITE_MEMORY_ERROR; */
 }
 
 int
-my_section_write_default_cb (void *data, struct t_config_file *config_file,
+my_section_write_default_cb (const void *pointer, void *data,
+                             struct t_config_file *config_file,
                              const char *section_name)
 {
     /* ... */
 
     return WEECHAT_CONFIG_WRITE_OK;
     /* return WEECHAT_CONFIG_WRITE_ERROR; */
+    /* return WEECHAT_CONFIG_WRITE_MEMORY_ERROR; */
 }
 
 int
-my_section_create_option_cb (void *data, struct t_config_file *config_file,
+my_section_create_option_cb (const void *pointer, void *data,
+                             struct t_config_file *config_file,
                              struct t_config_section *section,
-                             const char *option_name, const char *value)
+                             const char *option_name,
+                             const char *value)
 {
     /* ... */
 
+    /* return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED; */
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
+    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
 }
 
 int
-my_section_delete_option_cb (void *data, struct t_config_file *config_file,
+my_section_delete_option_cb (const void *pointer, void *data,
+                             struct t_config_file *config_file,
                              struct t_config_section *section,
                              struct t_config_option *option)
 {
     /* ... */
 
+    /* return WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET; */
+    /* return WEECHAT_CONFIG_OPTION_UNSET_OK_RESET; */
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
     /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
@@ -7088,6 +7101,7 @@ struct t_hook *weechat_hook_command (const char *command,
                                                      int argc,
                                                      char **argv,
                                                      char **argv_eol),
+                                     const void *callback_pointer,
                                      void *callback_data);
 ----
 
