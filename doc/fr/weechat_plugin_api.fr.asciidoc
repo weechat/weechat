@@ -7226,6 +7226,7 @@ struct t_hook *weechat_hook_command (const char *command,
                                                      int argc,
                                                      char **argv,
                                                      char **argv_eol),
+                                     const void *callback_pointer,
                                      void *callback_data);
 ----
 
@@ -7366,6 +7367,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
                                                          void *data,
                                                          struct t_gui_buffer *buffer,
                                                          const char *command),
+                                         const void *callback_pointer,
                                          void *callback_data);
 ----
 
@@ -7444,6 +7446,7 @@ struct t_hook *weechat_hook_timer (long interval,
                                    int (*callback)(const void *pointer,
                                                    void *data,
                                                    int remaining_calls),
+                                   const void *callback_pointer,
                                    void *callback_data);
 ----
 
@@ -7525,6 +7528,7 @@ struct t_hook *weechat_hook_fd (int fd,
                                 int (*callback)(const void *pointer,
                                                 void *data,
                                                 int fd),
+                                const void *callback_pointer,
                                 void *callback_data);
 ----
 
@@ -7612,6 +7616,7 @@ struct t_hook *weechat_hook_process (const char *command,
                                                      int return_code,
                                                      const char *out,
                                                      const char *err),
+                                     const void *callback_pointer,
                                      void *callback_data);
 ----
 
@@ -7759,6 +7764,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
                                                                int return_code,
                                                                const char *out,
                                                                const char *err),
+                                               const void *callback_pointer,
                                                void *callback_data);
 ----
 
@@ -7975,6 +7981,7 @@ struct t_hook *weechat_hook_connect (const char *proxy,
                                                      int sock,
                                                      const char *error,
                                                      const char *ip_address),
+                                     const void *callback_pointer,
                                      void *callback_data);
 ----
 
@@ -8155,6 +8162,7 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
                                                    int highlight,
                                                    const char *prefix,
                                                    const char *message),
+                                   const void *callback_pointer,
                                    void *callback_data);
 ----
 
@@ -8256,6 +8264,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
                                                     const char *signal,
                                                     const char *type_data,
                                                     void *signal_data),
+                                    const void *callback_pointer,
                                     void *callback_data);
 ----
 
@@ -9186,6 +9195,7 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
                                                      void *data,
                                                      const char *signal,
                                                      struct t_hashtable *hashtable),
+                                     const void *callback_pointer,
                                      void *callback_data);
 ----
 
@@ -9560,6 +9570,7 @@ struct t_hook *weechat_hook_config (const char *option,
                                                     void *data,
                                                     const char *option,
                                                     const char *value),
+                                    const void *callback_pointer,
                                     void *callback_data);
 ----
 
@@ -9637,6 +9648,7 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
                                                         const char *completion_item,
                                                         struct t_gui_buffer *buffer,
                                                         struct t_gui_completion *completion),
+                                        const void *callback_pointer,
                                         void *callback_data);
 ----
 
@@ -9830,6 +9842,7 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
                                                         const char *modifier,
                                                         const char *modifier_data,
                                                         const char *string),
+                                      const void *callback_pointer,
                                       void *callback_data);
 ----
 
@@ -10083,6 +10096,7 @@ struct t_hook *weechat_hook_info (const char *info_name,
                                                           void *data,
                                                           const char *info_name,
                                                           const char *arguments),
+                                  const void *callback_pointer,
                                   void *callback_data);
 ----
 
@@ -10165,6 +10179,7 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
                                                                             void *data,
                                                                             const char *info_name,
                                                                             struct t_hashtable *hashtable),
+                                            const void *callback_pointer,
                                             void *callback_data);
 ----
 
@@ -10252,6 +10267,7 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
                                                                      const char *infolist_name,
                                                                      void *obj_pointer,
                                                                      const char *arguments),
+                                      const void *callback_pointer,
                                       void *callback_data);
 ----
 
@@ -10338,6 +10354,7 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
                                    struct t_hdata *(*callback)(const void *pointer,
                                                                void *data,
                                                                const char *hdata_name),
+                                   const void *callback_pointer,
                                    void *callback_data);
 ----
 
@@ -10400,6 +10417,7 @@ struct t_hook *weechat_hook_focus (const char *area,
                                    struct t_hashtable *(*callback)(const void *pointer,
                                                                    void *data,
                                                                    struct t_hashtable *info),
+                                   const void *callback_pointer,
                                    void *callback_data);
 ----
 
