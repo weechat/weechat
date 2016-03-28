@@ -4414,7 +4414,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_reload_data': puntatore fornito dalla callback quando chiamata da
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the configuration file is
+  function) and it is automatically freed when the configuration file is
   freed
 
 Valore restituito:
@@ -4537,7 +4537,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_read_data': puntatore fornito dalla callback quando chiamata da
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the section is freed
+  function) and it is automatically freed when the section is freed
 * 'callback_write': funzione chiamata quando la sezione è scritta nel file (dovrebbe
   essere NULL in molti casi, tranne se la sezione necessita di una funzione
   personalizzata), argomenti e valore restituito:
@@ -4555,7 +4555,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_write_data': puntatore fornito dalla callback quando chiamata da
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the section is freed
+  function) and it is automatically freed when the section is freed
 * callback_write_default: funzione chiamata quando i valori predefiniti per la sezione
   devono essere scritti in un file, argomenti e valore restituito:
 ** 'const void *pointer': puntatore
@@ -4571,8 +4571,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_write_default_data': puntatore fornito dalla callback quando
   chiamata da WeeChat; if not NULL, it must have been allocated with malloc
-  (or similar function) and it will be automatically freed when the section is
-  freed
+  (or similar function) and it is automatically freed when the section is freed
 * 'callback_create_option': funzione chiamata quando viene creata una nuova
   opzione nella sezione (NULL se la sezione non consente di creare nuove
   opzioni), argomenti e valore restituito:
@@ -4592,8 +4591,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_create_option_data': puntatore fornito dalla callback quando
   chiamata da WeeChat; if not NULL, it must have been allocated with malloc
-  (or similar function) and it will be automatically freed when the section is
-  freed
+  (or similar function) and it is automatically freed when the section is freed
 * 'callback_delete_option': funzione chiamata quando un'opzione viene eliminata
   nella sezione (NULL se la sezione non consente di eliminare delle opzioni),
   argomenti e valore restituito:
@@ -4612,8 +4610,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_delete_option_data': puntatore fornito dalla callback quando
   chiamata da WeeChat; if not NULL, it must have been allocated with malloc
-  (or similar function) and it will be automatically freed when the section is
-  freed
+  (or similar function) and it is automatically freed when the section is freed
 
 Valore restituito:
 
@@ -4865,7 +4862,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_check_value_data': puntatore fornito dalla callback quando chiamata
   da WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the option is freed
+  function) and it is automatically freed when the option is freed
 * 'callback_change': funzione chiamata quando il valore dell'opzione è stata
   cambiata (opzionale), argomenti:
 ** 'const void *pointer': puntatore
@@ -4876,7 +4873,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_change_data': puntatore fornito dalla callback quando chiamata da
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the option is freed
+  function) and it is automatically freed when the option is freed
 * 'callback_delete': funzione chiamata quando l'opzione verrà eliminata
   (opzionale), argomenti:
 ** 'const void *pointer': puntatore
@@ -4887,7 +4884,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_delete_data': puntatore fornito dalla callback quando chiamata da
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the option is freed
+  function) and it is automatically freed when the option is freed
 
 Valore restituito:
 
@@ -7300,7 +7297,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito dalla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 I codici predefiniti per il completamento sono:
 
@@ -7432,7 +7429,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 [NOTE]
 La callback può restituire 'WEECHAT_RC_OK' o 'WEECHAT_RC_OK_EAT' (il comando
@@ -7513,7 +7510,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -7592,7 +7589,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -7691,7 +7688,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -8076,7 +8073,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -8239,7 +8236,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -8331,7 +8328,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -9335,7 +9332,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -9711,7 +9708,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -9791,7 +9788,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 [NOTE]
 I nomi del completamento sono globali (condivisi tra WeeChat e plugin). Si
@@ -9980,7 +9977,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -10228,7 +10225,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -10310,7 +10307,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -10396,7 +10393,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -10475,7 +10472,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Valore restituito:
 
@@ -10539,7 +10536,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 [IMPORTANT]
 Per l'azione di un mouse, la callback verrà chiamata due volte: la prima quando
@@ -10918,7 +10915,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'input_callback_data': puntatore fornito dalla callback quando chiamata da
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the buffer is closed
+  function) and it is automatically freed when the buffer is closed
 * 'close_callback': funzione chiamata alla chiusura del buffer, argomenti e
   valore restituito:
 ** 'const void *pointer': puntatore
@@ -10932,7 +10929,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'close_callback_data': puntatore fornito dalla callback quando chiamata da
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the buffer is closed
+  function) and it is automatically freed when the buffer is closed
 
 Valore restituito:
 
@@ -15909,22 +15906,45 @@ Funzioni per l'aggiornamento di WeeChat (comando "/upgrade").
 
 ==== upgrade_new
 
+// TRANSLATION MISSING
+_Updated in 1.5._
+
 Crea o legge un file per l'aggiornamento.
 
 Prototipo:
 
 [source,C]
 ----
-struct t_upgrade_file *weechat_upgrade_new (const char *filename, int write);
+struct t_upgrade_file *upgrade_file_new (const char *filename,
+                                         int (*callback_read)(const void *pointer,
+                                                              void *data,
+                                                              struct t_upgrade_file *upgrade_file,
+                                                              int object_id,
+                                                              struct t_infolist *infolist),
+                                         const void *callback_read_pointer,
+                                         void *callback_read_data);
 ----
 
 Argomenti:
 
 * 'filename': nome del file (l'estensione ".upgrade" verrà aggiunta a questo nome
   da WeeChat)
-* 'write':
-** '1': crea il file (in modalità scrittura, prima dell'aggiornamento)
-** '0': legge il file (dopo l'aggiornamento)
+* 'callback_read': funzione chiamata per ogni oggetto letto nel file
+  di aggiornamento, argomenti e valore restituito:
+** 'const void *pointer': puntatore
+** 'void *data': puntatore
+** 'struct t_upgrade_file *upgrade_file': puntatore al file di aggiornamento
+** 'int object_id': id dell'oggetto
+** 'struct t_infolist *infolist': lista info con il contenuto dell'oggetto
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
+* 'callback_read_pointer': puntatore fornito alla callback quando chiamata da
+  WeeChat
+// TRANSLATION MISSING
+* 'callback_read_data': puntatore fornito dalla callback quando chiamata da
+  WeeChat; if not NULL, it must have been allocated with malloc (or similar
+  function) and it is automatically freed when the upgrade file is closed
 
 Valore restituito:
 
@@ -15934,7 +15954,8 @@ Esempio in C:
 
 [source,C]
 ----
-struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file", 1);
+struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file",
+                                                           NULL, NULL, NULL);
 ----
 
 Script (Python):
@@ -15942,10 +15963,10 @@ Script (Python):
 [source,python]
 ----
 # prototipo
-upgrade_file = weechat.upgrade_new(filename, write)
+upgrade_file = weechat.upgrade_new(filename, callback_read, callback_read_data)
 
 # esempio
-upgrade_file = weechat.upgrade_new("my_file", 1)
+upgrade_file = weechat.upgrade_new("my_file", "", "")
 ----
 
 ==== upgrade_write_object
@@ -15998,34 +16019,21 @@ weechat.upgrade_write_object(upgrade_file, 1, infolist)
 
 ==== upgrade_read
 
+// TRANSLATION MISSING
+_Updated in 1.5._
+
 Legge un file di aggiornamento.
 
 Prototipo:
 
 [source,C]
 ----
-int weechat_upgrade_read (struct t_upgrade_file *upgrade_file,
-                          int (*callback_read)(void *data,
-                                               struct t_upgrade_file *upgrade_file,
-                                               int object_id,
-                                               struct t_infolist *infolist),
-                          void *callback_read_data);
+int weechat_upgrade_read (struct t_upgrade_file *upgrade_file);
 ----
 
 Argomenti:
 
 * 'upgrade_file': puntatore al file di aggiornamento
-* 'callback_read': funzione chiamata per ogni oggetto letto nel file
-  di aggiornamento, argomenti e valore restituito:
-** 'void *data': puntatore
-** 'struct t_upgrade_file *upgrade_file': puntatore al file di aggiornamento
-** 'int object_id': id dell'oggetto
-** 'struct t_infolist *infolist': lista info con il contenuto dell'oggetto
-** valore restituito:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'callback_read_data': puntatore assegnato per la lettura della chiamata
-  quando chiamata da WeeChat
 
 Valore restituito:
 
@@ -16035,16 +16043,7 @@ Esempio in C:
 
 [source,C]
 ----
-int
-my_upgrade_read_cb (struct t_upgrade_file *upgrade_file,
-                    int object_id,
-                    struct t_infolist *infolist)
-{
-    /* lettura variabili... */
-    return WEECHAT_RC_OK;
-}
-
-weechat_upgrade_read (upgrade_file, &my_upgrade_read_cb, NULL);
+weechat_upgrade_read (upgrade_file);
 ----
 
 Script (Python):
@@ -16052,14 +16051,10 @@ Script (Python):
 [source,python]
 ----
 # prototipo
-rc = weechat.upgrade_read(upgrade_file, callback_read, callback_read_data)
+rc = weechat.upgrade_read(upgrade_file)
 
 # esempio
-def my_upgrade_read_cb(upgrade_file, object_id, infolist):
-    # lettura variabili...
-    return weechat.WEECHAT_RC_OK
-
-weechat.upgrade_read(upgrade_file, "my_upgrade_read_cb", ""))
+weechat.upgrade_read(upgrade_file)
 ----
 
 ==== upgrade_close

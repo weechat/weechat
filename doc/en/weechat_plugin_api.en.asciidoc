@@ -4286,8 +4286,7 @@ Arguments:
   WeeChat
 * 'callback_reload_data': pointer given to callback when it is called by
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the configuration file is
-  freed
+  function) and it is automatically freed when the configuration file is freed
 
 Return value:
 
@@ -4408,7 +4407,7 @@ Arguments:
   WeeChat
 * 'callback_read_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the section is freed
+  and it is automatically freed when the section is freed
 * 'callback_write': function called when section is written in file (should be
   NULL for most cases, except if section needs to be written by a custom
   function), arguments and return value:
@@ -4425,7 +4424,7 @@ Arguments:
   WeeChat
 * 'callback_write_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the section is freed
+  and it is automatically freed when the section is freed
 * callback_write_default: function called when default values for section must
   be written in file, arguments and return value:
 ** 'const void *pointer': pointer
@@ -4440,7 +4439,7 @@ Arguments:
   by WeeChat
 * 'callback_write_default_data': pointer given to callback when it is called by
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the section is freed
+  function) and it is automatically freed when the section is freed
 * 'callback_create_option': function called when a new option is created in
   section (NULL if section does not allow new options to be created),
   arguments and return value:
@@ -4459,7 +4458,7 @@ Arguments:
   by WeeChat
 * 'callback_create_option_data': pointer given to callback when it is called by
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the section is freed
+  function) and it is automatically freed when the section is freed
 * 'callback_delete_option': function called when an option is deleted in
   section (NULL if section does not allow options to be deleted),
   arguments and return value:
@@ -4477,7 +4476,7 @@ Arguments:
   by WeeChat
 * 'callback_delete_option_data': pointer given to callback when it is called by
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the section is freed
+  function) and it is automatically freed when the section is freed
 
 Return value:
 
@@ -4727,7 +4726,7 @@ Arguments:
   is called by WeeChat
 * 'callback_check_value_data': pointer given to callback when it is called by
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the option is freed
+  function) and it is automatically freed when the option is freed
 * 'callback_change': function called when value of option has changed
   (optional), arguments:
 ** 'const void *pointer': pointer
@@ -4737,7 +4736,7 @@ Arguments:
   by WeeChat
 * 'callback_change_data': pointer given to callback when it is called by
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the option is freed
+  function) and it is automatically freed when the option is freed
 * 'callback_delete': function called when option will be deleted (optional),
   arguments:
 ** 'const void *pointer': pointer
@@ -4747,7 +4746,7 @@ Arguments:
   by WeeChat
 * 'callback_delete_data': pointer given to callback when it is called by
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the option is freed
+  function) and it is automatically freed when the option is freed
 
 Return value:
 
@@ -7126,7 +7125,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Default completion codes are:
 
@@ -7252,7 +7251,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 [NOTE]
 Callback can return 'WEECHAT_RC_OK' or 'WEECHAT_RC_OK_EAT' (command will not
@@ -7328,7 +7327,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -7404,7 +7403,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -7500,7 +7499,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -7869,7 +7868,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -8026,7 +8025,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -8114,7 +8113,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -9028,7 +9027,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -9388,7 +9387,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -9466,7 +9465,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 [NOTE]
 Completion names are global (shared across WeeChat and plugins). So it is
@@ -9649,7 +9648,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -9890,7 +9889,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -9968,7 +9967,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -10051,7 +10050,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -10130,7 +10129,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 Return value:
 
@@ -10193,7 +10192,7 @@ Arguments:
 * 'callback_pointer': pointer given to callback when it is called by WeeChat
 * 'callback_data': pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 [IMPORTANT]
 For a mouse gesture, your callback will be called two times: first time when
@@ -10554,7 +10553,7 @@ Arguments:
   WeeChat
 * 'input_callback_data': pointer given to callback when it is called by
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the buffer is closed
+  function) and it is automatically freed when the buffer is closed
 * 'close_callback': function called when buffer is closed, arguments and return
   value:
 ** 'const void *pointer': pointer
@@ -10567,7 +10566,7 @@ Arguments:
   WeeChat
 * 'close_callback_data': pointer given to callback when it is called by
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it will be automatically freed when the buffer is closed
+  function) and it is automatically freed when the buffer is closed
 
 Return value:
 
@@ -15385,22 +15384,44 @@ Functions for upgrading WeeChat (command "/upgrade").
 
 ==== upgrade_new
 
+_Updated in 1.5._
+
 Create or read a file for upgrade.
 
 Prototype:
 
 [source,C]
 ----
-struct t_upgrade_file *weechat_upgrade_new (const char *filename, int write);
+struct t_upgrade_file *upgrade_file_new (const char *filename,
+                                         int (*callback_read)(const void *pointer,
+                                                              void *data,
+                                                              struct t_upgrade_file *upgrade_file,
+                                                              int object_id,
+                                                              struct t_infolist *infolist),
+                                         const void *callback_read_pointer,
+                                         void *callback_read_data);
 ----
 
 Arguments:
 
-* 'filename': name of file (extension ".upgrade" will be added to this name by
+* 'filename': name of file (extension ".upgrade" is added to this name by
   WeeChat)
-* 'write':
-** '1': create file (write mode, before upgrade)
-** '0': read file (after upgrade)
+* 'callback_read': function called for each object read in upgrade file
+  (if NULL, the upgrade file is opened in write mode), arguments and return
+  value:
+** 'const void *pointer': pointer
+** 'void *data': pointer
+** 'struct t_upgrade_file *upgrade_file': pointer to upgrade file
+** 'int object_id': object id
+** 'struct t_infolist *infolist': infolist with content of object
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
+* 'callback_read_pointer': pointer given to callback when it is called by
+  WeeChat
+* 'callback_read_data': pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it is automatically freed when the upgrade file is closed
 
 Return value:
 
@@ -15410,7 +15431,8 @@ C example:
 
 [source,C]
 ----
-struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file", 1);
+struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file",
+                                                           NULL, NULL, NULL);
 ----
 
 Script (Python):
@@ -15418,10 +15440,10 @@ Script (Python):
 [source,python]
 ----
 # prototype
-upgrade_file = weechat.upgrade_new(filename, write)
+upgrade_file = weechat.upgrade_new(filename, callback_read, callback_read_data)
 
 # example
-upgrade_file = weechat.upgrade_new("my_file", 1)
+upgrade_file = weechat.upgrade_new("my_file", "", "")
 ----
 
 ==== upgrade_write_object
@@ -15474,34 +15496,20 @@ weechat.upgrade_write_object(upgrade_file, 1, infolist)
 
 ==== upgrade_read
 
+_Updated in 1.5._
+
 Read an upgrade file.
 
 Prototype:
 
 [source,C]
 ----
-int weechat_upgrade_read (struct t_upgrade_file *upgrade_file,
-                          int (*callback_read)(void *data,
-                                               struct t_upgrade_file *upgrade_file,
-                                               int object_id,
-                                               struct t_infolist *infolist),
-                          void *callback_read_data);
+int weechat_upgrade_read (struct t_upgrade_file *upgrade_file);
 ----
 
 Arguments:
 
 * 'upgrade_file': upgrade file pointer
-* 'callback_read': function called for each object read in upgrade file,
-  arguments and return value:
-** 'void *data': pointer
-** 'struct t_upgrade_file *upgrade_file': pointer to upgrade file
-** 'int object_id': object id
-** 'struct t_infolist *infolist': infolist with content of object
-** return value:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'callback_read_data': pointer given to read callback when it is called by
-  WeeChat
 
 Return value:
 
@@ -15511,16 +15519,7 @@ C example:
 
 [source,C]
 ----
-int
-my_upgrade_read_cb (struct t_upgrade_file *upgrade_file,
-                    int object_id,
-                    struct t_infolist *infolist)
-{
-    /* read variables... */
-    return WEECHAT_RC_OK;
-}
-
-weechat_upgrade_read (upgrade_file, &my_upgrade_read_cb, NULL);
+weechat_upgrade_read (upgrade_file);
 ----
 
 Script (Python):
@@ -15528,14 +15527,10 @@ Script (Python):
 [source,python]
 ----
 # prototype
-rc = weechat.upgrade_read(upgrade_file, callback_read, callback_read_data)
+rc = weechat.upgrade_read(upgrade_file)
 
 # example
-def my_upgrade_read_cb(upgrade_file, object_id, infolist):
-    # read variables...
-    return weechat.WEECHAT_RC_OK
-
-weechat.upgrade_read(upgrade_file, "my_upgrade_read_cb", ""))
+weechat.upgrade_read(upgrade_file)
 ----
 
 ==== upgrade_close

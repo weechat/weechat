@@ -4288,7 +4288,7 @@ struct t_config_file *weechat_config_new (const char *name,
 // TRANSLATION MISSING
 * 'callback_reload_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the configuration file is freed
+  and it is automatically freed when the configuration file is freed
 
 戻り値:
 
@@ -4409,7 +4409,7 @@ struct t_config_section *weechat_config_new_section (
 // TRANSLATION MISSING
 * 'callback_read_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the section is freed
+  and it is automatically freed when the section is freed
 * 'callback_write': セクションをファイルに書き込む際に呼び出す関数
   (特別な関数を使ってセクションを書き込む必要がある場合を除いて、殆どの場合は
   NULL を指定する)、引数と戻り値:
@@ -4426,7 +4426,7 @@ struct t_config_section *weechat_config_new_section (
 // TRANSLATION MISSING
 * 'callback_write_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the section is freed
+  and it is automatically freed when the section is freed
 * callback_write_default:
   セクションのデフォルト値が必ずファイルに書き込まれる際に呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
@@ -4442,7 +4442,7 @@ struct t_config_section *weechat_config_new_section (
 // TRANSLATION MISSING
 * 'callback_write_default_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the section is freed
+  and it is automatically freed when the section is freed
 * 'callback_create_option': セクションに新しいオプションを作成する際に呼び出す関数
   (セクションに新しいオプションを作成することを禁止する場合は
   NULL)、引数と戻り値:
@@ -4462,7 +4462,7 @@ struct t_config_section *weechat_config_new_section (
 // TRANSLATION MISSING
 * 'callback_create_option_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the section is freed
+  and it is automatically freed when the section is freed
 * 'callback_delete_option': セクションからオプションを削除する際に呼び出す関数
   (セクションからオプションを削除することを禁止する場合は
   NULL)、引数と戻り値:
@@ -4481,7 +4481,7 @@ struct t_config_section *weechat_config_new_section (
 // TRANSLATION MISSING
 * 'callback_delete_option_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the section is freed
+  and it is automatically freed when the section is freed
 
 戻り値:
 
@@ -4725,7 +4725,7 @@ struct t_config_option *weechat_config_new_option (
 // TRANSLATION MISSING
 * 'callback_check_value_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the option is freed
+  and it is automatically freed when the option is freed
 * 'callback_change': オプションの値を変更した際に呼び出す関数
   (任意)、引数:
 ** 'const void *pointer': ポインタ
@@ -4736,7 +4736,7 @@ struct t_config_option *weechat_config_new_option (
 // TRANSLATION MISSING
 * 'callback_change_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the option is freed
+  and it is automatically freed when the option is freed
 * 'callback_delete': オプションを削除する前に際に呼び出す関数
   (任意)、引数:
 ** 'const void *pointer': ポインタ
@@ -4747,7 +4747,7 @@ struct t_config_option *weechat_config_new_option (
 // TRANSLATION MISSING
 * 'callback_delete_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the option is freed
+  and it is automatically freed when the option is freed
 
 戻り値:
 
@@ -7124,7 +7124,7 @@ struct t_hook *weechat_hook_command (const char *command,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 デフォルトの補完候補コードは:
 
@@ -7251,7 +7251,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 [NOTE]
 コールバックは 'WEECHAT_RC_OK' または 'WEECHAT_RC_OK_EAT'
@@ -7328,7 +7328,7 @@ struct t_hook *weechat_hook_timer (long interval,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -7405,7 +7405,7 @@ struct t_hook *weechat_hook_fd (int fd,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -7502,7 +7502,7 @@ struct t_hook *weechat_hook_process (const char *command,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -7872,7 +7872,7 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -8030,7 +8030,7 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -8119,7 +8119,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -9034,7 +9034,7 @@ Arguments:
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -9395,7 +9395,7 @@ struct t_hook *weechat_hook_config (const char *option,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -9474,7 +9474,7 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 [NOTE]
 補完名はグローバルです (WeeChat
@@ -9658,7 +9658,7 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -9898,7 +9898,7 @@ struct t_hook *weechat_hook_info (const char *info_name,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -9977,7 +9977,7 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -10061,7 +10061,7 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -10141,7 +10141,7 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 戻り値:
 
@@ -10205,7 +10205,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 // TRANSLATION MISSING
 * 'callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the hook is deleted
+  and it is automatically freed when the hook is deleted
 
 [IMPORTANT]
 マウスジェスチャの場合、コールバックを 2 回呼び出します: 1
@@ -10567,7 +10567,7 @@ struct t_gui_buffer *weechat_buffer_new (const char *name,
 // TRANSLATION MISSING
 * 'input_callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the buffer is closed
+  and it is automatically freed when the buffer is closed
 * 'close_callback':
   バッファを閉じる際に呼び出す関数、引数と戻り値:
 ** 'const void *pointer': ポインタ
@@ -10580,7 +10580,7 @@ struct t_gui_buffer *weechat_buffer_new (const char *name,
 // TRANSLATION MISSING
 * 'close_callback_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
   if not NULL, it must have been allocated with malloc (or similar function)
-  and it will be automatically freed when the buffer is closed
+  and it is automatically freed when the buffer is closed
 
 戻り値:
 
@@ -15397,22 +15397,43 @@ WeeChat をアップグレードする (コマンド "/upgrade") 関数。
 
 ==== upgrade_new
 
+_バージョン 1.5 で更新。_
+
 アップグレード用のファイルを作成または読み込み。
 
 プロトタイプ:
 
 [source,C]
 ----
-struct t_upgrade_file *weechat_upgrade_new (const char *filename, int write);
+struct t_upgrade_file *upgrade_file_new (const char *filename,
+                                         int (*callback_read)(const void *pointer,
+                                                              void *data,
+                                                              struct t_upgrade_file *upgrade_file,
+                                                              int object_id,
+                                                              struct t_infolist *infolist),
+                                         const void *callback_read_pointer,
+                                         void *callback_read_data);
 ----
 
 引数:
 
 * 'filename': ファイルの名前 (WeeChat
   はこの名前に拡張子 ".upgrade" を追加します)
-* 'write':
-** '1': ファイルを作成 (書き込みモード、アップグレード前)
-** '0': ファイルを読み込む (アップグレード後)
+* 'callback_read': アップグレードファイル内の各オブジェクトを読み込む際に呼び出す関数
+  引数と戻り値:
+** 'const void *pointer': ポインタ
+** 'void *data': ポインタ
+** 'struct t_upgrade_file *upgrade_file': アップグレードファイルへのポインタ
+** 'int object_id': オブジェクトの識別番号
+** 'struct t_infolist *infolist': オブジェクトの内容を含むインフォリスト
+** 戻り値:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
+* 'callback_read_pointer': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ
+// TRANSLATION MISSING
+* 'callback_read_data': WeeChat がコールバックを呼び出す際にコールバックに渡すポインタ;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it is automatically freed when the upgrade file is closed
 
 戻り値:
 
@@ -15422,7 +15443,8 @@ C 言語での使用例:
 
 [source,C]
 ----
-struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file", 1);
+struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file",
+                                                           NULL, NULL, NULL);
 ----
 
 スクリプト (Python) での使用例:
@@ -15430,10 +15452,10 @@ struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file", 1);
 [source,python]
 ----
 # プロトタイプ
-upgrade_file = weechat.upgrade_new(filename, write)
+upgrade_file = weechat.upgrade_new(filename, callback_read, callback_read_data)
 
 # 例
-upgrade_file = weechat.upgrade_new("my_file", 1)
+upgrade_file = weechat.upgrade_new("my_file", "", "")
 ----
 
 ==== upgrade_write_object
@@ -15486,34 +15508,20 @@ weechat.upgrade_write_object(upgrade_file, 1, infolist)
 
 ==== upgrade_read
 
+_バージョン 1.5 で更新。_
+
 アップグレードファイルを読み込む。
 
 プロトタイプ:
 
 [source,C]
 ----
-int weechat_upgrade_read (struct t_upgrade_file *upgrade_file,
-                          int (*callback_read)(void *data,
-                                               struct t_upgrade_file *upgrade_file,
-                                               int object_id,
-                                               struct t_infolist *infolist),
-                          void *callback_read_data);
+int weechat_upgrade_read (struct t_upgrade_file *upgrade_file);
 ----
 
 引数:
 
 * 'upgrade_file': アップグレードファイルへのポインタ
-* 'callback_read': アップグレードファイル内の各オブジェクトを読み込む際に呼び出す関数
-  引数と戻り値:
-** 'void *data': ポインタ
-** 'struct t_upgrade_file *upgrade_file': アップグレードファイルへのポインタ
-** 'int object_id': オブジェクトの識別番号
-** 'struct t_infolist *infolist': オブジェクトの内容を含むインフォリスト
-** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'callback_read_data': WeeChat が read
-  コールバックを呼び出す際にコールバックに渡すポインタ
 
 戻り値:
 
@@ -15523,16 +15531,7 @@ C 言語での使用例:
 
 [source,C]
 ----
-int
-my_upgrade_read_cb (struct t_upgrade_file *upgrade_file,
-                    int object_id,
-                    struct t_infolist *infolist)
-{
-    /* read variables... */
-    return WEECHAT_RC_OK;
-}
-
-weechat_upgrade_read (upgrade_file, &my_upgrade_read_cb, NULL);
+weechat_upgrade_read (upgrade_file);
 ----
 
 スクリプト (Python) での使用例:
@@ -15540,14 +15539,10 @@ weechat_upgrade_read (upgrade_file, &my_upgrade_read_cb, NULL);
 [source,python]
 ----
 # プロトタイプ
-rc = weechat.upgrade_read(upgrade_file, callback_read, callback_read_data)
+rc = weechat.upgrade_read(upgrade_file)
 
 # 例
-def my_upgrade_read_cb(upgrade_file, object_id, infolist):
-    # read variables...
-    return weechat.WEECHAT_RC_OK
-
-weechat.upgrade_read(upgrade_file, "my_upgrade_read_cb", ""))
+weechat.upgrade_read(upgrade_file)
 ----
 
 ==== upgrade_close
