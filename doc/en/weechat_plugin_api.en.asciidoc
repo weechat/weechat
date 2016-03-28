@@ -7163,27 +7163,19 @@ my_command_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
 
 /* this example is inspired by command /filter */
 struct t_hook *my_command_hook =
-    weechat_hook_command (/* command name */
-                          "myfilter",
-                          /* description */
+    weechat_hook_command ("myfilter",
                           "description of myfilter",
-                          /* args */
                           "[list] | [enable|disable|toggle [name]] | "
                           "[add name plugin.buffer tags regex] | "
                           "[del name|-all]",
-                          /* args description */
                           "description of arguments...",
-                          /* completion */
                           "list"
                           " || enable %(filters_names)"
                           " || disable %(filters_names)"
                           " || toggle %(filters_names)"
                           " || add %(filters_names) %(buffers_plugins_names)|*"
                           " || del %(filters_names)|-all",
-                          /* callback */
-                          &my_command_cb,
-                          /* callback_data */
-                          NULL, NULL);
+                          &my_command_cb, NULL, NULL);
 ----
 
 For example, if command called is `/command abc def ghi`, then 'argv' and
