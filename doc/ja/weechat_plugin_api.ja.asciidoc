@@ -4258,6 +4258,8 @@ weechat_hashtable_free (hashtable);
 
 ==== config_new
 
+_バージョン 1.5 で更新。_
+
 新しい設定ファイルを作成。
 
 プロトタイプ:
@@ -4336,6 +4338,8 @@ config_file = weechat.config_new("test", "my_config_reload_cb", "")
 ----
 
 ==== config_new_section
+
+_バージョン 1.5 で更新。_
 
 設定ファイルに新しいセクションを作成する。
 
@@ -4664,6 +4668,8 @@ section = weechat.config_search_section(config_file, "section")
 ----
 
 ==== config_new_option
+
+_バージョン 1.5 で更新。_
 
 設定ファイルのあるセクションに新しいオプションを作成。
 

@@ -4383,6 +4383,9 @@ Funzioni per i file di configurazione.
 
 ==== config_new
 
+// TRANSLATION MISSING
+_Updated in 1.5._
+
 Crea un nuovo file di configurazione.
 
 Prototipo:
@@ -4463,6 +4466,9 @@ config_file = weechat.config_new("test", "my_config_reload_cb", "")
 ----
 
 ==== config_new_section
+
+// TRANSLATION MISSING
+_Updated in 1.5._
 
 Crea una nuova sezione nel file di configurazione.
 
@@ -4793,6 +4799,9 @@ section = weechat.config_search_section(config_file, "section")
 ----
 
 ==== config_new_option
+
+// TRANSLATION MISSING
+_Updated in 1.5._
 
 Crea una nuova opzione nella sezione di un file di configurazione.
 

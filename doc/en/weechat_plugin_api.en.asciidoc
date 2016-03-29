@@ -4257,6 +4257,8 @@ Functions for configuration files.
 
 ==== config_new
 
+_Updated in 1.5._
+
 Create a new configuration file.
 
 Prototype:
@@ -4334,6 +4336,8 @@ config_file = weechat.config_new("test", "my_config_reload_cb", "")
 ----
 
 ==== config_new_section
+
+_Updated in 1.5._
 
 Create a new section in configuration file.
 
@@ -4660,6 +4664,8 @@ section = weechat.config_search_section(config_file, "section")
 ----
 
 ==== config_new_option
+
+_Updated in 1.5._
 
 Create a new option in a section of a configuration file.
 
