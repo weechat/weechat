@@ -21,8 +21,8 @@ https://weechat.org/doc
 [[introduction]]
 == イントロダクション
 
-WeeChat (Wee Enhanced Environment for Chat) はフリー、高速、軽量な
-多くのオペレーティングシステムで動くチャットクライアントです。
+WeeChat (Wee Enhanced Environment for Chat)
+はフリー、高速、軽量な多くのオペレーティングシステムで動くチャットクライアントです。
 
 このマニュアル文書は以下のスクリプト言語を利用して WeeChat
 用のスクリプトを製作する方法を解説しています:
@@ -47,8 +47,8 @@ WeeChat (Wee Enhanced Environment for Chat) はフリー、高速、軽量な
 
 ==== Python
 
-* `import weechat` を使うことは必須です。
-* python では `print*` 系の関数は `prnt*` と呼ばれます
+* 必ず `import weechat` を使ってください。
+* python では `print*` 系の関数は `prnt*` と書きます
   ('print' は予約済みキーワードなので)。
 * 関数は `weechat.xxx(arg1, arg2, ...)` のように呼び出してください。
 
@@ -81,18 +81,22 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 ==== Guile (scheme)
 
 * 関数は `(weechat:xxx arg1 arg2 ...)` のように呼び出してください。
-* 以下の関数は引数のリストをひとつだけ取ります。
-  (他の関数のように多くの引数を取れません)、
-  この理由は引数の個数が Guile で利用できる引数の数を超えるからです。
+* 以下の関数は引数のリストをひとつだけ取ります
+  (他の関数のように多くの引数を取れません)、この理由は引数の個数が
+  Guile で利用できる引数の数を超えるからです。
 ** config_new_section
 ** config_new_option
 ** bar_new
 
+==== Javascript
+
+* 関数は `weechat.xxx(arg1, arg2, ...);` のように呼び出してください。
+
 [[register_function]]
 === 関数の登録
 
-全ての WeeChat スクリプトは WeeChat に自分自身を "登録"
-し、登録はスクリプトの最初で行われなければいけません。
+全ての WeeChat スクリプトは WeeChat
+に自分自身を「登録」し、登録はスクリプトの最初で行われなければいけません。
 
 プロトタイプ:
 
@@ -110,9 +114,8 @@ weechat.register(name, author, version, license, description, shutdown_function,
 * 'description': 文字列型、スクリプトの短い説明
 * 'shutdown_function': 文字列型、スクリプトがアンロードされた際に呼び出される関数の名前
   (空文字列でも可)
-* 'charset': 文字列型、スクリプトの文字コード
-  (UTF-8 はデフォルトの文字コードなので、スクリプトが UTF-8
-  で書かれている場合、空文字列を指定してください)
+* 'charset': 文字列型、スクリプトの文字コード (UTF-8
+  はデフォルトの文字コードなので、スクリプトが UTF-8 で書かれている場合、空文字列を指定してください)
 
 各言語で書かれたスクリプトの例:
 
@@ -221,9 +224,9 @@ $ ln -s ../script.py
 [[differences_with_c_api]]
 == C API との違い
 
-スクリプト API は C プラグイン API とほぼ同じです。API
+スクリプト API は C 言語プラグイン API とほぼ同じです。API
 に含まれる各関数の詳細については、'WeeChat プラグイン API リファレンス'
-をご覧ください: プロトタイプ、引数、戻り値、例
+をご覧ください: プロトタイプ、引数、戻り値、例。
 
 'プラグイン' と'スクリプト' の違いを理解することは重要です: 'プラグイン'
 とはコンパイル済みバイナリファイルで `/plugin` コマンドを使ってロードします、これに対して
@@ -256,17 +259,17 @@ WeeChat が 'test.py'
 [[pointers]]
 === ポインタ
 
-ご存知かもしれませんが、スクリプトには本当の意味での "ポインタ" はありません。このため
+ご存知かもしれませんが、スクリプトには本当の意味での「ポインタ」はありません。このため
 API 関数がポインタを返す場合、スクリプトでは文字列に変換されます。
 
 例えば、関数がポインタ 0x1234ab56 を返した場合、スクリプトは
 "0x1234ab56" という文字列を受け取ることになります。
 
 API 関数の引数にポインタを与える場合、スクリプトではポインタを文字列型として渡さなければいけません。C
-API 関数を呼び出す前に C
-プラグインがこれを本来のポインタ型に変換します。
+言語 API 関数を呼び出す前に C
+言語プラグインがこれを本来のポインタ型に変換します。
 
-空文字列や "0x0" を使うことも許されています。これらは C で言うところの NULL
+空文字列や "0x0" を使うことも許されています。これらは C 言語で言うところの NULL
 と解釈されます。例えば、データをコアバッファ (WeeChat メインバッファ) に表示する場合、以下のようになります:
 
 [source,python]
@@ -275,9 +278,9 @@ weechat.prnt("", "hi!")
 ----
 
 [WARNING]
-多くの関数ではスピードの関係で、WeeChat はポインタの値が正当なものか否かの確認を行いません。
-ポインタの正当性を確認することはプログラマが行わなければいけません。
-不正なポインタを利用した場合、細かなクラッシュレポートを目にすることになるでしょう ;)
+WeeChat の多くのスクリプト API
+関数は計算量を減らすために、ポインタの値が正当なものか否かの確認を行いません。ポインタの正当性を確認することはプログラマが行わなければいけません。不正なポインタを利用した場合、細かなクラッシュレポートを目にすることになるでしょう
+;)
 
 [[callbacks]]
 === コールバック
@@ -285,7 +288,7 @@ weechat.prnt("", "hi!")
 ほとんど全ての WeeChat コールバックは WEECHAT_RC_OK 又は WEECHAT_RC_ERROR
 を返さなければいけません (modifier コールバックは例外で、これは文字列を返します)。
 
-C コールバックはポインタ型の "data" 引数を利用します。スクリプト API
+C 言語コールバックはポインタ型の "data" 引数を利用します。スクリプト API
 では、"data" は文字列型で任意の値を取れます (ポインタ型ではありません)。
 
 各プログラミング言語でコールバックを利用する例:
@@ -448,9 +451,9 @@ API に含まれる関数の詳しい情報は
   bar_new, bar_set, bar_update, bar_remove
 | コマンド            |
   command
-| 情報                |
+| インフォ            |
   info_get, info_get_hashtable
-| 情報リスト          |
+| インフォリスト      |
   infolist_new, infolist_new_item, infolist_new_var_integer,
   infolist_new_var_string, infolist_new_var_pointer, infolist_new_var_time, +
   infolist_get, infolist_next, infolist_prev, infolist_reset_item_cursor, +
@@ -526,7 +529,7 @@ WeeChat コアバッファに対して操作する場合、空文字列を使う
 weechat.prnt("", "hello")
 
 # "hello" をコアバッファに表示するが、ログファイルには書き込まない
-# (バージョン >= 0.3.3 のみ)
+# (WeeChat バージョン 0.3.3 以上で利用可)
 weechat.prnt_date_tags("", 0, "no_log", "hello")
 
 # プレフィックス "==>" とメッセージ "hello" を現在のバッファに表示
@@ -551,7 +554,8 @@ weechat.prnt(buffer, "message on #weechat channel")
 ----
 
 [NOTE]
-Print 関数は Perl/Ruby/Lua/Tcl/Guile/Javascript では `print` で、Python では `prnt` です。
+Print 関数は Perl/Ruby/Lua/Tcl/Guile/Javascript では `print` で、Python では
+`prnt` です。
 
 [[buffers_send_text]]
 ==== バッファにテキストを送信
@@ -646,8 +650,8 @@ weechat.buffer_set(buffer, "localvar_del_myvar", "")
 [[hook_command]]
 ==== 新しいコマンドの追加
 
-カスタムコマンドを追加するには `hook_command` を使ってください。
-追加したコマンドに対してカスタム補完テンプレートを定義できます。
+カスタムコマンドを追加するには `hook_command`
+を使ってください。追加したコマンドに対してカスタム補完テンプレートを定義できます。
 
 例:
 
@@ -697,8 +701,8 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 [[hook_process]]
 ==== バックグラウンドプロセスの実行
 
-`hook_process` を使ってバックグラウンドプロセスを実行できます。
-コールバックはデータの準備が整った時点で呼び出されます。複数回呼び出されることもあります。
+バックグラウンドプロセスを実行するには `hook_process`
+を使います。コールバックはデータの準備が整った時点で呼び出されます。複数回呼び出されることもあります。
 
 コールバックの最後の呼び出しでは 'rc' が 0
 か正の値に設定されています。これはコマンドのリターンコードになります。
@@ -723,7 +727,7 @@ weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
 [[url_transfer]]
 ==== URL 転送
 
-_バージョン 0.3.7 に含まれる新機能_
+_WeeChat バージョン 0.3.7 以上で利用可。_
 
 URL をダウンロードする (又は URL にポストする) には、関数 `hook_process` 又は URL
 転送にオプションが必要な場合は `hook_process_hashtable` を使わなければいけません。
@@ -806,7 +810,7 @@ SCRIPT_NAME = "myscript"
 # ...
 
 def config_cb(data, option, value):
-    """スクリプトオプションが変更されたときに呼び出されるコールバック""
+    """スクリプトオプションが変更されたときに呼び出されるコールバック"""
     # 例えば、スクリプト変数に対する全てのスクリプトオプションを読み込む等...
     # ...
     return weechat.WEECHAT_RC_OK
@@ -814,7 +818,7 @@ def config_cb(data, option, value):
 # ...
 
 weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
-# 他のスクリプト言語の場合は "python" を適当なもの (perl/ruby/lua/tcl/guile/javascript) に変更してください。
+# 他のスクリプト言語の場合は "python" を適当なもの (perl/ruby/lua/tcl/guile/javascript) に変更してください
 ----
 
 [[config_options_weechat]]
@@ -898,7 +902,7 @@ weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")
 [[irc_message_parse]]
 ==== メッセージの構文解析
 
-_バージョン 0.3.4 の新機能_
+_WeeChat バージョン 0.3.4 以上で利用可。_
 
 "irc_message_parse" と呼ばれる info_hashtable を使って IRC メッセージを構文解析できます。
 
@@ -910,51 +914,51 @@ _バージョン 0.3.4 の新機能_
 |===
 | キー | WeeChat バージョン | 説明 | 例
 
-| tags | ≥ 0.4.0 |
+| tags | 0.4.0 以上 |
   メッセージに付けられたタグ (空にすることも可) |
   `time=2015-06-27T16:40:35.000Z`
 
-| message_without_tags | ≥ 0.4.0 |
+| message_without_tags | 0.4.0 以上 |
   タグを除いたメッセージ (タグが付けられていなければメッセージと同じ) |
   `:nick!user@host PRIVMSG #weechat :hello!`
 
-| nick | ≥ 0.3.4 |
+| nick | 0.3.4 以上 |
   発信者のニックネーム |
   `nick`
 
-| host | ≥ 0.3.4 |
+| host | 0.3.4 以上 |
   発信者のホスト (ニックネームを含む) |
   `nick!user@host`
 
-| command | ≥ 0.3.4 |
+| command | 0.3.4 以上 |
   コマンド ('PRIVMSG' 、'NOTICE' 、...) |
   `PRIVMSG`
 
-| channel | ≥ 0.3.4 |
+| channel | 0.3.4 以上 |
   送信先チャンネル |
   `#weechat`
 
-| arguments | ≥ 0.3.4 |
+| arguments | 0.3.4 以上 |
   コマンド引数 (チャンネルを含む) |
   `#weechat :hello!`
 
-| text | ≥ 1.3 |
+| text | 1.3 以上 |
   テキスト (ユーザメッセージなど) |
   `hello!`
 
-| pos_command | ≥ 1.3 |
+| pos_command | 1.3 以上 |
   メッセージ内における 'command' のインデックス ('command' が見つからない場合 "-1") |
   `47`
 
-| pos_arguments | ≥ 1.3 |
+| pos_arguments | 1.3 以上 |
   メッセージ内における 'arguments' のインデックス ('arguments' が見つからない場合 "-1") |
   `55`
 
-| pos_channel | ≥ 1.3 |
+| pos_channel | 1.3 以上 |
   メッセージ内における 'channel' のインデックス ('channel' が見つからない場合 "-1") |
   `55`
 
-| pos_text | ≥ 1.3 |
+| pos_text | 1.3 以上 |
   メッセージ内における 'text' のインデックス ('text' が見つからない場合 "-1") |
   `65`
 |===
@@ -1002,7 +1006,7 @@ else:
 ----
 
 [NOTE]
-バージョン 0.3.1.1 以下では 'info_get("version_number")'
+バージョン 0.3.1.1 以下の場合 'info_get("version_number")'
 は空文字列を返すため、値が空でないことを確認しなければいけません。
 
 文字列でバージョンを使うには:
@@ -1026,18 +1030,18 @@ weechat.prnt("", "Inactivity since %s seconds" % weechat.info_get("inactivity", 
 ----
 
 [[infolists]]
-=== 情報リスト
+=== インフォリスト
 
 [[infolists_read]]
-==== 情報リストの読み込み
+==== インフォリストの読み込み
 
-WeeChat や他のプラグインによって作られた情報リストを読み込むことができます。
+WeeChat や他のプラグインによって作られたインフォリストを読み込むことができます。
 
 例:
 
 [source,python]
 ----
-# バッファのリストを得るために "buffer" 情報リストを読み込む
+# バッファのリストを得るために "buffer" インフォリストを読み込む
 infolist = weechat.infolist_get("buffer", "", "")
 if infolist:
     while weechat.infolist_next(infolist):
@@ -1047,5 +1051,5 @@ if infolist:
 ----
 
 [IMPORTANT]
-WeeChat は自動的にメモリを解放しません、情報リストによって使われたメモリを解放するには、`infolist_free`
+WeeChat は自動的にメモリを解放しません、インフォリストによって使われたメモリを解放するには、`infolist_free`
 を呼び出すことを忘れないでください。

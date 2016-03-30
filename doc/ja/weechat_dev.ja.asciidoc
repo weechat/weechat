@@ -164,7 +164,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       gui-curses-key.c        | キーボード関数 (デフォルトキー、入力の読み取り)
 |       gui-curses-main.c       | WeeChat メインループ (キーボードやネットワークイベントの待ち受け)
 |       gui-curses-mouse.c      | マウス
-|       gui-curses-term.c       | ターミナルについての関数
+|       gui-curses-term.c       | 端末についての関数
 |       gui-curses-window.c     | ウィンドウ
 |       main.c                  | エントリポイント
 |===
@@ -616,7 +616,7 @@ http://www.python.org/dev/peps/pep-0008/ を参照
 [[naming_convention_files]]
 ==== ファイル
 
-ファイル名に使えるのは文字とハイフンだけで、フォーマット: 'xxx-yyyyy.[ch]'
+ファイル名に使えるのは文字とハイフンだけで、書式: 'xxx-yyyyy.[ch]'
 に従ってください。'xxx' はディレクトリおよび構成要素 (略称も可) で、'yyyyy'
 はファイルの名前です。
 
@@ -675,7 +675,7 @@ struct t_irc_nick
 * 'Y': ファイル名の最後
 * 'Z': 変数の名前
 
-例外として、リストの"最後の" ノードを表す変数の名前は 'last_X'
+例外として、リストの「最後の」ノードを表す変数の名前は 'last_X'
 という書式に従います (ここで 'X' は変数の名前で、単数形を使います)。
 
 例: ウィンドウ ('src/gui/gui-window.c' より):
@@ -760,7 +760,7 @@ struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
 === 文字列中の色コード
 
 WeeChat は文字列中に独自の色コードを使うことで、属性
-(太字、下線、...) とスクリーン上の色を表現します。
+(太字、下線、...) と画面上の色を表現します。
 
 文字列にある文字を含め、その後に属性及び色を指定します、これは:
 
@@ -788,7 +788,7 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 * `(A)STD`: 任意属性を含めた標準色 (属性 + 2 桁の番号)
 * `EXT`: 拡張色 (`@` + 5 桁の番号)
 * `(A)EXT`:任意属性を含めた拡張色 (`@` + 属性 + 5 桁の番号)
-* `ATTR`: 属性指定の 1 文字 (`*`、`!`、`/`、`_`、`|`)
+* `ATTR`: 属性指定の 1 文字 (`*` 、`!` 、`/` 、`_` 、`|`)
 
 以下の表にすべての組み合わせをまとめています:
 
@@ -815,14 +815,15 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 | hex[19] + "b" + "#"                | hex[19]`b#`             | input bar   | カーソル文字を移動 ("input_text" 要素のみで利用可)
 | hex[19] + "b" + "i"                | hex[19]`bi`             | bars        | 要素を開始
 | hex[19] + "b" + "l" (小文字の L)   | hex[19]`bl`             | bars        | 行要素を開始
-| hex[19] + "E"                      | hex[19]`E`              | chat + bars | テキストを強調 _(WeeChat ≥ 0.4.2)_
+| hex[19] + "E"                      | hex[19]`E`              | chat + bars | テキストを強調 _(WeeChat バージョン 0.4.2 以上で利用可)_
 | hex[19] + hex[1C]                  | hex[19]hex[1C]          | chat + bars | 色をリセット (属性は保存)
 | hex[1A] + ATTR                     | hex[1A]`*`              | chat + bars | 属性を設定
 | hex[1B] + ATTR                     | hex[1B]`*`              | chat + bars | 属性を削除
 | hex[1C]                            | hex[1C]                 | chat + bars | 属性と色をリセット
 |===
 
-オプションを使う色コード ('src/gui/gui-color.h' ファイルの 't_gui_color_enum' を参照):
+オプションを使う色コード
+('src/gui/gui-color.h' ファイルの 't_gui_color_enum' を参照):
 
 [width="70%",cols="^1m,10",options="header"]
 |===
@@ -844,16 +845,16 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 | 14   | weechat.color.chat_nick
 | 15   | weechat.color.chat_nick_self
 | 16   | weechat.color.chat_nick_other
-| 17   | _(WeeChat バージョン 0.3.4 以上では使えない)_
-| 18   | _(WeeChat バージョン 0.3.4 以上では使えない)_
-| 19   | _(WeeChat バージョン 0.3.4 以上では使えない)_
-| 20   | _(WeeChat バージョン 0.3.4 以上では使えない)_
-| 21   | _(WeeChat バージョン 0.3.4 以上では使えない)_
-| 22   | _(WeeChat バージョン 0.3.4 以上では使えない)_
-| 23   | _(WeeChat バージョン 0.3.4 以上では使えない)_
-| 24   | _(WeeChat バージョン 0.3.4 以上では使えない)_
-| 25   | _(WeeChat バージョン 0.3.4 以上では使えない)_
-| 26   | _(WeeChat バージョン 0.3.4 以上では使えない)_
+| 17   | _(WeeChat バージョン 0.3.4 以上で利用不可)_
+| 18   | _(WeeChat バージョン 0.3.4 以上で利用不可)_
+| 19   | _(WeeChat バージョン 0.3.4 以上で利用不可)_
+| 20   | _(WeeChat バージョン 0.3.4 以上で利用不可)_
+| 21   | _(WeeChat バージョン 0.3.4 以上で利用不可)_
+| 22   | _(WeeChat バージョン 0.3.4 以上で利用不可)_
+| 23   | _(WeeChat バージョン 0.3.4 以上で利用不可)_
+| 24   | _(WeeChat バージョン 0.3.4 以上で利用不可)_
+| 25   | _(WeeChat バージョン 0.3.4 以上で利用不可)_
+| 26   | _(WeeChat バージョン 0.3.4 以上で利用不可)_
 | 27   | weechat.color.chat_host
 | 28   | weechat.color.chat_delimiters
 | 29   | weechat.color.chat_highlight
@@ -861,17 +862,17 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 | 31   | weechat.color.chat_text_found
 | 32   | weechat.color.chat_value
 | 33   | weechat.color.chat_prefix_buffer
-| 34   | weechat.color.chat_tags _(WeeChat ≥ 0.3.6)_
-| 35   | weechat.color.chat_inactive_window _(WeeChat ≥ 0.3.6)_
-| 36   | weechat.color.chat_inactive_buffer _(WeeChat ≥ 0.3.6)_
-| 37   | weechat.color.chat_prefix_buffer_inactive_buffer _(WeeChat ≥ 0.3.6)_
-| 38   | weechat.color.chat_nick_offline _(WeeChat ≥ 0.3.9)_
-| 39   | weechat.color.chat_nick_offline_highlight _(WeeChat ≥ 0.3.9)_
-| 40   | weechat.color.chat_nick_prefix _(WeeChat ≥ 0.4.1)_
-| 41   | weechat.color.chat_nick_suffix _(WeeChat ≥ 0.4.1)_
-| 42   | weechat.color.emphasized _(WeeChat ≥ 0.4.2)_
-| 43   | weechat.color.chat_day_change _(WeeChat ≥ 0.4.2)_
-| 44   | weechat.color.chat_value_null _(WeeChat ≥ 1.4)_
+| 34   | weechat.color.chat_tags _(WeeChat バージョン 0.3.6 以上で利用可)_
+| 35   | weechat.color.chat_inactive_window _(WeeChat バージョン 0.3.6 以上で利用可)_
+| 36   | weechat.color.chat_inactive_buffer _(WeeChat バージョン 0.3.6 以上で利用可)_
+| 37   | weechat.color.chat_prefix_buffer_inactive_buffer _(WeeChat バージョン 0.3.6 以上で利用可)_
+| 38   | weechat.color.chat_nick_offline _(WeeChat バージョン 0.3.9 以上で利用可)_
+| 39   | weechat.color.chat_nick_offline_highlight _(WeeChat バージョン 0.3.9 以上で利用可)_
+| 40   | weechat.color.chat_nick_prefix _(WeeChat バージョン 0.4.1 以上で利用可)_
+| 41   | weechat.color.chat_nick_suffix _(WeeChat バージョン 0.4.1 以上で利用可)_
+| 42   | weechat.color.emphasized _(WeeChat バージョン 0.4.2 以上で利用可)_
+| 43   | weechat.color.chat_day_change _(WeeChat バージョン 0.4.2 以上で利用可)_
+| 44   | weechat.color.chat_value_null _(WeeChat バージョン 1.4 以上で利用可)_
 |===
 
 WeeChat 色は:
@@ -879,7 +880,7 @@ WeeChat 色は:
 [width="70%",cols="^1m,6",options="header"]
 |===
 | コード | 色
-| 00   | デフォルト (ターミナルの文字色/背景色)
+| 00   | デフォルト (端末の文字色/背景色)
 | 01   | 黒
 | 02   | 暗い灰色
 | 03   | 暗い赤
@@ -971,7 +972,7 @@ Git リポジトリはこの URL にあります: https://github.com/weechat/wee
 リクエストを使って提出することを推奨します。パッチは電子メールで送信することも可能です
 (`git diff` または `git format-patch` で作成してください)。
 
-コミットメッセージは以下のフォーマットに従ってください (GitHub の issue を閉じる場合):
+コミットメッセージは以下の書式に従ってください (GitHub の issue を閉じる場合):
 
 ----
 component: fix a problem (closes #123)
@@ -985,7 +986,7 @@ component: fix a problem (bug #12345)
 
 'component' には以下から 1 つ選んで記入してください:
 
-* WeeChat コア: 'core' (ルートディレクトリ、'po/' ディレクトリ、 'src/'
+* WeeChat コア: 'core' (ルートディレクトリ、'po/' ディレクトリ、'src/'
   ディレクトリに含まれるファイル、ただし 'src/plugins/' 内のファイルを除く)
 * 文書ファイル: 'doc' ('doc/' ディレクトリに含まれるファイル)
 * プラグインの名前: 'irc' 、'python' 、'relay' 、... ('src/plugins/' ディレクトリに含まれるファイル)
@@ -994,7 +995,7 @@ component: fix a problem (bug #12345)
 
 * 英語を使ってください
 * 動詞の原形を使ってください
-* コミットの内容がトラッカーに関するものである場合には、コミットメッセージの後にカッコで括ってその旨記載してください、フォーマットは以下のようにしてください:
+* コミットの内容がトラッカーに関するものである場合には、コミットメッセージの後にカッコで括ってその旨記載してください、書式は以下のようにしてください:
 ** GitHub: closes #123
 ** Savannah: bug #12345, task #12345, patch #12345
 
@@ -1063,9 +1064,11 @@ $ msgcheck.py xx.po
 [[asciidoc]]
 ==== Asciidoc
 
-asciidoc ファイルは 'doc/XX/' ディレクトリにあり、'XX' は言語コード (en、fr、de、it、...) です
+asciidoc ファイルは 'doc/XX/' ディレクトリにあり、'XX'
+は言語コード (en、fr、de、it、...) です。
 
-最初に英語の asciidoc ファイル ('doc/en/' ディレクトリ中にある) をコピーして、それを編集してください。
+最初に英語の asciidoc ファイル ('doc/en/' ディレクトリ中にある)
+をコピーして、それを編集してください。
 
 ファイル中の未翻訳部分には以下の文字列で目印が付けられています:
 
