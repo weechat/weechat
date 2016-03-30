@@ -120,7 +120,7 @@ WeeChat がサポートする機能: account-notify、away-notify、cap-notify�
     server: サーバ名、これは:
             - 内部サーバ名 (/server add で追加されたもの、利用推奨)
             - ホスト名/ポート番号又は IP アドレス/ポート番号、デフォルトのポート番号は 6667
-            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
+            - 次の書式に従う URL: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
             注意: アドレス/IP/URL を指定した場合、サーバを一時的に追加します (保存しません)、/help irc.look.temporary_servers を参照してください。
     option: サーバに関するオプション (ブール型オプションでは、value は無視される)
   nooption: ブール型オプションを 'off' にする (例: -nossl)

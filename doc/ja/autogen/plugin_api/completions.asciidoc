@@ -136,7 +136,7 @@
 
 | weechat | filters_names | フィルタ名
 
-| weechat | infolists | フックされた infolist の名前
+| weechat | infolists | フックされたインフォリストの名前
 
 | weechat | infos | フックされた情報の名前
 
@@ -150,7 +150,7 @@
 
 | weechat | nicks | 現在のバッファのニックネームリストに含まれるニックネーム
 
-| weechat | palette_colors | パレットカラー
+| weechat | palette_colors | パレット色
 
 | weechat | plugins_commands | プラグインの定義するコマンド
 

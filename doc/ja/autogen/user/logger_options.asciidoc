@@ -5,12 +5,12 @@
 * [[option_logger.color.backlog_end]] *logger.color.backlog_end*
 ** 説明: `バックログの最終行の色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_logger.color.backlog_line]] *logger.color.backlog_line*
 ** 説明: `バックログ行の色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
 ** 説明: `バッファの内容をファイルに自動的に保存 (バッファのログ保存が無効化されていない限り)`
@@ -28,7 +28,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_logger.file.mask]] *logger.file.mask*
-** 説明: `ログファイルのデフォルトファイル名マスク (フォーマットは "directory/to/file" または "file" で、最初に "/" が無ければ "path" オプションがファイルへの完全なパスを作るために使われます); ローカルバッファ変数を使うことも可能です (全てのバッファで定義されている変数以外を使わないでください。すなわち、$server や $channel などを使うべきではありません); 日付指定子を使うことも可能です (strftime の man を参照してください)`
+** 説明: `ログファイルのデフォルトファイル名マスク (書式は "directory/to/file" または "file" で、最初に "/" が無ければ "path" オプションがファイルへの完全なパスを作るために使われます); ローカルバッファ変数を使うことも可能です (全てのバッファで定義されている変数以外を使わないでください。すなわち、$server や $channel などを使うべきではありません); 日付指定子を使うことも可能です (strftime の man を参照してください)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"$plugin.$name.weechatlog"`)
 

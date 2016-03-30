@@ -5,72 +5,72 @@
 * [[option_irc.color.input_nick]] *irc.color.input_nick*
 ** 説明: `インプットバーのニックネームに使う色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `lightcyan`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `lightcyan`)
 
 * [[option_irc.color.item_channel_modes]] *irc.color.item_channel_modes*
 ** 説明: `チャンネル名付近のチャンネルモードに使う色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_irc.color.item_lag_counting]] *irc.color.item_lag_counting*
 ** 説明: `カウント中の遅延インジケータの色 (pong がサーバから返らない場合、遅延は増加する)`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_irc.color.item_lag_finished]] *irc.color.item_lag_finished*
 ** 説明: `pong がサーバから返った場合の、遅延インジケータの色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `yellow`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `yellow`)
 
 * [[option_irc.color.item_nick_modes]] *irc.color.item_nick_modes*
-** 説明: `"input_prompt" バーアイテム内のニックネームモードに付ける色`
+** 説明: `"input_prompt" バー要素内のニックネームモードに付ける色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_irc.color.message_join]] *irc.color.message_join*
 ** 説明: `参加メッセージの色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `green`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `green`)
 
 * [[option_irc.color.message_quit]] *irc.color.message_quit*
 ** 説明: `退出/終了 メッセージの色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `red`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `red`)
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
-** 説明: `メッセージに含まれる mirc カラーのマッピングをハッシュテーブルで変更: キーは "fg,bg" で -1 (指定無し) から 15 までの整数、 値は WeeChat 色名か色番号 (フォーマットは: "1,-1:color1;2,7:color2")、例: "1,-1:darkgray;1,2:white,blue" はテキスト色が黒のものを "darkgray" に、背景色が青でテキスト色が黒のものを "white,blue" に変更; IRC コードに対するデフォルトの WeeChat 色は、0=白、1=黒、2=青、3=緑、4=ライトレッド、5=赤、6=赤紫、7=茶色、8=黄色、9=ライトグリーン、10=シアン、11=ライトシアン、12=ライトブルー、13=ライトマゼンタ、14=灰色、15=白`
+** 説明: `メッセージに含まれる mirc の定義する色に対するマッピングをハッシュテーブルで変更: キーは "fg,bg" で -1 (指定無し) から 15 までの整数、値は WeeChat 色名か色番号 (書式: "1,-1:color1;2,7:color2")、例: "1,-1:darkgray;1,2:white,blue" はテキスト色が黒のものを "darkgray" に、背景色が青でテキスト色が黒のものを "white,blue" に変更; IRC コードに対するデフォルトの WeeChat 色は、0=白、1=黒、2=青、3=緑、4=ライトレッド、5=赤、6=赤紫、7=茶色、8=黄色、9=ライトグリーン、10=シアン、11=ライトシアン、12=ライトブルー、13=ライトマゼンタ、14=灰色、15=白`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"1,-1:darkgray"`)
 
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
-** 説明: `モード文字を用いたニックネームプレフィックスの色 (o=オペレータ、h=halfop、v=発言、..)、フォーマット: "o:color1;h:color2;v:color3" (モードが見つからない場合、WeeChat はサーバから受け取ったモードの次のものを試す ("PREFIX"); モードが見つからなかった場合は、特殊なモード "*" がデフォルト色として使えます)`
+** 説明: `モード文字を用いたニックネームプレフィックスの色 (o=オペレータ、h=halfop、v=発言、..)、書式: "o:color1;h:color2;v:color3" (モードが見つからない場合、WeeChat はサーバから受け取ったモードの次のものを試す ("PREFIX"); モードが見つからなかった場合は、特殊なモード "*" がデフォルト色として使えます)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"y:lightred;q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
 * [[option_irc.color.notice]] *irc.color.notice*
 ** 説明: `notices に含まれるテキスト "Notice" の色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `green`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `green`)
 
 * [[option_irc.color.reason_quit]] *irc.color.reason_quit*
 ** 説明: `退出/終了メッセージに含まれる理由の色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_irc.color.topic_current]] *irc.color.topic_current*
 ** 説明: `現在のチャンネルトピックの色 (チャンネルに参加または /topic を使ったときに使われます)`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_irc.color.topic_new]] *irc.color.topic_new*
 ** 説明: `新しいチャンネルトピックの色 (トピックが変更されたときに使われます)`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `white`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `white`)
 
 * [[option_irc.color.topic_old]] *irc.color.topic_old*
 ** 説明: `古いチャンネルトピックの色 (トピックが変更されたときに使われます)`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_irc.look.buffer_open_before_autojoin]] *irc.look.buffer_open_before_autojoin*
 ** 説明: `自動で参加した場合 ("autojoin" オプションで参加した場合) に、サーバから JOIN を受信する前にチャンネルバッファを開く; チャンネルとバッファ番号の対応を常に一致させたい場合に便利です`
@@ -113,7 +113,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
-** 説明: `CTCP TIME メッセージに対する応答に利用される時間フォーマット (日付/時間指定子は strftime の man を参照)`
+** 説明: `CTCP TIME メッセージに対する応答に利用される時間書式 (日付/時間指定子は strftime の man を参照)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%a, %d %b %Y %T %z"`)
 
@@ -198,17 +198,17 @@
 ** 値: 未制約文字列 (デフォルト値: `"k"`)
 
 * [[option_irc.look.item_display_server]] *irc.look.item_display_server*
-** 説明: `IRC サーバが表示されるバーアイテムの名前 (ステータスバー用)`
+** 説明: `IRC サーバが表示されるバー要素の名前 (ステータスバー用)`
 ** タイプ: 整数
 ** 値: buffer_plugin, buffer_name (デフォルト値: `buffer_plugin`)
 
 * [[option_irc.look.item_nick_modes]] *irc.look.item_nick_modes*
-** 説明: `"input_prompt" バーアイテムではニックネームモードを表示`
+** 説明: `"input_prompt" バー要素ではニックネームモードを表示`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.item_nick_prefix]] *irc.look.item_nick_prefix*
-** 説明: `"input_prompt" バーアイテムではニックネームプレフィックスを表示`
+** 説明: `"input_prompt" バー要素ではニックネームプレフィックスを表示`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -233,7 +233,7 @@
 ** 値: none, next, near_server (デフォルト値: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** 説明: `一部のニックネームでニックネーム色を強制する: ニックネームから計算されるハッシュを元にした色を利用しない (フォーマット: "nick1:color1;nick2:color2"); ニックネームの検索はまず大文字小文字が区別された状態で行われ、そのあとに小文字で行われます。このため、このオプションのニックネーム部分を小文字だけで書く事もできます`
+** 説明: `一部のニックネームでニックネーム色を強制する: ニックネームから計算されるハッシュを元にした色を利用しない (書式: "nick1:color1;nick2:color2"); ニックネームの検索はまず大文字小文字が区別された状態で行われ、そのあとに小文字で行われます。このため、このオプションのニックネーム部分を小文字だけで書く事もできます`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -413,7 +413,7 @@
 ** 値: 0 .. 604800 (デフォルト値: `0`)
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
-** 説明: `遅延時間が増加する場合、遅延アイテムの 2 回のリフレッシュの間のインターバル (秒単位)`
+** 説明: `遅延時間が増加する場合、遅延要素の 2 回のリフレッシュの間のインターバル (秒単位)`
 ** タイプ: 整数
 ** 値: 1 .. 3600 (デフォルト値: `1`)
 

@@ -26,7 +26,7 @@ listdict: インストール済み辞書を表示
   /set aspell.check.default_dict "en"
   /aspell enable
 
-バーの中に提案のリストを表示するには、"aspell_suggest" アイテムを使ってください。
+バーの中に提案のリストを表示するには、"aspell_suggest" 要素を使ってください。
 
 aspell の有効無効を切り替えるデフォルトのキーは alt-s です。
 ----

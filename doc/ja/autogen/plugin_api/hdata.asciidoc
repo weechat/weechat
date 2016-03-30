@@ -369,7 +369,7 @@
 ** リスト:
 *** 'gui_bars'
 *** 'last_gui_bar'
-* [[hdata_bar_item]]<<hdata_bar_item,'bar_item'>>: バーアイテム
+* [[hdata_bar_item]]<<hdata_bar_item,'bar_item'>>: バー要素
 ** プラグイン: weechat
 ** 変数:
 *** 'plugin' (pointer, hdata: "plugin")

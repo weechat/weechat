@@ -34,13 +34,13 @@
 
 | weechat | charset_internal | WeeChat 内部文字セット | -
 
-| weechat | charset_terminal | ターミナルの文字セット | -
+| weechat | charset_terminal | 端末の文字セット | -
 
 | weechat | color_ansi_regex | ANSI エスケープコードを検索する POSIX 拡張正規表現 | -
 
-| weechat | color_rgb2term | ターミナル色コード (0-255) に変換されたRGB 色コード | rgb,limit (limit は任意でデフォルトでは 256 に設定)
+| weechat | color_rgb2term | 端末色コード (0-255) に変換されたRGB 色コード | rgb,limit (limit は任意でデフォルトでは 256 に設定)
 
-| weechat | color_term2rgb | RGB 色コードに変換されたターミナル色コード (0-255) | 色コード (ターミナル色コード: 0-255)
+| weechat | color_term2rgb | RGB 色コードに変換された端末色コード (0-255) | 色コード (端末色コード: 0-255)
 
 | weechat | cursor_mode | カーソルモードが有効の場合 1 | -
 
@@ -54,9 +54,9 @@
 
 | weechat | locale | 翻訳メッセージに利用するロケール | -
 
-| weechat | term_height | ターミナルの高さ | -
+| weechat | term_height | 端末の高さ | -
 
-| weechat | term_width | ターミナルの幅 | -
+| weechat | term_width | 端末の幅 | -
 
 | weechat | version | WeeChat のバージョン | -
 
