@@ -56,8 +56,9 @@ DEFAULT_PACKAGER_NAME="Sébastien Helleu"
 DEFAULT_PACKAGER_EMAIL="flashcode@flashtux.org"
 DEFAULT_JOBS=""
 
-display_usage ()
+usage ()
 {
+    RC=$1
     cat <<-EOF
 
 Syntax: $0 devel|stable|<version> distro
@@ -79,6 +80,7 @@ Examples:
   $0 1.4-2 ubuntu/wily
 
 EOF
+    exit ${RC}
 }
 
 error ()
@@ -90,8 +92,7 @@ error ()
 error_usage ()
 {
     echo >&2 "ERROR: $*"
-    display_usage
-    exit 1
+    usage 1
 }
 
 # ================================== START ==================================
@@ -114,6 +115,9 @@ fi
 cd "${ROOT_DIR}"
 
 # check command line arguments
+if [ $# -eq 0 ]; then
+    usage 0
+fi
 if [ $# -lt 2 ]; then
     error_usage "missing arguments"
 fi
