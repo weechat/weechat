@@ -973,12 +973,12 @@ Exemple en C :
 [source,C]
 ----
 char *str = weechat_string_expand_home ("%h/test");
-/* result: "/home/xxx/.weechat/test" */
+/* résultat : "/home/xxx/.weechat/test" */
 /* ... */
 free (str);
 ----
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----
@@ -1548,11 +1548,11 @@ Exemple en C :
 char **argv;
 int argc;
 argv = weechat_string_split_shell ("test 'first arg'  \"second arg\"", &argc);
-/* résultat: argv[0] == "test"
-             argv[1] == "first arg"
-             argv[2] == "second arg"
-             argv[3] == NULL
-             argc == 3
+/* résultat : argv[0] == "test"
+              argv[1] == "first arg"
+              argv[2] == "second arg"
+              argv[3] == NULL
+              argc == 3
 */
 weechat_string_free_split (argv);
 ----
