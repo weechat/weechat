@@ -5522,9 +5522,12 @@ Arguments:
 
 * 'option': option pointer
 
-Return value:
+Return value, depending on the option type:
 
-* boolean value of option (0 or 1)
+* 'boolean': boolean value of option (0 or 1)
+* 'integer': 0
+* 'string': 0
+* 'color': 0
 
 C example:
 
@@ -5569,9 +5572,12 @@ Arguments:
 
 * 'option': option pointer
 
-Return value:
+Return value, depending on the option type:
 
-* default boolean value of option (0 or 1)
+* 'boolean': default boolean value of option (0 or 1)
+* 'integer': 0
+* 'string': 0
+* 'color': 0
 
 C example:
 
@@ -5616,9 +5622,12 @@ Arguments:
 
 * 'option': option pointer
 
-Return value:
+Return value, depending on the option type:
 
-* integer value of option
+* 'boolean': boolean value of option (0 or 1)
+* 'integer': integer value of option
+* 'string': 0
+* 'color': color index
 
 C example:
 
@@ -5655,9 +5664,12 @@ Arguments:
 
 * 'option': option pointer
 
-Return value:
+Return value, depending on the option type:
 
-* default integer value of option
+* 'boolean': default boolean value of option (0 or 1)
+* 'integer': default integer value of option
+* 'string': 0
+* 'color': default color index
 
 C example:
 
@@ -5694,9 +5706,13 @@ Arguments:
 
 * 'option': option pointer
 
-Return value:
+Return value, depending on the option type:
 
-* string value of option
+* 'boolean': "on" if value is true, otherwise "off"
+* 'integer': string value if the option is an integer with string values,
+  otherwise NULL
+* 'string': string value of option
+* 'color': name of color
 
 C example:
 
@@ -5733,9 +5749,13 @@ Arguments:
 
 * 'option': option pointer
 
-Return value:
+Return value, depending on the option type:
 
-* default string value of option
+* 'boolean': "on" if default value is true, otherwise "off"
+* 'integer': default string value if the option is an integer with string
+  values, otherwise NULL
+* 'string': default string value of option
+* 'color': name of default color
 
 C example:
 
@@ -5772,9 +5792,12 @@ Arguments:
 
 * 'option': option pointer
 
-Return value:
+Return value, depending on the option type:
 
-* color value of option (string with name of color)
+* 'boolean': NULL
+* 'integer': NULL
+* 'string': NULL
+* 'color': name of color
 
 C example:
 
@@ -5811,9 +5834,12 @@ Arguments:
 
 * 'option': option pointer
 
-Return value:
+Return value, depending on the option type:
 
-* default color value of option (string with name of color)
+* 'boolean': NULL
+* 'integer': NULL
+* 'string': NULL
+* 'color': name of default color
 
 C example:
 

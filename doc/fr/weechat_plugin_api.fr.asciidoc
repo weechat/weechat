@@ -5617,9 +5617,12 @@ Paramètres :
 
 * 'option' : pointeur vers l'option
 
-Valeur de retour :
+Valeur de retour, selon le type de l'option :
 
-* valeur booléenne de l'option (0 ou 1)
+* 'boolean' : valeur booléenne de l'option (0 ou 1)
+* 'integer' : 0
+* 'string' : 0
+* 'color' : 0
 
 Exemple en C :
 
@@ -5664,9 +5667,12 @@ Paramètres :
 
 * 'option' : pointeur vers l'option
 
-Valeur de retour :
+Valeur de retour, selon le type de l'option :
 
-* valeur booléenne par défaut de l'option (0 ou 1)
+* 'boolean' : valeur booléenne par défaut de l'option (0 ou 1)
+* 'integer' : 0
+* 'string' : 0
+* 'color' : 0
 
 Exemple en C :
 
@@ -5711,9 +5717,12 @@ Paramètres :
 
 * 'option' : pointeur vers l'option
 
-Valeur de retour :
+Valeur de retour, selon le type de l'option :
 
-* valeur entière de l'option
+* 'boolean' : valeur booléenne de l'option (0 ou 1)
+* 'integer' : valeur entière de l'option
+* 'string' : 0
+* 'color' : index de la couleur
 
 Exemple en C :
 
@@ -5750,9 +5759,12 @@ Paramètres :
 
 * 'option' : pointeur vers l'option
 
-Valeur de retour :
+Valeur de retour, selon le type de l'option :
 
-* valeur entière par défaut de l'option
+* 'boolean' : valeur booléenne par défaut de l'option (0 ou 1)
+* 'integer' : valeur entière par défaut de l'option
+* 'string' : 0
+* 'color' : index de la couleur par défaut
 
 Exemple en C :
 
@@ -5789,9 +5801,13 @@ Paramètres :
 
 * 'option' : pointeur vers l'option
 
-Valeur de retour :
+Valeur de retour, selon le type de l'option :
 
-* valeur de l'option, sous forme de chaîne
+* 'boolean' : "on" si la valeur est vraie, sinon "off"
+* 'integer' : valeur de l'option sous forme de chaîne si l'option est un entier
+  avec des valeurs sous forme de chaînes, sinon NULL
+* 'string' : valeur de l'option sous forme de chaîne
+* 'color' : nom de la couleur
 
 Exemple en C :
 
@@ -5828,9 +5844,13 @@ Paramètres :
 
 * 'option' : pointeur vers l'option
 
-Valeur de retour :
+Valeur de retour, selon le type de l'option :
 
-* valeur par défaut de l'option, sous forme de chaîne
+* 'boolean' : "on" si la valeur par défaut est vraie, sinon "off"
+* 'integer' : valeur par défaut de l'option sous forme de chaîne si l'option
+  est un entier avec des valeurs sous forme de chaînes, sinon NULL
+* 'string' : valeur par défaut de l'option sous forme de chaîne
+* 'color' : nom de la couleur par défaut
 
 Exemple en C :
 
@@ -5867,9 +5887,12 @@ Paramètres :
 
 * 'option' : pointeur vers l'option
 
-Valeur de retour :
+Valeur de retour, selon le type de l'option :
 
-* valeur de l'option sous forme de couleur (chaîne avec le nom de la couleur)
+* 'boolean' : NULL
+* 'integer' : NULL
+* 'string' : NULL
+* 'color' : nom de la couleur
 
 Exemple en C :
 
@@ -5906,10 +5929,12 @@ Paramètres :
 
 * 'option' : pointeur vers l'option
 
-Valeur de retour :
+Valeur de retour, selon le type de l'option :
 
-* valeur par défaut de l'option sous forme de couleur (chaîne avec le nom de la
-  couleur)
+* 'boolean' : NULL
+* 'integer' : NULL
+* 'string' : NULL
+* 'color' : nom de la couleur par défaut
 
 Exemple en C :
 
