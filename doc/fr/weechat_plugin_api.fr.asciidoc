@@ -3963,7 +3963,7 @@ map_cb (void *data, struct t_hashtable *hashtable,
         const void *key, const void *value)
 {
     /* afficher la clé et la valeur (elles sont des chaînes ici) */
-    weechat_printf (NULL, "clé: '%s', valeur: '%s'",
+    weechat_printf (NULL, "clé : '%s', valeur : '%s'",
                     (const char *)key,
                     (const char *)value);
 }
@@ -4012,7 +4012,7 @@ map_cb (void *data, struct t_hashtable *hashtable,
         const char *key, const char *value)
 {
     /* afficher la clé et la valeur */
-    weechat_printf (NULL, "clé: '%s', valeur: '%s'",
+    weechat_printf (NULL, "clé : '%s', valeur : '%s'",
                     key, value);
 }
 /* ... */
@@ -4137,9 +4137,9 @@ Exemples en C :
 
 [source,C]
 ----
-weechat_printf (NULL, "les clés sont de type: %s",
+weechat_printf (NULL, "les clés sont de type : %s",
                 weechat_hashtable_get_string (hashtable, "type_keys"));
-weechat_printf (NULL, "liste des clés: %s",
+weechat_printf (NULL, "liste des clés : %s",
                 weechat_hashtable_get_string (hashtable, "keys"));
 ----
 
@@ -6864,7 +6864,7 @@ Paramètres :
 * 'color_name' : nom de la couleur, parmi :
 ** le nom d'une option de couleur WeeChat (de weechat.color.xxx), par exemple
   'chat_delimiters'
-** le nom d'une option (format: fichier.section.option), par exemple
+** le nom d'une option (format : fichier.section.option), par exemple
    'irc.color.message_quit' (_WeeChat ≥ 1.2_)
 ** une couleur avec des attributs/fond optionnels (voir ci-dessous)
 ** un attribut :
@@ -7142,7 +7142,7 @@ Paramètres :
 
 * 'buffer' : pointeur vers le tampon
 * 'y' : numéro de ligne (la première ligne est 0); une valeur négative affiche
-  une ligne après la dernière ligne affichée: la valeur absolue de 'y' est le
+  une ligne après la dernière ligne affichée : la valeur absolue de 'y' est le
   nombre de lignes après la dernière ligne (par exemple -1 est immédiatement
   après la dernière ligne, -2 est 2 lignes après la dernière ligne)
   _(WeeChat ≥ 1.0)_
@@ -7767,9 +7767,9 @@ def my_process_cb(data, command, return_code, out, err):
     if return_code >= 0:
         weechat.prnt("", "return_code = %d" % return_code)
     if out != "":
-        weechat.prnt("", "stdout: %s" % out)
+        weechat.prnt("", "stdout : %s" % out)
     if err != "":
-        weechat.prnt("", "stderr: %s" % err)
+        weechat.prnt("", "stderr : %s" % err)
     return weechat.WEECHAT_RC_OK
 
 hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
@@ -7962,9 +7962,9 @@ def my_process_cb(data, command, return_code, out, err):
     if return_code >= 0:
         weechat.prnt("", "return_code = %d" % return_code)
     if out != "":
-        weechat.prnt("", "stdout: %s" % out)
+        weechat.prnt("", "stdout : %s" % out)
     if err != "":
-        weechat.prnt("", "stderr: %s" % err)
+        weechat.prnt("", "stderr : %s" % err)
     return weechat.WEECHAT_RC_OK
 
 # exemple 1 : téléchargement d'une URL
@@ -11301,10 +11301,10 @@ Paramètres :
    principal WeeChat)
 ** 'name' : nom du tampon
 ** 'full_name' : nom complet du tampon ("extension.nom") _(WeeChat ≥ 0.3.7)_
-** 'short_name' : nom court du tampon (note: utilisé pour l'affichage seulement
-   et peut être changé par l'utilisateur, il ne doit pas être utilisé pour
-   trouver le nom du tampon, utilisez à la place 'name', 'full_name' ou bien la
-   variable locale 'channel')
+** 'short_name' : nom court du tampon (note : utilisé pour l'affichage
+   seulement et peut être changé par l'utilisateur, il ne doit pas être utilisé
+   pour trouver le nom du tampon, utilisez à la place 'name', 'full_name' ou
+   bien la variable locale 'channel')
 ** 'title' : titre du tampon
 ** 'input' : texte saisi
 ** 'text_search_input' : texte saisi sauvegardé avant la recherche de texte
@@ -11839,7 +11839,7 @@ Exemple en C :
 [source,C]
 ----
 weechat_printf (NULL,
-                "fenêtre affichant le tampon core: %lx",
+                "fenêtre affichant le tampon core : %lx",
                 weechat_window_search_with_buffer (weechat_buffer_search_main ()));
 ----
 
@@ -11851,7 +11851,7 @@ Script (Python) :
 window = weechat.window_search_with_buffer(buffer)
 
 # exemple
-weechat.prnt("", "fenêtre affichant le tampon core: %s"
+weechat.prnt("", "fenêtre affichant le tampon core : %s"
     % weechat.window_search_with_buffer(weechat.buffer_search_main()))
 ----
 
@@ -13583,7 +13583,7 @@ dict = weechat.info_get_hashtable(info_name, dict_in)
 
 # exemple
 dict_in = {"message": ":nick!user@host PRIVMSG #weechat :message ici"}
-weechat.prnt("", "message analysé: %s"
+weechat.prnt("", "message analysé : %s"
              % weechat.info_get_hashtable("irc_message_parse", dict_in))
 ----
 
@@ -15772,8 +15772,8 @@ Exemple en C :
 
 [source,C]
 ----
-weechat_printf (NULL, "variables dans le hdata: %s", weechat_hdata_get_string (hdata, "var_keys"));
-weechat_printf (NULL, "listes dans le hdata: %s", weechat_hdata_get_string (hdata, "list_keys"));
+weechat_printf (NULL, "variables dans le hdata : %s", weechat_hdata_get_string (hdata, "var_keys"));
+weechat_printf (NULL, "listes dans le hdata : %s", weechat_hdata_get_string (hdata, "list_keys"));
 ----
 
 Script (Python) :
@@ -15784,8 +15784,8 @@ Script (Python) :
 value = weechat.hdata_get_string(hdata, property)
 
 # exemple
-weechat.prnt("", "variables dans le hdata: %s" % weechat.hdata_get_string(hdata, "var_keys"))
-weechat.prnt("", "listes dans le hdata: %s" % weechat.hdata_get_string(hdata, "list_keys"))
+weechat.prnt("", "variables dans le hdata : %s" % weechat.hdata_get_string(hdata, "var_keys"))
+weechat.prnt("", "listes dans le hdata : %s" % weechat.hdata_get_string(hdata, "list_keys"))
 ----
 
 [[upgrade]]
