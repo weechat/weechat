@@ -151,6 +151,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    gui-layout.c               | Dispositions ("layouts")
 |    gui-line.c                 | Lignes dans les tampons
 |    gui-mouse.c                | Souris
+|    gui-nick.c                 | Fonctions pour les pseudos
 |    gui-nicklist.c             | Liste de pseudos dans les tampons
 |    gui-window.c               | Fenêtres
 |    curses/                    | Interface Curses

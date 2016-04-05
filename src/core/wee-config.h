@@ -53,6 +53,12 @@ enum t_config_look_buffer_search_where
     CONFIG_LOOK_BUFFER_SEARCH_PREFIX_MESSAGE,
 };
 
+enum t_config_look_nick_color_hash
+{
+    CONFIG_LOOK_NICK_COLOR_HASH_DJB2 = 0,
+    CONFIG_LOOK_NICK_COLOR_HASH_SUM,
+};
+
 enum t_config_look_prefix_align
 {
     CONFIG_LOOK_PREFIX_ALIGN_NONE = 0,
@@ -193,6 +199,9 @@ extern struct t_config_option *config_look_key_bind_safe;
 extern struct t_config_option *config_look_key_grab_delay;
 extern struct t_config_option *config_look_mouse;
 extern struct t_config_option *config_look_mouse_timer_delay;
+extern struct t_config_option *config_look_nick_color_force;
+extern struct t_config_option *config_look_nick_color_hash;
+extern struct t_config_option *config_look_nick_color_stop_chars;
 extern struct t_config_option *config_look_nick_prefix;
 extern struct t_config_option *config_look_nick_suffix;
 extern struct t_config_option *config_look_paste_auto_add_newline;
@@ -338,7 +347,11 @@ extern struct t_config_look_word_char_item *config_word_chars_highlight;
 extern int config_word_chars_highlight_count;
 extern struct t_config_look_word_char_item *config_word_chars_input;
 extern int config_word_chars_input_count;
+extern char **config_nick_colors;
+extern int config_num_nick_colors;
+extern struct t_hashtable *config_hashtable_nick_color_force;
 
+extern void config_set_nick_colors ();
 extern struct t_config_option *config_weechat_debug_get (const char *plugin_name);
 extern int config_weechat_debug_set (const char *plugin_name,
                                      const char *value);

@@ -20,6 +20,27 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[1.5]]
 == Version 1.5 (under dev)
 
+[[1.5_nick_coloring]]
+=== Nick coloring moved to core
+
+The nick coloring feature has been moved from irc plugin to core.
+
+Two options have been moved from irc plugin (irc.conf) to core (weechat.conf),
+and you must set new value if you customized them:
+
+* 'irc.look.nick_color_force' moved to 'weechat.look.nick_color_force'
+* 'irc.look.nick_color_hash' moved to 'weechat.look.nick_color_hash'
+* 'irc.look.nick_color_stop_chars' moved to 'weechat.look.nick_color_stop_chars'
+
+The following info names (used by API function "info_get") are renamed as well:
+
+* 'irc_nick_color' renamed to 'nick_color'
+* 'irc_nick_color_name' renamed to 'nick_color_name'
+
+[NOTE]
+The old info 'irc_nick_color' and 'irc_nick_color_name' are kept for
+compatibility (especially scripts) and will be removed in an upcoming release.
+
 [[1.5_callbacks_pointer]]
 === Pointer in callbacks
 

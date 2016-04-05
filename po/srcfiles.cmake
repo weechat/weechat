@@ -92,6 +92,8 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-main.h
 ./src/gui/gui-mouse.c
 ./src/gui/gui-mouse.h
+./src/gui/gui-nick.c
+./src/gui/gui-nick.h
 ./src/gui/gui-nicklist.c
 ./src/gui/gui-nicklist.h
 ./src/gui/gui-window.c

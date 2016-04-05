@@ -232,21 +232,6 @@
 ** typ: liczba
 ** wartości: none, next, near_server (domyślna wartość: `none`)
 
-* [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** opis: `wymusza kolory dla niektórych nicków: hash połączony z nickiem w celu znalezienia koloru nie zostanie użyty dla tych nicków (format: "nick1:kolor1;nick2:kolor2"); wyszukiwanie nicków odbywa się na zasadzie dopasowania porównania dokładnego, następnie z małych liter, jest więc możliwe używanie tylko małych liter w tej opcji`
-** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
-
-* [[option_irc.look.nick_color_hash]] *irc.look.nick_color_hash*
-** opis: `algorytm haszujący używany do znalezienia koloru dla nicka: djb2 = odmiana djb2 (pozycja liter ma znaczenie: anagramy nicka mają różne kolory), sum = suma liter`
-** typ: liczba
-** wartości: djb2, sum (domyślna wartość: `sum`)
-
-* [[option_irc.look.nick_color_stop_chars]] *irc.look.nick_color_stop_chars*
-** opis: `znaki używane do zatrzymania odczytywania koloru nicka (przynajmniej jeden znak poza tą listą musi się znajdować przed zatrzymaniem) (przykład: nick "|nick|away" ze znakami "|" zwróci kolor nicka "|nick")`
-** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"_|["`)
-
 * [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
 ** opis: `inteligentne dopełnianie nicków (dopełnia najpierw ostatnimi rozmówcami): speakers = wszyscy rozmówcy (włączając podświetlenia), speakers_highlights = tylko rozmówcy z podświetleniem`
 ** typ: liczba

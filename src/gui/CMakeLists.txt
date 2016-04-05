@@ -36,11 +36,13 @@ gui-layout.c gui-layout.h
 gui-line.c gui-line.h
 gui-main.h
 gui-mouse.c gui-mouse.h
+gui-nick.c gui-nick.h
 gui-nicklist.c gui-nicklist.h
 gui-window.c gui-window.h)
 
 include_directories(${CMAKE_BINARY_DIR})
 add_library(weechat_gui_common STATIC ${LIB_GUI_COMMON_SRC})
+list(APPEND STATIC_LIBS weechat_gui_common)
 
 if(ENABLE_NCURSES)
   subdirs(curses)

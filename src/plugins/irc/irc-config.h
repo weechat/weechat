@@ -62,12 +62,6 @@ enum t_irc_config_look_notice_as_pv
     IRC_CONFIG_LOOK_NOTICE_AS_PV_ALWAYS,
 };
 
-enum t_irc_config_look_nick_color_hash
-{
-    IRC_CONFIG_LOOK_NICK_COLOR_HASH_DJB2 = 0,
-    IRC_CONFIG_LOOK_NICK_COLOR_HASH_SUM,
-};
-
 enum t_irc_config_look_nick_mode
 {
     IRC_CONFIG_LOOK_NICK_MODE_NONE = 0,
@@ -128,9 +122,6 @@ extern struct t_config_option *irc_config_look_join_auto_add_chantype;
 extern struct t_config_option *irc_config_look_msgbuffer_fallback;
 extern struct t_config_option *irc_config_look_new_channel_position;
 extern struct t_config_option *irc_config_look_new_pv_position;
-extern struct t_config_option *irc_config_look_nick_color_force;
-extern struct t_config_option *irc_config_look_nick_color_hash;
-extern struct t_config_option *irc_config_look_nick_color_stop_chars;
 extern struct t_config_option *irc_config_look_nick_completion_smart;
 extern struct t_config_option *irc_config_look_nick_mode;
 extern struct t_config_option *irc_config_look_nick_mode_empty;
@@ -189,17 +180,12 @@ extern struct t_config_option *irc_config_network_whois_double_nick;
 
 extern struct t_config_option *irc_config_server_default[];
 
-extern char **irc_config_nick_colors;
-extern int irc_config_num_nick_colors;
-
 extern struct t_hashtable *irc_config_hashtable_display_join_message;
-extern struct t_hashtable *irc_config_hashtable_nick_color_force;
 extern struct t_hashtable *irc_config_hashtable_nick_prefixes;
 extern struct t_hashtable *irc_config_hashtable_color_mirc_remap;
 extern char **irc_config_nicks_hide_password;
 extern int irc_config_num_nicks_hide_password;
 
-extern void irc_config_set_nick_colors ();
 extern int irc_config_display_channel_modes_arguments (const char *modes);
 extern int irc_config_server_check_value_cb (const void *pointer, void *data,
                                              struct t_config_option *option,

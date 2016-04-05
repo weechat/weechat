@@ -56,6 +56,8 @@ lib_weechat_gui_common_a_SOURCES = gui-bar.c \
                                    gui-main.h \
                                    gui-mouse.c \
                                    gui-mouse.h \
+                                   gui-nick.c \
+                                   gui-nick.h \
                                    gui-nicklist.c \
                                    gui-nicklist.h \
                                    gui-window.c \

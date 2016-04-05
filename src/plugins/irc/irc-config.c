@@ -83,9 +83,6 @@ struct t_config_option *irc_config_look_join_auto_add_chantype;
 struct t_config_option *irc_config_look_msgbuffer_fallback;
 struct t_config_option *irc_config_look_new_channel_position;
 struct t_config_option *irc_config_look_new_pv_position;
-struct t_config_option *irc_config_look_nick_color_force;
-struct t_config_option *irc_config_look_nick_color_hash;
-struct t_config_option *irc_config_look_nick_color_stop_chars;
 struct t_config_option *irc_config_look_nick_completion_smart;
 struct t_config_option *irc_config_look_nick_mode;
 struct t_config_option *irc_config_look_nick_mode_empty;
@@ -150,11 +147,9 @@ struct t_config_option *irc_config_network_whois_double_nick;
 
 struct t_config_option *irc_config_server_default[IRC_SERVER_NUM_OPTIONS];
 
-struct t_hook *irc_config_hook_config_nick_colors = NULL;
-char **irc_config_nick_colors = NULL;
-int irc_config_num_nick_colors = 0;
+struct t_hook *irc_config_hook_config_nick_color_options = NULL;
+struct t_hook *irc_config_hook_config_chat_nick_colors = NULL;
 struct t_hashtable *irc_config_hashtable_display_join_message = NULL;
-struct t_hashtable *irc_config_hashtable_nick_color_force = NULL;
 struct t_hashtable *irc_config_hashtable_nick_prefixes = NULL;
 struct t_hashtable *irc_config_hashtable_color_mirc_remap = NULL;
 char **irc_config_nicks_hide_password = NULL;
@@ -234,28 +229,6 @@ irc_config_compute_nick_colors ()
 }
 
 /*
- * Sets nick colors using option "weechat.color.chat_nick_colors".
- */
-
-void
-irc_config_set_nick_colors ()
-{
-    if (irc_config_nick_colors)
-    {
-        weechat_string_free_split (irc_config_nick_colors);
-        irc_config_nick_colors = NULL;
-        irc_config_num_nick_colors = 0;
-    }
-
-    irc_config_nick_colors =
-        weechat_string_split (
-            weechat_config_string (
-                weechat_config_get ("weechat.color.chat_nick_colors")),
-            ",", 0, 0,
-            &irc_config_num_nick_colors);
-}
-
-/*
  * Checks if channel modes arguments must be displayed or hidden
  * (according to option irc.look.item_channel_modes_hide_args).
  *
@@ -295,7 +268,7 @@ irc_config_display_channel_modes_arguments (const char *modes)
 }
 
 /*
- * Callback for changes on option "weechat.color.chat_nick_colors".
+ * Callback for changes on options changing nick colors.
  */
 
 int
@@ -308,7 +281,6 @@ irc_config_change_nick_colors_cb (const void *pointer, void *data,
     (void) option;
     (void) value;
 
-    irc_config_set_nick_colors ();
     irc_config_compute_nick_colors ();
 
     return WEECHAT_RC_OK;
@@ -563,71 +535,6 @@ irc_config_change_look_highlight_tags_restrict (const void *pointer, void *data,
             }
         }
     }
-}
-
-/*
- * Callback for changes on option "irc.look.nick_color_force".
- */
-
-void
-irc_config_change_look_nick_color_force (const void *pointer, void *data,
-                                         struct t_config_option *option)
-{
-    char **items, *pos;
-    int num_items, i;
-
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) option;
-
-    if (!irc_config_hashtable_nick_color_force)
-    {
-        irc_config_hashtable_nick_color_force = weechat_hashtable_new (
-            32,
-            WEECHAT_HASHTABLE_STRING,
-            WEECHAT_HASHTABLE_STRING,
-            NULL, NULL);
-    }
-    else
-        weechat_hashtable_remove_all (irc_config_hashtable_nick_color_force);
-
-    items = weechat_string_split (
-        weechat_config_string (irc_config_look_nick_color_force),
-        ";", 0, 0, &num_items);
-    if (items)
-    {
-        for (i = 0; i < num_items; i++)
-        {
-            pos = strchr (items[i], ':');
-            if (pos)
-            {
-                pos[0] = '\0';
-                weechat_hashtable_set (irc_config_hashtable_nick_color_force,
-                                       items[i],
-                                       pos + 1);
-            }
-        }
-        weechat_string_free_split (items);
-    }
-
-    irc_config_compute_nick_colors ();
-}
-
-/*
- * Callback for changes on options that change nick colors.
- */
-
-void
-irc_config_change_look_nick_colors (const void *pointer, void *data,
-                                    struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) option;
-
-    irc_config_compute_nick_colors ();
 }
 
 /*
@@ -2530,11 +2437,6 @@ irc_config_init ()
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING,
         NULL, NULL);
-    irc_config_hashtable_nick_color_force = weechat_hashtable_new (
-        32,
-        WEECHAT_HASHTABLE_STRING,
-        WEECHAT_HASHTABLE_STRING,
-        NULL, NULL);
     irc_config_hashtable_nick_prefixes = weechat_hashtable_new (
         32,
         WEECHAT_HASHTABLE_STRING,
@@ -2821,39 +2723,6 @@ irc_config_init ()
            "of server)"),
         "none|next|near_server", 0, 0, "none", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_look_nick_color_force = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "nick_color_force", "string",
-        N_("force color for some nicks: hash computed with nickname "
-           "to find color will not be used for these nicks (format is: "
-           "\"nick1:color1;nick2:color2\"); look up for nicks is with "
-           "exact case then lower case, so it's possible to use only lower "
-           "case for nicks in this option"),
-        NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL,
-        &irc_config_change_look_nick_color_force, NULL, NULL,
-        NULL, NULL, NULL);
-    irc_config_look_nick_color_hash = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "nick_color_hash", "integer",
-        N_("hash algorithm used to find the color for a nick: djb2 = variant "
-           "of djb2 (position of letters matters: anagrams of a nick have "
-           "different color), sum = sum of letters"),
-        "djb2|sum", 0, 0, "sum", NULL, 0,
-        NULL, NULL, NULL,
-        &irc_config_change_look_nick_colors, NULL, NULL,
-        NULL, NULL, NULL);
-    irc_config_look_nick_color_stop_chars = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "nick_color_stop_chars", "string",
-        N_("chars used to stop in nick when computing color with letters of "
-           "nick (at least one char outside this list must be in string before "
-           "stopping) (example: nick \"|nick|away\" with \"|\" in chars will "
-           "return color of nick \"|nick\")"),
-        NULL, 0, 0, "_|[", NULL, 0,
-        NULL, NULL, NULL,
-        &irc_config_change_look_nick_colors, NULL, NULL,
-        NULL, NULL, NULL);
     irc_config_look_nick_completion_smart = weechat_config_new_option (
         irc_config_file, ptr_section,
         "nick_completion_smart", "integer",
@@ -3396,7 +3265,10 @@ irc_config_init ()
     }
     irc_config_section_server = ptr_section;
 
-    irc_config_hook_config_nick_colors = weechat_hook_config (
+    irc_config_hook_config_nick_color_options = weechat_hook_config (
+        "weechat.look.nick_color_*",
+        &irc_config_change_nick_colors_cb, NULL, NULL);
+    irc_config_hook_config_chat_nick_colors = weechat_hook_config (
         "weechat.color.chat_nick_colors",
         &irc_config_change_nick_colors_cb, NULL, NULL);
 
@@ -3420,7 +3292,6 @@ irc_config_read ()
     {
         irc_notify_new_for_all_servers ();
         irc_config_change_look_display_join_message (NULL, NULL, NULL);
-        irc_config_change_look_nick_color_force (NULL, NULL, NULL);
         irc_config_change_look_nicks_hide_password (NULL, NULL, NULL);
         irc_config_change_color_nick_prefixes (NULL, NULL, NULL);
         irc_config_change_color_mirc_remap (NULL, NULL, NULL);
@@ -3452,16 +3323,16 @@ irc_config_free ()
 {
     weechat_config_free (irc_config_file);
 
-    if (irc_config_hook_config_nick_colors)
+    if (irc_config_hook_config_nick_color_options)
     {
-        weechat_unhook (irc_config_hook_config_nick_colors);
-        irc_config_hook_config_nick_colors = NULL;
+        weechat_unhook (irc_config_hook_config_nick_color_options);
+        irc_config_hook_config_nick_color_options = NULL;
     }
-    if (irc_config_nick_colors)
+
+    if (irc_config_hook_config_chat_nick_colors)
     {
-        weechat_string_free_split (irc_config_nick_colors);
-        irc_config_nick_colors = NULL;
-        irc_config_num_nick_colors = 0;
+        weechat_unhook (irc_config_hook_config_chat_nick_colors);
+        irc_config_hook_config_chat_nick_colors = NULL;
     }
 
     if (irc_config_nicks_hide_password)
@@ -3475,12 +3346,6 @@ irc_config_free ()
     {
         weechat_hashtable_free (irc_config_hashtable_display_join_message);
         irc_config_hashtable_display_join_message = NULL;
-    }
-
-    if (irc_config_hashtable_nick_color_force)
-    {
-        weechat_hashtable_free (irc_config_hashtable_nick_color_force);
-        irc_config_hashtable_nick_color_force = NULL;
     }
 
     if (irc_config_hashtable_nick_prefixes)

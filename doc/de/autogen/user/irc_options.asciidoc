@@ -232,21 +232,6 @@
 ** Typ: integer
 ** Werte: none, next, near_server (Standardwert: `none`)
 
-* [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** Beschreibung: `erzwingt für einen Nick eine spezielle Farbe. Die standardmäßig, mittels Streuwertfunktion aus dem Nicknamen, generierte Farbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Zuerst wird beim Namen des Nick nach Groß- und Kleinschreibung unterschieden. Sollte der Nick nicht gefunden werden findet keine Unterscheidung mehr statt. Somit ist es möglich die Nicks, für diese Einstellung, ausschließlich in Kleinschrift aufzuführen`
-** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `""`)
-
-* [[option_irc.look.nick_color_hash]] *irc.look.nick_color_hash*
-** Beschreibung: `Gibt an welcher Hash-Algorithmus zur Farbauswahl für Nicks genutzt werden soll: djb2 = Variante des djb2 (Position der Buchstaben innerhalb des Nicks werden berücksichtigt: Anagramme eines Nick erhalten eine andere Farbe), sum = hier ist nur die Anzahl der Buchstaben maßgeblich`
-** Typ: integer
-** Werte: djb2, sum (Standardwert: `sum`)
-
-* [[option_irc.look.nick_color_stop_chars]] *irc.look.nick_color_stop_chars*
-** Beschreibung: `Zeichen die genutzt werden sollen damit bei der Generierung der Farbe für einen Nicknamen abgebrochen wird. Es muss mindestens ein Zeichen im Nicknamen enthalten sein der nicht in dieser Liste aufgeführt wird, damit eine Farbe für den Nicknamen erstellt werden kann (Beispiel: Der Nickname lautet "|nick|abwesend" wobei das Zeichen "|" ignoriert werden soll. Die Farbe für den Nicknamen wird nun für "|nick" anstelle von "|nick|abwesend" erstellt)`
-** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"_|["`)
-
 * [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
 ** Beschreibung: `intelligente Vervollständigung für Nicks (es wird zuerst mit den letzten Rednern vervollständigt): speakers = alle Redner (einschließlich Highlights), speakers_highlight = nur Redner die eine Highlight Nachricht geschrieben haben`
 ** Typ: integer

@@ -37,6 +37,7 @@
 
 #include "weechat.h"
 #include "wee-config.h"
+#include "wee-hashtable.h"
 #include "wee-hook.h"
 #include "wee-log.h"
 #include "wee-network.h"
@@ -148,6 +149,9 @@ struct t_config_option *config_look_key_bind_safe;
 struct t_config_option *config_look_key_grab_delay;
 struct t_config_option *config_look_mouse;
 struct t_config_option *config_look_mouse_timer_delay;
+struct t_config_option *config_look_nick_color_force;
+struct t_config_option *config_look_nick_color_hash;
+struct t_config_option *config_look_nick_color_stop_chars;
 struct t_config_option *config_look_nick_prefix;
 struct t_config_option *config_look_nick_suffix;
 struct t_config_option *config_look_paste_auto_add_newline;
@@ -307,6 +311,9 @@ struct t_config_look_word_char_item *config_word_chars_highlight = NULL;
 int config_word_chars_highlight_count = 0;
 struct t_config_look_word_char_item *config_word_chars_input = NULL;
 int config_word_chars_input_count = 0;
+char **config_nick_colors = NULL;
+int config_num_nick_colors = 0;
+struct t_hashtable *config_hashtable_nick_color_force = NULL;
 
 
 /*
@@ -656,6 +663,74 @@ config_compute_prefix_max_length_all_buffers ()
             ptr_buffer->own_lines->prefix_max_length_refresh = 1;
         if (ptr_buffer->mixed_lines)
             ptr_buffer->mixed_lines->prefix_max_length_refresh = 1;
+    }
+}
+
+/*
+ * Sets nick colors using option "weechat.color.chat_nick_colors".
+ */
+
+void
+config_set_nick_colors ()
+{
+    if (config_nick_colors)
+    {
+        string_free_split (config_nick_colors);
+        config_nick_colors = NULL;
+        config_num_nick_colors = 0;
+    }
+
+    config_nick_colors = string_split (
+        CONFIG_STRING(config_color_chat_nick_colors),
+        ",", 0, 0,
+        &config_num_nick_colors);
+}
+
+/*
+ * Callback for changes on option "weechat.look.nick_color_force".
+ */
+
+void
+config_change_look_nick_color_force (const void *pointer, void *data,
+                                     struct t_config_option *option)
+{
+    char **items, *pos;
+    int num_items, i;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (!config_hashtable_nick_color_force)
+    {
+        config_hashtable_nick_color_force = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+    }
+    else
+    {
+        hashtable_remove_all (config_hashtable_nick_color_force);
+    }
+
+    items = string_split (CONFIG_STRING(config_look_nick_color_force),
+                          ";", 0, 0, &num_items);
+    if (items)
+    {
+        for (i = 0; i < num_items; i++)
+        {
+            pos = strchr (items[i], ':');
+            if (pos)
+            {
+                pos[0] = '\0';
+                hashtable_set (config_hashtable_nick_color_force,
+                               items[i],
+                               pos + 1);
+            }
+        }
+        string_free_split (items);
     }
 }
 
@@ -1047,6 +1122,7 @@ config_change_nick_colors (const void *pointer, void *data,
     (void) data;
     (void) option;
 
+    config_set_nick_colors ();
     gui_color_buffer_display ();
 }
 
@@ -1208,6 +1284,8 @@ config_weechat_init_after_read ()
 
     /* apply filters on all buffers */
     gui_filter_all_buffers ();
+
+    config_change_look_nick_color_force (NULL, NULL, NULL);
 }
 
 /*
@@ -2926,6 +3004,37 @@ config_weechat_init_options ()
            "wait this delay before processing event"),
         NULL, 1, 10000, "100", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_nick_color_force = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nick_color_force", "string",
+        N_("force color for some nicks: hash computed with nickname "
+           "to find color will not be used for these nicks (format is: "
+           "\"nick1:color1;nick2:color2\"); look up for nicks is with "
+           "exact case then lower case, so it's possible to use only lower "
+           "case for nicks in this option"),
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_look_nick_color_force, NULL, NULL,
+        NULL, NULL, NULL);
+    config_look_nick_color_hash = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nick_color_hash", "integer",
+        N_("hash algorithm used to find the color for a nick: djb2 = variant "
+           "of djb2 (position of letters matters: anagrams of a nick have "
+           "different color), sum = sum of letters"),
+        "djb2|sum", 0, 0, "sum", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_nick_color_stop_chars = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nick_color_stop_chars", "string",
+        N_("chars used to stop in nick when computing color with letters of "
+           "nick (at least one char outside this list must be in string before "
+           "stopping) (example: nick \"|nick|away\" with \"|\" in chars will "
+           "return color of nick \"|nick\")"),
+        NULL, 0, 0, "_|[", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     config_look_nick_prefix = config_file_new_option (
         weechat_config_file, ptr_section,
         "nick_prefix", "string",
@@ -4386,5 +4495,18 @@ config_weechat_free ()
         free (config_word_chars_input);
         config_word_chars_input = NULL;
         config_word_chars_input_count = 0;
+    }
+
+    if (config_nick_colors)
+    {
+        string_free_split (config_nick_colors);
+        config_nick_colors = NULL;
+        config_num_nick_colors = 0;
+    }
+
+    if (config_hashtable_nick_color_force)
+    {
+        hashtable_free (config_hashtable_nick_color_force);
+        config_hashtable_nick_color_force = NULL;
     }
 }

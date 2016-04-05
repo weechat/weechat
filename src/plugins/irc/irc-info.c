@@ -847,12 +847,14 @@ irc_info_init ()
         &irc_info_info_irc_nick_from_host_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick_color",
-        N_("get nick color code"),
+        N_("get nick color code "
+           "(*deprecated* since version 1.5, replaced by \"nick_color\")"),
         N_("nickname"),
         &irc_info_info_irc_nick_color_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick_color_name",
-        N_("get nick color name"),
+        N_("get nick color name "
+           "(*deprecated* since version 1.5, replaced by \"nick_color_name\")"),
         N_("nickname"),
         &irc_info_info_irc_nick_color_name_cb, NULL, NULL);
     weechat_hook_info (

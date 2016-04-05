@@ -150,6 +150,7 @@ WeeChat "core" is located in following directories:
 |    gui-layout.c               | Layout
 |    gui-line.c                 | Lines in buffers
 |    gui-mouse.c                | Mouse
+|    gui-nick.c                 | Nick functions
 |    gui-nicklist.c             | Nicklist in buffers
 |    gui-window.c               | Windows
 |    curses/                    | Curses interface

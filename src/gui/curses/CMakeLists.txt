@@ -81,7 +81,7 @@ add_executable(${EXECUTABLE} ${WEECHAT_CURSES_MAIN_SRC})
 
 add_dependencies(${EXECUTABLE} weechat_gui_curses)
 
-# Due to circular references, we must link two times with libweechat_core.a
+# Due to circular references, we must link two times with libweechat_core.a and libweechat_gui_common.a
 target_link_libraries(${EXECUTABLE} ${STATIC_LIBS} weechat_gui_curses ${EXTRA_LIBS} ${STATIC_LIBS})
 
 # Create a symbolic link weechat-curses -> weechat

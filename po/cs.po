@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-03-17 20:41+0100\n"
+"POT-Creation-Date: 2016-04-04 14:36+0200\n"
 "PO-Revision-Date: 2016-01-17 08:52+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3237,6 +3237,33 @@ msgid ""
 msgstr ""
 "zpoždění (v milisekundách) k převzetí události od myši: Weechat počká tuto "
 "dobu před zpracovánim události"
+
+#, fuzzy
+msgid ""
+"force color for some nicks: hash computed with nickname to find color will "
+"not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); look "
+"up for nicks is with exact case then lower case, so it's possible to use "
+"only lower case for nicks in this option"
+msgstr ""
+"vynutit barvu u některých přezdívek: hash spočítaný z přezdívky pro nalezení "
+"barvy nebude použit pro tyto přezdívky (formát je: \"přezdívka1:barva1;"
+"přezdívka2:barva2\")"
+
+msgid ""
+"hash algorithm used to find the color for a nick: djb2 = variant of djb2 "
+"(position of letters matters: anagrams of a nick have different color), sum "
+"= sum of letters"
+msgstr ""
+
+msgid ""
+"chars used to stop in nick when computing color with letters of nick (at "
+"least one char outside this list must be in string before stopping) "
+"(example: nick \"|nick|away\" with \"|\" in chars will return color of nick "
+"\"|nick\")"
+msgstr ""
+"znaky zastavující výpočet barvy přezdívky ze znaků přezdívky (alespoň jeden "
+"mimo tento list musí být v řetězci před zastavením) (example: přezdívka \"|"
+"nick|away\" s \"|\" ve znacích vrátí barvu přezdívky \"|nick\")"
 
 #, fuzzy
 msgid "text to display before nick in prefix of message, example: \"<\""
@@ -7317,33 +7344,6 @@ msgstr ""
 "pozice (měl by být poslední buffer), next = aktuální buffer + 1, near_server "
 "= za posledním kanálem/pv serveru)"
 
-#, fuzzy
-msgid ""
-"force color for some nicks: hash computed with nickname to find color will "
-"not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); look "
-"up for nicks is with exact case then lower case, so it's possible to use "
-"only lower case for nicks in this option"
-msgstr ""
-"vynutit barvu u některých přezdívek: hash spočítaný z přezdívky pro nalezení "
-"barvy nebude použit pro tyto přezdívky (formát je: \"přezdívka1:barva1;"
-"přezdívka2:barva2\")"
-
-msgid ""
-"hash algorithm used to find the color for a nick: djb2 = variant of djb2 "
-"(position of letters matters: anagrams of a nick have different color), sum "
-"= sum of letters"
-msgstr ""
-
-msgid ""
-"chars used to stop in nick when computing color with letters of nick (at "
-"least one char outside this list must be in string before stopping) "
-"(example: nick \"|nick|away\" with \"|\" in chars will return color of nick "
-"\"|nick\")"
-msgstr ""
-"znaky zastavující výpočet barvy přezdívky ze znaků přezdívky (alespoň jeden "
-"mimo tento list musí být v řetězci před zastavením) (example: přezdívka \"|"
-"nick|away\" s \"|\" ve znacích vrátí barvu přezdívky \"|nick\")"
-
 msgid ""
 "smart completion for nicks (completes first with last speakers): speakers = "
 "all speakers (including highlights), speakers_highlights = only speakers "
@@ -7707,11 +7707,15 @@ msgstr "získat přezdívku od IRC hosta"
 msgid "IRC host (like `:nick!name@server.com`)"
 msgstr "IRC host (jako `:nick!name@server.com`)"
 
-msgid "get nick color code"
-msgstr "získat kód barvy přezdívky"
+msgid ""
+"get nick color code (*deprecated* since version 1.5, replaced by \"nick_color"
+"\")"
+msgstr ""
 
-msgid "get nick color name"
-msgstr "získat jméno barvy přezdívky"
+msgid ""
+"get nick color name (*deprecated* since version 1.5, replaced by "
+"\"nick_color_name\")"
+msgstr ""
 
 msgid "get buffer pointer for an IRC server/channel/nick"
 msgstr "získat ukazatel bufferu pro IRC server/kanál/přezdívku"
@@ -8926,6 +8930,12 @@ msgstr "RGB barva konvertována do barev terminálu (0-255)"
 msgid "rgb,limit (limit is optional and is set to 256 by default)"
 msgstr "rgb,limit (limit je volitelný a nastaven na výchozí hodnotu 256)"
 
+msgid "get nick color code"
+msgstr "získat kód barvy přezdívky"
+
+msgid "get nick color name"
+msgstr "získat jméno barvy přezdívky"
+
 msgid "list of bars"
 msgstr "seznam polí"
 
@@ -9261,10 +9271,6 @@ msgstr "ukazatel skriptu (volitelný)"
 #, fuzzy
 msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr "jméno serveru (zástupný znak \"*\" je povolen) (volitelný)"
-
-#, fuzzy
-msgid "callback of a script"
-msgstr "Skript"
 
 #, fuzzy, c-format
 msgid ""
@@ -11318,3 +11324,7 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#, fuzzy
+#~ msgid "callback of a script"
+#~ msgstr "Skript"

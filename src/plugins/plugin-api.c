@@ -59,6 +59,7 @@
 #include "../gui/gui-key.h"
 #include "../gui/gui-layout.h"
 #include "../gui/gui-line.h"
+#include "../gui/gui-nick.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
 #include "plugin.h"
@@ -783,6 +784,40 @@ plugin_api_info_color_rgb2term_cb (const void *pointer, void *data,
               gui_color_convert_rgb_to_term (rgb, limit));
 
     return value;
+}
+
+/*
+ * Returns nick color code for a nickname.
+ */
+
+const char *
+plugin_api_info_nick_color_cb (const void *pointer, void *data,
+                               const char *info_name,
+                               const char *arguments)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    return gui_nick_find_color (arguments);
+}
+
+/*
+ * Returns nick color name for a nickname.
+ */
+
+const char *
+plugin_api_info_nick_color_name_cb (const void *pointer, void *data,
+                                    const char *info_name,
+                                    const char *arguments)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    return gui_nick_find_color_name (arguments);
 }
 
 /*
@@ -1855,6 +1890,14 @@ plugin_api_init ()
                N_("RGB color converted to terminal color (0-255)"),
                N_("rgb,limit (limit is optional and is set to 256 by default)"),
                &plugin_api_info_color_rgb2term_cb, NULL, NULL);
+    hook_info (NULL, "nick_color",
+               N_("get nick color code"),
+               N_("nickname"),
+               &plugin_api_info_nick_color_cb, NULL, NULL);
+    hook_info (NULL, "nick_color_name",
+               N_("get nick color name"),
+               N_("nickname"),
+               &plugin_api_info_nick_color_name_cb, NULL, NULL);
 
     /* WeeChat core infolist hooks */
     hook_infolist (NULL, "bar",

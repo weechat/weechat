@@ -18,9 +18,9 @@
 
 | irc | irc_nick | ottiene nick corrente su un server | nome server
 
-| irc | irc_nick_color | ottiene il codice del colore del nick | nick
+| irc | irc_nick_color | get nick color code (*deprecated* since version 1.5, replaced by "nick_color") | nick
 
-| irc | irc_nick_color_name | ottiene il nome del colore del nick | nick
+| irc | irc_nick_color_name | get nick color name (*deprecated* since version 1.5, replaced by "nick_color_name") | nick
 
 | irc | irc_nick_from_host | ottiene nick dall'host IRC | host IRC (come `:nick!nome@server.com`)
 
@@ -53,6 +53,10 @@
 | weechat | inactivity | inattività della tastiera (secondi) | -
 
 | weechat | locale | locale usato per la traduzione dei messaggi | -
+
+| weechat | nick_color | ottiene il codice del colore del nick | nick
+
+| weechat | nick_color_name | ottiene il nome del colore del nick | nick
 
 | weechat | term_height | height of terminal | -
 

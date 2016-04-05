@@ -18,9 +18,9 @@
 
 | irc | irc_nick | あるサーバの現在のニックネームを取得 | サーバ名
 
-| irc | irc_nick_color | ニックネームの色コードを取得 | ニックネーム
+| irc | irc_nick_color | get nick color code (*deprecated* since version 1.5, replaced by "nick_color") | ニックネーム
 
-| irc | irc_nick_color_name | ニックネームの色名を取得 | ニックネーム
+| irc | irc_nick_color_name | get nick color name (*deprecated* since version 1.5, replaced by "nick_color_name") | ニックネーム
 
 | irc | irc_nick_from_host | IRC ホストからニックネームを取得 | IRC ホスト (例: `:nick!name@server.com`)
 
@@ -53,6 +53,10 @@
 | weechat | inactivity | キーボード未使用時間 (秒) | -
 
 | weechat | locale | 翻訳メッセージに利用するロケール | -
+
+| weechat | nick_color | ニックネームの色コードを取得 | ニックネーム
+
+| weechat | nick_color_name | ニックネームの色名を取得 | ニックネーム
 
 | weechat | term_height | 端末の高さ | -
 
