@@ -32,6 +32,9 @@ and you must set new value if you customized them:
 * 'irc.look.nick_color_hash' moved to 'weechat.look.nick_color_hash'
 * 'irc.look.nick_color_stop_chars' moved to 'weechat.look.nick_color_stop_chars'
 
+The default value for option 'weechat.look.nick_color_hash' is now `djb2`
+instead of `sum`.
+
 The following info names (used by API function "info_get") are renamed as well:
 
 * 'irc_nick_color' renamed to 'nick_color'

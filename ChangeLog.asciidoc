@@ -21,11 +21,12 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[1.5_features]]
 === New features
 
+* core: change default value of option weechat.look.nick_color_hash to "djb2"
 * core: fix nick coloring when stop chars and a forced color are used: first
   remove chars then look for forced color
 * core: move nick coloring from irc plugin to core, move options
-  "irc.look.nick_color_force", "irc.look.nick_color_hash" and
-  "irc.look.nick_color_stop_chars" to core, add info "nick_color" and
+  irc.look.nick_color_force, irc.look.nick_color_hash and
+  irc.look.nick_color_stop_chars to core, add info "nick_color" and
   "nick_color_name", deprecate info "irc_nick_color" and "irc_color_name"
   (issue #262)
 * core: move irc bar item "away" to core, move options

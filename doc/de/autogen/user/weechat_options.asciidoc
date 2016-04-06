@@ -750,7 +750,7 @@
 * [[option_weechat.look.nick_color_hash]] *weechat.look.nick_color_hash*
 ** Beschreibung: `Gibt an welcher Hash-Algorithmus zur Farbauswahl für Nicks genutzt werden soll: djb2 = Variante des djb2 (Position der Buchstaben innerhalb des Nicks werden berücksichtigt: Anagramme eines Nick erhalten eine andere Farbe), sum = hier ist nur die Anzahl der Buchstaben maßgeblich`
 ** Typ: integer
-** Werte: djb2, sum (Standardwert: `sum`)
+** Werte: djb2, sum (Standardwert: `djb2`)
 
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
 ** Beschreibung: `Zeichen die genutzt werden sollen damit bei der Generierung der Farbe für einen Nicknamen abgebrochen wird. Es muss mindestens ein Zeichen im Nicknamen enthalten sein der nicht in dieser Liste aufgeführt wird, damit eine Farbe für den Nicknamen erstellt werden kann (Beispiel: Der Nickname lautet "|nick|abwesend" wobei das Zeichen "|" ignoriert werden soll. Die Farbe für den Nicknamen wird nun für "|nick" anstelle von "|nick|abwesend" erstellt)`

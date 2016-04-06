@@ -750,7 +750,7 @@
 * [[option_weechat.look.nick_color_hash]] *weechat.look.nick_color_hash*
 ** opis: `algorytm haszujący używany do znalezienia koloru dla nicka: djb2 = odmiana djb2 (pozycja liter ma znaczenie: anagramy nicka mają różne kolory), sum = suma liter`
 ** typ: liczba
-** wartości: djb2, sum (domyślna wartość: `sum`)
+** wartości: djb2, sum (domyślna wartość: `djb2`)
 
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
 ** opis: `znaki używane do zatrzymania odczytywania koloru nicka (przynajmniej jeden znak poza tą listą musi się znajdować przed zatrzymaniem) (przykład: nick "|nick|away" ze znakami "|" zwróci kolor nicka "|nick")`

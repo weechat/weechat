@@ -750,7 +750,7 @@
 * [[option_weechat.look.nick_color_hash]] *weechat.look.nick_color_hash*
 ** 説明: `ニックネームに対する色を見つけるハッシュアルゴリズム: djb2 = djb2 (文字の位置が重要: ニックネームに同じ色が使われにくくなる) の亜種、sum = 文字の総和`
 ** タイプ: 整数
-** 値: djb2, sum (デフォルト値: `sum`)
+** 値: djb2, sum (デフォルト値: `djb2`)
 
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
 ** 説明: `ニックネーム内の色計算に使用する部分を制限する文字 (このリストに含まれない文字が、このリストの文字の前に少なくとも一つ以上含まれなければいけない) (例: "|" を設定した場合、"|nick|away" はニックネーム "|nick" と同じ色になる)`

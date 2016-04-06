@@ -3022,7 +3022,7 @@ config_weechat_init_options ()
         N_("hash algorithm used to find the color for a nick: djb2 = variant "
            "of djb2 (position of letters matters: anagrams of a nick have "
            "different color), sum = sum of letters"),
-        "djb2|sum", 0, 0, "sum", NULL, 0,
+        "djb2|sum", 0, 0, "djb2", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_nick_color_stop_chars = config_file_new_option (
         weechat_config_file, ptr_section,
