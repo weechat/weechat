@@ -340,7 +340,8 @@ les valeurs recommandées sont :
 Vous devrez peut-être installer le paquet "ncurses-term" pour utiliser ces
 valeurs dans la variable 'TERM'.
 
-Si vous utilisez screen, vous pouvez ajouter cette ligne dans votre '~/.screenrc':
+Si vous utilisez screen, vous pouvez ajouter cette ligne dans votre
+'~/.screenrc' :
 
 ----
 term screen-256color
@@ -391,7 +392,7 @@ Pour envoyer le code au démarrage de WeeChat :
 ----
 
 Puis associez deux touches pour le focus (remplacez les commandes `/print` par
-les commandes de votre choix):
+les commandes de votre choix) :
 
 ----
 /key bind meta2-I /print -core focus
@@ -406,13 +407,13 @@ les commandes de votre choix):
 
 Si vous utilisez certains terminaux comme xterm ou uxterm, quelques touches
 meta ne fonctionnent pas par défaut. Vous pouvez ajouter cette ligne dans le
-fichier '~/.Xresources':
+fichier '~/.Xresources' :
 
-* pour xterm:
+* pour xterm :
 ----
 XTerm*metaSendsEscape: true
 ----
-* pour uxterm:
+* pour uxterm :
 ----
 UXTerm*metaSendsEscape: true
 ----
@@ -676,7 +677,8 @@ Pour Bitlbee ≥ 3, faites ceci sur le canal '&bitlbee' :
 channel set show_users online,away
 ----
 
-Pour une version plus ancienne de Bitlbee, faites ceci sur le canal '&bitlbee':
+Pour une version plus ancienne de Bitlbee, faites ceci sur le canal
+'&bitlbee' :
 
 ----
 set away_devoice false
