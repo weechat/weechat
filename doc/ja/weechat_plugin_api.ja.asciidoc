@@ -5522,10 +5522,9 @@ int weechat_config_boolean (struct t_config_option *option);
 
 * 'option': オプションへのポインタ
 
-// TRANSLATION MISSING
-Return value, depending on the option type:
+戻り値、オプションの型に依存:
 
-* 'boolean': boolean value of option (0 or 1)
+* 'boolean': オプションのブール値 (0 または 1)
 * 'integer': 0
 * 'string': 0
 * 'color': 0
@@ -5573,10 +5572,9 @@ int weechat_config_boolean_default (struct t_config_option *option);
 
 * 'option': オプションへのポインタ
 
-// TRANSLATION MISSING
-Return value, depending on the option type:
+戻り値、オプションの型に依存:
 
-* 'boolean': default boolean value of option (0 or 1)
+* 'boolean': オプションのデフォルトブール値 (0 または 1)
 * 'integer': 0
 * 'string': 0
 * 'color': 0
@@ -5624,13 +5622,12 @@ int weechat_config_integer (struct t_config_option *option);
 
 * 'option': オプションへのポインタ
 
-// TRANSLATION MISSING
-Return value, depending on the option type:
+戻り値、オプションの型に依存:
 
-* 'boolean': boolean value of option (0 or 1)
-* 'integer': integer value of option
+* 'boolean': オプションのブール値 (0 または 1)
+* 'integer': オプションの整数値
 * 'string': 0
-* 'color': color index
+* 'color': 色インデックス
 
 C 言語での使用例:
 
@@ -5667,13 +5664,12 @@ int weechat_config_integer_default (struct t_config_option *option);
 
 * 'option': オプションへのポインタ
 
-// TRANSLATION MISSING
-Return value, depending on the option type:
+戻り値、オプションの型に依存:
 
-* 'boolean': default boolean value of option (0 or 1)
-* 'integer': default integer value of option
+* 'boolean': オプションのデフォルトブール値 (0 または 1)
+* 'integer': オプションのデフォルト整数値
 * 'string': 0
-* 'color': default color index
+* 'color': デフォルト色インデックス
 
 C 言語での使用例:
 
@@ -5710,14 +5706,13 @@ const char *weechat_config_string (struct t_config_option *option);
 
 * 'option': オプションへのポインタ
 
-// TRANSLATION MISSING
-Return value, depending on the option type:
+戻り値、オプションの型に依存:
 
-* 'boolean': "on" if value is true, otherwise "off"
-* 'integer': string value if the option is an integer with string values,
-  otherwise NULL
-* 'string': string value of option
-* 'color': name of color
+* 'boolean': 値が真の場合は "on"、それ以外の場合は "off"
+* 'integer': 値が文字列に対応付けられている場合はその文字列値、それ以外の場合は
+  NULL
+* 'string': オプションの文字列値
+* 'color': 色名
 
 C 言語での使用例:
 
@@ -5754,14 +5749,13 @@ const char *weechat_config_string_default (struct t_config_option *option);
 
 * 'option': オプションへのポインタ
 
-// TRANSLATION MISSING
-Return value, depending on the option type:
+戻り値、オプションの型に依存:
 
-* 'boolean': "on" if default value is true, otherwise "off"
-* 'integer': default string value if the option is an integer with string
-  values, otherwise NULL
-* 'string': default string value of option
-* 'color': name of default color
+* 'boolean': デフォルト値が真の場合は "on"、それ以外の場合は "off"
+* 'integer': デフォルト値が文字列に対応付けられている場合はその文字列値、それ以外の場合は
+  NULL
+* 'string': オプションのデフォルト文字列値
+* 'color': デフォルト色名
 
 C 言語での使用例:
 
@@ -5798,13 +5792,12 @@ const char *weechat_config_color (struct t_config_option *option);
 
 * 'option': オプションへのポインタ
 
-// TRANSLATION MISSING
-Return value, depending on the option type:
+戻り値、オプションの型に依存:
 
 * 'boolean': NULL
 * 'integer': NULL
 * 'string': NULL
-* 'color': name of color
+* 'color': 色名
 
 C 言語での使用例:
 
@@ -5841,13 +5834,12 @@ const char *weechat_config_color_default (struct t_config_option *option);
 
 * 'option': オプションへのポインタ
 
-// TRANSLATION MISSING
-Return value, depending on the option type:
+戻り値、オプションの型に依存:
 
 * 'boolean': NULL
 * 'integer': NULL
 * 'string': NULL
-* 'color': name of default color
+* 'color': デフォルト色名
 
 C 言語での使用例:
 
