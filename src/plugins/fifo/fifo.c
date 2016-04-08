@@ -99,9 +99,9 @@ fifo_create ()
     /* create FIFO pipe, writable for user only */
     if (mkfifo (fifo_filename, 0600) == 0)
     {
-        /* open FIFO pipe in read-only, non-blocking mode */
+        /* open FIFO pipe in non-blocking mode */
         if ((fifo_fd = open (fifo_filename,
-                             O_RDONLY | O_NONBLOCK)) != -1)
+                             O_RDWR | O_NONBLOCK)) != -1)
         {
             if ((weechat_fifo_plugin->debug >= 1) || !fifo_quiet)
             {
@@ -307,42 +307,20 @@ fifo_fd_cb (const void *pointer, void *data, int fd)
         if (buf2)
             free (buf2);
     }
-    else
+    else if (num_read < 0)
     {
-        if (num_read < 0)
-        {
-            check_error = (errno == EAGAIN);
+        check_error = (errno == EAGAIN);
 #ifdef __CYGWIN__
-            check_error = check_error || (errno == ECOMM);
+        check_error = check_error || (errno == ECOMM);
 #endif /* __CYGWIN__ */
-            if (check_error)
-                return WEECHAT_RC_OK;
+        if (check_error)
+            return WEECHAT_RC_OK;
 
-            weechat_printf (NULL,
-                            _("%s%s: error reading pipe (%d %s), closing it"),
-                            weechat_prefix ("error"), FIFO_PLUGIN_NAME,
-                            errno, strerror (errno));
-            fifo_remove ();
-        }
-        else
-        {
-            weechat_unhook (fifo_fd_hook);
-            fifo_fd_hook = NULL;
-            close (fifo_fd);
-            fifo_fd = open (fifo_filename, O_RDONLY | O_NONBLOCK);
-            if (fifo_fd < 0)
-            {
-                weechat_printf (NULL,
-                                _("%s%s: error opening file, closing it"),
-                                weechat_prefix ("error"), FIFO_PLUGIN_NAME);
-                fifo_remove ();
-            }
-            else
-            {
-                fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0,
-                                                &fifo_fd_cb, NULL, NULL);
-            }
-        }
+        weechat_printf (NULL,
+                        _("%s%s: error reading pipe (%d %s), closing it"),
+                        weechat_prefix ("error"), FIFO_PLUGIN_NAME,
+                        errno, strerror (errno));
+        fifo_remove ();
     }
 
     return WEECHAT_RC_OK;
