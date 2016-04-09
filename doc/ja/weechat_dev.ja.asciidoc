@@ -155,8 +155,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    gui-layout.c               | レイアウト
 |    gui-line.c                 | バッファ中の行
 |    gui-mouse.c                | マウス
-// TRANSLATION MISSING
-|    gui-nick.c                 | Nick functions
+|    gui-nick.c                 | ニックネーム関数
 |    gui-nicklist.c             | バッファのニックネームリスト
 |    gui-window.c               | ウィンドウ
 |    curses/                    | curses インターフェイス
