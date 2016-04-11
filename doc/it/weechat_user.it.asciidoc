@@ -2305,7 +2305,9 @@ $ mkdir -p ~/.weechat/ssl
 $ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
-Nota: è possibile concatenare più certificati nel file CAs.pem.
+// TRANSLATION MISSING
+[NOTE]
+E possibile concatenare più certificati nel file CAs.pem.
 
 // TRANSLATION MISSING
 * In WeeChat, with "oftc" server already added:
