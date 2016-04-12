@@ -1104,8 +1104,8 @@ Exemple en C :
 
 [source,C]
 ----
-char *str = weechat_string_convert_escaped_chars ("snowman: \\u2603");
-/* str == "snowman: ☃" */
+char *str = weechat_string_convert_escaped_chars ("snowman : \\u2603");
+/* str == "snowman : ☃" */
 /* ... */
 free (str);
 ----
@@ -1430,9 +1430,9 @@ char *string;
 if (weechat_string_regcomp (&my_regex, "([0-9]{4})-([0-9]{2})-([0-9]{2})",
                             REG_EXTENDED) == 0)
 {
-    string = weechat_string_replace_regex ("date: 2014-02-14", &my_regex,
+    string = weechat_string_replace_regex ("date : 2014-02-14", &my_regex,
                                            "$3/$2/$1", '$', NULL, NULL);
-    /* string == "date: 14/02/2014" */
+    /* string == "date : 14/02/2014" */
     if (string)
         free (string);
     regfree (&my_regex);
@@ -2166,7 +2166,7 @@ struct t_hashtable *options2 = weechat_hashtable_new (8,
 /* ajout de crochets autour des URLs */
 weechat_hashtable_set (options2, "regex", "\\w+://\\S+");
 weechat_hashtable_set (options2, "regex_replace", "[ ${re:0} ]");
-char *str4 = weechat_string_eval_expression ("test: https://weechat.org", NULL, NULL, NULL);  /* "test: [ https://weechat.org ]" */
+char *str4 = weechat_string_eval_expression ("test : https://weechat.org", NULL, NULL, NULL);  /* "test : [ https://weechat.org ]" */
 
 /* masquage des mots de passe */
 weechat_hashtable_set (options2, "regex", "(password=)(\\S+)");
@@ -2195,7 +2195,7 @@ options = {
     "regex": "\\w+://\\S+",
     "regex_replace": "[ ${re:0} ]",
 }
-str4 = weechat.string_eval_expression("test: https://weechat.org", {}, {}, options)  # "test: [ https://weechat.org ]"
+str4 = weechat.string_eval_expression("test : https://weechat.org", {}, {}, options)  # "test : [ https://weechat.org ]"
 
 # replace with regex : masquage des mots de passe
 options = {
@@ -3099,7 +3099,7 @@ Exemple en C :
 [source,C]
 ----
 time_t date = time (NULL);
-weechat_printf (NULL, "date: %s",
+weechat_printf (NULL, "date : %s",
                 weechat_util_get_time_string (&date));
 ----
 
@@ -11527,8 +11527,8 @@ Propriétés :
 
 | hotlist_max_level_nicks | liste de "pseudo:niveau" séparés par des virgules |
   Liste de pseudos avec niveau max pour la hotlist sur ce tampon (le niveau peut
-  être : -1: jamais dans la hotlist, 0: faible, 1: message, 2: privé,
-  3: highlight), par exemple : "joe:2,mike:-1,robert:-1" (joe ne produira
+  être : -1 : jamais dans la hotlist, 0 : faible, 1 : message, 2 : privé,
+  3 : highlight), par exemple : "joe:2,mike:-1,robert:-1" (joe ne produira
   jamais de highlight sur le tampon, mike et robert ne changeront jamais la
   hotlist)
 

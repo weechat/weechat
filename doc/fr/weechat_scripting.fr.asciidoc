@@ -162,7 +162,7 @@ weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Script de test" "" ""
 weechat::print "" "Bonjour, du script tcl !"
 ----
 
-* Guile (scheme):
+* Guile (scheme) :
 
 [source,lisp]
 ----
@@ -170,7 +170,7 @@ weechat::print "" "Bonjour, du script tcl !"
 (weechat:print "" "Bonjour, du script scheme !")
 ----
 
-* Javascript:
+* Javascript :
 
 [source,javascript]
 ----
@@ -296,7 +296,7 @@ valeur (ce n'est pas un pointeur).
 
 Exemple de callback, pour chaque langage :
 
-* Python:
+* Python :
 
 [source,python]
 ----
@@ -307,7 +307,7 @@ def timer_cb(data, remaining_calls):
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
 ----
 
-* Perl:
+* Perl :
 
 [source,perl]
 ----
@@ -320,7 +320,7 @@ sub timer_cb {
 weechat::hook_timer(1000, 0, 1, "timer_cb", "test");
 ----
 
-* Ruby:
+* Ruby :
 
 [source,ruby]
 ----
@@ -332,7 +332,7 @@ end
 Weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 ----
 
-* Lua:
+* Lua :
 
 [source,lua]
 ----
@@ -344,7 +344,7 @@ end
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
 ----
 
-* Tcl:
+* Tcl :
 
 [source,tcl]
 ----
@@ -356,7 +356,7 @@ proc timer_cb { data remaining_calls } {
 weechat::hook_timer 1000 0 1 timer_cb test
 ----
 
-* Guile (scheme):
+* Guile (scheme) :
 
 [source,lisp]
 ----
@@ -368,7 +368,7 @@ weechat::hook_timer 1000 0 1 timer_cb test
 (weechat:hook_timer 1000 0 1 "timer_cb" "test")
 ----
 
-* Javascript:
+* Javascript :
 
 [source,javascript]
 ----
@@ -426,8 +426,8 @@ Liste des fonctions de l'API script :
 | associations de touches   |
   key_bind, key_unbind
 | affichage                 |
-  prefix, color, print (for python: prnt), print_date_tags (for python:
-  prnt_date_tags), print_y (for python: prnt_y), log_print
+  prefix, color, print (pour python : prnt), print_date_tags (pour python :
+  prnt_date_tags), print_y (pour python : prnt_y), log_print
 | hooks                     |
   hook_command, hook_command_run, hook_timer, hook_fd, hook_process,
   hook_process_hashtable, hook_connect, hook_print, hook_signal,
@@ -868,7 +868,7 @@ weechat.prnt("", "la valeur de l'option weechat.color.chat_delimiters est : %s"
 
 L'extension IRC envoie deux signaux pour un message reçu (`xxx` est le nom
 interne du serveur IRC, `yyy` est le nom de la commande IRC comme JOIN, QUIT,
-PRIVMSG, 301, ..):
+PRIVMSG, 301, ..) :
 
 xxxx,irc_in_yyy::
     signal envoyé avant traitement du message
@@ -924,7 +924,7 @@ Vous pouvez analyser un message IRC avec l'info_hashtable appelée
 
 Le résultat est une table de hachage avec les clés suivantes
 (les exemples de valeurs sont construits avec ce message :
-`@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!`):
+`@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!`) :
 
 [width="100%",cols="1,^2,10,8",options="header"]
 |===

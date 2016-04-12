@@ -199,7 +199,7 @@ $ make
 $ make install
 ----
 
-Des options peuvent être utilisées pour cmake, avec le format: "-DOPTION=VALUE".
+Des options peuvent être utilisées pour cmake, avec le format : "-DOPTION=VALUE".
 
 Liste des options couramment utilisées :
 
@@ -208,7 +208,7 @@ Liste des options couramment utilisées :
 | Option | Valeurs | Valeur par défaut | Description
 
 | CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` | |
-  Type de construction: `Debug` (ou `RelWithDebInfo`) est recommandé si vous
+  Type de construction : `Debug` (ou `RelWithDebInfo`) est recommandé si vous
   utilisez une version de développement de WeeChat.
 
 | CMAKE_INSTALL_PREFIX | répertoire | /usr/local |
@@ -406,7 +406,7 @@ Si vous avez installé un paquet binaire, alors installez le paquet
 ==== Fichiers core
 
 Pour activer les fichiers 'core', vous pouvez utiliser l'option
-<<option_weechat.startup.sys_rlimit,weechat.startup.sys_rlimit>>:
+<<option_weechat.startup.sys_rlimit,weechat.startup.sys_rlimit>> :
 
 ----
 /set weechat.startup.sys_rlimit "core:-1"
@@ -416,7 +416,7 @@ Pour WeeChat ≤ 0.3.8 ou si vous voulez activer les fichiers core avant que
 WeeChat ne démarre, vous pouvez utiliser la commande `ulimit`.
 
 Par exemple sous Linux avec le shell 'bash', ajoutez cette ligne dans votre
-`~/.bashrc`:
+`~/.bashrc` :
 
 ----
 ulimit -c unlimited
@@ -591,7 +591,7 @@ La barre 'input' contient les objets (items) suivants par défaut :
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Objet (item) | Exemple                                         | Description
-| input_prompt | `[@Flashy(i)]`                                  | Prompt, pour irc: pseudo et modes (le mode "+i" signifie invisible sur freenode)
+| input_prompt | `[@Flashy(i)]`                                  | Prompt, pour irc : pseudo et modes (le mode "+i" signifie invisible sur freenode)
 | away         | `(absent)`                                      | Indicateur d'absence
 | input_search | `[Recherche (~ str,msg)]`                       | Indicateur de recherche de texte ("`~`" : insensible à la casse, "`==`" : sensible à la casse, "`str`" : recherche de chaîne, "`regex`" : recherche d'expression régulière, "`msg`" : recherche dans les messages, "`pre`" : recherche dans les préfixes, "`pre\|msg`" : recherche dans les préfixes et messages)
 | input_paste  | `[Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non]` | Question à l'utilisateur pour coller des lignes
@@ -1538,7 +1538,8 @@ Quelques valeurs recommandées pour 'TERM' si vous voulez 256 couleurs :
 * en dehors de screen/tmux : 'xterm-256color', 'rxvt-256color',
   'putty-256color', ...
 
-Si vous utilisez screen, vous pouvez ajouter cette ligne dans votre '~/.screenrc':
+Si vous utilisez screen, vous pouvez ajouter cette ligne dans votre
+'~/.screenrc' :
 
 [NOTE]
 Vous devrez peut-être installer le paquet "ncurses-term" pour utiliser ces
@@ -1742,7 +1743,7 @@ commande `/secure set xxx ...`). +
 Pour une liste complète des options supportées, voir `/help secure`.
 
 Pour utiliser le mot de passe 'freenode', par exemple avec
-<<irc_sasl_authentication,l'authentification SASL>>:
+<<irc_sasl_authentication,l'authentification SASL>> :
 
 ----
 /set irc.server.freenode.sasl_password "${sec.data.freenode}"
@@ -1919,7 +1920,7 @@ peut être trouvée par la commande suivante sous le shell :
 $ aspell config
 ----
 
-Par exemple, pour activer l'option "ignore-case":
+Par exemple, pour activer l'option "ignore-case" :
 
 ----
 /set aspell.option.ignore-case "true"
@@ -1987,7 +1988,7 @@ UTF-8.
 Par exemple :
 
 ....
-charset: terminal: ISO-8859-15, interne: UTF-8
+charset : terminal : ISO-8859-15, interne : UTF-8
 ....
 
 [[charset_options]]
@@ -2634,15 +2635,15 @@ Les autres messages numériques peuvent être paramétrés de la même manière.
 Le message peut être préfixé par le nom du serveur pour être spécifique à un
 serveur IRC (par exemple: `freenode.whois`).
 
-Quelques exemples:
+Quelques exemples :
 
-* afficher le résultat de `/whois` sur le tampon privé:
+* afficher le résultat de `/whois` sur le tampon privé :
 
 ----
 /set irc.msgbuffer.whois private
 ----
 
-* restaurer le tampon par défaut pour whois (tampon du serveur):
+* restaurer le tampon par défaut pour whois (tampon du serveur) :
 
 ----
 /unset irc.msgbuffer.whois
@@ -2655,7 +2656,7 @@ seulement :
 /set irc.msgbuffer.freenode.invite current
 ----
 
-* afficher le message "303" (ison) sur le tampon "core" WeeChat:
+* afficher le message "303" (ison) sur le tampon "core" WeeChat :
 
 ----
 /set irc.msgbuffer.303 weechat
@@ -2973,8 +2974,8 @@ langages.
 
 Une autre extension appelée "script" est un gestionnaire de scripts et est
 utilisé pour charger/décharger des scripts pour n'importe quel langage, et
-installer/supprimer des scripts du dépôt WeeChat, qui sont visibles à cette URL:
-https://weechat.org/scripts
+installer/supprimer des scripts du dépôt WeeChat, qui sont visibles à cette
+URL : https://weechat.org/scripts
 
 Pour plus d'informations sur comment écrire des scripts, ou sur l'API
 WeeChat pour les scripts, merci de lire le 'Le Guide pour Scripts WeeChat'.
@@ -3051,7 +3052,7 @@ dans la 'Référence API Extension WeeChat'.
 [[trigger_options]]
 ==== Options (trigger.conf)
 
-Sections:
+Sections :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3063,7 +3064,7 @@ Sections:
             /set trigger.trigger.*                   | Options des triggers
 |===
 
-Options:
+Options :
 
 include::autogen/user/trigger_options.asciidoc[]
 
@@ -3076,7 +3077,7 @@ include::autogen/user/trigger_commands.asciidoc[]
 ==== Anatomie d'un trigger
 
 Un trigger a les options suivantes (les noms sont
-`trigger.trigger.<nom>.<option>`):
+`trigger.trigger.<nom>.<option>`) :
 
 [width="100%",cols="2m,2,10",options="header"]
 |===
@@ -3132,7 +3133,7 @@ Lorsque le callback d'un trigger est appelé, les actions suivantes sont
 exécutées, dans cet ordre, si les triggers sont globalement activés et si le
 trigger lui-même est activé :
 
-. vérifier les conditions du trigger: si faux, sortir
+. vérifier les conditions du trigger : si faux, sortir
 . remplacer du texte dans le trigger en utilisant des expressions régulières
 . exécuter la/les commande(s)
 . sortir avec un code retour (sauf pour les "hooks" 'modifier' et 'focus').
@@ -3441,7 +3442,7 @@ pour le modificateur 'weechat_print') :
 | tg_tags_count      | chaîne | Nombre d'étiquettes dans le message
 | tg_tag_nick        | chaîne | Pseudo (depuis l'étiquette "nick_xxx")
 | tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc")
-| tg_tag_host        | chaîne | Nom d'utilisateur et hôte, format: utilisateur@hôte (depuis l'étiquette "host_xxx")
+| tg_tag_host        | chaîne | Nom d'utilisateur et hôte, format : utilisateur@hôte (depuis l'étiquette "host_xxx")
 | tg_tag_notify      | chaîne | Niveau de notification ('none', 'message', 'private', 'highlight')
 | tg_notify          | chaîne | Niveau de notification, si différent de 'none'
 | tg_msg_pv          | chaîne | "1" pour un message privé, sinon "0"

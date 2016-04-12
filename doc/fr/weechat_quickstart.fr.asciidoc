@@ -89,7 +89,7 @@ commande `/set`.
 
 Le cœur de WeeChat ("core") ne fait qu'afficher les données à l'écran et
 interagir avec l'utilisateur, cela signifie que le cœur sans extension
-n'a pas grand intérêt (utilisateurs fidèles: IRC faisait partie du cœur
+n'a pas grand intérêt (utilisateurs fidèles : IRC faisait partie du cœur
 dans les versions ≤ 0.2.6).
 
 Tous les protocoles réseau comme IRC sont fournis sous forme d'extensions.
@@ -322,7 +322,7 @@ les touches vitales :
 - key[F11]/key[F12] : faire défiler la liste des pseudos
 - key[Tab] : compléter le texte de la barre d'entrée, comme avec votre shell
 - key[PgUp]/key[PgDn] : faire défiler le texte dans le tampon courant
-- key[alt-a]: sauter au tampon avec de l'activité (dans la "hotlist")
+- key[alt-a] : sauter au tampon avec de l'activité (dans la "hotlist")
 
 Selon votre clavier et/ou vos besoins, vous pouvez associer n'importe
 quelle touche à une commande avec la commande `/key`.

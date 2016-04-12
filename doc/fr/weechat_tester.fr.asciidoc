@@ -75,8 +75,8 @@ $ git clone https://github.com/weechat/weechat.git
 $ cd weechat
 ----
 
-NOTE: Plus tard, vous pourrez utiliser la commande "`git pull`" dans ce répertoire
-pour obtenir juste les deltas avec la version d'aujourd'hui.
+NOTE : Plus tard, vous pourrez utiliser la commande "`git pull`" dans ce
+répertoire pour obtenir juste les deltas avec la version d'aujourd'hui.
 
 Sinon vous pouvez installer le paquet 'devel' :
 
@@ -110,10 +110,10 @@ $ make install
 
 Selon votre distribution Linux :
 
-* Debian: https://weechat.org/download/debian
-* Gentoo: https://weechat.org/download
-* ArchLinux: PKGBUILD depuis http://aur.archlinux.org/
-* autre: nous ne savons pas ! Eheh.
+* Debian : https://weechat.org/download/debian
+* Gentoo : https://weechat.org/download
+* ArchLinux : PKGBUILD depuis http://aur.archlinux.org/
+* autre : nous ne savons pas ! Eheh.
 
 
 [[run]]
