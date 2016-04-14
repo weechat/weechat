@@ -2229,8 +2229,8 @@ WeeChat supports SASL authentication, using different mechanisms:
 * 'plain': plain text password (default)
 * 'ecdsa-nist256p-challenge': challenge with public/private key
 * 'external': client side SSL cert
-* 'dh-blowfish': blowfish encrypted password
-* 'dh-aes': AES encrypted password
+* 'dh-blowfish': blowfish encrypted password (*insecure*, not recommended)
+* 'dh-aes': AES encrypted password (*insecure*, not recommended)
 
 [NOTE]
 The "gcrypt" library is required when compiling WeeChat in order to use

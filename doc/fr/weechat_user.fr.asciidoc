@@ -2306,8 +2306,8 @@ mécanismes :
 * 'plain' : mot de passe en clair (par défaut)
 * 'ecdsa-nist256p-challenge' : challenge avec clé publique/privée
 * 'external' : certificat SSL côté client
-* 'dh-blowfish' : mot de passe chiffré avec blowfish
-* 'dh-aes' : mot de passe chiffré avec AES
+* 'dh-blowfish' : mot de passe chiffré avec blowfish (*non sûr*, non recommandé)
+* 'dh-aes' : mot de passe chiffré avec AES (*non sûr*, non recommandé)
 
 [NOTE]
 La librairie "gcrypt" est requise lors de la compilation de WeeChat pour
