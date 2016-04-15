@@ -2228,10 +2228,8 @@ WeeChat は SASL 認証をサポートします、以下の認証メカニズム
 * 'plain': 平文パスワード (デフォルト)
 * 'ecdsa-nist256p-challenge': 公開鍵/秘密鍵を使うチャレンジ認証
 * 'external': クライアント側 SSL 証明書
-// TRANSLATION MISSING
-* 'dh-blowfish': blowfish 暗号パスワード (*insecure*, not recommended)
-// TRANSLATION MISSING
-* 'dh-aes': AES 暗号パスワード (*insecure*, not recommended)
+* 'dh-blowfish': blowfish 暗号パスワード (*危険* 、非推奨)
+* 'dh-aes': AES 暗号パスワード (*危険* 、非推奨)
 
 [NOTE]
 "dh-blowfish" メカニズムを利用する場合、"gcrypt" ライブラリが
