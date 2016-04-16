@@ -15,14 +15,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
-# Vasco Almeida <vascomalmeida@sapo.pt>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-04-04 14:36+0200\n"
-"PO-Revision-Date: 2016-04-15 11:43+0000\n"
+"PO-Revision-Date: 2016-04-16 10:34+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -851,10 +850,10 @@ msgid "%sSecured data \"%s\" not found"
 msgstr "%sDados protegidos \"%s\" não encontrados"
 
 msgid "default if null: "
-msgstr "predefinição se for nulo:"
+msgstr "predefinição se for nulo: "
 
 msgid "default: "
-msgstr "predefinição:"
+msgstr "predefinição: "
 
 #, c-format
 msgid ""
@@ -929,7 +928,7 @@ msgid "%sFailed to unset option \"%s\""
 msgstr "%sFalha ao reinicializar a opção \"%s\""
 
 msgid "Option reset: "
-msgstr "Opção reposta:"
+msgstr "Opção reposta: "
 
 #, c-format
 msgid "Option removed: %s"
@@ -3065,7 +3064,7 @@ msgid "names of bars"
 msgstr "nomes das barras"
 
 msgid "values for a configuration option"
-msgstr "valores de uma opção de configuração "
+msgstr "valores de uma opção de configuração"
 
 msgid "weechat commands"
 msgstr "comandos do weechat"
@@ -5196,7 +5195,7 @@ msgstr "Verificador ortográfico da entrada (com Aspell)"
 #. TRANSLATORS: "%s" is "aspell"
 #, c-format
 msgid "%s dictionaries list:"
-msgstr "lista de dicionários do %s"
+msgstr "lista de dicionários do %s:"
 
 #, c-format
 msgid "%s: \"%s\" removed"
@@ -10047,7 +10046,7 @@ msgid ""
 "\"%s\"), failed to load"
 msgstr ""
 "%sErro: a API do plugin \"%s\" é incompatível (API atual: \"%s\", API do "
-"plugin: \"%s\"), falha ao carregar "
+"plugin: \"%s\"), falha ao carregar"
 
 #, c-format
 msgid ""
@@ -11223,7 +11222,7 @@ msgid ""
 "language, otherwise English version is used)"
 msgstr ""
 "traduzir a descrição dos scripts (se estiver disponível tradução na sua "
-"língua, caso contrário é usada a versão em inglês) "
+"língua, caso contrário é usada a versão em inglês)"
 
 msgid ""
 "use keys alt+X in script buffer to do actions on scripts (alt+i = install, "
