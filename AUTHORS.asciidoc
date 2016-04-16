@@ -94,6 +94,7 @@ Alphabetically:
 * Tom Alsberg
 * Tor Hveem (xt)
 * Valentin Lorentz (progval)
+* Vasco Almeida
 * Voroskoi
 * Yannick Palanque
 
