@@ -58,7 +58,7 @@ solaris*)
 esac
 
 # Gettext
-ALL_LINGUAS="cs de es fr hu it ja pl pt_BR ru tr"
+ALL_LINGUAS="cs de es fr hu it ja pl pt pt_BR ru tr"
 AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION([0.18])
 
