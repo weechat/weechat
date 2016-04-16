@@ -26,6 +26,7 @@ set(PO_FILES
   it.po
   ja.po
   pl.po
+  pt.po
   pt_BR.po
   ru.po
   tr.po
