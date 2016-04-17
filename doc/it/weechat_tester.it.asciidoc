@@ -80,8 +80,9 @@ $ git clone https://github.com/weechat/weechat.git
 $ cd weechat
 ----
 
-NOTA: In seguito, si può eseguire "`git pull`" in questa directory per
-ricevere gli ultimi aggiornamenti.
+[NOTE]
+In seguito, si può eseguire "`git pull`" in questa directory per ricevere gli
+ultimi aggiornamenti.
 
 Altrimenti si può scaricare ed estrarre il pacchetto 'devel':
 

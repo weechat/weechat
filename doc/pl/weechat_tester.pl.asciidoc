@@ -76,7 +76,8 @@ $ git clone https://github.com/weechat/weechat.git
 $ cd weechat
 ----
 
-UWAGA: Później możesz wykonać w tym katalogu "`git pull`", aby pobrać najnowsze
+[NOTE]
+Później możesz wykonać w tym katalogu "`git pull`", aby pobrać najnowsze
 poprawki.
 
 Oczywiście możesz pobrać paczkę oznaczoną jako 'devel':

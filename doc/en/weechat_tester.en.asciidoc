@@ -71,7 +71,8 @@ $ git clone https://github.com/weechat/weechat.git
 $ cd weechat
 ----
 
-NOTE: Later, you can run "`git pull`" in this directory, to get deltas with
+[NOTE]
+Later, you can run "`git pull`" in this directory, to get deltas with
 the latest updates.
 
 Otherwise you can download and unpack 'devel' package:

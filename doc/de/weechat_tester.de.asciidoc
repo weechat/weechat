@@ -83,7 +83,8 @@ $ git clone https://github.com/weechat/weechat.git
 $ cd weechat
 ----
 
-NOTE: Um auf den aktuellen Stand zu kommen verwendest Du z.B. "`git pull`" in
+[NOTE]
+Um auf den aktuellen Stand zu kommen verwendest Du z.B. "`git pull`" in
 diesem Ordner.
 
 Ansonsten kannst Du das 'Entwickler-Paket' herunterladen und entpacken:

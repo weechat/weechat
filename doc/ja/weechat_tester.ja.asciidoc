@@ -73,7 +73,8 @@ $ git clone https://github.com/weechat/weechat.git
 $ cd weechat
 ----
 
-注意: clone の後、このディレクトリ内で "`git pull`"
+[NOTE]
+clone の後、このディレクトリ内で "`git pull`"
 を実行すれば、最新のアップデートとの差分が更新されます。
 
 他の方法として 'devel' パッケージをダウンロードして展開する方法があります:

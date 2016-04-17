@@ -75,8 +75,9 @@ $ git clone https://github.com/weechat/weechat.git
 $ cd weechat
 ----
 
-NOTE : Plus tard, vous pourrez utiliser la commande "`git pull`" dans ce
-répertoire pour obtenir juste les deltas avec la version d'aujourd'hui.
+[NOTE]
+Plus tard, vous pourrez utiliser la commande "`git pull`" dans ce répertoire
+pour obtenir juste les deltas avec la version d'aujourd'hui.
 
 Sinon vous pouvez installer le paquet 'devel' :
 
