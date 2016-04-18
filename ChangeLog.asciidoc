@@ -45,7 +45,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: check that pointers received in arguments are not NULL in buffers and
   windows functions
 * core: fix truncation of buffer names in hotlist (issue #668)
-* core: fix update of window title under tmux (issue #685)
+* core: fix update of window title under Tmux (issue #685)
 * core: fix detection of Python shared libraries (issue #676)
 * api: fix number of arguments returned by function string_split() when
   keep_eol is 2 and the string ends with separators
@@ -112,7 +112,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: fix memory leak when using multiple "-d" or "-r" in command line
   arguments
 * core: don't complain any more about "tmux" and "tmux-256color" $TERM values
-  when WeeChat is running under tmux (issue #519)
+  when WeeChat is running under Tmux (issue #519)
 * core: fix truncated messages after a word with a length of zero on screen
   (for example a zero width space: U+200B) (bug #40985, issue #502)
 * api: fix handle of invalid escape in function string_convert_escaped_chars()
@@ -454,7 +454,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * core: add terabyte unit for size displayed
 * core: display a warning on startup if $TERM does not start with "screen"
-  under screen/tmux
+  under Screen/Tmux
 * core: add option weechat.color.status_nicklist_count (issue #109,
   issue #110)
 * core: add option "env" in command /set (manage environment variables)
@@ -2615,7 +2615,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * fix refresh bug (too many refresh) when terminal is resized
 * fix nicklist display bugs when on top or bottom of chat window
 * fix --disable-plugins option in configure script
-* fix high CPU usage when running under a screen that has been killed
+* fix high CPU usage when running under a Screen that has been killed
 
 [[0.1.8]]
 == Version 0.1.8 (2006-03-18)
