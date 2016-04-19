@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[1.5_features]]
 === New features
 
+* core: add Portuguese translations
 * core: change default value of option weechat.look.nick_color_hash to "djb2"
 * core: fix nick coloring when stop chars and a forced color are used: first
   remove chars then look for forced color
