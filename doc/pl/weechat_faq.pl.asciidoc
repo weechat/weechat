@@ -8,7 +8,7 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys@szluug.org>, 2009-2016
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2016
 
 [NOTE]
 Ten dokument jest napisany dla WeeChat w wersji ≥ 0.3.0, ale powinien być używany

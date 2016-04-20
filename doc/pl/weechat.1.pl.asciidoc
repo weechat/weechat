@@ -91,7 +91,7 @@ $HOME/.weechat/weechat.log::
 
 Autorem tej strony pomocy Sébastien Helleu <flashcode@flashtux.org>.
 
-Tłumaczenie Krzysztof Korościk <soltys@szluug.org>.
+Tłumaczenie Krzysztof Korościk <soltys1@gmail.com>.
 
 == PRAWA AUTORSKIE
 

@@ -9,7 +9,7 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys@szluug.org>, 2009-2016
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2016
 
 
 Ten dokument opisuje klienta rozmów WeeChat, który jest częścią WeeChat.
