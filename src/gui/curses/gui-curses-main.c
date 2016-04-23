@@ -422,6 +422,9 @@ gui_main_loop ()
 
         /* execute fd hooks */
         hook_fd_exec ();
+
+        /* run process (with fork) */
+        hook_process_exec ();
     }
 
     /* remove keyboard hook */

@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20160324-01"
+#define WEECHAT_PLUGIN_API_VERSION "20160423-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -138,11 +138,16 @@ struct timeval;
 
 /*
  * process return code (for callback):
- *   if >= 0, then process ended and it's return code of command
- *   if  < 0, then it's running or error
+ *   if >= 0, the process ended and it's return code of command
+ *   if -1, the process is still running
+ *   if -2, the process ended with an error
+ *   if -3, the callback is called in the child process (exec of function)
+ *          (note: the return code -3 is NEVER sent to script plugins,
+ *           it can be used only in C API)
  */
 #define WEECHAT_HOOK_PROCESS_RUNNING                -1
 #define WEECHAT_HOOK_PROCESS_ERROR                  -2
+#define WEECHAT_HOOK_PROCESS_CHILD                  -3
 
 /* connect status for connection hooked */
 #define WEECHAT_HOOK_CONNECT_OK                     0

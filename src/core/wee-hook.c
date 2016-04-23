@@ -76,6 +76,8 @@ int real_delete_pending = 0;           /* 1 if some hooks must be deleted   */
 
 struct pollfd *hook_fd_pollfd = NULL;  /* file descriptors for poll()       */
 int hook_fd_pollfd_count = 0;          /* number of file descriptors        */
+int hook_process_pending = 0;          /* 1 if there are some process to    */
+                                       /* run (via fork)                    */
 
 
 void hook_process_run (struct t_hook *hook_process);
@@ -1405,6 +1407,8 @@ hook_fd_exec ()
 
     /* perform the poll() */
     timeout = hook_timer_get_time_to_next ();
+    if (hook_process_pending)
+        timeout = 0;
     ready = poll (hook_fd_pollfd, num_fd, timeout);
     if (ready <= 0)
         return;
@@ -1547,7 +1551,10 @@ hook_process_hashtable (struct t_weechat_plugin *plugin,
                          new_hook_process->timeout);
     }
 
-    hook_process_run (new_hook);
+    if (strncmp (new_hook_process->command, "func:", 5) == 0)
+        hook_process_pending = 1;
+    else
+        hook_process_run (new_hook);
 
     return new_hook;
 
@@ -1655,6 +1662,16 @@ hook_process_child (struct t_hook *hook_process)
             ptr_url++;
         }
         rc = weeurl_download (ptr_url, HOOK_PROCESS(hook_process, options));
+    }
+    else if (strncmp (HOOK_PROCESS(hook_process, command), "func:", 5) == 0)
+    {
+        /* run a function (via the hook callback) */
+        rc = (int) (HOOK_PROCESS(hook_process, callback))
+            (hook_process->callback_pointer,
+             hook_process->callback_data,
+             HOOK_PROCESS(hook_process, command),
+             WEECHAT_HOOK_PROCESS_CHILD,
+             NULL, NULL);
     }
     else
     {
@@ -2140,6 +2157,39 @@ error:
          WEECHAT_HOOK_PROCESS_ERROR,
          NULL, NULL);
     unhook (hook_process);
+}
+
+/*
+ * Executes all process commands pending.
+ */
+
+void
+hook_process_exec ()
+{
+    struct t_hook *ptr_hook, *next_hook;
+
+    hook_exec_start ();
+
+    ptr_hook = weechat_hooks[HOOK_TYPE_PROCESS];
+    while (ptr_hook)
+    {
+        next_hook = ptr_hook->next_hook;
+
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
+            && (HOOK_PROCESS(ptr_hook, child_pid) == 0))
+        {
+            ptr_hook->running = 1;
+            hook_process_run (ptr_hook);
+            ptr_hook->running = 0;
+        }
+
+        ptr_hook = next_hook;
+    }
+
+    hook_exec_end ();
+
+    hook_process_pending = 0;
 }
 
 /*

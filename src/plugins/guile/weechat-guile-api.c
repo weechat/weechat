@@ -2171,14 +2171,33 @@ weechat_guile_api_hook_process_cb (const void *pointer, void *data,
 {
     struct t_plugin_script *script;
     void *func_argv[5];
-    char empty_arg[1] = { '\0' };
+    char empty_arg[1] = { '\0' }, *result;
     const char *ptr_function, *ptr_data;
     int *rc, ret;
 
     script = (struct t_plugin_script *)pointer;
     plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
 
-    if (ptr_function && ptr_function[0])
+    if (return_code == WEECHAT_HOOK_PROCESS_CHILD)
+    {
+        if (strncmp (command, "func:", 5) == 0)
+        {
+            func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+
+            result = (char *) weechat_guile_exec (script,
+                                                  WEECHAT_SCRIPT_EXEC_STRING,
+                                                  command + 5,
+                                                  "s", func_argv);
+            if (result)
+            {
+                printf ("%s", result);
+                free (result);
+                return 0;
+            }
+        }
+        return 1;
+    }
+    else if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (command) ? (char *)command : empty_arg;

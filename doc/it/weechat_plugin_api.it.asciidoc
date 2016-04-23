@@ -7718,8 +7718,9 @@ struct t_hook *weechat_hook_process (const char *command,
 
 Argomenti:
 
-* 'command': comando da avviare nel processo figlio o URL
-  _(WeeChat ≥ 0.3.7)_, segue:
+// TRANSLATION MISSING
+* 'command': command to launch in child process, URL _(WeeChat ≥ 0.3.7)_ or
+  function _(WeeChat ≥ 1.5)_ (see below)
 * 'timeout': timeout per il comando (in millisecondi): dopo questo timeout,
   il processo figlio viene terminato (0 indica nessun timeout)
 * 'callback': funzione chiamata quando i dati dal processo figlio sono disponibili,
@@ -7735,14 +7736,19 @@ Argomenti:
 **** '2': errore di trasferimento
 **** '3': memoria non sufficiente
 **** '4': errore con un file
-*** '< 0': 'WEECHAT_HOOK_PROCESS_RUNNING' (dati disponibili, ma figlio
-    ancora in esecuzione) o 'WEECHAT_HOOK_PROCESS_ERROR' (errore nella
-    esecuzione del comando)
+*** '< 0':
+**** 'WEECHAT_HOOK_PROCESS_RUNNING': dati disponibili, ma figlio ancora in
+     esecuzione)
+**** 'WEECHAT_HOOK_PROCESS_ERROR': errore nella esecuzione del comando
+// TRANSLATION MISSING
+**** 'WEECHAT_HOOK_PROCESS_CHILD': callback is called in the child process
 ** 'out': output standard del comando (stdout)
 ** 'err': output di errore del comando (stderr)
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
+// TRANSLATION MISSING
+*** child process return code (in case of function with "func:" in command)
 * 'callback_pointer': puntatore fornito alla callback quando chiamata da WeeChat
 // TRANSLATION MISSING
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat;
@@ -7760,6 +7766,16 @@ Il comando può essere un URL con il formato: "url:http://www.esempio.com", per
 scaricare il contenuto dell'URL _(WeeChat ≥ 0.3.7)_. Le opzioni per
 un URL sono disponibili con la funzione
 <<_hook_process_hashtable,weechat_hook_process_hashtable>>.
+
+// TRANSLATION MISSING
+The command can also be a function name with format: "func:name", to execute
+the function "name" _(WeeChat ≥ 1.5)_. This function receives a single argument
+('data') and must return a string, which is sent to the callback. +
+In C API, the callback is called with the return code set to
+'WEECHAT_HOOK_PROCESS_CHILD', which means the callback is running in the child
+process (after fork). +
+In scripting API, the function 'name' is called directly and its result
+(string) is sent to the callback (like the output of an external command).
 
 // TRANSLATION MISSING
 [TIP]
@@ -7782,6 +7798,7 @@ Esempio in C:
 
 [source,C]
 ----
+/* example with an external command */
 int
 my_process_cb (const void *pointer, void *data, const char *command,
                int return_code, const char *out, const char *err)
@@ -7812,6 +7829,52 @@ my_process_cb (const void *pointer, void *data, const char *command,
 
 struct t_hook *my_process_hook = weechat_hook_process ("ls", 5000,
                                                        &my_process_cb, NULL, NULL);
+
+/* example with the callback called in the child process */
+int
+my_process_cb (const void *pointer, void *data, const char *command,
+               int return_code, const char *out, const char *err)
+{
+    if (return_code == WEECHAT_HOOK_PROCESS_CHILD)
+    {
+        /* do something blocking... */
+        /* ... */
+
+        /* the stdout will be sent as "out" in the parent callback */
+        printf ("this is the result");
+
+        /* return code of the process */
+        return 0;
+    }
+    else
+    {
+        if (return_code == WEECHAT_HOOK_PROCESS_ERROR)
+        {
+            weechat_printf (NULL, "Error with command '%s'", command);
+            return WEECHAT_RC_OK;
+        }
+
+        if (return_code >= 0)
+        {
+            weechat_printf (NULL, "return_code = %d", return_code);
+        }
+
+        if (out)
+        {
+            weechat_printf (NULL, "stdout: %s", out);
+        }
+
+        if (err)
+        {
+            weechat_printf (NULL, "stderr: %s", err);
+        }
+
+        return WEECHAT_RC_OK;
+    }
+}
+
+struct t_hook *my_process_hook = weechat_hook_process ("func:get_status", 5000,
+                                                       &my_process_cb, NULL, NULL);
 ----
 
 Script (Python):
@@ -7821,7 +7884,7 @@ Script (Python):
 # prototipo
 hook = weechat.hook_process(command, timeout, callback, callback_data)
 
-# esempio
+# example with an external command
 def my_process_cb(data, command, return_code, out, err):
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Error with command '%s'" % command)
@@ -7835,6 +7898,26 @@ def my_process_cb(data, command, return_code, out, err):
     return weechat.WEECHAT_RC_OK
 
 hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
+
+# example with a script function
+def get_status(data):
+    # do something blocking...
+    # ...
+    return "this is the result"
+
+def my_process_cb(data, command, return_code, out, err):
+    if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+        weechat.prnt("", "Error with command '%s'" % command)
+        return weechat.WEECHAT_RC_OK
+    if return_code >= 0:
+        weechat.prnt("", "return_code = %d" % return_code)
+    if out != "":
+        weechat.prnt("", "stdout: %s" % out)
+    if err != "":
+        weechat.prnt("", "stderr: %s" % err)
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_process("func:get_status", 5000, "my_process_cb", "")
 ----
 
 ==== hook_process_hashtable
