@@ -215,7 +215,7 @@ weechat_js_exec (struct t_plugin_script *script,
         if ((ret_type == WEECHAT_SCRIPT_EXEC_STRING) && (ret_js->IsString()))
         {
             v8::String::Utf8Value temp_str(ret_js);
-            ret_value = *temp_str;
+            ret_value = (*temp_str) ? strdup(*temp_str) : NULL;
         }
         else if ((ret_type == WEECHAT_SCRIPT_EXEC_INT) && (ret_js->IsInt32()))
         {
