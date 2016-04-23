@@ -246,20 +246,17 @@ Wyjście z kanału (zostawiając otwarty bufor):
 /part [wiadomość pożegnalna]
 ----
 
-// TRANSLATION MISSING
-Close a server, channel or private buffer (`/close` is an alias for
+Zamknij serwer, kanał albo prywatny bufor (`/close` to alias dla
 `/buffer close`):
 
 ----
 /close
 ----
 
-// TRANSLATION MISSING
 [WARNING]
-Closing the server buffer will close all channel/private buffers.
+Zamknięcie buforu serwera poskutkuje zamknięciem wszystkich buforów prywatnych/kanałów.
 
-// TRANSLATION MISSING
-Disconnect from server, on the server buffer:
+Rozłączanie się z serwerem, w buforze serwera:
 
 ----
 /disconnect

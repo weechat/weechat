@@ -2249,12 +2249,10 @@ WeeChat wspiera uwierzytelnianie SASL, używając różnych mechanizmów:
 * 'plain': hasło w czystym tekście (domyślne)
 * 'ecdsa-nist256p-challenge': klucz prywatny/publiczny
 * 'external': certyfikat SSL po stronie klienta
-// TRANSLATION MISSING
 * 'dh-blowfish': hasło zaszyfrowane algorytmem blowfish
-  (*insecure*, not recommended)
-// TRANSLATION MISSING
+  (*niebezpieczne*, nie zalecane)
 * 'dh-aes': hasło zaszyfrowane algorytmem AES
-  (*insecure*, not recommended)
+  (*niebezpieczne*, nie zalecane)
 
 [NOTE]
 Biblioteka "gcrypt" jest wymagana podczas kompilacji WeeChat w celu dodania
