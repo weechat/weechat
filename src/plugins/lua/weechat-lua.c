@@ -204,7 +204,19 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
     {
         if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
         {
-            ret_value = strdup ((char *) lua_tostring (lua_current_interpreter, -1));
+            ret_value = (char *) lua_tostring (lua_current_interpreter, -1);
+            if (ret_value)
+            {
+                ret_value = strdup (ret_value);
+            }
+            else
+            {
+                weechat_printf (NULL,
+                                weechat_gettext ("%s%s: function \"%s\" must "
+                                                 "return a valid value"),
+                                weechat_prefix ("error"), LUA_PLUGIN_NAME,
+                                function);
+            }
         }
         else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
         {
