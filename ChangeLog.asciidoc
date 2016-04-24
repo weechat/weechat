@@ -34,6 +34,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   "irc.look.item_away_message" and "irc.color.item_away" to core (issue #692)
 * api: add support of functions in hook_process
 * api: add pointer in callbacks used in scripting API (issue #406)
+* irc: fix first message displayed in raw buffer when the message is modified
+  by a modifier (issue #719)
 * irc: add option irc.network.sasl_fail_unavailable (issue #600, issue #697)
 * irc: add multiple targets and support of "-server" in command /ctcp
   (issue #204, issue #493)
