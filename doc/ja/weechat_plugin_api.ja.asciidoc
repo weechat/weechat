@@ -7515,9 +7515,8 @@ struct t_hook *weechat_hook_process (const char *command,
 
 引数:
 
-// TRANSLATION MISSING
-* 'command': command to launch in child process, URL _(WeeChat ≥ 0.3.7)_ or
-  function _(WeeChat ≥ 1.5)_ (see below)
+* 'command': 子プロセスで実行するコマンド、URL _(WeeChat バージョン 0.3.7 以上で利用可)_
+  または関数 _(WeeChat バージョン 1.5 以上で利用可)_ (下記参照)
 * 'timeout': コマンドのタイムアウト (ミリ秒):
   このタイムアウトを過ぎたら、子プロセスを kill します (タイムアウトさせない場合は 0)
 * 'callback':
@@ -7533,19 +7532,15 @@ struct t_hook *weechat_hook_process (const char *command,
 **** '3': メモリ不足
 **** '4': ファイルに関するエラー
 *** '< 0':
-// TRANSLATION MISSING
-**** 'WEECHAT_HOOK_PROCESS_RUNNING': data available, but child still running)
-// TRANSLATION MISSING
-**** 'WEECHAT_HOOK_PROCESS_ERROR': error when launching command
-// TRANSLATION MISSING
-**** 'WEECHAT_HOOK_PROCESS_CHILD': callback is called in the child process
+**** 'WEECHAT_HOOK_PROCESS_RUNNING': データは利用可能だが子プロセスは終了していない
+**** 'WEECHAT_HOOK_PROCESS_ERROR': コマンドの起動中にエラー
+**** 'WEECHAT_HOOK_PROCESS_CHILD': 子プロセスからコールバックが呼び出された
 ** 'out': コマンドの標準出力 (stdout)
 ** 'err': コマンドの標準エラー出力 (stderr)
 ** 戻り値:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-// TRANSLATION MISSING
-*** child process return code (in case of function with "func:" in command)
+*** 子プロセスのリターンコード ('command' に "func:" を指定して関数を実行した場合)
 * 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
 * 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
@@ -7562,15 +7557,14 @@ struct t_hook *weechat_hook_process (const char *command,
 の内容がダウンロードされます _(WeeChat バージョン 0.3.7 以上で利用可)_ 。<<_hook_process_hashtable,weechat_hook_process_hashtable>>
 関数を使えば URL に対してオプションを与えることもできます。
 
-// TRANSLATION MISSING
-The command can also be a function name with format: "func:name", to execute
-the function "name" _(WeeChat ≥ 1.5)_. This function receives a single argument
-('data') and must return a string, which is sent to the callback. +
-In C API, the callback is called with the return code set to
-'WEECHAT_HOOK_PROCESS_CHILD', which means the callback is running in the child
-process (after fork). +
-In scripting API, the function 'name' is called directly and its result
-(string) is sent to the callback (like the output of an external command).
+'command' には関数名を指定することも可能です。"name" という関数を実行するには "func:name"
+のように指定します _(WeeChat バージョン 1.5 以上で利用可)_ 。ここで指定した関数 "name" は単独の引数 ('data')
+を受け取り、文字列を返すものでなければいけません。関数から返された文字列が 'callback' コールバックに送られます。 +
+C API の場合、'callback' コールバックが 'return_code' リターンコードに
+'WEECHAT_HOOK_PROCESS_CHILD' が設定された状態で呼び出されます。すなわち (フォークの後に)
+子プロセスが呼び出すのは関数 "name" ではなく 'callback' コールバックです。 +
+スクリプト API の場合、子プロセスが呼び出すのは関数 "name" であり、関数 "name" の戻り値 (文字列) が
+'callback' コールバックに送られます (関数の戻り値は外部コマンドを実行した場合の出力と同様に取り扱われます)。
 
 [TIP]
 WeeChat に関する情報 (例えば現在の安定版、最新の git コミット、...)
@@ -7591,7 +7585,7 @@ C 言語での使用例:
 
 [source,C]
 ----
-/* example with an external command */
+/* 外部コマンドを実行する例 */
 int
 my_process_cb (const void *pointer, void *data, const char *command,
                int return_code, const char *out, const char *err)
@@ -7623,20 +7617,20 @@ my_process_cb (const void *pointer, void *data, const char *command,
 struct t_hook *my_process_hook = weechat_hook_process ("ls", 5000,
                                                        &my_process_cb, NULL, NULL);
 
-/* example with the callback called in the child process */
+/* 子プロセスからコールバックを呼び出す例 */
 int
 my_process_cb (const void *pointer, void *data, const char *command,
                int return_code, const char *out, const char *err)
 {
     if (return_code == WEECHAT_HOOK_PROCESS_CHILD)
     {
-        /* do something blocking... */
+        /* 何かブロックを生じさせるようなことを実行... */
         /* ... */
 
-        /* the stdout will be sent as "out" in the parent callback */
+        /* 親プロセスはこの標準出力の内容を "out" に設定して、コールバックを呼び出します */
         printf ("this is the result");
 
-        /* return code of the process */
+        /* このプロセスの戻り値 */
         return 0;
     }
     else
@@ -7677,7 +7671,7 @@ struct t_hook *my_process_hook = weechat_hook_process ("func:get_status", 5000,
 # プロトタイプ
 hook = weechat.hook_process(command, timeout, callback, callback_data)
 
-# example with an external command
+# 外部コマンドを実行する例
 def my_process_cb(data, command, return_code, out, err):
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Error with command '%s'" % command)
@@ -7692,9 +7686,9 @@ def my_process_cb(data, command, return_code, out, err):
 
 hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
 
-# example with a script function
+# スクリプト関数を実行する例
 def get_status(data):
-    # do something blocking...
+    # 何かブロックを生じさせるようなことを実行...
     # ...
     return "this is the result"
 
