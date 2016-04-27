@@ -18,9 +18,9 @@
 
 | irc | irc_nick | pobiera aktualny nick z serwera | nazwa serwera
 
-| irc | irc_nick_color | get nick color code (*deprecated* since version 1.5, replaced by "nick_color") | nazwa użytkownika
+| irc | irc_nick_color | pobierz kod koloru nicka (*przestarzałe* od wersji 1.5, zamienione przez "nick_color") | nazwa użytkownika
 
-| irc | irc_nick_color_name | get nick color name (*deprecated* since version 1.5, replaced by "nick_color_name") | nazwa użytkownika
+| irc | irc_nick_color_name | pobierz nazwę koloru nicka (*przestarzałe* od wersji 1.5, zamienione przez "nick_color_name") | nazwa użytkownika
 
 | irc | irc_nick_from_host | pobiera nick z hosta IRC | host IRC (jak `:nick!nazwa@serwer.com`)
 
