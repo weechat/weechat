@@ -71,8 +71,11 @@ plugin_script_api_config_new (struct t_weechat_plugin *weechat_plugin,
          script,
          function_and_data);
 
-    if (!new_config_file && function_and_data)
-        free (function_and_data);
+    if (!new_config_file)
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
 
     return new_config_file;
 }
@@ -376,9 +379,6 @@ plugin_script_api_hook_command (struct t_weechat_plugin *weechat_plugin,
     char *function_and_data;
     struct t_hook *new_hook;
 
-    if (!function || !function[0])
-        return NULL;
-
     function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_command (command, description, args,
@@ -418,9 +418,6 @@ plugin_script_api_hook_command_run (struct t_weechat_plugin *weechat_plugin,
     char *function_and_data;
     struct t_hook *new_hook;
 
-    if (!function || !function[0])
-        return NULL;
-
     function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_command_run (command,
@@ -457,9 +454,6 @@ plugin_script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
 {
     char *function_and_data;
     struct t_hook *new_hook;
-
-    if (!function || !function[0])
-        return NULL;
 
     function_and_data = plugin_script_build_function_and_data (function, data);
 
@@ -498,9 +492,6 @@ plugin_script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
 {
     char *function_and_data;
     struct t_hook *new_hook;
-
-    if (!function || !function[0])
-        return NULL;
 
     function_and_data = plugin_script_build_function_and_data (function, data);
 
@@ -543,9 +534,6 @@ plugin_script_api_hook_process_hashtable (struct t_weechat_plugin *weechat_plugi
 {
     char *function_and_data;
     struct t_hook *new_hook;
-
-    if (!function || !function[0])
-        return NULL;
 
     function_and_data = plugin_script_build_function_and_data (function, data);
 
@@ -619,9 +607,6 @@ plugin_script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
     char *function_and_data;
     struct t_hook *new_hook;
 
-    if (!function || !function[0])
-        return NULL;
-
     function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_connect (proxy, address, port, ipv6, retry,
@@ -669,9 +654,6 @@ plugin_script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
     char *function_and_data;
     struct t_hook *new_hook;
 
-    if (!function || !function[0])
-        return NULL;
-
     function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_print (buffer, tags, message, strip_colors,
@@ -711,9 +693,6 @@ plugin_script_api_hook_signal (struct t_weechat_plugin *weechat_plugin,
     char *function_and_data;
     struct t_hook *new_hook;
 
-    if (!function || !function[0])
-        return NULL;
-
     function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_signal (signal, callback, script,
@@ -752,9 +731,6 @@ plugin_script_api_hook_hsignal (struct t_weechat_plugin *weechat_plugin,
     char *function_and_data;
     struct t_hook *new_hook;
 
-    if (!function || !function[0])
-        return NULL;
-
     function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_hsignal (signal, callback, script,
@@ -792,9 +768,6 @@ plugin_script_api_hook_config (struct t_weechat_plugin *weechat_plugin,
 {
     char *function_and_data;
     struct t_hook *new_hook;
-
-    if (!function || !function[0])
-        return NULL;
 
     function_and_data = plugin_script_build_function_and_data (function, data);
 
@@ -836,9 +809,6 @@ plugin_script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
     char *function_and_data;
     struct t_hook *new_hook;
 
-    if (!function || !function[0])
-        return NULL;
-
     function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_completion (completion, description,
@@ -877,9 +847,6 @@ plugin_script_api_hook_modifier (struct t_weechat_plugin *weechat_plugin,
 {
     char *function_and_data;
     struct t_hook *new_hook;
-
-    if (!function || !function[0])
-        return NULL;
 
     function_and_data = plugin_script_build_function_and_data (function, data);
 
@@ -921,9 +888,6 @@ plugin_script_api_hook_info (struct t_weechat_plugin *weechat_plugin,
     char *function_and_data;
     struct t_hook *new_hook;
 
-    if (!function || !function[0])
-        return NULL;
-
     function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_info (info_name, description, args_description,
@@ -964,9 +928,6 @@ plugin_script_api_hook_info_hashtable (struct t_weechat_plugin *weechat_plugin,
 {
     char *function_and_data;
     struct t_hook *new_hook;
-
-    if (!function || !function[0])
-        return NULL;
 
     function_and_data = plugin_script_build_function_and_data (function, data);
 
@@ -1013,9 +974,6 @@ plugin_script_api_hook_infolist (struct t_weechat_plugin *weechat_plugin,
     char *function_and_data;
     struct t_hook *new_hook;
 
-    if (!function || !function[0])
-        return NULL;
-
     function_and_data = plugin_script_build_function_and_data (function, data);
 
     new_hook = weechat_hook_infolist (infolist_name, description,
@@ -1053,9 +1011,6 @@ plugin_script_api_hook_focus (struct t_weechat_plugin *weechat_plugin,
 {
     char *function_and_data;
     struct t_hook *new_hook;
-
-    if (!function || !function[0])
-        return NULL;
 
     function_and_data = plugin_script_build_function_and_data (function, data);
 
