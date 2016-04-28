@@ -2298,7 +2298,7 @@ Argomenti:
 // TRANSLATION MISSING
 * 'length': max number of UTF-8 chars to check; if ≤ 0, the whole string is
   checked _(WeeChat ≥ 1.4)_
-* 'error': se non NULL, '*error*' è impostato con il puntatore al primo
+* 'error': se non NULL, '*error' è impostato con il puntatore al primo
   carattere UTF-8 non valido nella stringa, se esiste
 
 Valore restituito:

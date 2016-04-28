@@ -2218,7 +2218,7 @@ Arguments:
 * 'string': string
 * 'length': max number of UTF-8 chars to check; if ≤ 0, the whole string is
   checked _(WeeChat ≥ 1.4)_
-* 'error': if not NULL, '*error*' is set with pointer to first non valid UTF-8
+* 'error': if not NULL, '*error' is set with pointer to first non valid UTF-8
   char in string, if any
 
 Return value:

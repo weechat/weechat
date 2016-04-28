@@ -2219,7 +2219,7 @@ int weechat_utf8_is_valid (const char *string, int length, char **error);
 * 'string': 文字列
 * 'length': 確認する UTF-8 文字の最大文字数; これを 0 以下に設定した場合、文字列中のすべての文字を確認します
   _(WeeChat バージョン 1.4 以上で利用可)_
-* 'error': NULL でない場合は '*error*'
+* 'error': NULL でない場合は '*error'
   は文字列に含まれる最初の妥当でない UTF-8 文字へのポインタ
 
 戻り値:
