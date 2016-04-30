@@ -23,8 +23,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * core: add Portuguese translations
 * core: change default value of option weechat.look.nick_color_hash to "djb2"
-* core: fix nick coloring when stop chars and a forced color are used: first
-  remove chars then look for forced color
 * core: move nick coloring from irc plugin to core, move options
   irc.look.nick_color_force, irc.look.nick_color_hash and
   irc.look.nick_color_stop_chars to core, add info "nick_color" and
@@ -34,13 +32,9 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   irc.look.item_away_message and irc.color.item_away to core (issue #692)
 * api: add support of functions in hook_process
 * api: add pointer in callbacks used in scripting API (issue #406)
-* irc: fix first message displayed in raw buffer when the message is modified
-  by a modifier (issue #719)
 * irc: add option irc.network.sasl_fail_unavailable (issue #600, issue #697)
 * irc: add multiple targets and support of "-server" in command /ctcp
   (issue #204, issue #493)
-* lua: fix crash when a lua function doesn't return a value and a string was
-  expected (issue #718)
 * ruby: add detection of Ruby 2.3 (issue #698)
 * trigger: add "recover" in default triggers cmd_pass/msg_auth, and "regain"
   in default trigger "msg_auth" (issue #511)
@@ -48,6 +42,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[1.5_bugs]]
 === Bugs fixed
 
+* core: fix nick coloring when stop chars and a forced color are used: first
+  remove chars then look for forced color
 * core: check that pointers received in arguments are not NULL in buffers and
   windows functions
 * core: fix truncation of buffer names in hotlist (issue #668)
@@ -55,8 +51,12 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: fix detection of Python shared libraries (issue #676)
 * api: fix number of arguments returned by function string_split() when
   keep_eol is 2 and the string ends with separators
+* irc: fix first message displayed in raw buffer when the message is modified
+  by a modifier (issue #719)
 * irc: add missing completion "*" for target in command /msg
 * irc: fix /msg command with multiple targets including "*"
+* lua: fix crash when a lua function doesn't return a value and a string was
+  expected (issue #718)
 * relay: do not execute any command received in a PRIVMSG message from an irc
   relay client (issue #699)
 * relay: fix the max number of clients connected on a port, allow value 0 for
