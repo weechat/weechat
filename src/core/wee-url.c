@@ -46,7 +46,7 @@
 char *url_type_string[] = { "string", "long", "long long", "mask" };
 
 /*
- * Constants/options for Curl 7.38.0
+ * Constants/options for Curl 7.49.0
  * (this list of options must be updated on every new Curl release)
  */
 
@@ -104,6 +104,10 @@ struct t_url_constant url_protocols[] =
 #if LIBCURL_VERSION_NUM >= 0x071502 /* 7.21.2 */
     URL_DEF_CONST(PROTO, GOPHER),
 #endif
+#if LIBCURL_VERSION_NUM >= 0x072800 /* 7.40.0 */
+    URL_DEF_CONST(PROTO, SMB),
+    URL_DEF_CONST(PROTO, SMBS),
+#endif
     { NULL, 0 },
 };
 
@@ -123,7 +127,6 @@ struct t_url_constant url_auth[] =
     URL_DEF_CONST(AUTH, NONE),
     URL_DEF_CONST(AUTH, BASIC),
     URL_DEF_CONST(AUTH, DIGEST),
-    URL_DEF_CONST(AUTH, GSSNEGOTIATE),
     URL_DEF_CONST(AUTH, NTLM),
     URL_DEF_CONST(AUTH, ANY),
     URL_DEF_CONST(AUTH, ANYSAFE),
@@ -136,6 +139,9 @@ struct t_url_constant url_auth[] =
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071600 /* 7.22.0 */
     URL_DEF_CONST(AUTH, NTLM_WB),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070A06 && LIBCURL_VERSION_NUM < 0x072600 /* 7.10.6 - 7.38.0 */
+    URL_DEF_CONST(AUTH, GSSNEGOTIATE),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x072600 /* 7.38.0 */
     URL_DEF_CONST(AUTH, NEGOTIATE),
@@ -167,6 +173,18 @@ struct t_url_constant url_http_version[] =
     URL_DEF_CONST(_HTTP_VERSION, NONE),
     URL_DEF_CONST(_HTTP_VERSION, 1_0),
     URL_DEF_CONST(_HTTP_VERSION, 1_1),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072100 /* 7.33.0 */
+    URL_DEF_CONST(_HTTP_VERSION, 2_0),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072B00 /* 7.43.0 */
+    URL_DEF_CONST(_HTTP_VERSION, 2),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072F00 /* 7.47.0 */
+    URL_DEF_CONST(_HTTP_VERSION, 2TLS),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x073100 /* 7.49.0 */
+    URL_DEF_CONST(_HTTP_VERSION, 2_PRIOR_KNOWLEDGE),
 #endif
     { NULL, 0 },
 };
@@ -269,6 +287,9 @@ struct t_url_constant url_ssl_options[] =
 #if LIBCURL_VERSION_NUM >= 0x071900 /* 7.25.0 */
     URL_DEF_CONST(SSLOPT, ALLOW_BEAST),
 #endif
+#if LIBCURL_VERSION_NUM >= 0x072C00 /* 7.44.0 */
+    URL_DEF_CONST(SSLOPT, NO_REVOKE),
+#endif
     { NULL, 0 },
 };
 
@@ -365,13 +386,31 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(PROTOCOLS, MASK, url_protocols),
     URL_DEF_OPTION(REDIR_PROTOCOLS, MASK, url_protocols),
     URL_DEF_OPTION(NOPROXY, STRING, NULL),
-    URL_DEF_OPTION(SOCKS5_GSSAPI_SERVICE, STRING, NULL),
     URL_DEF_OPTION(SOCKS5_GSSAPI_NEC, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071900 /* 7.25.0 */
     URL_DEF_OPTION(TCP_KEEPALIVE, LONG, NULL),
     URL_DEF_OPTION(TCP_KEEPIDLE, LONG, NULL),
     URL_DEF_OPTION(TCP_KEEPINTVL, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072800 /* 7.40.0 */
+    URL_DEF_OPTION(UNIX_SOCKET_PATH, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072A00 /* 7.42.0 */
+    URL_DEF_OPTION(PATH_AS_IS, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072B00 /* 7.43.0 */
+    URL_DEF_OPTION(PROXY_SERVICE_NAME, STRING, NULL),
+    URL_DEF_OPTION(SERVICE_NAME, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072D00 /* 7.45.0 */
+    URL_DEF_OPTION(DEFAULT_PROTOCOL, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071304 && LIBCURL_VERSION_NUM < 0x073100 /* 7.19.4 - 7.49.0 */
+    URL_DEF_OPTION(SOCKS5_GSSAPI_SERVICE, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x073100 /* 7.49.0 */
+    URL_DEF_OPTION(TCP_FASTOPEN, LONG, NULL),
 #endif
 
     /*
@@ -480,6 +519,12 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(HEADEROPT, MASK, url_header),
     /*URL_DEF_OPTION(PROXYHEADER, LIST, NULL),*/
 #endif
+#if LIBCURL_VERSION_NUM >= 0x072B00 /* 7.43.0 */
+    URL_DEF_OPTION(PIPEWAIT, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072E00 /* 7.46.0 */
+    URL_DEF_OPTION(STREAM_WEIGHT, LONG, NULL),
+#endif
 
     /*
      * SMTP options
@@ -497,6 +542,9 @@ struct t_url_option url_options[] =
      */
 #if LIBCURL_VERSION_NUM >= 0x071304 /* 7.19.4 */
     URL_DEF_OPTION(TFTP_BLKSIZE, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x073000 /* 7.48.0 */
+    URL_DEF_OPTION(TFTP_NO_OPTIONS, LONG, NULL),
 #endif
 
     /*
@@ -637,6 +685,9 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(DNS_LOCAL_IP4, STRING, NULL),
     URL_DEF_OPTION(DNS_LOCAL_IP6, STRING, NULL),
 #endif
+#if LIBCURL_VERSION_NUM >= 0x073100 /* 7.49.0 */
+    /*URL_DEF_OPTION(CONNECT_TO, LIST, NULL),*/
+#endif
 
     /*
      * SSL and security options
@@ -694,6 +745,15 @@ struct t_url_option url_options[] =
 #if LIBCURL_VERSION_NUM >= 0x072400 /* 7.36.0 */
     URL_DEF_OPTION(SSL_ENABLE_ALPN, LONG, NULL),
     URL_DEF_OPTION(SSL_ENABLE_NPN, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072700 /* 7.39.0 */
+    URL_DEF_OPTION(PINNEDPUBLICKEY, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072900 /* 7.41.0 */
+    URL_DEF_OPTION(SSL_VERIFYSTATUS, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x072A00 /* 7.42.0 */
+    URL_DEF_OPTION(SSL_FALSESTART, LONG, NULL),
 #endif
 
     /*
