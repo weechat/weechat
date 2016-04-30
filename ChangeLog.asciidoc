@@ -31,7 +31,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   "nick_color_name", deprecate info "irc_nick_color" and "irc_color_name"
   (issue #262)
 * core: move irc bar item "away" to core, move options
-  "irc.look.item_away_message" and "irc.color.item_away" to core (issue #692)
+  irc.look.item_away_message and irc.color.item_away to core (issue #692)
 * api: add support of functions in hook_process
 * api: add pointer in callbacks used in scripting API (issue #406)
 * irc: fix first message displayed in raw buffer when the message is modified
@@ -1443,7 +1443,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add default keys key[ctrl-]key[Left]/key[Right] (`meta2-1;5D` /
   `meta2-1;5C`) for gnome-terminal
 * core: add option "hooks" in command /debug
-* core: add option "weechat.look.scroll_bottom_after_switch" (if enabled,
+* core: add option weechat.look.scroll_bottom_after_switch (if enabled,
   restore old behavior before fix of bug #25555 in version 0.3.5)
 * core: add new option weechat.completion.base_word_until_cursor: allow
   completion in middle of words (enabled by default) (task #9771)
@@ -1802,7 +1802,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add info "weechat_upgrading", signal "upgrade_ended", display duration
   of upgrade
 * core: replace the 10 nick color options and number of nick colors by a single
-  option "weechat.color.chat_nick_colors" (comma separated list of colors)
+  option weechat.color.chat_nick_colors (comma separated list of colors)
 * core: add color support in option weechat.look.buffer_time_format
 * core: add new option weechat.look.highlight_regex and function
   string_has_highlight_regex() in plugin API (task #10321)
@@ -2193,7 +2193,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * relay: add relay plugin (network communication between WeeChat and remote
   application)
 * xfer: add speed limit for DCC files sending (task #6178)
-* xfer: add new option "xfer.file.use_nick_in_filename" for Xfer files
+* xfer: add new option xfer.file.use_nick_in_filename for Xfer files
   (task #7140)
 * plugins: add some other plugins: alias, demo, fifo, tcl, xfer
 * scripts: new scripts: weeget.py (scripts manager), jabber.py (jabber/XMPP
