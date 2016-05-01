@@ -42,13 +42,11 @@
 
 | address_scope | long |
 
-| protocols | mask | http, https, ftp, ftps, scp, sftp, telnet, ldap, ldaps, dict, file, tftp, all, imap, imaps, pop3, pop3s, smtp, smtps, rtsp, rtmp, rtmpt, rtmpe, rtmpte, rtmps, rtmpts, gopher
+| protocols | mask | http, https, ftp, ftps, scp, sftp, telnet, ldap, ldaps, dict, file, tftp, all, imap, imaps, pop3, pop3s, smtp, smtps, rtsp, rtmp, rtmpt, rtmpe, rtmpte, rtmps, rtmpts, gopher, smb, smbs
 
-| redir_protocols | mask | http, https, ftp, ftps, scp, sftp, telnet, ldap, ldaps, dict, file, tftp, all, imap, imaps, pop3, pop3s, smtp, smtps, rtsp, rtmp, rtmpt, rtmpe, rtmpte, rtmps, rtmpts, gopher
+| redir_protocols | mask | http, https, ftp, ftps, scp, sftp, telnet, ldap, ldaps, dict, file, tftp, all, imap, imaps, pop3, pop3s, smtp, smtps, rtsp, rtmp, rtmpt, rtmpe, rtmpte, rtmps, rtmpts, gopher, smb, smbs
 
 | noproxy | string |
-
-| socks5_gssapi_service | string |
 
 | socks5_gssapi_nec | long |
 
@@ -58,15 +56,27 @@
 
 | tcp_keepintvl | long |
 
+| unix_socket_path | string |
+
+| path_as_is | long |
+
+| proxy_service_name | string |
+
+| service_name | string |
+
+| default_protocol | string |
+
+| socks5_gssapi_service | string |
+
 | netrc | long | ignored, optional, required
 
 | userpwd | string |
 
 | proxyuserpwd | string |
 
-| httpauth | mask | none, basic, digest, gssnegotiate, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate
+| httpauth | mask | none, basic, digest, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate
 
-| proxyauth | mask | none, basic, digest, gssnegotiate, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate
+| proxyauth | mask | none, basic, digest, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate
 
 | netrc_file | string |
 
@@ -116,7 +126,7 @@
 
 | cookiejar | string |
 
-| http_version | long | none, 1_0, 1_1
+| http_version | long | none, 1_0, 1_1, 2_0, 2, 2tls
 
 | cookiesession | long |
 
@@ -143,6 +153,10 @@
 | expect_100_timeout_ms | long |
 
 | headeropt | mask | unified, separate
+
+| pipewait | long |
+
+| stream_weight | long |
 
 | mail_from | string |
 
@@ -302,11 +316,17 @@
 
 | gssapi_delegation | long | none, policy_flag, flag
 
-| ssl_options | long | allow_beast
+| ssl_options | long | allow_beast, no_revoke
 
 | ssl_enable_alpn | long |
 
 | ssl_enable_npn | long |
+
+| pinnedpublickey | string |
+
+| ssl_verifystatus | long |
+
+| ssl_falsestart | long |
 
 | ssh_auth_types | mask | none, policy_flag, flag
 
