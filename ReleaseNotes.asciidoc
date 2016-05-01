@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[1.5]]
-== Version 1.5 (under dev)
+== Version 1.5 (2016-05-01)
 
 [[1.5_nick_coloring]]
 === Nick coloring moved to core
