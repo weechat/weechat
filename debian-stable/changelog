@@ -1,3 +1,22 @@
+weechat (1.4-2) unstable; urgency=medium
+
+  * Fix Vcs-(Git|Browser) fields to use secure URIs
+  * Enable hardening=+all build
+  * Add a patch to build ruby plugin against ruby2.3 (fix FTBFS). Thanks
+    to Christian Hofstaedtler for the patch (Closes: #816312)
+  * Build Tcl plugin against Tcl 8.6 (Closes: #812320)
+  * Bump Standards-Version to 3.9.7
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Fri, 04 Mar 2016 15:58:54 +0100
+
+weechat (1.4-1) unstable; urgency=medium
+
+  * New upstream release
+    - Update copyright (new year)
+    - Refresh XPM menu icon following upstream changes
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Fri, 15 Jan 2016 15:16:11 +0100
+
 weechat (1.3-1) unstable; urgency=medium
 
   * New upstream release
