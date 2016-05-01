@@ -26,8 +26,8 @@ Build-Depends:
     zlib1g-dev
 Standards-Version: 3.9.6
 Homepage: https://weechat.org/
-Vcs-Git: git://anonscm.debian.org/users/kolter/weechat.git
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=users/kolter/weechat.git
+Vcs-Git: https://anonscm.debian.org/git/users/kolter/weechat.git
+Vcs-Browser: https://anonscm.debian.org/git/users/kolter/weechat.git
 
 Package: weechat
 Architecture: all
