@@ -6,7 +6,7 @@ index ec63514..45a4fb7 100644
 -9
 +8
 diff --git a/debian-devel/control b/debian-devel/control
-index 8fd3e49..a5f9ceb 100644
+index 50f1217..bff1b8f 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -8,21 +8,20 @@ Build-Depends:
@@ -24,7 +24,8 @@ index 8fd3e49..a5f9ceb 100644
      python-dev,
      libaspell-dev,
      liblua5.1-0-dev,
-     tcl8.5-dev,
+-    tcl8.6-dev,
++    tcl8.5-dev,
      guile-2.0-dev,
 -    libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
 +    libv8-dev,
@@ -44,7 +45,7 @@ index ec63514..45a4fb7 100644
 -9
 +8
 diff --git a/debian-stable/control b/debian-stable/control
-index 0f3c34b..790b315 100644
+index f9e9aa0..ae1567e 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
 @@ -8,21 +8,20 @@ Build-Depends:
@@ -62,7 +63,8 @@ index 0f3c34b..790b315 100644
      python-dev,
      libaspell-dev,
      liblua5.1-0-dev,
-     tcl8.5-dev,
+-    tcl8.6-dev,
++    tcl8.5-dev,
      guile-2.0-dev,
 -    libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
 +    libv8-dev,
