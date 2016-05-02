@@ -135,10 +135,10 @@ compiler WeeChat.
 | libperl-dev | | |
   Extension perl
 
-| ruby2.1-dev | ≥ 1.8 | |
+| ruby2.3-dev | ≥ 1.8 | |
   Extension ruby
 
-| liblua5.2-dev | | |
+| liblua5.3-dev | | |
   Extension lua
 
 | tcl-dev | ≥ 8.5 | |

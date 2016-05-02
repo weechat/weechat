@@ -149,10 +149,10 @@ compilare WeeChat.
 | libperl-dev | | |
   Plugin perl
 
-| ruby2.1-dev | ≥ 1.8 | |
+| ruby2.3-dev | ≥ 1.8 | |
   Plugin ruby
 
-| liblua5.2-dev | | |
+| liblua5.3-dev | | |
   Plugin lua
 
 | tcl-dev | ≥ 8.5 | |

@@ -139,10 +139,10 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | libperl-dev | | |
   Perl Erweiterung
 
-| ruby2.1-dev | ≥ 1.8 | |
+| ruby2.3-dev | ≥ 1.8 | |
   Ruby Erweiterung
 
-| liblua5.2-dev | | |
+| liblua5.3-dev | | |
   Lua Erweiterung
 
 | tcl-dev | ≥ 8.5 | |
