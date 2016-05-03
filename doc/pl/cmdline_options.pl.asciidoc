@@ -4,10 +4,10 @@
 *-c*, *--colors*::
     Wyświetla domślne kolory w terminalu.
 
-*-d*, *--dir* '<ścieżka>'::
+*-d*, *--dir* _<ścieżka>_::
     Ustawia ścieżkę jako katalog domowy WeeChat (używany dla plików
     konfiguracyjnych, logów, wtyczek użytkownika i skryptów), domyślna wartość
-    to '~/.weechat' (katalog zostanie utworzony jeśli nie istnieje).
+    to "~/.weechat" (katalog zostanie utworzony jeśli nie istnieje).
     Jeśli ta opcja nie zostanie podada, użyta zostanie zawartość zmiennej
     WEECHAT_HOME (jeśli została ustawiona).
 
@@ -20,7 +20,7 @@
 *-p*, *--no-plugin*::
     Wyłącza automatyczne ładowanie wtyczek.
 
-*-r*, *--run-command* '<komenda>'::
+*-r*, *--run-command* _<komenda>_::
     Wykonuje komendę(-y) po uruchomieniu (komendy należy oddzielać średnikiem).
 
 *-s*, *--no-script*::

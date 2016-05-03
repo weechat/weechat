@@ -1,8 +1,11 @@
-= WEECHAT(1)
+= weechat(1)
 :doctype: manpage
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: cs
+// TRANSLATION MISSING
+:man manual: WeeChat Manual
+:man source: WeeChat {revnumber}
 
 == JMÉNO
 
@@ -11,11 +14,11 @@ weechat - the extensible chat client
 == PŘEHLED
 
 [verse]
-'weechat' [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
-'weechat' [-c|--colors]
-'weechat' [-h|--help]
-'weechat' [-l|--license]
-'weechat' [-v|--version]
+*weechat* [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+*weechat* [-c|--colors]
+*weechat* [-h|--help]
+*weechat* [-l|--license]
+*weechat* [-v|--version]
 
 == POPIS
 
@@ -56,34 +59,34 @@ $HOME/.weechat/sec.conf::
     konfigurační soubor s chráněnými daty
 
 $HOME/.weechat/alias.conf::
-    configurační soubor pro 'alias' plugin
+    configurační soubor pro _alias_ plugin
 
 $HOME/.weechat/aspell.conf::
-    konfigurační soubor pro 'aspell' plugin
+    konfigurační soubor pro _aspell_ plugin
 
 $HOME/.weechat/charset.conf::
-    konfigurační soubor pro 'charset' plugin
+    konfigurační soubor pro _charset_ plugin
 
 $HOME/.weechat/exec.conf::
-    konfigurační soubor pro 'exec' plugin
+    konfigurační soubor pro _exec_ plugin
 
 $HOME/.weechat/irc.conf::
-    konfigurační soubor pro 'irc' plugin
+    konfigurační soubor pro _irc_ plugin
 
 $HOME/.weechat/logger.conf::
-    konfigurační soubor pro 'logger' plugin
+    konfigurační soubor pro _logger_ plugin
 
 $HOME/.weechat/relay.conf::
-    konfigurační soubor pro 'relay' plugin
+    konfigurační soubor pro _relay_ plugin
 
 $HOME/.weechat/script.conf::
-    konfigurační soubor pro 'script' plugin
+    konfigurační soubor pro _script_ plugin
 
 $HOME/.weechat/trigger.conf::
-    konfigurační soubor pro 'trigger' plugin
+    konfigurační soubor pro _trigger_ plugin
 
 $HOME/.weechat/xfer.conf::
-    konfigurační soubor pro 'xfer' plugin
+    konfigurační soubor pro _xfer_ plugin
 
 $HOME/.weechat/weechat.log::
     soubor záznamů WeeChatu

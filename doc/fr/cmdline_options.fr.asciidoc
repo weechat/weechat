@@ -4,10 +4,10 @@
 *-c*, *--colors*::
     Afficher les couleurs par défaut du terminal.
 
-*-d*, *--dir* '<répertoire>'::
+*-d*, *--dir* _<répertoire>_::
     Définir le répertoire comme étant la base de WeeChat
     (utilisé pour les fichiers de configuration, logs, extensions
-    et scripts de l'utilisateur), la valeur par défaut est '~/.weechat' (note :
+    et scripts de l'utilisateur), la valeur par défaut est "~/.weechat" (note :
     le répertoire est créé s'il n'est pas trouvé par WeeChat).
     Si cette option n'est pas donnée, la variable d'environnement WEECHAT_HOME
     est utilisée (si non vide).
@@ -21,7 +21,7 @@
 *-p*, *--no-plugin*::
     Supprimer le chargement automatique des extensions au démarrage.
 
-*-r*, *--run-command* '<commande>'::
+*-r*, *--run-command* _<commande>_::
     Lancer la/les commande(s) après le démarrage (plusieurs commandes peuvent
     être séparées par des points-virgules).
 

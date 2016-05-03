@@ -1,8 +1,11 @@
-= WEECHAT(1)
+= weechat(1)
 :doctype: manpage
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ru
+// TRANSLATION MISSING
+:man manual: WeeChat Manual
+:man source: WeeChat {revnumber}
 
 == НАЗВАНИЕ
 
@@ -11,11 +14,11 @@ weechat - расширяемый чат-клиент
 == ОБЗОР
 
 [verse]
-'weechat' [-a|--no-connect] [-d|--dir <путь>] [-p|--no-plugin] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [<плагин>:<параметр>...]
-'weechat' [-c|--colors]
-'weechat' [-h|--help]
-'weechat' [-l|--license]
-'weechat' [-v|--version]
+*weechat* [-a|--no-connect] [-d|--dir <путь>] [-p|--no-plugin] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [<плагин>:<параметр>...]
+*weechat* [-c|--colors]
+*weechat* [-h|--help]
+*weechat* [-l|--license]
+*weechat* [-v|--version]
 
 == ОПИСАНИЕ
 
@@ -57,34 +60,34 @@ $HOME/.weechat/sec.conf::
     файл конфигурации с защищаемыми данными
 
 $HOME/.weechat/alias.conf::
-    файл конфигурации для плагина 'alias'
+    файл конфигурации для плагина _alias_
 
 $HOME/.weechat/aspell.conf::
-    файл конфигурации для плагина 'aspell'
+    файл конфигурации для плагина _aspell_
 
 $HOME/.weechat/charset.conf::
-    файл конфигурации для плагина 'charset'
+    файл конфигурации для плагина _charset_
 
 $HOME/.weechat/exec.conf::
-    файл конфигурации для плагина 'exec'
+    файл конфигурации для плагина _exec_
 
 $HOME/.weechat/irc.conf::
-    файл конфигурации для плагина 'irc'
+    файл конфигурации для плагина _irc_
 
 $HOME/.weechat/logger.conf::
-    файл конфигурации для плагина 'logger'
+    файл конфигурации для плагина _logger_
 
 $HOME/.weechat/relay.conf::
-    файл конфигурации для плагина 'relay'
+    файл конфигурации для плагина _relay_
 
 $HOME/.weechat/script.conf::
-    файл конфигурации для плагина 'script'
+    файл конфигурации для плагина _script_
 
 $HOME/.weechat/trigger.conf::
-    файл конфигурации для плагина 'trigger'
+    файл конфигурации для плагина _trigger_
 
 $HOME/.weechat/xfer.conf::
-    файл конфигурации для плагина 'xref'
+    файл конфигурации для плагина _xref_
 
 $HOME/.weechat/weechat.log::
     лог-файл WeeChat

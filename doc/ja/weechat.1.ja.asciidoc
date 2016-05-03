@@ -1,8 +1,11 @@
-= WEECHAT(1)
+= weechat(1)
 :doctype: manpage
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ja
+// TRANSLATION MISSING
+:man manual: WeeChat Manual
+:man source: WeeChat {revnumber}
 
 == 名前
 
@@ -11,11 +14,11 @@ weechat - 拡張可能なチャットクライアント
 == 書式
 
 [verse]
-'weechat' [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
-'weechat' [-c|--colors]
-'weechat' [-h|--help]
-'weechat' [-l|--license]
-'weechat' [-v|--version]
+*weechat* [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+*weechat* [-c|--colors]
+*weechat* [-h|--help]
+*weechat* [-l|--license]
+*weechat* [-v|--version]
 
 == 説明
 
@@ -57,34 +60,34 @@ $HOME/.weechat/sec.conf::
     保護されたデータを含む設定ファイル
 
 $HOME/.weechat/alias.conf::
-    'alias' プラグイン用の設定ファイル
+    _alias_ プラグイン用の設定ファイル
 
 $HOME/.weechat/aspell.conf::
-    'aspell' プラグイン用の設定ファイル
+    _aspell_ プラグイン用の設定ファイル
 
 $HOME/.weechat/charset.conf::
-    'charset' プラグイン用の設定ファイル
+    _charset_ プラグイン用の設定ファイル
 
 $HOME/.weechat/exec.conf::
-    'exec' プラグイン用の設定ファイル
+    _exec_ プラグイン用の設定ファイル
 
 $HOME/.weechat/irc.conf::
-    'irc' プラグイン用の設定ファイル
+    _irc_ プラグイン用の設定ファイル
 
 $HOME/.weechat/logger.conf::
-    'logger' プラグイン用の設定ファイル
+    _logger_ プラグイン用の設定ファイル
 
 $HOME/.weechat/relay.conf::
-    'relay' プラグイン用の設定ファイル
+    _relay_ プラグイン用の設定ファイル
 
 $HOME/.weechat/script.conf::
-    'script' プラグイン用の設定ファイル
+    _script_ プラグイン用の設定ファイル
 
 $HOME/.weechat/trigger.conf::
-    'trigger' プラグイン用の設定ファイル
+    _trigger_ プラグイン用の設定ファイル
 
 $HOME/.weechat/xfer.conf::
-    'xfer' プラグイン用の設定ファイル
+    _xfer_ プラグイン用の設定ファイル
 
 $HOME/.weechat/weechat.log::
     WeeChat ログファイル

@@ -1,8 +1,10 @@
-= WEECHAT(1)
+= weechat(1)
 :doctype: manpage
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en
+:man manual: WeeChat Manual
+:man source: WeeChat {revnumber}
 
 == NAME
 
@@ -11,11 +13,11 @@ weechat - the extensible chat client
 == SYNOPSIS
 
 [verse]
-'weechat' [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
-'weechat' [-c|--colors]
-'weechat' [-h|--help]
-'weechat' [-l|--license]
-'weechat' [-v|--version]
+*weechat* [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+*weechat* [-c|--colors]
+*weechat* [-h|--help]
+*weechat* [-l|--license]
+*weechat* [-v|--version]
 
 == DESCRIPTION
 
@@ -57,34 +59,34 @@ $HOME/.weechat/sec.conf::
     configuration file with secured data
 
 $HOME/.weechat/alias.conf::
-    configuration file for 'alias' plugin
+    configuration file for _alias_ plugin
 
 $HOME/.weechat/aspell.conf::
-    configuration file for 'aspell' plugin
+    configuration file for _aspell_ plugin
 
 $HOME/.weechat/charset.conf::
-    configuration file for 'charset' plugin
+    configuration file for _charset_ plugin
 
 $HOME/.weechat/exec.conf::
-    configuration file for 'exec' plugin
+    configuration file for _exec_ plugin
 
 $HOME/.weechat/irc.conf::
-    configuration file for 'irc' plugin
+    configuration file for _irc_ plugin
 
 $HOME/.weechat/logger.conf::
-    configuration file for 'logger' plugin
+    configuration file for _logger_ plugin
 
 $HOME/.weechat/relay.conf::
-    configuration file for 'relay' plugin
+    configuration file for _relay_ plugin
 
 $HOME/.weechat/script.conf::
-    configuration file for 'script' plugin
+    configuration file for _script_ plugin
 
 $HOME/.weechat/trigger.conf::
-    configuration file for 'trigger' plugin
+    configuration file for _trigger_ plugin
 
 $HOME/.weechat/xfer.conf::
-    configuration file for 'xfer' plugin
+    configuration file for _xfer_ plugin
 
 $HOME/.weechat/weechat.log::
     WeeChat log file

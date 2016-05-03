@@ -1,8 +1,11 @@
-= WEECHAT(1)
+= weechat(1)
 :doctype: manpage
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: pl
+// TRANSLATION MISSING
+:man manual: WeeChat Manual
+:man source: WeeChat {revnumber}
 
 == NAZWA
 
@@ -11,11 +14,11 @@ weechat - rozszerzalny klient rozmów
 == SKŁADNIA
 
 [verse]
-'weechat' [-a|--no-connect] [-d|--dir <ścieżka>] [-p|--no-plugin] [-r|--run-command <komenda>] [-s|--no-script] [--upgrade] [wtyczka:opcja...]
-'weechat' [-c|--colors]
-'weechat' [-h|--help]
-'weechat' [-l|--license]
-'weechat' [-v|--version]
+*weechat* [-a|--no-connect] [-d|--dir <ścieżka>] [-p|--no-plugin] [-r|--run-command <komenda>] [-s|--no-script] [--upgrade] [wtyczka:opcja...]
+*weechat* [-c|--colors]
+*weechat* [-h|--help]
+*weechat* [-l|--license]
+*weechat* [-v|--version]
 
 == OPIS
 
@@ -58,34 +61,34 @@ $HOME/.weechat/sec.conf::
     plik konfiguracyjny z zabezpieczonymi danymi
 
 $HOME/.weechat/alias.conf::
-    plik konfiguracyjny wtyczki 'alias'
+    plik konfiguracyjny wtyczki _alias_
 
 $HOME/.weechat/aspell.conf::
-    plik konfiguracyjny wtyczki 'aspell'
+    plik konfiguracyjny wtyczki _aspell_
 
 $HOME/.weechat/charset.conf::
-    plik konfiguracyjny wtyczki 'charset'
+    plik konfiguracyjny wtyczki _charset_
 
 $HOME/.weechat/exec.conf::
-    plik konfiguracyjny wtyczki 'exec'
+    plik konfiguracyjny wtyczki _exec_
 
 $HOME/.weechat/irc.conf::
-    plik konfiguracyjny wtyczki 'irc'
+    plik konfiguracyjny wtyczki _irc_
 
 $HOME/.weechat/logger.conf::
-    plik konfiguracyjny wtyczki 'logger'
+    plik konfiguracyjny wtyczki _logger_
 
 $HOME/.weechat/relay.conf::
-    plik konfiguracyjny wtyczki 'relay'
+    plik konfiguracyjny wtyczki _relay_
 
 $HOME/.weechat/script.conf::
-    plik konfiguracyjny wtyczki 'script'
+    plik konfiguracyjny wtyczki _script_
 
 $HOME/.weechat/trigger.conf::
-    plik konfiguracyjny wtyczki 'trigger'
+    plik konfiguracyjny wtyczki _trigger_
 
 $HOME/.weechat/xfer.conf::
-    plik konfiguracyjny wtyczki 'xfer'
+    plik konfiguracyjny wtyczki _xfer_
 
 $HOME/.weechat/weechat.log::
     plik z logami WeeChat

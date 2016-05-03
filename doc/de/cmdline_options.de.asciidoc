@@ -4,9 +4,9 @@
 *-c*, *--colors*::
     zeigt die Standardfarben im Terminal an.
 
-*-d*, *--dir* '<path>'::
+*-d*, *--dir* _<path>_::
     legt den Konfigurationsordner für WeeChat fest in welchem die Erweiterungen,
-    Skripten, Protokolldateien etc.pp. gesichert werden (Voreinstellung: ~/.weechat).
+    Skripten, Protokolldateien etc.pp. gesichert werden (Voreinstellung: "~/.weechat").
     Sollte das Verzeichnis nicht existieren wird es beim Start angelegt.
     Wird diese Option nicht genutzt, wird die Umgebungsvariable WEECHAT_HOME genutzt
     (sofern diese vorhanden ist).
@@ -20,7 +20,7 @@
 *-p*, *--no-plugin*::
     unterbindet das Laden der Erweiterungen beim Programmstart.
 
-*-r*, *--run-command* '<command>'::
+*-r*, *--run-command* _<command>_::
     führt einen oder mehrere Befehle aus, nachdem WeeChat gestartet wurde
     (mehrere Befehle müssen durch Kommata voneinander getrennt werden).
 

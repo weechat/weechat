@@ -21,7 +21,7 @@ if(ENABLE_MAN)
   # man page
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat.1
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS -a revision='WeeChat ${VERSION}' -b manpage -o weechat.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.cs.asciidoc
+    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.cs.asciidoc
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.cs.asciidoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.cs.asciidoc

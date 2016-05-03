@@ -4,10 +4,10 @@
 *-c*, *--colors*::
     Zobraz defaultní barvy v terminálu.
 
-*-d*, *--dir* '<path>'::
+*-d*, *--dir* _<path>_::
     Nastav cestu jako dovmský adresář pro WeeChat (použitou pro konfigurační
     soubory, logy, uživatelské pluginy a skripty), výchozí hodnota je
-    '~/.weechat' (poznámka: složka bude vytvořena pokud nebude nalezena
+    "~/.weechat" (poznámka: složka bude vytvořena pokud nebude nalezena
     Weechatem)
     Pokud tato volba není zadána, použije se promněná prostředí WEECHAT_HOME
     (pokud není prázdná)
@@ -21,7 +21,7 @@
 *-p*, *--no-plugin*::
     Vypne automatické nahrání pluginů.
 
-*-r*, *--run-command* '<command>'::
+*-r*, *--run-command* _<command>_::
     Spustí příkaz(y) po startu (více přůkazů může být odděleno středníky).
 
 *-s*, *--no-script*::

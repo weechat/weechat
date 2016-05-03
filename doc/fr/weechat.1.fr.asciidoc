@@ -1,8 +1,10 @@
-= WEECHAT(1)
+= weechat(1)
 :doctype: manpage
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr
+:man manual: Manuel WeeChat
+:man source: WeeChat {revnumber}
 
 == NOM
 
@@ -11,11 +13,11 @@ weechat - le client de discussion extensible
 == SYNOPSIS
 
 [verse]
-'weechat' [-a|--no-connect] [-d|--dir <répertoire>] [-p|--no-plugin] [-r|--run-command <commande>] [-s|--no-script] [--upgrade] [extension:option...]
-'weechat' [-c|--colors]
-'weechat' [-h|--help]
-'weechat' [-l|--license]
-'weechat' [-v|--version]
+*weechat* [-a|--no-connect] [-d|--dir <répertoire>] [-p|--no-plugin] [-r|--run-command <commande>] [-s|--no-script] [--upgrade] [extension:option...]
+*weechat* [-c|--colors]
+*weechat* [-h|--help]
+*weechat* [-l|--license]
+*weechat* [-v|--version]
 
 == DESCRIPTION
 
@@ -59,34 +61,34 @@ $HOME/.weechat/sec.conf::
     fichier de configuration avec les données sécurisées
 
 $HOME/.weechat/alias.conf::
-    fichier de configuration pour l'extension 'alias'
+    fichier de configuration pour l'extension _alias_
 
 $HOME/.weechat/aspell.conf::
-    fichier de configuration pour l'extension 'aspell'
+    fichier de configuration pour l'extension _aspell_
 
 $HOME/.weechat/charset.conf::
-    fichier de configuration pour l'extension 'charset'
+    fichier de configuration pour l'extension _charset_
 
 $HOME/.weechat/exec.conf::
-    fichier de configuration pour l'extension 'exec'
+    fichier de configuration pour l'extension _exec_
 
 $HOME/.weechat/irc.conf::
-    fichier de configuration pour l'extension 'irc'
+    fichier de configuration pour l'extension _irc_
 
 $HOME/.weechat/logger.conf::
-    fichier de configuration pour l'extension 'logger'
+    fichier de configuration pour l'extension _logger_
 
 $HOME/.weechat/relay.conf::
-    fichier de configuration pour l'extension 'relay'
+    fichier de configuration pour l'extension _relay_
 
 $HOME/.weechat/script.conf::
-    fichier de configuration pour l'extension 'script'
+    fichier de configuration pour l'extension _script_
 
 $HOME/.weechat/trigger.conf::
-    fichier de configuration pour l'extension 'trigger'
+    fichier de configuration pour l'extension _trigger_
 
 $HOME/.weechat/xfer.conf::
-    fichier de configuration pour l'extension 'xfer'
+    fichier de configuration pour l'extension _xfer_
 
 $HOME/.weechat/weechat.log::
     fichier de log de WeeChat
