@@ -1,9 +1,11 @@
 = WeeChat szybki start
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:toc2:
+:lang: pl
+:toc: left
 :toc-title: Spis treści
-:max-width: 100%
+:sectnums:
+:docinfo1:
 
 
 Tłumaczenie:

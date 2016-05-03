@@ -2,9 +2,9 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en
-:toc2:
+:toc: left
 :toclevels: 3
-:max-width: 100%
+:docinfo1:
 
 
 This manual documents WeeChat chat client, it is part of WeeChat.
@@ -338,8 +338,7 @@ Documentation files:
 |===
 | Path/file                                | Description
 | doc/                                     | Documentation
-|    asciidoc.conf                         | Asciidoc configuration file (some macros)
-|    asciidoc.css                          | Asciidoc style
+|    docinfo.html                          | Asciidoctor style
 |    docgen.py                             | Python script to build files in 'autogen/' directory (see below)
 |    XX/                                   | Documentation for language XX (languages: en, fr, de, it, ...)
 |       cmdline_options.XX.asciidoc        | Command-line options (file included in man page and user's guide)

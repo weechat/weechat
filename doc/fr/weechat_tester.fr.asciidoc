@@ -2,8 +2,9 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr
-:toc2:
-:max-width: 100%
+:toc: left
+:toc-title: Table des matières
+:docinfo1:
 
 
 [[purpose]]

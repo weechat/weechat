@@ -2,8 +2,10 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: de
-:toc:
-:toc-placement: manual
+:toc: macro
+:toc-title: Inhaltsverzeichnis
+:sectnums:
+:docinfo1:
 
 
 Übersetzer:

@@ -1,5 +1,8 @@
 = WEECHAT(1)
 :doctype: manpage
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: ja
 
 == 名前
 
@@ -88,16 +91,16 @@ $HOME/.weechat/weechat.log::
 
 == 著者
 
-この manpage を書いたのは Sébastien Helleu <flashcode@flashtux.org> さんです。
+この manpage を書いたのは {author} さんです。
 
-翻訳したのは Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp> さんです。
+翻訳したのは Ryuunosuke Ayanokouzi さんです。
 
 == 著作権
 
 WeeChat は Sébastien Helleu さんと貢献者によって作成されています
 (完全なリストは AUTHORS.asciidoc ファイルを参照してください)。
 
-著作権 (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
+著作権 (C) 2003-2016 {author}
 
 WeeChat はフリーソフトウェアです。あなたはこれを、フリーソフトウェア財団によって発行された
 GNU 一般公衆利用許諾契約書 (バージョン 2 か、希望によってはそれ以降のバージョンのうちどれか)
@@ -105,8 +108,8 @@ GNU 一般公衆利用許諾契約書 (バージョン 2 か、希望によっ�
 
 より詳しい情報は COPYING ファイルを読んでください。
 
-Web: <https://weechat.org/>
+Web: https://weechat.org/
 
 == サポート / バグ報告
 
-手助けを受けたりバグを報告するには: <https://weechat.org/dev/support>
+手助けを受けたりバグを報告するには: https://weechat.org/dev/support

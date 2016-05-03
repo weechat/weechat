@@ -1,9 +1,11 @@
 = WeeChat FAQ (Często zadawane pytania)
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:toc:
+:lang: pl
+:toc: macro
 :toc-title: Spis treści
-:toc-placement: manual
+:sectnums:
+:docinfo1:
 
 
 Tłumaczenie:

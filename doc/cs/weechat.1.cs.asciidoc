@@ -1,5 +1,7 @@
 = WEECHAT(1)
 :doctype: manpage
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
 :lang: cs
 
 == JMÉNO
@@ -88,15 +90,15 @@ $HOME/.weechat/weechat.log::
 
 == AUTOŘI
 
-Tato manuálová stránka byla napsána Sébastienem Helleu <flashcode@flashtux.org>.
-Tato manuálová stránka byla přeložena Ondřejem Súkupem <mimi.vx@gmail.com>
+Tato manuálová stránka byla napsána {author}.
+Tato manuálová stránka byla přeložena Ondřejem Súkupem.
 
 == COPYRIGHT
 
 WeeChat je napsán Sébastienem Helleu a přispěvovateli (kompletní seznam je v
 souboru AUTHORS.asciidoc).
 
-Copyright (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
+Copyright (C) 2003-2016 {author}
 
 WeeChat je svobodný software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -105,8 +107,8 @@ the Free Software Foundation; either version 3 of the License, or
 
 Prosím přečtěte si soubor COPYING pro více informací.
 
-Web: <https://weechat.org/>
+Web: https://weechat.org/
 
 == PODPORA / HLÁŠENÍ CHYB
 
-Pro pomoc nebo hlášení chyb <https://weechat.org/dev/support>
+Pro pomoc nebo hlášení chyb https://weechat.org/dev/support

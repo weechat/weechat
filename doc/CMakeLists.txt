@@ -20,29 +20,11 @@
 
 if(ENABLE_MAN OR ENABLE_DOC)
 
-  find_package(Sourcehighlight)
-  find_package(Asciidoc)
+  find_package(Asciidoctor)
 
-  if(ASCIIDOC_FOUND)
+  if(ASCIIDOCTOR_FOUND)
 
-    set(CSS_TOC -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/asciidoc_toc.css)
-    set(CSS_TOC2 -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/asciidoc_toc2.css)
-
-    set(ASCIIDOC_ARGS -a revision="${VERSION}" -f ${CMAKE_CURRENT_SOURCE_DIR}/asciidoc.conf)
-
-    # use html5 backend if available (asciidoc >= 8.6.5)
-    if(ASCIIDOC_VERSION VERSION_EQUAL "8.6.5" OR ASCIIDOC_VERSION VERSION_GREATER "8.6.5")
-      set(ASCIIDOC_ARGS -b html5 ${ASCIIDOC_ARGS})
-    endif()
-
-    set(ASCIIDOC_ARGS_USER       ${ASCIIDOC_ARGS} ${CSS_TOC2}   )
-    set(ASCIIDOC_ARGS_API        ${ASCIIDOC_ARGS} ${CSS_TOC2}   )
-    set(ASCIIDOC_ARGS_SCRIPTING  ${ASCIIDOC_ARGS} ${CSS_TOC2}   )
-    set(ASCIIDOC_ARGS_FAQ        ${ASCIIDOC_ARGS} ${CSS_TOC}  -n)
-    set(ASCIIDOC_ARGS_QUICKSTART ${ASCIIDOC_ARGS} ${CSS_TOC2} -n)
-    set(ASCIIDOC_ARGS_TESTER     ${ASCIIDOC_ARGS} ${CSS_TOC2}   )
-    set(ASCIIDOC_ARGS_RELAY      ${ASCIIDOC_ARGS} ${CSS_TOC2}   )
-    set(ASCIIDOC_ARGS_DEV        ${ASCIIDOC_ARGS} ${CSS_TOC2}   )
+    set(ASCIIDOCTOR_ARGS -a revnumber="${VERSION}" -a sectanchors -a source-highlighter=highlight.js)
 
     add_subdirectory(en)
     add_subdirectory(fr)

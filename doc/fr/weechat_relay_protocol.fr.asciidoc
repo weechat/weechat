@@ -2,9 +2,10 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr
-:toc2:
+:toc: left
 :toclevels: 3
-:max-width: 100%
+:toc-title: Table des matières
+:docinfo1:
 
 
 Ce document est une spécification du protocole Relay de WeeChat : le protocole

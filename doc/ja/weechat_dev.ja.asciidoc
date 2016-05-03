@@ -1,10 +1,11 @@
 = WeeChat 開発者ガイド
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:toc2:
+:lang: ja
+:toc: left
 :toclevels: 3
 :toc-title: 目次
-:max-width: 100%
+:docinfo1:
 
 
 翻訳者:
@@ -343,8 +344,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |===
 | パス/ファイル名                          | 説明
 | doc/                                     | 文書
-|    asciidoc.conf                         | asciidoc 設定ファイル (マクロ)
-|    asciidoc.css                          | asciidoc スタイル
+|    docinfo.html                          | asciidoctor スタイル
 |    docgen.py                             | 'autogen/' ディレクトリ内のファイルを作成する Python スクリプト (以下を参照)
 |    XX/                                   | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
 |       cmdline_options.XX.asciidoc        | コマンドラインオプション (man ページとユーザガイドに含まれるファイル)

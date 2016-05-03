@@ -21,13 +21,7 @@
 SUBDIRS = . en fr it de pl es ru ja cs
 
 EXTRA_DIST = docgen.py \
-             CMakeLists.txt \
-             asciidoc.conf \
-             asciidoc_toc.css \
-             asciidoc_toc2.css
+             CMakeLists.txt
 
 uninstall-hook:
 	-rmdir $(DESTDIR)$(datadir)/doc/$(PACKAGE)
-
-clean-local:
-	-rm -f asciidoc_toc.css asciidoc_toc2.css

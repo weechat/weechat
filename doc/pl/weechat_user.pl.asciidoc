@@ -1,10 +1,13 @@
 = Poradnik użytkownika WeeChat
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:toc2:
+:lang: pl
+:toc: left
 :toclevels: 3
 :toc-title: Spis treści
-:max-width: 100%
+:sectnums:
+:sectnumlevels: 2
+:docinfo1:
 
 
 Tłumaczenie:

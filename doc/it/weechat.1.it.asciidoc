@@ -1,6 +1,8 @@
 // TRANSLATION MISSING (WHOLE FILE)
 = WEECHAT(1)
 :doctype: manpage
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
 :lang: it
 
 == NAME
@@ -92,16 +94,17 @@ $HOME/.weechat/weechat.log::
 
 == AUTHORS
 
-This manpage was written by Sébastien Helleu <flashcode@flashtux.org>.
+This manpage was written by {author}.
 
-// Translated by Name <email@domain.com>.
+// TRANSLATION MISSING
+// Translated by Name.
 
 == COPYRIGHT
 
 WeeChat is written by Sébastien Helleu and contributors (complete list is in
 the AUTHORS.asciidoc file).
 
-Copyright (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
+Copyright (C) 2003-2016 {author}
 
 WeeChat is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -110,10 +113,10 @@ the Free Software Foundation; either version 3 of the License, or
 
 Please read the COPYING file for more information.
 
-Web: <https://weechat.org/>
+Web: https://weechat.org/
 
 // TRANSLATION MISSING
 == SUPPORT / REPORTING BUGS
 
 // TRANSLATION MISSING
-For help or a bug report: <https://weechat.org/dev/support>
+For help or a bug report: https://weechat.org/dev/support

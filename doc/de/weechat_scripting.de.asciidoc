@@ -2,9 +2,10 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: de
-:toc2:
+:toc: left
 :toclevels: 3
-:max-width: 100%
+:toc-title: Inhaltsverzeichnis
+:docinfo1:
 
 
 Übersetzer:

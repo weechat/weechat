@@ -1128,54 +1128,35 @@ if test "x$enable_doc" = "xno"; then
 fi
 
 if test "x$enable_man" = "xyes" -o "x$enable_doc" = "xyes"; then
-    DOC_ASCIIDOC8=""
-    AC_CHECK_PROGS(ASCIIDOC, [asciidoc])
-    AC_CHECK_PROGS(A2X, [a2x])
-    AC_CHECK_PROGS(SOURCEHIGHLIGHT, [source-highlight])
-    if test -z "$A2X"; then
-        not_found="$not_found a2x(from asciidoc)"
-    fi
-    if test -z "$SOURCEHIGHLIGHT"; then
-        not_found="$not_found source-highlight(needed by asciidoc)"
-    fi
-    if test -n "$ASCIIDOC"; then
-        AC_MSG_CHECKING([for asciidoc version])
-        asciidoc_version=`$ASCIIDOC --version 2>/dev/null`
-        case "${asciidoc_version}" in
-        asciidoc' '8*)
-                DOC_ASCIIDOC8="yes"
-                AC_MSG_RESULT([${asciidoc_version}])
-                if test "x$enable_man" = "xyes"; then
-                    if test -n "$A2X"; then
-                        msg_man="asciidoc(with a2x) $msg_man"
-                        AC_DEFINE(MAN)
-                    else
-                        enable_man="no"
-                    fi
-                fi
-                if test "x$enable_doc" = "xyes"; then
-                    if test -n "$SOURCEHIGHLIGHT"; then
-                        msg_doc="asciidoc(with source-highlight) $msg_doc"
-                        AC_DEFINE(DOC)
-                    else
-                        enable_doc="no"
-                    fi
-                fi
-                ;;
-        *)
-                AC_MSG_RESULT([${asciidoc_version} (too old)])
-                not_found="$not_found asciidoc"
+    AC_CHECK_PROGS(ASCIIDOCTOR, [asciidoctor])
+    if test -n "$ASCIIDOCTOR"; then
+        AC_MSG_CHECKING([for asciidoctor version])
+        asciidoctor_version=`$ASCIIDOCTOR --version 2>/dev/null | head -n 1 | cut -d" " -f2`
+        case "${asciidoctor_version}" in
+        Asciidoctor' '0.*)
+                AC_MSG_RESULT([${asciidoctor_version} (too old)])
+                not_found="$not_found asciidoctor"
                 enable_man="no"
                 enable_doc="no"
                 ;;
+        *)
+                AC_MSG_RESULT([${asciidoctor_version}])
+                if test "x$enable_man" = "xyes"; then
+                    msg_man="asciidoctor(${asciidoctor_version}) $msg_man"
+                    AC_DEFINE(MAN)
+                fi
+                if test "x$enable_doc" = "xyes"; then
+                    msg_doc="asciidoctor(${asciidoctor_version}) $msg_doc"
+                    AC_DEFINE(DOC)
+                fi
+                ;;
         esac
     else
-        not_found="$not_found asciidoc"
+        not_found="$not_found asciidoctor"
         enable_man="no"
         enable_doc="no"
     fi
-    AC_SUBST(ASCIIDOC)
-    AC_SUBST(A2X)
+    AC_SUBST(ASCIIDOCTOR)
 fi
 
 # ------------------------------------------------------------------------------

@@ -21,9 +21,7 @@ if(ENABLE_MAN)
   # man page
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat.1
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.it.asciidoc .
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.it.asciidoc .
-    COMMAND ${A2X_EXECUTABLE} ARGS -a revision='WeeChat ${VERSION}' -d manpage -f manpage -L weechat.1.it.asciidoc
+    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS -a revision='WeeChat ${VERSION}' -b manpage -o weechat.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.it.asciidoc
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.it.asciidoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.it.asciidoc
@@ -34,14 +32,14 @@ if(ENABLE_MAN)
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.1 DESTINATION ${MANDIR}/it/man1)
 endif()
 
-if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
+if(ENABLE_DOC)
 
   # user's guide
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.it.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_USER} -o weechat_user.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.it.asciidoc
+    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_user.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.it.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc2.css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.it.asciidoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.it.asciidoc
     ${CMAKE_CURRENT_SOURCE_DIR}/autogen/user/*.asciidoc
@@ -54,9 +52,9 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # plugin API reference
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.it.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_API} -o weechat_plugin_api.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.it.asciidoc
+    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_plugin_api.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.it.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc2.css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.it.asciidoc
     ${CMAKE_CURRENT_SOURCE_DIR}/autogen/plugin_api/*.asciidoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -68,9 +66,9 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # scripting guide
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.it.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_SCRIPTING} -o weechat_scripting.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.it.asciidoc
+    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_scripting.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.it.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc2.css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.it.asciidoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_scripting.it.html"
@@ -81,9 +79,9 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # FAQ
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.it.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_FAQ} -o weechat_faq.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.it.asciidoc
+    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_faq.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.it.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc.css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.it.asciidoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_faq.it.html"
@@ -94,9 +92,9 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # quickstart
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.it.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_QUICKSTART} -o weechat_quickstart.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.it.asciidoc
+    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_quickstart.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.it.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc2.css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.it.asciidoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_quickstart.it.html"
@@ -107,9 +105,9 @@ if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # tester's guide
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.it.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_TESTER} -o weechat_tester.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.it.asciidoc
+    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_tester.it.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.it.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc2.css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.it.asciidoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_tester.it.html"

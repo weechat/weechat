@@ -38,16 +38,11 @@ all-local: $(man_targets) $(doc_targets)
 
 # man page
 weechat.1: weechat.1.ru.asciidoc cmdline_options.ru.asciidoc
-	-mkdir tmp_man
-	cp -f $(abs_top_srcdir)/doc/ru/weechat.1.ru.asciidoc ./tmp_man/
-	cp -f $(abs_top_srcdir)/doc/ru/cmdline_options.ru.asciidoc ./tmp_man/
-	(cd tmp_man && $(A2X) -a revision="WeeChat $(VERSION)" -d manpage -f manpage -L weechat.1.ru.asciidoc)
-	mv -f tmp_man/weechat.1 .
-	rm -rf tmp_man
+	$(ASCIIDOCTOR) -a revision="WeeChat $(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/ru/weechat.1.ru.asciidoc
 
 # quickstart
-weechat_quickstart.ru.html: weechat_quickstart.ru.asciidoc $(abs_top_srcdir)/doc/asciidoc_toc2.css
-	$(ASCIIDOC) -b html5 -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc_toc2.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_quickstart.ru.html $(abs_top_srcdir)/doc/ru/weechat_quickstart.ru.asciidoc
+weechat_quickstart.ru.html: weechat_quickstart.ru.asciidoc $(abs_top_srcdir)/doc/docinfo.html
+	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=highlight.js -o weechat_quickstart.ru.html $(abs_top_srcdir)/doc/ru/weechat_quickstart.ru.asciidoc
 
 # install man/docs
 
@@ -76,5 +71,4 @@ uninstall-doc:
 # clean
 
 clean-local:
-	-rm -f weechat.1 weechat.1.ru.asciidoc cmdline_options.ru.asciidoc
-	-rm -f *.html
+	-rm -f weechat.1 weechat_*.html

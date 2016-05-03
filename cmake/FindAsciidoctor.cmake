@@ -17,39 +17,33 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# - Find Asciidoc
-# This module finds if asciidoc (version 8 or newer) is installed.
+# - Find Asciidoctor
+# This module finds if asciidoctor (version 1.5.0 or newer) is installed.
 
-if(ASCIIDOC_FOUND)
+if(ASCIIDOCTOR_FOUND)
   # Already in cache, be silent
-  set(ASCIIDOC_FIND_QUIETLY TRUE)
+  set(ASCIIDOCTOR_FIND_QUIETLY TRUE)
 endif()
 
 find_program(
-  ASCIIDOC_EXECUTABLE asciidoc
+  ASCIIDOCTOR_EXECUTABLE asciidoctor
   PATHS /bin /usr/bin /usr/local/bin /usr/pkg/bin
 )
 
-find_program(
-  A2X_EXECUTABLE a2x
-  PATHS /bin /usr/bin /usr/local/bin /usr/pkg/bin
-)
-
-if(ASCIIDOC_EXECUTABLE AND A2X_EXECUTABLE)
+if(ASCIIDOCTOR_EXECUTABLE)
   execute_process(
-    COMMAND ${ASCIIDOC_EXECUTABLE} --version
-    OUTPUT_VARIABLE ASCIIDOC_VERSION
+    COMMAND ${ASCIIDOCTOR_EXECUTABLE} --version
+    OUTPUT_VARIABLE ASCIIDOCTOR_VERSION
     )
 
-  string(STRIP ${ASCIIDOC_VERSION} ASCIIDOC_VERSION)
-  string(REPLACE "asciidoc " "" ASCIIDOC_VERSION ${ASCIIDOC_VERSION})
+  string(REGEX REPLACE "^Asciidoctor ([^ ]+) .*" "\\1" ASCIIDOCTOR_VERSION "${ASCIIDOCTOR_VERSION}")
 
-  if(ASCIIDOC_VERSION VERSION_EQUAL "8.0.0" OR ASCIIDOC_VERSION VERSION_GREATER "8.0.0")
-    set(ASCIIDOC_FOUND TRUE)
+  if(ASCIIDOCTOR_VERSION VERSION_EQUAL "1.5.0" OR ASCIIDOCTOR_VERSION VERSION_GREATER "1.5.0")
+    set(ASCIIDOCTOR_FOUND TRUE)
   endif()
 
   mark_as_advanced(
-    ASCIIDOC_EXECUTABLE
-    ASCIIDOC_VERSION
+    ASCIIDOCTOR_EXECUTABLE
+    ASCIIDOCTOR_VERSION
     )
 endif()

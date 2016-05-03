@@ -2,8 +2,9 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: cs
-:toc2:
-:max-width: 100%
+:toc: left
+:sectnums:
+:docinfo1:
 
 
 [[start]]

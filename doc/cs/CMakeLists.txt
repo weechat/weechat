@@ -21,9 +21,7 @@ if(ENABLE_MAN)
   # man page
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat.1
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.cs.asciidoc .
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.cs.asciidoc .
-    COMMAND ${A2X_EXECUTABLE} ARGS -a revision='WeeChat ${VERSION}' -d manpage -f manpage -L weechat.1.cs.asciidoc
+    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS -a revision='WeeChat ${VERSION}' -b manpage -o weechat.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.cs.asciidoc
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.cs.asciidoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.cs.asciidoc
@@ -34,14 +32,14 @@ if(ENABLE_MAN)
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.1 DESTINATION ${MANDIR}/cs/man1)
 endif()
 
-if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
+if(ENABLE_DOC)
 
   # quickstart
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.cs.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS ${ASCIIDOC_ARGS_QUICKSTART} -o weechat_quickstart.cs.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.cs.asciidoc
+    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -o weechat_quickstart.cs.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.cs.asciidoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc_toc2.css
+    ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.cs.asciidoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_quickstart.cs.html"

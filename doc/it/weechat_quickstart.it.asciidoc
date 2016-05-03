@@ -2,8 +2,10 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: it
-:toc2:
-:max-width: 100%
+:toc: left
+:toc-title: Indice
+:sectnums:
+:docinfo1:
 
 
 // TRANSLATION MISSING

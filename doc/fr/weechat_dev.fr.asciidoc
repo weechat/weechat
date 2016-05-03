@@ -2,9 +2,10 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr
-:toc2:
+:toc: left
 :toclevels: 3
-:max-width: 100%
+:toc-title: Table des matières
+:docinfo1:
 
 
 Ce manuel documente le client de messagerie instantanée WeeChat, il fait
@@ -339,8 +340,7 @@ Fichiers de documentation :
 |===
 | Chemin/fichier                           | Description
 | doc/                                     | Documentation
-|    asciidoc.conf                         | Fichier de configuration Asciidoc (quelques macros)
-|    asciidoc.css                          | Style Asciidoc
+|    docinfo.html                          | Style Asciidoctor
 |    docgen.py                             | Script Python pour construire les fichiers dans le répertoire 'autogen/' (voir ci-dessous)
 |    XX/                                   | Documentation pour la langue XX (langues : en, fr, de, it, ...)
 |       cmdline_options.XX.asciidoc        | Options de ligne de commande (fichier inclus dans la page de manuel et le guide utilisateur)

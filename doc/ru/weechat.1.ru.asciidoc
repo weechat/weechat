@@ -1,5 +1,7 @@
 = WEECHAT(1)
 :doctype: manpage
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
 :lang: ru
 
 == НАЗВАНИЕ
@@ -89,16 +91,16 @@ $HOME/.weechat/weechat.log::
 
 == АВТОРЫ
 
-Эта man-страница написана Sébastien Helleu <flashcode@flashtux.org>.
+Эта man-страница написана {author}.
 
-Перевод: Alexander Turenko <totktonada.ru@gmail.com>.
+Перевод: Alexander Turenko.
 
 == КОПИРАЙТ
 
 WeeChat написан Sébastien Helleu и другими участниками (полный список находится
 в файле AUTHORS.asciidoc).
 
-Copyright (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
+Copyright (C) 2003-2016 {author}
 
 WeeChat is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -107,8 +109,8 @@ the Free Software Foundation; either version 3 of the License, or
 
 Подробную информацию можно найти в файле COPYING.
 
-Веб: <https://weechat.org/>
+Веб: https://weechat.org/
 
 == ПОДДЕРЖКА / СООБЩЕНИЯ ОБ ОШИБКАХ
 
-Получить помощь или сообщить об ошибке: <https://weechat.org/dev/support>
+Получить помощь или сообщить об ошибке: https://weechat.org/dev/support

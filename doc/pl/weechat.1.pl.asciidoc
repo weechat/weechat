@@ -1,5 +1,8 @@
 = WEECHAT(1)
 :doctype: manpage
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: pl
 
 == NAZWA
 
@@ -89,16 +92,16 @@ $HOME/.weechat/weechat.log::
 
 == AUTORZY
 
-Autorem tej strony pomocy Sébastien Helleu <flashcode@flashtux.org>.
+Autorem tej strony pomocy {author}.
 
-Tłumaczenie Krzysztof Korościk <soltys1@gmail.com>.
+Tłumaczenie Krzysztof Korościk.
 
 == PRAWA AUTORSKIE
 
 WeeChat jest tworzony przez Sébastien Helleu i społeczność (pełna lista dostępna
 jest w pliku AUTHORS).
 
-Copyright (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
+Copyright (C) 2003-2016 {author}
 
 WeeChat is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -107,8 +110,8 @@ the Free Software Foundation; either version 3 of the License, or
 
 Pełna licencja znajduje się w pliku COPYING.
 
-Strona www: <https://weechat.org/>
+Strona www: https://weechat.org/
 
 == WSPARCIE / ZGŁASZANIE BŁĘDÓW
 
-W celu uzyskania pomocy, lub zgłoszenia błędu zajrzyj na: <https://weechat.org/dev/support>
+W celu uzyskania pomocy, lub zgłoszenia błędu zajrzyj na: https://weechat.org/dev/support
