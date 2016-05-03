@@ -770,6 +770,49 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
 * set the 'TZ' variable (for example: `export TZ="Europe/Paris"`), to prevent
   frequent access to file '/etc/localtime'
 
+[[security]]
+=== I am paranoid about security, which settings could I change to be even more secure?
+
+Disable IRC part and quit messages:
+
+----
+/set irc.server_default.default_msg_part ""
+/set irc.server_default.default_msg_quit ""
+----
+
+Disable answers to all CTCP queries:
+
+----
+/set irc.ctcp.clientinfo ""
+/set irc.ctcp.finger ""
+/set irc.ctcp.source ""
+/set irc.ctcp.time ""
+/set irc.ctcp.userinfo ""
+/set irc.ctcp.version ""
+/set irc.ctcp.ping ""
+----
+
+Unload and disable auto-loading of "xfer" plugin (used for IRC DCC):
+
+----
+/plugin unload xfer
+/set weechat.plugin.autoload "*,!xfer"
+----
+
+Define a passphrase and use secured data wherever you can for sensitive data
+like passwords: see `/help secure` and `/help` on options
+(if you can use secured data, it is written in the help).
+
+For example:
+
+----
+/secure passphrase xxxxxxxxxx
+/secure set freenode_username username
+/secure set freenode_password xxxxxxxx
+/set irc.server.freenode.sasl_username "${sec.data.freenode_username}"
+/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+----
+
 [[development]]
 == Development
 

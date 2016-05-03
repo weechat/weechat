@@ -807,6 +807,51 @@ celles-ci :
 * définir la variable 'TZ' (par exemple : `export TZ="Europe/Paris"`), pour
   éviter un accès fréquent au fichier '/etc/localtime'
 
+[[security]]
+=== Je suis paranoïaque sur la sécurité, quels paramètres puis-je changer pour être encore plus sûr ?
+
+Désactivez les messages de part et quit IRC :
+
+----
+/set irc.server_default.default_msg_part ""
+/set irc.server_default.default_msg_quit ""
+----
+
+Désactivez les réponses à toutes les demandes CTCP :
+
+----
+/set irc.ctcp.clientinfo ""
+/set irc.ctcp.finger ""
+/set irc.ctcp.source ""
+/set irc.ctcp.time ""
+/set irc.ctcp.userinfo ""
+/set irc.ctcp.version ""
+/set irc.ctcp.ping ""
+----
+
+Déchargez et désactivez le chargement automatique de l'extension "xfer"
+(utilisée pour le DCC IRC) :
+
+----
+/plugin unload xfer
+/set weechat.plugin.autoload "*,!xfer"
+----
+
+Définissez une phrase de chiffrement et utilisez les données sécurisées partout
+où vous le pouvez pour les données sensibles comme les mots de passe : voir
+`/help secure` et `/help` sur les options (si vous pouvez utiliser les données
+sécurisées, cela est mentionné dans l'aide).
+
+Par exemple :
+
+----
+/secure passphrase xxxxxxxxxx
+/secure set freenode_username username
+/secure set freenode_password xxxxxxxx
+/set irc.server.freenode.sasl_username "${sec.data.freenode_username}"
+/set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
+----
+
 [[development]]
 == Développement
 
