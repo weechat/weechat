@@ -1,3 +1,11 @@
+weechat (1.5-1) unstable; urgency=medium
+
+  * New upstream release
+  * Remove patch to build ruby plugin against ruby2.3
+  * Bump Standards-Version to 3.9.8
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Tue, 03 May 2016 09:29:42 +0200
+
 weechat (1.4-2) unstable; urgency=medium
 
   * Fix Vcs-(Git|Browser) fields to use secure URIs
