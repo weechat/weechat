@@ -161,7 +161,7 @@ with nickserv (only if you don't use SASL for authentication):
 ----
 
 [NOTE]
-Many commands in option 'command' can be separated by ';' (semi-colon).
+Many commands in option _command_ can be separated by `;` (semi-colon).
 
 If you want to protect your password in configuration files, you can use
 secured data.
@@ -217,8 +217,8 @@ This command can be used to create and connect to a new server without using
 `/server` command (should I repeat you can see help for this command with
 `/help connect` ?).
 
-By default, server buffers are merged with WeeChat 'core' buffer. To switch
-between 'core' buffer and server buffers, you can use key[ctrl-x].
+By default, server buffers are merged with WeeChat _core_ buffer. To switch
+between _core_ buffer and server buffers, you can use kbd:[Ctrl+x].
 
 It is possible to disable auto merge of server buffers to have independent
 server buffers:
@@ -262,7 +262,7 @@ Disconnect from server, on the server buffer:
 [[irc_private_messages]]
 == IRC private messages
 
-Open a buffer and send a message to another user (nick 'foo'):
+Open a buffer and send a message to another user (nick _foo_):
 
 ----
 /query foo this is a message
@@ -306,19 +306,20 @@ and a large window (2/3), use command:
 WeeChat uses many keys by default. All these keys are in the documentation,
 but you should know at least some vital keys:
 
-- key[alt-]key[←]/key[→] or key[F5]/key[F6]: switch to previous/next buffer
-- key[F7]/key[F8]: switch to previous/next window (when screen is split)
-- key[F9]/key[F10]: scroll title bar
-- key[F11]/key[F12]: scroll nicklist
-- key[Tab]: complete text in input bar, like in your shell
-- key[PgUp]/key[PgDn]: scroll text in current buffer
-- key[alt-a]: jump to buffer with activity (in hotlist)
+- kbd:[Alt+←] / kbd:[Alt+→] or kbd:[F5] / kbd:[F6]: switch to previous/next
+  buffer
+- kbd:[F7] / kbd:[F8]: switch to previous/next window (when screen is split)
+- kbd:[F9] / kbd:[F10]: scroll title bar
+- kbd:[F11] / kbd:[F12]: scroll nicklist
+- kbd:[Tab]: complete text in input bar, like in your shell
+- kbd:[PgUp] / kbd:[PgDn]: scroll text in current buffer
+- kbd:[Alt+a]: jump to buffer with activity (in hotlist)
 
 According to your keyboard and/or your needs, you can rebind any key
 to a command with `/key` command.
-A useful key is key[alt-k] to find key codes.
+A useful key is kbd:[Alt+k] to find key codes.
 
-For example, to bind key[alt-!] to command `/buffer close`:
+For example, to bind kbd:[Alt+!] to command `/buffer close`:
 
 ----
 /key bind (press alt-k) (press alt-!) /buffer close

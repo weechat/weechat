@@ -161,7 +161,7 @@ K spuštění příkazů po připojení k serveru, například k autentizaci s n
 ----
 
 [NOTE]
-Více příkazů v volbě 'command' bůže být odděleno pomocí ';' (středník).
+Více příkazů v volbě _command_ bůže být odděleno pomocí `;` (středník).
 
 // TRANSLATION MISSING
 If you want to protect your password in configuration files, you can use
@@ -221,8 +221,8 @@ Tento příkaz může být použit k vytvoření nového připojení k serveru b
 použití příkazu `/server` (mohu zopakovat že můžete zobrazit nápovědu
 pro tento příkaz s `/help connect` ?).
 
-Ve výchozím nastavení jsou serverové bufery spojen s Weechat 'core' buferem.
-K přepnutí mezi 'core' a server bufery můžete použít klávesu [ctrl-x].
+Ve výchozím nastavení jsou serverové bufery spojen s Weechat _core_ buferem.
+K přepnutí mezi _core_ a server bufery můžete použít klávesu kbd:[Ctrl+x].
 
 Je možné vypnout automatické sloučení serverových buferů a mít nezávislé
 serverové bufery:
@@ -268,7 +268,7 @@ Disconnect from server, on the server buffer:
 [[irc_private_messages]]
 == IRC soukromé zprávy
 
-Otevření buferu a poslání soukromé zprávy jinému uživateli (přezdívka 'foo'):
+Otevření buferu a poslání soukromé zprávy jinému uživateli (přezdívka _foo_):
 
 ----
 /query foo tato zpráva
@@ -312,19 +312,19 @@ okno (2/3), použijte příkaz:
 Weechat používá ve výchozím nastavení mnoho klávesových zkratek, Všechny
 najdete v dokumentaci, ale je dobré znát alespoň pár těchto důležitých:
 
-- key[alt-]key[←]/key[→] nebo key[F5]/key[F6]: přepnout na předchozí/další bufer
-- key[F7]/key[F8]: přepnout na předchozí/další okno (pokud je obrazovka rozdělena)
-- key[F9]/key[F10]: posunoutí titulku
-- key[F11]/key[F12]: posunutí seznamu přezdívek
-- key[Tab]: doplnění textu v vstupním řádku, podobně jak v shellu
-- key[PgUp]/key[PgDn]: posunutí textu v aktuálním buferu
-- key[alt-a]: přepni do aktivního buferu (v seznamu)
+- kbd:[Alt+←] / kbd:[Alt+→] nebo kbd:[F5] / kbd:[F6]: přepnout na předchozí/další bufer
+- kbd:[F7] / kbd:[F8]: přepnout na předchozí/další okno (pokud je obrazovka rozdělena)
+- kbd:[F9] / kbd:[F10]: posunoutí titulku
+- kbd:[F11] / kbd:[F12]: posunutí seznamu přezdívek
+- kbd:[Tab]: doplnění textu v vstupním řádku, podobně jak v shellu
+- kbd:[PgUp] / kbd:[PgDn]: posunutí textu v aktuálním buferu
+- kbd:[Alt+a]: přepni do aktivního buferu (v seznamu)
 
 Dle Vaší klávesnice a/nebo vašich potřeb, můžete přenastavit jakoukoliv
 klávesovou zkratku pomocí příkazu `/key`.
-Užitečná zkratka je key[alt-k] k najítí kodů kláves.
+Užitečná zkratka je kbd:[Alt+k] k najítí kodů kláves.
 
-Například k nastavení zkratky key[alt-!] na příkaz `/buffer close`:
+Například k nastavení zkratky kbd:[Alt+!] na příkaz `/buffer close`:
 
 ----
 /key bind (press alt-k) (press alt-!) /buffer close

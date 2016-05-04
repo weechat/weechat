@@ -175,7 +175,7 @@ autenticarsi con nickserv (solo se non viene usato SASL per l'autenticazione):
 
 // TRANSLATION MISSING
 [NOTE]
-Many commands in option 'command' can be separated by ';' (semi-colon).
+Many commands in option _command_ can be separated by `;` (semi-colon).
 
 // TRANSLATION MISSING
 If you want to protect your password in configuration files, you can use
@@ -237,9 +237,9 @@ Questo comando può essere usato per creare e connettersi ad un nuovo server
 senza utilizzare il comando `/server` (è necessario ripetere che è possibile
 visualizzare l'aiuto per questo comando con `/help connect`?).
 
-I buffer dei server vengono uniti al buffer 'core' di WeeChat in modo
-predefinito. Per passare tra buffer 'core' e buffer server, si può digitare
-key[ctrl-x].
+I buffer dei server vengono uniti al buffer _core_ di WeeChat in modo
+predefinito. Per passare tra buffer _core_ e buffer server, si può digitare
+kbd:[Ctrl+x].
 
 È possibile disabilitare l'unione automatica dei server dei buffer per avere i
 buffer dei server indipendenti:
@@ -286,7 +286,7 @@ Disconnect from server, on the server buffer:
 [[irc_private_messages]]
 == IRC private messages
 
-Open a buffer and send a message to another user (nick 'foo'):
+Open a buffer and send a message to another user (nick _foo_):
 
 ----
 /query foo this is a message
@@ -332,22 +332,22 @@ Per esempio, per dividere verticalmente lo schermo in una finestra piccola
 WeeChat usa molti tasti. Essi sono tutti presenti nella documentazione,
 ma si dovrebbero conoscere almeno quelli vitali:
 
-- key[alt-]key[←]/key[→] oppure key[F5]/key[F6]: passa al buffer
+- kbd:[Alt+←] / kbd:[Alt+→] oppure kbd:[F5] / kbd:[F6]: passa al buffer
   precedente/successivo
-- key[F7]/key[F8]: passa alla finestra precedente/successiva (quando lo schermo
+- kbd:[F7] / kbd:[F8]: passa alla finestra precedente/successiva (quando lo schermo
   è diviso)
-- key[F9]/key[F10]: scorre la barra del titolo
-- key[F11]/key[F12]: scorre la lista nick
-- key[Tab]: completa il testo nella barra di input, proprio come nella shell
-- key[PgUp]/key[PgDn]: scorre testo nel buffer corrente
-- key[alt-a]: passa al buffer con attività (nella hotlist)
+- kbd:[F9] / kbd:[F10]: scorre la barra del titolo
+- kbd:[F11] / kbd:[F12]: scorre la lista nick
+- kbd:[Tab]: completa il testo nella barra di input, proprio come nella shell
+- kbd:[PgUp] / kbd:[PgDn]: scorre testo nel buffer corrente
+- kbd:[Alt+a]: passa al buffer con attività (nella hotlist)
 
 A seconda della propria tastiera e/o le proprie necessità, è possibile
 associare nuovamente qualsiasi tasto ad un comando tramite
 `/key`.
-Un tasto utile è key[alt-k] per trovare i codici tasti.
+Un tasto utile è kbd:[Alt+k] per trovare i codici tasti.
 
-Ad esempio, per associare key[alt-!] al comando `/buffer close`:
+Ad esempio, per associare kbd:[Alt+!] al comando `/buffer close`:
 
 ----
 /key bind (digitare alt-k) (digitare alt-!) /buffer close

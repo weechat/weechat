@@ -50,8 +50,8 @@ Um Optionen zu setzen benutzt man:
 /set config.section.option Wert
 ----
 
-(dabei ist 'config' der Konfigurationsname ('weechat' für den Kern von weechat,
-oder der Name einer Erweiterung), 'section' ein Abschnitt dieser Konfiguration und 'option'
+(dabei ist _config_ der Konfigurationsname (_weechat_ für den Kern von weechat,
+oder der Name einer Erweiterung), _section_ ein Abschnitt dieser Konfiguration und _option_
 der Name der entsprechenden Option).
 
 WeeChat verwendet umgehend einen neu eingestellten Wert (WeeChat muss also zu *keinem* Zeitpunkt
@@ -179,7 +179,7 @@ identifizieren:
 ----
 
 [NOTE]
-Mehrere Befehle in der Option 'command' können durch ein ';' (Semikolon) voneinander getrennt werden.
+Mehrere Befehle in der Option _command_ können durch ein `;` (Semikolon) voneinander getrennt werden.
 
 Möchte man seine Passwörter nicht als Klartext in der Konfiguration sichern, kann man die
 Erweiterung /secure nutzen.
@@ -203,7 +203,7 @@ Variable anstelle des Passworts, `${sec.data.freenode_password}`:
 /set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
 ----
 
-Um ein auto-join (automatisches 'betreten') von Channels (Räumen) nach der
+Um ein auto-join (automatisches _betreten_) von Channels (Räumen) nach der
 Verbindung zum Server durchzuführen, müssen die entsprechenden Channels in
 eine Liste eingetragen werden:
 
@@ -241,7 +241,7 @@ kannst?).
 
 Standardmäßig werden alle Server-Buffer und der Buffer des Kerns von WeeChat -der
 core-Buffer- zusammengelegt. Um zwischen dem core-Buffer und den Server-Buffern
-zu wechseln, kannst Du key[ctrl-x] benutzen.
+zu wechseln, kannst Du kbd:[Ctrl+x] benutzen.
 
 Es ist möglich das automatische Zusammenlegen der Server-Buffer zu deaktivieren,
 um eigenständige Server-Buffer zu verwenden:
@@ -286,7 +286,7 @@ folgenden Befehl aus:
 [[irc_private_messages]]
 == IRC private Nachrichten
 
-Öffnet einen Buffer und schickt eine Nachricht an einen User (Nick 'foo'):
+Öffnet einen Buffer und schickt eine Nachricht an einen User (Nick _foo_):
 
 ----
 /query foo Dies ist eine Nachricht
@@ -334,21 +334,21 @@ WeeChat verwendet viele Standardtasten. Alle Tastenbelegungen sind in der
 Dokumentation beschrieben. Im folgenden werden die wichtigsten Tastenbelegungen
 kurz erläutert:
 
-- key[alt-]key[←]/key[→] oder key[F5]/key[F6]: Wechsel zum
+- kbd:[Alt+←] / kbd:[Alt+→] oder kbd:[F5] / kbd:[F6]: Wechsel zum
   vorherigen/nächsten Buffer
-- key[F7]/key[F8]: Wechsel zum vorherigen/nächsten Fenster (falls der
+- kbd:[F7] / kbd:[F8]: Wechsel zum vorherigen/nächsten Fenster (falls der
   Bildschirm aufgeteilt ist)
-- key[F9]/key[F10]: scrollt die Titelleiste
-- key[F11]/key[F12]: scrollt die Liste mit den Nicks
-- key[Tab]: komplettiert den Text in der Eingabezeile, ähnlich Deiner shell
-- key[PgUp]/key[PgDn]: scrollt den Text im aktiven Buffer
-- key[alt-a]: springt zum Buffer mit Aktivität (aus der Hotlist)
+- kbd:[F9] / kbd:[F10]: scrollt die Titelleiste
+- kbd:[F11] / kbd:[F12]: scrollt die Liste mit den Nicks
+- kbd:[Tab]: komplettiert den Text in der Eingabezeile, ähnlich Deiner shell
+- kbd:[PgUp] / kbd:[PgDn]: scrollt den Text im aktiven Buffer
+- kbd:[Alt+a]: springt zum Buffer mit Aktivität (aus der Hotlist)
 
 Gemäß Deiner Tastatur und/oder Deinen Bedürfnissen kann jede Taste mit Hilfe
 des `/key` Befehls durch jedweden Befehl neu belegt werden.
-Eine nützliche Tastenkombination um Tastencodes zu ermitteln ist key[alt-k].
+Eine nützliche Tastenkombination um Tastencodes zu ermitteln ist kbd:[Alt+k].
 
-Beispiel: Belegung von key[alt-!] mit dem Befehl `/buffer close`:
+Beispiel: Belegung von kbd:[Alt+!] mit dem Befehl `/buffer close`:
 
 ----
 /key bind (drücke alt-k) (drücke alt-!) /buffer close

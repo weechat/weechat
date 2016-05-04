@@ -183,7 +183,7 @@ with nickserv (only if you don't use SASL for authentication):
 
 // TRANSLATION MISSING
 [NOTE]
-Many commands in option 'command' can be separated by ';' (semi-colon).
+Many commands in option _command_ can be separated by `;` (semi-colon).
 
 // TRANSLATION MISSING
 If you want to protect your password in configuration files, you can use
@@ -246,7 +246,7 @@ la ayuda de este comando con `/help connect`?).
 
 Por defecto, todos los buffers del servidor están junto al buffer de
 núcleo. Para cambiar entre el buffer del núcleo y el buffer de los
-servidores use key[ctrl-x].
+servidores use kbd:[Ctrl+x].
 
 Es posible deshabilitar esta manera de tener todos los buffer de
 servidores juntos para tenerlos de manera independiente:
@@ -293,7 +293,7 @@ Disconnect from server, on the server buffer:
 [[irc_private_messages]]
 == IRC private messages
 
-Open a buffer and send a message to another user (nick 'foo'):
+Open a buffer and send a message to another user (nick _foo_):
 
 ----
 /query foo this is a message
@@ -340,22 +340,22 @@ WeeChat usa muchas teclas por defecto. Las mismas, están bien
 explicadas en la documentación pero debe conocer al menos la mas
 importantes.
 
-- key[alt-]key[←]/key[→] o key[F5]/key[F6]: Cambiara al buffer
+- kbd:[Alt+←] / kbd:[Alt+→] o kbd:[F5] / kbd:[F6]: Cambiara al buffer
   siguiente/anterior
-- key[F7]/key[F8]: Cambiara a la siguiente/anterior ventana (cuando la pantalla
+- kbd:[F7] / kbd:[F8]: Cambiara a la siguiente/anterior ventana (cuando la pantalla
   este dividida)
-- key[F9]/key[F10]: desplazamiento del texto en la barra de titulo
-- key[F11]/key[F12]: desplazamiento del texto en la lista de nick
-- key[Tab]: Completa los textos o nick que se escriben
-- key[PgUp]/key[PgDn]: desplazamiento del texto en el buffer
-- key[alt-a]: salta al siguiente buffer con actividad reciente
+- kbd:[F9] / kbd:[F10]: desplazamiento del texto en la barra de titulo
+- kbd:[F11] / kbd:[F12]: desplazamiento del texto en la lista de nick
+- kbd:[Tab]: Completa los textos o nick que se escriben
+- kbd:[PgUp] / kbd:[PgDn]: desplazamiento del texto en el buffer
+- kbd:[Alt+a]: salta al siguiente buffer con actividad reciente
 
 De acuerdo con su teclado y/o sus necesidades, puede asignar teclas a un
 comando usando el comando `/key`.
-Una combinación de teclas muy valiosa es key[alt-k] para hallar el código de
+Una combinación de teclas muy valiosa es kbd:[Alt+k] para hallar el código de
 alguna tecla.
 
-Por ejemplo, para asignar la combinación key[alt-!] al comando `/buffer close`:
+Por ejemplo, para asignar la combinación kbd:[Alt+!] al comando `/buffer close`:
 
 ----
 /key bind (presionamos alt-k) (presionamos alt-!) /buffer close

@@ -167,7 +167,7 @@ przez nickserv (tylko jeśli nie uwierzytelniasz się przez SASL):
 ----
 
 [NOTE]
-Opcja 'command' może zawierać wiele komend, należy je oddzielić ';' (średnik).
+Opcja _command_ może zawierać wiele komend, należy je oddzielić `;` (średnik).
 
 Jeśli chcesz zabezpieczyć swoje hasło podane w plikach konfiguracyjnych możesz
 użyć bezpiecznych danych.
@@ -223,8 +223,8 @@ Ta komenda może być użyta do utworzenia i połączenia się z nowym serwerem 
 użycia komendy `/server` (czy mam powtarzać, że pomoc dla tej komendy można
 uzyskać dzięki `/help connect` ?).
 
-Domyślnie bufory serwerów są połączone z buforem WeeChat 'core'. Aby przełączać
-się pomiędzy buforem 'core' a buforami serwerów możesz użyć key[ctrl-x].
+Domyślnie bufory serwerów są połączone z buforem WeeChat _core_. Aby przełączać
+się pomiędzy buforem _core_ a buforami serwerów możesz użyć kbd:[Ctrl+x].
 
 Jest możliwe wyłączenie automatycznego łączenia buforów serwerów, aby mieć
 oddzielne bufory dla serwerów:
@@ -267,7 +267,7 @@ Rozłączanie się z serwerem, w buforze serwera:
 [[irc_private_messages]]
 == Prywatne wiadomości IRC
 
-Otworzenie bufora i wysłanie wiadomości do innego użytkownika (nick 'foo'):
+Otworzenie bufora i wysłanie wiadomości do innego użytkownika (nick _foo_):
 
 ----
 /query foo to jest wiadomość
@@ -310,21 +310,21 @@ oraz duże okno (2/3), użyj komendy:
 WeeChat używa domyślnie wiele klawiszy. Wszystkie z nich są w dokumentacji,
 ale powinieneś znać przynajmniej kilka najprzydatniejszych:
 
-- key[alt-]key[←]/key[→] lub key[F5]/key[F6]: przełącza na poprzedni/następny
-  bufor
-- key[F7]/key[F8]: przełącza na poprzednie/następne okno (jeśli ekran jest
+- kbd:[Alt+←] / kbd:[Alt+→] lub kbd:[F5] / kbd:[F6]: przełącza na
+  poprzedni/następny bufor
+- kbd:[F7] / kbd:[F8]: przełącza na poprzednie/następne okno (jeśli ekran jest
   podzielony)
-- key[F9]/key[F10]: przewija pasek z tematem kanału
-- key[F11]/key[F12]: przewija listę z nickami
-- key[Tab]: dopełnia tekst w pasku danych wejściowych, dokładnie jak w terminalu
-- key[PgUp]/key[PgDn]: przewija tekst w obecnym buforze
-- key[alt-a]: skocz do bufora z aktywnością (w hotliście)
+- kbd:[F9] / kbd:[F10]: przewija pasek z tematem kanału
+- kbd:[F11] / kbd:[F12]: przewija listę z nickami
+- kbd:[Tab]: dopełnia tekst w pasku danych wejściowych, dokładnie jak w terminalu
+- kbd:[PgUp] / kbd:[PgDn]: przewija tekst w obecnym buforze
+- kbd:[Alt+a]: skocz do bufora z aktywnością (w hotliście)
 
 Zgodnie z Twoją klawiaturą i/lub potrzebami, możesz zmienić przypisanie
 dowolnego klawisza do komendy używając komendy `/key`.
-Przydatnym skrótem jest key[alt-k] do odnajdywania kodów klawiszy.
+Przydatnym skrótem jest kbd:[Alt+k] do odnajdywania kodów klawiszy.
 
-Na przykład, aby przypisać key[alt-!] do komendy `/buffer close`:
+Na przykład, aby przypisać kbd:[Alt+!] do komendy `/buffer close`:
 
 ----
 /key bind (wciśnij alt-k) (wciśnij alt-!) /buffer close
