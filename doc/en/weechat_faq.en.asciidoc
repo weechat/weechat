@@ -7,7 +7,6 @@
 :docinfo1:
 
 
-[NOTE]
 This document is written for WeeChat versions ≥ 0.3.0 but should preferably be
 used with latest stable version of WeeChat.
 
@@ -92,7 +91,7 @@ It's common issue, please read carefully and check *ALL* solutions below:
 * check that the "Charset" plugin is loaded with `/plugin` command (if it is
   not, then you probably need the "weechat-plugins" package)
 * check the output of command `/charset` (on core buffer). You should see
-  'ISO-XXXXXX' or 'UTF-8' for terminal charset. If you see 'ANSI_X3.4-1968' or
+  _ISO-XXXXXX_ or _UTF-8_ for terminal charset. If you see _ANSI_X3.4-1968_ or
   other values, your locale is probably wrong (fix your $LANG).
 * setup global decode value, for example:
   `/set charset.default.decode "ISO-8859-15"`
@@ -101,7 +100,7 @@ It's common issue, please read carefully and check *ALL* solutions below:
    rxvt-unicode)
 ** if you are using screen, check that it is run with UTF-8 mode
    ("`defutf8 on`" in ~/.screenrc or `screen -U` to run screen)
-* check that option 'weechat.look.eat_newline_glitch' is off (this option may
+* check that option _weechat.look.eat_newline_glitch_ is off (this option may
   cause display bugs)
 
 [NOTE]
@@ -112,10 +111,10 @@ and *not* UTF-8.
 [[unicode_chars]]
 === Some unicode chars are displayed in terminal but not in WeeChat, why?
 
-This may be caused by a libc bug in function 'wcwidth', which should be fixed
+This may be caused by a libc bug in function _wcwidth_, which should be fixed
 in glibc 2.22 (maybe not yet available in your distribution).
 
-There is a workaround to use the fixed 'wcwidth' function:
+There is a workaround to use the fixed _wcwidth_ function:
 https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
 
 See this bug report for more information:
@@ -130,11 +129,11 @@ output of `echo $TERM` in your terminal).
 Depending on where you launch WeeChat, you should have:
 
 * if WeeChat runs locally or on a remote machine without screen nor tmux, it
-  depends on the terminal used: 'xterm', 'xterm-256color', 'rxvt-unicode',
-  'rxvt-256color', ...
-* if WeeChat runs under screen, you should have 'screen' or 'screen-256color',
-* if WeeChat runs under tmux, you should have 'tmux', 'tmux-256color',
-  'screen' or 'screen-256color'.
+  depends on the terminal used: _xterm_, _xterm-256color_, _rxvt-unicode_,
+  _rxvt-256color_, ...
+* if WeeChat runs under screen, you should have _screen_ or _screen-256color_,
+* if WeeChat runs under tmux, you should have _tmux_, _tmux-256color_,
+  _screen_ or _screen-256color_.
 
 If needed, fix your TERM variable: `export TERM="xxx"`.
 
@@ -144,7 +143,7 @@ If needed, fix your TERM variable: `export TERM="xxx"`.
 This may be caused by bad value of the TERM variable in your shell (look at
 output of `echo $TERM` in your terminal, *outside screen/tmux*).
 
-For example, 'xterm-color' may display such weird chars, you can use 'xterm'
+For example, _xterm-color_ may display such weird chars, you can use _xterm_
 which is OK (like many other values).
 
 If needed, fix your TERM variable: `export TERM="xxx"`.
@@ -161,10 +160,10 @@ manager.
 [[buffer_vs_window]]
 === I heard about "buffers" and "windows", what's the difference?
 
-A 'buffer' is composed by a number, a name, lines displayed (and some other
+A _buffer_ is composed by a number, a name, lines displayed (and some other
 data).
 
-A 'window' is a screen area which displays a buffer. It is possible to split
+A _window_ is a screen area which displays a buffer. It is possible to split
 your screen into many windows.
 
 Each window displays one buffer. A buffer can be hidden (not displayed by a
@@ -173,7 +172,7 @@ window) or displayed by one or more windows.
 [[buffers_list]]
 === How to display the buffers list on the left side?
 
-Use script 'buffers.pl':
+Use script _buffers.pl_:
 
 ----
 /script install buffers.pl
@@ -209,8 +208,8 @@ To remove nick alignment:
 [[input_bar_size]]
 === How to use command line with more than one line?
 
-The option 'size' in input bar can be set to a value higher than 1 (for fixed
-size, default size is 1) or 0 for dynamic size, and then option 'size_max' will
+The option _size_ in input bar can be set to a value higher than 1 (for fixed
+size, default size is 1) or 0 for dynamic size, and then option _size_max_ will
 set the max size (0 = no limit).
 
 Example with dynamic size:
@@ -249,10 +248,10 @@ any bar:
 [[terminal_copy_paste]]
 === How can I copy/paste text without pasting nicklist?
 
-With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-l]).
+With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]).
 
 You can use a terminal with rectangular selection (like rxvt-unicode,
-konsole, gnome-terminal, ...). Key is usually key[ctrl-]key[alt-] mouse
+konsole, gnome-terminal, ...). Key is usually kbd:[Ctrl] + kbd:[Alt] + mouse
 selection.
 
 Another solution is to move nicklist to top or bottom, for example:
@@ -264,7 +263,7 @@ Another solution is to move nicklist to top or bottom, for example:
 [[urls]]
 === How can I click on long URLs (more than one line)?
 
-With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-l]).
+With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]).
 
 By default, WeeChat displays time and prefix for each line and optional bars
 around chat area. To make easier URL click, you can move nicklist to top and
@@ -317,24 +316,24 @@ With older WeeChat:
 
 256 colors are supported with WeeChat ≥ 0.3.4.
 
-First check that your 'TERM' environment variable is correct, recommended values
+First check that your _TERM_ environment variable is correct, recommended values
 are:
 
-* under screen: 'screen-256color'
-* under tmux: 'screen-256color' or 'tmux-256color'
-* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
+* under screen: _screen-256color_
+* under tmux: _screen-256color_ or _tmux-256color_
+* outside screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
 
 [NOTE]
-You may have to install package "ncurses-term" to use these values in 'TERM'
+You may have to install package "ncurses-term" to use these values in _TERM_
 variable.
 
-If you are using screen, you can add this line to your '~/.screenrc':
+If you are using screen, you can add this line to your _~/.screenrc_:
 
 ----
 term screen-256color
 ----
 
-If your 'TERM' variable has wrong value and that WeeChat is already running,
+If your _TERM_ variable has wrong value and that WeeChat is already running,
 you can change it with these two commands (with WeeChat ≥ 1.0):
 
 ----
@@ -352,8 +351,8 @@ Please read user's guide for more information about colors management.
 [[search_text]]
 === How can I search text in buffer (like /lastlog in irssi)?
 
-The default key is key[ctrl-r] (command is: `/input search_text_here`).
-And jump to highlights: key[alt-p] / key[alt-n].
+The default key is kbd:[Ctrl+r] (command is: `/input search_text_here`).
+And jump to highlights: kbd:[Alt+p] / kbd:[Alt+n].
 
 See user's guide for more info about this feature (default key bindings).
 
@@ -364,7 +363,7 @@ You must enable the focus events with a special code sent to terminal.
 
 *Important*:
 
-* Currently, *only* 'xterm' seems to support this feature.
+* Currently, *only* _xterm_ seems to support this feature.
 * It does *not* work under screen/tmux.
 
 To send the code when WeeChat is starting:
@@ -388,7 +387,7 @@ commands of your choice):
 === Some meta keys (alt + key) are not working, why?
 
 If you're using some terminals like xterm or uxterm, some meta keys does not
-work by default. You can add a line in file '~/.Xresources':
+work by default. You can add a line in file _~/.Xresources_:
 
 * for xterm:
 ----
@@ -406,13 +405,13 @@ And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
 
 Key bindings are customizable with `/key` command.
 
-Default key key[alt-k] lets you grab key code and insert it in command line.
+Default key kbd:[Alt+k] lets you grab key code and insert it in command line.
 
 [[jump_to_buffer_11_or_higher]]
 === What is the key to jump to buffer 11 (or higher number)?
 
-The key is key[alt-j] and then 2 digits, for example key[alt-j], key[1], key[1]
-to jump to buffer 11.
+The key is kbd:[Alt+j] and then 2 digits, for example kbd:[Alt+j], kbd:[1],
+kbd:[1] to jump to buffer 11.
 
 You can bind a key, for example:
 
@@ -426,7 +425,7 @@ List of default keys is in User's guide.
 === How to use global history (instead of buffer history) with up and down keys?
 
 You can bind the up and down keys on global history (default keys for global
-history are key[ctrl-↑] and key[ctrl-↓]).
+history are kbd:[Ctrl+↑] and kbd:[Ctrl+↓]).
 
 Example:
 
@@ -437,7 +436,7 @@ Example:
 
 [NOTE]
 Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
-code press key[alt-k] then key (up or down).
+code press kbd:[Alt+k] then key (up or down).
 
 [[mouse]]
 == Mouse
@@ -483,9 +482,9 @@ rxvt-unicode.
 [[mouse_select_paste]]
 === How can I select or paste text in terminal when mouse is enabled in WeeChat?
 
-When mouse is enabled in WeeChat, you can use key[shift] modifier to select or
+When mouse is enabled in WeeChat, you can use kbd:[Shift] modifier to select or
 click in terminal, as if the mouse was disabled (on some terminals like iTerm,
-you have to use key[alt] instead of key[shift]).
+you have to use kbd:[Alt] instead of kbd:[Shift]).
 
 [[irc]]
 == IRC
@@ -535,7 +534,7 @@ by your server name:
 [[irc_ssl_freenode]]
 === How can I connect to freenode server using SSL?
 
-Set option 'weechat.network.gnutls_ca_file' to file with certificates:
+Set option _weechat.network.gnutls_ca_file_ to file with certificates:
 
 ----
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
@@ -556,7 +555,7 @@ Setup server port, SSL, then connect:
 [[irc_oauth]]
 === How to connect to a server that requires "oauth"?
 
-Some servers like 'twitch' require oauth to connect.
+Some servers like _twitch_ require oauth to connect.
 
 The oauth is simply a password with the value "oauth:XXXX".
 
@@ -600,7 +599,7 @@ The `/filter` command is a core command, so it applies to any buffer.
 It lets you filter some lines in buffers with tags or regular expression for
 prefix and content of line.
 Filtered lines are only hidden, not deleted, and you can see them if you
-disable filters (by default, the key key[alt-=] toggles filters).
+disable filters (by default, the key kbd:[Alt+=] toggles filters).
 
 [[filter_irc_join_part_quit]]
 === How can I filter join/part/quit messages on IRC channels?
@@ -625,11 +624,11 @@ For help: `/help filter` and `/help irc.look.smart_filter`
 === How can I filter some messages displayed when I join an IRC channel?
 
 With WeeChat ≥ 0.4.1, you can choose which messages are displayed or not when
-joining a channel with the option 'irc.look.display_join_message' (see
+joining a channel with the option _irc.look.display_join_message_ (see
 `/help irc.look.display_join_message` for more info).
 
 To hide messages (but keep them in buffer), you can filter them using the tag
-(for example 'irc_329' for channel creation date). See `/help filter` for help
+(for example _irc_329_ for channel creation date). See `/help filter` for help
 with filters.
 
 [[filter_voice_messages]]
@@ -642,13 +641,13 @@ If you want to do that, it's probably because Bitlbee is using voice to show
 away users, and you are flooded with voice messages. Therefore, you can change
 that and let WeeChat use a special color for away nicks in nicklist.
 
-For Bitlbee ≥ 3, do that on channel '&bitlbee':
+For Bitlbee ≥ 3, do that on channel _&bitlbee_:
 
 ----
 channel set show_users online,away
 ----
 
-For older version of Bitlbee, do that on channel '&bitlbee':
+For older version of Bitlbee, do that on channel _&bitlbee_:
 
 ----
 set away_devoice false
@@ -667,10 +666,10 @@ is not perfect (will work only if first mode changed is voice):
 [[color_away_nicks]]
 === How can I see away nicks in nicklist?
 
-You have to set option 'irc.server_default.away_check' to a positive value
+You have to set option _irc.server_default.away_check_ to a positive value
 (minutes between each check of away nicks).
 
-You can set option 'irc.server_default.away_check_max_nicks' to limit away check
+You can set option _irc.server_default.away_check_max_nicks_ to limit away check
 on small channels only.
 
 For example, check every 5 minutes for away nicks, for channels with max 25
@@ -682,16 +681,16 @@ nicks:
 ----
 
 [NOTE]
-For WeeChat ≤ 0.3.3, options are 'irc.network.away_check' and
-'irc.network.away_check_max_nicks'.
+For WeeChat ≤ 0.3.3, options are _irc.network.away_check_ and
+_irc.network.away_check_max_nicks_.
 
 [[highlight_notification]]
 === How can I be warned when someone highlights me on a channel?
 
-With WeeChat ≥ 1.0, there is a default trigger "beep" which sends a 'BEL' to
+With WeeChat ≥ 1.0, there is a default trigger "beep" which sends a _BEL_ to
 the terminal on a highlight or private message. Thus you can configure your
 terminal (or multiplexer like screen/tmux) to run a command or play a sound
-when a 'BEL' occurs.
+when a _BEL_ occurs.
 
 Or you can add a command in "beep" trigger:
 
@@ -699,9 +698,9 @@ Or you can add a command in "beep" trigger:
 /set trigger.trigger.beep.command "/print -beep;/exec -bg /path/to/command arguments"
 ----
 
-With an older WeeChat, you can use a script like 'beep.pl' or 'launcher.pl'.
+With an older WeeChat, you can use a script like _beep.pl_ or _launcher.pl_.
 
-For 'launcher.pl', you have to setup command:
+For _launcher.pl_, you have to setup command:
 
 ----
 /set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"
@@ -716,7 +715,7 @@ Other scripts on this subject:
 [[irc_target_buffer]]
 === How can I change target buffer for commands on merged buffers (like buffer with servers)?
 
-The default key is key[ctrl-x] (command is: `/input switch_active_buffer`).
+The default key is kbd:[Ctrl+x] (command is: `/input switch_active_buffer`).
 
 [[plugins_scripts]]
 == Plugins / scripts
@@ -755,10 +754,10 @@ You can try following tips to consume less memory:
   logger, perl, python, ruby, lua, tcl, guile, javascript, xfer (used for DCC)
 * load only scripts that you really need
 * do not load certificates if SSL is *NOT* used: set empty string in option
-  'weechat.network.gnutls_ca_file'
-* reduce value of option 'weechat.history.max_buffer_lines_number' or set value
-  of option 'weechat.history.max_buffer_lines_minutes'
-* reduce value of option 'weechat.history.max_commands'
+  _weechat.network.gnutls_ca_file_
+* reduce value of option _weechat.history.max_buffer_lines_number_ or set value
+  of option _weechat.history.max_buffer_lines_minutes_
+* reduce value of option _weechat.history.max_commands_
 
 [[cpu_usage]]
 === How can I tweak WeeChat to use less CPU?
@@ -768,8 +767,8 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
 * hide "nicklist" bar: `/bar hide nicklist`
 * remove display of seconds in status bar time:
   `/set weechat.look.item_time_format "%H:%M"` (this is the default value)
-* set the 'TZ' variable (for example: `export TZ="Europe/Paris"`), to prevent
-  frequent access to file '/etc/localtime'
+* set the _TZ_ variable (for example: `export TZ="Europe/Paris"`), to prevent
+  frequent access to file _/etc/localtime_
 
 [[security]]
 === I am paranoid about security, which settings could I change to be even more secure?

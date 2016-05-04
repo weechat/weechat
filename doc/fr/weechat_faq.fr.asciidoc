@@ -8,7 +8,6 @@
 :docinfo1:
 
 
-[NOTE]
 Ce document est écrit pour les versions de WeeChat ≥ 0.3.0 mais devrait être
 utilisé de préférence avec la dernière version stable de WeeChat.
 
@@ -97,8 +96,8 @@ points ci-dessous :
   (s'il ne l'est pas, vous devez peut-être installer le paquet
   "weechat-plugins")
 * vérifiez la sortie de la commande `/charset` (sur le tampon "core"), vous
-  devriez voir 'ISO-XXXXXX' ou 'UTF-8' pour le charset du terminal. Si vous
-  voyez 'ANSI_X3.4-1968' ou d'autres valeurs, votre locale est probablement
+  devriez voir _ISO-XXXXXX_ ou _UTF-8_ pour le charset du terminal. Si vous
+  voyez _ANSI_X3.4-1968_ ou d'autres valeurs, votre locale est probablement
   erronée (corrigez votre $LANG).
 * affectez la valeur pour le décodage global, par exemple :
   `/set charset.default.decode "ISO-8859-15"`
@@ -107,7 +106,7 @@ points ci-dessous :
    (un terminal conseillé pour l'UTF-8 est rxvt-unicode)
 ** si vous utilisez screen, vérifiez qu'il est lancé en mode UTF-8
    ("`defutf8 on`" dans ~/.screenrc ou `screen -U` pour lancer screen)
-* vérifiez que l'option 'weechat.look.eat_newline_glitch' est désactivée (cette
+* vérifiez que l'option _weechat.look.eat_newline_glitch_ est désactivée (cette
   option peut causer des problèmes d'affichage)
 
 [NOTE]
@@ -118,11 +117,11 @@ et *pas* en UTF-8.
 [[unicode_chars]]
 === Certains caractères unicode sont affichés dans le terminal, mais pas dans WeeChat, pourquoi ?
 
-Cela peut être causé par un bug de la libc dans la fonction 'wcwidth' et
+Cela peut être causé par un bug de la libc dans la fonction _wcwidth_ et
 devrait être corrigé dans la glibc 2.22 (peut-être pas encore disponible dans
 votre distribution).
 
-Il y a un moyen de contournement pour utiliser la fonction 'wcwidth' corrigée :
+Il y a un moyen de contournement pour utiliser la fonction _wcwidth_ corrigée :
 https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
 
 Voir ce rapport de bug pour plus d'informations :
@@ -137,11 +136,11 @@ sortie de `echo $TERM` dans votre terminal).
 Selon la façon de lancer WeeChat, vous devriez avoir :
 
 * si WeeChat tourne en local ou sur une machine distante sans screen ni tmux :
-  cela dépend du terminal utilisé : 'xterm', 'xterm-256color', 'rxvt-unicode',
-  'rxvt-256color', etc...
-* si WeeChat tourne sous screen, vous devriez avoir 'screen' ou 'screen-256color',
-* si WeeChat tourne sous tmux, vous devriez avoir 'tmux', 'tmux-256color',
-  'screen' ou 'screen-256color'.
+  cela dépend du terminal utilisé : _xterm_, _xterm-256color_, _rxvt-unicode_,
+  _rxvt-256color_, etc...
+* si WeeChat tourne sous screen, vous devriez avoir _screen_ ou _screen-256color_,
+* si WeeChat tourne sous tmux, vous devriez avoir _tmux_, _tmux-256color_,
+  _screen_ ou _screen-256color_.
 
 Si besoin, corrigez la variable TERM : `export TERM="xxx"`.
 
@@ -151,8 +150,8 @@ Si besoin, corrigez la variable TERM : `export TERM="xxx"`.
 Cela peut être du à la variable TERM qui n'a pas la bonne valeur (regardez la
 sortie de `echo $TERM` dans votre terminal, *en dehors de screen/tmux*).
 
-Par exemple 'xterm-color' provoque ce genre de problèmes, utilisez
-'xterm' qui est ok (comme plein d'autres valeurs).
+Par exemple _xterm-color_ provoque ce genre de problèmes, utilisez
+_xterm_ qui est ok (comme plein d'autres valeurs).
 
 Si besoin, corrigez la variable TERM : `export TERM="xxx"`.
 
@@ -168,10 +167,10 @@ de paquets Homebrew.
 [[buffer_vs_window]]
 === J'ai entendu parler de "buffer" et "window", quelle est la différence ?
 
-Un tampon ('buffer') est composé d'un numéro, un nom, des lignes affichées
+Un tampon (_buffer_) est composé d'un numéro, un nom, des lignes affichées
 (ainsi que d'autres données).
 
-Une fenêtre ('window') est une zone de l'écran affichant un tampon. Il est
+Une fenêtre (_window_) est une zone de l'écran affichant un tampon. Il est
 possible de découper l'écran horizontalement ou verticalement en plusieurs
 fenêtres.
 
@@ -181,7 +180,7 @@ aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
 [[buffers_list]]
 === Comment afficher la liste des tampons sur la gauche ?
 
-Utilisez le script 'buffers.pl' :
+Utilisez le script _buffers.pl_ :
 
 ----
 /script install buffers.pl
@@ -217,9 +216,9 @@ Pour supprimer l'alignement sur les pseudos :
 [[input_bar_size]]
 === Comment utiliser une ligne de commande sur plusieurs lignes ?
 
-L'option 'size' dans la barre input peut être définie à une valeur supérieure
+L'option _size_ dans la barre input peut être définie à une valeur supérieure
 à 1 (pour une taille fixe, la taille par défaut est 1) ou 0 pour une taille
-dynamique, et alors l'option 'size_max' définira la taille maximum (0 = pas de
+dynamique, et alors l'option _size_max_ définira la taille maximum (0 = pas de
 limite).
 
 Exemple avec une taille dynamique :
@@ -259,11 +258,11 @@ barre, WeeChat recréera automatiquement la barre par défaut "input" si l'objet
 === Comment puis-je copier/coller du texte sans coller la liste des pseudos ?
 
 Avec WeeChat ≥ 1.0, vous pouvez utiliser l'affichage dépouillé (touche par
-défaut : key[alt-l]).
+défaut : kbd:[Alt+l]).
 
 Vous pouvez utiliser un terminal qui propose la sélection rectangulaire (comme
 rxvt-unicode, konsole, gnome-terminal, etc...). La touche est habituellement
-key[ctrl-]key[alt-] sélection à la souris.
+kbd:[Ctrl] + kbd:[Alt] + sélection à la souris.
 
 Une autre solution est de déplacer la liste des pseudos en haut ou en bas, par
 exemple :
@@ -276,7 +275,7 @@ exemple :
 === Comment puis-je cliquer sur les longs URLs (plus d'une ligne) ?
 
 Avec WeeChat ≥ 1.0, vous pouvez utiliser l'affichage dépouillé (touche par
-défaut : key[alt-l]).
+défaut : kbd:[Alt+l]).
 
 Par défaut, WeeChat affiche l'heure et un préfixe pour chaque ligne avec des
 barres optionnelles autour de la zone de discussion. Pour rendre la le clic
@@ -330,26 +329,26 @@ Avec un ancien WeeChat :
 
 Les 256 couleurs sont supportées avec WeeChat ≥ 0.3.4.
 
-Premièrement vérifiez que votre variable d'environnement 'TERM' est correcte,
+Premièrement vérifiez que votre variable d'environnement _TERM_ est correcte,
 les valeurs recommandées sont :
 
-* sous screen : 'screen-256color'
-* sous tmux : 'screen-256color' ou 'tmux-256color'
-* en dehors de screen/tmux : 'xterm-256color', 'rxvt-256color',
-  'putty-256color', ...
+* sous screen : _screen-256color_
+* sous tmux : _screen-256color_ ou _tmux-256color_
+* en dehors de screen/tmux : _xterm-256color_, _rxvt-256color_,
+  _putty-256color_, ...
 
 [NOTE]
 Vous devrez peut-être installer le paquet "ncurses-term" pour utiliser ces
-valeurs dans la variable 'TERM'.
+valeurs dans la variable _TERM_.
 
 Si vous utilisez screen, vous pouvez ajouter cette ligne dans votre
-'~/.screenrc' :
+_~/.screenrc_ :
 
 ----
 term screen-256color
 ----
 
-Si votre variable 'TERM' a une valeur erronée et que WeeChat est déjà lancé,
+Si votre variable _TERM_ a une valeur erronée et que WeeChat est déjà lancé,
 vous pouvez la changer avec ces deux commandes (avec WeeChat ≥ 1.0) :
 
 ----
@@ -370,8 +369,8 @@ couleurs.
 [[search_text]]
 === Comment puis-je chercher du texte dans le tampon (comme /lastlog dans irssi) ?
 
-La touche par défaut est key[ctrl-r] (la commande est : `/input search_text_here`).
-Et sauter aux highlights : key[alt-p] / key[alt-n].
+La touche par défaut est kbd:[Ctrl+r] (la commande est : `/input search_text_here`).
+Et sauter aux highlights : kbd:[Alt+p] / kbd:[Alt+n].
 
 Voir le guide utilisateur pour plus d'information sur cette fonctionnalité
 (raccourcis clavier par défaut).
@@ -384,7 +383,7 @@ terminal.
 
 *Important* :
 
-* Actuellement, *seulement* 'xterm' semble supporter cette fonctionnalité.
+* Actuellement, *seulement* _xterm_ semble supporter cette fonctionnalité.
 * Cela ne fonctionne *pas* sous screen/tmux.
 
 Pour envoyer le code au démarrage de WeeChat :
@@ -409,7 +408,7 @@ les commandes de votre choix) :
 
 Si vous utilisez certains terminaux comme xterm ou uxterm, quelques touches
 meta ne fonctionnent pas par défaut. Vous pouvez ajouter cette ligne dans le
-fichier '~/.Xresources' :
+fichier _~/.Xresources_ :
 
 * pour xterm :
 ----
@@ -427,14 +426,14 @@ Puis recharger les ressources (`xrdb -override ~/.Xresources`) ou redémarrez X.
 
 Les raccourcis clavier sont modifiables avec la commande `/key`.
 
-La touche par défaut key[alt-k] permet de capturer le code d'une touche et de
+La touche par défaut kbd:[Alt+k] permet de capturer le code d'une touche et de
 l'inclure dans la ligne de commande.
 
 [[jump_to_buffer_11_or_higher]]
 === Quelle est la touche pour sauter vers le tampon 11 (ou numéro plus élevé) ?
 
-La touche est key[alt-j] puis 2 chiffres, par exemple key[alt-j], key[1],
-key[1] pour sauter au tampon 11.
+La touche est kbd:[Alt+j] puis 2 chiffres, par exemple kbd:[Alt+j], kbd:[1],
+kbd:[1] pour sauter au tampon 11.
 
 Vous pouvez définir une touche, par exemple :
 
@@ -448,7 +447,7 @@ La liste des touches par défaut est dans le Guide utilisateur.
 === Comment utiliser l'historique global (au lieu de l'historique du tampon) avec les touches haut et bas ?
 
 Vous pouvez assigner les touches haut et bas sur l'historique global (les
-touches par défaut pour l'historique global sont key[ctrl-↑] et key[ctrl-↓]).
+touches par défaut pour l'historique global sont kbd:[Ctrl+↑] et kbd:[Ctrl+↓]).
 
 Exemple :
 
@@ -459,7 +458,7 @@ Exemple :
 
 [NOTE]
 Les touches "meta2-A" et "meta2-B" peuvent être différentes dans votre terminal.
-Pour trouver le code de la touche appuyez sur key[alt-k] puis la touche (haut
+Pour trouver le code de la touche appuyez sur kbd:[Alt+k] puis la touche (haut
 ou bas).
 
 [[mouse]]
@@ -508,9 +507,9 @@ souris, comme rxvt-unicode.
 === Comment puis-je sélectionner ou coller du texte quand la souris est activée dans WeeChat ?
 
 Lorsque la souris est activée dans WeeChat, vous pouvez utiliser la touche
-key[shift] pour sélectionner ou cliquer dans le terminal, comme si la souris
+kbd:[Shift] pour sélectionner ou cliquer dans le terminal, comme si la souris
 était désactivée (sous certains terminaux comme iTerm, vous devez utiliser
-key[alt] au lieu de key[shift]).
+kbd:[Alt] au lieu de kbd:[Shift]).
 
 [[irc]]
 == IRC
@@ -561,7 +560,7 @@ seulement), remplacez "xxx" par le nom de votre serveur :
 [[irc_ssl_freenode]]
 === Comment puis-je me connecter à freenode avec SSL ?
 
-Positionnez l'option 'weechat.network.gnutls_ca_file' avec le fichier des
+Positionnez l'option _weechat.network.gnutls_ca_file_ avec le fichier des
 certificats :
 
 ----
@@ -583,7 +582,7 @@ Configurez le port du serveur, SSL, puis connectez-vous :
 [[irc_oauth]]
 === Comment se connecter à un serveur qui requiert "oauth" ?
 
-Des serveurs tels que 'twitch' requièrent oauth pour se connecter.
+Des serveurs tels que _twitch_ requièrent oauth pour se connecter.
 
 L'oauth est simplement un mot de passe avec la valeur "oauth:XXXX".
 
@@ -628,7 +627,7 @@ quel tampon.
 Elle permet de filtrer des lignes dans les tampons à l'aide d'étiquettes ou
 d'expression régulière pour le préfixe et contenu de la ligne.
 Les lignes filtrées sont simplement cachées, pas supprimées, et il est possible
-de les voir en désactivant les filtres (par défaut, la touche key[alt-=]
+de les voir en désactivant les filtres (par défaut, la touche kbd:[Alt+=]
 active/désactive les filtres).
 
 [[filter_irc_join_part_quit]]
@@ -655,11 +654,11 @@ Pour l'aide : `/help filter` et `/help irc.look.smart_filter`
 === Comment puis-je filtrer certains messages affichés quand je rejoins un canal IRC ?
 
 Avec WeeChat ≥ 0.4.1, vous pouvez choisir les messages affichés ou non lorsque
-vous rejoignez un canal avec l'option 'irc.look.display_join_message' (voir
+vous rejoignez un canal avec l'option _irc.look.display_join_message_ (voir
 `/help irc.look.display_join_message` pour plus d'informations).
 
 Pour cacher des messages (mais les garder dans le tampon), vous pouvez les
-filtrer en utilisant l'étiquette (par exemple 'irc_329' pour la date de création
+filtrer en utilisant l'étiquette (par exemple _irc_329_ pour la date de création
 du canal). Voir `/help filter` pour l'aide sur les filtres.
 
 [[filter_voice_messages]]
@@ -673,14 +672,14 @@ voice pour montrer les utilisateurs absents, et vous recevez plein de messages
 voice. Par conséquent, vous pouvez changer cela et laisser WeeChat utiliser une
 couleur spéciale pour les pseudos absents dans la liste des pseudos.
 
-Pour Bitlbee ≥ 3, faites ceci sur le canal '&bitlbee' :
+Pour Bitlbee ≥ 3, faites ceci sur le canal _&bitlbee_ :
 
 ----
 channel set show_users online,away
 ----
 
 Pour une version plus ancienne de Bitlbee, faites ceci sur le canal
-'&bitlbee' :
+_&bitlbee_ :
 
 ----
 set away_devoice false
@@ -700,10 +699,10 @@ premier mode changé est voice) :
 [[color_away_nicks]]
 === Comment puis-je voir les pseudos absents dans la liste des pseudos ?
 
-Vous devez positionner l'option 'irc.server_default.away_check' avec une valeur
+Vous devez positionner l'option _irc.server_default.away_check_ avec une valeur
 positive (minutes entre chaque vérification des pseudos absents).
 
-Vous pouvez aussi positionner l'option 'irc.server_default.away_check_max_nicks'
+Vous pouvez aussi positionner l'option _irc.server_default.away_check_max_nicks_
 pour limiter la vérification d'absence sur les petits canaux seulement.
 
 Par exemple, pour vérifier les pseudos absents toutes les 5 minutes, pour les
@@ -715,16 +714,16 @@ canaux avec maximum 25 pseudos :
 ----
 
 [NOTE]
-Pour WeeChat ≤ 0.3.3, les options sont 'irc.network.away_check' et
-'irc.network.away_check_max_nicks'.
+Pour WeeChat ≤ 0.3.3, les options sont _irc.network.away_check_ et
+_irc.network.away_check_max_nicks_.
 
 [[highlight_notification]]
 === Comment être averti lorsque quelqu'un prononce mon pseudo sur un canal ?
 
-Avec WeeChat ≥ 1.0, il y a un trigger "beep" qui envoie 'BEL' au terminal sur
+Avec WeeChat ≥ 1.0, il y a un trigger "beep" qui envoie _BEL_ au terminal sur
 un highlight ou un message privé. Par conséquent vous pouvez configurer votre
 terminal (ou multiplexeur comme screen/tmux) pour lancer une commande ou jouer
-un son lorsque le 'BEL' se produit.
+un son lorsque le _BEL_ se produit.
 
 Ou vous pouvez ajouter une commande dans le trigger "beep" :
 
@@ -732,10 +731,10 @@ Ou vous pouvez ajouter une commande dans le trigger "beep" :
 /set trigger.trigger.beep.command "/print -beep;/exec -bg /chemin/vers/commande paramètres"
 ----
 
-Avec un WeeChat plus ancien, vous pouvez utiliser un script comme 'beep.pl' or
-'launcher.pl'.
+Avec un WeeChat plus ancien, vous pouvez utiliser un script comme _beep.pl_ ou
+_launcher.pl_.
 
-Pour 'launcher.pl', vous devez configurer la commande :
+Pour _launcher.pl_, vous devez configurer la commande :
 
 ----
 /set plugins.var.perl.launcher.signal.weechat_highlight "/chemin/vers/commande paramètres"
@@ -750,7 +749,7 @@ Autres scripts sur ce sujet :
 [[irc_target_buffer]]
 === Comment puis-je changer le serveur cible pour les commandes avec des tampons mélangés (comme le tampon avec les serveurs) ?
 
-La touche par défaut est key[ctrl-x] (la commande est :
+La touche par défaut est kbd:[Ctrl+x] (la commande est :
 `/input switch_active_buffer`).
 
 [[plugins_scripts]]
@@ -792,10 +791,10 @@ Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
   xfer (utilisé pour les DCC)
 * charger uniquement les scripts dont vous avez vraiment besoin
 * ne pas charger les certificats si SSL n'est *PAS* utilisé : affecter une
-  chaîne vide pour l'option 'weechat.network.gnutls_ca_file'
-* réduire la valeur de l'option 'weechat.history.max_buffer_lines_number' ou
-  affecter une valeur à l'option 'weechat.history.max_buffer_lines_minutes'
-* réduire la valeur de l'option 'weechat.history.max_commands'
+  chaîne vide pour l'option _weechat.network.gnutls_ca_file_
+* réduire la valeur de l'option _weechat.history.max_buffer_lines_number_ ou
+  affecter une valeur à l'option _weechat.history.max_buffer_lines_minutes_
+* réduire la valeur de l'option _weechat.history.max_commands_
 
 [[cpu_usage]]
 === Comment configurer WeeChat pour moins utiliser le processeur ?
@@ -806,8 +805,8 @@ celles-ci :
 * cacher la barre "nicklist" : `/bar hide nicklist`
 * supprimer l'affichage des secondes dans l'heure de la barre de statut :
   `/set weechat.look.item_time_format "%H:%M"` (ceci est la valeur par défaut)
-* définir la variable 'TZ' (par exemple : `export TZ="Europe/Paris"`), pour
-  éviter un accès fréquent au fichier '/etc/localtime'
+* définir la variable _TZ_ (par exemple : `export TZ="Europe/Paris"`), pour
+  éviter un accès fréquent au fichier _/etc/localtime_
 
 [[security]]
 === Je suis paranoïaque sur la sécurité, quels paramètres puis-je changer pour être encore plus sûr ?

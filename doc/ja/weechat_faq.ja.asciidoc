@@ -8,13 +8,12 @@
 :docinfo1:
 
 
+この文書は WeeChat バージョン 0.3.0 以上向けに書かれたものですが、
+最新安定版の WeeChat に対しても利用できます。
+
 翻訳者:
 
 * Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2012-2016
-
-[NOTE]
-この文書は WeeChat バージョン 0.3.0 以上向けに書かれたものですが、
-最新安定版の WeeChat に対しても利用できます。
 
 toc::[]
 
@@ -96,8 +95,8 @@ https://weechat.org/doc
   全てではありませんが、ほとんどのディストリビューションで必要です): `ldd /path/to/weechat`
 * `/plugin` コマンドで "Charset" プラグインがロード済みであることの確認
   (ロードされていない場合、"weechat-plugins" パッケージが必要かもしれません)。
-* `/charset` コマンドの出力を確認 (core バッファ上で)。端末の文字セットとして 'ISO-XXXXXX'
-  又は 'UTF-8' があるはずです。その他の値がある場合は、ロケールが間違っている可能性があります
+* `/charset` コマンドの出力を確認 (core バッファ上で)。端末の文字セットとして _ISO-XXXXXX_
+  又は _UTF-8_ があるはずです。その他の値がある場合は、ロケールが間違っている可能性があります
   ($LANG を修正してください)。
 * グローバルデコードを設定、例えば:
   `/set charset.default.decode "ISO-8859-15"`
@@ -106,7 +105,7 @@ https://weechat.org/doc
    rxvt-unicode を推奨)
 ** screen を使っている場合は、UTF-8 モードで起動されていることを確認
    (~/.screenrc に "`defutf8 on`" の記述があるか又は `screen -U` のようにして起動)。
-* 'weechat.look.eat_newline_glitch' オプションが off であることを確認してください
+* _weechat.look.eat_newline_glitch_ オプションが off であることを確認してください
   (このオプションは表示上のバグを引き起こす可能性があります)
 
 [NOTE]
@@ -117,10 +116,10 @@ WeeChat は UTF-8 ロケールを推奨します。ISO
 [[unicode_chars]]
 === 端末で表示されるユニコード文字が WeeChat では表示されない場合があります、なぜでしょうか?
 
-この問題は libc の 'wcwidth' 関数のバグによって引き起こされている可能性があります。これは glibc 2.22
+この問題は libc の _wcwidth_ 関数のバグによって引き起こされている可能性があります。これは glibc 2.22
 で修正されているはずです (使用中のディストリビューションではまだ提供されていないかもしれません)
 
-次の回避方法を使えば、修正済みの 'wcwidth' 関数を使う事が可能です:
+次の回避方法を使えば、修正済みの _wcwidth_ 関数を使う事が可能です:
 https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
 
 より詳しい情報を得るにはバグ報告をご覧ください:
@@ -136,10 +135,10 @@ WeeChat を起動した場所に依存しますが、以下の値を持つはず
 
 * WeeChat を screen および tmux
   を使わずにローカルまたはリモートマシンで実行している場合、使用中の端末に依存します:
-  'xterm' 、'xterm-256color' 、'rxvt-unicode' 、'rxvt-256color' 、...
-* WeeChat を screen 内で実行している場合、'screen' または 'screen-256color' です、
+  _xterm_ 、_xterm-256color_ 、_rxvt-unicode_ 、_rxvt-256color_ 、...
+* WeeChat を screen 内で実行している場合、_screen_ または _screen-256color_ です、
 * WeeChat を tmux
-  内で実行している場合、'tmux' 、'tmux-256color'、'screen' 、'screen-256color' です。
+  内で実行している場合、_tmux_ 、_tmux-256color_、_screen_ 、_screen-256color_ です。
 
 もし必要であれば、TERM 変数を修正してください: `export TERM="xxx"`
 
@@ -149,7 +148,7 @@ WeeChat を起動した場所に依存しますが、以下の値を持つはず
 シェルの TERM 変数に間違った値が設定されている可能性があります
 (端末、*screen/tmux の外* で `echo $TERM` の出力を確認してください)。
 
-例えば、'xterm-color' の場合、おかしな文字列が表示される可能性があります。'xterm'
+例えば、_xterm-color_ の場合、おかしな文字列が表示される可能性があります。_xterm_
 と設定すればこのようなことは起こらないので (その他多くの値でも問題は起きません)、これを使ってください。
 
 もし必要であれば、TERM 変数を修正してください: `export TERM="xxx"`
@@ -166,10 +165,10 @@ WeeChat をインストールすることをお勧めします。
 [[buffer_vs_window]]
 === 「バッファ」と「ウィンドウ」の違いは何ですか。
 
-'バッファ' とは番号、名前、表示行 (とその他のデータ)
+_バッファ_ とは番号、名前、表示行 (とその他のデータ)
 からなります。
 
-'ウィンドウ'
+_ウィンドウ_
 とはバッファを表示する画面エリアです。画面を複数のウィンドウに分割出来ます。
 
 それぞれのウィンドウは 1 つのバッファの内容を表示します。バッファを隠す
@@ -178,7 +177,7 @@ WeeChat をインストールすることをお勧めします。
 [[buffers_list]]
 === どうすれば左側にバッファリストを表示できますか。
 
-'buffers.pl' スクリプトを使ってください:
+_buffers.pl_ スクリプトを使ってください:
 
 ----
 /script install buffers.pl
@@ -214,8 +213,8 @@ WeeChat をインストールすることをお勧めします。
 [[input_bar_size]]
 === コマンドラインの行数を増やすにはどうすればいいですか。
 
-インプットバーの 'size' オプションには 1 (サイズ固定、デフォルト値)
-以上の値又は動的なサイズの意味で 0 を設定できます。'size_max'
+インプットバーの _size_ オプションには 1 (サイズ固定、デフォルト値)
+以上の値又は動的なサイズの意味で 0 を設定できます。_size_max_
 オプションではサイズの最大値を設定できます (0 = 制限なし)。
 
 動的サイズを設定する例:
@@ -254,11 +253,11 @@ WeeChat は自動的にデフォルトバー "input" を作成します:
 [[terminal_copy_paste]]
 === どうすればニックネームリストを選択せずにテキストだけをコピー/ペーストできますか。
 
-WeeChat バージョン 1.0 以上の場合、最小限表示を使うことができます (デフォルトキー: key[alt-l])。
+WeeChat バージョン 1.0 以上の場合、最小限表示を使うことができます (デフォルトキー: kbd:[Alt+l])。
 
 矩形選択のできる端末を使ってください
 (rxvt-unicode、konsole、gnome-terminal、...)。通常、キーは
-key[ctrl-]key[alt-] マウス選択です。
+kbd:[Ctrl] + kbd:[Alt] + マウス選択です。
 
 別の解決策はニックネームリストを上か下かに移動することです、例えば:
 
@@ -269,7 +268,7 @@ key[ctrl-]key[alt-] マウス選択です。
 [[urls]]
 === どうすれば長い (一行以上に渡る) URL をクリックできますか。
 
-WeeChat バージョン 1.0 以上の場合、最小限表示を使うことができます (デフォルトキー: key[alt-l])。
+WeeChat バージョン 1.0 以上の場合、最小限表示を使うことができます (デフォルトキー: kbd:[Alt+l])。
 
 デフォルトでは、WeeChat
 はそれぞれの行の最初に時間とプレフィックス、さらにチャットエリアを囲むようにオプションバーを表示します。URL
@@ -321,24 +320,24 @@ WeeChat バージョン 1.0 以上の場合、再起動せずに変更できま�
 
 WeeChat バージョン 0.3.4 以上の場合、256 色がサポートされます。
 
-最初に 'TERM'
+最初に _TERM_
 環境変数が正しいことを確認してください、お勧めの値は:
 
-* screen 内の場合: 'screen-256color'
-* tmux 内の場合: 'screen-256color' または 'tmux-256color'
-* screen および tmux の外の場合: 'xterm-256color' 、'rxvt-256color' 、'putty-256color' 、...
+* screen 内の場合: _screen-256color_
+* tmux 内の場合: _screen-256color_ または _tmux-256color_
+* screen および tmux の外の場合: _xterm-256color_ 、_rxvt-256color_ 、_putty-256color_ 、...
 
 [NOTE]
-これらの値を 'TERM' に設定するには、"ncurses-term"
+これらの値を _TERM_ に設定するには、"ncurses-term"
 パッケージをインストールする必要があるかもしれません。
 
-screen を使っている場合は、以下の行を '~/.screenrc' に追加してください:
+screen を使っている場合は、以下の行を _~/.screenrc_ に追加してください:
 
 ----
 term screen-256color
 ----
 
-'TERM' 変数が間違った値に設定された状態で WeeChat が起動完了している場合は、以下の
+_TERM_ 変数が間違った値に設定された状態で WeeChat が起動完了している場合は、以下の
 2 つのコマンドを使って変数の値を変更してください (WeeChat バージョン 1.0 以上で利用可):
 
 ----
@@ -356,8 +355,8 @@ WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用で�
 [[search_text]]
 === どうすればバッファ内の文字列を検索できますか (irssi の /lastlog の様に)。
 
-デフォルトのキーは key[ctrl-r] です (コマンドは: `/input search_text_here`)。
-ハイライト部分へのジャンプは: key[alt-p] / key[alt-n]
+デフォルトのキーは kbd:[Ctrl+r] です (コマンドは: `/input search_text_here`)。
+ハイライト部分へのジャンプは: kbd:[Alt+p] / kbd:[Alt+n]
 
 この機能に関するより詳しい情報はユーザーガイドを参照してください (デフォルトのキー割り当て)。
 
@@ -368,7 +367,7 @@ WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用で�
 
 *重要*:
 
-* 現時点では、'xterm' を除いてこの機能をサポートする端末は*存在しない* ようです。
+* 現時点では、_xterm_ を除いてこの機能をサポートする端末は*存在しない* ようです。
 * screen および tmux ではこの機能を*使うことができません* 。
 
 WeeChat の開始時にコードを送信するには:
@@ -392,7 +391,7 @@ WeeChat の開始時にコードを送信するには:
 === いくつかのメタキーが (alt + key) が動きません。
 
 xterm や uxterm 等の端末を利用している場合、いくつかのメタキーはデフォルトでは利用できません。以下の行を
-'~/.Xresources' に追加してください:
+_~/.Xresources_ に追加してください:
 
 * xterm の場合:
 ----
@@ -410,13 +409,13 @@ UXTerm*metaSendsEscape: true
 
 キー割り当ては `/key` コマンドでカスタマイズできます。
 
-デフォルトキー key[alt-k] でキーコードを取り込み、これをコマンドラインに入力できます。
+デフォルトキー kbd:[Alt+k] でキーコードを取り込み、これをコマンドラインに入力できます。
 
 [[jump_to_buffer_11_or_higher]]
 === バッファ 11 番 (又はそれ以上の番号) にジャンプするキーは何ですか。
 
-キー key[alt-j] の後に 2 桁の数字を入力します、例えば key[alt-j]
-その後に key[1]、key[1] でバッファ 11 番にジャンプします。
+キー kbd:[Alt+j] の後に 2 桁の数字を入力します、例えば kbd:[Alt+j]
+その後に kbd:[1]、kbd:[1] でバッファ 11 番にジャンプします。
 
 これにキーを割り当てることが出来ます、例えば:
 
@@ -430,7 +429,7 @@ UXTerm*metaSendsEscape: true
 === どうすればグローバルヒストリを (バッファヒストリの代わりに) 上下矢印キーで使えますか。
 
 上下矢印キーをグローバルヒストリに割り当ててください
-(グローバルヒストリに対するデフォルトのキーは key[ctrl-↑] と key[ctrl-↓] です。
+(グローバルヒストリに対するデフォルトのキーは kbd:[Ctrl+↑] と kbd:[Ctrl+↓] です。
 
 例:
 
@@ -441,7 +440,7 @@ UXTerm*metaSendsEscape: true
 
 [NOTE]
 "meta2-A" と "meta2-B" キーは端末によって異なります。キーコードを見つけるには
-key[alt-k] の後にキー (上矢印又は下矢印) を押してください。
+kbd:[Alt+k] の後にキー (上矢印又は下矢印) を押してください。
 
 [[mouse]]
 == マウス
@@ -487,9 +486,9 @@ $ printf '\033[?1002l'
 [[mouse_select_paste]]
 === WeeChat でマウスが利用可能な場合、端末のテキストを選択したり、ペーストするにはどうすれば良いですか。
 
-WeeChat でマウスが利用可能な場合、key[shift]
+WeeChat でマウスが利用可能な場合、kbd:[Shift]
 キーを押しながら端末をクリックして選択してください、マウスが無効化されます
-(例えば iTerm 等の場合、key[shift] の代わりに key[alt] を使ってください)。
+(例えば iTerm 等の場合、kbd:[Shift] の代わりに kbd:[Alt] を使ってください)。
 
 [[irc]]
 == IRC
@@ -539,7 +538,7 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 [[irc_ssl_freenode]]
 === どうすれば SSL を使って freenode サーバに接続できますか。
 
-オプション 'weechat.network.gnutls_ca_file' に証明書ファイルへのパスを設定してください。
+オプション _weechat.network.gnutls_ca_file_ に証明書ファイルへのパスを設定してください。
 
 ----
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
@@ -560,7 +559,7 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 [[irc_oauth]]
 === どうすれば "oauth" が必要なサーバに接続出来ますか?
 
-'twitch' などの一部のサーバは接続するために oauth が必要です。
+_twitch_ などの一部のサーバは接続するために oauth が必要です。
 
 oauth を使うにはパスワードを "oauth:XXXX" のように指定してください。
 
@@ -603,7 +602,7 @@ IRC プラグインによって表示される前に削除されます
 `/filter`
 コマンドは core
 コマンドです、このため任意のバッファに対してこれを有効化できます。バッファ内の行のプレフィックスと内容に対して付けられたタグや正規表現にマッチする行をフィルタできます。フィルタされた行は隠されているだけで、削除はされていません、フィルタを無効化すれば見えるようになります
-(デフォルトでは key[alt-=]
+(デフォルトでは kbd:[Alt+=]
 でフィルタの有効無効の切り替えが出来ます)。
 
 [[filter_irc_join_part_quit]]
@@ -628,12 +627,12 @@ IRC プラグインによって表示される前に削除されます
 [[filter_irc_join_channel_messages]]
 === どうすれば IRC チャンネルに参加した際に表示される一部のメッセージをフィルタできますか。
 
-WeeChat バージョン 0.4.1 以上の場合、'irc.look.display_join_message'
+WeeChat バージョン 0.4.1 以上の場合、_irc.look.display_join_message_
 オプションを使って、チャンネル参加時に表示するメッセージの種類を選択できます
 (より詳しい情報は `/help irc.look.display_join_message` を参照)。
 
 メッセージを隠す (ただしバッファに残す) には、タグを使ってメッセージをフィルタしてください
-(たとえばチャンネル作成日時を隠すには 'irc_329' タグを使ってください)。フィルタの書き方に関する情報は
+(たとえばチャンネル作成日時を隠すには _irc_329_ タグを使ってください)。フィルタの書き方に関する情報は
 `/help filter` を参照してください。
 
 [[filter_voice_messages]]
@@ -646,13 +645,13 @@ Bitlbee は離席ユーザを表示するために voice を利用します。�
 メッセージでチャットエリアが溢れてしまいます。おそらくこれをフィルタしたいのではないでしょうか。この様な場合には、Bitlbee
 が離席状態を通知することを禁止し、WeeChat にニックネームリスト中に含まれる離席中のニックネームに対して特別な色を使わせることができます。
 
-Bitlbee 3 以上の場合、以下のコマンドをチャンネル '&bitlbee' で入力:
+Bitlbee 3 以上の場合、以下のコマンドをチャンネル _&bitlbee_ で入力:
 
 ----
 channel set show_users online,away
 ----
 
-Bitlbee の古いバージョンでは、以下のコマンドを '&bitlbee' で入力:
+Bitlbee の古いバージョンでは、以下のコマンドを _&bitlbee_ で入力:
 
 ----
 set away_devoice false
@@ -671,10 +670,10 @@ WeeChat
 [[color_away_nicks]]
 === どうすればニックネームリストから離席中のニックネームを確認できますか。
 
-オプション 'irc.server_default.away_check' に正の値を設定してください
+オプション _irc.server_default.away_check_ に正の値を設定してください
 (離席状態確認のインターバルを分単位で)。
 
-オプション 'irc.server_default.away_check_max_nicks'
+オプション _irc.server_default.away_check_max_nicks_
 を設定することで離席状態確認を小さなチャンネルのみに制限できます。
 
 例えば、5 分間隔で離席状態確認を行い、25
@@ -686,16 +685,16 @@ WeeChat
 ----
 
 [NOTE]
-WeeChat 0.3.3 以下では、オプション名が 'irc.network.away_check' と
-'irc.network.away_check_max_nicks' になっています。
+WeeChat 0.3.3 以下では、オプション名が _irc.network.away_check_ と
+_irc.network.away_check_max_nicks_ になっています。
 
 [[highlight_notification]]
 === どうすればあるチャンネルで自分が呼ばれたら警告できますか。
 
 WeeChat バージョン 1.0 以上の場合、デフォルトトリガ "beep"
 が設定されています。これはハイライトまたはプライベートメッセージを受け取った際に
-'BEL' を端末に送信します。このため、端末 (または screen/tmux などのマルチプレクサ)
-を設定して、'BEL' が発生した際にコマンドを実行させたり音を再生させることができます。
+_BEL_ を端末に送信します。このため、端末 (または screen/tmux などのマルチプレクサ)
+を設定して、_BEL_ が発生した際にコマンドを実行させたり音を再生させることができます。
 
 もしくは "beep" トリガにコマンドを追加することもできます:
 
@@ -703,9 +702,9 @@ WeeChat バージョン 1.0 以上の場合、デフォルトトリガ "beep"
 /set trigger.trigger.beep.command "/print -beep;/exec -bg /path/to/command arguments"
 ----
 
-古い WeeChat をお使いの場合、'beep.pl' や 'launcher.pl' 等のスクリプトを使ってください。
+古い WeeChat をお使いの場合、_beep.pl_ や _launcher.pl_ 等のスクリプトを使ってください。
 
-'launcher.pl' の場合、コマンドの設定が必要です:
+_launcher.pl_ の場合、コマンドの設定が必要です:
 
 ----
 /set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"
@@ -720,7 +719,7 @@ WeeChat バージョン 1.0 以上の場合、デフォルトトリガ "beep"
 [[irc_target_buffer]]
 === どうすればマージされたバッファ内であるコマンドを発行するターゲットバッファを変更できますか。
 
-デフォルトのキーは key[ctrl-x] です (コマンドは: `/input switch_active_buffer`)。
+デフォルトのキーは kbd:[Ctrl+x] です (コマンドは: `/input switch_active_buffer`)。
 
 [[plugins_scripts]]
 == プラグイン / スクリプト
@@ -759,10 +758,10 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
   aspell、fifo、logger、perl、python、ruby、lua、tcl、guile、javascript、xfer (DCC で使用)
 * 本当に必要なスクリプトだけをロード
 * SSL を*使わない* なら、証明書を読み込まないでください: オプション
-  'weechat.network.gnutls_ca_file' に空文字列を設定してください。
-* 'weechat.history.max_buffer_lines_number'
-  オプションの値を減らすか、'weechat.history.max_buffer_lines_minutes' オプションに値を設定してください。
-* 'weechat.history.max_commands' オプションの値を減らしてください。
+  _weechat.network.gnutls_ca_file_ に空文字列を設定してください。
+* _weechat.history.max_buffer_lines_number_
+  オプションの値を減らすか、_weechat.history.max_buffer_lines_minutes_ オプションに値を設定してください。
+* _weechat.history.max_commands_ オプションの値を減らしてください。
 
 [[cpu_usage]]
 === どうすれば WeeChat の CPU 負荷を低減できますか?
@@ -772,8 +771,8 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 * "nicklist" バーを非表示にする: `/bar hide nicklist`
 * ステータスバー時間に秒の表示を止める:
   `/set weechat.look.item_time_format "%H:%M"` (これはデフォルト値です)
-* 'TZ' 変数を設定する (例: `export TZ="Europe/Paris"`)、こうすることで
-  '/etc/localtime' ファイルへ頻繁にアクセスしないようになります。
+* _TZ_ 変数を設定する (例: `export TZ="Europe/Paris"`)、こうすることで
+  _/etc/localtime_ ファイルへ頻繁にアクセスしないようになります。
 
 [[security]]
 === セキュリティを気にしています。セキュリティを高めるためにはどの設定を変更すればよいですか?

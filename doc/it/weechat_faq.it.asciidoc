@@ -8,14 +8,13 @@
 :docinfo1:
 
 
+Questo documento è stato scritto per le versioni di WeeChat ≥ 0.3.0, ma dovrebbe
+essere usato preferibilmente con l'ultima versione stabile di WeeChat.
+
 // TRANSLATION MISSING
 Translators:
 
 * Marco Paolone <marcopaolone@gmail.com>, 2009-2013
-
-[NOTE]
-Questo documento è stato scritto per le versioni di WeeChat ≥ 0.3.0, ma dovrebbe
-essere usato preferibilmente con l'ultima versione stabile di WeeChat.
 
 toc::[]
 
@@ -104,8 +103,8 @@ soluzione tra quelle elencate:
 * verificare che il plugin "charset" sia caricato con il comando `plugin` (se non
   lo è, probabilmente è necessario il pacchetto "weechat-plugins")
 * verificare l'output del comando `/charset` (sul buffer core). Dovrebbero essere
-  visualizzati 'ISO-XXXXXX' oppure 'UTF-8' per il set caratteri del terminale.
-  Se invece compaiono 'ANSI_X3.4-1968' o altri valori, il locale probabilmente
+  visualizzati _ISO-XXXXXX_ oppure _UTF-8_ per il set caratteri del terminale.
+  Se invece compaiono _ANSI_X3.4-1968_ o altri valori, il locale probabilmente
   non è esatto (correggere la variabile $LANG).
 * impostare il valore di decodifica globale, per esempio:
   `/set charset.default.decode = ISO-8859-15`
@@ -116,7 +115,7 @@ soluzione tra quelle elencate:
     UTF-8 ("`defutf8 on` nel file ~/.screenrc` oppure `screen -U` per avviare
     screen)
 // TRANSLATION MISSING
-* check that option 'weechat.look.eat_newline_glitch' is off (this option may
+* check that option _weechat.look.eat_newline_glitch_ is off (this option may
   cause display bugs)
 
 [NOTE]
@@ -128,10 +127,10 @@ siano ISO e *non* UTF-8.
 [[unicode_chars]]
 === Some unicode chars are displayed in terminal but not in WeeChat, why?
 
-This may be caused by a libc bug in function 'wcwidth', which should be fixed
+This may be caused by a libc bug in function _wcwidth_, which should be fixed
 in glibc 2.22 (maybe not yet available in your distribution).
 
-There is a workaround to use the fixed 'wcwidth' function:
+There is a workaround to use the fixed _wcwidth_ function:
 https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
 
 See this bug report for more information:
@@ -147,13 +146,13 @@ A seconda di dove viene eseguito WeeChat, si dovrebbe avere:
 
 // TRANSLATION MISSING
 * if WeeChat runs locally or on a remote machine without screen nor tmux, it
-  depends on the terminal used: 'xterm', 'xterm-256color', 'rxvt-unicode',
-  'rxvt-256color', ...
+  depends on the terminal used: _xterm_, _xterm-256color_, _rxvt-unicode_,
+  _rxvt-256color_, ...
 // TRANSLATION MISSING
-* if WeeChat runs under screen, you should have 'screen' or 'screen-256color',
+* if WeeChat runs under screen, you should have _screen_ or _screen-256color_,
 // TRANSLATION MISSING
-* if WeeChat runs under tmux, you should have 'tmux', 'tmux-256color',
-  'screen' or 'screen-256color'.
+* if WeeChat runs under tmux, you should have _tmux_, _tmux-256color_,
+  _screen_ or _screen-256color_.
 
 Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
 
@@ -164,8 +163,8 @@ Potrebbe essere causato da un valore errato della variabile TERM nella propria
 shell (consultare l'output di `echo $TERM` nel terminale *al di fuori di
 screen/tmux*).
 
-Per esempio, 'xterm-color' potrebbe visualizzare questo tipo di caratteri strani,
-è meglio utilizzare 'xterm' che funziona (come molti altri valori).
+Per esempio, _xterm-color_ potrebbe visualizzare questo tipo di caratteri strani,
+è meglio utilizzare _xterm_ che funziona (come molti altri valori).
 
 Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
 
@@ -181,10 +180,10 @@ Homebrew.
 [[buffer_vs_window]]
 === Ho sentito parlare di "buffer" e "finestre", qual è la differenza?
 
-Un 'buffer' è composto da un numero, un nome, delle righe visualizzate (e
+Un _buffer_ è composto da un numero, un nome, delle righe visualizzate (e
 qualche altro dato).
 
-Una 'finestra' (o window) è un'aread dello schermo in cui viene visualizzato
+Una _finestra_ (o window) è un'aread dello schermo in cui viene visualizzato
 un buffer. È possibile dividere lo schermo in più finestre.
 
 Ogni finestra visualizza un buffer. Un buffer può essere nascosto (non visualizzato
@@ -193,7 +192,7 @@ da una finestra) o visualizzato da una o più finestre.
 [[buffers_list]]
 === Come si può visualizzare la lista dei buffer sulla sinistra?
 
-Utilizzando lo script 'buffers.pl':
+Utilizzando lo script _buffers.pl_:
 
 ----
 /script install buffers.pl
@@ -230,9 +229,9 @@ Per rimuovere l'allineamento dei nick:
 [[input_bar_size]]
 === Come posso usare la riga di comando con più di una riga?
 
-L'opzione 'size' nella barra di input può essere impostata a un valore maggiore
+L'opzione _size_ nella barra di input può essere impostata a un valore maggiore
 di uno (il valore predefinito per la dimensione fissa è 1) oppure 0 per la
-dimensione dinamica, e poi l'opzione 'size_max' imposta la dimensione massima (0
+dimensione dinamica, e poi l'opzione _size_max_ imposta la dimensione massima (0
 = nessun limite).
 
 Esempio con la dimensione dinamica:
@@ -272,11 +271,11 @@ non viene usato da un'altra barra:
 === Come posso copiare/incollare testo senza incollare la lista nick?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-l]).
+With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]).
 
 È possibile usare un terminale con la selezione rettangolare (come
 rxvt-unicode, konsole, gnome-terminal, ...). La combinazione tasti in
-generale è key[ctrl-]key[alt-] selezione mouse.
+generale è kbd:[Ctrl] + kbd:[Alt] + selezione mouse.
 
 Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
 
@@ -288,7 +287,7 @@ Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
 === Come posso cliccare su URL lunghi (più di una riga)?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-l]).
+With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]).
 
 Con le impostazioni predefinite, WeeChat mostra l'ora ed il prefisso per ogni
 riga e le barre opzionali intorno all'area di chat. Per facilitare il clic
@@ -344,28 +343,28 @@ With older WeeChat:
 
 I 256 colori sono supportati nelle versioni di WeeChat ≥ 0.3.4.
 
-Per prima cosa verificare che la variabile di ambiente 'TERM' sia corretta, i
+Per prima cosa verificare che la variabile di ambiente _TERM_ sia corretta, i
 valori raccomandati sono:
 
-* con screen: 'screen-256color'
+* con screen: _screen-256color_
 // TRANSLATION MISSING
-* under tmux: 'screen-256color' or 'tmux-256color'
+* under tmux: _screen-256color_ or _tmux-256color_
 // TRANSLATION MISSING
-* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
+* outside screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
 
 [NOTE]
 Potrebbe essere necessario installare il pacchetto "ncurses-term" per usare
-questi valori nella variabile 'TERM'.
+questi valori nella variabile _TERM_.
 
 Se si sta utilizzando screen, è possibile aggiungere questa riga al
-proprio '~/.screenrc':
+proprio _~/.screenrc_:
 
 ----
 term screen-256color
 ----
 
 // TRANSLATION MISSING
-If your 'TERM' variable has wrong value and that WeeChat is already running,
+If your _TERM_ variable has wrong value and that WeeChat is already running,
 you can change it with these two commands (with WeeChat ≥ 1.0):
 
 ----
@@ -384,8 +383,8 @@ dei colori.
 [[search_text]]
 === Come posso cercare testo nel buffer (come /lastlog con irssi)?
 
-Il tasto predefinito è key[ctrl-r] (il comando è: `/input search_text_here`).
-E per passare alle notifiche: key[alt-p] / key[alt-n].
+Il tasto predefinito è kbd:[Ctrl+r] (il comando è: `/input search_text_here`).
+E per passare alle notifiche: kbd:[Alt+p] / kbd:[Alt+n].
 
 Consultare la guida per l'utente per maggiori informazioni su questa funzione
 (combinazioni tasti predefiniti).
@@ -398,7 +397,7 @@ You must enable the focus events with a special code sent to terminal.
 
 *Important*:
 
-* Currently, *only* 'xterm' seems to support this feature.
+* Currently, *only* _xterm_ seems to support this feature.
 * It does *not* work under screen/tmux.
 
 To send the code when WeeChat is starting:
@@ -422,7 +421,7 @@ commands of your choice):
 === Alcuni tasti meta (alt + tasto) non funzionano, perché?
 
 Se si utilizzano terminali come xterm o uxterm, alcuni tasti meta non funzionano
-per default. È possibile aggiungere una riga nel file '~/.Xresources':
+per default. È possibile aggiungere una riga nel file _~/.Xresources_:
 
 * per xterm:
 ----
@@ -440,14 +439,14 @@ Al termine, ricaricare la configurazione (`xrdb -override ~/.Xresources`) o riav
 
 Le associazioni dei tasti sono personalizzabili con il comando `/key`.
 
-Il tasto predefinito key[alt-k] consente di registrare il codice tasto ed
+Il tasto predefinito kbd:[Alt+k] consente di registrare il codice tasto ed
 inserirlo nella riga di comando.
 
 [[jump_to_buffer_11_or_higher]]
 === Qual è il tasto per passare al buffer 11 (o superiore)?
 
-Il tasto è key[alt-j] seguito da due numeri, ad esempio key[alt-j], key[1],
-key[1] per passare al buffer 11.
+Il tasto è kbd:[Alt+j] seguito da due numeri, ad esempio kbd:[Alt+j], kbd:[1],
+kbd:[1] per passare al buffer 11.
 
 È possibile associare un tasto, ad esempio:
 
@@ -462,7 +461,7 @@ L'elenco dei tasti predefiniti è nella Guida dell'utente.
 === Come si può usare la cronologia globale (invece di quella del buffer) con i tasti su e giù?
 
 È possibile associare i tasti su e giù alla cronologia globale (quelli predefiniti
-sono key[ctrl-↑] e key[ctrl-↓]).
+sono kbd:[Ctrl+↑] e kbd:[Ctrl+↓]).
 
 Esempio:
 
@@ -473,7 +472,7 @@ Esempio:
 
 [NOTE]
 I tasti "meta2-A" e "meta2-B" possono essere differenti nel proprio terminale.
-Per trovare il codice tasto digitare key[alt-k] poi il tast (su o giù).
+Per trovare il codice tasto digitare kbd:[Alt+k] poi il tast (su o giù).
 
 [[mouse]]
 == Mouse
@@ -521,9 +520,9 @@ come rxvt-unicode.
 === Come posso selezionare o incollare del testo nel terminale quando il mouse è abilitato in WeeChat?
 
 Quando il mouse è abilitato in WeeChat, è possibile usare il modificatore
-key[shift] per selezionare o cliccare nel terminale, come se il mouse fosse
-disabilitato (in alcuni terminali come iTerm, bisogna usare key[alt] invece di
-key[shift]).
+kbd:[Shift] per selezionare o cliccare nel terminale, come se il mouse fosse
+disabilitato (in alcuni terminali come iTerm, bisogna usare kbd:[Alt] invece di
+kbd:[Shift]).
 
 [[irc]]
 == IRC
@@ -575,7 +574,7 @@ Provare una stringa di priorità diversa (solo WeeChat ≥ 0.3.5), sostituendo
 [[irc_ssl_freenode]]
 === Come ci si può connettere al server freenode via SSL?
 
-Impostare l'opzione 'weechat.network.gnutls_ca_file' con il file dei certificati:
+Impostare l'opzione _weechat.network.gnutls_ca_file_ con il file dei certificati:
 
 ----
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
@@ -597,7 +596,7 @@ Impostare la porta del server, SSL, poi riconnettersi:
 [[irc_oauth]]
 === How to connect to a server that requires "oauth"?
 
-Some servers like 'twitch' require oauth to connect.
+Some servers like _twitch_ require oauth to connect.
 
 The oauth is simply a password with the value "oauth:XXXX".
 
@@ -642,7 +641,7 @@ buffer. Esso consente di filtrare alcune righe nei buffer mediante tag
 o espressioni regolari per il prefisso ed il contenuto delle righe.
 Le righe filtrate vengono solo nascoste, non eliminate, ed è possibile
 visualizzarle se i filtri vengono disabilitati (il comando predefinito
-key[alt-=] abilita/disabilita i filtri).
+kbd:[Alt+=] abilita/disabilita i filtri).
 
 [[filter_irc_join_part_quit]]
 === Come posso filtrare i messaggi di entrata/uscita/abbandono sui canali IRC?
@@ -669,12 +668,12 @@ Per aiuto: `/help filter` e `/help irc.look.smart_filter`
 
 // TRANSLATION MISSING
 With WeeChat ≥ 0.4.1, you can choose which messages are displayed or not when
-joining a channel with the option 'irc.look.display_join_message' (see
+joining a channel with the option _irc.look.display_join_message_ (see
 `/help irc.look.display_join_message` for more info).
 
 // TRANSLATION MISSING
 To hide messages (but keep them in buffer), you can filter them using the tag
-(for example 'irc_329' for channel creation date). See `/help filter` for help
+(for example _irc_329_ for channel creation date). See `/help filter` for help
 with filters.
 
 [[filter_voice_messages]]
@@ -688,13 +687,13 @@ utenti assenti, e si viene tempestati di messaggi voice. Perciò, è possibile
 modificare questo comportamento e consentire a WeeChat di utilizzare un
 colore speciale per i nick assenti nella lista nick.
 
-Per versioni di Bitlbee ≥ 3, sul canale '&bitlbee' digitare:
+Per versioni di Bitlbee ≥ 3, sul canale _&bitlbee_ digitare:
 
 ----
 channel set show_users online,away
 ----
 
-Per versioni precedenti di Bitlbee, sul canale '&bitlbee' digitare:
+Per versioni precedenti di Bitlbee, sul canale _&bitlbee_ digitare:
 
 ----
 set away_devoice false
@@ -714,10 +713,10 @@ modificata è il voice):
 [[color_away_nicks]]
 === Come posso vedere i nick assenti nella lista nick?
 
-È necessario impostare l'opzione 'irc.server_default.away_check' su un valore
+È necessario impostare l'opzione _irc.server_default.away_check_ su un valore
 positivo (minuti tra ogni controllo dei nick assenti).
 
-L'opzione 'irc.server_default.away_check_max_nicks' limita il controllo delle
+L'opzione _irc.server_default.away_check_max_nicks_ limita il controllo delle
 assenze solo sui canali più piccoli.
 
 Ad esempio, per controllare ogni 5 minuti per i nick assenti, sui canali con
@@ -729,17 +728,17 @@ massimo 25 nick:
 ----
 
 [NOTE]
-Per WeeChat ≤ 0.3.3, le opzioni sono 'irc.network.away_check' e
-'irc.network.away_check_max_nicks'.
+Per WeeChat ≤ 0.3.3, le opzioni sono _irc.network.away_check_ e
+_irc.network.away_check_max_nicks_.
 
 [[highlight_notification]]
 === Come posso essere avvisato quando qualcuno mi cerca in un canale?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 1.0, there is a default trigger "beep" which sends a 'BEL' to
+With WeeChat ≥ 1.0, there is a default trigger "beep" which sends a _BEL_ to
 the terminal on a highlight or private message. Thus you can configure your
 terminal (or multiplexer like screen/tmux) to run a command or play a sound
-when a 'BEL' occurs.
+when a _BEL_ occurs.
 
 // TRANSLATION MISSING
 Or you can add a command in "beep" trigger:
@@ -749,9 +748,9 @@ Or you can add a command in "beep" trigger:
 ----
 
 // TRANSLATION MISSING
-With an older WeeChat, you can use a script like 'beep.pl' or 'launcher.pl'.
+With an older WeeChat, you can use a script like _beep.pl_ or _launcher.pl_.
 
-Per 'launcher.pl', bisogna impostare il comando:
+Per _launcher.pl_, bisogna impostare il comando:
 
 ----
 /set plugins.var.perl.launcher.signal.weechat_highlight "/path/del/comando argomenti"
@@ -766,7 +765,7 @@ Altri script correlati:
 [[irc_target_buffer]]
 === Come si può modificare il buffer destinazione per i comandi sui buffer uniti (come i buffer con i server)?
 
-Il tasto predefinito è key[ctrl-x] (il comando è: `/input switch_active_buffer`).
+Il tasto predefinito è kbd:[Ctrl+x] (il comando è: `/input switch_active_buffer`).
 
 [[plugins_scripts]]
 == Plugin / script
@@ -807,10 +806,10 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
   logger, perl, python, ruby, lua, tcl, guile, javascript, xfer (usato per DCC)
 * caricare solo gli script veramente necessari
 * non caricare i certificati se SSL *NON* viene usato: usare una stringa vuota nell'opzione
-  'weechat.network.gnutls_ca_file'
-* ridurre il valore dell'opzione 'weechat.history.max_buffer_lines_number'  oppure
-  impostare il valore dell'opzione 'weechat.history.max_buffer_lines_minutes'
-* ridurre il valore dell'opzione 'weechat.history.max_commands'
+  _weechat.network.gnutls_ca_file_
+* ridurre il valore dell'opzione _weechat.history.max_buffer_lines_number_  oppure
+  impostare il valore dell'opzione _weechat.history.max_buffer_lines_minutes_
+* ridurre il valore dell'opzione _weechat.history.max_commands_
 
 // TRANSLATION MISSING
 [[cpu_usage]]
@@ -822,8 +821,8 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
 * hide "nicklist" bar: `/bar hide nicklist`
 * remove display of seconds in status bar time:
   `/set weechat.look.item_time_format "%H:%M"` (this is the default value)
-* set the 'TZ' variable (for example: `export TZ="Europe/Paris"`), to prevent
-  frequent access to file '/etc/localtime'
+* set the _TZ_ variable (for example: `export TZ="Europe/Paris"`), to prevent
+  frequent access to file _/etc/localtime_
 
 // TRANSLATION MISSING
 [[security]]
