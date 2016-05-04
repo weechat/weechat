@@ -25,7 +25,7 @@ index 50f1217..24daebc 100644
 +    libgcrypt11-dev,
 +    libgnutls-dev,
      zlib1g-dev
- Standards-Version: 3.9.6
+ Standards-Version: 3.9.8
  Homepage: https://weechat.org/
 diff --git a/debian-stable/control b/debian-stable/control
 index f9e9aa0..919202a 100644
@@ -54,7 +54,7 @@ index f9e9aa0..919202a 100644
 +    libgcrypt11-dev,
 +    libgnutls-dev,
      zlib1g-dev
- Standards-Version: 3.9.6
+ Standards-Version: 3.9.8
  Homepage: https://weechat.org/
 diff --git a/debian-stable/weechat-plugins.install b/debian-stable/weechat-plugins.install
 old mode 100755
