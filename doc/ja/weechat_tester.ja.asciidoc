@@ -34,11 +34,11 @@ WeeChat
 [[prepare_system]]
 == システムの準備
 
-Linux の 'core' ファイルを有効にすることはとても役に立ちます: WeeChat
-がクラッシュすると、Linux は 'core' と呼ばれるファイルを作ります。このファイルには、WeeChat
+Linux の _core_ ファイルを有効にすることはとても役に立ちます: WeeChat
+がクラッシュすると、Linux は _core_ と呼ばれるファイルを作ります。このファイルには、WeeChat
 に問題の有る箇所を正確に示す、とても役立つデバッグ情報が含まれています。
 
-'bash' シェルを使っている場合、以下の行を `~/.bashrc` に追記してください:
+_bash_ シェルを使っている場合、以下の行を _~/.bashrc_ に追記してください:
 
 ----
 ulimit -c unlimited
@@ -59,7 +59,7 @@ ulimit -c unlimited
 [[get_sources]]
 === ソースの取得とビルド
 
-最初にディレクトリを作ってください、ここでは 'weechat-git':
+最初にディレクトリを作ってください、ここでは _weechat-git_:
 
 ----
 $ mkdir ~/weechat-git
@@ -75,10 +75,10 @@ $ cd weechat
 ----
 
 [NOTE]
-clone の後、このディレクトリ内で "`git pull`"
+clone の後、このディレクトリ内で `git pull`
 を実行すれば、最新のアップデートとの差分が更新されます。
 
-他の方法として 'devel' パッケージをダウンロードして展開する方法があります:
+他の方法として _devel_ パッケージをダウンロードして展開する方法があります:
 
 ----
 $ wget https://weechat.org/files/src/weechat-devel.tar.bz2
@@ -132,6 +132,6 @@ $ ~/weechat-git/bin/weechat
 の最新バージョンを使っていることを確認するべきです ;)
 
 おかしな (問題を引き起こしたり、クラッシュしたり、あなたを怒らせるような) 挙動を見つけたら
-`chat.freenode.net` の `#weechat` に参加して、開発チームにこの挙動を教えてください。
+_chat.freenode.net_ の _#weechat_ に参加して、開発チームにこの挙動を教えてください。
 
 クラッシュしなかったとしても教えてください。開発チームはあなたからのフィードバックをお待ちしています!

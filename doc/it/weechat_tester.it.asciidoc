@@ -40,12 +40,12 @@ vecchi bug).
 [[prepare_system]]
 == Preparazione del sistema
 
-Sarebbe molto di aiuto abilitare i file 'core' di Linux: se WeeChat
-dovesse andare in crash, Linux scriverebbe un file chiamato 'core'.
+Sarebbe molto di aiuto abilitare i file _core_ di Linux: se WeeChat
+dovesse andare in crash, Linux scriverebbe un file chiamato _core_.
 Questo file contiene informazioni di debug molto utili, per sapere
 esattamente dove sia il problema in WeeChat.
 
-Se si utilizza la shell 'bash', aggiungere la seguente riga al file `~/.bashrc`:
+Se si utilizza la shell _bash_, aggiungere la seguente riga al file _~/.bashrc_:
 
 ----
 ulimit -c unlimited
@@ -67,7 +67,7 @@ conservato in un deposito GIT.
 [[get_sources]]
 === Ottenere e compilare i sorgenti
 
-Per prima cosa creare una directory, per esempio 'weechat-git':
+Per prima cosa creare una directory, per esempio _weechat-git_:
 
 ----
 $ mkdir ~/weechat-git
@@ -82,10 +82,10 @@ $ cd weechat
 ----
 
 [NOTE]
-In seguito, si può eseguire "`git pull`" in questa directory per ricevere gli
+In seguito, si può eseguire `git pull` in questa directory per ricevere gli
 ultimi aggiornamenti.
 
-Altrimenti si può scaricare ed estrarre il pacchetto 'devel':
+Altrimenti si può scaricare ed estrarre il pacchetto _devel_:
 
 ----
 $ wget https://weechat.org/files/src/weechat-devel.tar.bz2
@@ -139,8 +139,8 @@ Se siete ancora svegli dovreste vedere un'interfaccia familiare e vantarvi del
 fatto di avere la versione più nuova possibile di WeeChat. ;)
 
 Se si dovessero verificare strani comportamenti (potrebbe andare in crash
-o far bollire la vostra birra) non esitate ad entrare in `#weechat` su
-`chat.freenode.net` e farcelo sapere.
+o far bollire la vostra birra) non esitate ad entrare in _#weechat_ su
+_chat.freenode.net_ e farcelo sapere.
 
 Se non dovesse andare in crash - ditelo comunque, abbiamo bisogno dei vostri
 commenti!

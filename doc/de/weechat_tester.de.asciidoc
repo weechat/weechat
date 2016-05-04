@@ -41,12 +41,12 @@ alte Fehler schon behoben wurden.
 [[prepare_system]]
 == Bereite Dein System vor
 
-Es wäre uns schon sehr damit geholfen wenn Du Linux 'core' Dateien aktivieren würdest.
-Falls WeeChat abstürzen sollte wird eine Datei Namens 'core' erzeugt. Diese Datei
+Es wäre uns schon sehr damit geholfen wenn Du Linux _core_ Dateien aktivieren würdest.
+Falls WeeChat abstürzen sollte wird eine Datei Namens _core_ erzeugt. Diese Datei
 beinhaltet viele nützliche Debug-Informationen um das genaue Problem in WeeChat
 zu lokalisieren.
 
-Falls Du die 'bash' als shell benutzt, dann ergänze Deine `~/.bashrc` durch folgende
+Falls Du die _bash_ als shell benutzt, dann ergänze Deine _~/.bashrc_ durch folgende
 Zeile:
 
 ----
@@ -70,7 +70,7 @@ Du könntest Dich dazu entscheiden es manuell zu bauen (empfohlen):
 [[get_sources]]
 === Beschaffe und baue die Quellen
 
-Erstelle zuerst einen neuen Ordner, z.B. 'weechat-git':
+Erstelle zuerst einen neuen Ordner, z.B. _weechat-git_:
 
 ----
 $ mkdir ~/weechat-git
@@ -85,10 +85,10 @@ $ cd weechat
 ----
 
 [NOTE]
-Um auf den aktuellen Stand zu kommen verwendest Du z.B. "`git pull`" in
+Um auf den aktuellen Stand zu kommen verwendest Du z.B. `git pull` in
 diesem Ordner.
 
-Ansonsten kannst Du das 'Entwickler-Paket' herunterladen und entpacken:
+Ansonsten kannst Du das _Entwickler-Paket_ herunterladen und entpacken:
 
 ----
 $ wget https://weechat.org/files/src/weechat-devel.tar.bz2
@@ -143,7 +143,7 @@ prahle vor Anderen, dass Du die neueste WeeChat-Version verwendest :)
 
 Solltest Du nun ein merkwürdiges Verhalten bemerken (es können diverse Probleme
 oder Abstürze auftreten oder einfach Dein Bier überkochen) zögere nicht, komme
-in den Channel `#weechat` auf `chat.freenode.net` (A.d.Ü.: englischsprachig) und
+in den Channel _#weechat_ auf _chat.freenode.net_ (A.d.Ü.: englischsprachig) und
 berichte uns darüber.
 
 Auch falls alles korrekt funktionieren sollte gib uns trotzdem Bescheid, wir

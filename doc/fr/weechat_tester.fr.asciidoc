@@ -34,12 +34,12 @@ fonctionnalités (et à corriger des anciens bugs).
 [[prepare_system]]
 == Préparez votre système
 
-Cela nous aiderait beaucoup si vous activiez les fichiers 'core' Linux : si
-WeeChat se plante, Linux écrit un fichier 'core'. Ce fichier contient des
+Cela nous aiderait beaucoup si vous activiez les fichiers _core_ Linux : si
+WeeChat se plante, Linux écrit un fichier _core_. Ce fichier contient des
 informations importantes pour le debug, pour savoir exactement où le problème
 se situe dans WeeChat).
 
-Si vous utilisez le shell 'bash', ajoutez cette ligne dans votre `~/.bashrc` :
+Si vous utilisez le shell _bash_, ajoutez cette ligne dans votre _~/.bashrc_ :
 
 ----
 ulimit -c unlimited
@@ -62,7 +62,7 @@ Vous pouvez décider de le construire manuellement (méthode recommandée) :
 [[get_sources]]
 === Obtenir et compiler les sources
 
-Créez tout d'abord un répertoire, par exemple 'weechat-git' :
+Créez tout d'abord un répertoire, par exemple _weechat-git_ :
 
 ----
 $ mkdir ~/weechat-git
@@ -77,10 +77,10 @@ $ cd weechat
 ----
 
 [NOTE]
-Plus tard, vous pourrez utiliser la commande "`git pull`" dans ce répertoire
+Plus tard, vous pourrez utiliser la commande `git pull` dans ce répertoire
 pour obtenir juste les deltas avec la version d'aujourd'hui.
 
-Sinon vous pouvez installer le paquet 'devel' :
+Sinon vous pouvez installer le paquet _devel_ :
 
 ----
 $ wget https://weechat.org/files/src/weechat-devel.tar.bz2
@@ -134,7 +134,7 @@ Si vous êtes encore éveillé, vous devriez voir une interface familière et
 pouvoir vous vanter d'utiliser la version la plus récente possible de WeeChat ;)
 
 Maintenant si vous obtenez un comportement étrange ou un plantage, n'hésitez
-pas à nous en avertir sur `#weechat`, serveur `chat.freenode.net`.
+pas à nous en avertir sur _#weechat_, serveur _chat.freenode.net_.
 
 S'il n'y a pas de plantage, dites-le nous aussi, nous avons besoin de votre
 retour et de vos impressions !

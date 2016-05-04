@@ -37,11 +37,11 @@ zajęci cały czas implementowaniem nowych rzeczy (oraz poprawianiem błędów).
 [[prepare_system]]
 == Przygotuj swój system
 
-Bardzo nam pomoże, jeśli włączysz linuksowe pliki 'core': jeśli WeeChat zawiesi
-się Linux zapisze plik zwany 'core'. Plik ten zawiera użyteczne informacje
+Bardzo nam pomoże, jeśli włączysz linuksowe pliki _core_: jeśli WeeChat zawiesi
+się Linux zapisze plik zwany _core_. Plik ten zawiera użyteczne informacje
 pozwalające dokładnie zlokalizować błąd w WeeChat.
 
-Jeśli korzystasz z powłoki 'bash', dodaj następującą linijkę do `~/.bashrc`:
+Jeśli korzystasz z powłoki _bash_, dodaj następującą linijkę do _~/.bashrc_:
 
 ----
 ulimit -c unlimited
@@ -62,7 +62,7 @@ Możesz się zdecydować na własnoręczne zbudowanie (zalecana metoda):
 [[get_sources]]
 === Pobierz i zbuduj źródła
 
-Najpierw stwórz katalog, na przykład 'weechat-git':
+Najpierw stwórz katalog, na przykład _weechat-git_:
 
 ----
 $ mkdir ~/weechat-git
@@ -78,10 +78,10 @@ $ cd weechat
 ----
 
 [NOTE]
-Później możesz wykonać w tym katalogu "`git pull`", aby pobrać najnowsze
+Później możesz wykonać w tym katalogu `git pull`, aby pobrać najnowsze
 poprawki.
 
-Oczywiście możesz pobrać paczkę oznaczoną jako 'devel':
+Oczywiście możesz pobrać paczkę oznaczoną jako _devel_:
 
 ----
 $ wget https://weechat.org/files/src/weechat-devel.tar.bz2
@@ -135,7 +135,7 @@ Jeśli nadal nie śpisz powinieneś ujrzeć znajomy interfejs i chwalić się
 z posiadania najnowszej możliwej wersji WeeChat. ;)
 
 Teraz jeśli zaobserwujesz dziwne zachowanie (może sprawiać problemy, ulec awarii
-lub zagotować Twoje piwo) nie wahaj się wejść na kanał `#weechat` na serwerze
-`chat.freenode.net` i nam o tym opowiedzieć.
+lub zagotować Twoje piwo) nie wahaj się wejść na kanał _#weechat_ na serwerze
+_chat.freenode.net_ i nam o tym opowiedzieć.
 
 Jeśli wszystko będzie w porządku - też nam o tym powiedz, potrzebujemy Twojej opinii!

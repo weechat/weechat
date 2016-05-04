@@ -10,8 +10,7 @@
 == Purpose
 
 Many thankful users ask us how can they help developing WeeChat. The
-easiest (and also most tricky) way to help developing WeeChat is
-testing!
+easiest (and also most tricky) way to help developing WeeChat is testing!
 
 Testing is a very important part of software development and should not be
 underestimated. When some features are implemented it should be tested, but for
@@ -31,11 +30,11 @@ implementing new stuff (and fixing old bugs) all the time.
 [[prepare_system]]
 == Prepare your system
 
-It would help us a lot if you enable Linux 'core' files: if WeeChat crashes,
-Linux will write a file called 'core'. This file contains very useful debug
+It would help us a lot if you enable Linux _core_ files: if WeeChat crashes,
+Linux will write a file called _core_. This file contains very useful debug
 info, to know exactly where is problem in WeeChat.
 
-If you're using the 'bash' shell, add following line to your `~/.bashrc`:
+If you're using the _bash_ shell, add following line to your _~/.bashrc_:
 
 ----
 ulimit -c unlimited
@@ -56,7 +55,7 @@ You may decide to build it manually (recommended way):
 [[get_sources]]
 === Get and build sources
 
-First create a directory, for example 'weechat-git':
+First create a directory, for example _weechat-git_:
 
 ----
 $ mkdir ~/weechat-git
@@ -72,10 +71,10 @@ $ cd weechat
 ----
 
 [NOTE]
-Later, you can run "`git pull`" in this directory, to get deltas with
+Later, you can run `git pull` in this directory, to get deltas with
 the latest updates.
 
-Otherwise you can download and unpack 'devel' package:
+Otherwise you can download and unpack _devel_ package:
 
 ----
 $ wget https://weechat.org/files/src/weechat-devel.tar.bz2
@@ -129,6 +128,6 @@ If you're still awake you should see the familiar interface and brag about
 having the newest possible version of WeeChat. ;)
 
 Now if you experience strange behavior (it may have issues or crash or boil
-your beer) don't hesitate to join `#weechat` at `chat.freenode.net` and tell us.
+your beer) don't hesitate to join _#weechat_ at _chat.freenode.net_ and tell us.
 
 If it doesn't crash - tell us too, we need your feedback!
