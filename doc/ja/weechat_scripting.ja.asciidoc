@@ -50,7 +50,7 @@ WeeChat (Wee Enhanced Environment for Chat)
 
 * 必ず `import weechat` を使ってください。
 * python では `print*` 系の関数は `prnt*` と書きます
-  ('print' は予約済みキーワードなので)。
+  (_print_ は予約済みキーワードなので)。
 * 関数は `weechat.xxx(arg1, arg2, ...)` のように呼び出してください。
 
 ==== Perl
@@ -59,7 +59,7 @@ WeeChat (Wee Enhanced Environment for Chat)
 
 ==== Ruby
 
-* 'weechat_init' を定義して、内部で 'register' を呼び出してください。
+* _weechat_init_ を定義して、内部で _register_ を呼び出してください。
 * 関数は `Weechat.xxx(arg1, arg2, ...)` のように呼び出してください。
 * Ruby では関数に渡せる引数の数が最大 15 個に制限されているため、`Weechat.config_new_option`
   関数はコールバック用の引数群を 6 個の文字列からなる 1 個の配列で受け取ります (3 個のコールバック
@@ -108,14 +108,14 @@ weechat.register(name, author, version, license, description, shutdown_function,
 
 引数:
 
-* 'name': 文字列型、スクリプトの内部名
-* 'author': 文字列型、作者名
-* 'version': 文字列型、スクリプトのバージョン
-* 'license': 文字列型、スクリプトのライセンス
-* 'description': 文字列型、スクリプトの短い説明
-* 'shutdown_function': 文字列型、スクリプトがアンロードされた際に呼び出される関数の名前
+* _name_: 文字列型、スクリプトの内部名
+* _author_: 文字列型、作者名
+* _version_: 文字列型、スクリプトのバージョン
+* _license_: 文字列型、スクリプトのライセンス
+* _description_: 文字列型、スクリプトの短い説明
+* _shutdown_function_: 文字列型、スクリプトがアンロードされた際に呼び出される関数の名前
   (空文字列でも可)
-* 'charset': 文字列型、スクリプトの文字コード (UTF-8
+* _charset_: 文字列型、スクリプトの文字コード (UTF-8
   はデフォルトの文字コードなので、スクリプトが UTF-8 で書かれている場合、空文字列を指定してください)
 
 各言語で書かれたスクリプトの例:
@@ -209,7 +209,7 @@ weechat.print("", "Hello, from javascript script!");
 ----
 
 WeeChat の開始時にスクリプトを自動ロードするには
-'language/autoload' ディレクトリ内にリンクを作ってください。
+_language/autoload_ ディレクトリ内にリンクを作ってください。
 
 例えば Python の場合:
 
@@ -219,22 +219,22 @@ $ ln -s ../script.py
 ----
 
 [NOTE]
-`/script install` コマンドでスクリプトをインストールした場合、'autoload'
+`/script install` コマンドでスクリプトをインストールした場合、_autoload_
 ディレクトリ内にリンクが自動的に作成されます。
 
 [[differences_with_c_api]]
 == C API との違い
 
 スクリプト API は C 言語プラグイン API とほぼ同じです。API
-に含まれる各関数の詳細については、'WeeChat プラグイン API リファレンス'
+に含まれる各関数の詳細については、_WeeChat プラグイン API リファレンス_
 をご覧ください: プロトタイプ、引数、戻り値、例。
 
-'プラグイン' と'スクリプト' の違いを理解することは重要です: 'プラグイン'
+_プラグイン_ と_スクリプト_ の違いを理解することは重要です: _プラグイン_
 とはコンパイル済みバイナリファイルで `/plugin` コマンドを使ってロードします、これに対して
-'スクリプト' とはテキストファイルで例えば 'python' プラグインであれば `/python`
+_スクリプト_ とはテキストファイルで例えば _python_ プラグインであれば `/python`
 コマンドを使ってロードします。
 
-例えば 'test.py' スクリプトが WeeChat API 関数を呼び出す場合、以下の順に呼び出されます:
+例えば _test.py_ スクリプトが WeeChat API 関数を呼び出す場合、以下の順に呼び出されます:
 
 // PLEASE DO NOT TRANSLATE
 ....
@@ -245,7 +245,7 @@ test.py ─────► │ script API │  C API  │ ─────► ║
                └────────────┴─────────┘        ╚═════════╧════════╝
 ....
 
-WeeChat が 'test.py'
+WeeChat が _test.py_
 スクリプトで定義されたコールバックを呼び出す場合、順番は逆になります:
 
 // PLEASE DO NOT TRANSLATE
@@ -382,7 +382,7 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 == スクリプト API
 
 API に含まれる関数の詳しい情報は
-'WeeChat プラグイン API リファレンス' をご覧ください。.
+_WeeChat プラグイン API リファレンス_ をご覧ください。.
 
 [[script_api_functions]]
 === 関数
@@ -511,7 +511,7 @@ API に含まれる関数の詳しい情報は
 
 この章ではいくつかの良くあるタスクを例を交えて紹介します。ここでは
 API の一部の機能を使っています。完全なリファレンスは
-'WeeChat プラグイン API リファレンス' をご覧ください。
+_WeeChat プラグイン API リファレンス_ をご覧ください。
 
 [[buffers]]
 === バッファ
@@ -705,7 +705,7 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 バックグラウンドプロセスを実行するには `hook_process`
 を使います。コールバックはデータの準備が整った時点で呼び出されます。複数回呼び出されることもあります。
 
-コールバックの最後の呼び出しでは 'rc' が 0
+コールバックの最後の呼び出しでは _rc_ が 0
 か正の値に設定されています。これはコマンドのリターンコードになります。
 
 例:
@@ -757,7 +757,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 WeeChat に関して利用できる情報は全て https://weechat.org/dev/info にあります
 
 オプション有りの URL 転送の例: 最新の WeeChat 開発パッケージをファイル
-'/tmp/weechat-devel.tar.gz' にダウンロード:
+_/tmp/weechat-devel.tar.gz_ にダウンロード:
 
 [source,python]
 ----
@@ -772,7 +772,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 ----
 
 URL 転送に関するより詳しい情報と利用可能なオプションを見るには、
-'WeeChat プラグイン API リファレンス' の `hook_process` と `hook_process_hashtable` をご覧ください。
+_WeeChat プラグイン API リファレンス_ の `hook_process` と `hook_process_hashtable` をご覧ください。
 
 [[config_options]]
 === 設定 / オプション
@@ -932,7 +932,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
   `nick!user@host`
 
 | command | 0.3.4 以上 |
-  コマンド ('PRIVMSG' 、'NOTICE' 、...) |
+  コマンド (_PRIVMSG_ 、_NOTICE_ 、...) |
   `PRIVMSG`
 
 | channel | 0.3.4 以上 |
@@ -948,19 +948,19 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
   `hello!`
 
 | pos_command | 1.3 以上 |
-  メッセージ内における 'command' のインデックス ('command' が見つからない場合 "-1") |
+  メッセージ内における _command_ のインデックス (_command_ が見つからない場合 "-1") |
   `47`
 
 | pos_arguments | 1.3 以上 |
-  メッセージ内における 'arguments' のインデックス ('arguments' が見つからない場合 "-1") |
+  メッセージ内における _arguments_ のインデックス (_arguments_ が見つからない場合 "-1") |
   `55`
 
 | pos_channel | 1.3 以上 |
-  メッセージ内における 'channel' のインデックス ('channel' が見つからない場合 "-1") |
+  メッセージ内における _channel_ のインデックス (_channel_ が見つからない場合 "-1") |
   `55`
 
 | pos_text | 1.3 以上 |
-  メッセージ内における 'text' のインデックス ('text' が見つからない場合 "-1") |
+  メッセージ内における _text_ のインデックス (_text_ が見つからない場合 "-1") |
   `65`
 |===
 
@@ -1007,7 +1007,7 @@ else:
 ----
 
 [NOTE]
-バージョン 0.3.1.1 以下の場合 'info_get("version_number")'
+バージョン 0.3.1.1 以下の場合 _info_get("version_number")_
 は空文字列を返すため、値が空でないことを確認しなければいけません。
 
 文字列でバージョンを使うには:

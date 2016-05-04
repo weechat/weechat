@@ -50,7 +50,7 @@ Allerdings ist die API für alle Skriptsprachen nahezu identisch.
 
 * WeeChat muss als Modul eingebunden werden: `import weechat`
 * Um die WeeChat Funktion `print*` nutzen zu können muss `prnt*` genutzt
-  werden ('print' ist ein reservierter Befehl von Python!)
+  werden (_print_ ist ein reservierter Befehl von Python!)
 * Funktionen werden im Format `weechat.xxx(arg1, arg2, ...)` ausgeführt
 
 ==== Perl
@@ -59,7 +59,7 @@ Allerdings ist die API für alle Skriptsprachen nahezu identisch.
 
 ==== Ruby
 
-* Es muss 'weechat_init' definiert und darin die Funktion 'register' ausgeführt werden
+* Es muss _weechat_init_ definiert und darin die Funktion _register_ ausgeführt werden
 * Funktionen werden im Format `Weechat.xxx(arg1, arg2, ...)` ausgeführt
 * Aufgrund einer Limitierung, seitens Ruby (maximal 15 Argumente pro Funktion), empfängt
   die Funktion `Weechat.config_new_option` den Callback in einem Array von 6 Strings
@@ -108,14 +108,14 @@ weechat.register(Name, Author, Version, Lizenz, Beschreibung, Shutdown_Funktion,
 
 Argumente:
 
-* 'name': interner Name des Skripts (String)
-* 'author': Name des Authors (String)
-* 'version': Version des Skripts (String)
-* 'license': Lizenz für das Skripts (String)
-* 'description': kurze Beschreibung des Skripts (String)
-* 'shutdown_function': Name der Funktion die beim Beenden des Skripts aufgerufen werden soll
+* _name_: interner Name des Skripts (String)
+* _author_: Name des Authors (String)
+* _version_: Version des Skripts (String)
+* _license_: Lizenz für das Skripts (String)
+* _description_: kurze Beschreibung des Skripts (String)
+* _shutdown_function_: Name der Funktion die beim Beenden des Skripts aufgerufen werden soll
   (String, kann auch eine leere Zeichenkette sein)
-* 'charset': Skript Zeichensatz (optional, liegt das Skript im UTF-8 Format vor kann dieser Wert
+* _charset_: Skript Zeichensatz (optional, liegt das Skript im UTF-8 Format vor kann dieser Wert
   leer bleiben. UTF-8 ist der Standardzeichensatz) (String)
 
 Beispielskripten, für jede Sprache:
@@ -211,7 +211,7 @@ Skriptsprache, den entsprechenden Befehl zu nutzen:
 ----
 
 Um Skripten automatisch beim Start von WeeChat zu laden sollte man einen Link
-anlegen, der in das Verzeichnis 'Skriptsprache/autoload' zeigt.
+anlegen, der in das Verzeichnis _Skriptsprache/autoload_ zeigt.
 
 Ein Beispiel für ein Python-Skript:
 
@@ -222,7 +222,7 @@ $ ln -s ../script.py
 
 [NOTE]
 Installiert man mittels `/script install` ein Skript, dann wird automatisch
-ein Link in das entsprechende 'autoload' Verzeichnis erzeugt.
+ein Link in das entsprechende _autoload_ Verzeichnis erzeugt.
 
 [[differences_with_c_api]]
 == Unterschiede zur C API
@@ -230,13 +230,13 @@ ein Link in das entsprechende 'autoload' Verzeichnis erzeugt.
 Die Skripten API ist nahezu identisch mit der API der C Erweiterung.
 Um einen Überblick über alle API Funktionen (Prototyp, Argumente,
 Rückgabe werte, Beispiele) zu erhalten werfen Sie einen Blick in
-die 'WeeChat Plugin API Reference'.
-Es ist wichtig das man zwischen einer 'Erweiterung' und einem 'Skript'
-unterscheidet: Eine 'Erweiterung' ist eine Binärdatei die kompiliert wurde
-und mittels `/plugin` geladen wird. Ein 'Skript' ist eine Textdatei welche
-durch eine Erweiterung z.B. 'python' mittels dem Befehl `/python` geladen
+die _WeeChat Plugin API Reference_.
+Es ist wichtig das man zwischen einer _Erweiterung_ und einem _Skript_
+unterscheidet: Eine _Erweiterung_ ist eine Binärdatei die kompiliert wurde
+und mittels `/plugin` geladen wird. Ein _Skript_ ist eine Textdatei welche
+durch eine Erweiterung z.B. _python_ mittels dem Befehl `/python` geladen
 wird.
-Falls Ihr Skript 'test.py' eine WeeChat API Funktion aufruft wird der Aufruf
+Falls Ihr Skript _test.py_ eine WeeChat API Funktion aufruft wird der Aufruf
 wie folgt abgearbeitet:
 
 ....
@@ -247,7 +247,7 @@ test.py ─────► │ Skript API │  C API  │ ─────► ║
                └────────────┴─────────┘        ╚═════════╧════════╝
 ....
 
-Gibt WeeChat einen Rückgabewert an Ihr Skript 'test.py' zurück, dann wird der
+Gibt WeeChat einen Rückgabewert an Ihr Skript _test.py_ zurück, dann wird der
 Aufruf in umgekehrter Reihenfolge abgearbeitet:
 
 ....
@@ -387,7 +387,7 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 == Skript API
 
 Um weiterführende Informationen zu den API Funktionen zu erhalten
-lesen Sie bitte 'WeeChat Plugin API Reference'.
+lesen Sie bitte _WeeChat Plugin API Reference_.
 
 [[script_api_functions]]
 === Funktionen
@@ -516,7 +516,7 @@ Liste der Konstanten in Skript API:
 
 Dieses Kapitel beinhaltet einige Aufgaben mit Lösungsbeispielen.
 Die Skript API wird dabei nur sehr oberflächlich besprochen.Um eine vollständige
-Übersicht aller Befehle zu erhalten nutzen Sie bitte die  'WeeChat Plugin API Reference'.
+Übersicht aller Befehle zu erhalten nutzen Sie bitte die _WeeChat Plugin API Reference_.
 
 [[buffers]]
 === Buffer
@@ -717,7 +717,7 @@ Mit der Funktion `hook_process` kann ein Hintergrundprozess gestartet werden.
 Der Callback wird aufgerufen sobald der Hintergrundprozess abgearbeitet wurde.
 Dies kann auch mehrfach der Fall sein.
 
-Für den letzten Aufruf des Callback wird 'rc' auf 0 oder einen positiven Wert
+Für den letzten Aufruf des Callback wird _rc_ auf 0 oder einen positiven Wert
 gesetzt. Dies ist der Return Code des Befehls.
 
 Beispiele:
@@ -770,7 +770,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 Alle Informationen die WeeChat betreffen findet man auf: https://weechat.org/dev/info
 
 Beispiel eines URL Transfers, mit zusätzliche Optionen: Es wird das neuste
-WeeChat Entwicklerpaket in die Datei '/tmp/weechat-devel.tar.gz' gesichert:
+WeeChat Entwicklerpaket in die Datei _/tmp/weechat-devel.tar.gz_ gesichert:
 
 [source,python]
 ----
@@ -947,7 +947,7 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
   `nick!user@host`
 
 | command | ≥ 0.3.4 |
-  der Befehl ('PRIVMSG', 'NOTICE', ...) |
+  der Befehl (_PRIVMSG_, _NOTICE_, ...) |
   `PRIVMSG`
 
 | channel | ≥ 0.3.4 |
@@ -963,19 +963,19 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
   `hello!`
 
 | pos_command | ≥ 1.3 |
-  Index von 'command' innerhalb einer Nachricht ("-1" falls 'command' nicht gefunden wird) |
+  Index von _command_ innerhalb einer Nachricht ("-1" falls _command_ nicht gefunden wird) |
   `47`
 
 | pos_arguments | ≥ 1.3 |
-  Index von'arguments' innerhalb einer Nachricht ("-1" falls 'arguments' nicht gefunden wird) |
+  Index von_arguments_ innerhalb einer Nachricht ("-1" falls _arguments_ nicht gefunden wird) |
   `55`
 
 | pos_channel | ≥ 1.3 |
-  Index von 'channel' innerhalb einer Nachricht ("-1" falls 'channel' nicht gefunden wird) |
+  Index von _channel_ innerhalb einer Nachricht ("-1" falls _channel_ nicht gefunden wird) |
   `55`
 
 | pos_text | ≥ 1.3 |
-  Index von 'text' innerhalb einer Nachricht ("-1" falls 'text' nicht gefunden wird) |
+  Index von _text_ innerhalb einer Nachricht ("-1" falls _text_ nicht gefunden wird) |
   `65`
 |===
 
@@ -1023,7 +1023,7 @@ else:
 ----
 
 [NOTE]
-Versionen ≤ 0.3.1.1 geben einen leeren String zurück wenn man 'info_get("version_number")'
+Versionen ≤ 0.3.1.1 geben einen leeren String zurück wenn man _info_get("version_number")_
 aufruft. Deshalb müssen Sie prüfen ob der Rückgabewert *nicht* leer ist.
 
 Um die Version als String zu erhalten:

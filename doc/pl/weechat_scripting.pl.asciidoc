@@ -49,7 +49,7 @@ ale API jest takie same dla wszystkich języków.
 ==== Python
 
 * Należy wykonać `import weechat`
-* Funkcje `print*` są nazwane `prnt*` w pythonie (ponieważ 'print' jest zastrzeżonym
+* Funkcje `print*` są nazwane `prnt*` w pythonie (ponieważ _print_ jest zastrzeżonym
   słowem kluczowym)
 * Funkcje są wywoływane za pomocą `weechat.xxx(arg1, arg2, ...)`
 
@@ -59,7 +59,7 @@ ale API jest takie same dla wszystkich języków.
 
 ==== Ruby
 
-* Trzeba zdefiniować 'weechat_init' i wywołać 'register' wewnątrz
+* Trzeba zdefiniować _weechat_init_ i wywołać _register_ wewnątrz
 * Funkcje są wywoływane za pomocą `Weechat.xxx(arg1, arg2, ...)`
 * W związku z ograniczeniami Ruby (maksymalnie 15 argumentów dla funkcji), funkcja
   `Weechat.config_new_option` otrzymuje callbacki w postaci tablicy 6 ciągów
@@ -108,14 +108,14 @@ weechat.register(nazwa, autor, wersja, licencja, opis, funkcja_wyłączająca, k
 
 Argumenty:
 
-* 'nazwa': string, wewnętrzna nazwa skryptu
-* 'autor': string, autor skryptu
-* 'wersja': string, wersja
-* 'licencja': string, licencja
-* 'opis': string, krótki opis skryptu
-* 'funkcja_wyłączająca': string, nazwa funkcji wywoływanej podczas wyładowania skryptu
+* _nazwa_: string, wewnętrzna nazwa skryptu
+* _autor_: string, autor skryptu
+* _wersja_: string, wersja
+* _licencja_: string, licencja
+* _opis_: string, krótki opis skryptu
+* _funkcja_wyłączająca_: string, nazwa funkcji wywoływanej podczas wyładowania skryptu
   (może być pusty ciąg)
-* 'kodowanie': string, kodowane skryptu (jeśli skrypt jest napisany
+* _kodowanie_: string, kodowane skryptu (jeśli skrypt jest napisany
   w UTF-8 można nie podawać tej wartości - UTF-8 to domyślne kodowanie)
 
 Przykład dla skryptu w każdym z języków:
@@ -208,7 +208,7 @@ Każdy język posiada również swoją własną komendę:
 /javascript load skrypt.js
 ----
 
-Możesz zrobić dowiązanie w katalogu 'język/autoload' jeśli chcesz automatycznie
+Możesz zrobić dowiązanie w katalogu _język/autoload_ jeśli chcesz automatycznie
 ładować skrypt po uruchomieniu WeeChat.
 
 Na przykład dla Pythona:
@@ -220,21 +220,21 @@ $ ln -s ../skrypt.py
 
 [NOTE]
 Podczas instalacji skryptu za pomocą `/script install` automatycznie tworzone jest
-dowiązanie w katalogu 'autoload'.
+dowiązanie w katalogu _autoload_.
 
 [[differences_with_c_api]]
 == Różnice pomiędzy API dla C
 
 API skryptów jest prawie takie same jak API dla wtyczek pisanych w C.
-Możesz zajrzeć do 'Opisu API wtyczek WeeChat' po więcej informacji na temat
+Możesz zajrzeć do _Opisu API wtyczek WeeChat_ po więcej informacji na temat
 każdej z funkcji API: prototyp, argumenty, zwracane wartości, przykłady.
 
-Ważne jest rozróżnienie 'wtyczki' od 'skryptu': 'wtyczka' jest plikiem binarnym
-skompilowanym i załadowanym za pomocą komendy `/plugin`, natomiast 'skrypt' jest
-plikiem tekstowym załadowanym przez wtyczkę jak 'python' za pomocą komendy
+Ważne jest rozróżnienie _wtyczki_ od _skryptu_: _wtyczka_ jest plikiem binarnym
+skompilowanym i załadowanym za pomocą komendy `/plugin`, natomiast _skrypt_ jest
+plikiem tekstowym załadowanym przez wtyczkę jak _python_ za pomocą komendy
 `/python`.
 
-W momencie, kiedy Twój skrypt 'test.py' wywołuje funkcję z API Weechat, wygląda to tak:
+W momencie, kiedy Twój skrypt _test.py_ wywołuje funkcję z API Weechat, wygląda to tak:
 
 ....
                ┌────────────────────────┐        ╔══════════════════╗
@@ -244,7 +244,7 @@ test.py ─────► │ API skryptów │  C API  │ ─────► 
                └──────────────┴─────────┘        ╚═════════╧════════╝
 ....
 
-Kiedy WeeChat odwołuje się do Twojego skryptu 'test.py' wygląda to tak:
+Kiedy WeeChat odwołuje się do Twojego skryptu _test.py_ wygląda to tak:
 
 ....
 ╔══════════════════╗        ┌────────────────────────┐
@@ -378,7 +378,7 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 [[script_api]]
 == API skryptów
 
-Więcej informacji o funkcjach w API, znajdziesz w 'Opisie API wtyczek WeeChat'.
+Więcej informacji o funkcjach w API, znajdziesz w _Opisie API wtyczek WeeChat_.
 
 [[script_api_functions]]
 === Fukcje
@@ -507,7 +507,7 @@ Lista stałych w API skryptów:
 
 Ten rozdział przedstawia część częstych zadań z przykładami.
 Użyto tu tylko część rzeczy dostępnych w API, dokładne informacje można znaleźć
-w Opisie API wtyczek WeeChat'.
+w _Opisie API wtyczek WeeChat_.
 
 [[buffers]]
 === Bufory
@@ -701,7 +701,7 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 Do wykonywania procesów w tle służy `hook_process`. Twoje callbacki zostaną
 wywołane, kiedy dane będą gotowe. Może zostać wywołane wiele razy.
 
-Dla ostatniego wykonania Twojego callbacku 'rc' jest ustawiane na 0, lub wartość
+Dla ostatniego wykonania Twojego callbacku _rc_ jest ustawiane na 0, lub wartość
 dodatnią, jest to kod zwracany przez komendę.
 
 Przykład:
@@ -753,7 +753,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 Wszystkie informacje o WeeChat dostępne są na stronie https://weechat.org/dev/info
 
 Przykładowy transfer URL z opcją: pobranie najnowszej wersji rozwojowej WeeChat
-do pliku '/tmp/weechat-devel.tar.gz':
+do pliku _/tmp/weechat-devel.tar.gz_:
 
 [source,python]
 ----
@@ -768,7 +768,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 ----
 
 Więcej informacji o transferach URL i dostępnych opcjach dla funkcji
-`hook_process` oraz `hook_process_hashtable` można znaleźć w 'Opisie API wtyczek'.
+`hook_process` oraz `hook_process_hashtable` można znaleźć w _Opisie API wtyczek_.
 
 [[config_options]]
 === Konfiguracja / opcje
@@ -929,7 +929,7 @@ Wynik jest tabela hashy z następującymi kluczami
   `nick!user@host`
 
 | command | ≥ 0.3.4 |
-  Komenda ('PRIVMSG', 'NOTICE', ...) |
+  Komenda (_PRIVMSG_, _NOTICE_, ...) |
   `PRIVMSG`
 
 | channel | ≥ 0.3.4 |
@@ -945,19 +945,19 @@ Wynik jest tabela hashy z następującymi kluczami
   `hello!`
 
 | pos_command | ≥ 1.3 |
-  The index of 'command' in message ("-1" if 'command' was not found) |
+  The index of _command_ in message ("-1" if _command_ was not found) |
   `47`
 
 | pos_arguments | ≥ 1.3 |
-  The index of 'arguments' in message ("-1" if 'arguments' was not found) |
+  The index of _arguments_ in message ("-1" if _arguments_ was not found) |
   `55`
 
 | pos_channel | ≥ 1.3 |
-  The index of 'channel' in message ("-1" if 'channel' was not found) |
+  The index of _channel_ in message ("-1" if _channel_ was not found) |
   `55`
 
 | pos_text | ≥ 1.3 |
-  The index of 'text' in message ("-1" if 'text' was not found) |
+  The index of _text_ in message ("-1" if _text_ was not found) |
   `65`
 |===
 
@@ -1004,7 +1004,7 @@ else:
 ----
 
 [NOTE]
-Wersje ≤ 0.3.1.1 zwracają pusty ciąg dla 'info_get("version_number")' należy
+Wersje ≤ 0.3.1.1 zwracają pusty ciąg dla _info_get("version_number")_ należy
 sprawdzić, czy zwracana wartość *nie* jest pusta.
 
 Aby otrzymać ciąg z numerem wersji:

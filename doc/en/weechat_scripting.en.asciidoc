@@ -43,7 +43,7 @@ other languages.
 ==== Python
 
 * You have to `import weechat`
-* Functions `print*` are called `prnt*` in python (because 'print' is reserved
+* Functions `print*` are called `prnt*` in python (because _print_ is reserved
   keyword)
 * Functions are called with `weechat.xxx(arg1, arg2, ...)`
 
@@ -53,7 +53,7 @@ other languages.
 
 ==== Ruby
 
-* You have to define 'weechat_init' and call 'register' inside
+* You have to define _weechat_init_ and call _register_ inside
 * Functions are called with `Weechat.xxx(arg1, arg2, ...)`
 * Due to a limitation of Ruby (15 arguments max by function), the function
   `Weechat.config_new_option` receives the callbacks in an array of 6 strings
@@ -102,14 +102,14 @@ weechat.register(name, author, version, license, description, shutdown_function,
 
 Arguments:
 
-* 'name': string, internal name of script
-* 'author': string, author name
-* 'version': string, script version
-* 'license': string, script license
-* 'description': string, short description of script
-* 'shutdown_function': string, name of function called when script is unloaded
+* _name_: string, internal name of script
+* _author_: string, author name
+* _version_: string, script version
+* _license_: string, script license
+* _description_: string, short description of script
+* _shutdown_function_: string, name of function called when script is unloaded
   (can be empty string)
-* 'charset': string, script charset (if your script is UTF-8, you can use blank
+* _charset_: string, script charset (if your script is UTF-8, you can use blank
   value here, because UTF-8 is default charset)
 
 Example of script, for each language:
@@ -202,7 +202,7 @@ Each language has also its own command:
 /javascript load script.js
 ----
 
-You can make link in directory 'language/autoload' to autoload script when
+You can make link in directory _language/autoload_ to autoload script when
 WeeChat is starting.
 
 For example with Python:
@@ -213,22 +213,22 @@ $ ln -s ../script.py
 ----
 
 [NOTE]
-When installing a script with command `/script install` the link in 'autoload'
+When installing a script with command `/script install` the link in _autoload_
 directory is automatically created.
 
 [[differences_with_c_api]]
 == Differences with C API
 
 Script API is almost the same as C plugin API.
-You can look at 'WeeChat Plugin API Reference' for detail about each function
+You can look at _WeeChat Plugin API Reference_ for detail about each function
 in API: prototype, arguments, return values, examples.
 
-It's important to make difference between a 'plugin' and a 'script': a
-'plugin' is a binary file compiled and loaded with command `/plugin`, whereas
-a 'script' is a text file loaded with a plugin like 'python' with command
+It's important to make difference between a _plugin_ and a _script_: a
+_plugin_ is a binary file compiled and loaded with command `/plugin`, whereas
+a _script_ is a text file loaded with a plugin like _python_ with command
 `/python`.
 
-When your script 'test.py' calls a WeeChat API function, path is like that:
+When your script _test.py_ calls a WeeChat API function, path is like that:
 
 ....
                ┌──────────────────────┐        ╔══════════════════╗
@@ -238,7 +238,7 @@ test.py ─────► │ script API │  C API  │ ─────► ║
                └────────────┴─────────┘        ╚═════════╧════════╝
 ....
 
-When WeeChat calls a callback in your script 'test.py', it's reverse of
+When WeeChat calls a callback in your script _test.py_, it's reverse of
 previous path:
 
 ....
@@ -374,7 +374,7 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 == Script API
 
 For more information about functions in API, please read
-'WeeChat Plugin API Reference'.
+_WeeChat Plugin API Reference_.
 
 [[script_api_functions]]
 === Functions
@@ -503,7 +503,7 @@ List of constants in script API:
 
 This chapter shows some common tasks, with examples.
 Only partial things in API are used here, for full reference, see
-'WeeChat Plugin API Reference'.
+_WeeChat Plugin API Reference_.
 
 [[buffers]]
 === Buffers
@@ -697,7 +697,7 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 You can run a background process with `hook_process`. Your callback will be
 called when data is ready. It may be called many times.
 
-For the last call to your callback, 'rc' is set to 0 or positive value, it's
+For the last call to your callback, _rc_ is set to 0 or positive value, it's
 return code of command.
 
 Example:
@@ -749,7 +749,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 All infos available about WeeChat are on page https://weechat.org/dev/info
 
 Example of URL transfer with an option: download latest WeeChat development
-package in file '/tmp/weechat-devel.tar.gz':
+package in file _/tmp/weechat-devel.tar.gz_:
 
 [source,python]
 ----
@@ -764,7 +764,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 ----
 
 For more information about URL transfer and available options, see functions
-`hook_process` and `hook_process_hashtable` in 'WeeChat Plugin API Reference'.
+`hook_process` and `hook_process_hashtable` in _WeeChat Plugin API Reference_.
 
 [[config_options]]
 === Config / options
@@ -924,7 +924,7 @@ The result is a hashtable with following keys
   `nick!user@host`
 
 | command | ≥ 0.3.4 |
-  The command ('PRIVMSG', 'NOTICE', ...) |
+  The command (_PRIVMSG_, _NOTICE_, ...) |
   `PRIVMSG`
 
 | channel | ≥ 0.3.4 |
@@ -940,19 +940,19 @@ The result is a hashtable with following keys
   `hello!`
 
 | pos_command | ≥ 1.3 |
-  The index of 'command' in message ("-1" if 'command' was not found) |
+  The index of _command_ in message ("-1" if _command_ was not found) |
   `47`
 
 | pos_arguments | ≥ 1.3 |
-  The index of 'arguments' in message ("-1" if 'arguments' was not found) |
+  The index of _arguments_ in message ("-1" if _arguments_ was not found) |
   `55`
 
 | pos_channel | ≥ 1.3 |
-  The index of 'channel' in message ("-1" if 'channel' was not found) |
+  The index of _channel_ in message ("-1" if _channel_ was not found) |
   `55`
 
 | pos_text | ≥ 1.3 |
-  The index of 'text' in message ("-1" if 'text' was not found) |
+  The index of _text_ in message ("-1" if _text_ was not found) |
   `65`
 |===
 
@@ -999,7 +999,7 @@ else:
 ----
 
 [NOTE]
-Versions ≤ 0.3.1.1 return empty string for 'info_get("version_number")' so you
+Versions ≤ 0.3.1.1 return empty string for _info_get("version_number")_ so you
 must check that value returned is *not* empty.
 
 To get version as string:
