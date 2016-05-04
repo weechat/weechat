@@ -5,6 +5,7 @@
 :toc: left
 :toclevels: 3
 :toc-title: Table des matières
+:sectnums:
 :docinfo1:
 
 
@@ -41,7 +42,7 @@ weechat::
     dépôt principal avec le code source et la documentation
 
 scripts::
-    les scripts 'officiels' soumis sur weechat.org
+    les scripts _officiels_ soumis sur weechat.org
 
 weechat.org::
     le code source du site de WeeChat : https://weechat.org/
@@ -52,42 +53,42 @@ weercd::
 qweechat::
     interface Qt distante pour WeeChat.
 
-Ce manuel documente seulement le dépôt 'weechat'.
+Ce manuel documente seulement le dépôt _weechat_.
 
 [[overview]]
 === Vue d'ensemble
 
 Les répertoires principaux de WeeChat sont :
 
-[width="100%",cols="1v,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | Répertoire        | Description
 | src/              | Racine des sources
-|    core/          | Fonctions du cœur : point d'entrée, structures internes
-|    gui/           | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces)
-|       curses/     | Interface Curses
-|    plugins/       | API extension/script
-|       alias/      | Extension Alias
-|       aspell/     | Extension Aspell
-|       charset/    | Extension Charset
-|       exec/       | Extension Exec
-|       fifo/       | Extension Fifo (tube FIFO utilisé pour envoyer des commandes à WeeChat)
-|       guile/      | API script Guile (scheme)
-|       irc/        | Extension IRC (Internet Relay Chat)
-|       javascript/ | API script Javascript
-|       logger/     | Extension Logger (enregistrer les messages affichés dans des fichiers)
-|       lua/        | API script Lua
-|       perl/       | API script Perl
-|       python/     | API script Python
-|       relay/      | Extension Relay (proxy IRC + relai pour interfaces distantes)
-|       ruby/       | API script Ruby
-|       script/     | Gestionnaire de scripts
-|       tcl/        | API script Tcl
-|       trigger/    | Extension Trigger
-|       xfer/       | Extension Xfer (IRC DCC fichier/discussion)
+|    core/          | Fonctions du cœur : point d'entrée, structures internes
+|    gui/           | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces)
+|       curses/     | Interface Curses
+|    plugins/       | API extension/script
+|       alias/      | Extension Alias
+|       aspell/     | Extension Aspell
+|       charset/    | Extension Charset
+|       exec/       | Extension Exec
+|       fifo/       | Extension Fifo (tube FIFO utilisé pour envoyer des commandes à WeeChat)
+|       guile/      | API script Guile (scheme)
+|       irc/        | Extension IRC (Internet Relay Chat)
+|       javascript/ | API script Javascript
+|       logger/     | Extension Logger (enregistrer les messages affichés dans des fichiers)
+|       lua/        | API script Lua
+|       perl/       | API script Perl
+|       python/     | API script Python
+|       relay/      | Extension Relay (proxy IRC + relai pour interfaces distantes)
+|       ruby/       | API script Ruby
+|       script/     | Gestionnaire de scripts
+|       tcl/        | API script Tcl
+|       trigger/    | Extension Trigger
+|       xfer/       | Extension Xfer (IRC DCC fichier/discussion)
 | tests/            | Tests
-|    unit/          | Tests unitaires
-|       core/       | Tests unitaires pour les fonctions du cœur
+|    unit/          | Tests unitaires
+|       core/       | Tests unitaires pour les fonctions du cœur
 | doc/              | Documentation
 | po/               | Fichiers de traductions (gettext)
 | debian/           | Empaquetage Debian
@@ -101,234 +102,234 @@ Les répertoires principaux de WeeChat sont :
 
 Le cœur de WeeChat est situé dans les répertoires suivants :
 
-* 'src/core/' : fonctions du cœur (pour manipuler des données)
-* 'src/gui/' : fonctions pour l'interface (tampons, fenêtres, ...)
+* _src/core/_ : fonctions du cœur (pour manipuler des données)
+* _src/gui/_ : fonctions pour l'interface (tampons, fenêtres, ...)
 
-[width="100%",cols="1v,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | Chemin/fichier                | Description
 | core/                         | Fonctions du cœur : point d'entrée, structures internes
-|    wee-arraylist.c            | Listes avec tableau (« arraylists »)
-|    wee-backtrace.c            | Afficher une trace après un plantage
-|    wee-command.c              | Commandes du cœur de WeeChat
-|    wee-completion.c           | Complétions par défaut
-|    wee-config-file.c          | Gestion des fichiers de configuration
-|    wee-config.c               | Options de configuration du cœur de WeeChat (fichier weechat.conf)
-|    wee-debug.c                | Quelques fonctions de debug
-|    wee-eval.c                 | Évaluation d'expressions avec des références à des variables internes
-|    wee-hashtable.c            | Tables de hachage
-|    wee-hdata.c                | Hdata (accès direct aux données en utilisant des tables de hachage)
-|    wee-hook.c                 | Crochets ("hooks")
-|    wee-infolist.c             | Infolists (listes avec les données des objets)
-|    wee-input.c                | Entrée de commandes/texte
-|    wee-list.c                 | Listes triées
-|    wee-log.c                  | Écriture dans le fichier de log WeeChat (weechat.log)
-|    wee-network.c              | Fonctions réseau (connexion aux serveurs/proxies)
-|    wee-proxy.c                | Gestion des proxies
-|    wee-secure.c               | Options des données sécurisées (fichier sec.conf)
-|    wee-string.c               | Fonctions sur les chaînes de caractères
-|    wee-upgrade-file.c         | Système de mise à jour interne
-|    wee-upgrade.c              | Mise à jour du cœur de WeeChat (tampons, lignes, historique, ...)
-|    wee-url.c                  | Transfert d'URL (en utilisant libcurl)
-|    wee-utf8.c                 | Fonctions UTF-8
-|    wee-util.c                 | Quelques autres fonctions utilitaires
-|    wee-version.c              | Fonctions pour la version de WeeChat
-|    weechat.c                  | Fonctions principales : options de ligne de commande, démarrage
+|    wee-arraylist.c            | Listes avec tableau (« arraylists »)
+|    wee-backtrace.c            | Afficher une trace après un plantage
+|    wee-command.c              | Commandes du cœur de WeeChat
+|    wee-completion.c           | Complétions par défaut
+|    wee-config-file.c          | Gestion des fichiers de configuration
+|    wee-config.c               | Options de configuration du cœur de WeeChat (fichier weechat.conf)
+|    wee-debug.c                | Quelques fonctions de debug
+|    wee-eval.c                 | Évaluation d'expressions avec des références à des variables internes
+|    wee-hashtable.c            | Tables de hachage
+|    wee-hdata.c                | Hdata (accès direct aux données en utilisant des tables de hachage)
+|    wee-hook.c                 | Crochets ("hooks")
+|    wee-infolist.c             | Infolists (listes avec les données des objets)
+|    wee-input.c                | Entrée de commandes/texte
+|    wee-list.c                 | Listes triées
+|    wee-log.c                  | Écriture dans le fichier de log WeeChat (weechat.log)
+|    wee-network.c              | Fonctions réseau (connexion aux serveurs/proxies)
+|    wee-proxy.c                | Gestion des proxies
+|    wee-secure.c               | Options des données sécurisées (fichier sec.conf)
+|    wee-string.c               | Fonctions sur les chaînes de caractères
+|    wee-upgrade-file.c         | Système de mise à jour interne
+|    wee-upgrade.c              | Mise à jour du cœur de WeeChat (tampons, lignes, historique, ...)
+|    wee-url.c                  | Transfert d'URL (en utilisant libcurl)
+|    wee-utf8.c                 | Fonctions UTF-8
+|    wee-util.c                 | Quelques autres fonctions utilitaires
+|    wee-version.c              | Fonctions pour la version de WeeChat
+|    weechat.c                  | Fonctions principales : options de ligne de commande, démarrage
 | gui/                          | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces)
-|    gui-bar-item.c             | Objets de barre
-|    gui-bar-window.c           | Fenêtres de barre
-|    gui-bar.c                  | Barres
-|    gui-buffer.c               | Tampons
-|    gui-chat.c                 | Fonctions pour la discussion (afficher un message, ...)
-|    gui-color.c                | Fonctions de couleur
-|    gui-completion.c           | Complétion sur la ligne de commande
-|    gui-cursor.c               | Mode curseur (mouvement libre du curseur)
-|    gui-filter.c               | Filtres
-|    gui-focus.c                | Fonctions concernant le focus (pour les modes curseur et souris)
-|    gui-history.c              | Commandes/texte sauvés dans les tampons
-|    gui-hotlist.c              | Gestion de la "hotlist" (liste des tampons avec activité)
-|    gui-input.c                | Fonctions d'entrée (barre "input")
-|    gui-key.c                  | Fonctions pour le clavier
-|    gui-layout.c               | Dispositions ("layouts")
-|    gui-line.c                 | Lignes dans les tampons
-|    gui-mouse.c                | Souris
-|    gui-nick.c                 | Fonctions pour les pseudos
-|    gui-nicklist.c             | Liste de pseudos dans les tampons
-|    gui-window.c               | Fenêtres
-|    curses/                    | Interface Curses
-|       gui-curses-bar-window.c | Affichage dans les fenêtres de barre
-|       gui-curses-chat.c       | Affichage dans la zone de discussion (messages)
-|       gui-curses-color.c      | Fonctions pour les couleurs
-|       gui-curses-key.c        | Fonctions pour le clavier (touches par défaut, lecture du clavier)
-|       gui-curses-main.c       | Boucle principale de WeeChat (attente des évènements clavier/réseau)
-|       gui-curses-mouse.c      | Souris
-|       gui-curses-term.c       | Fonctions pour le terminal
-|       gui-curses-window.c     | Fenêtres
-|       main.c                  | Point d'entrée
+|    gui-bar-item.c             | Objets de barre
+|    gui-bar-window.c           | Fenêtres de barre
+|    gui-bar.c                  | Barres
+|    gui-buffer.c               | Tampons
+|    gui-chat.c                 | Fonctions pour la discussion (afficher un message, ...)
+|    gui-color.c                | Fonctions de couleur
+|    gui-completion.c           | Complétion sur la ligne de commande
+|    gui-cursor.c               | Mode curseur (mouvement libre du curseur)
+|    gui-filter.c               | Filtres
+|    gui-focus.c                | Fonctions concernant le focus (pour les modes curseur et souris)
+|    gui-history.c              | Commandes/texte sauvés dans les tampons
+|    gui-hotlist.c              | Gestion de la "hotlist" (liste des tampons avec activité)
+|    gui-input.c                | Fonctions d'entrée (barre "input")
+|    gui-key.c                  | Fonctions pour le clavier
+|    gui-layout.c               | Dispositions ("layouts")
+|    gui-line.c                 | Lignes dans les tampons
+|    gui-mouse.c                | Souris
+|    gui-nick.c                 | Fonctions pour les pseudos
+|    gui-nicklist.c             | Liste de pseudos dans les tampons
+|    gui-window.c               | Fenêtres
+|    curses/                    | Interface Curses
+|       gui-curses-bar-window.c | Affichage dans les fenêtres de barre
+|       gui-curses-chat.c       | Affichage dans la zone de discussion (messages)
+|       gui-curses-color.c      | Fonctions pour les couleurs
+|       gui-curses-key.c        | Fonctions pour le clavier (touches par défaut, lecture du clavier)
+|       gui-curses-main.c       | Boucle principale de WeeChat (attente des évènements clavier/réseau)
+|       gui-curses-mouse.c      | Souris
+|       gui-curses-term.c       | Fonctions pour le terminal
+|       gui-curses-window.c     | Fenêtres
+|       main.c                  | Point d'entrée
 |===
 
 [[sources_plugins]]
 ==== Extensions
 
-[width="100%",cols="1v,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | Chemin/fichier                    | Description
 | plugins/                          | Racine des extensions
-|    plugin.c                       | Gestion des extensions (chargement/déchargement des librairies C dynamiques)
-|    plugin-api.c                   | Fonctions supplémentaires pour l'API extension (enveloppes autour des fonctions du cœur de WeeChat)
-|    plugin-config.c                | Options de configuration des extensions (fichier plugins.conf)
-|    plugin-script.c                | Fonctions communes utilisés par les extensions pour les scripts
-|    plugin-script-api.c            | Fonctions pour l'API script : enveloppes autour de quelques fonctions de l'API extension
-|    weechat-plugin.h               | En-tête destiné à être distribué avec les extensions WeeChat, pour les compiler
-|    alias/                         | Extension Alias
-|       alias.c                     | Fonctions principales pour les alias
-|       alias-command.c             | Commandes Alias
-|       alias-completion.c          | Complétions pour Alias
-|       alias-config.c              | Options de configuration des alias (fichier alias.conf)
-|       alias-info.c                | Info/infolists/hdata pour les alias
-|    aspell/                        | Extension Aspell
-|       weechat-aspell.c            | Fonctions principales pour Aspell
-|       weechat-aspell-bar-item.c   | Objets de barre Aspell
-|       weechat-aspell-command.c    | Commandes Aspell
-|       weechat-aspell-completion.c | Complétions pour Aspell
-|       weechat-aspell-config.c     | Options de configuration pour Aspell (fichier aspell.conf)
-|       weechat-aspell-info.c       | Info/infolists/hdata pour Aspell
-|       weechat-aspell-speller.c    | Gestion des correcteurs orthographiques
-|    charset/                       | Extension Charset
-|       charset.c                   | Fonctions pour Charset
-|    exec/                          | Extension Exec
-|       exec.c                      | Fonctions principales de Exec
-|       exec-buffer.c               | Tampon Exec
-|       exec-command.c              | Commandes pour Exec
-|       exec-completion.c           | Complétions pour Exec
-|       exec-config.c               | Options de configuration pour Exec (fichier exec.conf)
-|    fifo/                          | Extension Fifo
-|       fifo.c                      | Fonctions principales de Fifo
-|       fifo-command.c              | Commandes pour Fifo
-|       fifo-info.c                 | Info/infolists/hdata pour Fifo
-|    guile/                         | Extension Guile (scheme)
-|       weechat-guile.c             | Fonctions principales pour Guile (chargement/déchargement des scripts, exécution de code Guile)
-|       weechat-guile-api.c         | Fonctions de l'API script Guile
-|    irc/                           | Extension IRC (Internet Relay Chat)
-|       irc.c                       | Fonctions principales IRC
-|       irc-bar-item.c              | Objets de barre IRC
-|       irc-buffer.c                | Tampons IRC
-|       irc-channel.c               | Canaux IRC
-|       irc-color.c                 | Couleurs IRC
-|       irc-command.c               | Commandes IRC
-|       irc-completion.c            | Complétions IRC
-|       irc-config.c                | Options de configuration IRC (fichier irc.conf)
-|       irc-ctcp.c                  | CTCP IRC
-|       irc-debug.c                 | Fonctions de debug IRC
-|       irc-ignore.c                | Ignore IRC
-|       irc-info.c                  | Info/infolists/hdata pour IRC
-|       irc-input.c                 | Entrée de commandes/texte
-|       irc-message.c               | Fonctions pour manipuler les messages IRC
-|       irc-mode.c                  | Fonctions pour les modes de canal/pseudo
-|       irc-msgbuffer.c             | Tampon cible pour les messages IRC
-|       irc-nick.c                  | Pseudos IRC
-|       irc-notify.c                | Listes de notification IRC
-|       irc-protocol.c              | Protocole IRC (RFCs 1459/2810/2811/2812/2813)
-|       irc-raw.c                   | Tampon des données brutes IRC
-|       irc-redirect.c              | Redirection de la sortie des commandes IRC
-|       irc-sasl.c                  | Authentification SASL avec le serveur IRC
-|       irc-server.c                | Communication avec le serveur IRC
-|       irc-upgrade.c               | Sauvegarde/restauration des données IRC lors de la mise à jour de WeeChat
-|    javascript/                    | Extension Javascript
-|       weechat-js.cpp              | Fonctions principales pour Javascript (chargement/déchargement des scripts, exécution de code Javascript)
-|       weechat-js-api.cpp          | Fonctions de l'API script Javascript
-|       weechat-js-v8.cpp           | Fonctions Javascript v8
-|    logger/                        | Extension Logger
-|       logger.c                    | Fonctions principales pour Logger
-|       logger-buffer.c             | Gestion des listes de tampons pour Logger
-|       logger-config.c             | Options de configuration pour Logger (fichier logger.conf)
-|       logger-info.c               | Info/infolists/hdata pour Logger
-|       logger-tail.c               | Fonctions pour obtenir les dernières lignes d'un fichier
-|    lua/                           | Extension Lua
-|       weechat-lua.c               | Fonctions principales pour Lua (chargement/déchargement des scripts, exécution de code Lua)
-|       weechat-lua-api.c           | Fonctions de l'API script Lua
-|    perl/                          | Extension Perl
-|       weechat-perl.c              | Fonctions principales pour Perl (chargement/déchargement des scripts, exécution de code Perl)
-|       weechat-perl-api.c          | Fonctions de l'API script Perl
-|    python/                        | Extension Python
-|       weechat-python.c            | Fonctions principales pour Python (chargement/déchargement des scripts, exécution de code Python)
-|       weechat-python-api.c        | Fonctions de l'API script Python
-|    relay/                         | Extension Relay (proxy IRC et relai pour des interfaces distantes)
-|       relay.c                     | Fonctions principales de Relay
-|       relay-buffer.c              | Tampon Relay
-|       relay-client.c              | Clients du relai
-|       relay-command.c             | Commandes de Relay
-|       relay-completion.c          | Complétions de Relay
-|       relay-config.c              | Options de configuration pour Relay (fichier relay.conf)
-|       relay-info.c                | Info/infolists/hdata pour Relay
-|       relay-network.c             | Fonctions de réseau pour Relay
-|       relay-raw.c                 | Tampon des données brutes de Relay
-|       relay-server.c              | Serveur Relay
-|       relay-upgrade.c             | Sauvegarde/restauration des données Relay lors de la mise à jour de WeeChat
-|       relay-websocket.c           | Fonctions pour le serveur WebSocket (RFC 6455)
-|       irc/                        | Proxy IRC
-|          relay-irc.c              | Fonctions principales pour le proxy IRC
-|       weechat/                    | Relai pour les interfaces distantes
-|          relay-weechat.c          | Relai pour les interfaces distantes (fonctions principales)
-|          relay-weechat-msg.c      | Envoi de messages binaires aux clients
-|          relay-weechat-nicklist.c | Fonctions pour la liste de pseudos
-|          relay-weechat-protocol.c | Lecture des commandes des clients
-|    ruby/                          | Extension Ruby
-|       weechat-ruby.c              | Fonctions principales pour Ruby (chargement/déchargement des scripts, exécution de code Ruby)
-|       weechat-ruby-api.c          | Fonctions de l'API script Ruby
-|    script/                        | Gestionnaire de scripts
-|       script.c                    | Fonctions principales du gestionnaire de scripts
-|       script-action.c             | Actions sur les scripts (chargement/déchargement, installation/suppression, ...)
-|       script-buffer.c             | Tampon pour le gestionnaire de scripts
-|       script-command.c            | Commandes pour le gestionnaire de scripts
-|       script-completion.c         | Complétions pour le gestionnaire de scripts
-|       script-config.c             | Options de configuration pour le gestionnaire de scripts (fichier script.conf)
-|       script-info.c               | Info/infolists/hdata pour le gestionnaire de scripts
-|       script-repo.c               | Téléchargement et lecture du dépôt de scripts
-|    tcl/                           | Extension Tcl
-|       weechat-tcl.c               | Fonctions principales pour Tcl (chargement/déchargement des scripts, exécution de code Tcl)
-|       weechat-tcl-api.c           | Fonctions de l'API script Tcl
-|    trigger/                       | Extension Trigger
-|       trigger.c                   | Fonctions principales de Trigger
-|       trigger-buffer.c            | Tampon Trigger
-|       trigger-callback.c          | Callbacks de Trigger
-|       trigger-command.c           | Commandes pour Trigger
-|       trigger-completion.c        | Complétions pour Trigger
-|       trigger-config.c            | Options de configuration pour Trigger (fichier trigger.conf)
-|    xfer/                          | Extension Xfer (IRC DCC fichier/discussion)
-|       xfer.c                      | Fonctions principales de Xfer
-|       xfer-buffer.c               | Tampon Xfer
-|       xfer-chat.c                 | Discussion DCC
-|       xfer-command.c              | Commandes pour Xfer
-|       xfer-completion.c           | Complétions pour Xfer
-|       xfer-config.c               | Options de configuration pour Xfer (fichier xfer.conf)
-|       xfer-dcc.c                  | Transfert de fichier par DCC
-|       xfer-file.c                 | Fonctions pour les fichiers dans Xfer
-|       xfer-info.c                 | Info/infolists/hdata pour Xfer
-|       xfer-network.c              | Fonctions réseau pour Xfer
-|       xfer-upgrade.c              | Sauvegarde/restauration des données Xfer lors de la mise à jour de WeeChat
+|    plugin.c                       | Gestion des extensions (chargement/déchargement des librairies C dynamiques)
+|    plugin-api.c                   | Fonctions supplémentaires pour l'API extension (enveloppes autour des fonctions du cœur de WeeChat)
+|    plugin-config.c                | Options de configuration des extensions (fichier plugins.conf)
+|    plugin-script.c                | Fonctions communes utilisés par les extensions pour les scripts
+|    plugin-script-api.c            | Fonctions pour l'API script : enveloppes autour de quelques fonctions de l'API extension
+|    weechat-plugin.h               | En-tête destiné à être distribué avec les extensions WeeChat, pour les compiler
+|    alias/                         | Extension Alias
+|       alias.c                     | Fonctions principales pour les alias
+|       alias-command.c             | Commandes Alias
+|       alias-completion.c          | Complétions pour Alias
+|       alias-config.c              | Options de configuration des alias (fichier alias.conf)
+|       alias-info.c                | Info/infolists/hdata pour les alias
+|    aspell/                        | Extension Aspell
+|       weechat-aspell.c            | Fonctions principales pour Aspell
+|       weechat-aspell-bar-item.c   | Objets de barre Aspell
+|       weechat-aspell-command.c    | Commandes Aspell
+|       weechat-aspell-completion.c | Complétions pour Aspell
+|       weechat-aspell-config.c     | Options de configuration pour Aspell (fichier aspell.conf)
+|       weechat-aspell-info.c       | Info/infolists/hdata pour Aspell
+|       weechat-aspell-speller.c    | Gestion des correcteurs orthographiques
+|    charset/                       | Extension Charset
+|       charset.c                   | Fonctions pour Charset
+|    exec/                          | Extension Exec
+|       exec.c                      | Fonctions principales de Exec
+|       exec-buffer.c               | Tampon Exec
+|       exec-command.c              | Commandes pour Exec
+|       exec-completion.c           | Complétions pour Exec
+|       exec-config.c               | Options de configuration pour Exec (fichier exec.conf)
+|    fifo/                          | Extension Fifo
+|       fifo.c                      | Fonctions principales de Fifo
+|       fifo-command.c              | Commandes pour Fifo
+|       fifo-info.c                 | Info/infolists/hdata pour Fifo
+|    guile/                         | Extension Guile (scheme)
+|       weechat-guile.c             | Fonctions principales pour Guile (chargement/déchargement des scripts, exécution de code Guile)
+|       weechat-guile-api.c         | Fonctions de l'API script Guile
+|    irc/                           | Extension IRC (Internet Relay Chat)
+|       irc.c                       | Fonctions principales IRC
+|       irc-bar-item.c              | Objets de barre IRC
+|       irc-buffer.c                | Tampons IRC
+|       irc-channel.c               | Canaux IRC
+|       irc-color.c                 | Couleurs IRC
+|       irc-command.c               | Commandes IRC
+|       irc-completion.c            | Complétions IRC
+|       irc-config.c                | Options de configuration IRC (fichier irc.conf)
+|       irc-ctcp.c                  | CTCP IRC
+|       irc-debug.c                 | Fonctions de debug IRC
+|       irc-ignore.c                | Ignore IRC
+|       irc-info.c                  | Info/infolists/hdata pour IRC
+|       irc-input.c                 | Entrée de commandes/texte
+|       irc-message.c               | Fonctions pour manipuler les messages IRC
+|       irc-mode.c                  | Fonctions pour les modes de canal/pseudo
+|       irc-msgbuffer.c             | Tampon cible pour les messages IRC
+|       irc-nick.c                  | Pseudos IRC
+|       irc-notify.c                | Listes de notification IRC
+|       irc-protocol.c              | Protocole IRC (RFCs 1459/2810/2811/2812/2813)
+|       irc-raw.c                   | Tampon des données brutes IRC
+|       irc-redirect.c              | Redirection de la sortie des commandes IRC
+|       irc-sasl.c                  | Authentification SASL avec le serveur IRC
+|       irc-server.c                | Communication avec le serveur IRC
+|       irc-upgrade.c               | Sauvegarde/restauration des données IRC lors de la mise à jour de WeeChat
+|    javascript/                    | Extension Javascript
+|       weechat-js.cpp              | Fonctions principales pour Javascript (chargement/déchargement des scripts, exécution de code Javascript)
+|       weechat-js-api.cpp          | Fonctions de l'API script Javascript
+|       weechat-js-v8.cpp           | Fonctions Javascript v8
+|    logger/                        | Extension Logger
+|       logger.c                    | Fonctions principales pour Logger
+|       logger-buffer.c             | Gestion des listes de tampons pour Logger
+|       logger-config.c             | Options de configuration pour Logger (fichier logger.conf)
+|       logger-info.c               | Info/infolists/hdata pour Logger
+|       logger-tail.c               | Fonctions pour obtenir les dernières lignes d'un fichier
+|    lua/                           | Extension Lua
+|       weechat-lua.c               | Fonctions principales pour Lua (chargement/déchargement des scripts, exécution de code Lua)
+|       weechat-lua-api.c           | Fonctions de l'API script Lua
+|    perl/                          | Extension Perl
+|       weechat-perl.c              | Fonctions principales pour Perl (chargement/déchargement des scripts, exécution de code Perl)
+|       weechat-perl-api.c          | Fonctions de l'API script Perl
+|    python/                        | Extension Python
+|       weechat-python.c            | Fonctions principales pour Python (chargement/déchargement des scripts, exécution de code Python)
+|       weechat-python-api.c        | Fonctions de l'API script Python
+|    relay/                         | Extension Relay (proxy IRC et relai pour des interfaces distantes)
+|       relay.c                     | Fonctions principales de Relay
+|       relay-buffer.c              | Tampon Relay
+|       relay-client.c              | Clients du relai
+|       relay-command.c             | Commandes de Relay
+|       relay-completion.c          | Complétions de Relay
+|       relay-config.c              | Options de configuration pour Relay (fichier relay.conf)
+|       relay-info.c                | Info/infolists/hdata pour Relay
+|       relay-network.c             | Fonctions de réseau pour Relay
+|       relay-raw.c                 | Tampon des données brutes de Relay
+|       relay-server.c              | Serveur Relay
+|       relay-upgrade.c             | Sauvegarde/restauration des données Relay lors de la mise à jour de WeeChat
+|       relay-websocket.c           | Fonctions pour le serveur WebSocket (RFC 6455)
+|       irc/                        | Proxy IRC
+|          relay-irc.c              | Fonctions principales pour le proxy IRC
+|       weechat/                    | Relai pour les interfaces distantes
+|          relay-weechat.c          | Relai pour les interfaces distantes (fonctions principales)
+|          relay-weechat-msg.c      | Envoi de messages binaires aux clients
+|          relay-weechat-nicklist.c | Fonctions pour la liste de pseudos
+|          relay-weechat-protocol.c | Lecture des commandes des clients
+|    ruby/                          | Extension Ruby
+|       weechat-ruby.c              | Fonctions principales pour Ruby (chargement/déchargement des scripts, exécution de code Ruby)
+|       weechat-ruby-api.c          | Fonctions de l'API script Ruby
+|    script/                        | Gestionnaire de scripts
+|       script.c                    | Fonctions principales du gestionnaire de scripts
+|       script-action.c             | Actions sur les scripts (chargement/déchargement, installation/suppression, ...)
+|       script-buffer.c             | Tampon pour le gestionnaire de scripts
+|       script-command.c            | Commandes pour le gestionnaire de scripts
+|       script-completion.c         | Complétions pour le gestionnaire de scripts
+|       script-config.c             | Options de configuration pour le gestionnaire de scripts (fichier script.conf)
+|       script-info.c               | Info/infolists/hdata pour le gestionnaire de scripts
+|       script-repo.c               | Téléchargement et lecture du dépôt de scripts
+|    tcl/                           | Extension Tcl
+|       weechat-tcl.c               | Fonctions principales pour Tcl (chargement/déchargement des scripts, exécution de code Tcl)
+|       weechat-tcl-api.c           | Fonctions de l'API script Tcl
+|    trigger/                       | Extension Trigger
+|       trigger.c                   | Fonctions principales de Trigger
+|       trigger-buffer.c            | Tampon Trigger
+|       trigger-callback.c          | Callbacks de Trigger
+|       trigger-command.c           | Commandes pour Trigger
+|       trigger-completion.c        | Complétions pour Trigger
+|       trigger-config.c            | Options de configuration pour Trigger (fichier trigger.conf)
+|    xfer/                          | Extension Xfer (IRC DCC fichier/discussion)
+|       xfer.c                      | Fonctions principales de Xfer
+|       xfer-buffer.c               | Tampon Xfer
+|       xfer-chat.c                 | Discussion DCC
+|       xfer-command.c              | Commandes pour Xfer
+|       xfer-completion.c           | Complétions pour Xfer
+|       xfer-config.c               | Options de configuration pour Xfer (fichier xfer.conf)
+|       xfer-dcc.c                  | Transfert de fichier par DCC
+|       xfer-file.c                 | Fonctions pour les fichiers dans Xfer
+|       xfer-info.c                 | Info/infolists/hdata pour Xfer
+|       xfer-network.c              | Fonctions réseau pour Xfer
+|       xfer-upgrade.c              | Sauvegarde/restauration des données Xfer lors de la mise à jour de WeeChat
 |===
 
 [[sources_tests]]
 ==== Tests
 
-[width="100%",cols="1v,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | Chemin/fichier              | Description
 | tests/                      | Racine des tests
-|    tests.cpp                | Programme utilisé pour lancer les tests
-|    unit/                    | Racine des tests unitaires
-|       core/                 | Racine des tests unitaires pour le cœur
-|          test-arraylist.cpp | Tests : listes avec tableau (« arraylists »)
-|          test-eval.cpp      | Tests : évaluation d'expressions
-|          test-hashtble.cpp  | Tests : tables de hachage
-|          test-hdata.cpp     | Tests : hdata
-|          test-infolist.cpp  | Tests : infolists
-|          test-list.cpp      | Tests : listes
-|          test-string.cpp    | Tests : chaînes
-|          test-url.cpp       | Tests : URLs
-|          test-utf8.cpp      | Tests : UTF-8
-|          test-util.cpp      | Tests : fonctions utiles
+|    tests.cpp                | Programme utilisé pour lancer les tests
+|    unit/                    | Racine des tests unitaires
+|       core/                 | Racine des tests unitaires pour le cœur
+|          test-arraylist.cpp | Tests : listes avec tableau (« arraylists »)
+|          test-eval.cpp      | Tests : évaluation d'expressions
+|          test-hashtble.cpp  | Tests : tables de hachage
+|          test-hdata.cpp     | Tests : hdata
+|          test-infolist.cpp  | Tests : infolists
+|          test-list.cpp      | Tests : listes
+|          test-string.cpp    | Tests : chaînes
+|          test-url.cpp       | Tests : URLs
+|          test-utf8.cpp      | Tests : UTF-8
+|          test-util.cpp      | Tests : fonctions utiles
 |===
 
 [[documentation_translations]]
@@ -336,37 +337,37 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 
 Fichiers de documentation :
 
-[width="100%",cols="1v,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | Chemin/fichier                           | Description
 | doc/                                     | Documentation
-|    docinfo.html                          | Style Asciidoctor
-|    docgen.py                             | Script Python pour construire les fichiers dans le répertoire 'autogen/' (voir ci-dessous)
-|    XX/                                   | Documentation pour la langue XX (langues : en, fr, de, it, ...)
-|       cmdline_options.XX.asciidoc        | Options de ligne de commande (fichier inclus dans la page de manuel et le guide utilisateur)
-|       weechat.1.XX.asciidoc              | Page de manuel (`man weechat`)
-|       weechat_dev.XX.asciidoc            | Guide du développeur (ce document)
-|       weechat_faq.XX.asciidoc            | FAQ (questions fréquemment posées)
-|       weechat_plugin_api.XX.asciidoc     | Référence API extension
-|       weechat_quickstart.XX.asciidoc     | Guide de démarrage
-|       weechat_relay_protocol.XX.asciidoc | Protocole Relay (pour les interfaces distantes)
-|       weechat_scripting.XX.asciidoc      | Guide pour scripts
-|       weechat_tester.XX.asciidoc         | Guide du testeur
-|       weechat_user.XX.asciidoc           | Guide utilisateur
-|       autogen/                           | Fichiers automatiquement générés avec le script docgen.py
-|          user/                           | Fichiers automatiquement générés pour le guide utilisateur (ne *JAMAIS* les mettre à jour manuellement !)
-|          plugin_api/                     | Fichiers automatiquement générés pour l'API extension (ne *JAMAIS* les mettre à jour manuellement !)
+|    docinfo.html                          | Style Asciidoctor
+|    docgen.py                             | Script Python pour construire les fichiers dans le répertoire _autogen/_ (voir ci-dessous)
+|    XX/                                   | Documentation pour la langue XX (langues : en, fr, de, it, ...)
+|       cmdline_options.XX.asciidoc        | Options de ligne de commande (fichier inclus dans la page de manuel et le guide utilisateur)
+|       weechat.1.XX.asciidoc              | Page de manuel (`man weechat`)
+|       weechat_dev.XX.asciidoc            | Guide du développeur (ce document)
+|       weechat_faq.XX.asciidoc            | FAQ (questions fréquemment posées)
+|       weechat_plugin_api.XX.asciidoc     | Référence API extension
+|       weechat_quickstart.XX.asciidoc     | Guide de démarrage
+|       weechat_relay_protocol.XX.asciidoc | Protocole Relay (pour les interfaces distantes)
+|       weechat_scripting.XX.asciidoc      | Guide pour scripts
+|       weechat_tester.XX.asciidoc         | Guide du testeur
+|       weechat_user.XX.asciidoc           | Guide utilisateur
+|       autogen/                           | Fichiers automatiquement générés avec le script docgen.py
+|          user/                           | Fichiers automatiquement générés pour le guide utilisateur (ne *JAMAIS* les mettre à jour manuellement !)
+|          plugin_api/                     | Fichiers automatiquement générés pour l'API extension (ne *JAMAIS* les mettre à jour manuellement !)
 |===
 
 Les traductions pour WeeChat et les extensions sont effectuées avec gettext, les
-fichiers sont dans le répertoire 'po/' :
+fichiers sont dans le répertoire _po/_ :
 
-[width="100%",cols="1v,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | Chemin/fichier | Description
 | po/            | Fichiers de traduction (gettext)
-|    XX.po       | Traductions pour la langue XX (fr, de, it, ...), la langue par défaut est l'anglais
-|    weechat.pot | Modèle pour les traductions (automatiquement généré)
+|    XX.po       | Traductions pour la langue XX (fr, de, it, ...), la langue par défaut est l'anglais
+|    weechat.pot | Modèle pour les traductions (automatiquement généré)
 |===
 
 [[coding_rules]]
@@ -598,7 +599,7 @@ struct t_hook_fd *new_hook_fd;
 new_hook_fd = malloc (sizeof (*new_hook_fd));
 ----
 
-* Ce code Lisp peut être utilisé dans votre '~/.emacs.el' pour indenter
+* Ce code Lisp peut être utilisé dans votre _~/.emacs.el_ pour indenter
   correctement si vous utilisez l'éditeur de texte Emacs :
 
 [source,lisp]
@@ -627,15 +628,15 @@ Voir http://www.python.org/dev/peps/pep-0008/
 ==== Fichiers
 
 Les noms de fichiers sont composés de lettres et tirets, avec le format :
-'xxx-yyyyy.[ch]', où 'xxx' est le répertoire/composant (peut être une
-abréviation) et 'yyyyy' un nom pour le fichier.
+_xxx-yyyyy.[ch]_, où _xxx_ est le répertoire/composant (peut être une
+abréviation) et _yyyyy_ un nom pour le fichier.
 
 Le fichier principal d'un répertoire peut avoir le même nom que le répertoire,
-par exemple 'irc.c' pour l'extension irc.
+par exemple _irc.c_ pour l'extension irc.
 
 Exemples :
 
-[width="100%",cols="1l,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | Répertoire          | Fichiers
 | src/core/           | weechat.c, wee-backtrace.c, wee-command.c, ...
@@ -647,18 +648,18 @@ Exemples :
 |===
 
 Les en-têtes des fichiers C doivent avoir le même nom que le fichier, par
-exemple 'wee-command.h' pour le fichier 'wee-command.c'.
+exemple _wee-command.h_ pour le fichier _wee-command.c_.
 
 [[naming_convention_structures]]
 ==== Structures
 
-Les structures ont le nom 't_X_Y' ou 't_X_Y_Z' :
+Les structures ont le nom _t_X_Y_ ou _t_X_Y_Z_ :
 
-* 'X' : répertoire/composant (peut être une abréviation)
-* 'Y' : fin du nom de fichier
-* 'Z' : nom de la structure (facultatif)
+* _X_ : répertoire/composant (peut être une abréviation)
+* _Y_ : fin du nom de fichier
+* _Z_ : nom de la structure (facultatif)
 
-Exemple : un pseudo IRC (de 'src/plugins/irc/irc-nick.h') :
+Exemple : un pseudo IRC (de _src/plugins/irc/irc-nick.h_) :
 
 [source,C]
 ----
@@ -679,16 +680,16 @@ struct t_irc_nick
 [[naming_convention_variables]]
 ==== Variables
 
-Les variables globales (en dehors des fonctions) ont le nom 'X_Y_Z' :
+Les variables globales (en dehors des fonctions) ont le nom _X_Y_Z_ :
 
-* 'X' : répertoire/composant (peut être une abréviation)
-* 'Y' : fin du nom de fichier
-* 'Z' : nom de la variable
+* _X_ : répertoire/composant (peut être une abréviation)
+* _Y_ : fin du nom de fichier
+* _Z_ : nom de la variable
 
 Exception : pour les variables des derniers éléments d'une liste, le nom est
-'last_X' (où 'X' est le nom de la variable, en utilisant le singulier).
+_last_X_ (où _X_ est le nom de la variable, en utilisant le singulier).
 
-Exemple : fenêtres (de 'src/gui/gui-window.c') :
+Exemple : fenêtres (de _src/gui/gui-window.c_) :
 
 [source,C]
 ----
@@ -699,8 +700,8 @@ struct t_gui_window *gui_current_window = NULL; /* current window           */
 
 Il n'y a pas de convention pour les variables locales (dans les fonctions).
 La seule recommandation est que le nom soit explicite (et pas trop court). +
-Cependant, les pointeurs vers les structures sont souvent nommés 'ptr_xxxx', par
-exemple un pointeur sur 'struct t_gui_buffer *' sera : '*ptr_buffer'.
+Cependant, les pointeurs vers les structures sont souvent nommés _ptr_xxxx_, par
+exemple un pointeur sur _struct t_gui_buffer *_ sera : _*ptr_buffer_.
 
 [[naming_convention_functions]]
 ==== Fonctions
@@ -708,7 +709,7 @@ exemple un pointeur sur 'struct t_gui_buffer *' sera : '*ptr_buffer'.
 La convention pour les noms des fonctions est le même que celui des
 <<naming_convention_variables,variables>>.
 
-Exemple : création d'une nouvelle fenêtre (de 'src/gui/gui-window.c') :
+Exemple : création d'une nouvelle fenêtre (de _src/gui/gui-window.c_) :
 
 [source,C]
 ----
@@ -746,7 +747,7 @@ avec un "callback".
 La plupart des listes chaînes WeeChat sont doublement chaînées : chaque nœud a
 un pointeur vers le nœud précédent/suivant.
 
-Exemple : liste des tampons (de 'src/gui/gui-buffer.h') :
+Exemple : liste des tampons (de _src/gui/gui-buffer.h_) :
 
 [source,C]
 ----
@@ -778,10 +779,10 @@ attributs (gras, souligné, ...) et les couleurs à l'écran.
 Tous les attributs/couleurs sont préfixés par un caractère dans la chaîne, qui
 peuvent être :
 
-* '0x19' : code couleur (suivi par un/des code(s) couleur)
-* '0x1A' : activer un attribut (suivi par un attribut sur un caractère)
-* '0x1B' : supprimer un attribut (suivi par un attribut sur un caractère)
-* '0x1C' : réinitialiser (rien après)
+* _0x19_ : code couleur (suivi par un/des code(s) couleur)
+* _0x1A_ : activer un attribut (suivi par un attribut sur un caractère)
+* _0x1B_ : supprimer un attribut (suivi par un attribut sur un caractère)
+* _0x1C_ : réinitialiser (rien après)
 
 Les attributs autorisés sont (un ou plusieurs caractères) :
 
@@ -810,36 +811,36 @@ Toutes les combinaisons sont résumées dans ce tableau :
 
 [width="100%",cols="4,2,2,8",options="header"]
 |===
-| Code                               | Exemple                 | Aires         | Description
-| hex[19] + STD                      | hex[19]`01`             | chat + barres | Définir les attributs et la couleur en utilisant une option, voir le tableau ci-dessous
-| hex[19] + EXT                      | hex[19]`@00001`         | chat          | Définir une couleur avec la paire ncurses (utilisé seulement sur le tampon `/color`)
-| hex[19] + "F" + (A)STD             | hex[19]`F*05`           | chat + barres | Définir la couleur de texte (couleur WeeChat)
-| hex[19] + "F" + (A)EXT             | hex[19]`F@00214`        | chat + barres | Définir la couleur de texte (couleur étendue)
-| hex[19] + "B" + STD                | hex[19]`B05`            | chat + barres | Définir la couleur de fond (couleur WeeChat)
-| hex[19] + "B" + EXT                | hex[19]`B@00124`        | chat + barres | Définir le couleur de fond (couleur étendue)
-| hex[19] + "*" + (A)STD             | hex[19]`*05`            | chat + barres | Définir la couleur de texte (couleur WeeChat)
-| hex[19] + "*" + (A)EXT             | hex[19]`*@00214`        | chat + barres | Définir la couleur de texte (couleur étendue)
-| hex[19] + "*" + (A)STD + "," + STD | hex[19]`*08,05`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat)
-| hex[19] + "*" + (A)STD + "," + EXT | hex[19]`*01,@00214`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue)
-| hex[19] + "*" + (A)EXT + "," + STD | hex[19]`*@00214,05`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat)
-| hex[19] + "*" + (A)EXT + "," + EXT | hex[19]`*@00214,@00017` | chat + barres | Définir la couleur de texte/fond (couleurs étendues)
-| hex[19] + "b" + "F"                | hex[19]`bF`             | barres        | Définir la couleur de texte de la barre
-| hex[19] + "b" + "D"                | hex[19]`bD`             | barres        | Définir la couleur du délimiteur de la barre
-| hex[19] + "b" + "B"                | hex[19]`bB`             | barres        | Définir la couleur de fond de la barre
-| hex[19] + "b" + "_"                | hex[19]`b_`             | barre input   | Caractère de démarrage dans l'entrée (utilisé seulement dans l'objet "input_text")
-| hex[19] + "b" + "-"                | hex[19]`b-`             | barre input   | Caractère de démarrage caché dans l'entrée (utilisé seulement dans l'objet "input_text")
-| hex[19] + "b" + "#"                | hex[19]`b#`             | barre input   | Caractère de déplacement du curseur (utilisé seulement dans l'objet "input_text")
-| hex[19] + "b" + "i"                | hex[19]`bi`             | barres        | Début d'objet
-| hex[19] + "b" + "l" (lower L)      | hex[19]`bl`             | barres        | Ligne de démarrage d'objet
-| hex[19] + "E"                      | hex[19]`E`              | chat + barres | Texte mis en valeur _(WeeChat ≥ 0.4.2)_
-| hex[19] + hex[1C]                  | hex[19]hex[1C]          | chat + barres | Réinitialiser la couleur (garder les attributs)
-| hex[1A] + ATTR                     | hex[1A]`*`              | chat + barres | Activer un attribut
-| hex[1B] + ATTR                     | hex[1B]`*`              | chat + barres | Supprimer un attribut
-| hex[1C]                            | hex[1C]                 | chat + barres | Réinitialiser les attributs et la couleur
+| Code                                 | Exemple                    | Aires         | Description
+| [hex]#19# + STD                      | [hex]#19# `01`             | chat + barres | Définir les attributs et la couleur en utilisant une option, voir le tableau ci-dessous
+| [hex]#19# + EXT                      | [hex]#19# `@00001`         | chat          | Définir une couleur avec la paire ncurses (utilisé seulement sur le tampon `/color`)
+| [hex]#19# + "F" + (A)STD             | [hex]#19# `F*05`           | chat + barres | Définir la couleur de texte (couleur WeeChat)
+| [hex]#19# + "F" + (A)EXT             | [hex]#19# `F@00214`        | chat + barres | Définir la couleur de texte (couleur étendue)
+| [hex]#19# + "B" + STD                | [hex]#19# `B05`            | chat + barres | Définir la couleur de fond (couleur WeeChat)
+| [hex]#19# + "B" + EXT                | [hex]#19# `B@00124`        | chat + barres | Définir le couleur de fond (couleur étendue)
+| [hex]#19# + "*" + (A)STD             | [hex]#19# `*05`            | chat + barres | Définir la couleur de texte (couleur WeeChat)
+| [hex]#19# + "*" + (A)EXT             | [hex]#19# `*@00214`        | chat + barres | Définir la couleur de texte (couleur étendue)
+| [hex]#19# + "*" + (A)STD + "," + STD | [hex]#19# `*08,05`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat)
+| [hex]#19# + "*" + (A)STD + "," + EXT | [hex]#19# `*01,@00214`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue)
+| [hex]#19# + "*" + (A)EXT + "," + STD | [hex]#19# `*@00214,05`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat)
+| [hex]#19# + "*" + (A)EXT + "," + EXT | [hex]#19# `*@00214,@00017` | chat + barres | Définir la couleur de texte/fond (couleurs étendues)
+| [hex]#19# + "b" + "F"                | [hex]#19# `bF`             | barres        | Définir la couleur de texte de la barre
+| [hex]#19# + "b" + "D"                | [hex]#19# `bD`             | barres        | Définir la couleur du délimiteur de la barre
+| [hex]#19# + "b" + "B"                | [hex]#19# `bB`             | barres        | Définir la couleur de fond de la barre
+| [hex]#19# + "b" + "_"                | [hex]#19# `b_`             | barre input   | Caractère de démarrage dans l'entrée (utilisé seulement dans l'objet "input_text")
+| [hex]#19# + "b" + "-"                | [hex]#19# `b-`             | barre input   | Caractère de démarrage caché dans l'entrée (utilisé seulement dans l'objet "input_text")
+| [hex]#19# + "b" + "#"                | [hex]#19# `b#`             | barre input   | Caractère de déplacement du curseur (utilisé seulement dans l'objet "input_text")
+| [hex]#19# + "b" + "i"                | [hex]#19# `bi`             | barres        | Début d'objet
+| [hex]#19# + "b" + "l" (lower L)      | [hex]#19# `bl`             | barres        | Ligne de démarrage d'objet
+| [hex]#19# + "E"                      | [hex]#19# `E`              | chat + barres | Texte mis en valeur _(WeeChat ≥ 0.4.2)_
+| [hex]#19# + [hex]#1C#                | [hex]#19# [hex]#1C#        | chat + barres | Réinitialiser la couleur (garder les attributs)
+| [hex]#1A# + ATTR                     | [hex]#1A# `*`              | chat + barres | Activer un attribut
+| [hex]#1B# + ATTR                     | [hex]#1B# `*`              | chat + barres | Supprimer un attribut
+| [hex]#1C#                            | [hex]#1C#                  | chat + barres | Réinitialiser les attributs et la couleur
 |===
 
-Les codes couleur utilisant des options (voir 't_gui_color_enum', dans le
-fichier 'src/gui/gui-color.h') :
+Les codes couleur utilisant des options (voir _t_gui_color_enum_, dans le
+fichier _src/gui/gui-color.h_) :
 
 [width="70%",cols="^1m,10",options="header"]
 |===
@@ -919,31 +920,31 @@ Exemples de codes couleur :
 
 [width="70%",cols="1,2",options="header"]
 |===
-| Code                      | Description
-| hex[19]`01`               | Couleur de l'option "01" (texte de discussion)
-| hex[19]`*08,03`           | Jaune sur rouge
-| hex[19]`*@00214`          | Orange (couleur étendue 214)
-| hex[19]`*@*_00214,@00017` | Orange (214) gras souligné sur bleu foncé (17)
-| hex[1A]`_`                | Activer le souligné
-| hex[1B]`_`                | Supprimer le souligné
-| hex[1C]                   | Réinitialiser les attributs et la couleur
+| Code                         | Description
+| [hex]#19# `01`               | Couleur de l'option "01" (texte de discussion)
+| [hex]#19# `*08,03`           | Jaune sur rouge
+| [hex]#19# `*@00214`          | Orange (couleur étendue 214)
+| [hex]#19# `*@*_00214,@00017` | Orange (214) gras souligné sur bleu foncé (17)
+| [hex]#1A# `_`                | Activer le souligné
+| [hex]#1B# `_`                | Supprimer le souligné
+| [hex]#1C#                    | Réinitialiser les attributs et la couleur
 |===
 
 [[plugin_internals]]
 == Intérieur des extensions
 
-Le fichier 'src/plugins/weechat-plugin.h' définit et exporte toutes les
+Le fichier _src/plugins/weechat-plugin.h_ définit et exporte toutes les
 fonctions disponibles dans l'API.
 
-Une structure appelée 't_weechat_plugin' est utilisée pour stocker les
+Une structure appelée _t_weechat_plugin_ est utilisée pour stocker les
 informations sur l'extension (nom de fichier, nom, auteur, description, ...) et
 toutes les fonctions de l'API, sous forme de pointeurs vers les fonctions
 WeeChat.
 
 Et puis des macros sont utilisées pour appeler ces fonctions.
 
-Par exemple, la fonction 'hook_timer' est définie dans la structure
-'t_weechat_plugin' comme ceci :
+Par exemple, la fonction _hook_timer_ est définie dans la structure
+_t_weechat_plugin_ comme ceci :
 
 [source,C]
 ----
@@ -1001,13 +1002,13 @@ Pour un bug Savannah :
 component: fix a problem (bug #12345)
 ----
 
-Où 'component' est :
+Où _component_ est :
 
-* pour le cœur WeeChat : 'core' (les fichiers dans le répertoire racine, 'po/'
-  et 'src/', sauf 'src/plugins/')
-* fichiers de documentation : 'doc' (fichiers dans le répertoire 'doc/')
-* nom d'une extension : 'irc', 'python', 'relay', ... (fichiers dans le
-  répertoire 'src/plugins/')
+* pour le cœur WeeChat : _core_ (les fichiers dans le répertoire racine, _po/_
+  et _src/_, sauf _src/plugins/_)
+* fichiers de documentation : _doc_ (fichiers dans le répertoire _doc/_)
+* nom d'une extension : _irc_, _python_, _relay_, ... (fichiers dans le
+  répertoire _src/plugins/_)
 
 Quelques règles à suivre :
 
@@ -1035,7 +1036,7 @@ core: update Japanese translations (patch #7783)
 [[gettext]]
 ==== Gettext
 
-Les fichiers gettext sont dans le répertoire 'po/'.
+Les fichiers gettext sont dans le répertoire _po/_.
 
 Si vous souhaitez initialiser une nouvelle langue, utilisez la commande
 `msginit`. Par exemple pour créer un fichier qui est prêt à traduire en
@@ -1050,7 +1051,7 @@ La langue de base pour WeeChat est l'anglais, donc vous devez évidemment
 comprendre parfaitement l'anglais pour traduire vers votre langue.
 
 Une fois terminé, vous *devez* vérifier votre fichier avec le script
-'msgcheck.py' (https://github.com/flashcode/msgcheck) :
+_msgcheck.py_ (https://github.com/flashcode/msgcheck) :
 
 ----
 $ msgcheck.py xx.po
@@ -1059,13 +1060,13 @@ $ msgcheck.py xx.po
 [[build_autogen_files]]
 ===== Construire les fichiers auto-générés
 
-Les fichiers dans le répertoire 'doc/XX/autogen/' sont automatiquement générés
-par le script 'doc/docgen.py'.
+Les fichiers dans le répertoire _doc/XX/autogen/_ sont automatiquement générés
+par le script _doc/docgen.py_.
 
 Copiez ce script python dans votre répertoire python (par exemple
-'~/.weechat/python').
+_~/.weechat/python_).
 Vous pouvez alors charger le script dans votre WeeChat, et configurer le chemin
-vers votre répertoire '/doc' :
+vers votre répertoire _/doc_ :
 
 ----
 /python load docgen.py
@@ -1089,11 +1090,11 @@ données actuellement en mémoire.
 [[asciidoc]]
 ==== Asciidoc
 
-Les fichiers asciidoc donc dans le répertoire 'doc/XX/' où 'XX' est la langue
+Les fichiers Asciidoc donc dans le répertoire _doc/XX/_ où _XX_ est la langue
 (en, fr, de, it, ...).
 
 Faites d'abord une copie du fichier asciidoc en anglais (dans le répertoire
-'doc/en/'), puis travaillez dessus.
+_doc/en/_), puis travaillez dessus.
 
 Les traductions manquantes dans les fichiers sont indiquées par cette chaîne :
 

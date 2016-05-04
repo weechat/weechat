@@ -5,6 +5,7 @@
 :toc: left
 :toclevels: 3
 :toc-title: 目次
+:sectnums:
 :docinfo1:
 
 
@@ -45,7 +46,7 @@ weechat::
     ソースコードと文書を含むコアリポジトリ
 
 scripts::
-    weechat.org に投稿された '公式' スクリプト
+    weechat.org に投稿された _公式_ スクリプト
 
 weechat.org::
     WeeChat ウェブサイトのソースコード: https://weechat.org/
@@ -56,42 +57,42 @@ weercd::
 qweechat::
     WeeChat の Qt リモート GUI。
 
-このマニュアルは 'weechat' リポジトリだけを説明しています。
+このマニュアルは _weechat_ リポジトリだけを説明しています。
 
 [[overview]]
 === 概要
 
 主な WeeChat ディレクトリは:
 
-[width="100%",cols="1v,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | ディレクトリ      | 説明
 | src/              | ソースコードのルートディレクトリ
-|    core/          | コア関数: エントリポイント、内部構造体
-|    gui/           | バッファ、ウィンドウ、... を操作する関数 (全てのインターフェイスで使う)
-|       curses/     | curses インターフェイス
-|    plugins/       | プラグインとスクリプト向け API
-|       alias/      | alias プラグイン
-|       aspell/     | aspell プラグイン
-|       charset/    | charset プラグイン
-|       exec/       | exec プラグイン
-|       fifo/       | fifo プラグイン (WeeChat にコマンドを送信する FIFO パイプ)
-|       guile/      | guile (scheme) スクリプト用 API
-|       irc/        | IRC (Internet Relay Chat) プラグイン
-|       javascript/ | javascript スクリプト用 API
-|       logger/     | logger プラグイン (表示されたメッセージをファイルに書き込む)
-|       lua/        | lua スクリプト用 API
-|       perl/       | perl スクリプト用 API
-|       python/     | python スクリプト用 API
-|       relay/      | relay プラグイン (irc プロキシ + リモートインターフェイス用の中継)
-|       ruby/       | ruby スクリプト用 API
-|       script/     | スクリプトマネージャ
-|       tcl/        | tcl スクリプト用 API
-|       trigger/    | trigger プラグイン
-|       xfer/       | xfer (IRC DCC ファイル/チャット)
+|    core/          | コア関数: エントリポイント、内部構造体
+|    gui/           | バッファ、ウィンドウ、... を操作する関数 (全てのインターフェイスで使う)
+|       curses/     | curses インターフェイス
+|    plugins/       | プラグインとスクリプト向け API
+|       alias/      | alias プラグイン
+|       aspell/     | aspell プラグイン
+|       charset/    | charset プラグイン
+|       exec/       | exec プラグイン
+|       fifo/       | fifo プラグイン (WeeChat にコマンドを送信する FIFO パイプ)
+|       guile/      | guile (scheme) スクリプト用 API
+|       irc/        | IRC (Internet Relay Chat) プラグイン
+|       javascript/ | javascript スクリプト用 API
+|       logger/     | logger プラグイン (表示されたメッセージをファイルに書き込む)
+|       lua/        | lua スクリプト用 API
+|       perl/       | perl スクリプト用 API
+|       python/     | python スクリプト用 API
+|       relay/      | relay プラグイン (irc プロキシ + リモートインターフェイス用の中継)
+|       ruby/       | ruby スクリプト用 API
+|       script/     | スクリプトマネージャ
+|       tcl/        | tcl スクリプト用 API
+|       trigger/    | trigger プラグイン
+|       xfer/       | xfer (IRC DCC ファイル/チャット)
 | tests/            | テスト
-|    unit/          | 単体テスト
-|       core/       | コア関数の単体テスト
+|    unit/          | 単体テスト
+|       core/       | コア関数の単体テスト
 | doc/              | 文書
 | po/               | 翻訳ファイル (gettext)
 | debian/           | Debian パッケージ用
@@ -105,234 +106,234 @@ qweechat::
 
 WeeChat "core" は以下のディレクトリに配置されています:
 
-* 'src/core/': コア関数 (データ操作用)
-* 'src/gui/': インターフェイスの関数 (バッファ、ウィンドウ、...)
+* _src/core/_: コア関数 (データ操作用)
+* _src/gui/_: インターフェイスの関数 (バッファ、ウィンドウ、...)
 
-[width="100%",cols="1v,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | パス/ファイル名               | 説明
 | core/                         | コア関数: エントリポイント、内部構造体
-|    wee-arraylist.c            | 配列リスト
-|    wee-backtrace.c            | クラッシュした際にバックトレースを表示
-|    wee-command.c              | WeeChat コアコマンド
-|    wee-completion.c           | デフォルト補完
-|    wee-config-file.c          | 設定ファイル管理
-|    wee-config.c               | WeeChat コアの設定オプション (weechat.conf ファイル)
-|    wee-debug.c                | デバッグ用関数
-|    wee-eval.c                 | 内部変数へのリファレンスを含む式を評価
-|    wee-hashtable.c            | ハッシュテーブル
-|    wee-hdata.c                | hdata (ハッシュテーブルを用いて直接データを読む)
-|    wee-hook.c                 | フック
-|    wee-infolist.c             | インフォリスト (オブジェクトに関するデータを含むリスト)
-|    wee-input.c                | コマンドおよびテキストの入力
-|    wee-list.c                 | ソート済みリスト
-|    wee-log.c                  | WeeChat ログファイル (weechat.log) に書き込む
-|    wee-network.c              | ネットワーク関数 (サーバやプロキシへの接続)
-|    wee-proxy.c                | プロキシ管理
-|    wee-secure.c               | 安全なデータオプション (sec.conf ファイル)
-|    wee-string.c               | 文字列関数
-|    wee-upgrade-file.c         | 内部アップグレードシステム
-|    wee-upgrade.c              | WeeChat コアのアップグレード (バッファ、行、履歴、...)
-|    wee-url.c                  | URL 転送 (libcurl を使う)
-|    wee-utf8.c                 | UTF-8 関数
-|    wee-util.c                 | その他の関数
-|    wee-version.c              | WeeChat バージョンについての関数
-|    weechat.c                  | 主要関数: コマンドラインオプション、起動
+|    wee-arraylist.c            | 配列リスト
+|    wee-backtrace.c            | クラッシュした際にバックトレースを表示
+|    wee-command.c              | WeeChat コアコマンド
+|    wee-completion.c           | デフォルト補完
+|    wee-config-file.c          | 設定ファイル管理
+|    wee-config.c               | WeeChat コアの設定オプション (weechat.conf ファイル)
+|    wee-debug.c                | デバッグ用関数
+|    wee-eval.c                 | 内部変数へのリファレンスを含む式を評価
+|    wee-hashtable.c            | ハッシュテーブル
+|    wee-hdata.c                | hdata (ハッシュテーブルを用いて直接データを読む)
+|    wee-hook.c                 | フック
+|    wee-infolist.c             | インフォリスト (オブジェクトに関するデータを含むリスト)
+|    wee-input.c                | コマンドおよびテキストの入力
+|    wee-list.c                 | ソート済みリスト
+|    wee-log.c                  | WeeChat ログファイル (weechat.log) に書き込む
+|    wee-network.c              | ネットワーク関数 (サーバやプロキシへの接続)
+|    wee-proxy.c                | プロキシ管理
+|    wee-secure.c               | 安全なデータオプション (sec.conf ファイル)
+|    wee-string.c               | 文字列関数
+|    wee-upgrade-file.c         | 内部アップグレードシステム
+|    wee-upgrade.c              | WeeChat コアのアップグレード (バッファ、行、履歴、...)
+|    wee-url.c                  | URL 転送 (libcurl を使う)
+|    wee-utf8.c                 | UTF-8 関数
+|    wee-util.c                 | その他の関数
+|    wee-version.c              | WeeChat バージョンについての関数
+|    weechat.c                  | 主要関数: コマンドラインオプション、起動
 | gui/                          | バッファ、ウィンドウなどの関数 (全てのインターフェイスで利用)
-|    gui-bar-item.c             | バー要素
-|    gui-bar-window.c           | バーウィンドウ
-|    gui-bar.c                  | バー
-|    gui-buffer.c               | バッファ
-|    gui-chat.c                 | チャット関数 (メッセージの表示、...)
-|    gui-color.c                | 色関数
-|    gui-completion.c           | コマンドラインの補完
-|    gui-cursor.c               | カーソルモード (カーソルを自由に移動)
-|    gui-filter.c               | フィルタ
-|    gui-focus.c                | フォーカスについての関数 (カーソルモードとマウス用)
-|    gui-history.c              | コマンド及びバッファに保存されたテキスト
-|    gui-hotlist.c              | ホットリスト管理 (活発なバッファのリスト)
-|    gui-input.c                | 入力関数 (入力バー)
-|    gui-key.c                  | キーボード関数
-|    gui-layout.c               | レイアウト
-|    gui-line.c                 | バッファ中の行
-|    gui-mouse.c                | マウス
-|    gui-nick.c                 | ニックネーム関数
-|    gui-nicklist.c             | バッファのニックネームリスト
-|    gui-window.c               | ウィンドウ
-|    curses/                    | curses インターフェイス
-|       gui-curses-bar-window.c | バーウィンドウへの表示
-|       gui-curses-chat.c       | チャットエリアへの表示 (メッセージ)
-|       gui-curses-color.c      | 色関数
-|       gui-curses-key.c        | キーボード関数 (デフォルトキー、入力の読み取り)
-|       gui-curses-main.c       | WeeChat メインループ (キーボードやネットワークイベントの待ち受け)
-|       gui-curses-mouse.c      | マウス
-|       gui-curses-term.c       | 端末についての関数
-|       gui-curses-window.c     | ウィンドウ
-|       main.c                  | エントリポイント
+|    gui-bar-item.c             | バー要素
+|    gui-bar-window.c           | バーウィンドウ
+|    gui-bar.c                  | バー
+|    gui-buffer.c               | バッファ
+|    gui-chat.c                 | チャット関数 (メッセージの表示、...)
+|    gui-color.c                | 色関数
+|    gui-completion.c           | コマンドラインの補完
+|    gui-cursor.c               | カーソルモード (カーソルを自由に移動)
+|    gui-filter.c               | フィルタ
+|    gui-focus.c                | フォーカスについての関数 (カーソルモードとマウス用)
+|    gui-history.c              | コマンド及びバッファに保存されたテキスト
+|    gui-hotlist.c              | ホットリスト管理 (活発なバッファのリスト)
+|    gui-input.c                | 入力関数 (入力バー)
+|    gui-key.c                  | キーボード関数
+|    gui-layout.c               | レイアウト
+|    gui-line.c                 | バッファ中の行
+|    gui-mouse.c                | マウス
+|    gui-nick.c                 | ニックネーム関数
+|    gui-nicklist.c             | バッファのニックネームリスト
+|    gui-window.c               | ウィンドウ
+|    curses/                    | curses インターフェイス
+|       gui-curses-bar-window.c | バーウィンドウへの表示
+|       gui-curses-chat.c       | チャットエリアへの表示 (メッセージ)
+|       gui-curses-color.c      | 色関数
+|       gui-curses-key.c        | キーボード関数 (デフォルトキー、入力の読み取り)
+|       gui-curses-main.c       | WeeChat メインループ (キーボードやネットワークイベントの待ち受け)
+|       gui-curses-mouse.c      | マウス
+|       gui-curses-term.c       | 端末についての関数
+|       gui-curses-window.c     | ウィンドウ
+|       main.c                  | エントリポイント
 |===
 
 [[sources_plugins]]
 ==== プラグイン
 
-[width="100%",cols="1v,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | パス/ファイル名                   | 説明
 | plugins/                          | プラグインのルートディレクトリ
-|    plugin.c                       | プラグイン管理 (動的 C 言語ライブラリのロード/アンロード)
-|    plugin-api.c                   | プラグイン API の追加関数 (WeeChat コア関数のラッパー)
-|    plugin-config.c                | プラグイン設定オプション (plugins.conf ファイル)
-|    plugin-script.c                | スクリプトプラグインの共用関数
-|    plugin-script-api.c            | スクリプト API 関数: 一部のプラグイン API 関数のラッパー
-|    weechat-plugin.h               | WeeChat プラグインと一緒に配布されるヘッダファイル、プラグインのコンパイルに必要
-|    alias/                         | alias プラグイン
-|       alias.c                     | alias の主要関数
-|       alias-command.c             | alias コマンド
-|       alias-completion.c          | alias 補完
-|       alias-config.c              | alias 設定オプション (alias.conf ファイル)
-|       alias-info.c                | alias の情報/インフォリスト/hdata
-|    aspell/                        | aspell プラグイン
-|       weechat-aspell.c            | aspell の主要関数
-|       weechat-aspell-bar-item.c   | aspell バー要素
-|       weechat-aspell-command.c    | aspell コマンド
-|       weechat-aspell-completion.c | aspell 補完
-|       weechat-aspell-config.c     | aspell 設定オプション (aspell.conf ファイル)
-|       weechat-aspell-info.c       | aspell の情報/インフォリスト/hdata
-|       weechat-aspell-speller.c    | スペルチェッカ管理
-|    charset/                       | charset プラグイン
-|       charset.c                   | charset 関数
-|    exec/                          | exec プラグイン
-|       exec.c                      | exec の主要関数
-|       exec-buffer.c               | exec バッファ
-|       exec-command.c              | exec コマンド
-|       exec-completion.c           | exec 補完
-|       exec-config.c               | exec 設定オプション (exec.conf ファイル)
-|    fifo/                          | fifo プラグイン
-|       fifo.c                      | fifo の主要関数
-|       fifo-command.c              | fifo コマンド
-|       fifo-info.c                 | fifo の情報/インフォリスト/hdata
-|    guile/                         | guile (scheme) プラグイン
-|       weechat-guile.c             | guile の主要関数 (スクリプトのロード/アンロード、guile コードの実行)
-|       weechat-guile-api.c         | guile スクリプト作成 API 関数
-|    irc/                           | IRC (Internet Relay Chat) プラグイン
-|       irc.c                       | IRC の主要関数
-|       irc-bar-item.c              | IRC バー要素
-|       irc-buffer.c                | IRC バッファ
-|       irc-channel.c               | IRC チャンネル
-|       irc-color.c                 | IRC 色
-|       irc-command.c               | IRC コマンド
-|       irc-completion.c            | IRC 補完
-|       irc-config.c                | IRC 設定オプション (irc.conf ファイル)
-|       irc-ctcp.c                  | IRC CTCP
-|       irc-debug.c                 | IRC デバッグ関数
-|       irc-ignore.c                | IRC 無視
-|       irc-info.c                  | IRC の情報/インフォリスト/hdata
-|       irc-input.c                 | コマンドおよびテキストの入力
-|       irc-message.c               | IRC メッセージを操作する関数
-|       irc-mode.c                  | チャンネルおよびニックネームのモードを操作する関数
-|       irc-msgbuffer.c             | IRC メッセージを送るバッファ
-|       irc-nick.c                  | IRC ニックネーム
-|       irc-notify.c                | IRC 通知リスト
-|       irc-protocol.c              | IRC プロトコル (RFC 1459/2810/2811/2812/2813)
-|       irc-raw.c                   | IRC 生バッファ
-|       irc-redirect.c              | IRC コマンド出力のリダイレクト
-|       irc-sasl.c                  | IRC サーバに対する SASL 認証
-|       irc-server.c                | IRC サーバとの入出力通信
-|       irc-upgrade.c               | WeeChat をアップグレードする際の IRC データの保存および読み込み
-|    javascript/                    | javascript プラグイン
-|       weechat-js.cpp              | javascript の主要関数 (スクリプトのロード/アンロード、javascript コードの実行)
-|       weechat-js-api.cpp          | javascript スクリプト作成 API 関数
-|       weechat-js-v8.cpp           | javascript v8 関数
-|    logger/                        | logger プラグイン
-|       logger.c                    | logger の主要関数
-|       logger-buffer.c             | logger バッファリスト管理
-|       logger-config.c             | logger 設定オプション (logger.conf ファイル)
-|       logger-info.c               | logger の情報/インフォリスト/hdata
-|       logger-tail.c               | ファイル末尾の行を返す
-|    lua/                           | lua プラグイン
-|       weechat-lua.c               | lua の主要関数 (スクリプトのロード/アンロード、lua コードの実行)
-|       weechat-lua-api.c           | lua スクリプト作成 API 関数
-|    perl/                          | perl プラグイン
-|       weechat-perl.c              | perl の主要関数 (スクリプトのロード/アンロード、perl コードの実行)
-|       weechat-perl-api.c          | perl スクリプト作成 API 関数
-|    python/                        | python プラグイン
-|       weechat-python.c            | python の主要関数 (スクリプトのロード/アンロード、python コードの実行)
-|       weechat-python-api.c        | python スクリプト作成 API 関数
-|    relay/                         | relay プラグイン (IRC プロキシとリモートインターフェイスへの中継)
-|       relay.c                     | relay の主要関数
-|       relay-buffer.c              | relay バッファ
-|       relay-client.c              | relay クライアント
-|       relay-command.c             | relay コマンド
-|       relay-completion.c          | relay 補完
-|       relay-config.c              | relay 設定オプション (relay.conf ファイル)
-|       relay-info.c                | relay の情報/インフォリスト/hdata
-|       relay-network.c             | relay 用のネットワーク関数
-|       relay-raw.c                 | relay 生バッファ
-|       relay-server.c              | relay サーバ
-|       relay-upgrade.c             | WeeChat をアップグレードする際にデータを保存/回復
-|       relay-websocket.c           | リレー用の websocket サーバ関数 (RFC 6455)
-|       irc/                        | IRC プロキシ
-|          relay-irc.c              | IRC プロキシの主要関数
-|       weechat/                    | リモートインターフェイスへの中継
-|          relay-weechat.c          | リモートインターフェイスへの中継 (主要関数)
-|          relay-weechat-msg.c      | クライアントにバイナリメッセージを送信
-|          relay-weechat-nicklist.c | ニックネームリスト関数
-|          relay-weechat-protocol.c | クライアントからのコマンドを読み取る
-|    ruby/                          | ruby プラグイン
-|       weechat-ruby.c              | ruby の主要関数 (スクリプトのロード/アンロード、ruby コードの実行)
-|       weechat-ruby-api.c          | ruby スクリプト作成 API 関数
-|    script/                        | スクリプトマネージャ
-|       script.c                    | スクリプトマネージャの主要関数
-|       script-action.c             | スクリプトに対する操作 (ロード/アンロード、インストール/削除、...)
-|       script-buffer.c             | スクリプトマネージャ用のバッファ
-|       script-command.c            | スクリプトマネージャ用のコマンド
-|       script-completion.c         | スクリプトマネージャ用の補完
-|       script-config.c             | スクリプトマネージャ用の設定オプション (script.conf ファイル)
-|       script-info.c               | スクリプトマネージャの情報/インフォリスト/hdata
-|       script-repo.c               | リポジトリファイルのダウンロードと読み込み
-|    tcl/                           | tcl プラグイン
-|       weechat-tcl.c               | tcl の主要関数 (スクリプトのロード/アンロード、tcl コードの実行)
-|       weechat-tcl-api.c           | tcl スクリプト作成 API 関数
-|    trigger/                       | trigger プラグイン
-|       trigger.c                   | trigger の主要関数
-|       trigger-buffer.c            | trigger バッファ
-|       trigger-callback.c          | trigger コールバック
-|       trigger-command.c           | trigger コマンド
-|       trigger-completion.c        | trigger 補完
-|       trigger-config.c            | trigger 設定オプション (trigger.conf ファイル)
-|    xfer/                          | xfer プラグイン (IRC DCC ファイル/チャット)
-|       xfer.c                      | xfer の主要関数
-|       xfer-buffer.c               | xfer バッファ
-|       xfer-chat.c                 | xfer DCC チャット
-|       xfer-command.c              | xfer コマンド
-|       xfer-completion.c           | xfer 補完
-|       xfer-config.c               | xfer 設定オプション (xfer.conf ファイル)
-|       xfer-dcc.c                  | DCC ファイル転送
-|       xfer-file.c                 | xfer のファイル関数
-|       xfer-info.c                 | xfer の情報/インフォリスト/hdata
-|       xfer-network.c              | xfer のネットワーク関数
-|       xfer-upgrade.c              | WeeChat をアップグレードする際の xfer データの保存および回復
+|    plugin.c                       | プラグイン管理 (動的 C 言語ライブラリのロード/アンロード)
+|    plugin-api.c                   | プラグイン API の追加関数 (WeeChat コア関数のラッパー)
+|    plugin-config.c                | プラグイン設定オプション (plugins.conf ファイル)
+|    plugin-script.c                | スクリプトプラグインの共用関数
+|    plugin-script-api.c            | スクリプト API 関数: 一部のプラグイン API 関数のラッパー
+|    weechat-plugin.h               | WeeChat プラグインと一緒に配布されるヘッダファイル、プラグインのコンパイルに必要
+|    alias/                         | alias プラグイン
+|       alias.c                     | alias の主要関数
+|       alias-command.c             | alias コマンド
+|       alias-completion.c          | alias 補完
+|       alias-config.c              | alias 設定オプション (alias.conf ファイル)
+|       alias-info.c                | alias の情報/インフォリスト/hdata
+|    aspell/                        | aspell プラグイン
+|       weechat-aspell.c            | aspell の主要関数
+|       weechat-aspell-bar-item.c   | aspell バー要素
+|       weechat-aspell-command.c    | aspell コマンド
+|       weechat-aspell-completion.c | aspell 補完
+|       weechat-aspell-config.c     | aspell 設定オプション (aspell.conf ファイル)
+|       weechat-aspell-info.c       | aspell の情報/インフォリスト/hdata
+|       weechat-aspell-speller.c    | スペルチェッカ管理
+|    charset/                       | charset プラグイン
+|       charset.c                   | charset 関数
+|    exec/                          | exec プラグイン
+|       exec.c                      | exec の主要関数
+|       exec-buffer.c               | exec バッファ
+|       exec-command.c              | exec コマンド
+|       exec-completion.c           | exec 補完
+|       exec-config.c               | exec 設定オプション (exec.conf ファイル)
+|    fifo/                          | fifo プラグイン
+|       fifo.c                      | fifo の主要関数
+|       fifo-command.c              | fifo コマンド
+|       fifo-info.c                 | fifo の情報/インフォリスト/hdata
+|    guile/                         | guile (scheme) プラグイン
+|       weechat-guile.c             | guile の主要関数 (スクリプトのロード/アンロード、guile コードの実行)
+|       weechat-guile-api.c         | guile スクリプト作成 API 関数
+|    irc/                           | IRC (Internet Relay Chat) プラグイン
+|       irc.c                       | IRC の主要関数
+|       irc-bar-item.c              | IRC バー要素
+|       irc-buffer.c                | IRC バッファ
+|       irc-channel.c               | IRC チャンネル
+|       irc-color.c                 | IRC 色
+|       irc-command.c               | IRC コマンド
+|       irc-completion.c            | IRC 補完
+|       irc-config.c                | IRC 設定オプション (irc.conf ファイル)
+|       irc-ctcp.c                  | IRC CTCP
+|       irc-debug.c                 | IRC デバッグ関数
+|       irc-ignore.c                | IRC 無視
+|       irc-info.c                  | IRC の情報/インフォリスト/hdata
+|       irc-input.c                 | コマンドおよびテキストの入力
+|       irc-message.c               | IRC メッセージを操作する関数
+|       irc-mode.c                  | チャンネルおよびニックネームのモードを操作する関数
+|       irc-msgbuffer.c             | IRC メッセージを送るバッファ
+|       irc-nick.c                  | IRC ニックネーム
+|       irc-notify.c                | IRC 通知リスト
+|       irc-protocol.c              | IRC プロトコル (RFC 1459/2810/2811/2812/2813)
+|       irc-raw.c                   | IRC 生バッファ
+|       irc-redirect.c              | IRC コマンド出力のリダイレクト
+|       irc-sasl.c                  | IRC サーバに対する SASL 認証
+|       irc-server.c                | IRC サーバとの入出力通信
+|       irc-upgrade.c               | WeeChat をアップグレードする際の IRC データの保存および読み込み
+|    javascript/                    | javascript プラグイン
+|       weechat-js.cpp              | javascript の主要関数 (スクリプトのロード/アンロード、javascript コードの実行)
+|       weechat-js-api.cpp          | javascript スクリプト作成 API 関数
+|       weechat-js-v8.cpp           | javascript v8 関数
+|    logger/                        | logger プラグイン
+|       logger.c                    | logger の主要関数
+|       logger-buffer.c             | logger バッファリスト管理
+|       logger-config.c             | logger 設定オプション (logger.conf ファイル)
+|       logger-info.c               | logger の情報/インフォリスト/hdata
+|       logger-tail.c               | ファイル末尾の行を返す
+|    lua/                           | lua プラグイン
+|       weechat-lua.c               | lua の主要関数 (スクリプトのロード/アンロード、lua コードの実行)
+|       weechat-lua-api.c           | lua スクリプト作成 API 関数
+|    perl/                          | perl プラグイン
+|       weechat-perl.c              | perl の主要関数 (スクリプトのロード/アンロード、perl コードの実行)
+|       weechat-perl-api.c          | perl スクリプト作成 API 関数
+|    python/                        | python プラグイン
+|       weechat-python.c            | python の主要関数 (スクリプトのロード/アンロード、python コードの実行)
+|       weechat-python-api.c        | python スクリプト作成 API 関数
+|    relay/                         | relay プラグイン (IRC プロキシとリモートインターフェイスへの中継)
+|       relay.c                     | relay の主要関数
+|       relay-buffer.c              | relay バッファ
+|       relay-client.c              | relay クライアント
+|       relay-command.c             | relay コマンド
+|       relay-completion.c          | relay 補完
+|       relay-config.c              | relay 設定オプション (relay.conf ファイル)
+|       relay-info.c                | relay の情報/インフォリスト/hdata
+|       relay-network.c             | relay 用のネットワーク関数
+|       relay-raw.c                 | relay 生バッファ
+|       relay-server.c              | relay サーバ
+|       relay-upgrade.c             | WeeChat をアップグレードする際にデータを保存/回復
+|       relay-websocket.c           | リレー用の websocket サーバ関数 (RFC 6455)
+|       irc/                        | IRC プロキシ
+|          relay-irc.c              | IRC プロキシの主要関数
+|       weechat/                    | リモートインターフェイスへの中継
+|          relay-weechat.c          | リモートインターフェイスへの中継 (主要関数)
+|          relay-weechat-msg.c      | クライアントにバイナリメッセージを送信
+|          relay-weechat-nicklist.c | ニックネームリスト関数
+|          relay-weechat-protocol.c | クライアントからのコマンドを読み取る
+|    ruby/                          | ruby プラグイン
+|       weechat-ruby.c              | ruby の主要関数 (スクリプトのロード/アンロード、ruby コードの実行)
+|       weechat-ruby-api.c          | ruby スクリプト作成 API 関数
+|    script/                        | スクリプトマネージャ
+|       script.c                    | スクリプトマネージャの主要関数
+|       script-action.c             | スクリプトに対する操作 (ロード/アンロード、インストール/削除、...)
+|       script-buffer.c             | スクリプトマネージャ用のバッファ
+|       script-command.c            | スクリプトマネージャ用のコマンド
+|       script-completion.c         | スクリプトマネージャ用の補完
+|       script-config.c             | スクリプトマネージャ用の設定オプション (script.conf ファイル)
+|       script-info.c               | スクリプトマネージャの情報/インフォリスト/hdata
+|       script-repo.c               | リポジトリファイルのダウンロードと読み込み
+|    tcl/                           | tcl プラグイン
+|       weechat-tcl.c               | tcl の主要関数 (スクリプトのロード/アンロード、tcl コードの実行)
+|       weechat-tcl-api.c           | tcl スクリプト作成 API 関数
+|    trigger/                       | trigger プラグイン
+|       trigger.c                   | trigger の主要関数
+|       trigger-buffer.c            | trigger バッファ
+|       trigger-callback.c          | trigger コールバック
+|       trigger-command.c           | trigger コマンド
+|       trigger-completion.c        | trigger 補完
+|       trigger-config.c            | trigger 設定オプション (trigger.conf ファイル)
+|    xfer/                          | xfer プラグイン (IRC DCC ファイル/チャット)
+|       xfer.c                      | xfer の主要関数
+|       xfer-buffer.c               | xfer バッファ
+|       xfer-chat.c                 | xfer DCC チャット
+|       xfer-command.c              | xfer コマンド
+|       xfer-completion.c           | xfer 補完
+|       xfer-config.c               | xfer 設定オプション (xfer.conf ファイル)
+|       xfer-dcc.c                  | DCC ファイル転送
+|       xfer-file.c                 | xfer のファイル関数
+|       xfer-info.c                 | xfer の情報/インフォリスト/hdata
+|       xfer-network.c              | xfer のネットワーク関数
+|       xfer-upgrade.c              | WeeChat をアップグレードする際の xfer データの保存および回復
 |===
 
 [[sources_tests]]
 ==== テスト
 
-[width="100%",cols="1v,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | パス/ファイル名             | 説明
 | tests/                      | テスト用のルートディレクトリ
-|    tests.cpp                | テスト実行に使うプログラム
-|    unit/                    | 単体テスト用のルートディレクトリ
-|       core/                 | core 向け単体テスト用のルートディレクトリ
-|          test-arraylist.cpp | テスト: 配列リスト
-|          test-eval.cpp      | テスト: 式の評価
-|          test-hashtble.cpp  | テスト: ハッシュテーブル
-|          test-hdata.cpp     | テスト: hdata
-|          test-infolist.cpp  | テスト: インフォリスト
-|          test-list.cpp      | テスト: リスト
-|          test-string.cpp    | テスト: 文字列
-|          test-url.cpp       | テスト: URL
-|          test-utf8.cpp      | テスト: UTF-8
-|          test-util.cpp      | テスト: ユーティリティ関数
+|    tests.cpp                | テスト実行に使うプログラム
+|    unit/                    | 単体テスト用のルートディレクトリ
+|       core/                 | core 向け単体テスト用のルートディレクトリ
+|          test-arraylist.cpp | テスト: 配列リスト
+|          test-eval.cpp      | テスト: 式の評価
+|          test-hashtble.cpp  | テスト: ハッシュテーブル
+|          test-hdata.cpp     | テスト: hdata
+|          test-infolist.cpp  | テスト: インフォリスト
+|          test-list.cpp      | テスト: リスト
+|          test-string.cpp    | テスト: 文字列
+|          test-url.cpp       | テスト: URL
+|          test-utf8.cpp      | テスト: UTF-8
+|          test-util.cpp      | テスト: ユーティリティ関数
 |===
 
 [[documentation_translations]]
@@ -340,36 +341,36 @@ WeeChat "core" は以下のディレクトリに配置されています:
 
 文書ファイル:
 
-[width="100%",cols="1v,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | パス/ファイル名                          | 説明
 | doc/                                     | 文書
-|    docinfo.html                          | asciidoctor スタイル
-|    docgen.py                             | 'autogen/' ディレクトリ内のファイルを作成する Python スクリプト (以下を参照)
-|    XX/                                   | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
-|       cmdline_options.XX.asciidoc        | コマンドラインオプション (man ページとユーザガイドに含まれるファイル)
-|       weechat.1.XX.asciidoc              | man ページ (`man weechat`)
-|       weechat_dev.XX.asciidoc            | 開発者リファレンス (この文書)
-|       weechat_faq.XX.asciidoc            | FAQ
-|       weechat_plugin_api.XX.asciidoc     | プラグイン API リファレンス
-|       weechat_quickstart.XX.asciidoc     | クイックスタートガイド
-|       weechat_relay_protocol.XX.asciidoc | リレープロトコル (リモートインターフェイス用)
-|       weechat_scripting.XX.asciidoc      | スクリプト作成ガイド
-|       weechat_tester.XX.asciidoc         | テスターガイド
-|       weechat_user.XX.asciidoc           | ユーザーガイド
-|       autogen/                           | docgen.py スクリプトが自動生成するファイル
-|          user/                           | ユーザーガイド用の自動生成ファイル (手作業による編集は*禁止* !)
-|          plugin_api/                     | プラグイン API 用の自動生成ファイル (手作業による編集は*禁止* !)
+|    docinfo.html                          | asciidoctor スタイル
+|    docgen.py                             | _autogen/_ ディレクトリ内のファイルを作成する Python スクリプト (以下を参照)
+|    XX/                                   | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
+|       cmdline_options.XX.asciidoc        | コマンドラインオプション (man ページとユーザガイドに含まれるファイル)
+|       weechat.1.XX.asciidoc              | man ページ (`man weechat`)
+|       weechat_dev.XX.asciidoc            | 開発者リファレンス (この文書)
+|       weechat_faq.XX.asciidoc            | FAQ
+|       weechat_plugin_api.XX.asciidoc     | プラグイン API リファレンス
+|       weechat_quickstart.XX.asciidoc     | クイックスタートガイド
+|       weechat_relay_protocol.XX.asciidoc | リレープロトコル (リモートインターフェイス用)
+|       weechat_scripting.XX.asciidoc      | スクリプト作成ガイド
+|       weechat_tester.XX.asciidoc         | テスターガイド
+|       weechat_user.XX.asciidoc           | ユーザーガイド
+|       autogen/                           | docgen.py スクリプトが自動生成するファイル
+|          user/                           | ユーザーガイド用の自動生成ファイル (手作業による編集は*禁止* !)
+|          plugin_api/                     | プラグイン API 用の自動生成ファイル (手作業による編集は*禁止* !)
 |===
 
-WeeChat とプラグインの翻訳は gettext で行います、ファイルは 'po/' ディレクトリに含まれています:
+WeeChat とプラグインの翻訳は gettext で行います、ファイルは _po/_ ディレクトリに含まれています:
 
-[width="100%",cols="1v,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | パス/ファイル名 | 説明
 | po/            | 翻訳ファイル (gettext)
-|    XX.po       | 言語コード XX (言語コード: en、fr、de、it、...) への翻訳、翻訳元言語は英語
-|    weechat.pot | 翻訳用テンプレート (自動作成)
+|    XX.po       | 言語コード XX (言語コード: en、fr、de、it、...) への翻訳、翻訳元言語は英語
+|    weechat.pot | 翻訳用テンプレート (自動作成)
 |===
 
 [[coding_rules]]
@@ -590,7 +591,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 ----
 
 * Emacs テキストエディタのユーザは以下の Lisp コードを
-  '~/.emacs.el' に追記することで、適切なインデントを行うことができます。
+  _~/.emacs.el_ に追記することで、適切なインデントを行うことができます。
 
 [source,lisp]
 ----
@@ -617,16 +618,16 @@ http://www.python.org/dev/peps/pep-0008/ を参照
 [[naming_convention_files]]
 ==== ファイル
 
-ファイル名に使えるのは文字とハイフンだけで、書式: 'xxx-yyyyy.[ch]'
-に従ってください。'xxx' はディレクトリおよび構成要素 (略称も可) で、'yyyyy'
+ファイル名に使えるのは文字とハイフンだけで、書式: _xxx-yyyyy.[ch]_
+に従ってください。_xxx_ はディレクトリおよび構成要素 (略称も可) で、_yyyyy_
 はファイルの名前です。
 
 主要ファイルにはディレクトリと同じ名前を付ける事ができます。例えば
-irc プラグインの 'irc.c' など。
+irc プラグインの _irc.c_ など。
 
 例:
 
-[width="100%",cols="1l,5",options="header"]
+[width="100%",cols="1m,3",options="header"]
 |===
 | ディレクトリ        | ファイル
 | src/core/           | weechat.c、wee-backtrace.c、wee-command.c、...
@@ -638,18 +639,18 @@ irc プラグインの 'irc.c' など。
 |===
 
 C 言語ファイルのヘッダはファイルと同じ名前です、例えばファイル
-'wee-command.c' のヘッダファイルは 'wee-command.h' です
+_wee-command.c_ のヘッダファイルは _wee-command.h_ です
 
 [[naming_convention_structures]]
 ==== 構造体
 
-構造体の名前は 't_X_Y' または 't_X_Y_Z' という書式に従います:
+構造体の名前は _t_X_Y_ または _t_X_Y_Z_ という書式に従います:
 
-* 'X': ディレクトリ/構成要素 (略称も可)
-* 'Y': ファイル名の最後
-* 'Z': 構造体の名前 (任意)
+* _X_: ディレクトリ/構成要素 (略称も可)
+* _Y_: ファイル名の最後
+* _Z_: 構造体の名前 (任意)
 
-例: IRC のニックネーム ('src/plugins/irc/irc-nick.h' より):
+例: IRC のニックネーム (_src/plugins/irc/irc-nick.h_ より):
 
 [source,C]
 ----
@@ -670,16 +671,16 @@ struct t_irc_nick
 [[naming_convention_variables]]
 ==== 変数
 
-グローバル変数 (関数の外側) の名前は 'X_Y_Z' という書式に従います:
+グローバル変数 (関数の外側) の名前は _X_Y_Z_ という書式に従います:
 
-* 'X': ディレクトリ/構成要素 (略称も可)
-* 'Y': ファイル名の最後
-* 'Z': 変数の名前
+* _X_: ディレクトリ/構成要素 (略称も可)
+* _Y_: ファイル名の最後
+* _Z_: 変数の名前
 
-例外として、リストの「最後の」ノードを表す変数の名前は 'last_X'
-という書式に従います (ここで 'X' は変数の名前で、単数形を使います)。
+例外として、リストの「最後の」ノードを表す変数の名前は _last_X_
+という書式に従います (ここで _X_ は変数の名前で、単数形を使います)。
 
-例: ウィンドウ ('src/gui/gui-window.c' より):
+例: ウィンドウ (_src/gui/gui-window.c_ より):
 
 [source,C]
 ----
@@ -689,8 +690,8 @@ struct t_gui_window *gui_current_window = NULL; /* current window           */
 ----
 
 ローカル変数 (関数内) に対する命名規則はありません。ただし具体的な (短すぎない)
-名前をつけることを推奨します。とは言うものの、構造体へのポインタは通常 'ptr_xxxx'
-のように名付けます。例えば、'struct t_gui_buffer *' へのポインタは: '*ptr_buffer'
+名前をつけることを推奨します。とは言うものの、構造体へのポインタは通常 _ptr_xxxx_
+のように名付けます。例えば、_struct t_gui_buffer *_ へのポインタは: _*ptr_buffer_
 のように名付けます。
 
 [[naming_convention_functions]]
@@ -698,7 +699,7 @@ struct t_gui_window *gui_current_window = NULL; /* current window           */
 
 関数に対する命名規則は<<naming_convention_variables,変数>>と同じです。
 
-例: 新しいウィンドウの作成 ('src/gui/gui-window.c' より):
+例: 新しいウィンドウの作成 (_src/gui/gui-window.c_ より):
 
 [source,C]
 ----
@@ -734,7 +735,7 @@ WeeChat コアだけでなく、C 言語プラグインとスクリプトでも�
 WeeChat のほとんどの連結リストは双方向連結リストです: 各ノードは
 1 つ前と 1 つ後のノードへのポインタを持っています。
 
-例: バッファのリスト ('src/gui/gui-buffer.h' より):
+例: バッファのリスト (_src/gui/gui-buffer.h_ より):
 
 [source,C]
 ----
@@ -765,10 +766,10 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 
 文字列にある文字を含め、その後に属性及び色を指定します、これは:
 
-* '0x19': 色コード (これの後に色コード指定)
-* '0x1A': 属性の設定 (これの後に属性を指定)
-* '0x1B': 削除属性 (これの後に属性を指定)
-* '0x1C': リセット (これの後には何も付けない)
+* _0x19_: 色コード (これの後に色コード指定)
+* _0x1A_: 属性の設定 (これの後に属性を指定)
+* _0x1B_: 削除属性 (これの後に属性を指定)
+* _0x1C_: リセット (これの後には何も付けない)
 
 指定できる属性は (1 文字以上):
 
@@ -795,36 +796,36 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 
 [width="100%",cols="4,2,2,8",options="header"]
 |===
-| コード                             | 例                      | エリア      | 説明
-| hex[19] + STD                      | hex[19]`01`             | chat + bars | オプションを使って属性と色を指定、色コードは以下の表を参照
-| hex[19] + EXT                      | hex[19]`@00001`         | chat        | ncurses ペアを使って色を指定 (`/color` バッファのみ有効)
-| hex[19] + "F" + (A)STD             | hex[19]`F*05`           | chat + bars | 文字色 (WeeChat 色) を設定
-| hex[19] + "F" + (A)EXT             | hex[19]`F@00214`        | chat + bars | 文字色 (拡張色) を設定
-| hex[19] + "B" + STD                | hex[19]`B05`            | chat + bars | 背景色 (WeeChat 色) を設定
-| hex[19] + "B" + EXT                | hex[19]`B@00124`        | chat + bars | 背景色 (拡張色) を設定
-| hex[19] + "*" + (A)STD             | hex[19]`*05`            | chat + bars | 文字色(WeeChat 色) を設定
-| hex[19] + "*" + (A)EXT             | hex[19]`*@00214`        | chat + bars | 文字色 (拡張色) を設定
-| hex[19] + "*" + (A)STD + "," + STD | hex[19]`*08,05`         | chat + bars | 文字色及び背景色 (WeeChat 色) を設定
-| hex[19] + "*" + (A)STD + "," + EXT | hex[19]`*01,@00214`     | chat + bars | 文字色 (WeeChat 色) と背景色 (拡張色) を設定
-| hex[19] + "*" + (A)EXT + "," + STD | hex[19]`*@00214,05`     | chat + bars | 文字色 (拡張色) と背景色 (WeeChat 色) を設定
-| hex[19] + "*" + (A)EXT + "," + EXT | hex[19]`*@00214,@00017` | chat + bars | 文字色及び背景色 (拡張色) を設定
-| hex[19] + "b" + "F"                | hex[19]`bF`             | bars        | バーの文字色を設定
-| hex[19] + "b" + "D"                | hex[19]`bD`             | bars        | バーの区切り文字色を設定
-| hex[19] + "b" + "B"                | hex[19]`bB`             | bars        | バーの背景色を設定
-| hex[19] + "b" + "_"                | hex[19]`b_`             | input bar   | 文字入力を開始 ("input_text" 要素のみで利用可)
-| hex[19] + "b" + "-"                | hex[19]`b-`             | input bar   | 隠し文字入力を開始 ("input_text" 要素のみで利用可)
-| hex[19] + "b" + "#"                | hex[19]`b#`             | input bar   | カーソル文字を移動 ("input_text" 要素のみで利用可)
-| hex[19] + "b" + "i"                | hex[19]`bi`             | bars        | 要素を開始
-| hex[19] + "b" + "l" (小文字の L)   | hex[19]`bl`             | bars        | 行要素を開始
-| hex[19] + "E"                      | hex[19]`E`              | chat + bars | テキストを強調 _(WeeChat バージョン 0.4.2 以上で利用可)_
-| hex[19] + hex[1C]                  | hex[19]hex[1C]          | chat + bars | 色をリセット (属性は保存)
-| hex[1A] + ATTR                     | hex[1A]`*`              | chat + bars | 属性を設定
-| hex[1B] + ATTR                     | hex[1B]`*`              | chat + bars | 属性を削除
-| hex[1C]                            | hex[1C]                 | chat + bars | 属性と色をリセット
+| コード                               | 例                         | エリア      | 説明
+| [hex]#19# + STD                      | [hex]#19# `01`             | chat + bars | オプションを使って属性と色を指定、色コードは以下の表を参照
+| [hex]#19# + EXT                      | [hex]#19# `@00001`         | chat        | ncurses ペアを使って色を指定 (`/color` バッファのみ有効)
+| [hex]#19# + "F" + (A)STD             | [hex]#19# `F*05`           | chat + bars | 文字色 (WeeChat 色) を設定
+| [hex]#19# + "F" + (A)EXT             | [hex]#19# `F@00214`        | chat + bars | 文字色 (拡張色) を設定
+| [hex]#19# + "B" + STD                | [hex]#19# `B05`            | chat + bars | 背景色 (WeeChat 色) を設定
+| [hex]#19# + "B" + EXT                | [hex]#19# `B@00124`        | chat + bars | 背景色 (拡張色) を設定
+| [hex]#19# + "*" + (A)STD             | [hex]#19# `*05`            | chat + bars | 文字色(WeeChat 色) を設定
+| [hex]#19# + "*" + (A)EXT             | [hex]#19# `*@00214`        | chat + bars | 文字色 (拡張色) を設定
+| [hex]#19# + "*" + (A)STD + "," + STD | [hex]#19# `*08,05`         | chat + bars | 文字色及び背景色 (WeeChat 色) を設定
+| [hex]#19# + "*" + (A)STD + "," + EXT | [hex]#19# `*01,@00214`     | chat + bars | 文字色 (WeeChat 色) と背景色 (拡張色) を設定
+| [hex]#19# + "*" + (A)EXT + "," + STD | [hex]#19# `*@00214,05`     | chat + bars | 文字色 (拡張色) と背景色 (WeeChat 色) を設定
+| [hex]#19# + "*" + (A)EXT + "," + EXT | [hex]#19# `*@00214,@00017` | chat + bars | 文字色及び背景色 (拡張色) を設定
+| [hex]#19# + "b" + "F"                | [hex]#19# `bF`             | bars        | バーの文字色を設定
+| [hex]#19# + "b" + "D"                | [hex]#19# `bD`             | bars        | バーの区切り文字色を設定
+| [hex]#19# + "b" + "B"                | [hex]#19# `bB`             | bars        | バーの背景色を設定
+| [hex]#19# + "b" + "_"                | [hex]#19# `b_`             | input bar   | 文字入力を開始 ("input_text" 要素のみで利用可)
+| [hex]#19# + "b" + "-"                | [hex]#19# `b-`             | input bar   | 隠し文字入力を開始 ("input_text" 要素のみで利用可)
+| [hex]#19# + "b" + "#"                | [hex]#19# `b#`             | input bar   | カーソル文字を移動 ("input_text" 要素のみで利用可)
+| [hex]#19# + "b" + "i"                | [hex]#19# `bi`             | bars        | 要素を開始
+| [hex]#19# + "b" + "l" (小文字の L)   | [hex]#19# `bl`             | bars        | 行要素を開始
+| [hex]#19# + "E"                      | [hex]#19# `E`              | chat + bars | テキストを強調 _(WeeChat バージョン 0.4.2 以上で利用可)_
+| [hex]#19# + [hex]#1C#                | [hex]#19# [hex]#1C#        | chat + bars | 色をリセット (属性は保存)
+| [hex]#1A# + ATTR                     | [hex]#1A# `*`              | chat + bars | 属性を設定
+| [hex]#1B# + ATTR                     | [hex]#1B# `*`              | chat + bars | 属性を削除
+| [hex]#1C#                            | [hex]#1C#                  | chat + bars | 属性と色をリセット
 |===
 
 オプションを使う色コード
-('src/gui/gui-color.h' ファイルの 't_gui_color_enum' を参照):
+(_src/gui/gui-color.h_ ファイルの _t_gui_color_enum_ を参照):
 
 [width="70%",cols="^1m,10",options="header"]
 |===
@@ -904,30 +905,30 @@ WeeChat 色は:
 
 [width="70%",cols="1,2",options="header"]
 |===
-| コード                    | 説明
-| hex[19]`01`               | オプション "01" の色 (チャットテキスト)
-| hex[19]`*08,03`           | 文字色が黄色、背景色が赤色
-| hex[19]`*@00214`          | オレンジ (拡張色 214)
-| hex[19]`*@*_00214,@00017` | 文字は太字で下線付きのオレンジ色 (214)、背景色は青 (17)
-| hex[1A]`_`                | 下線
-| hex[1B]`_`                | 下線を削除
-| hex[1C]                   | 属性と色をリセット
+| コード                       | 説明
+| [hex]#19# `01`               | オプション "01" の色 (チャットテキスト)
+| [hex]#19# `*08,03`           | 文字色が黄色、背景色が赤色
+| [hex]#19# `*@00214`          | オレンジ (拡張色 214)
+| [hex]#19# `*@*_00214,@00017` | 文字は太字で下線付きのオレンジ色 (214)、背景色は青 (17)
+| [hex]#1A# `_`                | 下線
+| [hex]#1B# `_`                | 下線を削除
+| [hex]#1C#                    | 属性と色をリセット
 |===
 
 [[plugin_internals]]
 == プラグインの内部構造
 
-ファイル 'src/plugins/weechat-plugin.h' は API
+ファイル _src/plugins/weechat-plugin.h_ は API
 で使うことのできる全ての関数を定義し、エクスポートします。
 
-'t_weechat_plugin' 構造体はプラグインに関する情報
+_t_weechat_plugin_ 構造体はプラグインに関する情報
 (ファイル名、プラグイン名、作者、説明、...)
 と全ての API 関数をポインタにしてを保存するために使われます
 
 API 関数を簡単に呼び出すためのマクロが定義されています。
 
-例えば、関数 'hook_timer' は以下のように構造体
-'t_weechat_plugin' で定義されています:
+例えば、関数 _hook_timer_ は以下のように構造体
+_t_weechat_plugin_ で定義されています:
 
 [source,C]
 ----
@@ -985,12 +986,12 @@ Savannah のバグを閉じる場合:
 component: fix a problem (bug #12345)
 ----
 
-'component' には以下から 1 つ選んで記入してください:
+_component_ には以下から 1 つ選んで記入してください:
 
-* WeeChat コア: 'core' (ルートディレクトリ、'po/' ディレクトリ、'src/'
-  ディレクトリに含まれるファイル、ただし 'src/plugins/' 内のファイルを除く)
-* 文書ファイル: 'doc' ('doc/' ディレクトリに含まれるファイル)
-* プラグインの名前: 'irc' 、'python' 、'relay' 、... ('src/plugins/' ディレクトリに含まれるファイル)
+* WeeChat コア: _core_ (ルートディレクトリ、_po/_ ディレクトリ、_src/_
+  ディレクトリに含まれるファイル、ただし _src/plugins/_ 内のファイルを除く)
+* 文書ファイル: _doc_ (_doc/_ ディレクトリに含まれるファイル)
+* プラグインの名前: _irc_ 、_python_ 、_relay_ 、... (_src/plugins/_ ディレクトリに含まれるファイル)
 
 以下のルールに従ってください:
 
@@ -1017,7 +1018,7 @@ core: update Japanese translations (patch #7783)
 [[gettext]]
 ==== Gettext
 
-Gettext ファイルは 'po/'
+Gettext ファイルは _po/_
 
 ディレクトリに入っています。新しい言語の翻訳を始める際は、コマンド
 `msginit` を使ってください。例えばオランダ語の空ファイルを作成するには:
@@ -1030,7 +1031,7 @@ $ msginit -i weechat.pot -l nl_NL -o nl.po
 WeeChat
 の翻訳元言語は英語です、翻訳する場合は必ず英語から翻訳してください
 
-翻訳が完了したら、*必ず* 'msgcheck.py' (https://github.com/flashcode/msgcheck)
+翻訳が完了したら、*必ず* _msgcheck.py_ (https://github.com/flashcode/msgcheck)
 スクリプトを使ってファイルの内容を確認してください:
 
 ----
@@ -1040,10 +1041,10 @@ $ msgcheck.py xx.po
 [[build_autogen_files]]
 ===== 自動生成ファイルを作成する
 
-'doc/XX/autogen/' ディレクトリに含まれるファイルは 'doc/docgen.py' スクリプトが自動生成するファイルです。
+_doc/XX/autogen/_ ディレクトリに含まれるファイルは _doc/docgen.py_ スクリプトが自動生成するファイルです。
 
-この python スクリプトを自分の python ディレクトリ (例えば '~/.weechat/python')
-にコピーしてください。WeeChat からこのスクリプトをロードして、'/doc' ディレクトリへのパスを設定してください:
+この python スクリプトを自分の python ディレクトリ (例えば _~/.weechat/python_)
+にコピーしてください。WeeChat からこのスクリプトをロードして、_/doc_ ディレクトリへのパスを設定してください:
 
 ----
 /python load docgen.py
@@ -1065,10 +1066,10 @@ $ msgcheck.py xx.po
 [[asciidoc]]
 ==== Asciidoc
 
-asciidoc ファイルは 'doc/XX/' ディレクトリにあり、'XX'
+Asciidoc ファイルは _doc/XX/_ ディレクトリにあり、_XX_
 は言語コード (en、fr、de、it、...) です。
 
-最初に英語の asciidoc ファイル ('doc/en/' ディレクトリ中にある)
+最初に英語の asciidoc ファイル (_doc/en/_ ディレクトリ中にある)
 をコピーして、それを編集してください。
 
 ファイル中の未翻訳部分には以下の文字列で目印が付けられています:
