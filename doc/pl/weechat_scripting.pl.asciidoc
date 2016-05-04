@@ -5,6 +5,7 @@
 :toc: left
 :toclevels: 3
 :toc-title: Spis treści
+:sectnums:
 :docinfo1:
 
 

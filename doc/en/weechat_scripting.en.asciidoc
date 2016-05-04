@@ -4,6 +4,7 @@
 :lang: en
 :toc: left
 :toclevels: 3
+:sectnums:
 :docinfo1:
 
 

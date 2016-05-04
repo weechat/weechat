@@ -5,6 +5,7 @@
 :toc: left
 :toclevels: 3
 :toc-title: 目次
+:sectnums:
 :docinfo1:
 
 
