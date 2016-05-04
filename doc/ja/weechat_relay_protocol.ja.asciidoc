@@ -25,15 +25,15 @@
 
 この文書では以下の用語を利用します:
 
-* 'リレー': これは relay プラグインを備えた WeeChat を指し、"サーバ"
-  のように振る舞い、'クライアント' からの接続を受け付けます
-* 'クライアント': これは他のソフトウェアのことを指し、ネットワークを介して 'リレー'
-  に接続します; 多くの場合、'クライアント' はリモートインターフェイスのことを指します。
+* _リレー_: これは relay プラグインを備えた WeeChat を指し、"サーバ"
+  のように振る舞い、_クライアント_ からの接続を受け付けます
+* _クライアント_: これは他のソフトウェアのことを指し、ネットワークを介して _リレー_
+  に接続します; 多くの場合、_クライアント_ はリモートインターフェイスのことを指します。
 
 [[network_diagram]]
 === ネットワーク図
 
-以下の図に示すように'クライアント' は'リレー' に接続しています:
+以下の図に示すように_クライアント_ は_リレー_ に接続しています:
 
 ....
                                                ┌────────────────┐ ワークステーション
@@ -54,20 +54,20 @@
 ....
 
 [NOTE]
-この文書で述べる全てのクライアントは'リレー' プラグインの 'weechat' プロトコルを使っています。また'リレー'
-プラグインは IRC クライアントからの接続を受け入れることができます、この場合'リレー'
-プラグインは 'IRC プロキシ' のように振舞います (この文書では説明しません)。
+この文書で述べる全てのクライアントは_リレー_ プラグインの _weechat_ プロトコルを使っています。また_リレー_
+プラグインは IRC クライアントからの接続を受け入れることができます、この場合_リレー_
+プラグインは _IRC プロキシ_ のように振舞います (この文書では説明しません)。
 
 [[protocol_generalities]]
 == プロトコルの一般的説明
 
-* 'リレー' プラグインは新しい接続を受け入れるために IP/port をリッスンし、'クライアント'
-  は TCP ソケットを使って'リレー' に接続します。
-* 'クライアント' の数はオプション 'relay.network.max_clients' で制限されています。
-* それぞれの'クライアント' が自分以外のクライアントと協調して動くことはできません。
-* 'クライアント' から'リレー' へのメッセージを'コマンド'
+* _リレー_ プラグインは新しい接続を受け入れるために IP/port をリッスンし、_クライアント_
+  は TCP ソケットを使って_リレー_ に接続します。
+* _クライアント_ の数はオプション _relay.network.max_clients_ で制限されています。
+* それぞれの_クライアント_ が自分以外のクライアントと協調して動くことはできません。
+* _クライアント_ から_リレー_ へのメッセージを_コマンド_
   と呼び、これはテキスト形式 (文字列) で送信されます。
-* 'リレー' から'クライアント' へのメッセージを'メッセージ'
+* _リレー_ から_クライアント_ へのメッセージを_メッセージ_
   と呼び、これはバイナリデータとして送信されます。
 
 [[commands]]
@@ -77,11 +77,11 @@
 
 フィールドは:
 
-* 'id': 'リレー' からの応答に含まれる任意指定のメッセージ識別子;
+* _id_: _リレー_ からの応答に含まれる任意指定のメッセージ識別子;
   識別子は必ず括弧で括り、アンダースコア ("_") を最初につけるのは禁止されています
-  (アンダースコアが最初についている識別子は WeeChat 'event' メッセージ用に予約されています)
-* 'command': コマンド (以下のテーブルを参照)
-* 'arguments': コマンドに対する任意指定の引数
+  (アンダースコアが最初についている識別子は WeeChat _event_ メッセージ用に予約されています)
+* _command_: コマンド (以下のテーブルを参照)
+* _arguments_: コマンドに対する任意指定の引数
   (複数の引数を渡す場合は空白で区切ってください)。
 
 利用可能なコマンドのリスト (詳しくは次の章を参照):
@@ -89,23 +89,23 @@
 [width="80%",cols="^3m,14",options="header"]
 |===
 | コマンド | 説明
-| init     | 'リレー' 接続を初期化
-| hdata    | 'hdata' を要求
-| info     | 'インフォ' を要求
-| infolist | 'インフォリスト' を要求
-| nicklist | 'ニックネームリスト' を要求
+| init     | _リレー_ 接続を初期化
+| hdata    | _hdata_ を要求
+| info     | _インフォ_ を要求
+| infolist | _インフォリスト_ を要求
+| nicklist | _ニックネームリスト_ を要求
 | input    | バッファにデータを送信 (テキストまたはコマンド)
 | sync     | バッファを同期 (バッファの最新情報を取得)
 | desync   | バッファを非同期 (バッファの更新を止める)
-| quit     | 'リレー' から切断
+| quit     | _リレー_ から切断
 |===
 
 [[command_init]]
 === init
 
-'リレー' 接続を初期化。'リレー'
-に送るコマンドは必ずこのコマンドから始めてください。'リレー'
-がこのコマンドを受信していない場合、'リレー' は最初のコマンドを受け取った時点で警告無しに接続を閉じます。
+_リレー_ 接続を初期化。_リレー_
+に送るコマンドは必ずこのコマンドから始めてください。_リレー_
+がこのコマンドを受信していない場合、_リレー_ は最初のコマンドを受け取った時点で警告無しに接続を閉じます。
 
 構文:
 
@@ -115,15 +115,15 @@ init [<option>=<value>,[<option>=<value>,...]]
 
 引数:
 
-* 'option': 以下のうちの 1 つ:
-** 'password': 'リレー' の認証用パスワード (WeeChat の
-   'relay.network.password' オプション)
-** 'compression': 圧縮タイプ:
-*** 'zlib': 'リレー' から受信するメッセージに対して 'zlib' 圧縮を使う
-*** 'off': 圧縮を使わない
+* _option_: 以下のうちの 1 つ:
+** _password_: _リレー_ の認証用パスワード (WeeChat の
+   _relay.network.password_ オプション)
+** _compression_: 圧縮タイプ:
+*** _zlib_: _リレー_ から受信するメッセージに対して _zlib_ 圧縮を使う
+*** _off_: 圧縮を使わない
 
 [NOTE]
-'リレー' が 'zlib' 圧縮をサポートする場合、'zlib' 圧縮はデフォルトで有効化されます。
+_リレー_ が _zlib_ 圧縮をサポートする場合、_zlib_ 圧縮はデフォルトで有効化されます。
 
 例:
 
@@ -138,7 +138,7 @@ init password=mypass,compression=off
 [[command_hdata]]
 === hdata
 
-'hdata' を要求。
+_hdata_ を要求。
 
 構文:
 
@@ -148,14 +148,14 @@ init password=mypass,compression=off
 
 引数:
 
-* 'path': hdata へのパス、書式: "hdata:pointer/var/var/.../var"、最後の
+* _path_: hdata へのパス、書式: "hdata:pointer/var/var/.../var"、最後の
   var に対応する hdata が返されます:
-** 'hdata': hdata の名前
-** 'pointer': ポインタ ("0x12345") またはリスト名 (例: "gui_buffers")
+** _hdata_: hdata の名前
+** _pointer_: ポインタ ("0x12345") またはリスト名 (例: "gui_buffers")
    (番号も可能、以下を参照)
-** 'var': 親 hdata に含まれる変数名 (パスで言う 1 つ前の名前)
+** _var_: 親 hdata に含まれる変数名 (パスで言う 1 つ前の名前)
    (番号も可能、以下を参照)
-* 'keys': hdata で返すキーのコンマ区切りリスト
+* _keys_: hdata で返すキーのコンマ区切りリスト
   (指定しなかった場合、全てのキーが返されます。強大な hdata 構造体の場合全てのキーを返すことはお勧めしません)
 
 ポインタと変数の後に番号を指定することができます。書式は
@@ -163,7 +163,7 @@ init password=mypass,compression=off
 
 * 正数: N 回次の要素への反復を繰り返す
 * 負数: N 回前の要素への反復を繰り返す
-* '*': 最後の要素まで、次の要素への反復を繰り返す
+* _*_: 最後の要素まで、次の要素への反復を繰り返す
 
 例:
 
@@ -183,7 +183,7 @@ hdata buffer:gui_buffers full_name
 [[command_info]]
 === info
 
-'インフォ' を要求。
+_インフォ_ を要求。
 
 構文:
 
@@ -193,7 +193,7 @@ hdata buffer:gui_buffers full_name
 
 引数:
 
-* 'name': 読み出すインフォの名前
+* _name_: 読み出すインフォの名前
 
 例:
 
@@ -204,7 +204,7 @@ info version
 [[command_infolist]]
 === infolist
 
-'インフォリスト' を要求。
+_インフォリスト_ を要求。
 
 [IMPORTANT]
 インフォリストの内容は実際のデータの複製です。可能な限り <<command_hdata,hdata>>
@@ -219,9 +219,9 @@ info version
 
 引数:
 
-* 'name': 取得するインフォリストの名前
-* 'pointer': ポインタ (任意)
-* 'arguments': 引数 (任意)
+* _name_: 取得するインフォリストの名前
+* _pointer_: ポインタ (任意)
+* _arguments_: 引数 (任意)
 
 例:
 
@@ -232,7 +232,7 @@ infolist buffer
 [[command_nicklist]]
 === nicklist
 
-1 つまたは全てのバッファから'ニックネームリスト' を要求。
+1 つまたは全てのバッファから_ニックネームリスト_ を要求。
 
 構文:
 
@@ -242,8 +242,8 @@ infolist buffer
 
 引数:
 
-* 'buffer': ポインタ ('0x12345') またはバッファの完全な名前 (例:
-  'core.weechat' または 'irc.freenode.#weechat')
+* _buffer_: ポインタ (_0x12345_) またはバッファの完全な名前 (例:
+  _core.weechat_ または _irc.freenode.#weechat_)
 
 例:
 
@@ -268,9 +268,9 @@ input <buffer> <data>
 
 引数:
 
-* 'buffer': ポインタ ('0x12345') またはバッファの完全な名前 (例:
-  'core.weechat' または 'irc.freenode.#weechat')
-* 'data': バッファに送信するデータ: '/'
+* _buffer_: ポインタ (_0x12345_) またはバッファの完全な名前 (例:
+  _core.weechat_ または _irc.freenode.#weechat_)
+* _data_: バッファに送信するデータ: `/`
    で始まる場合、バッファ内でコマンドとして実行されます、それ以外の場合、テキストはバッファの入力として送信されます。
 
 例:
@@ -300,21 +300,21 @@ sync [<buffer>[,<buffer>...] <option>[,<option>...]]
 
 引数:
 
-* 'buffer': ポインタ ('0x12345') またはバッファの完全な名前 (例:
-  'core.weechat' または 'irc.freenode.#weechat');
+* _buffer_: ポインタ (_0x12345_) またはバッファの完全な名前 (例:
+  _core.weechat_ または _irc.freenode.#weechat_);
   全てのバッファを指定するには "*" を使ってください
-* 'options': 以下に挙げるキーワード、コンマ区切り ("*" に対するデフォルトは
-  'buffers,upgrade,buffer,nicklist' 、バッファに対するデフォルトは 'buffer,nicklist'):
-** 'buffers': バッファに関するシグナルを受け取る
+* _options_: 以下に挙げるキーワード、コンマ区切り ("*" に対するデフォルトは
+  _buffers,upgrade,buffer,nicklist_ 、バッファに対するデフォルトは _buffer,nicklist_):
+** _buffers_: バッファに関するシグナルを受け取る
    (オープン/クローズ、移動、リネーム、マージ/アンマージ、隠す/隠さない); これは名前が "*" の場合のみ利用可能
    _(WeeChat バージョン 0.4.1 以上で利用可)_
-** 'upgrade': WeeChat アップグレードに関するシグナルを受信 (アップグレード、アップグレードの終了);
+** _upgrade_: WeeChat アップグレードに関するシグナルを受信 (アップグレード、アップグレードの終了);
    名前が "*" のバッファに対してのみ利用可能
    _(WeeChat バージョン 0.4.1 以上で利用可)_
-** 'buffer': バッファに関するシグナルを受信
-   (新しい行、型の変更、タイトルの変更、ローカル変数の追加/削除、'buffers'
+** _buffer_: バッファに関するシグナルを受信
+   (新しい行、型の変更、タイトルの変更、ローカル変数の追加/削除、_buffers_
    と同じバッファに関するシグナル) _(WeeChat バージョン 0.4.1 で更新)_
-** 'nicklist': 変更後にニックネームリストを受信
+** _nicklist_: 変更後にニックネームリストを受信
 
 例:
 
@@ -345,7 +345,7 @@ _WeeChat バージョン 0.4.1 で更新。_
 更新を中止して 1 つまたは複数のバッファの同期を中止。
 
 [NOTE]
-バッファの'オプション'
+バッファの_オプション_
 を削除します。バッファに対する一部のオプションがまだ有効な場合、クライアントはバッファに対するアップデートを受け取ります。
 
 構文:
@@ -356,11 +356,11 @@ desync [<buffer>[,<buffer>...] <option>[,<option>...]]
 
 引数:
 
-* 'buffer': ポインタ ('0x12345') またはバッファの完全な名前 (例:
-  'core.weechat' または 'irc.freenode.#weechat');
+* _buffer_: ポインタ (_0x12345_) またはバッファの完全な名前 (例:
+  _core.weechat_ または _irc.freenode.#weechat_);
   全てのバッファを指定するには "*" を使ってください
-* 'options': 以下に挙げるキーワード、コンマ区切り ("*" に対するデフォルトは
-  'buffers,upgrade,buffer,nicklist' 、バッファに対するデフォルトは 'buffer,nicklist'):
+* _options_: 以下に挙げるキーワード、コンマ区切り ("*" に対するデフォルトは
+  _buffers,upgrade,buffer,nicklist_ 、バッファに対するデフォルトは _buffer,nicklist_):
   値に関する詳しい情報は <<command_sync,sync コマンド>>をご覧ください
 
 [NOTE]
@@ -458,7 +458,7 @@ ping 1370802127000
 [[command_quit]]
 === quit
 
-'リレー' から切断。
+_リレー_ から切断。
 
 構文:
 
@@ -489,37 +489,37 @@ quit
                                'length' バイト
 ....
 
-* 'length' (符号なし整数型): メッセージ全体のバイト数
+* _length_ (符号なし整数型): メッセージ全体のバイト数
   (このフィールドを含む)
-* 'compression' (バイト型): フラグ:
-** '0x00': これ以降のデータは圧縮されていません
-** '0x01': これ以降のデータは 'zlib' で圧縮されています
-* 'id' (文字列型): クライアントが送信した識別子 (コマンド名の前につけられる);
+* _compression_ (バイト型): フラグ:
+** _0x00_: これ以降のデータは圧縮されていません
+** _0x01_: これ以降のデータは _zlib_ で圧縮されています
+* _id_ (文字列型): クライアントが送信した識別子 (コマンド名の前につけられる);
   コマンドに識別子が含まれない場合は空文字列でも可
   (内容を含まない長さゼロの文字列)
-* 'type' (3 文字): 型の種類: 3 文字 (以下の表を参照)
-* 'object': オブジェクト (以下の表を参照)
+* _type_ (3 文字): 型の種類: 3 文字 (以下の表を参照)
+* _object_: オブジェクト (以下の表を参照)
 
 [[message_compression]]
 === 圧縮
 
-'compression' フラグが 0x01 の場合、これ以降の*全ての* データは 'zlib'
+_compression_ フラグが 0x01 の場合、これ以降の*全ての* データは _zlib_
 で圧縮されているため、処理前に必ず展開してください。
 
 [[message_identifier]]
 === 識別子
 
-識別子 ('id') には 2 種類あります:
+識別子 (_id_) には 2 種類あります:
 
-* 'クライアント' が送信する 'id': 'リレー' は 'id' を含む受信メッセージに対して同じ 'id' を付けて応答します。
-* イベントの 'id': 一部のイベントで、'リレー' は 'クライアント' に向けて特別な、アンダースコアで始まる、'id'
+* _クライアント_ が送信する _id_: _リレー_ は _id_ を含む受信メッセージに対して同じ _id_ を付けて応答します。
+* イベントの _id_: 一部のイベントで、_リレー_ は _クライアント_ に向けて特別な、アンダースコアで始まる、_id_
   を含むメッセージを送信します (以下の表を参照)
 
 WeeChat の予約識別子:
 
 [width="100%",cols="5,5,3,4,7",options="header"]
 |===
-| 識別子 | 'sync' で受信 | 送信されるデータ |
+| 識別子 | _sync_ で受信 | 送信されるデータ |
   説明 | 推奨するクライアントの挙動
 
 | _buffer_opened | buffers / buffer | hdata: buffer |
@@ -595,8 +595,8 @@ hdata として送られるデータ:
 |===
 | 名前            | 型        | 説明
 | number          | integer   | バッファ番号 (1 以上)
-| full_name       | string    | 完全な名前 (例: 'irc.freenode.#weechat')
-| short_name      | string    | 短い名前 (例: '#weechat')
+| full_name       | string    | 完全な名前 (例: _irc.freenode.#weechat_)
+| short_name      | string    | 短い名前 (例: _#weechat_)
 | nicklist        | integer   | バッファがニックネームリストを持つ場合 1、それ以外は 0
 | title           | string    | バッファのタイトル
 | local_variables | hashtable | ローカル変数
@@ -604,8 +604,8 @@ hdata として送られるデータ:
 | next_buffer     | pointer   | 次のバッファへのポインタ
 |===
 
-例: freenode の '#weechat' チャンネルに参加、新しいバッファは
-'irc.freenode.#weechat':
+例: freenode の _#weechat_ チャンネルに参加、新しいバッファは
+_irc.freenode.#weechat_:
 
 [source,python]
 ----
@@ -638,12 +638,12 @@ hdata として送られるデータ:
 |===
 | 名前        | 型      | 説明
 | number      | integer | バッファ番号 (1 以上)
-| full_name   | string  | 完全な名前 (例: 'irc.freenode.#weechat')
+| full_name   | string  | 完全な名前 (例: _irc.freenode.#weechat_)
 | prev_buffer | pointer | 前のバッファへのポインタ
 | next_buffer | pointer | 次のバッファへのポインタ
 |===
 
-例: バッファ 'irc.freenode.#weechat' を番号 2 に移動:
+例: バッファ _irc.freenode.#weechat_ を番号 2 に移動:
 
 [source,python]
 ----
@@ -671,12 +671,12 @@ hdata として送られるデータ:
 |===
 | 名前        | 型      | 説明
 | number      | integer | バッファ番号 (1 以上)
-| full_name   | string  | 完全な名前 (例: 'irc.freenode.#weechat')
+| full_name   | string  | 完全な名前 (例: _irc.freenode.#weechat_)
 | prev_buffer | pointer | 前のバッファへのポインタ
 | next_buffer | pointer | 次のバッファへのポインタ
 |===
 
-例: バッファ 'irc.freenode.#weechat' をバッファ #2 とマージ:
+例: バッファ _irc.freenode.#weechat_ をバッファ #2 とマージ:
 
 [source,python]
 ----
@@ -704,12 +704,12 @@ hdata として送られるデータ:
 |===
 | 名前        | 型      | 説明
 | number      | integer | バッファ番号 (1 以上)
-| full_name   | string  | 完全な名前 (例: 'irc.freenode.#weechat')
+| full_name   | string  | 完全な名前 (例: _irc.freenode.#weechat_)
 | prev_buffer | pointer | 前のバッファへのポインタ
 | next_buffer | pointer | 次のバッファへのポインタ
 |===
 
-例: バッファ 'irc.freenode.#weechat' をアンマージ:
+例: バッファ _irc.freenode.#weechat_ をアンマージ:
 
 [source,python]
 ----
@@ -739,12 +739,12 @@ hdata として送られるデータ:
 |===
 | 名前        | 型      | 説明
 | number      | integer | バッファ番号 (1 以上)
-| full_name   | string  | 完全な名前 (例: 'irc.freenode.#weechat')
+| full_name   | string  | 完全な名前 (例: _irc.freenode.#weechat_)
 | prev_buffer | pointer | 前のバッファへのポインタ
 | next_buffer | pointer | 次のバッファへのポインタ
 |===
 
-例: バッファ 'irc.freenode.#weechat' を隠す:
+例: バッファ _irc.freenode.#weechat_ を隠す:
 
 [source,python]
 ----
@@ -774,12 +774,12 @@ hdata として送られるデータ:
 |===
 | 名前        | 型      | 説明
 | number      | integer | バッファ番号 (1 以上)
-| full_name   | string  | 完全な名前 (例: 'irc.freenode.#weechat')
+| full_name   | string  | 完全な名前 (例: _irc.freenode.#weechat_)
 | prev_buffer | pointer | 前のバッファへのポインタ
 | next_buffer | pointer | 次のバッファへのポインタ
 |===
 
-例: バッファ 'irc.freenode.#weechat' を隠すことを止める:
+例: バッファ _irc.freenode.#weechat_ を隠すことを止める:
 
 [source,python]
 ----
@@ -807,12 +807,12 @@ hdata として送られるデータ:
 |===
 | 名前            | 型        | 説明
 | number          | integer   | バッファ番号 (1 以上)
-| full_name       | string    | 完全な名前 (例: 'irc.freenode.#weechat')
-| short_name      | string    | 短い名前 (例: '#weechat')
+| full_name       | string    | 完全な名前 (例: _irc.freenode.#weechat_)
+| short_name      | string    | 短い名前 (例: _#weechat_)
 | local_variables | hashtable | ローカル変数
 |===
 
-例: プライベートバッファを 'FlashCode' から 'Flash2' にリネーム:
+例: プライベートバッファを _FlashCode_ から _Flash2_ にリネーム:
 
 [source,python]
 ----
@@ -841,11 +841,11 @@ hdata として送られるデータ:
 |===
 | 名前      | 型      | 説明
 | number    | integer | バッファ番号 (1 以上)
-| full_name | string  | 完全な名前 (例: 'irc.freenode.#weechat')
+| full_name | string  | 完全な名前 (例: _irc.freenode.#weechat_)
 | title     | string  | バッファのタイトル
 |===
 
-例: チャンネル '#weechat' のトピックを変更:
+例: チャンネル _#weechat_ のトピックを変更:
 
 [source,python]
 ----
@@ -874,10 +874,10 @@ hdata として送られるデータ:
 |===
 | 名前      | 型      | 説明
 | number    | integer | バッファ番号 (1 以上)
-| full_name | string  | 完全な名前 (例: 'irc.freenode.#weechat')
+| full_name | string  | 完全な名前 (例: _irc.freenode.#weechat_)
 |===
 
-例: バッファ 'irc.freenode.#weechat' をクリア:
+例: バッファ _irc.freenode.#weechat_ をクリア:
 
 [source,python]
 ----
@@ -903,11 +903,11 @@ hdata として送られるデータ:
 |===
 | 名前      | 型      | 説明
 | number    | integer | バッファ番号 (1 以上)
-| full_name | string  | 完全な名前 (例: 'irc.freenode.#weechat')
+| full_name | string  | 完全な名前 (例: _irc.freenode.#weechat_)
 | type      | integer | バッファの種類: 0 = 書式あり (デフォルト)、1 = 自由内容
 |===
 
-例: バッファ 'script.scripts' の種類を書式あり (0) から自由内容
+例: バッファ _script.scripts_ の種類を書式あり (0) から自由内容
 (1) に変更:
 
 [source,python]
@@ -935,11 +935,11 @@ hdata として送られるデータ:
 |===
 | 名前            | 型        | 説明
 | number          | integer   | バッファ番号 (1 以上)
-| full_name       | string    | 完全な名前 (例: 'irc.freenode.#weechat')
+| full_name       | string    | 完全な名前 (例: _irc.freenode.#weechat_)
 | local_variables | hashtable | ローカル変数
 |===
 
-例: 'irc.freenode.#weechat' にローカル変数 'test' を追加:
+例: _irc.freenode.#weechat_ にローカル変数 _test_ を追加:
 
 [source,python]
 ----
@@ -968,11 +968,11 @@ hdata として送られるデータ:
 |===
 | 名前            | 型        | 説明
 | number          | integer   | バッファ番号 (1 以上)
-| full_name       | string    | 完全な名前 (例: 'irc.freenode.#weechat')
+| full_name       | string    | 完全な名前 (例: _irc.freenode.#weechat_)
 | local_variables | hashtable | ローカル変数
 |===
 
-例: 'irc.freenode.#weechat' に含まれるローカル変数 'test' を更新:
+例: _irc.freenode.#weechat_ に含まれるローカル変数 _test_ を更新:
 
 [source,python]
 ----
@@ -1001,11 +1001,11 @@ hdata として送られるデータ:
 |===
 | 名前            | 型        | 説明
 | number          | integer   | バッファ番号 (1 以上)
-| full_name       | string    | 完全な名前 (例: 'irc.freenode.#weechat')
+| full_name       | string    | 完全な名前 (例: _irc.freenode.#weechat_)
 | local_variables | hashtable | ローカル変数
 |===
 
-例: 'irc.freenode.#weechat' からローカル変数 'test' を削除:
+例: _irc.freenode.#weechat_ からローカル変数 _test_ を削除:
 
 [source,python]
 ----
@@ -1042,7 +1042,7 @@ hdata として送られるデータ:
 | message      | string           | メッセージ
 |===
 
-例: バッファ 'irc.freenode.#weechat' でニックネーム 'FlashCode' からの新しいメッセージ 'hello!':
+例: バッファ _irc.freenode.#weechat_ でニックネーム _FlashCode_ からの新しいメッセージ _hello!_:
 
 [source,python]
 ----
@@ -1075,10 +1075,10 @@ hdata として送られるデータ:
 |===
 | 名前      | 型      | 説明
 | number    | integer | バッファ番号 (1 以上)
-| full_name | string  | 完全な名前 (例: 'irc.freenode.#weechat')
+| full_name | string  | 完全な名前 (例: _irc.freenode.#weechat_)
 |===
 
-例: WeeChat がバッファ 'irc.freenode.#weechat' を閉じる:
+例: WeeChat がバッファ _irc.freenode.#weechat_ を閉じる:
 
 [source,python]
 ----
@@ -1099,7 +1099,7 @@ hda:
 が行われた場合にクライアントに送られます。このメッセージには完全なニックネームリストが含まれます。
 
 ニックネームリストに対して小さな更新が行われた場合 (例えばニックネームを 1
-つだけ追加)、識別子 '_nicklist_diff' を含むメッセージが送信されます (以下を参照)。
+つだけ追加)、識別子 __nicklist_diff_ を含むメッセージが送信されます (以下を参照)。
 
 hdata として送られるデータ:
 
@@ -1115,7 +1115,7 @@ hdata として送られるデータ:
 | prefix_color | string  | プレフィックスの色 (ニックネーム専用)
 |===
 
-例: バッファ 'irc.freenode.#weechat' のニックネームリスト:
+例: バッファ _irc.freenode.#weechat_ のニックネームリスト:
 
 [source,python]
 ----
@@ -1204,7 +1204,7 @@ hdata として送られるデータ:
 | prefix_color | string  | プレフィックスの色 (ニックネーム専用)
 |===
 
-'_diff' のとりうる値:
+__diff_ のとりうる値:
 
 * `^`: 親グループ:
   これの後に続くグループまたはニックネームに関する操作はこのグループに対して行う
@@ -1212,8 +1212,8 @@ hdata として送られるデータ:
 * `-`: このグループおよびニックネームを親グループから削除
 * `*`: このグループおよびニックネームを親グループで更新
 
-例: ニックネーム 'master' を '000|o' (IRC チャンネルのチャンネルオペレータ)
-グループに追加、ニックネーム 'nick1' と 'nick2' を '999|...' に追加
+例: ニックネーム _master_ を _000|o_ (IRC チャンネルのチャンネルオペレータ)
+グループに追加、ニックネーム _nick1_ と _nick2_ を _999|..._ に追加
 (IRC チャンネルの一般ユーザ):
 
 [source,python]
@@ -1280,7 +1280,7 @@ hda:
 
 _WeeChat バージョン 0.4.2 以上で利用可。_
 
-このメッセージは 'リレー' が "ping" メッセージを受信する際にクライアントに送られます。
+このメッセージは _リレー_ が "ping" メッセージを受信する際にクライアントに送られます。
 
 文字列として送られるデータ: "ping" メッセージで受信した引数。
 
@@ -1296,7 +1296,7 @@ _WeeChat バージョン 0.3.8 以上で利用可。_
 メッセージにデータは含まれません。
 
 クライアントは WeeChat との同期を中止するか
-('desync' コマンドを送信)、WeeChat から切断することを推奨します
+(_desync_ コマンドを送信)、WeeChat から切断することを推奨します
 (これはアップグレードの後はすべてのポインタが変わるからです)。
 
 [NOTE]
@@ -1314,12 +1314,12 @@ _WeeChat バージョン 0.3.8 以上で利用可。_
 メッセージにデータは含まれません。
 
 クライアントは WeeChat との同期を再開することを推奨します:
-クライアントを開始して 'init' 以降に送信したすべてのコマンドを再送信。
+クライアントを開始して _init_ 以降に送信したすべてのコマンドを再送信。
 
 [[objects]]
 === オブジェクト
 
-オブジェクトは 'type' と呼ばれる 3 文字で特定されます。以下の種類が使われます:
+オブジェクトは _type_ と呼ばれる 3 文字で特定されます。以下の種類が使われます:
 
 [width="100%",cols="^2m,5,10",options="header"]
 |===
@@ -1327,7 +1327,7 @@ _WeeChat バージョン 0.3.8 以上で利用可。_
 | chr  | 符号付文字            | 1 バイト
 | int  | 符号付整数            | 4 バイト
 | lon  | 符号付長整数          | 1 バイト + 文字列で表現した整数の長さ
-| str  | 文字列                | 4 バイト + 文字列の長さ (最後の '\0' を含まない)
+| str  | 文字列                | 4 バイト + 文字列の長さ (最後の _\0_ を含まない)
 | buf  | バッファのバイト数    | 4 バイト + データの長さ
 | ptr  | ポインタ              | 1 バイト + 文字列で表現したポインタの長さ
 | tim  | 時間                  | 1 バイト + 文字列で表現した時間の長さ
@@ -1397,7 +1397,7 @@ length '-'  '1'  '2'  '3'  '4'  '5'  '6'  '7'  '8'  '9'  '0'
 [[object_string]]
 ==== 文字列
 
-1 つの文字列はその長さ (4 バイト表現した整数) + 文字列の内容 (最後の '\0' を除く) で表現されています。
+1 つの文字列はその長さ (4 バイト表現した整数) + 文字列の内容 (最後の _\0_ を除く) で表現されています。
 
 例:
 
@@ -1419,7 +1419,7 @@ length '-'  '1'  '2'  '3'  '4'  '5'  '6'  '7'  '8'  '9'  '0'
        length
 ....
 
-'NULL' 文字列 (C 言語の NULL ポインタ) を表現するにはの長さを -1 にしてください:
+_NULL_ 文字列 (C 言語の NULL ポインタ) を表現するにはの長さを -1 にしてください:
 
 ....
 ┌────┬────┬────┬────┐
@@ -1449,7 +1449,7 @@ length '-'  '1'  '2'  '3'  '4'  '5'  '6'  '7'  '8'  '9'  '0'
 length '1'  'a'  '2'  'b'  '3'  'c'  '4'  'd'  '5'
 ....
 
-'NULL' ポインタを表現するには長さを 1 で値を 0 にしてください:
+_NULL_ ポインタを表現するには長さを 1 で値を 0 にしてください:
 
 ....
 ┌────╥────┐
@@ -1500,7 +1500,7 @@ length '1'  '3'  '2'  '1'  '9'  '9'  '3'  '4'  '5'  '6'
 [[object_hdata]]
 ==== Hdata
 
-1 つの 'hdata' には hdata 名を含むパス、キーのリスト、オブジェクトセットの数、オブジェクトセット
+1 つの _hdata_ には hdata 名を含むパス、キーのリスト、オブジェクトセットの数、オブジェクトセット
 (ポインタのパス、オブジェクト) が含まれています。
 
 ....
@@ -1513,18 +1513,18 @@ length '1'  '3'  '2'  '1'  '9'  '9'  '3'  '4'  '5'  '6'
    ──╨────────┴─────────────────────╨─────┘
 ....
 
-* 'h-path' (文字列): hdata にアクセスする際に使うパス (例:
-  'buffer/lines/line/line_data'); 返される hdata はパスの最後の要素です
-* 'keys' (文字列): 'key:type' のリスト (コンマ区切り)
-  を含む文字列、例: 'number:int,name:str'
-* 'count' (文字列): オブジェクトセットの数
-* 'p-path': オブジェクトへのポインタを含むパス
+* _h-path_ (文字列): hdata にアクセスする際に使うパス (例:
+  _buffer/lines/line/line_data_); 返される hdata はパスの最後の要素です
+* _keys_ (文字列): _key:type_ のリスト (コンマ区切り)
+  を含む文字列、例: _number:int,name:str_
+* _count_ (文字列): オブジェクトセットの数
+* _p-path_: オブジェクトへのポインタを含むパス
   (ポインタの数はパスに含まれる要素の数)
-* 'values': 値のリスト (値の数は hdata
+* _values_: 値のリスト (値の数は hdata
   で返されるキーの数)
 
 2 つのバッファ (weechat コアと freenode サーバ) と
-2 つのキー ('number' と 'full_name') を持つ hdata の例:
+2 つのキー (_number_ と _full_name_) を持つ hdata の例:
 
 ....
 # コマンド
@@ -1621,7 +1621,7 @@ nicklist
 [[object_info]]
 ==== インフォ
 
-1 つの'インフォ' は名前と値を含んでいます (両方とも文字列)。
+1 つの_インフォ_ は名前と値を含んでいます (両方とも文字列)。
 
 ....
 ┌──────┬───────┐
@@ -1629,10 +1629,10 @@ nicklist
 └──────┴───────┘
 ....
 
-* 'name' (文字列): インフォの名前
-* 'value' (文字列): 値
+* _name_ (文字列): インフォの名前
+* _value_ (文字列): 値
 
-'version' インフォの例:
+_version_ インフォの例:
 
 ....
 ┌─────────┬───────────────────┐
@@ -1643,7 +1643,7 @@ nicklist
 [[object_infolist]]
 ==== インフォリスト
 
-1 つの'インフォリスト' は名前、要素の数、要素
+1 つの_インフォリスト_ は名前、要素の数、要素
 (変数のセット) を含んでいます。
 
 ....
@@ -1660,13 +1660,13 @@ nicklist
 └───────╨────────┴────────┴─────────╨─────╨────────┴────────┴─────────┘
 ....
 
-* 'name' (文字列): インフォリストの名前 ('buffer' 、'window' 、'bar' 、...)
-* 'count' (整数): 要素の数
-* 'item':
-** 'count': 要素に含まれる変数の数
-** 'name': 変数の名前
-** 'type': 変数の型 ('int' 、'str' 、...)
-** 'value': 変数の値
+* _name_ (文字列): インフォリストの名前 (_buffer_ 、_window_ 、_bar_ 、...)
+* _count_ (整数): 要素の数
+* _item_:
+** _count_: 要素に含まれる変数の数
+** _name_: 変数の名前
+** _type_: 変数の型 (_int_ 、_str_ 、...)
+** _value_: 変数の値
 
 2 つのバッファ (weechat コアと freenode サーバ) を持つインフォリストの例:
 
@@ -1725,7 +1725,7 @@ infolist buffer
           456 (0x1C8)         789 (0x315)
 ....
 
-'NULL' 配列:
+_NULL_ 配列:
 
 ....
 ┌─────╥────┬────┬────┬────┐

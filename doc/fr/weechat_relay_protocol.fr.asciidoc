@@ -21,16 +21,16 @@ interfaces distantes.
 
 Les termes suivants sont utilisés dans ce document :
 
-* 'relay' : il s'agit de l'extension "relay" de WeeChat, qui agit comme un
-  "serveur" et autorise les 'clients' à se connecter
-* 'client' : il s'agit d'un autre logiciel, connecté au 'relay' via une
-  connexion réseau; dans la plupart des cas, ce 'client' est une interface
+* _relay_ : il s'agit de l'extension "relay" de WeeChat, qui agit comme un
+  "serveur" et autorise les _clients_ à se connecter
+* _client_ : il s'agit d'un autre logiciel, connecté au _relay_ via une
+  connexion réseau; dans la plupart des cas, ce _client_ est une interface
   distante.
 
 [[network_diagram]]
 === Diagramme réseau
 
-Les 'clients' sont connectés au 'relay' comme dans le diagramme ci-dessous :
+Les _clients_ sont connectés au _relay_ comme dans le diagramme ci-dessous :
 
 ....
                                               ┌──────────┐ Station de travail
@@ -51,20 +51,20 @@ Les 'clients' sont connectés au 'relay' comme dans le diagramme ci-dessous :
 ....
 
 [NOTE]
-Tous les clients ici utilisent le protocole 'weechat' dans l'extension 'relay'.
-L'extension 'relay' autorise aussi des clients IRC, et 'relay' agit alors comme
-un 'proxy IRC' (non décrit dans ce document).
+Tous les clients ici utilisent le protocole _weechat_ dans l'extension _relay_.
+L'extension _relay_ autorise aussi des clients IRC, et _relay_ agit alors comme
+un _proxy IRC_ (non décrit dans ce document).
 
 [[protocol_generalities]]
 == Généralités sur le protocole
 
-* Les connexions du 'client' vers 'relay' sont faites avec des sockets TCP sur
-  l'IP/port utilisé par 'relay' pour écouter les nouvelles connexions.
-* Le nombre de clients est limité par l'option 'relay.network.max_clients'.
-* Chaque 'client' est indépendant des autres clients.
-* Les messages du 'client' vers 'relay' sont appelés 'commandes', elles sont
+* Les connexions du _client_ vers _relay_ sont faites avec des sockets TCP sur
+  l'IP/port utilisé par _relay_ pour écouter les nouvelles connexions.
+* Le nombre de clients est limité par l'option _relay.network.max_clients_.
+* Chaque _client_ est indépendant des autres clients.
+* Les messages du _client_ vers _relay_ sont appelés _commandes_, elles sont
   envoyées sous forme de texte (une chaîne de caractères).
-* Les messages de 'relay' vers le 'client' sont appelés des 'messages', ils sont
+* Les messages de _relay_ vers le _client_ sont appelés des _messages_, ils sont
   envoyés sous forme de données binaires.
 
 [[commands]]
@@ -74,12 +74,12 @@ Les commandes ont le format : "(id) commande paramètres\n".
 
 Les champs sont :
 
-* 'id' : identifiant du message (facultatif) qui sera envoyée dans la réponse de
-  'relay'; elle doit être entre parenthèses, et ne doit pas commencer par un
+* _id_ : identifiant du message (facultatif) qui sera envoyée dans la réponse de
+  _relay_; elle doit être entre parenthèses, et ne doit pas commencer par un
   underscore ("_") (les identifiants commençant par un underscore sont réservés
-  pour les messages 'évènements' de WeeChat)
-* 'commande' : une commande (voir le tableau ci-dessous)
-* 'paramètres' : paramètres facultatifs pour la commande (plusieurs paramètres
+  pour les messages _évènements_ de WeeChat)
+* _commande_ : une commande (voir le tableau ci-dessous)
+* _paramètres_ : paramètres facultatifs pour la commande (plusieurs paramètres
   sont séparés par des espaces).
 
 Liste des commandes disponibles (détail dans les chapitres suivants) :
@@ -87,22 +87,22 @@ Liste des commandes disponibles (détail dans les chapitres suivants) :
 [width="80%",cols="^3m,14",options="header"]
 |===
 | Commande | Description
-| init     | Initialiser la connexion avec 'relay'
-| hdata    | Demander un 'hdata'
-| info     | Demander une 'info'
-| infolist | Demander une 'infolist'
-| nicklist | Demander une 'nicklist' (liste de pseudos)
+| init     | Initialiser la connexion avec _relay_
+| hdata    | Demander un _hdata_
+| info     | Demander une _info_
+| infolist | Demander une _infolist_
+| nicklist | Demander une _nicklist_ (liste de pseudos)
 | input    | Envoyer des données à un tampon (texte ou commande)
 | sync     | Synchroniser un/des tampon(s) (recevoir les mises à jour pour le(s) tampon(s))
 | desync   | Désynchroniser un/des tampon(s) (stopper les mises à jour pour le(s) tampon(s))
-| quit     | Se déconnecter de 'relay'
+| quit     | Se déconnecter de _relay_
 |===
 
 [[command_init]]
 === init
 
-Initialiser la connexion avec 'relay'. Il doit s'agir de la première commande
-envoyée à 'relay'. Si elle n'est pas envoyée, 'relay' coupera la connexion à la
+Initialiser la connexion avec _relay_. Il doit s'agir de la première commande
+envoyée à _relay_. Si elle n'est pas envoyée, _relay_ coupera la connexion à la
 première commande reçue, sans avertissement.
 
 Syntaxe :
@@ -113,16 +113,16 @@ init [<option>=<valeur>,[<option>=<valeur>,...]]
 
 Paramètres :
 
-* 'option' : une des options suivantes :
-** 'password' : mot de passe utilisé pour s'authentifier avec 'relay' (option
-   'relay.network.password' dans WeeChat)
-** 'compression' : type de compression :
-*** 'zlib' : activer la compression 'zlib' pour les messages envoyés par 'relay'
-*** 'off' : désactiver la compression
+* _option_ : une des options suivantes :
+** _password_ : mot de passe utilisé pour s'authentifier avec _relay_ (option
+   _relay.network.password_ dans WeeChat)
+** _compression_ : type de compression :
+*** _zlib_ : activer la compression _zlib_ pour les messages envoyés par _relay_
+*** _off_ : désactiver la compression
 
 [NOTE]
-La compression 'zlib' est activée par défaut si 'relay' supporte la compression
-'zlib'.
+La compression _zlib_ est activée par défaut si _relay_ supporte la compression
+_zlib_.
 
 Exemples :
 
@@ -137,7 +137,7 @@ init password=mypass,compression=off
 [[command_hdata]]
 === hdata
 
-Demander un 'hdata'.
+Demander un _hdata_.
 
 Syntaxe :
 
@@ -147,14 +147,14 @@ Syntaxe :
 
 Paramètres :
 
-* 'chemin' : chemin vers le hdata, avec le format :
+* _chemin_ : chemin vers le hdata, avec le format :
   "hdata:pointeur/var/var/.../var", la dernière variable est le hdata retourné :
-** 'hdata' : nom du hdata
-** 'pointeur' : pointeur ("0x12345") ou nom de liste (par exemple :
+** _hdata_ : nom du hdata
+** _pointeur_ : pointeur ("0x12345") ou nom de liste (par exemple :
    "gui_buffers") (nombre autorisé, voir ci-dessous)
-** 'var' : un nom de variable dans le hdata parent (nom précédent dans le
+** _var_ : un nom de variable dans le hdata parent (nom précédent dans le
    chemin) (nombre autorisé, voir ci-dessous)
-* 'clés' : liste de clés (séparées par des virgules) à retourner dans le hdata
+* _clés_ : liste de clés (séparées par des virgules) à retourner dans le hdata
   (si non spécifié, toutes les clés sont retournées, ce qui n'est pas recommandé
   avec les grosses structures hdata)
 
@@ -163,7 +163,7 @@ Les valeurs possibles sont :
 
 * nombre positif : itérer en utilisant l'élément suivant, N fois
 * nombre négatif : itérer en utilisant l'élément précédent, N fois
-* '*' : itérer en utilisant l'élément suivant, jusqu'à la fin de la liste
+* _*_ : itérer en utilisant l'élément suivant, jusqu'à la fin de la liste
 
 Exemples :
 
@@ -184,7 +184,7 @@ hdata buffer:gui_buffers full_name
 [[command_info]]
 === info
 
-Demander une 'info'.
+Demander une _info_.
 
 Syntaxe :
 
@@ -194,8 +194,8 @@ Syntaxe :
 
 Paramètres :
 
-* 'nom' : nom de l'info à obtenir
-* 'paramètres' : paramètres pour l'info (facultatif)
+* _nom_ : nom de l'info à obtenir
+* _paramètres_ : paramètres pour l'info (facultatif)
 
 Exemple :
 
@@ -206,7 +206,7 @@ info version
 [[command_infolist]]
 === infolist
 
-Demander une 'infolist'.
+Demander une _infolist_.
 
 [IMPORTANT]
 Le contenu de l'infolist est une duplication des données. Dans la mesure du
@@ -222,9 +222,9 @@ Syntaxe :
 
 Paramètres :
 
-* 'nom' : nom de l'infolist à obtenir
-* 'pointeur' : pointeur (facultatif)
-* 'paramètres' : paramètres (facultatif)
+* _nom_ : nom de l'infolist à obtenir
+* _pointeur_ : pointeur (facultatif)
+* _paramètres_ : paramètres (facultatif)
 
 Exemple :
 
@@ -235,7 +235,7 @@ infolist buffer
 [[command_nicklist]]
 === nicklist
 
-Demander une 'nicklist' (liste de pseudos), pour un ou tous les tampons.
+Demander une _nicklist_ (liste de pseudos), pour un ou tous les tampons.
 
 Syntaxe :
 
@@ -245,8 +245,8 @@ Syntaxe :
 
 Paramètres :
 
-* 'tampon' : pointeur ('0x12345') ou nom complet du tampon (par exemple :
-  'core.weechat' ou 'irc.freenode.#weechat')
+* _tampon_ : pointeur (_0x12345_) ou nom complet du tampon (par exemple :
+  _core.weechat_ ou _irc.freenode.#weechat_)
 
 Exemples :
 
@@ -271,9 +271,9 @@ input <tampon> <données>
 
 Paramètres :
 
-* 'tampon' : pointeur ('0x12345') ou nom complet du tampon (par exemple :
-  'core.weechat' ou 'irc.freenode.#weechat')
-* 'données' : données à envoyer au tampon : si elles commencent par '/',
+* _tampon_ : pointeur (_0x12345_) ou nom complet du tampon (par exemple :
+  _core.weechat_ ou _irc.freenode.#weechat_)
+* _données_ : données à envoyer au tampon : si elles commencent par `/`,
   cela sera exécuté comme une commande sur le tampon, sinon le texte est envoyé
   comme entrée sur le tampon
 
@@ -304,22 +304,22 @@ sync [<tampon>[,<tampon>...] <option>[,<option>...]]
 
 Paramètres :
 
-* 'tampon' : pointeur ('0x12345') ou nom complet du tampon (par exemple :
-  'core.weechat' ou 'irc.freenode.#weechat'); le nom "*" peut être utilisé pour
+* _tampon_ : pointeur (_0x12345_) ou nom complet du tampon (par exemple :
+  _core.weechat_ ou _irc.freenode.#weechat_); le nom "*" peut être utilisé pour
   spécifier tous les tampons
-* 'options' : un ou plusieurs mots-clés, séparés par des virgules (par défaut
-  'buffers,upgrade,buffer,nicklist' pour "*" et 'buffer,nicklist' pour un
+* _options_ : un ou plusieurs mots-clés, séparés par des virgules (par défaut
+  _buffers,upgrade,buffer,nicklist_ pour "*" et _buffer,nicklist_ pour un
   tampon) :
-** 'buffers' : recevoir les signaux à propos des tampons (ouverts/fermés,
+** _buffers_ : recevoir les signaux à propos des tampons (ouverts/fermés,
    déplacés, renommés, mélangés, masqués/démasqués); peut être utilisé seulement
    avec "*" _(WeeChat ≥ 0.4.1)_
-** 'upgrade' : recevoir les signaux à propos de la mise à jour de WeeChat
+** _upgrade_ : recevoir les signaux à propos de la mise à jour de WeeChat
    (mise à jour, fin de mise à jour); peut être utilisé seulement avec "*"
    _(WeeChat ≥ 0.4.1)_
-** 'buffer' : recevoir les signaux à propos du tampon (nouvelles lignes, type
+** _buffer_ : recevoir les signaux à propos du tampon (nouvelles lignes, type
    changé, titre changé, variable locale ajoutée/supprimée, et les même signaux
-   que 'buffers' pour le tampon) _(mis à jour dans la version 0.4.1)_
-** 'nicklist' : recevoir la liste de pseudos après des changements
+   que _buffers_ pour le tampon) _(mis à jour dans la version 0.4.1)_
+** _nicklist_ : recevoir la liste de pseudos après des changements
 
 Exemples :
 
@@ -350,7 +350,7 @@ _Mis à jour dans la version 0.4.1._
 Désynchroniser un ou plusieurs tampons, pour stopper les mises à jour.
 
 [NOTE]
-Ceci retirera les 'options' pour les tampons. Si des options sont toujours
+Ceci retirera les _options_ pour les tampons. Si des options sont toujours
 actives pour les tampons, le client recevra toujours les mises à jour pour ces
 tampons.
 
@@ -362,11 +362,11 @@ desync [<tampon>[,<tampon>...] <option>[,<option>...]]
 
 Paramètres :
 
-* 'tampon' : pointeur ('0x12345') ou nom complet du tampon (par exemple :
-  'core.weechat' ou 'irc.freenode.#weechat'); le nom "*" peut être utilisé pour
+* _tampon_ : pointeur (_0x12345_) ou nom complet du tampon (par exemple :
+  _core.weechat_ ou _irc.freenode.#weechat_); le nom "*" peut être utilisé pour
   spécifier tous les tampons
-* 'options' : un ou plusieurs mots-clés, séparés par des virgules (le défaut est
-  'buffers,upgrade,buffer,nicklist' pour "*" et 'buffer,nicklist' pour un
+* _options_ : un ou plusieurs mots-clés, séparés par des virgules (le défaut est
+  _buffers,upgrade,buffer,nicklist_ pour "*" et _buffer,nicklist_ pour un
   tampon); voir <<command_sync,la commande sync>> pour les valeurs
 
 [NOTE]
@@ -467,7 +467,7 @@ ping 1370802127000
 [[command_quit]]
 === quit
 
-Se déconnecter de 'relay'.
+Se déconnecter de _relay_.
 
 Syntaxe :
 
@@ -499,40 +499,40 @@ suivant (avec la taille en octets) :
                               'taille' octets
 ....
 
-* 'taille' (entier non signé) : nombre d'octets du message entier (en incluant
+* _taille_ (entier non signé) : nombre d'octets du message entier (en incluant
   ce champ)
-* 'compression' (octet) : drapeau :
-** '0x00' : les données qui suivent ne sont pas compressées
-** '0x01' : les données qui suivent sont compressées avec 'zlib'
-* 'id' (chaîne) : l'identifiant envoyé par le client (avant le nom de la
+* _compression_ (octet) : drapeau :
+** _0x00_ : les données qui suivent ne sont pas compressées
+** _0x01_ : les données qui suivent sont compressées avec _zlib_
+* _id_ (chaîne) : l'identifiant envoyé par le client (avant le nom de la
   commande); il peut être vide (chaîne avec une longueur de zéro sans contenu)
   si l'identifiant n'était pas donné dans la commande
-* 'type' (3 caractères) : un type : 3 lettres (voir le tableau ci-dessous)
-* 'objet' : un objet (voir tableau ci-dessous)
+* _type_ (3 caractères) : un type : 3 lettres (voir le tableau ci-dessous)
+* _objet_ : un objet (voir tableau ci-dessous)
 
 [[message_compression]]
 === Compression
 
-Si le drapeau de 'compression' est égal à 0x01, alors *toutes* les données après
-sont compressées avec 'zlib', et par conséquent doivent être décompressées avant
+Si le drapeau de _compression_ est égal à 0x01, alors *toutes* les données après
+sont compressées avec _zlib_, et par conséquent doivent être décompressées avant
 d'être utilisées.
 
 [[message_identifier]]
 === Identifiant
 
-Il y a deux types d'identifiants ('id') :
+Il y a deux types d'identifiants (_id_) :
 
-* 'id' envoyé par le 'client' : 'relay' répondra avec le même 'id' dans sa
+* _id_ envoyé par le _client_ : _relay_ répondra avec le même _id_ dans sa
   réponse
-* 'id' d'un évènement : pour certains évènements, 'relay' enverra un message au
-  'client' en utilisant un 'id' spécifique, commençant par underscore (voir le
+* _id_ d'un évènement : pour certains évènements, _relay_ enverra un message au
+  _client_ en utilisant un _id_ spécifique, commençant par underscore (voir le
   tableau ci-dessous)
 
 Les identifiants réservés par WeeChat :
 
 [width="100%",cols="5,5,3,4,7",options="header"]
 |===
-| Identifiant | Reçu avec 'sync' | Données envoyées |
+| Identifiant | Reçu avec _sync_ | Données envoyées |
   Description | Action recommandée dans le client
 
 | _buffer_opened | buffers / buffer | hdata : buffer |
@@ -608,8 +608,8 @@ Données envoyées dans le hdata :
 |===
 | Nom             | Type             | Description
 | number          | entier           | Numéro de tampon (≥ 1)
-| full_name       | chaîne           | Nom complet (exemple : 'irc.freenode.#weechat')
-| short_name      | chaîne           | Nom court (exemple : '#weechat')
+| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_)
+| short_name      | chaîne           | Nom court (exemple : _#weechat_)
 | nicklist        | entier           | 1 si le tampon a une liste de pseudos, sinon 0
 | title           | chaîne           | Titre du tampon
 | local_variables | table de hachage | Variables locales
@@ -617,8 +617,8 @@ Données envoyées dans le hdata :
 | next_buffer     | pointeur         | Pointeur vers le tampon suivant
 |===
 
-Exemple : canal '#weechat' rejoint sur freenode, nouveau tampon
-'irc.freenode.#weechat' :
+Exemple : canal _#weechat_ rejoint sur freenode, nouveau tampon
+_irc.freenode.#weechat_ :
 
 [source,python]
 ----
@@ -651,12 +651,12 @@ Données envoyées dans le hdata :
 |===
 | Nom         | Type     | Description
 | number      | entier   | Numéro de tampon (≥ 1)
-| full_name   | chaîne   | Nom complet (exemple : 'irc.freenode.#weechat')
+| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_)
 | prev_buffer | pointeur | Pointeur vers le tampon précédent
 | next_buffer | pointeur | Pointeur vers le tampon suivant
 |===
 
-Exemple : tampon 'irc.freenode.#weechat' déplacé vers le numéro 2 :
+Exemple : tampon _irc.freenode.#weechat_ déplacé vers le numéro 2 :
 
 [source,python]
 ----
@@ -684,12 +684,12 @@ Données envoyées dans le hdata :
 |===
 | Nom         | Type     | Description
 | number      | entier   | Numéro de tampon (≥ 1)
-| full_name   | chaîne   | Nom complet (exemple : 'irc.freenode.#weechat')
+| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_)
 | prev_buffer | pointeur | Pointeur vers le tampon précédent
 | next_buffer | pointeur | Pointeur vers le tampon suivant
 |===
 
-Exemple : tampon 'irc.freenode.#weechat' mélangé avec le tampon n°2 :
+Exemple : tampon _irc.freenode.#weechat_ mélangé avec le tampon n°2 :
 
 [source,python]
 ----
@@ -717,12 +717,12 @@ Données envoyées dans le hdata :
 |===
 | Nom         | Type     | Description
 | number      | entier   | Numéro de tampon (≥ 1)
-| full_name   | chaîne   | Nom complet (exemple : 'irc.freenode.#weechat')
+| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_)
 | prev_buffer | pointeur | Pointeur vers le tampon précédent
 | next_buffer | pointeur | Pointeur vers le tampon suivant
 |===
 
-Exemple : tampon 'irc.freenode.#weechat' sorti du mélange :
+Exemple : tampon _irc.freenode.#weechat_ sorti du mélange :
 
 [source,python]
 ----
@@ -752,12 +752,12 @@ Données envoyées dans le hdata :
 |===
 | Nom         | Type     | Description
 | number      | entier   | Numéro de tampon (≥ 1)
-| full_name   | chaîne   | Nom complet (exemple : 'irc.freenode.#weechat')
+| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_)
 | prev_buffer | pointeur | Pointeur vers le tampon précédent
 | next_buffer | pointeur | Pointeur vers le tampon suivant
 |===
 
-Exemple : tampon 'irc.freenode.#weechat' masqué :
+Exemple : tampon _irc.freenode.#weechat_ masqué :
 
 [source,python]
 ----
@@ -787,12 +787,12 @@ Données envoyées dans le hdata :
 |===
 | Nom         | Type     | Description
 | number      | entier   | Numéro de tampon (≥ 1)
-| full_name   | chaîne   | Nom complet (exemple : 'irc.freenode.#weechat')
+| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_)
 | prev_buffer | pointeur | Pointeur vers le tampon précédent
 | next_buffer | pointeur | Pointeur vers le tampon suivant
 |===
 
-Exemple : tampon 'irc.freenode.#weechat' démasqué :
+Exemple : tampon _irc.freenode.#weechat_ démasqué :
 
 [source,python]
 ----
@@ -820,12 +820,12 @@ Données envoyées dans le hdata :
 |===
 | Nom             | Type             | Description
 | number          | entier           | Numéro de tampon (≥ 1)
-| full_name       | chaîne           | Nom complet (exemple : 'irc.freenode.#weechat')
-| short_name      | chaîne           | Nom court (exemple : '#weechat')
+| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_)
+| short_name      | chaîne           | Nom court (exemple : _#weechat_)
 | local_variables | table de hachage | Variables locales
 |===
 
-Exemple : tampon privé renommé de 'FlashCode' en 'Flash2' :
+Exemple : tampon privé renommé de _FlashCode_ en _Flash2_ :
 
 [source,python]
 ----
@@ -854,11 +854,11 @@ Données envoyées dans le hdata :
 |===
 | Nom       | Type   | Description
 | number    | entier | Numéro de tampon (≥ 1)
-| full_name | chaîne | Nom complet (exemple : 'irc.freenode.#weechat')
+| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_)
 | title     | chaîne | Titre du tampon
 |===
 
-Exemple : titre changé sur le canal '#weechat' :
+Exemple : titre changé sur le canal _#weechat_ :
 
 [source,python]
 ----
@@ -887,10 +887,10 @@ Données envoyées dans le hdata :
 |===
 | Nom       | Type   | Description
 | number    | entier | Numéro de tampon (≥ 1)
-| full_name | chaîne | Nom complet (exemple : 'irc.freenode.#weechat')
+| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_)
 |===
 
-Exemple : tampon 'irc.freenode.#weechat' vidé :
+Exemple : tampon _irc.freenode.#weechat_ vidé :
 
 [source,python]
 ----
@@ -916,11 +916,11 @@ Données envoyées dans le hdata :
 |===
 | Nom       | Type   | Description
 | number    | entier | Numéro de tampon (≥ 1)
-| full_name | chaîne | Nom complet (exemple : 'irc.freenode.#weechat')
+| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_)
 | type      | entier | Type de tampon : 0 = formaté (par défaut), 1 = contenu libre
 |===
 
-Exemple : type de tampon 'script.scripts' changé de formaté (0) à contenu
+Exemple : type de tampon _script.scripts_ changé de formaté (0) à contenu
 libre (1) :
 
 [source,python]
@@ -948,12 +948,12 @@ Données envoyées dans le hdata :
 |===
 | Nom             | Type             | Description
 | number          | entier           | Numéro de tampon (≥ 1)
-| full_name       | chaîne           | Nom complet (exemple : 'irc.freenode.#weechat')
+| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_)
 | local_variables | table de hachage | Variables locales
 |===
 
-Exemple : variable locale 'test' ajoutée dans le tampon
-'irc.freenode.#weechat' :
+Exemple : variable locale _test_ ajoutée dans le tampon
+_irc.freenode.#weechat_ :
 
 [source,python]
 ----
@@ -982,12 +982,12 @@ Données envoyées dans le hdata :
 |===
 | Nom             | Type             | Description
 | number          | entier           | Numéro de tampon (≥ 1)
-| full_name       | chaîne           | Nom complet (exemple : 'irc.freenode.#weechat')
+| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_)
 | local_variables | table de hachage | Variables locales
 |===
 
-Exemple : variable locale 'test' mise à jour dans le tampon
-'irc.freenode.#weechat' :
+Exemple : variable locale _test_ mise à jour dans le tampon
+_irc.freenode.#weechat_ :
 
 [source,python]
 ----
@@ -1016,11 +1016,11 @@ Données envoyées dans le hdata :
 |===
 | Nom             | Type             | Description
 | number          | entier           | Numéro de tampon (≥ 1)
-| full_name       | chaîne           | Nom complet (exemple : 'irc.freenode.#weechat')
+| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_)
 | local_variables | table de hachage | Variables locales
 |===
 
-Exemple : variable locale 'test' supprimée du tampon 'irc.freenode.#weechat' :
+Exemple : variable locale _test_ supprimée du tampon _irc.freenode.#weechat_ :
 
 [source,python]
 ----
@@ -1057,8 +1057,8 @@ Données envoyées dans le hdata :
 | message         | chaîne             | Message
 |===
 
-Exemple : nouveau message 'hello!' du pseudo 'FlashCode' sur le tampon
-'irc.freenode.#weechat' :
+Exemple : nouveau message _hello!_ du pseudo _FlashCode_ sur le tampon
+_irc.freenode.#weechat_ :
 
 [source,python]
 ----
@@ -1091,10 +1091,10 @@ Données envoyées dans le hdata :
 |===
 | Nom       | Type   | Description
 | number    | entier | Numéro de tampon (≥ 1)
-| full_name | chaîne | Nom complet (exemple : 'irc.freenode.#weechat')
+| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_)
 |===
 
-Exemple : tampon 'irc.freenode.#weechat' en cours de fermeture par WeeChat :
+Exemple : tampon _irc.freenode.#weechat_ en cours de fermeture par WeeChat :
 
 [source,python]
 ----
@@ -1116,7 +1116,7 @@ sur la liste de pseudos (groupes/pseudos ajoutés/supprimés/changés). Le messa
 contient la liste complète des pseudos.
 
 Lorsque de petites mises à jour sont faites sur la liste de pseudos (par exemple
-l'ajout d'un seul pseudo), un autre message avec l'identifiant '_nicklist_diff'
+l'ajout d'un seul pseudo), un autre message avec l'identifiant __nicklist_diff_
 est envoyé (voir ci-dessous).
 
 Données envoyées dans le hdata :
@@ -1133,7 +1133,7 @@ Données envoyées dans le hdata :
 | prefix_color | chaîne    | Couleur du préfixe (seulement pour un pseudo)
 |===
 
-Exemple : liste de pseudos pour le tampon 'irc.freenode.#weechat' :
+Exemple : liste de pseudos pour le tampon _irc.freenode.#weechat_ :
 
 [source,python]
 ----
@@ -1223,7 +1223,7 @@ Données envoyées dans le hdata :
 | prefix_color | chaîne    | Couleur du préfixe (seulement pour un pseudo)
 |===
 
-La valeur de '_diff' peut être :
+La valeur de __diff_ peut être :
 
 * `^` : le groupe parent : le(s) groupe(s)/pseudo(s) après celui-ci sont liés à
   ce groupe
@@ -1231,8 +1231,8 @@ La valeur de '_diff' peut être :
 * `-` : groupe/pseudo supprimé du groupe parent
 * `*` : groupe/pseudo mis à jour dans le groupe parent
 
-Exemple : pseudo 'master' ajouté dans le groupe '000|o' (opérateurs de canel sur
-un canal IRC), pseudos 'nick1' et 'nick2' ajoutés dans le groupe '999|...'
+Exemple : pseudo _master_ ajouté dans le groupe _000|o_ (opérateurs de canel sur
+un canal IRC), pseudos _nick1_ et _nick2_ ajoutés dans le groupe _999|..._
 (utilisateurs standard sur un canal IRC) :
 
 [source,python]
@@ -1299,7 +1299,7 @@ hda:
 
 _WeeChat ≥ 0.4.2._
 
-Ce message est envoyé au client lorsque 'relay' reçoit un message "ping".
+Ce message est envoyé au client lorsque _relay_ reçoit un message "ping".
 
 Données envoyées dans la chaîne : paramètres reçus dans le message "ping".
 
@@ -1316,7 +1316,7 @@ Ce message est envoyé au client lorsque WeeChat commence sa mise à jour.
 Il n'y a pas de données dans le message.
 
 L'action recommandée dans le client est de se désynchroniser de WeeChat (envoi
-de la commande 'desync'), ou de se déconnecter de WeeChat (car après la mise à
+de la commande _desync_), ou de se déconnecter de WeeChat (car après la mise à
 jour, tous les pointeurs changeront).
 
 [NOTE]
@@ -1333,12 +1333,12 @@ Ce message est envoyé au client lorsque WeeChat a terminé sa mise à jour.
 Il n'y a pas de données dans le message.
 
 L'action recommandée dans le client est de se resynchroniser avec WeeChat :
-envoyer à nouveau les commandes envoyées au démarrage après 'init'.
+envoyer à nouveau les commandes envoyées au démarrage après _init_.
 
 [[objects]]
 === Objets
 
-Les objets sont identifiés par 3 lettres, appelées 'type'. Les types suivants
+Les objets sont identifiés par 3 lettres, appelées _type_. Les types suivants
 sont utilisés :
 
 [width="100%",cols="^2m,5,10",options="header"]
@@ -1347,7 +1347,7 @@ sont utilisés :
 | chr  | Caractère signé       | 1 octet
 | int  | Entier signé          | 4 octets
 | lon  | Entier long signé     | 1 octet + longueur de l'entier sous forme de chaîne
-| str  | Chaîne                | 4 octets + longueur de la chaîne (sans le '\0' final)
+| str  | Chaîne                | 4 octets + longueur de la chaîne (sans le _\0_ final)
 | buf  | Tampon d'octets       | 4 octets + longueur des données
 | ptr  | Pointeur              | 1 octet + longueur du pointeur sous forme de chaîne
 | tim  | Date/heure            | 1 octet + longueur de la date/heure sous forme de chaîne
@@ -1419,7 +1419,7 @@ long.  '-'  '1'  '2'  '3'  '4'  '5'  '6'  '7'  '8'  '9'  '0'
 ==== Chaîne de caractères
 
 Une chaîne de caractère est une longueur (un entier sur 4 octets) + le contenu
-de la chaîne (sans le '\0' final).
+de la chaîne (sans le _\0_ final).
 
 Exemple :
 
@@ -1441,7 +1441,7 @@ Une chaîne vide a une longueur de zéro :
       longueur
 ....
 
-Une chaîne 'NULL' (pointeur NULL en C) a une longueur de -1 :
+Une chaîne _NULL_ (pointeur NULL en C) a une longueur de -1 :
 
 ....
 ┌────┬────┬────┬────┐
@@ -1473,7 +1473,7 @@ Exemple :
 long.  '1'  'a'  '2'  'b'  '3'  'c'  '4'  'd'  '5'
 ....
 
-Un pointeur 'NULL' a une longueur de 1 avec la valeur 0 :
+Un pointeur _NULL_ a une longueur de 1 avec la valeur 0 :
 
 ....
 ┌────╥────┐
@@ -1526,7 +1526,7 @@ Exemple :
 [[object_hdata]]
 ==== Hdata
 
-Un 'hdata' contient un chemin avec les noms de hdata, une liste de clés, le
+Un _hdata_ contient un chemin avec les noms de hdata, une liste de clés, le
 nombre d'objets, et l'ensemble des objets (chemin avec les pointeurs, puis les
 objets).
 
@@ -1540,19 +1540,19 @@ objets).
    ──╨────────┴─────────────────────╨─────┘
 ....
 
-* 'h-path' (chaîne) : chemin utilise pour atteindre le hdata (exemple :
-  'buffer/lines/line/line_data'); le dernier élément du chemin est le hdata
+* _h-path_ (chaîne) : chemin utilise pour atteindre le hdata (exemple :
+  _buffer/lines/line/line_data_); le dernier élément du chemin est le hdata
   retourné
-* 'keys' (chaînes) : chaîne avec une liste de 'clé:type' (séparés par des
-  virgules), exemple : 'number:int,name:str'
-* 'count' (entier) : nombre d'objets
-* 'p-path' : chemin avec les pointeurs vers les objets (le nombre de pointeurs
+* _keys_ (chaînes) : chaîne avec une liste de _clé:type_ (séparés par des
+  virgules), exemple : _number:int,name:str_
+* _count_ (entier) : nombre d'objets
+* _p-path_ : chemin avec les pointeurs vers les objets (le nombre de pointeurs
   ici est le nombre d'éléments dans le chemin)
-* 'values' : liste de valeurs (le nombre de valeurs est le nombre de clés
+* _values_ : liste de valeurs (le nombre de valeurs est le nombre de clés
   retournées pour le hdata)
 
 Exemple de hdata avec deux tampons (tampon "core" weechat et le serveur
-freenode) et deux clés ('number' et 'full_name') :
+freenode) et deux clés (_number_ et _full_name_) :
 
 ....
 # commande
@@ -1649,7 +1649,7 @@ nicklist
 [[object_info]]
 ==== Info
 
-Une 'info' contient un nom et une valeur (les deux sont des chaînes de
+Une _info_ contient un nom et une valeur (les deux sont des chaînes de
 caractères).
 
 ....
@@ -1658,10 +1658,10 @@ caractères).
 └──────┴───────┘
 ....
 
-* 'nom' (chaîne) : nom de l'info
-* 'value' (chaîne) : valeur
+* _nom_ (chaîne) : nom de l'info
+* _value_ (chaîne) : valeur
 
-Exemple de l'info 'version' :
+Exemple de l'info _version_ :
 
 ....
 ┌─────────┬───────────────────┐
@@ -1672,7 +1672,7 @@ Exemple de l'info 'version' :
 [[object_infolist]]
 ==== Infolist
 
-Une 'infolist' contient un nom, nombre d'éléments, et les éléments (ensemble de
+Une _infolist_ contient un nom, nombre d'éléments, et les éléments (ensemble de
 variables).
 
 ....
@@ -1689,13 +1689,13 @@ Un élément est :
 └───────╨────────┴────────┴─────────╨─────╨────────┴────────┴─────────┘
 ....
 
-* 'name' (chaîne) : nom de l'infolist ('buffer', 'window', 'bar', ...)
-* 'count' (entier) : nombre d'éléments
-* 'item' :
-** 'count' : nombre de variables dans l'élément
-** 'name' : nom de variable
-** 'type' : type de variable ('int', 'str', ...)
-** 'value' : valeur de la variable
+* _name_ (chaîne) : nom de l'infolist (_buffer_, _window_, _bar_, ...)
+* _count_ (entier) : nombre d'éléments
+* _item_ :
+** _count_ : nombre de variables dans l'élément
+** _name_ : nom de variable
+** _type_ : type de variable (_int_, _str_, ...)
+** _value_ : valeur de la variable
 
 Exemple d'infolist avec deux tampons (tampon "core" weechat et le serveur
 freenode) :
@@ -1756,7 +1756,7 @@ Exemple de tableau avec trois entiers :
           456 (0x1C8)         789 (0x315)
 ....
 
-Un tableau 'NULL' :
+Un tableau _NULL_ :
 
 ....
 ┌─────╥────┬────┬────┬────┐
