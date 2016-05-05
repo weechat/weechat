@@ -153,14 +153,8 @@ WeeChat.
 | libv8-dev | ≤ 3.24.3 | |
   Wtyczka javascript
 
-| asciidoc | ≥ 8.5.0 | |
+| asciidoctor | ≥ 1.5.0 | |
   Tworzenie strony man i dokumentacji
-
-| source-highlight | | |
-  Podświetlanie składni dla kodów źródłowych w dokumentacji
-
-| xsltproc, docbook-xml, docbook-xsl | | |
-  Tworzenie strony man
 
 | libcpputest-dev | ≥ 3.4 | |
   Uruchamianie testów

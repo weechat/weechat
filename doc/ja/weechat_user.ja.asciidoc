@@ -152,14 +152,8 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 | libv8-dev | 3.24.3 以下 | |
   javascript プラグイン
 
-| asciidoc | 8.5.0 以上 | |
+| asciidoctor | 1.5.0 以上 | |
   man ページと文書のビルド
-
-| source-highlight | | |
-  文書中のソースに対するシンタックスハイライト
-
-| xsltproc, docbook-xml, docbook-xsl | | |
-  man ページのビルド
 
 | libcpputest-dev | 3.4 以上 | |
   テストの実行

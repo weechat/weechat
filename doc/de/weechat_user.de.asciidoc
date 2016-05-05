@@ -157,14 +157,8 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | libv8-dev | ≤ 3.24.3 | |
   Javascript Erweiterung
 
-| asciidoc | ≥ 8.5.0 | |
+| asciidoctor | ≥ 1.5.0 | |
   Zum Erstellen der man page und der Dokumentation
-
-| source-highlight | | |
-  Syntax Highlight für Quelltext in Dokumentation
-
-| xsltproc, docbook-xml, docbook-xsl | | |
-  Erstellt man page
 
 | libcpputest-dev | ≥ 3.4 | |
   Testlauf

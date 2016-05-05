@@ -168,15 +168,8 @@ compilare WeeChat.
   Plugin Javascript
 
 // TRANSLATION MISSING
-| asciidoc | ≥ 8.5.0 | |
+| asciidoctor | ≥ 1.5.0 | |
   Build man page and documentation
-
-| source-highlight | | |
-  Evidenziazione della sintassi per i sorgenti nella documentazione
-
-// TRANSLATION MISSING
-| xsltproc, docbook-xml, docbook-xsl | | |
-  Build of man page
 
 // TRANSLATION MISSING
 | libcpputest-dev | ≥ 3.4 | |

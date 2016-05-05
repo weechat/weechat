@@ -147,14 +147,8 @@ compile WeeChat.
 | libv8-dev | ≤ 3.24.3 | |
   Javascript plugin
 
-| asciidoc | ≥ 8.5.0 | |
+| asciidoctor | ≥ 1.5.0 | |
   Build man page and documentation
-
-| source-highlight | | |
-  Syntax highlight for sources in documentation
-
-| xsltproc, docbook-xml, docbook-xsl | | |
-  Build of man page
 
 | libcpputest-dev | ≥ 3.4 | |
   Run tests

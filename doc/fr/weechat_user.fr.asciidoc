@@ -153,14 +153,8 @@ compiler WeeChat.
 | libv8-dev | ≤ 3.24.3 | |
   Extension javascript
 
-| asciidoc | ≥ 8.5.0 | |
+| asciidoctor | ≥ 1.5.0 | |
   Construction de la page man et de la documentation
-
-| source-highlight | | |
-  Coloration des sources dans la documentation
-
-| xsltproc, docbook-xml, docbook-xsl | | |
-  Construction de la page de manuel
 
 | libcpputest-dev | ≥ 3.4 | |
   Lancement des tests
