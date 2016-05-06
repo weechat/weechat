@@ -1366,8 +1366,9 @@ Przykłady zdarzeń:
 
 [TIP]
 Podczas przypisywania skrótów w kontekście myszy, możliwe jest dopasowanie wielu
-zdarzeń używając `*` na początku lub końcu nazwy, na przykład `button1-gesture-*`
-będzie pasować do gestów wykonanych z użyciem lewego przycisku myszy.
+zdarzeń używając `+*+` na początku lub końcu nazwy, na przykład
+`+button1-gesture-*+` będzie pasować do gestów wykonanych z użyciem lewego
+przycisku myszy.
 
 [TIP]
 Możesz znaleźć nazwę zdarzenia za pomocą komendy `/input grab_mouse` wykonując

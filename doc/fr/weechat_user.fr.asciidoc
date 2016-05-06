@@ -1387,9 +1387,9 @@ Exemples d'évènements :
 
 [TIP]
 Lors de l'association d'une touche dans le contexte "mouse", il est possible
-d'adresser plusieurs évènements en utilisant `*` au début ou la fin du nom,
-par exemple `button1-gesture-*` qui correspond à n'importe quel geste effectué
-avec le bouton gauche.
+d'adresser plusieurs évènements en utilisant `+*+` au début ou la fin du nom,
+par exemple `+button1-gesture-*+` qui correspond à n'importe quel geste
+effectué avec le bouton gauche.
 
 [TIP]
 Vous pouvez trouver le nom de l'évènement avec la commande `/input grab_mouse`

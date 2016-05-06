@@ -1352,8 +1352,8 @@ Example of events:
 
 [TIP]
 When binding a key in context "mouse", it's possible to match many events using
-`*` at beginning or end of name, for example `button1-gesture-*` will match any
-gesture made using left button.
+`+*+` at beginning or end of name, for example `+button1-gesture-*+` will match
+any gesture made using left button.
 
 [TIP]
 You can find an event name with command `/input grab_mouse` then doing event

@@ -1421,8 +1421,8 @@ Esempio di eventi:
 
 [TIP]
 Quando si associa un tasto nel contesto "mouse", è possibile far corrispondere
-più eventi usando `*` all'inizio o alla fine del nome, ad esempio
-`button1-gesture-*` corrisponderà ad ogni azione compiuta col tasto sinistro.
+più eventi usando `+*+` all'inizio o alla fine del nome, ad esempio
+`+button1-gesture-*+` corrisponderà ad ogni azione compiuta col tasto sinistro.
 
 [TIP]
 È possibile trovare il nome di un evento con il comando `/input grab_mouse`

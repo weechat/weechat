@@ -1375,9 +1375,10 @@ Bespiele von Ereignissen:
 * `ctrl-alt-wheeldown`
 
 [TIP]
-Wird eine Funktion im "mouse"-Kontext hinzufügt ist es möglich, mehrere Mausereignisse
-mittels `*` abzufangen. Zum Beispiel fängt `button1-gesture-*` alle Mausgesten ab, die
-mit der linken Maustaste eingeleitet werden.
+Wird eine Funktion im "mouse"-Kontext hinzufügt ist es möglich, mehrere
+Mausereignisse mittels `+*+` abzufangen. Zum Beispiel fängt
+`+button1-gesture-*+` alle Mausgesten ab, die mit der linken Maustaste
+eingeleitet werden.
 
 [TIP]
 Den Namen eines Mausereignisses kann man mittels des Befehls `/input grab_mouse` erfragen.
