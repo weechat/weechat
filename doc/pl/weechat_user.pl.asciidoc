@@ -921,7 +921,7 @@ Tryb niesformatowanego ekranu posiada następujące cechy:
   tekstu
 * ncurses nie jest używane, dlatego URLe nie są obcinane z końcem linii.
 
-Domyślnym skrótem uruchamiającym ten tryb jest key[alt-l], tak jak wyłączającym
+Domyślnym skrótem uruchamiającym ten tryb jest kbd:[Alt+l], tak jak wyłączającym
 go (lub domyślnie dowolna zmiana wejścia spowoduje wyjście z tego trybu, zobacz
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
 
@@ -1040,131 +1040,149 @@ Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buff
 [[key_bindings_command_line]]
 ==== Skróty dla linii poleceń
 
-[width="100%",cols="^.^3,.^10,.^5",options="header"]
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Skrót           | Opis | Komenda
-| key[←]       .2+| Idź do poprzedniego znaku w linii poleceń .2+| `/input move_previous_char`
-| key[ctrl-b]
-| key[→]       .2+| Idź do następnego znaku w linii poleceń .2+| `/input move_next_char`
-| key[ctrl-f]
-| key[ctrl-←]  .2+| Idź do poprzedniego słowa w linii poleceń .2+| `/input move_previous_word`
-| key[alt-b]
-| key[ctrl-→]  .2+| Idź do następnego słowa w linii poleceń .2+| `/input move_next_word`
-| key[alt-f]
-| key[Home]    .2+| Idź na początek linii poleceń .2+| `/input move_beginning_of_line`
-| key[ctrl-a]
-| key[End]     .2+| Idź na koniec linii poleceń .2+| `/input move_end_of_line`
-| key[ctrl-e]
-| key[ctrl-c,b]   | Wstaw kod dla pogrubionego tekstu | `/input insert \x02`
-| key[ctrl-c,c]   | Wstaw kod dla kolorowego tekstu | `/input insert \x03`
-| key[ctrl-c,i]   | Wstaw kod dla pochyłego tekstu | `/input insert \x1D`
-| key[ctrl-c,o]   | Wstaw kod dla zresetowania koloru | `/input insert \x0F`
-| key[ctrl-c,v]   | Wstaw kod dla odwrócenia koloru | `/input insert \x16`
-| key[ctrl-c,_]   | Wstaw kod dla podkreślonego tekstu | `/input insert \x1F`
-| key[Del]     .2+| Usuń następny znak w linii poleceń .2+| `/input delete_next_char`
-| key[ctrl-d]
-| key[Backsp.] .2+| Usuń poprzedni znak w linii poleceń .2+| `/input delete_previous_char`
-| key[ctrl-h]
-| key[ctrl-k]     | Usuń od znacznika kursora do końca linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_end_of_line`
-| key[ctrl-r]     | Wyszukaj tekst w historii bufora (zobacz <<key_bindings_search_context,skróty dla kontekstu wyszukiwania>>) | `/input search_text_here`
-| key[ctrl-t]     | Przestaw znaki | `/input transpose_chars`
-| key[ctrl-u]     | Usuń od znaku kursora do początku linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_beginning_of_line`
-| key[ctrl-w]     | Usuń poprzednie słowo w linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_previous_word`
-| key[ctrl-y]     | Wklej zawartość schowka | `/input clipboard_paste`
-| key[ctrl-_]     | Cofnij poprzednia akcję w linii poleceń | `/input undo`
-| key[alt-_]      | Powtórz ostatnią akcję w linii poleceń | `/input redo`
-| key[Tab]        | Dopełnij komendę lub nick (ponowne wciśnięcie key[Tab]: znajdź następne dopełnienie) | `/input complete_next`
-| key[shift-Tab]  | Bez dopełnienia: wykonaj częściowe dopełnienie, z oczekującym dopełnieniem: dopełnij z poprzednim dopełnieniem | `/input complete_previous`
-| key[Enter]   .3+| Wykonaj komendę lub wyślij wiadomość (w trybie wyszukiwania: przerwij wyszukiwanie) .3+| `/input return`
-| key[ctrl-j]
-| key[ctrl-m]
-| key[↑]          | Pokaż poprzednią komendę/wiadomość (w trybie wyszukiwania: szukaj w górę) | `/input history_previous`
-| key[↓]          | Pokaż następną komendę/wiadomość (w trybie wyszukiwania: szukaj w dół) | `/input history_next`
-| key[ctrl-↑]     | Pokaż poprzednią komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów) | `/input history_global_previous`
-| key[ctrl-↓]     | Pokaż następną komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów) | `/input history_global_next`
-| key[alt-d]      | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_next_word`
-| key[alt-k]      | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń | `/input grab_key_command`
-| key[alt-r]      | Usuń całą zawartość linii poleceń | `/input delete_line`
-| key[alt-s]      | Przełącz aspell | `/mute aspell toggle`
+| kbd:[←] +
+  kbd:[Ctrl+b]    | Idź do poprzedniego znaku w linii poleceń | `/input move_previous_char`
+| kbd:[→] +
+  kbd:[Ctrl+f]    | Idź do następnego znaku w linii poleceń | `/input move_next_char`
+| kbd:[Ctrl+←] +
+  kbd:[Alt+b]     | Idź do poprzedniego słowa w linii poleceń | `/input move_previous_word`
+| kbd:[Ctrl+→] +
+  kbd:[Alt+f]     | Idź do następnego słowa w linii poleceń | `/input move_next_word`
+| kbd:[Home] +
+  kbd:[Ctrl+a]    | Idź na początek linii poleceń | `/input move_beginning_of_line`
+| kbd:[End] +
+  kbd:[Ctrl+e]    | Idź na koniec linii poleceń | `/input move_end_of_line`
+| kbd:[Ctrl+c],
+  kbd:[b]         | Wstaw kod dla pogrubionego tekstu | `/input insert \x02`
+| kbd:[Ctrl+c],
+  kbd:[c]         | Wstaw kod dla kolorowego tekstu | `/input insert \x03`
+| kbd:[Ctrl+c],
+  kbd:[i]         | Wstaw kod dla pochyłego tekstu | `/input insert \x1D`
+| kbd:[Ctrl+c],
+  kbd:[o]         | Wstaw kod dla zresetowania koloru | `/input insert \x0F`
+| kbd:[Ctrl+c],
+  kbd:[v]         | Wstaw kod dla odwrócenia koloru | `/input insert \x16`
+| kbd:[Ctrl+c],
+  kbd:[_]         | Wstaw kod dla podkreślonego tekstu | `/input insert \x1F`
+| kbd:[Del] +
+  kbd:[Ctrl+d]    | Usuń następny znak w linii poleceń | `/input delete_next_char`
+| kbd:[Backsp.] +
+  kbd:[Ctrl+h]    | Usuń poprzedni znak w linii poleceń | `/input delete_previous_char`
+| kbd:[Ctrl+k]    | Usuń od znacznika kursora do końca linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_end_of_line`
+| kbd:[Ctrl+r]    | Wyszukaj tekst w historii bufora (zobacz <<key_bindings_search_context,skróty dla kontekstu wyszukiwania>>) | `/input search_text_here`
+| kbd:[Ctrl+t]    | Przestaw znaki | `/input transpose_chars`
+| kbd:[Ctrl+u]    | Usuń od znaku kursora do początku linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_beginning_of_line`
+| kbd:[Ctrl+w]    | Usuń poprzednie słowo w linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_previous_word`
+| kbd:[Ctrl+y]    | Wklej zawartość schowka | `/input clipboard_paste`
+| kbd:[Ctrl+_]    | Cofnij poprzednia akcję w linii poleceń | `/input undo`
+| kbd:[Alt+_]     | Powtórz ostatnią akcję w linii poleceń | `/input redo`
+| kbd:[Tab]       | Dopełnij komendę lub nick (ponowne wciśnięcie kbd:[Tab]: znajdź następne dopełnienie) | `/input complete_next`
+| kbd:[Shift+Tab] | Bez dopełnienia: wykonaj częściowe dopełnienie, z oczekującym dopełnieniem: dopełnij z poprzednim dopełnieniem | `/input complete_previous`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]    | Wykonaj komendę lub wyślij wiadomość (w trybie wyszukiwania: przerwij wyszukiwanie) | `/input return`
+| kbd:[↑]         | Pokaż poprzednią komendę/wiadomość (w trybie wyszukiwania: szukaj w górę) | `/input history_previous`
+| kbd:[↓]         | Pokaż następną komendę/wiadomość (w trybie wyszukiwania: szukaj w dół) | `/input history_next`
+| kbd:[Ctrl+↑]    | Pokaż poprzednią komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów) | `/input history_global_previous`
+| kbd:[Ctrl+↓]    | Pokaż następną komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów) | `/input history_global_next`
+| kbd:[Alt+d]     | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_next_word`
+| kbd:[Alt+k]     | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń | `/input grab_key_command`
+| kbd:[Alt+r]     | Usuń całą zawartość linii poleceń | `/input delete_line`
+| kbd:[Alt+s]     | Przełącz aspell | `/mute aspell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
 ==== Skróty dla buforów / okien
 
-[width="100%",cols="^.^3,.^10,.^5",options="header"]
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Skrót              | Opis   | Komenda
-| key[ctrl-l]        | Przerysuj całe okno | `/window refresh`
-| key[ctrl-s,ctrl-u] | Ustaw znacznik nieprzeczytania we wszystkich buforach | `/input set_unread`
-| key[ctrl-x]        | Przełącz obecny bufor jeśli bufory są dołączone z tym samym numerem | `/input switch_active_buffer`
-| key[alt-x]         | Pokaż wybrany z połączonych buforów (naciśnij key[alt-x] ponownie: wyświetl wszystkie połączone bufory) | `/input zoom_merged_buffer`
-| key[PgUp]          | Przewiń jedną stronę w górę w historii bufora | `/window page_up`
-| key[PgDn]          | Przewiń jedną stronę w dół w historii bufora | `/window page_down`
-| key[alt-PgUp]      | Przewiń w górę kilka linii w historii bufora | `/window scroll_up`
-| key[alt-PgDn]      | Przewiń w dół kilka linii w historii bufora | `/window scroll_down`
-| key[alt-Home]      | Przewiń na górę bufora | `/window scroll_top`
-| key[alt-End]       | Przewiń na dół bufora | `/window scroll_bottom`
-| key[alt-←]      .4+| Przełącz na poprzedni bufor .4+| `/buffer -1`
-| key[alt-↑]
-| key[ctrl-p]
-| key[F5]
-| key[alt-→]      .4+| Przełącz na następny bufor .4+| `/buffer +1`
-| key[alt-↓]
-| key[ctrl-n]
-| key[F6]
-| key[F7]            | Przełącz na poprzednie okno | `/window -1`
-| key[F8]            | Przełącz na następne okno | `/window +1`
-| key[F9]            | Przewiń tytuł bufora w lewo | `/bar scroll title * -30%`
-| key[F10]           | Przewiń tytuł bufora w prawo | `/bar scroll title * +30%`
-| key[F11]           | Przewiń w górę jedna stronę listy nicków | `/bar scroll nicklist * -100%`
-| key[F12]           | Przewiń w dół jedna stronę listy nicków | `/bar scroll nicklist * +100%`
-| key[alt-F11]       | Idź na początek listy nicków | `/bar scroll nicklist * b`
-| key[alt-F12]       | Idź na koniec listy nicków | `/bar scroll nicklist * e`
-| key[alt-a]         | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne) | `/input jump_smart`
-| key[alt-h]         | Wyczyść hotlistę (powiadomienia o aktywności w innych buforach) | `/input hotlist_clear`
-| key[alt-j,alt-f]   | Przełącz na pierwszy bufor | `/buffer -`
-| key[alt-j,alt-l]   | Przełącz na ostatni bufor | `/buffer +`
-| key[alt-j,alt-r]   | Przełącz na bufor IRC raw | `/server raw`
-| key[alt-j,alt-s]   | Przełącz na bufor serwera IRC | `/server jump`
-| key[alt-0...9]     | Przełącz na bufor za pomocą liczb (0 = 10) | `/buffer *N`
-| key[alt-j,01...99] | Przełącz na bufor za pomocą liczb | `/buffer *NN`
-| key[alt-l]         | Przełącz tryb niesformatowanego wyświetlania | `/window bare`
-| key[alt-m]         | Przełącz obsługę myszy | `/mouse toggle`
-| key[alt-n]         | Przewiń do następnego powiadomienia | `/window scroll_next_highlight`
-| key[alt-p]         | Przewiń do poprzedniego powiadomienia | `/window scroll_previous_highlight`
-| key[alt-u]         | Przewiń do pierwszej nieprzeczytanej linii w buforze | `/window scroll_unread`
-| key[alt-w,alt-↑]   | Przełącz na okno wyżej | `/window up`
-| key[alt-w,alt-↓]   | Przełącz na okno niżej | `/window down`
-| key[alt-w,alt-←]   | Przełącz na okno z lewej | `/window left`
-| key[alt-w,alt-→]   | Przełącz na okno z prawej | `/window right`
-| key[alt-w,alt-b]   | Balansuj rozmiar wszystkich okien | `/window balance`
-| key[alt-w,alt-s]   | Zamień bufory między dwoma oknami | `/window swap`
-| key[alt-z]         | Pokaż obecne okno (ponowne wciśnięcie key[alt-z]: przywraca wcześniejszy układ okien) | `/window zoom`
-| key[alt-]key[<]    | Przełącz na poprzedni bufor z listy odwiedzonych buforów | `/input jump_previously_visited_buffer`
-| key[alt-]key[>]    | Przełącz na następny bufor z listy odwiedzonych buforów | `/input jump_next_visited_buffer`
-| key[alt-/]         | Przełącz na ostatnio wyświetlony bufor (przed ostatnią zmianą bufora) | `/input jump_last_buffer_displayed`
-| key[alt-=]         | Włącz/wyłącz filtry | `/filter toggle`
-| key[alt--]         | Włącz/wyłącz filtry w bieżącym buforze | `/filter toggle @`
+| Skrót           | Opis | Komenda
+| kbd:[Ctrl+l]    | Przerysuj całe okno | `/window refresh`
+| kbd:[Ctrl+s],
+  kbd:[Ctrl+u]    | Ustaw znacznik nieprzeczytania we wszystkich buforach | `/input set_unread`
+| kbd:[Ctrl+x]    | Przełącz obecny bufor jeśli bufory są dołączone z tym samym numerem | `/input switch_active_buffer`
+| kbd:[Alt+x]     | Pokaż wybrany z połączonych buforów (naciśnij kbd:[Alt+x] ponownie: wyświetl wszystkie połączone bufory) | `/input zoom_merged_buffer`
+| kbd:[PgUp]      | Przewiń jedną stronę w górę w historii bufora | `/window page_up`
+| kbd:[PgDn]      | Przewiń jedną stronę w dół w historii bufora | `/window page_down`
+| kbd:[Alt+PgUp]  | Przewiń w górę kilka linii w historii bufora | `/window scroll_up`
+| kbd:[Alt+PgDn]  | Przewiń w dół kilka linii w historii bufora | `/window scroll_down`
+| kbd:[Alt+Home]  | Przewiń na górę bufora | `/window scroll_top`
+| kbd:[Alt+End]   | Przewiń na dół bufora | `/window scroll_bottom`
+| kbd:[Alt+←] +
+  kbd:[Alt+↑] +
+  kbd:[Ctrl+p] +
+  kbd:[F5]        | Przełącz na poprzedni bufor | `/buffer -1`
+| kbd:[Alt+→] +
+  kbd:[Alt+↓] +
+  kbd:[Ctrl+n] +
+  kbd:[F6]        | Przełącz na następny bufor | `/buffer +1`
+| kbd:[F7]        | Przełącz na poprzednie okno | `/window -1`
+| kbd:[F8]        | Przełącz na następne okno | `/window +1`
+| kbd:[F9]        | Przewiń tytuł bufora w lewo | `/bar scroll title * -30%`
+| kbd:[F10]       | Przewiń tytuł bufora w prawo | `/bar scroll title * +30%`
+| kbd:[F11]       | Przewiń w górę jedna stronę listy nicków | `/bar scroll nicklist * -100%`
+| kbd:[F12]       | Przewiń w dół jedna stronę listy nicków | `/bar scroll nicklist * +100%`
+| kbd:[Alt+F11]   | Idź na początek listy nicków | `/bar scroll nicklist * b`
+| kbd:[Alt+F12]   | Idź na koniec listy nicków | `/bar scroll nicklist * e`
+| kbd:[Alt+a]     | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne) | `/input jump_smart`
+| kbd:[Alt+h]     | Wyczyść hotlistę (powiadomienia o aktywności w innych buforach) | `/input hotlist_clear`
+| kbd:[Alt+j],
+  kbd:[Alt+f]     | Przełącz na pierwszy bufor | `/buffer -`
+| kbd:[Alt+j],
+  kbd:[Alt+l]     | Przełącz na ostatni bufor | `/buffer +`
+| kbd:[Alt+j],
+  kbd:[Alt+r]     | Przełącz na bufor IRC raw | `/server raw`
+| kbd:[Alt+j],
+  kbd:[Alt+s]     | Przełącz na bufor serwera IRC | `/server jump`
+| kbd:[Alt+0...9] | Przełącz na bufor za pomocą liczb (0 = 10) | `/buffer *N`
+| kbd:[Alt+j],
+  kbd:[01...99]   | Przełącz na bufor za pomocą liczb | `/buffer *NN`
+| kbd:[Alt+l]     | Przełącz tryb niesformatowanego wyświetlania | `/window bare`
+| kbd:[Alt+m]     | Przełącz obsługę myszy | `/mouse toggle`
+| kbd:[Alt+n]     | Przewiń do następnego powiadomienia | `/window scroll_next_highlight`
+| kbd:[Alt+p]     | Przewiń do poprzedniego powiadomienia | `/window scroll_previous_highlight`
+| kbd:[Alt+u]     | Przewiń do pierwszej nieprzeczytanej linii w buforze | `/window scroll_unread`
+| kbd:[Alt+w],
+  kbd:[Alt+↑]     | Przełącz na okno wyżej | `/window up`
+| kbd:[Alt+w],
+  kbd:[Alt+↓]     | Przełącz na okno niżej | `/window down`
+| kbd:[Alt+w],
+  kbd:[Alt+←]     | Przełącz na okno z lewej | `/window left`
+| kbd:[Alt+w],
+  kbd:[Alt+→]     | Przełącz na okno z prawej | `/window right`
+| kbd:[Alt+w],
+  kbd:[Alt+b]     | Balansuj rozmiar wszystkich okien | `/window balance`
+| kbd:[Alt+w],
+  kbd:[Alt+s]     | Zamień bufory między dwoma oknami | `/window swap`
+| kbd:[Alt+z]     | Pokaż obecne okno (ponowne wciśnięcie kbd:[Alt+z]: przywraca wcześniejszy układ okien) | `/window zoom`
+| kbd:[Alt+<]     | Przełącz na poprzedni bufor z listy odwiedzonych buforów | `/input jump_previously_visited_buffer`
+| kbd:[Alt+>]     | Przełącz na następny bufor z listy odwiedzonych buforów | `/input jump_next_visited_buffer`
+| kbd:[Alt+/]     | Przełącz na ostatnio wyświetlony bufor (przed ostatnią zmianą bufora) | `/input jump_last_buffer_displayed`
+| kbd:[Alt+=]     | Włącz/wyłącz filtry | `/filter toggle`
+| kbd:[Alt+-]     | Włącz/wyłącz filtry w bieżącym buforze | `/filter toggle @`
 |===
 
 [[key_bindings_search_context]]
 ==== Skróty dla kontekstu wyszukiwania
 
-Te skróty są używane w kontekście wyszukiwania (kiedy kombinacja key[ctrl-r]
+Te skróty są używane w kontekście wyszukiwania (kiedy kombinacja kbd:[Ctrl+r]
 zostanie wciśnięta w buforze tekstowym).
 
-[width="100%",cols="^.^3,.^10,.^5",options="header"]
+[width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Skrót         | Opis   | Komenda
-| key[ctrl-r]   | Przełącz rodzaj wyszukiwania: ciąg (domyślne), wyrażenie regularne | `/input search_switch_regex`
-| key[alt-c]    | Przełącz dopasowywanie wielości liter podczas wyszukiwania | `/input search_switch_case`
-| key[Tab]      | Przełącz miejsce wyszukiwania: wiadomości (domyślne), prefiksy, prefiksy + wiadmości | `/input search_switch_where`
-| key[↑]        | Poprzednie wystąpienie | `/input search_previous`
-| key[↓]        | Następne wystąpienie | `/input search_next`
-| key[Enter] .3+| Zatrzymaj wyszukiwanie na obecnej pozycji .3+| `/input search_stop_here`
-| key[ctrl-j]
-| key[ctrl-m]
-| key[ctrl-q]   | Zatrzymaj wyszukiwanie i przewin na spód bufora | `/input search_stop`
+| Skrót          | Opis | Komenda
+| kbd:[Ctrl+r]   | Przełącz rodzaj wyszukiwania: ciąg (domyślne), wyrażenie regularne | `/input search_switch_regex`
+| kbd:[Alt+c]    | Przełącz dopasowywanie wielości liter podczas wyszukiwania | `/input search_switch_case`
+| kbd:[Tab]      | Przełącz miejsce wyszukiwania: wiadomości (domyślne), prefiksy, prefiksy + wiadmości | `/input search_switch_where`
+| kbd:[↑]        | Poprzednie wystąpienie | `/input search_previous`
+| kbd:[↓]        | Następne wystąpienie | `/input search_next`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | Zatrzymaj wyszukiwanie na obecnej pozycji | `/input search_stop_here`
+| kbd:[Ctrl+q]   | Zatrzymaj wyszukiwanie i przewin na spód bufora | `/input search_stop`
 |===
 
 [[key_bindings_cursor_context]]
@@ -1173,28 +1191,28 @@ zostanie wciśnięta w buforze tekstowym).
 Te skróty są używane s kontekście kursora (dowolne przemieszczanie kursora na
 ekranie).
 
-[width="100%",cols="^.^3,^.^3,.^10,.^8",options="header"]
+[width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
-| Skrót         | Obszar   | Opis | Komenda
-| key[↑]        | -        | Przesuń kursor linię wyżej | `/cursor move up`
-| key[↓]        | -        | Przesuń kursor linię niżej | `/cursor move down`
-| key[←]        | -        | Przesuń kursor kolumnę w lewo | `/cursor move left`
-| key[→]        | -        | Przesuń kursor kolumnę w prawo | `/cursor move right`
-| key[alt-↑]    | -        | Przesuń kursor obszar do góry | `/cursor move area_up`
-| key[alt-↓]    | -        | Przesuń kursor obszar w dół | `/cursor move area_down`
-| key[alt-←]    | -        | Przesuń kursor obszar w lewo | `/cursor move area_left`
-| key[alt-→]    | -        | Przesuń kursor obszar w prawo | `/cursor move area_right`
-| key[m]        | chat     | Cytuj wiadomość | `hsignal:chat_quote_message;/cursor stop`
-| key[q]        | chat     | Cytuj prefiks i wiadomość | `hsignal:chat_quote_prefix_message;/cursor stop`
-| key[Q]        | chat     | Cytuj czas, prefiks i wiadomość | `hsignal:chat_quote_time_prefix_message;/cursor stop`
-| key[b]        | nicklist | Zbanuj osobę | `/window ${_window_number};/ban ${nick}`
-| key[k]        | nicklist | Wykop osobę | `/window ${_window_number};/kick ${nick}`
-| key[K]        | nicklist | Wykop i zbanuj osobę | `/window ${_window_number};/kickban ${nick}`
-| key[q]        | nicklist | Otwórz rozmowę z osobą | `/window ${_window_number};/query ${nick};/cursor stop`
-| key[w]        | nicklist | Wykonaj whois dla osoby | `/window ${_window_number};/whois ${nick}`
-| key[Enter] .3+| -     .3+| Wyłącz tryb kursora .3+| `/cursor stop`
-| key[ctrl-j]
-| key[ctrl-m]
+| Skrót          | Obszar   | Opis | Komenda
+| kbd:[↑]        | -        | Przesuń kursor linię wyżej | `/cursor move up`
+| kbd:[↓]        | -        | Przesuń kursor linię niżej | `/cursor move down`
+| kbd:[←]        | -        | Przesuń kursor kolumnę w lewo | `/cursor move left`
+| kbd:[→]        | -        | Przesuń kursor kolumnę w prawo | `/cursor move right`
+| kbd:[Alt+↑]    | -        | Przesuń kursor obszar do góry | `/cursor move area_up`
+| kbd:[Alt+↓]    | -        | Przesuń kursor obszar w dół | `/cursor move area_down`
+| kbd:[Alt+←]    | -        | Przesuń kursor obszar w lewo | `/cursor move area_left`
+| kbd:[Alt+→]    | -        | Przesuń kursor obszar w prawo | `/cursor move area_right`
+| kbd:[m]        | chat     | Cytuj wiadomość | `hsignal:chat_quote_message;/cursor stop`
+| kbd:[q]        | chat     | Cytuj prefiks i wiadomość | `hsignal:chat_quote_prefix_message;/cursor stop`
+| kbd:[Q]        | chat     | Cytuj czas, prefiks i wiadomość | `hsignal:chat_quote_time_prefix_message;/cursor stop`
+| kbd:[b]        | nicklist | Zbanuj osobę | `/window ${_window_number};/ban ${nick}`
+| kbd:[k]        | nicklist | Wykop osobę | `/window ${_window_number};/kick ${nick}`
+| kbd:[K]        | nicklist | Wykop i zbanuj osobę | `/window ${_window_number};/kickban ${nick}`
+| kbd:[q]        | nicklist | Otwórz rozmowę z osobą | `/window ${_window_number};/query ${nick};/cursor stop`
+| kbd:[w]        | nicklist | Wykonaj whois dla osoby | `/window ${_window_number};/whois ${nick}`
+| kbd:[Enter] +
+  kbd:[Ctrl+j] +
+  kbd:[Ctrl+m]   | -        | Wyłącz tryb kursora | `/cursor stop`
 |===
 
 [[key_bindings_mouse_context]]
@@ -1202,35 +1220,35 @@ ekranie).
 
 Te skróty używane są w kontekście myszy, w momencie wystąpienia zdarzenia myszy.
 
-[width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8",options="header"]
+[width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-| Klawisz ^(1)^ | Gest | Obszar | Opis | Komenda
-| ◾◽◽         | -             | chat                  | Przełącz na okno | `/window ${_window_number}`
-| ◾◽◽         | lewo          | chat                  | Przełącz na poprzedni bufor | `/window ${_window_number};/buffer +1`
-| ◾◽◽         | prawo         | chat                  | Przełącz na następny bufor | `/window ${_window_number};/buffer +1`
-| ◾◽◽         | lewo (długo)  | chat                  | Przełącz na pierwszy bufor | `/window ${_window_number};/buffer 1`
-| ◾◽◽         | prawo (długo) | chat                  | Przełącz na ostatni bufor | `/window ${_window_number};/input jump_last_buffer`
-| ◾◽◽         | -             | chat (bufor skryptów) | Zaznacz linię w buforze skryptów | `/script go ${_chat_line_y}`
-| ◽◽◾         | -             | chat (bufor skryptów) | Zainstaluj/usuń skrypt | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
-| ⇑           | -             | chat                  | Przewiń w górę kilka linii w historii bufora | `/window scroll_up -window ${_window_number}`
-| ⇓           | -             | chat                  | Przewiń w dół kilka linii w historii bufora | `/window scroll_down -window ${_window_number}`
-| ⇑           | -             | chat (bufor skryptów) | Przejdź 5 linii w górę w buforze skryptów | `/script up 5`
-| ⇓           | -             | chat (bufor skryptów) | Przejdź 5 linii w dół w buforze skryptów | `/script down 5`
-| key[ctrl-]⇑ | -             | chat                  | Przewiń poziomo w lewo | `/window scroll_horiz -window ${_window_number} -10%`
-| key[ctrl-]⇓ | -             | chat                  | Przewiń poziomo w prawo | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽         | góra          | lista nicków          | Przewiń w górę jedna stronę listy nicków | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽         | dół           | lista nicków          | Przewiń w dół jedna stronę listy nicków | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽         | góra (długo)  | lista nicków          | Idź na początek listy nicków | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽         | dół (długo)   | lista nicków          | Idź na koniec listy nicków | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽         | -             | lista nicków          | Otwórz prywatną rozmowę z nick | `/window ${_window_number};/query ${nick}`
-| ◽◽◾         | -             | lista nicków          | Wykonaj whois dla nicka | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽         | lewo          | lista nicków          | Wykop nick | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽         | lewo (długo)  | lista nicków          | Wykop i zbanuj nick | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾         | lewo          | lista nicków          | Zbanuj nick | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾         | -             | linia poleceń         | Przechwyć zdarzenie myszy i wstaw jego kod w linii poleceń | `/input grab_mouse_area`
-| ⇑           | -             | dowolny pasek         | Przewiń pasek o -20% | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| ⇓           | -             | dowolny pasek         | Przewiń pasek o +20% | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽         | -             | gdziekolwiek          | Włącz tryb kursora w tym miejscu | `/cursor go ${_x},${_y}`
+| Klawisz ^(1)^ | Gest          | Obszar                | Opis | Komenda
+| ◾◽◽           | -             | chat                  | Przełącz na okno | `/window ${_window_number}`
+| ◾◽◽           | lewo          | chat                  | Przełącz na poprzedni bufor | `/window ${_window_number};/buffer +1`
+| ◾◽◽           | prawo         | chat                  | Przełącz na następny bufor | `/window ${_window_number};/buffer +1`
+| ◾◽◽           | lewo (długo)  | chat                  | Przełącz na pierwszy bufor | `/window ${_window_number};/buffer 1`
+| ◾◽◽           | prawo (długo) | chat                  | Przełącz na ostatni bufor | `/window ${_window_number};/input jump_last_buffer`
+| ◾◽◽           | -             | chat (bufor skryptów) | Zaznacz linię w buforze skryptów | `/script go ${_chat_line_y}`
+| ◽◽◾           | -             | chat (bufor skryptów) | Zainstaluj/usuń skrypt | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
+| ⇑             | -             | chat                  | Przewiń w górę kilka linii w historii bufora | `/window scroll_up -window ${_window_number}`
+| ⇓             | -             | chat                  | Przewiń w dół kilka linii w historii bufora | `/window scroll_down -window ${_window_number}`
+| ⇑             | -             | chat (bufor skryptów) | Przejdź 5 linii w górę w buforze skryptów | `/script up 5`
+| ⇓             | -             | chat (bufor skryptów) | Przejdź 5 linii w dół w buforze skryptów | `/script down 5`
+| kbd:[Ctrl+⇑]  | -             | chat                  | Przewiń poziomo w lewo | `/window scroll_horiz -window ${_window_number} -10%`
+| kbd:[Ctrl+⇓]  | -             | chat                  | Przewiń poziomo w prawo | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽           | góra          | lista nicków          | Przewiń w górę jedna stronę listy nicków | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽           | dół           | lista nicków          | Przewiń w dół jedna stronę listy nicków | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽           | góra (długo)  | lista nicków          | Idź na początek listy nicków | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽           | dół (długo)   | lista nicków          | Idź na koniec listy nicków | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽           | -             | lista nicków          | Otwórz prywatną rozmowę z nick | `/window ${_window_number};/query ${nick}`
+| ◽◽◾           | -             | lista nicków          | Wykonaj whois dla nicka | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽           | lewo          | lista nicków          | Wykop nick | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽           | lewo (długo)  | lista nicków          | Wykop i zbanuj nick | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾           | lewo          | lista nicków          | Zbanuj nick | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾           | -             | linia poleceń         | Przechwyć zdarzenie myszy i wstaw jego kod w linii poleceń | `/input grab_mouse_area`
+| ⇑             | -             | dowolny pasek         | Przewiń pasek o -20% | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| ⇓             | -             | dowolny pasek         | Przewiń pasek o +20% | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽           | -             | gdziekolwiek          | Włącz tryb kursora w tym miejscu | `/cursor go ${_x},${_y}`
 |===
 
 [NOTE]
@@ -1251,14 +1269,14 @@ jak i zdalnie przez połączenie ssh z lub bez użycia screena/tmuxa.
 /set weechat.look.mouse on
 ----
 
-Żeby włączyć obsługę myszy teraz, wciśnij key[alt-m] lub wykonaj komendę:
+Żeby włączyć obsługę myszy teraz, wciśnij kbd:[Alt+m] lub wykonaj komendę:
 
 ----
 /mouse enable
 ----
 
 Możliwe jest czasowe wyłączenie obsługi myszy i przypisanie tego do skrótu. Na
-przykład skrót key[alt-%] wyłączający obsługę myszy na 10 sekund:
+przykład skrót kbd:[Alt+%] wyłączający obsługę myszy na 10 sekund:
 
 ----
 /key bind meta-% /mouse toggle 10
@@ -1268,9 +1286,9 @@ przykład skrót key[alt-%] wyłączający obsługę myszy na 10 sekund:
 Kiedy obsługa myszy jest włączona w WeeChat, wszystkie zdarzenia myszy są
 przechwytywane przez WeeChat. Dlatego akcje jak kopiowanie/wklejanie lub
 klikanie w URLe nie są przesyłane do terminala. +
-Użycie klawisza key[shift] sprawia, że te zdarzenia są przesyłane bezpośrednio
+Użycie klawisza kbd:[Shift] sprawia, że te zdarzenia są przesyłane bezpośrednio
 do terminala, tak jakby obsługa myszy była wyłączona (w niektórych terminalach
-jak iTerm, należy użyc klawisza key[alt] zamiast key[shift]).
+jak iTerm, należy użyc klawisza kbd:[Alt] zamiast kbd:[Shift]).
 
 [NOTE]
 W razie jakichkolwiek problemów z obsługą myszy, zajrzyj do 'WeeChat FAQ'.
@@ -1292,9 +1310,9 @@ Lista modyfikatorów:
 [width="50%",cols="3m,4",options="header"]
 |===
 | Modyfikator | Opis
-| ctrl        | Klawisz key[ctrl]
-| alt         | Klawisz key[alt]
-| ctrl-alt    | Klawisze key[ctrl-]key[alt]
+| ctrl        | Klawisz kbd:[Ctrl]
+| alt         | Klawisz kbd:[Alt]
+| ctrl-alt    | Klawisze kbd:[Ctrl] + kbd:[Alt]
 |===
 
 Lista klawiszy/rolek:
@@ -1389,40 +1407,40 @@ Na przykład, żeby wysłać tekst '/set' do obecnego buforu:
 ==== Kody kolorów
 
 Dla niektórych wtyczek jak IRC, można użyć kolorów i atrybutów w następujący sposób
-(wciśnij key[ctrl-c] następnie literę z opcjonalną wartością):
+(wciśnij kbd:[Ctrl+c] następnie literę z opcjonalną wartością):
 
-key[ctrl-c,b]::
+kbd:[Ctrl+c], kbd:[b]::
     pogrubiony tekst
 
-key[ctrl-c,c], key[xx]::
+kbd:[Ctrl+c], kbd:[c], kbd:[xx]::
     kolor tekstu `xx` (zgodnie z poniższą listą kolorów)
 
-key[ctrl-c,c], key[xx]key[,]key[yy]::
+kbd:[Ctrl+c], kbd:[c], kbd:[xx], kbd:[,], kbd:[yy]::
     kolor tekstu `xx` i tła `yy` (zgodnie z poniższą listą kolorów)
 
-key[ctrl-c,i]::
+kbd:[Ctrl+c], kbd:[i]::
     pochyły tekst
 
-key[ctrl-c,o]::
+kbd:[Ctrl+c], kbd:[o]::
     wyłącza kolory i atrybuty
 
-key[ctrl-c,v]::
+kbd:[Ctrl+c], kbd:[v]::
     odwróć video (przywraca kolor tekstu i tła)
 
-key[ctrl-c,_]::
+kbd:[Ctrl+c], kbd:[_]::
     podkreślony tekst
 
 [NOTE]
-Ten sam sktót (bez numeru dla key[ctrl-c,c]) może zostać użyty do zatrzymania
+Ten sam sktót (bez numeru dla kbd:[Ctrl+c], kbd:[c]) może zostać użyty do zatrzymania
 atrybutu.
 
-Kody kolorów dla key[ctrl-c,c]:
+Kody kolorów dla kbd:[Ctrl+c], kbd:[c]:
 
 include::autogen/user/irc_colors.asciidoc[]
 
 [NOTE]
 W celu wyświetlenia wszystkich dostępnych kolorów dla terminala możesz wykonać
-komendę `/color` następnie key[alt-c] (w WeeChat) lub wywołać w terminalu:
+komendę `/color` następnie kbd:[Alt+c] (w WeeChat) lub wywołać w terminalu:
 `weechat --colors`.
 
 Przykład: wyświetlenie "hello everybody!" z pogrubionym jasno niebieskim "hello"
@@ -1519,7 +1537,7 @@ wyświetlania buforów i pasków).
 W dodatku do podstawowych kolorów, możesz użyć numer koloru pomiędzy 1 a limitem
 twojego terminala.
 
-Użyj komendy `/color`, aby zobaczyć obecne kolory i limity. Za pomocą key[alt-c]
+Użyj komendy `/color`, aby zobaczyć obecne kolory i limity. Za pomocą kbd:[Alt+c]
 możesz tymczasowo przełączyć się na kolory terminala, żeby wybrać kolor.
 
 Na przykład jeśli chcesz wyświetlać czas na pomarańczowo w buforze:
@@ -1646,7 +1664,7 @@ serwera IRC 'freenode':
 /secure set freenode mojehasło
 ----
 
-Dla wygody, zabezpieczone dane mogą być wyświetlone w dedykowanym buforze (key[alt-v]
+Dla wygody, zabezpieczone dane mogą być wyświetlone w dedykowanym buforze (kbd:[Alt+v]
 w buforze, w celu wyświetlenia wartości), po prostu wykonaj:
 
 ----
