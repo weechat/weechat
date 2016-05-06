@@ -773,20 +773,17 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 * 'TZ' 変数を設定する (例: `export TZ="Europe/Paris"`)、こうすることで
   '/etc/localtime' ファイルへ頻繁にアクセスしないようになります。
 
-// TRANSLATION MISSING
 [[security]]
-=== I am paranoid about security, which settings could I change to be even more secure?
+=== セキュリティを気にしています。セキュリティを高めるためにはどの設定を変更すればよいですか?
 
-// TRANSLATION MISSING
-Disable IRC part and quit messages:
+IRC の退出および終了メッセージを無効化します:
 
 ----
 /set irc.server_default.default_msg_part ""
 /set irc.server_default.default_msg_quit ""
 ----
 
-// TRANSLATION MISSING
-Disable answers to all CTCP queries:
+すべての CTCP クエリに対する応答を無効化します:
 
 ----
 /set irc.ctcp.clientinfo ""
@@ -798,20 +795,18 @@ Disable answers to all CTCP queries:
 /set irc.ctcp.ping ""
 ----
 
-// TRANSLATION MISSING
-Unload and disable auto-loading of "xfer" plugin (used for IRC DCC):
+"xfer" プラグイン (これは IRC DCC 機能を使うためのものです) をアンロードして自動ロードを無効化します:
 
 ----
 /plugin unload xfer
 /set weechat.plugin.autoload "*,!xfer"
 ----
 
-// TRANSLATION MISSING
-Define a passphrase and use secured data wherever you can for sensitive data
-like passwords: see `/help secure` and `/help` on options
-(if you can use secured data, it is written in the help).
+パスフレーズを定義してパスワードなどの保護したいデータの使用時は常にセキュアデータを使います:
+`/help secure` およびセキュアデータを使用したいオプションの `/help` を参照してください
+(セキュアデータを使うことが可能なオプションのヘルプにはこの点が明記されています)。
 
-For example:
+例:
 
 ----
 /secure passphrase xxxxxxxxxx
