@@ -1421,26 +1421,21 @@ Für einige Erweiterungen wie z.B. der IRC Erweiterung können Farbkodierungen u
 Text gesetzt werden. Dazu muss die Tastenkombination kbd:[Ctrl+c], gefolgt von einem der folgenden
 Zeichen, genutzt werden:
 
-kbd:[Ctrl+c], kbd:[b]::
-    Text wird fett dargestellt
-
-kbd:[Ctrl+c], kbd:[c], kbd:[xx]::
-    Textfarbe `xx` (siehe Farbtabelle)
-
-kbd:[Ctrl+c], kbd:[c], kbd:[xx], kbd:[,], kbd:[yy]::
-    Textfarbe `xx` und Hintergrundfarbe `yy` (siehe Farbtabelle)
-
-kbd:[Ctrl+c], kbd:[i]::
-    Text wird kursiv dargestellt
-
-kbd:[Ctrl+c], kbd:[o]::
-    deaktiviert Farben und Attribute
-
-kbd:[Ctrl+c], kbd:[v]::
-    Farben umkehren (kehrt Textfarbe und Hintergrundfarbe um)
-
-kbd:[Ctrl+c], kbd:[_]::
-    Text wird mit Unterstrich dargestellt
+[width="60%",cols="3,5",options="header"]
+|===
+// TRANSLATIION MISSING
+| Key                    | Description
+| kbd:[Ctrl+c], kbd:[b]  | Text wird fett dargestellt
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx]               | Textfarbe `xx` (siehe Farbtabelle)
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx], kbd:[,],
+  kbd:[yy]               | Textfarbe `xx` und Hintergrundfarbe `yy` (siehe Farbtabelle)
+| kbd:[Ctrl+c], kbd:[i]  | Text wird kursiv dargestellt
+| kbd:[Ctrl+c], kbd:[o]  | deaktiviert Farben und Attribute
+| kbd:[Ctrl+c], kbd:[v]  | Farben umkehren (kehrt Textfarbe und Hintergrundfarbe um)
+| kbd:[Ctrl+c], kbd:[_]  | Text wird mit Unterstrich dargestellt
+|===
 
 [NOTE]
 Der selbe Befehl (ohne den Wert für kbd:[Ctrl+c], kbd:[c]) sollte genutzt werden

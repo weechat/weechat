@@ -1467,28 +1467,22 @@ Per alcuni plugin come IRC, è possibile usare codici colori ed attributi,
 come segue (digitare kbd:[Ctrl+c] poi la lettera che segue, con il valore
 opzionale):
 
-kbd:[Ctrl+c], kbd:[b]::
-    testo in grassetto
-
-kbd:[Ctrl+c], kbd:[c], kbd:[xx]::
-    colore del testo `xx` (consultare la lista di colori che segue)
-
-kbd:[Ctrl+c], kbd:[c], kbd:[xx], kbd:[,], kbd:[yy]::
-    colore del testo `xx` e di sfondo `yy` (consultare la lista di colori
-    che segue)
-
+[width="60%",cols="3,5",options="header"]
+|===
+// TRANSLATIION MISSING
+| Key                    | Description
+| kbd:[Ctrl+c], kbd:[b]  | testo in grassetto
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx]               | colore del testo `xx` (consultare la lista di colori che segue)
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx], kbd:[,],
+  kbd:[yy]               | colore del testo `xx` e di sfondo `yy` (consultare la lista di colori che segue)
 // TRANSLATION MISSING
-kbd:[Ctrl+c], kbd:[i]::
-    italic text
-
-kbd:[Ctrl+c], kbd:[o]::
-    disabilita colori ed attributi
-
-kbd:[Ctrl+c], kbd:[v]::
-    video inverso (inverte il colore del testo con quello di sfondo)
-
-kbd:[Ctrl+c], kbd:[_]::
-    testo sottolineato
+| kbd:[Ctrl+c], kbd:[i]  | italic text
+| kbd:[Ctrl+c], kbd:[o]  | disabilita colori ed attributi
+| kbd:[Ctrl+c], kbd:[v]  | video inverso (inverte il colore del testo con quello di sfondo)
+| kbd:[Ctrl+c], kbd:[_]  | testo sottolineato
+|===
 
 [NOTE]
 Lo stesso codice (senza numero per kbd:[Ctrl+c], kbd:[c]) può essere usato per

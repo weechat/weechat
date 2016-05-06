@@ -1409,26 +1409,21 @@ Na przykład, żeby wysłać tekst '/set' do obecnego buforu:
 Dla niektórych wtyczek jak IRC, można użyć kolorów i atrybutów w następujący sposób
 (wciśnij kbd:[Ctrl+c] następnie literę z opcjonalną wartością):
 
-kbd:[Ctrl+c], kbd:[b]::
-    pogrubiony tekst
-
-kbd:[Ctrl+c], kbd:[c], kbd:[xx]::
-    kolor tekstu `xx` (zgodnie z poniższą listą kolorów)
-
-kbd:[Ctrl+c], kbd:[c], kbd:[xx], kbd:[,], kbd:[yy]::
-    kolor tekstu `xx` i tła `yy` (zgodnie z poniższą listą kolorów)
-
-kbd:[Ctrl+c], kbd:[i]::
-    pochyły tekst
-
-kbd:[Ctrl+c], kbd:[o]::
-    wyłącza kolory i atrybuty
-
-kbd:[Ctrl+c], kbd:[v]::
-    odwróć video (przywraca kolor tekstu i tła)
-
-kbd:[Ctrl+c], kbd:[_]::
-    podkreślony tekst
+[width="60%",cols="3,5",options="header"]
+|===
+// TRANSLATIION MISSING
+| Key                    | Description
+| kbd:[Ctrl+c], kbd:[b]  | pogrubiony tekst
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx]               | kolor tekstu `xx` (zgodnie z poniższą listą kolorów)
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx], kbd:[,],
+  kbd:[yy]               | kolor tekstu `xx` i tła `yy` (zgodnie z poniższą listą kolorów)
+| kbd:[Ctrl+c], kbd:[i]  | pochyły tekst
+| kbd:[Ctrl+c], kbd:[o]  | wyłącza kolory i atrybuty
+| kbd:[Ctrl+c], kbd:[v]  | odwróć video (przywraca kolor tekstu i tła)
+| kbd:[Ctrl+c], kbd:[_]  | podkreślony tekst
+|===
 
 [NOTE]
 Ten sam sktót (bez numeru dla kbd:[Ctrl+c], kbd:[c]) może zostać użyty do zatrzymania

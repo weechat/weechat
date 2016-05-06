@@ -1433,27 +1433,20 @@ Pour certaines extensions comme IRC, il est possible d'utiliser des codes
 couleur et attributs comme suit (appuyer sur kbd:[Ctrl+c] puis sur la lettre qui
 suit et éventuellement une valeur) :
 
-kbd:[Ctrl+c], kbd:[b]::
-    texte gras
-
-kbd:[Ctrl+c], kbd:[c], kbd:[xx]::
-    couleur du texte `xx` (voir la liste des couleurs ci-dessous)
-
-kbd:[Ctrl+c], kbd:[c], kbd:[xx], kbd:[,], kbd:[yy]::
-    couleur du texte `xx` et du fond `yy` (voir la liste des couleurs
-    ci-dessous)
-
-kbd:[Ctrl+c], kbd:[i]::
-    texte en italique
-
-kbd:[Ctrl+c], kbd:[o]::
-    désactiver la couleur et tous les attributs
-
-kbd:[Ctrl+c], kbd:[v]::
-    vidéo inverse (inversion de la couleur d'écriture et du fond)
-
-kbd:[Ctrl+c], kbd:[_]::
-    texte souligné
+[width="60%",cols="3,5",options="header"]
+|===
+| Touche                 | Description
+| kbd:[Ctrl+c], kbd:[b]  | texte gras
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx]               | couleur du texte `xx` (voir la liste des couleurs ci-dessous)
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx], kbd:[,],
+  kbd:[yy]               | couleur du texte `xx` et du fond `yy` (voir la liste des couleurs ci-dessous)
+| kbd:[Ctrl+c], kbd:[i]  | texte en italique
+| kbd:[Ctrl+c], kbd:[o]  | désactiver la couleur et tous les attributs
+| kbd:[Ctrl+c], kbd:[v]  | vidéo inverse (inversion de la couleur d'écriture et du fond)
+| kbd:[Ctrl+c], kbd:[_]  | texte souligné
+|===
 
 [NOTE]
 Le même code (sans le numéro pour kbd:[Ctrl+c], kbd:[c]) peut être utilisé pour

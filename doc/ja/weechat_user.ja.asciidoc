@@ -1397,26 +1397,21 @@ hello
 IRC 等のプラグインでは、以下の色コードと属性を利用できます
 (kbd:[Ctrl+c] の後に、オプションとともに以下のキーを押してください):
 
-kbd:[Ctrl+c], kbd:[b]::
-    テキストを太字に
-
-kbd:[Ctrl+c], kbd:[c], kbd:[xx]::
-    テキスト表示色を `xx` に (以下の色リストを参照)
-
-kbd:[Ctrl+c], kbd:[c], kbd:[xx], kbd:[,], kbd:[yy]::
-    テキスト表示色を `xx` に、背景色を `yy` に (以下の色リストを参照)
-
-kbd:[Ctrl+c], kbd:[i]::
-    テキストをイタリック体に
-
-kbd:[Ctrl+c], kbd:[o]::
-    テキスト表示色と属性をリセット
-
-kbd:[Ctrl+c], kbd:[v]::
-    テキストを反転 (テキスト表示色と背景色の入れ替え)
-
-kbd:[Ctrl+c], kbd:[_]::
-    テキストに下線を引く
+[width="60%",cols="3,5",options="header"]
+|===
+// TRANSLATION MISSING
+| Key                    | Description
+| kbd:[Ctrl+c], kbd:[b]  | テキストを太字に
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx]               | テキスト表示色を `xx` に (以下の色リストを参照)
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx], kbd:[,],
+  kbd:[yy]               | テキスト表示色を `xx` に、背景色を `yy` に (以下の色リストを参照)
+| kbd:[Ctrl+c], kbd:[i]  | テキストをイタリック体に
+| kbd:[Ctrl+c], kbd:[o]  | テキスト表示色と属性をリセット
+| kbd:[Ctrl+c], kbd:[v]  | テキストを反転 (テキスト表示色と背景色の入れ替え)
+| kbd:[Ctrl+c], kbd:[_]  | テキストに下線を引く
+|===
 
 [NOTE]
 同じコードで (色コードを入力せずに kbd:[Ctrl+c], kbd:[c]

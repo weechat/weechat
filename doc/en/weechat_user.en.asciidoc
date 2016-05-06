@@ -1395,26 +1395,20 @@ For example, to send text '/set' on current buffer:
 For some plugins like IRC, you can use color codes and attributes, as
 follow (press kbd:[Ctrl+c] then following letter, with optional value):
 
-kbd:[Ctrl+c], kbd:[b]::
-    bold text
-
-kbd:[Ctrl+c], kbd:[c], kbd:[xx]::
-    text color `xx` (see list of colors below)
-
-kbd:[Ctrl+c], kbd:[c], kbd:[xx], kbd:[,], kbd:[yy]::
-    text color `xx` and background `yy` (see list of colors below)
-
-kbd:[Ctrl+c], kbd:[i]::
-    italic text
-
-kbd:[Ctrl+c], kbd:[o]::
-    disable color and attributes
-
-kbd:[Ctrl+c], kbd:[v]::
-    reverse video (revert text color with background)
-
-kbd:[Ctrl+c], kbd:[_]::
-    underlined text
+[width="60%",cols="3,5",options="header"]
+|===
+| Key                    | Description
+| kbd:[Ctrl+c], kbd:[b]  | bold text
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx]               | text color `xx` (see list of colors below)
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx], kbd:[,],
+  kbd:[yy]               | text color `xx` and background `yy` (see list of colors below)
+| kbd:[Ctrl+c], kbd:[i]  | italic text
+| kbd:[Ctrl+c], kbd:[o]  | disable color and attributes
+| kbd:[Ctrl+c], kbd:[v]  | reverse video (revert text color with background)
+| kbd:[Ctrl+c], kbd:[_]  | underlined text
+|===
 
 [NOTE]
 The same code (without number for kbd:[Ctrl+c], kbd:[c]) can be used to stop the
