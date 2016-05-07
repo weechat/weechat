@@ -148,6 +148,7 @@ extern struct t_config_option *config_look_buffer_search_regex;
 extern struct t_config_option *config_look_buffer_search_where;
 extern struct t_config_option *config_look_buffer_time_format;
 extern struct t_config_option *config_look_color_basic_force_bold;
+extern struct t_config_option *config_look_color_inactive_bar;
 extern struct t_config_option *config_look_color_inactive_buffer;
 extern struct t_config_option *config_look_color_inactive_message;
 extern struct t_config_option *config_look_color_inactive_prefix;
@@ -243,6 +244,7 @@ extern struct t_config_option *config_look_window_title;
 extern struct t_config_option *config_look_word_chars_highlight;
 extern struct t_config_option *config_look_word_chars_input;
 
+extern struct t_config_option *config_color_bar_inactive_window;
 extern struct t_config_option *config_color_bar_more;
 extern struct t_config_option *config_color_chat;
 extern struct t_config_option *config_color_chat_bg;

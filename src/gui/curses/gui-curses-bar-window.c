@@ -163,6 +163,7 @@ gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
 
 int
 gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
+                             struct t_gui_window *window,
                              enum t_gui_bar_filling filling,
                              int *x, int *y,
                              const char *string,
@@ -170,7 +171,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              int hide_chars_if_scrolling,
                              int *index_item, int *index_subitem, int *index_line)
 {
-    int x_with_hidden, size_on_screen, low_char, hidden;
+    int x_with_hidden, size_on_screen, low_char, hidden, color_bg;
     char utf_char[16], *next_char, *output;
 
     if (!bar_window || !string || !string[0])
@@ -178,11 +179,20 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
 
     wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, *y, *x);
 
+    color_bg = CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]);
+    if (window
+        && (window != gui_current_window)
+        && CONFIG_BOOLEAN(config_look_color_inactive_bar)
+        && (color_bg != gui_color_search("default")))
+    {
+        color_bg = CONFIG_COLOR(config_color_bar_inactive_window);
+    }
+
     if (reset_color_before_display)
     {
         gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                            CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
-                                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]),
+                                           color_bg,
                                            1);
     }
 
@@ -241,7 +251,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                 /* bar background */
                                 string += 2;
                                 gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                                CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                                                                color_bg);
                                 break;
                             case GUI_COLOR_BAR_START_INPUT_CHAR:
                                 string += 2;
@@ -303,7 +313,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         string++;
                         gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                            CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
-                                                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]),
+                                                           color_bg,
                                                            0);
                         break;
                     default:
@@ -328,7 +338,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                                A_ALL_ATTR);
                 gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                    CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
-                                                   CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]),
+                                                   color_bg,
                                                    1);
                 break;
             default:
@@ -423,6 +433,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     int diff, max_length, optimal_number_of_lines;
     int some_data_not_displayed;
     int index_item, index_subitem, index_line;
+    int color_bg;
 
     if (!gui_init_ok)
         return;
@@ -451,6 +462,15 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                   GUI_COLOR_COLOR_CHAR,
                   GUI_COLOR_BAR_CHAR,
                   GUI_COLOR_BAR_MOVE_CURSOR_CHAR);
+    }
+
+    color_bg = CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]);
+    if (window
+        && (window != gui_current_window)
+        && CONFIG_BOOLEAN(config_look_color_inactive_bar)
+        && (color_bg != gui_color_search("default")))
+    {
+        color_bg = CONFIG_COLOR(config_color_bar_inactive_window);
     }
 
     /*
@@ -493,7 +513,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 gui_bar_window_set_current_size (bar_window, window, 1);
             gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                               CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
-                              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                              color_bg);
         }
         else
         {
@@ -548,7 +568,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
 
             gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                               CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
-                              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                              color_bg);
             x = 0;
             y = 0;
             some_data_not_displayed = 0;
@@ -641,7 +661,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 if ((bar_window->scroll_y == 0)
                     || (line >= bar_window->scroll_y))
                 {
-                    if (!gui_bar_window_print_string (bar_window, filling,
+                    if (!gui_bar_window_print_string (bar_window, window, filling,
                                                       &x, &y,
                                                       items[line], 1, 1,
                                                       &index_item,
@@ -657,7 +677,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         {
                             gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                                CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
-                                                               CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]),
+                                                               color_bg,
                                                                1);
                             gui_window_remove_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                            A_ALL_ATTR);
@@ -670,7 +690,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         }
                         while (x < bar_window->width)
                         {
-                            gui_bar_window_print_string (bar_window, filling,
+                            gui_bar_window_print_string (bar_window, window, filling,
                                                          &x, &y, " ", 0, 0,
                                                          &index_item,
                                                          &index_subitem,
@@ -702,7 +722,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 {
                     gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                        CONFIG_COLOR(config_color_bar_more),
-                                                       CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]),
+                                                       color_bg,
                                                        1);
                     mvwaddstr (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                y, x, ptr_string);
@@ -722,7 +742,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 {
                     gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                        CONFIG_COLOR(config_color_bar_more),
-                                                       CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]),
+                                                       color_bg,
                                                        1);
                     mvwaddstr (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                y, x, ptr_string);
@@ -739,7 +759,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             gui_bar_window_set_current_size (bar_window, window, 1);
         gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
-                          CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                          color_bg);
     }
 
     /*
