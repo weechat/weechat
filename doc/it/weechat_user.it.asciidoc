@@ -58,7 +58,7 @@ Per poter installare WeeChat, è necessario:
 
 * un sistema GNU/Linux in esecuzione (con gli strumenti di
   compilazione per i sorgenti), oppure OS compatibile
-* privilegi di 'root' (per installare WeeChat in una directory di
+* privilegi di _root_ (per installare WeeChat in una directory di
   sistema)
 // TRANSLATION MISSING
 * some libraries (see <<dependencies,dependencies>>).
@@ -154,7 +154,7 @@ correttamente con la versione 2.7, ma non con le versioni ≤ 2.6 o ≥ 3.0).
 [[compile_with_cmake]]
 ==== Compilazione con cmake
 
-* Installazione nelle directory di sistema (richiede privilegi di 'root'):
+* Installazione nelle directory di sistema (richiede privilegi di _root_):
 
 ----
 $ mkdir build
@@ -311,7 +311,7 @@ Only cmake is officially supported to build WeeChat. You should use autotools
 only if you are not able to use cmake. +
 Build with autotools requires more dependencies and is slower than with cmake.
 
-* Installazione nelle directory di sistema (richiede privilegi di 'root'):
+* Installazione nelle directory di sistema (richiede privilegi di _root_):
 
 ----
 $ ./autogen.sh
@@ -334,7 +334,7 @@ $ make install
 ----
 
 // TRANSLATION MISSING
-Options can be used for 'configure' script, they can be displayed with this
+Options can be used for _configure_ script, they can be displayed with this
 command:
 
 ----
@@ -364,7 +364,7 @@ futuro di WeeChat, è necessario:
 
 * compilarlo con informazioni di debug (o installare il pacchetto binario con
   le informazioni di debug)
-* abilitare i file 'core' sul proprio sistema
+* abilitare i file _core_ sul proprio sistema
 * installare gdb
 
 [[debug_info]]
@@ -378,13 +378,13 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 
 Se compilato con gli autotools, il debug è attivato automaticamente (`--with-debug=1`).
 
-Se è stato installato il pacchetto binario, installare il pacchetto 'weechat-gdb'.
+Se è stato installato il pacchetto binario, installare il pacchetto _weechat-gdb_.
 
 [[core_files]]
 ==== File core
 
 // TRANSLATION MISSING
-To enable 'core' files, you can use option
+To enable _core_ files, you can use option
 <<option_weechat.startup.sys_rlimit,weechat.startup.sys_rlimit>>:
 
 ----
@@ -395,7 +395,7 @@ To enable 'core' files, you can use option
 For WeeChat ≤ 0.3.8 or if you want to enable core files even before WeeChat
 starts, you can use `ulimit` command.
 
-Ad esempio su Linux con la shell 'bash', aggiungere questa riga al proprio
+Ad esempio su Linux con la shell _bash_, aggiungere questa riga al proprio
 `~/.bashrc`:
 
 ----
@@ -411,13 +411,13 @@ ulimit -c 200000
 [[gdb_backtrace]]
 ==== Ottenere un backtrace con gdb
 
-In caso di errore di WeeChat, il sistema creerà un file 'core' oppure 'core.12345'
-('12345' è l'id del processo).
+In caso di errore di WeeChat, il sistema creerà un file _core_ oppure _core.12345_
+(_12345_ è l'id del processo).
 Questo file viene creato nella directory in cui è in esecuzione WeeChat (e
 *non* la directory dove WeeChat è installato!).
 
-Ad esempio, se 'weechat' è installato in '/usr/bin/' ed il file 'core'
-si trova in '/home/xxx/', allora eseguire gdb con questo comando:
+Ad esempio, se _weechat_ è installato in _/usr/bin/_ ed il file _core_
+si trova in _/home/xxx/_, allora eseguire gdb con questo comando:
 
 ----
 gdb /usr/bin/weechat /home/xxx/core
@@ -465,7 +465,7 @@ Grazie per il vostro aiuto!
 
 Per eseguire il debug di un'istanza di WeeChat in esecuzione (ad esempio se
 WeeChat sembra sia bloccato), è possibile usare gdb con l'id del processo
-(sostituire '12345' con il PID del processo weechat):
+(sostituire _12345_ con il PID del processo weechat):
 
 ----
 gdb /usr/bin/weechat 12345
@@ -495,7 +495,7 @@ $ weechat
 
 Alla prima esecuzione di WeeChat, viene creato un file di configurazione
 predefinito. Il file di configurazione viene creato nella directory:
-'~/.weechat/weechat.conf'.
+_~/.weechat/weechat.conf_.
 
 È possibile modificare questo file per configurare WeeChat a seconda delle
 proprie esigenze, oppure impostando i parametri con il comando `/set`
@@ -541,12 +541,12 @@ Lo schermo è composto dalle seguenti aree:
 ** prefisso (prima di "|")
 ** messaggio (dopo di "|")
 * barre che circondano l'area di chat, quelle predefinite sono:
-** barra 'titolo', in alto rispetto all'area di chat
-** barra 'stato', in basso rispetto all'area di chat
-** barra 'input', in basso rispetto alla barra di stato
-** barra 'nicklist', sulla destra
+** barra _titolo_, in alto rispetto all'area di chat
+** barra _stato_, in basso rispetto all'area di chat
+** barra _input_, in basso rispetto alla barra di stato
+** barra _nicklist_, sulla destra
 
-La barra 'stato' ha i seguenti elementi predefiniti:
+La barra _stato_ ha i seguenti elementi predefiniti:
 
 [width="100%",cols="^3,^4,10",options="header"]
 |===
@@ -561,14 +561,14 @@ La barra 'stato' ha i seguenti elementi predefiniti:
 | buffer_nicklist_count | `{4}`                 | Numero di nick nella lista nick
 // TRANSLATION MISSING
 | buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed
-| buffer_filter         | `*`                   | Indicatore filtraggio: `*` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate
+| buffer_filter         | `+*+`                 | Indicatore filtraggio: `+*+` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate
 | scroll                | `-ANCORA(50)-`        | Indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata
 | lag                   | `[Ritardo: 2.5]`      | Indicatore ritardo, in secondi (nascosto se il ritardo è basso)
 | hotlist               | `[H: 4:#abc(2,5), 6]` | Elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 notifiche e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #6)
 | completion            | `abc(2) def(5)`       | Elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola
 |===
 
-La barra 'input' ha i seguenti elementi predefiniti:
+La barra _input_ ha i seguenti elementi predefiniti:
 
 [width="100%",cols="^3,^4,10",options="header"]
 |===
@@ -602,7 +602,7 @@ Other items available (not used in bars by default):
 [[buffers_and_windows]]
 === Buffer e finestre
 
-Un 'buffer' è composto da un numero, un nome, delle righe visualizzate (e
+Un _buffer_ è composto da un numero, un nome, delle righe visualizzate (e
 altri dati).
 
 Esempi di buffer:
@@ -612,7 +612,7 @@ Esempi di buffer:
 * canale irc
 * query irc
 
-Una 'finestra' (o window) è un'area dello schermo in cui viene visualizzato
+Una _finestra_ (o window) è un'area dello schermo in cui viene visualizzato
 un buffer. È possibile dividere lo schermo in più finestre.
 
 Ogni finestra visualizza un buffer. Un buffer può essere nascosto (non visualizzato
@@ -717,7 +717,7 @@ Esempio di split orizzontale + verticale:
 [[bars]]
 === Bars
 
-A 'bar' is an area beside the chat that can contain any type of text.
+A _bar_ is an area beside the chat that can contain any type of text.
 
 The bar options can be set with options `weechat.bar.name.option` where `name`
 is the name of the bar and `option` the option for this bar.
@@ -730,12 +730,12 @@ List of bar options:
 
 | type | `root`, `window` |
   A bar with type `root` is displayed exactly one time on screen, outside all
-  windows. There is no root bar by default, but an example is the bar 'buffers'
-  created by script 'buffers.pl' (sidebar with list of buffers). +
+  windows. There is no root bar by default, but an example is the bar _buffers_
+  created by script _buffers.pl_ (sidebar with list of buffers). +
   A bar with type `window` is displayed in each window, for example if you
   split one time the screen (with `/window splith` or `/window splitv`), you
-  will have one bar in each window. The four default bars ('title', 'status',
-  'input', 'nicklist') have type `window`.
+  will have one bar in each window. The four default bars (_title_, _status_,
+  _input_, _nicklist_) have type `window`.
 
 | position | `top`, `bottom`, `left`, `right` |
   Position of the bar: above/below chat, on the left/right.
@@ -745,7 +745,7 @@ List of bar options:
   many bars have same type and position. +
   The bars are displayed from the edge of the screen to the center. A higher
   priority will display bar at the beginning, so closer to the edge. +
-  Example: 'input' bar has priority 1000, so it is displayed before the 'status'
+  Example: _input_ bar has priority 1000, so it is displayed before the _status_
   bar, which has priority 500.
 
 | size | integer ≥ 0 |
@@ -776,7 +776,7 @@ List of bar options:
   other bars (or chat).
 
 | items | string |
-  A list of 'items' (see <<bar_items,items>> for more info).
+  A list of _items_ (see <<bar_items,items>> for more info).
 
 | filling_left_right | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
   Type of filling for a bar which has position `left` or `right` (see
@@ -794,7 +794,7 @@ List of bar options:
 [[bar_items]]
 ==== Items
 
-The option 'items' is a string with a list of bar items, separated by a comma
+The option _items_ is a string with a list of bar items, separated by a comma
 (space between items on screen) or "+" (glued items).
 
 The list of bar items is displayed with command `/bar listitems`.
@@ -802,7 +802,7 @@ The list of bar items is displayed with command `/bar listitems`.
 // TRANSLATION MISSING
 Before or after item name, you can use chars (that are not alphanumeric, "-" or
 "_"). They will be displayed before/after item with the delimiters color
-defined in bar (option 'color_delim').
+defined in bar (option _color_delim_).
 
 Example of bar with items "[time],buffer_number+:+buffer_plugin+.+buffer_name":
 
@@ -823,7 +823,7 @@ not displayed in the current window (or even not displayed at all).
 
 // TRANSLATION MISSING
 Example: nicklist of bitlbee in a root bar (if the bar is called
-'bitlist' and if bitlbee server is called 'bitlbee'):
+_bitlist_ and if bitlbee server is called _bitlbee_):
 
 ----
 /set weechat.bar.bitlist.items "@irc.bitlbee.&bitlbee:buffer_nicklist"
@@ -844,10 +844,10 @@ There are four types of filling:
 * `columns_vertical`: items are displayed using columns, where text is aligned
   on the left. The first item is on top left, the second is one line below.
 
-Default bars 'title', 'status' and 'input' have 'horizontal' filling, and
-default bar 'nicklist' has 'vertical' filling.
+Default bars _title_, _status_ and _input_ have _horizontal_ filling, and
+default bar _nicklist_ has _vertical_ filling.
 
-Some examples of filling for bar 'nicklist':
+Some examples of filling for bar _nicklist_:
 
 ....
 ┌───────────────────────────────────────────────────────────────────────┐
@@ -911,14 +911,14 @@ Some examples of filling for bar 'nicklist':
 ==== Conditions
 
 // TRANSLATION MISSING
-The option 'conditions' is a string which is evaluated to know if the bar
+The option _conditions_ is a string which is evaluated to know if the bar
 must be displayed or not.
 
 The string can be:
 
-* 'active': the window must be active
-* 'inactive': the window must be inactive
-* 'nicklist': the buffer displayed in window must have a nicklist
+* _active_: the window must be active
+* _inactive_: the window must be inactive
+* _nicklist_: the buffer displayed in window must have a nicklist
 * an expression: it is evaluated as boolean (see command
   <<command_weechat_eval,/eval>>)
 
@@ -940,7 +940,7 @@ width of window is > 100 :
 /set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
 ----
 
-Same condition, but always display nicklist on buffer '&bitlbee' (even if window
+Same condition, but always display nicklist on buffer _&bitlbee_ (even if window
 is small):
 
 ----
@@ -1026,7 +1026,7 @@ The screen will look like that in bare display:
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
-So you can click the URL from 'joe' without any problem in your terminal (of
+So you can click the URL from _joe_ without any problem in your terminal (of
 course this supposes that your terminal supports click on URLs).
 
 [[notify_levels]]
@@ -1035,26 +1035,26 @@ course this supposes that your terminal supports click on URLs).
 Sono possibili quattro livelli per i messaggi mostrati nei buffer, dal più basso
 al più alto:
 
-* 'low': messaggio di bassa importanza (ad esempio entrata/uscita/disconnessione
+* _low_: messaggio di bassa importanza (ad esempio entrata/uscita/disconnessione
   di irc)
-* 'message': messaggio da un utente
-* 'private': messaggio in un buffer privato
-* 'highlight': messaggio con notifica
+* _message_: messaggio da un utente
+* _private_: messaggio in un buffer privato
+* _highlight_: messaggio con notifica
 
 Ogni buffer ha un livello di notifica, che viene usato per decidere quale
 messaggio il buffer andrà ad aggiungere nella hotlist.
 
 Il livello predefinito di notifica può essere impostato usando l'opzione
 <<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
-il valore predefinito è 'all'.
+il valore predefinito è _all_.
 
 [width="50%",cols="3m,10",options="header"]
 |===
 | Livello di notifica | Livello del messaggio aggiunto alla hotlist
 | none                | (nessuno)
-| highlight           | 'highlight' + 'private'
-| message             | 'highlight' + 'private' + 'message'
-| all                 | 'highlight' + 'private' + 'message' + 'low'
+| highlight           | _highlight_ + _private_
+| message             | _highlight_ + _private_ + _message_
+| all                 | _highlight_ + _private_ + _message_ + _low_
 |===
 
 Il livello di notifica può essere definito per un set di buffer, ad esempio
@@ -1064,7 +1064,7 @@ tutti i buffer per il server irc "freenode":
 /set weechat.notify.irc.freenode message
 ----
 
-Imposta il livello di notifica 'highlight' solo sul canale '#weechat':
+Imposta il livello di notifica _highlight_ solo sul canale _#weechat_:
 
 ----
 /set weechat.notify.irc.freenode.#weechat highlight
@@ -1164,8 +1164,8 @@ Il livello di notifica per un buffer può essere impostato con il comando `/buff
   kbd:[F6]        | Passa al buffer successivo | `/buffer +1`
 | kbd:[F7]        | Passa alla finestra precedente | `/window -1`
 | kbd:[F8]        | Passa alla finestra successiva | `/window +1`
-| kbd:[F9]        | Scorre il titolo del buffer sulla sinistra | `/bar scroll title * -30%`
-| kbd:[F10]       | Scorre il titolo del buffer sulla destra | `/bar scroll title * +30%`
+| kbd:[F9]        | Scorre il titolo del buffer sulla sinistra | `+/bar scroll title * -30%+`
+| kbd:[F10]       | Scorre il titolo del buffer sulla destra | `+/bar scroll title * +30%+`
 | kbd:[F11]       | Scorre di una pagina in alto nella lista nick | `/bar scroll nicklist * -100%`
 | kbd:[F12]       | Scorre di una pagina in basso nella lista nick | `/bar scroll nicklist * +100%`
 | kbd:[Alt+F11]   | Sposta all'inizio della lista nick | `/bar scroll nicklist * b`
@@ -1344,7 +1344,7 @@ as if the mouse was disabled (on some terminals like iTerm, you have to use
 kbd:[Alt] instead of kbd:[Shift]).
 
 [NOTE]
-Per qualunque problema con il mouse, consultare 'FAQ di WeeChat'.
+Per qualunque problema con il mouse, consultare _FAQ di WeeChat_.
 
 [[mouse_bind_events]]
 ==== Associare gli eventi del mouse a comandi
@@ -1446,7 +1446,7 @@ per consultare un elenco di opzioni:
 ----
 
 Il testo inviato ad un buffer è qualsiasi testo che non comincia con
-il carattere "/". Per esempio, per inviare il testo 'ciao' sul buffer
+il carattere "/". Per esempio, per inviare il testo _ciao_ sul buffer
 attivo:
 
 ----
@@ -1454,7 +1454,7 @@ ciao
 ----
 
 Ad ogni modo, è possibile iniziare con il carattere "/", aggiungendone
-poi un altro. Ad esempio, per inviare il testo '/set' sul buffer attivo:
+poi un altro. Ad esempio, per inviare il testo `/set` sul buffer attivo:
 
 ----
 //set
@@ -1514,7 +1514,7 @@ Nel plugin irc, si possono riorganizzare i colori usando l'opzione
 WeeChat può usare fino a 256 coppie di colore per visualizzare il testo nelle barre e
 nell'area di chat(il terminale deve supportare 256 colori per essere utilizzati in WeeChat).
 
-In base al valore della variabile di ambiente 'TERM', potrebbero verificarsi i
+In base al valore della variabile di ambiente _TERM_, potrebbero verificarsi i
 seguenti limiti per i colori in WeeChat:
 
 [width="50%",cols="8,>2,>2",options="header"]
@@ -1531,27 +1531,27 @@ seguenti limiti per i colori in WeeChat:
 È possibile eseguire `weechat --colors` o utilizzare il comando `/color` in
 WeeChat per visualizzare i limiti del proprio ambiente.
 
-Alcuni valori raccomandati per 'TERM' se si desiderano 256 colori:
+Alcuni valori raccomandati per _TERM_ se si desiderano 256 colori:
 
-* con screen: 'screen-256color'
+* con screen: _screen-256color_
 // TRANSLATION MISSING
-* under tmux: 'screen-256color' or 'tmux-256color'
+* under tmux: _screen-256color_ or _tmux-256color_
 // TRANSLATION MISSING
-* outside screen/tmux: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
+* outside screen/tmux: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
 
 [NOTE]
 Potrebbe essere necessario installare il pacchetto "ncurses-term" per usare
-questi valori nella variabile 'TERM'.
+questi valori nella variabile _TERM_.
 
 Se si sta utilizzando screen, è possibile aggiungere questa riga al
-proprio '~/.screenrc':
+proprio _~/.screenrc_:
 
 ----
 term screen-256color
 ----
 
 // TRANSLATION MISSING
-If your 'TERM' variable has wrong value and that WeeChat is already running,
+If your _TERM_ variable has wrong value and that WeeChat is already running,
 you can change it with these two commands:
 
 ----
@@ -1595,7 +1595,7 @@ sullo schermo (per mostrare buffer e barre).
 In aggiunta ai colori di base, si può usare un numero per il colore compreso
 tra 1 e il limite del proprio terminale.
 
-Il comando '/color' mostra i colori attivi ed i limiti. Com kbd:[Alt+c] si può
+Il comando `/color` mostra i colori attivi ed i limiti. Com kbd:[Alt+c] si può
 passare temporaneamente ai colori del terminale per sceglierne uno.
 
 Se ad esempio si desidera visualizzare l'ora in arancione nel buffer:
@@ -1613,7 +1613,7 @@ O se si desidera uno sfondo verde scuro per la barra di stato:
 [[colors_aliases]]
 ==== Alias
 
-Si possono aggiungere degli alias ai colori con il comando '/color alias' e
+Si possono aggiungere degli alias ai colori con il comando `/color alias` e
 usarli in ogni opzione relativa al colore.
 
 Ad esempio:
@@ -1629,11 +1629,11 @@ Ad esempio:
 Esistono alcuni attributi per i colori. Uno o più attributi vanno aggiunti prima
 del nome o del numero del colore:
 
-* `*` : testo in grassetto
-* `!` : video inverso
-* `/` : testo in corsivo
-* `_` : testo sottolineato
-* `|` : mantiene attributi: non ripristina grassetto/inverso/sottolineato
+* `+*+` : testo in grassetto
+* `+!+` : video inverso
+* `+/+` : testo in corsivo
+* `+_+` : testo sottolineato
+* `+|+` : mantiene attributi: non ripristina grassetto/inverso/sottolineato
   al cambio di colore
 
 Ad esempio se si vuole il proprio nick bianco e sottolineato:
@@ -1667,12 +1667,12 @@ Esempio di grassetto con il colore di primo piano del terminale:
 ==== Storage
 
 WeeChat can encrypt passwords or private data using secured data, stored in file
-'sec.conf'.
+_sec.conf_.
 
 This configuration file is read before any other file, and the values stored
 inside can be used in various WeeChat or plugins/scripts options.
 
-You can set a passphrase to encrypt data in 'sec.conf'. This is not mandatory
+You can set a passphrase to encrypt data in _sec.conf_. This is not mandatory
 but highly recommended, otherwise data is stored as plain text in file.
 
 ----
@@ -1695,9 +1695,9 @@ The encryption of data is made in 3 steps:
 . Encrypt the hash + data (output is: salt + encrypted hash/data).
 
 [NOTE]
-The cipher block mode is 'CFB'.
+The cipher block mode is _CFB_.
 
-The result is put as hexadecimal string in file 'sec.conf', for example:
+The result is put as hexadecimal string in file _sec.conf_, for example:
 
 ----
 [data]
@@ -1717,7 +1717,7 @@ The decryption of data is made in 3 steps:
 [[secured_data_manage]]
 ==== Manage secured data
 
-To add secured data, use `/secure set`, for example a password for 'freenode'
+To add secured data, use `/secure set`, for example a password for _freenode_
 IRC server:
 
 ----
@@ -1736,7 +1736,7 @@ password, using this format: "${sec.data.xxx}" where "xxx" is the name of
 secured data (used with `/secure set xxx ...`). +
 For a complete list of supported options, see `/help secure`.
 
-To use the 'freenode' password, for example with
+To use the _freenode_ password, for example with
 <<irc_sasl_authentication,SASL authentication>>:
 
 ----
@@ -1820,9 +1820,9 @@ In GNU/Linux, il file ha estensione ".so", ".dll" in Windows.
 I plugin trovati vengono caricati automaticamente all'avvio di WeeChat, ed
 è possibile caricare o scaricare i plugin durante l'esecuzione del programma.
 
-È importante evidenziare la differenza tra un 'plugin' ed uno 'script': un
-'plugin' è un file binario compilato e caricato con il comando `/plugin`,
-mentre uno 'script' è un file di testo caricato con un plugin come 'python'
+È importante evidenziare la differenza tra un _plugin_ ed uno _script_: un
+_plugin_ è un file binario compilato e caricato con il comando `/plugin`,
+mentre uno _script_ è un file di testo caricato con un plugin come _python_
 con il comando `/python`.
 
 È possibile utilizzare il comando `/plugin` per caricare/scaricare un plugin,
@@ -1866,8 +1866,8 @@ I plugin predefiniti sono:
 |===
 
 Per saperne di più riguardo lo sviluppo di plugin o script (tramite le API), per
-favore consultare 'Riferimento API dei Plugin per WeeChat' oppure
-'Guida allo Scripting di WeeChat'.
+favore consultare _Riferimento API dei Plugin per WeeChat_ oppure
+_Guida allo Scripting di WeeChat_.
 
 [[alias_plugin]]
 === Plugin Alias
@@ -1937,10 +1937,10 @@ Ad esempio, per abilitare l'opzione "ignore-case":
 ==== Suggestions
 
 Suggestions are displayed in a bar item called "aspell_suggest". The number of
-suggestions is set in option 'aspell.check.suggestions'.
+suggestions is set in option _aspell.check.suggestions_.
 
-To enable suggestions you must set option 'aspell.check.suggestions' to an
-integer ≥ 0 and add the bar item "aspell_suggest" to a bar, like 'status'.
+To enable suggestions you must set option _aspell.check.suggestions_ to an
+integer ≥ 0 and add the bar item "aspell_suggest" to a bar, like _status_.
 
 Example of suggestions with English dictionary (`en`):
 
@@ -2039,7 +2039,7 @@ Per esempio:
 Se il set caratteri globale per la decodifica non è impostato (ad
 esempio durante il primo caricamento del plugin Charset), verrà
 impostato automaticamente sul set caratteri del terminale (se
-diverso da UTF-8), oppure su 'ISO-8859-1'.
+diverso da UTF-8), oppure su _ISO-8859-1_.
 
 Il valore di codifica predefinito è vuoto, perciò il testo viene
 inviato per default con il set caratteri interno (UTF-8).
@@ -2081,7 +2081,7 @@ Per visualizzare tutti i set caratteri utilizzati, utilizzare il comando seguent
 ==== Risoluzione problemi
 
 Per qualunque problema con i set caratteri, per favore consultare
-le 'Domande Frequenti di WeeChat'.
+le _Domande Frequenti di WeeChat_.
 
 // TRANSLATION MISSING
 [[exec_plugin]]
@@ -2117,8 +2117,8 @@ include::autogen/user/exec_commands.asciidoc[]
 È possibile controllare da remoto WeeChat, inviando comandi o del testo ad una
 pipe FIFO (se l'opzione "plugins.var.fifo.fifo" è abilitata, e lo è per default).
 
-La pipe FIFO si trova in '~/.weechat/' ed è chiamata 'weechat_fifo_xxxx'
-(dove 'xxxx' è l'ID del processo (PID) dell'istanza di WeeChat in esecuzione).
+La pipe FIFO si trova in _~/.weechat/_ ed è chiamata _weechat_fifo_xxxx_
+(dove _xxxx_ è l'ID del processo (PID) dell'istanza di WeeChat in esecuzione).
 
 La sintassi per i comandi/testo della pipe FIFO è una delle seguenti:
 
@@ -2197,8 +2197,8 @@ trasferimento file (tramite plugin xfer, consultare <<xfer_plugin,plugin Xfer>>)
 irc[6][s]://[nick[:password]@]irc.esempio.org[:porta][/#canale][,#canale[...]]
 ----
 
-Esempio per entrare in '#weechat' e '#tizio' sul server 'chat.freenode.net',
-porta predefinita (6667), con il nick 'caio':
+Esempio per entrare in _#weechat_ e _#tizio_ sul server _chat.freenode.net_,
+porta predefinita (6667), con il nick _caio_:
 
 ----
 $ weechat irc://caio@chat.freenode.net/#weechat,#tizio
@@ -2313,14 +2313,14 @@ Per maggiori informazioni consultare http://www.oftc.net/oftc/NickServ/CertFP
 WeeChat supports SASL authentication, using different mechanisms:
 
 // TRANSLATION MISSING
-* 'plain': password in chiaro (default)
+* _plain_: password in chiaro (default)
 // TRANSLATION MISSING
-* 'ecdsa-nist256p-challenge': challenge with public/private key
-* 'external': certificato SSL da lato client
+* _ecdsa-nist256p-challenge_: challenge with public/private key
+* _external_: certificato SSL da lato client
 // TRANSLATION MISSING
-* 'dh-blowfish': blowfish encrypted password (*insecure*, not recommended)
+* _dh-blowfish_: blowfish encrypted password (*insecure*, not recommended)
 // TRANSLATION MISSING
-* 'dh-aes': AES encrypted password (*insecure*, not recommended)
+* _dh-aes_: AES encrypted password (*insecure*, not recommended)
 
 [NOTE]
 La libreria "gcrypt" è richiesta per compilare WeeChat al fine di usare il
@@ -2329,15 +2329,15 @@ meccanismo "dh-blowfish" (consultare <<dependencies,dipendenze>>).
 Le opzioni nel server sono:
 
 // TRANSLATION MISSING
-* 'sasl_mechanism': meccanismo da usare (see above)
-* 'sasl_timeout': timeout (in secondi) per l'autenticazione
+* _sasl_mechanism_: meccanismo da usare (see above)
+* _sasl_timeout_: timeout (in secondi) per l'autenticazione
 // TRANSLATION MISSING
-* 'sasl_fail': action to perform if authentication fails
-* 'sasl_username': nome utente (nick)
-* 'sasl_password': password
+* _sasl_fail_: action to perform if authentication fails
+* _sasl_username_: nome utente (nick)
+* _sasl_password_: password
 // TRANSLATION MISSING
-* 'sasl_key': file with ECc private key (for mechanism
-  'ecdsa-nist256p-challenge')
+* _sasl_key_: file with ECc private key (for mechanism
+  _ecdsa-nist256p-challenge_)
 
 // TRANSLATION MISSING
 [[irc_sasl_ecdsa_nist256p_challenge]]
@@ -2555,7 +2555,7 @@ le risposte CTCP sono:
 ==== Buffer di destinazione per i messaggi IRC
 
 È possibile personalizzare il buffer di destinazione per i messaggi IRC
-(buffer usato per visualizzare messaggi) con l'opzione `irc.msgbuffer.*`.
+(buffer usato per visualizzare messaggi) con l'opzione `+irc.msgbuffer.*+`.
 
 Per alcuni messaggi IRC (elenco in basso), si possono usare i seguenti
 valori:
@@ -2566,7 +2566,7 @@ current::
 
 private::
     buffer privato per il nick, o il buffer corrente se non trovato
-    (in base all'opzione 'irc.look.msgbuffer_fallback')
+    (in base all'opzione _irc.look.msgbuffer_fallback_)
 
 server::
     buffer del server
@@ -2853,9 +2853,9 @@ Si avranno i seguenti file:
 Il plugin Relay viene utilizzato per inoltrare i dati via rete, facendo uso di
 protocolli differenti:
 
-* 'irc': proxy IRC: usato per condividere le connessioni ai server IRC con uno
+* _irc_: proxy IRC: usato per condividere le connessioni ai server IRC con uno
   o più client IRC
-* 'weechat': protocollo usato dalle interfacce remote per mostrare ed interagire
+* _weechat_: protocollo usato dalle interfacce remote per mostrare ed interagire
   con WeeChat (ad esempio QWeeChat)
 
 [[relay_options]]
@@ -2896,7 +2896,7 @@ It is highly recommended to set a password for relay, with command:
 /set relay.network.password "miapass"
 ----
 
-This password is used for 'irc' and 'weechat' protocols.
+This password is used for _irc_ and _weechat_ protocols.
 
 [[relay_ssl]]
 ==== SSL
@@ -2904,7 +2904,7 @@ This password is used for 'irc' and 'weechat' protocols.
 È possibile usare SSL creando un certificato e una chiave privata, e usando il
 prefisso "ssl." nel nome del protocollo.
 
-Il file predefinito per il certificato/chiave è '~/.weechat/ssl/relay.pem'
+Il file predefinito per il certificato/chiave è _~/.weechat/ssl/relay.pem_
 (opzione <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>).
 
 È possibile creare un certificato e una chiave privata con i seguenti comandi:
@@ -2996,7 +2996,7 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 ----
 
 The port (9000 in example) is the port defined in Relay plugin.
-The URI must always end with "/weechat" (for 'irc' and 'weechat' protocols).
+The URI must always end with "/weechat" (for _irc_ and _weechat_ protocols).
 
 [[scripts_plugins]]
 === Plugin per gli script
@@ -3012,7 +3012,7 @@ scripts of any language, and install/remove scripts of WeeChat scripts
 repository, which are visible at this URL: https://weechat.org/scripts
 
 Per maggiori informazioni su come scrivere gli script, o le API WeeChat
-per gli script, consultare la 'Guida allo Scripting di WeeChat'.
+per gli script, consultare la _Guida allo Scripting di WeeChat_.
 
 // TRANSLATION MISSING
 [[script_options]]
@@ -3085,8 +3085,8 @@ commands. A condition can be used to prevent the trigger to run in some
 circumstances.
 
 Using triggers require you to know how the signals, modifiers, ... are working.
-So you might consider reading the 'Hooks' chapter in the
-'WeeChat Plugin API Reference'.
+So you might consider reading the _Hooks_ chapter in the
+_WeeChat Plugin API Reference_.
 
 [[trigger_options]]
 ==== Options (trigger.conf)
@@ -3129,7 +3129,7 @@ A trigger has the following options (names are
 | hook | `signal`, `hsignal`, `modifier`, `print`, `command`, `command_run`,
   `timer`, `config`, `focus` |
   The hook used in trigger. For more information, see
-  'WeeChat Plugin API Reference', chapter 'Hooks'.
+  _WeeChat Plugin API Reference_, chapter _Hooks_.
 
 | arguments | string |
   The arguments for the hook, it depends on the hook type used.
@@ -3152,7 +3152,7 @@ A trigger has the following options (names are
   all triggers, the other values are rarely used).
 |===
 
-For example, the default 'beep' trigger has following options:
+For example, the default _beep_ trigger has following options:
 
 ----
 trigger.trigger.beep.enabled = on
@@ -3173,7 +3173,7 @@ order, if triggers are globally enabled and if the trigger itself is enabled:
 . check trigger conditions: if false, exit
 . replace text in trigger using regular expression(s)
 . execute command(s)
-. exit with a return code (except for hooks 'modifier' and 'focus').
+. exit with a return code (except for hooks _modifier_ and _focus_).
 
 [[trigger_hook_arguments]]
 ==== Hook arguments
@@ -3241,7 +3241,7 @@ The arguments depend on the hook used. They are separated by semicolons.
   1. option name (priority allowed) (required) +
   2. option name (priority allowed) +
   3. ... |
-  `weechat.look.*`
+  `+weechat.look.*+`
 
 | focus |
   1. area name (priority allowed) (required) +
@@ -3259,7 +3259,7 @@ They are evaluated, and data available in callback can be used
 (see <<trigger_callback_data,data in callbacks>> and command
 <<command_weechat_eval,/eval>>).
 
-Example: the default 'beep' trigger uses this condition to make a beep only on
+Example: the default _beep_ trigger uses this condition to make a beep only on
 highlight or private message:
 
 ----
@@ -3271,9 +3271,9 @@ ${tg_highlight} || ${tg_msg_pv}
 
 The regular expression is used to change variables in callback hashtable.
 
-The format is: "/regex/replace" or "/regex/replace/var" (where 'var' is a
+The format is: "/regex/replace" or "/regex/replace/var" (where _var_ is a
 variable of the hashtable). +
-If 'var' is not specified, the default variable is used, it depends on hook
+If _var_ is not specified, the default variable is used, it depends on hook
 type:
 
 [width="50%",cols="4,5m",options="header"]
@@ -3301,8 +3301,8 @@ Matching groups can be used in "replace":
   `${re:99}` are groups captured
 * `${re:+}`: the last match (with highest number)
 * `${hide:c,${re:N}}`: match "N" with all chars replaced by "c"
-  (example: `${hide:*,${re:2}}` is the group #2 with all chars replaced by
-  `*`).
+  (example: `+${hide:*,${re:2}}+` is the group #2 with all chars replaced by
+  `+*+`).
 
 Example: use bold for words between "*":
 
@@ -3310,9 +3310,9 @@ Example: use bold for words between "*":
 /\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
-Example: default trigger 'server_pass' uses this regular expression to hide
+Example: default trigger _server_pass_ uses this regular expression to hide
 password in commands `/server` and `/connect` (chars in passwords are replaced
-by `*`):
+by `+*+`):
 
 ----
 ==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
@@ -3331,7 +3331,7 @@ Many commands can be separated by semicolons.
 It is evaluated (see command <<command_weechat_eval,/eval>>) and text replaced
 with a regular expression can be used in the command.
 
-Example: default 'beep' trigger uses this command to make a beep (BEL):
+Example: default _beep_ trigger uses this command to make a beep (BEL):
 
 ----
 /print -beep
@@ -3343,9 +3343,9 @@ Example: default 'beep' trigger uses this command to make a beep (BEL):
 Data received in callbacks are stored in hashtables (pointers and strings) and
 can be used in following options:
 
-* 'conditions'
-* 'regex'
-* 'command'
+* _conditions_
+* _regex_
+* _command_
 
 The content of hashtables depend on the hook type.
 
@@ -3381,16 +3381,16 @@ is added in hashtable:
 | host                 | string | Hostname
 | command              | string | IRC command (example: "PRIVMSG", "NOTICE", ...)
 | channel              | string | IRC channel
-| arguments            | string | Arguments of command (includes value of 'channel')
+| arguments            | string | Arguments of command (includes value of _channel_)
 | text                 | string | Text (for example user message)
 // TRANSLATION MISSING
-| pos_command          | string | The index of 'command' in message ("-1" if 'command' was not found)
+| pos_command          | string | The index of _command_ in message ("-1" if _command_ was not found)
 // TRANSLATION MISSING
-| pos_arguments        | string | The index of 'arguments' in message ("-1" if 'arguments' was not found)
+| pos_arguments        | string | The index of _arguments_ in message ("-1" if _arguments_ was not found)
 // TRANSLATION MISSING
-| pos_channel          | string | The index of 'channel' in message ("-1" if 'channel' was not found)
+| pos_channel          | string | The index of _channel_ in message ("-1" if _channel_ was not found)
 // TRANSLATION MISSING
-| pos_text             | string | The index of 'text' in message ("-1" if 'text' was not found)
+| pos_text             | string | The index of _text_ in message ("-1" if _text_ was not found)
 |===
 
 When the data is a pointer, the variable `tg_signal_data` can be used like this
@@ -3428,7 +3428,7 @@ The "modifier" callback sets following variables in hashtable:
 | tg_string_nocolor | string | The string without color codes
 |===
 
-For the 'weechat_print' modifier, variables using message tags are added (see
+For the _weechat_print_ modifier, variables using message tags are added (see
 <<trigger_data_print,hook print>> below), and following variables:
 
 [width="100%",cols="3m,2,14",options="header"]
@@ -3464,7 +3464,7 @@ The "print" callback sets following variables in hashtable:
 | tg_message_nocolor | string  | Message without color codes
 |===
 
-Variables set using tags in message (they are set in modifier 'weechat_print'
+Variables set using tags in message (they are set in modifier _weechat_print_
 too):
 
 [width="100%",cols="3m,2,14",options="header"]
@@ -3476,8 +3476,8 @@ too):
 | tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc")
 // TRANSLATION MISSING
 | tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx")
-| tg_tag_notify      | string | Notify level ('none', 'message', 'private', 'highlight')
-| tg_notify          | string | Notify level, if different from 'none'
+| tg_tag_notify      | string | Notify level (_none_, _message_, _private_, _highlight_)
+| tg_notify          | string | Notify level, if different from _none_
 | tg_msg_pv          | string | "1" for a private message, otherwise "0"
 |===
 
@@ -3603,9 +3603,9 @@ hour:
 
 Arguments for the timer hook are:
 
-* '3600000': 3600 * 1000 milliseconds, the callback is called each hour
-* '0': alignment on second (not aligned here)
-* '0': max number of calls (0 = no end for the timer)
+* _3600000_: 3600 * 1000 milliseconds, the callback is called each hour
+* _0_: alignment on second (not aligned here)
+* _0_: max number of calls (0 = no end for the timer)
 
 The command `/mute /save` will silently save configuration files (nothing
 displayed on core buffer).
@@ -3653,13 +3653,13 @@ Before asking for support, be sure you've read documentation and FAQ provided
 with WeeChat.
 
 // TRANSLATION MISSING
-For support with IRC, on server 'chat.freenode.net':
+For support with IRC, on server _chat.freenode.net_:
 
 * official channels (with developers):
-** '#weechat' (English)
-** '#weechat-fr' (French)
+** _#weechat_ (English)
+** _#weechat-fr_ (French)
 * non-official channels:
-** '#weechat-de' (German)
+** _#weechat-de_ (German)
 
 // TRANSLATION MISSING
 For other ways of support, see: https://weechat.org/dev/support

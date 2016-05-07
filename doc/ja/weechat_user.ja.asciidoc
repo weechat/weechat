@@ -54,7 +54,7 @@ WeeChat をインストールするには、以下のものが必要です:
 
 * GNU/Linux が稼動しているシステム
   (ソースパッケージを使う場合は、コンパイラツールも必要)、又は互換 OS
-* 'root' 特権 (WeeChat をシステムディレクトリにインストールする場合)
+* _root_ 特権 (WeeChat をシステムディレクトリにインストールする場合)
 * 一部のライブラリ (<<dependencies,依存関係>>を参照)。
 
 [[install]]
@@ -135,7 +135,7 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 [[compile_with_cmake]]
 ==== cmake によるコンパイル
 
-* システムディレクトリにインストールする場合 ('root' 特権が必要です):
+* システムディレクトリにインストールする場合 (_root_ 特権が必要です):
 
 ----
 $ mkdir build
@@ -286,7 +286,7 @@ cmake 以外を用いた WeeChat のビルドは公式にサポートされま�
 を利用できない場合のみ autotools を使ってください。 +
 autotools を用いてビルドする場合、cmake よりも多くの依存パッケージとより長い時間が必要です。
 
-* システムディレクトリにインストールする場合 ('root' 特権が必要です):
+* システムディレクトリにインストールする場合 (_root_ 特権が必要です):
 
 ----
 $ ./autogen.sh
@@ -308,7 +308,7 @@ $ make
 $ make install
 ----
 
-'configure'
+_configure_
 スクリプトに対してオプションを指定することができます、オプションを表示するには以下のコマンドを使ってください:
 
 ----
@@ -337,7 +337,7 @@ WeeChat がクラッシュした場合、または WeeChat
 をクラッシュさせる操作を報告する場合、以下の手順に従ってください:
 
 * デバッグを有効化してコンパイル (またはデバック情報を含んだバイナリパッケージをインストール)
-* システムの 'core' ファイルを有効化
+* システムの _core_ ファイルを有効化
 * gdb のインストール
 
 [[debug_info]]
@@ -351,12 +351,12 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 
 autotools でコンパイルする場合は、デバックはデフォルトで有効化されています (`--with-debug=1`)。
 
-バイナリパッケージをインストールする場合は、'weechat-dbg' パッケージをインストールしてください。
+バイナリパッケージをインストールする場合は、_weechat-dbg_ パッケージをインストールしてください。
 
 [[core_files]]
 ==== Core ファイル
 
-'core' ファイルを有効化するには、<<option_weechat.startup.sys_rlimit,weechat.startup.sys_rlimit>>
+_core_ ファイルを有効化するには、<<option_weechat.startup.sys_rlimit,weechat.startup.sys_rlimit>>
 オプションを使ってください:
 
 ----
@@ -366,7 +366,7 @@ autotools でコンパイルする場合は、デバックはデフォルトで�
 WeeChat バージョン 0.3.8 以下または WeeChat の実行前に core
 ファイルを有効化したい場合には、`ulimit` コマンドを使ってください。
 
-Linux で 'bash' シェルを使っている場合、以下の内容を `~/.bashrc` に追加してください:
+Linux で _bash_ シェルを使っている場合、以下の内容を `~/.bashrc` に追加してください:
 
 ----
 ulimit -c unlimited
@@ -381,13 +381,13 @@ ulimit -c 200000
 [[gdb_backtrace]]
 ==== gdb でバックトレースを得る
 
-WeeChat がクラッシュすると、'core' または 'core.12345' ファイルが作られます
-('12345' はプロセス番号です)。
+WeeChat がクラッシュすると、_core_ または _core.12345_ ファイルが作られます
+(_12345_ はプロセス番号です)。
 このファイルは WeeChat を起動したディレクトリに作られます (これは
 WeeChat がインストールされているディレクトリでは*ありません*!)。
 
-例えば、'weechat' が '/usr/bin/' にインストールされ、'core' ファイルが
-'/home/xxx/' にある場合、以下のコマンドで gdb を起動してください:
+例えば、_weechat_ が _/usr/bin/_ にインストールされ、_core_ ファイルが
+_/home/xxx/_ にある場合、以下のコマンドで gdb を起動してください:
 
 ----
 gdb /usr/bin/weechat /home/xxx/core
@@ -433,7 +433,7 @@ Copying output to /tmp/crash.txt.
 ==== 起動中の WeeChat のデバッグ
 
 起動している WeeChat をデバッグするには (例えば WeeChat がフリーズしているような場合)、gdb
-の引数にプロセス番号を与えて起動します ('12345' は weechat プロセスの PID に変更してください):
+の引数にプロセス番号を与えて起動します (_12345_ は weechat プロセスの PID に変更してください):
 
 ----
 gdb /usr/bin/weechat 12345
@@ -463,7 +463,7 @@ $ weechat
 
 初めて WeeChat
 を起動する場合、デフォルトのオプションで設定ファイルが作成されます。このデフォルト設定ファイルは
-'~/.weechat/weechat.conf' です。
+_~/.weechat/weechat.conf_ です。
 
 WeeChat を設定するにはこのファイルを編集するか、WeeChat
 内で `/set` コマンドにパラメータを付けて設定します
@@ -508,12 +508,12 @@ WeeChat を起動した端末の例:
 ** プレフィックス ("|" の前)
 ** メッセージ ("|" の後)
 * チャットエリアの周りにあるバー、デフォルトバーは:
-** タイトル ('title') バー、チャットエリアの上
-** 状態 ('status') バー、チャットエリアの下
-** 入力 ('input') バー、状態バーの下
-** ニックネームリスト ('nicklist') バー、右端
+** タイトル (_title_) バー、チャットエリアの上
+** 状態 (_status_) バー、チャットエリアの下
+** 入力 (_input_) バー、状態バーの下
+** ニックネームリスト (_nicklist_) バー、右端
 
-状態 ('status') バーは以下の初期要素を持っています:
+状態 (_status_) バーは以下の初期要素を持っています:
 
 [width="100%",cols="^3,^4,10",options="header"]
 |===
@@ -526,14 +526,14 @@ WeeChat を起動した端末の例:
 | buffer_modes          | `+n`                  | IRC チャンネルモード
 | buffer_nicklist_count | `{4}`                 | ニックネームリスト中のニックネームの数
 | buffer_zoom           | !                     | `!` はマージされたバッファがズームされている状態 (ズームされたものだけを表示する状態) を示します、空の場合はすべてのマージされたバッファが表示されていることを示します
-| buffer_filter         | `*`                   | フィルタ表示: `*` の場合いくつかの行がフィルタされ (隠され) ます、空の場合すべての行が表示されます。
+| buffer_filter         | `+*+`                 | フィルタ表示: `+*+` の場合いくつかの行がフィルタされ (隠され) ます、空の場合すべての行が表示されます。
 | scroll                | `-MORE(50)-`          | スクロール表示、最後の行が表示されてから追加された行数を含む。
 | lag                   | `[Lag: 2.5]`          | 遅延秒表示 (遅延が短い場合は非表示)
-| hotlist               | `[H: 4:#abc(2,5), 6]` | 変化のあったバッファのリスト (未読メッセージ) (例では、'#abc' に 2 個のハイライトと 5 個の未読メッセージ、6 番目のバッファに 1 個の未読メッセージがあることを意味します。)
+| hotlist               | `[H: 4:#abc(2,5), 6]` | 変化のあったバッファのリスト (未読メッセージ) (例では、_#abc_ に 2 個のハイライトと 5 個の未読メッセージ、6 番目のバッファに 1 個の未読メッセージがあることを意味します。)
 | completion            | `abc(2) def(5)`       | 補完候補の単語リスト、各単語に対して適応される補完候補の数を含む。
 |===
 
-入力 ('input') バーは以下の初期要素を持っています:
+入力 (_input_) バーは以下の初期要素を持っています:
 
 [width="100%",cols="^3,^4,10",options="header"]
 |===
@@ -563,7 +563,7 @@ WeeChat を起動した端末の例:
 [[buffers_and_windows]]
 === バッファとウィンドウ
 
-'バッファ' は番号、名前、表示された行
+_バッファ_ は番号、名前、表示された行
 (とその他の情報) で構成されています。
 
 バッファの例:
@@ -573,7 +573,7 @@ WeeChat を起動した端末の例:
 * irc チャンネル
 * irc プライベート
 
-'window'
+_window_
 はバッファを表示する画面エリアのことです。画面を複数のウィンドウに分割することができます。
 
 それぞれのウィンドウは 1 つのバッファを表示します。バッファは隠したり
@@ -674,7 +674,7 @@ WeeChat を起動した端末の例:
 [[bars]]
 === バー
 
-'バー' とは任意のテキストを含めることができるチャットエリア以外の場所です。
+_バー_ とは任意のテキストを含めることができるチャットエリア以外の場所です。
 
 バーオプションは `weechat.bar.name.option` オプションで設定します。ここで
 `name` はバーの名前、`option` はこのバーのオプション名です。
@@ -687,11 +687,11 @@ WeeChat を起動した端末の例:
 
 | type | `root` 、`window` |
   `root` 型のバーは画面に (全てのウィンドウの外に) 1 回だけ表示されます。デフォルトでは
-  root バーはありませんが、'buffers.pl' スクリプトが作成する 'buffers' バー
+  root バーはありませんが、_buffers.pl_ スクリプトが作成する _buffers_ バー
   (バッファのリストを含むサイドバー) が例の 1 つです。 +
   `window` 型のバーは各ウィンドウに対して表示されます。例えば (`/window splith`
   や `/window splitv` で) 画面を 1 回分割する場合、それぞれのウィンドウにバーが
-  1 つ表示されます。4 つのデフォルトバー ('title' 、'status' 、'input' 、'nicklist')
+  1 つ表示されます。4 つのデフォルトバー (_title_ 、_status_ 、_input_ 、_nicklist_)
   は `window` 型のバーです。
 
 | position | `top` 、`bottom` 、`left` 、`right` |
@@ -702,7 +702,7 @@ WeeChat を起動した端末の例:
   型と位置が同じ複数のバーを画面に表示する順番に利用される。 +
   バーは画面の端から中心に向かって表示される。高い優先度を持つバーが先に
   (画面の端に近い側に) 表示される。 +
-  例: 優先度 1000 の 'input' バーは優先度 500 の 'status'
+  例: 優先度 1000 の _input_ バーは優先度 500 の _status_
   バーよりも先に表示される。
 
 | size | 0 以上の整数 |
@@ -733,7 +733,7 @@ WeeChat を起動した端末の例:
   がバー同士またはバーとチャットエリアの間に表示されます。
 
 | items | 文字列 |
-  'items' のリスト (詳細は<<bar_items,バー要素>>を参照)。
+  _items_ のリスト (詳細は<<bar_items,バー要素>>を参照)。
 
 | filling_left_right | `horizontal` 、`vertical` 、`columns_horizontal` 、`columns_vertical` |
   位置が `left` または `right` のバーに対するフィリングタイプ
@@ -751,13 +751,13 @@ WeeChat を起動した端末の例:
 [[bar_items]]
 ==== バー要素
 
-'items' オプションはバー要素をコンマ (画面上の要素同士に間隔を空ける)
+_items_ オプションはバー要素をコンマ (画面上の要素同士に間隔を空ける)
 または "+" (間隔を空けない) で区切った文字列です。
 
 バー要素のリストは `/bar listitems` コマンドで表示されます。
 
 要素名の前または後に文字を表示させることができます (英数字以外の文字、"-"
-または "_")。この文字はバー ('color_delim' オプション)
+または "_")。この文字はバー (_color_delim_ オプション)
 で定義された区切り文字の色をつけて要素の前または後に表示されます。
 
 バー要素を含むバーの例 "[time],buffer_number+:+buffer_plugin+.+buffer_name":
@@ -776,7 +776,7 @@ WeeChat を起動した端末の例:
 特定のバッファの要素を表示させる際に便利です。
 
 例: bitlbee のニックネームリストをルートバーに表示させる
-(バーが 'bitlist' で bitlbee サーバが 'bitlbee' の場合):
+(バーが _bitlist_ で bitlbee サーバが _bitlbee_ の場合):
 
 ----
 /set weechat.bar.bitlist.items "@irc.bitlbee.&bitlbee:buffer_nicklist"
@@ -797,10 +797,10 @@ WeeChat を起動した端末の例:
 * `columns_vertical`: テキストを左寄せして、列形式で要素を表示。最初の要素は左上、2
   番目は同じ列の 1 行下側。
 
-デフォルトバーである 'title' 、'status' 、'input' は
-'horizontal' フィリング、'nicklist' は 'vertical' フィリング。
+デフォルトバーである _title_ 、_status_ 、_input_ は
+_horizontal_ フィリング、_nicklist_ は _vertical_ フィリング。
 
-'nicklist' バーに対するフィリングの例:
+_nicklist_ バーに対するフィリングの例:
 
 ....
 ┌───────────────────────────────────────────────────────────────────────┐
@@ -863,14 +863,14 @@ WeeChat を起動した端末の例:
 [[bar_conditions]]
 ==== バー状態
 
-'conditions'
+_conditions_
 オプションはバーを表示するか否かを評価する文字列です。
 
 文字列は以下のいずれか:
 
-* 'active': 非アクティブ状態のウィンドウ
-* 'inactive': 非アクティブ状態のウィンドウ
-* 'nicklist': ニックネームリストが含まれるバッファのウィンドウ
+* _active_: 非アクティブ状態のウィンドウ
+* _inactive_: 非アクティブ状態のウィンドウ
+* _nicklist_: ニックネームリストが含まれるバッファのウィンドウ
 * 式: ブール値として評価
   (<<command_weechat_eval,/eval>> コマンドを参照)
 
@@ -892,7 +892,7 @@ WeeChat を起動した端末の例:
 /set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
 ----
 
-上と同じだが、'&bitlbee' バッファでは常にニックネームリストを表示
+上と同じだが、_&bitlbee_ バッファでは常にニックネームリストを表示
 (ウィンドウ幅が狭くても):
 
 ----
@@ -977,7 +977,7 @@ WeeChat が以下のような表示状態の場合:
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
-このため、端末で問題なく 'joe' さんからの URL をクリックできます
+このため、端末で問題なく _joe_ さんからの URL をクリックできます
 (もちろん、使用中の端末で URL をクリックできるように設定されていなければいけませんが)。
 
 [[notify_levels]]
@@ -985,24 +985,24 @@ WeeChat が以下のような表示状態の場合:
 
 バッファに表示された各メッセージには 4 つのレベルが設定されています。レベルの低いものから順に:
 
-* 'low': 重要性の低いメッセージ (例えば irc の参加/退出/終了メッセージ)
-* 'message': ユーザからのメッセージ
-* 'private': プライベートバッファのメッセージ
-* 'highlight': ハイライトされたメッセージ
+* _low_: 重要性の低いメッセージ (例えば irc の参加/退出/終了メッセージ)
+* _message_: ユーザからのメッセージ
+* _private_: プライベートバッファのメッセージ
+* _highlight_: ハイライトされたメッセージ
 
 それぞれのバッファには通知レベルが設定されており、通知レベルに対応するメッセージの数がホットリストに表示されます。
 
 デフォルトの通知レベルは
 <<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>
-オプションで指定し、デフォルトは 'all' です。
+オプションで指定し、デフォルトは _all_ です。
 
 [width="50%",cols="3m,10",options="header"]
 |===
 | 通知レベル   | ホットリストに追加されるメッセージのレベル
 | none         | (無効)
-| highlight    | 'highlight' + 'private'
-| message      | 'highlight' + 'private' + 'message'
-| all          | 'highlight' + 'private' + 'message' + 'low'
+| highlight    | _highlight_ + _private_
+| message      | _highlight_ + _private_ + _message_
+| all          | _highlight_ + _private_ + _message_ + _low_
 |===
 
 通知レベルはバッファグループに対して設定することも可能で、例えば
@@ -1012,7 +1012,7 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 /set weechat.notify.irc.freenode message
 ----
 
-"#weechat" チャンネルだけに対して、通知レベルを 'highlight' に設定する場合:
+"#weechat" チャンネルだけに対して、通知レベルを _highlight_ に設定する場合:
 
 ----
 /set weechat.notify.irc.freenode.#weechat highlight
@@ -1111,8 +1111,8 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
   kbd:[F6]        | 後のバッファに移動 | `/buffer +1`
 | kbd:[F7]        | ウィンドウを前に移動 | `/window -1`
 | kbd:[F8]        | ウィンドウを後に移動 | `/window +1`
-| kbd:[F9]        | バッファタイトルを左方向にスクロール | `/bar scroll title * -30%`
-| kbd:[F10]       | バッファタイトルを右方向にスクロール | `/bar scroll title * +30%`
+| kbd:[F9]        | バッファタイトルを左方向にスクロール | `+/bar scroll title * -30%+`
+| kbd:[F10]       | バッファタイトルを右方向にスクロール | `+/bar scroll title * +30%+`
 | kbd:[F11]       | ニックネームリストを上方向にスクロール | `/bar scroll nicklist * -100%`
 | kbd:[F12]       | ニックネームリストを下方向にスクロール | `/bar scroll nicklist * +100%`
 | kbd:[Alt+F11]   | ニックネームリストを一番上にスクロール | `/bar scroll nicklist * b`
@@ -1279,7 +1279,7 @@ WeeChat でマウスを有効化した場合、すべてのマウスイベント
 (一部の端末、例えば iTerm などでは kbd:[Shift] の代わりに kbd:[Alt] を使ってください)。
 
 [NOTE]
-マウスに関するトラブルがあれば 'WeeChat FAQ' を参照してください。
+マウスに関するトラブルがあれば _WeeChat FAQ_ を参照してください。
 
 [[mouse_bind_events]]
 ==== コマンドに対してマウスイベントを割り当てる
@@ -1377,14 +1377,14 @@ WeeChat コマンドライン (ウィンドウの一番下にあります)
 /set
 ----
 
-"/" が最初に無い場合、そのテキストはバッファに送信されます。例えば、'hello'
+"/" が最初に無い場合、そのテキストはバッファに送信されます。例えば、_hello_
 というテキストをバッファに送信するには:
 
 ----
 hello
 ----
 
-"/" 文字から始まるテキストを送信したい場合、2 重に "/" をつけます。例えば、'/set'
+"/" 文字から始まるテキストを送信したい場合、2 重に "/" をつけます。例えば、`/set`
 というテキストを現在のバッファに送信するには:
 
 ----
@@ -1442,7 +1442,7 @@ irc プラグインでは、<<option_irc.color.mirc_remap,irc.color.mirc_remap>>
 WeeChat ではバーやチャットエリアにおけるテキスト表示に 256 個の色ペアを利用できます
 (この機能を利用するには WeeChat が実行されている端末が 256 色表示に対応している必要があります)。
 
-'TERM' 環境変数の値によって、WeeChat
+_TERM_ 環境変数の値によって、WeeChat
 で利用できる色と色ペアに以下の制限があります:
 
 [width="50%",cols="8,>2,>2",options="header"]
@@ -1459,23 +1459,23 @@ WeeChat ではバーやチャットエリアにおけるテキスト表示に 25
 `weechat --colors` を実行するか、`/color` コマンドを WeeChat
 の中で実行することで、色表示の制限を確認できます。
 
-256 色を利用したい場合に推奨される 'TERM' 環境変数の値は:
+256 色を利用したい場合に推奨される _TERM_ 環境変数の値は:
 
-* screen 内の場合: 'screen-256color'
-* tmux 内の場合: 'screen-256color' 、'tmux-256color'
-* screen および tmux の外の場合: 'xterm-256color' 、'rxvt-256color' 、'putty-256color' 、...
+* screen 内の場合: _screen-256color_
+* tmux 内の場合: _screen-256color_ 、_tmux-256color_
+* screen および tmux の外の場合: _xterm-256color_ 、_rxvt-256color_ 、_putty-256color_ 、...
 
 [NOTE]
-'TERM' 環境変数の値に上の値を設定するには、"ncurses-term"
+_TERM_ 環境変数の値に上の値を設定するには、"ncurses-term"
 パッケージをインストールする必要があるかもしれません。
 
-screen を使っている場合、'~/.screenrc' に以下の内容を追加してください:
+screen を使っている場合、_~/.screenrc_ に以下の内容を追加してください:
 
 ----
 term screen-256color
 ----
 
-'TERM' 変数が間違った値に設定された状態で WeeChat が起動完了している場合は、以下の
+_TERM_ 変数が間違った値に設定された状態で WeeChat が起動完了している場合は、以下の
 2 つのコマンドを使って変数の値を変更してください:
 
 ----
@@ -1553,11 +1553,11 @@ WeeChat は画面に色が表示された時点で色ペアを動的に割り当
 色に対していくつかの属性を付加することができます。1
 つ以上の属性を色名又は色番号の前に付加できます:
 
-* `*` : テキストを太字に
-* `!` : テキストを反転
-* `/` : テキストをイタリック体に
-* `_` : テキストに下線を引く
-* `|` : 属性を保持:
+* `+*+` : テキストを太字に
+* `+!+` : テキストを反転
+* `+/+` : テキストをイタリック体に
+* `+_+` : テキストに下線を引く
+* `+|+` : 属性を保持:
   色を変えた際に太字/反転/下線属性をリセットしない
 
 例えば、自分自身のニックネームの表示色を白にして、下線を引きたい場合:
@@ -1587,13 +1587,13 @@ WeeChat は画面に色が表示された時点で色ペアを動的に割り当
 [[secured_data_storage]]
 ==== データの保存
 
-WeeChat はパスワード及び 'sec.conf'
+WeeChat はパスワード及び _sec.conf_
 ファイルに保存されている個人データを暗号化することができます。
 
 この設定ファイルは他のどのファイルよりも先に読まれ、ファイルに保存されている値を
 WeeChat 及びプラグイン/スクリプトのオプションで使うことができます。
 
-'sec.conf'
+_sec.conf_
 に含まれるデータを暗号化するパスフレーズを設定することが可能です。これは必須ではありませんが、パスフレーズを設定することを強く勧めます。パスフレーズを設定しない場合、データは平文でファイルに保存されます。
 
 ----
@@ -1616,9 +1616,9 @@ WeeChat 及びプラグイン/スクリプトのオプションで使うこと�
 . ハッシュとデータを暗号化 (出力: salt + 暗号化済みのハッシュ/データ)。
 
 [NOTE]
-ブロック暗号モードは 'CFB' です。
+ブロック暗号モードは _CFB_ です。
 
-結果は 16 進数文字列として 'sec.conf' ファイルに保存されます、例:
+結果は 16 進数文字列として _sec.conf_ ファイルに保存されます、例:
 
 ----
 [data]
@@ -1638,7 +1638,7 @@ freenode = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA5953
 [[secured_data_manage]]
 ==== 暗号化データの管理
 
-暗号化データを追加するには、`/secure set` を使ってください、'freenode'
+暗号化データを追加するには、`/secure set` を使ってください、_freenode_
 IRC サーバのパスワードを設定する例:
 
 ----
@@ -1657,7 +1657,7 @@ IRC サーバのパスワードを設定する例:
 (`/secure set xxx ...` のように使います)。 +
 利用できるオプションの完全なリストはを見るには、`/help secure` を使ってください。
 
-例えば上の 'freenode' パスワードを
+例えば上の _freenode_ パスワードを
 <<irc_sasl_authentication,SASL 認証>>で使うには:
 
 ----
@@ -1733,9 +1733,9 @@ include::autogen/user/weechat_commands.asciidoc[]
 見つかったプラグインは WeeChat の起動時に自動的に読み込まれます。WeeChat
 の起動時にプラグインを読み込むか否かは選択可能です。
 
-'プラグイン' と 'スクリプト' の違いを明らかにすることは重要です:
-'プラグイン' とは `/plugin` コマンドで読み込まれるコンパイル済みバイナリファイルです。これに対して、
-'スクリプト' とは `/python` 等のコマンドで 'python'
+_プラグイン_ と _スクリプト_ の違いを明らかにすることは重要です:
+_プラグイン_ とは `/plugin` コマンドで読み込まれるコンパイル済みバイナリファイルです。これに対して、
+_スクリプト_ とは `/python` 等のコマンドで _python_
 等のプラグインとともに読み込まれるテキストファイルです。
 
 `/plugin`
@@ -1774,8 +1774,8 @@ include::autogen/user/weechat_commands.asciidoc[]
 | xfer       | ファイル転送とダイレクトチャット
 |===
 
-API を使ったプラグインやスクリプトの開発についてより詳しく学ぶには、'WeeChat
-プラグイン API リファレンス' 又は 'WeeChat スクリプト製作ガイド' を参照してください。
+API を使ったプラグインやスクリプトの開発についてより詳しく学ぶには、_WeeChat
+プラグイン API リファレンス_ 又は _WeeChat スクリプト製作ガイド_ を参照してください。
 
 [[alias_plugin]]
 === Alias プラグイン
@@ -1841,9 +1841,9 @@ $ aspell config
 ==== 修正候補
 
 "aspell_suggest" バー要素内に修正候補が表示されます。修正候補の数は
-'aspell.check.suggestions' オプションで設定します。
+_aspell.check.suggestions_ オプションで設定します。
 
-修正候補を利用するには、'aspell.check.suggestions' オプションをゼロ以上の整数に設定し、'status'
+修正候補を利用するには、_aspell.check.suggestions_ オプションをゼロ以上の整数に設定し、_status_
 バーなどに "aspell_suggest" バー要素を追加してください。
 
 英語辞書 (`en`) を用いた修正候補の例:
@@ -1936,7 +1936,7 @@ include::autogen/user/charset_commands.asciidoc[]
 
 グローバルデコード文字コードが設定されていない場合 (例えば Charset
 プラグインを始めてロードした場合)、これは自動的に端末の文字コードか
-(UTF-8 でなければ)、デフォルトの 'ISO-8859-1' に設定されます。
+(UTF-8 でなければ)、デフォルトの _ISO-8859-1_ に設定されます。
 
 デフォルトのエンコード文字コードはありません。従って、内部文字コード
 (UTF-8) が使われます。
@@ -1975,7 +1975,7 @@ IRC サーバの全てのチャンネルおよびプライベートバッファ�
 [[charset_troubleshooting]]
 ==== トラブルシューティング
 
-文字コードに関する問題があれば、'WeeChat FAQ' を参照してください。
+文字コードに関する問題があれば、_WeeChat FAQ_ を参照してください。
 
 [[exec_plugin]]
 === exec プラグイン
@@ -2010,8 +2010,8 @@ include::autogen/user/exec_commands.asciidoc[]
 外部から WeeChat を操作するには、FIFO パイプにコマンドやテキストを書き込んでください ("plugins.var.fifo.fifo"
 オプションが有効化されている必要がありますが、デフォルトで有効化されているはずです)。
 
-FIFO パイプは '~/.weechat/' の下にあり、'weechat_fifo_xxxx'
-のような名前になっています ('xxxx' は実行中の WeeChat のプロセス ID (PID) です)。
+FIFO パイプは _~/.weechat/_ の下にあり、_weechat_fifo_xxxx_
+のような名前になっています (_xxxx_ は実行中の WeeChat のプロセス ID (PID) です)。
 
 FIFO パイプに書き込むコマンド/テキストの文法は以下の例の一つです:
 
@@ -2089,8 +2089,8 @@ IRC プラグインは IRC プロトコルに従って他の人と会話を行�
 irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 ----
 
-'nono' というニックネームを使って 'chat.freenode.net' ホストのデフォルトポート (6667)
-で稼働中の IRC サーバ上の '#weechat' と '#toto' チャンネルに参加する例:
+_nono_ というニックネームを使って _chat.freenode.net_ ホストのデフォルトポート (6667)
+で稼働中の IRC サーバ上の _#weechat_ と _#toto_ チャンネルに参加する例:
 
 ----
 $ weechat irc://nono@chat.freenode.net/#weechat,#toto
@@ -2195,11 +2195,11 @@ $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick
 
 WeeChat は SASL 認証をサポートします、以下の認証メカニズムを利用できます:
 
-* 'plain': 平文パスワード (デフォルト)
-* 'ecdsa-nist256p-challenge': 公開鍵/秘密鍵を使うチャレンジ認証
-* 'external': クライアント側 SSL 証明書
-* 'dh-blowfish': blowfish 暗号パスワード (*危険* 、非推奨)
-* 'dh-aes': AES 暗号パスワード (*危険* 、非推奨)
+* _plain_: 平文パスワード (デフォルト)
+* _ecdsa-nist256p-challenge_: 公開鍵/秘密鍵を使うチャレンジ認証
+* _external_: クライアント側 SSL 証明書
+* _dh-blowfish_: blowfish 暗号パスワード (*危険* 、非推奨)
+* _dh-aes_: AES 暗号パスワード (*危険* 、非推奨)
 
 [NOTE]
 "dh-blowfish" メカニズムを利用する場合、"gcrypt" ライブラリが
@@ -2207,13 +2207,13 @@ WeeChat のコンパイル時に必要です (<<dependencies,依存関係>>を�
 
 サーバオプション:
 
-* 'sasl_mechanism': 利用する認証メカニズム (上記参照)
-* 'sasl_timeout': 認証時のタイムアウト (秒単位)
-* 'sasl_fail': 認証に失敗した場合の挙動
-* 'sasl_username': ユーザ名 (ニックネーム)
-* 'sasl_password': パスワード
-* 'sasl_key': ECC 秘密鍵を含むファイル
-  ('ecdsa-nist256p-challenge' 用)
+* _sasl_mechanism_: 利用する認証メカニズム (上記参照)
+* _sasl_timeout_: 認証時のタイムアウト (秒単位)
+* _sasl_fail_: 認証に失敗した場合の挙動
+* _sasl_username_: ユーザ名 (ニックネーム)
+* _sasl_password_: パスワード
+* _sasl_key_: ECC 秘密鍵を含むファイル
+  (_ecdsa-nist256p-challenge_ 用)
 
 [[irc_sasl_ecdsa_nist256p_challenge]]
 ===== SASL ECDSA-NIST256P-CHALLENGE 認証
@@ -2418,7 +2418,7 @@ CTCP オプションが設定されていない (デフォルトの) 場合、CT
 [[irc_target_buffer]]
 ==== IRC メッセージのターゲットバッファ
 
-`irc.msgbuffer.*` オプションを使えば、IRC メッセージに対するターゲットバッファ
+`+irc.msgbuffer.*+` オプションを使えば、IRC メッセージに対するターゲットバッファ
 (メッセージを表示するバッファ) をカスタマイズすることができます。
 
 一部の IRC メッセージ (以下のリストを参照) に対して、以下の値を設定できます:
@@ -2428,7 +2428,7 @@ current::
 
 private::
     ニックネームに対するプライベートバッファ、見つからない場合は現在のバッファまたはサーババッファ
-    ('irc.look.msgbuffer_fallback' オプションに依存)
+    (_irc.look.msgbuffer_fallback_ オプションに依存)
 
 server::
     サーババッファ
@@ -2701,9 +2701,9 @@ IRC サーバ名を使ったディレクトリに、チャンネル名を使っ�
 
 Relay プラグインはネットワークを介して異なるプロトコルを用いてデータを中継するために利用します:
 
-* 'irc': IRC プロキシ: IRC サーバに対する接続を、単一または複数の IRC
+* _irc_: IRC プロキシ: IRC サーバに対する接続を、単一または複数の IRC
   クライアントで共有するために用います。
-* 'weechat': WeeChat の表示にリモートインターフェイス
+* _weechat_: WeeChat の表示にリモートインターフェイス
   (例えば QWeeChat) を使う場合に利用されるプロトコル
 
 [[relay_options]]
@@ -2740,7 +2740,7 @@ include::autogen/user/relay_commands.asciidoc[]
 /set relay.network.password "mypass"
 ----
 
-このパスワードは 'irc' と 'weechat' プロトコルで利用されます。
+このパスワードは _irc_ と _weechat_ プロトコルで利用されます。
 
 [[relay_ssl]]
 ==== SSL
@@ -2748,7 +2748,7 @@ include::autogen/user/relay_commands.asciidoc[]
 証明書と秘密鍵を作り、プロトコル名の最初に "ssl." を付けることで
 SSL 経由でリレーを利用することができます。
 
-証明書/秘密鍵ファイルへのデフォルトパスは '~/.weechat/ssl/relay.pem' です
+証明書/秘密鍵ファイルへのデフォルトパスは _~/.weechat/ssl/relay.pem_ です
 (option <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>)。
 
 以下のコマンドを使って証明書と秘密鍵ファイルを作成します:
@@ -2835,7 +2835,7 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 ----
 
 ポート番号 (例では 9000 番) は Relay プラグインで定義したものです。URI
-の最後には必ず "/weechat" をつけます ('irc' と 'weechat' プロトコルの場合)。
+の最後には必ず "/weechat" をつけます (_irc_ と _weechat_ プロトコルの場合)。
 
 [[scripts_plugins]]
 === スクリプトプラグイン
@@ -2849,7 +2849,7 @@ Python、Perl、Ruby、Lua、Tcl、Guile
 のスクリプトをインストール/削除したりする事が可能です。
 
 スクリプトの書き方やスクリプト用の WeeChat API
-についての詳しい情報は、'WeeChat スクリプト製作ガイド' を参照してください。
+についての詳しい情報は、_WeeChat スクリプト製作ガイド_ を参照してください。
 
 [[script_options]]
 ==== スクリプトオプション (script.conf)
@@ -2917,8 +2917,8 @@ include::autogen/user/javascript_commands.asciidoc[]
 をフックして、データの内容を書き換えたり、複数のコマンドを実行することができます。条件をつけることで一部の場合だけトリガを実行するように設定することもできます。
 
 トリガを使うにはシグナル、修飾子、...
-がどのように動いているかを知らなければいけません。これを知るには 'WeeChat
-プラグイン API リファレンス' の 'フック' の章を読むことをお勧めします。
+がどのように動いているかを知らなければいけません。これを知るには _WeeChat
+プラグイン API リファレンス_ の _フック_ の章を読むことをお勧めします。
 
 [[trigger_options]]
 ==== オプション (trigger.conf)
@@ -2960,8 +2960,8 @@ include::autogen/user/trigger_commands.asciidoc[]
 
 | hook | `signal` 、`hsignal` 、`modifier` 、`print` 、`command` 、`command_run` 、`timer` 、`config` 、`focus`
   |
-  トリガの中で使われるフック。より詳しい情報は、'WeeChat
-  プラグイン API リファレンス' の 'フック' の章を参照してください。
+  トリガの中で使われるフック。より詳しい情報は、_WeeChat
+  プラグイン API リファレンス_ の _フック_ の章を参照してください。
 
 | arguments | 文字列 |
   フックに対する引数、指定したフックの型に依存します。
@@ -2984,7 +2984,7 @@ include::autogen/user/trigger_commands.asciidoc[]
   `ok` 、ほとんどすべてのトリガで戻り値はこれを使うべきで、ほかの値を使うことは極めてまれです)。
 |===
 
-例えば、デフォルトの 'beep' トリガは以下のオプションをとります:
+例えば、デフォルトの _beep_ トリガは以下のオプションをとります:
 
 ----
 trigger.trigger.beep.enabled = on
@@ -3004,7 +3004,7 @@ trigger.trigger.beep.return_code = ok
 . トリガ条件の確認: 偽の場合、終了
 . 正規表現を使ってトリガ内でテキスト置換
 . コマンドを実行
-. リターンコードを付けて終了 ('modifier' と 'focus' フックの場合を除く)。
+. リターンコードを付けて終了 (_modifier_ と _focus_ フックの場合を除く)。
 
 [[trigger_hook_arguments]]
 ==== フック引数
@@ -3072,7 +3072,7 @@ trigger.trigger.beep.return_code = ok
   1. オプション名 (優先度の指定も可) (必須) +
   2. オプション名 (優先度の指定も可) +
   3. ... |
-  `weechat.look.*`
+  `+weechat.look.*+`
 
 | focus |
   1. エリア名 (優先度の指定も可) (必須) +
@@ -3090,7 +3090,7 @@ trigger.trigger.beep.return_code = ok
 (<<trigger_callback_data,コールバック内のデータ>>とコマンド
 <<command_weechat_eval,/eval>> を参照)。
 
-例: デフォルトの 'beep'
+例: デフォルトの _beep_
 トリガは以下の条件を使い、ハイライトまたはプライベートメッセージの場合だけビープを鳴らすようにしています:
 
 ----
@@ -3103,8 +3103,8 @@ ${tg_highlight} || ${tg_msg_pv}
 正規表現はコールバックハッシュテーブル内の変数を変更するために使われます。
 
 書式: "/regex/replace" または "/regex/replace/var" (ここで
-'var' はハッシュテーブルの変数)。 +
-'var'
+_var_ はハッシュテーブルの変数)。 +
+_var_
 が指定されなかった場合、デフォルト変数を使います、これはフックの種類に依存します:
 
 [width="50%",cols="4,5m",options="header"]
@@ -3132,7 +3132,7 @@ ${tg_highlight} || ${tg_msg_pv}
   `${re:99}` はグループ化されたマッチ部分
 * `${re:+}`: 最後のマッチ部分 (最大のグループ番号を持つ)
 * `${hide:c,${re:N}}`: マッチグループ "N" のすべての文字を "c" で置換した文字列
-  (例: `${hide:*,${re:2}}` はグループ #2 のすべての文字を `*`
+  (例: `+${hide:*,${re:2}}+` はグループ #2 のすべての文字を `*`
   で置換した文字列)。
 
 例: "*" で囲まれた文字を太字にする:
@@ -3141,7 +3141,7 @@ ${tg_highlight} || ${tg_msg_pv}
 /\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
-例: デフォルトトリガ 'server_pass' はこの正規表現を使って、`/server`
+例: デフォルトトリガ _server_pass_ はこの正規表現を使って、`/server`
 と `/connect` コマンドのパスワードを隠しています (パスワード部分の文字を
 `*` で置換しています):
 
@@ -3161,7 +3161,7 @@ ${tg_highlight} || ${tg_msg_pv}
 コマンドは評価され (コマンド <<command_weechat_eval,/eval>> を参照)
 コマンド内では正規表現を使って置換したテキストを使うことができます。
 
-例: デフォルトの 'beep' トリガは以下のコマンドを実行してビープ (BEL) を鳴らしています:
+例: デフォルトの _beep_ トリガは以下のコマンドを実行してビープ (BEL) を鳴らしています:
 
 ----
 /print -beep
@@ -3173,9 +3173,9 @@ ${tg_highlight} || ${tg_msg_pv}
 コールバック内で受け取ったデータはハッシュテーブル (ポインタと文字列)
 の中に保存され、以下のオプションで使うことができます:
 
-* 'conditions'
-* 'regex'
-* 'command'
+* _conditions_
+* _regex_
+* _command_
 
 ハッシュテーブルの内容はフックの種類に依存します。
 
@@ -3210,12 +3210,12 @@ ${tg_highlight} || ${tg_msg_pv}
 | host                 | string | ホスト名
 | command              | string | IRC コマンド (例: "PRIVMSG"、"NOTICE"、...)
 | channel              | string | IRC チャンネル
-| arguments            | string | コマンドの引数 ('channel' の値を含みます)
+| arguments            | string | コマンドの引数 (_channel_ の値を含みます)
 | text                 | string | テキスト (例えばユーザメッセージ)
-| pos_command          | string | メッセージ内における 'command' のインデックス ('command' が見つからない場合 "-1")
-| pos_arguments        | string | メッセージ内における 'arguments' のインデックス ('arguments' が見つからない場合 "-1")
-| pos_channel          | string | メッセージ内における 'channel' のインデックス ('channel' が見つからない場合 "-1")
-| pos_text             | string | メッセージ内における 'text' のインデックス ('text' が見つからない場合 "-1")
+| pos_command          | string | メッセージ内における _command_ のインデックス (_command_ が見つからない場合 "-1")
+| pos_arguments        | string | メッセージ内における _arguments_ のインデックス (_arguments_ が見つからない場合 "-1")
+| pos_channel          | string | メッセージ内における _channel_ のインデックス (_channel_ が見つからない場合 "-1")
+| pos_text             | string | メッセージ内における _text_ のインデックス (_text_ が見つからない場合 "-1")
 |===
 
 データがポインタの場合、hdata の属性を読むために変数 `tg_signal_data`
@@ -3253,7 +3253,7 @@ string/string) が含まれています。
 | tg_string_nocolor | string | 色コードを含まない文字列
 |===
 
-'weechat_print' 修飾子では、メッセージタグを使う変数 (下の
+_weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 <<trigger_data_print,Print>> を参照) と以下の変数が追加されます:
 
 [width="100%",cols="3m,2,14",options="header"]
@@ -3290,7 +3290,7 @@ string/string) が含まれています。
 |===
 
 メッセージのタグをもとにして変数が格納されます
-(変数は 'weechat_print' 修飾子でも格納されます):
+(変数は _weechat_print_ 修飾子でも格納されます):
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -3300,8 +3300,8 @@ string/string) が含まれています。
 | tg_tag_nick        | string | ニックネーム ("nick_xxx" タグから)
 | tg_tag_prefix_nick | string | プレフィックスで使うニックネームの色 ("prefix_nick_ccc" タグから)
 | tg_tag_host        | string | ユーザ名とホスト名、書式: username@host ("host_xxx" タグから)
-| tg_tag_notify      | string | 通知レベル ('none' 、'message' 、'private' 、'highlight')
-| tg_notify          | string | 通知レベルが 'none' 以外の場合、その通知レベル
+| tg_tag_notify      | string | 通知レベル (_none_ 、_message_ 、_private_ 、_highlight_)
+| tg_notify          | string | 通知レベルが _none_ 以外の場合、その通知レベル
 | tg_msg_pv          | string | プライベートメッセージの場合 "1"、それ以外は "0"
 |===
 
@@ -3426,9 +3426,9 @@ WeeChat は SIGWINCH を受けとたった際 (端末のサイズが変更され
 
 timer フックに対する引数は:
 
-* '3600000': 3600 * 1000 ミリ秒、コールバックは毎時間呼び出される
-* '0': 秒の調整 (この場合調整しない)
-* '0': 呼び出し回数の最大値 (0 = タイマーを無限に繰り返す)
+* _3600000_: 3600 * 1000 ミリ秒、コールバックは毎時間呼び出される
+* _0_: 秒の調整 (この場合調整しない)
+* _0_: 呼び出し回数の最大値 (0 = タイマーを無限に繰り返す)
 
 コマンド `/mute /save` は無言で設定ファイルを保存します
 (core バッファに対して何も表示しません)。
@@ -3471,12 +3471,12 @@ include::autogen/user/xfer_commands.asciidoc[]
 サポートを依頼する前に、必ず WeeChat
 に付属するドキュメントと FAQ を読んでください。
 
-IRC を使ったサポート窓口は 'chat.freenode.net' サーバにあります:
+IRC を使ったサポート窓口は _chat.freenode.net_ サーバにあります:
 
 * 公式チャンネル (開発者もいます):
-** '#weechat' (英語)
-** '#weechat-fr' (フランス語)
+** _#weechat_ (英語)
+** _#weechat-fr_ (フランス語)
 * 非公式チャンネル:
-** '#weechat-de' (ドイツ語)
+** _#weechat-de_ (ドイツ語)
 
 他の方法でサポートを受けるには、以下のページをご覧ください: https://weechat.org/dev/support
