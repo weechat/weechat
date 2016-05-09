@@ -15,6 +15,15 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'ReleaseNotes.asciidoc' in sources).
 
 
+[[1.6]]
+== Version 1.6 (under dev)
+
+[[1.6_bugs]]
+=== Bugs fixed
+
+* api: fix crash in function string_split_command() when the separator is not
+  a semicolon (issue #731)
+
 [[1.5]]
 == Version 1.5 (2016-05-01)
 
