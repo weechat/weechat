@@ -942,6 +942,16 @@ TEST(String, SplitCommand)
 
     string_free_split_command (argv);
 
+    /* separator other than ';' */
+    argv = string_split_command ("abc,de,fghi", ',');
+    CHECK(argv);
+    STRCMP_EQUAL("abc", argv[0]);
+    STRCMP_EQUAL("de", argv[1]);
+    STRCMP_EQUAL("fghi", argv[2]);
+    POINTERS_EQUAL(NULL, argv[3]);
+
+    string_free_split_command (argv);
+
     /* free split with NULL */
     string_free_split_command (NULL);
 }

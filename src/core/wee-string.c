@@ -2118,7 +2118,7 @@ string_split_command (const char *command, char separator)
     while(*ptr != '\0')
     {
         type = 0;
-        if (*ptr == ';')
+        if (*ptr == separator)
         {
             if (ptr == command)
                 type = 1;
