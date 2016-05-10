@@ -17,10 +17,10 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file 'ChangeLog.asciidoc' in sources).
 
 
-[[1.5]]
+[[v1.5]]
 == Version 1.5 (2016-05-01)
 
-[[1.5_nick_coloring]]
+[[v1.5_nick_coloring]]
 === Nick coloring moved to core
 
 The nick coloring feature has been moved from irc plugin to core.
@@ -44,7 +44,7 @@ The following info names (used by API function "info_get") are renamed as well:
 The old info 'irc_nick_color' and 'irc_nick_color_name' are kept for
 compatibility (especially scripts) and will be removed in an upcoming release.
 
-[[1.5_callbacks_pointer]]
+[[v1.5_callbacks_pointer]]
 === Pointer in callbacks
 
 A pointer has been added in all callbacks used by scripts, so the callbacks
@@ -87,7 +87,7 @@ Following functions are changed in the C API:
 The function `unhook_all` has a new argument `const char *subplugin` to remove
 only hooks created by this "subplugin" (script).
 
-[[1.5_bar_item_away]]
+[[v1.5_bar_item_away]]
 === Bar item "away"
 
 The bar item "away" has been moved from irc plugin to core (so that away status
@@ -98,7 +98,7 @@ Two options have been moved from irc plugin (irc.conf) to core (weechat.conf):
 * 'irc.look.item_away_message' moved to 'weechat.look.item_away_message'
 * 'irc.color.item_away' moved to 'weechat.color.item_away'
 
-[[1.5_default_triggers]]
+[[v1.5_default_triggers]]
 === Default triggers
 
 The default triggers "cmd_pass" and "msg_auth" have been updated to include
@@ -110,10 +110,10 @@ You can restore them with the following command:
 /trigger restore cmd_pass msg_auth
 ----
 
-[[1.4]]
+[[v1.4]]
 == Version 1.4 (2016-01-10)
 
-[[1.4_irc_alternate_nicks]]
+[[v1.4_irc_alternate_nicks]]
 === IRC alternate nicks
 
 The option 'irc.network.alternate_nick' has been moved into servers
@@ -134,10 +134,10 @@ For a specific server:
 /set irc.server.freenode.nicks_alternate off
 ----
 
-[[1.3]]
+[[v1.3]]
 == Version 1.3 (2015-08-16)
 
-[[1.3_irc_channels_encoding]]
+[[v1.3_irc_channels_encoding]]
 === IRC channels encoding
 
 If you are using exotic charsets in your channel names (anything different from
@@ -156,7 +156,7 @@ See these issues for more information: issue #482, issue #218.
 It is *highly recommended* to use only UTF-8 in WeeChat (wherever you can),
 because everything is stored as UTF-8 internally.
 
-[[1.3_alias_command]]
+[[v1.3_alias_command]]
 === Alias command
 
 The command `/alias` has been updated to list, add and remove aliases.
@@ -175,13 +175,13 @@ And the alias is removed with this command:
 /alias del split
 ----
 
-[[1.3_script_path]]
+[[v1.3_script_path]]
 === Script path
 
 The option 'script.scripts.dir' has been renamed to 'script.scripts.path'
 (and the content is now evaluated, see `/help eval`).
 
-[[1.2]]
+[[v1.2]]
 == Version 1.2 (2015-05-10)
 
 The word chars are now customizable with two options:
@@ -199,15 +199,15 @@ command:
 /set weechat.look.word_chars_input "!\u00A0,!\x20,*"
 ----
 
-[[1.1.1]]
+[[v1.1.1]]
 == Version 1.1.1 (2015-01-25)
 
 Bug fix and maintenance release.
 
-[[1.1]]
+[[v1.1]]
 == Version 1.1 (2015-01-11)
 
-[[1.1_triggers_regex_format]]
+[[v1.1_triggers_regex_format]]
 === New format for regex replacement in triggers
 
 A new format is used in regex replacement to use regex groups, this format
@@ -236,7 +236,7 @@ You can restore them with the following command:
 If you added triggers with the old regex replacement format, you must update
 them manually.
 
-[[1.1_trigger_beep]]
+[[v1.1_trigger_beep]]
 === Default "beep" trigger
 
 The command of "beep" trigger is now executed only if the message is displayed
@@ -248,7 +248,7 @@ You can restore the default "beep" trigger with the following command:
 /trigger restore beep
 ----
 
-[[1.1_commands_return_code]]
+[[v1.1_commands_return_code]]
 === Return code of commands
 
 The API function 'weechat_command' now sends the value returned return by
@@ -261,7 +261,7 @@ explicit error message before returning 'WEECHAT_RC_ERROR'.
 For C plugins, two macros have been added in weechat-plugin.h:
 'WEECHAT_COMMAND_MIN_ARGS' and 'WEECHAT_COMMAND_ERROR'.
 
-[[1.1_inline_commands_completion]]
+[[v1.1_inline_commands_completion]]
 === Completion of inline commands
 
 WeeChat now completes by default inline commands (not only at beginning of
@@ -277,7 +277,7 @@ To restore the old behavior (no completion of inline commands):
 /set weechat.completion.command_inline off
 ----
 
-[[1.1_relay_irc_backlog_tags]]
+[[v1.1_relay_irc_backlog_tags]]
 === Relay option relay.irc.backlog_tags
 
 The option 'relay.irc.backlog_tags' is now a list separated by commas
@@ -286,7 +286,7 @@ The option 'relay.irc.backlog_tags' is now a list separated by commas
 If you are using a list of tags in this option, you must adjust the value
 manually.
 
-[[1.1_relay_ipv6_ipv4]]
+[[v1.1_relay_ipv6_ipv4]]
 === IPv4-mapped IPv6 client address in relay
 
 The string "::ffff:" has been removed from IPv4-mapped IPv6 client address
@@ -295,7 +295,7 @@ in relay plugin.
 If you are using "::ffff:" in option 'relay.network.allowed_ips', you can
 remove it.
 
-[[1.1_irc_temporary_servers]]
+[[v1.1_irc_temporary_servers]]
 === Temporary servers disabled by default with /connect
 
 Creating a temporary server with command `/connect <address>` or
@@ -308,7 +308,7 @@ the old behavior in command `/connect`:
 /set irc.look.temporary_servers on
 ----
 
-[[1.1_timeval_microseconds]]
+[[v1.1_timeval_microseconds]]
 === Microseconds in API timeval functions
 
 The API functions using timeval are now using or returning microseconds,
@@ -318,15 +318,15 @@ instead of milliseconds:
 * function 'util_timeval_add': the argument 'interval' is now expressed in
   microseconds.
 
-[[1.0.1]]
+[[v1.0.1]]
 == Version 1.0.1 (2014-09-28)
 
 Bug fix and maintenance release.
 
-[[1.0]]
+[[v1.0]]
 == Version 1.0 (2014-08-15)
 
-[[1.0_irc_channel_type]]
+[[v1.0_irc_channel_type]]
 === Channel type not added by default on /join
 
 The channel type is not any more automatically added to a channel name on join
@@ -339,7 +339,7 @@ the new option:
 /set irc.look.join_auto_add_chantype on
 ----
 
-[[1.0_irc_channel_modes_arguments]]
+[[v1.0_irc_channel_modes_arguments]]
 === Hide IRC channel modes arguments
 
 The option 'irc.look.item_channel_modes_hide_key' has been renamed to
@@ -353,7 +353,7 @@ behavior (never hide arguments, even with a channel key), you can do:
 /set irc.look.item_channel_modes_hide_args ""
 ----
 
-[[1.0_jump_first_last_buffer]]
+[[v1.0_jump_first_last_buffer]]
 === Jump to first/last buffer
 
 The command `/input jump_last_buffer` has been replaced by `/buffer +`.
@@ -374,7 +374,7 @@ You can add it with following command:
 /key missing
 ----
 
-[[1.0_hotlist_conditions]]
+[[v1.0_hotlist_conditions]]
 === Hotlist conditions
 
 A new option 'weechat.look.hotlist_add_conditions' has been added. This option
@@ -393,7 +393,7 @@ default conditions with the following command:
 /set weechat.look.hotlist_add_conditions "${buffer.num_displayed} == 0"
 ----
 
-[[1.0_trigger_plugin]]
+[[v1.0_trigger_plugin]]
 === Rmodifier replaced by Trigger plugin
 
 The trigger plugin replaces the rmodifier plugin, which has been removed
@@ -410,7 +410,7 @@ If on startup you have an error about API mismatch in plugin 'rmodifier.so',
 you can manually remove the file (the command `make install` does not remove
 obsolete plugins).
 
-[[1.0_bare_display]]
+[[v1.0_bare_display]]
 === Bare display
 
 A bare display mode has been added (for easy text selection and click on URLs),
@@ -419,10 +419,10 @@ the new default key is key[alt-l].
 Use command `/key missing` to add the key or `/key listdiff` to see differences
 between your current keys and WeeChat default keys.
 
-[[0.4.3]]
+[[v0.4.3]]
 == Version 0.4.3 (2014-02-09)
 
-[[0.4.3_colors_messages]]
+[[v0.4.3_colors_messages]]
 === Colors in messages
 
 The color code for "reverse video" in IRC message has been fixed: now WeeChat
@@ -446,7 +446,7 @@ You can remove the old keys and add the new ones with these commands:
 /key missing
 ----
 
-[[0.4.3_terminal_title]]
+[[v0.4.3_terminal_title]]
 === Terminal title
 
 The boolean option 'weechat.look.set_title' has been renamed to
@@ -458,7 +458,7 @@ The content is evaluated and the default value is `WeeChat ${info:version}`.
 Only static content should be used in this option, because the title is
 refreshed only when the option is changed.
 
-[[0.4.3_bar_item_buffer_last_number]]
+[[v0.4.3_bar_item_buffer_last_number]]
 === New bar item buffer_last_number
 
 The bar item 'buffer_count' now displays the number of opened buffers (each
@@ -470,7 +470,7 @@ currently used.
 If you want to display last number in the status bar, replace 'buffer_count'
 by 'buffer_last_number' in your option 'weechat.bar.status.items'.
 
-[[0.4.3_bar_item_buffer_zoom]]
+[[v0.4.3_bar_item_buffer_zoom]]
 === New bar item buffer_zoom
 
 A new bar item has been added: 'buffer_zoom'.
@@ -480,7 +480,7 @@ The default value for status bar items becomes:
 /set weechat.bar.status.items "[time],[buffer_count],[buffer_plugin],buffer_number+:+buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+buffer_filter,[lag],[hotlist],completion,scroll"
 ----
 
-[[0.4.3_irc_messages_channel_join]]
+[[v0.4.3_irc_messages_channel_join]]
 === IRC messages on channel join
 
 The names are not displayed any more by default on channel join (they are in
@@ -496,7 +496,7 @@ If you want to display all messages on join (including names), you can do:
 /set irc.look.display_join_message "329,332,333,353,366"
 ----
 
-[[0.4.3_irc_maximum_lag]]
+[[v0.4.3_irc_maximum_lag]]
 === Maximum lag in IRC
 
 Option 'irc.network.lag_max' has been added.
@@ -507,10 +507,10 @@ never occur.
 
 You should check the value of both options and fix them if needed.
 
-[[0.4.2]]
+[[v0.4.2]]
 == Version 0.4.2 (2013-10-06)
 
-[[0.4.2_day_change_message]]
+[[v0.4.2_day_change_message]]
 === Day change message
 
 The day change message is now dynamically displayed, and therefore is not stored
@@ -526,7 +526,7 @@ After `/upgrade` from an old version, you will see two messages for each day
 change. This is a normal behavior and will not happen again with the next day
 changes.
 
-[[0.4.2_buffer_regex_search]]
+[[v0.4.2_buffer_regex_search]]
 === Regex search in buffer
 
 Search with regular expression has been added, and therefore some keys in search
@@ -557,13 +557,13 @@ To view keys in search context:
 
 For more information, see the chapter about keys in the 'WeeChat User's guide'.
 
-[[0.4.2_rmodifier]]
+[[v0.4.2_rmodifier]]
 === New rmodifier
 
 A new rmodifier "secure" has been added to hide passphrase and passwords
 displayed by command "/secure". Use command `/rmodifier missing` to add it.
 
-[[0.4.2_color_codes_options]]
+[[v0.4.2_color_codes_options]]
 === Color codes in options
 
 The format for color codes in some options has changed. The options are
@@ -589,7 +589,7 @@ Example:
 /set weechat.look.buffer_time_format "${color:251}%H${color:243}%M${color:238}%S"
 ----
 
-[[0.4.2_binary_man_page]]
+[[v0.4.2_binary_man_page]]
 === Binary and man page
 
 WeeChat binary and man page have been renamed from `weechat-curses` to
@@ -607,7 +607,7 @@ For packagers: you should create the link `weechat-curses` -> `weechat` if it's
 not automatically created in the package (both cmake and configure are creating
 this link on make install).
 
-[[0.4.2_man_page_documentation]]
+[[v0.4.2_man_page_documentation]]
 === Man page / documentation
 
 Documentation is not built by default any more, you have to use option
@@ -617,15 +617,15 @@ The man page is now built with asciidoc and translated in several
 languages. A new cmake option `ENABLE_MAN` has been added to compile man page
 (`OFF` by default).
 
-[[0.4.2_aspell_colors]]
+[[v0.4.2_aspell_colors]]
 === Aspell colors
 
 Option 'aspell.look.color' has been renamed to 'aspell.color.misspelled'.
 
-[[0.4.1]]
+[[v0.4.1]]
 == Version 0.4.1 (2013-05-20)
 
-[[0.4.1_relay_nicklist_diff]]
+[[v0.4.1_relay_nicklist_diff]]
 === Nicklist diff in relay
 
 A new message with identifier "_nicklist_diff" has been added in relay (WeeChat
@@ -636,7 +636,7 @@ Clients using nicklist must implement it.
 
 For more info about content of message, see document 'WeeChat Relay Protocol'.
 
-[[0.4.1_dynamic_nick_prefix_suffix]]
+[[v0.4.1_dynamic_nick_prefix_suffix]]
 === Dynamic nick prefix/suffix
 
 The nick prefix/suffix (for example: "<" and ">") are now dynamic and used on
@@ -698,14 +698,14 @@ New options in logger plugin (logger.conf):
 * 'logger.file.nick_suffix': suffix for nicks in log files (default: empty
   string)
 
-[[0.4.1_irc_reconnection_lag]]
+[[v0.4.1_irc_reconnection_lag]]
 === IRC reconnection on important lag
 
 Option 'irc.network.lag_disconnect' has been renamed to
 'irc.network.lag_reconnect' and value is now a number of seconds (instead of
 minutes).
 
-[[0.4.1_irc_passwords_hidden]]
+[[v0.4.1_irc_passwords_hidden]]
 === IRC passwords hidden
 
 IRC plugin is now using modifiers "irc_command_auth" and "irc_message_auth" to
@@ -733,7 +733,7 @@ If you added/changed some rmodifiers, do it manually with these commands:
 /rmodifier add message_auth irc_message_auth 1,3* ^(.*(id|identify|register|ghost \S+|release \S+) +)(.*)
 ----
 
-[[0.4.1_lua_constants]]
+[[v0.4.1_lua_constants]]
 === Lua constants
 
 For consistency with other supported languages, the API constants in Lua have
@@ -756,7 +756,7 @@ The new syntax is:
 return weechat.WEECHAT_RC_OK
 ----
 
-[[0.4.1_guile_callbacks]]
+[[v0.4.1_guile_callbacks]]
 === Guile callbacks
 
 The way to give arguments for guile callbacks has been fixed: now arguments are
@@ -765,10 +765,10 @@ sent individually (instead of a list with all arguments inside).
 Therefore, existing guile scripts must be modified accordingly. Moreover,
 WeeChat now requires Guile ≥ 2.0 to compile.
 
-[[0.4.0]]
+[[v0.4.0]]
 == Version 0.4.0 (2013-01-20)
 
-[[0.4.0_bars_conditions]]
+[[v0.4.0_bars_conditions]]
 === Conditions in bars
 
 Conditions in bars have changed, and now an expression is evaluated.
@@ -777,7 +777,7 @@ If you have a value with many conditions in a bar, like: `nicklist,active`, you
 must now use an expression like: `${nicklist} && ${active}` (see the chapter
 about bars in the 'WeeChat User's guide').
 
-[[0.4.0_ipv6_default]]
+[[v0.4.0_ipv6_default]]
 === IPv6 by default
 
 ==== IRC
@@ -799,21 +799,21 @@ disable IPv6 in relay if you don't plan to use it at all:
 /set relay.network.ipv6 off
 ----
 
-[[0.3.9.2]]
+[[v0.3.9.2]]
 == Version 0.3.9.2 (2012-11-18)
 
 This version fixes a security vulnerability when a plugin/script gives
 untrusted command to API function "hook_process".
 
-[[0.3.9.1]]
+[[v0.3.9.1]]
 == Version 0.3.9.1 (2012-11-09)
 
 This version fixes crash when decoding IRC colors in strings.
 
-[[0.3.9]]
+[[v0.3.9]]
 == Version 0.3.9 (2012-09-29)
 
-[[0.3.9_options_moved]]
+[[v0.3.9_options_moved]]
 === Options moved
 
 Options moved from core (weechat.conf) to irc plugin (irc.conf):
@@ -822,7 +822,7 @@ Options moved from core (weechat.conf) to irc plugin (irc.conf):
    with values: none/prefix/action/both)
 * 'weechat.look.nickmode_empty' moved to 'irc.look.nick_mode_empty'
 
-[[0.3.9_bar_item_buffer_modes]]
+[[v0.3.9_bar_item_buffer_modes]]
 === New bar item buffer_modes
 
 A new bar item has been added: 'buffer_modes' and irc option
@@ -835,7 +835,7 @@ for status bar items becomes:
 /set weechat.bar.status.items "[time],[buffer_count],[buffer_plugin],buffer_number+:+buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_filter,[lag],[hotlist],completion,scroll"
 ----
 
-[[0.3.9_command_aspell]]
+[[v0.3.9_command_aspell]]
 === Command /aspell
 
 New options in command `/aspell`:
@@ -850,7 +850,7 @@ Options renamed in command `/aspell`:
 * `disable` renamed to `deldict` (delete dictionary used on current buffer)
 * `dictlist` renamed to `listdict` (show installed dictionaries)
 
-[[0.3.9_horizontal_separator]]
+[[v0.3.9_horizontal_separator]]
 === Horizontal separator
 
 An horizontal separator has been added between split windows, and two options
@@ -859,16 +859,16 @@ have been added to toggle separators (both are enabled by default):
 * 'weechat.look.window_separator_horizontal'
 * 'weechat.look.window_separator_vertical'
 
-[[0.3.9_new_keys]]
+[[v0.3.9_new_keys]]
 === New keys
 
 New keys were added, use command `/key missing` to add them or `/key listdiff`
 to see differences between your current keys and WeeChat default keys.
 
-[[0.3.8]]
+[[v0.3.8]]
 == Version 0.3.8 (2012-06-03)
 
-[[0.3.8_options]]
+[[v0.3.8_options]]
 === Options
 
 Options 'weechat.look.prefix_align_more' and
@@ -879,7 +879,7 @@ to string:
   this char
 * if the value was off, you have to set " " (string with one space)
 
-[[0.3.8_paste_detection]]
+[[v0.3.8_paste_detection]]
 === Paste detection
 
 Option 'weechat.look.paste_max_lines' can now be used with value 0 to detect
@@ -891,7 +891,7 @@ disable paste detection: if your value was 0, you should set it to -1
 /set weechat.look.paste_max_lines -1
 ----
 
-[[0.3.8_rmodifier]]
+[[v0.3.8_rmodifier]]
 === Rmodifier
 
 Rmodifier "nickserv" has a new default regex which includes option "release"
@@ -910,10 +910,10 @@ If you added/changed some rmodifiers, do it manually with these commands:
 /rmodifier add nickserv history_add,input_text_display 1,4* ^(/(msg|quote) +nickserv +(id|identify|ghost \S+|release \S+) +)(.*)
 ----
 
-[[0.3.7]]
+[[v0.3.7]]
 == Version 0.3.7 (2012-02-26)
 
-[[0.3.7_options]]
+[[v0.3.7_options]]
 === Options
 
 Option `scroll_unread` has been moved from command `/input` to `/window`,
@@ -931,7 +931,7 @@ Option 'weechat.plugin.extension' now supports list of extensions, and new
 default value is ".so,.dll" (with this value, weechat.conf is compatible with
 Cygwin).
 
-[[0.3.7_extended_regex]]
+[[v0.3.7_extended_regex]]
 === Extended regex
 
 Extended regex is used in filters and irc ignore, so some chars that needed
@@ -942,26 +942,26 @@ Option 'weechat.look.highlight_regex' becomes case insensitive by default, to
 make it case sensitive, use "(?-i)" at beginning of string, for example:
 "(?-i)FlashCode|flashy".
 
-[[0.3.6]]
+[[v0.3.6]]
 == Version 0.3.6 (2011-10-22)
 
-[[0.3.6_options]]
+[[v0.3.6_options]]
 === Options
 
 Option 'weechat.look.hline_char' has been renamed to
 'weechat.look.separator_horizontal'.
 
-[[0.3.6_colors_bold]]
+[[v0.3.6_colors_bold]]
 === Bold in colors
 
 Bold is not used any more for basic colors (used only if terminal has less than
 16 colors), a new option has been added to force bold if needed:
 'weechat.look.color_basic_force_bold'.
 
-[[0.3.5]]
+[[v0.3.5]]
 == Version 0.3.5 (2011-05-15)
 
-[[0.3.5_colors]]
+[[v0.3.5_colors]]
 === Colors
 
 If you have some colors defined in section "palette" with version 0.3.4, you
@@ -973,10 +973,10 @@ option 'irc.color.nick_prefixes', therefore following options will be lost:
 'irc.color.nick_prefix_op', 'irc.color.nick_prefix_halfop',
 'irc.color.nick_prefix_voice', 'irc.color.nick_prefix_user'.
 
-[[0.3.5_hotlist]]
+[[v0.3.5_hotlist]]
 === Hotlist
 
-[[0.3.5_hotlist_counters]]
+[[v0.3.5_hotlist_counters]]
 ==== Counters
 
 Count of messages have been added to hotlist by default, if you want to come
@@ -987,7 +987,7 @@ back to old behavior, do that:
 /set weechat.look.hotlist_buffer_separator ","
 ----
 
-[[0.3.5_hotlist_away_current_buffer]]
+[[v0.3.5_hotlist_away_current_buffer]]
 ==== Away and current buffer
 
 When you are away, all buffers are now added to hotlist by default (even if
@@ -998,16 +998,16 @@ that:
 /set weechat.look.hotlist_add_buffer_if_away off
 ----
 
-[[0.3.5_new_keys]]
+[[v0.3.5_new_keys]]
 === New keys
 
 New keys were added, use command `/key missing` to add them or `/key listdiff`
 to see differences between your current keys and WeeChat default keys.
 
-[[0.3.4]]
+[[v0.3.4]]
 == Version 0.3.4 (2011-01-16)
 
-[[0.3.4_after_upgrade]]
+[[v0.3.4_after_upgrade]]
 === After /upgrade
 
 If you are using `/upgrade` from a previous release:
@@ -1019,7 +1019,7 @@ If you are using `/upgrade` from a previous release:
 * nick colors in messages displayed will be wrong if you changed some nick
   colors (old default colors will be used)
 
-[[0.3.4_options]]
+[[v0.3.4_options]]
 === Options
 
 Some IRC options have been renamed, before upgrading to this version, note
@@ -1046,16 +1046,16 @@ value for old options, and set them again with new name:
 ** 'irc.look.open_pv_near_server' moved to 'irc.look.new_pv_position'
    (old option was boolean, new is integer with value as string)
 
-[[0.3.3]]
+[[v0.3.3]]
 == Version 0.3.3 (2010-08-07)
 
-[[0.3.3_after_upgrade]]
+[[v0.3.3_after_upgrade]]
 === After /upgrade
 
 If you are using `/upgrade` from a previous release, then you must reconnect to
 IRC servers in order to use new command /wallchops.
 
-[[0.3.3_options]]
+[[v0.3.3_options]]
 === Options
 
 Option 'irc.look.show_away_once' has been renamed to
@@ -1064,10 +1064,10 @@ Option 'irc.look.show_away_once' has been renamed to
 Option 'irc.network.lag_min_show' is now in milliseconds, you should set new
 value: your current value multiplied by 1000 (new default value is 500).
 
-[[0.3.2]]
+[[v0.3.2]]
 == Version 0.3.2 (2010-04-18)
 
-[[0.3.2_after_upgrade]]
+[[v0.3.2_after_upgrade]]
 === After /upgrade
 
 If you are using `/upgrade` from a previous release, then you must execute this
@@ -1078,17 +1078,17 @@ needed on WeeChat core buffer or buffers from other plugins/scripts):
 /buffer set highlight_words $nick
 ----
 
-[[0.3.1.1]]
+[[v0.3.1.1]]
 == Version 0.3.1.1 (2010-01-31)
 
 This version fixes crashes with SSL connection and purge of old DCC chats.
 
 All users of version 0.3.1 should upgrade to this version.
 
-[[0.3.1]]
+[[v0.3.1]]
 == Version 0.3.1 (2010-01-23)
 
-[[0.3.1_aliases]]
+[[v0.3.1_aliases]]
 === Aliases
 
 IRC commands /ame and /amsg are now aliases, if you are upgrading from version
@@ -1101,7 +1101,7 @@ IRC commands /ame and /amsg are now aliases, if you are upgrading from version
 /alias anick allserv /nick
 ----
 
-[[0.3.0]]
+[[v0.3.0]]
 == Version 0.3.0 (2009-09-06)
 
 This version brings *MAJOR* changes, especially for configuration files and
@@ -1125,47 +1125,47 @@ More information about new API is available on wiki:
 http://wiki.flashtux.org/wiki/WeeChat_0.3.0
 and http://wiki.flashtux.org/wiki/WeeChat_0.3.0_API
 
-[[0.2.6.3]]
+[[v0.2.6.3]]
 == Version 0.2.6.3 (2009-06-13)
 
 This version fixes gnutls detection.
 
-[[0.2.6.2]]
+[[v0.2.6.2]]
 == Version 0.2.6.2 (2009-04-18)
 
 This version fixes a bug with charset decoding (like 'iso2022jp').
 
-[[0.2.6.1]]
+[[v0.2.6.1]]
 == Version 0.2.6.1 (2009-03-14)
 
 This version fixes a major bug: crash with some special chars in IRC messages.
 
-[[0.2.6]]
+[[v0.2.6]]
 == Version 0.2.6 (2007-09-06)
 
 No release note.
 
-[[0.2.5]]
+[[v0.2.5]]
 == Version 0.2.5 (2007-06-07)
 
 No release note.
 
-[[0.2.4]]
+[[v0.2.4]]
 == Version 0.2.4 (2007-03-29)
 
 No release note.
 
-[[0.2.3]]
+[[v0.2.3]]
 == Version 0.2.3 (2007-01-10)
 
 This version fixes several major bugs of version 0.2.2.
 
 All users of version 0.2.2 should upgrade to this version.
 
-[[0.2.2]]
+[[v0.2.2]]
 == Version 0.2.2 (2007-01-06)
 
-[[0.2.2_charset_plugin]]
+[[v0.2.2_charset_plugin]]
 === Charset plugin
 
 For users of any previous version, all your charset settings in weechat.rc will
@@ -1191,7 +1191,7 @@ For server encode (on server buffer):
 /charset encode ISO-8859-1
 ----
 
-[[0.2.2_new_keys]]
+[[v0.2.2_new_keys]]
 === New keys
 
 New keys for topic scroll: key[F9]/key[F10].
@@ -1209,21 +1209,21 @@ Which gives something like:
 /key meta2-21~ scroll_topic_right
 ----
 
-[[0.2.1]]
+[[v0.2.1]]
 == Version 0.2.1 (2006-10-01)
 
 No release note.
 
-[[0.2.0]]
+[[v0.2.0]]
 == Version 0.2.0 (2006-08-19)
 
-[[0.2.0_after_upgrade]]
+[[v0.2.0_after_upgrade]]
 === After /upgrade
 
 If you upgraded with `/upgrade` in WeeChat, you should `/disconnect` and then
 `/reconnect` on each server, to display properly channel/user modes.
 
-[[0.2.0_plugins]]
+[[v0.2.0_plugins]]
 === Plugins
 
 If you're using plugins, you should remove some old plugins libraries in
@@ -1231,26 +1231,26 @@ WeeChat system library directory (commonly '/usr/local/lib/weechat/plugins'):
 remove `lib*` files (like `libperl.*`, `libpython.*`, ..) and keep only new
 libraries (`perl.*`, `python.*`, ..).
 
-[[0.1.9]]
+[[v0.1.9]]
 == Version 0.1.9 (2006-05-25)
 
-[[0.1.9_dcc_chat]]
+[[v0.1.9_dcc_chat]]
 === DCC chat
 
 Please close all DCC chat buffers before using /upgrade command, otherwise you
 may experience problems with DCC chats.
 
-[[0.1.9_script_api]]
+[[v0.1.9_script_api]]
 === Script API
 
 Some changes in script API: now timer handlers functions takes exactly 0 (zero)
 argument (in version 0.1.8, two arguments were mandatory but not used: server
 and arguments).
 
-[[0.1.8]]
+[[v0.1.8]]
 == Version 0.1.8 (2006-03-18)
 
-[[0.1.8_after_upgrade]]
+[[v0.1.8_after_upgrade]]
 === After /upgrade
 
 After installing 0.1.8 (or with `/upgrade`), issue both commands (if you didn't
@@ -1263,7 +1263,7 @@ redefine these keys (key[alt-]key[Home]/key[End]):
 
 Then launch again WeeChat (or issue `/upgrade`).
 
-[[0.1.8_configuration_files]]
+[[v0.1.8_configuration_files]]
 === Configuration files
 
 It is recommended for users of version 0.1.7 (or any older), to replace values
@@ -1275,22 +1275,22 @@ in setup file ('~/.weechat/weechat.rc'):
 The string '%h' is replaced by WeeChat home (default: '~/.weechat', may be
 overridden by new command line argument `--dir`).
 
-[[0.1.8_keys]]
+[[v0.1.8_keys]]
 === Keys
 
 Keys key[alt-]key[Home]/key[End] were used for nicklist scroll, they're now
 replaced by key[alt-]key[F11]/key[F12].
 
-[[0.1.7]]
+[[v0.1.7]]
 == Version 0.1.7 (2006-01-14)
 
-[[0.1.7_ruby]]
+[[v0.1.7_ruby]]
 === Ruby
 
 Ruby script plugin has been added but is experimental in this release. You're
 warned!
 
-[[0.1.7_command_away]]
+[[v0.1.7_command_away]]
 === Command /away
 
 Command `/away` was changed to be RFC 2812 compliant. Now argument is required
@@ -1298,23 +1298,23 @@ to set away, and no argument means remove away ("back").
 
 Option 'irc_default_msg_away' has been removed.
 
-[[0.1.6]]
+[[v0.1.6]]
 == Version 0.1.6 (2005-11-11)
 
-[[0.1.6_script_api]]
+[[v0.1.6_script_api]]
 === Script API
 
 Incompatibility with some old scripts: now all handlers have to return a code
 for completion, and to do some actions about message to ignore (please look at
 documentation for detail).
 
-[[0.1.6_openbsd]]
+[[v0.1.6_openbsd]]
 === OpenBSD
 
 On OpenBSD, the new option 'plugins_extension' should be set to '.so.0.0' since
 the plugins names are ending by '.so.0.0' and not '.so'.
 
-[[0.1.6_utf8]]
+[[v0.1.6_utf8]]
 === UTF-8
 
 With new and full UTF-8 support, the option 'look_charset_internal' should be
@@ -1323,77 +1323,77 @@ detected by WeeChat (you can set 'UTF-8' or 'ISO-8859-15' for example,
 depending on your locale). WeeChat is looking for 'UTF-8' in your locale name
 at startup.
 
-[[0.1.5]]
+[[v0.1.5]]
 == Version 0.1.5 (2005-09-24)
 
 No release note.
 
-[[0.1.4]]
+[[v0.1.4]]
 == Version 0.1.4 (2005-07-30)
 
 No release note.
 
-[[0.1.3]]
+[[v0.1.3]]
 == Version 0.1.3 (2005-07-02)
 
 No release note.
 
-[[0.1.2]]
+[[v0.1.2]]
 == Version 0.1.2 (2005-05-21)
 
 No release note.
 
-[[0.1.1]]
+[[v0.1.1]]
 == Version 0.1.1 (2005-03-20)
 
 No release note.
 
-[[0.1.0]]
+[[v0.1.0]]
 == Version 0.1.0 (2005-02-12)
 
 No release note.
 
-[[0.0.9]]
+[[v0.0.9]]
 == Version 0.0.9 (2005-01-01)
 
 No release note.
 
-[[0.0.8]]
+[[v0.0.8]]
 == Version 0.0.8 (2004-10-30)
 
 No release note.
 
-[[0.0.7]]
+[[v0.0.7]]
 == Version 0.0.7 (2004-08-08)
 
 No release note.
 
-[[0.0.6]]
+[[v0.0.6]]
 == Version 0.0.6 (2004-06-05)
 
 No release note.
 
-[[0.0.5]]
+[[v0.0.5]]
 == Version 0.0.5 (2004-02-07)
 
 No release note.
 
-[[0.0.4]]
+[[v0.0.4]]
 == Version 0.0.4 (2004-01-01)
 
 No release note.
 
-[[0.0.3]]
+[[v0.0.3]]
 == Version 0.0.3 (2003-11-03)
 
 No release note.
 
-[[0.0.2]]
+[[v0.0.2]]
 == Version 0.0.2 (2003-10-05)
 
 No release note.
 
-[[0.0.1]]
+[[v0.0.1]]
 == Version 0.0.1 (2003-09-27)
 
 No release note.
