@@ -3,10 +3,10 @@
 :email: flashcode@flashtux.org
 :lang: pl
 :toc: left
-:toclevels: 3
+:toclevels: 4
 :toc-title: Spis treści
 :sectnums:
-:sectnumlevels: 2
+:sectnumlevels: 3
 :docinfo1:
 
 
