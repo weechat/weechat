@@ -4,6 +4,7 @@
 :lang: it
 :toc: left
 :toc-title: Indice
+:sectnums:
 :docinfo1:
 
 

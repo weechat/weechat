@@ -4,6 +4,7 @@
 :lang: fr
 :toc: left
 :toc-title: Table des matières
+:sectnums:
 :docinfo1:
 
 

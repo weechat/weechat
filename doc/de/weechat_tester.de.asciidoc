@@ -4,6 +4,7 @@
 :lang: de
 :toc: left
 :toc-title: Inhaltsverzeichnis
+:sectnums:
 :docinfo1:
 
 

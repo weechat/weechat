@@ -4,6 +4,7 @@
 :lang: ja
 :toc: left
 :toc-title: 目次
+:sectnums:
 :docinfo1:
 
 

@@ -3,6 +3,7 @@
 :email: flashcode@flashtux.org
 :lang: en
 :toc: left
+:sectnums:
 :docinfo1:
 
 
