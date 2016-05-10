@@ -879,7 +879,7 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 
 WeeChat 色は:
 
-[width="70%",cols="^1m,6",options="header"]
+[width="70%",cols="^1m,10",options="header"]
 |===
 | コード | 色
 | 00   | デフォルト (端末の文字色/背景色)

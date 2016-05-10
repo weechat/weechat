@@ -894,7 +894,7 @@ fichier _src/gui/gui-color.h_) :
 
 Les couleurs WeeChat sont :
 
-[width="70%",cols="^1m,6",options="header"]
+[width="70%",cols="^1m,10",options="header"]
 |===
 | Code | Couleur
 | 00   | Défaut (couleur de texte/fond du terminal)

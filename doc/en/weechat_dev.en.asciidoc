@@ -878,7 +878,7 @@ _src/gui/gui-color.h_):
 
 WeeChat colors are:
 
-[width="70%",cols="^1m,6",options="header"]
+[width="70%",cols="^1m,10",options="header"]
 |===
 | Code | Color
 | 00   | Default (terminal foreground/background)
