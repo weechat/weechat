@@ -96,6 +96,7 @@ Alphabetically:
 * Valentin Lorentz (progval)
 * Vasco Almeida
 * Voroskoi
+* Wojciech Kwolek
 * Yannick Palanque
 
 == Contact
