@@ -6,7 +6,6 @@
 :toclevels: 3
 :toc-title: 目次
 :sectnums:
-:sectnumlevels: 2
 :docinfo1:
 
 

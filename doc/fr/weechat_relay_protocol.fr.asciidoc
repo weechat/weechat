@@ -6,7 +6,6 @@
 :toclevels: 3
 :toc-title: Table des matières
 :sectnums:
-:sectnumlevels: 2
 :docinfo1:
 
 
