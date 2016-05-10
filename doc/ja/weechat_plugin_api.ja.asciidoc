@@ -6,7 +6,7 @@
 :toclevels: 4
 :toc-title: 目次
 :sectnums:
-:sectnumlevels: 2
+:sectnumlevels: 3
 :docinfo1:
 
 
@@ -89,21 +89,21 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 
 引数:
 
-* 'plugin': WeeChat プラグイン構造体へのポインタ
-* 'argc': プラグインに対する引数の数 (ユーザがコマンドラインで指定)
-* 'argv': プラグインに対する引数
+* _plugin_: WeeChat プラグイン構造体へのポインタ
+* _argc_: プラグインに対する引数の数 (ユーザがコマンドラインで指定)
+* _argv_: プラグインに対する引数
 
 戻り値:
 
-* 'WEECHAT_RC_OK' 成功した場合 (プラグインを読み込みます)
-* 'WEECHAT_RC_ERROR' エラーが起きた場合 (プラグインを読み込みません)
+* _WEECHAT_RC_OK_ 成功した場合 (プラグインを読み込みます)
+* _WEECHAT_RC_ERROR_ エラーが起きた場合 (プラグインを読み込みません)
 
 [[plugin_priority]]
 ===== プラグインの優先度
 
 複数のプラグインが自動ロードされた場合 (たとえば起動時)、WeeChat
-はまず全てのプラグインをロードし、各プラグインで定義された優先度に従って 'init'
-関数を呼び出します。優先度を大きな値にすれば 'init' 関数を呼び出す順番が早くなります
+はまず全てのプラグインをロードし、各プラグインで定義された優先度に従って _init_
+関数を呼び出します。優先度を大きな値にすれば _init_ 関数を呼び出す順番が早くなります
 
 デフォルトの優先度は 1000 です
 (この値を設定した場合、全てのデフォルトプラグインの後にプラグインをロードします)。
@@ -125,17 +125,17 @@ int weechat_plugin_end (struct t_weechat_plugin *plugin);
 
 引数:
 
-* 'plugin': WeeChat プラグイン構造体へのポインタ
+* _plugin_: WeeChat プラグイン構造体へのポインタ
 
 戻り値:
 
-* 'WEECHAT_RC_OK' 成功した場合
-* 'WEECHAT_RC_ERROR' エラーが起きた場合
+* _WEECHAT_RC_OK_ 成功した場合
+* _WEECHAT_RC_ERROR_ エラーが起きた場合
 
 [[compile_plugin]]
 === プラグインのコンパイル
 
-コンパイルするために WeeChat のソースは不要で、'weechat-plugin.h'
+コンパイルするために WeeChat のソースは不要で、_weechat-plugin.h_
 ファイルだけが必要です。
 
 1 つのファイル "toto.c" からなるプラグインは以下のようにコンパイルします (GNU/Linux の場合):
@@ -148,9 +148,9 @@ $ gcc -shared -fPIC -o libtoto.so toto.o
 [[load_plugin]]
 === プラグインを読み込む
 
-'libtoto.so' ファイルをシステムのプラグインディレクトリ (例えば
-'/usr/local/lib/weechat/plugins') またはユーザのプラグインディレクトリ (例えば
-'/home/xxx/.weechat/plugins') にコピーしてください。
+_libtoto.so_ ファイルをシステムのプラグインディレクトリ (例えば
+_/usr/local/lib/weechat/plugins_) またはユーザのプラグインディレクトリ (例えば
+_/home/xxx/.weechat/plugins_) にコピーしてください。
 
 WeeChat の中で:
 
@@ -161,7 +161,7 @@ WeeChat の中で:
 [[plugin_example]]
 === プラグインの例
 
-コマンド '/double' を追加するプラグインの例: 引数を 2
+コマンド _/double_ を追加するプラグインの例: 引数を 2
 倍して現在のバッファに表示するか、コマンドを 2 回実行する
 (これは実用的なコマンドというよりも、ただの例です!):
 
@@ -261,7 +261,7 @@ const char *weechat_plugin_get_name (struct t_weechat_plugin *plugin);
 
 引数:
 
-* 'plugin': WeeChat プラグイン構造体へのポインタ (NULL でも可)
+* _plugin_: WeeChat プラグイン構造体へのポインタ (NULL でも可)
 
 戻り値:
 
@@ -295,8 +295,8 @@ UTF-8 とロケールに準じて取り扱うようになっているからで�
 
 ==== charset_set
 
-新しいプラグインの文字セットを設定する (デフォルトの文字セットは 'UTF-8'
-です、このためプラグインで 'UTF-8' を使う場合は、この関数を呼び出す必要はありません。
+新しいプラグインの文字セットを設定する (デフォルトの文字セットは _UTF-8_
+です、このためプラグインで _UTF-8_ を使う場合は、この関数を呼び出す必要はありません。
 
 プロトタイプ:
 
@@ -307,7 +307,7 @@ void weechat_charset_set (const char *charset);
 
 引数:
 
-* 'charset': 新たに利用する文字セット
+* _charset_: 新たに利用する文字セット
 
 C 言語での使用例:
 
@@ -340,8 +340,8 @@ char *weechat_iconv_to_internal (const char *charset, const char *string);
 
 引数:
 
-* 'charset': 変換元の文字列の文字セット
-* 'string': 変換元の文字列
+* _charset_: 変換元の文字列の文字セット
+* _string_: 変換元の文字列
 
 戻り値:
 
@@ -380,8 +380,8 @@ char *weechat_iconv_from_internal (const char *charset, const char *string);
 
 引数:
 
-* 'charset': 変換先の文字列の文字セット
-* 'string': 変換元の文字列
+* _charset_: 変換先の文字列の文字セット
+* _string_: 変換元の文字列
 
 戻り値:
 
@@ -420,7 +420,7 @@ const char *weechat_gettext (const char *string);
 
 引数:
 
-* 'string': 翻訳元の文字列
+* _string_: 翻訳元の文字列
 
 戻り値:
 
@@ -446,7 +446,7 @@ str = weechat.gettext("hello")
 
 ==== ngettext
 
-'count'
+_count_
 引数を元に単数形または複数形で、翻訳済み文字列を返す。
 
 プロトタイプ:
@@ -459,9 +459,9 @@ const char *weechat_ngettext (const char *string, const char *plural,
 
 引数:
 
-* 'string': 翻訳元の文字列、単数形
-* 'plural': 翻訳元の文字列、複数形
-* 'count': 単数形と複数形のどちらを返すかの判断に使います
+* _string_: 翻訳元の文字列、単数形
+* _plural_: 翻訳元の文字列、複数形
+* _count_: 単数形と複数形のどちらを返すかの判断に使います
   (選択は設定言語に依存)
 
 戻り値:
@@ -489,7 +489,7 @@ str = weechat.ngettext("file", "files", num_files)
 
 ==== strndup
 
-複製した文字列を最大で 'length' 文字分返す。
+複製した文字列を最大で _length_ 文字分返す。
 
 プロトタイプ:
 
@@ -500,8 +500,8 @@ char *weechat_strndup (const char *string, int length);
 
 引数:
 
-* 'string': 複製元の文字列
-* 'length': 複製する文字列の最大文字数
+* _string_: 複製元の文字列
+* _length_: 複製する文字列の最大文字数
 
 戻り値:
 
@@ -532,7 +532,7 @@ void weechat_string_tolower (char *string);
 
 引数:
 
-* 'string': 変換元の文字列
+* _string_: 変換元の文字列
 
 C 言語での使用例:
 
@@ -558,7 +558,7 @@ void weechat_string_toupper (char *string);
 
 引数:
 
-* 'string': 変換元の文字列
+* _string_: 変換元の文字列
 
 C 言語での使用例:
 
@@ -586,8 +586,8 @@ int weechat_strcasecmp (const char *string1, const char *string2);
 
 引数:
 
-* 'string1': 1 番目の比較対象の文字列
-* 'string2': 2 番目の比較対象の文字列
+* _string1_: 1 番目の比較対象の文字列
+* _string2_: 2 番目の比較対象の文字列
 
 戻り値:
 
@@ -620,12 +620,12 @@ int weechat_strcasecmp_range (const char *string1, const char *string2, int rang
 
 引数:
 
-* 'string1': 1 番目の比較対象の文字列
-* 'string2': 2 番目の比較対象の文字列
-* 'range': 大文字小文字を無視する文字範囲の幅、例:
-** 26: "A-Z" を "a-z" のように変換して比較
-** 29: "A-Z [ \ ]" を "a-z { | }" のように変換して比較
-** 30: "A-Z [ \ ] ^" を "a-z { | } ~" のように変換して比較
+* _string1_: 1 番目の比較対象の文字列
+* _string2_: 2 番目の比較対象の文字列
+* _range_: 大文字小文字を無視する文字範囲の幅、例:
+** 26: `A-Z` を `a-z` のように変換して比較
+** 29: `A-Z [ \ ]` を `a-z { | }` のように変換して比較
+** 30: `A-Z [ \ ] ^` を `a-z { | } ~` のように変換して比較
 
 [NOTE]
 29 と 30 は IRC など一部のプロトコルで使います。
@@ -650,7 +650,7 @@ int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29);  /* == 0 *
 
 _WeeChat バージョン 1.0 で更新。_
 
-ロケールと大文字小文字を無視して 'max' 文字だけ文字列を比較。
+ロケールと大文字小文字を無視して _max_ 文字だけ文字列を比較。
 
 プロトタイプ:
 
@@ -661,9 +661,9 @@ int weechat_strncasecmp (const char *string1, const char *string2, int max);
 
 引数:
 
-* 'string1': 1 番目の比較対象の文字列
-* 'string2': 2 番目の比較対象の文字列
-* 'max': 比較する文字数の最大値
+* _string1_: 1 番目の比較対象の文字列
+* _string2_: 2 番目の比較対象の文字列
+* _max_: 比較する文字数の最大値
 
 戻り値:
 
@@ -686,7 +686,7 @@ int diff = weechat_strncasecmp ("aabb", "aacc", 2);  /* == 0 */
 _WeeChat バージョン 0.3.7 以上で利用可、バージョン 1.0 で更新。_
 
 大文字小文字を無視する文字範囲の幅を使い、ロケールと大文字小文字を無視して
-'max' 文字だけ文字列を比較。
+_max_ 文字だけ文字列を比較。
 
 プロトタイプ:
 
@@ -697,13 +697,13 @@ int weechat_strncasecmp_range (const char *string1, const char *string2, int max
 
 引数:
 
-* 'string1': 1 番目の比較対象の文字列
-* 'string2': 2 番目の比較対象の文字列
-* 'max': 比較する文字数の最大値
-* 'range': 大文字小文字を無視する文字範囲の幅、例:
-** 26: "A-Z" を "a-z" のように変換して比較
-** 29: "A-Z [ \ ]" を "a-z { | }" のように変換して比較
-** 30: "A-Z [ \ ] ^" を "a-z { | } ~" のように変換して比較
+* _string1_: 1 番目の比較対象の文字列
+* _string2_: 2 番目の比較対象の文字列
+* _max_: 比較する文字数の最大値
+* _range_: 大文字小文字を無視する文字範囲の幅、例:
+** 26: `A-Z` を `a-z` のように変換して比較
+** 29: `A-Z [ \ ]` を `a-z { | }` のように変換して比較
+** 30: `A-Z [ \ ] ^` を `a-z { | } ~` のように変換して比較
 
 [NOTE]
 29 と 30 は IRC など一部のプロトコルで使います。
@@ -742,10 +742,10 @@ int weechat_strcmp_ignore_chars (const char *string1, const char *string2,
 
 引数:
 
-* 'string1': 1 番目の比較対象の文字列
-* 'string2': 2 番目の比較対象の文字列
-* 'chars_ignored': 無視する文字
-* 'case_sensitive': 大文字小文字を区別して比較する場合は 1、区別しない場合は 0
+* _string1_: 1 番目の比較対象の文字列
+* _string2_: 2 番目の比較対象の文字列
+* _chars_ignored_: 無視する文字
+* _case_sensitive_: 大文字小文字を区別して比較する場合は 1、区別しない場合は 0
 
 戻り値:
 
@@ -778,13 +778,13 @@ const char *weechat_strcasestr (const char *string, const char *search);
 
 引数:
 
-* 'string': 文字列
-* 'search': 'string' 内を検索する文字
+* _string_: 文字列
+* _search_: _string_ 内を検索する文字
 
 戻り値:
 
 * 見つかった文字列へのポインタ、見つからない場合は NULL
-  (_WeeChat バージョン 1.3 以上の場合_: 返されるポインタは 'const char *' であり、'char *' ではありません)
+  (_WeeChat バージョン 1.3 以上の場合_: 返されるポインタは _const char *_ であり、_char *_ ではありません)
 
 C 言語での使用例:
 
@@ -813,7 +813,7 @@ int weechat_strlen_screen (const char *string);
 
 引数:
 
-* 'string': 文字列
+* _string_: 文字列
 
 戻り値:
 
@@ -853,10 +853,10 @@ int weechat_string_match (const char *string, const char *mask,
 
 引数:
 
-* 'string': 文字列
-* 'mask': ワイルドカード ("*") を含むマスク、各ワイルドカードは文字列中の
+* _string_: 文字列
+* _mask_: ワイルドカード (`+*+`) を含むマスク、各ワイルドカードは文字列中の
   0 個またはそれ以上の文字にマッチします
-* 'case_sensitive': 大文字小文字を区別する場合は 1、区別しない場合は 0
+* _case_sensitive_: 大文字小文字を区別する場合は 1、区別しない場合は 0
 
 [NOTE]
 WeeChat バージョン 1.0 以上の場合、ワイルドカードをマスクの内部で使うことが可能です
@@ -896,8 +896,8 @@ match5 = weechat.string_match("abcdef", "*b*d*", 0)  # 1
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
 
-文字列が `~` から始まる場合はこれをホームディレクトリで置換。文字列が
-`~` から始まっていない場合は同じ文字列を返す。
+文字列が `+~+` から始まる場合はこれをホームディレクトリで置換。文字列が
+`+~+` から始まっていない場合は同じ文字列を返す。
 
 プロトタイプ:
 
@@ -908,11 +908,11 @@ char *weechat_string_expand_home (const char *path);
 
 引数:
 
-* 'path': パス
+* _path_: パス
 
 戻り値:
 
-* `~` から始まるパスをホームディレクトリで置換したパス
+* `+~+` から始まるパスをホームディレクトリで置換したパス
   (使用後には必ず "free" を呼び出して領域を開放してください)
 
 C 言語での使用例:
@@ -935,7 +935,7 @@ _WeeChat バージョン 0.3.3 以上で利用可。_
 3 段階でパスを評価します:
 
 . 先頭の `%h` を WeeChat ホームディレクトリで置換し、
-. 先頭の `~` をユーザのホームディレクトリで置換し
+. 先頭の `+~+` をユーザのホームディレクトリで置換し
   (<<_string_expand_home,weechat_string_expand_home>> を実行し)、
 . 変数を評価します
   (<<_string_eval_expression,weechat_string_eval_expression>> を参照してください)。
@@ -952,12 +952,12 @@ char *weechat_string_eval_path_home (const char *path,
 
 引数:
 
-* 'path': パス
-* 'pointers': 関数に渡されるハッシュテーブル
+* _path_: パス
+* _pointers_: 関数に渡されるハッシュテーブル
   <<_string_eval_expression,weechat_string_eval_expression>>
-* 'extra_vars': 関数に渡されるハッシュテーブル
+* _extra_vars_: 関数に渡されるハッシュテーブル
   <<_string_eval_expression,weechat_string_eval_expression>>
-* 'options': 関数に渡されるハッシュテーブル
+* _options_: 関数に渡されるハッシュテーブル
   <<_string_eval_expression,weechat_string_eval_expression>>
 
 戻り値:
@@ -1000,8 +1000,8 @@ char *weechat_string_remove_quotes (const char *string, const char *quotes);
 
 引数:
 
-* 'string': 文字列
-* 'quotes': 引用符号のリストを含む文字列
+* _string_: 文字列
+* _quotes_: 引用符号のリストを含む文字列
 
 戻り値:
 
@@ -1035,10 +1035,10 @@ char *weechat_string_strip (const char *string, int left, int right,
 
 引数:
 
-* 'string': 文字列
-* 'left': 0 以外の場合は左側の文字を削除
-* 'right': 0 以外の場合は右側の文字を削除
-* 'chars': 削除する文字を含む文字列
+* _string_: 文字列
+* _left_: 0 以外の場合は左側の文字を削除
+* _right_: 0 以外の場合は右側の文字を削除
+* _chars_: 削除する文字を含む文字列
 
 戻り値:
 
@@ -1062,20 +1062,20 @@ _WeeChat バージョン 1.0 以上で利用可。_
 
 エスケープ文字を値に変換:
 
-* `\"`: 二重引用符
-* `\\`: バックスラッシュ
-* `\a`: アラート (BEL)
-* `\b`: バックスペース
-* `\e`: エスケープ
-* `\f`: 改ページ
-* `\n`: 改行
-* `\r`: キャリッジリターン
-* `\t`: 水平タブ
-* `\v`: 垂直タブ
-* `\0ooo`: 文字の 8 進数表現 (ooo は 0 桁から 3 桁)
-* `\xhh`: 文字の 16 進数表現 (hh は 1 桁から 2 桁)
-* `\uhhhh`: ユニコード文字の 16 進数表現 (hhhh は 1 桁から 4 桁)
-* `\Uhhhhhhhh`: ユニコード文字の 16 進数表現 (hhhhhhhh は 1 桁から 8 桁)
+* `+\"+`: 二重引用符
+* `+\\+`: バックスラッシュ
+* `+\a+`: アラート (BEL)
+* `+\b+`: バックスペース
+* `+\e+`: エスケープ
+* `+\f+`: 改ページ
+* `+\n+`: 改行
+* `+\r+`: キャリッジリターン
+* `+\t+`: 水平タブ
+* `+\v+`: 垂直タブ
+* `+\0ooo+`: 文字の 8 進数表現 (`ooo` は 0 桁から 3 桁)
+* `+\xhh+`: 文字の 16 進数表現 (`hh` は 1 桁から 2 桁)
+* `+\uhhhh+`: ユニコード文字の 16 進数表現 (`hhhh` は 1 桁から 4 桁)
+* `+\Uhhhhhhhh+`: ユニコード文字の 16 進数表現 (`hhhhhhhh` は 1 桁から 8 桁)
 
 プロトタイプ:
 
@@ -1086,7 +1086,7 @@ char *weechat_string_convert_escaped_chars (const char *string);
 
 引数:
 
-* 'string': 文字列
+* _string_: 文字列
 
 戻り値:
 
@@ -1109,7 +1109,7 @@ free (str);
 ==== string_mask_to_regex
 
 マスクから正規表現を作りこれを返す、マスク用の特殊文字は
-"`*`" のみ。これ以外の文字はすべてエスケープされます。
+`+*+` のみ。これ以外の文字はすべてエスケープされます。
 
 プロトタイプ:
 
@@ -1120,7 +1120,7 @@ char *weechat_string_mask_to_regex (const char *mask);
 
 引数:
 
-* 'mask': マスク
+* _mask_: マスク
 
 戻り値:
 
@@ -1162,13 +1162,13 @@ const char *weechat_string_regex_flags (const char *regex, int default_flags, in
 
 引数:
 
-* 'regex': POSIX 拡張正規表現
-* 'default_flags': 以下の値を組み合わせたもの (`man regcomp` を参照):
+* _regex_: POSIX 拡張正規表現
+* _default_flags_: 以下の値を組み合わせたもの (`man regcomp` を参照):
 ** REG_EXTENDED
 ** REG_ICASE
 ** REG_NEWLINE
 ** REG_NOSUB
-* 'flags': ポインタ値は正規表現中で指定されたフラグと一緒にセットされます
+* _flags_: ポインタ値は正規表現中で指定されたフラグと一緒にセットされます
   (デフォルトのフラグ + 正規表現中で指定されたフラグ)
 
 フラグは必ず正規表現の最初につけてください。書式:
@@ -1176,14 +1176,14 @@ const char *weechat_string_regex_flags (const char *regex, int default_flags, in
 
 利用可能なフラグ:
 
-* 'e': POSIX 拡張正規表現 ('REG_EXTENDED')
-* 'i': 大文字小文字を区別しない ('REG_ICASE')
-* 'n': 任意の文字にマッチする演算子を改行文字にマッチさせない ('REG_NEWLINE')
-* 's': マッチした部分文字列の位置を使わない ('REG_NOSUB')
+* _e_: POSIX 拡張正規表現 (_REG_EXTENDED_)
+* _i_: 大文字小文字を区別しない (_REG_ICASE_)
+* _n_: 任意の文字にマッチする演算子を改行文字にマッチさせない (_REG_NEWLINE_)
+* _s_: マッチした部分文字列の位置を使わない (_REG_NOSUB_)
 
 戻り値:
 
-* 'regex' からフラグを除いた位置へのポインタ
+* _regex_ からフラグを除いた位置へのポインタ
 
 C 言語での使用例:
 
@@ -1215,9 +1215,9 @@ int weechat_string_regcomp (void *preg, const char *regex, int default_flags)
 
 引数:
 
-* 'preg': 'regex_t' 構造体へのポインタ
-* 'regex': POSIX 拡張正規表現
-* 'default_flags': 以下の値の組み合わせ (`man regcomp` を参照):
+* _preg_: _regex_t_ 構造体へのポインタ
+* _regex_: POSIX 拡張正規表現
+* _default_flags_: 以下の値の組み合わせ (`man regcomp` を参照):
 ** REG_EXTENDED
 ** REG_ICASE
 ** REG_NEWLINE
@@ -1256,8 +1256,8 @@ int weechat_string_has_highlight (const char *string,
 
 引数:
 
-* 'string': 文字列
-* 'highlight_words': ハイライトしたい単語のリスト、コンマ区切り
+* _string_: 文字列
+* _highlight_words_: ハイライトしたい単語のリスト、コンマ区切り
 
 戻り値:
 
@@ -1288,7 +1288,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 POSIX 拡張正規表現を使って、文字列中から正規表現にマッチする部分が 1
 つ以上あるか確認。 +
 文字列を正規表現にマッチさせるには、マッチする部分の前後に区切り文字
-(アルファベット、"-"、"_"、"|" 以外) がなければいけません。
+(アルファベット、`+-+`、`+_+`、`+|+` 以外) がなければいけません。
 
 プロトタイプ:
 
@@ -1299,8 +1299,8 @@ int weechat_string_has_highlight_regex (const char *string, const char *regex);
 
 引数:
 
-* 'string': 文字列
-* 'regex': POSIX 拡張正規表現
+* _string_: 文字列
+* _regex_: POSIX 拡張正規表現
 
 戻り値:
 
@@ -1338,13 +1338,13 @@ char *weechat_string_replace (const char *string, const char *search,
 
 引数:
 
-* 'string': 文字列
-* 'search': マッチさせる文字列
-* 'replace': 'search' を置き換える文字列
+* _string_: 文字列
+* _search_: マッチさせる文字列
+* _replace_: _search_ を置き換える文字列
 
 戻り値:
 
-* 'search' を 'replace' で置き換えた文字列
+* _search_ を _replace_ で置き換えた文字列
   (使用後には必ず "free" を呼び出して領域を開放してください)
 
 C 言語での使用例:
@@ -1377,24 +1377,24 @@ char *weechat_string_replace_regex (const char *string, void *regex,
 
 引数:
 
-* 'string': 文字列
-* 'regex': WeeChat 関数 <<_string_regcomp,weechat_string_regcomp>>
+* _string_: 文字列
+* _regex_: WeeChat 関数 <<_string_regcomp,weechat_string_regcomp>>
   または regcomp (`man regcomp` を参照)
-  でコンパイルした正規表現へのポインタ ('regex_t' 構造体)
-* 'replace': 置換先テキスト、以下のリファレンスを使うことができます:
-** `$0` から `$99`: 正規表現中の 0 から 99 番目のマッチ部分 (0
+  でコンパイルした正規表現へのポインタ (_regex_t_ 構造体)
+* _replace_: 置換先テキスト、以下のリファレンスを使うことができます:
+** `+$0+` から `+$99+`: 正規表現中の 0 から 99 番目のマッチ部分 (0
    はマッチする部分全体、1 から 99 は括弧で括られたグループ)
-** `$+`: 最後にマッチした部分 (最大の番号を持つマッチ部分)
-** `$.*N`: `*` で全ての文字を置換した `N` 番目 (`+` または `0` から `99` を使うことができます)
-   のマッチ部分 (`*` 文字は空白 (32) から `~` (126) までの任意の文字を使うことができます)
-* 'reference_char': マッチ部分を参照するための文字 (通常は '$')
-* 'callback': 'replace' に含まれる各リファレンスに対して呼び出される任意指定可能なコールバック関数
+** `+$++`: 最後にマッチした部分 (最大の番号を持つマッチ部分)
+** `+$.*N+`: `+*+` で全ての文字を置換した `+N+` 番目 (`+++` または `+0+` から `+99+` を使うことができます)
+   のマッチ部分 (`+*+` 文字は空白 (32) から `+~+` (126) までの任意の文字を使うことができます)
+* _reference_char_: マッチ部分を参照するための文字 (通常は `+$+`)
+* _callback_: _replace_ に含まれる各リファレンスに対して呼び出される任意指定可能なコールバック関数
   (マッチ部分を文字で置換する場合を除く); このコールバックは必ず以下の値を返してください:
 ** 新しく割り当てられた文字列: 文字列を置換先テキストとして使います
    (文字列は使用後に開放されます)
 ** NULL: コールバックに渡されたテキストを置換先テキストとして使います
    (文字列に変更を加えません)
-* 'callback_data': 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
 
 戻り値:
 
@@ -1437,15 +1437,15 @@ char **weechat_string_split (const char *string, const char *separators,
 
 引数:
 
-* 'string': 分割する文字列
-* 'separators': 分割に使う区切り文字
-* 'keep_eol':
+* _string_: 分割する文字列
+* _separators_: 分割に使う区切り文字
+* _keep_eol_:
 ** 0: 区切り文字ごとの文字列に分割
 ** 1: 文字列の最初から区切り文字までの文字列に分割 (下の例を参照)
 ** 2: 1 と同じだが、文字列の最後から区切り文字を削除しない
    _(WeeChat バージョン 0.3.6 以上で利用可)_
-* 'num_items_max': 分割回数の上限 (0 = 制限なし)
-* 'num_items': 分割回数を返す整数型変数へのポインタ
+* _num_items_max_: 分割回数の上限 (0 = 制限なし)
+* _num_items_: 分割回数を返す整数型変数へのポインタ
 
 戻り値:
 
@@ -1507,8 +1507,8 @@ char **weechat_string_split_shell (const char *string, int *num_items);
 
 引数:
 
-* 'string': 分割する文字列
-* 'num_items': 分割回数を返す整数型変数へのポインタ
+* _string_: 分割する文字列
+* _num_items_: 分割回数を返す整数型変数へのポインタ
 
 戻り値:
 
@@ -1547,7 +1547,7 @@ void weechat_string_free_split (char **split_string);
 
 引数:
 
-* 'split_string': 関数 <<_string_split,weechat_string_split>>
+* _split_string_: 関数 <<_string_split,weechat_string_split>>
   が返した分割文字列の配列
 
 C 言語での使用例:
@@ -1578,9 +1578,9 @@ char *weechat_string_build_with_split_string (char **split_string,
 
 引数:
 
-* 'split_string': 関数 <<_string_split,weechat_string_split>>
+* _split_string_: 関数 <<_string_split,weechat_string_split>>
   が返した分割文字列の配列
-* 'separator': 文字列を分割する区切り文字
+* _separator_: 文字列を分割する区切り文字
 
 戻り値:
 
@@ -1604,8 +1604,8 @@ free (str);
 
 ==== string_split_command
 
-'separator' でコマンドのリストを分割
-(コマンドに区切り文字を使う場合は "\" でエスケープ)。
+_separator_ でコマンドのリストを分割
+(コマンドに区切り文字を使う場合は `+\+` でエスケープ)。
 
 プロトタイプ:
 
@@ -1616,8 +1616,8 @@ char **weechat_string_split_command (const char *command, char separator);
 
 引数:
 
-* 'command': 分割するコマンド
-* 'separator': 区切り文字
+* _command_: 分割するコマンド
+* _separator_: 区切り文字
 
 戻り値:
 
@@ -1652,7 +1652,7 @@ void weechat_string_free_split_command (char **split_command);
 
 引数:
 
-* 'split_command': 関数 <<_string_split_command,weechat_string_split_command>>
+* _split_command_: 関数 <<_string_split_command,weechat_string_split_command>>
   が返す分割コマンドの配列
 
 C 言語での使用例:
@@ -1680,7 +1680,7 @@ char *weechat_string_format_size (unsigned long long size);
 
 引数:
 
-* 'size': サイズ (バイト単位)
+* _size_: サイズ (バイト単位)
 
 戻り値:
 
@@ -1730,8 +1730,8 @@ char *weechat_string_remove_color (const char *string,
 
 引数:
 
-* 'string': 文字列
-* 'replacement': NULL または空文字列でなければ、WeeChat
+* _string_: 文字列
+* _replacement_: NULL または空文字列でなければ、WeeChat
   色コードを指定した文字列の 1 文字目で置換、そうでなければ WeeChat
   色コードとそれに続く (色に関連する) 文字を文字列から削除
 
@@ -1780,9 +1780,9 @@ void weechat_string_encode_base64 (const char *from, int length, char *to);
 
 引数:
 
-* 'from': エンコード元文字列
-* 'length': エンコードする文字列の長さ (例えば `strlen(from)`)
-* 'to': エンコード結果を保存する文字列へのポインタ
+* _from_: エンコード元文字列
+* _length_: エンコードする文字列の長さ (例えば `strlen(from)`)
+* _to_: エンコード結果を保存する文字列へのポインタ
   (十分な領域を確保してください、結果はエンコード元文字列よりも長くなります)
 
 C 言語での使用例:
@@ -1812,13 +1812,13 @@ int weechat_string_decode_base64 (const char *from, char *to);
 
 引数:
 
-* 'from': デコード元文字列
-* 'to': デコード結果を保存する文字列へのポインタ
+* _from_: デコード元文字列
+* _to_: デコード結果を保存する文字列へのポインタ
   (十分な領域を確保してください、結果はデコード元文字列よりも短くなります)
 
 戻り値:
 
-* *to に保存された文字列の長さ (最後の '\0' は数えません)
+* _*to_ に保存された文字列の長さ (最後の _\0_ は数えません)
 
 C 言語での使用例:
 
@@ -1849,12 +1849,12 @@ char *string_hex_dump (const char *data, int data_size, int bytes_per_line,
 
 引数:
 
-* 'data': ダンプ対象のデータ
-* 'data_size': 'data' からダンプ対象にするバイト数
-* 'bytes_per_line': 各行に表示するバイト数
-* 'prefix': 各行の先頭に表示するプレフィックス
+* _data_: ダンプ対象のデータ
+* _data_size_: _data_ からダンプ対象にするバイト数
+* _bytes_per_line_: 各行に表示するバイト数
+* _prefix_: 各行の先頭に表示するプレフィックス
   (任意、NULL も可)
-* 'suffix': 各行の末尾に表示するサフィックス
+* _suffix_: 各行の末尾に表示するサフィックス
   (任意、NULL も可)
 
 戻り値:
@@ -1878,7 +1878,7 @@ char *dump = weechat_string_hex_dump (string, strlen (string), 8, " >> ", NULL);
 
 _WeeChat バージョン 0.3.2 以上で利用可。_
 
-文字列の 1 文字目がコマンド文字か確認 (デフォルトのコマンド文字は '/')。
+文字列の 1 文字目がコマンド文字か確認 (デフォルトのコマンド文字は `+/+`)。
 
 プロトタイプ:
 
@@ -1889,7 +1889,7 @@ int weechat_string_is_command_char (const char *string);
 
 引数:
 
-* 'string': 文字列
+* _string_: 文字列
 
 戻り値:
 
@@ -1931,7 +1931,7 @@ const char *weechat_string_input_for_buffer (const char *string);
 
 引数:
 
-* 'string': 文字列
+* _string_: 文字列
 
 戻り値:
 
@@ -1982,28 +1982,28 @@ char *weechat_string_eval_expression (const char *expr,
 
 引数:
 
-* 'expr': 評価する式 (以下の表を参照)
-* 'pointers': ポインタを含むハッシュテーブル (キーは文字列、値はポインタ);
+* _expr_: 評価する式 (以下の表を参照)
+* _pointers_: ポインタを含むハッシュテーブル (キーは文字列、値はポインタ);
   (現在のウィンドウやバッファへのポインタを持つ) ハッシュテーブルが "window" と
   "buffer" ポインタを持たない場合はこれらは自動的に追加される (NULL でも可):
-** 'regex': WeeChat 関数 <<_string_regcomp,weechat_string_regcomp>>
+** _regex_: WeeChat 関数 <<_string_regcomp,weechat_string_regcomp>>
    または regcomp (`man regcomp` を参照) でコンパイル済みの正規表現へのポインタ
-   ('regex_t' 構造体); このオプションは (以下の) ハッシュテーブル構造体 'options'
-   メンバの 'regex' とよく似ていますが、より高速に動作します
-* 'extra_vars': 展開される追加変数 (NULL でも可)
-* 'options': いくつかのオプションを含むハッシュテーブル (キーと値は必ず文字列)
+   (_regex_t_ 構造体); このオプションは (以下の) ハッシュテーブル構造体 _options_
+   メンバの _regex_ とよく似ていますが、より高速に動作します
+* _extra_vars_: 展開される追加変数 (NULL でも可)
+* _options_: いくつかのオプションを含むハッシュテーブル (キーと値は必ず文字列)
   (NULL でも可):
-** 'type':
+** _type_:
    デフォルトの挙動では式中の変数をその値で置換するだけです、その他に以下のタイプを使うことができます:
-*** 'condition': 条件式として式を評価します:
+*** _condition_: 条件式として式を評価します:
     演算子と括弧が使われます、結果はブール値 ("0" または "1") です
-** 'prefix': 置換する変数のプレフィックス (デフォルト: "${")
-** 'suffix': 置換する変数のサフィックス (デフォルト: "}")
-** 'regex': 'expr' のテキストを置換する正規表現
-   (この場合 'expr' は評価されません)
-** 'regex_replace': 'regex' と一緒に使われる置換テキスト、'expr'
-   に含まれるテキストを置換する ('regex_replace' は、'expr' 内で
-   'regex' 引数にマッチする部分が見つからなくなるまで、毎回評価されます)
+** _prefix_: 置換する変数のプレフィックス (デフォルト: `+${+`)
+** _suffix_: 置換する変数のサフィックス (デフォルト: `+}+`)
+** _regex_: _expr_ のテキストを置換する正規表現
+   (この場合 _expr_ は評価されません)
+** _regex_replace_: _regex_ と一緒に使われる置換テキスト、_expr_
+   に含まれるテキストを置換する (_regex_replace_ は、_expr_ 内で
+   _regex_ 引数にマッチする部分が見つからなくなるまで、毎回評価されます)
 
 戻り値:
 
@@ -2017,7 +2017,7 @@ char *weechat_string_eval_expression (const char *expr,
 |===
 | 書式 | 説明 | 例 | 結果
 
-| `${name}` | 'extra_vars' の変数 `name` の値に展開 |
+| `${name}` | _extra_vars_ の変数 `name` の値に展開 |
   `${name}` | `value`
 
 | `${eval:xxx}` +
@@ -2040,8 +2040,8 @@ char *weechat_string_eval_expression (const char *expr,
  `********`
 
 | `${re:N}` |
-  正規表現のキャプチャグループ: 0 = マッチするすべての文字列、1 から 99 =
-  キャプチャされたグループ、`+` = 最後にキャプチャされたグループ |
+  正規表現のキャプチャグループ: `0` = マッチするすべての文字列、`1` から `99` =
+  キャプチャされたグループ、`+++` = 最後にキャプチャされたグループ |
   `${re:1}` |
   `test`
 
@@ -2186,7 +2186,7 @@ int weechat_utf8_has_8bits (const char *string);
 
 引数:
 
-* 'string': 文字列
+* _string_: 文字列
 
 戻り値:
 
@@ -2220,10 +2220,10 @@ int weechat_utf8_is_valid (const char *string, int length, char **error);
 
 引数:
 
-* 'string': 文字列
-* 'length': 確認する UTF-8 文字の最大文字数; これを 0 以下に設定した場合、文字列中のすべての文字を確認します
+* _string_: 文字列
+* _length_: 確認する UTF-8 文字の最大文字数; これを 0 以下に設定した場合、文字列中のすべての文字を確認します
   _(WeeChat バージョン 1.4 以上で利用可)_
-* 'error': NULL でない場合は '*error'
+* _error_: NULL でない場合は _*error_
   は文字列に含まれる最初の妥当でない UTF-8 文字へのポインタ
 
 戻り値:
@@ -2261,8 +2261,8 @@ void weechat_utf8_normalize (char *string, char replacement);
 
 引数:
 
-* 'string': 文字列
-* 'replacement': 非 UTF-8 文字を置き換える文字
+* _string_: 文字列
+* _replacement_: 非 UTF-8 文字を置き換える文字
 
 C 言語での使用例:
 
@@ -2290,14 +2290,14 @@ const char *weechat_utf8_prev_char (const char *string_start,
 
 引数:
 
-* 'string_start': 文字列の開始位置へのポインタ
+* _string_start_: 文字列の開始位置へのポインタ
   (関数はこのポインタよりも前の文字を返しません)
-* 'string': 文字列へのポインタ (必ず 'string_start' 以上の値)
+* _string_: 文字列へのポインタ (必ず _string_start_ 以上の値)
 
 戻り値:
 
 * 1 つ前の UTF-8 文字へのポインタ、見つからなければ (文字列の開始位置に到達した場合は) NULL
-  (_WeeChat バージョン 1.3 以上の場合_: 返されるポインタは 'const char *' であり、'char *' ではありません)
+  (_WeeChat バージョン 1.3 以上の場合_: 返されるポインタは _const char *_ であり、_char *_ ではありません)
 
 C 言語での使用例:
 
@@ -2324,12 +2324,12 @@ const char *weechat_utf8_next_char (const char *string);
 
 引数:
 
-* 'string': 文字列
+* _string_: 文字列
 
 戻り値:
 
 * 1 つ後の UTF-8 文字へのポインタ、見つからなければ (文字列の最後に到達した場合は) NULL
-  (_WeeChat バージョン 1.3 以上の場合_: 返されるポインタは 'const char *' であり、'char *' ではありません)
+  (_WeeChat バージョン 1.3 以上の場合_: 返されるポインタは _const char *_ であり、_char *_ ではありません)
 
 C 言語での使用例:
 
@@ -2354,7 +2354,7 @@ int weechat_utf8_char_int (const char *string);
 
 引数:
 
-* 'string': 文字列
+* _string_: 文字列
 
 戻り値:
 
@@ -2383,7 +2383,7 @@ int weechat_utf8_char_size (const char *string);
 
 引数:
 
-* 'string': 文字列
+* _string_: 文字列
 
 戻り値:
 
@@ -2412,7 +2412,7 @@ int weechat_utf8_strlen (const char *string);
 
 引数:
 
-* 'string': 文字列
+* _string_: 文字列
 
 戻り値:
 
@@ -2430,7 +2430,7 @@ int length = weechat_utf8_strlen ("chêne");  /* == 5 */
 
 ==== utf8_strnlen
 
-文字列の 'bytes' バイト目までに含まれる UTF-8 文字列の長さを返す (UTF-8 文字の個数)。
+文字列の _bytes_ バイト目までに含まれる UTF-8 文字列の長さを返す (UTF-8 文字の個数)。
 
 プロトタイプ:
 
@@ -2441,8 +2441,8 @@ int weechat_utf8_strnlen (const char *string, int bytes);
 
 引数:
 
-* 'string': 文字列
-* 'bytes': バイト数の上限
+* _string_: 文字列
+* _bytes_: バイト数の上限
 
 戻り値:
 
@@ -2471,7 +2471,7 @@ int weechat_utf8_strlen_screen (const char *string);
 
 引数:
 
-* 'string': 文字列
+* _string_: 文字列
 
 戻り値:
 
@@ -2502,8 +2502,8 @@ int weechat_utf8_charcmp (const char *string1, const char *string2);
 
 引数:
 
-* 'string1': 1 番目の比較文字列
-* 'string2': 2 番目の比較文字列
+* _string1_: 1 番目の比較文字列
+* _string2_: 2 番目の比較文字列
 
 戻り値:
 
@@ -2536,8 +2536,8 @@ int weechat_utf8_charcasecmp (const char *string1, const char *string2);
 
 引数:
 
-* 'string1': 1 番目の比較文字列
-* 'string2': 2 番目の比較文字列
+* _string1_: 1 番目の比較文字列
+* _string2_: 2 番目の比較文字列
 
 戻り値:
 
@@ -2568,7 +2568,7 @@ int weechat_utf8_char_size_screen (const char *string);
 
 引数:
 
-* 'string': 文字列
+* _string_: 文字列
 
 戻り値:
 
@@ -2599,13 +2599,13 @@ const char *weechat_utf8_add_offset (const char *string, int offset);
 
 引数:
 
-* 'string': 文字列
-* 'offset': 文字数
+* _string_: 文字列
+* _offset_: 文字数
 
 戻り値:
 
 * 文字列の N 文字後に進んだ位置へのポインタ (元文字列の最後より後の位置を指す場合は NULL)
-  (_WeeChat バージョン 1.3 以上の場合_: 返されるポインタは 'const char *' であり、'char *' ではありません)
+  (_WeeChat バージョン 1.3 以上の場合_: 返されるポインタは _const char *_ であり、_char *_ ではありません)
 
 C 言語での使用例:
 
@@ -2631,8 +2631,8 @@ int weechat_utf8_real_pos (const char *string, int pos);
 
 引数:
 
-* 'string': 文字列
-* 'pos': 位置 (文字目)
+* _string_: 文字列
+* _pos_: 位置 (文字目)
 
 戻り値:
 
@@ -2661,8 +2661,8 @@ int weechat_utf8_pos (const char *string, int real_pos);
 
 引数:
 
-* 'string': 文字列
-* 'real_pos': 真の位置 (バイト単位)
+* _string_: 文字列
+* _real_pos_: 真の位置 (バイト単位)
 
 戻り値:
 
@@ -2680,7 +2680,7 @@ int pos = weechat_utf8_pos ("chêne", 4);  /* == 3 */
 
 ==== utf8_strndup
 
-最長 'length' 文字の複製された文字列を返す。
+最長 _length_ 文字の複製された文字列を返す。
 
 プロトタイプ:
 
@@ -2691,8 +2691,8 @@ char *weechat_utf8_strndup (const char *string, int length);
 
 引数:
 
-* 'string': 文字列
-* 'length': 複製する文字数の最大値
+* _string_: 文字列
+* _length_: 複製する文字数の最大値
 
 戻り値:
 
@@ -2728,8 +2728,8 @@ int weechat_mkdir_home (char *directory, int mode);
 
 引数:
 
-* 'directory': 作成するディレクトリの名前
-* 'mode': ディレクトリのモード
+* _directory_: 作成するディレクトリの名前
+* _mode_: ディレクトリのモード
 
 戻り値:
 
@@ -2769,8 +2769,8 @@ int weechat_mkdir (char *directory, int mode);
 
 引数:
 
-* 'directory': 作成するディレクトリの名前
-* 'mode': ディレクトリのモード
+* _directory_: 作成するディレクトリの名前
+* _mode_: ディレクトリのモード
 
 戻り値:
 
@@ -2810,8 +2810,8 @@ int weechat_mkdir_parents (char *directory, int mode);
 
 引数:
 
-* 'directory': 作成するディレクトリの名前
-* 'mode': ディレクトリのモード
+* _directory_: 作成するディレクトリの名前
+* _mode_: ディレクトリのモード
 
 戻り値:
 
@@ -2857,12 +2857,12 @@ void weechat_exec_on_files (const char *directory,
 
 引数:
 
-* 'directory': ファイルを検索するディレクトリ
-* 'hidden_files': 検索対象に隠しファイルを含める場合は 1、含めない場合は 0
-* 'callback': 各ファイルに対して呼び出すコールバック関数、引数:
-** 'void *data': ポインタ
-** 'const char *filename': 見つかったファイルの名前
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* _directory_: ファイルを検索するディレクトリ
+* _hidden_files_: 検索対象に隠しファイルを含める場合は 1、含めない場合は 0
+* _callback_: 各ファイルに対して呼び出すコールバック関数、引数:
+** _void *data_: ポインタ
+** _const char *filename_: 見つかったファイルの名前
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
 
 C 言語での使用例:
 
@@ -2894,7 +2894,7 @@ char *weechat_file_get_content (const char *filename);
 
 引数:
 
-* 'filename': パスやファイル名
+* _filename_: パスやファイル名
 
 戻り値:
 
@@ -2932,8 +2932,8 @@ int weechat_util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 
 引数:
 
-* 'tv1': 1 番目の "timeval" 構造体
-* 'tv2': 2 番目の "timeval" 構造体
+* _tv1_: 1 番目の "timeval" 構造体
+* _tv2_: 2 番目の "timeval" 構造体
 
 戻り値:
 
@@ -2969,8 +2969,8 @@ long long weechat_util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 
 引数:
 
-* 'tv1': 1 番目の "timeval" 構造体
-* 'tv2': 2 番目の "timeval" 構造体
+* _tv1_: 1 番目の "timeval" 構造体
+* _tv2_: 2 番目の "timeval" 構造体
 
 戻り値:
 
@@ -3004,8 +3004,8 @@ void weechat_util_timeval_add (struct timeval *tv, long long interval);
 
 引数:
 
-* 'tv': timeval 構造体
-* 'interval': 時間間隔 (マイクロ秒単位)
+* _tv_: timeval 構造体
+* _interval_: 時間間隔 (マイクロ秒単位)
 
 [NOTE]
 WeeChat バージョン 1.0 以前の場合、時間間隔の単位はミリ秒でした。
@@ -3025,7 +3025,7 @@ weechat_util_timeval_add (&tv, 2000000);  /* add 2 seconds */
 _WeeChat バージョン 0.3.2 以上で利用可、バージョン 1.3 で更新。_
 
 日付/時刻を "strftime" で作った文字列として取得します。書式は
-'weechat.look.time_format' で定義されています。
+_weechat.look.time_format_ で定義されています。
 
 プロトタイプ:
 
@@ -3036,7 +3036,7 @@ const char *weechat_util_get_time_string (const time_t *date);
 
 引数:
 
-* 'date': 日付へのポインタ
+* _date_: 日付へのポインタ
 
 戻り値:
 
@@ -3069,7 +3069,7 @@ int weechat_util_version_number (const char *version);
 
 引数:
 
-* 'version': WeeChat バージョン文字列 (例: "0.3.9" や "0.3.9-dev")
+* _version_: WeeChat バージョン文字列 (例: "0.3.9" や "0.3.9-dev")
 
 C 言語での使用例:
 
@@ -3138,13 +3138,13 @@ struct t_weelist_item *weechat_list_add (struct t_weelist *weelist,
 
 引数:
 
-* 'weelist': リストへのポインタ
-* 'data': リストに追加するデータ
-* 'where': データを追加する場所:
-** 'WEECHAT_LIST_POS_SORT': リストに追加、リストをソートされた状態を保持
-** 'WEECHAT_LIST_POS_BEGINNING': リストの最初に追加
-** 'WEECHAT_LIST_POS_END': リストの最後に追加
-* 'user_data': 任意のポインタ
+* _weelist_: リストへのポインタ
+* _data_: リストに追加するデータ
+* _where_: データを追加する場所:
+** _WEECHAT_LIST_POS_SORT_: リストに追加、リストをソートされた状態を保持
+** _WEECHAT_LIST_POS_BEGINNING_: リストの最初に追加
+** _WEECHAT_LIST_POS_END_: リストの最後に追加
+* _user_data_: 任意のポインタ
 
 戻り値:
 
@@ -3183,8 +3183,8 @@ struct t_weelist_item *weechat_list_search (struct t_weelist *weelist,
 
 引数:
 
-* 'weelist': リストへのポインタ
-* 'data': リストから検索するデータ
+* _weelist_: リストへのポインタ
+* _data_: リストから検索するデータ
 
 戻り値:
 
@@ -3224,8 +3224,8 @@ int weechat_list_search_pos (struct t_weelist *weelist,
 
 引数:
 
-* 'weelist': リストへのポインタ
-* 'data': リストから検索するデータ
+* _weelist_: リストへのポインタ
+* _data_: リストから検索するデータ
 
 戻り値:
 
@@ -3263,8 +3263,8 @@ struct t_weelist_item *weechat_list_casesearch (struct t_weelist *weelist,
 
 引数:
 
-* 'weelist': リストへのポインタ
-* 'data': リストから検索するデータ
+* _weelist_: リストへのポインタ
+* _data_: リストから検索するデータ
 
 戻り値:
 
@@ -3304,8 +3304,8 @@ int weechat_list_casesearch_pos (struct t_weelist *weelist,
 
 引数:
 
-* 'weelist': リストへのポインタ
-* 'data': リストから検索するデータ
+* _weelist_: リストへのポインタ
+* _data_: リストから検索するデータ
 
 戻り値:
 
@@ -3343,8 +3343,8 @@ struct t_weelist_item *weechat_list_get (struct t_weelist *weelist,
 
 引数:
 
-* 'weelist': リストへのポインタ
-* 'position': リスト中の位置 (1 番目の要素は 0)
+* _weelist_: リストへのポインタ
+* _position_: リスト中の位置 (1 番目の要素は 0)
 
 戻り値:
 
@@ -3381,8 +3381,8 @@ void weechat_list_set (struct t_weelist_item *item, const char *value);
 
 引数:
 
-* 'item': 要素へのポインタ
-* 'value': 要素にセットする新しい値
+* _item_: 要素へのポインタ
+* _value_: 要素にセットする新しい値
 
 C 言語での使用例:
 
@@ -3415,7 +3415,7 @@ struct t_weelist_item *weechat_list_next (struct t_weelist_item *item);
 
 引数:
 
-* 'item': 要素へのポインタ
+* _item_: 要素へのポインタ
 
 戻り値:
 
@@ -3452,7 +3452,7 @@ struct t_weelist_item *weechat_list_prev (struct t_weelist_item *item);
 
 引数:
 
-* 'item': 要素へのポインタ
+* _item_: 要素へのポインタ
 
 戻り値:
 
@@ -3489,7 +3489,7 @@ const char *weechat_list_string (struct t_weelist_item *item);
 
 引数:
 
-* 'item': 要素へのポインタ
+* _item_: 要素へのポインタ
 
 戻り値:
 
@@ -3526,7 +3526,7 @@ char *weechat_list_size (struct t_weelist *weelist);
 
 引数:
 
-* 'weelist': 要素へのポインタ
+* _weelist_: 要素へのポインタ
 
 戻り値:
 
@@ -3564,8 +3564,8 @@ void weechat_list_remove (struct t_weelist *weelist,
 
 引数:
 
-* 'weelist': リストへのポインタ
-* 'item': 要素へのポインタ
+* _weelist_: リストへのポインタ
+* _item_: 要素へのポインタ
 
 C 言語での使用例:
 
@@ -3598,7 +3598,7 @@ void weechat_list_remove_all (struct t_weelist *weelist);
 
 引数:
 
-* 'weelist': リストへのポインタ
+* _weelist_: リストへのポインタ
 
 C 言語での使用例:
 
@@ -3631,7 +3631,7 @@ void weechat_list_free (struct t_weelist *weelist);
 
 引数:
 
-* 'weelist': リストへのポインタ
+* _weelist_: リストへのポインタ
 
 C 言語での使用例:
 
@@ -3678,37 +3678,37 @@ struct t_hashtable *weechat_hashtable_new (int size,
 
 引数:
 
-* 'size':
+* _size_:
   ハッシュキーを保存している内部配列のサイズ、値が大きければ多くのメモリを使う反面パフォーマンスがよくなります
   (これはハッシュテーブルの要素数の上限を決めるもの*ではありません*)
-* 'type_keys': ハッシュテーブルのキーの種類:
-** 'WEECHAT_HASHTABLE_INTEGER'
-** 'WEECHAT_HASHTABLE_STRING'
-** 'WEECHAT_HASHTABLE_POINTER'
-** 'WEECHAT_HASHTABLE_BUFFER'
-** 'WEECHAT_HASHTABLE_TIME'
-* 'type_values': ハッシュテーブルの値の種類:
-** 'WEECHAT_HASHTABLE_INTEGER'
-** 'WEECHAT_HASHTABLE_STRING'
-** 'WEECHAT_HASHTABLE_POINTER'
-** 'WEECHAT_HASHTABLE_BUFFER'
-** 'WEECHAT_HASHTABLE_TIME'
-* 'callback_hash_key': キーを「ハッシュ化」する (キーを整数値にする)
+* _type_keys_: ハッシュテーブルのキーの種類:
+** _WEECHAT_HASHTABLE_INTEGER_
+** _WEECHAT_HASHTABLE_STRING_
+** _WEECHAT_HASHTABLE_POINTER_
+** _WEECHAT_HASHTABLE_BUFFER_
+** _WEECHAT_HASHTABLE_TIME_
+* _type_values_: ハッシュテーブルの値の種類:
+** _WEECHAT_HASHTABLE_INTEGER_
+** _WEECHAT_HASHTABLE_STRING_
+** _WEECHAT_HASHTABLE_POINTER_
+** _WEECHAT_HASHTABLE_BUFFER_
+** _WEECHAT_HASHTABLE_TIME_
+* _callback_hash_key_: キーを「ハッシュ化」する (キーを整数値にする)
   際のコールバック関数、キーの種類が "buffer" 以外の場合、コールバックは
   NULL でも可 (デフォルトのハッシュ関数を使います)、引数と戻り値:
-** 'struct t_hashtable *hashtable': ハッシュテーブルへのポインタ
-** 'const void *key': キー
+** _struct t_hashtable *hashtable_: ハッシュテーブルへのポインタ
+** _const void *key_: キー
 ** 戻り値: キーのハッシュ値
-* 'callback_keycmp': 2 つのキーを比較する際のコールバック関数、キーの種類が
+* _callback_keycmp_: 2 つのキーを比較する際のコールバック関数、キーの種類が
   "buffer" 以外の場合、コールバックは NULL でも可
   (デフォルトの比較関数を使います)、引数と戻り値:
-** 'struct t_hashtable *hashtable': ハッシュテーブルへのポインタ
-** 'const void *key1': 1 番目のキー
-** 'const void *key2': 2 番目のキー
+** _struct t_hashtable *hashtable_: ハッシュテーブルへのポインタ
+** _const void *key1_: 1 番目のキー
+** _const void *key2_: 2 番目のキー
 ** 戻り値:
-*** 'key1' が 'key2' より小さい場合は負
-*** 'key1' が 'key2' と同じ場合はゼロ
-*** 'key1' が 'key2' より大きい場合は正
+*** _key1_ が _key2_ より小さい場合は負
+*** _key1_ が _key2_ と同じ場合はゼロ
+*** _key1_ が _key2_ より大きい場合は正
 
 戻り値:
 
@@ -3745,12 +3745,12 @@ struct t_hashtable_item *weechat_hashtable_set_with_size (struct t_hashtable *ha
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
-* 'key': キーへのポインタ
-* 'key_size': キーのサイズ (バイト単位)、ハッシュテーブルのキーの種類が
+* _hashtable_: ハッシュテーブルへのポインタ
+* _key_: キーへのポインタ
+* _key_size_: キーのサイズ (バイト単位)、ハッシュテーブルのキーの種類が
   "buffer" の場合のみ使用
-* 'value': 値へのポインタ
-* 'value_size': 値のサイズ (バイト単位)、ハッシュテーブルの値の種類が
+* _value_: 値へのポインタ
+* _value_size_: 値のサイズ (バイト単位)、ハッシュテーブルの値の種類が
   "buffer" の場合のみ使用
 
 戻り値:
@@ -3784,9 +3784,9 @@ struct t_hashtable_item *weechat_hashtable_set (struct t_hashtable *hashtable,
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
-* 'key': キーへのポインタ
-* 'value': 値へのポインタ
+* _hashtable_: ハッシュテーブルへのポインタ
+* _key_: キーへのポインタ
+* _value_: 値へのポインタ
 
 戻り値:
 
@@ -3817,8 +3817,8 @@ void *weechat_hashtable_get (struct t_hashtable *hashtable, void *key);
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
-* 'key': キーへのポインタ
+* _hashtable_: ハッシュテーブルへのポインタ
+* _key_: キーへのポインタ
 
 戻り値:
 
@@ -3849,8 +3849,8 @@ int weechat_hashtable_has_key (struct t_hashtable *hashtable, void *key);
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
-* 'key': キーへのポインタ
+* _hashtable_: ハッシュテーブルへのポインタ
+* _key_: キーへのポインタ
 
 戻り値:
 
@@ -3890,9 +3890,9 @@ void weechat_hashtable_map (struct t_hashtable *hashtable,
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
-* 'callback_map': ハッシュテーブルの各のエントリに対して呼び出すコールバック関数
-* 'callback_map_data': 'callback_map' コールバックを呼び出す際のコールバックの結果保存先へのポインタ
+* _hashtable_: ハッシュテーブルへのポインタ
+* _callback_map_: ハッシュテーブルの各のエントリに対して呼び出すコールバック関数
+* _callback_map_data_: _callback_map_ コールバックを呼び出す際のコールバックの結果保存先へのポインタ
 
 C 言語での使用例:
 
@@ -3934,12 +3934,12 @@ void weechat_hashtable_map_string (struct t_hashtable *hashtable,
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
-* 'callback_map': ハッシュテーブルの各のエントリに対して呼び出すコールバック関数
-* 'callback_map_data': 'callback_map' コールバックを呼び出した際のコールバックの結果保存先へのポインタ
+* _hashtable_: ハッシュテーブルへのポインタ
+* _callback_map_: ハッシュテーブルの各のエントリに対して呼び出すコールバック関数
+* _callback_map_data_: _callback_map_ コールバックを呼び出した際のコールバックの結果保存先へのポインタ
 
 [NOTE]
-コールバックに渡される文字列 'key' と 'value'
+コールバックに渡される文字列 _key_ と _value_
 は一時的な文字列で、コールバックの呼び出しが終了したら削除されます。
 
 C 言語での使用例:
@@ -3976,7 +3976,7 @@ struct t_hashtable *weechat_hashtable_dup (struct t_hashtable *hashtable);
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
+* _hashtable_: ハッシュテーブルへのポインタ
 
 戻り値:
 
@@ -4008,10 +4008,10 @@ int weechat_hashtable_get_integer (struct t_hashtable *hashtable,
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
-* 'property': プロパティ名:
-** 'size': ハッシュテーブルの内部配列 "htable" のサイズ
-** 'items_count': ハッシュテーブルに含まれる要素の数
+* _hashtable_: ハッシュテーブルへのポインタ
+* _property_: プロパティ名:
+** _size_: ハッシュテーブルの内部配列 "htable" のサイズ
+** _items_count_: ハッシュテーブルに含まれる要素の数
 
 戻り値:
 
@@ -4043,26 +4043,26 @@ const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
-* 'property': プロパティ名:
-** 'type_keys': キーの型:
-*** 'integer': 整数
-*** 'string': 文字列
-*** 'pointer': ポインタ
-*** 'buffer': バッファ
-*** 'time': 時間
-** 'type_values': 値の型:
-*** 'integer': 整数
-*** 'string': 文字列
-*** 'pointer': ポインタ
-*** 'buffer': バッファ
-*** 'time': 時間
-** 'keys': キーのリストを含む文字列 (書式: "key1,key2,key3")
-** 'keys_sorted': ソートされたキーのリストを含む文字列 (書式: "key1,key2,key3")
-** 'values': 値のリストを含む文字列 (書式: "value1,value2,value3")
-** 'keys_values': リストのキーと値を含む文字列
+* _hashtable_: ハッシュテーブルへのポインタ
+* _property_: プロパティ名:
+** _type_keys_: キーの型:
+*** _integer_: 整数
+*** _string_: 文字列
+*** _pointer_: ポインタ
+*** _buffer_: バッファ
+*** _time_: 時間
+** _type_values_: 値の型:
+*** _integer_: 整数
+*** _string_: 文字列
+*** _pointer_: ポインタ
+*** _buffer_: バッファ
+*** _time_: 時間
+** _keys_: キーのリストを含む文字列 (書式: "key1,key2,key3")
+** _keys_sorted_: ソートされたキーのリストを含む文字列 (書式: "key1,key2,key3")
+** _values_: 値のリストを含む文字列 (書式: "value1,value2,value3")
+** _keys_values_: リストのキーと値を含む文字列
    (書式: "key1:value1,key2:value2,key3:value3")
-** 'keys_values_sorted': リストのキーと値を含む文字列 (キーでソート)
+** _keys_values_sorted_: リストのキーと値を含む文字列 (キーでソート)
    (書式: "key1:value1,key2:value2,key3:value3")
 
 戻り値:
@@ -4098,12 +4098,12 @@ void weechat_hashtable_set_pointer (struct t_hashtable *hashtable,
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
-* 'property': プロパティ名:
-** 'callback_free_key': ハッシュテーブルからキーを開放する際のコールバック関数
+* _hashtable_: ハッシュテーブルへのポインタ
+* _property_: プロパティ名:
+** _callback_free_key_: ハッシュテーブルからキーを開放する際のコールバック関数
    _(WeeChat バージョン 0.4.2 以上で利用可)_
-** 'callback_free_value': ハッシュテーブルから値を開放する際のコールバック関数
-* 'pointer': プロパティの新しいポインタ値
+** _callback_free_value_: ハッシュテーブルから値を開放する際のコールバック関数
+* _pointer_: プロパティの新しいポインタ値
 
 C 言語での使用例:
 
@@ -4145,9 +4145,9 @@ int weechat_hashtable_add_to_infolist (struct t_hashtable *hashtable,
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
-* 'infolist_item': インフォリスト要素へのポインタ
-* 'prefix': インフォリストで名前のプレフィックスとして使う文字列
+* _hashtable_: ハッシュテーブルへのポインタ
+* _infolist_item_: インフォリスト要素へのポインタ
+* _prefix_: インフォリストで名前のプレフィックスとして使う文字列
 
 戻り値:
 
@@ -4188,8 +4188,8 @@ void weechat_hashtable_remove (struct t_hashtable *hashtable, const void *key);
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
-* 'key': キーへのポインタ
+* _hashtable_: ハッシュテーブルへのポインタ
+* _key_: キーへのポインタ
 
 C 言語での使用例:
 
@@ -4216,7 +4216,7 @@ void weechat_hashtable_remove_all (struct t_hashtable *hashtable);
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
+* _hashtable_: ハッシュテーブルへのポインタ
 
 C 言語での使用例:
 
@@ -4243,7 +4243,7 @@ void weechat_hashtable_free (struct t_hashtable *hashtable);
 
 引数:
 
-* 'hashtable': ハッシュテーブルへのポインタ
+* _hashtable_: ハッシュテーブルへのポインタ
 
 C 言語での使用例:
 
@@ -4280,19 +4280,19 @@ struct t_config_file *weechat_config_new (const char *name,
 
 引数:
 
-* 'name': 設定ファイルの名前 (パスと拡張子は不要)
-* 'callback_reload': `/reload` で設定ファイルを再読み込みする際に呼び出すコールバック関数
+* _name_: 設定ファイルの名前 (パスと拡張子は不要)
+* _callback_reload_: `/reload` で設定ファイルを再読み込みする際に呼び出すコールバック関数
   (任意、NULL でも可)、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_config_file *config_file': 設定ファイルへのポインタ
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_config_file *config_file_: 設定ファイルへのポインタ
 ** 戻り値:
-*** 'WEECHAT_CONFIG_READ_OK'
-*** 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
-*** 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
-* 'callback_reload_pointer': WeeChat が 'callback_reload'
+*** _WEECHAT_CONFIG_READ_OK_
+*** _WEECHAT_CONFIG_READ_MEMORY_ERROR_
+*** _WEECHAT_CONFIG_READ_FILE_NOT_FOUND_
+* _callback_reload_pointer_: WeeChat が _callback_reload_
   コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_reload_data': WeeChat が 'callback_reload' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_reload_data_: WeeChat が _callback_reload_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成した設定ファイルが開放された時点で自動的に開放されます
 
@@ -4394,96 +4394,96 @@ struct t_config_section *weechat_config_new_section (
 
 引数:
 
-* 'config_file': 設定ファイルへのポインタ
-* 'name': セクションの名前
-* 'user_can_add_options':
+* _config_file_: 設定ファイルへのポインタ
+* _name_: セクションの名前
+* _user_can_add_options_:
   ユーザがこのセクションに新しいオプションを作成することを許可する場合は 1、禁止する場合は 0
-* 'user_can_delete_options':
+* _user_can_delete_options_:
   ユーザがこのセクションからオプションを削除することを許可する場合は 1、禁止する場合は 0
-* 'callback_read': このセクションに含まれるオプションがディスクから読まれた際に呼び出すコールバック関数
+* _callback_read_: このセクションに含まれるオプションがディスクから読まれた際に呼び出すコールバック関数
   (特別な関数を使ってセクションを読み出す必要がある場合を除いて、殆どの場合は
   NULL を指定する)、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_config_file *config_file': 設定ファイルへのポインタ
-** 'struct t_config_section *section': セクションへのポインタ
-** 'const char *option_name': オプションの名前
-** 'const char *value': 値
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_config_file *config_file_: 設定ファイルへのポインタ
+** _struct t_config_section *section_: セクションへのポインタ
+** _const char *option_name_: オプションの名前
+** _const char *value_: 値
 ** 戻り値:
-*** 'WEECHAT_CONFIG_READ_OK'
-*** 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
-*** 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
-* 'callback_read_pointer': WeeChat が 'callback_read'
+*** _WEECHAT_CONFIG_READ_OK_
+*** _WEECHAT_CONFIG_READ_MEMORY_ERROR_
+*** _WEECHAT_CONFIG_READ_FILE_NOT_FOUND_
+* _callback_read_pointer_: WeeChat が _callback_read_
   コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_read_data': WeeChat が 'callback_read' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_read_data_: WeeChat が _callback_read_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したセクションが開放された時点で自動的に開放されます
-* 'callback_write': セクションをファイルに書き込む際に呼び出すコールバック関数
+* _callback_write_: セクションをファイルに書き込む際に呼び出すコールバック関数
   (特別な関数を使ってセクションを書き込む必要がある場合を除いて、殆どの場合は
   NULL を指定する)、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_config_file *config_file': 設定ファイルへのポインタ
-** 'const char *section_name': セクションの名前
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_config_file *config_file_: 設定ファイルへのポインタ
+** _const char *section_name_: セクションの名前
 ** 戻り値:
-*** 'WEECHAT_CONFIG_WRITE_OK'
-*** 'WEECHAT_CONFIG_WRITE_ERROR'
-*** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
-* 'callback_write_pointer': WeeChat が 'callback_write'
+*** _WEECHAT_CONFIG_WRITE_OK_
+*** _WEECHAT_CONFIG_WRITE_ERROR_
+*** _WEECHAT_CONFIG_WRITE_MEMORY_ERROR_
+* _callback_write_pointer_: WeeChat が _callback_write_
   コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_write_data': WeeChat が 'callback_write' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_write_data_: WeeChat が _callback_write_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したセクションが開放された時点で自動的に開放されます
-* 'callback_write_default':
+* _callback_write_default_:
   セクションのデフォルト値が必ずファイルに書き込まれる際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_config_file *config_file': 設定ファイルへのポインタ
-** 'const char *section_name': セクションの名前
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_config_file *config_file_: 設定ファイルへのポインタ
+** _const char *section_name_: セクションの名前
 ** 戻り値:
-*** 'WEECHAT_CONFIG_WRITE_OK'
-*** 'WEECHAT_CONFIG_WRITE_ERROR'
-*** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
-* 'callback_write_default_pointer': WeeChat が 'callback_write_default'
+*** _WEECHAT_CONFIG_WRITE_OK_
+*** _WEECHAT_CONFIG_WRITE_ERROR_
+*** _WEECHAT_CONFIG_WRITE_MEMORY_ERROR_
+* _callback_write_default_pointer_: WeeChat が _callback_write_default_
   コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_write_default_data': WeeChat が 'callback_write_default' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_write_default_data_: WeeChat が _callback_write_default_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したセクションが開放された時点で自動的に開放されます
-* 'callback_create_option': セクションに新しいオプションを作成する際に呼び出すコールバック関数
+* _callback_create_option_: セクションに新しいオプションを作成する際に呼び出すコールバック関数
   (セクションに新しいオプションを作成することを禁止する場合は
   NULL)、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_config_file *config_file': 設定ファイルへのポインタ
-** 'struct t_config_section *section': セクションへのポインタ
-** 'const char *option_name': オプションの名前
-** 'const char *value': 値
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_config_file *config_file_: 設定ファイルへのポインタ
+** _struct t_config_section *section_: セクションへのポインタ
+** _const char *option_name_: オプションの名前
+** _const char *value_: 値
 ** 戻り値:
-*** 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED'
-*** 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
-*** 'WEECHAT_CONFIG_OPTION_SET_ERROR'
-*** 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND'
-* 'callback_create_option_pointer': WeeChat が 'callback_create_option'
+*** _WEECHAT_CONFIG_OPTION_SET_OK_CHANGED_
+*** _WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE_
+*** _WEECHAT_CONFIG_OPTION_SET_ERROR_
+*** _WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND_
+* _callback_create_option_pointer_: WeeChat が _callback_create_option_
   コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_create_option_data': WeeChat が 'callback_create_option' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_create_option_data_: WeeChat が _callback_create_option_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したセクションが開放された時点で自動的に開放されます
-* 'callback_delete_option': セクションからオプションを削除する際に呼び出すコールバック関数
+* _callback_delete_option_: セクションからオプションを削除する際に呼び出すコールバック関数
   (セクションからオプションを削除することを禁止する場合は
   NULL)、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_config_file *config_file': 設定ファイルへのポインタ
-** 'struct t_config_section *section': セクションへのポインタ
-** 'struct t_config_option *option': オプションへのポインタ
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_config_file *config_file_: 設定ファイルへのポインタ
+** _struct t_config_section *section_: セクションへのポインタ
+** _struct t_config_option *option_: オプションへのポインタ
 ** 戻り値:
-*** 'WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET'
-*** 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET'
-*** 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED'
-*** 'WEECHAT_CONFIG_OPTION_UNSET_ERROR'
-* 'callback_delete_option_pointer': WeeChat が 'callback_delete_option'
+*** _WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET_
+*** _WEECHAT_CONFIG_OPTION_UNSET_OK_RESET_
+*** _WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED_
+*** _WEECHAT_CONFIG_OPTION_UNSET_ERROR_
+* _callback_delete_option_pointer_: WeeChat が _callback_delete_option_
   コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_delete_option_data': WeeChat が 'callback_delete_option' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_delete_option_data_: WeeChat が _callback_delete_option_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、ポインタはここで作成したセクションが開放された時点で自動的に開放されます
 
@@ -4641,8 +4641,8 @@ struct t_config_section *weechat_config_search_section (
 
 引数:
 
-* 'config_file': 設定ファイルへのポインタ
-* 'section_name': 検索するセクションの名前
+* _config_file_: 設定ファイルへのポインタ
+* _section_name_: 検索するセクションの名前
 
 戻り値:
 
@@ -4709,58 +4709,58 @@ struct t_config_option *weechat_config_new_option (
 
 引数:
 
-* 'config_file': 設定ファイルへのポインタ
-* 'section': セクションへのポインタ
-* 'name': オプションの名前; WeeChat バージョン 1.4 以上の場合、名前には親オプションの名前を含めることも可能です
+* _config_file_: 設定ファイルへのポインタ
+* _section_: セクションへのポインタ
+* _name_: オプションの名前; WeeChat バージョン 1.4 以上の場合、名前には親オプションの名前を含めることも可能です
   (このオプションが "null" の場合、親オプションの値が `/set`
   コマンドの出力に表示されます)。以下の構文を使ってください:
   "name << file.section.option"
-* 'type': オプションの型:
-** 'boolean': ブール値 (on/off)
-** 'integer': 整数値 (任意で文字列を受けるようにすることも可)
-** 'string': 文字列
-** 'color': 色
-* 'description': オプションの説明
-* 'string_values': 文字列で値を受ける
-  ("|" で区切る)、'integer' 型の場合に使う (任意)
-* 'min': 最小値 ('integer' 型で有効)
-* 'max': 最大値 ('integer' 型で有効)
-* 'default_value': オプションのデフォルト値 (オプションをリセットした際に使われる)
-* 'value': オプションの値
-* 'null_value_allowed': オプションに 'null' (未定義値)
+* _type_: オプションの型:
+** _boolean_: ブール値 (on/off)
+** _integer_: 整数値 (任意で文字列を受けるようにすることも可)
+** _string_: 文字列
+** _color_: 色
+* _description_: オプションの説明
+* _string_values_: 文字列で値を受ける
+  (`+|+` で区切る)、_integer_ 型の場合に使う (任意)
+* _min_: 最小値 (_integer_ 型で有効)
+* _max_: 最大値 (_integer_ 型で有効)
+* _default_value_: オプションのデフォルト値 (オプションをリセットした際に使われる)
+* _value_: オプションの値
+* _null_value_allowed_: オプションに _null_ (未定義値)
   を設定することを許可する場合に 1、禁止する場合は 0
-* 'callback_check_value': オプションの新しい値をチェックする際に呼び出すコールバック関数
+* _callback_check_value_: オプションの新しい値をチェックする際に呼び出すコールバック関数
   (任意)、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_config_option *option': オプションへのポインタ
-** 'const char *value': オプションの新しい値
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_config_option *option_: オプションへのポインタ
+** _const char *value_: オプションの新しい値
 ** 戻り値:
 *** 値が有効の場合は 1
 *** 値が無効の場合は 0
-* 'callback_check_value_pointer': WeeChat が 'callback_check_value'
+* _callback_check_value_pointer_: WeeChat が _callback_check_value_
   コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_check_value_data': WeeChat が 'callback_check_value' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_check_value_data_: WeeChat が _callback_check_value_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したオプションが開放された時点で自動的に開放されます
-* 'callback_change': オプションの値を変更した際に呼び出すコールバック関数
+* _callback_change_: オプションの値を変更した際に呼び出すコールバック関数
   (任意)、引数:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_config_option *option': オプションへのポインタ
-* 'callback_change_pointer': WeeChat が 'callback_change'
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_config_option *option_: オプションへのポインタ
+* _callback_change_pointer_: WeeChat が _callback_change_
   コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_change_data': WeeChat が 'callback_change' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_change_data_: WeeChat が _callback_change_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したオプションが開放された時点で自動的に開放されます
-* 'callback_delete': オプションを削除する前に際に呼び出すコールバック関数
+* _callback_delete_: オプションを削除する前に際に呼び出すコールバック関数
   (任意)、引数:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_config_option *option': オプションへのポインタ
-* 'callback_delete_pointer': WeeChat が 'callback_delete'
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_config_option *option_: オプションへのポインタ
+* _callback_delete_pointer_: WeeChat が _callback_delete_
   コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_delete_data': WeeChat が 'callback_delete' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_delete_data_: WeeChat が _callback_delete_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したオプションが開放された時点で自動的に開放されます
 
@@ -4901,7 +4901,7 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 [NOTE]
 Ruby では、3 組のコールバックとデータ (合わせて 6 つの文字列) を渡すために必ず 6 つの文字列をからなる配列を
 1 つ渡してください (これは Ruby が 関数に 15 個以上の引数を渡せないことが原因です)、より詳しい内容は
-'WeeChat スクリプト作成ガイド' を参照してください _(WeeChat バージョン 0.4.1 で修正済み)_ 。
+_WeeChat スクリプト作成ガイド_ を参照してください _(WeeChat バージョン 0.4.1 で修正済み)_ 。
 
 ==== config_search_option
 
@@ -4919,9 +4919,9 @@ struct t_config_option *weechat_config_search_option (
 
 引数:
 
-* 'config_file': 設定ファイルへのポインタ
-* 'section': セクションへのポインタ
-* 'name': 検索するオプションの名前
+* _config_file_: 設定ファイルへのポインタ
+* _section_: セクションへのポインタ
+* _name_: 検索するオプションの名前
 
 戻り値:
 
@@ -4963,12 +4963,12 @@ void weechat_config_search_section_option (struct t_config_file *config_file,
 
 引数:
 
-* 'config_file': 設定ファイルへのポインタ
-* 'section': セクションへのポインタ
-* 'option_name': オプション名
-* 'section_found':
+* _config_file_: 設定ファイルへのポインタ
+* _section_: セクションへのポインタ
+* _option_name_: オプション名
+* _section_found_:
   セクションへのポインタへのポインタ、これは見つかったオプションのセクションになります
-* 'option_found':
+* _option_found_:
   オプションへのポインタへのポインタ、これは見つかったオプションのへのポインタになります
 
 C 言語での使用例:
@@ -5013,14 +5013,14 @@ void weechat_config_search_with_string (const char *option_name,
 
 引数:
 
-* 'option_name': オプションの完全な名前 (書式: "file.section.option")
-* 'config_file':
+* _option_name_: オプションの完全な名前 (書式: "file.section.option")
+* _config_file_:
   設定ファイルへのポインタへのポインタ、これは見つかったオプションの設定ファイルへのポインタになります
-* 'section':
+* _section_:
   セクションへのポインタのポインタ、これは見つかったオプションのセクションになります
-* 'option':
+* _option_:
   オプションへのポインタのポインタ、これは見つかったオプションへのポインタになります
-* 'pos_option_name':
+* _pos_option_name_:
   文字列へのポインタへのポインタ、これはオプション名へのポインタになります
 
 C 言語での使用例:
@@ -5063,7 +5063,7 @@ int weechat_config_string_to_boolean (const char *text);
 
 引数:
 
-* 'text': チェックするテキスト
+* _text_: チェックするテキスト
 
 戻り値:
 
@@ -5110,15 +5110,15 @@ int weechat_config_option_reset (struct t_config_option *option,
 
 引数:
 
-* 'option': オプションへのポインタ
-* 'run_callback': オプションを変更する際に、コールバックを呼び出す場合は
+* _option_: オプションへのポインタ
+* _run_callback_: オプションを変更する際に、コールバックを呼び出す場合は
   1、呼び出さない場合は 0
 
 戻り値:
 
-* オプションの値がリセットされた場合は 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED'
-* 値が変更されなかった場合は 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
-* エラーが起きた場合は 'WEECHAT_CONFIG_OPTION_SET_ERROR'
+* オプションの値がリセットされた場合は _WEECHAT_CONFIG_OPTION_SET_OK_CHANGED_
+* 値が変更されなかった場合は _WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE_
+* エラーが起きた場合は _WEECHAT_CONFIG_OPTION_SET_ERROR_
 
 C 言語での使用例:
 
@@ -5169,16 +5169,16 @@ int weechat_config_option_set (struct t_config_option *option,
 
 引数:
 
-* 'option': オプションへのポインタ
-* 'value': オプションの新しい値
-* 'run_callback': オプションが変更された際に、'callback_change' コールバックを呼び出す場合は
+* _option_: オプションへのポインタ
+* _value_: オプションの新しい値
+* _run_callback_: オプションが変更された際に、_callback_change_ コールバックを呼び出す場合は
   1、呼び出さない場合は 0
 
 戻り値:
 
-* オプションの値が変更された場合は 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED'
-* 値が変更されなかった場合は 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
-* エラーが起きた場合は 'WEECHAT_CONFIG_OPTION_SET_ERROR'
+* オプションの値が変更された場合は _WEECHAT_CONFIG_OPTION_SET_OK_CHANGED_
+* 値が変更されなかった場合は _WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE_
+* エラーが起きた場合は _WEECHAT_CONFIG_OPTION_SET_ERROR_
 
 C 言語での使用例:
 
@@ -5229,8 +5229,8 @@ int weechat_config_option_set_null (struct t_config_option *option,
 
 引数:
 
-* 'option': オプションへのポインタ
-* 'run_callback': オプションが (null 以外の値に) 変更された際に、'callback_change'
+* _option_: オプションへのポインタ
+* _run_callback_: オプションが (null 以外の値に) 変更された際に、_callback_change_
   コールバックを呼び出す場合は 1、呼び出さない場合は 0
 
 [NOTE]
@@ -5239,9 +5239,9 @@ int weechat_config_option_set_null (struct t_config_option *option,
 
 戻り値:
 
-* オプション値が変更された場合は 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED'
-* 値が変更されなかった場合は 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
-* エラーが起きた場合は 'WEECHAT_CONFIG_OPTION_SET_ERROR'
+* オプション値が変更された場合は _WEECHAT_CONFIG_OPTION_SET_OK_CHANGED_
+* 値が変更されなかった場合は _WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE_
+* エラーが起きた場合は _WEECHAT_CONFIG_OPTION_SET_ERROR_
 
 C 言語での使用例:
 
@@ -5291,14 +5291,14 @@ int weechat_config_option_unset (struct t_config_option *option);
 
 引数:
 
-* 'option': オプションへのポインタ
+* _option_: オプションへのポインタ
 
 戻り値:
 
-* オプションの値がリセットされなかった場合は 'WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET'
-* オプションの値がリセットされた場合は 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET'
-* オプションが削除された場合は 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED'
-* エラーが起きた場合は 'WEECHAT_CONFIG_OPTION_UNSET_ERROR'
+* オプションの値がリセットされなかった場合は _WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET_
+* オプションの値がリセットされた場合は _WEECHAT_CONFIG_OPTION_UNSET_OK_RESET_
+* オプションが削除された場合は _WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED_
+* エラーが起きた場合は _WEECHAT_CONFIG_OPTION_UNSET_ERROR_
 
 C 言語での使用例:
 
@@ -5354,8 +5354,8 @@ void weechat_config_option_rename (struct t_config_option *option,
 
 引数:
 
-* 'option': オプションへのポインタ
-* 'new_name': オプションの新しい名前
+* _option_: オプションへのポインタ
+* _new_name_: オプションの新しい名前
 
 C 言語での使用例:
 
@@ -5389,21 +5389,21 @@ void *weechat_config_option_get_pointer (struct t_config_option *option,
 
 引数:
 
-* 'option': オプションへのポインタ
-* 'property': プロパティ名:
-** 'config_file': 設定ファイルへのポインタ ('struct t_config_file *')
-** 'section': セクションへのポインタ ('struct t_config_section *')
-** 'name': オプション名 ('char *')
-** 'parent_name': 親オプションの名前 ('char *') _(WeeChat バージョン 1.4 以上で利用可)_
-** 'type': オプションの型 ('int *')
-** 'description': オプションの説明 ('char *')
-** 'string_values': 文字列値 ('char *')
-** 'min': 最大値 ('int *')
-** 'max': 最小値 ('int *')
-** 'default_value': デフォルト値 (オプションの型に依存)
-** 'value': 現在の値 (オプションの型に依存)
-** 'prev_option': 1 つ前のオプションへのポインタ ('struct t_config_option *')
-** 'next_option': 1 つ後のオプションへのポインタ ('struct t_config_option *')
+* _option_: オプションへのポインタ
+* _property_: プロパティ名:
+** _config_file_: 設定ファイルへのポインタ (_struct t_config_file *_)
+** _section_: セクションへのポインタ (_struct t_config_section *_)
+** _name_: オプション名 (_char *_)
+** _parent_name_: 親オプションの名前 (_char *_) _(WeeChat バージョン 1.4 以上で利用可)_
+** _type_: オプションの型 (_int *_)
+** _description_: オプションの説明 (_char *_)
+** _string_values_: 文字列値 (_char *_)
+** _min_: 最大値 (_int *_)
+** _max_: 最小値 (_int *_)
+** _default_value_: デフォルト値 (オプションの型に依存)
+** _value_: 現在の値 (オプションの型に依存)
+** _prev_option_: 1 つ前のオプションへのポインタ (_struct t_config_option *_)
+** _next_option_: 1 つ後のオプションへのポインタ (_struct t_config_option *_)
 
 戻り値:
 
@@ -5432,7 +5432,7 @@ int weechat_config_option_is_null (struct t_config_option *option);
 
 引数:
 
-* 'option': オプションへのポインタ
+* _option_: オプションへのポインタ
 
 戻り値:
 
@@ -5478,7 +5478,7 @@ int weechat_config_option_default_is_null (struct t_config_option *option);
 
 引数:
 
-* 'option': オプションへのポインタ
+* _option_: オプションへのポインタ
 
 戻り値:
 
@@ -5524,14 +5524,14 @@ int weechat_config_boolean (struct t_config_option *option);
 
 引数:
 
-* 'option': オプションへのポインタ
+* _option_: オプションへのポインタ
 
 戻り値、オプションの型に依存:
 
-* 'boolean': オプションのブール値 (0 または 1)
-* 'integer': 0
-* 'string': 0
-* 'color': 0
+* _boolean_: オプションのブール値 (0 または 1)
+* _integer_: 0
+* _string_: 0
+* _color_: 0
 
 C 言語での使用例:
 
@@ -5574,14 +5574,14 @@ int weechat_config_boolean_default (struct t_config_option *option);
 
 引数:
 
-* 'option': オプションへのポインタ
+* _option_: オプションへのポインタ
 
 戻り値、オプションの型に依存:
 
-* 'boolean': オプションのデフォルトブール値 (0 または 1)
-* 'integer': 0
-* 'string': 0
-* 'color': 0
+* _boolean_: オプションのデフォルトブール値 (0 または 1)
+* _integer_: 0
+* _string_: 0
+* _color_: 0
 
 C 言語での使用例:
 
@@ -5624,14 +5624,14 @@ int weechat_config_integer (struct t_config_option *option);
 
 引数:
 
-* 'option': オプションへのポインタ
+* _option_: オプションへのポインタ
 
 戻り値、オプションの型に依存:
 
-* 'boolean': オプションのブール値 (0 または 1)
-* 'integer': オプションの整数値
-* 'string': 0
-* 'color': 色インデックス
+* _boolean_: オプションのブール値 (0 または 1)
+* _integer_: オプションの整数値
+* _string_: 0
+* _color_: 色インデックス
 
 C 言語での使用例:
 
@@ -5666,14 +5666,14 @@ int weechat_config_integer_default (struct t_config_option *option);
 
 引数:
 
-* 'option': オプションへのポインタ
+* _option_: オプションへのポインタ
 
 戻り値、オプションの型に依存:
 
-* 'boolean': オプションのデフォルトブール値 (0 または 1)
-* 'integer': オプションのデフォルト整数値
-* 'string': 0
-* 'color': デフォルト色インデックス
+* _boolean_: オプションのデフォルトブール値 (0 または 1)
+* _integer_: オプションのデフォルト整数値
+* _string_: 0
+* _color_: デフォルト色インデックス
 
 C 言語での使用例:
 
@@ -5708,15 +5708,15 @@ const char *weechat_config_string (struct t_config_option *option);
 
 引数:
 
-* 'option': オプションへのポインタ
+* _option_: オプションへのポインタ
 
 戻り値、オプションの型に依存:
 
-* 'boolean': 値が真の場合は "on"、それ以外の場合は "off"
-* 'integer': 値が文字列に対応付けられている場合はその文字列値、それ以外の場合は
+* _boolean_: 値が真の場合は "on"、それ以外の場合は "off"
+* _integer_: 値が文字列に対応付けられている場合はその文字列値、それ以外の場合は
   NULL
-* 'string': オプションの文字列値
-* 'color': 色名
+* _string_: オプションの文字列値
+* _color_: 色名
 
 C 言語での使用例:
 
@@ -5751,15 +5751,15 @@ const char *weechat_config_string_default (struct t_config_option *option);
 
 引数:
 
-* 'option': オプションへのポインタ
+* _option_: オプションへのポインタ
 
 戻り値、オプションの型に依存:
 
-* 'boolean': デフォルト値が真の場合は "on"、それ以外の場合は "off"
-* 'integer': デフォルト値が文字列に対応付けられている場合はその文字列値、それ以外の場合は
+* _boolean_: デフォルト値が真の場合は "on"、それ以外の場合は "off"
+* _integer_: デフォルト値が文字列に対応付けられている場合はその文字列値、それ以外の場合は
   NULL
-* 'string': オプションのデフォルト文字列値
-* 'color': デフォルト色名
+* _string_: オプションのデフォルト文字列値
+* _color_: デフォルト色名
 
 C 言語での使用例:
 
@@ -5794,14 +5794,14 @@ const char *weechat_config_color (struct t_config_option *option);
 
 引数:
 
-* 'option': オプションへのポインタ
+* _option_: オプションへのポインタ
 
 戻り値、オプションの型に依存:
 
-* 'boolean': NULL
-* 'integer': NULL
-* 'string': NULL
-* 'color': 色名
+* _boolean_: NULL
+* _integer_: NULL
+* _string_: NULL
+* _color_: 色名
 
 C 言語での使用例:
 
@@ -5836,14 +5836,14 @@ const char *weechat_config_color_default (struct t_config_option *option);
 
 引数:
 
-* 'option': オプションへのポインタ
+* _option_: オプションへのポインタ
 
 戻り値、オプションの型に依存:
 
-* 'boolean': NULL
-* 'integer': NULL
-* 'string': NULL
-* 'color': デフォルト色名
+* _boolean_: NULL
+* _integer_: NULL
+* _string_: NULL
+* _color_: デフォルト色名
 
 C 言語での使用例:
 
@@ -5880,8 +5880,8 @@ void weechat_config_write_option (struct t_config_file *config_file,
 
 引数:
 
-* 'config_file': 設定ファイルへのポインタ
-* 'option': オプションへのポインタ
+* _config_file_: 設定ファイルへのポインタ
+* _option_: オプションへのポインタ
 
 C 言語での使用例:
 
@@ -5930,9 +5930,9 @@ void weechat_config_write_line (struct t_config_file *config_file,
 
 引数:
 
-* 'config_file': 設定ファイルへのポインタ
-* 'option_name': オプション名
-* 'value': 値 (NULL の場合、セクション名の行を書き込みます。例:
+* _config_file_: 設定ファイルへのポインタ
+* _option_name_: オプション名
+* _value_: 値 (NULL の場合、セクション名の行を書き込みます。例:
   "[section]")
 
 C 言語での使用例:
@@ -5980,13 +5980,13 @@ int weechat_config_write (struct t_config_file *config_file);
 
 引数:
 
-* 'config_file': 設定ファイルへのポインタ
+* _config_file_: 設定ファイルへのポインタ
 
 戻り値:
 
-* 設定を書き込んだ場合は 'WEECHAT_CONFIG_WRITE_OK'
-* メモリ不足の場合は 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
-* その他のエラーが起きた場合は 'WEECHAT_CONFIG_WRITE_ERROR'
+* 設定を書き込んだ場合は _WEECHAT_CONFIG_WRITE_OK_
+* メモリ不足の場合は _WEECHAT_CONFIG_WRITE_MEMORY_ERROR_
+* その他のエラーが起きた場合は _WEECHAT_CONFIG_WRITE_ERROR_
 
 C 言語での使用例:
 
@@ -6036,13 +6036,13 @@ int weechat_config_read (struct t_config_file *config_file);
 
 引数:
 
-* 'config_file': 設定ファイルへのポインタ
+* _config_file_: 設定ファイルへのポインタ
 
 戻り値:
 
-* 設定ファイルを読み込んだ場合は 'WEECHAT_CONFIG_READ_OK'
-* メモリ不足の場合は 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
-* ファイルが見つからない場合は 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
+* 設定ファイルを読み込んだ場合は _WEECHAT_CONFIG_READ_OK_
+* メモリ不足の場合は _WEECHAT_CONFIG_READ_MEMORY_ERROR_
+* ファイルが見つからない場合は _WEECHAT_CONFIG_READ_FILE_NOT_FOUND_
 
 C 言語での使用例:
 
@@ -6092,13 +6092,13 @@ int weechat_config_reload (struct t_config_file *config_file);
 
 引数:
 
-* 'config_file': 設定ファイルへのポインタ
+* _config_file_: 設定ファイルへのポインタ
 
 戻り値:
 
-* 設定を再読み込みした場合は 'WEECHAT_CONFIG_READ_OK'
-* メモリ不足の合は 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
-* ファイルが見つからない場合は 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
+* 設定を再読み込みした場合は _WEECHAT_CONFIG_READ_OK_
+* メモリ不足の合は _WEECHAT_CONFIG_READ_MEMORY_ERROR_
+* ファイルが見つからない場合は _WEECHAT_CONFIG_READ_FILE_NOT_FOUND_
 
 C 言語での使用例:
 
@@ -6148,7 +6148,7 @@ void weechat_config_option_free (struct t_config_option *option);
 
 引数:
 
-* 'option': オプションへのポインタ
+* _option_: オプションへのポインタ
 
 C 言語での使用例:
 
@@ -6181,7 +6181,7 @@ void weechat_config_section_free_options (struct t_config_section *section);
 
 引数:
 
-* 'section': セクションへのポインタ
+* _section_: セクションへのポインタ
 
 C 言語での使用例:
 
@@ -6214,7 +6214,7 @@ void weechat_config_section_free (struct t_config_section *section);
 
 引数:
 
-* 'section': セクションへのポインタ
+* _section_: セクションへのポインタ
 
 C 言語での使用例:
 
@@ -6247,7 +6247,7 @@ void weechat_config_free (struct t_config_file *config_file);
 
 引数:
 
-* 'config_file': 設定ファイルへのポインタ
+* _config_file_: 設定ファイルへのポインタ
 
 C 言語での使用例:
 
@@ -6280,7 +6280,7 @@ struct t_config_option *weechat_config_get (const char *option_name);
 
 引数:
 
-* 'option_name': オプションの完全な名前 (書式: "file.section.option")
+* _option_name_: オプションの完全な名前 (書式: "file.section.option")
 
 戻り値:
 
@@ -6317,7 +6317,7 @@ const char *weechat_config_get_plugin (const char *option_name);
 
 引数:
 
-* 'option_name': オプション名、プレフィックス "plugins.var.xxx."
+* _option_name_: オプション名、プレフィックス "plugins.var.xxx."
   が自動的に付けられる (ここで "xxx" は現在のプラグイン名)。
 
 戻り値:
@@ -6357,7 +6357,7 @@ int weechat_config_is_set_plugin (const char *option_name);
 
 引数:
 
-* 'option_name': オプション名、プレフィックス "plugins.var.xxx."
+* _option_name_: オプション名、プレフィックス "plugins.var.xxx."
   が自動的に付けられる (ここで "xxx" は現在のプラグイン名)。
 
 戻り値:
@@ -6407,16 +6407,16 @@ int weechat_config_set_plugin (const char *option_name, const char *value);
 
 引数:
 
-* 'option_name': オプション名、プレフィックス "plugins.var.xxx."
+* _option_name_: オプション名、プレフィックス "plugins.var.xxx."
   が自動的に付けられる (ここで "xxx" は現在のプラグイン名)。
-* 'value': オプションの新しい値
+* _value_: オプションの新しい値
 
 戻り値:
 
-* オプションの値を変更した場合は 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED'
-* 値を変更しなかった場合は 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
-* オプションが見つからない場合は 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND'
-* その他のエラーが起きた場合は 'WEECHAT_CONFIG_OPTION_SET_ERROR'
+* オプションの値を変更した場合は _WEECHAT_CONFIG_OPTION_SET_OK_CHANGED_
+* 値を変更しなかった場合は _WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE_
+* オプションが見つからない場合は _WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND_
+* その他のエラーが起きた場合は _WEECHAT_CONFIG_OPTION_SET_ERROR_
 
 C 言語での使用例:
 
@@ -6474,9 +6474,9 @@ void weechat_config_set_desc_plugin (const char *option_name,
 
 引数:
 
-* 'option_name': オプション名、プレフィックス "plugins.var.xxx."
+* _option_name_: オプション名、プレフィックス "plugins.var.xxx."
   が自動的に付けられる (ここで "xxx" は現在のプラグイン名)。
-* 'description': オプションの説明
+* _description_: オプションの説明
 
 [NOTE]
 オプション (plugins.var.xxx.option_name)
@@ -6515,15 +6515,15 @@ int weechat_config_unset_plugin (const char *option_name);
 
 引数:
 
-* 'option_name': オプション名、プレフィックス "plugins.var.xxx."
+* _option_name_: オプション名、プレフィックス "plugins.var.xxx."
   が自動的に付けられる (ここで "xxx" は現在のプラグイン名)。
 
 戻り値:
 
-* オプションの値をリセットしなかった場合は 'WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET'
-* オプションの値をリセットした場合は 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET'
-* オプションを削除した場合は 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED'
-* エラーが起きた場合は 'WEECHAT_CONFIG_OPTION_UNSET_ERROR'
+* オプションの値をリセットしなかった場合は _WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET_
+* オプションの値をリセットした場合は _WEECHAT_CONFIG_OPTION_UNSET_OK_RESET_
+* オプションを削除した場合は _WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED_
+* エラーが起きた場合は _WEECHAT_CONFIG_OPTION_UNSET_ERROR_
 
 C 言語での使用例:
 
@@ -6590,12 +6590,12 @@ int weechat_key_bind (const char *context, struct t_hashtable *keys);
 
 引数:
 
-* 'context': キーのコンテキスト:
-** 'default': デフォルトコンテキスト (一般的な動作)
-** 'search': 検索コンテキスト (バッファ中のテキストを検索中)
-** 'cursor': 画面上のカーソルを自由に移動
-** 'mouse': マウスイベント用のキー
-* 'keys': キー割り当てを収めたハッシュテーブル
+* _context_: キーのコンテキスト:
+** _default_: デフォルトコンテキスト (一般的な動作)
+** _search_: 検索コンテキスト (バッファ中のテキストを検索中)
+** _cursor_: 画面上のカーソルを自由に移動
+** _mouse_: マウスイベント用のキー
+* _keys_: キー割り当てを収めたハッシュテーブル
 
 戻り値:
 
@@ -6652,9 +6652,9 @@ int weechat_key_unbind (const char *context, const char *key);
 
 引数:
 
-* 'context': キーのコンテキスト (<<_key_bind,weechat_key_bind>> を参照)
-* 'key': 削除するキーまたは特殊値 "area:XXX" で1 番目または 2
-  番目の領域から 'XXX' をもつすべてのキーを削除する
+* _context_: キーのコンテキスト (<<_key_bind,weechat_key_bind>> を参照)
+* _key_: 削除するキーまたは特殊値 "area:XXX" で1 番目または 2
+  番目の領域から _XXX_ をもつすべてのキーを削除する
 
 戻り値:
 
@@ -6705,7 +6705,7 @@ const char *weechat_prefix (const char *prefix);
 
 引数:
 
-* 'prefix': プレフィックスの名前 (以下の表を参照)
+* _prefix_: プレフィックスの名前 (以下の表を参照)
 
 戻り値:
 
@@ -6714,14 +6714,14 @@ const char *weechat_prefix (const char *prefix);
 
 List of prefixes:
 
-[width="70%",cols="^2e,^1,^3,5",options="header"]
+[width="70%",cols="^2m,^1,^3,5",options="header"]
 |===
-| プレフィックス | 値 | 色     | 説明
-| error   | `=!=` | yellow     | エラーメッセージ
-| network | `--`  | magenta    | ネットワークからのメッセージ
-| action  | `*`   | white      | 本人の動作
-| join    | `-->` | lightgreen | 誰かが現在のチャットに参加
-| quit    | `<--` | lightred   | 誰かが現在のチャットから退出
+| プレフィックス    | 値 | 色    | 説明
+| error   | `+=!=+` | yellow     | エラーメッセージ
+| network | `+--+`  | magenta    | ネットワークからのメッセージ
+| action  | `+*+`   | white      | 本人の動作
+| join    | `+-->+` | lightgreen | 誰かが現在のチャットに参加
+| quit    | `+<--+` | lightred   | 誰かが現在のチャットから退出
 |===
 
 [NOTE]
@@ -6758,49 +6758,49 @@ const char *weechat_color (const char *color_name);
 
 引数:
 
-* 'color_name': 色の名前、以下の中から 1 つ:
+* _color_name_: 色の名前、以下の中から 1 つ:
 ** WeeChat 色オプション名 (weechat.color.xxx の xxx)、例えば
-   'chat_delimiters'
+   _chat_delimiters_
 ** オプション名 (書式: file.section.option)、例えば
-   'irc.color.message_quit' (_WeeChat バージョン 1.2 以上で利用可_)
+   _irc.color.message_quit_ (_WeeChat バージョン 1.2 以上で利用可_)
 ** 任意で属性や背景色を指定した色 (以下を参照)
 ** 属性:
-*** 'bold': 太字を有効
-*** '-bold': 太字を無効
-*** 'reverse': 色反転を有効
-*** '-reverse': 色反転を削除
-*** 'italic': イタリックを有効
-*** '-italic': イタリックを無効
-*** 'underline': 下線を有効
-*** '-underline': 下線を無効
-*** 'emphasis': テキストの強調を切り替え (注意: WeeChat
+*** _bold_: 太字を有効
+*** _-bold_: 太字を無効
+*** _reverse_: 色反転を有効
+*** _-reverse_: 色反転を削除
+*** _italic_: イタリックを有効
+*** _-italic_: イタリックを無効
+*** _underline_: 下線を有効
+*** _-underline_: 下線を無効
+*** _emphasis_: テキストの強調を切り替え (注意: WeeChat
     はテキスト強調をバッファテキストを検索する際に使用するため、バー以外でこれを使わないでください。)
     _(WeeChat バージョン 0.4.2 以上で利用可)_
 ** バーの色名:
-*** 'bar_fg': バーのテキストの色
-*** 'bar_delim': バーの区切り文字の色
-*** 'bar_bg': バーの背景色
+*** _bar_fg_: バーのテキストの色
+*** _bar_delim_: バーの区切り文字の色
+*** _bar_bg_: バーの背景色
 ** リセット:
-*** 'reset': 色と属性をリセット
-*** 'resetcolor': 色をリセット (属性はリセットしない) _(WeeChat バージョン 0.3.6 以上で利用可)_
+*** _reset_: 色と属性をリセット
+*** _resetcolor_: 色をリセット (属性はリセットしない) _(WeeChat バージョン 0.3.6 以上で利用可)_
 
 色の書式: 属性 (任意) + 色名 + ",background"
 (任意)。以下の属性を使えます:
 
-* `*` : 太字
-* `!` : 色反転
-* `/` : イタリック
-* `_` : 下線
-* `|` : 属性を保存: 色を変更する際に太字/色反転/イタリック/下線の状態をリセットしない
+* `+*+` : 太字
+* `+!+` : 色反転
+* `+/+` : イタリック
+* `+_+` : 下線
+* `+|+` : 属性を保存: 色を変更する際に太字/色反転/イタリック/下線の状態をリセットしない
   _(WeeChat バージョン 0.3.6 以上で利用可)_
 
 例:
 
-* `yellow` : テキストを黄色に
-* `_green` : テキストに下線を引き、テキストを緑色に
-* `*214` : テキストを太字でオレンジ色に
-* `yellow,red` : テキストを黄色に、背景色を赤に
-* `|cyan` : テキストをシアンに (これよりも前に設定した属性は変えない)
+* `+yellow+` : テキストを黄色に
+* `+_green+` : テキストに下線を引き、テキストを緑色に
+* `+*214+` : テキストを太字でオレンジ色に
+* `+yellow,red+` : テキストを黄色に、背景色を赤に
+* `+|cyan+` : テキストをシアンに (これよりも前に設定した属性は変えない)
 
 戻り値:
 
@@ -6841,8 +6841,8 @@ void weechat_printf (struct t_gui_buffer *buffer, const char *message, ...);
 
 引数:
 
-* 'buffer': バッファへのポインタ、NULL の場合は WeeChat バッファにメッセージを表示
-* 'message': 表示するメッセージ
+* _buffer_: バッファへのポインタ、NULL の場合は WeeChat バッファにメッセージを表示
+* _message_: 表示するメッセージ
 
 [NOTE]
 メッセージに含まれる最初のタブ文字 ("\t") はメッセージのプレフィックスを分割するために使われます。 +
@@ -6900,9 +6900,9 @@ void weechat_printf_date (struct t_gui_buffer *buffer, time_t date,
 
 引数:
 
-* 'buffer': バッファへのポインタ、NULL の場合、メッセージは WeeChat バッファに表示
-* 'date': メッセージの日付 (0 は現在の日付/時間を意味する)
-* 'message': 表示するメッセージ
+* _buffer_: バッファへのポインタ、NULL の場合、メッセージは WeeChat バッファに表示
+* _date_: メッセージの日付 (0 は現在の日付/時間を意味する)
+* _message_: 表示するメッセージ
 
 C 言語での使用例:
 
@@ -6928,9 +6928,9 @@ void weechat_printf_tags (struct t_gui_buffer *buffer, const char *tags,
 
 引数:
 
-* 'buffer': バッファへのポインタ、NULL の場合、メッセージは WeeChat バッファに表示
-* 'tags': タグのコンマ区切りリスト
-* 'message': 表示するメッセージ
+* _buffer_: バッファへのポインタ、NULL の場合、メッセージは WeeChat バッファに表示
+* _tags_: タグのコンマ区切りリスト
+* _message_: 表示するメッセージ
 
 C 言語での使用例:
 
@@ -6957,10 +6957,10 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 
 引数:
 
-* 'buffer': バッファへのポインタ、NULL の場合、メッセージは WeeChat バッファに表示
-* 'date': メッセージの日付 (0 は現在の日付/時間を意味する)
-* 'tags': タグのコンマ区切りリスト
-* 'message': 表示するメッセージ
+* _buffer_: バッファへのポインタ、NULL の場合、メッセージは WeeChat バッファに表示
+* _date_: メッセージの日付 (0 は現在の日付/時間を意味する)
+* _tags_: タグのコンマ区切りリスト
+* _message_: 表示するメッセージ
 
 通常使用するタグ (一部抜粋したリスト):
 
@@ -7026,12 +7026,12 @@ void weechat_printf_y (struct t_gui_buffer *buffer, int y,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'y': 行番号 (1 行目は 0); 負数の場合は表示された最後の行の後に行を追加する:
-  'y' の絶対値で最後の行の後に追加する行数を指定 (例えば
+* _buffer_: バッファへのポインタ
+* _y_: 行番号 (1 行目は 0); 負数の場合は表示された最後の行の後に行を追加する:
+  _y_ の絶対値で最後の行の後に追加する行数を指定 (例えば
   -1 は最後の行のすぐ後、-2 は 最後の行の 2 行後)
   _(WeeChat バージョン 1.0 以上で利用可)_
-* 'message': 表示するメッセージ
+* _message_: 表示するメッセージ
 
 C 言語での使用例:
 
@@ -7067,7 +7067,7 @@ void weechat_log_printf (const char *message, ...);
 
 引数:
 
-* 'message': 書き込むメッセージ
+* _message_: 書き込むメッセージ
 
 C 言語での使用例:
 
@@ -7146,28 +7146,28 @@ struct t_hook *weechat_hook_command (const char *command,
 
 引数:
 
-* 'command': コマンド名
+* _command_: コマンド名
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-* 'description': コマンドの説明 (`/help command` で表示されます)
-* 'args': コマンドの引数 (`/help command` で表示されます)
-* 'args_description': 引数の説明 (`/help command` で表示されます)
-* 'completion': コマンドの補完候補テンプレート: 各引数に対する補完候補の空白区切りリスト。1
-  つの引数に対して複数の補完候補を設定するには補完候補同士を "|"
+* _description_: コマンドの説明 (`/help command` で表示されます)
+* _args_: コマンドの引数 (`/help command` で表示されます)
+* _args_description_: 引数の説明 (`/help command` で表示されます)
+* _completion_: コマンドの補完候補テンプレート: 各引数に対する補完候補の空白区切りリスト。1
+  つの引数に対して複数の補完候補を設定するには補完候補同士を `+|+`
   で区切ってください。1 つのコマンドに対して複数のテンプレートを設定するにはテンプレート同士を
-  "||" で区切ってください。
-* 'callback': コマンドが使用された際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_gui_buffer *buffer': コマンドを実行するバッファ
-** 'int argc': コマンドに渡す引数の個数
-** 'char **argv': コマンドに渡す引数
-** 'char **argv_eol': コマンドに渡す引数
+  `+||+` で区切ってください。
+* _callback_: コマンドが使用された際に呼び出すコールバック関数、引数と戻り値:
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_gui_buffer *buffer_: コマンドを実行するバッファ
+** _int argc_: コマンドに渡す引数の個数
+** _char **argv_: コマンドに渡す引数
+** _char **argv_eol_: コマンドに渡す引数
    (最初の引数から各引数までを収めた文字列)
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -7177,9 +7177,9 @@ include::autogen/plugin_api/completions.asciidoc[]
 
 特殊コード:
 
-* '%%command': コマンド 'command' と同じ補完候補テンプレートを使用
-* '%-': 補完の中止
-* '%*': 最後の補完候補を繰り返す
+* `+%%command+`: コマンド _command_ と同じ補完候補テンプレートを使用
+* `+%-+`: 補完の中止
+* `+%*+`: 最後の補完候補を繰り返す
 
 戻り値:
 
@@ -7215,20 +7215,20 @@ struct t_hook *my_command_hook =
 ----
 
 例えば、コマンドが `/command abc def ghi`
-のように実行された場合、'argv' と 'argv_eol' は以下のようになります:
+のように実行された場合、_argv_ と _argv_eol_ は以下のようになります:
 
-* 'argv':
-** 'argv[0]' == "/command"
-** 'argv[1]' == "abc"
-** 'argv[2]' == "def"
-** 'argv[3]' == "ghi"
-* 'argv_eol':
-** 'argv_eol[0]' == "/command abc def ghi"
-** 'argv_eol[1]' == "abc def ghi"
-** 'argv_eol[2]' == "def ghi"
-** 'argv_eol[3]' == "ghi"
+* _argv_:
+** _argv[0]_ == "/command"
+** _argv[1]_ == "abc"
+** _argv[2]_ == "def"
+** _argv[3]_ == "ghi"
+* _argv_eol_:
+** _argv_eol[0]_ == "/command abc def ghi"
+** _argv_eol[1]_ == "abc def ghi"
+** _argv_eol[2]_ == "def ghi"
+** _argv_eol[3]_ == "ghi"
 
-スクリプトでは、'args' は "abc def ghi" のようになります。
+スクリプトでは、_args_ は "abc def ghi" のようになります。
 
 スクリプト (Python) での使用例:
 
@@ -7276,24 +7276,24 @@ struct t_hook *weechat_hook_command_run (const char *command,
 
 引数:
 
-* 'command': フックするコマンド (ワイルドカード "*" を使うことができます)
+* _command_: フックするコマンド (ワイルドカード `+*+` を使うことができます)
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-* 'callback': コマンドが実行される際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_gui_buffer *buffer': コマンドを実行するバッファ
-** 'const char *command': 実行するコマンド、引数付き
+* _callback_: コマンドが実行される際に呼び出すコールバック関数、引数と戻り値:
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_gui_buffer *buffer_: コマンドを実行するバッファ
+** _const char *command_: 実行するコマンド、引数付き
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_OK_EAT'
-*** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_OK_EAT_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
 [NOTE]
-コールバックは 'WEECHAT_RC_OK' または 'WEECHAT_RC_OK_EAT'
+コールバックは _WEECHAT_RC_OK_ または _WEECHAT_RC_OK_EAT_
 (コールバックの後にコマンドを実行しない) を返すことができます。
 
 戻り値:
@@ -7354,20 +7354,20 @@ struct t_hook *weechat_hook_timer (long interval,
 
 引数:
 
-* 'interval': 2 つの呼び出し間隔 (ミリ秒、1000 = 1 秒)
-* 'align_second': 秒の調整。例えば、現在時刻が 09:00、
+* _interval_: 2 つの呼び出し間隔 (ミリ秒、1000 = 1 秒)
+* _align_second_: 秒の調整。例えば、現在時刻が 09:00、
   interval = 60000 (60 秒)、align_second = 60
   の場合、毎分 0 秒時にタイマを呼び出す
-* 'max_calls': タイマを呼び出す回数 (0 の場合、タイマを無限に呼び出す)
-* 'callback': 時間が来たら呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'int remaining_calls': 呼び出し残り回数 (タイマを無限に呼び出す場合は -1)
+* _max_calls_: タイマを呼び出す回数 (0 の場合、タイマを無限に呼び出す)
+* _callback_: 時間が来たら呼び出すコールバック関数、引数と戻り値:
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _int remaining_calls_: 呼び出し残り回数 (タイマを無限に呼び出す場合は -1)
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -7430,21 +7430,21 @@ struct t_hook *weechat_hook_fd (int fd,
 
 引数:
 
-* 'fd': ファイルディスクリプタ
-* 'flag_read': 1 = 読み込みイベントをキャッチ、0 = 無視
-* 'flag_write': 1 = 書き込みイベントをキャッチ、0 = 無視
-* 'flag_exception': 1 = 例外イベントをキャッチ、0 = 無視
+* _fd_: ファイルディスクリプタ
+* _flag_read_: 1 = 読み込みイベントをキャッチ、0 = 無視
+* _flag_write_: 1 = 書き込みイベントをキャッチ、0 = 無視
+* _flag_exception_: 1 = 例外イベントをキャッチ、0 = 無視
   (_WeeChat バージョン 1.3 以上の場合_: この引数は無視され、使われません)
-* 'callback': ファイル (またはソケット)
+* _callback_: ファイル (またはソケット)
   に対してキャッチしたいイベントが発生した場合に実行するコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'int fd': ファイルディスクリプタ
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _int fd_: ファイルディスクリプタ
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -7496,7 +7496,7 @@ WeeChat バージョン 0.3.9.2
 以上の場合、コマンドを実行するためにシェルを使わないようになりました。WeeChat
 が自動的にコマンドと引数を分割します (シェルがやっているように)。 +
 分割 (クォートに基づくコマンド分割)
-に失敗する場合、またはシェルを使いたい場合は、ハッシュテーブル 'options'
+に失敗する場合、またはシェルを使いたい場合は、ハッシュテーブル _options_
 に引数を入れて <<_hook_process_hashtable,weechat_hook_process_hashtable>>
 関数を使ってください _(WeeChat バージョン 0.4.0 以上で利用可)_ 。
 
@@ -7519,34 +7519,34 @@ struct t_hook *weechat_hook_process (const char *command,
 
 引数:
 
-* 'command': 子プロセスで実行するコマンド、URL _(WeeChat バージョン 0.3.7 以上で利用可)_
+* _command_: 子プロセスで実行するコマンド、URL _(WeeChat バージョン 0.3.7 以上で利用可)_
   または関数 _(WeeChat バージョン 1.5 以上で利用可)_ (下記参照)
-* 'timeout': コマンドのタイムアウト (ミリ秒):
+* _timeout_: コマンドのタイムアウト (ミリ秒):
   このタイムアウトを過ぎたら、子プロセスを kill します (タイムアウトさせない場合は 0)
-* 'callback':
+* _callback_:
   子プロセスからのデータが利用可能になるか、子プロセスが終了したら呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'const char *command': 子プロセスが実行するコマンド
-** 'int return_code': リターンコード:
-*** '>= 0': コマンドを実行した子プロセスのまたは URL に対するリターンコード。URL の場合に取り得る値は:
-**** '0': 転送に成功
-**** '1': 無効な URL
-**** '2': 転送エラー
-**** '3': メモリ不足
-**** '4': ファイルに関するエラー
-*** '< 0':
-**** 'WEECHAT_HOOK_PROCESS_RUNNING': データは利用可能だが子プロセスは終了していない
-**** 'WEECHAT_HOOK_PROCESS_ERROR': コマンドの起動中にエラー
-**** 'WEECHAT_HOOK_PROCESS_CHILD': 子プロセスからコールバックが呼び出された
-** 'out': コマンドの標準出力 (stdout)
-** 'err': コマンドの標準エラー出力 (stderr)
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _const char *command_: 子プロセスが実行するコマンド
+** _int return_code_: リターンコード:
+*** _>= 0_: コマンドを実行した子プロセスのまたは URL に対するリターンコード。URL の場合に取り得る値は:
+**** _0_: 転送に成功
+**** _1_: 無効な URL
+**** _2_: 転送エラー
+**** _3_: メモリ不足
+**** _4_: ファイルに関するエラー
+*** _< 0_:
+**** _WEECHAT_HOOK_PROCESS_RUNNING_: データは利用可能だが子プロセスは終了していない
+**** _WEECHAT_HOOK_PROCESS_ERROR_: コマンドの起動中にエラー
+**** _WEECHAT_HOOK_PROCESS_CHILD_: 子プロセスからコールバックが呼び出された
+** _out_: コマンドの標準出力 (stdout)
+** _err_: コマンドの標準エラー出力 (stderr)
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-*** 子プロセスのリターンコード ('command' に "func:" を指定して関数を実行した場合)
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+*** 子プロセスのリターンコード (_command_ に "func:" を指定して関数を実行した場合)
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -7561,14 +7561,14 @@ struct t_hook *weechat_hook_process (const char *command,
 の内容がダウンロードされます _(WeeChat バージョン 0.3.7 以上で利用可)_ 。<<_hook_process_hashtable,weechat_hook_process_hashtable>>
 関数を使えば URL に対してオプションを与えることもできます。
 
-'command' には関数名を指定することも可能です。"name" という関数を実行するには "func:name"
-のように指定します _(WeeChat バージョン 1.5 以上で利用可)_ 。ここで指定した関数 "name" は単独の引数 ('data')
-を受け取り、文字列を返すものでなければいけません。関数から返された文字列が 'callback' コールバックに送られます。 +
-C API の場合、'callback' コールバックが 'return_code' リターンコードに
-'WEECHAT_HOOK_PROCESS_CHILD' が設定された状態で呼び出されます。すなわち (フォークの後に)
-子プロセスが呼び出すのは関数 "name" ではなく 'callback' コールバックです。 +
+_command_ には関数名を指定することも可能です。"name" という関数を実行するには "func:name"
+のように指定します _(WeeChat バージョン 1.5 以上で利用可)_ 。ここで指定した関数 "name" は単独の引数 (_data_)
+を受け取り、文字列を返すものでなければいけません。関数から返された文字列が _callback_ コールバックに送られます。 +
+C API の場合、_callback_ コールバックが _return_code_ リターンコードに
+_WEECHAT_HOOK_PROCESS_CHILD_ が設定された状態で呼び出されます。すなわち (フォークの後に)
+子プロセスが呼び出すのは関数 "name" ではなく _callback_ コールバックです。 +
 スクリプト API の場合、子プロセスが呼び出すのは関数 "name" であり、関数 "name" の戻り値 (文字列) が
-'callback' コールバックに送られます (関数の戻り値は外部コマンドを実行した場合の出力と同様に取り扱われます)。
+_callback_ コールバックに送られます (関数の戻り値は外部コマンドを実行した場合の出力と同様に取り扱われます)。
 
 [TIP]
 WeeChat に関する情報 (例えば現在の安定版、最新の git コミット、...)
@@ -7738,7 +7738,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 引数は以下の追加引数を除いて
 <<_hook_process,weechat_hook_process>> 関数と同じです:
 
-* 'options': 実行するコマンドのオプション;
+* _options_: 実行するコマンドのオプション;
   ハッシュテーブルは関数の中で複製されるため、この関数を呼び出した後にハッシュテーブルを安全に開放できます。
 
 一般的なコマンド (最初に "url:" が付かないコマンド)
@@ -7753,7 +7753,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   任意の文字列 |
   コマンドの引数;
   このオプションを使って引数を渡さない場合、シェルと同じように引数を自動的に分割します
-  ('command' 引数からコマンド引数を読み込みます)
+  (_command_ 引数からコマンド引数を読み込みます)
 
 | stdin +
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
@@ -7771,7 +7771,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   _(WeeChat バージョン 1.0 以上で利用可)_ |
   (非使用) |
   detached モードでプロセスを実行: 標準出力と標準エラー出力を
-  '/dev/null' にリダイレクトする
+  _/dev/null_ にリダイレクトする
 |===
 
 "url:..." 型のコマンドでは、以下のコマンドを使うことができます
@@ -7785,8 +7785,8 @@ include::autogen/plugin_api/url_options.asciidoc[]
 
 URL では、入力/出力ファイル用に 2 つのオプション (文字列) を使うことができます:
 
-* 'file_in': 読み込んで URL に送信するファイル (ファイルを送信)
-* 'file_out': ダウンロードした URL/ファイルをこのファイルに書き込む
+* _file_in_: 読み込んで URL に送信するファイル (ファイルを送信)
+* _file_out_: ダウンロードした URL/ファイルをこのファイルに書き込む
   (標準出力を使わない)
 
 戻り値:
@@ -7951,51 +7951,51 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 
 引数:
 
-* 'proxy': 接続に使用するプロキシの名前
+* _proxy_: 接続に使用するプロキシの名前
   (任意、プロキシを使わない場合は NULL)
-* 'address': 接続先のドメイン名または IP アドレス
-* 'port': ポート番号
-* 'ipv6': (IPv4 フォールバックを有効にして) IPv6 を使う場合は 1、IPv4 のみを使う場合は 0
-* 'retry': 再試行回数、IPv6 ホストに接続したもののクライアントの受け入れに失敗した際に
+* _address_: 接続先のドメイン名または IP アドレス
+* _port_: ポート番号
+* _ipv6_: (IPv4 フォールバックを有効にして) IPv6 を使う場合は 1、IPv4 のみを使う場合は 0
+* _retry_: 再試行回数、IPv6 ホストに接続したもののクライアントの受け入れに失敗した際に
   IPv4 ホストへフォールバックする際に使う
-* 'gnutls_sess': GnuTLS セッション (任意)
-* 'gnutls_cb': GnuTLS コールバック (任意)
-* 'gnutls_dhkey_size': Diffie-Hellman
+* _gnutls_sess_: GnuTLS セッション (任意)
+* _gnutls_cb_: GnuTLS コールバック (任意)
+* _gnutls_dhkey_size_: Diffie-Hellman
   鍵交換の際に使う鍵のサイズ (GnuTLS)
-* 'gnutls_priorities': gnutls のプロパティ (構文は gnutls マニュアルの
-  'gnutls_priority_init' 関数を参照)、基本的な値を以下に示す:
-** 'PERFORMANCE'
-** 'NORMAL' (デフォルト)
-** 'SECURE128'
-** 'SECURE256'
-** 'EXPORT'
-** 'NONE'
-* 'local_hostname': 接続に使うローカルのホスト名前 (任意)
-* 'callback':
+* _gnutls_priorities_: gnutls のプロパティ (構文は gnutls マニュアルの
+  _gnutls_priority_init_ 関数を参照)、基本的な値を以下に示す:
+** _PERFORMANCE_
+** _NORMAL_ (デフォルト)
+** _SECURE128_
+** _SECURE256_
+** _EXPORT_
+** _NONE_
+* _local_hostname_: 接続に使うローカルのホスト名前 (任意)
+* _callback_:
   接続に成功および失敗した際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'int status': 接続状態:
-*** 'WEECHAT_HOOK_CONNECT_OK': 接続成功
-*** 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND': アドレスが見つかりません
-*** 'WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND': IP アドレスが見つかりません
-*** 'WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED': 接続が拒否されました
-*** 'WEECHAT_HOOK_CONNECT_PROXY_ERROR': プロキシに関するエラー
-*** 'WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR': ローカルのホスト名に関するエラー
-*** 'WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR': GnuTLS 初期化エラー
-*** 'WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR': GnuTLS ハンドシェイクエラー
-*** 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR': メモリ不足
-*** 'WEECHAT_HOOK_CONNECT_TIMEOUT': タイムアウト
-*** 'WEECHAT_HOOK_CONNECT_SOCKET_ERROR': ソケットの作成に失敗
-** 'gnutls_rc': 'gnutls_handshake()' の戻り値
-** 'sock': 接続に使うソケット
-** 'const char *error': 'gnutls_strerror(gnutls_rc)' の戻り値
-** 'const char *ip_address': 見つかった IP アドレス
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _int status_: 接続状態:
+*** _WEECHAT_HOOK_CONNECT_OK_: 接続成功
+*** _WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND_: アドレスが見つかりません
+*** _WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND_: IP アドレスが見つかりません
+*** _WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED_: 接続が拒否されました
+*** _WEECHAT_HOOK_CONNECT_PROXY_ERROR_: プロキシに関するエラー
+*** _WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR_: ローカルのホスト名に関するエラー
+*** _WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR_: GnuTLS 初期化エラー
+*** _WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR_: GnuTLS ハンドシェイクエラー
+*** _WEECHAT_HOOK_CONNECT_MEMORY_ERROR_: メモリ不足
+*** _WEECHAT_HOOK_CONNECT_TIMEOUT_: タイムアウト
+*** _WEECHAT_HOOK_CONNECT_SOCKET_ERROR_: ソケットの作成に失敗
+** _gnutls_rc_: _gnutls_handshake()_ の戻り値
+** _sock_: 接続に使うソケット
+** _const char *error_: _gnutls_strerror(gnutls_rc)_ の戻り値
+** _const char *ip_address_: 見つかった IP アドレス
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -8126,34 +8126,34 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ、NULL の場合、任意のバッファからのメッセージをキャッチする
-* 'tags': このタグが付けられたメッセージだけをキャッチする (任意):
+* _buffer_: バッファへのポインタ、NULL の場合、任意のバッファからのメッセージをキャッチする
+* _tags_: このタグが付けられたメッセージだけをキャッチする (任意):
 ** WeeChat バージョン 0.4.3 以上の場合: メッセージに付けられたタグのコンマ区切りリスト (論理 "or");
-   複数の条件を論理 "and" で組み合わせる場合は区切りに "+" を使ってください;
-   ワイルドカード "*" を使うことができます
+   複数の条件を論理 "and" で組み合わせる場合は区切りに `+++` を使ってください;
+   ワイルドカード `+*+` を使うことができます
 ** WeeChat バージョン 0.4.2 以下の場合: 論理 "and"
    で組み合わせたタグのコンマ区切りリスト
-* 'message': この文字列を含むメッセージだけをキャッチする
+* _message_: この文字列を含むメッセージだけをキャッチする
   (任意、大文字小文字を区別しない)
-* 'strip_colors': 1
+* _strip_colors_: 1
   の場合、コールバックを呼ぶ前に、表示されるメッセージから色を削除する
-* 'callback':
+* _callback_:
   メッセージが表示される際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_gui_buffer *buffer': バッファへのポインタ
-** 'time_t date': 日付
-** 'int tags_count': 行に付けられたタグの個数
-** 'const char **tags': 行に付けられたタグの配列
-** 'int displayed': 行が表示される場合は 1、フィルタされる (隠される) 場合は 0
-** 'int highlight': 行がハイライトされる場合は 1、ハイライトされない場合は 0
-** 'const char *prefix': プレフィックス
-** 'const char *message': メッセージ
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_gui_buffer *buffer_: バッファへのポインタ
+** _time_t date_: 日付
+** _int tags_count_: 行に付けられたタグの個数
+** _const char **tags_: 行に付けられたタグの配列
+** _int displayed_: 行が表示される場合は 1、フィルタされる (隠される) 場合は 0
+** _int highlight_: 行がハイライトされる場合は 1、ハイライトされない場合は 0
+** _const char *prefix_: プレフィックス
+** _const char *message_: メッセージ
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -8162,10 +8162,10 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 * 新しいフックへのポインタ、エラーが起きた場合は NULL
 
 [IMPORTANT]
-WeeChat バージョン 1.0 以上では、スクリプトのコールバック引数 'displayed'
-と 'highlight' は整数です (WeeChat バージョン 0.4.3 以下では文字列でした)。 +
+WeeChat バージョン 1.0 以上では、スクリプトのコールバック引数 _displayed_
+と _highlight_ は整数です (WeeChat バージョン 0.4.3 以下では文字列でした)。 +
 すべてのバージョンで互換性を持たせるためには、引数を使う前に整数に変換することをお勧めします、Python
-を使った例: "`if int(highlight):`"。
+を使った例: `if int(highlight):`。
 
 C 言語での使用例:
 
@@ -8225,26 +8225,26 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 引数:
 
-* 'signal': キャッチするシグナル、ワイルドカード "*" を使うことができます
+* _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
   (以下の表を参照)
-* 'callback':
+* _callback_:
   シグナルを受信した際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'const char *signal': 受信したシグナル
-** 'const char *type_data': シグナルが送信したデータの型
-*** 'WEECHAT_HOOK_SIGNAL_STRING': 文字列
-*** 'WEECHAT_HOOK_SIGNAL_INT': 整数
-*** 'WEECHAT_HOOK_SIGNAL_POINTER':  ポインタ
-** 'void *signal_data': シグナルが送信したデータ
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _const char *signal_: 受信したシグナル
+** _const char *type_data_: シグナルが送信したデータの型
+*** _WEECHAT_HOOK_SIGNAL_STRING_: 文字列
+*** _WEECHAT_HOOK_SIGNAL_INT_: 整数
+*** _WEECHAT_HOOK_SIGNAL_POINTER_:  ポインタ
+** _void *signal_data_: シグナルが送信したデータ
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_OK_EAT' (直ちにシグナルの送信を止める)
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_OK_EAT_ (直ちにシグナルの送信を止める)
     _(WeeChat バージョン 0.4.0 以上で利用可)_
-*** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -8702,17 +8702,17 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | weechat | key_combo_default +
   _(WeeChat バージョン 1.0 以上で利用可)_ |
   String: キーの組み合わせ |
-  'default' コンテキスト内のキーの組み合わせ
+  _default_ コンテキスト内のキーの組み合わせ
 
 | weechat | key_combo_search +
   _(WeeChat バージョン 1.0 以上で利用可)_ |
   String: キーの組み合わせ |
-  'search' コンテキスト内のキーの組み合わせ
+  _search_ コンテキスト内のキーの組み合わせ
 
 | weechat | key_combo_cursor +
   _(WeeChat バージョン 1.0 以上で利用可)_ |
   String: キーの組み合わせ |
-  'cursor' コンテキスト内のキーの組み合わせ
+  _cursor_ コンテキスト内のキーの組み合わせ
 
 | weechat | mouse_enabled +
   _(WeeChat バージョン 1.1 以上で利用可)_ |
@@ -8890,7 +8890,7 @@ WeeChat とプラグインが送信するシグナルのリスト:
 |===
 
 [NOTE]
-^(1)^ 'xxx' はサーバ名、'yyy' は IRC コマンド名。
+^(1)^ _xxx_ はサーバ名、_yyy_ は IRC コマンド名。
 
 C 言語での使用例:
 
@@ -8941,18 +8941,18 @@ int weechat_hook_signal_send (const char *signal, const char *type_data,
 
 引数:
 
-* 'signal': 送信するシグナル
-* 'type_data': シグナルと一緒に送信するデータの型
+* _signal_: 送信するシグナル
+* _type_data_: シグナルと一緒に送信するデータの型
   (<<_hook_signal,weechat_hook_signal>> を参照)
-* 'signal_data': シグナルと一緒に送信するデータ
+* _signal_data_: シグナルと一緒に送信するデータ
 
 戻り値 _(WeeChat バージョン 1.0 以上で利用可)_:
 
 * 最後に実行したコールバックの戻り値
-  (コールバックを実行しなかった場合は 'WEECHAT_RC_OK'):
-** 'WEECHAT_RC_OK'
-** 'WEECHAT_RC_OK_EAT'
-** 'WEECHAT_RC_ERROR'
+  (コールバックを実行しなかった場合は _WEECHAT_RC_OK_):
+** _WEECHAT_RC_OK_
+** _WEECHAT_RC_OK_EAT_
+** _WEECHAT_RC_ERROR_
 
 C 言語での使用例:
 
@@ -8999,22 +8999,22 @@ weechat.hook_signal_send("logger_backlog", weechat.WEECHAT_HOOK_SIGNAL_POINTER, 
 
 プログラミング言語ごとに、スクリプトをインストールするために送信するシグナルが 5 種類あります:
 
-* 'perl_script_install'
-* 'python_script_install'
-* 'ruby_script_install'
-* 'lua_script_install'
-* 'tcl_script_install'
-* 'guile_script_install'
-* 'javascript_script_install'
+* _perl_script_install_
+* _python_script_install_
+* _ruby_script_install_
+* _lua_script_install_
+* _tcl_script_install_
+* _guile_script_install_
+* _javascript_script_install_
 
 シグナルを受け取ったらコールバックは以下のように働きます:
 
 . インストール済みスクリプトを再読み込みして削除。
-. 新しいスクリプトをディレクトリ '~/.weechat/xxx/' に移動 ('xxx' はプログラミング言語)
-. 新しいスクリプトへのリンクをディレクトリ '~/.weechat/xxx/autoload/' に作成
+. 新しいスクリプトをディレクトリ _~/.weechat/xxx/_ に移動 (_xxx_ はプログラミング言語)
+. 新しいスクリプトへのリンクをディレクトリ _~/.weechat/xxx/autoload/_ に作成
 . 新しいスクリプトを読み込む
 
-'script' プラグインはスクリプトをインストールする際にこれらのシグナルを使っています。
+_script_ プラグインはスクリプトをインストールする際にこれらのシグナルを使っています。
 
 引数はインストールするスクリプトのパスを収めた文字列です。
 
@@ -9039,20 +9039,20 @@ weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
 
 プログラミング言語ごとに、リスト文字列に含まれるスクリプトを削除するために送信するシグナルが 5 種類あります:
 
-* 'perl_script_remove'
-* 'python_script_remove'
-* 'ruby_script_remove'
-* 'lua_script_remove'
-* 'tcl_script_remove'
-* 'guile_script_remove'
-* 'javascript_script_remove'
+* _perl_script_remove_
+* _python_script_remove_
+* _ruby_script_remove_
+* _lua_script_remove_
+* _tcl_script_remove_
+* _guile_script_remove_
+* _javascript_script_remove_
 
 リスト文字列に含まれるそれぞれのスクリプトについて、コールバックはスクリプトを再読み込みして削除します。
 
-'script' プラグインはスクリプトを削除する際にこれらのシグナルを使っています。
+_script_ プラグインはスクリプトを削除する際にこれらのシグナルを使っています。
 
 引数は削除したいスクリプトのコンマ区切りリスト文字列です
-(パスを含まないスクリプトの名前を使います、例えば 'script.py').
+(パスを含まないスクリプトの名前を使います、例えば _script.py_).
 
 C 言語での使用例:
 
@@ -9087,11 +9087,11 @@ irc バッファ(サーバ、チャンネル、プライベート)
 * チャンネル名 (任意)
 * セミコロン
 * オプションのコンマ区切りリスト (任意):
-** 'priority_high': キューに高い優先度を設定 (ユーザメッセージなど);
+** _priority_high_: キューに高い優先度を設定 (ユーザメッセージなど);
    特に設定しなければこの優先度が設定されます
-** 'priority_low': キューに低い優先度を設定 (WeeChat
+** _priority_low_: キューに低い優先度を設定 (WeeChat
    が自動的に送信するメッセージなど)
-** 'user_message': 強制的にユーザメッセージ化 (コマンドを実行しません)
+** _user_message_: 強制的にユーザメッセージ化 (コマンドを実行しません)
 * セミコロン
 * メッセージを送信する際に使うタグのコンマ区切りリスト (任意)
 * セミコロン
@@ -9144,22 +9144,22 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Arguments:
 
-* 'signal': キャッチするシグナル、ワイルドカード "*" を使うことができます
+* _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
   (以下の表を参照)
-* 'callback':
+* _callback_:
   シグナルを受信した際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'const char *signal': 受信したシグナル
-** 'struct t_hashtable *hashtable': ハッシュテーブル
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _const char *signal_: 受信したシグナル
+** _struct t_hashtable *hashtable_: ハッシュテーブル
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_OK_EAT' (直ちにシグナルの送信を止める)
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_OK_EAT_ (直ちにシグナルの送信を止める)
     _(WeeChat バージョン 0.4.0 以上で利用可)_
-*** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -9180,49 +9180,49 @@ hsignal のリスト:
 
 | weechat | nicklist_group_added +
   _(WeeChat バージョン 0.4.1 以上で利用可)_ |
-  'buffer' ('struct t_gui_buffer *'): バッファ +
-  'parent_group' ('struct t_gui_nick_group *'): 親グループ +
-  'group' ('struct t_gui_nick_group *'): グループ |
+  _buffer_ (_struct t_gui_buffer *_): バッファ +
+  _parent_group_ (_struct t_gui_nick_group *_): 親グループ +
+  _group_ (_struct t_gui_nick_group *_): グループ |
   ニックネームリストにグループを追加
 
 | weechat | nicklist_nick_added +
   _(WeeChat バージョン 0.4.1 以上で利用可)_ |
-  'buffer' ('struct t_gui_buffer *'): バッファ +
-  'parent_group' ('struct t_gui_nick_group *'): 親グループ +
-  'nick' ('struct t_gui_nick *'): ニックネーム |
+  _buffer_ (_struct t_gui_buffer *_): バッファ +
+  _parent_group_ (_struct t_gui_nick_group *_): 親グループ +
+  _nick_ (_struct t_gui_nick *_): ニックネーム |
   ニックネームリストにニックネームを追加
 
 | weechat | nicklist_group_removing +
   _(WeeChat バージョン 0.4.1 以上で利用可)_ |
-  'buffer' ('struct t_gui_buffer *'): バッファ +
-  'parent_group' ('struct t_gui_nick_group *'): 親グループ +
-  'group' ('struct t_gui_nick_group *'): グループ |
+  _buffer_ (_struct t_gui_buffer *_): バッファ +
+  _parent_group_ (_struct t_gui_nick_group *_): 親グループ +
+  _group_ (_struct t_gui_nick_group *_): グループ |
   ニックネームリストからグループを削除
 
 | weechat | nicklist_nick_removing +
   _(WeeChat バージョン 0.4.1 以上で利用可)_ |
-  'buffer' ('struct t_gui_buffer *'): バッファ +
-  'parent_group' ('struct t_gui_nick_group *'): 親グループ +
-  'nick' ('struct t_gui_nick *'): ニックネーム |
+  _buffer_ (_struct t_gui_buffer *_): バッファ +
+  _parent_group_ (_struct t_gui_nick_group *_): 親グループ +
+  _nick_ (_struct t_gui_nick *_): ニックネーム |
   ニックネームリストからニックネームを削除
 
 | weechat | nicklist_group_changed +
   _(WeeChat バージョン 0.4.1 以上で利用可)_ |
-  'buffer' ('struct t_gui_buffer *'): バッファ +
-  'parent_group' ('struct t_gui_nick_group *'): 親グループ +
-  'group' ('struct t_gui_nick_group *'): グループ |
+  _buffer_ (_struct t_gui_buffer *_): バッファ +
+  _parent_group_ (_struct t_gui_nick_group *_): 親グループ +
+  _group_ (_struct t_gui_nick_group *_): グループ |
   ニックネームリストに含まれるグループを変更
 
 | weechat | nicklist_nick_changed +
   _(WeeChat バージョン 0.4.1 以上で利用可)_ |
-  'buffer' ('struct t_gui_buffer *'): バッファ +
-  'parent_group' ('struct t_gui_nick_group *'): 親グループ +
-  'nick' ('struct t_gui_nick *'): ニックネーム |
+  _buffer_ (_struct t_gui_buffer *_): バッファ +
+  _parent_group_ (_struct t_gui_nick_group *_): 親グループ +
+  _nick_ (_struct t_gui_nick *_): ニックネーム |
   ニックネームリストに含まれるニックネームを変更
 |===
 
 [NOTE]
-^(1)^ 'xxx' は転送で送信するシグナル、'yyy'
+^(1)^ _xxx_ は転送で送信するシグナル、_yyy_
 は転送元のシグナル。
 
 C 言語での使用例:
@@ -9271,16 +9271,16 @@ int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable
 
 引数:
 
-* 'signal': 送信するシグナル
-* 'hashtable': ハッシュテーブル
+* _signal_: 送信するシグナル
+* _hashtable_: ハッシュテーブル
 
 戻り値 _(WeeChat バージョン 1.0 以上で利用可)_:
 
 * 最後に実行したコールバックの戻り値
-  (コールバックを実行しなかった場合は 'WEECHAT_RC_OK'):
-** 'WEECHAT_RC_OK'
-** 'WEECHAT_RC_OK_EAT'
-** 'WEECHAT_RC_ERROR'
+  (コールバックを実行しなかった場合は _WEECHAT_RC_OK_):
+** _WEECHAT_RC_OK_
+** _WEECHAT_RC_OK_EAT_
+** _WEECHAT_RC_ERROR_
 
 C 言語での使用例:
 
@@ -9321,51 +9321,51 @@ hsignal "irc_redirect_command" は irc
 
 引数は以下のエントリを持つハッシュテーブル (キーと値は文字列) です:
 
-* 'server': 内部サーバ名 (必須)
-* 'pattern': 転送パターン (必須)、デフォルトパターン (irc プラグインが定義したもの)
+* _server_: 内部サーバ名 (必須)
+* _pattern_: 転送パターン (必須)、デフォルトパターン (irc プラグインが定義したもの)
   またはユーザ定義パターン (<<hsignal_irc_redirect_pattern>> を参照)
   のどちらか一方、デフォルトパターンは以下:
-** 'ison'
-** 'list'
-** 'mode_channel'
-** 'mode_channel_ban' ("mode #channel b")
-** 'mode_channel_ban_exception' ("mode #channel e")
-** 'mode_channel_invite' ("mode #channel I")
-** 'mode_user'
-** 'monitor'
-** 'names'
-** 'ping'
-** 'time'
-** 'topic'
-** 'userhost'
-** 'who'
-** 'whois'
-** 'whowas'
-* 'signal': シグナル名 (必須)
-* 'count': 転送を行う回数 (任意、デフォルトは 1 回)
-* 'string': 受信する irc メッセージに含まれる文字列
+** _ison_
+** _list_
+** _mode_channel_
+** _mode_channel_ban_ ("mode #channel b")
+** _mode_channel_ban_exception_ ("mode #channel e")
+** _mode_channel_invite_ ("mode #channel I")
+** _mode_user_
+** _monitor_
+** _names_
+** _ping_
+** _time_
+** _topic_
+** _userhost_
+** _who_
+** _whois_
+** _whowas_
+* _signal_: シグナル名 (必須)
+* _count_: 転送を行う回数 (任意、デフォルトは 1 回)
+* _string_: 受信する irc メッセージに含まれる文字列
   (任意ですが推奨します、この文字列を含むメッセージだけを転送します)
-* 'timeout': 転送のタイムアウト、秒単位 (任意、デフォルトは 60)
-* 'cmd_filter': フィルタする irc コマンドのコンマ区切りリスト
+* _timeout_: 転送のタイムアウト、秒単位 (任意、デフォルトは 60)
+* _cmd_filter_: フィルタする irc コマンドのコンマ区切りリスト
   (これらのコマンドはコールバックに送信されます、これ以外のコマンドは無視されます) (任意)
 
 この hsignal を送信したら必ずその直後に irc
 サーバにコマンドを送信してください、そうすれば送信したコマンドに対する応答が転送されます。
 
 コマンドに対する応答を完全に受信したら、hsignal が送信されます。この
-hsignal は 'irc_redirection_xxx_yyy' という名前で、ここで 'xxx' は
-'signal' 、'yyy' は 'pattern' で指定したものになります。
+hsignal は _irc_redirection_xxx_yyy_ という名前で、ここで _xxx_ は
+_signal_ 、_yyy_ は _pattern_ で指定したものになります。
 
 以下の内容からなるハッシュテーブルが hsignal で送信されます (キーと値は文字列):
 
-* 'output': コマンドの出力 (メッセージは "\n" で区切られています)
-* 'output_size': 'output' のバイト数 (文字列)
-* 'error': エラー文字列 (エラーが起きた場合):
-** 'timeout': タイムアウトで転送を中止
-* 'server': 内部サーバ名
-* 'pattern': 転送パターン
-* 'signal': シグナル名
-* 'command': リダイレクトされたコマンド
+* _output_: コマンドの出力 (メッセージは "\n" で区切られています)
+* _output_size_: _output_ のバイト数 (文字列)
+* _error_: エラー文字列 (エラーが起きた場合):
+** _timeout_: タイムアウトで転送を中止
+* _server_: 内部サーバ名
+* _pattern_: 転送パターン
+* _signal_: シグナル名
+* _command_: リダイレクトされたコマンド
 
 C 言語での使用例:
 
@@ -9426,14 +9426,14 @@ hsignal "irc_redirect_pattern" は irc 転送用のパターンを作成する�
 
 引数は以下のエントリを持つハッシュテーブルです (キーと値は文字列):
 
-* 'pattern': パターンの名前 (必須)
-* 'timeout': パターンのデフォルトタイムアウト、秒単位 (任意、デフォルトは 60)
-* 'cmd_start': 転送を開始するコマンドのコンマ区切りリスト (任意)
-* 'cmd_stop': 転送を終了するコマンドのコンマ区切りリスト (必須)
-* 'cmd_extra': コマンドを停止した後に受信する可能性のあるコマンドのコンマ区切りリスト
+* _pattern_: パターンの名前 (必須)
+* _timeout_: パターンのデフォルトタイムアウト、秒単位 (任意、デフォルトは 60)
+* _cmd_start_: 転送を開始するコマンドのコンマ区切りリスト (任意)
+* _cmd_stop_: 転送を終了するコマンドのコンマ区切りリスト (必須)
+* _cmd_extra_: コマンドを停止した後に受信する可能性のあるコマンドのコンマ区切りリスト
   (任意)
 
-'cmd_start' 、'cmd_stop' 、'cmd_extra'
+_cmd_start_ 、_cmd_stop_ 、_cmd_extra_
 には受け取ったメッセージに必ず含まれていなければいけない
 "string" の位置を示す整数を与えることが可能、例:
 
@@ -9508,20 +9508,20 @@ struct t_hook *weechat_hook_config (const char *option,
 
 引数:
 
-* 'option': オプション、書式は完全な名前、コマンド `/set` で使うのと同じ
-  (例: `weechat.look.item_time_format`)、ワイルドカード "*" を使うことができます
+* _option_: オプション、書式は完全な名前、コマンド `/set` で使うのと同じ
+  (例: `weechat.look.item_time_format`)、ワイルドカード `+*+` を使うことができます
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-* 'callback':
+* _callback_:
   設定オプションが変更されたら呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'const char *option': オプションの名前
-** 'const char *value': オプションの新しい値
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _const char *option_: オプションの名前
+** _const char *value_: オプションの新しい値
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -9585,24 +9585,24 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 
 引数:
 
-* 'completion_item': 補完要素の名前、この後フックされたコマンドで
-  '%(name)' を使うことができます ('completion' 引数)
+* _completion_item_: 補完要素の名前、この後フックされたコマンドで
+  _%(name)_ を使うことができます (_completion_ 引数)
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-* 'description': 補完の説明
-* 'callback': 補完要素 (ユーザはこの要素を使って何かを補完している)
+* _description_: 補完の説明
+* _callback_: 補完要素 (ユーザはこの要素を使って何かを補完している)
   が使われた場合に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'const char *completion_item': 補完要素の名前
-** 'struct t_gui_buffer *buffer': 補完が行われたバッファ
-** 'struct t_gui_completion *completion':
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _const char *completion_item_: 補完要素の名前
+** _struct t_gui_buffer *buffer_: 補完が行われたバッファ
+** _struct t_gui_completion *completion_:
    補完に際して単語を追加するために使われる構造体
    (<<_hook_completion_list_add,weechat_hook_completion_list_add>> を参照)
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -9618,7 +9618,7 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 key[Tab] が押された時にコマンドラインを更新するためには、関数
 <<_hook_command_run,weechat_hook_command_run>> を使ってコマンド
 "/input complete_next" をフックしてください (コールバックがコマンドラインを更新する場合は必ず
-'WEECHAT_RC_OK_EAT' を返してください。そうすれば WeeChat は補完を行いません)。
+_WEECHAT_RC_OK_EAT_ を返してください。そうすれば WeeChat は補完を行いません)。
 
 戻り値:
 
@@ -9678,11 +9678,11 @@ const char *weechat_hook_completion_get_string (struct t_gui_completion *complet
 
 引数:
 
-* 'completion': 補完へのポインタ
-* 'property': プロパティ名:
-** 'base_command': 補完に使ったコマンド
-** 'base_word': 補完された単語
-** 'args': コマンド引数 (元の単語を含む)
+* _completion_: 補完へのポインタ
+* _property_: プロパティ名:
+** _base_command_: 補完に使ったコマンド
+** _base_word_: 補完された単語
+** _args_: コマンド引数 (元の単語を含む)
 
 C 言語での使用例:
 
@@ -9735,13 +9735,13 @@ void weechat_hook_completion_list_add (struct t_gui_completion *completion,
 
 引数:
 
-* 'completion': 補完へのポインタ
-* 'word': 追加する単語
-* 'nick_completion': 単語がニックネームの場合は 1、そうでなければ 0
-* 'where': 単語を追加するリスト上での位置:
-** 'WEECHAT_LIST_POS_SORT': リストがソートされた状態になるような位置
-** 'WEECHAT_LIST_POS_BEGINNING': リストの最初
-** 'WEECHAT_LIST_POS_END': リストの最後
+* _completion_: 補完へのポインタ
+* _word_: 追加する単語
+* _nick_completion_: 単語がニックネームの場合は 1、そうでなければ 0
+* _where_: 単語を追加するリスト上での位置:
+** _WEECHAT_LIST_POS_SORT_: リストがソートされた状態になるような位置
+** _WEECHAT_LIST_POS_BEGINNING_: リストの最初
+** _WEECHAT_LIST_POS_END_: リストの最後
 
 C 言語での使用例: <<_hook_completion,weechat_hook_completion>> を参照。
 
@@ -9777,18 +9777,18 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 引数:
 
-* 'modifier': 修飾子名、Weechat またはプラグインが使う修飾子のリスト
+* _modifier_: 修飾子名、Weechat またはプラグインが使う修飾子のリスト
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
   (以下の表を参照)
-* 'callback': 修飾子が使われた際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'const char *modifier': 修飾子の名前
-** 'const char *modifier_data': 修飾子に渡すデータ
-** 'const char *string': 修飾子に渡す文字列
+* _callback_: 修飾子が使われた際に呼び出すコールバック関数、引数と戻り値:
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _const char *modifier_: 修飾子の名前
+** _const char *modifier_data_: 修飾子に渡すデータ
+** _const char *string_: 修飾子に渡す文字列
 ** 戻り値: 新しい文字列
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -9909,8 +9909,8 @@ WeeChat とプラグインが使う修飾子のリスト:
 |===
 
 [NOTE]
-^(1)^ 'xxx' は IRC コマンド名。 +
-^(2)^ 'yyy' はバーの名前。
+^(1)^ _xxx_ は IRC コマンド名。 +
+^(2)^ _yyy_ はバーの名前。
 
 C 言語での使用例:
 
@@ -9971,9 +9971,9 @@ char *weechat_hook_modifier_exec (const char *modifier,
 
 引数:
 
-* 'modifier': 修飾子の名前
-* 'modifier_data': 修飾子に渡すデータ
-* 'string': 修正する文字列
+* _modifier_: 修飾子の名前
+* _modifier_data_: 修飾子に渡すデータ
+* _string_: 修正する文字列
 
 戻り値:
 
@@ -10021,18 +10021,18 @@ struct t_hook *weechat_hook_info (const char *info_name,
 
 引数:
 
-* 'info_name': インフォの名前
+* _info_name_: インフォの名前
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-* 'description': 説明
-* 'args_description': 引数の説明 (任意、NULL にすることも可)
-* 'callback': インフォが要求されたら呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'const char *info_name': インフォの名前
-** 'const char *arguments': 追加の引数、インフォに依存
+* _description_: 説明
+* _args_description_: 引数の説明 (任意、NULL にすることも可)
+* _callback_: インフォが要求されたら呼び出すコールバック関数、引数と戻り値:
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _const char *info_name_: インフォの名前
+** _const char *arguments_: 追加の引数、インフォに依存
 ** 戻り値: 要求されたインフォの値
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -10098,20 +10098,20 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 
 引数:
 
-* 'info_name': インフォの名前
+* _info_name_: インフォの名前
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-* 'description': 説明
-* 'args_description': 引数ハッシュテーブルの説明 (任意、NULL でも可)
-* 'output_description': コールバックが返すハッシュテーブルの説明
+* _description_: 説明
+* _args_description_: 引数ハッシュテーブルの説明 (任意、NULL でも可)
+* _output_description_: コールバックが返すハッシュテーブルの説明
   (任意、NULL でも可)
-* 'callback': インフォを要求する際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'const char *info_name': インフォの名前
-** 'struct t_hashtable *hashtable': ハッシュテーブル、インフォに依存
+* _callback_: インフォを要求する際に呼び出すコールバック関数、引数と戻り値:
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _const char *info_name_: インフォの名前
+** _struct t_hashtable *hashtable_: ハッシュテーブル、インフォに依存
 ** 戻り値: 要求したハッシュテーブル
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -10182,22 +10182,22 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 
 引数:
 
-* 'infolist_name': インフォリストの名前
+* _infolist_name_: インフォリストの名前
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-* 'description': 説明
-* 'pointer_description': ポインタの説明 (任意、NULL でも可)
-* 'args_description': 引数の説明 (任意、NULL でも可)
-* 'callback':
+* _description_: 説明
+* _pointer_description_: ポインタの説明 (任意、NULL でも可)
+* _args_description_: 引数の説明 (任意、NULL でも可)
+* _callback_:
   インフォリストが要求された際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'const char *infolist_name': インフォリストの名前
-** 'void *pointer': インフォリストが返すオブジェクトへのポインタ
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _const char *infolist_name_: インフォリストの名前
+** _void *pointer_: インフォリストが返すオブジェクトへのポインタ
    (インフォリストの要素を 1 つだけ返す)
-** 'const char *arguments': 追加の引数、インフォリストに依存
+** _const char *arguments_: 追加の引数、インフォリストに依存
 ** 戻り値: 要求したインフォリスト
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -10269,17 +10269,17 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 
 引数:
 
-* 'hdata_name': hdata の名前
+* _hdata_name_: hdata の名前
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-* 'description': 説明
-* 'callback':
+* _description_: 説明
+* _callback_:
   hdata が要求された際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'const char *hdata_name': hdata の名前
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _const char *hdata_name_: hdata の名前
 ** 戻り値: 要求された hdata
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -10332,20 +10332,20 @@ struct t_hook *weechat_hook_focus (const char *area,
 
 引数:
 
-* 'area': チャットエリアの場合は "chat"、またはバー要素の名前
+* _area_: チャットエリアの場合は "chat"、またはバー要素の名前
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-* 'callback':
+* _callback_:
   フォーカスが当たったら呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_hashtable *info': フォーカスの情報を含むハッシュテーブルと、他の
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_hashtable *info_: フォーカスの情報を含むハッシュテーブルと、他の
    (より高い優先度を持つ) フォーカスコールバックを呼び出して返された文字列 (以下のテーブルを参照)
 ** 戻り値: "info" ポインタ (完全なハッシュテーブル)
    または新しいハッシュテーブル (コールバックが作成、キーと値は
    "string" 型) へのポインタ、この新しいハッシュテーブルの内容は
-   'info' に追加され、他のフォーカスコールバックに渡されます
-* 'callback_pointer': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_data': WeeChat が 'callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+   _info_ に追加され、他のフォーカスコールバックに渡されます
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
@@ -10533,9 +10533,9 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 
 引数:
 
-* 'hook': "weechat_hook_xxx()" の戻り値
-* 'property': プロパティ名 (以下の表を参照)
-* 'value': プロパティの新しい値
+* _hook_: "weechat_hook_xxx()" の戻り値
+* _property_: プロパティ名 (以下の表を参照)
+* _value_: プロパティの新しい値
 
 プロパティ:
 
@@ -10544,22 +10544,22 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 | 名前 | フック型 | 値 | 説明
 
 | subplugin | 任意の型 | 任意の文字列 |
-  サブプラグインの名前 (通常は `/help command` で 'command'
+  サブプラグインの名前 (通常は `/help command` で _command_
   をタイプした時のフックで表示されるスクリプト名)
 
 | stdin +
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
-  'process' 、'process_hashtable' | 任意の文字列 |
-  子プロセスの標準入力 ('stdin') にデータを送信
+  _process_ 、_process_hashtable_ | 任意の文字列 |
+  子プロセスの標準入力 (_stdin_) にデータを送信
 
 | stdin_close +
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
-  'process' 、'process_hashtable' | (非使用) |
-  子プロセスの標準入力 ('stdin') にデータを送信するパイプを閉じる
+  _process_ 、_process_hashtable_ | (非使用) |
+  子プロセスの標準入力 (_stdin_) にデータを送信するパイプを閉じる
 
 | signal +
   _(WeeChat バージョン 1.0 以上で利用可)_ |
-  'process' 、'process_hashtable' |
+  _process_ 、_process_hashtable_ |
   シグナル番号または以下の名前から 1 つ:
   `hup` 、`int` 、`quit` 、`kill` 、`term` 、`usr1` 、`usr2` |
   子プロセスにシグナルを送信
@@ -10607,7 +10607,7 @@ void weechat_unhook (struct t_hook *hook);
 
 引数:
 
-* 'hook': "weechat_hook_xxx()" の戻り値
+* _hook_: "weechat_hook_xxx()" の戻り値
 
 C 言語での使用例:
 
@@ -10644,7 +10644,7 @@ void weechat_unhook_all (const char *subplugin);
 
 引数:
 
-* 'subplugin': これが NULL でない場合、ここで指定した "subplugin" を持つフックだけを解除します
+* _subplugin_: これが NULL でない場合、ここで指定した "subplugin" を持つフックだけを解除します
   (スクリプトから API を使う場合にはこの引数を指定できません)
 
 C 言語での使用例:
@@ -10696,31 +10696,31 @@ struct t_gui_buffer *weechat_buffer_new (const char *name,
 
 引数:
 
-* 'name': バッファの名前 (プラグインに対して固有)
-* 'input_callback':
+* _name_: バッファの名前 (プラグインに対して固有)
+* _input_callback_:
   入力テキストをバッファに挿入する際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_gui_buffer *buffer': バッファポインタ
-** 'const char *input_data': 入力データ
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_gui_buffer *buffer_: バッファポインタ
+** _const char *input_data_: 入力データ
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'input_callback_pointer': WeeChat が 'input_callback' コールバックを呼び出す際にコールバックに渡すポインタ
-* 'input_callback_data': WeeChat が 'input_callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _input_callback_pointer_: WeeChat が _input_callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _input_callback_data_: WeeChat が _input_callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したバッファが閉じられた時点で自動的に開放されます
-* 'close_callback':
+* _close_callback_:
   バッファを閉じる際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_gui_buffer *buffer': バッファポインタ
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_gui_buffer *buffer_: バッファポインタ
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'close_callback_pointer': WeeChat が 'close_callback'
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _close_callback_pointer_: WeeChat が _close_callback_
   コールバックを呼び出す際にコールバックに渡すポインタ
-* 'close_callback_data': WeeChat が 'close_callback' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _close_callback_data_: WeeChat が _close_callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したバッファが閉じられた時点で自動的に開放されます
 
@@ -10743,7 +10743,7 @@ my_input_cb (const void *pointer, void *data,
 int
 my_close_cb (const void *pointer, void *data, struct t_gui_buffer *buffer)
 {
-    weechat_printf (NULL, "Buffer '%s' will be closed!",
+    weechat_printf (NULL, "Buffer _%s_ will be closed!",
                     weechat_buffer_get_string (buffer, "name"));
     return WEECHAT_RC_OK;
 }
@@ -10767,7 +10767,7 @@ def my_input_cb(data, buffer, input_data):
     return weechat.WEECHAT_RC_OK
 
 def my_close_cb(data, buffer):
-    weechat.prnt("", "Buffer '%s' will be closed!" % weechat.buffer_get_string(buffer, "name"))
+    weechat.prnt("", "Buffer _%s_ will be closed!" % weechat.buffer_get_string(buffer, "name"))
     return weechat.WEECHAT_RC_OK
 
 buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
@@ -10822,11 +10822,11 @@ struct t_gui_buffer *weechat_buffer_search (const char *plugin,
 
 引数:
 
-* 'plugin': プラグインの名前、以下の特殊値を使うことができます:
-** `==`: name 引数でバッファの完全な名前を使う (例:
+* _plugin_: プラグインの名前、以下の特殊値を使うことができます:
+** `+==+`: name 引数でバッファの完全な名前を使う (例:
    `freenode.#weechat` ではなく `irc.freenode.#weechat`)
    _(WeeChat バージョン 1.0 以上で利用可)_
-* 'name': バッファの名前、NULL または空文字列の場合、現在のバッファ
+* _name_: バッファの名前、NULL または空文字列の場合、現在のバッファ
   (現在のウィンドウに表示されているバッファ) を返す; 名前が `(?i)`
   で始まる場合、検索は大文字小文字を区別せずに検索 _(WeeChat バージョン 1.0 以上で利用可)_
 
@@ -10855,7 +10855,7 @@ buffer = weechat.buffer_search("my_plugin", "my_buffer")
 
 ==== buffer_search_main
 
-WeeChat メインバッファ ('core' バッファ、WeeChat
+WeeChat メインバッファ (_core_ バッファ、WeeChat
 を実行して最初に表示されるバッファ) を検索。
 
 プロトタイプ:
@@ -10867,7 +10867,7 @@ struct t_gui_buffer *weechat_buffer_search_main ();
 
 戻り値:
 
-* WeeChat メインバッファ ('core' バッファ) へのポインタ
+* WeeChat メインバッファ (_core_ バッファ) へのポインタ
 
 C 言語での使用例:
 
@@ -10900,7 +10900,7 @@ void weechat_buffer_clear (struct t_gui_buffer *buffer);
 
 引数:
 
-* 'buffer': バッファへのポインタ
+* _buffer_: バッファへのポインタ
 
 C 言語での使用例:
 
@@ -10940,7 +10940,7 @@ void weechat_buffer_close (struct t_gui_buffer *buffer);
 
 引数:
 
-* 'buffer': バッファへのポインタ
+* _buffer_: バッファへのポインタ
 
 C 言語での使用例:
 
@@ -10982,8 +10982,8 @@ void weechat_buffer_merge (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'target_buffer': ターゲットバッファ、マージ先のバッファ
+* _buffer_: バッファへのポインタ
+* _target_buffer_: ターゲットバッファ、マージ先のバッファ
 
 C 言語での使用例:
 
@@ -11020,9 +11020,9 @@ void weechat_buffer_unmerge (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'number': 分離したバッファの宛先番号、1
-  より小さい場合、バッファは 'buffer' の番号 + 1 になる
+* _buffer_: バッファへのポインタ
+* _number_: 分離したバッファの宛先番号、1
+  より小さい場合、バッファは _buffer_ の番号 + 1 になる
 
 C 言語での使用例:
 
@@ -11056,55 +11056,55 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'property': プロパティ名:
-** 'number': バッファの番号 (1 以上)
-** 'layout_number': レイアウトに保存されたバッファの番号
-** 'layout_number_merge_order': レイアウトのマージをする際の順番
-** 'short_name_is_set': 短い名前が設定されている場合は 1、そうでない場合は 0
-** 'type': バッファタイプ (0: 書式あり、1: 自由内容)
-** 'notify': バッファの通知レベル
-** 'num_displayed': バッファを表示しているウィンドウの数
-** 'active': バッファがマージされて選択されている場合は 2、バッファが選択されている場合は
+* _buffer_: バッファへのポインタ
+* _property_: プロパティ名:
+** _number_: バッファの番号 (1 以上)
+** _layout_number_: レイアウトに保存されたバッファの番号
+** _layout_number_merge_order_: レイアウトのマージをする際の順番
+** _short_name_is_set_: 短い名前が設定されている場合は 1、そうでない場合は 0
+** _type_: バッファタイプ (0: 書式あり、1: 自由内容)
+** _notify_: バッファの通知レベル
+** _num_displayed_: バッファを表示しているウィンドウの数
+** _active_: バッファがマージされて選択されている場合は 2、バッファが選択されている場合は
    1、バッファがマージされ選択されていない場合は 0
-** 'hidden': バッファが隠されている場合は 1、そうでない場合は 0
+** _hidden_: バッファが隠されている場合は 1、そうでない場合は 0
    _(WeeChat バージョン 1.0 以上で利用可)_
-** 'zoomed': バッファがマージとズームされている場合は 1、そうでない場合は 0
+** _zoomed_: バッファがマージとズームされている場合は 1、そうでない場合は 0
    _(WeeChat バージョン 1.0 以上で利用可)_
-** 'print_hooks_enabled': プリントフックが有効化されている場合は 1、そうでない場合は 0
-** 'day_change': 日付変更メッセージを表示する場合は 1、そうでない場合は 0
+** _print_hooks_enabled_: プリントフックが有効化されている場合は 1、そうでない場合は 0
+** _day_change_: 日付変更メッセージを表示する場合は 1、そうでない場合は 0
    _(WeeChat バージョン 0.4.3 以上で利用可)_
-** 'clear': コマンド `/buffer clear` でバッファをクリアできる場合は 1、そうでない場合は 0
+** _clear_: コマンド `/buffer clear` でバッファをクリアできる場合は 1、そうでない場合は 0
    _(WeeChat バージョン 1.0 以上で利用可)_
-** 'filter': バッファでフィルタが有効な場合は 1、そうでない場合は 0
+** _filter_: バッファでフィルタが有効な場合は 1、そうでない場合は 0
    _(WeeChat バージョン 1.0 以上で利用可)_
-** 'lines_hidden': バッファに非表示 (フィルタされた) メッセージが 1
+** _lines_hidden_: バッファに非表示 (フィルタされた) メッセージが 1
    行以上含まれる場合は 1、すべてのメッセージが表示冴えている場合は 0
-** 'prefix_max_length': バッファプレフィックスの最大長
-** 'time_for_each_line': バッファの各行に時間を表示する場合は
+** _prefix_max_length_: バッファプレフィックスの最大長
+** _time_for_each_line_: バッファの各行に時間を表示する場合は
    1 (デフォルト)、そうでない場合は 0
-** 'nicklist': ニックネームリストが有効化されている場合は 1、そうでない場合は 0
-** 'nicklist_case_sensitive': ニックネームの大文字小文字を区別する場合は 1、そうでない場合は 0
-** 'nicklist_max_length': ニックネームの最大長
-** 'nicklist_display_groups': グループを表示する場合 1、そうでない場合は 0
-** 'nicklist_count': ニックネームリストに含まれるニックネームとグループの数
-** 'nicklist_groups_count': ニックネームリストに含まれるグループの数
-** 'nicklist_nicks_count': ニックネームリストに含まれるニックネームの数
-** 'nicklist_visible_count': 表示されているニックネームとグループの数
-** 'input': 入力可能な場合は 1、そうでない場合は 0
-** 'input_get_unknown_commands': 未定義のコマンドを入力コールバックに送信する場合は
+** _nicklist_: ニックネームリストが有効化されている場合は 1、そうでない場合は 0
+** _nicklist_case_sensitive_: ニックネームの大文字小文字を区別する場合は 1、そうでない場合は 0
+** _nicklist_max_length_: ニックネームの最大長
+** _nicklist_display_groups_: グループを表示する場合 1、そうでない場合は 0
+** _nicklist_count_: ニックネームリストに含まれるニックネームとグループの数
+** _nicklist_groups_count_: ニックネームリストに含まれるグループの数
+** _nicklist_nicks_count_: ニックネームリストに含まれるニックネームの数
+** _nicklist_visible_count_: 表示されているニックネームとグループの数
+** _input_: 入力可能な場合は 1、そうでない場合は 0
+** _input_get_unknown_commands_: 未定義のコマンドを入力コールバックに送信する場合は
    1、そうでない場合は 0
-** 'input_size': 入力サイズ (バイト単位)
-** 'input_length': 入力長 (文字数)
-** 'input_pos': バッファ入力におけるカーソル位置
-** 'input_1st_display': バッファ入力における 1 文字目
-** 'num_history': コマンド履歴の数
-** 'text_search': テキスト検索タイプ:
+** _input_size_: 入力サイズ (バイト単位)
+** _input_length_: 入力長 (文字数)
+** _input_pos_: バッファ入力におけるカーソル位置
+** _input_1st_display_: バッファ入力における 1 文字目
+** _num_history_: コマンド履歴の数
+** _text_search_: テキスト検索タイプ:
 *** 0: 現在検索していない
 *** 1: 後方検索 (検索方向: 最古のメッセージに向かって検索)
 *** 2: 前方検索 (検索方向: 最新のメッセージに向かって検索)
-** 'text_search_exact': テキスト検索で大文字小文字を区別する場合は 1
-** 'text_search_found': テキストが見つかった場合は 1、そうでない場合は 0
+** _text_search_exact_: テキスト検索で大文字小文字を区別する場合は 1
+** _text_search_found_: テキストが見つかった場合は 1、そうでない場合は 0
 
 戻り値:
 
@@ -11143,24 +11143,24 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'property': プロパティ名:
-** 'plugin': バッファを作成したプラグインの名前
+* _buffer_: バッファへのポインタ
+* _property_: プロパティ名:
+** _plugin_: バッファを作成したプラグインの名前
    ("core" は WeeChat メインバッファ)
-** 'name': バッファの名前
-** 'full_name': バッファの完全な名前 ("plugin.name") _(WeeChat バージョン 0.3.7 以上で利用可)_
-** 'short_name': バッファの短縮名 (注意:
-   表示目的以外に使用するのは禁止、ユーザは書き換えることが可能、バッファを検索する際にこれを使ってはいけない、'name' 、'full_name' 、またはローカル変数
-   'channel' を使うこと)
-** 'title': バッファのタイトル
-** 'input': 入力テキスト
-** 'text_search_input': テキスト検索前に保存した入力テキスト
-** 'highlight_words': ハイライトする単語のリスト
-** 'highlight_regex': ハイライト用の POSIX 拡張正規表現
-** 'highlight_tags_restrict': これらのタグを付けられたメッセージだけにハイライトを制限する
-** 'highlight_tags': これらのタグを付けられたメッセージを強制的にハイライトする
-** 'hotlist_max_level_nicks': 一部のニックネームに対するホットリストレベルの最大値
-** 'localvar_xxx': ローカル変数 "xxx" の値
+** _name_: バッファの名前
+** _full_name_: バッファの完全な名前 ("plugin.name") _(WeeChat バージョン 0.3.7 以上で利用可)_
+** _short_name_: バッファの短縮名 (注意:
+   表示目的以外に使用するのは禁止、ユーザは書き換えることが可能、バッファを検索する際にこれを使ってはいけない、_name_ 、_full_name_ 、またはローカル変数
+   _channel_ を使うこと)
+** _title_: バッファのタイトル
+** _input_: 入力テキスト
+** _text_search_input_: テキスト検索前に保存した入力テキスト
+** _highlight_words_: ハイライトする単語のリスト
+** _highlight_regex_: ハイライト用の POSIX 拡張正規表現
+** _highlight_tags_restrict_: これらのタグを付けられたメッセージだけにハイライトを制限する
+** _highlight_tags_: これらのタグを付けられたメッセージを強制的にハイライトする
+** _hotlist_max_level_nicks_: 一部のニックネームに対するホットリストレベルの最大値
+** _localvar_xxx_: ローカル変数 "xxx" の値
    ("xxx" は読み出す変数の名前)
 
 戻り値:
@@ -11203,11 +11203,11 @@ void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'property': プロパティ名:
-** 'plugin': このバッファを作ったプラグインへのポインタ
+* _buffer_: バッファへのポインタ
+* _property_: プロパティ名:
+** _plugin_: このバッファを作ったプラグインへのポインタ
    (WeeChat メインバッファの場合は NULL)
-** 'highlight_regex_compiled': コンパイル済みの正規表現 'highlight_regex'
+** _highlight_regex_compiled_: コンパイル済みの正規表現 _highlight_regex_
 
 戻り値:
 
@@ -11246,9 +11246,9 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'property': プロパティ名 (以下の表を参照)
-* 'value': プロパティの新しい値
+* _buffer_: バッファへのポインタ
+* _property_: プロパティ名 (以下の表を参照)
+* _value_: プロパティの新しい値
 
 プロパティ:
 
@@ -11292,7 +11292,7 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 | type | "formatted" または "free" |
   バッファのタイプを設定: "formatted" (チャットメッセージ用)、または
-  "free" (自由内容用); 値が "free" の場合、'clear' プロパティは強制的に
+  "free" (自由内容用); 値が "free" の場合、_clear_ プロパティは強制的に
   "0" に設定されます _(WeeChat バージョン 1.0 以上で利用可)_
 
 | notify | "0", "1", "2", "3" |
@@ -11373,11 +11373,11 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   ホットリストの最大レベルから削除するニックネームのコンマ区切りリスト
 
 | key_bind_xxx | 任意の文字列 |
-  指定したバッファに対して新しいキー 'xxx'
+  指定したバッファに対して新しいキー _xxx_
   を割り当てる、値はキーを押して実行するコマンド
 
 | key_unbind_xxx | - |
-  指定したバッファに対してキー 'xxx' の割り当てを解除する
+  指定したバッファに対してキー _xxx_ の割り当てを解除する
 
 | input | 任意の文字列 |
   バッファ入力に新しい値を設定
@@ -11391,11 +11391,11 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   を入力した場合、バッファはこれを受け入れる (未定義のコマンドに対するエラーを出さない)
 
 | localvar_set_xxx | 任意の文字列 |
-  ローカル変数 'xxx' の新しい値を設定
+  ローカル変数 _xxx_ の新しい値を設定
   (存在しない変数の場合は変数を作成する)
 
 | localvar_del_xxx | - |
-  ローカル変数 'xxx' を削除
+  ローカル変数 _xxx_ を削除
 |===
 
 C 言語での使用例:
@@ -11457,17 +11457,17 @@ void weechat_buffer_set_pointer (struct t_gui_buffer *buffer, const char *proper
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'property': プロパティ名:
-** 'close_callback': バッファを閉じる際に呼び出すコールバック関数を設定
-** 'close_callback_data': バッファを閉じる際に呼び出すコールバック関数に渡すデータを設定
-** 'input_callback': 入力テキストをバッファに挿入する際に呼び出すコールバック関数を設定
-** 'input_callback_data': 入力テキストをバッファに挿入する際に呼び出すコールバック関数に渡すデータを設定
-** 'nickcmp_callback': ニックネーム比較コールバック関数を設定
+* _buffer_: バッファへのポインタ
+* _property_: プロパティ名:
+** _close_callback_: バッファを閉じる際に呼び出すコールバック関数を設定
+** _close_callback_data_: バッファを閉じる際に呼び出すコールバック関数に渡すデータを設定
+** _input_callback_: 入力テキストをバッファに挿入する際に呼び出すコールバック関数を設定
+** _input_callback_data_: 入力テキストをバッファに挿入する際に呼び出すコールバック関数に渡すデータを設定
+** _nickcmp_callback_: ニックネーム比較コールバック関数を設定
   (ニックネームリストからニックネームを検索する際にこのコールバックを使用) _(WeeChat バージョン 0.3.9 以上で利用可)_
-** 'nickcmp_callback_data': ニックネーム比較コールバック関数に渡すデータを設定
+** _nickcmp_callback_data_: ニックネーム比較コールバック関数に渡すデータを設定
    _(WeeChat バージョン 0.3.9 以上で利用可)_
-* 'pointer': プロパティの新しいポインタ値
+* _pointer_: プロパティの新しいポインタ値
 
 コールバックのプロトタイプ:
 
@@ -11515,8 +11515,8 @@ char *weechat_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'string': テキストおよび書式 "$var" のローカル変数を含む文字列
+* _buffer_: バッファへのポインタ
+* _string_: テキストおよび書式 "$var" のローカル変数を含む文字列
 
 戻り値:
 
@@ -11561,11 +11561,11 @@ int weechat_buffer_match_list (struct t_gui_buffer *buffer, const char *string);
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'string': バッファのコンマ区切りリスト:
-** "*" 任意のバッファにマッチ
-** 名前の最初に "!" がある場合はその名前を含まない場合にマッチ
-** 名前にワイルドカード "*" を使うことができます
+* _buffer_: バッファへのポインタ
+* _string_: バッファのコンマ区切りリスト:
+** `+*+` 任意のバッファにマッチ
+** 名前の最初に `+!+` がある場合はその名前を含まない場合にマッチ
+** 名前にワイルドカード `+*+` を使うことができます
 
 戻り値:
 
@@ -11654,7 +11654,7 @@ struct t_gui_window *weechat_window_search_with_buffer (struct t_gui_buffer *buf
 
 引数:
 
-* 'buffer': バッファへのポインタ
+* _buffer_: バッファへのポインタ
 
 戻り値:
 
@@ -11695,25 +11695,25 @@ int weechat_window_get_integer (struct t_gui_window *window,
 
 引数:
 
-* 'window': ウィンドウへのポインタ
-* 'property': プロパティ名:
-** 'number': ウィンドウ番号 (1 以上)
-** 'win_x': 端末内でのウィンドウの X 座標 (1 列目は 0)
-** 'win_y': 端末内でのウィンドウの Y 座標 (1 行目は 0)
-** 'win_width': ウィンドウの横幅、文字単位
-** 'win_height': ウィンドウの縦幅、文字単位
-** 'win_width_pct': ウィンドウ横幅の百分率、親ウィンドウに対する割合
+* _window_: ウィンドウへのポインタ
+* _property_: プロパティ名:
+** _number_: ウィンドウ番号 (1 以上)
+** _win_x_: 端末内でのウィンドウの X 座標 (1 列目は 0)
+** _win_y_: 端末内でのウィンドウの Y 座標 (1 行目は 0)
+** _win_width_: ウィンドウの横幅、文字単位
+** _win_height_: ウィンドウの縦幅、文字単位
+** _win_width_pct_: ウィンドウ横幅の百分率、親ウィンドウに対する割合
    (例えば 50 は半分を意味する)
-** 'win_height_pct': ウィンドウ縦幅の百分率、親ウィンドウに対する割合
+** _win_height_pct_: ウィンドウ縦幅の百分率、親ウィンドウに対する割合
    (例えば 50 は半分を意味する)
-** 'win_chat_x': チャットウィンドウの X 座標 (1 列目は 0)
-** 'win_chat_y': チャットウィンドウの Y 座標 (1 行目は 0)
-** 'win_chat_width': チャットウィンドウの横幅、文字単位
-** 'win_chat_height': チャットウィンドウの縦幅、文字単位
-** 'first_line_displayed': バッファの 1
+** _win_chat_x_: チャットウィンドウの X 座標 (1 列目は 0)
+** _win_chat_y_: チャットウィンドウの Y 座標 (1 行目は 0)
+** _win_chat_width_: チャットウィンドウの横幅、文字単位
+** _win_chat_height_: チャットウィンドウの縦幅、文字単位
+** _first_line_displayed_: バッファの 1
    行目が画面に表示されている場合は 1、そうでなければ 0
-** 'scrolling': ウィンドウでスクロールが有効化されている場合 (最後の行が表示されていない場合) は 1
-** 'lines_after': バッファの最終行を表示した後にバッファに追加された行の数
+** _scrolling_: ウィンドウでスクロールが有効化されている場合 (最後の行が表示されていない場合) は 1
+** _lines_after_: バッファの最終行を表示した後にバッファに追加された行の数
    (スクロール中)
 
 戻り値:
@@ -11759,8 +11759,8 @@ int weechat_window_get_string (struct t_gui_window *window,
 
 引数:
 
-* 'window': ウィンドウへのポインタ
-* 'property': プロパティ名
+* _window_: ウィンドウへのポインタ
+* _property_: プロパティ名
 
 戻り値:
 
@@ -11780,10 +11780,10 @@ void *weechat_window_get_pointer (struct t_gui_window *window,
 
 引数:
 
-* 'window': ウィンドウへのポインタ
-* 'property': プロパティ名:
-** 'current': 現在のウィンドウへのポインタ
-** 'buffer': 指定したウィンドウが表示しているバッファへのポインタ
+* _window_: ウィンドウへのポインタ
+* _property_: プロパティ名:
+** _current_: 現在のウィンドウへのポインタ
+** _buffer_: 指定したウィンドウが表示しているバッファへのポインタ
 
 戻り値:
 
@@ -11823,7 +11823,7 @@ void weechat_window_set_title (const char *title);
 
 引数:
 
-* 'title': 端末の新しいタイトル (タイトルをリセットする場合は NULL)
+* _title_: 端末の新しいタイトル (タイトルをリセットする場合は NULL)
 
 C 言語での使用例:
 
@@ -11865,20 +11865,20 @@ struct t_gui_nick_group *weechat_nicklist_add_group (struct t_gui_buffer *buffer
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'parent_group': グループの親へのポインタ、グループに親がない場合 NULL
+* _buffer_: バッファへのポインタ
+* _parent_group_: グループの親へのポインタ、グループに親がない場合 NULL
   (ニックネームリスト)
-* 'name': グループ名
-* 'color': 色オプション名:
-** WeeChat オプション名、例えば 'weechat.color.nicklist_group'
-** 任意で背景色をつけた色、例えば 'yellow' や 'yellow,red'
+* _name_: グループ名
+* _color_: 色オプション名:
+** WeeChat オプション名、例えば _weechat.color.nicklist_group_
+** 任意で背景色をつけた色、例えば _yellow_ や _yellow,red_
 ** バーの色名:
-*** 'bar_fg': バーの前景色
-*** 'bar_delim': バーの区切り文字
-*** 'bar_bg': バーの背景色
-* 'visible':
-** '1': グループとサブグループおよびニックネームを表示
-** '0': グループとサブグループおよびニックネームを非表示
+*** _bar_fg_: バーの前景色
+*** _bar_delim_: バーの区切り文字
+*** _bar_bg_: バーの背景色
+* _visible_:
+** _1_: グループとサブグループおよびニックネームを表示
+** _0_: グループとサブグループおよびニックネームを非表示
 
 [NOTE]
 グループ名の前に、1
@@ -11929,10 +11929,10 @@ struct t_gui_nick_group *weechat_nicklist_search_group (struct t_gui_buffer *buf
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'from_group':
+* _buffer_: バッファへのポインタ
+* _from_group_:
   このグループのみを検索、全てのニックネームリストから検索する場合は NULL
-* 'name': 検索するグループ名
+* _name_: 検索するグループ名
 
 戻り値:
 
@@ -11976,27 +11976,27 @@ struct t_gui_nick_group *weechat_nicklist_add_nick (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'group': グループへのポインタ
-* 'name': ニックネーム
-* 'color': 色オプション名:
-*** WeeChat オプション名 (weechat.color.xxx のオプション部分)、例えば 'chat_delimiters'
-*** 任意で背景色をつけた色、例えば 'yellow' や 'yellow,red'
+* _buffer_: バッファへのポインタ
+* _group_: グループへのポインタ
+* _name_: ニックネーム
+* _color_: 色オプション名:
+*** WeeChat オプション名 (weechat.color.xxx のオプション部分)、例えば _chat_delimiters_
+*** 任意で背景色をつけた色、例えば _yellow_ や _yellow,red_
 *** バーの色名:
-**** 'bar_fg': バーの前景色
-**** 'bar_delim': バーの区切り文字
-**** 'bar_bg': バーの背景色
-* 'prefix': ニックネームの前に表示するプレフィックス
-* 'prefix_color': 色オプション名:
-** WeeChat オプション名 (weechat.color.xxx のオプション部分)、例えば 'chat_delimiters'
-** 任意で背景色をつけた色、例えば 'yellow' や 'yellow,red'
+**** _bar_fg_: バーの前景色
+**** _bar_delim_: バーの区切り文字
+**** _bar_bg_: バーの背景色
+* _prefix_: ニックネームの前に表示するプレフィックス
+* _prefix_color_: 色オプション名:
+** WeeChat オプション名 (weechat.color.xxx のオプション部分)、例えば _chat_delimiters_
+** 任意で背景色をつけた色、例えば _yellow_ や _yellow,red_
 ** バーの色名:
-*** 'bar_fg': バーの前景色
-*** 'bar_delim': バーの区切り文字
-*** 'bar_bg': バーの背景色
-* 'visible':
-** '1': ニックネームを表示
-** '0': ニックネームを非表示
+*** _bar_fg_: バーの前景色
+*** _bar_delim_: バーの区切り文字
+*** _bar_bg_: バーの背景色
+* _visible_:
+** _1_: ニックネームを表示
+** _0_: ニックネームを非表示
 
 戻り値:
 
@@ -12044,10 +12044,10 @@ struct t_gui_nick *weechat_nicklist_search_nick (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'from_group':
+* _buffer_: バッファへのポインタ
+* _from_group_:
   このグループのみを検索、全てのニックネームリストから検索する場合は NULL
-* 'name': 検索するニックネーム
+* _name_: 検索するニックネーム
 
 戻り値:
 
@@ -12086,8 +12086,8 @@ void weechat_nicklist_remove_group (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'group': 削除するグループへのポインタ (同時に全てのサブグループおよびニックネームを削除)
+* _buffer_: バッファへのポインタ
+* _group_: 削除するグループへのポインタ (同時に全てのサブグループおよびニックネームを削除)
 
 C 言語での使用例:
 
@@ -12121,8 +12121,8 @@ void weechat_nicklist_remove_nick (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'nick': 削除するニックネームへのポインタ
+* _buffer_: バッファへのポインタ
+* _nick_: 削除するニックネームへのポインタ
 
 C 言語での使用例:
 
@@ -12155,7 +12155,7 @@ void weechat_nicklist_remove_all (struct t_gui_buffer *buffer);
 
 引数:
 
-* 'buffer': バッファへのポインタ
+* _buffer_: バッファへのポインタ
 
 C 言語での使用例:
 
@@ -12192,9 +12192,9 @@ void weechat_nicklist_get_next_item (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'group': グループへのポインタへのポインタ
-* 'nick': ニックネームへのポインタへのポインタ
+* _buffer_: バッファへのポインタ
+* _group_: グループへのポインタへのポインタ
+* _nick_: ニックネームへのポインタへのポインタ
 
 C 言語での使用例:
 
@@ -12242,11 +12242,11 @@ int weechat_nicklist_group_get_integer (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'group': グループへのポインタ
-* 'property': プロパティ名:
-** 'visible': グループが表示されている場合は 1、そうでない場合は 0
-** 'level': グループレベル (ルートは 0)
+* _buffer_: バッファへのポインタ
+* _group_: グループへのポインタ
+* _property_: プロパティ名:
+** _visible_: グループが表示されている場合は 1、そうでない場合は 0
+** _level_: グループレベル (ルートは 0)
 
 戻り値:
 
@@ -12287,11 +12287,11 @@ const char *weechat_nicklist_group_get_string (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'group': グループへのポインタ
-* 'property': プロパティ名:
-** 'name': グループの名前
-** 'color': ニックネームリストのグループ色
+* _buffer_: バッファへのポインタ
+* _group_: グループへのポインタ
+* _property_: プロパティ名:
+** _name_: グループの名前
+** _color_: ニックネームリストのグループ色
 
 戻り値:
 
@@ -12332,10 +12332,10 @@ void *weechat_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'group': グループへのポインタ
-* 'property': プロパティ名:
-** 'parent': 親グループへのポインタ
+* _buffer_: バッファへのポインタ
+* _group_: グループへのポインタ
+* _property_: プロパティ名:
+** _parent_: 親グループへのポインタ
 
 戻り値:
 
@@ -12377,10 +12377,10 @@ void weechat_nicklist_group_set (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'group': グループへのポインタ
-* 'property': プロパティ名 (以下の表を参照)
-* 'value': プロパティの新しい値
+* _buffer_: バッファへのポインタ
+* _group_: グループへのポインタ
+* _property_: プロパティ名 (以下の表を参照)
+* _value_: プロパティの新しい値
 
 プロパティ:
 
@@ -12446,10 +12446,10 @@ int weechat_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'nick': ニックネームへのポインタ
-* 'property': プロパティ名:
-** 'visible': 表示状態のニックネームの場合 1、それ以外の場合は 0
+* _buffer_: バッファへのポインタ
+* _nick_: ニックネームへのポインタ
+* _property_: プロパティ名:
+** _visible_: 表示状態のニックネームの場合 1、それ以外の場合は 0
 
 戻り値:
 
@@ -12490,13 +12490,13 @@ const char *weechat_nicklist_nick_get_string (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのプロパティ
-* 'nick': ニックネームへのポインタ
-* 'property': プロパティ名:
-** 'name': ニックネームの名前
-** 'color': ニックネームリスト内でのニックネームの色
-** 'prefix': ニックネームのプレフィックス
-** 'prefix_color': ニックネームリスト内でのプレフィックスの色
+* _buffer_: バッファへのプロパティ
+* _nick_: ニックネームへのポインタ
+* _property_: プロパティ名:
+** _name_: ニックネームの名前
+** _color_: ニックネームリスト内でのニックネームの色
+** _prefix_: ニックネームのプレフィックス
+** _prefix_color_: ニックネームリスト内でのプレフィックスの色
 
 戻り値:
 
@@ -12537,10 +12537,10 @@ void *weechat_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'nick': ニックネームへのポインタ
-* 'property': プロパティ名:
-** 'group': 指定したニックネームを含むグループへのポインタ
+* _buffer_: バッファへのポインタ
+* _nick_: ニックネームへのポインタ
+* _property_: プロパティ名:
+** _group_: 指定したニックネームを含むグループへのポインタ
 
 戻り値:
 
@@ -12582,10 +12582,10 @@ void weechat_nicklist_nick_set (struct t_gui_buffer *buffer,
 
 引数:
 
-* 'buffer': バッファへのポインタ
-* 'nick': ニックネームへのポインタ
-* 'property': プロパティ名 (以下の表を参照)
-* 'value': プロパティの新しい値
+* _buffer_: バッファへのポインタ
+* _nick_: ニックネームへのポインタ
+* _property_: プロパティ名 (以下の表を参照)
+* _value_: プロパティの新しい値
 
 プロパティ:
 
@@ -12665,7 +12665,7 @@ struct t_gui_bar_item *weechat_bar_item_search (const char *name);
 
 引数:
 
-* 'name': バー要素の名前
+* _name_: バー要素の名前
 
 戻り値:
 
@@ -12712,23 +12712,23 @@ struct t_gui_bar_item *weechat_bar_item_new (const char *name,
 
 引数:
 
-* 'name': バー要素の名前
-* 'build_callback':
+* _name_: バー要素の名前
+* _build_callback_:
   バー要素を作成する際に呼び出すコールバック関数、引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_gui_bar_item *item': 要素へのポインタ
-** 'struct t_gui_window *window':
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_gui_bar_item *item_: 要素へのポインタ
+** _struct t_gui_window *window_:
    ウィンドウへのポインタ (ルートバーの場合は NULL)
-** 'struct t_gui_buffer *buffer': ウィンドウに表示されているバッファ
+** _struct t_gui_buffer *buffer_: ウィンドウに表示されているバッファ
    (ウィンドウが NULL の場合、現在のバッファ) または以下の構文で指定したバー要素に含まれるバッファ:
    "@buffer:item" _(WeeChat バージョン 0.4.2 以上で利用可)_
-** 'struct t_hashtable *extra_info': 常に NULL
+** _struct t_hashtable *extra_info_: 常に NULL
    (この引数は将来のバージョン用に予約されています) _(WeeChat バージョン 0.4.2 以上で利用可)_
 ** 戻り値: バー要素の内容
-* 'build_callback_pointer': WeeChat が 'build_callback'
+* _build_callback_pointer_: WeeChat が _build_callback_
   コールバックを呼び出す際にコールバックに渡すポインタ
-* 'build_callback_data': WeeChat が 'build_callback' コールバックを呼び出す際にコールバックに渡すポインタ
+* _build_callback_data_: WeeChat が _build_callback_ コールバックを呼び出す際にコールバックに渡すポインタ
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したバー要素が削除された時点で自動的に開放されます
 
@@ -12759,7 +12759,7 @@ struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
 
 [IMPORTANT]
 WeeChat バージョン 0.4.1 以下に対する互換性のために、デフォルトのコールバックに渡す引数の個数は
-3 個です: 'data' 、'item' 、'window' ('buffer' と 'extra_info' は渡されません)。 +
+3 個です: _data_ 、_item_ 、_window_ (_buffer_ と _extra_info_ は渡されません)。 +
 全ての引数を受け取るコールバックを使う場合は、名前の前に "(extra)"
 をつけてください、以下の例を参照 (WeeChat バージョン 0.4.2 以上で利用可)。
 
@@ -12783,7 +12783,7 @@ bar_item2 = weechat.bar_item_new("(extra)myitem2", "my_build_callback2", "")  # 
 
 ==== bar_item_update
 
-'build_callback' コールバックを呼び出してバー要素の内容を更新。
+_build_callback_ コールバックを呼び出してバー要素の内容を更新。
 
 プロトタイプ:
 
@@ -12794,7 +12794,7 @@ void weechat_bar_item_update (const char *name);
 
 引数:
 
-* 'name': バー要素の名前
+* _name_: バー要素の名前
 
 C 言語での使用例:
 
@@ -12827,7 +12827,7 @@ void weechat_bar_item_remove (struct t_gui_bar_item *item);
 
 引数:
 
-* 'item': バー要素へのポインタ
+* _item_: バー要素へのポインタ
 
 C 言語での使用例:
 
@@ -12860,7 +12860,7 @@ struct t_gui_bar *weechat_bar_search (const char *name);
 
 引数:
 
-* 'name': バーの名前
+* _name_: バーの名前
 
 戻り値:
 
@@ -12911,39 +12911,39 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 
 引数:
 
-* 'name': バーの名前
-* 'hidden':
-** 'on': バーを非表示
-** 'off': バーを表示
-* 'priority': バーの優先度 (整数)
-* 'type':
-** 'root': ウィンドウの外に 1 回だけ表示されたバー
-** 'window': 各ウィンドウに表示されたバー
-* 'condition': バーの表示位置:
-** 'active': アクティブウィンドウのみに表示されているバー
-** 'inactive': 非アクティブウィンドウのみに表示されているバー
-** 'nicklist': ニックネームリストを持つウィンドウに表示されているバー
-** 評価された式: 'WeeChat ユーザガイド' のバーに関する章を参照
-* 'position': 'top' 、'bottom' 、'left' 、'right'
-* 'filling_top_bottom':
-** 'horizontal': 要素は水平方向に詰め込まれている (各要素の後に間隔)
-** 'vertical': 要素は垂直方向に詰め込まれている (各要素の後に行)
-** 'columns_horizontal': 要素は水平方向に詰め込まれている、列と一緒に表示
-** 'columns_vertical': 要素は垂直方向に詰め込まれている、列と一緒に表示
-* 'filling_left_right':
-** 'horizontal': 要素は水平方向に詰め込まれている (各要素の後に間隔)
-** 'vertical': 要素は垂直方向に詰め込まれている (各要素の後に行)
-** 'columns_horizontal': 要素は水平方向に詰め込まれている、列と一緒に表示
-** 'columns_vertical': 要素は垂直方向に詰め込まれている、列と一緒に表示
-* 'size': バーのサイズ、文字単位 (0 は自動サイズ)
-* 'size_max': バーの最大サイズ (0 は最大サイズが指定されていない)
-* 'color_fg': バーのテキスト色
-* 'color_delim': バーの区切り文字の色
-* 'color_bg': バーの背景色
-* 'separator':
-** 'on': バーには他のウィンドウおよびバーとの区切り行がある
-** 'off': 区切り無し
-* 'items': バーの要素のリスト、コンマ (要素の間に間隔)、または
+* _name_: バーの名前
+* _hidden_:
+** _on_: バーを非表示
+** _off_: バーを表示
+* _priority_: バーの優先度 (整数)
+* _type_:
+** _root_: ウィンドウの外に 1 回だけ表示されたバー
+** _window_: 各ウィンドウに表示されたバー
+* _condition_: バーの表示位置:
+** _active_: アクティブウィンドウのみに表示されているバー
+** _inactive_: 非アクティブウィンドウのみに表示されているバー
+** _nicklist_: ニックネームリストを持つウィンドウに表示されているバー
+** 評価された式: _WeeChat ユーザガイド_ のバーに関する章を参照
+* _position_: _top_ 、_bottom_ 、_left_ 、_right_
+* _filling_top_bottom_:
+** _horizontal_: 要素は水平方向に詰め込まれている (各要素の後に間隔)
+** _vertical_: 要素は垂直方向に詰め込まれている (各要素の後に行)
+** _columns_horizontal_: 要素は水平方向に詰め込まれている、列と一緒に表示
+** _columns_vertical_: 要素は垂直方向に詰め込まれている、列と一緒に表示
+* _filling_left_right_:
+** _horizontal_: 要素は水平方向に詰め込まれている (各要素の後に間隔)
+** _vertical_: 要素は垂直方向に詰め込まれている (各要素の後に行)
+** _columns_horizontal_: 要素は水平方向に詰め込まれている、列と一緒に表示
+** _columns_vertical_: 要素は垂直方向に詰め込まれている、列と一緒に表示
+* _size_: バーのサイズ、文字単位 (0 は自動サイズ)
+* _size_max_: バーの最大サイズ (0 は最大サイズが指定されていない)
+* _color_fg_: バーのテキスト色
+* _color_delim_: バーの区切り文字の色
+* _color_bg_: バーの背景色
+* _separator_:
+** _on_: バーには他のウィンドウおよびバーとの区切り行がある
+** _off_: 区切り無し
+* _items_: バーの要素のリスト、コンマ (要素の間に間隔)、または
   "+" (要素の間に間隔を開けない) 区切り
 
 戻り値:
@@ -12999,11 +12999,11 @@ int weechat_bar_set (struct t_gui_bar *bar, const char *property,
 
 引数:
 
-* 'bar': バーへのポインタ
-* 'property': name、hidden、priority、conditions、position、filling_top_bottom、filling_left_right、size、size_max、color_fg、color_delim、color_bg、separator、items
+* _bar_: バーへのポインタ
+* _property_: name、hidden、priority、conditions、position、filling_top_bottom、filling_left_right、size、size_max、color_fg、color_delim、color_bg、separator、items
   (<<_bar_new,weechat_bar_new>>
   を参照)
-* 'value': プロパティの新しい値
+* _value_: プロパティの新しい値
 
 戻り値:
 
@@ -13040,7 +13040,7 @@ void weechat_bar_update (const char *name);
 
 引数:
 
-* 'name': バーの名前
+* _name_: バーの名前
 
 C 言語での使用例:
 
@@ -13073,7 +13073,7 @@ void weechat_bar_remove (struct t_gui_bar *bar);
 
 引数:
 
-* 'bar': バーへのポインタ
+* _bar_: バーへのポインタ
 
 C 言語での使用例:
 
@@ -13113,15 +13113,15 @@ int weechat_command (struct t_gui_buffer *buffer, const char *command);
 
 引数:
 
-* 'buffer': バッファへのポインタ
+* _buffer_: バッファへのポインタ
   (コマンドは指定したバッファで実行されます、現在のバッファで実行するには NULL を指定してください)
-* 'command': 実行するコマンド ("/"
+* _command_: 実行するコマンド ("/"
   で始まっている場合)、またはバッファに送信するテキスト
 
 戻り値: (_WeeChat バージョン 1.1 以上で利用可_)
 
-* 'WEECHAT_RC_OK' 成功した場合
-* 'WEECHAT_RC_ERROR' エラーが起きた場合
+* _WEECHAT_RC_OK_ 成功した場合
+* _WEECHAT_RC_ERROR_ エラーが起きた場合
 
 C 言語での使用例:
 
@@ -13168,10 +13168,10 @@ int weechat_network_pass_proxy (const char *proxy,
 
 引数:
 
-* 'proxy': 使用するプロキシ名
-* 'sock': 使用するソケット
-* 'address': アドレス (ホスト名または IP アドレス)
-* 'port': ポート番号
+* _proxy_: 使用するプロキシ名
+* _sock_: 使用するソケット
+* _address_: アドレス (ホスト名または IP アドレス)
+* _port_: ポート番号
 
 戻り値:
 
@@ -13215,9 +13215,9 @@ int weechat_network_connect_to (const char *proxy,
 
 引数:
 
-* 'proxy': 使用するプロキシ名
-* 'address': 接続先のアドレス (ポート番号を含む)
-* 'address_length': 引数 'address' の長さ
+* _proxy_: 使用するプロキシ名
+* _address_: 接続先のアドレス (ポート番号を含む)
+* _address_length_: 引数 _address_ の長さ
 
 戻り値:
 
@@ -13231,7 +13231,7 @@ struct sockaddr *addr;
 socklen_t length;
 int sock;
 
-/* allocate/set address and port in 'addr', set 'length' */
+/* allocate/set address and port in _addr_, set _length_ */
 /* ... */
 
 sock = weechat_network_connect_to (NULL, addr, length);
@@ -13266,8 +13266,8 @@ const char *weechat_info_get (const char *info_name, const char *arguments);
 
 引数:
 
-* 'info_name': 読み出すインフォの名前 (以下の表を参照)
-* 'arguments': 指定したインフォに対する引数
+* _info_name_: 読み出すインフォの名前 (以下の表を参照)
+* _arguments_: 指定したインフォに対する引数
   (任意、引数を指定しない場合は NULL)
 
 戻り値:
@@ -13318,8 +13318,8 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 
 引数:
 
-* 'info_name': 読み出すインフォの名前 (以下の表を参照)
-* 'hashtable': 引数を含むハッシュテーブル (指定したインフォに依存)
+* _info_name_: 読み出すインフォの名前 (以下の表を参照)
+* _hashtable_: 引数を含むハッシュテーブル (指定したインフォに依存)
   (任意、引数を指定しない場合は NULL)
 
 戻り値:
@@ -13371,7 +13371,7 @@ if (hashtable_in)
 
 [NOTE]
 "irc_message_parse" の出力に関するより詳しい内容を得るには
-'WeeChat スクリプト作成ガイド' をご覧ください。
+_WeeChat スクリプト作成ガイド_ をご覧ください。
 
 スクリプト (Python) での使用例:
 
@@ -13397,11 +13397,11 @@ weechat.prnt("", "message parsed: %s"
 
 各要素には型と値があり、以下の型を使うことができます:
 
-* 'integer': 任意の整数値
-* 'string': 任意の文字列値
-* 'pointer': 任意のポインタ
-* 'buffer': 任意のデータを含む固定長のバッファ
-* 'time': 時刻値
+* _integer_: 任意の整数値
+* _string_: 任意の文字列値
+* _pointer_: 任意のポインタ
+* _buffer_: 任意のデータを含む固定長のバッファ
+* _time_: 時刻値
 
 ==== infolist_new
 
@@ -13449,7 +13449,7 @@ struct t_infolist_item *weechat_infolist_new_item (struct t_infolist *infolist);
 
 引数:
 
-* 'infolist': インフォリストへのポインタ
+* _infolist_: インフォリストへのポインタ
 
 戻り値:
 
@@ -13488,9 +13488,9 @@ struct t_infolist_var *weechat_infolist_new_var_integer (struct t_infolist_item 
 
 引数:
 
-* 'item': インフォリストの要素へのポインタ
-* 'name': 変数名
-* 'value': 整数値
+* _item_: インフォリストの要素へのポインタ
+* _name_: 変数名
+* _value_: 整数値
 
 戻り値:
 
@@ -13531,9 +13531,9 @@ struct t_infolist_var *weechat_infolist_new_var_string (struct t_infolist_item *
 
 引数:
 
-* 'item': インフォリストの要素へのポインタ
-* 'name': 変数名
-* 'value': 文字列値
+* _item_: インフォリストの要素へのポインタ
+* _name_: 変数名
+* _value_: 文字列値
 
 戻り値:
 
@@ -13574,9 +13574,9 @@ struct t_infolist_var *weechat_infolist_new_var_pointer (struct t_infolist_item 
 
 引数:
 
-* 'item': インフォリストの要素へのポインタ
-* 'name': 変数名
-* 'pointer': ポインタ
+* _item_: インフォリストの要素へのポインタ
+* _name_: 変数名
+* _pointer_: ポインタ
 
 戻り値:
 
@@ -13618,10 +13618,10 @@ struct t_infolist_var *weechat_infolist_new_var_buffer (struct t_infolist_item *
 
 引数:
 
-* 'item': インフォリストの要素へのポインタ
-* 'name': 変数名
-* 'pointer': バッファへのポインタ
-* 'size': バッファのサイズ
+* _item_: インフォリストの要素へのポインタ
+* _name_: 変数名
+* _pointer_: バッファへのポインタ
+* _size_: バッファのサイズ
 
 戻り値:
 
@@ -13657,9 +13657,9 @@ struct t_infolist_var *weechat_infolist_new_var_time (struct t_infolist_item *it
 
 引数:
 
-* 'item': インフォリストの要素へのポインタ
-* 'name': 変数名
-* 'time': 時刻値
+* _item_: インフォリストの要素へのポインタ
+* _name_: 変数名
+* _time_: 時刻値
 
 戻り値:
 
@@ -13707,10 +13707,10 @@ struct t_infolist *weechat_infolist_get (const char *infolist_name,
 
 引数:
 
-* 'infolist_name': 読み出すインフォリストの名前 (以下の表を参照)
-* 'pointer': 要素へのポインタ、インフォリストからこの要素のみを取得する場合に指定
+* _infolist_name_: 読み出すインフォリストの名前 (以下の表を参照)
+* _pointer_: 要素へのポインタ、インフォリストからこの要素のみを取得する場合に指定
   (任意、NULL でも可)
-* 'arguments': 指定したインフォリストに対する引数
+* _arguments_: 指定したインフォリストに対する引数
   (任意、引数が不要の場合は NULL)
 
 戻り値:
@@ -13753,7 +13753,7 @@ int weechat_infolist_next (struct t_infolist *infolist);
 
 引数:
 
-* 'infolist': インフォリストへのポインタ
+* _infolist_: インフォリストへのポインタ
 
 戻り値:
 
@@ -13802,7 +13802,7 @@ int weechat_infolist_prev (struct t_infolist *infolist);
 
 引数:
 
-* 'infolist': インフォリストへのポインタ
+* _infolist_: インフォリストへのポインタ
 
 戻り値:
 
@@ -13851,7 +13851,7 @@ void weechat_infolist_reset_item_cursor (struct t_infolist *infolist);
 
 引数:
 
-* 'infolist': インフォリストへのポインタ
+* _infolist_: インフォリストへのポインタ
 
 C 言語での使用例:
 
@@ -13887,8 +13887,8 @@ struct t_infolist_var *weechat_infolist_search_var (struct t_infolist *infolist,
 
 引数:
 
-* 'infolist': インフォリストへのポインタ
-* 'name': 変数名
+* _infolist_: インフォリストへのポインタ
+* _name_: 変数名
 
 戻り値:
 
@@ -13931,7 +13931,7 @@ const char *weechat_infolist_fields (struct t_infolist *infolist);
 
 引数:
 
-* 'infolist': インフォリストへのポインタ
+* _infolist_: インフォリストへのポインタ
 
 戻り値:
 
@@ -13974,8 +13974,8 @@ int weechat_infolist_integer (struct t_infolist *infolist, const char *var);
 
 引数:
 
-* 'infolist': インフォリストへのポインタ
-* 'var': 変数名 (必ず「整数」型)
+* _infolist_: インフォリストへのポインタ
+* _var_: 変数名 (必ず「整数」型)
 
 戻り値:
 
@@ -14013,8 +14013,8 @@ const char *weechat_infolist_string (struct t_infolist *infolist, const char *va
 
 引数:
 
-* 'infolist': インフォリストへのポインタ
-* 'var': 変数名 (必ず「文字列」型)
+* _infolist_: インフォリストへのポインタ
+* _var_: 変数名 (必ず「文字列」型)
 
 戻り値:
 
@@ -14052,8 +14052,8 @@ void *weechat_infolist_pointer (struct t_infolist *infolist, const char *var);
 
 引数:
 
-* 'infolist': インフォリストへのポインタ
-* 'var': 変数名 (必ず「ポインタ」型)
+* _infolist_: インフォリストへのポインタ
+* _var_: 変数名 (必ず「ポインタ」型)
 
 戻り値:
 
@@ -14092,9 +14092,9 @@ void *weechat_infolist_buffer (struct t_infolist *infolist, const char *var,
 
 引数:
 
-* 'infolist': インフォリストへのポインタ
-* 'var': 変数名 (必ず「バッファ」型)
-* 'size': 整数変数へのポインタ、バッファサイズを返す
+* _infolist_: インフォリストへのポインタ
+* _var_: 変数名 (必ず「バッファ」型)
+* _size_: 整数変数へのポインタ、バッファサイズを返す
 
 戻り値:
 
@@ -14126,8 +14126,8 @@ time_t weechat_infolist_time (struct t_infolist *infolist, const char *var);
 
 引数:
 
-* 'infolist': インフォリストへのポインタ
-* 'var': 変数名 (必ず「時刻」型)
+* _infolist_: インフォリストへのポインタ
+* _var_: 変数名 (必ず「時刻」型)
 
 戻り値:
 
@@ -14165,7 +14165,7 @@ void weechat_infolist_free (struct t_infolist *infolist);
 
 引数:
 
-* 'infolist': インフォリストへのポインタ
+* _infolist_: インフォリストへのポインタ
 
 C 言語での使用例:
 
@@ -14228,23 +14228,23 @@ struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev,
 
 引数:
 
-* 'hdata_name': hdata の名前
-* 'var_prev': 構造体に含まれる変数名。構造体は配列の 1 つ前の要素へのポインタ
+* _hdata_name_: hdata の名前
+* _var_prev_: 構造体に含まれる変数名。構造体は配列の 1 つ前の要素へのポインタ
   (変数が利用不可能な場合は NULL でも可)
-* 'var_next': 構造体に含まれる変数名。構造体は配列の 1 つ後の要素へのポインタ
+* _var_next_: 構造体に含まれる変数名。構造体は配列の 1 つ後の要素へのポインタ
   (変数が利用不可能な場合は NULL でも可)
-* 'create_allowed': 構造体の作成を許可する場合は 1、それ以外の場合は 0
+* _create_allowed_: 構造体の作成を許可する場合は 1、それ以外の場合は 0
   _(WeeChat バージョン 0.4.0 以上で利用可)_
-* 'delete_allowed': 構造体の削除を許可する場合は 1、それ以外の場合は 0
+* _delete_allowed_: 構造体の削除を許可する場合は 1、それ以外の場合は 0
   _(WeeChat バージョン 0.3.9 以上で利用可)_
-* 'callback_update': hdata 内のデータを更新する際のコールバック関数、データの更新を禁止する場合は NULL
+* _callback_update_: hdata 内のデータを更新する際のコールバック関数、データの更新を禁止する場合は NULL
   _(WeeChat バージョン 0.3.9 以上で利用可)_ 、引数と戻り値:
-** 'void *data': ポインタ
-** 'struct t_hdata *hdata': hdata へのポインタ
-** 'struct t_hashtable *hashtable': 更新する変数を含むハッシュテーブル
+** _void *data_: ポインタ
+** _struct t_hdata *hdata_: hdata へのポインタ
+** _struct t_hashtable *hashtable_: 更新する変数を含むハッシュテーブル
    (<<_hdata_update,weechat_hdata_update>> を参照)
 ** return value: 更新された変数の数
-* 'callback_update_data': WeeChat が 'callback_update' コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_update_data_: WeeChat が _callback_update_ コールバックを呼び出す際にコールバックに渡すポインタ
   _(WeeChat バージョン 0.3.9 以上で利用可)_
 
 戻り値:
@@ -14277,10 +14277,10 @@ void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset,
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'name': 変数名
-* 'offset': 構造体における変数のオフセット
-* 'type': 変数型、以下の 1 つ:
+* _hdata_: hdata へのポインタ
+* _name_: 変数名
+* _offset_: 構造体における変数のオフセット
+* _type_: 変数型、以下の 1 つ:
 ** WEECHAT_HDATA_CHAR
 ** WEECHAT_HDATA_INTEGER
 ** WEECHAT_HDATA_LONG
@@ -14290,16 +14290,16 @@ void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset,
 ** WEECHAT_HDATA_TIME
 ** WEECHAT_HDATA_HASHTABLE
 ** WEECHAT_HDATA_OTHER
-* 'update_allowed': 変数の更新を許可する場合は 1、禁止する場合は 0
+* _update_allowed_: 変数の更新を許可する場合は 1、禁止する場合は 0
   _(WeeChat バージョン 0.3.9 以上で利用可)_
-* 'array_size': 配列でない場合は必ず NULL、配列の場合の値は:
+* _array_size_: 配列でない場合は必ず NULL、配列の場合の値は:
   _(WeeChat バージョン 0.3.9 以上で利用可)_
 ** hdata に含まれる変数の名前: 配列のサイズはこの名前の変数に収められている
    (配列サイズは動的に変化)
 ** 整数 (文字列): 配列のサイズは固定
-** '*': 自動サイズ: 配列のサイズは値の中に見つかる最初の NULL を元に計算されます
+** _*_: 自動サイズ: 配列のサイズは値の中に見つかる最初の NULL を元に計算されます
    (文字列、ポインタ、ハッシュテーブル型以外では使えません)
-* 'hdata_name': hdata の名前 (変数が hdata を含む構造体へのポインタの場合)
+* _hdata_name_: hdata の名前 (変数が hdata を含む構造体へのポインタの場合)
 
 C 言語での使用例:
 
@@ -14359,11 +14359,11 @@ void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *poin
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'name': 変数名
-* 'pointer': リストへのポインタ
-* 'flags': 以下の値の組み合わせ: _(WeeChat バージョン 1.0 以上)_
-** 'WEECHAT_HDATA_LIST_CHECK_POINTERS': ポインタをチェックする際に使うリスト
+* _hdata_: hdata へのポインタ
+* _name_: 変数名
+* _pointer_: リストへのポインタ
+* _flags_: 以下の値の組み合わせ: _(WeeChat バージョン 1.0 以上)_
+** _WEECHAT_HDATA_LIST_CHECK_POINTERS_: ポインタをチェックする際に使うリスト
 
 C 言語での使用例:
 
@@ -14426,7 +14426,7 @@ struct t_hdata *weechat_hdata_get (const char *hdata_name);
 
 引数:
 
-* 'hdata_name': hdata の名前
+* _hdata_name_: hdata の名前
 
 戻り値:
 
@@ -14469,8 +14469,8 @@ int weechat_hdata_get_var_offset (struct t_hdata *hdata, const char *name);
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'name': 変数名
+* _hdata_: hdata へのポインタ
+* _name_: 変数名
 
 戻り値:
 
@@ -14509,8 +14509,8 @@ int weechat_hdata_get_var_type (struct t_hdata *hdata, const char *name);
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'name': 変数名
+* _hdata_: hdata へのポインタ
+* _name_: 変数名
 
 戻り値:
 
@@ -14574,8 +14574,8 @@ const char *weechat_hdata_get_var_type_string (struct t_hdata *hdata, const char
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'name': 変数名
+* _hdata_: hdata へのポインタ
+* _name_: 変数名
 
 戻り値:
 
@@ -14614,9 +14614,9 @@ int weechat_hdata_get_var_array_size (struct t_hdata *hdata, void *pointer, cons
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'name': 変数名
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名
 
 戻り値:
 
@@ -14656,9 +14656,9 @@ const char *weechat_hdata_get_var_array_size_string (struct t_hdata *hdata, void
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'name': 変数名
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名
 
 戻り値:
 
@@ -14698,8 +14698,8 @@ const char *weechat_hdata_get_var_hdata (struct t_hdata *hdata, const char *name
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'name': 変数名
+* _hdata_: hdata へのポインタ
+* _name_: 変数名
 
 戻り値:
 
@@ -14738,9 +14738,9 @@ void *weechat_hdata_get_var (struct t_hdata *hdata, void *pointer, const char *n
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'name': 変数名
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名
 
 戻り値:
 
@@ -14773,9 +14773,9 @@ void *weechat_hdata_get_var_at_offset (struct t_hdata *hdata, void *pointer, int
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'name': 変数名
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名
 
 戻り値:
 
@@ -14809,8 +14809,8 @@ void *weechat_hdata_get_list (struct t_hdata *hdata, const char *name);
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'name': リスト名
+* _hdata_: hdata へのポインタ
+* _name_: リスト名
 
 戻り値:
 
@@ -14851,12 +14851,12 @@ int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointe
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'list': リストポインタ; NULL の場合 _(WeeChat バージョン 1.0 以上)_ 、ポインタは
+* _hdata_: hdata へのポインタ
+* _list_: リストポインタ; NULL の場合 _(WeeChat バージョン 1.0 以上)_ 、ポインタは
    hdata に含まれる "check pointers" フラグを持つリストでチェックされます
   (<<_hdata_new_list,weechat_hdata_new_list>>
   を参照)、このフラグを持つリストがない場合、ポインタは妥当とされます。
-* 'pointer': 確認するポインタ
+* _pointer_: 確認するポインタ
 
 戻り値:
 
@@ -14912,9 +14912,9 @@ void *weechat_hdata_move (struct t_hdata *hdata, void *pointer, int count);
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'count': 移動を実行する回数
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _count_: 移動を実行する回数
   (負および正の整数、ゼロは禁止)
 
 戻り値:
@@ -14959,7 +14959,7 @@ if buffer:
 
 _WeeChat バージョン 0.4.1 以上で利用可。_
 
-リストから要素を検索: リスト内の各要素に対して 'search'
+リストから要素を検索: リスト内の各要素に対して _search_
 の内容を評価し、マッチする要素が見つかるかリストの最後に到達するまでこれを続ける。
 
 プロトタイプ:
@@ -14971,12 +14971,12 @@ void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *se
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'search': 評価する式、式中のデフォルトポインタは hdata の名前
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _search_: 評価する式、式中のデフォルトポインタは hdata の名前
   (デフォルトポインタはリストに含まれる各要素で置換される); 式に関する詳細は
-  'WeeChat ユーザガイド' のコマンド `/eval` を参照
-* 'move': 検索に失敗した後に移動を実行する回数
+  _WeeChat ユーザガイド_ のコマンド `/eval` を参照
+* _move_: 検索に失敗した後に移動を実行する回数
   (負および正の整数、ゼロは禁止)
 
 戻り値:
@@ -15030,9 +15030,9 @@ char weechat_hdata_char (struct t_hdata *hdata, void *pointer, const char *name)
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'name': 変数名 (必ず「文字型」であること); 配列の場合、"N|name"
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名 (必ず「文字型」であること); 配列の場合、"N|name"
   のように名前を指定することが可能。ここで N は配列のインデックス (1 番目は 0)、例: "2|name"
 
 戻り値:
@@ -15072,9 +15072,9 @@ int weechat_hdata_integer (struct t_hdata *hdata, void *pointer, const char *nam
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'name': 変数名 (必ず「整数型」であること); 配列の場合、"N|name"
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名 (必ず「整数型」であること); 配列の場合、"N|name"
   のように名前を指定することが可能。ここで N は配列のインデックス (1 番目は 0)、例: "2|name"
 
 戻り値:
@@ -15118,9 +15118,9 @@ long weechat_hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'name': 変数名 (必ず「long 型」であること); 配列の場合、"N|name"
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名 (必ず「long 型」であること); 配列の場合、"N|name"
   のように名前を指定することが可能。ここで N は配列のインデックス (1 番目は 0)、例: "2|name"
 
 戻り値:
@@ -15160,9 +15160,9 @@ const char *weechat_hdata_string (struct t_hdata *hdata, void *pointer, const ch
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'name': 変数名 (必ず「文字列型」であること); 配列の場合、"N|name"
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名 (必ず「文字列型」であること); 配列の場合、"N|name"
   のように名前を指定することが可能。ここで N は配列のインデックス (1 番目は 0)、例: "2|name"
 
 戻り値:
@@ -15206,9 +15206,9 @@ void *weechat_hdata_pointer (struct t_hdata *hdata, void *pointer, const char *n
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'name': 変数名 (必ず「ポインタ型」であること); 配列の場合、"N|name"
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名 (必ず「ポインタ型」であること); 配列の場合、"N|name"
   のように名前を指定することが可能。ここで N は配列のインデックス (1 番目は 0)、例: "2|name"
 
 戻り値:
@@ -15252,9 +15252,9 @@ time_t weechat_hdata_time (struct t_hdata *hdata, void *pointer, const char *nam
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'name': 変数名 (必ず「時刻型」であること); 配列の場合、"N|name"
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名 (必ず「時刻型」であること); 配列の場合、"N|name"
   のように名前を指定することが可能。ここで N は配列のインデックス (1 番目は 0)、例: "2|name"
 
 戻り値:
@@ -15320,9 +15320,9 @@ struct t_hashtable *weechat_hdata_hashtable (struct t_hdata *hdata, void *pointe
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'name': 変数名 (必ず「ハッシュテーブル型」であること); 配列の場合、"N|name"
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名 (必ず「ハッシュテーブル型」であること); 配列の場合、"N|name"
   のように名前を指定することが可能。ここで N は配列のインデックス (1 番目は 0)、例: "2|name"
 
 戻り値:
@@ -15376,11 +15376,11 @@ int weechat_hdata_set (struct t_hdata *hdata, void *pointer, const char *name, c
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'name': 変数名 (許可されている型: 文字型、整数型、long
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _name_: 変数名 (許可されている型: 文字型、整数型、long
   型、文字列型、ポインタ型、時刻型)
-* 'value': 変数の新しい値
+* _value_: 変数の新しい値
 
 戻り値:
 
@@ -15411,9 +15411,9 @@ int weechat_hdata_update (struct t_hdata *hdata, void *pointer, struct t_hashtab
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'pointer': WeeChat および plugin オブジェクトへのポインタ
-* 'hashtable': 更新する変数:
+* _hdata_: hdata へのポインタ
+* _pointer_: WeeChat および plugin オブジェクトへのポインタ
+* _hashtable_: 更新する変数:
   キーは変数の名前、値は変数の新しい値
   (キーと値は文字列)、以下の特別なキーを使うことができます:
 ** キー `__create_allowed` (値は任意): 構造体の作製を許可する場合は
@@ -15497,23 +15497,23 @@ const char *weechat_hdata_get_string (struct t_hdata *hdata, const char *propert
 
 引数:
 
-* 'hdata': hdata へのポインタ
-* 'property': プロパティ名:
-** 'var_keys': hdata に含まれる変数のキーのリストを含む文字列
+* _hdata_: hdata へのポインタ
+* _property_: プロパティ名:
+** _var_keys_: hdata に含まれる変数のキーのリストを含む文字列
    (書式: "key1,key2,key3")
-** 'var_values': hdata に含まれる変数の値のリストを含む文字列
+** _var_values_: hdata に含まれる変数の値のリストを含む文字列
    (書式: "value1,value2,value3")
-** 'var_keys_values': hdata に含まれる変数のキーと値のリストを含む文字列
+** _var_keys_values_: hdata に含まれる変数のキーと値のリストを含む文字列
    (書式: "key1:value1,key2:value2,key3:value3")
-** 'var_prev':
+** _var_prev_:
    構造体に含まれる変数の名前、構造体はリスト内の 1 つ前の要素へのポインタ
-** 'var_next':
+** _var_next_:
    構造体に含まれる変数の名前、構造体はリスト内の 1 つ後の要素へのポインタ
-** 'list_keys': hdata に含まれるリストのキーのリストを含む文字列
+** _list_keys_: hdata に含まれるリストのキーのリストを含む文字列
    (書式: "key1,key2,key3")
-** 'list_values': hdata に含まれるリストの値のリストを含む文字列
+** _list_values_: hdata に含まれるリストの値のリストを含む文字列
    (書式: "value1,value2,value3")
-** 'list_keys_values': hdata に含まれるリストのキーと値のリストを含む文字列
+** _list_keys_values_: hdata に含まれるリストのキーと値のリストを含む文字列
    (書式: "key1:value1,key2:value2,key3:value3")
 
 戻り値:
@@ -15567,21 +15567,21 @@ struct t_upgrade_file *upgrade_file_new (const char *filename,
 
 引数:
 
-* 'filename': ファイルの名前 (WeeChat
+* _filename_: ファイルの名前 (WeeChat
   はこの名前に拡張子 ".upgrade" を追加します)
-* 'callback_read': アップグレードファイル内の各オブジェクトを読み込む際に呼び出すコールバック関数
+* _callback_read_: アップグレードファイル内の各オブジェクトを読み込む際に呼び出すコールバック関数
   引数と戻り値:
-** 'const void *pointer': ポインタ
-** 'void *data': ポインタ
-** 'struct t_upgrade_file *upgrade_file': アップグレードファイルへのポインタ
-** 'int object_id': オブジェクトの識別番号
-** 'struct t_infolist *infolist': オブジェクトの内容を含むインフォリスト
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _struct t_upgrade_file *upgrade_file_: アップグレードファイルへのポインタ
+** _int object_id_: オブジェクトの識別番号
+** _struct t_infolist *infolist_: オブジェクトの内容を含むインフォリスト
 ** 戻り値:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
-* 'callback_read_pointer': WeeChat が 'callback_read'
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_read_pointer_: WeeChat が _callback_read_
   コールバックを呼び出す際にコールバックに渡すポインタ
-* 'callback_read_data': WeeChat が 'callback_read' コールバックを呼び出す際にコールバックに渡すポインタ;
+* _callback_read_data_: WeeChat が _callback_read_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはアップグレードファイルが閉じられた時点で自動的に開放されます
 
@@ -15623,9 +15623,9 @@ int weechat_upgrade_write_object (struct t_upgrade_file *upgrade_file,
 
 引数:
 
-* 'upgrade_file': アップグレードファイルへのポインタ
-* 'object_id': オブジェクトの識別番号
-* 'infolist': ファイルに書き込むインフォリスト
+* _upgrade_file_: アップグレードファイルへのポインタ
+* _object_id_: オブジェクトの識別番号
+* _infolist_: ファイルに書き込むインフォリスト
 
 戻り値:
 
@@ -15671,7 +15671,7 @@ int weechat_upgrade_read (struct t_upgrade_file *upgrade_file);
 
 引数:
 
-* 'upgrade_file': アップグレードファイルへのポインタ
+* _upgrade_file_: アップグレードファイルへのポインタ
 
 戻り値:
 
@@ -15708,7 +15708,7 @@ void weechat_upgrade_close (struct t_upgrade_file *upgrade_file);
 
 引数:
 
-* 'upgrade_file': アップグレードファイルへのポインタ
+* _upgrade_file_: アップグレードファイルへのポインタ
 
 C 言語での使用例:
 
