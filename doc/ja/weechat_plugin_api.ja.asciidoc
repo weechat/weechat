@@ -1628,6 +1628,7 @@ C 言語での使用例:
 char **argv = weechat_string_split_command ("/command1 arg;/command2", ';');
 /* result: argv[0] == "/command1 arg"
            argv[1] == "/command2"
+           argv[2] == NULL
 */
 weechat_free_split_command (argv);
 ----
