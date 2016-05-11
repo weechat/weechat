@@ -6964,7 +6964,7 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 
 通常使用するタグ (一部抜粋したリスト):
 
-[width="70%",cols="1m,4",options="header"]
+[width="70%",cols="^1,4",options="header"]
 |===
 | タグ             | 説明
 | no_filter        | フィルタできない行
@@ -10358,7 +10358,7 @@ info を使う前にエリアが一致していることを確認して下さい
 
 コールバックに送られるハッシュテーブルの内容 (キーと値は "string" 型):
 
-[width="100%",cols="5m,5,8,3",options="header"]
+[width="100%",cols="5,5,8,3",options="header"]
 |===
 | キー ^(1)^ | 説明 | 値の例 | 定義できない場合の値
 
@@ -10465,13 +10465,13 @@ info を使う前にエリアが一致していることを確認して下さい
 
 バー要素 "buffer_nicklist" の追加情報:
 
-[width="70%",cols="3m,3,8",options="header"]
+[width="60%",cols="1,1,5",options="header"]
 |===
-| キー           | プラグイン ^(1)^ | 説明
-| nick           | core         | ニックネーム
-| prefix         | core         | ニックネームのプレフィックス
-| group          | core         | グループ名
-| irc_host       | irc          | ニックネームのホスト名 (判る場合)
+| キー     | プラグイン ^(1)^ | 説明
+| nick     | core             | ニックネーム
+| prefix   | core             | ニックネームのプレフィックス
+| group    | core             | グループ名
+| irc_host | irc              | ニックネームのホスト名 (判る場合)
 |===
 
 [NOTE]

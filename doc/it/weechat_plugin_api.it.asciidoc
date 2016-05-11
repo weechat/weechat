@@ -7142,7 +7142,7 @@ Argomenti:
 
 Tag usati di frequente (elenco non esaustivo):
 
-[width="70%",cols="1m,4",options="header"]
+[width="70%",cols="^1,4",options="header"]
 |===
 | Tag              | Descrizione
 | no_filter        | La riga non può essere filtrata
@@ -10737,7 +10737,7 @@ callback se l'area corrisponde prima di usare le informazioni nella tabella hash
 Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 "string"):
 
-[width="100%",cols="5m,5,8,3",options="header"]
+[width="100%",cols="5,5,8,3",options="header"]
 |===
 | Key ^(1)^ | Descrizione | Valori di esempio | Valore se N/D
 
@@ -10845,13 +10845,13 @@ per sapere dove il pulsante del mouse è stato rilasciato). +
 
 Informazioni aggiuntive per l'elemento barra "buffer_nicklist":
 
-[width="70%",cols="3m,3,8",options="header"]
+[width="60%",cols="1,1,5",options="header"]
 |===
-| Chiave         | Plugin | Descrizione
-| nick           | core   | Nick
-| prefix         | core   | Prefisso per il nick
-| group          | core   | Nome gruppo
-| irc_host       | irc    | Host per il nick (se conosciuto)
+| Chiave   | Plugin ^(1)^ | Descrizione
+| nick     | core         | Nick
+| prefix   | core         | Prefisso per il nick
+| group    | core         | Nome gruppo
+| irc_host | irc          | Host per il nick (se conosciuto)
 |===
 
 [NOTE]

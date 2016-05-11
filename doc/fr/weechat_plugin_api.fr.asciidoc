@@ -7081,7 +7081,7 @@ Paramètres :
 
 Tags couramment utilisés (liste non exhaustive) :
 
-[width="70%",cols="1m,4",options="header"]
+[width="70%",cols="^1,4",options="header"]
 |===
 | Tag              | Description
 | no_filter        | La ligne ne peut pas être filtrée
@@ -10590,7 +10590,7 @@ correspond avant d'utiliser les informations de la table de hachage.
 Contenu de la table de hachage envoyée au "callback" (les clés et valeurs sont
 de type "string") :
 
-[width="100%",cols="5m,5,8,3",options="header"]
+[width="100%",cols="5,5,8,3",options="header"]
 |===
 | Clé ^(1)^ | Description | Exemples de valeur | Valeur si non applicable
 
@@ -10698,13 +10698,13 @@ relâché). +
 
 Informations additionnelles pour l'objet de barre "buffer_nicklist" :
 
-[width="70%",cols="3m,3,8",options="header"]
+[width="60%",cols="1,1,5",options="header"]
 |===
-| Clé            | Extension ^(1)^ | Description
-| nick           | core            | Pseudonyme
-| prefix         | core            | Préfixe du pseudonyme
-| group          | core            | Nom du groupe
-| irc_host       | irc             | Nom d'hôte pour le pseudonyme (si connu)
+| Clé      | Extension ^(1)^ | Description
+| nick     | core            | Pseudonyme
+| prefix   | core            | Préfixe du pseudonyme
+| group    | core            | Nom du groupe
+| irc_host | irc             | Nom d'hôte pour le pseudonyme (si connu)
 |===
 
 [NOTE]

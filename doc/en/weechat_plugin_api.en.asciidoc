@@ -6964,7 +6964,7 @@ Arguments:
 
 Tags commonly used (non-exhaustive list):
 
-[width="70%",cols="1m,4",options="header"]
+[width="70%",cols="^1,4",options="header"]
 |===
 | Tag              | Description
 | no_filter        | Line can not be filtered
@@ -10361,7 +10361,7 @@ hashtable.
 
 Content of hashtable sent to callback (keys and values are of type "string"):
 
-[width="100%",cols="5m,5,8,3",options="header"]
+[width="100%",cols="5,5,8,3",options="header"]
 |===
 | Key ^(1)^ | Description | Value examples | Value if N/A
 
@@ -10468,13 +10468,13 @@ button has been released). +
 
 Extra info for bar item "buffer_nicklist":
 
-[width="70%",cols="3m,3,8",options="header"]
+[width="60%",cols="1,1,5",options="header"]
 |===
-| Key            | Plugin ^(1)^ | Description
-| nick           | core         | Nick name
-| prefix         | core         | Prefix for nick
-| group          | core         | Group name
-| irc_host       | irc          | Host for nick (if known)
+| Key      | Plugin ^(1)^ | Description
+| nick     | core         | Nick name
+| prefix   | core         | Prefix for nick
+| group    | core         | Group name
+| irc_host | irc          | Host for nick (if known)
 |===
 
 [NOTE]
