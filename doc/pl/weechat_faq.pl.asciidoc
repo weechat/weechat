@@ -652,7 +652,7 @@ pozwolić WeeChat używać specjalnego koloru dla nieobecnych nicków.
 Dla Bitlbee ≥ 3, należy wykonać na kanale '&bitlbee':
 
 ----
-channel set show_users online,away
+channel [<channel id>] set show_users online,away
 ----
 
 Dla starszych wersji Bitlbee, należy wykonać na kanale '&bitlbee':

@@ -647,7 +647,7 @@ Bitlbee は離席ユーザを表示するために voice を利用します。�
 Bitlbee 3 以上の場合、以下のコマンドをチャンネル '&bitlbee' で入力:
 
 ----
-channel set show_users online,away
+channel [<channel id>] set show_users online,away
 ----
 
 Bitlbee の古いバージョンでは、以下のコマンドを '&bitlbee' で入力:
