@@ -23,6 +23,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * api: fix crash in function string_split_command() when the separator is not
   a semicolon (issue #731)
+* relay: allow escape of comma in command "init" (weechat protocol) (issue #730)
 
 [[v1.5]]
 == Version 1.5 (2016-05-01)

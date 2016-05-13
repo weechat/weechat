@@ -170,14 +170,14 @@ relay_weechat_protocol_is_sync (struct t_relay_client *ptr_client,
 RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
 {
     char **options, *pos, *password;
-    int num_options, i, compression;
+    int i, compression;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(1);
 
-    options = weechat_string_split (argv_eol[0], ",", 0, 0, &num_options);
+    options = weechat_string_split_command (argv_eol[0], ',');
     if (options)
     {
-        for (i = 0; i < num_options; i++)
+        for (i = 0; options[i]; i++)
         {
             pos = strchr (options[i], '=');
             if (pos)
@@ -208,7 +208,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                 }
             }
         }
-        weechat_string_free_split (options);
+        weechat_string_free_split_command (options);
     }
 
     return WEECHAT_RC_OK;
