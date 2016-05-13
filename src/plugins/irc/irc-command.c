@@ -3540,7 +3540,7 @@ IRC_COMMAND_CALLBACK(notify)
                     ptr_server->buffer,
                     _("%sMonitor list is full (%d)"),
                     weechat_prefix ("error"), ptr_server->monitor);
-                continue;
+                break;
             }
 
             ptr_notify = irc_notify_new (ptr_server, nicks[i], check_away);
