@@ -3,11 +3,7 @@ Section: net
 Priority: optional
 Maintainer: Sébastien Helleu <flashcode@flashtux.org>
 Build-Depends:
-    asciidoc (>= 8.5),
-    source-highlight,
-    xsltproc,
-    docbook-xsl,
-    docbook-xml,
+    asciidoctor (>= 1.5.4),
     debhelper (>= 9),
     dh-exec,
     cmake, pkg-config,
