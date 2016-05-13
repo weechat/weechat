@@ -1133,7 +1133,7 @@ if test "x$enable_man" = "xyes" -o "x$enable_doc" = "xyes"; then
         AC_MSG_CHECKING([for asciidoctor version])
         asciidoctor_version=`$ASCIIDOCTOR --version 2>/dev/null | head -n 1 | cut -d" " -f2`
         case "${asciidoctor_version}" in
-        Asciidoctor' '0.*)
+        Asciidoctor' '0.*|Asciidoctor' '1.5.[0-3]*)
                 AC_MSG_RESULT([${asciidoctor_version} (too old)])
                 not_found="$not_found asciidoctor"
                 enable_man="no"

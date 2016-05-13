@@ -18,7 +18,7 @@
 #
 
 # - Find Asciidoctor
-# This module finds if asciidoctor (version 1.5.0 or newer) is installed.
+# This module finds if asciidoctor (version 1.5.4 or newer) is installed.
 
 if(ASCIIDOCTOR_FOUND)
   # Already in cache, be silent
@@ -38,7 +38,7 @@ if(ASCIIDOCTOR_EXECUTABLE)
 
   string(REGEX REPLACE "^Asciidoctor ([^ ]+) .*" "\\1" ASCIIDOCTOR_VERSION "${ASCIIDOCTOR_VERSION}")
 
-  if(ASCIIDOCTOR_VERSION VERSION_EQUAL "1.5.0" OR ASCIIDOCTOR_VERSION VERSION_GREATER "1.5.0")
+  if(ASCIIDOCTOR_VERSION VERSION_EQUAL "1.5.4" OR ASCIIDOCTOR_VERSION VERSION_GREATER "1.5.4")
     set(ASCIIDOCTOR_FOUND TRUE)
   endif()
 

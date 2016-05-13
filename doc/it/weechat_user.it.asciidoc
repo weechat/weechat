@@ -133,7 +133,7 @@ compilare WeeChat.
 | guile-2.0-dev          | ≥ 2.0         |           | Plugin guile (scheme)
 | libv8-dev              | ≤ 3.24.3      |           | Plugin Javascript
 // TRANSLATION MISSING
-| asciidoctor            | ≥ 1.5.0       |           | Build man page and documentation
+| asciidoctor            | ≥ 1.5.4       |           | Build man page and documentation
 // TRANSLATION MISSING
 | libcpputest-dev        | ≥ 3.4         |           | Run tests
 // TRANSLATION MISSING
