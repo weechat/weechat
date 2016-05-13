@@ -6507,8 +6507,8 @@ irc_command_init ()
     weechat_hook_command (
         "notify",
         N_("add a notification for presence or away status of nicks on servers"),
-        N_("add <nick> [<server> [-away]]"
-           " || del <nick>|-all [<server>]"),
+        N_("add <nick1>[,<nick2>...] [<server> [-away]]"
+           " || del <nick1>[,<nick2>...]|-all [<server>]"),
         N_("   add: add a notification\n"
            "  nick: nick\n"
            "server: internal server name (by default current server)\n"
@@ -6526,7 +6526,9 @@ irc_command_init ()
            "  notify when \"toto\" joins/quits freenode server:\n"
            "    /notify add toto freenode\n"
            "  notify when \"toto\" is away or back on freenode server:\n"
-           "    /notify add toto freenode -away"),
+           "    /notify add toto freenode -away\n"
+           "  notify when \"toto\" or \"gary\" join/quit current server:\n"
+           "    /notify add toto,gary\n"),
         "add %(irc_channel_nicks) %(irc_servers) -away %-"
         " || del -all|%(irc_notify_nicks) %(irc_servers) %-",
         &irc_command_notify, NULL, NULL);
