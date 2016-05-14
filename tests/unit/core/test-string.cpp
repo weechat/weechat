@@ -931,15 +931,33 @@ TEST(String, SplitCommand)
 {
     char **argv;
 
+    /* test with a NULL/empty string */
     POINTERS_EQUAL(NULL, string_split_command (NULL, ';'));
     POINTERS_EQUAL(NULL, string_split_command ("", ';'));
+
+    /* string with one command */
+    argv = string_split_command ("abc", ';');
+    CHECK(argv);
+    STRCMP_EQUAL("abc", argv[0]);
+    POINTERS_EQUAL(NULL, argv[1]);
+    string_free_split_command (argv);
+
+    /* string with 3 commands */
     argv = string_split_command ("abc;de;fghi", ';');
     CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
     POINTERS_EQUAL(NULL, argv[3]);
+    string_free_split_command (argv);
 
+    /* string with 3 commands (containing spaces) */
+    argv = string_split_command ("  abc ; de ; fghi  ", ';');
+    CHECK(argv);
+    STRCMP_EQUAL("abc ", argv[0]);
+    STRCMP_EQUAL("de ", argv[1]);
+    STRCMP_EQUAL("fghi  ", argv[2]);
+    POINTERS_EQUAL(NULL, argv[3]);
     string_free_split_command (argv);
 
     /* separator other than ';' */
@@ -949,7 +967,6 @@ TEST(String, SplitCommand)
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
     POINTERS_EQUAL(NULL, argv[3]);
-
     string_free_split_command (argv);
 
     /* free split with NULL */
