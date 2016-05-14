@@ -26,7 +26,7 @@ When reporting https://github.com/weechat/weechat/issues[issues] on GitHub,
 please include:
 
 * your *WeeChat version*: the output of `/v` in WeeChat, for example:
-  'WeeChat 1.0-dev (git: v0.4.3-475-gb174b3c)'. +
+  _WeeChat 1.0-dev (git: v0.4.3-475-gb174b3c)_. +
   If WeeChat does not start at all, please include the version displayed by
   `weechat --help` (or the version installed with your package manager).
 * your *operating system*: its name and version (examples: Linux Debian Wheezy,
@@ -42,7 +42,7 @@ https://weechat.org/files/doc/devel/weechat_user.en.html#report_crashes[User's g
 for more info).
 
 [IMPORTANT]
-Most of times, the WeeChat crash log file ('weechat_crash_YYYYMMDD_xxx.log') is
+Most of times, the WeeChat crash log file (_weechat_crash_YYYYMMDD_xxx.log_) is
 *NOT USEFUL* to fix the bug, so please report this file *ONLY* if a developer
 asked you to send it (and be extremely careful, this file can contain personal
 data like passwords and contents of your chats).
@@ -80,7 +80,7 @@ https://github.com/weechat/weechat/milestones[milestones] on GitHub.
 Pull requests on GitHub are welcome for minor new features.
 
 For major new features, it's better to discuss about it in IRC
-(server: 'chat.freenode.net', channel '#weechat').
+(server: _chat.freenode.net_, channel _#weechat_).
 
 Before submitting any pull request, be sure you have read the
 https://weechat.org/files/doc/devel/weechat_dev.en.html#coding_rules[coding rules]
