@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_fifo_fifo]]
-[command]*`fifo`* konfiguracja wtyczki fifo::
+* `+fifo+`: konfiguracja wtyczki fifo
 
 ----
 /fifo  enable|disable|toggle

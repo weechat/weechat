@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_alias_alias]]
-[command]*`alias`* auflisten, hinzufügen oder entfernen von Alternativnamen::
+* `+alias+`: auflisten, hinzufügen oder entfernen von Alternativnamen
 
 ----
 /alias  list [<alias>]

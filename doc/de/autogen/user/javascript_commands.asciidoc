@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_javascript_javascript]]
-[command]*`javascript`* auflisten/installieren/beenden von Skripten::
+* `+javascript+`: auflisten/installieren/beenden von Skripten
 
 ----
 /javascript  list|listfull [<name>]

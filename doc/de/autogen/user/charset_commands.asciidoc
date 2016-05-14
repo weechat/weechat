@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_charset_charset]]
-[command]*`charset`* Ändert den Zeichensatz für aktuellen Buffer::
+* `+charset+`: Ändert den Zeichensatz für aktuellen Buffer
 
 ----
 /charset  decode|encode <charset>

@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_lua_lua]]
-[command]*`lua`* auflisten/installieren/beenden von Skripten::
+* `+lua+`: auflisten/installieren/beenden von Skripten
 
 ----
 /lua  list|listfull [<name>]

@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_trigger_trigger]]
-[command]*`trigger`* zarządzaj triggerami, scyzorykiem WeeChat::
+* `+trigger+`: zarządzaj triggerami, scyzorykiem WeeChat
 
 ----
 /trigger  list|listfull|listdefault

@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_ruby_ruby]]
-[command]*`ruby`* auflisten/installieren/beenden von Skripten::
+* `+ruby+`: auflisten/installieren/beenden von Skripten
 
 ----
 /ruby  list|listfull [<name>]

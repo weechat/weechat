@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_alias_alias]]
-[command]*`alias`* 別名コマンドのリストアップ、追加、削除::
+* `+alias+`: 別名コマンドのリストアップ、追加、削除
 
 ----
 /alias  list [<alias>]

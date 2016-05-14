@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_weechat_away]]
-[command]*`away`* ustawia lub kasuje status nieobecności::
+* `+away+`: ustawia lub kasuje status nieobecności
 
 ----
 /away  [-all] [<wiadomość>]
@@ -13,7 +13,7 @@ wiadomość: powód nieobecności (jeśli nie podano wiadomości status nieobecn
 ----
 
 [[command_weechat_bar]]
-[command]*`bar`* zarządzaj paskami::
+* `+bar+`: zarządzaj paskami
 
 ----
 /bar  list|listfull|listitems
@@ -65,7 +65,7 @@ Przykłady:
 ----
 
 [[command_weechat_buffer]]
-[command]*`buffer`* zarządzaj buforami::
+* `+buffer+`: zarządzaj buforami
 
 ----
 /buffer  list
@@ -138,7 +138,7 @@ Przykłady:
 ----
 
 [[command_weechat_color]]
-[command]*`color`* definiuje aliasy i wyświetla paletę kolorów::
+* `+color+`: definiuje aliasy i wyświetla paletę kolorów
 
 ----
 /color  alias <kolor> <nazwa>
@@ -168,7 +168,7 @@ Przykłady:
 ----
 
 [[command_weechat_command]]
-[command]*`command`* wywołaj wyraźnie komendę WeeChat lub wtyczki::
+* `+command+`: wywołaj wyraźnie komendę WeeChat lub wtyczki
 
 ----
 /command  [-buffer <nazwa>] <wtyczka> <komenda>
@@ -179,7 +179,7 @@ komenda: komenda do wywołania ( '/' jest automatycznie dodawane jeśli nie wyst
 ----
 
 [[command_weechat_cursor]]
-[command]*`cursor`* wolne poruszanie kursora na ekranie, w celu wykonania akcji na konkretnych obszarach ekranu::
+* `+cursor+`: wolne poruszanie kursora na ekranie, w celu wykonania akcji na konkretnych obszarach ekranu
 
 ----
 /cursor  go chat|<pasek>|<x>,<y>
@@ -214,7 +214,7 @@ Przykłady:
 ----
 
 [[command_weechat_debug]]
-[command]*`debug`* kontrola debugu dla rdzenia/wtyczek::
+* `+debug+`: kontrola debugu dla rdzenia/wtyczek
 
 ----
 /debug  list
@@ -245,7 +245,7 @@ infolists: wyświetla informacje o infolistach
 ----
 
 [[command_weechat_eval]]
-[command]*`eval`* przetwórz wyrażenie::
+* `+eval+`: przetwórz wyrażenie
 
 ----
 /eval  [-n|-s] <wyrażenie>
@@ -319,7 +319,7 @@ Przykłady (warunki):
 ----
 
 [[command_weechat_filter]]
-[command]*`filter`* filtruje wiadomości w buforach, aby je ukryć/pokazać w zależności do tagów lub wyrażeń regularnych::
+* `+filter+`: filtruje wiadomości w buforach, aby je ukryć/pokazać w zależności do tagów lub wyrażeń regularnych
 
 ----
 /filter  list
@@ -383,7 +383,7 @@ Przykłady:
 ----
 
 [[command_weechat_help]]
-[command]*`help`* wyświetl pomoc na temat komend i opcji::
+* `+help+`: wyświetl pomoc na temat komend i opcji
 
 ----
 /help  -list|-listfull [<wtyczka> [<wtyczka>...]]
@@ -398,7 +398,7 @@ Przykłady:
 ----
 
 [[command_weechat_history]]
-[command]*`history`* pokaż historię komend bufora::
+* `+history+`: pokaż historię komend bufora
 
 ----
 /history  clear
@@ -409,7 +409,7 @@ Wartość: ilość elementów historii do pokazania
 ----
 
 [[command_weechat_input]]
-[command]*`input`* funkcje linii komend::
+* `+input+`: funkcje linii komend
 
 ----
 /input  <akcja> [<argumenty>]
@@ -471,7 +471,7 @@ Ta komenda jest używana do przypisywania klawiszy lub przez wtyczki.
 ----
 
 [[command_weechat_key]]
-[command]*`key`* dodaj/usuń przypisanie klawiszy::
+* `+key+`: dodaj/usuń przypisanie klawiszy
 
 ----
 /key  list|listdefault|listdiff [<kontekst>]
@@ -526,7 +526,7 @@ Przykłady:
 ----
 
 [[command_weechat_layout]]
-[command]*`layout`* zarządzaj układami buforów/okien::
+* `+layout+`: zarządzaj układami buforów/okien
 
 ----
 /layout  store [<nazwa>] [buffers|windows]
@@ -551,7 +551,7 @@ Obecny układ można zapisać podczas wykonywania komendy /quit za pomocą opcji
 ----
 
 [[command_weechat_mouse]]
-[command]*`mouse`* kontrola myszy::
+* `+mouse+`: kontrola myszy
 
 ----
 /mouse  enable|disable|toggle [<opóźnienie>]
@@ -571,7 +571,7 @@ Przykłady:
 ----
 
 [[command_weechat_mute]]
-[command]*`mute`* wykonuje komendę po cichu::
+* `+mute+`: wykonuje komendę po cichu
 
 ----
 /mute  [-core | -current | -buffer <nazwa>] <komenda>
@@ -594,7 +594,7 @@ Przykłady:
 ----
 
 [[command_weechat_plugin]]
-[command]*`plugin`* lista/załaduj/wyładuj wtyczkę::
+* `+plugin+`: lista/załaduj/wyładuj wtyczkę
 
 ----
 /plugin  list|listfull [<nazwa>]
@@ -617,7 +617,7 @@ Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki.
 ----
 
 [[command_weechat_print]]
-[command]*`print`* wyświetl tekst w buforze::
+* `+print+`: wyświetl tekst w buforze
 
 ----
 /print  [-buffer <numer>|<nazwa>] [-core] [-escape] [-date <data>] [-tags <tagi>] [-action|-error|-join|-network|-quit] <tekst>
@@ -661,7 +661,7 @@ Przykłady:
 ----
 
 [[command_weechat_proxy]]
-[command]*`proxy`* zarządzanie proxy::
+* `+proxy+`: zarządzanie proxy
 
 ----
 /proxy  list
@@ -695,7 +695,7 @@ Przykłady:
 ----
 
 [[command_weechat_quit]]
-[command]*`quit`* zakończ WeeChat::
+* `+quit+`: zakończ WeeChat
 
 ----
 /quit  [-yes][<argumenty>]
@@ -708,7 +708,7 @@ Domyślnie pliki konfiguracyjne są zapisywane przy wyjściu z aplikacji (zobacz
 ----
 
 [[command_weechat_reload]]
-[command]*`reload`* przeładuj pliki konfiguracyjne z dysku::
+* `+reload+`: przeładuj pliki konfiguracyjne z dysku
 
 ----
 /reload  [<plik> [<plik>...]]
@@ -719,7 +719,7 @@ Bez podania argumentu wszystkie pliki (WeeChat oraz wtyczki) zostaną przeładow
 ----
 
 [[command_weechat_repeat]]
-[command]*`repeat`* wykonuje komendę kilka razy::
+* `+repeat+`: wykonuje komendę kilka razy
 
 ----
 /repeat  [-interval <opóźnienie>] <ilość> <komenda>
@@ -736,7 +736,7 @@ Przykład:
 ----
 
 [[command_weechat_save]]
-[command]*`save`* zapisuje pliki konfiguracyjne na dysku::
+* `+save+`: zapisuje pliki konfiguracyjne na dysku
 
 ----
 /save  [<plik> [<plik>...]]
@@ -749,7 +749,7 @@ Domyślnie zapisywane na dysku są wszystkie pliki konfiguracyjne podczas wykony
 ----
 
 [[command_weechat_secure]]
-[command]*`secure`* zarządzanie zabezpieczonymi danymi (hasła lub dane poufne zaszyfrowane w pliku sec.conf)::
+* `+secure+`: zarządzanie zabezpieczonymi danymi (hasła lub dane poufne zaszyfrowane w pliku sec.conf)
 
 ----
 /secure  passphrase <hasło>|-delete
@@ -789,7 +789,7 @@ Przykłady:
 ----
 
 [[command_weechat_set]]
-[command]*`set`* ustaw opcje konfiguracyjne i zmienne środowiskowe::
+* `+set+`: ustaw opcje konfiguracyjne i zmienne środowiskowe
 
 ----
 /set  [<opcja> [<wartość>]]
@@ -825,7 +825,7 @@ Przykłady:
 ----
 
 [[command_weechat_unset]]
-[command]*`unset`* skasuj/zresetuj zmienną konfiguracyjną::
+* `+unset+`: skasuj/zresetuj zmienną konfiguracyjną
 
 ----
 /unset  <opcja>
@@ -844,7 +844,7 @@ Przykłady:
 ----
 
 [[command_weechat_upgrade]]
-[command]*`upgrade`* uaktualnia WeeChat bez rozłączania z serwerami::
+* `+upgrade+`: uaktualnia WeeChat bez rozłączania z serwerami
 
 ----
 /upgrade  [-yes] [<ścieżka_do_binarki>|-quit]
@@ -876,7 +876,7 @@ Jest możliwe przywrócenie sesji WeeChat na innej maszynie, jeśli skopiujemy z
 ----
 
 [[command_weechat_uptime]]
-[command]*`uptime`* pokazuje czas pracy WeeChat::
+* `+uptime+`: pokazuje czas pracy WeeChat
 
 ----
 /uptime  [-o | -ol]
@@ -886,7 +886,7 @@ Jest możliwe przywrócenie sesji WeeChat na innej maszynie, jeśli skopiujemy z
 ----
 
 [[command_weechat_version]]
-[command]*`version`* pokazuje wersję i datę, kiedy skompilowano WeeChat::
+* `+version+`: pokazuje wersję i datę, kiedy skompilowano WeeChat
 
 ----
 /version  [-o | -ol]
@@ -898,7 +898,7 @@ Domyślny alias /v może zostać użyty do wykonania tej komendy we wszystkich b
 ----
 
 [[command_weechat_wait]]
-[command]*`wait`* planuje komendę do wykonania w przyszłości::
+* `+wait+`: planuje komendę do wykonania w przyszłości
 
 ----
 /wait  <liczba>[<jednostka>] <komenda>
@@ -923,7 +923,7 @@ Przykłady:
 ----
 
 [[command_weechat_window]]
-[command]*`window`* zarządza oknami::
+* `+window+`: zarządza oknami
 
 ----
 /window  list

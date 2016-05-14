@@ -3,21 +3,21 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_sec.crypt.cipher]] *sec.crypt.cipher*
-** opis: `szyfr używany do szyfrowania danych (numer za nazwą algorytmu to długość klucza w bitach)`
+** opis: pass:none[szyfr używany do szyfrowania danych (numer za nazwą algorytmu to długość klucza w bitach)]
 ** typ: liczba
-** wartości: aes128, aes192, aes256 (domyślna wartość: `aes256`)
+** wartości: aes128, aes192, aes256 (domyślna wartość: `+aes256+`)
 
 * [[option_sec.crypt.hash_algo]] *sec.crypt.hash_algo*
-** opis: `algorytm haszujący użyty do sprawdzenia rozszyfrowanych danych`
+** opis: pass:none[algorytm haszujący użyty do sprawdzenia rozszyfrowanych danych]
 ** typ: liczba
-** wartości: sha224, sha256, sha384, sha512 (domyślna wartość: `sha256`)
+** wartości: sha224, sha256, sha384, sha512 (domyślna wartość: `+sha256+`)
 
 * [[option_sec.crypt.passphrase_file]] *sec.crypt.passphrase_file*
-** opis: `ścieżka do pliku zawierającego hasło do szyfrowania/rozszyfrowywania zabezpieczonych danych; opcja ta jest używana tylko podczas odczytu pliku sec.conf; używana jest tylko pierwsza linia z tego pliku; plik jest używany tylko jeśli zmienna środowiskowa "WEECHAT_PASSPHRASE" nie została ustawiona (zmienna środowiskowa ma najwyższy priorytet); uwaga bezpieczeństwa: zaleca się trzymanie tego pliku poza katalogiem domowym WeeChat (np. w katalogu domowym) i nadanie mu praw do odczytu tylko przez siebie; przykład: "~/.weechat-passphrase"`
+** opis: pass:none[ścieżka do pliku zawierającego hasło do szyfrowania/rozszyfrowywania zabezpieczonych danych; opcja ta jest używana tylko podczas odczytu pliku sec.conf; używana jest tylko pierwsza linia z tego pliku; plik jest używany tylko jeśli zmienna środowiskowa "WEECHAT_PASSPHRASE" nie została ustawiona (zmienna środowiskowa ma najwyższy priorytet); uwaga bezpieczeństwa: zaleca się trzymanie tego pliku poza katalogiem domowym WeeChat (np. w katalogu domowym) i nadanie mu praw do odczytu tylko przez siebie; przykład: "~/.weechat-passphrase"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_sec.crypt.salt]] *sec.crypt.salt*
-** opis: `użyj "solenia" podczas generowania klucza używanego w szyfrowaniu (zalecane dla maksimum bezpieczeństwa); jeśli włączone zawartość zaszyfrowanych danych w pliku sec.conf będzie się zmieniać z każdym zapisem pliku; jeśli plik sec.conf zostanie umieszczony w systemie kontroli wersji, można wyłączyć tą opcję (zawartość pliku będzie zawsze taka sama)`
+** opis: pass:none[użyj "solenia" podczas generowania klucza używanego w szyfrowaniu (zalecane dla maksimum bezpieczeństwa); jeśli włączone zawartość zaszyfrowanych danych w pliku sec.conf będzie się zmieniać z każdym zapisem pliku; jeśli plik sec.conf zostanie umieszczony w systemie kontroli wersji, można wyłączyć tą opcję (zawartość pliku będzie zawsze taka sama)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)

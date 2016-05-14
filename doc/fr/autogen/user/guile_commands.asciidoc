@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_guile_guile]]
-[command]*`guile`* lister/charger/décharger des scripts::
+* `+guile+`: lister/charger/décharger des scripts
 
 ----
 /guile  list|listfull [<nom>]

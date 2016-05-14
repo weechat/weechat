@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_javascript_javascript]]
-[command]*`javascript`* elenca/carica/scarica script::
+* `+javascript+`: elenca/carica/scarica script
 
 ----
 /javascript  list|listfull [<nome>]

@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_relay_relay]]
-[command]*`relay`* リレー管理::
+* `+relay+`: リレー管理
 
 ----
 /relay  list|listfull|listrelay

@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_logger_logger]]
-[command]*`logger`* Konfiguration für "logger" Erweiterung (dient zum protokollieren der Buffer)::
+* `+logger+`: Konfiguration für "logger" Erweiterung (dient zum protokollieren der Buffer)
 
 ----
 /logger  list

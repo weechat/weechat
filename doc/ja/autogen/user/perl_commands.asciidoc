@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_perl_perl]]
-[command]*`perl`* スクリプトをリストアップ/ロード/アンロード::
+* `+perl+`: スクリプトをリストアップ/ロード/アンロード
 
 ----
 /perl  list|listfull [<name>]

@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_logger_logger]]
-[command]*`logger`* configuration de l'extension logger::
+* `+logger+`: configuration de l'extension logger
 
 ----
 /logger  list

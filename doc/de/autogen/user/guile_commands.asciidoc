@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_guile_guile]]
-[command]*`guile`* auflisten/installieren/beenden von Skripten::
+* `+guile+`: auflisten/installieren/beenden von Skripten
 
 ----
 /guile  list|listfull [<name>]

@@ -3,11 +3,11 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_charset.default.decode]] *charset.default.decode*
-** Beschreibung: `globale Zeichendekodierung: Zeichendekodierung die für eingehende Nachrichten genutzt werden soll, falls diese nicht UTF-8 gültig ist`
+** Beschreibung: pass:none[globale Zeichendekodierung: Zeichendekodierung die für eingehende Nachrichten genutzt werden soll, falls diese nicht UTF-8 gültig ist]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"iso-8859-1"`)
+** Werte: beliebige Zeichenkette (Standardwert: `+"iso-8859-1"+`)
 
 * [[option_charset.default.encode]] *charset.default.encode*
-** Beschreibung: `globale Zeichenkodierung: Zeichenkodierung die für ausgehende Nachrichten genutzt werden soll (sollte keine Zeichenkodierung angegeben werden, wird UTF-8 verwendet, da WeeChat UTF-8 zur internen Kodierung nutzt)`
+** Beschreibung: pass:none[globale Zeichenkodierung: Zeichenkodierung die für ausgehende Nachrichten genutzt werden soll (sollte keine Zeichenkodierung angegeben werden, wird UTF-8 verwendet, da WeeChat UTF-8 zur internen Kodierung nutzt)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `""`)
+** Werte: beliebige Zeichenkette (Standardwert: `+""+`)

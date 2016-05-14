@@ -3,66 +3,66 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_logger.color.backlog_end]] *logger.color.backlog_end*
-** Beschreibung: `Farbe für die letzte Zeile im Verlaufsspeicher`
+** Beschreibung: pass:none[Farbe für die letzte Zeile im Verlaufsspeicher]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `default`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
 
 * [[option_logger.color.backlog_line]] *logger.color.backlog_line*
-** Beschreibung: `Textfarbe in der der Verlaufsspeicher dargestellt werden soll`
+** Beschreibung: pass:none[Textfarbe in der der Verlaufsspeicher dargestellt werden soll]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `default`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
 
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
-** Beschreibung: `speichert automatisch den Inhalt eines Buffers in eine Datei (sofern das Protokollieren für den Buffer nicht deaktiviert sein sollte)`
+** Beschreibung: pass:none[speichert automatisch den Inhalt eines Buffers in eine Datei (sofern das Protokollieren für den Buffer nicht deaktiviert sein sollte)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `on`)
+** Werte: on, off (Standardwert: `+on+`)
 
 * [[option_logger.file.flush_delay]] *logger.file.flush_delay*
-** Beschreibung: `Zeit, in Sekunden, die verstreicht bis eine Protokolldatei gesichert wird (0 = Protokolldatei wird unmittelbar gesichert, nachdem eine neue Zeile dargestellt wurde)`
+** Beschreibung: pass:none[Zeit, in Sekunden, die verstreicht bis eine Protokolldatei gesichert wird (0 = Protokolldatei wird unmittelbar gesichert, nachdem eine neue Zeile dargestellt wurde)]
 ** Typ: integer
-** Werte: 0 .. 3600 (Standardwert: `120`)
+** Werte: 0 .. 3600 (Standardwert: `+120+`)
 
 * [[option_logger.file.info_lines]] *logger.file.info_lines*
-** Beschreibung: `fügt eine Information in die Protokoll-Datei ein, wenn die Protokollierung gestartet oder beendet wird`
+** Beschreibung: pass:none[fügt eine Information in die Protokoll-Datei ein, wenn die Protokollierung gestartet oder beendet wird]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `off`)
+** Werte: on, off (Standardwert: `+off+`)
 
 * [[option_logger.file.mask]] *logger.file.mask*
-** Beschreibung: `Standardmaske für Protokolldateien (Format: "Verzeichnis/zur/Datei" oder "Datei", ohne ein führendes "/", da die "Verzeichnis" Einstellung genutzt wird um vollständige Verzeichnisstrukturen zu erstellen); lokale Buffer Variablen und Datumsspezifikationen (siehe: man strftime) sind zulässig (es sollten aber nur solche Variablen genutzt werden die auf alle Buffer angewendet werden können. Zum Beispiel sollten NICHT die Variablen $server oder $channel genutzt werden)`
+** Beschreibung: pass:none[Standardmaske für Protokolldateien (Format: "Verzeichnis/zur/Datei" oder "Datei", ohne ein führendes "/", da die "Verzeichnis" Einstellung genutzt wird um vollständige Verzeichnisstrukturen zu erstellen); lokale Buffer Variablen und Datumsspezifikationen (siehe: man strftime) sind zulässig (es sollten aber nur solche Variablen genutzt werden die auf alle Buffer angewendet werden können. Zum Beispiel sollten NICHT die Variablen $server oder $channel genutzt werden)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"$plugin.$name.weechatlog"`)
+** Werte: beliebige Zeichenkette (Standardwert: `+"$plugin.$name.weechatlog"+`)
 
 * [[option_logger.file.name_lower_case]] *logger.file.name_lower_case*
-** Beschreibung: `Protokolldateien werden ausschließlich in Kleinschreibung erstellt`
+** Beschreibung: pass:none[Protokolldateien werden ausschließlich in Kleinschreibung erstellt]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `on`)
+** Werte: on, off (Standardwert: `+on+`)
 
 * [[option_logger.file.nick_prefix]] *logger.file.nick_prefix*
-** Beschreibung: `Zeichenkette, die dem Nick vorangestellt werden soll. Beispiel: "<"`
+** Beschreibung: pass:none[Zeichenkette, die dem Nick vorangestellt werden soll. Beispiel: "<"]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `""`)
+** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
 
 * [[option_logger.file.nick_suffix]] *logger.file.nick_suffix*
-** Beschreibung: `Zeichenkette, die nach dem Nick eingefügt werden soll. Beispiel: ">"`
+** Beschreibung: pass:none[Zeichenkette, die nach dem Nick eingefügt werden soll. Beispiel: ">"]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `""`)
+** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
 
 * [[option_logger.file.path]] *logger.file.path*
-** Beschreibung: `Pfad für WeeChat Protokolldateien; "%h" wird durch das WeeChat Verzeichnis ersetzt (Standardpfad: "~/.weechat"); eine Datumsspezifikation ist zulässig (siehe: man strftime) (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
+** Beschreibung: pass:none[Pfad für WeeChat Protokolldateien; "%h" wird durch das WeeChat Verzeichnis ersetzt (Standardpfad: "~/.weechat"); eine Datumsspezifikation ist zulässig (siehe: man strftime) (Hinweis: Inhalt wird evaluiert, siehe /help eval)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"%h/logs/"`)
+** Werte: beliebige Zeichenkette (Standardwert: `+"%h/logs/"+`)
 
 * [[option_logger.file.replacement_char]] *logger.file.replacement_char*
-** Beschreibung: `Ersatzzeichen für Dateinamen, falls der Dateiname Sonderzeichen beinhaltet (z.B. das Trennzeichen bei Verzeichnissen "/")`
+** Beschreibung: pass:none[Ersatzzeichen für Dateinamen, falls der Dateiname Sonderzeichen beinhaltet (z.B. das Trennzeichen bei Verzeichnissen "/")]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"_"`)
+** Werte: beliebige Zeichenkette (Standardwert: `+"_"+`)
 
 * [[option_logger.file.time_format]] *logger.file.time_format*
-** Beschreibung: `Zeitstempel in Protokoll-Datei nutzen (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden)`
+** Beschreibung: pass:none[Zeitstempel in Protokoll-Datei nutzen (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"%Y-%m-%d %H:%M:%S"`)
+** Werte: beliebige Zeichenkette (Standardwert: `+"%Y-%m-%d %H:%M:%S"+`)
 
 * [[option_logger.look.backlog]] *logger.look.backlog*
-** Beschreibung: `maximale Anzahl der letzten Zeilen die aus der Protokolldatei dargestellt werden sollen, sobald ein Buffer geöffnet wird (0 = kein Darstellung)`
+** Beschreibung: pass:none[maximale Anzahl der letzten Zeilen die aus der Protokolldatei dargestellt werden sollen, sobald ein Buffer geöffnet wird (0 = kein Darstellung)]
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: `20`)
+** Werte: 0 .. 2147483647 (Standardwert: `+20+`)

@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_exec_exec]]
-[command]*`exec`* exécuter des commandes externes::
+* `+exec+`: exécuter des commandes externes
 
 ----
 /exec  -list

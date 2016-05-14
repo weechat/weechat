@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_tcl_tcl]]
-[command]*`tcl`* list/load/unload skrypt::
+* `+tcl+`: list/load/unload skrypt
 
 ----
 /tcl  list|listfull [<nazwa>]

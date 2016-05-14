@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_fifo_fifo]]
-[command]*`fifo`* configuration de l'extension fifo::
+* `+fifo+`: configuration de l'extension fifo
 
 ----
 /fifo  enable|disable|toggle

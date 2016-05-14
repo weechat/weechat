@@ -3,51 +3,51 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_trigger.color.flag_command]] *trigger.color.flag_command*
-** description: `text color for command flag (in /trigger list)`
+** description: pass:none[text color for command flag (in /trigger list)]
 ** type: color
-** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `lightgreen`)
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `+lightgreen+`)
 
 * [[option_trigger.color.flag_conditions]] *trigger.color.flag_conditions*
-** description: `text color for conditions flag (in /trigger list)`
+** description: pass:none[text color for conditions flag (in /trigger list)]
 ** type: color
-** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `yellow`)
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `+yellow+`)
 
 * [[option_trigger.color.flag_regex]] *trigger.color.flag_regex*
-** description: `text color for regex flag (in /trigger list)`
+** description: pass:none[text color for regex flag (in /trigger list)]
 ** type: color
-** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `lightcyan`)
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `+lightcyan+`)
 
 * [[option_trigger.color.flag_return_code]] *trigger.color.flag_return_code*
-** description: `text color for return code flag (in /trigger list)`
+** description: pass:none[text color for return code flag (in /trigger list)]
 ** type: color
-** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `lightmagenta`)
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `+lightmagenta+`)
 
 * [[option_trigger.color.regex]] *trigger.color.regex*
-** description: `text color for regular expressions`
+** description: pass:none[text color for regular expressions]
 ** type: color
-** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `white`)
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `+white+`)
 
 * [[option_trigger.color.replace]] *trigger.color.replace*
-** description: `text color for replacement text (for regular expressions)`
+** description: pass:none[text color for replacement text (for regular expressions)]
 ** type: color
-** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `cyan`)
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `+cyan+`)
 
 * [[option_trigger.color.trigger]] *trigger.color.trigger*
-** description: `text color for trigger name`
+** description: pass:none[text color for trigger name]
 ** type: color
-** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `green`)
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `+green+`)
 
 * [[option_trigger.color.trigger_disabled]] *trigger.color.trigger_disabled*
-** description: `text color for disabled trigger name`
+** description: pass:none[text color for disabled trigger name]
 ** type: color
-** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `red`)
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `+red+`)
 
 * [[option_trigger.look.enabled]] *trigger.look.enabled*
-** description: `enable trigger support`
+** description: pass:none[enable trigger support]
 ** type: boolean
-** values: on, off (default value: `on`)
+** values: on, off (default value: `+on+`)
 
 * [[option_trigger.look.monitor_strip_colors]] *trigger.look.monitor_strip_colors*
-** description: `strip colors in hashtable values displayed on monitor buffer`
+** description: pass:none[strip colors in hashtable values displayed on monitor buffer]
 ** type: boolean
-** values: on, off (default value: `off`)
+** values: on, off (default value: `+off+`)

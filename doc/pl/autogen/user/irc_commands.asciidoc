@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_irc_admin]]
-[command]*`admin`* wyszukuje informacje o administratorze serwera::
+* `+admin+`: wyszukuje informacje o administratorze serwera
 
 ----
 /admin  [<cel>]
@@ -12,7 +12,7 @@ cel: nazwa serwera
 ----
 
 [[command_irc_allchan]]
-[command]*`allchan`* wykonuje komendę na wszystkich kanałach na połączonych serwerach::
+* `+allchan+`: wykonuje komendę na wszystkich kanałach na połączonych serwerach
 
 ----
 /allchan  [-current] [-exclude=<kanał>[,<kanał>...]] <komenda> [<argumenty>]
@@ -32,7 +32,7 @@ Przykłady:
 ----
 
 [[command_irc_allpv]]
-[command]*`allpv`* wykonuje komendę na wszystkich prywatnych buforach wszystkich połączonych serwerów::
+* `+allpv+`: wykonuje komendę na wszystkich prywatnych buforach wszystkich połączonych serwerów
 
 ----
 /allpv  [-current] [-exclude=<nick>[,<nick>...]] <komenda> [<argumenty>]
@@ -54,7 +54,7 @@ Przykłady:
 ----
 
 [[command_irc_allserv]]
-[command]*`allserv`* wykonuje komendę na wszystkich połączonych serwerach::
+* `+allserv+`: wykonuje komendę na wszystkich połączonych serwerach
 
 ----
 /allserv  [-exclude=<serwer>[,<serwer>...]] <komenda> [<argumenty>]
@@ -73,7 +73,7 @@ Przykłady:
 ----
 
 [[command_irc_ban]]
-[command]*`ban`* banuje nick albo host::
+* `+ban+`: banuje nick albo host
 
 ----
 /ban  [<kanał>] [<nick> [<nick>...]]
@@ -85,7 +85,7 @@ Bez podania argumentu komenda wyświetla listę banów na obecnym kanale.
 ----
 
 [[command_irc_cap]]
-[command]*`cap`* negocjacja możliwości klienta::
+* `+cap+`: negocjacja możliwości klienta
 
 ----
 /cap  ls
@@ -111,7 +111,7 @@ Przykłady:
 ----
 
 [[command_irc_connect]]
-[command]*`connect`* łączy się z serwerem(ami) IRC::
+* `+connect+`: łączy się z serwerem(ami) IRC
 
 ----
 /connect  [<serwer> [<serwer>...] [-<opcja>[=<wartość>]] [-no<opcja>] [-nojoin] [-switch]
@@ -143,7 +143,7 @@ Przykłady:
 ----
 
 [[command_irc_ctcp]]
-[command]*`ctcp`* wyślij wiadomość CTCP (protokół klient-klient)::
+* `+ctcp+`: wyślij wiadomość CTCP (protokół klient-klient)
 
 ----
 /ctcp  [-server <serwer>] <cel>[,<cel>...] <typ> [<argumenty>]
@@ -160,7 +160,7 @@ Przykłady:
 ----
 
 [[command_irc_cycle]]
-[command]*`cycle`* wyjdź i wejdź ponownie na kanał::
+* `+cycle+`: wyjdź i wejdź ponownie na kanał
 
 ----
 /cycle  [<kanał>[,<kanał>...]] [<wiadomość>]
@@ -170,7 +170,7 @@ wiadomość: wiadomość pożegnalna (pokazywana innym użytkownikom)
 ----
 
 [[command_irc_dcc]]
-[command]*`dcc`* rozpoczyna DCC (przesył pliku lub rozmowę)::
+* `+dcc+`: rozpoczyna DCC (przesył pliku lub rozmowę)
 
 ----
 /dcc  chat <nick>
@@ -187,7 +187,7 @@ Przykłady:
 ----
 
 [[command_irc_dehalfop]]
-[command]*`dehalfop`* usuwa status halfopa kanału::
+* `+dehalfop+`: usuwa status halfopa kanału
 
 ----
 /dehalfop  <nick> [<nick>...]
@@ -197,7 +197,7 @@ nick: nick lub maska (wildcard "*" jest dozwolony)
 ----
 
 [[command_irc_deop]]
-[command]*`deop`* usuwa status operatora kanału::
+* `+deop+`: usuwa status operatora kanału
 
 ----
 /deop  <nick> [<nick>...]
@@ -208,7 +208,7 @@ nick: nick lub maska (wildcard "*" jest dozwolony)
 ----
 
 [[command_irc_devoice]]
-[command]*`devoice`* usuwa flagę voice::
+* `+devoice+`: usuwa flagę voice
 
 ----
 /devoice  <nick> [<nick>...]
@@ -219,7 +219,7 @@ nick: nick lub maska (wildcard "*" jest dozwolony)
 ----
 
 [[command_irc_die]]
-[command]*`die`* wyłącza serwer::
+* `+die+`: wyłącza serwer
 
 ----
 /die  [<cel>]
@@ -228,7 +228,7 @@ cel: nazwa serwera
 ----
 
 [[command_irc_disconnect]]
-[command]*`disconnect`* rozłącza się z jednym lub wszystkimi serwerami IRC::
+* `+disconnect+`: rozłącza się z jednym lub wszystkimi serwerami IRC
 
 ----
 /disconnect  [<serwer>|-all|-pending [<powód>]]
@@ -240,7 +240,7 @@ cel: nazwa serwera
 ----
 
 [[command_irc_halfop]]
-[command]*`halfop`* nadaje status halfopa nickowi(m)::
+* `+halfop+`: nadaje status halfopa nickowi(m)
 
 ----
 /halfop  <nick> [<nick>...]
@@ -251,7 +251,7 @@ nick: nick lub maska (wildcard "*" jest dozwolony)
 ----
 
 [[command_irc_ignore]]
-[command]*`ignore`* ignoruje nicki/hosty z serwera lub kanałów::
+* `+ignore+`: ignoruje nicki/hosty z serwera lub kanałów
 
 ----
 /ignore  list
@@ -279,7 +279,7 @@ Przykłady:
 ----
 
 [[command_irc_info]]
-[command]*`info`* pobiera informacje opisujące serwer::
+* `+info+`: pobiera informacje opisujące serwer
 
 ----
 /info  [<cel>]
@@ -288,7 +288,7 @@ cel: nazwa serwera
 ----
 
 [[command_irc_invite]]
-[command]*`invite`* zaprasza użytkownika na kanał::
+* `+invite+`: zaprasza użytkownika na kanał
 
 ----
 /invite  <nick> [<nick>...] [<kanał>]
@@ -298,7 +298,7 @@ kanał: nazwa kanału
 ----
 
 [[command_irc_ison]]
-[command]*`ison`* sprawdza czy użytkownik jest obecnie na IRC::
+* `+ison+`: sprawdza czy użytkownik jest obecnie na IRC
 
 ----
 /ison  <nick> [<nick>...]
@@ -307,7 +307,7 @@ nick: nazwa użytkownika
 ----
 
 [[command_irc_join]]
-[command]*`join`* wchodzi na kanał::
+* `+join+`: wchodzi na kanał
 
 ----
 /join  [-noswitch] [-server <serwer>] [<kanał1>[,<kanał2>...]] [<hasło1>[,<hasło2>...]]
@@ -325,7 +325,7 @@ Przykłady:
 ----
 
 [[command_irc_kick]]
-[command]*`kick`* wyrzuca użytkownika z kanału::
+* `+kick+`: wyrzuca użytkownika z kanału
 
 ----
 /kick  [<kanał>] <nick> [<powód>]
@@ -336,7 +336,7 @@ kanał: nazwa kanału
 ----
 
 [[command_irc_kickban]]
-[command]*`kickban`* wyrzuca użytkownika z kanału i banuje hosta::
+* `+kickban+`: wyrzuca użytkownika z kanału i banuje hosta
 
 ----
 /kickban  [<kanał>] <nick> [<powód>]
@@ -353,7 +353,7 @@ Przykład:
 ----
 
 [[command_irc_kill]]
-[command]*`kill`* zamyka połączenie klient-serwer::
+* `+kill+`: zamyka połączenie klient-serwer
 
 ----
 /kill  <nick> [<powód>]
@@ -363,7 +363,7 @@ powód: powód
 ----
 
 [[command_irc_links]]
-[command]*`links`* wyświetla wszystkie nazwy serwerów, które są połączone z tym samym serwerem co my::
+* `+links+`: wyświetla wszystkie nazwy serwerów, które są połączone z tym samym serwerem co my
 
 ----
 /links  [[<serwer>] <maska_serwera>]
@@ -373,7 +373,7 @@ maska: lista serwerów musi pasować do maski
 ----
 
 [[command_irc_list]]
-[command]*`list`* wyświetla kanały i ich tematy::
+* `+list+`: wyświetla kanały i ich tematy
 
 ----
 /list  [<kanał>[,<kanał>...]] [<serwer>] [-re <regex>]
@@ -392,7 +392,7 @@ Przykłady:
 ----
 
 [[command_irc_lusers]]
-[command]*`lusers`* pobiera statystyki o wielkości sieci IRC::
+* `+lusers+`: pobiera statystyki o wielkości sieci IRC
 
 ----
 /lusers  [<maska> [<cel>]]
@@ -402,13 +402,13 @@ cel: serwer, do którego ma być przesłane żądanie
 ----
 
 [[command_irc_map]]
-[command]*`map`* pokazuje graficzną mapę sieci IRC::
+* `+map+`: pokazuje graficzną mapę sieci IRC
 
 ----
 ----
 
 [[command_irc_me]]
-[command]*`me`* wysyła akcję CTCP na aktualny kanał::
+* `+me+`: wysyła akcję CTCP na aktualny kanał
 
 ----
 /me  <wiadomość>
@@ -417,7 +417,7 @@ wiadomość: wiadomość do wysłania
 ----
 
 [[command_irc_mode]]
-[command]*`mode`* zmień ustawienia kanału lub użytkownika::
+* `+mode+`: zmień ustawienia kanału lub użytkownika
 
 ----
 /mode  [<kanał>] +|-]o|p|s|i|t|n|m|l|b|e|v|k [<argumenty>]
@@ -454,7 +454,7 @@ Przykład:
 ----
 
 [[command_irc_motd]]
-[command]*`motd`* pobierz "Wiadomość Dnia" (motd)::
+* `+motd+`: pobierz "Wiadomość Dnia" (motd)
 
 ----
 /motd  [<cel>]
@@ -463,7 +463,7 @@ cel: nazwa serwera
 ----
 
 [[command_irc_msg]]
-[command]*`msg`* wysyła wiadomość do użytkownika albo kanału::
+* `+msg+`: wysyła wiadomość do użytkownika albo kanału
 
 ----
 /msg  [-server <serwer>] <cel>[,<cel>...] <tekst>
@@ -474,7 +474,7 @@ cel: nick lub kanał (może być maska, '*' = aktualny kanał)
 ----
 
 [[command_irc_names]]
-[command]*`names`* wyświetla nazwy użytkowników na kanałach::
+* `+names+`: wyświetla nazwy użytkowników na kanałach
 
 ----
 /names  [<kanał>[,<kanał>...]]
@@ -483,7 +483,7 @@ kanał: nazwa kanału
 ----
 
 [[command_irc_nick]]
-[command]*`nick`* zmienia obecną nazwę użytkownika::
+* `+nick+`: zmienia obecną nazwę użytkownika
 
 ----
 /nick  [-all] <nick>
@@ -493,7 +493,7 @@ nick: nowy nick
 ----
 
 [[command_irc_notice]]
-[command]*`notice`* wysyła powiadomienie do użytkownika::
+* `+notice+`: wysyła powiadomienie do użytkownika
 
 ----
 /notice  [-server <serwer>] <cel> <tekst>
@@ -504,7 +504,7 @@ cel: nick lub kanał
 ----
 
 [[command_irc_notify]]
-[command]*`notify`* dodaje powiadomienie o obecności lub statusie nieobecności nicków na serwerze::
+* `+notify+`: dodaje powiadomienie o obecności lub statusie nieobecności nicków na serwerze
 
 ----
 /notify  add <nick> [<serwer> [-away]]
@@ -529,7 +529,7 @@ Przykłady:
 ----
 
 [[command_irc_op]]
-[command]*`op`* nadaje uprawienia operatora kanału::
+* `+op+`: nadaje uprawienia operatora kanału
 
 ----
 /op  <nick> [<nick>...]
@@ -540,7 +540,7 @@ nick: nick lub maska (wildcard "*" jest dozwolony)
 ----
 
 [[command_irc_oper]]
-[command]*`oper`* uzyskaj uprawnienia operatora::
+* `+oper+`: uzyskaj uprawnienia operatora
 
 ----
 /oper  <użytkownik> <hasło>
@@ -550,7 +550,7 @@ hasło: hasło
 ----
 
 [[command_irc_part]]
-[command]*`part`* opuszcza kanał::
+* `+part+`: opuszcza kanał
 
 ----
 /part  [<kanał>[,<kanał>...]] [<wiadomość>]
@@ -560,7 +560,7 @@ wiadomość: wiadomość pożegnalna (pokazywana innym użytkownikom)
 ----
 
 [[command_irc_ping]]
-[command]*`ping`* wyślij ping do serwera::
+* `+ping+`: wyślij ping do serwera
 
 ----
 /ping  <serwer1> [<serwer2>]
@@ -570,7 +570,7 @@ serwer2: przekieruj ping do tego serwera
 ----
 
 [[command_irc_pong]]
-[command]*`pong`* odpowiedz na ping::
+* `+pong+`: odpowiedz na ping
 
 ----
 /pong  <demon> [<demon2>]
@@ -580,7 +580,7 @@ demon2: prześlij do tego demona
 ----
 
 [[command_irc_query]]
-[command]*`query`* wysyła prywatną wiadomość do użytkownika::
+* `+query+`: wysyła prywatną wiadomość do użytkownika
 
 ----
 /query  [-noswitch] [-server <serwer>] <nick>[,<nick>...] [<tekst>]
@@ -592,7 +592,7 @@ demon2: prześlij do tego demona
 ----
 
 [[command_irc_quiet]]
-[command]*`quiet`* ucisza nicki albo hosty::
+* `+quiet+`: ucisza nicki albo hosty
 
 ----
 /quiet  [<kanał>] [<nick> [<nick>...]]
@@ -604,7 +604,7 @@ Bez podania argumentu komenda wyświetla listę uciszeń dla obecnego kanału.
 ----
 
 [[command_irc_quote]]
-[command]*`quote`* wyślij nieprzetworzone dane do serwera bez prasowania::
+* `+quote+`: wyślij nieprzetworzone dane do serwera bez prasowania
 
 ----
 /quote  [-server <serwer>] <dane>
@@ -614,7 +614,7 @@ serwer: wyślij do tego serwera (nazwa wewnętrzna)
 ----
 
 [[command_irc_reconnect]]
-[command]*`reconnect`* ponownie połącz się z serwerem(ami)::
+* `+reconnect+`: ponownie połącz się z serwerem(ami)
 
 ----
 /reconnect  <serwer> [<serwer>...] [-nojoin] [-switch]
@@ -627,7 +627,7 @@ serwer: wyślij do tego serwera (nazwa wewnętrzna)
 ----
 
 [[command_irc_rehash]]
-[command]*`rehash`* mówi serwerowi, żeby przeładował pliki konfiguracyjne::
+* `+rehash+`: mówi serwerowi, żeby przeładował pliki konfiguracyjne
 
 ----
 /rehash  [<opcja>]
@@ -636,7 +636,7 @@ opcje: dodatkowe opcje, dla niektórych serwerów
 ----
 
 [[command_irc_remove]]
-[command]*`remove`* zmusza użytkownika do opuszczenia kanału::
+* `+remove+`: zmusza użytkownika do opuszczenia kanału
 
 ----
 /remove  [<kanał>] <nick> [<powód>]
@@ -647,7 +647,7 @@ kanał: nazwa kanału
 ----
 
 [[command_irc_restart]]
-[command]*`restart`* mówi serwerowi, aby się ponownie uruchomił::
+* `+restart+`: mówi serwerowi, aby się ponownie uruchomił
 
 ----
 /restart  [<cel>]
@@ -656,7 +656,7 @@ cel: nazwa serwera
 ----
 
 [[command_irc_sajoin]]
-[command]*`sajoin`* zmusza użytkownika do wejścia na kanał(y)::
+* `+sajoin+`: zmusza użytkownika do wejścia na kanał(y)
 
 ----
 /sajoin  <nick> <kanał>[,<kanał>...]
@@ -666,7 +666,7 @@ kanał: nazwa kanału
 ----
 
 [[command_irc_samode]]
-[command]*`samode`* zmienia atrybuty kanału, bez posiadania statusu operatora::
+* `+samode+`: zmienia atrybuty kanału, bez posiadania statusu operatora
 
 ----
 /samode  [<kanał>] <atrybuty>
@@ -676,7 +676,7 @@ kanał: nazwa kanału
 ----
 
 [[command_irc_sanick]]
-[command]*`sanick`* zmusza użytkownika do użycia innego nicku::
+* `+sanick+`: zmusza użytkownika do użycia innego nicku
 
 ----
 /sanick  <nick> <nowy_nick>
@@ -686,7 +686,7 @@ nowy_nick: nowy nick
 ----
 
 [[command_irc_sapart]]
-[command]*`sapart`* zmusza użytkownika do opuszczenia kanału(ów)::
+* `+sapart+`: zmusza użytkownika do opuszczenia kanału(ów)
 
 ----
 /sapart  <nick> <kanał>[,<kanał>...]
@@ -696,7 +696,7 @@ kanał: nazwa kanału
 ----
 
 [[command_irc_saquit]]
-[command]*`saquit`* zmusza użytkownika do opuszczenia serwera z powodem::
+* `+saquit+`: zmusza użytkownika do opuszczenia serwera z powodem
 
 ----
 /saquit  <nick> <powód>
@@ -706,7 +706,7 @@ powód: powód
 ----
 
 [[command_irc_server]]
-[command]*`server`* wyświetla, dodaje lub usuwa serwery IRC::
+* `+server+`: wyświetla, dodaje lub usuwa serwery IRC
 
 ----
 /server  list|listfull [<serwer>]
@@ -745,7 +745,7 @@ Przykłady:
 ----
 
 [[command_irc_service]]
-[command]*`service`* rejestruje nową usługę::
+* `+service+`: rejestruje nową usługę
 
 ----
 /service  <nick> <zarezerwowany> <distribution> <typ> <zarezerwowany> <info>
@@ -755,7 +755,7 @@ distribution: widoczność serwisu
 ----
 
 [[command_irc_servlist]]
-[command]*`servlist`* wyświetla serwisy obecnie połączone z siecią::
+* `+servlist+`: wyświetla serwisy obecnie połączone z siecią
 
 ----
 /servlist  [<maska> [<typ>]]
@@ -765,7 +765,7 @@ typ: wyświetl tylko serwisy tego typu
 ----
 
 [[command_irc_squery]]
-[command]*`squery`* dostarcza wiadomość do usługi::
+* `+squery+`: dostarcza wiadomość do usługi
 
 ----
 /squery  <usługa> <tekst>
@@ -775,7 +775,7 @@ usługa: nazwa usługi
 ----
 
 [[command_irc_squit]]
-[command]*`squit`* rozłącza od podłączonych serwerów::
+* `+squit+`: rozłącza od podłączonych serwerów
 
 ----
 /squit  <serwer> <komentarz>
@@ -785,7 +785,7 @@ komentarz: komentarz
 ----
 
 [[command_irc_stats]]
-[command]*`stats`* zapytanie o statystyki serwera::
+* `+stats+`: zapytanie o statystyki serwera
 
 ----
 /stats  [<zapytanie> [<serwer>]]
@@ -795,7 +795,7 @@ serwer: nazwa serwera
 ----
 
 [[command_irc_summon]]
-[command]*`summon`* wyślij do użytkowników serwera wiadomość proszącą ich o wejście na IRC::
+* `+summon+`: wyślij do użytkowników serwera wiadomość proszącą ich o wejście na IRC
 
 ----
 /summon  <użytkownik> [<cel> [<kanał>]]
@@ -806,7 +806,7 @@ kanał: nazwa kanału
 ----
 
 [[command_irc_time]]
-[command]*`time`* uzyskaj lokalny czas serwera::
+* `+time+`: uzyskaj lokalny czas serwera
 
 ----
 /time  [<cel>]
@@ -815,7 +815,7 @@ cel: pobierz czas podanego serwera
 ----
 
 [[command_irc_topic]]
-[command]*`topic`* pobiera/ustawia temat kanału::
+* `+topic+`: pobiera/ustawia temat kanału
 
 ----
 /topic  [<kanał>] [<temat>|-delete]
@@ -826,7 +826,7 @@ kanał: nazwa kanału
 ----
 
 [[command_irc_trace]]
-[command]*`trace`* znajduje drogę do konkretnego serwera::
+* `+trace+`: znajduje drogę do konkretnego serwera
 
 ----
 /trace  [<cel>]
@@ -835,7 +835,7 @@ cel: nazwa serwera
 ----
 
 [[command_irc_unban]]
-[command]*`unban`* odbanowuje nicki lub hosty::
+* `+unban+`: odbanowuje nicki lub hosty
 
 ----
 /unban  [<kanał>] <nick> [<nick> ...]
@@ -845,7 +845,7 @@ kanał: nazwa kanału
 ----
 
 [[command_irc_unquiet]]
-[command]*`unquiet`* nicki albo hosty przestają być uciszone::
+* `+unquiet+`: nicki albo hosty przestają być uciszone
 
 ----
 /unquiet  [<kanał>] <nick> [<nick> ...]
@@ -855,7 +855,7 @@ kanał: nazwa kanału
 ----
 
 [[command_irc_userhost]]
-[command]*`userhost`* zwraca listę informacji o użytkownikach::
+* `+userhost+`: zwraca listę informacji o użytkownikach
 
 ----
 /userhost  <nick> [<nick>...]
@@ -864,7 +864,7 @@ nick: nazwa użytkownika
 ----
 
 [[command_irc_users]]
-[command]*`users`* wyświetla użytkowników zalogowanych do serwera::
+* `+users+`: wyświetla użytkowników zalogowanych do serwera
 
 ----
 /users  [<cel>]
@@ -873,7 +873,7 @@ cel: nazwa serwera
 ----
 
 [[command_irc_version]]
-[command]*`version`* podaje informację o wersji nicka lub serwera (obecnego lub określonego)::
+* `+version+`: podaje informację o wersji nicka lub serwera (obecnego lub określonego)
 
 ----
 /version  [<serwer>|<nick>]
@@ -883,7 +883,7 @@ serwer: nazwa serwera
 ----
 
 [[command_irc_voice]]
-[command]*`voice`* daje głos (voice) nickowi(-m)::
+* `+voice+`: daje głos (voice) nickowi(-m)
 
 ----
 /voice  <nick> [<nick>...]
@@ -893,7 +893,7 @@ nick: nick lub maska (wildcard "*" jest dozwolony)
 ----
 
 [[command_irc_wallchops]]
-[command]*`wallchops`* wysyła powiadomienie do operatorów kanału::
+* `+wallchops+`: wysyła powiadomienie do operatorów kanału
 
 ----
 /wallchops  [<kanał>] <tekst>
@@ -903,7 +903,7 @@ kanał: nazwa kanału
 ----
 
 [[command_irc_wallops]]
-[command]*`wallops`* wysyła wiadomość do wszystkich obecnie połączonych użytkowników, którzy ustawili sobie tryb 'w'::
+* `+wallops+`: wysyła wiadomość do wszystkich obecnie połączonych użytkowników, którzy ustawili sobie tryb 'w'
 
 ----
 /wallops  <tekst>
@@ -912,7 +912,7 @@ tekst: wiadomość do wysłania
 ----
 
 [[command_irc_who]]
-[command]*`who`* tworzy zapytanie, które zwraca listę informacji::
+* `+who+`: tworzy zapytanie, które zwraca listę informacji
 
 ----
 /who  [<mask> [o]]
@@ -922,7 +922,7 @@ maska: tylko informacje pasujące do maski
 ----
 
 [[command_irc_whois]]
-[command]*`whois`* zapytanie o informacje o użytkowniku(ach)::
+* `+whois+`: zapytanie o informacje o użytkowniku(ach)
 
 ----
 /whois  [<serwer>] [<nick>[,<nick>...]]
@@ -938,7 +938,7 @@ Jeśli opcja irc.network.whois_double_nick jest włączona, wysyłane są dwa ni
 ----
 
 [[command_irc_whowas]]
-[command]*`whowas`* pyta o informacje o użytkowniku, który już nie istnieje::
+* `+whowas+`: pyta o informacje o użytkowniku, który już nie istnieje
 
 ----
 /whowas  <nick>[,<nick>...] [<ilość> [<cel>]]

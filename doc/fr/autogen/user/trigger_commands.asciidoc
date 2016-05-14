@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_trigger_trigger]]
-[command]*`trigger`* gestion des triggers, le couteau Suisse pour WeeChat::
+* `+trigger+`: gestion des triggers, le couteau Suisse pour WeeChat
 
 ----
 /trigger  list|listfull|listdefault

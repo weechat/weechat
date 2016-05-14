@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_ruby_ruby]]
-[command]*`ruby`* elenca/carica/scarica script::
+* `+ruby+`: elenca/carica/scarica script
 
 ----
 /ruby  list|listfull [<nome>]

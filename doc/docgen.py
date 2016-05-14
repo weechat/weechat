@@ -322,30 +322,40 @@ def get_hdata():
                                                                     key)
                     hdata2.append({
                         'offset': var_offset,
-                        'text': '\'{0}\' ({1})'.format(key, type_string),
-                        'textlong': '\'{0}\' ({1}{2}{3})'.format(
+                        'text': '_{0}_ ({1})'.format(key, type_string),
+                        'textlong': '_{0}_   ({1}{2}{3})'.format(
                             key, type_string, var_array_size, var_hdata),
                         'update': weechat.hdata_update(
                             ptr_hdata, '', {'__update_allowed': key}),
                     })
                 hdata2 = sorted(hdata2, key=itemgetter('offset'))
                 for item in hdata2:
-                    variables += '*** {0}\n'.format(item['textlong'])
+                    variables += '{0} +\n'.format(item['textlong'])
                     if item['update']:
-                        variables_update += '*** {0}\n'.format(item['text'])
+                        variables_update += '    {0} +\n'.format(item['text'])
                 if weechat.hdata_update(ptr_hdata, '',
                                         {'__create_allowed': ''}):
-                    variables_update += '*** \'__create\'\n'
+                    variables_update += '    _{hdata_update_create}_ +\n'
                 if weechat.hdata_update(ptr_hdata, '',
                                         {'__delete_allowed': ''}):
-                    variables_update += '*** \'__delete\'\n'
+                    variables_update += '    _{hdata_update_delete}_ +\n'
             hdata[plugin][hdata_name]['vars'] = variables
             hdata[plugin][hdata_name]['vars_update'] = variables_update
 
+            def compate_list_name(name1, name2):
+                rc = 1 if name2 > name1 else (-1 if name1 < name2 else 0)
+                if name2.startswith('last_'):
+                    rc *= 1000
+
             string = weechat.hdata_get_string(ptr_hdata, 'list_keys')
             if string:
-                for item in sorted(string.split(',')):
-                    lists += '*** \'{0}\'\n'.format(item)
+                list_lists = string.split(',')
+                lists_std = [l for l in list_lists
+                             if not l.startswith('last_')]
+                lists_last = [l for l in list_lists
+                              if l.startswith('last_')]
+                for item in sorted(lists_std) + sorted(lists_last):
+                    lists += '_{0}_ +\n'.format(item)
             hdata[plugin][hdata_name]['lists'] = lists
     weechat.infolist_free(infolist)
     return hdata
@@ -481,7 +491,7 @@ def docgen_cmd_cb(data, buf, args):
                 desc = translate(_cmd['description'])
                 args_desc = translate(_cmd['args_description'])
                 doc.write('[[command_{0}_{1}]]\n'.format(plugin, command))
-                doc.write('[command]*`{0}`* {1}::\n\n'.format(command, desc))
+                doc.write('* `+{0}+`: {1}\n\n'.format(command, desc))
                 doc.write('----\n')
                 prefix = '/' + command + '  '
                 if args_formats != ['']:
@@ -547,9 +557,10 @@ def docgen_cmd_cb(data, buf, args):
                     doc.write('* [[option_{0}.{1}.{2}]] *{3}.{4}.{5}*\n'
                               ''.format(config, section, option, config,
                                         section, option))
-                    doc.write('** {0}: `{1}`\n'.format(_('description'), desc))
+                    doc.write('** {0}: pass:none[{1}]\n'.format(
+                        _('description'), desc.replace(']', '\\]')))
                     doc.write('** {0}: {1}\n'.format(_('type'), type_nls))
-                    doc.write('** {0}: {1} ({2}: `{3}`)\n'
+                    doc.write('** {0}: {1} ({2}: `+{3}+`)\n'
                               ''.format(_('values'), values,
                                         _('default value'), default_value))
                     if null_value_allowed:
@@ -590,7 +601,7 @@ def docgen_cmd_cb(data, buf, args):
 
         # write infos (hashtable) hooked
         doc = AutogenDoc(directory, 'plugin_api', 'infos_hashtable')
-        doc.write('[width="100%",cols="^1,^2,6,6,6",options="header"]\n')
+        doc.write('[width="100%",cols="^1,^2,6,6,8",options="header"]\n')
         doc.write('|===\n')
         doc.write('| {0} | {1} | {2} | {3} | {4}\n\n'
                   ''.format(_('Plugin'), _('Name'), _('Description'),
@@ -630,33 +641,38 @@ def docgen_cmd_cb(data, buf, args):
 
         # write hdata hooked
         doc = AutogenDoc(directory, 'plugin_api', 'hdata')
+        doc.write(':hdata_update_create: __create\n')
+        doc.write(':hdata_update_delete: __delete\n')
+        doc.write('[width="100%",cols="^1,^2,2,2,5",options="header"]\n')
+        doc.write('|===\n')
+        doc.write('| {0} | {1} | {2} | {3} | {4}\n\n'
+                  ''.format(_('Plugin'), _('Name'), _('Description'),
+                            _('Lists'), _('Variables')))
         for plugin in sorted(hdata):
             for hdata_name in sorted(hdata[plugin]):
-                anchor = 'hdata_{0}'.format(hdata_name)
                 _hda = hdata[plugin][hdata_name]
+                anchor = 'hdata_{0}'.format(hdata_name)
                 desc = translate(_hda['description'])
                 variables = _hda['vars']
                 variables_update = _hda['vars_update']
                 lists = _hda['lists']
-                doc.write('* [[{0}]]<<{0},\'{1}\'>>: {2}\n'
-                          ''.format(escape(anchor), escape(hdata_name),
-                                    escape(desc)))
-                doc.write('** {0}: {1}\n'.format(_('plugin'),
-                                                 escape(plugin)))
-                doc.write('** {0}:\n{1}'.format(_('variables'),
-                                                escape(variables)))
+                doc.write('| {0}\n'.format(escape(plugin)))
+                doc.write('| [[{0}]]<<{0},{1}>>\n'
+                          ''.format(escape(anchor), escape(hdata_name)))
+                doc.write('| {0}\n'.format(escape(desc)))
+                doc.write('| {0}\n'.format(escape(lists) if lists else '-'))
+                doc.write('| {0}\n'.format(escape(variables)))
                 if variables_update:
-                    doc.write('** {0}:\n{1}'.format(
-                        _('update allowed'),
+                    doc.write('*{0}*: +\n{1}'.format(
+                        _('Update allowed'),
                         escape(variables_update)))
-                if lists:
-                    doc.write('** {0}:\n{1}'.format(_('lists'),
-                                                    escape(lists)))
+                doc.write('\n')
+        doc.write('|===\n')
         doc.update('hdata', num_files, num_files_updated)
 
         # write completions hooked
         doc = AutogenDoc(directory, 'plugin_api', 'completions')
-        doc.write('[width="65%",cols="^1,^2,8",options="header"]\n')
+        doc.write('[width="100%",cols="^1,^2,7",options="header"]\n')
         doc.write('|===\n')
         doc.write('| {0} | {1} | {2}\n\n'
                   ''.format(_('Plugin'), _('Name'), _('Description')))

@@ -3,46 +3,46 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_aspell.check.commands]] *aspell.check.commands*
-** descrizione: `elenco separato da virgole di comandi per cui il controllo ortografico è abilitato (il controllo ortografico è disabilitato per tutti gli altri comandi)`
+** descrizione: pass:none[elenco separato da virgole di comandi per cui il controllo ortografico è abilitato (il controllo ortografico è disabilitato per tutti gli altri comandi)]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"`)
+** valori: qualsiasi stringa (valore predefinito: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`)
 
 * [[option_aspell.check.default_dict]] *aspell.check.default_dict*
-** descrizione: `dizionario predefinito (o elenco separato da virgole di dizionari) da usare quando il buffer non ha alcun dizionario definito (vuoto per disabilitare il controllo ortografico sui buffer in cui non è stato esplicitamente abilitato)`
+** descrizione: pass:none[dizionario predefinito (o elenco separato da virgole di dizionari) da usare quando il buffer non ha alcun dizionario definito (vuoto per disabilitare il controllo ortografico sui buffer in cui non è stato esplicitamente abilitato)]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `""`)
+** valori: qualsiasi stringa (valore predefinito: `+""+`)
 
 * [[option_aspell.check.during_search]] *aspell.check.during_search*
-** descrizione: `controlla le parole durante la ricerca del testo nel buffer`
+** descrizione: pass:none[controlla le parole durante la ricerca del testo nel buffer]
 ** tipo: bool
-** valori: on, off (valore predefinito: `off`)
+** valori: on, off (valore predefinito: `+off+`)
 
 * [[option_aspell.check.enabled]] *aspell.check.enabled*
-** descrizione: `abilita il controllo aspell per la riga di comando`
+** descrizione: pass:none[abilita il controllo aspell per la riga di comando]
 ** tipo: bool
-** valori: on, off (valore predefinito: `off`)
+** valori: on, off (valore predefinito: `+off+`)
 
 * [[option_aspell.check.real_time]] *aspell.check.real_time*
-** descrizione: `controllo ortografico in tempo reale (più lento, disabilitato per default: le parole vengono controllate solo se seguite da un delimitatore)`
+** descrizione: pass:none[controllo ortografico in tempo reale (più lento, disabilitato per default: le parole vengono controllate solo se seguite da un delimitatore)]
 ** tipo: bool
-** valori: on, off (valore predefinito: `off`)
+** valori: on, off (valore predefinito: `+off+`)
 
 * [[option_aspell.check.suggestions]] *aspell.check.suggestions*
-** descrizione: `numero di suggerimenti da mostrare nell'elemento barra "aspell_suggest" per ogni dizionario impostato nel buffer (-1 = disattiva suggerimenti, 0 = mostra tutti i possibili suggerimenti in tutte le lingue)`
+** descrizione: pass:none[numero di suggerimenti da mostrare nell'elemento barra "aspell_suggest" per ogni dizionario impostato nel buffer (-1 = disattiva suggerimenti, 0 = mostra tutti i possibili suggerimenti in tutte le lingue)]
 ** tipo: intero
-** valori: -1 .. 2147483647 (valore predefinito: `-1`)
+** valori: -1 .. 2147483647 (valore predefinito: `+-1+`)
 
 * [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
-** descrizione: `lunghezza minima per una parola da controllare (0 per controllarle tutte)`
+** descrizione: pass:none[lunghezza minima per una parola da controllare (0 per controllarle tutte)]
 ** tipo: intero
-** valori: 0 .. 2147483647 (valore predefinito: `2`)
+** valori: 0 .. 2147483647 (valore predefinito: `+2+`)
 
 * [[option_aspell.color.misspelled]] *aspell.color.misspelled*
-** descrizione: `text color for misspelled words (input bar)`
+** descrizione: pass:none[text color for misspelled words (input bar)]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `lightred`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+lightred+`)
 
 * [[option_aspell.color.suggestions]] *aspell.color.suggestions*
-** descrizione: `text color for suggestions on a misspelled word (status bar)`
+** descrizione: pass:none[text color for suggestions on a misspelled word (status bar)]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `default`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+default+`)

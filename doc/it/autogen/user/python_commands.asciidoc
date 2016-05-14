@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_python_python]]
-[command]*`python`* elenca/carica/scarica script::
+* `+python+`: elenca/carica/scarica script
 
 ----
 /python  list|listfull [<nome>]

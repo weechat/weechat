@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_lua_lua]]
-[command]*`lua`* elenca/carica/scarica script::
+* `+lua+`: elenca/carica/scarica script
 
 ----
 /lua  list|listfull [<nome>]

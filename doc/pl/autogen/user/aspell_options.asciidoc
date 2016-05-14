@@ -3,46 +3,46 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_aspell.check.commands]] *aspell.check.commands*
-** opis: `oddzielona przecinkiem lista komend, dla których sprawdzana jest poprawna pisownia (sprawdzanie pisowni jest wyłączone dla pozostałych komend)`
+** opis: pass:none[oddzielona przecinkiem lista komend, dla których sprawdzana jest poprawna pisownia (sprawdzanie pisowni jest wyłączone dla pozostałych komend)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`)
 
 * [[option_aspell.check.default_dict]] *aspell.check.default_dict*
-** opis: `domyślny słownik (lub oddzielona przecinkami lista słowników) używany, kiedy bufor nie ma zdefiniowanego słownika (zostaw puste, aby wyłączyć słownik w buforach, które nie posiadają konkretnie przypisanego słownika aspell)`
+** opis: pass:none[domyślny słownik (lub oddzielona przecinkami lista słowników) używany, kiedy bufor nie ma zdefiniowanego słownika (zostaw puste, aby wyłączyć słownik w buforach, które nie posiadają konkretnie przypisanego słownika aspell)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_aspell.check.during_search]] *aspell.check.during_search*
-** opis: `sprawdzaj słowa podczas wyszukiwania tekstu w buforze`
+** opis: pass:none[sprawdzaj słowa podczas wyszukiwania tekstu w buforze]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_aspell.check.enabled]] *aspell.check.enabled*
-** opis: `włącza sprawdzanie aspell dla linii komend`
+** opis: pass:none[włącza sprawdzanie aspell dla linii komend]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_aspell.check.real_time]] *aspell.check.real_time*
-** opis: `sprawdzanie pisowni w czasie rzeczywistym (wolniejsze, wyłączone domyślnie: słowa są sprawdzane tylko jeśli za nimi znajduje się separator)`
+** opis: pass:none[sprawdzanie pisowni w czasie rzeczywistym (wolniejsze, wyłączone domyślnie: słowa są sprawdzane tylko jeśli za nimi znajduje się separator)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_aspell.check.suggestions]] *aspell.check.suggestions*
-** opis: `numer podpowiedzi wyświetlanych w elemencie paska "aspell_suggest" dla każdego słownika ustawionego w buforze (-1 = wyłącza podpowiedzi, 0 = wyświetla wszystkie możliwe podpowiedzi dla każdego języka)`
+** opis: pass:none[numer podpowiedzi wyświetlanych w elemencie paska "aspell_suggest" dla każdego słownika ustawionego w buforze (-1 = wyłącza podpowiedzi, 0 = wyświetla wszystkie możliwe podpowiedzi dla każdego języka)]
 ** typ: liczba
-** wartości: -1 .. 2147483647 (domyślna wartość: `-1`)
+** wartości: -1 .. 2147483647 (domyślna wartość: `+-1+`)
 
 * [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
-** opis: `minimalna długość słowa do sprawdzenia ( 0 - sprawdzaj wszystkie słowa)`
+** opis: pass:none[minimalna długość słowa do sprawdzenia ( 0 - sprawdzaj wszystkie słowa)]
 ** typ: liczba
-** wartości: 0 .. 2147483647 (domyślna wartość: `2`)
+** wartości: 0 .. 2147483647 (domyślna wartość: `+2+`)
 
 * [[option_aspell.color.misspelled]] *aspell.color.misspelled*
-** opis: `kolor używany dla błędnie zapisanych słów (pasek wprowadzania)`
+** opis: pass:none[kolor używany dla błędnie zapisanych słów (pasek wprowadzania)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightred`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightred+`)
 
 * [[option_aspell.color.suggestions]] *aspell.color.suggestions*
-** opis: `kolor tekstu sugestii dla błędnie wprowadzonego słowa (pasek statusu)`
+** opis: pass:none[kolor tekstu sugestii dla błędnie wprowadzonego słowa (pasek statusu)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)

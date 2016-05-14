@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_xfer_me]]
-[command]*`me`* sendet CTCP Aktion an entfernten Host::
+* `+me+`: sendet CTCP Aktion an entfernten Host
 
 ----
 /me  <message>
@@ -12,7 +12,7 @@ message: zu sendende Nachricht
 ----
 
 [[command_xfer_xfer]]
-[command]*`xfer`* Kontrolle der Übertragung(en)::
+* `+xfer+`: Kontrolle der Übertragung(en)
 
 ----
 /xfer  [list|listfull]

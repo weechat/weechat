@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_weechat_away]]
-[command]*`away`* Abwesenheitsstatus setzen oder entfernen::
+* `+away+`: Abwesenheitsstatus setzen oder entfernen
 
 ----
 /away  [-all] [<message>]
@@ -13,7 +13,7 @@ message: Abwesenheitsnachricht (ohne Angabe einer Nachricht wird der Abwesenheit
 ----
 
 [[command_weechat_bar]]
-[command]*`bar`* Infobars verwalten::
+* `+bar+`: Infobars verwalten
 
 ----
 /bar  list|listfull|listitems
@@ -65,7 +65,7 @@ Beispiele:
 ----
 
 [[command_weechat_buffer]]
-[command]*`buffer`* Buffer verwalten::
+* `+buffer+`: Buffer verwalten
 
 ----
 /buffer  list
@@ -138,7 +138,7 @@ Beispiele:
 ----
 
 [[command_weechat_color]]
-[command]*`color`* definiert Farbaliase und stellt eine Palette der möglichen Farben dar::
+* `+color+`: definiert Farbaliase und stellt eine Palette der möglichen Farben dar
 
 ----
 /color  alias <color> <name>
@@ -168,7 +168,7 @@ Beispiele:
 ----
 
 [[command_weechat_command]]
-[command]*`command`* führe explizit einen WeeChat Befehl oder eine Erweiterung aus::
+* `+command+`: führe explizit einen WeeChat Befehl oder eine Erweiterung aus
 
 ----
 /command  [-buffer <name>] <plugin> <command>
@@ -179,7 +179,7 @@ command: auszuführender Befehl (es wird automatisch ein '/' vorangestellt, fall
 ----
 
 [[command_weechat_cursor]]
-[command]*`cursor`* Cursor kann frei auf dem Bildschirm bewegt werden, um Aktionen in bestimmten Bildschirmbereichen auszuführen::
+* `+cursor+`: Cursor kann frei auf dem Bildschirm bewegt werden, um Aktionen in bestimmten Bildschirmbereichen auszuführen
 
 ----
 /cursor  go chat|<bar>|<x>,<y>
@@ -214,7 +214,7 @@ Beispiele:
 ----
 
 [[command_weechat_debug]]
-[command]*`debug`* Debug-Kontrolle für Hauptprogramm und/oder Erweiterung::
+* `+debug+`: Debug-Kontrolle für Hauptprogramm und/oder Erweiterung
 
 ----
 /debug  list
@@ -245,7 +245,7 @@ infolists: zeigt Information über die Infolists an
 ----
 
 [[command_weechat_eval]]
-[command]*`eval`* evaluierter Ausdruck::
+* `+eval+`: evaluierter Ausdruck
 
 ----
 /eval  [-n|-s] <expression>
@@ -319,7 +319,7 @@ Beispiele (Bedingungen):
 ----
 
 [[command_weechat_filter]]
-[command]*`filter`* Filterfunktion um Nachrichten in Buffer aus- oder einzublenden, dazu können Schlagwörter oder reguläre Ausdrücke verwendet werden::
+* `+filter+`: Filterfunktion um Nachrichten in Buffer aus- oder einzublenden, dazu können Schlagwörter oder reguläre Ausdrücke verwendet werden
 
 ----
 /filter  list
@@ -383,7 +383,7 @@ Beispiele:
 ----
 
 [[command_weechat_help]]
-[command]*`help`* Zeigt einen Hilfstext für Befehle und Einstellungen an::
+* `+help+`: Zeigt einen Hilfstext für Befehle und Einstellungen an
 
 ----
 /help  -list|-listfull [<plugin> [<plugin>...]]
@@ -398,7 +398,7 @@ Beispiele:
 ----
 
 [[command_weechat_history]]
-[command]*`history`* Zeigt den Befehlsverlauf des Buffers::
+* `+history+`: Zeigt den Befehlsverlauf des Buffers
 
 ----
 /history  clear
@@ -409,7 +409,7 @@ value: Anzahl der gewünschten Einträgen im Befehlsverlauf anzeigen
 ----
 
 [[command_weechat_input]]
-[command]*`input`* Funktionen für die Befehlszeile::
+* `+input+`: Funktionen für die Befehlszeile
 
 ----
 /input  <action> [<arguments>]
@@ -471,7 +471,7 @@ Dieser Befehl wird sinnvollerweise mittels Tastenbelegungen oder Erweiterungen g
 ----
 
 [[command_weechat_key]]
-[command]*`key`* Einer Taste einen Befehl zuordnen oder entfernen::
+* `+key+`: Einer Taste einen Befehl zuordnen oder entfernen
 
 ----
 /key  list|listdefault|listdiff [<context>]
@@ -526,7 +526,7 @@ Beispiele:
 ----
 
 [[command_weechat_layout]]
-[command]*`layout`* Verwaltet Buffer/Fenster Layouts::
+* `+layout+`: Verwaltet Buffer/Fenster Layouts
 
 ----
 /layout  store [<name>] [buffers|windows]
@@ -551,7 +551,7 @@ Das aktuelle Layout kann beim Ausführen des /quit Befehls mit der Option "weech
 ----
 
 [[command_weechat_mouse]]
-[command]*`mouse`* Maussteuerung::
+* `+mouse+`: Maussteuerung
 
 ----
 /mouse  enable|disable|toggle [<delay>]
@@ -571,7 +571,7 @@ Beispiele:
 ----
 
 [[command_weechat_mute]]
-[command]*`mute`* führt einen Befehl ohne Textausgabe aus::
+* `+mute+`: führt einen Befehl ohne Textausgabe aus
 
 ----
 /mute  [-core | -current | -buffer <name>] <command>
@@ -594,7 +594,7 @@ Beispiele:
 ----
 
 [[command_weechat_plugin]]
-[command]*`plugin`* Erweiterungen verwalten (auflisten/installieren/beenden)::
+* `+plugin+`: Erweiterungen verwalten (auflisten/installieren/beenden)
 
 ----
 /plugin  list|listfull [<name>]
@@ -617,7 +617,7 @@ Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
 ----
 
 [[command_weechat_print]]
-[command]*`print`* gibt einen Text in einem Buffer aus::
+* `+print+`: gibt einen Text in einem Buffer aus
 
 ----
 /print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]
@@ -661,7 +661,7 @@ Beispiele:
 ----
 
 [[command_weechat_proxy]]
-[command]*`proxy`* Proxys verwalten::
+* `+proxy+`: Proxys verwalten
 
 ----
 /proxy  list
@@ -695,7 +695,7 @@ Beispiele:
 ----
 
 [[command_weechat_quit]]
-[command]*`quit`* WeeChat beenden::
+* `+quit+`: WeeChat beenden
 
 ----
 /quit  [-yes] [<arguments>]
@@ -708,7 +708,7 @@ Standardmäßig werden alle Konfigurationsdateien beim Beenden gespeichert (sieh
 ----
 
 [[command_weechat_reload]]
-[command]*`reload`* Konfiguration neu laden::
+* `+reload+`: Konfiguration neu laden
 
 ----
 /reload  [<file> [<file>...]]
@@ -719,7 +719,7 @@ Ohne Angabe von Argumenten werden alle Konfigurationen (WeeChat und Erweiterunge
 ----
 
 [[command_weechat_repeat]]
-[command]*`repeat`* führt einen Befehl mehrfach aus::
+* `+repeat+`: führt einen Befehl mehrfach aus
 
 ----
 /repeat  [-interval <delay>] <count> <command>
@@ -736,7 +736,7 @@ Beispiel:
 ----
 
 [[command_weechat_save]]
-[command]*`save`* Konfiguration abspeichern::
+* `+save+`: Konfiguration abspeichern
 
 ----
 /save  [<file> [<file>...]]
@@ -749,7 +749,7 @@ Standardmäßig werden alle Konfigurationsdateien beim Ausführen des /quit Befe
 ----
 
 [[command_weechat_secure]]
-[command]*`secure`* verwaltet zu schützende Daten (Passwörter oder private Daten werden in der Datei sec.conf verschlüsselt)::
+* `+secure+`: verwaltet zu schützende Daten (Passwörter oder private Daten werden in der Datei sec.conf verschlüsselt)
 
 ----
 /secure  passphrase <passphrase>|-delete
@@ -789,7 +789,7 @@ Beispiele:
 ----
 
 [[command_weechat_set]]
-[command]*`set`* um Konfigurationsoptionen und Umgebungsvariablen zu setzen::
+* `+set+`: um Konfigurationsoptionen und Umgebungsvariablen zu setzen
 
 ----
 /set  [<option> [<value>]]
@@ -825,7 +825,7 @@ Beispiele:
 ----
 
 [[command_weechat_unset]]
-[command]*`unset`* Konfigurationsparameter freigeben/zurücksetzen::
+* `+unset+`: Konfigurationsparameter freigeben/zurücksetzen
 
 ----
 /unset  <option>
@@ -844,7 +844,7 @@ Beispiele:
 ----
 
 [[command_weechat_upgrade]]
-[command]*`upgrade`* Aktualisiert WeeChat ohne die Verbindung zum Server zu trennen::
+* `+upgrade+`: Aktualisiert WeeChat ohne die Verbindung zum Server zu trennen
 
 ----
 /upgrade  [-yes] [<path_to_binary>|-quit]
@@ -876,7 +876,7 @@ Es ist möglich die WeeChat-Sitzung auf einem anderen Rechner wiederherzustellen
 ----
 
 [[command_weechat_uptime]]
-[command]*`uptime`* Zeigt die Uptime von Weechat an::
+* `+uptime+`: Zeigt die Uptime von Weechat an
 
 ----
 /uptime  [-o | -ol]
@@ -886,7 +886,7 @@ Es ist möglich die WeeChat-Sitzung auf einem anderen Rechner wiederherzustellen
 ----
 
 [[command_weechat_version]]
-[command]*`version`* Zeigt die WeeChat-Version und das Datum der Kompilierung an::
+* `+version+`: Zeigt die WeeChat-Version und das Datum der Kompilierung an
 
 ----
 /version  [-o | -ol]
@@ -898,7 +898,7 @@ Um diesen Befehl in jedem Buffer ausführen zu können, kann der Standardkurzbef
 ----
 
 [[command_weechat_wait]]
-[command]*`wait`* Terminiere einen Befehl der ausgeführt werden soll::
+* `+wait+`: Terminiere einen Befehl der ausgeführt werden soll
 
 ----
 /wait  <number>[<unit>] <command>
@@ -923,7 +923,7 @@ Beispiele:
 ----
 
 [[command_weechat_window]]
-[command]*`window`* Fenster verwalten::
+* `+window+`: Fenster verwalten
 
 ----
 /window  list

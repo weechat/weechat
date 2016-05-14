@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_trigger_trigger]]
-[command]*`trigger`* トリガ (WeeChat 用のスイスアーミーナイフ) の管理::
+* `+trigger+`: トリガ (WeeChat 用のスイスアーミーナイフ) の管理
 
 ----
 /trigger  list|listfull|listdefault

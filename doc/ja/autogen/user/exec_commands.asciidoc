@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_exec_exec]]
-[command]*`exec`* 外部コマンドを実行::
+* `+exec+`: 外部コマンドを実行
 
 ----
 /exec  -list

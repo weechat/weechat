@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_alias_alias]]
-[command]*`alias`* list, add or remove command aliases::
+* `+alias+`: list, add or remove command aliases
 
 ----
 /alias  list [<alias>]

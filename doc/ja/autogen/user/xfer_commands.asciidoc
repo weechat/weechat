@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_xfer_me]]
-[command]*`me`* CTCP action をリモートホストに送信::
+* `+me+`: CTCP action をリモートホストに送信
 
 ----
 /me  <message>
@@ -12,7 +12,7 @@ message: 送信メッセージ
 ----
 
 [[command_xfer_xfer]]
-[command]*`xfer`* xfer 管理::
+* `+xfer+`: xfer 管理
 
 ----
 /xfer  [list|listfull]

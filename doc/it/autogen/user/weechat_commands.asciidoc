@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_weechat_away]]
-[command]*`away`* imposta o elimina lo stato di assenza::
+* `+away+`: imposta o elimina lo stato di assenza
 
 ----
 /away  [-all] [<messaggio>]
@@ -13,7 +13,7 @@ messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene r
 ----
 
 [[command_weechat_bar]]
-[command]*`bar`* gestione delle barre::
+* `+bar+`: gestione delle barre
 
 ----
 /bar  list|listfull|listitems
@@ -65,7 +65,7 @@ Examples:
 ----
 
 [[command_weechat_buffer]]
-[command]*`buffer`* gestione dei buffer::
+* `+buffer+`: gestione dei buffer
 
 ----
 /buffer  list
@@ -138,7 +138,7 @@ Examples:
 ----
 
 [[command_weechat_color]]
-[command]*`color`* definisce gli alias dei colori e visualizza la tavolozza dei colori::
+* `+color+`: definisce gli alias dei colori e visualizza la tavolozza dei colori
 
 ----
 /color  alias <color> <name>
@@ -168,7 +168,7 @@ Examples:
 ----
 
 [[command_weechat_command]]
-[command]*`command`* esegui comando o plugin di WeeChat esplicito::
+* `+command+`: esegui comando o plugin di WeeChat esplicito
 
 ----
 /command  [-buffer <name>] <plugin> <command>
@@ -179,7 +179,7 @@ command: command to execute (a '/' is automatically added if not found at beginn
 ----
 
 [[command_weechat_cursor]]
-[command]*`cursor`* movimento libero del cursore sullo schermo per eseguire azioni su aree specifiche dello schermo::
+* `+cursor+`: movimento libero del cursore sullo schermo per eseguire azioni su aree specifiche dello schermo
 
 ----
 /cursor  go chat|<barra>|<x>,<y>
@@ -214,7 +214,7 @@ Examples:
 ----
 
 [[command_weechat_debug]]
-[command]*`debug`* attiva debug per core/plugin::
+* `+debug+`: attiva debug per core/plugin
 
 ----
 /debug  list
@@ -245,7 +245,7 @@ infolists: display infos about infolists
 ----
 
 [[command_weechat_eval]]
-[command]*`eval`* evaluate expression::
+* `+eval+`: evaluate expression
 
 ----
 /eval  [-n|-s] <expression>
@@ -319,7 +319,7 @@ Examples (conditions):
 ----
 
 [[command_weechat_filter]]
-[command]*`filter`* filtra messaggi nei buffer, per nascondere/mostrare in base a tag o regexp::
+* `+filter+`: filtra messaggi nei buffer, per nascondere/mostrare in base a tag o regexp
 
 ----
 /filter  list
@@ -383,7 +383,7 @@ Examples:
 ----
 
 [[command_weechat_help]]
-[command]*`help`* visualizza l'aiuto su comandi e opzioni::
+* `+help+`: visualizza l'aiuto su comandi e opzioni
 
 ----
 /help  -list|-listfull [<plugin> [<plugin>...]]
@@ -398,7 +398,7 @@ Examples:
 ----
 
 [[command_weechat_history]]
-[command]*`history`* mostra la cronologia dei comandi del buffer::
+* `+history+`: mostra la cronologia dei comandi del buffer
 
 ----
 /history  <clear
@@ -409,7 +409,7 @@ valore: numero delle voci nella cronologia da mostrare
 ----
 
 [[command_weechat_input]]
-[command]*`input`* funzioni per la riga di comando::
+* `+input+`: funzioni per la riga di comando
 
 ----
 /input  <azioni> [<argomenti>]
@@ -471,7 +471,7 @@ This command is used by key bindings or plugins.
 ----
 
 [[command_weechat_key]]
-[command]*`key`* associa/disassocia tasti::
+* `+key+`: associa/disassocia tasti
 
 ----
 /key  list|listdefault|listdiff [<contesto>]
@@ -526,7 +526,7 @@ Examples:
 ----
 
 [[command_weechat_layout]]
-[command]*`layout`* manage buffers/windows layouts::
+* `+layout+`: manage buffers/windows layouts
 
 ----
 /layout  store [<name>] [buffers|windows]
@@ -551,7 +551,7 @@ The current layout can be saved on /quit command with the option "weechat.look.s
 ----
 
 [[command_weechat_mouse]]
-[command]*`mouse`* controllo mouse::
+* `+mouse+`: controllo mouse
 
 ----
 /mouse  enable|disable|toggle [<ritardo>]
@@ -571,7 +571,7 @@ Esempi:
 ----
 
 [[command_weechat_mute]]
-[command]*`mute`* esegue un comando in silenzio::
+* `+mute+`: esegue un comando in silenzio
 
 ----
 /mute  [-core | -current | -buffer <name>] <command>
@@ -594,7 +594,7 @@ Examples:
 ----
 
 [[command_weechat_plugin]]
-[command]*`plugin`* elenca/carica/scarica plugin::
+* `+plugin+`: elenca/carica/scarica plugin
 
 ----
 /plugin  list|listfull [<nome>]
@@ -617,7 +617,7 @@ Senza argomento, questo comando elenca i plugin caricati.
 ----
 
 [[command_weechat_print]]
-[command]*`print`* display text on a buffer::
+* `+print+`: display text on a buffer
 
 ----
 /print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]
@@ -661,7 +661,7 @@ Examples:
 ----
 
 [[command_weechat_proxy]]
-[command]*`proxy`* gestione dei proxy::
+* `+proxy+`: gestione dei proxy
 
 ----
 /proxy  list
@@ -695,7 +695,7 @@ Examples:
 ----
 
 [[command_weechat_quit]]
-[command]*`quit`* esce da WeeChat::
+* `+quit+`: esce da WeeChat
 
 ----
 /quit  [-yes] [<argomenti>]
@@ -708,7 +708,7 @@ By default when quitting the configuration files are saved (see option "weechat.
 ----
 
 [[command_weechat_reload]]
-[command]*`reload`* ricarica i file di configurazione da disco::
+* `+reload+`: ricarica i file di configurazione da disco
 
 ----
 /reload  [<file> [<file....>]]
@@ -719,7 +719,7 @@ Senza argomento, vengono ricaricati tutti i file (WeeChat e plugin).
 ----
 
 [[command_weechat_repeat]]
-[command]*`repeat`* esegue un comando più volte::
+* `+repeat+`: esegue un comando più volte
 
 ----
 /repeat  [-interval <ritardo>] <numero> <comando>
@@ -736,7 +736,7 @@ Esempio:
 ----
 
 [[command_weechat_save]]
-[command]*`save`* salva i file di configurazione su disco::
+* `+save+`: salva i file di configurazione su disco
 
 ----
 /save  [<file> [<file....>]]
@@ -749,7 +749,7 @@ By default all configuration files are saved to disk on /quit command (see optio
 ----
 
 [[command_weechat_secure]]
-[command]*`secure`* gestione dei dati sensibili (password o file privati cifrati nel file sec.conf)::
+* `+secure+`: gestione dei dati sensibili (password o file privati cifrati nel file sec.conf)
 
 ----
 /secure  passphrase <chiave di cifratura>|-delete
@@ -789,7 +789,7 @@ Examples:
 ----
 
 [[command_weechat_set]]
-[command]*`set`* set config options and environment variables::
+* `+set+`: set config options and environment variables
 
 ----
 /set  [<option> [<value>]]
@@ -825,7 +825,7 @@ Examples:
 ----
 
 [[command_weechat_unset]]
-[command]*`unset`* annulla/ripristina opzione::
+* `+unset+`: annulla/ripristina opzione
 
 ----
 /unset  <option>
@@ -844,7 +844,7 @@ Examples:
 ----
 
 [[command_weechat_upgrade]]
-[command]*`upgrade`* aggiorna WeeChat senza disconnettere dai server::
+* `+upgrade+`: aggiorna WeeChat senza disconnettere dai server
 
 ----
 /upgrade  [-yes] [<path_to_binary>|-quit]
@@ -876,7 +876,7 @@ It is possible to restore WeeChat session on another machine if you copy the con
 ----
 
 [[command_weechat_uptime]]
-[command]*`uptime`* mostra l'uptime di WeeChat::
+* `+uptime+`: mostra l'uptime di WeeChat
 
 ----
 /uptime  [-o | -ol]
@@ -886,7 +886,7 @@ It is possible to restore WeeChat session on another machine if you copy the con
 ----
 
 [[command_weechat_version]]
-[command]*`version`* mostra la versione e la data di compilazione di WeeChat::
+* `+version+`: mostra la versione e la data di compilazione di WeeChat
 
 ----
 /version  [-o | -ol]
@@ -898,7 +898,7 @@ The default alias /v can be used to execute this command on all buffers (otherwi
 ----
 
 [[command_weechat_wait]]
-[command]*`wait`* pianifica l'esecuzione di un comando::
+* `+wait+`: pianifica l'esecuzione di un comando
 
 ----
 /wait  <numero>[<unità>] <comando>
@@ -923,7 +923,7 @@ Esempi:
 ----
 
 [[command_weechat_window]]
-[command]*`window`* gestione delle finestre::
+* `+window+`: gestione delle finestre
 
 ----
 /window  list

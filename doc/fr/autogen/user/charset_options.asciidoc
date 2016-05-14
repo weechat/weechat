@@ -3,11 +3,11 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_charset.default.decode]] *charset.default.decode*
-** description: `charset de décodage global : charset utilisé pour décoder les messages entrants lorsqu'ils ne sont pas valides UTF-8`
+** description: pass:none[charset de décodage global : charset utilisé pour décoder les messages entrants lorsqu'ils ne sont pas valides UTF-8]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `"iso-8859-1"`)
+** valeurs: toute chaîne (valeur par défaut: `+"iso-8859-1"+`)
 
 * [[option_charset.default.encode]] *charset.default.encode*
-** description: `charset d'encodage global : charset utilisé pour encoder les messages sortants (si vide, le défaut est UTF-8 car c'est le charset interne de WeeChat)`
+** description: pass:none[charset d'encodage global : charset utilisé pour encoder les messages sortants (si vide, le défaut est UTF-8 car c'est le charset interne de WeeChat)]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `""`)
+** valeurs: toute chaîne (valeur par défaut: `+""+`)

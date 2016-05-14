@@ -3,21 +3,21 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_exec.color.flag_finished]] *exec.color.flag_finished*
-** Beschreibung: `Textfarbe des Statusindikator (in der Auflistung der Befehle) für beendete Befehle`
+** Beschreibung: pass:none[Textfarbe des Statusindikator (in der Auflistung der Befehle) für beendete Befehle]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `lightred`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightred+`)
 
 * [[option_exec.color.flag_running]] *exec.color.flag_running*
-** Beschreibung: `Textfarbe des Statusindikator (in der Auflistung der Befehle) für Befehle die zur Zeit ausgeführt werden`
+** Beschreibung: pass:none[Textfarbe des Statusindikator (in der Auflistung der Befehle) für Befehle die zur Zeit ausgeführt werden]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `lightgreen`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightgreen+`)
 
 * [[option_exec.command.default_options]] *exec.command.default_options*
-** Beschreibung: `Standardoptionen für den Befehl /exec (siehe /help exec); Beispiele: "-nosh -bg" führt alle Befehle im Hintergrund aus (keine Textausgabe) und ohne das die shell genutzt wird`
+** Beschreibung: pass:none[Standardoptionen für den Befehl /exec (siehe /help exec); Beispiele: "-nosh -bg" führt alle Befehle im Hintergrund aus (keine Textausgabe) und ohne das die shell genutzt wird]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `""`)
+** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
 
 * [[option_exec.command.purge_delay]] *exec.command.purge_delay*
-** Beschreibung: `Wartezeit bis nicht mehr ausgeführte Befehle gelöscht werden (in Sekunden, 0 = lösche Befehle unmittelbar, -1 = niemals löschen)`
+** Beschreibung: pass:none[Wartezeit bis nicht mehr ausgeführte Befehle gelöscht werden (in Sekunden, 0 = lösche Befehle unmittelbar, -1 = niemals löschen)]
 ** Typ: integer
-** Werte: -1 .. 25920000 (Standardwert: `0`)
+** Werte: -1 .. 25920000 (Standardwert: `+0+`)

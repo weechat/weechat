@@ -3,66 +3,66 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_logger.color.backlog_end]] *logger.color.backlog_end*
-** opis: `kolor linii kończącej backloga`
+** opis: pass:none[kolor linii kończącej backloga]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_logger.color.backlog_line]] *logger.color.backlog_line*
-** opis: `kolor linii backloga`
+** opis: pass:none[kolor linii backloga]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
-** opis: `automatycznie zapisuj zawartość buforów do plików (chyba, że bufor ma wyłączone logowanie)`
+** opis: pass:none[automatycznie zapisuj zawartość buforów do plików (chyba, że bufor ma wyłączone logowanie)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_logger.file.flush_delay]] *logger.file.flush_delay*
-** opis: `ilość sekund pomiędzy zapisywaniem plików z logami (0 = zapisuj pliki natychmiast po pojawieniu sie każdej nowej linii)`
+** opis: pass:none[ilość sekund pomiędzy zapisywaniem plików z logami (0 = zapisuj pliki natychmiast po pojawieniu sie każdej nowej linii)]
 ** typ: liczba
-** wartości: 0 .. 3600 (domyślna wartość: `120`)
+** wartości: 0 .. 3600 (domyślna wartość: `+120+`)
 
 * [[option_logger.file.info_lines]] *logger.file.info_lines*
-** opis: `zapisuje informacje w pliku z logami o rozpoczęciu i zakończeniu logowania buforu`
+** opis: pass:none[zapisuje informacje w pliku z logami o rozpoczęciu i zakończeniu logowania buforu]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_logger.file.mask]] *logger.file.mask*
-** opis: `domyślna maska nazw plików z logami (format to "ścieżka/do/pliku" lub "plik", bez pierwszego "/" ponieważ opcja "path" jest użyta do stworzenia kompletnej ścieżki do pliku); lokalne zmienne buforów dozwolone; (powinno się używać tylko zmiennych zdefiniowanych dla wszytkich buforów, na przykład nie należy używać $server ani $channel); określenia dla daty są dozwolone (zobacz man  strftime)`
+** opis: pass:none[domyślna maska nazw plików z logami (format to "ścieżka/do/pliku" lub "plik", bez pierwszego "/" ponieważ opcja "path" jest użyta do stworzenia kompletnej ścieżki do pliku); lokalne zmienne buforów dozwolone; (powinno się używać tylko zmiennych zdefiniowanych dla wszytkich buforów, na przykład nie należy używać $server ani $channel); określenia dla daty są dozwolone (zobacz man  strftime)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"$plugin.$name.weechatlog"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"$plugin.$name.weechatlog"+`)
 
 * [[option_logger.file.name_lower_case]] *logger.file.name_lower_case*
-** opis: `używaj tylko małych liter dla nazw plików z logami`
+** opis: pass:none[używaj tylko małych liter dla nazw plików z logami]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_logger.file.nick_prefix]] *logger.file.nick_prefix*
-** opis: `tekst wyświetlany przed nickiem w przedrostku wiadomości, przykład: "<"`
+** opis: pass:none[tekst wyświetlany przed nickiem w przedrostku wiadomości, przykład: "<"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_logger.file.nick_suffix]] *logger.file.nick_suffix*
-** opis: `tekst wyświetlany za nickiem w przedrostku wiadomości, przykład: ">"`
+** opis: pass:none[tekst wyświetlany za nickiem w przedrostku wiadomości, przykład: ">"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_logger.file.path]] *logger.file.path*
-** opis: `ścieżka do plików z logami WeeChat; "%h" na początku ciągu zostanie zastąpione przez katalog domowy WeeChat (domyślnie "~/.weechat"); określenia dla daty są dozwolone (zobacz man  strftime) (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
+** opis: pass:none[ścieżka do plików z logami WeeChat; "%h" na początku ciągu zostanie zastąpione przez katalog domowy WeeChat (domyślnie "~/.weechat"); określenia dla daty są dozwolone (zobacz man  strftime) (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"%h/logs/"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"%h/logs/"+`)
 
 * [[option_logger.file.replacement_char]] *logger.file.replacement_char*
-** opis: `znak zastępczy dla znaków specjalnych w plikach stworzonych przy użyciu maski (jak separator katalogów)`
+** opis: pass:none[znak zastępczy dla znaków specjalnych w plikach stworzonych przy użyciu maski (jak separator katalogów)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"_"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"_"+`)
 
 * [[option_logger.file.time_format]] *logger.file.time_format*
-** opis: `format czasu użyty w plikach z logami (zobacz man strftime dla specyfikatorów daty/czasu)`
+** opis: pass:none[format czasu użyty w plikach z logami (zobacz man strftime dla specyfikatorów daty/czasu)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"%Y-%m-%d %H:%M:%S"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"%Y-%m-%d %H:%M:%S"+`)
 
 * [[option_logger.look.backlog]] *logger.look.backlog*
-** opis: `maksymalna ilość linii wyświetlana z logu podczas tworzenia nowego bufora (0 = bez historii)`
+** opis: pass:none[maksymalna ilość linii wyświetlana z logu podczas tworzenia nowego bufora (0 = bez historii)]
 ** typ: liczba
-** wartości: 0 .. 2147483647 (domyślna wartość: `20`)
+** wartości: 0 .. 2147483647 (domyślna wartość: `+20+`)

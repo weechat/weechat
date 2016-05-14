@@ -3,46 +3,46 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_aspell.check.commands]] *aspell.check.commands*
-** description: `liste de commandes (séparées par des virgules) pour lesquelles la vérification orthographique est activée (la vérification est désactivée pour toutes les autres commandes)`
+** description: pass:none[liste de commandes (séparées par des virgules) pour lesquelles la vérification orthographique est activée (la vérification est désactivée pour toutes les autres commandes)]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"`)
+** valeurs: toute chaîne (valeur par défaut: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`)
 
 * [[option_aspell.check.default_dict]] *aspell.check.default_dict*
-** description: `dictionnaire par défaut (ou liste de dictionnaires séparés par une virgule) à utiliser quand le tampon courant n'a pas de dictionnaire défini (laissez blanc pour désactiver aspell sur les tampons pour lesquels vous ne l'avez pas explicitement activé)`
+** description: pass:none[dictionnaire par défaut (ou liste de dictionnaires séparés par une virgule) à utiliser quand le tampon courant n'a pas de dictionnaire défini (laissez blanc pour désactiver aspell sur les tampons pour lesquels vous ne l'avez pas explicitement activé)]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `""`)
+** valeurs: toute chaîne (valeur par défaut: `+""+`)
 
 * [[option_aspell.check.during_search]] *aspell.check.during_search*
-** description: `vérifier les mots pendant la recherche de texte dans le tampon`
+** description: pass:none[vérifier les mots pendant la recherche de texte dans le tampon]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `off`)
+** valeurs: on, off (valeur par défaut: `+off+`)
 
 * [[option_aspell.check.enabled]] *aspell.check.enabled*
-** description: `activer la vérification aspell pour la ligne de commande`
+** description: pass:none[activer la vérification aspell pour la ligne de commande]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `off`)
+** valeurs: on, off (valeur par défaut: `+off+`)
 
 * [[option_aspell.check.real_time]] *aspell.check.real_time*
-** description: `vérification orthographique des mots en temps réel (plus lent, désactivé par défaut : les mots sont vérifiés seulement s'il y a un délimiteur après)`
+** description: pass:none[vérification orthographique des mots en temps réel (plus lent, désactivé par défaut : les mots sont vérifiés seulement s'il y a un délimiteur après)]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `off`)
+** valeurs: on, off (valeur par défaut: `+off+`)
 
 * [[option_aspell.check.suggestions]] *aspell.check.suggestions*
-** description: `nombre de suggestions à afficher dans l'objet de barre "aspell_suggest" pour chaque dictionnaire du tampon (-1 = désactiver les suggestions, 0 = afficher toutes les suggestions possibles dans toutes les langues)`
+** description: pass:none[nombre de suggestions à afficher dans l'objet de barre "aspell_suggest" pour chaque dictionnaire du tampon (-1 = désactiver les suggestions, 0 = afficher toutes les suggestions possibles dans toutes les langues)]
 ** type: entier
-** valeurs: -1 .. 2147483647 (valeur par défaut: `-1`)
+** valeurs: -1 .. 2147483647 (valeur par défaut: `+-1+`)
 
 * [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
-** description: `longueur minimum d'un mot pour que l'orthographe soit vérifiée (utilisez 0 pour vérifier tous les mots)`
+** description: pass:none[longueur minimum d'un mot pour que l'orthographe soit vérifiée (utilisez 0 pour vérifier tous les mots)]
 ** type: entier
-** valeurs: 0 .. 2147483647 (valeur par défaut: `2`)
+** valeurs: 0 .. 2147483647 (valeur par défaut: `+2+`)
 
 * [[option_aspell.color.misspelled]] *aspell.color.misspelled*
-** description: `couleur du texte pour les mots mal orthographiés (barre de saisie)`
+** description: pass:none[couleur du texte pour les mots mal orthographiés (barre de saisie)]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `lightred`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+lightred+`)
 
 * [[option_aspell.color.suggestions]] *aspell.color.suggestions*
-** description: `couleur du texte pour les suggestions sur un mot mal orthographié (barre de statut)`
+** description: pass:none[couleur du texte pour les suggestions sur un mot mal orthographié (barre de statut)]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+default+`)

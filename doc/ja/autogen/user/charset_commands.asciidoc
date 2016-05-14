@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_charset_charset]]
-[command]*`charset`* 現在のバッファの文字セットを変更::
+* `+charset+`: 現在のバッファの文字セットを変更
 
 ----
 /charset  decode|encode <charset>

@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_lua_lua]]
-[command]*`lua`* list/load/unload skrypt::
+* `+lua+`: list/load/unload skrypt
 
 ----
 /lua  list|listfull [<nazwa>]

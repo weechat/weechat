@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_perl_perl]]
-[command]*`perl`* lister/charger/décharger des scripts::
+* `+perl+`: lister/charger/décharger des scripts
 
 ----
 /perl  list|listfull [<nom>]

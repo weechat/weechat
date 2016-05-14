@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_weechat_away]]
-[command]*`away`* définir ou supprimer le statut d'absence::
+* `+away+`: définir ou supprimer le statut d'absence
 
 ----
 /away  [-all] [<message>]
@@ -13,7 +13,7 @@ message : message pour l'absence (si pas de message donné, le statut d'absence
 ----
 
 [[command_weechat_bar]]
-[command]*`bar`* gestion des barres::
+* `+bar+`: gestion des barres
 
 ----
 /bar  list|listfull|listitems
@@ -65,7 +65,7 @@ Exemples :
 ----
 
 [[command_weechat_buffer]]
-[command]*`buffer`* gestion des tampons::
+* `+buffer+`: gestion des tampons
 
 ----
 /buffer  list
@@ -138,7 +138,7 @@ Exemples :
 ----
 
 [[command_weechat_color]]
-[command]*`color`* définir des alias de couleurs et afficher la palette des couleurs::
+* `+color+`: définir des alias de couleurs et afficher la palette des couleurs
 
 ----
 /color  alias <couleur> <nom>
@@ -168,7 +168,7 @@ Exemples :
 ----
 
 [[command_weechat_command]]
-[command]*`command`* lancer explicitement une commande WeeChat ou d'une extension::
+* `+command+`: lancer explicitement une commande WeeChat ou d'une extension
 
 ----
 /command  [-buffer <nom>] <extension> <commande>
@@ -179,7 +179,7 @@ extension : exécuter la commande de cette extension ; 'core' pour une command
 ----
 
 [[command_weechat_cursor]]
-[command]*`cursor`* mouvement libre du curseur sur l'écran pour exécuter des actions sur des zones spécifiques de l'écran::
+* `+cursor+`: mouvement libre du curseur sur l'écran pour exécuter des actions sur des zones spécifiques de l'écran
 
 ----
 /cursor  go chat|<barre>|<x>,<y>
@@ -214,7 +214,7 @@ Exemples :
 ----
 
 [[command_weechat_debug]]
-[command]*`debug`* contrôle du debug pour le cœur/les extensions::
+* `+debug+`: contrôle du debug pour le cœur/les extensions
 
 ----
 /debug  list
@@ -245,7 +245,7 @@ infolists : afficher des infos sur les infolists
 ----
 
 [[command_weechat_eval]]
-[command]*`eval`* évaluer une expression::
+* `+eval+`: évaluer une expression
 
 ----
 /eval  [-n|-s] <expression>
@@ -319,7 +319,7 @@ Exemples (conditions) :
 ----
 
 [[command_weechat_filter]]
-[command]*`filter`* filtrer les messages dans les tampons, pour les cacher/afficher selon des étiquettes ou expressions régulières::
+* `+filter+`: filtrer les messages dans les tampons, pour les cacher/afficher selon des étiquettes ou expressions régulières
 
 ----
 /filter  list
@@ -383,7 +383,7 @@ Exemples :
 ----
 
 [[command_weechat_help]]
-[command]*`help`* afficher l'aide sur les commandes et les options::
+* `+help+`: afficher l'aide sur les commandes et les options
 
 ----
 /help  -list|-listfull [<extension> [<extension>...]]
@@ -398,7 +398,7 @@ extension : lister les commandes de cette extension
 ----
 
 [[command_weechat_history]]
-[command]*`history`* afficher l'historique des commandes du tampon::
+* `+history+`: afficher l'historique des commandes du tampon
 
 ----
 /history  clear
@@ -409,7 +409,7 @@ valeur : nombre d'entrées dans l'historique à afficher
 ----
 
 [[command_weechat_input]]
-[command]*`input`* fonctions pour la ligne de commande::
+* `+input+`: fonctions pour la ligne de commande
 
 ----
 /input  <action> [<paramètres>]
@@ -471,7 +471,7 @@ Cette commande est utilisé par les associations de touches ou les extensions.
 ----
 
 [[command_weechat_key]]
-[command]*`key`* associer/libérer des touches::
+* `+key+`: associer/libérer des touches
 
 ----
 /key  list|listdefault|listdiff [<contexte>]
@@ -526,7 +526,7 @@ Exemples :
 ----
 
 [[command_weechat_layout]]
-[command]*`layout`* gestion des dispositions de tampons/fenêtres::
+* `+layout+`: gestion des dispositions de tampons/fenêtres
 
 ----
 /layout  store [<nom>] [buffers|windows]
@@ -551,7 +551,7 @@ La disposition courante peut être sauvegardée sur la commande /quit avec l'opt
 ----
 
 [[command_weechat_mouse]]
-[command]*`mouse`* contrôle de la souris::
+* `+mouse+`: contrôle de la souris
 
 ----
 /mouse  enable|disable|toggle [<délai>]
@@ -571,7 +571,7 @@ Exemples :
 ----
 
 [[command_weechat_mute]]
-[command]*`mute`* exécuter une commande silencieusement::
+* `+mute+`: exécuter une commande silencieusement
 
 ----
 /mute  [-core | -current | -buffer <nom>] <commande>
@@ -594,7 +594,7 @@ Exemples :
 ----
 
 [[command_weechat_plugin]]
-[command]*`plugin`* lister/charger/décharger des extensions::
+* `+plugin+`: lister/charger/décharger des extensions
 
 ----
 /plugin  list|listfull [<nom>]
@@ -617,7 +617,7 @@ Sans paramètre, cette commande liste les extensions chargées.
 ----
 
 [[command_weechat_print]]
-[command]*`print`* afficher du texte dans un tampon::
+* `+print+`: afficher du texte dans un tampon
 
 ----
 /print  [-buffer <numéro>|<nom>] [-core] [-escape] [-date <date>] [-tags <étiquettes>] [-action|-error|-join|-network|-quit] [<texte>]
@@ -661,7 +661,7 @@ Exemples :
 ----
 
 [[command_weechat_proxy]]
-[command]*`proxy`* gestion des proxies::
+* `+proxy+`: gestion des proxies
 
 ----
 /proxy  list
@@ -695,7 +695,7 @@ Exemples :
 ----
 
 [[command_weechat_quit]]
-[command]*`quit`* quitter WeeChat::
+* `+quit+`: quitter WeeChat
 
 ----
 /quit  [-yes] [<paramètres>]
@@ -708,7 +708,7 @@ Par défaut en quittant les fichiers de configuration sont sauvegardés (voir l'
 ----
 
 [[command_weechat_reload]]
-[command]*`reload`* recharger les fichiers de configuration depuis le disque::
+* `+reload+`: recharger les fichiers de configuration depuis le disque
 
 ----
 /reload  [<fichier> [<fichier>...]]
@@ -719,7 +719,7 @@ Sans paramètre, tous les fichiers (WeeChat et extensions) sont rechargés.
 ----
 
 [[command_weechat_repeat]]
-[command]*`repeat`* exécuter une commande plusieurs fois::
+* `+repeat+`: exécuter une commande plusieurs fois
 
 ----
 /repeat  [-interval <délai>] <nombre> <commande>
@@ -736,7 +736,7 @@ Exemple :
 ----
 
 [[command_weechat_save]]
-[command]*`save`* sauvegarder les fichiers de configuration sur disque::
+* `+save+`: sauvegarder les fichiers de configuration sur disque
 
 ----
 /save  [<fichier> [<fichier>...]]
@@ -749,7 +749,7 @@ Par défaut tous les fichiers de configuration sont sauvegardés sur disque sur 
 ----
 
 [[command_weechat_secure]]
-[command]*`secure`* gestion des données sécurisées (mots de passe ou données privées chiffrés dans le fichier sec.conf)::
+* `+secure+`: gestion des données sécurisées (mots de passe ou données privées chiffrés dans le fichier sec.conf)
 
 ----
 /secure  passphrase <phrase de chiffrement>|-delete
@@ -789,7 +789,7 @@ Exemples :
 ----
 
 [[command_weechat_set]]
-[command]*`set`* définir des options de configuration et des variables d'environnement::
+* `+set+`: définir des options de configuration et des variables d'environnement
 
 ----
 /set  [<option> [<valeur>]]
@@ -825,7 +825,7 @@ Exemples :
 ----
 
 [[command_weechat_unset]]
-[command]*`unset`* supprimer/réinitialiser des options de configuration::
+* `+unset+`: supprimer/réinitialiser des options de configuration
 
 ----
 /unset  <option>
@@ -844,7 +844,7 @@ Exemples :
 ----
 
 [[command_weechat_upgrade]]
-[command]*`upgrade`* mettre à jour WeeChat sans se déconnecter des serveurs::
+* `+upgrade+`: mettre à jour WeeChat sans se déconnecter des serveurs
 
 ----
 /upgrade  [-yes] [<chemin_vers_binaire>|-quit]
@@ -876,7 +876,7 @@ Il est également possible de restaurer la session WeeChat sur une autre machine
 ----
 
 [[command_weechat_uptime]]
-[command]*`uptime`* montrer l'uptime de WeeChat::
+* `+uptime+`: montrer l'uptime de WeeChat
 
 ----
 /uptime  [-o | -ol]
@@ -886,7 +886,7 @@ Il est également possible de restaurer la session WeeChat sur une autre machine
 ----
 
 [[command_weechat_version]]
-[command]*`version`* afficher la version de WeeChat et la date de compilation::
+* `+version+`: afficher la version de WeeChat et la date de compilation
 
 ----
 /version  [-o | -ol]
@@ -898,7 +898,7 @@ L'alias par défaut /v peut être utilisé pour exécuter cette commande sur tou
 ----
 
 [[command_weechat_wait]]
-[command]*`wait`* planifier l'exécution d'une commande dans le futur::
+* `+wait+`: planifier l'exécution d'une commande dans le futur
 
 ----
 /wait  <nombre>[<unité>] <commande>
@@ -923,7 +923,7 @@ Exemples :
 ----
 
 [[command_weechat_window]]
-[command]*`window`* gestion des fenêtres::
+* `+window+`: gestion des fenêtres
 
 ----
 /window  list

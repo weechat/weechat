@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_perl_perl]]
-[command]*`perl`* list/load/unload skrypt::
+* `+perl+`: list/load/unload skrypt
 
 ----
 /perl  list|listfull [<nazwa>]

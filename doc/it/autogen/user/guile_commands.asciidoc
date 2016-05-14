@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_guile_guile]]
-[command]*`guile`* elenca/carica/scarica script::
+* `+guile+`: elenca/carica/scarica script
 
 ----
 /guile  list|listfull [<nome>]

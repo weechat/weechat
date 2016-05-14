@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_relay_relay]]
-[command]*`relay`* controllo relay::
+* `+relay+`: controllo relay
 
 ----
 /relay  list|listfull|listrelay

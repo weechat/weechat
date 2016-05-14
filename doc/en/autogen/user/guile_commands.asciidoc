@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_guile_guile]]
-[command]*`guile`* list/load/unload scripts::
+* `+guile+`: list/load/unload scripts
 
 ----
 /guile  list|listfull [<name>]

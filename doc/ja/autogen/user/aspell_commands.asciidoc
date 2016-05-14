@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_aspell_aspell]]
-[command]*`aspell`* aspell プラグイン設定::
+* `+aspell+`: aspell プラグイン設定
 
 ----
 /aspell  enable|disable|toggle

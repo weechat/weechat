@@ -3,21 +3,21 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_exec.color.flag_finished]] *exec.color.flag_finished*
-** descrizione: `text color for a finished command flag in list of commands`
+** descrizione: pass:none[text color for a finished command flag in list of commands]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `lightred`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+lightred+`)
 
 * [[option_exec.color.flag_running]] *exec.color.flag_running*
-** descrizione: `text color for a running command flag in list of commands`
+** descrizione: pass:none[text color for a running command flag in list of commands]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `lightgreen`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+lightgreen+`)
 
 * [[option_exec.command.default_options]] *exec.command.default_options*
-** descrizione: `default options for command /exec (see /help exec); example: "-nosh -bg" to run all commands in background (no output), and without using the shell`
+** descrizione: pass:none[default options for command /exec (see /help exec); example: "-nosh -bg" to run all commands in background (no output), and without using the shell]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `""`)
+** valori: qualsiasi stringa (valore predefinito: `+""+`)
 
 * [[option_exec.command.purge_delay]] *exec.command.purge_delay*
-** descrizione: `delay for purging finished commands (in seconds, 0 = purge commands immediately, -1 = never purge)`
+** descrizione: pass:none[delay for purging finished commands (in seconds, 0 = purge commands immediately, -1 = never purge)]
 ** tipo: intero
-** valori: -1 .. 25920000 (valore predefinito: `0`)
+** valori: -1 .. 25920000 (valore predefinito: `+0+`)

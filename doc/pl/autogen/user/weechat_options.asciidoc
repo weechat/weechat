@@ -3,1046 +3,1046 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_weechat.color.bar_more]] *weechat.color.bar_more*
-** opis: `kolor '+' przy przewijaniu pasków`
+** opis: pass:none[kolor '+' przy przewijaniu pasków]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightmagenta`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightmagenta+`)
 
 * [[option_weechat.color.chat]] *weechat.color.chat*
-** opis: `kolor tekstu czatu`
+** opis: pass:none[kolor tekstu czatu]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.chat_bg]] *weechat.color.chat_bg*
-** opis: `kolor tła czatu`
+** opis: pass:none[kolor tła czatu]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.chat_buffer]] *weechat.color.chat_buffer*
-** opis: `kolor nazw buforów`
+** opis: pass:none[kolor nazw buforów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `white`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
 
 * [[option_weechat.color.chat_channel]] *weechat.color.chat_channel*
-** opis: `kolor nazw kanałów`
+** opis: pass:none[kolor nazw kanałów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `white`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
 
 * [[option_weechat.color.chat_day_change]] *weechat.color.chat_day_change*
-** opis: `kolor tekstu dla wiadomości o zmianie daty`
+** opis: pass:none[kolor tekstu dla wiadomości o zmianie daty]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `cyan`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+cyan+`)
 
 * [[option_weechat.color.chat_delimiters]] *weechat.color.chat_delimiters*
-** opis: `kolor separatorów`
+** opis: pass:none[kolor separatorów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `green`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+green+`)
 
 * [[option_weechat.color.chat_highlight]] *weechat.color.chat_highlight*
-** opis: `kolor przedrostka podświetlenia`
+** opis: pass:none[kolor przedrostka podświetlenia]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+yellow+`)
 
 * [[option_weechat.color.chat_highlight_bg]] *weechat.color.chat_highlight_bg*
-** opis: `kolor tła przedrostka podświetlenia`
+** opis: pass:none[kolor tła przedrostka podświetlenia]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `magenta`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+magenta+`)
 
 * [[option_weechat.color.chat_host]] *weechat.color.chat_host*
-** opis: `kolor nazw hostów`
+** opis: pass:none[kolor nazw hostów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `cyan`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+cyan+`)
 
 * [[option_weechat.color.chat_inactive_buffer]] *weechat.color.chat_inactive_buffer*
-** opis: `kolor tekstu dla rozmowy, kiedy linia nie jest aktywna (bufor jest połączony z innymi i nie został wybrany)`
+** opis: pass:none[kolor tekstu dla rozmowy, kiedy linia nie jest aktywna (bufor jest połączony z innymi i nie został wybrany)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.chat_inactive_window]] *weechat.color.chat_inactive_window*
-** opis: `kolor tekstu dla rozmowy, kiedy okno jest nieaktywne (obecnie nie wybrane okno)`
+** opis: pass:none[kolor tekstu dla rozmowy, kiedy okno jest nieaktywne (obecnie nie wybrane okno)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.chat_nick]] *weechat.color.chat_nick*
-** opis: `kolor nicków w oknie rozmowy`
+** opis: pass:none[kolor nicków w oknie rozmowy]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightcyan`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightcyan+`)
 
 * [[option_weechat.color.chat_nick_colors]] *weechat.color.chat_nick_colors*
-** opis: `kolor tekstu nicków (oddzielona przecinkami lista kolorów, tło jest dozwolone za pomocą formatu: "fg:bg" na przykład: "lightred:blue")`
+** opis: pass:none[kolor tekstu nicków (oddzielona przecinkami lista kolorów, tło jest dozwolone za pomocą formatu: "fg:bg" na przykład: "lightred:blue")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"+`)
 
 * [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
-** opis: `kolor tekstu dla nieobecnego nicka (nie występuje już na liście nicków); ten kolor używany jest tylko jeśli włączona jest opcja weechat.look.color_nick_offline`
+** opis: pass:none[kolor tekstu dla nieobecnego nicka (nie występuje już na liście nicków); ten kolor używany jest tylko jeśli włączona jest opcja weechat.look.color_nick_offline]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
-** opis: `kolor tekstu dla podświetlenia nieobecnego nicka; ten kolor używany jest tylko jeśli włączona jest opcja weechat.look.color_nick_offline`
+** opis: pass:none[kolor tekstu dla podświetlenia nieobecnego nicka; ten kolor używany jest tylko jeśli włączona jest opcja weechat.look.color_nick_offline]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
-** opis: `kolor tła dla podświetlenia nieobecnego nicka; ten kolor używany jest tylko jeśli włączona jest opcja weechat.look.color_nick_offline`
+** opis: pass:none[kolor tła dla podświetlenia nieobecnego nicka; ten kolor używany jest tylko jeśli włączona jest opcja weechat.look.color_nick_offline]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `blue`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+blue+`)
 
 * [[option_weechat.color.chat_nick_other]] *weechat.color.chat_nick_other*
-** opis: `kolor innego nicka w prywatnym buforze`
+** opis: pass:none[kolor innego nicka w prywatnym buforze]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `cyan`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+cyan+`)
 
 * [[option_weechat.color.chat_nick_prefix]] *weechat.color.chat_nick_prefix*
-** opis: `kolor przedrostka nicka (przedrostek to ciąg wyświetlany przed nickiem w prafiksie)`
+** opis: pass:none[kolor przedrostka nicka (przedrostek to ciąg wyświetlany przed nickiem w prafiksie)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `green`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+green+`)
 
 * [[option_weechat.color.chat_nick_self]] *weechat.color.chat_nick_self*
-** opis: `kolor lokalnego nicka w oknie rozmowy`
+** opis: pass:none[kolor lokalnego nicka w oknie rozmowy]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `white`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
 
 * [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
-** opis: `kolor przyrostka nicka (przyrostek to ciąg wyświetlany za nickiem w prefiksie)`
+** opis: pass:none[kolor przyrostka nicka (przyrostek to ciąg wyświetlany za nickiem w prefiksie)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `green`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+green+`)
 
 * [[option_weechat.color.chat_prefix_action]] *weechat.color.chat_prefix_action*
-** opis: `kolor przedrostka akcji`
+** opis: pass:none[kolor przedrostka akcji]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `white`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
 
 * [[option_weechat.color.chat_prefix_buffer]] *weechat.color.chat_prefix_buffer*
-** opis: `kolor nazwy bufora (przed przedrostkiem, kiedy wiele buforów jest połączonych)`
+** opis: pass:none[kolor nazwy bufora (przed przedrostkiem, kiedy wiele buforów jest połączonych)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `brown`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+brown+`)
 
 * [[option_weechat.color.chat_prefix_buffer_inactive_buffer]] *weechat.color.chat_prefix_buffer_inactive_buffer*
-** opis: `kolor tekstu dla nazwy nieaktywnego bufora (przed przedrostkiem, kiedy wiele buforów jest połączonych z tym samym numerem, oraz jeśli bufor nie jest wybrany)`
+** opis: pass:none[kolor tekstu dla nazwy nieaktywnego bufora (przed przedrostkiem, kiedy wiele buforów jest połączonych z tym samym numerem, oraz jeśli bufor nie jest wybrany)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.chat_prefix_error]] *weechat.color.chat_prefix_error*
-** opis: `kolor przedrostka błędu`
+** opis: pass:none[kolor przedrostka błędu]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+yellow+`)
 
 * [[option_weechat.color.chat_prefix_join]] *weechat.color.chat_prefix_join*
-** opis: `kolor przedrostka wejścia na kanał`
+** opis: pass:none[kolor przedrostka wejścia na kanał]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightgreen`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightgreen+`)
 
 * [[option_weechat.color.chat_prefix_more]] *weechat.color.chat_prefix_more*
-** opis: `kolor '+' dla za długich przedrostków`
+** opis: pass:none[kolor '+' dla za długich przedrostków]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightmagenta`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightmagenta+`)
 
 * [[option_weechat.color.chat_prefix_network]] *weechat.color.chat_prefix_network*
-** opis: `kolor przedrostka sieci`
+** opis: pass:none[kolor przedrostka sieci]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `magenta`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+magenta+`)
 
 * [[option_weechat.color.chat_prefix_quit]] *weechat.color.chat_prefix_quit*
-** opis: `kolor przedrostka wyjścia z IRC`
+** opis: pass:none[kolor przedrostka wyjścia z IRC]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightred`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightred+`)
 
 * [[option_weechat.color.chat_prefix_suffix]] *weechat.color.chat_prefix_suffix*
-** opis: `kolor przyrostka (po przedrostku)`
+** opis: pass:none[kolor przyrostka (po przedrostku)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `green`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+green+`)
 
 * [[option_weechat.color.chat_read_marker]] *weechat.color.chat_read_marker*
-** opis: `kolor znacznika nieprzeczytanych wiadomości`
+** opis: pass:none[kolor znacznika nieprzeczytanych wiadomości]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `magenta`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+magenta+`)
 
 * [[option_weechat.color.chat_read_marker_bg]] *weechat.color.chat_read_marker_bg*
-** opis: `kolor tła znacznika nieprzeczytanych wiadomości`
+** opis: pass:none[kolor tła znacznika nieprzeczytanych wiadomości]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.chat_server]] *weechat.color.chat_server*
-** opis: `kolor nazw serwerów`
+** opis: pass:none[kolor nazw serwerów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `brown`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+brown+`)
 
 * [[option_weechat.color.chat_tags]] *weechat.color.chat_tags*
-** opis: `kolor tekstu dla tagów po wiadomościach (wyświetlanych za pomocą komendy /debug tags)`
+** opis: pass:none[kolor tekstu dla tagów po wiadomościach (wyświetlanych za pomocą komendy /debug tags)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `red`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+red+`)
 
 * [[option_weechat.color.chat_text_found]] *weechat.color.chat_text_found*
-** opis: `kolor znacznika linii, w których znaleziono szukany tekst`
+** opis: pass:none[kolor znacznika linii, w których znaleziono szukany tekst]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+yellow+`)
 
 * [[option_weechat.color.chat_text_found_bg]] *weechat.color.chat_text_found_bg*
-** opis: `kolor tła znacznika linii, w których znaleziono szukany tekst`
+** opis: pass:none[kolor tła znacznika linii, w których znaleziono szukany tekst]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightmagenta`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightmagenta+`)
 
 * [[option_weechat.color.chat_time]] *weechat.color.chat_time*
-** opis: `kolor czasu w oknie czatu`
+** opis: pass:none[kolor czasu w oknie czatu]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.chat_time_delimiters]] *weechat.color.chat_time_delimiters*
-** opis: `kolor separatora czasu`
+** opis: pass:none[kolor separatora czasu]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `brown`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+brown+`)
 
 * [[option_weechat.color.chat_value]] *weechat.color.chat_value*
-** opis: `kolor wyświetlania wartości`
+** opis: pass:none[kolor wyświetlania wartości]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `cyan`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+cyan+`)
 
 * [[option_weechat.color.chat_value_null]] *weechat.color.chat_value_null*
-** opis: `kolor wyświetlania wartości null (niezdefiniowane)`
+** opis: pass:none[kolor wyświetlania wartości null (niezdefiniowane)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `blue`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+blue+`)
 
 * [[option_weechat.color.emphasized]] *weechat.color.emphasized*
-** opis: `kolor dla wyróżnionego tekstu (na przykład podczas wyszukiwania); opcja używana tylko jeśli opcja weechat.look.emphasized_attributes jest pustym ciągiem (wartość domyślna)`
+** opis: pass:none[kolor dla wyróżnionego tekstu (na przykład podczas wyszukiwania); opcja używana tylko jeśli opcja weechat.look.emphasized_attributes jest pustym ciągiem (wartość domyślna)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+yellow+`)
 
 * [[option_weechat.color.emphasized_bg]] *weechat.color.emphasized_bg*
-** opis: `kolor tła dla wyróżnionego tekstu (na przykład podczas wyszukiwania tekstu); opcja używana tylko jeśli opcja weechat.look.emphasized_attributes jest pustym ciągiem (wartość domyślna)`
+** opis: pass:none[kolor tła dla wyróżnionego tekstu (na przykład podczas wyszukiwania tekstu); opcja używana tylko jeśli opcja weechat.look.emphasized_attributes jest pustym ciągiem (wartość domyślna)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `magenta`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+magenta+`)
 
 * [[option_weechat.color.input_actions]] *weechat.color.input_actions*
-** opis: `kolor akcji w wprowadzonej linii`
+** opis: pass:none[kolor akcji w wprowadzonej linii]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightgreen`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightgreen+`)
 
 * [[option_weechat.color.input_text_not_found]] *weechat.color.input_text_not_found*
-** opis: `kolor nieudanego wyszukiwania tekstu w wprowadzonej linii`
+** opis: pass:none[kolor nieudanego wyszukiwania tekstu w wprowadzonej linii]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `red`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+red+`)
 
 * [[option_weechat.color.item_away]] *weechat.color.item_away*
-** opis: `kolor elementu nieobecności`
+** opis: pass:none[kolor elementu nieobecności]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+yellow+`)
 
 * [[option_weechat.color.nicklist_away]] *weechat.color.nicklist_away*
-** opis: `kolor nicków ze statusem nieobecności`
+** opis: pass:none[kolor nicków ze statusem nieobecności]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `cyan`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+cyan+`)
 
 * [[option_weechat.color.nicklist_group]] *weechat.color.nicklist_group*
-** opis: `kolor grup na liście nicków`
+** opis: pass:none[kolor grup na liście nicków]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `green`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+green+`)
 
 * [[option_weechat.color.separator]] *weechat.color.separator*
-** opis: `kolor tła dla separatorów (kiedy podzielone) i separatorów obok pasków (jak lista nicków)`
+** opis: pass:none[kolor tła dla separatorów (kiedy podzielone) i separatorów obok pasków (jak lista nicków)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `blue`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+blue+`)
 
 * [[option_weechat.color.status_count_highlight]] *weechat.color.status_count_highlight*
-** opis: `kolor tekstu dla licznika podświetleń w hotliście (pasek statusu)`
+** opis: pass:none[kolor tekstu dla licznika podświetleń w hotliście (pasek statusu)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `magenta`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+magenta+`)
 
 * [[option_weechat.color.status_count_msg]] *weechat.color.status_count_msg*
-** opis: `kolor tekstu dla licznika wiadomości w hotliście (pasek statusu)`
+** opis: pass:none[kolor tekstu dla licznika wiadomości w hotliście (pasek statusu)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `brown`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+brown+`)
 
 * [[option_weechat.color.status_count_other]] *weechat.color.status_count_other*
-** opis: `kolor tekstu dla licznika innych wiadomości w hotliście (pasek statusu)`
+** opis: pass:none[kolor tekstu dla licznika innych wiadomości w hotliście (pasek statusu)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.status_count_private]] *weechat.color.status_count_private*
-** opis: `kolor tekstu dla licznika prywatnych wiadomości w hotliście (pasek statusu)`
+** opis: pass:none[kolor tekstu dla licznika prywatnych wiadomości w hotliście (pasek statusu)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `green`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+green+`)
 
 * [[option_weechat.color.status_data_highlight]] *weechat.color.status_data_highlight*
-** opis: `kolor bufora z podświetleniem (pasek statusu)`
+** opis: pass:none[kolor bufora z podświetleniem (pasek statusu)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightmagenta`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightmagenta+`)
 
 * [[option_weechat.color.status_data_msg]] *weechat.color.status_data_msg*
-** opis: `kolor bufora z nowymi wiadomościami (pasek statusu)`
+** opis: pass:none[kolor bufora z nowymi wiadomościami (pasek statusu)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+yellow+`)
 
 * [[option_weechat.color.status_data_other]] *weechat.color.status_data_other*
-** opis: `kolor bufora z nowymi zdarzeniami (nie wiadomościami) (pasek statusu)`
+** opis: pass:none[kolor bufora z nowymi zdarzeniami (nie wiadomościami) (pasek statusu)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.status_data_private]] *weechat.color.status_data_private*
-** opis: `kolor bufora z prywatną wiadomością (pasek statusu)`
+** opis: pass:none[kolor bufora z prywatną wiadomością (pasek statusu)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightgreen`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightgreen+`)
 
 * [[option_weechat.color.status_filter]] *weechat.color.status_filter*
-** opis: `kolor wskaźnika filtru w pasku statusu`
+** opis: pass:none[kolor wskaźnika filtru w pasku statusu]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `green`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+green+`)
 
 * [[option_weechat.color.status_more]] *weechat.color.status_more*
-** opis: `kolor bufora z nowymi zdarzeniami (pasek statusu)`
+** opis: pass:none[kolor bufora z nowymi zdarzeniami (pasek statusu)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+yellow+`)
 
 * [[option_weechat.color.status_mouse]] *weechat.color.status_mouse*
-** opis: `kolor wskaźnika myszy w pasku statusu`
+** opis: pass:none[kolor wskaźnika myszy w pasku statusu]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `green`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+green+`)
 
 * [[option_weechat.color.status_name]] *weechat.color.status_name*
-** opis: `kolor nazwy obecnego bufora w pasku statusu`
+** opis: pass:none[kolor nazwy obecnego bufora w pasku statusu]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `white`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
 
 * [[option_weechat.color.status_name_ssl]] *weechat.color.status_name_ssl*
-** opis: `kolor nazwy obecnego bufora w pasku statusu, jeśli połączenie jest szyfrowane np poprzez SSL`
+** opis: pass:none[kolor nazwy obecnego bufora w pasku statusu, jeśli połączenie jest szyfrowane np poprzez SSL]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightgreen`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightgreen+`)
 
 * [[option_weechat.color.status_nicklist_count]] *weechat.color.status_nicklist_count*
-** opis: `kolor tekstu dla numeru nicków w liście nicków (pasek statusu)`
+** opis: pass:none[kolor tekstu dla numeru nicków w liście nicków (pasek statusu)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.status_number]] *weechat.color.status_number*
-** opis: `kolor numeru obecnego bufora w pasku statusu`
+** opis: pass:none[kolor numeru obecnego bufora w pasku statusu]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+yellow+`)
 
 * [[option_weechat.color.status_time]] *weechat.color.status_time*
-** opis: `kolor czasu (pasek statusu)`
+** opis: pass:none[kolor czasu (pasek statusu)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
-** opis: `jeśli włączone, bazowe słowo do dopełniania kończy się na znaku przed kursorem; w innym wypadku słowo bazowe kończy się na pierwszej spacji po kursorze`
+** opis: pass:none[jeśli włączone, bazowe słowo do dopełniania kończy się na znaku przed kursorem; w innym wypadku słowo bazowe kończy się na pierwszej spacji po kursorze]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
-** opis: `jeśli włączone, komendy wewnątrz linii komend są dopełniane (komenda na początku linii ma wyższy priorytet i zostanie użyta pierwsza); uwaga: włączenie tej opcji wyłącza automatyczne dopełnianie ścieżek zaczynających się od '/' (poza argumentami komend)`
+** opis: pass:none[jeśli włączone, komendy wewnątrz linii komend są dopełniane (komenda na początku linii ma wyższy priorytet i zostanie użyta pierwsza); uwaga: włączenie tej opcji wyłącza automatyczne dopełnianie ścieżek zaczynających się od '/' (poza argumentami komend)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
-** opis: `domyślny szablon dopełnień (zajrzyj do dokumentacji w celu uzyskania kodów i wartości szablonów: opis API wtyczek, funkcja "weechat_hook_command")`
+** opis: pass:none[domyślny szablon dopełnień (zajrzyj do dokumentacji w celu uzyskania kodów i wartości szablonów: opis API wtyczek, funkcja "weechat_hook_command")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"%(nicks)|%(irc_channels)"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"%(nicks)|%(irc_channels)"+`)
 
 * [[option_weechat.completion.nick_add_space]] *weechat.completion.nick_add_space*
-** opis: `dodaj spację po dopełnionym nicku (kiedy nick nie jest pierwszym słowem w linii poleceń)`
+** opis: pass:none[dodaj spację po dopełnionym nicku (kiedy nick nie jest pierwszym słowem w linii poleceń)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.completion.nick_completer]] *weechat.completion.nick_completer*
-** opis: `ciąg wstawiany  po dopełnionym nicku (kiedy nick jest pierwszym słowem w linii poleceń)`
+** opis: pass:none[ciąg wstawiany  po dopełnionym nicku (kiedy nick jest pierwszym słowem w linii poleceń)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `":"`)
+** wartości: dowolny ciąg (domyślna wartość: `+":"+`)
 
 * [[option_weechat.completion.nick_first_only]] *weechat.completion.nick_first_only*
-** opis: `dopełniaj tylko pierwszym znalezionym nickiem`
+** opis: pass:none[dopełniaj tylko pierwszym znalezionym nickiem]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.completion.nick_ignore_chars]] *weechat.completion.nick_ignore_chars*
-** opis: `znaki ignorowane przy dopełnieniu nicków`
+** opis: pass:none[znaki ignorowane przy dopełnieniu nicków]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"[]`_-^"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"[]`_-^"+`)
 
 * [[option_weechat.completion.partial_completion_alert]] *weechat.completion.partial_completion_alert*
-** opis: `powiadom użytkownika o częściowym dopełnieniu`
+** opis: pass:none[powiadom użytkownika o częściowym dopełnieniu]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.completion.partial_completion_command]] *weechat.completion.partial_completion_command*
-** opis: `częściowe dopełnienie nazwy komend (zatrzymaj, kiedy wiele komend zaczyna się od tych samych liter)`
+** opis: pass:none[częściowe dopełnienie nazwy komend (zatrzymaj, kiedy wiele komend zaczyna się od tych samych liter)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.completion.partial_completion_command_arg]] *weechat.completion.partial_completion_command_arg*
-** opis: `częściowe dopełnienie argumentów komend (zatrzymaj, gdy wiele argumentów zaczyna się jednakowym przedrostkiem)`
+** opis: pass:none[częściowe dopełnienie argumentów komend (zatrzymaj, gdy wiele argumentów zaczyna się jednakowym przedrostkiem)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.completion.partial_completion_count]] *weechat.completion.partial_completion_count*
-** opis: `wyświetlaj ilość wszystkich częściowych dopełnień w elemencie paska`
+** opis: pass:none[wyświetlaj ilość wszystkich częściowych dopełnień w elemencie paska]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.completion.partial_completion_other]] *weechat.completion.partial_completion_other*
-** opis: `częściowe dopełnienie zewnętrznych komend (zatrzymaj, kiedy wiele słów zaczyna się takimi samymi literami)`
+** opis: pass:none[częściowe dopełnienie zewnętrznych komend (zatrzymaj, kiedy wiele słów zaczyna się takimi samymi literami)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.history.display_default]] *weechat.history.display_default*
-** opis: `maksymalna ilość komend domyślnie wyświetlanych w listingu historii (0 = bez ograniczeń)`
+** opis: pass:none[maksymalna ilość komend domyślnie wyświetlanych w listingu historii (0 = bez ograniczeń)]
 ** typ: liczba
-** wartości: 0 .. 2147483647 (domyślna wartość: `5`)
+** wartości: 0 .. 2147483647 (domyślna wartość: `+5+`)
 
 * [[option_weechat.history.max_buffer_lines_minutes]] *weechat.history.max_buffer_lines_minutes*
-** opis: `maksymalna ilość minut w historii każdego bufora (0 = bez ograniczeń); przykłady: 1440 = dzień, 10080 = tydzień, 43200 = miesiąc, 525600 = rok; 0 można użyć TYLKO jeśli opcja weechat.history.max_buffer_lines_number NIE JEST ustawiona na 0`
+** opis: pass:none[maksymalna ilość minut w historii każdego bufora (0 = bez ograniczeń); przykłady: 1440 = dzień, 10080 = tydzień, 43200 = miesiąc, 525600 = rok; 0 można użyć TYLKO jeśli opcja weechat.history.max_buffer_lines_number NIE JEST ustawiona na 0]
 ** typ: liczba
-** wartości: 0 .. 2147483647 (domyślna wartość: `0`)
+** wartości: 0 .. 2147483647 (domyślna wartość: `+0+`)
 
 * [[option_weechat.history.max_buffer_lines_number]] *weechat.history.max_buffer_lines_number*
-** opis: `maksymalna ilość linii w historii każdego bufora (0 = bez ograniczeń); 0 można użyć TYLKO jeśli opcja weechat.history.max_buffer_lines_minutes NIE JEST ustawiona na 0`
+** opis: pass:none[maksymalna ilość linii w historii każdego bufora (0 = bez ograniczeń); 0 można użyć TYLKO jeśli opcja weechat.history.max_buffer_lines_minutes NIE JEST ustawiona na 0]
 ** typ: liczba
-** wartości: 0 .. 2147483647 (domyślna wartość: `4096`)
+** wartości: 0 .. 2147483647 (domyślna wartość: `+4096+`)
 
 * [[option_weechat.history.max_commands]] *weechat.history.max_commands*
-** opis: `maksymalna ilość komend użytkownika w historii (0 = bez ograniczeń, NIE ZALECANE: brak limitu w zajmowanej pamięci)`
+** opis: pass:none[maksymalna ilość komend użytkownika w historii (0 = bez ograniczeń, NIE ZALECANE: brak limitu w zajmowanej pamięci)]
 ** typ: liczba
-** wartości: 0 .. 2147483647 (domyślna wartość: `100`)
+** wartości: 0 .. 2147483647 (domyślna wartość: `+100+`)
 
 * [[option_weechat.history.max_visited_buffers]] *weechat.history.max_visited_buffers*
-** opis: `maksymalna ilość odwiedzonych buforów trzymana w pamięci`
+** opis: pass:none[maksymalna ilość odwiedzonych buforów trzymana w pamięci]
 ** typ: liczba
-** wartości: 0 .. 1000 (domyślna wartość: `50`)
+** wartości: 0 .. 1000 (domyślna wartość: `+50+`)
 
 * [[option_weechat.look.align_end_of_lines]] *weechat.look.align_end_of_lines*
-** opis: `wyrównanie dla końca linii (wszystkie po pierwszej): zaczynają się od tego (time, buffer, prefix, suffix, message (domyślnie))`
+** opis: pass:none[wyrównanie dla końca linii (wszystkie po pierwszej): zaczynają się od tego (time, buffer, prefix, suffix, message (domyślnie))]
 ** typ: liczba
-** wartości: time, buffer, prefix, suffix, message (domyślna wartość: `message`)
+** wartości: time, buffer, prefix, suffix, message (domyślna wartość: `+message+`)
 
 * [[option_weechat.look.bar_more_down]] *weechat.look.bar_more_down*
-** opis: `ciąg wyświetlany jeśli pasek może zostać przewinięty w dół (dla pasków z wypełnieniem innym niż "horizontal")`
+** opis: pass:none[ciąg wyświetlany jeśli pasek może zostać przewinięty w dół (dla pasków z wypełnieniem innym niż "horizontal")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"++"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"++"+`)
 
 * [[option_weechat.look.bar_more_left]] *weechat.look.bar_more_left*
-** opis: `ciąg wyświetlany jeśli pasek może zostać przewinięty w lewo (dla pasków z wypełnieniem innym niż "horizontal")`
+** opis: pass:none[ciąg wyświetlany jeśli pasek może zostać przewinięty w lewo (dla pasków z wypełnieniem innym niż "horizontal")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"<<"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"<<"+`)
 
 * [[option_weechat.look.bar_more_right]] *weechat.look.bar_more_right*
-** opis: `ciąg wyświetlany jeśli pasek może zostać przewinięty w prawo (dla pasków z wypełnieniem innym niż "horizontal")`
+** opis: pass:none[ciąg wyświetlany jeśli pasek może zostać przewinięty w prawo (dla pasków z wypełnieniem innym niż "horizontal")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `">>"`)
+** wartości: dowolny ciąg (domyślna wartość: `+">>"+`)
 
 * [[option_weechat.look.bar_more_up]] *weechat.look.bar_more_up*
-** opis: `ciąg wyświetlany jeśli pasek może zostać przewinięty w górę (dla pasków z wypełnieniem innym niż "horizontal")`
+** opis: pass:none[ciąg wyświetlany jeśli pasek może zostać przewinięty w górę (dla pasków z wypełnieniem innym niż "horizontal")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"--"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"--"+`)
 
 * [[option_weechat.look.bare_display_exit_on_input]] *weechat.look.bare_display_exit_on_input*
-** opis: `wyjście z trybu niesformatowanego wyświetlania po każdej zmianie wejścia`
+** opis: pass:none[wyjście z trybu niesformatowanego wyświetlania po każdej zmianie wejścia]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.bare_display_time_format]] *weechat.look.bare_display_time_format*
-** opis: `format czasu dla trybu niesformatowanego wyświetlania  (zobacz man strftime dla specyfikatorów daty/czasu)`
+** opis: pass:none[format czasu dla trybu niesformatowanego wyświetlania  (zobacz man strftime dla specyfikatorów daty/czasu)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"%H:%M"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"%H:%M"+`)
 
 * [[option_weechat.look.buffer_auto_renumber]] *weechat.look.buffer_auto_renumber*
-** opis: `automatyczna zmiana numerów buforów, aby uzyskać tylko kolejne numery i zaczynać od numeru 1; jeśli wyłączone dozwolone są przerwy między numerami buforów i pierwszy bufor może mieć numer większy od 1`
+** opis: pass:none[automatyczna zmiana numerów buforów, aby uzyskać tylko kolejne numery i zaczynać od numeru 1; jeśli wyłączone dozwolone są przerwy między numerami buforów i pierwszy bufor może mieć numer większy od 1]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.buffer_notify_default]] *weechat.look.buffer_notify_default*
-** opis: `domyślny poziom powiadomień dla buforów (używany do powiedzenia WeeChat czy bufor musi być wyświetlany na hotliście czy nie, w zależności od wagi wiadomości): all=wszystkie wiadomości (domyślnie), message=wiadomości+podświetlenia, highlight=tylko podświetlenia, none=nigdy nie wyświetlany na hotliście`
+** opis: pass:none[domyślny poziom powiadomień dla buforów (używany do powiedzenia WeeChat czy bufor musi być wyświetlany na hotliście czy nie, w zależności od wagi wiadomości): all=wszystkie wiadomości (domyślnie), message=wiadomości+podświetlenia, highlight=tylko podświetlenia, none=nigdy nie wyświetlany na hotliście]
 ** typ: liczba
-** wartości: none, highlight, message, all (domyślna wartość: `all`)
+** wartości: none, highlight, message, all (domyślna wartość: `+all+`)
 
 * [[option_weechat.look.buffer_position]] *weechat.look.buffer_position*
-** opis: `pozycja nowego bufora: end = na końcu listy (numer = ostatni +1)(domyślne), first_gap = na pierwszym wolnym miejscu w liście (na końcu listy, jeśli nie ma wcześniej wolnego miejsca); ta opcja używana jest tylko, jeśli bufor nie ma numeru układu`
+** opis: pass:none[pozycja nowego bufora: end = na końcu listy (numer = ostatni +1)(domyślne), first_gap = na pierwszym wolnym miejscu w liście (na końcu listy, jeśli nie ma wcześniej wolnego miejsca); ta opcja używana jest tylko, jeśli bufor nie ma numeru układu]
 ** typ: liczba
-** wartości: end, first_gap (domyślna wartość: `end`)
+** wartości: end, first_gap (domyślna wartość: `+end+`)
 
 * [[option_weechat.look.buffer_search_case_sensitive]] *weechat.look.buffer_search_case_sensitive*
-** opis: `domyślne wyszukiwanie w buforze: uwzględniające wielkość liter lub nie`
+** opis: pass:none[domyślne wyszukiwanie w buforze: uwzględniające wielkość liter lub nie]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.buffer_search_force_default]] *weechat.look.buffer_search_force_default*
-** opis: `wymusza domyślne wartości dla wyszukiwań tekstowych w buforze (zamiast wartości z poprzedniego wyszukiwania)`
+** opis: pass:none[wymusza domyślne wartości dla wyszukiwań tekstowych w buforze (zamiast wartości z poprzedniego wyszukiwania)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.buffer_search_regex]] *weechat.look.buffer_search_regex*
-** opis: `domyślne wyszukiwanie w buforze: jeśli włączone szukane jest rozszerzone wyrażenie regularne POSIX, w przeciwnym wypadku prosty ciąg`
+** opis: pass:none[domyślne wyszukiwanie w buforze: jeśli włączone szukane jest rozszerzone wyrażenie regularne POSIX, w przeciwnym wypadku prosty ciąg]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.buffer_search_where]] *weechat.look.buffer_search_where*
-** opis: `domyślny tekst do wyszukiwania w buforze: w wiadomości, prefiksie, prefiksie i wiadomości`
+** opis: pass:none[domyślny tekst do wyszukiwania w buforze: w wiadomości, prefiksie, prefiksie i wiadomości]
 ** typ: liczba
-** wartości: prefix, message, prefix_message (domyślna wartość: `prefix_message`)
+** wartości: prefix, message, prefix_message (domyślna wartość: `+prefix_message+`)
 
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
-** opis: `format czasu używany dla każdej linii w buforze (zobacz man strftime dla specyfikatorów daty/czasu) (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval); na przykład czas w odcieniach szarości (wymaga wsparcia dla 256 kolorów):"${color:252}%H${color:245}%M${color:240}%S"`
+** opis: pass:none[format czasu używany dla każdej linii w buforze (zobacz man strftime dla specyfikatorów daty/czasu) (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval); na przykład czas w odcieniach szarości (wymaga wsparcia dla 256 kolorów):"${color:252}%H${color:245}%M${color:240}%S"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"%H:%M:%S"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"%H:%M:%S"+`)
 
 * [[option_weechat.look.color_basic_force_bold]] *weechat.look.color_basic_force_bold*
-** opis: `wymusza atrybut "bold" dla jasnych kolorów oraz "darkgray" w kolorach podstawowych (ta opcja jest domyślnie wyłączona: pogrubienie jest używane tylko jeśli terminal obsługuje poniżej 16 kolorów)`
+** opis: pass:none[wymusza atrybut "bold" dla jasnych kolorów oraz "darkgray" w kolorach podstawowych (ta opcja jest domyślnie wyłączona: pogrubienie jest używane tylko jeśli terminal obsługuje poniżej 16 kolorów)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.color_inactive_buffer]] *weechat.look.color_inactive_buffer*
-** opis: `użycie rożnych kolorów dla linii w nieaktywnym buforze (kiedy linia pochodzi z niewybranego połączonego bufora)`
+** opis: pass:none[użycie rożnych kolorów dla linii w nieaktywnym buforze (kiedy linia pochodzi z niewybranego połączonego bufora)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.color_inactive_message]] *weechat.look.color_inactive_message*
-** opis: `używa innego koloru dla nieaktywnych wiadomości (dla okien nie będących obecnie wybranych lub jeśli linia pochodzi z niewybranego z połączonych buforów)`
+** opis: pass:none[używa innego koloru dla nieaktywnych wiadomości (dla okien nie będących obecnie wybranych lub jeśli linia pochodzi z niewybranego z połączonych buforów)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.color_inactive_prefix]] *weechat.look.color_inactive_prefix*
-** opis: `użyj różnych kolorów dla nieaktywnych prefiksów (kiedy okno nie jest obecnym oknem lub linia pochodzi z niewybranego z połączonych buforów)`
+** opis: pass:none[użyj różnych kolorów dla nieaktywnych prefiksów (kiedy okno nie jest obecnym oknem lub linia pochodzi z niewybranego z połączonych buforów)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.color_inactive_prefix_buffer]] *weechat.look.color_inactive_prefix_buffer*
-** opis: `użycie rożnych kolorów dla przedrostka nazwy nieaktywnego bufora (kiedy okno nie jest obecnym, lub linia w połączonych buforach nie pochodzi z wybranego)`
+** opis: pass:none[użycie rożnych kolorów dla przedrostka nazwy nieaktywnego bufora (kiedy okno nie jest obecnym, lub linia w połączonych buforach nie pochodzi z wybranego)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.color_inactive_time]] *weechat.look.color_inactive_time*
-** opis: `używaj różnych kolorów dla czasu (dla okien poza obecnym lub jeśli linia pochodzi niewybranego z połączonych buforów)`
+** opis: pass:none[używaj różnych kolorów dla czasu (dla okien poza obecnym lub jeśli linia pochodzi niewybranego z połączonych buforów)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.color_inactive_window]] *weechat.look.color_inactive_window*
-** opis: `użycie rożnych kolorów dla linii w nieaktywnym oknie (kiedy okno nie jest obecnym oknem)`
+** opis: pass:none[użycie rożnych kolorów dla linii w nieaktywnym oknie (kiedy okno nie jest obecnym oknem)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
-** opis: `użyj innego koloru dla nieobecnych nicków (nie znajdujących się na liście nicków)`
+** opis: pass:none[użyj innego koloru dla nieobecnych nicków (nie znajdujących się na liście nicków)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.color_pairs_auto_reset]] *weechat.look.color_pairs_auto_reset*
-** opis: `automatycznie resetuje tablicę par kolorów, kiedy ilość dostępnych par jest niższa lub równa tej wartości ( -1 = wyłączone, wymagane jest ręczne wykonywanie polecenia "/color reset", kiedy tablica jest pełna)`
+** opis: pass:none[automatycznie resetuje tablicę par kolorów, kiedy ilość dostępnych par jest niższa lub równa tej wartości ( -1 = wyłączone, wymagane jest ręczne wykonywanie polecenia "/color reset", kiedy tablica jest pełna)]
 ** typ: liczba
-** wartości: -1 .. 256 (domyślna wartość: `5`)
+** wartości: -1 .. 256 (domyślna wartość: `+5+`)
 
 * [[option_weechat.look.color_real_white]] *weechat.look.color_real_white*
-** opis: `jeśli ustawiona, używa prawdziwego białego koloru, domyślnie wyłączona dla terminali z białym tłem (jeśli biały kolor tła nigdy nie jest używany powinno się włączyć tę opcję, aby zobaczyć prawdziwy biały zamiast domyślnego koloru czcionki w terminalu)`
+** opis: pass:none[jeśli ustawiona, używa prawdziwego białego koloru, domyślnie wyłączona dla terminali z białym tłem (jeśli biały kolor tła nigdy nie jest używany powinno się włączyć tę opcję, aby zobaczyć prawdziwy biały zamiast domyślnego koloru czcionki w terminalu)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.command_chars]] *weechat.look.command_chars*
-** opis: `znaki użyte do określenia czy wprowadzony ciąg jest komendą czy nie: wprowadzony ciąg musi się zaczynać od jednego z tych znaków; slash ("/") jest zawsze uważany za prefiks komendy (np: ".$")`
+** opis: pass:none[znaki użyte do określenia czy wprowadzony ciąg jest komendą czy nie: wprowadzony ciąg musi się zaczynać od jednego z tych znaków; slash ("/") jest zawsze uważany za prefiks komendy (np: ".$")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.look.command_incomplete]] *weechat.look.command_incomplete*
-** opis: `jeśli ustawione, niekompletne i jednoznaczne komendy są dozwolone, na przykład /he dla /help`
+** opis: pass:none[jeśli ustawione, niekompletne i jednoznaczne komendy są dozwolone, na przykład /he dla /help]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.confirm_quit]] *weechat.look.confirm_quit*
-** opis: `jeśli ustawione, komenda /quit musi być potwierdzona dodatkowym argumentem "-yes" (zobacz /help quit)`
+** opis: pass:none[jeśli ustawione, komenda /quit musi być potwierdzona dodatkowym argumentem "-yes" (zobacz /help quit)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.confirm_upgrade]] *weechat.look.confirm_upgrade*
-** opis: `jeśli ustawione, komenda /upgrade musi być potwierdzona dodatkowym argumentem "-yes" (zobacz /help upgrade)`
+** opis: pass:none[jeśli ustawione, komenda /upgrade musi być potwierdzona dodatkowym argumentem "-yes" (zobacz /help upgrade)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.day_change]] *weechat.look.day_change*
-** opis: `wyświetlaj specjalną wiadomość, kiedy zmienia się dzień`
+** opis: pass:none[wyświetlaj specjalną wiadomość, kiedy zmienia się dzień]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.day_change_message_1date]] *weechat.look.day_change_message_1date*
-** opis: `wiadomość wyświetlana po zmianie dnia, wyświetlając tylko jedną datę (na przykład na początku bufora) (zobacz man strftime dla listy specyfikatorów daty/czasu) (uwaga: zawartość jest przetwarzana, dlatego można używać kolorów w formacie "${color:xxx}", zobacz /help eval)`
+** opis: pass:none[wiadomość wyświetlana po zmianie dnia, wyświetlając tylko jedną datę (na przykład na początku bufora) (zobacz man strftime dla listy specyfikatorów daty/czasu) (uwaga: zawartość jest przetwarzana, dlatego można używać kolorów w formacie "${color:xxx}", zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"-- %a, %d %b %Y --"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"-- %a, %d %b %Y --"+`)
 
 * [[option_weechat.look.day_change_message_2dates]] *weechat.look.day_change_message_2dates*
-** opis: `wiadomość wyświetlana po zmianie dnia, wyświetlając dwie daty (pomiędzy wiadomościami); specyfikatory drugiej daty muszą zaczynać się od dwóch "%" ponieważ strftime jest wywoływane dwa razy dla tego ciągu (zobacz man strftime dla listy specyfikatorów daty/czasu) (uwaga: zawartość jest przetwarzana, dlatego można używać kolorów w formacie "${color:xxx}", zobacz /help eval)`
+** opis: pass:none[wiadomość wyświetlana po zmianie dnia, wyświetlając dwie daty (pomiędzy wiadomościami); specyfikatory drugiej daty muszą zaczynać się od dwóch "%" ponieważ strftime jest wywoływane dwa razy dla tego ciągu (zobacz man strftime dla listy specyfikatorów daty/czasu) (uwaga: zawartość jest przetwarzana, dlatego można używać kolorów w formacie "${color:xxx}", zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"-- %%a, %%d %%b %%Y (%a, %d %b %Y) --"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"-- %%a, %%d %%b %%Y (%a, %d %b %Y) --"+`)
 
 * [[option_weechat.look.eat_newline_glitch]] *weechat.look.eat_newline_glitch*
-** opis: `jeśli ustawione  eat_newline_glitch zostanie ustawione na 0; używa się tego w celu nie dodawania znaku nowej linii na końcu każdej linii, powoduje to nie łamanie tekstu podczas kopiowania/wklejania tekstu z WeeChat do innej aplikacji (domyślnie ta opcja jest wyłączona, ponieważ może spowodować poważne błędy wyświetlania)`
+** opis: pass:none[jeśli ustawione  eat_newline_glitch zostanie ustawione na 0; używa się tego w celu nie dodawania znaku nowej linii na końcu każdej linii, powoduje to nie łamanie tekstu podczas kopiowania/wklejania tekstu z WeeChat do innej aplikacji (domyślnie ta opcja jest wyłączona, ponieważ może spowodować poważne błędy wyświetlania)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.emphasized_attributes]] *weechat.look.emphasized_attributes*
-** opis: `atrybuty dla wyróżnionego tekstu: jeden lub więcej znaków atrybutu ("*" dla pogrubienia, "!" dla odwrócenia, "/" dla pochylenia,  "_" dla podkreślenia); jeśli ciąg jest pusty, używane są kolory weechat.color.emphasized*`
+** opis: pass:none[atrybuty dla wyróżnionego tekstu: jeden lub więcej znaków atrybutu ("*" dla pogrubienia, "!" dla odwrócenia, "/" dla pochylenia,  "_" dla podkreślenia); jeśli ciąg jest pusty, używane są kolory weechat.color.emphasized*]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.look.highlight]] *weechat.look.highlight*
-** opis: `lista słów do podświetlania oddzielona przecinkami; wielkość znaków nie ma znaczenia przy porównywaniu (użyj "(?-i)" na początku słów, aby wielkość znaków miała znaczenie), słowa mogą zaczynać się od "*" dla częściowego dopasowania; przykład: "test,(?-i)*toto*,flash*"`
+** opis: pass:none[lista słów do podświetlania oddzielona przecinkami; wielkość znaków nie ma znaczenia przy porównywaniu (użyj "(?-i)" na początku słów, aby wielkość znaków miała znaczenie), słowa mogą zaczynać się od "*" dla częściowego dopasowania; przykład: "test,(?-i)*toto*,flash*"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** opis: `rozszerzone wyrażenie regularne POSIX używane do sprawdzenia, czy wiadomość posiada podświetlenie czy nie, przynajmniej jedno dopasowanie w ciąg musi być otoczone separatorami (znaki inne niż: alfanumeryczne, "-", "_" lub "|"), wielkość znaków nie ma wpływu na wyrażenie (użyj "(?-i)" na początku, aby wielkość znaków miała znaczenie), przykłady: "flashcode|flashy", "(?-i)FlashCode|flashy"`
+** opis: pass:none[rozszerzone wyrażenie regularne POSIX używane do sprawdzenia, czy wiadomość posiada podświetlenie czy nie, przynajmniej jedno dopasowanie w ciąg musi być otoczone separatorami (znaki inne niż: alfanumeryczne, "-", "_" lub "|"), wielkość znaków nie ma wpływu na wyrażenie (użyj "(?-i)" na początku, aby wielkość znaków miała znaczenie), przykłady: "flashcode|flashy", "(?-i)FlashCode|flashy"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** opis: `oddzielona przecinkami lista tagów do podświetleń; porównywanie bez uwzględnienia wielkości znaków; wildcard "*" jest dozwolony w każdym tagu; wiele tagów może być oddzielonych "+" jako logicznym "i" pomiędzy tagami; przykłady: "nick_flashcode" dla wiadomości od nicka "FlashCode", "irc_notice+nick_toto*" dla powiadomień od nicka zaczynającego się na "toto"`
+** opis: pass:none[oddzielona przecinkami lista tagów do podświetleń; porównywanie bez uwzględnienia wielkości znaków; wildcard "*" jest dozwolony w każdym tagu; wiele tagów może być oddzielonych "+" jako logicznym "i" pomiędzy tagami; przykłady: "nick_flashcode" dla wiadomości od nicka "FlashCode", "irc_notice+nick_toto*" dla powiadomień od nicka zaczynającego się na "toto"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.look.hotlist_add_conditions]] *weechat.look.hotlist_add_conditions*
-** opis: `warunki dla dodania buforu na hotlistę (jeśli poziom powiadomień jest OK dla bufora); możesz użyć następujących warunków:  "window" (wskaźnik obecnego okna), "buffer" (wskaźnik bufora do dodania na hotlistę), "priority" (0 = niski, 1 = wiadomość, 2 = rozmowa prywatna, 3 = highlight); domyślnie bufor jest dodawany do hotlisty jeśli jesteś niedostępny lub jeśli bufor nie jest widoczny na ekranie (nie jest wyświetlany w żadnym oknie)`
+** opis: pass:none[warunki dla dodania buforu na hotlistę (jeśli poziom powiadomień jest OK dla bufora); możesz użyć następujących warunków:  "window" (wskaźnik obecnego okna), "buffer" (wskaźnik bufora do dodania na hotlistę), "priority" (0 = niski, 1 = wiadomość, 2 = rozmowa prywatna, 3 = highlight); domyślnie bufor jest dodawany do hotlisty jeśli jesteś niedostępny lub jeśli bufor nie jest widoczny na ekranie (nie jest wyświetlany w żadnym oknie)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"${away} || ${buffer.num_displayed} == 0"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"${away} || ${buffer.num_displayed} == 0"+`)
 
 * [[option_weechat.look.hotlist_buffer_separator]] *weechat.look.hotlist_buffer_separator*
-** opis: `ciąg znaków wyświetlany pomiędzy buforami w hotliście`
+** opis: pass:none[ciąg znaków wyświetlany pomiędzy buforami w hotliście]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `", "`)
+** wartości: dowolny ciąg (domyślna wartość: `+", "+`)
 
 * [[option_weechat.look.hotlist_count_max]] *weechat.look.hotlist_count_max*
-** opis: `maksymalna liczba wiadomości do wyświetlania w hotliście dla bufora (0 = nie wyświetlaj licznika)`
+** opis: pass:none[maksymalna liczba wiadomości do wyświetlania w hotliście dla bufora (0 = nie wyświetlaj licznika)]
 ** typ: liczba
-** wartości: 0 .. 4 (domyślna wartość: `2`)
+** wartości: 0 .. 4 (domyślna wartość: `+2+`)
 
 * [[option_weechat.look.hotlist_count_min_msg]] *weechat.look.hotlist_count_min_msg*
-** opis: `wyświetla licznik wiadomości jeśli ilość wiadomości jest większa lub równa tej wartości`
+** opis: pass:none[wyświetla licznik wiadomości jeśli ilość wiadomości jest większa lub równa tej wartości]
 ** typ: liczba
-** wartości: 1 .. 100 (domyślna wartość: `2`)
+** wartości: 1 .. 100 (domyślna wartość: `+2+`)
 
 * [[option_weechat.look.hotlist_names_count]] *weechat.look.hotlist_names_count*
-** opis: `maksymalna ilość nazw w hotliście (0 = żadna nazwa nie zostanie wyświetlona, tylko numery buforów)`
+** opis: pass:none[maksymalna ilość nazw w hotliście (0 = żadna nazwa nie zostanie wyświetlona, tylko numery buforów)]
 ** typ: liczba
-** wartości: 0 .. 10000 (domyślna wartość: `3`)
+** wartości: 0 .. 10000 (domyślna wartość: `+3+`)
 
 * [[option_weechat.look.hotlist_names_length]] *weechat.look.hotlist_names_length*
-** opis: `maksymalna długość nazwy w hotliście (0 = brak limitu)`
+** opis: pass:none[maksymalna długość nazwy w hotliście (0 = brak limitu)]
 ** typ: liczba
-** wartości: 0 .. 32 (domyślna wartość: `0`)
+** wartości: 0 .. 32 (domyślna wartość: `+0+`)
 
 * [[option_weechat.look.hotlist_names_level]] *weechat.look.hotlist_names_level*
-** opis: `poziom wyświetlania nazw w hotlście (kombinacja: 1 = join/part, 2 = wiadomość, 4 = prywatne, 8 = podświetlenie, na przykład: 12 = prywatne+podświetlenie)`
+** opis: pass:none[poziom wyświetlania nazw w hotlście (kombinacja: 1 = join/part, 2 = wiadomość, 4 = prywatne, 8 = podświetlenie, na przykład: 12 = prywatne+podświetlenie)]
 ** typ: liczba
-** wartości: 1 .. 15 (domyślna wartość: `12`)
+** wartości: 1 .. 15 (domyślna wartość: `+12+`)
 
 * [[option_weechat.look.hotlist_names_merged_buffers]] *weechat.look.hotlist_names_merged_buffers*
-** opis: `jeśli ustawione, wymusza wyświetlanie nazw w hotliście dla połączonych buforów`
+** opis: pass:none[jeśli ustawione, wymusza wyświetlanie nazw w hotliście dla połączonych buforów]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.hotlist_prefix]] *weechat.look.hotlist_prefix*
-** opis: `ciąg znaków wyświetlany na początku hotlisty`
+** opis: pass:none[ciąg znaków wyświetlany na początku hotlisty]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"H: "`)
+** wartości: dowolny ciąg (domyślna wartość: `+"H: "+`)
 
 * [[option_weechat.look.hotlist_remove]] *weechat.look.hotlist_remove*
-** opis: `usuwa bufor z hotlisty: buffer = usuwa bufor po buforze, merged = usuwa wszystkie widoczne połączone bufory`
+** opis: pass:none[usuwa bufor z hotlisty: buffer = usuwa bufor po buforze, merged = usuwa wszystkie widoczne połączone bufory]
 ** typ: liczba
-** wartości: buffer, merged (domyślna wartość: `merged`)
+** wartości: buffer, merged (domyślna wartość: `+merged+`)
 
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
-** opis: `jeśli ustawione, używa krótkich nazw do wyświetlania nazw buforów w hotliście (zaczyna po pierwszym wystąpieniu '.' w nazwie)`
+** opis: pass:none[jeśli ustawione, używa krótkich nazw do wyświetlania nazw buforów w hotliście (zaczyna po pierwszym wystąpieniu '.' w nazwie)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.hotlist_sort]] *weechat.look.hotlist_sort*
-** opis: `sortowanie hotlisty: group_time_*: grupuj po poziomie powiadomień (powiadomienia pierwsze) następnie sortuj po czasie, group_number_*: grupuj po poziomie powiadomień (powiadomienia pierwsze) następnie sortuj po numerze, number_*: sortuj po numerze; asc = sortowanie rosnące, desc = sortowanie malejące`
+** opis: pass:none[sortowanie hotlisty: group_time_*: grupuj po poziomie powiadomień (powiadomienia pierwsze) następnie sortuj po czasie, group_number_*: grupuj po poziomie powiadomień (powiadomienia pierwsze) następnie sortuj po numerze, number_*: sortuj po numerze; asc = sortowanie rosnące, desc = sortowanie malejące]
 ** typ: liczba
-** wartości: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (domyślna wartość: `group_time_asc`)
+** wartości: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (domyślna wartość: `+group_time_asc+`)
 
 * [[option_weechat.look.hotlist_suffix]] *weechat.look.hotlist_suffix*
-** opis: `ciąg znaków wyświetlany na końcu hotlisty`
+** opis: pass:none[ciąg znaków wyświetlany na końcu hotlisty]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.look.hotlist_unique_numbers]] *weechat.look.hotlist_unique_numbers*
-** opis: `zatrzymaj unikalne numery na hotliście (stosowane tylko dla elementów hotlisty, w których nazwa NIE jest wyświetlana po numerze)`
+** opis: pass:none[zatrzymaj unikalne numery na hotliście (stosowane tylko dla elementów hotlisty, w których nazwa NIE jest wyświetlana po numerze)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.input_cursor_scroll]] *weechat.look.input_cursor_scroll*
-** opis: `ilość znaków wyświetlanych po końcu linii wejściowej, kiedy przewijamy do wyświetlenia końca linii`
+** opis: pass:none[ilość znaków wyświetlanych po końcu linii wejściowej, kiedy przewijamy do wyświetlenia końca linii]
 ** typ: liczba
-** wartości: 0 .. 100 (domyślna wartość: `20`)
+** wartości: 0 .. 100 (domyślna wartość: `+20+`)
 
 * [[option_weechat.look.input_share]] *weechat.look.input_share*
-** opis: `udostępnia komendy, tekst lub oba w wejściach dla wszystkich buforów (nadal każdy bufor posiada lokalną historię)`
+** opis: pass:none[udostępnia komendy, tekst lub oba w wejściach dla wszystkich buforów (nadal każdy bufor posiada lokalną historię)]
 ** typ: liczba
-** wartości: none, commands, text, all (domyślna wartość: `none`)
+** wartości: none, commands, text, all (domyślna wartość: `+none+`)
 
 * [[option_weechat.look.input_share_overwrite]] *weechat.look.input_share_overwrite*
-** opis: `jeśli ustawiono i wejście jest dzielone, zawsze nadpisuje wejście w danym buforze`
+** opis: pass:none[jeśli ustawiono i wejście jest dzielone, zawsze nadpisuje wejście w danym buforze]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.input_undo_max]] *weechat.look.input_undo_max*
-** opis: `maksymalna ilość "cofnięć" dla linii poleceń dla bufora (0 = wyłączone)`
+** opis: pass:none[maksymalna ilość "cofnięć" dla linii poleceń dla bufora (0 = wyłączone)]
 ** typ: liczba
-** wartości: 0 .. 65535 (domyślna wartość: `32`)
+** wartości: 0 .. 65535 (domyślna wartość: `+32+`)
 
 * [[option_weechat.look.item_away_message]] *weechat.look.item_away_message*
-** opis: `wyświetla wiadomość o nieobecności dla serwera w elemencie paska`
+** opis: pass:none[wyświetla wiadomość o nieobecności dla serwera w elemencie paska]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.item_buffer_filter]] *weechat.look.item_buffer_filter*
-** opis: `ciąg użyty do pokazania, że część linii jest filtrowana w obecnym buforze (element paska "buffer_filter")`
+** opis: pass:none[ciąg użyty do pokazania, że część linii jest filtrowana w obecnym buforze (element paska "buffer_filter")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"*"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"*"+`)
 
 * [[option_weechat.look.item_buffer_zoom]] *weechat.look.item_buffer_zoom*
-** opis: `ciąg użyty do pokazania przybliżenia w połączonym buforze (element paska "buffer_zoom")`
+** opis: pass:none[ciąg użyty do pokazania przybliżenia w połączonym buforze (element paska "buffer_zoom")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"!"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"!"+`)
 
 * [[option_weechat.look.item_mouse_status]] *weechat.look.item_mouse_status*
-** opis: `ciąg użyty do pokazania czy obsługa myszy jest włączona (element paska "mouse_status")`
+** opis: pass:none[ciąg użyty do pokazania czy obsługa myszy jest włączona (element paska "mouse_status")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"M"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"M"+`)
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
-** opis: `format czasu dla elementu paska "time" (zobacz man strftime dla specyfikatorów daty/czasu)`
+** opis: pass:none[format czasu dla elementu paska "time" (zobacz man strftime dla specyfikatorów daty/czasu)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"%H:%M"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"%H:%M"+`)
 
 * [[option_weechat.look.jump_current_to_previous_buffer]] *weechat.look.jump_current_to_previous_buffer*
-** opis: `skocz do poprzednio wyświetlanego bufora, podczas skoku do obecnego bufora o numerze za pomocą /buffer *N (gdzie N jest numerem bufora), aby łatwo przełączyć się do kolejnego bufora, następnie wracając do obecnego`
+** opis: pass:none[skocz do poprzednio wyświetlanego bufora, podczas skoku do obecnego bufora o numerze za pomocą /buffer *N (gdzie N jest numerem bufora), aby łatwo przełączyć się do kolejnego bufora, następnie wracając do obecnego]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.jump_previous_buffer_when_closing]] *weechat.look.jump_previous_buffer_when_closing*
-** opis: `skocz do poprzedniego buforu, po zamknięciu obecnego (jeśli wyłączona, wtedy skocz do buforu numer -1)`
+** opis: pass:none[skocz do poprzedniego buforu, po zamknięciu obecnego (jeśli wyłączona, wtedy skocz do buforu numer -1)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.jump_smart_back_to_buffer]] *weechat.look.jump_smart_back_to_buffer*
-** opis: `wróć do początkowego buforu po dotarciu na koniec hotlisty`
+** opis: pass:none[wróć do początkowego buforu po dotarciu na koniec hotlisty]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.key_bind_safe]] *weechat.look.key_bind_safe*
-** opis: `pozwala przypisać tylko "bezpieczne" skróty (zaczynające się od kodu ctrl albo meta)`
+** opis: pass:none[pozwala przypisać tylko "bezpieczne" skróty (zaczynające się od kodu ctrl albo meta)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.key_grab_delay]] *weechat.look.key_grab_delay*
-** opis: `domyślne opóźnienie (w milisekundach) do przechwycenia klawiszy (za pomocą domyślnego skrótu alt-k); to opóźnienie może zostać nadpisane przez komendę /input (zobacz /help input)`
+** opis: pass:none[domyślne opóźnienie (w milisekundach) do przechwycenia klawiszy (za pomocą domyślnego skrótu alt-k); to opóźnienie może zostać nadpisane przez komendę /input (zobacz /help input)]
 ** typ: liczba
-** wartości: 1 .. 10000 (domyślna wartość: `800`)
+** wartości: 1 .. 10000 (domyślna wartość: `+800+`)
 
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
-** opis: `włącza wsparcie dla myszy`
+** opis: pass:none[włącza wsparcie dla myszy]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.mouse_timer_delay]] *weechat.look.mouse_timer_delay*
-** opis: `odstęp (w milisekundach) przechwytywania zdarzeń myszy: WeeChat zawsze poczeka ten czas przed obsługą zdarzenia`
+** opis: pass:none[odstęp (w milisekundach) przechwytywania zdarzeń myszy: WeeChat zawsze poczeka ten czas przed obsługą zdarzenia]
 ** typ: liczba
-** wartości: 1 .. 10000 (domyślna wartość: `100`)
+** wartości: 1 .. 10000 (domyślna wartość: `+100+`)
 
 * [[option_weechat.look.nick_color_force]] *weechat.look.nick_color_force*
-** opis: `wymusza kolory dla niektórych nicków: hash połączony z nickiem w celu znalezienia koloru nie zostanie użyty dla tych nicków (format: "nick1:kolor1;nick2:kolor2"); wyszukiwanie nicków odbywa się na zasadzie dopasowania porównania dokładnego, następnie z małych liter, jest więc możliwe używanie tylko małych liter w tej opcji`
+** opis: pass:none[wymusza kolory dla niektórych nicków: hash połączony z nickiem w celu znalezienia koloru nie zostanie użyty dla tych nicków (format: "nick1:kolor1;nick2:kolor2"); wyszukiwanie nicków odbywa się na zasadzie dopasowania porównania dokładnego, następnie z małych liter, jest więc możliwe używanie tylko małych liter w tej opcji]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.look.nick_color_hash]] *weechat.look.nick_color_hash*
-** opis: `algorytm haszujący używany do znalezienia koloru dla nicka: djb2 = odmiana djb2 (pozycja liter ma znaczenie: anagramy nicka mają różne kolory), sum = suma liter`
+** opis: pass:none[algorytm haszujący używany do znalezienia koloru dla nicka: djb2 = odmiana djb2 (pozycja liter ma znaczenie: anagramy nicka mają różne kolory), sum = suma liter]
 ** typ: liczba
-** wartości: djb2, sum (domyślna wartość: `djb2`)
+** wartości: djb2, sum (domyślna wartość: `+djb2+`)
 
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
-** opis: `znaki używane do zatrzymania odczytywania koloru nicka (przynajmniej jeden znak poza tą listą musi się znajdować przed zatrzymaniem) (przykład: nick "|nick|away" ze znakami "|" zwróci kolor nicka "|nick")`
+** opis: pass:none[znaki używane do zatrzymania odczytywania koloru nicka (przynajmniej jeden znak poza tą listą musi się znajdować przed zatrzymaniem) (przykład: nick "|nick|away" ze znakami "|" zwróci kolor nicka "|nick")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"_|["`)
+** wartości: dowolny ciąg (domyślna wartość: `+"_|["+`)
 
 * [[option_weechat.look.nick_prefix]] *weechat.look.nick_prefix*
-** opis: `teks wyświetlany przed nickiem w prefiksie wiadomości, przykład: "<"`
+** opis: pass:none[teks wyświetlany przed nickiem w prefiksie wiadomości, przykład: "<"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.look.nick_suffix]] *weechat.look.nick_suffix*
-** opis: `teks wyświetlany za nickiem w prefiksie wiadomości, przykład: przykład: ">"`
+** opis: pass:none[teks wyświetlany za nickiem w prefiksie wiadomości, przykład: przykład: ">"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
-** opis: `automatyczne dodawanie nowej linii na końcu wklejanego tesktu jeśli wklejane są co najmniej dwie linie i jeśli potwierdzenie jest wmagane`
+** opis: pass:none[automatyczne dodawanie nowej linii na końcu wklejanego tesktu jeśli wklejane są co najmniej dwie linie i jeśli potwierdzenie jest wmagane]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
-** opis: `włącza tryb terminala "bracketed paste mode" (nie wszystkie terminale/multiplexery ją wspierają): w tym trybie, wklejany tekst jest otoczony sekwencją kontrolna, dzięki czemu WeeChat może odróżnić tekst wklejony od wpisanego ("ESC[200~", wklejony tekst, "ESC[201~")`
+** opis: pass:none[włącza tryb terminala "bracketed paste mode" (nie wszystkie terminale/multiplexery ją wspierają): w tym trybie, wklejany tekst jest otoczony sekwencją kontrolna, dzięki czemu WeeChat może odróżnić tekst wklejony od wpisanego ("ESC[200~", wklejony tekst, "ESC[201~")]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.paste_bracketed_timer_delay]] *weechat.look.paste_bracketed_timer_delay*
-** opis: `wymusza zakończenie ograniczenia wklejanego tekstu po upływie określonego czasu (w sekundach) jeśli sekwencja kontrolna zakańczająca wklejany tekst ("ESC[201~") nie została otrzymana na czas`
+** opis: pass:none[wymusza zakończenie ograniczenia wklejanego tekstu po upływie określonego czasu (w sekundach) jeśli sekwencja kontrolna zakańczająca wklejany tekst ("ESC[201~") nie została otrzymana na czas]
 ** typ: liczba
-** wartości: 1 .. 60 (domyślna wartość: `10`)
+** wartości: 1 .. 60 (domyślna wartość: `+10+`)
 
 * [[option_weechat.look.paste_max_lines]] *weechat.look.paste_max_lines*
-** opis: `maksymalna ilość linii do wklejenia bez pytania użytkownika (-1 = wyłącza tę opcję)`
+** opis: pass:none[maksymalna ilość linii do wklejenia bez pytania użytkownika (-1 = wyłącza tę opcję)]
 ** typ: liczba
-** wartości: -1 .. 2147483647 (domyślna wartość: `1`)
+** wartości: -1 .. 2147483647 (domyślna wartość: `+1+`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
-** opis: `przedrostek dla wiadomości o akcjach (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval)`
+** opis: pass:none[przedrostek dla wiadomości o akcjach (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `" *"`)
+** wartości: dowolny ciąg (domyślna wartość: `+" *"+`)
 
 * [[option_weechat.look.prefix_align]] *weechat.look.prefix_align*
-** opis: `wyrównanie przedrostków (none, left, right (domyślne))`
+** opis: pass:none[wyrównanie przedrostków (none, left, right (domyślne))]
 ** typ: liczba
-** wartości: none, left, right (domyślna wartość: `right`)
+** wartości: none, left, right (domyślna wartość: `+right+`)
 
 * [[option_weechat.look.prefix_align_max]] *weechat.look.prefix_align_max*
-** opis: `maksymalny rozmiar przedrostka (0 = brak maksymalnego rozmiaru)`
+** opis: pass:none[maksymalny rozmiar przedrostka (0 = brak maksymalnego rozmiaru)]
 ** typ: liczba
-** wartości: 0 .. 128 (domyślna wartość: `0`)
+** wartości: 0 .. 128 (domyślna wartość: `+0+`)
 
 * [[option_weechat.look.prefix_align_min]] *weechat.look.prefix_align_min*
-** opis: `minimalny rozmiar przedrostka`
+** opis: pass:none[minimalny rozmiar przedrostka]
 ** typ: liczba
-** wartości: 0 .. 128 (domyślna wartość: `0`)
+** wartości: 0 .. 128 (domyślna wartość: `+0+`)
 
 * [[option_weechat.look.prefix_align_more]] *weechat.look.prefix_align_more*
-** opis: `znak wyświetlany jeśli przedrostek został obcięty (dokładnie jeden znak na ekranie)`
+** opis: pass:none[znak wyświetlany jeśli przedrostek został obcięty (dokładnie jeden znak na ekranie)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"+"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"+"+`)
 
 * [[option_weechat.look.prefix_align_more_after]] *weechat.look.prefix_align_more_after*
-** opis: `znak wyświetlany jako skrócenie (domyślnie "+") po tekście (zamiast spacji, która powinna zostać wyświetlona); jeśli wyłączone, znak zastępuje ostatni znak tekstu`
+** opis: pass:none[znak wyświetlany jako skrócenie (domyślnie "+") po tekście (zamiast spacji, która powinna zostać wyświetlona); jeśli wyłączone, znak zastępuje ostatni znak tekstu]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.prefix_buffer_align]] *weechat.look.prefix_buffer_align*
-** opis: `wyrównanie przedrostków nazw buforów, kiedy wiele buforów jest połączonych z tą samą nazwą (none, left, right (domyślnie))`
+** opis: pass:none[wyrównanie przedrostków nazw buforów, kiedy wiele buforów jest połączonych z tą samą nazwą (none, left, right (domyślnie))]
 ** typ: liczba
-** wartości: none, left, right (domyślna wartość: `right`)
+** wartości: none, left, right (domyślna wartość: `+right+`)
 
 * [[option_weechat.look.prefix_buffer_align_max]] *weechat.look.prefix_buffer_align_max*
-** opis: `maksymalna długość nazwy bufora, kiedy wiele buforów jest połączonych z identycznym numerem (0 = brak maksymalnej długości)`
+** opis: pass:none[maksymalna długość nazwy bufora, kiedy wiele buforów jest połączonych z identycznym numerem (0 = brak maksymalnej długości)]
 ** typ: liczba
-** wartości: 0 .. 128 (domyślna wartość: `0`)
+** wartości: 0 .. 128 (domyślna wartość: `+0+`)
 
 * [[option_weechat.look.prefix_buffer_align_more]] *weechat.look.prefix_buffer_align_more*
-** opis: `znak wyświetlany jeśli nazwa bufora została obcięta (kiedy wiele buforów jest scalonych z takim samym numerem)(dokładnie jeden znak na ekranie)`
+** opis: pass:none[znak wyświetlany jeśli nazwa bufora została obcięta (kiedy wiele buforów jest scalonych z takim samym numerem)(dokładnie jeden znak na ekranie)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"+"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"+"+`)
 
 * [[option_weechat.look.prefix_buffer_align_more_after]] *weechat.look.prefix_buffer_align_more_after*
-** opis: `znak wyświetlany jako skrócenie (domyślnie "+") po tekście (zamiast spacji, która powinna zostać wyświetlona); jeśli wyłączone, znak zastępuje ostatni znak tekstu`
+** opis: pass:none[znak wyświetlany jako skrócenie (domyślnie "+") po tekście (zamiast spacji, która powinna zostać wyświetlona); jeśli wyłączone, znak zastępuje ostatni znak tekstu]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** opis: `przedrostek dla wiadomości o błędach (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval)`
+** opis: pass:none[przedrostek dla wiadomości o błędach (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"=!="`)
+** wartości: dowolny ciąg (domyślna wartość: `+"=!="+`)
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
-** opis: `prefiks dla wiadomości o wejściach na kanał (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval)`
+** opis: pass:none[prefiks dla wiadomości o wejściach na kanał (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"-->"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"-->"+`)
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
-** opis: `przedrostek dla wiadomości sieciowych (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval)`
+** opis: pass:none[przedrostek dla wiadomości sieciowych (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"--"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"--"+`)
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
-** opis: `prefiks dla wiadomości o wyjściach (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval)`
+** opis: pass:none[prefiks dla wiadomości o wyjściach (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"<--"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"<--"+`)
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
-** opis: `prefiks wyświetlany dla wiadomości z takim samym nickiem jak poprzednia wiadomość: spacja ("") chowa prefiks, inny ciąg wyświetlany zamiast prefiksu lub pusty ciąg dla wyłączenia opcji (wyświetlanie przedrostka)`
+** opis: pass:none[prefiks wyświetlany dla wiadomości z takim samym nickiem jak poprzednia wiadomość: spacja ("") chowa prefiks, inny ciąg wyświetlany zamiast prefiksu lub pusty ciąg dla wyłączenia opcji (wyświetlanie przedrostka)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.look.prefix_suffix]] *weechat.look.prefix_suffix*
-** opis: `ciąg wyświetlany po przedrostku`
+** opis: pass:none[ciąg wyświetlany po przedrostku]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"|"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"|"+`)
 
 * [[option_weechat.look.quote_nick_prefix]] *weechat.look.quote_nick_prefix*
-** opis: `teks wyświetlany przed nickiem podczas cytowania wiadomości (zobacz /help cursor)`
+** opis: pass:none[teks wyświetlany przed nickiem podczas cytowania wiadomości (zobacz /help cursor)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"<"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"<"+`)
 
 * [[option_weechat.look.quote_nick_suffix]] *weechat.look.quote_nick_suffix*
-** opis: `teks wyświetlany za nickiem podczas cytowania wiadomości (zobacz /help cursor)`
+** opis: pass:none[teks wyświetlany za nickiem podczas cytowania wiadomości (zobacz /help cursor)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `">"`)
+** wartości: dowolny ciąg (domyślna wartość: `+">"+`)
 
 * [[option_weechat.look.quote_time_format]] *weechat.look.quote_time_format*
-** opis: `format czasu podczas cytowania wiadomości (zobacz /help cursor)`
+** opis: pass:none[format czasu podczas cytowania wiadomości (zobacz /help cursor)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"%H:%M:%S"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"%H:%M:%S"+`)
 
 * [[option_weechat.look.read_marker]] *weechat.look.read_marker*
-** opis: `używaj znacznika (linii albo znaku) do zaznaczania pierwszej nieprzeczytanej linii w buforze`
+** opis: pass:none[używaj znacznika (linii albo znaku) do zaznaczania pierwszej nieprzeczytanej linii w buforze]
 ** typ: liczba
-** wartości: none, line, char (domyślna wartość: `line`)
+** wartości: none, line, char (domyślna wartość: `+line+`)
 
 * [[option_weechat.look.read_marker_always_show]] *weechat.look.read_marker_always_show*
-** opis: `zawsze pokazuj wskaźnik przeczytania, nawet jeśli jest po ostatniej linii w buforze`
+** opis: pass:none[zawsze pokazuj wskaźnik przeczytania, nawet jeśli jest po ostatniej linii w buforze]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.read_marker_string]] *weechat.look.read_marker_string*
-** opis: `ciąg używany do rysowania znacznika przeczytanej linii (ciąg jest powtarzany do końca linii)`
+** opis: pass:none[ciąg używany do rysowania znacznika przeczytanej linii (ciąg jest powtarzany do końca linii)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"- "`)
+** wartości: dowolny ciąg (domyślna wartość: `+"- "+`)
 
 * [[option_weechat.look.save_config_on_exit]] *weechat.look.save_config_on_exit*
-** opis: `zapisz plik konfiguracyjny przy wyjściu`
+** opis: pass:none[zapisz plik konfiguracyjny przy wyjściu]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
-** opis: `zapisz układ przy wyjściu (bufory, okna lub oba)`
+** opis: pass:none[zapisz układ przy wyjściu (bufory, okna lub oba)]
 ** typ: liczba
-** wartości: none, buffers, windows, all (domyślna wartość: `none`)
+** wartości: none, buffers, windows, all (domyślna wartość: `+none+`)
 
 * [[option_weechat.look.scroll_amount]] *weechat.look.scroll_amount*
-** opis: `ile linii przewijać za pomocą scroll_up i scroll_down`
+** opis: pass:none[ile linii przewijać za pomocą scroll_up i scroll_down]
 ** typ: liczba
-** wartości: 1 .. 2147483647 (domyślna wartość: `3`)
+** wartości: 1 .. 2147483647 (domyślna wartość: `+3+`)
 
 * [[option_weechat.look.scroll_bottom_after_switch]] *weechat.look.scroll_bottom_after_switch*
-** opis: `przewiń na spód okna po przełączeniu do innego bufora (nie zapamiętuj pozycji w oknie); przewijanie wykonywane jest tylko w buforach ze sformatowaną zawartością`
+** opis: pass:none[przewiń na spód okna po przełączeniu do innego bufora (nie zapamiętuj pozycji w oknie); przewijanie wykonywane jest tylko w buforach ze sformatowaną zawartością]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.scroll_page_percent]] *weechat.look.scroll_page_percent*
-** opis: `procent ekranu do przewinięcia podczas przewijania strony w górę lub w dół (na przykład 100 oznacza jedną stronę, 50 pół strony)`
+** opis: pass:none[procent ekranu do przewinięcia podczas przewijania strony w górę lub w dół (na przykład 100 oznacza jedną stronę, 50 pół strony)]
 ** typ: liczba
-** wartości: 1 .. 100 (domyślna wartość: `100`)
+** wartości: 1 .. 100 (domyślna wartość: `+100+`)
 
 * [[option_weechat.look.search_text_not_found_alert]] *weechat.look.search_text_not_found_alert*
-** opis: `powiadamia użytkownika, kiedy wyszukiwany tekst nie został znaleziony w buforze`
+** opis: pass:none[powiadamia użytkownika, kiedy wyszukiwany tekst nie został znaleziony w buforze]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
-** opis: `znak używany do rysowania poziomych separatorów dookoła pasków i okien (pusta wartość oznacza rysowanie prawdziwych linii za pomocą ncurses, jednak może powodować błędy w zaznaczaniu URLi w niektórych terminalach); szerokość na ekranie musi wynosić dokładnie jeden znak`
+** opis: pass:none[znak używany do rysowania poziomych separatorów dookoła pasków i okien (pusta wartość oznacza rysowanie prawdziwych linii za pomocą ncurses, jednak może powodować błędy w zaznaczaniu URLi w niektórych terminalach); szerokość na ekranie musi wynosić dokładnie jeden znak]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"-"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"-"+`)
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
-** opis: `znak używany do rysowania poziomych separatorów dookoła pasków i okien (pusta wartość oznacza rysowanie prawdziwych linii za pomocą ncurses); szerokość na ekranie musi wynosić dokładnie jeden znak`
+** opis: pass:none[znak używany do rysowania poziomych separatorów dookoła pasków i okien (pusta wartość oznacza rysowanie prawdziwych linii za pomocą ncurses); szerokość na ekranie musi wynosić dokładnie jeden znak]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.look.tab_width]] *weechat.look.tab_width*
-** opis: `liczba spacji używana do wyświetlania tabulacji w wiadomościach`
+** opis: pass:none[liczba spacji używana do wyświetlania tabulacji w wiadomościach]
 ** typ: liczba
-** wartości: 1 .. 64 (domyślna wartość: `1`)
+** wartości: 1 .. 64 (domyślna wartość: `+1+`)
 
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
-** opis: `format czasu dla dat, konwertowany do ciągu i wyświetlany w wiadomościach (zobacz man strftime dla specyfikatorów daty/czasu)`
+** opis: pass:none[format czasu dla dat, konwertowany do ciągu i wyświetlany w wiadomościach (zobacz man strftime dla specyfikatorów daty/czasu)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"%a, %d %b %Y %T"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"%a, %d %b %Y %T"+`)
 
 * [[option_weechat.look.window_auto_zoom]] *weechat.look.window_auto_zoom*
-** opis: `automatycznie skup się na obecnym oknie jeśli terminal stanie się zbyt mały do wyświetlenia wszystkich okien (użyj alt-z w celu oddalenia okien, kiedy terminal będzie dostatecznie duży)`
+** opis: pass:none[automatycznie skup się na obecnym oknie jeśli terminal stanie się zbyt mały do wyświetlenia wszystkich okien (użyj alt-z w celu oddalenia okien, kiedy terminal będzie dostatecznie duży)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.look.window_separator_horizontal]] *weechat.look.window_separator_horizontal*
-** opis: `wyświetl poziomy separator pomiędzy oknami`
+** opis: pass:none[wyświetl poziomy separator pomiędzy oknami]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.window_separator_vertical]] *weechat.look.window_separator_vertical*
-** opis: `wyświetl pionowy separator pomiędzy oknami`
+** opis: pass:none[wyświetl pionowy separator pomiędzy oknami]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.look.window_title]] *weechat.look.window_title*
-** opis: `tytuł dla okna (terminal dla GUI Curses), ustawiany na starcie; pusty ciąg pozostawi tytuł bez zmian (zawartość jest przetwarzana, zobacz /help eval)`
+** opis: pass:none[tytuł dla okna (terminal dla GUI Curses), ustawiany na starcie; pusty ciąg pozostawi tytuł bez zmian (zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"WeeChat ${info:version}"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"WeeChat ${info:version}"+`)
 
 * [[option_weechat.look.word_chars_highlight]] *weechat.look.word_chars_highlight*
-** opis: `oddzielona przecinkami lista znaków (lub zakres znaków) rozważanych jako część słowa podświetlenia; każdy element może być pojedynczym znakiem, zakresem znaków (format: a-z), klasą znaków (przykład "alnum", zobacz man wctype); znak "!" przed elementem neguje go (znak NIE jest uznawany za część słowa); wartość "*" pasuje do dowolnego znaku; znaki unikodu są dozwolone w formacie \u1234, na przykład \u00A0 dla niełamliwej spacji (wspierane formaty można znaleźć w /help print)`
+** opis: pass:none[oddzielona przecinkami lista znaków (lub zakres znaków) rozważanych jako część słowa podświetlenia; każdy element może być pojedynczym znakiem, zakresem znaków (format: a-z), klasą znaków (przykład "alnum", zobacz man wctype); znak "!" przed elementem neguje go (znak NIE jest uznawany za część słowa); wartość "*" pasuje do dowolnego znaku; znaki unikodu są dozwolone w formacie \u1234, na przykład \u00A0 dla niełamliwej spacji (wspierane formaty można znaleźć w /help print)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"!\u00A0,-,_,|,alnum"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"!\u00A0,-,_,|,alnum"+`)
 
 * [[option_weechat.look.word_chars_input]] *weechat.look.word_chars_input*
-** opis: `oddzielona przecinkami lista znaków (lub zakres znaków) rozważanych jako część słowa linii poleceń; każdy element może być pojedynczym znakiem, zakresem znaków (format: a-z), klasą znaków (przykład "alnum", zobacz man wctype); znak "!" przed elementem neguje go (znak NIE jest uznawany za część słowa); wartość "*" pasuje do dowolnego znaku; znaki unikodu są dozwolone w formacie \u1234, na przykład \u00A0 dla niełamliwej spacji (wspierane formaty można znaleźć w /help print)`
+** opis: pass:none[oddzielona przecinkami lista znaków (lub zakres znaków) rozważanych jako część słowa linii poleceń; każdy element może być pojedynczym znakiem, zakresem znaków (format: a-z), klasą znaków (przykład "alnum", zobacz man wctype); znak "!" przed elementem neguje go (znak NIE jest uznawany za część słowa); wartość "*" pasuje do dowolnego znaku; znaki unikodu są dozwolone w formacie \u1234, na przykład \u00A0 dla niełamliwej spacji (wspierane formaty można znaleźć w /help print)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"!\u00A0,-,_,|,alnum"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"!\u00A0,-,_,|,alnum"+`)
 
 * [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
-** opis: `czas oczekiwania (w sekundach) na połączenie ze zdalnym serwerem (wykonywane w procesie potomnym)`
+** opis: pass:none[czas oczekiwania (w sekundach) na połączenie ze zdalnym serwerem (wykonywane w procesie potomnym)]
 ** typ: liczba
-** wartości: 1 .. 2147483647 (domyślna wartość: `60`)
+** wartości: 1 .. 2147483647 (domyślna wartość: `+60+`)
 
 * [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
-** opis: `plik zawierający CA ("%h" zostanie zastąpione katalogiem domowym WeeChat - domyślnie "~/.weechat")`
+** opis: pass:none[plik zawierający CA ("%h" zostanie zastąpione katalogiem domowym WeeChat - domyślnie "~/.weechat")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"/etc/ssl/certs/ca-certificates.crt"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"/etc/ssl/certs/ca-certificates.crt"+`)
 
 * [[option_weechat.network.gnutls_handshake_timeout]] *weechat.network.gnutls_handshake_timeout*
-** opis: `czas oczekiwania (w sekundach) na uwierzytelnienie gnutls`
+** opis: pass:none[czas oczekiwania (w sekundach) na uwierzytelnienie gnutls]
 ** typ: liczba
-** wartości: 1 .. 2147483647 (domyślna wartość: `30`)
+** wartości: 1 .. 2147483647 (domyślna wartość: `+30+`)
 
 * [[option_weechat.network.proxy_curl]] *weechat.network.proxy_curl*
-** opis: `nazwa pośrednika używanego do pobierania URLi za pomocą Curl (używane do pobierania listy skryptów oraz w skryptach wywołujących funkcję hook_process); pośrednik musi być zdefiniowany za pomocą komendy /proxy`
+** opis: pass:none[nazwa pośrednika używanego do pobierania URLi za pomocą Curl (używane do pobierania listy skryptów oraz w skryptach wywołujących funkcję hook_process); pośrednik musi być zdefiniowany za pomocą komendy /proxy]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
-** opis: `oddzielona przecinkami lista wtyczek do automatycznego załadowania podczas startu, "*" oznacza wszystkie znalezione wtyczki, nazwa zaczynająca się od "!" powoduje nie ładowanie tej wtyczki, wildcard "*" jest dozwolony w nazwach (przykłady: "*" lub "*,!lua,!tcl")`
+** opis: pass:none[oddzielona przecinkami lista wtyczek do automatycznego załadowania podczas startu, "*" oznacza wszystkie znalezione wtyczki, nazwa zaczynająca się od "!" powoduje nie ładowanie tej wtyczki, wildcard "*" jest dozwolony w nazwach (przykłady: "*" lub "*,!lua,!tcl")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"*"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"*"+`)
 
 * [[option_weechat.plugin.debug]] *weechat.plugin.debug*
-** opis: `włącz wiadomości debugujące domyślnie we wszystkich wtyczkach (opcja domyślnie wyłączona, co jest wysoce zalecane)`
+** opis: pass:none[włącz wiadomości debugujące domyślnie we wszystkich wtyczkach (opcja domyślnie wyłączona, co jest wysoce zalecane)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `off`)
+** wartości: on, off (domyślna wartość: `+off+`)
 
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
-** opis: `oddzielona przecinkami lista rozszerzeń nazw plików dla wtyczek`
+** opis: pass:none[oddzielona przecinkami lista rozszerzeń nazw plików dla wtyczek]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `".so,.dll"`)
+** wartości: dowolny ciąg (domyślna wartość: `+".so,.dll"+`)
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
-** opis: `ścieżka wyszukiwania wtyczek ("%h" zostanie zastąpione katalogiem domowym WeeChat - domyślnie "~/.weechat")`
+** opis: pass:none[ścieżka wyszukiwania wtyczek ("%h" zostanie zastąpione katalogiem domowym WeeChat - domyślnie "~/.weechat")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"%h/plugins"`)
+** wartości: dowolny ciąg (domyślna wartość: `+"%h/plugins"+`)
 
 * [[option_weechat.plugin.save_config_on_unload]] *weechat.plugin.save_config_on_unload*
-** opis: `zapisuj pliki konfiguracyjne przy wyładowywaniu wtyczek`
+** opis: pass:none[zapisuj pliki konfiguracyjne przy wyładowywaniu wtyczek]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** opis: `komenda wykonana kiedy WeeChat jest uruchamiany, po załadowaniu wtyczek (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
+** opis: pass:none[komenda wykonana kiedy WeeChat jest uruchamiany, po załadowaniu wtyczek (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** opis: `komenda wykonana kiedy WeeChat jest uruchamiany, przed załadowaniem wtyczek (uwaga: zawartość jest przetwarzana, zobacz /help eval)`
+** opis: pass:none[komenda wykonana kiedy WeeChat jest uruchamiany, przed załadowaniem wtyczek (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_weechat.startup.display_logo]] *weechat.startup.display_logo*
-** opis: `wyświetl logo WeeChat podczas uruchamiania`
+** opis: pass:none[wyświetl logo WeeChat podczas uruchamiania]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.startup.display_version]] *weechat.startup.display_version*
-** opis: `wyświetl wersję WeeChat podczas uruchamiania`
+** opis: pass:none[wyświetl wersję WeeChat podczas uruchamiania]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `+on+`)
 
 * [[option_weechat.startup.sys_rlimit]] *weechat.startup.sys_rlimit*
-** opis: `ustawia limit zasobów dla procesu WeeChat, format: "res1:limit1,res2:limit2"; nazwa zasobu to końcówka stałej (RLIMIT_XXX) pisana małymi literami (wartości można znaleźć w man setrlimit); limit -1 oznacza "nieograniczone"; przykład ustawienie braku limitu dla rdzenia i maksymalnie 1 GB dla pamięci wirtualnej: "core:-1,as:1000000000"`
+** opis: pass:none[ustawia limit zasobów dla procesu WeeChat, format: "res1:limit1,res2:limit2"; nazwa zasobu to końcówka stałej (RLIMIT_XXX) pisana małymi literami (wartości można znaleźć w man setrlimit); limit -1 oznacza "nieograniczone"; przykład ustawienie braku limitu dla rdzenia i maksymalnie 1 GB dla pamięci wirtualnej: "core:-1,as:1000000000"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `""`)
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)

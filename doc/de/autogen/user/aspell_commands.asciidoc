@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_aspell_aspell]]
-[command]*`aspell`* Konfiguration für Aspell-Erweiterung::
+* `+aspell+`: Konfiguration für Aspell-Erweiterung
 
 ----
 /aspell  enable|disable|toggle

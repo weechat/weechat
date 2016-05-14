@@ -3,66 +3,66 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_logger.color.backlog_end]] *logger.color.backlog_end*
-** descrizione: `colore per la riga finale nella cronologia`
+** descrizione: pass:none[colore per la riga finale nella cronologia]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `default`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+default+`)
 
 * [[option_logger.color.backlog_line]] *logger.color.backlog_line*
-** descrizione: `colore per la cronologia`
+** descrizione: pass:none[colore per la cronologia]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `default`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+default+`)
 
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
-** descrizione: `salva automaticamente il contenuto dei buffer su file (a meno che un buffer disabiliti il log)`
+** descrizione: pass:none[salva automaticamente il contenuto dei buffer su file (a meno che un buffer disabiliti il log)]
 ** tipo: bool
-** valori: on, off (valore predefinito: `on`)
+** valori: on, off (valore predefinito: `+on+`)
 
 * [[option_logger.file.flush_delay]] *logger.file.flush_delay*
-** descrizione: `numero di secondi tra il flush (scrittura) dei file di log (0 = scrive sui file di log immediatamente per ogni riga stampata)`
+** descrizione: pass:none[numero di secondi tra il flush (scrittura) dei file di log (0 = scrive sui file di log immediatamente per ogni riga stampata)]
 ** tipo: intero
-** valori: 0 .. 3600 (valore predefinito: `120`)
+** valori: 0 .. 3600 (valore predefinito: `+120+`)
 
 * [[option_logger.file.info_lines]] *logger.file.info_lines*
-** descrizione: `scrive una riga informativa nel file di log quando il log inizia o termina per un buffer`
+** descrizione: pass:none[scrive una riga informativa nel file di log quando il log inizia o termina per un buffer]
 ** tipo: bool
-** valori: on, off (valore predefinito: `off`)
+** valori: on, off (valore predefinito: `+off+`)
 
 * [[option_logger.file.mask]] *logger.file.mask*
-** descrizione: `default file name mask for log files (format is "directory/to/file" or "file", without first "/" because "path" option is used to build complete path to file); local buffer variables are permitted (you should use only variables that are defined on all buffers, so for example you should NOT use $server nor $channel); date specifiers are permitted (see man strftime)`
+** descrizione: pass:none[default file name mask for log files (format is "directory/to/file" or "file", without first "/" because "path" option is used to build complete path to file); local buffer variables are permitted (you should use only variables that are defined on all buffers, so for example you should NOT use $server nor $channel); date specifiers are permitted (see man strftime)]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `"$plugin.$name.weechatlog"`)
+** valori: qualsiasi stringa (valore predefinito: `+"$plugin.$name.weechatlog"+`)
 
 * [[option_logger.file.name_lower_case]] *logger.file.name_lower_case*
-** descrizione: `usare solo lettere minuscole per i nomi dei file di log`
+** descrizione: pass:none[usare solo lettere minuscole per i nomi dei file di log]
 ** tipo: bool
-** valori: on, off (valore predefinito: `on`)
+** valori: on, off (valore predefinito: `+on+`)
 
 * [[option_logger.file.nick_prefix]] *logger.file.nick_prefix*
-** descrizione: `testo da scrivere prima del nick nel prefisso del messaggo, esempio: "<"`
+** descrizione: pass:none[testo da scrivere prima del nick nel prefisso del messaggo, esempio: "<"]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `""`)
+** valori: qualsiasi stringa (valore predefinito: `+""+`)
 
 * [[option_logger.file.nick_suffix]] *logger.file.nick_suffix*
-** descrizione: `testo da scrivere dopo il nick nel prefisso del messaggo, esempio: "<"`
+** descrizione: pass:none[testo da scrivere dopo il nick nel prefisso del messaggo, esempio: "<"]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `""`)
+** valori: qualsiasi stringa (valore predefinito: `+""+`)
 
 * [[option_logger.file.path]] *logger.file.path*
-** descrizione: `path for WeeChat log files; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default); date specifiers are permitted (see man strftime) (note: content is evaluated, see /help eval)`
+** descrizione: pass:none[path for WeeChat log files; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default); date specifiers are permitted (see man strftime) (note: content is evaluated, see /help eval)]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `"%h/logs/"`)
+** valori: qualsiasi stringa (valore predefinito: `+"%h/logs/"+`)
 
 * [[option_logger.file.replacement_char]] *logger.file.replacement_char*
-** descrizione: `carattere di sostituzione per i caratteri speciali nei nomi dei file salvati con la mask (come il delimitatore di directory)`
+** descrizione: pass:none[carattere di sostituzione per i caratteri speciali nei nomi dei file salvati con la mask (come il delimitatore di directory)]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `"_"`)
+** valori: qualsiasi stringa (valore predefinito: `+"_"+`)
 
 * [[option_logger.file.time_format]] *logger.file.time_format*
-** descrizione: `data e ora usati nei file di log (consultare man strftime per gli specificatori di data/ora)`
+** descrizione: pass:none[data e ora usati nei file di log (consultare man strftime per gli specificatori di data/ora)]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `"%Y-%m-%d %H:%M:%S"`)
+** valori: qualsiasi stringa (valore predefinito: `+"%Y-%m-%d %H:%M:%S"+`)
 
 * [[option_logger.look.backlog]] *logger.look.backlog*
-** descrizione: `numero massimo di righe da visualizzare dal file di log alla creazione di un nuovo buffer (0 = nessuna cronologia)`
+** descrizione: pass:none[numero massimo di righe da visualizzare dal file di log alla creazione di un nuovo buffer (0 = nessuna cronologia)]
 ** tipo: intero
-** valori: 0 .. 2147483647 (valore predefinito: `20`)
+** valori: 0 .. 2147483647 (valore predefinito: `+20+`)

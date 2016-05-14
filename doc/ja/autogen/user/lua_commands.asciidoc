@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_lua_lua]]
-[command]*`lua`* スクリプトをリストアップ/ロード/アンロード::
+* `+lua+`: スクリプトをリストアップ/ロード/アンロード
 
 ----
 /lua  list|listfull [<name>]

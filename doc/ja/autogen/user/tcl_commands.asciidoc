@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_tcl_tcl]]
-[command]*`tcl`* スクリプトをリストアップ/ロード/アンロード::
+* `+tcl+`: スクリプトをリストアップ/ロード/アンロード
 
 ----
 /tcl  list|listfull [<name>]
