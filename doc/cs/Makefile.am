@@ -44,7 +44,7 @@ weechat.1: weechat.1.cs.adoc cmdline_options.cs.adoc
 
 # quickstart
 weechat_quickstart.cs.html: weechat_quickstart.cs.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=highlight.js -o weechat_quickstart.cs.html $(abs_top_srcdir)/doc/cs/weechat_quickstart.cs.adoc
+	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_quickstart.cs.html $(abs_top_srcdir)/doc/cs/weechat_quickstart.cs.adoc
 
 # install man/docs
 

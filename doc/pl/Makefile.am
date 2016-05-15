@@ -52,23 +52,23 @@ weechat.1: weechat.1.pl.adoc cmdline_options.pl.adoc
 
 # user's guide
 weechat_user.pl.html: weechat_user.pl.adoc cmdline_options.pl.adoc $(wildcard autogen/user/*.adoc) $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=highlight.js -o weechat_user.pl.html $(abs_top_srcdir)/doc/pl/weechat_user.pl.adoc
+	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_user.pl.html $(abs_top_srcdir)/doc/pl/weechat_user.pl.adoc
 
 # scripting guide
 weechat_scripting.pl.html: weechat_scripting.pl.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=highlight.js -o weechat_scripting.pl.html $(abs_top_srcdir)/doc/pl/weechat_scripting.pl.adoc
+	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_scripting.pl.html $(abs_top_srcdir)/doc/pl/weechat_scripting.pl.adoc
 
 # FAQ
 weechat_faq.pl.html: weechat_faq.pl.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=highlight.js -o weechat_faq.pl.html $(abs_top_srcdir)/doc/pl/weechat_faq.pl.adoc
+	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_faq.pl.html $(abs_top_srcdir)/doc/pl/weechat_faq.pl.adoc
 
 # quickstart
 weechat_quickstart.pl.html: weechat_quickstart.pl.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=highlight.js -o weechat_quickstart.pl.html $(abs_top_srcdir)/doc/pl/weechat_quickstart.pl.adoc
+	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_quickstart.pl.html $(abs_top_srcdir)/doc/pl/weechat_quickstart.pl.adoc
 
 # tester's guide
 weechat_tester.pl.html: weechat_tester.pl.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=highlight.js -o weechat_tester.pl.html $(abs_top_srcdir)/doc/pl/weechat_tester.pl.adoc
+	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_tester.pl.html $(abs_top_srcdir)/doc/pl/weechat_tester.pl.adoc
 
 # install man/docs
 

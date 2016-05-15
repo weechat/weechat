@@ -36,7 +36,7 @@ all-local: $(man_targets) $(doc_targets)
 
 # quickstart
 weechat_quickstart.es.html: weechat_quickstart.es.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=highlight.js -o weechat_quickstart.es.html $(abs_top_srcdir)/doc/es/weechat_quickstart.es.adoc
+	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_quickstart.es.html $(abs_top_srcdir)/doc/es/weechat_quickstart.es.adoc
 
 # install man/docs
 
