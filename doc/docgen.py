@@ -342,11 +342,6 @@ def get_hdata():
             hdata[plugin][hdata_name]['vars'] = variables
             hdata[plugin][hdata_name]['vars_update'] = variables_update
 
-            def compate_list_name(name1, name2):
-                rc = 1 if name2 > name1 else (-1 if name1 < name2 else 0)
-                if name2.startswith('last_'):
-                    rc *= 1000
-
             string = weechat.hdata_get_string(ptr_hdata, 'list_keys')
             if string:
                 list_lists = string.split(',')
