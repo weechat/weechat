@@ -20,9 +20,9 @@
 docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
-             weechat.1.ru.asciidoc \
-             cmdline_options.ru.asciidoc \
-             weechat_quickstart.ru.asciidoc
+             weechat.1.ru.adoc \
+             cmdline_options.ru.adoc \
+             weechat_quickstart.ru.adoc
 
 if MAN
   man_targets = weechat.1
@@ -37,12 +37,12 @@ endif
 all-local: $(man_targets) $(doc_targets)
 
 # man page
-weechat.1: weechat.1.ru.asciidoc cmdline_options.ru.asciidoc
-	$(ASCIIDOCTOR) -a revision="WeeChat $(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/ru/weechat.1.ru.asciidoc
+weechat.1: weechat.1.ru.adoc cmdline_options.ru.adoc
+	$(ASCIIDOCTOR) -a revision="WeeChat $(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/ru/weechat.1.ru.adoc
 
 # quickstart
-weechat_quickstart.ru.html: weechat_quickstart.ru.asciidoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=highlight.js -o weechat_quickstart.ru.html $(abs_top_srcdir)/doc/ru/weechat_quickstart.ru.asciidoc
+weechat_quickstart.ru.html: weechat_quickstart.ru.adoc $(abs_top_srcdir)/doc/docinfo.html
+	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=highlight.js -o weechat_quickstart.ru.html $(abs_top_srcdir)/doc/ru/weechat_quickstart.ru.adoc
 
 # install man/docs
 

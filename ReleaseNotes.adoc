@@ -14,7 +14,7 @@ version.
 
 For a complete list of changes, please look at
 https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
-(file _ChangeLog.asciidoc_ in sources).
+(file _ChangeLog.adoc_ in sources).
 
 
 [[v1.5]]

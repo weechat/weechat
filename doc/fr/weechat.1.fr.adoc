@@ -27,7 +27,7 @@ Il est hautement paramétrable et extensible avec des scripts.
 
 == OPTIONS
 
-include::cmdline_options.fr.asciidoc[]
+include::cmdline_options.fr.adoc[]
 
 == OPTIONS D'EXTENSION
 
@@ -100,7 +100,7 @@ Cette page de manuel a été écrite par {author}.
 == COPYRIGHT
 
 WeeChat est écrit par Sébastien Helleu et des contributeurs (la liste complète
-est dans le fichier AUTHORS.asciidoc).
+est dans le fichier AUTHORS.adoc).
 
 Copyright (C) 2003-2016 {author}
 

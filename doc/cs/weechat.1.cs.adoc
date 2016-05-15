@@ -28,7 +28,7 @@ Je velmi připůsobitelný a rozšiřitelný s skripty.
 
 == VOLBY
 
-include::cmdline_options.cs.asciidoc[]
+include::cmdline_options.cs.adoc[]
 
 == VOLBY PLUGINŮ
 
@@ -99,7 +99,7 @@ Tato manuálová stránka byla přeložena Ondřejem Súkupem.
 == COPYRIGHT
 
 WeeChat je napsán Sébastienem Helleu a přispěvovateli (kompletní seznam je v
-souboru AUTHORS.asciidoc).
+souboru AUTHORS.adoc).
 
 Copyright (C) 2003-2016 {author}
 

@@ -485,7 +485,7 @@ Poi, come per un crash, usare il comando `bt full`:
 
 Argomenti a riga di comando:
 
-include::cmdline_options.it.asciidoc[]
+include::cmdline_options.it.adoc[]
 
 Per avviare WeeChat, digitare questo comando:
 
@@ -1490,7 +1490,7 @@ terminare l'attributo.
 
 I codici colore per kbd:[Ctrl+c], kbd:[c] sono:
 
-include::autogen/user/irc_colors.asciidoc[]
+include::autogen/user/irc_colors.adoc[]
 
 // TRANSLATION MISSING
 [NOTE]
@@ -1765,7 +1765,7 @@ Sections:
 // TRANSLATION MISSING
 Options:
 
-include::autogen/user/sec_options.asciidoc[]
+include::autogen/user/sec_options.adoc[]
 
 [[weechat_options]]
 ==== Opzioni di WeeChat (weechat.conf)
@@ -1803,12 +1803,12 @@ Sections:
 // TRANSLATION MISSING
 Options:
 
-include::autogen/user/weechat_options.asciidoc[]
+include::autogen/user/weechat_options.adoc[]
 
 [[weechat_commands]]
 ==== Comandi di WeeChat
 
-include::autogen/user/weechat_commands.asciidoc[]
+include::autogen/user/weechat_commands.adoc[]
 
 [[plugins]]
 == Plugin
@@ -1878,7 +1878,7 @@ plugin).
 [[alias_commands]]
 ==== Comandi
 
-include::autogen/user/alias_commands.asciidoc[]
+include::autogen/user/alias_commands.adoc[]
 
 [[aspell_plugin]]
 === Plugin Aspell
@@ -1906,12 +1906,12 @@ Sections:
 // TRANSLATION MISSING
 Options:
 
-include::autogen/user/aspell_options.asciidoc[]
+include::autogen/user/aspell_options.adoc[]
 
 [[aspell_commands]]
 ==== Comandi
 
-include::autogen/user/aspell_commands.asciidoc[]
+include::autogen/user/aspell_commands.adoc[]
 
 [[aspell_speller_options]]
 ==== Opzioni ortografiche
@@ -2016,12 +2016,12 @@ Sections:
 // TRANSLATION MISSING
 Options:
 
-include::autogen/user/charset_options.asciidoc[]
+include::autogen/user/charset_options.adoc[]
 
 [[charset_commands]]
 ==== Comandi
 
-include::autogen/user/charset_commands.asciidoc[]
+include::autogen/user/charset_commands.adoc[]
 
 [[charset_set]]
 ==== Impostare il set caratteri
@@ -2104,12 +2104,12 @@ Sections:
 
 Options:
 
-include::autogen/user/exec_options.asciidoc[]
+include::autogen/user/exec_options.adoc[]
 
 [[exec_commands]]
 ==== Commands
 
-include::autogen/user/exec_commands.asciidoc[]
+include::autogen/user/exec_commands.adoc[]
 
 [[fifo_plugin]]
 === Plugin Fifo
@@ -2178,7 +2178,7 @@ $ ./auto_weechat_command 'irc.freenode.#weechat *ciao'
 [[fifo_commands]]
 ==== Comandi
 
-include::autogen/user/fifo_commands.asciidoc[]
+include::autogen/user/fifo_commands.adoc[]
 
 [[irc_plugin]]
 === Plugin IRC
@@ -2228,12 +2228,12 @@ Sections:
 // TRANSLATION MISSING
 Options:
 
-include::autogen/user/irc_options.asciidoc[]
+include::autogen/user/irc_options.adoc[]
 
 [[irc_commands]]
 ==== Comandi
 
-include::autogen/user/irc_commands.asciidoc[]
+include::autogen/user/irc_commands.adoc[]
 
 [[irc_ssl_certificates]]
 ==== Certificati SSL
@@ -2718,12 +2718,12 @@ Sections:
 // TRANSLATION MISSING
 Options:
 
-include::autogen/user/logger_options.asciidoc[]
+include::autogen/user/logger_options.adoc[]
 
 [[logger_commands]]
 ==== Comandi
 
-include::autogen/user/logger_commands.asciidoc[]
+include::autogen/user/logger_commands.adoc[]
 
 [[logger_log_levels]]
 ==== Livelli di log
@@ -2879,12 +2879,12 @@ Sections:
 // TRANSLATION MISSING
 Options:
 
-include::autogen/user/relay_options.asciidoc[]
+include::autogen/user/relay_options.adoc[]
 
 [[relay_commands]]
 ==== Comandi
 
-include::autogen/user/relay_commands.asciidoc[]
+include::autogen/user/relay_commands.adoc[]
 
 // TRANSLATION MISSING
 [[relay_password]]
@@ -3033,47 +3033,47 @@ Sections:
 // TRANSLATION MISSING
 Options:
 
-include::autogen/user/script_options.asciidoc[]
+include::autogen/user/script_options.adoc[]
 
 [[script_commands]]
 ==== Comandi Script
 
-include::autogen/user/script_commands.asciidoc[]
+include::autogen/user/script_commands.adoc[]
 
 [[python_commands]]
 ==== Comandi Python
 
-include::autogen/user/python_commands.asciidoc[]
+include::autogen/user/python_commands.adoc[]
 
 [[perl_commands]]
 ==== Comandi Perl
 
-include::autogen/user/perl_commands.asciidoc[]
+include::autogen/user/perl_commands.adoc[]
 
 [[ruby_commands]]
 ==== Comandi Ruby
 
-include::autogen/user/ruby_commands.asciidoc[]
+include::autogen/user/ruby_commands.adoc[]
 
 [[lua_commands]]
 ==== Comandi Lua
 
-include::autogen/user/lua_commands.asciidoc[]
+include::autogen/user/lua_commands.adoc[]
 
 [[tcl_commands]]
 ==== Comandi Tcl
 
-include::autogen/user/tcl_commands.asciidoc[]
+include::autogen/user/tcl_commands.adoc[]
 
 [[guile_commands]]
 ==== Comandi Guile
 
-include::autogen/user/guile_commands.asciidoc[]
+include::autogen/user/guile_commands.adoc[]
 
 [[javascript_commands]]
 ==== Comandi Javascript
 
-include::autogen/user/javascript_commands.asciidoc[]
+include::autogen/user/javascript_commands.adoc[]
 
 // TRANSLATION MISSING
 [[trigger_plugin]]
@@ -3105,12 +3105,12 @@ Sections:
 
 Options:
 
-include::autogen/user/trigger_options.asciidoc[]
+include::autogen/user/trigger_options.adoc[]
 
 [[trigger_commands]]
 ==== Commands
 
-include::autogen/user/trigger_commands.asciidoc[]
+include::autogen/user/trigger_commands.adoc[]
 
 [[trigger_anatomy]]
 ==== Anatomy of a trigger
@@ -3638,12 +3638,12 @@ Sections:
 // TRANSLATION MISSING
 Options:
 
-include::autogen/user/xfer_options.asciidoc[]
+include::autogen/user/xfer_options.adoc[]
 
 [[xfer_commands]]
 ==== Comandi
 
-include::autogen/user/xfer_commands.asciidoc[]
+include::autogen/user/xfer_commands.adoc[]
 
 [[support]]
 == Supporto

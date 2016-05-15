@@ -343,24 +343,24 @@ WeeChat "core" は以下のディレクトリに配置されています:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| パス/ファイル名                          | 説明
-| doc/                                     | 文書
-|    docinfo.html                          | asciidoctor スタイル
-|    docgen.py                             | _autogen/_ ディレクトリ内のファイルを作成する Python スクリプト (以下を参照)
-|    XX/                                   | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
-|       cmdline_options.XX.asciidoc        | コマンドラインオプション (man ページとユーザガイドに含まれるファイル)
-|       weechat.1.XX.asciidoc              | man ページ (`man weechat`)
-|       weechat_dev.XX.asciidoc            | 開発者リファレンス (この文書)
-|       weechat_faq.XX.asciidoc            | FAQ
-|       weechat_plugin_api.XX.asciidoc     | プラグイン API リファレンス
-|       weechat_quickstart.XX.asciidoc     | クイックスタートガイド
-|       weechat_relay_protocol.XX.asciidoc | リレープロトコル (リモートインターフェイス用)
-|       weechat_scripting.XX.asciidoc      | スクリプト作成ガイド
-|       weechat_tester.XX.asciidoc         | テスターガイド
-|       weechat_user.XX.asciidoc           | ユーザーガイド
-|       autogen/                           | docgen.py スクリプトが自動生成するファイル
-|          user/                           | ユーザーガイド用の自動生成ファイル (手作業による編集は*禁止* !)
-|          plugin_api/                     | プラグイン API 用の自動生成ファイル (手作業による編集は*禁止* !)
+| パス/ファイル名                      | 説明
+| doc/                                 | 文書
+|    docinfo.html                      | asciidoctor スタイル
+|    docgen.py                         | _autogen/_ ディレクトリ内のファイルを作成する Python スクリプト (以下を参照)
+|    XX/                               | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
+|       cmdline_options.XX.adoc        | コマンドラインオプション (man ページとユーザガイドに含まれるファイル)
+|       weechat.1.XX.adoc              | man ページ (`man weechat`)
+|       weechat_dev.XX.adoc            | 開発者リファレンス (この文書)
+|       weechat_faq.XX.adoc            | FAQ
+|       weechat_plugin_api.XX.adoc     | プラグイン API リファレンス
+|       weechat_quickstart.XX.adoc     | クイックスタートガイド
+|       weechat_relay_protocol.XX.adoc | リレープロトコル (リモートインターフェイス用)
+|       weechat_scripting.XX.adoc      | スクリプト作成ガイド
+|       weechat_tester.XX.adoc         | テスターガイド
+|       weechat_user.XX.adoc           | ユーザーガイド
+|       autogen/                       | docgen.py スクリプトが自動生成するファイル
+|          user/                       | ユーザーガイド用の自動生成ファイル (手作業による編集は*禁止* !)
+|          plugin_api/                 | プラグイン API 用の自動生成ファイル (手作業による編集は*禁止* !)
 |===
 
 WeeChat とプラグインの翻訳は gettext で行います、ファイルは _po/_ ディレクトリに含まれています:

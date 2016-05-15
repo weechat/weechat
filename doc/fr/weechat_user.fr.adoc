@@ -459,7 +459,7 @@ Ensuite comme pour un crash, utilisez la commande `bt full` :
 
 Paramètres de ligne de commande :
 
-include::cmdline_options.fr.asciidoc[]
+include::cmdline_options.fr.adoc[]
 
 Pour lancer WeeChat, tapez cette commande :
 
@@ -1454,7 +1454,7 @@ stopper l'attribut défini.
 
 Les codes couleur pour kbd:[Ctrl+c], kbd:[c] sont :
 
-include::autogen/user/irc_colors.asciidoc[]
+include::autogen/user/irc_colors.adoc[]
 
 [NOTE]
 Pour voir toutes les couleurs disponibles dans votre terminal, vous pouvez
@@ -1731,7 +1731,7 @@ Sections :
 
 Options :
 
-include::autogen/user/sec_options.asciidoc[]
+include::autogen/user/sec_options.adoc[]
 
 [[weechat_options]]
 ==== Options WeeChat (weechat.conf)
@@ -1766,12 +1766,12 @@ Sections :
 
 Options :
 
-include::autogen/user/weechat_options.asciidoc[]
+include::autogen/user/weechat_options.adoc[]
 
 [[weechat_commands]]
 ==== Commandes WeeChat
 
-include::autogen/user/weechat_commands.asciidoc[]
+include::autogen/user/weechat_commands.adoc[]
 
 [[plugins]]
 == Extensions
@@ -1840,7 +1840,7 @@ d'autres extensions).
 [[alias_commands]]
 ==== Commandes
 
-include::autogen/user/alias_commands.asciidoc[]
+include::autogen/user/alias_commands.adoc[]
 
 [[aspell_plugin]]
 === Extension Aspell
@@ -1865,12 +1865,12 @@ Sections :
 
 Options :
 
-include::autogen/user/aspell_options.asciidoc[]
+include::autogen/user/aspell_options.adoc[]
 
 [[aspell_commands]]
 ==== Commandes
 
-include::autogen/user/aspell_commands.asciidoc[]
+include::autogen/user/aspell_commands.adoc[]
 
 [[aspell_speller_options]]
 ==== Options du vérificateur d'orthographe
@@ -1973,12 +1973,12 @@ Sections :
 
 Options :
 
-include::autogen/user/charset_options.asciidoc[]
+include::autogen/user/charset_options.adoc[]
 
 [[charset_commands]]
 ==== Commandes
 
-include::autogen/user/charset_commands.asciidoc[]
+include::autogen/user/charset_commands.adoc[]
 
 [[charset_set]]
 ==== Définir le jeu de caractère
@@ -2061,12 +2061,12 @@ Sections :
 
 Options :
 
-include::autogen/user/exec_options.asciidoc[]
+include::autogen/user/exec_options.adoc[]
 
 [[exec_commands]]
 ==== Commandes
 
-include::autogen/user/exec_commands.asciidoc[]
+include::autogen/user/exec_commands.adoc[]
 
 [[fifo_plugin]]
 === Extension Fifo
@@ -2137,7 +2137,7 @@ $ ./auto_weechat_command 'irc.freenode.#weechat *bonjour'
 [[fifo_commands]]
 ==== Commandes
 
-include::autogen/user/fifo_commands.asciidoc[]
+include::autogen/user/fifo_commands.adoc[]
 
 [[irc_plugin]]
 === Extension IRC
@@ -2186,12 +2186,12 @@ Sections :
 
 Options :
 
-include::autogen/user/irc_options.asciidoc[]
+include::autogen/user/irc_options.adoc[]
 
 [[irc_commands]]
 ==== Commandes
 
-include::autogen/user/irc_commands.asciidoc[]
+include::autogen/user/irc_commands.adoc[]
 
 [[irc_ssl_certificates]]
 ==== Certificats SSL
@@ -2650,12 +2650,12 @@ Sections :
 
 Options :
 
-include::autogen/user/logger_options.asciidoc[]
+include::autogen/user/logger_options.adoc[]
 
 [[logger_commands]]
 ==== Commandes
 
-include::autogen/user/logger_commands.asciidoc[]
+include::autogen/user/logger_commands.adoc[]
 
 [[logger_log_levels]]
 ==== Niveaux d'enregistrement
@@ -2808,12 +2808,12 @@ Sections :
 
 Options :
 
-include::autogen/user/relay_options.asciidoc[]
+include::autogen/user/relay_options.adoc[]
 
 [[relay_commands]]
 ==== Commandes
 
-include::autogen/user/relay_commands.asciidoc[]
+include::autogen/user/relay_commands.adoc[]
 
 [[relay_password]]
 ==== Mot de passe
@@ -2960,47 +2960,47 @@ Sections :
 
 Options :
 
-include::autogen/user/script_options.asciidoc[]
+include::autogen/user/script_options.adoc[]
 
 [[script_commands]]
 ==== Commandes Script
 
-include::autogen/user/script_commands.asciidoc[]
+include::autogen/user/script_commands.adoc[]
 
 [[python_commands]]
 ==== Commandes Python
 
-include::autogen/user/python_commands.asciidoc[]
+include::autogen/user/python_commands.adoc[]
 
 [[perl_commands]]
 ==== Commandes Perl
 
-include::autogen/user/perl_commands.asciidoc[]
+include::autogen/user/perl_commands.adoc[]
 
 [[ruby_commands]]
 ==== Commandes Ruby
 
-include::autogen/user/ruby_commands.asciidoc[]
+include::autogen/user/ruby_commands.adoc[]
 
 [[lua_commands]]
 ==== Commandes Lua
 
-include::autogen/user/lua_commands.asciidoc[]
+include::autogen/user/lua_commands.adoc[]
 
 [[tcl_commands]]
 ==== Commandes Tcl
 
-include::autogen/user/tcl_commands.asciidoc[]
+include::autogen/user/tcl_commands.adoc[]
 
 [[guile_commands]]
 ==== Commandes Guile
 
-include::autogen/user/guile_commands.asciidoc[]
+include::autogen/user/guile_commands.adoc[]
 
 [[javascript_commands]]
 ==== Commandes Javascript
 
-include::autogen/user/javascript_commands.asciidoc[]
+include::autogen/user/javascript_commands.adoc[]
 
 [[trigger_plugin]]
 === Extension Trigger
@@ -3031,12 +3031,12 @@ Sections :
 
 Options :
 
-include::autogen/user/trigger_options.asciidoc[]
+include::autogen/user/trigger_options.adoc[]
 
 [[trigger_commands]]
 ==== Commandes
 
-include::autogen/user/trigger_commands.asciidoc[]
+include::autogen/user/trigger_commands.adoc[]
 
 [[trigger_anatomy]]
 ==== Anatomie d'un trigger
@@ -3571,12 +3571,12 @@ Sections :
 
 Options :
 
-include::autogen/user/xfer_options.asciidoc[]
+include::autogen/user/xfer_options.adoc[]
 
 [[xfer_commands]]
 ==== Commandes
 
-include::autogen/user/xfer_commands.asciidoc[]
+include::autogen/user/xfer_commands.adoc[]
 
 [[support]]
 == Support

@@ -31,11 +31,11 @@ endif
 
 SUBDIRS = po doc intl src $(tests_dir)
 
-EXTRA_DIST = AUTHORS.asciidoc \
-             ChangeLog.asciidoc \
-             Contributing.asciidoc \
-             README.asciidoc \
-             ReleaseNotes.asciidoc \
+EXTRA_DIST = AUTHORS.adoc \
+             ChangeLog.adoc \
+             Contributing.adoc \
+             README.adoc \
+             ReleaseNotes.adoc \
              CMakeLists.txt \
              config.rpath \
              config.h.cmake \

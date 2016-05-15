@@ -28,7 +28,7 @@ Posiada dużo opcji konfiguracyjnych i dodatkowych wtyczek.
 
 == OPCJE
 
-include::cmdline_options.pl.asciidoc[]
+include::cmdline_options.pl.adoc[]
 
 == OPCJE WTYCZEK
 

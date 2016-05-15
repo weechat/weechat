@@ -143,7 +143,7 @@ class AutogenDoc(object):
 
     def __init__(self, directory, doc, name):
         """Initialize auto-generated doc file."""
-        self.filename = os.path.join(directory, doc, name + '.asciidoc')
+        self.filename = os.path.join(directory, doc, name + '.adoc')
         self.filename_tmp = self.filename + '.tmp'
         self._file = open(self.filename_tmp, 'w')
         self.write('//\n')

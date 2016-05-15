@@ -24,7 +24,7 @@ override_dh_auto_configure:
 	echo
 
 override_dh_installchangelogs:
-	dh_installchangelogs ChangeLog.asciidoc
+	dh_installchangelogs ChangeLog.adoc
 
 override_dh_strip:
 	dh_strip --dbg-package=weechat-dbg

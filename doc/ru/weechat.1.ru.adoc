@@ -29,7 +29,7 @@ It is highly customizable and extensible with scripts.
 
 == ПАРАМЕТРЫ
 
-include::cmdline_options.ru.asciidoc[]
+include::cmdline_options.ru.adoc[]
 
 == ПАРАМЕТРЫ ПЛАГИНОВ
 
@@ -101,7 +101,7 @@ $HOME/.weechat/weechat.log::
 == КОПИРАЙТ
 
 WeeChat написан Sébastien Helleu и другими участниками (полный список находится
-в файле AUTHORS.asciidoc).
+в файле AUTHORS.adoc).
 
 Copyright (C) 2003-2016 {author}
 

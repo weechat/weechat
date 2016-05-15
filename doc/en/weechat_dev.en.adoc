@@ -337,24 +337,24 @@ Documentation files:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| Path/file                                | Description
-| doc/                                     | Documentation
-|    docinfo.html                          | Asciidoctor style
-|    docgen.py                             | Python script to build files in _autogen/_ directory (see below)
-|    XX/                                   | Documentation for language XX (languages: en, fr, de, it, ...)
-|       cmdline_options.XX.asciidoc        | Command-line options (file included in man page and user's guide)
-|       weechat.1.XX.asciidoc              | Man page (`man weechat`)
-|       weechat_dev.XX.asciidoc            | Developer's guide (this document)
-|       weechat_faq.XX.asciidoc            | FAQ
-|       weechat_plugin_api.XX.asciidoc     | Plugin API reference
-|       weechat_quickstart.XX.asciidoc     | Quickstart guide
-|       weechat_relay_protocol.XX.asciidoc | Relay protocol (for remote interfaces)
-|       weechat_scripting.XX.asciidoc      | Scripting guide
-|       weechat_tester.XX.asciidoc         | Tester's guide
-|       weechat_user.XX.asciidoc           | User's guide
-|       autogen/                           | Files auto-built with script docgen.py
-|          user/                           | Files auto-built for user's guide (do *NEVER* update manually!)
-|          plugin_api/                     | Files auto-built for plugin API (do *NEVER* update manually!)
+| Path/file                            | Description
+| doc/                                 | Documentation
+|    docinfo.html                      | Asciidoctor style
+|    docgen.py                         | Python script to build files in _autogen/_ directory (see below)
+|    XX/                               | Documentation for language XX (languages: en, fr, de, it, ...)
+|       cmdline_options.XX.adoc        | Command-line options (file included in man page and user's guide)
+|       weechat.1.XX.adoc              | Man page (`man weechat`)
+|       weechat_dev.XX.adoc            | Developer's guide (this document)
+|       weechat_faq.XX.adoc            | FAQ
+|       weechat_plugin_api.XX.adoc     | Plugin API reference
+|       weechat_quickstart.XX.adoc     | Quickstart guide
+|       weechat_relay_protocol.XX.adoc | Relay protocol (for remote interfaces)
+|       weechat_scripting.XX.adoc      | Scripting guide
+|       weechat_tester.XX.adoc         | Tester's guide
+|       weechat_user.XX.adoc           | User's guide
+|       autogen/                       | Files auto-built with script docgen.py
+|          user/                       | Files auto-built for user's guide (do *NEVER* update manually!)
+|          plugin_api/                 | Files auto-built for plugin API (do *NEVER* update manually!)
 |===
 
 Translations for WeeChat and plugins are done with gettext, files are in _po/_

@@ -453,7 +453,7 @@ gdb /usr/bin/weechat 12345
 
 コマンドライン引数:
 
-include::cmdline_options.ja.asciidoc[]
+include::cmdline_options.ja.adoc[]
 
 WeeChat を起動させるには、以下コマンドを実行:
 
@@ -1419,7 +1419,7 @@ IRC 等のプラグインでは、以下の色コードと属性を利用でき�
 
 kbd:[Ctrl+c], kbd:[c] 用の色コード:
 
-include::autogen/user/irc_colors.asciidoc[]
+include::autogen/user/irc_colors.adoc[]
 
 [NOTE]
 端末で利用可能なすべての色を表示するには、WeeChat で `/color` を実行した後
@@ -1681,7 +1681,7 @@ IRC サーバのパスワードを設定する例:
 
 オプション:
 
-include::autogen/user/sec_options.asciidoc[]
+include::autogen/user/sec_options.adoc[]
 
 [[weechat_options]]
 ==== WeeChat オプション (weechat.conf)
@@ -1716,12 +1716,12 @@ include::autogen/user/sec_options.asciidoc[]
 
 オプション:
 
-include::autogen/user/weechat_options.asciidoc[]
+include::autogen/user/weechat_options.adoc[]
 
 [[weechat_commands]]
 ==== WeeChat コマンド
 
-include::autogen/user/weechat_commands.asciidoc[]
+include::autogen/user/weechat_commands.adoc[]
 
 [[plugins]]
 == プラグイン
@@ -1786,7 +1786,7 @@ Alias プラグインを使うことで、コマンドの別名を定義でき�
 [[alias_commands]]
 ==== コマンド
 
-include::autogen/user/alias_commands.asciidoc[]
+include::autogen/user/alias_commands.adoc[]
 
 [[aspell_plugin]]
 === Aspell プラグイン
@@ -1811,12 +1811,12 @@ Aspell
 
 オプション:
 
-include::autogen/user/aspell_options.asciidoc[]
+include::autogen/user/aspell_options.adoc[]
 
 [[aspell_commands]]
 ==== コマンド
 
-include::autogen/user/aspell_commands.asciidoc[]
+include::autogen/user/aspell_commands.adoc[]
 
 [[aspell_speller_options]]
 ==== Speller オプション
@@ -1915,12 +1915,12 @@ charset: terminal: ISO-8859-15, internal: UTF-8
 
 オプション:
 
-include::autogen/user/charset_options.asciidoc[]
+include::autogen/user/charset_options.adoc[]
 
 [[charset_commands]]
 ==== コマンド
 
-include::autogen/user/charset_commands.asciidoc[]
+include::autogen/user/charset_commands.adoc[]
 
 [[charset_set]]
 ==== 文字コードの設定
@@ -1997,12 +1997,12 @@ IRC サーバの全てのチャンネルおよびプライベートバッファ�
 
 オプション:
 
-include::autogen/user/exec_options.asciidoc[]
+include::autogen/user/exec_options.adoc[]
 
 [[exec_commands]]
 ==== コマンド
 
-include::autogen/user/exec_commands.asciidoc[]
+include::autogen/user/exec_commands.adoc[]
 
 [[fifo_plugin]]
 === Fifo プラグイン
@@ -2070,7 +2070,7 @@ $ ./auto_weechat_command 'irc.freenode.#weechat *hello'
 [[fifo_commands]]
 ==== コマンド
 
-include::autogen/user/fifo_commands.asciidoc[]
+include::autogen/user/fifo_commands.adoc[]
 
 [[irc_plugin]]
 === IRC プラグイン
@@ -2117,12 +2117,12 @@ $ weechat irc://nono@chat.freenode.net/#weechat,#toto
 
 オプション:
 
-include::autogen/user/irc_options.asciidoc[]
+include::autogen/user/irc_options.adoc[]
 
 [[irc_commands]]
 ==== コマンド
 
-include::autogen/user/irc_commands.asciidoc[]
+include::autogen/user/irc_commands.adoc[]
 
 [[irc_ssl_certificates]]
 ==== SSL 証明書
@@ -2570,12 +2570,12 @@ Logger
 
 オプション:
 
-include::autogen/user/logger_options.asciidoc[]
+include::autogen/user/logger_options.adoc[]
 
 [[logger_commands]]
 ==== コマンド
 
-include::autogen/user/logger_commands.asciidoc[]
+include::autogen/user/logger_commands.adoc[]
 
 [[logger_log_levels]]
 ==== ログレベル
@@ -2724,12 +2724,12 @@ Relay プラグインはネットワークを介して異なるプロトコル�
 
 オプション:
 
-include::autogen/user/relay_options.asciidoc[]
+include::autogen/user/relay_options.adoc[]
 
 [[relay_commands]]
 ==== コマンド
 
-include::autogen/user/relay_commands.asciidoc[]
+include::autogen/user/relay_commands.adoc[]
 
 [[relay_password]]
 ==== パスワード
@@ -2866,47 +2866,47 @@ Python、Perl、Ruby、Lua、Tcl、Guile
 
 オプション:
 
-include::autogen/user/script_options.asciidoc[]
+include::autogen/user/script_options.adoc[]
 
 [[script_commands]]
 ==== Script コマンド
 
-include::autogen/user/script_commands.asciidoc[]
+include::autogen/user/script_commands.adoc[]
 
 [[python_commands]]
 ==== Python コマンド
 
-include::autogen/user/python_commands.asciidoc[]
+include::autogen/user/python_commands.adoc[]
 
 [[perl_commands]]
 ==== Perl コマンド
 
-include::autogen/user/perl_commands.asciidoc[]
+include::autogen/user/perl_commands.adoc[]
 
 [[ruby_commands]]
 ==== Ruby コマンド
 
-include::autogen/user/ruby_commands.asciidoc[]
+include::autogen/user/ruby_commands.adoc[]
 
 [[lua_commands]]
 ==== Lua コマンド
 
-include::autogen/user/lua_commands.asciidoc[]
+include::autogen/user/lua_commands.adoc[]
 
 [[tcl_commands]]
 ==== Tcl コマンド
 
-include::autogen/user/tcl_commands.asciidoc[]
+include::autogen/user/tcl_commands.adoc[]
 
 [[guile_commands]]
 ==== Guile コマンド
 
-include::autogen/user/guile_commands.asciidoc[]
+include::autogen/user/guile_commands.adoc[]
 
 [[javascript_commands]]
 ==== Javascript コマンド
 
-include::autogen/user/javascript_commands.asciidoc[]
+include::autogen/user/javascript_commands.adoc[]
 
 [[trigger_plugin]]
 === トリガプラグイン
@@ -2937,12 +2937,12 @@ include::autogen/user/javascript_commands.asciidoc[]
 
 オプション:
 
-include::autogen/user/trigger_options.asciidoc[]
+include::autogen/user/trigger_options.adoc[]
 
 [[trigger_commands]]
 ==== コマンド
 
-include::autogen/user/trigger_commands.asciidoc[]
+include::autogen/user/trigger_commands.adoc[]
 
 [[trigger_anatomy]]
 ==== トリガの構造
@@ -3458,12 +3458,12 @@ Xfer プラグインの機能:
 
 オプション:
 
-include::autogen/user/xfer_options.asciidoc[]
+include::autogen/user/xfer_options.adoc[]
 
 [[xfer_commands]]
 ==== コマンド
 
-include::autogen/user/xfer_commands.asciidoc[]
+include::autogen/user/xfer_commands.adoc[]
 
 [[support]]
 == サポート

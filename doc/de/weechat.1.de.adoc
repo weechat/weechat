@@ -28,7 +28,7 @@ Durch Skripten ist das Hauptprogramm äußerst flexibel und erweiterbar.
 
 == OPTIONEN
 
-include::cmdline_options.de.asciidoc[]
+include::cmdline_options.de.adoc[]
 
 == OPTIONEN von ERWEITERUNGEN
 
@@ -101,7 +101,7 @@ Diese manpage wurde von {author} geschrieben.
 == COPYRIGHT
 
 WeeChat wird programmiert von Sébastien Helleu und weiteren Beitragenden (eine vollständige Auflistung
-findet man in der AUTHORS.asciidoc Datei).
+findet man in der AUTHORS.adoc Datei).
 
 Copyright (C) 2003-2016 {author}
 

@@ -12,7 +12,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[here]).
 
 For a list of important changes that require manual action, please look at
 https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
-(file _ReleaseNotes.asciidoc_ in sources).
+(file _ReleaseNotes.adoc_ in sources).
 
 
 [[v1.6]]

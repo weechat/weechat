@@ -109,7 +109,7 @@ chargée après toutes les extensions par défaut).
 
 Les extensions par défaut de WeeChat sont initialisées dans cet ordre :
 
-include::autogen/plugin_api/plugins_priority.asciidoc[]
+include::autogen/plugin_api/plugins_priority.adoc[]
 
 ==== weechat_plugin_end
 
@@ -7301,7 +7301,7 @@ Paramètres :
 
 Les codes complétions par défaut sont :
 
-include::autogen/plugin_api/completions.asciidoc[]
+include::autogen/plugin_api/completions.adoc[]
 
 Codes spéciaux :
 
@@ -7931,7 +7931,7 @@ sont disponibles :
 Pour la commande "url:...", les options suivantes sont disponibles (voir
 `man curl_easy_setopt` pour une description de chaque option) :
 
-include::autogen/plugin_api/url_options.asciidoc[]
+include::autogen/plugin_api/url_options.adoc[]
 
 [NOTE]
 ^(1)^ Lorsque des constantes sont disponibles, elles doivent être utilisées
@@ -13563,7 +13563,7 @@ Valeur de retour :
 
 Infos :
 
-include::autogen/plugin_api/infos.asciidoc[]
+include::autogen/plugin_api/infos.adoc[]
 
 Exemple en C :
 
@@ -13616,7 +13616,7 @@ Valeur de retour :
 
 Infos :
 
-include::autogen/plugin_api/infos_hashtable.asciidoc[]
+include::autogen/plugin_api/infos_hashtable.adoc[]
 
 Exemple en C :
 
@@ -14011,7 +14011,7 @@ Valeur de retour :
 
 Infolists :
 
-include::autogen/plugin_api/infolists.asciidoc[]
+include::autogen/plugin_api/infolists.adoc[]
 
 Exemple en C :
 
@@ -14746,7 +14746,7 @@ Valeur de retour :
 
 Liste des hdata :
 
-include::autogen/plugin_api/hdata.asciidoc[]
+include::autogen/plugin_api/hdata.adoc[]
 
 Exemple en C :
 

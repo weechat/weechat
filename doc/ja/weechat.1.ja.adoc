@@ -28,7 +28,7 @@ WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライ
 
 == オプション
 
-include::cmdline_options.ja.asciidoc[]
+include::cmdline_options.ja.adoc[]
 
 == プラグインオプション
 
@@ -101,7 +101,7 @@ $HOME/.weechat/weechat.log::
 == 著作権
 
 WeeChat は Sébastien Helleu さんと貢献者によって作成されています
-(完全なリストは AUTHORS.asciidoc ファイルを参照してください)。
+(完全なリストは AUTHORS.adoc ファイルを参照してください)。
 
 著作権 (C) 2003-2016 {author}
 

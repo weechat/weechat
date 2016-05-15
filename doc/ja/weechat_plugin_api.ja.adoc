@@ -110,7 +110,7 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 
 WeeChat のデフォルトプラグインは以下の順番で初期化されます:
 
-include::autogen/plugin_api/plugins_priority.asciidoc[]
+include::autogen/plugin_api/plugins_priority.adoc[]
 
 ==== weechat_plugin_end
 
@@ -7173,7 +7173,7 @@ struct t_hook *weechat_hook_command (const char *command,
 
 デフォルトの補完候補コードは:
 
-include::autogen/plugin_api/completions.asciidoc[]
+include::autogen/plugin_api/completions.adoc[]
 
 特殊コード:
 
@@ -7777,7 +7777,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 "url:..." 型のコマンドでは、以下のコマンドを使うことができます
 (それぞれのオプションについては `man curl_easy_setopt` を参照):
 
-include::autogen/plugin_api/url_options.asciidoc[]
+include::autogen/plugin_api/url_options.adoc[]
 
 [NOTE]
 ^(1)^ 定数が利用可能な場合、定数は必ずオプションの値に含めてください。"mask"
@@ -13276,7 +13276,7 @@ const char *weechat_info_get (const char *info_name, const char *arguments);
 
 インフォ:
 
-include::autogen/plugin_api/infos.asciidoc[]
+include::autogen/plugin_api/infos.adoc[]
 
 C 言語での使用例:
 
@@ -13328,7 +13328,7 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 
 インフォ:
 
-include::autogen/plugin_api/infos_hashtable.asciidoc[]
+include::autogen/plugin_api/infos_hashtable.adoc[]
 
 C 言語での使用例:
 
@@ -13719,7 +13719,7 @@ struct t_infolist *weechat_infolist_get (const char *infolist_name,
 
 インフォリスト:
 
-include::autogen/plugin_api/infolists.asciidoc[]
+include::autogen/plugin_api/infolists.adoc[]
 
 C 言語での使用例:
 
@@ -14434,7 +14434,7 @@ struct t_hdata *weechat_hdata_get (const char *hdata_name);
 
 hdata のリスト:
 
-include::autogen/plugin_api/hdata.asciidoc[]
+include::autogen/plugin_api/hdata.adoc[]
 
 C 言語での使用例:
 
