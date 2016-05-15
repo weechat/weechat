@@ -52,8 +52,7 @@ Following packages are optional:
 * for SSL: gnutls, ca-certificates
 * for spell checking: aspell
 * for scripting: python, perl, ruby, lua, tcl, guile, libv8 (javascript)
-* for building doc: asciidoc, source-highlight
-  (for man page: xsltproc, docbook-xml, docbook-xsl)
+* for building doc and man page: asciidoctor
 * for building tests: C++ compiler, CppUTest
 
 For a complete list of dependencies and versions recommended, please look at
