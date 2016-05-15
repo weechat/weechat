@@ -102,7 +102,7 @@ Tłumaczenie Krzysztof Korościk.
 == PRAWA AUTORSKIE
 
 WeeChat jest tworzony przez Sébastien Helleu i społeczność (pełna lista dostępna
-jest w pliku AUTHORS).
+jest w pliku AUTHORS.adoc).
 
 Copyright (C) 2003-2016 {author}
 
