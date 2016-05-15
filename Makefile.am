@@ -41,7 +41,7 @@ EXTRA_DIST = AUTHORS.adoc \
              config.h.cmake \
              makedist.sh \
              cmake/CMakeParseArguments.cmake \
-             cmake/FindAsciidoc.cmake \
+             cmake/FindAsciidoctor.cmake \
              cmake/FindAspell.cmake \
              cmake/FindCppUTest.cmake \
              cmake/FindENCHANT.cmake \
