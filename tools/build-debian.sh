@@ -158,14 +158,16 @@ if [ -z "${DISTRO_TYPE}" -o -z "${DISTRO_NAME}" ]; then
 fi
 
 # set distro for dch
-if [ "${DISTRO_TYPE}" = "debian" ]; then
-    DCH_DISTRO="unstable"
-else
+if [ "${DISTRO_TYPE}" = "ubuntu" ]; then
+    # ubuntu
     if [ "${VERSION}" = "devel" ]; then
         DCH_DISTRO="UNRELEASED"
     else
         DCH_DISTRO="${DISTRO_NAME}"
     fi
+else
+    # debian/raspbian
+    DCH_DISTRO="unstable"
 fi
 
 if [ "${VERSION}" = "devel" ]; then
