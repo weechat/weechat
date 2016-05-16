@@ -1,0 +1,76 @@
+diff --git a/debian-devel/control b/debian-devel/control
+index 8f54814..a058bcc 100644
+--- a/debian-devel/control
++++ b/debian-devel/control
+@@ -3,7 +3,6 @@ Section: net
+ Priority: optional
+ Maintainer: Sébastien Helleu <flashcode@flashtux.org>
+ Build-Depends:
+-    asciidoctor (>= 1.5.4),
+     debhelper (>= 9),
+     dh-exec,
+     cmake, pkg-config,
+diff --git a/debian-devel/rules b/debian-devel/rules
+index 0fb3b21..89e8ddb 100755
+--- a/debian-devel/rules
++++ b/debian-devel/rules
+@@ -7,8 +7,8 @@ $(BUILDDIR)/Makefile:
+ 	cd $(BUILDDIR) && \
+ 	cmake .. \
+ 		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
+-		-DENABLE_DOC:BOOL=ON \
+-		-DENABLE_MAN:BOOL=ON \
++		-DENABLE_DOC:BOOL=OFF \
++		-DENABLE_MAN:BOOL=OFF \
+ 		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+ 		-DCMAKE_C_FLAGS_RELWITHDEBINFO:STRING="$(CFLAGS) -D_FORTIFY_SOURCE=2" \
+ 		-DCMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING="$(LDFLAGS)" \
+diff --git a/debian-stable/control b/debian-stable/control
+index 74d134c..e0e9c25 100644
+--- a/debian-stable/control
++++ b/debian-stable/control
+@@ -3,7 +3,6 @@ Section: net
+ Priority: optional
+ Maintainer: Emmanuel Bouthenot <kolter@debian.org>
+ Build-Depends:
+-    asciidoctor (>= 1.5.4),
+     debhelper (>= 9),
+     dh-exec,
+     cmake, pkg-config,
+diff --git a/debian-stable/rules b/debian-stable/rules
+index b92991d..335610a 100755
+--- a/debian-stable/rules
++++ b/debian-stable/rules
+@@ -7,8 +7,8 @@ $(BUILDDIR)/Makefile:
+ 	cd $(BUILDDIR) && \
+ 	cmake .. \
+ 		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
+-		-DENABLE_DOC:BOOL=ON \
+-		-DENABLE_MAN:BOOL=ON \
++		-DENABLE_DOC:BOOL=OFF \
++		-DENABLE_MAN:BOOL=OFF \
+ 		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+ 		-DCMAKE_C_FLAGS_RELWITHDEBINFO:STRING="$(CFLAGS) -D_FORTIFY_SOURCE=2" \
+ 		-DCMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING="$(LDFLAGS)" \
+diff --git a/debian-stable/weechat-curses.install b/debian-stable/weechat-curses.install
+index 9ca6321..fbfdb1f 100644
+--- a/debian-stable/weechat-curses.install
++++ b/debian-stable/weechat-curses.install
+@@ -1,4 +1,2 @@
+ usr/bin/weechat
+ debian/weechat.xpm usr/share/pixmaps
+-usr/share/man/man1/weechat.1
+-usr/share/man/*/man1/weechat.1
+diff --git a/debian-stable/weechat-curses.links b/debian-stable/weechat-curses.links
+index 4d0e998..bd9a567 100644
+--- a/debian-stable/weechat-curses.links
++++ b/debian-stable/weechat-curses.links
+@@ -1,8 +1 @@
+ usr/bin/weechat usr/bin/weechat-curses
+-usr/share/man/man1/weechat.1.gz usr/share/man/man1/weechat-curses.1.gz
+-usr/share/man/de/man1/weechat.1.gz usr/share/man/de/man1/weechat-curses.1.gz
+-usr/share/man/fr/man1/weechat.1.gz usr/share/man/fr/man1/weechat-curses.1.gz
+-usr/share/man/it/man1/weechat.1.gz usr/share/man/it/man1/weechat-curses.1.gz
+-usr/share/man/ja/man1/weechat.1.gz usr/share/man/ja/man1/weechat-curses.1.gz
+-usr/share/man/pl/man1/weechat.1.gz usr/share/man/pl/man1/weechat-curses.1.gz
+-usr/share/man/ru/man1/weechat.1.gz usr/share/man/ru/man1/weechat-curses.1.gz
