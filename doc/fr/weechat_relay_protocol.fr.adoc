@@ -119,17 +119,21 @@ Paramètres :
    _relay.network.password_ dans WeeChat)
 ** _compression_ : type de compression :
 *** _zlib_ : activer la compression _zlib_ pour les messages envoyés par _relay_
+    (activée par défaut si _relay_ supporte la compression _zlib_)
 *** _off_ : désactiver la compression
 
 [NOTE]
-La compression _zlib_ est activée par défaut si _relay_ supporte la compression
-_zlib_.
+Avec WeeChat ≥ 1.6, les virgules peuvent être échappées dans la valeur,
+par exemple `init password=foo\,bar` pour envoyer le mot de passe "foo,bar".
 
 Exemples :
 
 ----
 # initialiser et utiliser la compression zlib par défaut (si WeeChat la supporte)
 init password=mypass
+
+# initialiser avec des virgules dans le mot de passe (WeeChat ≥ 1.6)
+init password=mypass\,avec\,virgules
 
 # initialiser et désactiver la compression
 init password=mypass,compression=off

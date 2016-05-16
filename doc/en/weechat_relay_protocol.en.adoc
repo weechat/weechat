@@ -114,16 +114,21 @@ Arguments:
    _relay.network.password_ in WeeChat)
 ** _compression_: compression type:
 *** _zlib_: enable _zlib_ compression for messages sent by _relay_
+    (enabled by default if _relay_ supports _zlib_ compression)
 *** _off_: disable compression
 
 [NOTE]
-Compression _zlib_ is enabled by default if _relay_ supports _zlib_ compression.
+With WeeChat ≥ 1.6, commas can be escaped in the value, for example
+`init password=foo\,bar` to send the password "foo,bar".
 
 Examples:
 
 ----
 # initialize and use zlib compression by default (if WeeChat supports it)
 init password=mypass
+
+# initialize with commas in the password (WeeChat ≥ 1.6)
+init password=mypass\,with\,commas
 
 # initialize and disable compression
 init password=mypass,compression=off

@@ -120,17 +120,25 @@ init [<option>=<value>,[<option>=<value>,...]]
 ** _password_: _リレー_ の認証用パスワード (WeeChat の
    _relay.network.password_ オプション)
 ** _compression_: 圧縮タイプ:
+// TRANSLATION MISSING
 *** _zlib_: _リレー_ から受信するメッセージに対して _zlib_ 圧縮を使う
+    (enabled by default if _relay_ supports _zlib_ compression)
 *** _off_: 圧縮を使わない
 
+// TRANSLATION MISSING
 [NOTE]
-_リレー_ が _zlib_ 圧縮をサポートする場合、_zlib_ 圧縮はデフォルトで有効化されます。
+With WeeChat ≥ 1.6, commas can be escaped in the value, for example
+`init password=foo\,bar` to send the password "foo,bar".
 
 例:
 
+// TRANSLATION MISSING
 ----
 # 初期化、デフォルト設定の zlib を使用 (WeeChat がサポートする場合)
 init password=mypass
+
+# initialize with commas in the password (WeeChat ≥ 1.6)
+init password=mypass\,with\,commas
 
 # 初期化、圧縮を使わない
 init password=mypass,compression=off
