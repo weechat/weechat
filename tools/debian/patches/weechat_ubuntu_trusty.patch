@@ -1,5 +1,5 @@
 diff --git a/debian-devel/control b/debian-devel/control
-index 8f54814..cce7e04 100644
+index 809e059..cce7e04 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -3,9 +3,7 @@ Section: net
@@ -26,6 +26,48 @@ index 8f54814..cce7e04 100644
      zlib1g-dev
  Standards-Version: 3.9.8
  Homepage: https://weechat.org/
+@@ -28,7 +26,6 @@ Vcs-Browser: https://anonscm.debian.org/git/users/kolter/weechat.git
+ Package: weechat-devel
+ Architecture: all
+ Depends: ${misc:Depends}, weechat-devel-curses (>= ${source:Version})
+-Suggests: weechat-devel-doc (= ${source:Version})
+ Conflicts: weechat
+ Description: Fast, light and extensible chat client
+  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+@@ -55,7 +52,6 @@ Architecture: any
+ Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-core (= ${binary:Version})
+ Conflicts: weechat-curses
+ Recommends: weechat-devel-plugins (= ${binary:Version})
+-Suggests: weechat-devel-doc (= ${source:Version})
+ Description: Fast, light and extensible chat client - console client
+  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+  for many operating systems. Everything can be done with a keyboard.
+@@ -82,7 +78,6 @@ Package: weechat-devel-core
+ Architecture: any
+ Depends: ${misc:Depends}, ${shlibs:Depends}
+ Conflicts: weechat-core
+-Suggests: weechat-devel-doc (= ${source:Version})
+ Description: Fast, light and extensible chat client - core files
+  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+  for many operating systems. Everything can be done with a keyboard.
+@@ -108,17 +103,6 @@ Description: Fast, light and extensible chat client - plugins
+   - IRC proxy
+   - Trigger
+ 
+-Package: weechat-devel-doc
+-Section: doc
+-Architecture: all
+-Depends: ${misc:Depends}
+-Conflicts: weechat-doc
+-Description: Fast, light and extensible chat client - documentation
+- WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+- for many operating systems. Everything can be done with a keyboard.
+- .
+- This package contains the html documentation for WeeChat.
+-
+ Package: weechat-devel-dev
+ Section: devel
+ Architecture: all
 diff --git a/debian-devel/rules b/debian-devel/rules
 index d1603c1..ee9fc59 100755
 --- a/debian-devel/rules
@@ -41,6 +83,685 @@ index d1603c1..ee9fc59 100755
  		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
  		-DCMAKE_C_FLAGS_RELWITHDEBINFO:STRING="$(CFLAGS) -D_FORTIFY_SOURCE=2" \
  		-DCMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING="$(LDFLAGS)" \
+diff --git a/debian-devel/weechat-devel-doc.doc-base.dev-en b/debian-devel/weechat-devel-doc.doc-base.dev-en
+deleted file mode 100644
+index f53a799..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.dev-en
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-dev-en
+-Title: WeeChat developer's guide (English)
+-Author: Sébastien Helleu
+-Abstract: This manual describes WeeChat internals and
+- how to contribute to WeeChat (English version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_dev.en.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_dev.en.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.dev-fr b/debian-devel/weechat-devel-doc.doc-base.dev-fr
+deleted file mode 100644
+index 0c3be2b..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.dev-fr
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-dev-fr
+-Title: WeeChat developer's guide (French)
+-Author: Sébastien Helleu
+-Abstract: This manual describes WeeChat internals and
+- how to contribute to WeeChat (French version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_dev.fr.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_dev.fr.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.dev-ja b/debian-devel/weechat-devel-doc.doc-base.dev-ja
+deleted file mode 100644
+index c8b399d..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.dev-ja
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-dev-ja
+-Title: WeeChat developer's guide (Japanese)
+-Author: Sébastien Helleu
+-Abstract: This manual describes WeeChat internals and
+- how to contribute to WeeChat (Japanese version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_dev.ja.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_dev.ja.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.faq-de b/debian-devel/weechat-devel-doc.doc-base.faq-de
+deleted file mode 100644
+index 090929a..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.faq-de
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-faq-de
+-Title: WeeChat FAQ (German)
+-Author: Sébastien Helleu
+-Abstract: This document answers frequently asked questions
+- about the WeeChat IRC client (German version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_faq.de.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_faq.de.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.faq-en b/debian-devel/weechat-devel-doc.doc-base.faq-en
+deleted file mode 100644
+index 1003532..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.faq-en
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-faq-en
+-Title: WeeChat FAQ (English)
+-Author: Sébastien Helleu
+-Abstract: This document answers frequently asked questions
+- about the WeeChat IRC client (English version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_faq.en.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_faq.en.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.faq-fr b/debian-devel/weechat-devel-doc.doc-base.faq-fr
+deleted file mode 100644
+index 654672c..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.faq-fr
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-faq-fr
+-Title: WeeChat FAQ (French)
+-Author: Sébastien Helleu
+-Abstract: This document answers frequently asked questions
+- about the WeeChat IRC client (French version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_faq.fr.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_faq.fr.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.faq-it b/debian-devel/weechat-devel-doc.doc-base.faq-it
+deleted file mode 100644
+index 68a4805..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.faq-it
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-faq-it
+-Title: WeeChat FAQ (Italian)
+-Author: Sébastien Helleu
+-Abstract: This document answers frequently asked questions
+- about the WeeChat IRC client (Italian version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_faq.it.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_faq.it.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.faq-ja b/debian-devel/weechat-devel-doc.doc-base.faq-ja
+deleted file mode 100644
+index 0b8aa25..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.faq-ja
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-faq-ja
+-Title: WeeChat FAQ (Japanese)
+-Author: Sébastien Helleu
+-Abstract: This document answers frequently asked questions
+- about the WeeChat IRC client (Japanese version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_faq.ja.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_faq.ja.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.faq-pl b/debian-devel/weechat-devel-doc.doc-base.faq-pl
+deleted file mode 100644
+index e375a56..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.faq-pl
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-faq-pl
+-Title: WeeChat FAQ (Polish)
+-Author: Sébastien Helleu
+-Abstract: This document answers frequently asked questions
+- about the WeeChat IRC client (Polish version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_faq.pl.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_faq.pl.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.plugin-en b/debian-devel/weechat-devel-doc.doc-base.plugin-en
+deleted file mode 100644
+index 347b708..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.plugin-en
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-plugin-en
+-Title: WeeChat plugin API reference (English)
+-Author: Sébastien Helleu
+-Abstract: This document describes the API to create plugins
+- for WeeChat (English version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_plugin_api.en.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_plugin_api.en.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.plugin-fr b/debian-devel/weechat-devel-doc.doc-base.plugin-fr
+deleted file mode 100644
+index 1a40c18..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.plugin-fr
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-plugin-fr
+-Title: WeeChat plugin API reference (French)
+-Author: Sébastien Helleu
+-Abstract: This document describes the API to create plugins
+- for WeeChat (French version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_plugin_api.fr.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_plugin_api.fr.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.plugin-it b/debian-devel/weechat-devel-doc.doc-base.plugin-it
+deleted file mode 100644
+index 1585253..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.plugin-it
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-plugin-it
+-Title: WeeChat plugin API reference (Italian)
+-Author: Sébastien Helleu
+-Abstract: This document describes the API to create plugins
+- for WeeChat (Italian version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_plugin_api.it.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_plugin_api.it.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.plugin-ja b/debian-devel/weechat-devel-doc.doc-base.plugin-ja
+deleted file mode 100644
+index d072c52..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.plugin-ja
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-plugin-ja
+-Title: WeeChat plugin API reference (Japanese)
+-Author: Sébastien Helleu
+-Abstract: This document describes the API to create plugins
+- for WeeChat (Japanese version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_plugin_api.ja.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_plugin_api.ja.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.quickstart-de b/debian-devel/weechat-devel-doc.doc-base.quickstart-de
+deleted file mode 100644
+index 0bdc4a4..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.quickstart-de
++++ /dev/null
+@@ -1,9 +0,0 @@
+-Document: weechat-quickstart-de
+-Title: WeeChat quick start guide (German)
+-Author: Sébastien Helleu
+-Abstract: A short HowTo for new WeeChat users (German version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.de.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.de.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.quickstart-en b/debian-devel/weechat-devel-doc.doc-base.quickstart-en
+deleted file mode 100644
+index f1ee63e..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.quickstart-en
++++ /dev/null
+@@ -1,9 +0,0 @@
+-Document: weechat-quickstart-en
+-Title: WeeChat quick start guide (English)
+-Author: Sébastien Helleu
+-Abstract: A short HowTo for new WeeChat users (English version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.en.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.en.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.quickstart-es b/debian-devel/weechat-devel-doc.doc-base.quickstart-es
+deleted file mode 100644
+index 9af7165..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.quickstart-es
++++ /dev/null
+@@ -1,9 +0,0 @@
+-Document: weechat-quickstart-es
+-Title: WeeChat quick start guide (Spanish)
+-Author: Sébastien Helleu
+-Abstract: A short HowTo for new WeeChat users (Spanish version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.es.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.es.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.quickstart-fr b/debian-devel/weechat-devel-doc.doc-base.quickstart-fr
+deleted file mode 100644
+index 006dede..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.quickstart-fr
++++ /dev/null
+@@ -1,9 +0,0 @@
+-Document: weechat-quickstart-fr
+-Title: WeeChat quick start guide (French)
+-Author: Sébastien Helleu
+-Abstract: A short HowTo for new WeeChat users (French version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.fr.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.fr.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.quickstart-it b/debian-devel/weechat-devel-doc.doc-base.quickstart-it
+deleted file mode 100644
+index eb05811..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.quickstart-it
++++ /dev/null
+@@ -1,9 +0,0 @@
+-Document: weechat-quickstart-it
+-Title: WeeChat quick start guide (Italian)
+-Author: Sébastien Helleu
+-Abstract: A short HowTo for new WeeChat users (Italian version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.it.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.it.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.quickstart-ja b/debian-devel/weechat-devel-doc.doc-base.quickstart-ja
+deleted file mode 100644
+index 01ee01f..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.quickstart-ja
++++ /dev/null
+@@ -1,9 +0,0 @@
+-Document: weechat-quickstart-ja
+-Title: WeeChat quick start guide (Japanese)
+-Author: Sébastien Helleu
+-Abstract: A short HowTo for new WeeChat users (Japanese version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.ja.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.ja.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.quickstart-pl b/debian-devel/weechat-devel-doc.doc-base.quickstart-pl
+deleted file mode 100644
+index c661364..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.quickstart-pl
++++ /dev/null
+@@ -1,9 +0,0 @@
+-Document: weechat-quickstart-pl
+-Title: WeeChat quick start guide (Polish)
+-Author: Sébastien Helleu
+-Abstract: A short HowTo for new WeeChat users (Polish version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.pl.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.pl.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.quickstart-ru b/debian-devel/weechat-devel-doc.doc-base.quickstart-ru
+deleted file mode 100644
+index 6b662b6..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.quickstart-ru
++++ /dev/null
+@@ -1,10 +0,0 @@
+-# coding: utf-8
+-Document: weechat-quickstart-ru
+-Title: WeeChat quick start guide (Russian)
+-Author: Sébastien Helleu
+-Abstract: A short HowTo for new WeeChat users (Russian version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.ru.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_quickstart.ru.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.relay-protocol-en b/debian-devel/weechat-devel-doc.doc-base.relay-protocol-en
+deleted file mode 100644
+index 9eda8ba..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.relay-protocol-en
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-relay-protocol-en
+-Title: WeeChat Relay protocol (English)
+-Author: Sébastien Helleu
+-Abstract: This manual describes WeeChat Relay Protocol, used by
+- remote GUI to communicate with Relay plugin (English version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_relay_protocol.en.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_relay_protocol.en.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.relay-protocol-fr b/debian-devel/weechat-devel-doc.doc-base.relay-protocol-fr
+deleted file mode 100644
+index 8d10f3c..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.relay-protocol-fr
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-relay-protocol-fr
+-Title: WeeChat Relay protocol (French)
+-Author: Sébastien Helleu
+-Abstract: This manual describes WeeChat Relay Protocol, used by
+- remote GUI to communicate with Relay plugin (French version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_relay_protocol.fr.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_relay_protocol.fr.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.relay-protocol-ja b/debian-devel/weechat-devel-doc.doc-base.relay-protocol-ja
+deleted file mode 100644
+index da7db97..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.relay-protocol-ja
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-relay-protocol-ja
+-Title: WeeChat Relay protocol (Japanese)
+-Author: Sébastien Helleu
+-Abstract: This manual describes WeeChat Relay Protocol, used by
+- remote GUI to communicate with Relay plugin (Japanese version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_relay_protocol.ja.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_relay_protocol.ja.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.scripting-de b/debian-devel/weechat-devel-doc.doc-base.scripting-de
+deleted file mode 100644
+index b4aa3e0..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.scripting-de
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-scripting-de
+-Title: WeeChat scripting guide (German)
+-Author: Sébastien Helleu
+-Abstract: This document describes the API to create scripts
+- for WeeChat (German version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.de.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.de.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.scripting-en b/debian-devel/weechat-devel-doc.doc-base.scripting-en
+deleted file mode 100644
+index a533a7d..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.scripting-en
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-scripting-en
+-Title: WeeChat scripting guide (English)
+-Author: Sébastien Helleu
+-Abstract: This document describes the API to create scripts
+- for WeeChat (English version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.en.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.en.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.scripting-fr b/debian-devel/weechat-devel-doc.doc-base.scripting-fr
+deleted file mode 100644
+index e3cb1f3..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.scripting-fr
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-scripting-fr
+-Title: WeeChat scripting guide (French)
+-Author: Sébastien Helleu
+-Abstract: This document describes the API to create scripts
+- for WeeChat (French version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.fr.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.fr.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.scripting-it b/debian-devel/weechat-devel-doc.doc-base.scripting-it
+deleted file mode 100644
+index d4cc0e6..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.scripting-it
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-scripting-it
+-Title: WeeChat scripting guide (Italian)
+-Author: Sébastien Helleu
+-Abstract: This document describes the API to create scripts
+- for WeeChat (Italian version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.it.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.it.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.scripting-ja b/debian-devel/weechat-devel-doc.doc-base.scripting-ja
+deleted file mode 100644
+index 9500d40..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.scripting-ja
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-scripting-ja
+-Title: WeeChat scripting guide (Japanese)
+-Author: Sébastien Helleu
+-Abstract: This document describes the API to create scripts
+- for WeeChat (Japanese version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.ja.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.ja.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.scripting-pl b/debian-devel/weechat-devel-doc.doc-base.scripting-pl
+deleted file mode 100644
+index 8e70901..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.scripting-pl
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-scripting-pl
+-Title: WeeChat scripting guide (Polish)
+-Author: Sébastien Helleu
+-Abstract: This document describes the API to create scripts
+- for WeeChat (Polish version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.pl.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.pl.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.tester-de b/debian-devel/weechat-devel-doc.doc-base.tester-de
+deleted file mode 100644
+index e4926f1..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.tester-de
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-tester-de
+-Title: WeeChat tester's guide (German)
+-Author: Sébastien Helleu
+-Abstract: This document describes how to test and report
+- bugs against the WeeChat IRC Client (German version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_tester.de.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_tester.de.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.tester-en b/debian-devel/weechat-devel-doc.doc-base.tester-en
+deleted file mode 100644
+index ce9ac40..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.tester-en
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-tester-en
+-Title: WeeChat tester's guide (English)
+-Author: Sébastien Helleu
+-Abstract: This document describes how to test and report
+- bugs against the WeeChat IRC Client (English version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_tester.en.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_tester.en.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.tester-fr b/debian-devel/weechat-devel-doc.doc-base.tester-fr
+deleted file mode 100644
+index 976c7e7..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.tester-fr
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-tester-fr
+-Title: WeeChat tester's guide (French)
+-Author: Sébastien Helleu
+-Abstract: This document describes how to test and report
+- bugs against the WeeChat IRC Client (French version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_tester.fr.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_tester.fr.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.tester-it b/debian-devel/weechat-devel-doc.doc-base.tester-it
+deleted file mode 100644
+index 8bb540e..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.tester-it
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-tester-it
+-Title: WeeChat tester's guide (Italian)
+-Author: Sébastien Helleu
+-Abstract: This document describes how to test and report
+- bugs against the WeeChat IRC Client (Italian version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_tester.it.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_tester.it.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.tester-ja b/debian-devel/weechat-devel-doc.doc-base.tester-ja
+deleted file mode 100644
+index 4e51e91..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.tester-ja
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-tester-ja
+-Title: WeeChat tester's guide (Japanese)
+-Author: Sébastien Helleu
+-Abstract: This document describes how to test and report
+- bugs against the WeeChat IRC Client (Japanese version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_tester.ja.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_tester.ja.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.tester-pl b/debian-devel/weechat-devel-doc.doc-base.tester-pl
+deleted file mode 100644
+index 9090ed5..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.tester-pl
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-tester-pl
+-Title: WeeChat tester's guide (Polish)
+-Author: Sébastien Helleu
+-Abstract: This document describes how to test and report
+- bugs against the WeeChat IRC Client (Polish version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_tester.pl.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_tester.pl.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.user-de b/debian-devel/weechat-devel-doc.doc-base.user-de
+deleted file mode 100644
+index ad2709b..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.user-de
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-user-de
+-Title: WeeChat user's guide (German)
+-Author: Sébastien Helleu
+-Abstract: This manual describes how to use the WeeChat
+- IRC client (German version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_user.de.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_user.de.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.user-en b/debian-devel/weechat-devel-doc.doc-base.user-en
+deleted file mode 100644
+index fa468db..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.user-en
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-user-en
+-Title: WeeChat user's guide (English)
+-Author: Sébastien Helleu
+-Abstract: This manual describes how to use the WeeChat
+- IRC client (English version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_user.en.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_user.en.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.user-fr b/debian-devel/weechat-devel-doc.doc-base.user-fr
+deleted file mode 100644
+index fe6f5ab..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.user-fr
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-user-fr
+-Title: WeeChat user's guide (French)
+-Author: Sébastien Helleu
+-Abstract: This manual describes how to use the WeeChat
+- IRC client (French version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_user.fr.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_user.fr.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.user-it b/debian-devel/weechat-devel-doc.doc-base.user-it
+deleted file mode 100644
+index 1378c7a..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.user-it
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-user-it
+-Title: WeeChat user's guide (Italian)
+-Author: Sébastien Helleu
+-Abstract: This manual describes how to use the WeeChat
+- IRC client (Italian version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_user.it.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_user.it.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.user-ja b/debian-devel/weechat-devel-doc.doc-base.user-ja
+deleted file mode 100644
+index 9b30e41..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.user-ja
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-user-ja
+-Title: WeeChat user's guide (Japanese)
+-Author: Sébastien Helleu
+-Abstract: This manual describes how to use the WeeChat
+- IRC client (Japanese version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_user.ja.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_user.ja.html
+diff --git a/debian-devel/weechat-devel-doc.doc-base.user-pl b/debian-devel/weechat-devel-doc.doc-base.user-pl
+deleted file mode 100644
+index 4bcaa4d..0000000
+--- a/debian-devel/weechat-devel-doc.doc-base.user-pl
++++ /dev/null
+@@ -1,10 +0,0 @@
+-Document: weechat-user-pl
+-Title: WeeChat user's guide (Polish)
+-Author: Sébastien Helleu
+-Abstract: This manual describes how to use the WeeChat
+- IRC client (Polish version).
+-Section: Network/Communication
+-
+-Format: HTML
+-Index: /usr/share/doc/weechat-devel-doc/html/weechat_user.pl.html
+-Files: /usr/share/doc/weechat-devel-doc/html/weechat_user.pl.html
+diff --git a/debian-devel/weechat-devel-doc.install b/debian-devel/weechat-devel-doc.install
+deleted file mode 100644
+index e99edcd..0000000
+--- a/debian-devel/weechat-devel-doc.install
++++ /dev/null
+@@ -1 +0,0 @@
+-usr/share/doc/weechat/*.html usr/share/doc/weechat-devel-doc/html
+diff --git a/debian-devel/weechat-devel-doc.links b/debian-devel/weechat-devel-doc.links
+deleted file mode 100644
+index 1671cfa..0000000
+--- a/debian-devel/weechat-devel-doc.links
++++ /dev/null
+@@ -1 +0,0 @@
+-usr/share/doc/weechat-devel-doc/html usr/share/doc/weechat-devel/html
 diff --git a/debian-stable/control b/debian-stable/control
 index 74d134c..5f3d8ce 100644
 --- a/debian-stable/control
