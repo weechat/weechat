@@ -6,7 +6,7 @@ index ec63514..45a4fb7 100644
 -9
 +8
 diff --git a/debian-devel/control b/debian-devel/control
-index fabddc6..b81db8b 100644
+index 8f54814..b81db8b 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -3,22 +3,20 @@ Section: net
@@ -39,7 +39,7 @@ index fabddc6..b81db8b 100644
  Standards-Version: 3.9.8
  Homepage: https://weechat.org/
 diff --git a/debian-devel/rules b/debian-devel/rules
-index 0fb3b21..89e8ddb 100755
+index d1603c1..ee9fc59 100755
 --- a/debian-devel/rules
 +++ b/debian-devel/rules
 @@ -7,8 +7,8 @@ $(BUILDDIR)/Makefile:
@@ -61,7 +61,7 @@ index ec63514..45a4fb7 100644
 -9
 +8
 diff --git a/debian-stable/control b/debian-stable/control
-index 641c931..ebd0d96 100644
+index 74d134c..ebd0d96 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
 @@ -3,22 +3,20 @@ Section: net
@@ -94,7 +94,7 @@ index 641c931..ebd0d96 100644
  Standards-Version: 3.9.8
  Homepage: https://weechat.org/
 diff --git a/debian-stable/rules b/debian-stable/rules
-index b92991d..335610a 100755
+index a4e1e3d..a244e2f 100755
 --- a/debian-stable/rules
 +++ b/debian-stable/rules
 @@ -7,8 +7,8 @@ $(BUILDDIR)/Makefile:
@@ -131,7 +131,9 @@ index 4d0e998..bd9a567 100644
 -usr/share/man/pl/man1/weechat.1.gz usr/share/man/pl/man1/weechat-curses.1.gz
 -usr/share/man/ru/man1/weechat.1.gz usr/share/man/ru/man1/weechat-curses.1.gz
 diff --git a/debian-stable/weechat-plugins.install b/debian-stable/weechat-plugins.install
-index 198360f..980192f 100755
+old mode 100755
+new mode 100644
+index 198360f..980192f
 --- a/debian-stable/weechat-plugins.install
 +++ b/debian-stable/weechat-plugins.install
 @@ -1,10 +1,8 @@
