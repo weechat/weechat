@@ -28,6 +28,7 @@ Vcs-Browser: https://anonscm.debian.org/git/users/kolter/weechat.git
 Package: weechat-devel
 Architecture: all
 Depends: ${misc:Depends}, weechat-devel-curses (>= ${source:Version})
+Suggests: weechat-devel-doc (= ${source:Version})
 Conflicts: weechat
 Description: Fast, light and extensible chat client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
@@ -54,6 +55,7 @@ Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-core (= ${binary:Version})
 Conflicts: weechat-curses
 Recommends: weechat-devel-plugins (= ${binary:Version})
+Suggests: weechat-devel-doc (= ${source:Version})
 Description: Fast, light and extensible chat client - console client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -80,6 +82,7 @@ Package: weechat-devel-core
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Conflicts: weechat-core
+Suggests: weechat-devel-doc (= ${source:Version})
 Description: Fast, light and extensible chat client - core files
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -104,6 +107,17 @@ Description: Fast, light and extensible chat client - plugins
   - FIFO pipe for remote control
   - IRC proxy
   - Trigger
+
+Package: weechat-devel-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}
+Conflicts: weechat-doc
+Description: Fast, light and extensible chat client - documentation
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+ for many operating systems. Everything can be done with a keyboard.
+ .
+ This package contains the html documentation for WeeChat.
 
 Package: weechat-devel-dev
 Section: devel

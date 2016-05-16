@@ -1,0 +1,10 @@
+Document: weechat-scripting-pl
+Title: WeeChat scripting guide (Polish)
+Author: Sébastien Helleu
+Abstract: This document describes the API to create scripts
+ for WeeChat (Polish version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.pl.html
+Files: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.pl.html

@@ -1,0 +1,10 @@
+Document: weechat-scripting-fr
+Title: WeeChat scripting guide (French)
+Author: Sébastien Helleu
+Abstract: This document describes the API to create scripts
+ for WeeChat (French version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.fr.html
+Files: /usr/share/doc/weechat-devel-doc/html/weechat_scripting.fr.html
