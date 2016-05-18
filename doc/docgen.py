@@ -658,8 +658,8 @@ def docgen_cmd_cb(data, buf, args):
                 doc.write('| {0}\n'.format(escape(lists) if lists else '-'))
                 doc.write('| {0}\n'.format(escape(variables)))
                 if variables_update:
-                    doc.write('*{0}*: +\n{1}'.format(
-                        _('Update allowed'),
+                    doc.write('*{0}* +\n{1}'.format(
+                        _('Update allowed:'),
                         escape(variables_update)))
                 doc.write('\n')
         doc.write('|===\n')

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-04-04 14:36+0200\n"
-"PO-Revision-Date: 2016-04-16 10:34+0200\n"
+"POT-Creation-Date: 2016-05-18 07:45+0200\n"
+"PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -96,17 +96,17 @@ msgstr "Tabela hash (saída)"
 msgid "Pointer"
 msgstr "Ponteiro"
 
-msgid "plugin"
-msgstr "plugin"
+#, fuzzy
+msgid "Lists"
+msgstr "listas"
 
-msgid "variables"
+#, fuzzy
+msgid "Variables"
 msgstr "variáveis"
 
-msgid "update allowed"
+#, fuzzy
+msgid "Update allowed:"
 msgstr "atualização permitida"
-
-msgid "lists"
-msgstr "listas"
 
 msgid "Option"
 msgstr "Opção"
@@ -9999,6 +9999,9 @@ msgstr "grupo na lista de nicks"
 msgid "nick in nicklist"
 msgstr "nick na lista de nicks"
 
+msgid "plugin"
+msgstr "plugin"
+
 msgid "proxy"
 msgstr "proxy"
 
@@ -12367,6 +12370,3 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
-
-#~ msgid "callback of a script"
-#~ msgstr "callback de um script"

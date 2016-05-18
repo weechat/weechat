@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-04-04 14:36+0200\n"
-"PO-Revision-Date: 2016-03-17 20:43+0100\n"
+"POT-Creation-Date: 2016-05-18 07:45+0200\n"
+"PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys1@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -98,17 +98,17 @@ msgstr "Hashtable (wyjście)"
 msgid "Pointer"
 msgstr "Wskaźnik"
 
-msgid "plugin"
-msgstr "wtyczka"
+#, fuzzy
+msgid "Lists"
+msgstr "listy"
 
-msgid "variables"
+#, fuzzy
+msgid "Variables"
 msgstr "zmienne"
 
-msgid "update allowed"
+#, fuzzy
+msgid "Update allowed:"
 msgstr "aktualizacja dozwolona"
-
-msgid "lists"
-msgstr "listy"
 
 msgid "Option"
 msgstr "Opcja"
@@ -7775,7 +7775,8 @@ msgid ""
 msgstr ""
 "akcja do wykonania jeśli uwierzytelnianie SASL się nie powiedzie: \"continue"
 "\" dla zignorowania problemu, \"reconnect\" ponownie połącz się z serwerem, "
-"\"disconnect\" odłącz od serwera (zobacz też opcję irc.network.sasl_fail_unavailable)"
+"\"disconnect\" odłącz od serwera (zobacz też opcję irc.network."
+"sasl_fail_unavailable)"
 
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "automatycznie połącz się z serwerem przy uruchamianiu WeeChat"
@@ -9648,9 +9649,9 @@ msgstr ""
 "domyślna maska nazw plików z logami (format to \"ścieżka/do/pliku\" lub "
 "\"plik\", bez pierwszego \"/\" ponieważ opcja \"path\" jest użyta do "
 "stworzenia kompletnej ścieżki do pliku); lokalne zmienne buforów dozwolone; "
-"(powinno się używać tylko zmiennych zdefiniowanych dla wszytkich buforów, "
-"na przykład nie należy używać $server ani $channel); określenia dla daty "
-"są dozwolone (zobacz man  strftime)"
+"(powinno się używać tylko zmiennych zdefiniowanych dla wszytkich buforów, na "
+"przykład nie należy używać $server ani $channel); określenia dla daty są "
+"dozwolone (zobacz man  strftime)"
 
 msgid "use only lower case for log filenames"
 msgstr "używaj tylko małych liter dla nazw plików z logami"
@@ -9992,6 +9993,9 @@ msgstr "grupy na liście nicków"
 
 msgid "nick in nicklist"
 msgstr "nicki na liście nicków"
+
+msgid "plugin"
+msgstr "wtyczka"
 
 msgid "proxy"
 msgstr "pośrednik"
@@ -12355,6 +12359,3 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
-
-#~ msgid "callback of a script"
-#~ msgstr "callback skryptu"

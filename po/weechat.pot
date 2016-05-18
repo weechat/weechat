@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-04-04 14:36+0200\n"
+"POT-Creation-Date: 2016-05-18 07:45+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -90,16 +90,13 @@ msgstr ""
 msgid "Pointer"
 msgstr ""
 
-msgid "plugin"
+msgid "Lists"
 msgstr ""
 
-msgid "variables"
+msgid "Variables"
 msgstr ""
 
-msgid "update allowed"
-msgstr ""
-
-msgid "lists"
+msgid "Update allowed:"
 msgstr ""
 
 msgid "Option"
@@ -7637,6 +7634,9 @@ msgid "group in nicklist"
 msgstr ""
 
 msgid "nick in nicklist"
+msgstr ""
+
+msgid "plugin"
 msgstr ""
 
 msgid "proxy"

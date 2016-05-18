@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-04-04 14:36+0200\n"
-"PO-Revision-Date: 2016-04-05 07:40+0200\n"
+"POT-Creation-Date: 2016-05-18 07:45+0200\n"
+"PO-Revision-Date: 2016-05-18 07:45+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -97,17 +97,14 @@ msgstr "Table de hachage (sortie)"
 msgid "Pointer"
 msgstr "Pointeur"
 
-msgid "plugin"
-msgstr "extension"
+msgid "Lists"
+msgstr "Listes"
 
-msgid "variables"
-msgstr "variables"
+msgid "Variables"
+msgstr "Variables"
 
-msgid "update allowed"
-msgstr "mise à jour autorisée"
-
-msgid "lists"
-msgstr "listes"
+msgid "Update allowed:"
+msgstr "Mise à jour autorisée :"
 
 msgid "Option"
 msgstr "Option"
@@ -10194,6 +10191,9 @@ msgstr "groupe dans la liste de pseudos"
 msgid "nick in nicklist"
 msgstr "pseudo dans la liste de pseudos"
 
+msgid "plugin"
+msgstr "extension"
+
 msgid "proxy"
 msgstr "proxy"
 
@@ -12614,13 +12614,3 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
-
-#~ msgid "callback of a script"
-#~ msgstr "callback d'un script"
-
-#~ msgid ""
-#~ "cause SASL authentication failure when SASL is requested but unavailable "
-#~ "on the server"
-#~ msgstr ""
-#~ "provoquer un échec d'authentification SASL quand SASL est demandé mais "
-#~ "non disponible sur le serveur"

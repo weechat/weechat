@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-04-04 14:36+0200\n"
-"PO-Revision-Date: 2016-01-05 07:51+0100\n"
+"POT-Creation-Date: 2016-05-18 07:45+0200\n"
+"PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -93,16 +93,13 @@ msgstr ""
 msgid "Pointer"
 msgstr ""
 
-msgid "plugin"
-msgstr "eklenti"
-
-msgid "variables"
+msgid "Lists"
 msgstr ""
 
-msgid "update allowed"
+msgid "Variables"
 msgstr ""
 
-msgid "lists"
+msgid "Update allowed:"
 msgstr ""
 
 msgid "Option"
@@ -7715,6 +7712,9 @@ msgstr ""
 msgid "nick in nicklist"
 msgstr ""
 
+msgid "plugin"
+msgstr "eklenti"
+
 msgid "proxy"
 msgstr ""
 
@@ -9660,7 +9660,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
-
-#, fuzzy
-#~ msgid "callback of a script"
-#~ msgstr "betiklerin listesi"

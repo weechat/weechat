@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-04-04 14:36+0200\n"
-"PO-Revision-Date: 2016-01-17 08:52+0100\n"
+"POT-Creation-Date: 2016-05-18 07:45+0200\n"
+"PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -102,18 +102,14 @@ msgstr ""
 msgid "Pointer"
 msgstr "perc"
 
-#, fuzzy
-msgid "plugin"
-msgstr "  (nem található bővítőmodul)\n"
-
-#, fuzzy
-msgid "variables"
-msgstr "  . típus: szám\n"
-
-msgid "update allowed"
+msgid "Lists"
 msgstr ""
 
-msgid "lists"
+#, fuzzy
+msgid "Variables"
+msgstr "  . típus: szám\n"
+
+msgid "Update allowed:"
 msgstr ""
 
 #, fuzzy
@@ -8525,6 +8521,10 @@ msgstr "név színe"
 msgid "nick in nicklist"
 msgstr "%s nem található ilyen mellőzés\n"
 
+#, fuzzy
+msgid "plugin"
+msgstr "  (nem található bővítőmodul)\n"
+
 msgid "proxy"
 msgstr ""
 
@@ -10633,7 +10633,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy
-#~ msgid "callback of a script"
-#~ msgstr "Aliaszok listája:\n"

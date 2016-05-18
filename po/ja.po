@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-04-04 14:36+0200\n"
-"PO-Revision-Date: 2016-04-08 09:00+0900\n"
+"POT-Creation-Date: 2016-05-18 07:45+0200\n"
+"PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
 "Language: ja\n"
@@ -94,17 +94,17 @@ msgstr "ハッシュテーブル (出力)"
 msgid "Pointer"
 msgstr "ポインタ"
 
-msgid "plugin"
-msgstr "プラグイン"
+#, fuzzy
+msgid "Lists"
+msgstr "リスト"
 
-msgid "variables"
+#, fuzzy
+msgid "Variables"
 msgstr "変数"
 
-msgid "update allowed"
+#, fuzzy
+msgid "Update allowed:"
 msgstr "アップデート可"
-
-msgid "lists"
-msgstr "リスト"
 
 msgid "Option"
 msgstr "オプション"
@@ -9802,6 +9802,9 @@ msgstr "ニックネームリストにあるグループ"
 msgid "nick in nicklist"
 msgstr "ニックネームリストにあるニックネーム"
 
+msgid "plugin"
+msgstr "プラグイン"
+
 msgid "proxy"
 msgstr "プロキシ"
 
@@ -12124,6 +12127,3 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
-
-#~ msgid "callback of a script"
-#~ msgstr "スクリプトのコールバック"
