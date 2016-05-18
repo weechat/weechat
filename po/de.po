@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-05-18 07:45+0200\n"
+"POT-Creation-Date: 2016-05-18 07:50+0200\n"
 "PO-Revision-Date: 2016-05-18 07:42+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
@@ -11026,6 +11026,11 @@ msgid "text color of selected line in relay buffer"
 msgstr "Textfarbe für selektierte Zeile in Relay-Buffer"
 
 msgid ""
+"allow empty password in relay (it should be enabled only for tests or local "
+"network)"
+msgstr ""
+
+msgid ""
 "POSIX extended regular expression with IPs allowed to use relay (case "
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
 "\"^(123.45.67.89|192.160.*)$\""
@@ -11073,9 +11078,11 @@ msgstr ""
 "maximale Anzahl an Clients die mit einem Port verbunden sein dürfen (0 = "
 "keine Begrenzung)"
 
+#, fuzzy
 msgid ""
 "password required by clients to access this relay (empty value means no "
-"password required) (note: content is evaluated, see /help eval)"
+"password required, see option relay.network.allow_empty_password) (note: "
+"content is evaluated, see /help eval)"
 msgstr ""
 "Passwort wird von Clients benötigt um Zugriff auf dieses Relay zu erhalten "
 "(kein Eintrag bedeutet, dass kein Passwort benötigt wird) (Hinweis: Inhalt "
@@ -11176,6 +11183,12 @@ msgstr "%s: Socket wurde für %s (Port %d) geschlossen"
 #, c-format
 msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s%s: Der Client wird am Port %d (%s) nicht akzeptiert: Fehler %d %s"
+
+#, c-format
+msgid ""
+"%s%s: cannot accept client because relay password is empty, and option relay."
+"network.allow_empty_password is off"
+msgstr ""
 
 #, c-format
 msgid "%s%s: client not allowed (max %d client is allowed at same time)"

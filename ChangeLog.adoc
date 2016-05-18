@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * doc: switch to asciidoctor to build docs and man page
+  * relay: add option relay.network.allow_empty_password (issue #735)
 
 Bugs fixed::
 

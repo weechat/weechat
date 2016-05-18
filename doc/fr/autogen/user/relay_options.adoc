@@ -87,6 +87,11 @@
 ** type: entier
 ** valeurs: 0 .. 65535 (valeur par défaut: `+256+`)
 
+* [[option_relay.network.allow_empty_password]] *relay.network.allow_empty_password*
+** description: pass:none[autoriser un mot de passe vide dans relay (devrait être activé seulement pour des tests ou sur le réseau local)]
+** type: booléen
+** valeurs: on, off (valeur par défaut: `+off+`)
+
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
 ** description: pass:none[expression régulière POSIX étendue avec les IPs autorisées pour le relai (insensible à la casse, utilisez "(?-i)" en début de chaîne pour la rendre insensible à la casse), exemple : "^(123.45.67.89|192.160.*)$"]
 ** type: chaîne
@@ -118,7 +123,7 @@
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `+5+`)
 
 * [[option_relay.network.password]] *relay.network.password*
-** description: pass:none[mot de passe requis par les clients pour accéder à ce relai (une valeur vide indique que le mot de passe n'est pas nécessaire) (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[mot de passe requis par les clients pour accéder à ce relai (une valeur vide indique que le mot de passe n'est pas nécessaire, voir l'option relay.network.allow_empty_password) (note : le contenu est évalué, voir /help eval)]
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `+""+`)
 

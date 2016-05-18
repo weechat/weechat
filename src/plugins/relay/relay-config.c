@@ -52,6 +52,7 @@ struct t_config_option *relay_config_color_text_selected;
 
 /* relay config, network section */
 
+struct t_config_option *relay_config_network_allow_empty_password;
 struct t_config_option *relay_config_network_allowed_ips;
 struct t_config_option *relay_config_network_bind_address;
 struct t_config_option *relay_config_network_clients_purge_delay;
@@ -750,6 +751,13 @@ relay_config_init ()
         return 0;
     }
 
+    relay_config_network_allow_empty_password = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "allow_empty_password", "boolean",
+        N_("allow empty password in relay (it should be enabled only for "
+           "tests or local network)"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_allowed_ips = weechat_config_new_option (
         relay_config_file, ptr_section,
         "allowed_ips", "string",
@@ -768,9 +776,7 @@ relay_config_init ()
            "interfaces, use \"127.0.0.1\" to allow connections from "
             "local machine only)"),
         NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_change_network_bind_address_cb, NULL, NULL,
-        NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_clients_purge_delay = weechat_config_new_option (
         relay_config_file, ptr_section,
         "clients_purge_delay", "integer",
@@ -806,8 +812,9 @@ relay_config_init ()
         relay_config_file, ptr_section,
         "password", "string",
         N_("password required by clients to access this relay (empty value "
-            "means no password required) (note: content is evaluated, see "
-           "/help eval)"),
+           "means no password required, see option "
+           "relay.network.allow_empty_password) (note: content is evaluated, "
+           "see /help eval)"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_ssl_cert_key = weechat_config_new_option (

@@ -87,6 +87,11 @@
 ** typ: liczba
 ** wartości: 0 .. 65535 (domyślna wartość: `+256+`)
 
+* [[option_relay.network.allow_empty_password]] *relay.network.allow_empty_password*
+** opis: pass:none[allow empty password in relay (it should be enabled only for tests or local network)]
+** typ: bool
+** wartości: on, off (domyślna wartość: `+off+`)
+
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
 ** opis: pass:none[rozszerzone wyrażenia regularne POSIX z adresami IP dozwolonymi dla pośrednika (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^(123.45.67.89|192.160.*)$"]
 ** typ: ciąg
@@ -118,7 +123,7 @@
 ** wartości: 0 .. 2147483647 (domyślna wartość: `+5+`)
 
 * [[option_relay.network.password]] *relay.network.password*
-** opis: pass:none[hasło wymagane od klientów do połączenia z tym pośrednikiem (pusta wartość oznacza brak wymaganego hasła) (zawartość jest przetwarzana, zobacz /help eval)]
+** opis: pass:none[password required by clients to access this relay (empty value means no password required, see option relay.network.allow_empty_password) (note: content is evaluated, see /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 

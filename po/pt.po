@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-05-18 07:45+0200\n"
+"POT-Creation-Date: 2016-05-18 07:50+0200\n"
 "PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -10576,6 +10576,11 @@ msgid "text color of selected line in relay buffer"
 msgstr "cor do texto da linha selecionada no buffer de reencaminhamento"
 
 msgid ""
+"allow empty password in relay (it should be enabled only for tests or local "
+"network)"
+msgstr ""
+
+msgid ""
 "POSIX extended regular expression with IPs allowed to use relay (case "
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
 "\"^(123.45.67.89|192.160.*)$\""
@@ -10618,9 +10623,11 @@ msgstr ""
 msgid "maximum number of clients connecting to a port (0 = no limit)"
 msgstr "número máximo de clientes que se conectam a uma porta (0 = sem limite)"
 
+#, fuzzy
 msgid ""
 "password required by clients to access this relay (empty value means no "
-"password required) (note: content is evaluated, see /help eval)"
+"password required, see option relay.network.allow_empty_password) (note: "
+"content is evaluated, see /help eval)"
 msgstr ""
 "palavra-passe solicitada aos clientes para acederem a este reencaminhador (o "
 "valor vazio significa que a palavra-passe não é necessária) (nota: o "
@@ -10714,6 +10721,12 @@ msgstr "%s: socket de %s fechado (porta %d)"
 #, c-format
 msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s%s: não é possível aceitar o cliente na porta %d (%s): erro %d %s"
+
+#, c-format
+msgid ""
+"%s%s: cannot accept client because relay password is empty, and option relay."
+"network.allow_empty_password is off"
+msgstr ""
 
 #, c-format
 msgid "%s%s: client not allowed (max %d client is allowed at same time)"

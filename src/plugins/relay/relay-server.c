@@ -229,6 +229,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
     int client_fd, flags, set, max_clients, num_clients_on_port;
     char ipv4_address[INET_ADDRSTRLEN + 1], ipv6_address[INET6_ADDRSTRLEN + 1];
     char *ptr_ip_address;
+    const char *relay_password;
 
     /* make C compiler happy */
     (void) data;
@@ -258,6 +259,22 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
                         server->port, server->protocol_string,
                         errno, strerror (errno));
+        return WEECHAT_RC_OK;
+    }
+
+    /* check if relay password is empty and if it is not allowed */
+    relay_password = weechat_string_eval_expression (
+        weechat_config_string (relay_config_network_password),
+        NULL, NULL, NULL);
+    if (!weechat_config_boolean (relay_config_network_allow_empty_password)
+        && (!relay_password || !relay_password[0]))
+    {
+        weechat_printf (NULL,
+                        _("%s%s: cannot accept client because relay password "
+                          "is empty, and option "
+                          "relay.network.allow_empty_password is off"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+        close (client_fd);
         return WEECHAT_RC_OK;
     }
 

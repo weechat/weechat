@@ -87,6 +87,11 @@
 ** tipo: intero
 ** valori: 0 .. 65535 (valore predefinito: `+256+`)
 
+* [[option_relay.network.allow_empty_password]] *relay.network.allow_empty_password*
+** descrizione: pass:none[allow empty password in relay (it should be enabled only for tests or local network)]
+** tipo: bool
+** valori: on, off (valore predefinito: `+off+`)
+
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
 ** descrizione: pass:none[POSIX extended regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^(123.45.67.89|192.160.*)$"]
 ** tipo: stringa
@@ -118,7 +123,7 @@
 ** valori: 0 .. 2147483647 (valore predefinito: `+5+`)
 
 * [[option_relay.network.password]] *relay.network.password*
-** descrizione: pass:none[password richiesta dai client per accedere a questo relay (un valore nullo corrisponde a nessuna password richiesta) (nota: il contenuto viene valutato, consultare /help eval)]
+** descrizione: pass:none[password required by clients to access this relay (empty value means no password required, see option relay.network.allow_empty_password) (note: content is evaluated, see /help eval)]
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `+""+`)
 

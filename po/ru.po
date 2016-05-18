@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-05-18 07:45+0200\n"
+"POT-Creation-Date: 2016-05-18 07:50+0200\n"
 "PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9084,6 +9084,11 @@ msgid "text color of selected line in relay buffer"
 msgstr "цвет названия сервера"
 
 msgid ""
+"allow empty password in relay (it should be enabled only for tests or local "
+"network)"
+msgstr ""
+
+msgid ""
 "POSIX extended regular expression with IPs allowed to use relay (case "
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
 "\"^(123.45.67.89|192.160.*)$\""
@@ -9116,7 +9121,8 @@ msgstr "максимальное количество команд в истор
 
 msgid ""
 "password required by clients to access this relay (empty value means no "
-"password required) (note: content is evaluated, see /help eval)"
+"password required, see option relay.network.allow_empty_password) (note: "
+"content is evaluated, see /help eval)"
 msgstr ""
 
 msgid ""
@@ -9195,6 +9201,12 @@ msgstr "FIFO pipe закрыт\n"
 #, fuzzy, c-format
 msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s невозможно создать сокет\n"
+
+#, c-format
+msgid ""
+"%s%s: cannot accept client because relay password is empty, and option relay."
+"network.allow_empty_password is off"
+msgstr ""
 
 #, c-format
 msgid "%s%s: client not allowed (max %d client is allowed at same time)"

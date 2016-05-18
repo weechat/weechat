@@ -87,6 +87,11 @@
 ** タイプ: 整数
 ** 値: 0 .. 65535 (デフォルト値: `+256+`)
 
+* [[option_relay.network.allow_empty_password]] *relay.network.allow_empty_password*
+** 説明: pass:none[allow empty password in relay (it should be enabled only for tests or local network)]
+** タイプ: ブール
+** 値: on, off (デフォルト値: `+off+`)
+
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
 ** 説明: pass:none[リレーの利用を許可する IP アドレスの POSIX 拡張正規表現 (大文字小文字の区別無し、最初に "(?-i)" をつければ区別有り)、例: "^(123.45.67.89|192.160.*)$"]
 ** タイプ: 文字列
@@ -118,7 +123,7 @@
 ** 値: 0 .. 2147483647 (デフォルト値: `+5+`)
 
 * [[option_relay.network.password]] *relay.network.password*
-** 説明: pass:none[このリレーを利用するためにクライアントが必要なパスワード (空の場合パスワードなし) (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[password required by clients to access this relay (empty value means no password required, see option relay.network.allow_empty_password) (note: content is evaluated, see /help eval)]
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `+""+`)
 
