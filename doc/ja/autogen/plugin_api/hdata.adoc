@@ -6,7 +6,7 @@
 :hdata_update_delete: __delete
 [width="100%",cols="^1,^2,2,2,5",options="header"]
 |===
-| プラグイン | 名前 | 説明 | Lists | Variables
+| プラグイン | 名前 | 説明 | リスト | 変数
 
 | guile
 | [[hdata_guile_script]]<<hdata_guile_script,guile_script>>
@@ -694,7 +694,7 @@ _last_gui_history_ +
 _next_history_   (pointer, hdata: "history") +
 _prev_history_   (pointer, hdata: "history") +
 
-*Update allowed:* +
+*更新可能な変数:* +
     _{hdata_update_create}_ +
     _{hdata_update_delete}_ +
 
@@ -822,7 +822,7 @@ _prefix_   (shared_string) +
 _prefix_length_   (integer) +
 _message_   (string) +
 
-*Update allowed:* +
+*更新可能な変数:* +
     _date_ (time) +
     _date_printed_ (time) +
     _tags_array_ (shared_string) +
