@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-05-18 07:50+0200\n"
-"PO-Revision-Date: 2016-05-18 07:42+0200\n"
+"PO-Revision-Date: 2016-05-20 17:39+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de\n"
@@ -102,17 +102,14 @@ msgstr "Hashtable (Ausgabe)"
 msgid "Pointer"
 msgstr "Pointer"
 
-#, fuzzy
 msgid "Lists"
 msgstr "Listen"
 
-#, fuzzy
 msgid "Variables"
 msgstr "Variablen"
 
-#, fuzzy
 msgid "Update allowed:"
-msgstr "Update erlaubt"
+msgstr "Update erlaubt:"
 
 msgid "Option"
 msgstr "Einstellung"
@@ -11029,6 +11026,8 @@ msgid ""
 "allow empty password in relay (it should be enabled only for tests or local "
 "network)"
 msgstr ""
+"erlaubt das kein Passwort für Relay genutzt wird (sollte ausschließlich für "
+"Testzwecke oder auf einem lokalen System genutzt werden)"
 
 msgid ""
 "POSIX extended regular expression with IPs allowed to use relay (case "
@@ -11078,15 +11077,15 @@ msgstr ""
 "maximale Anzahl an Clients die mit einem Port verbunden sein dürfen (0 = "
 "keine Begrenzung)"
 
-#, fuzzy
 msgid ""
 "password required by clients to access this relay (empty value means no "
 "password required, see option relay.network.allow_empty_password) (note: "
 "content is evaluated, see /help eval)"
 msgstr ""
 "Passwort wird von Clients benötigt um Zugriff auf dieses Relay zu erhalten "
-"(kein Eintrag bedeutet, dass kein Passwort benötigt wird) (Hinweis: Inhalt "
-"wird evaluiert, siehe /help eval)"
+"(kein Eintrag bedeutet, dass kein Passwort benötigt wird, siehe Option relay."
+"network.allow_empty_password) (Hinweis: Inhalt wird evaluiert, siehe /help "
+"eval)"
 
 msgid ""
 "file with SSL certificate and private key (for serving clients with SSL)"
@@ -11189,6 +11188,8 @@ msgid ""
 "%s%s: cannot accept client because relay password is empty, and option relay."
 "network.allow_empty_password is off"
 msgstr ""
+"%s%s: client wird nicht akzeptiert da kein Relay-Passwort existiert und die "
+"Option relay.network.allow_empty_password deaktiviert ist"
 
 #, c-format
 msgid "%s%s: client not allowed (max %d client is allowed at same time)"
