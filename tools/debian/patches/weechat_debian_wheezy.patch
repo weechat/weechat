@@ -404,8 +404,7 @@ deleted file mode 100644
 index 6b662b6..0000000
 --- a/debian-devel/weechat-devel-doc.doc-base.quickstart-ru
 +++ /dev/null
-@@ -1,10 +0,0 @@
--# coding: utf-8
+@@ -1,9 +0,0 @@
 -Document: weechat-quickstart-ru
 -Title: WeeChat quick start guide (Russian)
 -Author: Sébastien Helleu
