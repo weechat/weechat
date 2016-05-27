@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-05-18 07:50+0200\n"
+"POT-Creation-Date: 2016-05-27 20:09+0200\n"
 "PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -242,8 +242,8 @@ msgstr "  %s (eklenti: %s)"
 msgid "No bar item defined"
 msgstr ""
 
-#, c-format
-msgid "%sNot enough memory"
+#, fuzzy, c-format
+msgid "%sNot enough memory (%s)"
 msgstr "%sYeterli bellek yok"
 
 #, c-format
@@ -7097,9 +7097,9 @@ msgid ""
 "value is %d, try a lower value like %d or %d)"
 msgstr ""
 
-#, c-format
-msgid "%s%s: not enough memory"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: not enough memory (%s)"
+msgstr "%sYeterli bellek yok"
 
 #, c-format
 msgid "%s%s: timeout"
@@ -7265,6 +7265,10 @@ msgstr ""
 msgid ""
 "%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
 "for this buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory"
 msgstr ""
 
 #, c-format

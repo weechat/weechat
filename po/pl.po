@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-05-18 07:50+0200\n"
+"POT-Creation-Date: 2016-05-27 20:09+0200\n"
 "PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys1@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -292,8 +292,8 @@ msgstr "  %s (wtyczka: %s)"
 msgid "No bar item defined"
 msgstr "Nie zdefiniowano elementów paska"
 
-#, c-format
-msgid "%sNot enough memory"
+#, fuzzy, c-format
+msgid "%sNot enough memory (%s)"
 msgstr "%sZa mało pamięci"
 
 #, c-format
@@ -9307,8 +9307,8 @@ msgstr ""
 "%s%s: powinieneś zmienić wartość opcji irc.server.%s.ssl_dhkey_size (obecna "
 "wartość to %d, spróbuj niższej wartości jak %d lub %d)"
 
-#, c-format
-msgid "%s%s: not enough memory"
+#, fuzzy, c-format
+msgid "%s%s: not enough memory (%s)"
 msgstr "%s%s: za mało pamięci"
 
 #, c-format
@@ -9485,6 +9485,10 @@ msgid ""
 msgstr ""
 "%s%s: nie można odnaleźć maski pliku dla bufora \"%s\", logowanie dla tego "
 "bufora zostaje wyłączone"
+
+#, c-format
+msgid "%s%s: not enough memory"
+msgstr "%s%s: za mało pamięci"
 
 #, c-format
 msgid ""

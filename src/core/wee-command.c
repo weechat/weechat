@@ -239,8 +239,9 @@ COMMAND_CALLBACK(bar)
         if (!str_type)
         {
             gui_chat_printf (NULL,
-                             _("%sNot enough memory"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                             _("%sNot enough memory (%s)"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "/bar");
             return WEECHAT_RC_OK;
         }
         type = gui_bar_search_type (str_type);
@@ -5081,8 +5082,9 @@ COMMAND_CALLBACK(repeat)
                 if (!repeat_args)
                 {
                     gui_chat_printf (NULL,
-                                     _("%sNot enough memory"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                                     _("%sNot enough memory (%s)"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     "/repeat");
                     return WEECHAT_RC_OK;
                 }
                 repeat_args[0] = strdup (buffer->full_name);
@@ -6040,8 +6042,9 @@ COMMAND_CALLBACK(upgrade)
     if (!ptr_binary && !quit)
     {
         gui_chat_printf (NULL,
-                         _("%sNot enough memory"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                         _("%sNot enough memory (%s)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         "/upgrade");
         return WEECHAT_RC_OK;
     }
 
@@ -6400,8 +6403,9 @@ COMMAND_CALLBACK(wait)
     if (!timer_args)
     {
         gui_chat_printf (NULL,
-                         _("%sNot enough memory"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                         _("%sNot enough memory (%s)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         "/wait");
         return WEECHAT_RC_OK;
     }
     timer_args[0] = strdup (buffer->full_name);

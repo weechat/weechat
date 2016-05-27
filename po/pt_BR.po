@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-05-18 07:50+0200\n"
+"POT-Creation-Date: 2016-05-27 20:09+0200\n"
 "PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -302,8 +302,8 @@ msgstr "  %s (plugin: %s)"
 msgid "No bar item defined"
 msgstr "Nenhum item da barra definido"
 
-#, c-format
-msgid "%sNot enough memory"
+#, fuzzy, c-format
+msgid "%sNot enough memory (%s)"
 msgstr "%sMemória insuficiente"
 
 #, c-format
@@ -8261,8 +8261,8 @@ msgstr ""
 "%s%s: você deve alterar a opção irc.server.%s.ssl_dhkey_size (valor atual é "
 "%d)"
 
-#, c-format
-msgid "%s%s: not enough memory"
+#, fuzzy, c-format
+msgid "%s%s: not enough memory (%s)"
 msgstr "%s%s: memória insuficiente"
 
 #, fuzzy, c-format
@@ -8444,6 +8444,10 @@ msgid ""
 msgstr ""
 "%s%s: não foi possível encontrar máscara de nome de arquigo para o buffer "
 "\"%s\", o registro está desabilitado para este buffer"
+
+#, c-format
+msgid "%s%s: not enough memory"
+msgstr "%s%s: memória insuficiente"
 
 #, c-format
 msgid ""

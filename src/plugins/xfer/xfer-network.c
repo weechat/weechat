@@ -620,8 +620,9 @@ xfer_network_connect_chat_recv_cb (const void *pointer, void *data,
             break;
         case WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
             weechat_printf (NULL,
-                            _("%s%s: not enough memory"),
-                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
+                            _("%s%s: not enough memory (%s)"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                            (error) ? error : "-");
             break;
         case WEECHAT_HOOK_CONNECT_TIMEOUT:
             weechat_printf (NULL,

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-05-18 07:50+0200\n"
+"POT-Creation-Date: 2016-05-27 20:09+0200\n"
 "PO-Revision-Date: 2016-05-18 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation/ja>\n"
@@ -285,8 +285,8 @@ msgstr "  %s (プラグイン: %s)"
 msgid "No bar item defined"
 msgstr "バー要素が定義されていません"
 
-#, c-format
-msgid "%sNot enough memory"
+#, fuzzy, c-format
+msgid "%sNot enough memory (%s)"
 msgstr "%sメモリ不足"
 
 #, c-format
@@ -9120,8 +9120,8 @@ msgstr ""
 "%s%s: オプション irc.server.%s.ssl_dhkey_size をいろいろと試してください (現"
 "在の値は %d、%d や %d などの低い値を試してください)"
 
-#, c-format
-msgid "%s%s: not enough memory"
+#, fuzzy, c-format
+msgid "%s%s: not enough memory (%s)"
 msgstr "%s%s: メモリが足りません"
 
 #, c-format
@@ -9299,6 +9299,10 @@ msgid ""
 msgstr ""
 "%s%s: バッファ \"%s\" のファイル名マスクが見つかりません、ログ保存を無効化し"
 "ています"
+
+#, c-format
+msgid "%s%s: not enough memory"
+msgstr "%s%s: メモリが足りません"
 
 #, c-format
 msgid ""

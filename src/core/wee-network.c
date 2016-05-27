@@ -1609,7 +1609,7 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
             (hook_connect->callback_pointer,
              hook_connect->callback_data,
              WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
-             0, sock, cb_error, cb_ip_address);
+             0, sock, "child_read_cb", NULL);
         unhook (hook_connect);
     }
 
@@ -1695,7 +1695,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
             (hook_connect->callback_pointer,
              hook_connect->callback_data,
              WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
-             0, -1, NULL, NULL);
+             0, -1, "pipe", NULL);
         unhook (hook_connect);
         return;
     }
@@ -1710,7 +1710,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
             (hook_connect->callback_pointer,
              hook_connect->callback_data,
              WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
-             0, -1, NULL, NULL);
+             0, -1, "socketpair", NULL);
         unhook (hook_connect);
         return;
     }
@@ -1732,7 +1732,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
                 (hook_connect->callback_pointer,
                  hook_connect->callback_data,
                  WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
-                 0, -1, NULL, NULL);
+                 0, -1, "fork", NULL);
             unhook (hook_connect);
             return;
         /* child process */

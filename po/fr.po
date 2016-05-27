@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-05-18 07:50+0200\n"
-"PO-Revision-Date: 2016-05-18 07:53+0200\n"
+"POT-Creation-Date: 2016-05-27 20:09+0200\n"
+"PO-Revision-Date: 2016-05-27 20:10+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -290,8 +290,8 @@ msgid "No bar item defined"
 msgstr "Pas d'objet de barre défini"
 
 #, c-format
-msgid "%sNot enough memory"
-msgstr "%sPas assez de mémoire"
+msgid "%sNot enough memory (%s)"
+msgstr "%sPas assez de mémoire (%s)"
 
 #, c-format
 msgid "%sError: wrong type \"%s\" for bar \"%s\""
@@ -9490,8 +9490,8 @@ msgstr ""
 "valeur actuelle est %d, essayez avec une valeur plus petite comme %d ou %d)"
 
 #, c-format
-msgid "%s%s: not enough memory"
-msgstr "%s%s : pas assez de mémoire"
+msgid "%s%s: not enough memory (%s)"
+msgstr "%s%s : pas assez de mémoire (%s)"
 
 #, c-format
 msgid "%s%s: timeout"
@@ -9669,6 +9669,10 @@ msgid ""
 msgstr ""
 "%s%s : impossible de trouver le masque de nom de fichier pour le tampon \"%s"
 "\", l'enregistrement est désactivé pour ce tampon"
+
+#, c-format
+msgid "%s%s: not enough memory"
+msgstr "%s%s : pas assez de mémoire"
 
 #, c-format
 msgid ""

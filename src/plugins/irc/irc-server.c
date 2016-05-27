@@ -3618,8 +3618,9 @@ irc_server_connect_cb (const void *pointer, void *data,
         case WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
             weechat_printf (
                 server->buffer,
-                _("%s%s: not enough memory"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                _("%s%s: not enough memory (%s)"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                (error) ? error : "-");
             if (error && error[0])
             {
                 weechat_printf (
@@ -3939,8 +3940,9 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
             {
                 weechat_printf (
                     server->buffer,
-                    _("%s%s: not enough memory"),
-                    weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                    _("%s%s: not enough memory (%s)"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                    "fingerprint");
             }
         }
 
@@ -4432,8 +4434,9 @@ irc_server_connect (struct t_irc_server *server)
         {
             weechat_printf (
                 server->buffer,
-                _("%s%s: not enough memory"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                _("%s%s: not enough memory (%s)"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                "proxy");
             return 0;
         }
         snprintf (option_name, length, "weechat.proxy.%s.type", proxy);

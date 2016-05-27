@@ -1119,16 +1119,18 @@ xfer_add_cb (const void *pointer, void *data,
             if (!path)
             {
                 weechat_printf (NULL,
-                                _("%s%s: not enough memory"),
-                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
+                                _("%s%s: not enough memory (%s)"),
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                                "xfer_add, path");
                 goto error;
             }
             filename2 = malloc (strlen (path) + strlen (filename) + 4);
             if (!filename2)
             {
                 weechat_printf (NULL,
-                                _("%s%s: not enough memory"),
-                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
+                                _("%s%s: not enough memory (%s)"),
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                                "xfer_add, filename2");
                 free (path);
                 goto error;
             }

@@ -24,6 +24,7 @@ New features::
 
 Improvements::
 
+  * core, irc, xfer: display more information in memory allocation errors (issue #573)
   * relay: allow escape of comma in command "init" (weechat protocol) (issue #730)
 
 Bug fixes::

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-05-18 07:50+0200\n"
+"POT-Creation-Date: 2016-05-27 20:09+0200\n"
 "PO-Revision-Date: 2016-05-18 07:42+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -291,8 +291,8 @@ msgstr "  %s (plugin: %s)"
 msgid "No bar item defined"
 msgstr "Žádné položky pole nejsou definovány"
 
-#, c-format
-msgid "%sNot enough memory"
+#, fuzzy, c-format
+msgid "%sNot enough memory (%s)"
 msgstr "%sNedostatek paměti"
 
 #, c-format
@@ -8436,8 +8436,8 @@ msgstr ""
 "%s%s: měl by jste změnit volbu irc.server.%s.ssl_dhkey_size (aktuální "
 "hodnota je %d)"
 
-#, c-format
-msgid "%s%s: not enough memory"
+#, fuzzy, c-format
+msgid "%s%s: not enough memory (%s)"
 msgstr "%s%s: nedostatek paměti"
 
 #, c-format
@@ -8615,6 +8615,10 @@ msgid ""
 msgstr ""
 "%s%s: nemohu najít jméno souboru masky pro buffer \"%s\", logování pro tento "
 "buffer je vypnuto"
+
+#, c-format
+msgid "%s%s: not enough memory"
+msgstr "%s%s: nedostatek paměti"
 
 #, c-format
 msgid ""

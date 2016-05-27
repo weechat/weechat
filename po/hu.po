@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-05-18 07:50+0200\n"
+"POT-Creation-Date: 2016-05-27 20:09+0200\n"
 "PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -277,7 +277,7 @@ msgid "No bar item defined"
 msgstr "Nincs aliasz definiálva.\n"
 
 #, fuzzy, c-format
-msgid "%sNot enough memory"
+msgid "%sNot enough memory (%s)"
 msgstr "Nincs elég memória az új sorhoz\n"
 
 #, fuzzy, c-format
@@ -7838,7 +7838,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: not enough memory"
+msgid "%s%s: not enough memory (%s)"
 msgstr "Nincs elég memória az új sorhoz\n"
 
 #, fuzzy, c-format
@@ -8014,6 +8014,10 @@ msgid ""
 "%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
 "for this buffer"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory"
+msgstr "Nincs elég memória az új sorhoz\n"
 
 #, c-format
 msgid ""
