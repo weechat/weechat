@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-05-27 20:09+0200\n"
-"PO-Revision-Date: 2016-05-20 17:39+0200\n"
+"PO-Revision-Date: 2016-05-28 10:41+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de\n"
@@ -300,9 +300,9 @@ msgstr "  %s (Erweiterung: %s)"
 msgid "No bar item defined"
 msgstr "Es wurde kein Bar-Item festgelegt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sNot enough memory (%s)"
-msgstr "%sNicht genügend Speicher"
+msgstr "%sNicht ausreichend Speicher (%s)"
 
 #, c-format
 msgid "%sError: wrong type \"%s\" for bar \"%s\""
@@ -9728,9 +9728,9 @@ msgstr ""
 "verändert werden (zur Zeit genutzter Wert: %d, es sollte ein kleinerer Wert "
 "ausprobiert werden, z.B. %d oder %d)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: not enough memory (%s)"
-msgstr "%s%s: nicht genügend Speicher"
+msgstr "%s%s: nicht ausreichend Speicher (%s)"
 
 #, c-format
 msgid "%s%s: timeout"
