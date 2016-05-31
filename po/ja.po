@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-05-27 20:09+0200\n"
-"PO-Revision-Date: 2016-05-18 09:00+0900\n"
+"PO-Revision-Date: 2016-05-29 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation/ja>\n"
 "Language: ja\n"
@@ -285,9 +285,9 @@ msgstr "  %s (プラグイン: %s)"
 msgid "No bar item defined"
 msgstr "バー要素が定義されていません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sNot enough memory (%s)"
-msgstr "%sメモリ不足"
+msgstr "%sメモリ不足 (%s)"
 
 #, c-format
 msgid "%sError: wrong type \"%s\" for bar \"%s\""
@@ -9120,9 +9120,9 @@ msgstr ""
 "%s%s: オプション irc.server.%s.ssl_dhkey_size をいろいろと試してください (現"
 "在の値は %d、%d や %d などの低い値を試してください)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: not enough memory (%s)"
-msgstr "%s%s: メモリが足りません"
+msgstr "%s%s: メモリが足りません (%s)"
 
 #, c-format
 msgid "%s%s: timeout"
