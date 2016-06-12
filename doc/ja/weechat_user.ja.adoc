@@ -3018,32 +3018,32 @@ trigger.trigger.beep.return_code = ok
   1. シグナル名 (優先度の指定も可) (必須) +
   2. シグナル名 (優先度の指定も可) +
   3. ... |
-  `*,irc_in_privmsg` +
-  `*,irc_in_privmsg;*,irc_in_notice` +
-  `signal_sigwinch`
+  `+*,irc_in_privmsg+` +
+  `+*,irc_in_privmsg;*,irc_in_notice+` +
+  `+signal_sigwinch+`
 
 | hsignal |
   1. シグナル名 (優先度の指定も可) (必須) +
   2. シグナル名 (優先度の指定も可) +
   3. ... |
-  `nicklist_nick_added`
+  `+nicklist_nick_added+`
 
 | modifier |
   1. 修飾子名 (優先度の指定も可) (必須) +
   2. 修飾子名 (優先度の指定も可) +
   3. ... |
-  `weechat_print` +
-  `5000\|input_text_display;5000\|history_add`
+  `+weechat_print+` +
+  `+5000\|input_text_display;5000\|history_add+`
 
 | print |
   1. バッファ名 +
   2. タグ +
   3. メッセージ +
   4. 色の削除 (0/1) |
-  `irc.freenode.*` +
-  `irc.freenode.#weechat` +
-  `irc.freenode.#weechat;irc_notice` +
-  `*;;;1`
+  `+irc.freenode.*+` +
+  `+irc.freenode.#weechat+` +
+  `+irc.freenode.#weechat;irc_notice+` +
+  `+*;;;1+`
 
 | command |
   1. コマンド名 (優先度の指定も可) (必須) +
@@ -3051,21 +3051,21 @@ trigger.trigger.beep.return_code = ok
   3. 引数 +
   4. 引数の説明 +
   5. 補完 |
-  `test` +
-  `5000\|test`
+  `+test+` +
+  `+5000\|test+`
 
 | command_run |
   1. コマンド (優先度の指定も可) (必須) +
   2. コマンド (優先度の指定も可) +
   3. ... |
-  `/cmd arguments`
+  `+/cmd arguments+`
 
 | timer |
   1. インターバルするミリ秒数 (必須) +
   2. 秒の調整 (デフォルト: 0) +
   3. 呼び出し回数の最大値 (デフォルト: 0、「無限に」呼び出すことを意味します) |
-  `3600000` +
-  `60000;0;5`
+  `+3600000+` +
+  `+60000;0;5+`
 
 | config |
   1. オプション名 (優先度の指定も可) (必須) +
@@ -3077,7 +3077,7 @@ trigger.trigger.beep.return_code = ok
   1. エリア名 (優先度の指定も可) (必須) +
   2. エリア名 (優先度の指定も可) +
   3. ... |
-  `buffer_nicklist`
+  `+buffer_nicklist+`
 |===
 
 [[trigger_conditions]]

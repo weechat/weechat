@@ -3021,32 +3021,32 @@ The arguments depend on the hook used. They are separated by semicolons.
   1. signal name (priority allowed) (required) +
   2. signal name (priority allowed) +
   3. ... |
-  `*,irc_in_privmsg` +
-  `*,irc_in_privmsg;*,irc_in_notice` +
-  `signal_sigwinch`
+  `+*,irc_in_privmsg+` +
+  `+*,irc_in_privmsg;*,irc_in_notice+` +
+  `+signal_sigwinch+`
 
 | hsignal |
   1. signal name (priority allowed) (required) +
   2. signal name (priority allowed) +
   3. ... |
-  `nicklist_nick_added`
+  `+nicklist_nick_added+`
 
 | modifier |
   1. modifier name (priority allowed) (required) +
   2. modifier name (priority allowed) +
   3. ... |
-  `weechat_print` +
-  `5000\|input_text_display;5000\|history_add`
+  `+weechat_print+` +
+  `+5000\|input_text_display;5000\|history_add+`
 
 | print |
   1. buffer name +
   2. tags +
   3. message +
   4. strip colors (0/1) |
-  `irc.freenode.*` +
-  `irc.freenode.#weechat` +
-  `irc.freenode.#weechat;irc_notice` +
-  `*;;;1`
+  `+irc.freenode.*+` +
+  `+irc.freenode.#weechat+` +
+  `+irc.freenode.#weechat;irc_notice+` +
+  `+*;;;1+`
 
 | command |
   1. command name (priority allowed) (required) +
@@ -3054,21 +3054,21 @@ The arguments depend on the hook used. They are separated by semicolons.
   3. arguments +
   4. description of arguments +
   5. completion |
-  `test` +
-  `5000\|test`
+  `+test+` +
+  `+5000\|test+`
 
 | command_run |
   1. command (priority allowed) (required) +
   2. command (priority allowed) +
   3. ... |
-  `/cmd arguments`
+  `+/cmd arguments+`
 
 | timer |
   1. interval in milliseconds (required) +
   2. alignment on second (default: 0) +
   3. max number of calls (default: 0, which means "no end") |
-  `3600000` +
-  `60000;0;5`
+  `+3600000+` +
+  `+60000;0;5+`
 
 | config |
   1. option name (priority allowed) (required) +
@@ -3080,7 +3080,7 @@ The arguments depend on the hook used. They are separated by semicolons.
   1. area name (priority allowed) (required) +
   2. area name (priority allowed) +
   3. ... |
-  `buffer_nicklist`
+  `+buffer_nicklist+`
 |===
 
 [[trigger_conditions]]

@@ -3051,32 +3051,32 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   1. nazwa sygnału (dozwolony priorytet) (wymagane) +
   2. nazwa sygnału (dozwolony priorytet) +
   3. ... |
-  `*,irc_in_privmsg` +
-  `*,irc_in_privmsg;*,irc_in_notice` +
-  `signal_sigwinch`
+  `+*,irc_in_privmsg+` +
+  `+*,irc_in_privmsg;*,irc_in_notice+` +
+  `+signal_sigwinch+`
 
 | hsignal |
   1. nazwa sygnału (dozwolony priorytet) (wymagane) +
   2. nazwa sygnału (dozwolony priorytet) +
   3. ... |
-  `nicklist_nick_added`
+  `+nicklist_nick_added+`
 
 | modifier |
   1. nazwa modyfikatora (dozwolony priorytet) (wymagane) +
   2. nazwa modyfikatora (dozwolony priorytet) +
   3. ... |
-  `weechat_print` +
-  `5000\|input_text_display;5000\|history_add`
+  `+weechat_print+` +
+  `+5000\|input_text_display;5000\|history_add+`
 
 | print |
   1. nazwa buforu +
   2. tagi +
   3. wiadomość +
   4. odrzucić kolory (0/1) |
-  `irc.freenode.*` +
-  `irc.freenode.#weechat` +
-  `irc.freenode.#weechat;irc_notice` +
-  `*;;;1`
+  `+irc.freenode.*+` +
+  `+irc.freenode.#weechat+` +
+  `+irc.freenode.#weechat;irc_notice+` +
+  `+*;;;1+`
 
 | command |
   1. nazwa komendy dozwolony priorytet) (wymagane) +
@@ -3084,21 +3084,21 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   3. argumenty +
   4. opis argumentów +
   5. dopełnienie |
-  `test` +
-  `5000\|test`
+  `+test+` +
+  `+5000\|test+`
 
 | command_run |
   1. komenda (dozwolony priorytet) (wymagane) +
   2. komenda (dozwolony priorytet) +
   3. ... |
-  `/cmd argumenty`
+  `+/cmd argumenty+`
 
 | timer |
   1. interwał w milisekundach (wymagane) +
   2. wyrównanie na sekundę (domyślnie: 0) +
   3. maksymalna ilość wywołań (domyślnie: 0, co oznacza "brak końca") |
-  `3600000` +
-  `60000;0;5`
+  `+3600000+` +
+  `+60000;0;5+`
 
 | config |
   1. nazwa opcji (dozwolony priorytet) (wymagane) +
@@ -3110,7 +3110,7 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   1. nazwa obszaru (dozwolony priorytet) (wymagane) +
   2. nazwa obszaru (dozwolony priorytet) +
   3. ... |
-  `buffer_nicklist`
+  `+buffer_nicklist+`
 |===
 
 [[trigger_conditions]]

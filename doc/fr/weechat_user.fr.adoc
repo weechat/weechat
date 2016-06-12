@@ -3117,32 +3117,32 @@ points-virgules.
   1. nom de signal (priorité autorisée) (obligatoire) +
   2. nom de signal (priorité autorisée) +
   3. ... |
-  `*,irc_in_privmsg` +
-  `*,irc_in_privmsg;*,irc_in_notice` +
-  `signal_sigwinch`
+  `+*,irc_in_privmsg+` +
+  `+*,irc_in_privmsg;*,irc_in_notice+` +
+  `+signal_sigwinch+`
 
 | hsignal |
   1. nom de signal (priorité autorisée) (obligatoire) +
   2. nom de signal (priorité autorisée) +
   3. ... |
-  `nicklist_nick_added`
+  `+nicklist_nick_added+`
 
 | modifier |
   1. nom de modificateur (priorité autorisée) (obligatoire) +
   2. nom de modificateur (priorité autorisée) +
   3. ... |
-  `weechat_print` +
-  `5000\|input_text_display;5000\|history_add`
+  `+weechat_print+` +
+  `+5000\|input_text_display;5000\|history_add+`
 
 | print |
   1. nom de tampon +
   2. étiquettes +
   3. message +
   4. suppression des couleurs (0/1) |
-  `irc.freenode.*` +
-  `irc.freenode.#weechat` +
-  `irc.freenode.#weechat;irc_notice` +
-  `*;;;1`
+  `+irc.freenode.*+` +
+  `+irc.freenode.#weechat+` +
+  `+irc.freenode.#weechat;irc_notice+` +
+  `+*;;;1+`
 
 | command |
   1. nom de commande (priorité autorisée) (obligatoire) +
@@ -3150,21 +3150,21 @@ points-virgules.
   3. paramètres +
   4. description des paramètres +
   5. complétion |
-  `test` +
-  `5000\|test`
+  `+test+` +
+  `+5000\|test+`
 
 | command_run |
   1. commande (priorité autorisée) (obligatoire) +
   2. commande (priorité autorisée) +
   3. ... |
-  `/cmd paramètres`
+  `+/cmd paramètres+`
 
 | timer |
   1. intervalle, en millisecondes (obligatoire) +
   2. alignement sur la seconde (par défaut : 0) +
   3. nombre maximum d'appels (par défaut : 0, qui signifie "sans fin") |
-  `3600000` +
-  `60000;0;5`
+  `+3600000+` +
+  `+60000;0;5+`
 
 | config |
   1. nom d'option (priorité autorisée) (obligatoire) +
@@ -3176,7 +3176,7 @@ points-virgules.
   1. nom d'aire (priorité autorisée) (obligatoire) +
   2. nom d'aire (priorité autorisée) +
   3. ... |
-  `buffer_nicklist`
+  `+buffer_nicklist+`
 |===
 
 [[trigger_conditions]]

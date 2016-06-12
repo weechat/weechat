@@ -3100,32 +3100,32 @@ ein Semikolon getrennt.
   1. Signalname (Priorität erlaubt) (erforderlich) +
   2. Signalname (Priorität erlaubt) +
   3. ... |
-  `*,irc_in_privmsg` +
-  `*,irc_in_privmsg;*,irc_in_notice` +
-  `signal_sigwinch`
+  `+*,irc_in_privmsg+` +
+  `+*,irc_in_privmsg;*,irc_in_notice+` +
+  `+signal_sigwinch+`
 
 | hsignal |
   1. Signalname (Priorität erlaubt) (erforderlich) +
   2. Signalname (Priorität erlaubt) +
   3. ... |
-  `nicklist_nick_added`
+  `+nicklist_nick_added+`
 
 | modifier |
   1. modifier-Name (Priorität erlaubt) (erforderlich) +
   2. modifier-Name (Priorität erlaubt) +
   3. ... |
-  `weechat_print` +
-  `5000\|input_text_display;5000\|history_add`
+  `+weechat_print+` +
+  `+5000\|input_text_display;5000\|history_add+`
 
 | print |
   1. Buffername +
   2. Tags +
   3. Nachricht +
   4. entferne Farben (0/1) |
-  `irc.freenode.*` +
-  `irc.freenode.#weechat` +
-  `irc.freenode.#weechat;irc_notice` +
-  `*;;;1`
+  `+irc.freenode.*+` +
+  `+irc.freenode.#weechat+` +
+  `+irc.freenode.#weechat;irc_notice+` +
+  `+*;;;1+`
 
 | command |
   1. Befehlsname (Priorität erlaubt) (erforderlich) +
@@ -3133,21 +3133,21 @@ ein Semikolon getrennt.
   3. Argumente +
   4. Beschreibung der Argumente +
   5. Vervollständigung |
-  `test` +
-  `5000\|test`
+  `+test+` +
+  `+5000\|test+`
 
 | command_run |
   1. Befehl (Priorität erlaubt) (erforderlich) +
   2. Befehl (Priorität erlaubt) +
   3. ... |
-  `/cmd arguments`
+  `+/cmd arguments+`
 
 | timer |
   1. Intervall in Millisekunden (erforderlich) +
   2. Abgleich der Sekunden (Standardwert: 0) +
   3. max. Anzahl an Aufrufen (Standardwert: 0, was "unendlich" bedeutet) |
-  `3600000` +
-  `60000;0;5`
+  `+3600000+` +
+  `+60000;0;5+`
 
 | config |
   1. Name der Option (Priorität erlaubt) (erforderlich) +
@@ -3159,7 +3159,7 @@ ein Semikolon getrennt.
   1. area Name (Priorität erlaubt) (erforderlich) +
   2. area Name (Priorität erlaubt) +
   3. ... |
-  `buffer_nicklist`
+  `+buffer_nicklist+`
 |===
 
 [[trigger_conditions]]
