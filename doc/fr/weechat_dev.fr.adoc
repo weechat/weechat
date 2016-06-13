@@ -786,11 +786,11 @@ peuvent être :
 
 Les attributs autorisés sont (un ou plusieurs caractères) :
 
-* `*` : gras
-* `!` : vidéo inverse
-* `/` : italique
-* `_` : souligné
-* `|` : garder les attributs
+* `+*+` : gras
+* `+!+` : vidéo inverse
+* `+/+` : italique
+* `+_+` : souligné
+* `+|+` : garder les attributs
 
 Les couleurs possibles sont :
 

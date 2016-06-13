@@ -772,11 +772,11 @@ All attributes/colors are prefixed with a char in string, which can be:
 
 Allowed attributes are (one or more chars):
 
-* `*`: bold
-* `!`: reverse
-* `/`: italic
-* `_`: underline
-* `|`: keep attributes
+* `+*+`: bold
+* `+!+`: reverse
+* `+/+`: italic
+* `+_+`: underline
+* `+|+`: keep attributes
 
 Possible colors are:
 
