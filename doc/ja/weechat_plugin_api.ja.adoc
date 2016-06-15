@@ -623,9 +623,9 @@ int weechat_strcasecmp_range (const char *string1, const char *string2, int rang
 * _string1_: 1 番目の比較対象の文字列
 * _string2_: 2 番目の比較対象の文字列
 * _range_: 大文字小文字を無視する文字範囲の幅、例:
-** 26: `A-Z` を `a-z` のように変換して比較
-** 29: `A-Z [ \ ]` を `a-z { | }` のように変換して比較
-** 30: `A-Z [ \ ] ^` を `a-z { | } ~` のように変換して比較
+** 26: `+A-Z+` を `+a-z+` のように変換して比較
+** 29: `+A-Z [ \ ]+` を `+a-z { | }+` のように変換して比較
+** 30: `+A-Z [ \ ] ^+` を `+a-z { | } ~+` のように変換して比較
 
 [NOTE]
 29 と 30 は IRC など一部のプロトコルで使います。
@@ -701,9 +701,9 @@ int weechat_strncasecmp_range (const char *string1, const char *string2, int max
 * _string2_: 2 番目の比較対象の文字列
 * _max_: 比較する文字数の最大値
 * _range_: 大文字小文字を無視する文字範囲の幅、例:
-** 26: `A-Z` を `a-z` のように変換して比較
-** 29: `A-Z [ \ ]` を `a-z { | }` のように変換して比較
-** 30: `A-Z [ \ ] ^` を `a-z { | } ~` のように変換して比較
+** 26: `+A-Z+` を `+a-z+` のように変換して比較
+** 29: `+A-Z [ \ ]+` を `+a-z { | }+` のように変換して比較
+** 30: `+A-Z [ \ ] ^+` を `+a-z { | } ~+` のように変換して比較
 
 [NOTE]
 29 と 30 は IRC など一部のプロトコルで使います。
@@ -1963,12 +1963,12 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 _WeeChat バージョン 0.4.0 以上で利用可、バージョン 0.4.2、1.0、1.1、1.2、1.3 で更新。_
 
-式を評価して文字列として返す。`${variable}`
+式を評価して文字列として返す。`+${variable}+`
 という書式で書かれた特殊変数は展開されます (以下の表を参照)。
 
 [NOTE]
 WeeChat バージョン 1.0 以上の場合、入れ子変数を使えるようになりました、例:
-`${color:${variable}}` 。
+`+${color:${variable}}+` 。
 
 プロトタイプ:
 
@@ -2017,90 +2017,93 @@ char *weechat_string_eval_expression (const char *expr,
 |===
 | 書式 | 説明 | 例 | 結果
 
-| `${name}` | _extra_vars_ の変数 `name` の値に展開 |
-  `${name}` | `value`
+| `+${name}+` |
+  _extra_vars_ の変数 `name` の値に展開 |
+  `+${name}+` |
+  `+value+`
 
-| `${eval:xxx}` +
+| `+${eval:xxx}+` +
   (_WeeChat バージョン 1.3 以上で利用可_) |
   評価する文字列 |
-  `${eval:${date:${weechat.look.buffer_time_format}}}` |
- `19:02:45` (オプション weechat.look.buffer_time_format
+  `+${eval:${date:${weechat.look.buffer_time_format}}}+` |
+ `+19:02:45+` (オプション weechat.look.buffer_time_format
  内に色コードが存在する場合色付き)
 
-| `${esc:xxx}` +
-  `${\xxx}` | エスケープ文字を含む文字列 |
-  `${esc:prefix\tmessage}` +
-  `${\ua9}` |
-  `prefix<TAB>message` +
-  `©`
+| `+${esc:xxx}+` +
+  `+${\xxx}+` |
+  エスケープ文字を含む文字列 |
+  `+${esc:prefix\tmessage}+` +
+  `+${\ua9}+` |
+  `+prefix<TAB>message+` +
+  `+©+`
 
-| `${hide:x,value}` |
+| `+${hide:x,value}+` |
   隠す文字を含むテキスト (`value` に含まれる文字をすべて `x` で置換) |
-  `${hide:*,password}` |
- `********`
+  `+${hide:*,password}+` |
+ `+********+`
 
-| `${re:N}` |
+| `+${re:N}+` |
   正規表現のキャプチャグループ: `0` = マッチするすべての文字列、`1` から `99` =
   キャプチャされたグループ、`+++` = 最後にキャプチャされたグループ |
-  `${re:1}` |
-  `test`
+  `+${re:1}+` |
+  `+test+`
 
-| `${color:name}` |
+| `+${color:name}+` |
   WeeChat 色コード (色名部分はオプション属性をとることも可能です),
   書式を確認するには関数 <<_color,weechat_color>> をご確認ください |
-  `${color:red}red text` +
-  `${color:*214}bold orange text` |
-  `red text` (赤色で) +
-  `bold orange text` (太字オレンジ色で)
+  `+${color:red}red text+` +
+  `+${color:*214}bold orange text+` |
+  `+red text+` (赤色で) +
+  `+bold orange text+` (太字オレンジ色で)
 
-| `${info:name}` +
-  `${info:name,arguments}` |
+| `+${info:name}+` +
+  `+${info:name,arguments}+` |
   WeeChat またはプラグインのインフォ、<<_info_get,weechat_info_get>>
   を参照 |
-  `${info:version}` +
-  `${info:irc_nick_color_name,foo}` |
-  `1.0` +
-  `lightblue`
+  `+${info:version}+` +
+  `+${info:irc_nick_color_name,foo}+` |
+  `+1.0+` +
+  `+lightblue+`
 
-| `${date}` +
-  `${date:xxx}` +
+| `+${date}+` +
+  `+${date:xxx}+` +
   (_WeeChat バージョン 1.3 以上で利用可_) |
   現在の日付/時刻、カスタム書式を使うことも可能です (`man strftime` を参照)、
   デフォルト書式は `%F %T` |
-  `${date}` +
-  `${date:%H:%M:%S}` |
-  `2015-06-30 19:02:45` +
-  `19:02:45`
+  `+${date}+` +
+  `+${date:%H:%M:%S}+` |
+  `+2015-06-30 19:02:45+` +
+  `+19:02:45+`
 
-| `${env:NAME}` +
+| `+${env:NAME}+` +
   (_WeeChat バージョン 1.2 以上で利用可_) |
   環境変数 `NAME` の値 |
-  `${env:HOME}` |
-  `/home/user`
+  `+${env:HOME}+` |
+  `+/home/user+`
 
-| `${sec.data.name}` |
+| `+${sec.data.name}+` |
   セキュアデータ `name` の値 |
-  `${sec.data.freenode_pass}` |
-  `my_password`
+  `+${sec.data.freenode_pass}+` |
+  `+my_password+`
 
-| `${file.section.option}` |
+| `+${file.section.option}+` |
   オプションの値 |
-  `${weechat.look.buffer_time_format}` |
-  `%H:%M:%S`
+  `+${weechat.look.buffer_time_format}+` |
+  `+%H:%M:%S+`
 
-| `${name}` |
+| `+${name}+` |
   バッファに対するローカル変数 `name` の値 |
-  `${nick}` |
-  `FlashCode`
+  `+${nick}+` |
+  `+FlashCode+`
 
-| `${hdata.var1.var2...}` +
-  `${hdata[list].var1.var2...}` |
+| `+${hdata.var1.var2...}+` +
+  `+${hdata[list].var1.var2...}+` |
   hdata の値 (`window` と `buffer`
   ポインタはデフォルトで現在のウィンドウ/バッファに設定されます) |
-  `${buffer[gui_buffers].full_name}` +
-  `${window.buffer.number}` |
-  `core.weechat` +
-  `1`
+  `+${buffer[gui_buffers].full_name}+` +
+  `+${window.buffer.number}+` |
+  `+core.weechat+` +
+  `+1+`
 |===
 
 C 言語での使用例:
@@ -9831,8 +9834,8 @@ WeeChat とプラグインが使う修飾子のリスト:
 | irc_command_auth +
   _(WeeChat バージョン 0.4.1 以上で利用可)_ |
   サーバ名 |
-  認証コマンド (例: `/msg nickserv identify password`) |
-  パスワードを隠したコマンド (例: `/msg nickserv identify ********`)
+  認証コマンド (例: `+/msg nickserv identify password+`) |
+  パスワードを隠したコマンド (例: `+/msg nickserv identify ********+`)
 
 | irc_message_auth +
   _(WeeChat バージョン 0.4.1 以上で利用可)_ |

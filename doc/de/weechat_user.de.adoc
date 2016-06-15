@@ -888,14 +888,14 @@ Folgende Zeichenketten sind möglich:
 
 Für den Ausdruck sind folgende Variablen verfügbar:
 
-* `${active}`  : wahr, wenn Fenster aktiv ist
-* `${inactive}`: wahr, wenn Fenster inaktiv ist
-* `${nicklist}`: wahr, wenn der Buffer im Fenster eine Nicklist anzeigt.
+* `+${active}+`  : wahr, wenn Fenster aktiv ist
+* `+${inactive}+`: wahr, wenn Fenster inaktiv ist
+* `+${nicklist}+`: wahr, wenn der Buffer im Fenster eine Nicklist anzeigt.
 
 Folgende Zeiger sind verfügbar:
 
-* `${window}`: das Fenster in dem der Zustand ausgewertet wird
-* `${buffer}`: der Buffer eines Fensters in dem der Zustand ausgewertet wird
+* `+${window}+`: das Fenster in dem der Zustand ausgewertet wird
+* `+${buffer}+`: der Buffer eines Fensters in dem der Zustand ausgewertet wird
 
 Beispiel wie man die Bar-Nicklist in allen Buffer, die eine Nicklist besitzen,
 darstellt, aber nur wenn das Fenster eine Mindestbreite von > 100 Pixeln aufweist:
@@ -3213,10 +3213,10 @@ oder mehrere identische Zeichen).
 
 Matching groups können in "replace" genutzt werden:
 
-* `${re:0}` bis `${re:99}`: `${re:0}` um alles zu matchen, `${re:1}` bis
-  `${re:99}` um Gruppen zu fangen
-* `${re:+}`: der letzte match (mit der höchsten Nummer)
-* `${hide:c,${re:N}}`: match "N" mit allen Zeichen die durch "c" ersetzt wurden
+* `+${re:0}+` bis `+${re:99}+`: `+${re:0}+` um alles zu matchen, `+${re:1}+` bis
+  `+${re:99}+` um Gruppen zu fangen
+* `+${re:+}+`: der letzte match (mit der höchsten Nummer)
+* `+${hide:c,${re:N}}+`: match "N" mit allen Zeichen die durch "c" ersetzt wurden
   (Beispiel: `+${hide:*,${re:2}}+` ist die group #2 mit allen Zeichen die durch
   `+*+` ersetzt wurden).
 
@@ -3498,8 +3498,8 @@ sich die Größe des Terminalfensters verändert:
 Der Trigger nutzt das Signal "signal_sigwinch", welches durch WeeChat verschickt wird
 sobald das Signal SIGWINCH vom Terminal empfangen wird.
 
-Die Bedingung `${info:term_width}` überprüft die Breite des Terminal (zusätzlich kann
-auch `${info:term_height}` genutzt werden).
+Die Bedingung `+${info:term_width}+` überprüft die Breite des Terminal (zusätzlich kann
+auch `+${info:term_height}+` genutzt werden).
 
 In obigem Beispiel wird die Nicklist versteckt, sobald das Terminal verkleinert wird.
 Die Benutzerliste wird wieder angezeigt, sobald die Breite des Terminals größer oder
@@ -3508,7 +3508,7 @@ gleich 100 Zeichen ist.
 [[trigger_example_config_save]]
 ===== automatisches speichern der Konfiguration
 
-Die Konfigurationsdateien (`*.conf`), können automatisch jede Stunde
+Die Konfigurationsdateien (`+*.conf+`), können automatisch jede Stunde
 gespeichert werden:
 
 ----

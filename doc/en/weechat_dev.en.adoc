@@ -417,7 +417,7 @@ Some basic rules you *must* follow when you write C code:
 * Use 4 spaces for indentation. Don't use tabs, they are evil.
 * Try to not exceed 80 chars by line, except if this is needed to increase
   readability.
-* Use comments `/* comment */` (not C99-style comments like `// comment`).
+* Use comments `+/* comment */+` (not C99-style comments like `+// comment+`).
 * Add a comment before any function, to explain what it does (always use a
   multi-line comment, even if description is very short).
 
@@ -468,8 +468,8 @@ foo ()
 ----
 
 * Use parentheses to explicitly show how expression is evaluated, even if
-  they are not required, for example: write `x + (y * z)` instead of `x + y * z`.
-* Place curly brackets `{ }` alone on lines, and indent them with number of
+  they are not required, for example: write `+x + (y * z)+` instead of `+x + y * z+`.
+* Place curly brackets `+{ }+` alone on lines, and indent them with number of
   spaces used for line above opening curly bracket (the `if` in example):
 
 [source,C]
@@ -781,46 +781,46 @@ Allowed attributes are (one or more chars):
 Possible colors are:
 
 * standard color: optional attributes + number on 2 digits
-* extended color: `@` + optional attributes + number on 5 digits
+* extended color: `+@+` + optional attributes + number on 5 digits
 
 In following table, these conventions are used:
 
 * `STD`: standard color (2 digits)
 * `(A)STD`: standard color with optional attributes (attributes + 2 digits)
-* `EXT`: extended color (`@` + 5 digits)
-* `(A)EXT`: extended color with optional attributes (`@` + attributes + 5 digits)
-* `ATTR`: one attribute char (`*`, `!`, `/`, `_` or `|`)
+* `EXT`: extended color (`+@+` + 5 digits)
+* `(A)EXT`: extended color with optional attributes (`+@+` + attributes + 5 digits)
+* `ATTR`: one attribute char (`+*+`, `+!+`, `+/+`, `+_+` or `+|+`)
 
 All combinations are summarized in this table:
 
 [width="100%",cols="4,2,2,8",options="header"]
 |===
-| Code                                 | Example                    | Areas       | Description
-| [hex]#19# + STD                      | [hex]#19# `01`             | chat + bars | Set attributes and color using option, see table below
-| [hex]#19# + EXT                      | [hex]#19# `@00001`         | chat        | Set color with a ncurses pair (used only on `/color` buffer)
-| [hex]#19# + "F" + (A)STD             | [hex]#19# `F*05`           | chat + bars | Set foreground (WeeChat color)
-| [hex]#19# + "F" + (A)EXT             | [hex]#19# `F@00214`        | chat + bars | Set foreground (extended color)
-| [hex]#19# + "B" + STD                | [hex]#19# `B05`            | chat + bars | Set background (WeeChat color)
-| [hex]#19# + "B" + EXT                | [hex]#19# `B@00124`        | chat + bars | Set background (extended color)
-| [hex]#19# + "*" + (A)STD             | [hex]#19# `*05`            | chat + bars | Set foreground (WeeChat color)
-| [hex]#19# + "*" + (A)EXT             | [hex]#19# `*@00214`        | chat + bars | Set foreground (extended color)
-| [hex]#19# + "*" + (A)STD + "," + STD | [hex]#19# `*08,05`         | chat + bars | Set foreground/background (WeeChat colors)
-| [hex]#19# + "*" + (A)STD + "," + EXT | [hex]#19# `*01,@00214`     | chat + bars | Set foreground (WeeChat color) and background (extended color)
-| [hex]#19# + "*" + (A)EXT + "," + STD | [hex]#19# `*@00214,05`     | chat + bars | Set foreground (extended color) and background (WeeChat color)
-| [hex]#19# + "*" + (A)EXT + "," + EXT | [hex]#19# `*@00214,@00017` | chat + bars | Set foreground/background (extended colors)
-| [hex]#19# + "b" + "F"                | [hex]#19# `bF`             | bars        | Set bar foreground color
-| [hex]#19# + "b" + "D"                | [hex]#19# `bD`             | bars        | Set bar delimiter color
-| [hex]#19# + "b" + "B"                | [hex]#19# `bB`             | bars        | Set bar background color
-| [hex]#19# + "b" + "_"                | [hex]#19# `b_`             | input bar   | Start input char (used only in item "input_text")
-| [hex]#19# + "b" + "-"                | [hex]#19# `b-`             | input bar   | Start input hidden char (used only in item "input_text")
-| [hex]#19# + "b" + "#"                | [hex]#19# `b#`             | input bar   | Move cursor char (used only in item "input_text")
-| [hex]#19# + "b" + "i"                | [hex]#19# `bi`             | bars        | Start item
-| [hex]#19# + "b" + "l" (lower L)      | [hex]#19# `bl`             | bars        | Start line item
-| [hex]#19# + "E"                      | [hex]#19# `E`              | chat + bars | Emphasize text _(WeeChat ≥ 0.4.2)_
-| [hex]#19# + [hex]#1C#                | [hex]#19# [hex]#1C#        | chat + bars | Reset color (keep attributes)
-| [hex]#1A# + ATTR                     | [hex]#1A# `*`              | chat + bars | Set attribute
-| [hex]#1B# + ATTR                     | [hex]#1B# `*`              | chat + bars | Remove attribute
-| [hex]#1C#                            | [hex]#1C#                  | chat + bars | Reset attributes and color
+| Code                                 | Example                      | Areas       | Description
+| [hex]#19# + STD                      | [hex]#19# `+01++`            | chat + bars | Set attributes and color using option, see table below
+| [hex]#19# + EXT                      | [hex]#19# `+@00001+`         | chat        | Set color with a ncurses pair (used only on `/color` buffer)
+| [hex]#19# + "F" + (A)STD             | [hex]#19# `+F*05+`           | chat + bars | Set foreground (WeeChat color)
+| [hex]#19# + "F" + (A)EXT             | [hex]#19# `+F@00214+`        | chat + bars | Set foreground (extended color)
+| [hex]#19# + "B" + STD                | [hex]#19# `+B05+`            | chat + bars | Set background (WeeChat color)
+| [hex]#19# + "B" + EXT                | [hex]#19# `+B@00124+`        | chat + bars | Set background (extended color)
+| [hex]#19# + "*" + (A)STD             | [hex]#19# `+*05+`            | chat + bars | Set foreground (WeeChat color)
+| [hex]#19# + "*" + (A)EXT             | [hex]#19# `+*@00214+`        | chat + bars | Set foreground (extended color)
+| [hex]#19# + "*" + (A)STD + "," + STD | [hex]#19# `+*08,05+`         | chat + bars | Set foreground/background (WeeChat colors)
+| [hex]#19# + "*" + (A)STD + "," + EXT | [hex]#19# `+*01,@00214+`     | chat + bars | Set foreground (WeeChat color) and background (extended color)
+| [hex]#19# + "*" + (A)EXT + "," + STD | [hex]#19# `+*@00214,05+`     | chat + bars | Set foreground (extended color) and background (WeeChat color)
+| [hex]#19# + "*" + (A)EXT + "," + EXT | [hex]#19# `+*@00214,@00017+` | chat + bars | Set foreground/background (extended colors)
+| [hex]#19# + "b" + "F"                | [hex]#19# `+bF+`             | bars        | Set bar foreground color
+| [hex]#19# + "b" + "D"                | [hex]#19# `+bD+`             | bars        | Set bar delimiter color
+| [hex]#19# + "b" + "B"                | [hex]#19# `+bB+`             | bars        | Set bar background color
+| [hex]#19# + "b" + "_"                | [hex]#19# `+b_+`             | input bar   | Start input char (used only in item "input_text")
+| [hex]#19# + "b" + "-"                | [hex]#19# `+b-+`             | input bar   | Start input hidden char (used only in item "input_text")
+| [hex]#19# + "b" + "#"                | [hex]#19# `+b#+`             | input bar   | Move cursor char (used only in item "input_text")
+| [hex]#19# + "b" + "i"                | [hex]#19# `+bi+`             | bars        | Start item
+| [hex]#19# + "b" + "l" (lower L)      | [hex]#19# `+bl+`             | bars        | Start line item
+| [hex]#19# + "E"                      | [hex]#19# `+E+`              | chat + bars | Emphasize text _(WeeChat ≥ 0.4.2)_
+| [hex]#19# + [hex]#1C#                | [hex]#19# [hex]#1C#          | chat + bars | Reset color (keep attributes)
+| [hex]#1A# + ATTR                     | [hex]#1A# `+*+`              | chat + bars | Set attribute
+| [hex]#1B# + ATTR                     | [hex]#1B# `+*+`              | chat + bars | Remove attribute
+| [hex]#1C#                            | [hex]#1C#                    | chat + bars | Reset attributes and color
 |===
 
 Color codes using options (see _t_gui_color_enum_, in file
@@ -904,14 +904,14 @@ Examples of color codes:
 
 [width="70%",cols="1,2",options="header"]
 |===
-| Code                         | Description
-| [hex]#19# `01`               | Color of option "01" (chat text)
-| [hex]#19# `*08,03`           | Yellow on red
-| [hex]#19# `*@00214`          | Orange (extended color 214)
-| [hex]#19# `*@*_00214,@00017` | Bold underlined orange (214) on dark blue (17)
-| [hex]#1A# `_`                | Set underline
-| [hex]#1B# `_`                | Remove underline
-| [hex]#1C#                    | Reset attributes and color
+| Code                           | Description
+| [hex]#19# `+01+`               | Color of option "01" (chat text)
+| [hex]#19# `+*08,03+`           | Yellow on red
+| [hex]#19# `+*@00214+`          | Orange (extended color 214)
+| [hex]#19# `+*@*_00214,@00017+` | Bold underlined orange (214) on dark blue (17)
+| [hex]#1A# `+_+`                | Set underline
+| [hex]#1B# `+_+`                | Remove underline
+| [hex]#1C#                      | Reset attributes and color
 |===
 
 [[plugin_internals]]

@@ -618,9 +618,9 @@ Arguments:
 * _string1_: first string for comparison
 * _string2_: second string for comparison
 * _range_: number of chars in case comparison, for example:
-** 26: `A-Z` are lowered to `a-z`
-** 29: `A-Z [ \ ]` are lowered to `a-z { | }`
-** 30: `A-Z [ \ ] ^` are lowered to `a-z { | } ~`
+** 26: `+A-Z+` are lowered to `+a-z+`
+** 29: `+A-Z [ \ ]+` are lowered to `+a-z { | }+`
+** 30: `+A-Z [ \ ] ^+` are lowered to `+a-z { | } ~+`
 
 [NOTE]
 Values 29 and 30 are used by some protocols like IRC.
@@ -696,9 +696,9 @@ Arguments:
 * _string2_: second string for comparison
 * _max_: max chars to compare
 * _range_: number of chars in case comparison, for example:
-** 26: `A-Z` are lowered to `a-z`
-** 29: `A-Z [ \ ]` are lowered to `a-z { | }`
-** 30: `A-Z [ \ ] ^` are lowered to `a-z { | } ~`
+** 26: `+A-Z+` are lowered to `+a-z+`
+** 29: `+A-Z [ \ ]+` are lowered to `+a-z { | }+`
+** 30: `+A-Z [ \ ] ^+` are lowered to `+a-z { | } ~+`
 
 [NOTE]
 Values 29 and 30 are used by some protocols like IRC.
@@ -1963,11 +1963,11 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 1.0, 1.1, 1.2 and 1.3._
 
 Evaluate an expression and return result as a string.
-Special variables with format `${variable}` are expanded (see table below).
+Special variables with format `+${variable}+` are expanded (see table below).
 
 [NOTE]
 Since version 1.0, nested variables are supported, for example:
-`${color:${variable}}`.
+`+${color:${variable}}+`.
 
 Prototype:
 
@@ -2016,90 +2016,93 @@ expanded to last):
 |===
 | Format | Description | Examples | Results
 
-| `${name}` | Variable `name` from hashtable _extra_vars_ |
-  `${name}` | `value`
+| `+${name}+` |
+  Variable `name` from hashtable _extra_vars_ |
+  `+${name}+` |
+  `+value+`
 
-| `${eval:xxx}` +
+| `+${eval:xxx}+` +
   (_WeeChat ≥ 1.3_) |
   String to evaluate |
-  `${eval:${date:${weechat.look.buffer_time_format}}}` |
- `19:02:45` (with colors if there are color codes in the option
- weechat.look.buffer_time_format)
+  `+${eval:${date:${weechat.look.buffer_time_format}}}+` |
+  `+19:02:45+` (with colors if there are color codes in the option
+  weechat.look.buffer_time_format)
 
-| `${esc:xxx}` +
-  `${\xxx}` | String with escaped chars |
-  `${esc:prefix\tmessage}` +
-  `${\ua9}` |
-  `prefix<TAB>message` +
-  `©`
+| `+${esc:xxx}+` +
+  `+${\xxx}+` |
+  String with escaped chars |
+  `+${esc:prefix\tmessage}+` +
+  `+${\ua9}+` |
+  `+prefix<TAB>message+` +
+  `+©+`
 
-| `${hide:x,value}` |
+| `+${hide:x,value}+` |
   String with hidden chars (all chars in `value` replaced by `x`) |
-  `${hide:*,password}` |
- `********`
+  `+${hide:*,password}+` |
+  `+********+`
 
-| `${re:N}` |
+| `+${re:N}+` |
   Regex captured group: `0` = whole string matching, `1` to `99` = group
   captured, `+++` = last group captured |
-  `${re:1}` |
-  `test`
+  `+${re:1}+` |
+  `+test+`
 
-| `${color:name}` |
+| `+${color:name}+` |
   WeeChat color code (the name of color has optional attributes),
   see function <<_color,weechat_color>> for supported formats |
-  `${color:red}red text` +
-  `${color:*214}bold orange text` |
-  `red text` (in red) +
-  `bold orange text` (in bold orange)
+  `+${color:red}red text+` +
+  `+${color:*214}bold orange text+` |
+  `+red text+` (in red) +
+  `+bold orange text+` (in bold orange)
 
-| `${info:name}` +
-  `${info:name,arguments}` |
+| `+${info:name}+` +
+  `+${info:name,arguments}+` |
   Info from WeeChat or a plugin, see function
   <<_info_get,weechat_info_get>> |
-  `${info:version}` +
-  `${info:irc_nick_color_name,foo}` |
-  `1.0` +
-  `lightblue`
+  `+${info:version}+` +
+  `+${info:irc_nick_color_name,foo}+` |
+  `+1.0+` +
+  `+lightblue+`
 
-| `${date}` +
-  `${date:xxx}` +
+| `+${date}+` +
+  `+${date:xxx}+` +
   (_WeeChat ≥ 1.3_) |
   Current date/time, with custom format (see `man strftime`),
   default format is `%F %T` |
-  `${date}` +
-  `${date:%H:%M:%S}` |
-  `2015-06-30 19:02:45` +
-  `19:02:45`
+  `+${date}+` +
+  `+${date:%H:%M:%S}+` |
+  `+2015-06-30 19:02:45+` +
+  `+19:02:45+`
 
-| `${env:NAME}` +
+| `+${env:NAME}+` +
   (_WeeChat ≥ 1.2_) |
   Value of the environment variable `NAME` |
-  `${env:HOME}` |
-  `/home/user`
+  `+${env:HOME}+` |
+  `+/home/user+`
 
-| `${sec.data.name}` |
+| `+${sec.data.name}+` |
   Value of the secured data `name` |
-  `${sec.data.freenode_pass}` |
-  `my_password`
+  `+${sec.data.freenode_pass}+` |
+  `+my_password+`
 
-| `${file.section.option}` |
+| `+${file.section.option}+` |
   Value of the option |
-  `${weechat.look.buffer_time_format}` |
-  `%H:%M:%S`
+  `+${weechat.look.buffer_time_format}+` |
+  `+%H:%M:%S+`
 
-| `${name}` |
+| `+${name}+` |
   Value of local variable `name` in buffer |
-  `${nick}` |
-  `FlashCode`
+  `+${nick}+` |
+  `+FlashCode+`
 
-| `${hdata.var1.var2...}` +
-  `${hdata[list].var1.var2...}` |
+| `+${hdata.var1.var2...}+` +
+  `+${hdata[list].var1.var2...}+` |
   Hdata value (pointers `window` and `buffer` are set by default with current
   window/buffer) |
-  `${buffer[gui_buffers].full_name}` +
-  `${window.buffer.number}` |
-  `core.weechat` +
-  `1`
+  `+${buffer[gui_buffers].full_name}+` +
+  `+${window.buffer.number}+` |
+  `+core.weechat+` +
+  `+1+`
 |===
 
 C examples:
@@ -9834,8 +9837,8 @@ List of modifiers used by WeeChat and plugins:
 | irc_command_auth +
   _(WeeChat ≥ 0.4.1)_ |
   Server name |
-  Authentication command (for example: `/msg nickserv identify password`) |
-  command with hidden password (for example: `/msg nickserv identify ********`)
+  Authentication command (for example: `+/msg nickserv identify password+`) |
+  command with hidden password (for example: `+/msg nickserv identify ********+`)
 
 | irc_message_auth +
   _(WeeChat ≥ 0.4.1)_ |

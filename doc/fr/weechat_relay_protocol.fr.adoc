@@ -1230,11 +1230,11 @@ Données envoyées dans le hdata :
 
 La valeur de __diff_ peut être :
 
-* `^` : le groupe parent : le(s) groupe(s)/pseudo(s) après celui-ci sont liés à
+* `+^+` : le groupe parent : le(s) groupe(s)/pseudo(s) après celui-ci sont liés à
   ce groupe
-* `+` : groupe/pseudo ajouté dans le groupe parent
-* `-` : groupe/pseudo supprimé du groupe parent
-* `*` : groupe/pseudo mis à jour dans le groupe parent
+* `+++` : groupe/pseudo ajouté dans le groupe parent
+* `+-+` : groupe/pseudo supprimé du groupe parent
+* `+*+` : groupe/pseudo mis à jour dans le groupe parent
 
 Exemple : pseudo _master_ ajouté dans le groupe _000|o_ (opérateurs de canel sur
 un canal IRC), pseudos _nick1_ et _nick2_ ajoutés dans le groupe _999|..._

@@ -197,7 +197,7 @@ Dann kann man zum Beispiel für Freenode ein geheimes Passwort setzen:
 ----
 
 Um nun das geschützte Freenode-Passwort in einer Option zu nutzen setzt man eine
-Variable anstelle des Passworts, `${sec.data.freenode_password}`:
+Variable anstelle des Passworts, `+${sec.data.freenode_password}+`:
 
 ----
 /set irc.server.freenode.sasl_password "${sec.data.freenode_password}"

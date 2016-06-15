@@ -50,7 +50,7 @@ ale API jest takie same dla wszystkich języków.
 ==== Python
 
 * Należy wykonać `import weechat`
-* Funkcje `print*` są nazwane `prnt*` w pythonie (ponieważ _print_ jest zastrzeżonym
+* Funkcje `+print*+` są nazwane `+prnt*+` w pythonie (ponieważ _print_ jest zastrzeżonym
   słowem kluczowym)
 * Funkcje są wywoływane za pomocą `weechat.xxx(arg1, arg2, ...)`
 

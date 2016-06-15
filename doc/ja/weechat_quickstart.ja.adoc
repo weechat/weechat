@@ -184,7 +184,7 @@ _command_ オプションに複数のコマンドを含める場合は `;` (セ�
 ----
 
 こうすることで前述したようにパスワードを IRC オプションに直接書くのではなく
-`${sec.data.freenode_password}` を指定可能になります。例えば以下のように設定します:
+`+${sec.data.freenode_password}+` を指定可能になります。例えば以下のように設定します:
 
 ----
 /set irc.server.freenode.sasl_password "${sec.data.freenode_password}"

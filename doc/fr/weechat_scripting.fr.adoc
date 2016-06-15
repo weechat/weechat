@@ -46,7 +46,7 @@ l'API est la même pour les autres langages.
 ==== Python
 
 * Vous devez utiliser `import weechat`
-* Les fonctions `print*` se nomment `prnt*` en python (car _print_ est un mot
+* Les fonctions `+print*+` se nomment `+prnt*+` en python (car _print_ est un mot
   clé réservé)
 * Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`
 

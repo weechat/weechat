@@ -50,7 +50,7 @@ Allerdings ist die API für alle Skriptsprachen nahezu identisch.
 ==== Python
 
 * WeeChat muss als Modul eingebunden werden: `import weechat`
-* Um die WeeChat Funktion `print*` nutzen zu können muss `prnt*` genutzt
+* Um die WeeChat Funktion `+print*+` nutzen zu können muss `+prnt*+` genutzt
   werden (_print_ ist ein reservierter Befehl von Python!)
 * Funktionen werden im Format `weechat.xxx(arg1, arg2, ...)` ausgeführt
 

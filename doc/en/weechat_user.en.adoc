@@ -873,14 +873,14 @@ The string can be:
 
 For the expression, following variables are available:
 
-* `${active}`: true if window is active
-* `${inactive}`: true if window is inactive
-* `${nicklist}`: true if buffer displayed in window has a nicklist
+* `+${active}+`: true if window is active
+* `+${inactive}+`: true if window is inactive
+* `+${nicklist}+`: true if buffer displayed in window has a nicklist
 
 Following pointers are available:
 
-* `${window}`: the window where condition is evaluated
-* `${buffer}`: the buffer of window where condition is evaluated
+* `+${window}+`: the window where condition is evaluated
+* `+${buffer}+`: the buffer of window where condition is evaluated
 
 Example to display nicklist bar in all buffers with a nicklist, and only if
 width of window is > 100 :
@@ -3130,10 +3130,10 @@ The char "/" can be replaced by any char (one or more identical chars).
 
 Matching groups can be used in "replace":
 
-* `${re:0}` to `${re:99}`: `${re:0}` is the whole match, `${re:1}` to
-  `${re:99}` are groups captured
-* `${re:+}`: the last match (with highest number)
-* `${hide:c,${re:N}}`: match "N" with all chars replaced by "c"
+* `+${re:0}+` to `+${re:99}+`: `+${re:0}+` is the whole match, `+${re:1}+` to
+  `+${re:99}+` are groups captured
+* `+${re:+}+`: the last match (with highest number)
+* `+${hide:c,${re:N}}+`: match "N" with all chars replaced by "c"
   (example: `+${hide:*,${re:2}}+` is the group #2 with all chars replaced by
   `+*+`).
 
@@ -3413,8 +3413,8 @@ terminal is changed:
 The triggers catch the signal "signal_sigwinch", which is sent by WeeChat when
 signal SIGWINCH is received (when terminal size is changed).
 
-The condition with `${info:term_width}` checks the width of terminal (you can
-also use `${info:term_height}` if needed).
+The condition with `+${info:term_width}+` checks the width of terminal (you can
+also use `+${info:term_height}+` if needed).
 
 In the example, when the terminal becomes small, the nicklist is hidden. And the
 bar is restored when the width is greater or equal to 100 chars.
@@ -3422,7 +3422,7 @@ bar is restored when the width is greater or equal to 100 chars.
 [[trigger_example_config_save]]
 ===== Automatic save of configuration
 
-You can automatically save configuration files (`*.conf`), for example each
+You can automatically save configuration files (`+*.conf+`), for example each
 hour:
 
 ----

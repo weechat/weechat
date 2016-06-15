@@ -627,9 +627,9 @@ Paramètres :
 * _string1_ : première chaîne à comparer
 * _string2_ : seconde chaîne à comparer
 * _range_ : nombre de caractères pour la comparaison de casse, par exemple :
-** 26 : `A-Z` deviennent en minuscules `a-z`
-** 29 : `A-Z [ \ ]` deviennent minuscules `a-z { | }`
-** 30 : `A-Z [ \ ] ^` deviennent minuscules `a-z { | } ~`
+** 26 : `+A-Z+` deviennent en minuscules `a-z`
+** 29 : `+A-Z [ \ ]+` deviennent minuscules `+a-z { | }+`
+** 30 : `+A-Z [ \ ] ^+` deviennent minuscules `+a-z { | } ~+`
 
 [NOTE]
 Les valeurs 29 et 30 sont utilisés par quelques protocoles comme IRC.
@@ -706,9 +706,9 @@ Paramètres :
 * _string2_ : seconde chaîne à comparer
 * _max_ : nombre maximum de caractères à comparer
 * _range_ : nombre de caractères pour la comparaison de casse, par exemple :
-** 26 : `A-Z` deviennent en minuscules `a-z`
-** 29 : `A-Z [ \ ]` deviennent minuscules `a-z { | }`
-** 30 : `A-Z [ \ ] ^` deviennent minuscules `a-z { | } ~`
+** 26 : `+A-Z+` deviennent en minuscules `+a-z+`
+** 29 : `+A-Z [ \ ]+` deviennent minuscules `+a-z { | }+`
+** 30 : `+A-Z [ \ ] ^+` deviennent minuscules `+a-z { | } ~+`
 
 [NOTE]
 Les valeurs 29 et 30 sont utilisés par quelques protocoles comme IRC.
@@ -1998,12 +1998,12 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 _WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2, 1.0, 1.1, 1.2 et 1.3._
 
 Évaluer l'expression et retourner le résultat sous forme de chaîne.
-Les variables spéciales avec le format `${variable}` sont étendues (voir le
+Les variables spéciales avec le format `+${variable}+` sont étendues (voir le
 tableau ci-dessous).
 
 [NOTE]
 Depuis la version 1.0, les variables imbriquées sont supportées, par exemple :
-`${color:${variable}}`.
+`+${color:${variable}}+`.
 
 Prototype :
 
@@ -2057,91 +2057,94 @@ première étendue à la dernière) :
 |===
 | Format | Description | Exemples | Résultats
 
-| `${nom}` | Variable `nom` de la table de hachage _extra_vars_ |
-  `${nom}` | `valeur`
+| `+${nom}+` |
+  Variable `nom` de la table de hachage _extra_vars_ |
+  `+${nom}+` |
+  `+valeur+`
 
-| `${eval:xxx}` +
+| `+${eval:xxx}+` +
   (_WeeChat ≥ 1.3_) |
   Chaîne à évaluer |
-  `${eval:${date:${weechat.look.buffer_time_format}}}` |
- `19:02:45` (avec des couleurs s'il y a des codes couleur dans l'option
- weechat.look.buffer_time_format)
+  `+${eval:${date:${weechat.look.buffer_time_format}}}+` |
+  `+19:02:45+` (avec des couleurs s'il y a des codes couleur dans l'option
+  weechat.look.buffer_time_format)
 
-| `${esc:xxx}` +
-  `${\xxx}` | Chaîne avec caractères échappés |
-  `${esc:préfixe\tmessage}` +
-  `${\ua9}` |
-  `préfixe<TAB>message` +
-  `©`
+| `+${esc:xxx}+` +
+  `+${\xxx}+` |
+  Chaîne avec caractères échappés |
+  `+${esc:préfixe\tmessage}+` +
+  `+${\ua9}+` |
+  `+préfixe<TAB>message+` +
+  `+©+`
 
-| `${hide:x,valeur}` |
+| `+${hide:x,valeur}+` |
   Chaîne avec les caractères masqués (tous les caractères dans `valeur`
   remplacés par `x` |
-  `${hide:*,mot_de_passe}` |
- `************`
+  `+${hide:*,mot_de_passe}+` |
+  `+************+`
 
-| `${re:N}` |
+| `+${re:N}+` |
   Groupe regex capturé : `0` = toute la chaîne correspondante,
   `1` à `99` = groupe capturé, `+++` = dernier groupe capturé |
-  `${re:1}` |
-  `test`
+  `+${re:1}+` |
+  `+test+`
 
-| `${color:nom}` |
+| `+${color:nom}+` |
   Code couleur WeeChat (le nom de couleur a des attributs facultatifs),
   voir la fonction <<_color,weechat_color>> pour les formats supportés |
-  `${color:red}texte rouge` +
-  `${color:*214}texte orange gras` |
-  `texte rouge` (en rouge) +
-  `texte orange gras` (en orange gras)
+  `+${color:red}texte rouge+` +
+  `+${color:*214}texte orange gras+` |
+  `+texte rouge+` (en rouge) +
+  `+texte orange gras+` (en orange gras)
 
-| `${info:nom}` +
-  `${info:nom,paramètres}` |
+| `+${info:nom}+` +
+  `+${info:nom,paramètres}+` |
   Info de WeeChat ou d'une extension, voir la fonction
   <<_info_get,weechat_info_get>> |
-  `${info:version}` +
-  `${info:irc_nick_color_name,foo}` |
-  `1.0` +
-  `lightblue`
+  `+${info:version}+` +
+  `+${info:irc_nick_color_name,foo}+` |
+  `+1.0+` +
+  `+lightblue+`
 
-| `${date}` +
-  `${date:xxx}` +
+| `+${date}+` +
+  `+${date:xxx}+` +
   (_WeeChat ≥ 1.3_) |
   La date/heure courante, avec un format personnalisé (voir `man strftime`),
   le format par défaut est `%F %T` |
-  `${date}` +
-  `${date:%H:%M:%S}` |
-  `2015-06-30 19:02:45` +
-  `19:02:45`
+  `+${date}+` +
+  `+${date:%H:%M:%S}+` |
+  `+2015-06-30 19:02:45+` +
+  `+19:02:45+`
 
-| `${env:NOM}` +
+| `+${env:NOM}+` +
   (_WeeChat ≥ 1.2_) |
   Valeur de la variable d'environnement `NOM` |
-  `${env:HOME}` |
-  `/home/user`
+  `+${env:HOME}+` |
+  `+/home/user+`
 
-| `${sec.data.nom}` |
+| `+${sec.data.nom}+` |
   Valeur de la donnée sécurisée `nom` |
-  `${sec.data.freenode_pass}` |
-  `mon_mot_de_passe`
+  `+${sec.data.freenode_pass}+` |
+  `+mon_mot_de_passe+`
 
-| `${fichier.section.option}` |
+| `+${fichier.section.option}+` |
   Valeur de l'option |
-  `${weechat.look.buffer_time_format}` |
-  `%H:%M:%S`
+  `+${weechat.look.buffer_time_format}+` |
+  `+%H:%M:%S+`
 
-| `${nom}` |
+| `+${nom}+` |
   Valeur de la variable locale `nom` dans le tampon |
-  `${nick}` |
-  `FlashCode`
+  `+${nick}+` |
+  `+FlashCode+`
 
-| `${hdata.var1.var2...}` +
-  `${hdata[list].var1.var2...}` |
+| `+${hdata.var1.var2...}+` +
+  `+${hdata[list].var1.var2...}+` |
   Valeur d'un hdata (les pointeurs `window` et `buffer` sont définis par défaut
   avec la fenêtre et tampon courants) |
-  `${buffer[gui_buffers].full_name}` +
-  `${window.buffer.number}` |
-  `core.weechat` +
-  `1`
+  `+${buffer[gui_buffers].full_name}+` +
+  `+${window.buffer.number}+` |
+  `+core.weechat+` +
+  `+1+`
 |===
 
 Exemples en C :
@@ -10038,8 +10041,8 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
 | irc_command_auth +
   _(WeeChat ≥ 0.4.1)_ |
   Nom du serveur |
-  Commande d'authentification (par exemple : `/msg nickserv identify password`) |
-  Commande avec le mot de passe caché (par exemple : `/msg nickserv identify ********`)
+  Commande d'authentification (par exemple : `+/msg nickserv identify password+`) |
+  Commande avec le mot de passe caché (par exemple : `+/msg nickserv identify ********+`)
 
 | irc_message_auth +
   _(WeeChat ≥ 0.4.1)_ |

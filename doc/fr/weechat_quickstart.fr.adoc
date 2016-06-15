@@ -187,7 +187,7 @@ Puis ajoutez une donnée sécurisée avec votre mot de passe freenode :
 /secure set freenode_password xxxxxxx
 ----
 
-Vous pouvez alors utiliser `${sec.data.freenode_password}` au lieu de votre
+Vous pouvez alors utiliser `+${sec.data.freenode_password}+` au lieu de votre
 mot de passe dans les options IRC mentionnées ci-dessus, par exemple :
 
 ----

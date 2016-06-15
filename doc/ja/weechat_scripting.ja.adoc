@@ -50,7 +50,7 @@ WeeChat (Wee Enhanced Environment for Chat)
 ==== Python
 
 * 必ず `import weechat` を使ってください。
-* python では `print*` 系の関数は `prnt*` と書きます
+* python では `+print*+` 系の関数は `+prnt*+` と書きます
   (_print_ は予約済みキーワードなので)。
 * 関数は `weechat.xxx(arg1, arg2, ...)` のように呼び出してください。
 

@@ -184,7 +184,7 @@ Następnie dodaj swoje hasło, np dla sieci freenode:
 /secure set freenode_password xxxxxxx
 ----
 
-Następnie możesz użyć `${sec.data.freenode_password}` zamiast swojego hasła dla
+Następnie możesz użyć `+${sec.data.freenode_password}+` zamiast swojego hasła dla
 opcji IRC omówionych wcześniej, na przykład:
 
 ----

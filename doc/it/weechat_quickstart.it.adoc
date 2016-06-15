@@ -196,7 +196,7 @@ Then add a secured data with your freenode password:
 ----
 
 // TRANSLATION MISSING
-Then you can use `${sec.data.freenode_password}` instead of your password in
+Then you can use `+${sec.data.freenode_password}+` instead of your password in
 IRC options mentioned above, for example:
 
 ----

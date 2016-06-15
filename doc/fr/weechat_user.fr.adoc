@@ -895,15 +895,15 @@ La chaîne peut être :
 
 Pour une expression, les variables suivantes sont disponibles :
 
-* `${active}` : vrai si la fenêtre est active
-* `${inactive}` : vrai si la fenêtre est inactive
-* `${nicklist}` : vrai si le tampon affiché dans la fenêtre a une liste de
+* `+${active}+` : vrai si la fenêtre est active
+* `+${inactive}+` : vrai si la fenêtre est inactive
+* `+${nicklist}+` : vrai si le tampon affiché dans la fenêtre a une liste de
   pseudos
 
 Les pointeurs suivants sont disponibles :
 
-* `${window}` : la fenêtre où la condition est évaluée
-* `${buffer}` : le tampon de la fenêtre où la condition est évaluée
+* `+${window}+` : la fenêtre où la condition est évaluée
+* `+${buffer}+` : le tampon de la fenêtre où la condition est évaluée
 
 Exemple pour afficher la liste de pseudos dans tous les tampons possédant une
 liste de pseudos, et seulement si la largeur de fenêtre est supérieurs à 100 :
@@ -3229,10 +3229,10 @@ caractères identiques).
 
 Les groupes de correspondance peuvent être utilisés dans le "remplacement" :
 
-* `${re:0}` à `${re:99}` : `${re:0}` est la correspondance complète, `${re:1}`
-  à `${re:99}` sont les groupes capturés
-* `${re:+}` : la dernière correspondance (avec le numéro le plus élevé)
-* `${hide:c,${re:N}}` : la correspondance "N" avec tous les caractères
+* `+${re:0}+` à `+${re:99}+` : `+${re:0}+` est la correspondance complète, `+${re:1}+`
+  à `+${re:99}+` sont les groupes capturés
+* `+${re:+}+` : la dernière correspondance (avec le numéro le plus élevé)
+* `+${hide:c,${re:N}}+` : la correspondance "N" avec tous les caractères
   remplacés par "c" (exemple : `+${hide:*,${re:2}}+` est le groupe n°2 avec tous
   les caractères remplacés par `+*+`).
 
@@ -3519,8 +3519,8 @@ lorsque la taille du terminal change :
 Les triggers attrapent le signal "signal_sigwinch", qui et envoyé par WeeChat
 lorsque le signal SIGWINCH est reçu (lorsque la taille du terminal a changé).
 
-La condition avec `${info:term_width}` vérifie la largeur du terminal (vous
-pouvez aussi utiliser `${info:term_height}` si besoin).
+La condition avec `+${info:term_width}+` vérifie la largeur du terminal (vous
+pouvez aussi utiliser `+${info:term_height}+` si besoin).
 
 Dans l'exemple, si le terminal devient petit, la liste de pseudos est cachée.
 Et la barre est restaurée lorsque la largeur du terminal est supérieure ou
@@ -3530,7 +3530,7 @@ Et la barre est restaurée lorsque la largeur du terminal est supérieure ou
 ===== Sauvegarde automatique de la configuration
 
 Vous pouvez sauvegarder automatiquement les fichiers de configuration
-(`*.conf`), par example chaque heure :
+(`+*.conf+`), par example chaque heure :
 
 ----
 /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"

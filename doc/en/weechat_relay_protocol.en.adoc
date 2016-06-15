@@ -1205,11 +1205,11 @@ Data sent as hdata:
 
 The value of __diff_ can be:
 
-* `^`: the parent group: group(s) or nick(s) after this one are related to this
+* `+^+`: the parent group: group(s) or nick(s) after this one are related to this
   group
-* `+`: group/nick added in the parent group
-* `-`: group/nick removed from the parent group
-* `*`: group/nick updated in the parent group
+* `+++`: group/nick added in the parent group
+* `+-+`: group/nick removed from the parent group
+* `+*+`: group/nick updated in the parent group
 
 Example: nick _master_ added in group _000|o_ (channel ops on an IRC channel),
 nicks _nick1_ and _nick2_ added in group _999|..._ (standard users on an IRC

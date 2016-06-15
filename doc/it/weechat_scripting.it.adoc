@@ -52,7 +52,7 @@ Quasi tutti gli esempi in questo manuale sono scritti in Python, ma l'API
 ==== Python
 
 * E necessario `import weechat`
-* Le funzioni `print*` sono chiamate `prnt*` in python (dato che _print_
+* Le funzioni `+print*+` sono chiamate `+prnt*+` in python (dato che _print_
   è una parola riservata)
 * Le funzioni sono chiamate con `weechat.xxx(arg1, arg2, ...)`
 

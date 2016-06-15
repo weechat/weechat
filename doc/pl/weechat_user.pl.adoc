@@ -883,14 +883,14 @@ Dostępne opcje:
 
 Dla wyrażeń dostępne są następujące zmienne:
 
-* `${active}`: prawda, jeśli okno jest aktywne
-* `${inactive}`: prawda, jeśli okno jest nieaktywne
-* `${nicklist}`: prawda, jeśli okno posiada listę nicków
+* `+${active}+`: prawda, jeśli okno jest aktywne
+* `+${inactive}+`: prawda, jeśli okno jest nieaktywne
+* `+${nicklist}+`: prawda, jeśli okno posiada listę nicków
 
 Następujące wskaźniki są dostępne:
 
-* `${window}`: okno, dla którego warunek jest sprawdzany
-* `${buffer}`: bufor okna, dla którego warunek jest sprawdzany
+* `+${window}+`: okno, dla którego warunek jest sprawdzany
+* `+${buffer}+`: bufor okna, dla którego warunek jest sprawdzany
 
 Przykład wyświetlania paska z listą nicków w każdym oknie z taką listą i tylko
 jeśli szerokość okna > 100:
@@ -3162,10 +3162,10 @@ identycznymi znakami).
 
 Dopasowane grupy, które mogą zostać użyte w "zamień":
 
-* `${re:0}` to `${re:99}`: `${re:0}` to pełne dopasowanie, `${re:1}` do
-  `${re:99}` to przechwycone grupy
-* `${re:+}`: ostatnie dopasowanie (z najwyższym numerem)
-* `${hide:c,${re:N}}`: dopasowanie "N" z wszystkimi znakami zastąpionymi "c"
+* `+${re:0}+` to `+${re:99}+`: `+${re:0}+` to pełne dopasowanie, `+${re:1}+` do
+  `+${re:99}+` to przechwycone grupy
+* `+${re:+}+`: ostatnie dopasowanie (z najwyższym numerem)
+* `+${hide:c,${re:N}}+`: dopasowanie "N" z wszystkimi znakami zastąpionymi "c"
   (przykład: `+${hide:*,${re:2}}+` to grupa #2 ze znakami zastąpionymi `+*+`).
 
 Przykład: użyj pogrubienia dla słów pomiędzy "*":
@@ -3442,8 +3442,8 @@ nastąpi zmiana rozmiaru terminala:
 Triggery przechwytują sygnał "signal_sigwinch", który jest wysyłany przez WeeChat,
 kiedy sygnał SIGWINCH zostanie otrzymany (kiedy rozmiar terminala się zmieni).
 
-Warunek z `${info:term_width}` sprawdza szerokość terminala (możesz również użyć
-`${info:term_height}` w razie potrzeby).
+Warunek z `+${info:term_width}+` sprawdza szerokość terminala (możesz również użyć
+`+${info:term_height}+` w razie potrzeby).
 
 W przykładzie, kiedy terminal stanie się mały, ukrywana jest lista nicków. Jest
 ona przywracana, kiedy szerokość jest większa lub równa 100 znakom.
@@ -3451,7 +3451,7 @@ ona przywracana, kiedy szerokość jest większa lub równa 100 znakom.
 [[trigger_example_config_save]]
 ===== Automatyczne zapisywanie konfiguracji
 
-Możesz automatycznie zapisywać pliki konfiguracyjne (`*.conf`), na przykład co
+Możesz automatycznie zapisywać pliki konfiguracyjne (`+*.conf+`), na przykład co
 godzinę:
 
 ----

@@ -44,7 +44,7 @@ other languages.
 ==== Python
 
 * You have to `import weechat`
-* Functions `print*` are called `prnt*` in python (because _print_ is reserved
+* Functions `+print*+` are called `+prnt*+` in python (because _print_ is reserved
   keyword)
 * Functions are called with `weechat.xxx(arg1, arg2, ...)`
 
