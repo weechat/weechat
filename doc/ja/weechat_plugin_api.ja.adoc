@@ -6842,6 +6842,16 @@ weechat.prnt("", "Color: %sblue %sdefault color %syellow on red"
 void weechat_printf (struct t_gui_buffer *buffer, const char *message, ...);
 ----
 
+// TRANSLATION MISSING
+This function is a shortcut for function printf_date_tags. These two calls give
+exactly same result:
+
+[source,C]
+----
+weechat_printf (buffer, "message");
+weechat_printf_date_tags (buffer, 0, NULL, "message");
+----
+
 引数:
 
 * _buffer_: バッファへのポインタ、NULL の場合は WeeChat バッファにメッセージを表示

@@ -7013,6 +7013,16 @@ Prototipo:
 void weechat_printf (struct t_gui_buffer *buffer, const char *message, ...);
 ----
 
+// TRANSLATION MISSING
+This function is a shortcut for function printf_date_tags. These two calls give
+exactly same result:
+
+[source,C]
+----
+weechat_printf (buffer, "message");
+weechat_printf_date_tags (buffer, 0, NULL, "message");
+----
+
 Argomenti:
 
 * _buffer_: puntatore al buffer, se NULL il messaggio viene visualizzato sul buffer di WeeChat

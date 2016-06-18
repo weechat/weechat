@@ -6953,6 +6953,15 @@ Prototype :
 void weechat_printf (struct t_gui_buffer *buffer, const char *message, ...);
 ----
 
+Cette fonction est un raccourci vers la fonction printf_date_tags. Ces deux appels
+donnent exactement le même résultat :
+
+[source,C]
+----
+weechat_printf (buffer, "message");
+weechat_printf_date_tags (buffer, 0, NULL, "message");
+----
+
 Paramètres :
 
 * _buffer_ : pointeur vers le tampon, si NULL, le message est affiché sur le
