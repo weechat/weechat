@@ -6914,7 +6914,7 @@ Arguments:
 
 * _buffer_: buffer pointer, if NULL, message is displayed on WeeChat buffer
 * _date_: date for message (0 means current date/time)
-* _tags_: comma separated list of tags
+* _tags_: comma separated list of tags (NULL means no tags)
 * _message_: message to display
 
 Tags commonly used (non-exhaustive list):

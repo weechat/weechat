@@ -7091,7 +7091,8 @@ Argomenti:
 * _buffer_: puntatore al buffer, se NULL il messaggio viene visualizzato
   sul buffer di WeeChat
 * _date_: data per il messaggio (0 indica data/ora corrente)
-* _tags_: lista di tag separati da virgole
+// TRANSLATION MISSING
+* _tags_: lista di tag separati da virgole (NULL means no tags)
 * _message_: messaggio da visualizzare
 
 Tag usati di frequente (elenco non esaustivo):

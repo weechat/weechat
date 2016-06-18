@@ -6915,7 +6915,8 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 
 * _buffer_: バッファへのポインタ、NULL の場合、メッセージは WeeChat バッファに表示
 * _date_: メッセージの日付 (0 は現在の日付/時間を意味する)
-* _tags_: タグのコンマ区切りリスト
+// TRANSLATION MISSING
+* _tags_: タグのコンマ区切りリスト (NULL means no tags)
 * _message_: 表示するメッセージ
 
 通常使用するタグ (一部抜粋したリスト):

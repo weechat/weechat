@@ -7029,7 +7029,8 @@ Paramètres :
 * _buffer_ : pointeur vers le tampon, si NULL, le message est affiché sur le
   tampon Weechat
 * _date_ : date pour le message (0 signifie la date/heure courante)
-* _tags_ : liste d'étiquettes séparées par des virgules
+* _tags_ : liste d'étiquettes séparées par des virgules (NULL signifie aucune
+  étiquette)
 * _message_ : message à afficher
 
 Tags couramment utilisés (liste non exhaustive) :
