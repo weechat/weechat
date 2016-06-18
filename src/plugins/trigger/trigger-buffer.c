@@ -254,22 +254,23 @@ trigger_buffer_hashtable_map_cb (void *data,
     {
         value_no_color = (weechat_config_boolean (trigger_config_look_monitor_strip_colors)) ?
             weechat_string_remove_color ((const char *)value, NULL) : NULL;
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "\t    %s: %s\"%s%s%s\"",
-                             (char *)key,
-                             weechat_color ("chat_delimiters"),
-                             weechat_color ("reset"),
-                             (value_no_color) ? value_no_color : (const char *)value,
-                             weechat_color ("chat_delimiters"));
+        weechat_printf_date_tags (
+            trigger_buffer, 0, "no_trigger",
+            "\t    %s: %s\"%s%s%s\"",
+            (char *)key,
+            weechat_color ("chat_delimiters"),
+            weechat_color ("reset"),
+            (value_no_color) ? value_no_color : (const char *)value,
+            weechat_color ("chat_delimiters"));
         if (value_no_color)
             free (value_no_color);
     }
     else if (strcmp (value_type, "pointer") == 0)
     {
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "\t    %s: 0x%lx",
-                             (char *)key,
-                             value);
+        weechat_printf_date_tags (trigger_buffer, 0, "no_trigger",
+                                  "\t    %s: 0x%lx",
+                                  (char *)key,
+                                  value);
     }
 }
 
@@ -284,7 +285,7 @@ trigger_buffer_display_hashtable (const char *name,
     if (!trigger_buffer)
         return;
 
-    weechat_printf_tags (trigger_buffer, "no_trigger", "  %s:", name);
+    weechat_printf_date_tags (trigger_buffer, 0, "no_trigger", "  %s:", name);
 
     weechat_hashtable_map (hashtable, &trigger_buffer_hashtable_map_cb, NULL);
 }
@@ -310,21 +311,23 @@ trigger_buffer_display_trigger (struct t_trigger *trigger,
     if (!trigger_buffer_match_filters (trigger))
         return 0;
 
-    weechat_printf_tags (trigger_buffer, "no_trigger",
-                         "%s\t%s%s %s(%s%s%s)",
-                         trigger_hook_type_string[weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])],
-                         weechat_color (weechat_config_string (trigger_config_color_trigger)),
-                         trigger->name,
-                         weechat_color ("chat_delimiters"),
-                         weechat_color ("reset"),
-                         weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
-                         weechat_color ("chat_delimiters"));
+    weechat_printf_date_tags (
+        trigger_buffer, 0, "no_trigger",
+        "%s\t%s%s %s(%s%s%s)",
+        trigger_hook_type_string[weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])],
+        weechat_color (weechat_config_string (trigger_config_color_trigger)),
+        trigger->name,
+        weechat_color ("chat_delimiters"),
+        weechat_color ("reset"),
+        weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+        weechat_color ("chat_delimiters"));
     if (buffer)
     {
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "\t  buffer: %s%s",
-                             weechat_color ("chat_buffer"),
-                             weechat_buffer_get_string (buffer, "full_name"));
+        weechat_printf_date_tags (
+            trigger_buffer, 0, "no_trigger",
+            "\t  buffer: %s%s",
+            weechat_color ("chat_buffer"),
+            weechat_buffer_get_string (buffer, "full_name"));
     }
     if (pointers)
         trigger_buffer_display_hashtable ("pointers", pointers);

@@ -200,16 +200,18 @@ xfer_chat_recv_cb (const void *pointer, void *data, int fd)
                               (pv_tags && pv_tags[0]) ? pv_tags : "",
                               (pv_tags && pv_tags[0]) ? "," : "",
                               xfer->remote_nick);
-                    weechat_printf_tags (xfer->buffer,
-                                         str_tags,
-                                         "%s%s%s%s%s%s",
-                                         weechat_prefix ("action"),
-                                         weechat_color ((xfer->remote_nick_color) ?
-                                                        xfer->remote_nick_color : "chat_nick_other"),
-                                         xfer->remote_nick,
-                                         weechat_color ("chat"),
-                                         (ptr_buf2[0]) ? " " : "",
-                                         ptr_buf2);
+                    weechat_printf_date_tags (
+                        xfer->buffer,
+                        0,
+                        str_tags,
+                        "%s%s%s%s%s%s",
+                        weechat_prefix ("action"),
+                        weechat_color ((xfer->remote_nick_color) ?
+                                       xfer->remote_nick_color : "chat_nick_other"),
+                        xfer->remote_nick,
+                        weechat_color ("chat"),
+                        (ptr_buf2[0]) ? " " : "",
+                        ptr_buf2);
                 }
                 else
                 {
@@ -224,13 +226,16 @@ xfer_chat_recv_cb (const void *pointer, void *data, int fd)
                               xfer->remote_nick);
                     if (str_color)
                         free (str_color);
-                    weechat_printf_tags (xfer->buffer,
-                                         str_tags,
-                                         "%s%s\t%s",
-                                         weechat_color ((xfer->remote_nick_color) ?
-                                                        xfer->remote_nick_color : "chat_nick_other"),
-                                         xfer->remote_nick,
-                                         ptr_buf2);
+                    weechat_printf_date_tags (
+                        xfer->buffer,
+                        0,
+                        str_tags,
+                        "%s%s\t%s",
+                        weechat_color (
+                            (xfer->remote_nick_color) ?
+                            xfer->remote_nick_color : "chat_nick_other"),
+                        xfer->remote_nick,
+                        ptr_buf2);
                 }
                 if (ptr_buf_decoded)
                     free (ptr_buf_decoded);
@@ -290,12 +295,14 @@ xfer_chat_buffer_input_cb (const void *pointer, void *data,
                 input_data_color = weechat_hook_modifier_exec ("irc_color_decode",
                                                                "1",
                                                                input_data);
-                weechat_printf_tags (buffer,
-                                     str_tags,
-                                     "%s%s\t%s",
-                                     weechat_color ("chat_nick_self"),
-                                     ptr_xfer->local_nick,
-                                     (input_data_color) ? input_data_color : input_data);
+                weechat_printf_date_tags (
+                    buffer,
+                    0,
+                    str_tags,
+                    "%s%s\t%s",
+                    weechat_color ("chat_nick_self"),
+                    ptr_xfer->local_nick,
+                    (input_data_color) ? input_data_color : input_data);
                 if (input_data_color)
                     free (input_data_color);
             }

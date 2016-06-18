@@ -79,11 +79,10 @@ logger_buffer_add (struct t_gui_buffer *buffer, int log_level)
 
     if (weechat_logger_plugin->debug)
     {
-        weechat_printf_tags (NULL,
-                             "no_log",
-                             "%s: start logging for buffer \"%s\"",
-                             LOGGER_PLUGIN_NAME,
-                             weechat_buffer_get_string (buffer, "name"));
+        weechat_printf_date_tags (NULL, 0, "no_log",
+                                  "%s: start logging for buffer \"%s\"",
+                                  LOGGER_PLUGIN_NAME,
+                                  weechat_buffer_get_string (buffer, "name"));
     }
 
     new_logger_buffer = malloc (sizeof (*new_logger_buffer));
@@ -197,11 +196,11 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
 
     if (weechat_logger_plugin->debug)
     {
-        weechat_printf_tags (NULL,
-                             "no_log",
-                             "%s: stop logging for buffer \"%s\"",
-                             LOGGER_PLUGIN_NAME,
-                             weechat_buffer_get_string (ptr_buffer, "name"));
+        weechat_printf_date_tags (
+            NULL, 0, "no_log",
+            "%s: stop logging for buffer \"%s\"",
+            LOGGER_PLUGIN_NAME,
+            weechat_buffer_get_string (ptr_buffer, "name"));
     }
 }
 

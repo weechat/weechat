@@ -7002,65 +7002,6 @@ weechat.prnt(buffer, "\t\t")  # ligne vide (sans heure)
 [NOTE]
 La fonction s'appelle "print" dans les scripts ("prnt" en Python).
 
-==== printf_date
-
-Afficher un message sur un tampon, en utilisant une date personnalisée.
-
-Prototype :
-
-[source,C]
-----
-void weechat_printf_date (struct t_gui_buffer *buffer, time_t date,
-                          const char *message, ...);
-----
-
-Paramètres :
-
-* _buffer_ : pointeur vers le tampon, si NULL, le message est affiché sur le
-  tampon Weechat
-* _date_ : date pour le message (0 signifie la date/heure courante)
-* _message_ : message à afficher
-
-Exemple en C :
-
-[source,C]
-----
-weechat_printf_date (NULL, time (NULL) - 120, "Bonjour, il y a 2 minutes");
-----
-
-[NOTE]
-Cette fonction n'est pas disponible dans l'API script.
-
-==== printf_tags
-
-Afficher un message sur un tampon, avec des étiquettes personnalisées.
-
-Prototype :
-
-[source,C]
-----
-void weechat_printf_tags (struct t_gui_buffer *buffer, const char *tags,
-                          const char *message, ...);
-----
-
-Paramètres :
-
-* _buffer_ : pointeur vers le tampon, si NULL, le message est affiché sur le
-  tampon Weechat
-* _tags_ : liste d'étiquettes séparées par des virgules
-* _message_ : message à afficher
-
-Exemple en C :
-
-[source,C]
-----
-weechat_printf_tags (NULL, "notify_message",
-                     "Message avec une étiquette 'notify_message'");
-----
-
-[NOTE]
-Cette fonction n'est pas disponible dans l'API script.
-
 ==== printf_date_tags
 
 Afficher un message sur un tampon, en utilisant une date et des étiquettes

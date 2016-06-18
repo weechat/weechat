@@ -672,8 +672,9 @@ irc_notify_set_is_on_server (struct t_irc_notify *notify, const char *host,
     if (notify->is_on_server == is_on_server)
         return;
 
-    weechat_printf_tags (
+    weechat_printf_date_tags (
         notify->server->buffer,
+        0,
         irc_notify_get_tags (irc_config_look_notify_tags_ison,
                              (is_on_server) ? "join" : "quit",
                              notify->nick),
@@ -719,8 +720,9 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
 
     if (!notify->away_message && away_message)
     {
-        weechat_printf_tags (
+        weechat_printf_date_tags (
             notify->server->buffer,
+            0,
             irc_notify_get_tags (
                 irc_config_look_notify_tags_whois, "away", notify->nick),
             _("%snotify: %s%s%s is now away: \"%s\""),
@@ -733,8 +735,9 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
     }
     else if (notify->away_message && !away_message)
     {
-        weechat_printf_tags (
+        weechat_printf_date_tags (
             notify->server->buffer,
+            0,
             irc_notify_get_tags (
                 irc_config_look_notify_tags_whois, "back", notify->nick),
             _("%snotify: %s%s%s is back"),
@@ -746,8 +749,9 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
     }
     else if (notify->away_message && away_message)
     {
-        weechat_printf_tags (
+        weechat_printf_date_tags (
             notify->server->buffer,
+            0,
             irc_notify_get_tags (
                 irc_config_look_notify_tags_whois, "still_away", notify->nick),
             _("%snotify: %s%s%s is still away: \"%s\""),

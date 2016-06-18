@@ -36,9 +36,9 @@
 void
 trigger_command_display_status ()
 {
-    weechat_printf_tags (NULL, "no_trigger",
-                         (trigger_enabled) ?
-                         _("Triggers enabled") : _("Triggers disabled"));
+    weechat_printf_date_tags (NULL, 0, "no_trigger",
+                              (trigger_enabled) ?
+                              _("Triggers enabled") : _("Triggers disabled"));
 }
 
 /*
@@ -67,8 +67,8 @@ trigger_command_display_trigger_internal (const char *name,
 
     if (verbose >= 1)
     {
-        weechat_printf_tags (
-            NULL, "no_trigger",
+        weechat_printf_date_tags (
+            NULL, 0, "no_trigger",
             "  %s%s%s: %s%s%s%s%s%s%s",
             (enabled) ?
             weechat_color (weechat_config_string (trigger_config_color_trigger)) :
@@ -89,69 +89,73 @@ trigger_command_display_trigger_internal (const char *name,
         spaces[length] = '\0';
         if (verbose >= 2)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 "%s hooks: %d", spaces, hooks_count);
-            weechat_printf_tags (NULL, "no_trigger",
-                                 "%s callback: %d",
-                                 spaces, hook_count_cb);
-            weechat_printf_tags (NULL, "no_trigger",
-                                 "%s commands: %d",
-                                 spaces, hook_count_cmd);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      "%s hooks: %d", spaces, hooks_count);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      "%s callback: %d",
+                                      spaces, hook_count_cb);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      "%s commands: %d",
+                                      spaces, hook_count_cmd);
         }
         if (conditions && conditions[0])
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 "%s %s=? %s\"%s%s%s\"",
-                                 spaces,
-                                 weechat_color (weechat_config_string (trigger_config_color_flag_conditions)),
-                                 weechat_color ("chat_delimiters"),
-                                 weechat_color ("reset"),
-                                 conditions,
-                                 weechat_color ("chat_delimiters"));
+            weechat_printf_date_tags (
+                NULL, 0, "no_trigger",
+                "%s %s=? %s\"%s%s%s\"",
+                spaces,
+                weechat_color (weechat_config_string (trigger_config_color_flag_conditions)),
+                weechat_color ("chat_delimiters"),
+                weechat_color ("reset"),
+                conditions,
+                weechat_color ("chat_delimiters"));
         }
         for (i = 0; i < regex_count; i++)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 "%s %s~%d %s\"%s%s%s\" --> "
-                                 "\"%s%s%s\"%s%s%s%s",
-                                 spaces,
-                                 weechat_color (weechat_config_string (trigger_config_color_flag_regex)),
-                                 i + 1,
-                                 weechat_color ("chat_delimiters"),
-                                 weechat_color (weechat_config_string (trigger_config_color_regex)),
-                                 regex[i].str_regex,
-                                 weechat_color ("chat_delimiters"),
-                                 weechat_color (weechat_config_string (trigger_config_color_replace)),
-                                 regex[i].replace,
-                                 weechat_color ("chat_delimiters"),
-                                 weechat_color ("reset"),
-                                 (regex[i].variable) ? " (" : "",
-                                 (regex[i].variable) ? regex[i].variable : "",
-                                 (regex[i].variable) ? ")" : "");
+            weechat_printf_date_tags (
+                NULL, 0, "no_trigger",
+                "%s %s~%d %s\"%s%s%s\" --> "
+                "\"%s%s%s\"%s%s%s%s",
+                spaces,
+                weechat_color (weechat_config_string (trigger_config_color_flag_regex)),
+                i + 1,
+                weechat_color ("chat_delimiters"),
+                weechat_color (weechat_config_string (trigger_config_color_regex)),
+                regex[i].str_regex,
+                weechat_color ("chat_delimiters"),
+                weechat_color (weechat_config_string (trigger_config_color_replace)),
+                regex[i].replace,
+                weechat_color ("chat_delimiters"),
+                weechat_color ("reset"),
+                (regex[i].variable) ? " (" : "",
+                (regex[i].variable) ? regex[i].variable : "",
+                (regex[i].variable) ? ")" : "");
         }
         if (commands)
         {
             for (i = 0; commands[i]; i++)
             {
-                weechat_printf_tags (NULL, "no_trigger",
-                                     "%s %s/%d %s\"%s%s%s\"",
-                                     spaces,
-                                     weechat_color (weechat_config_string (trigger_config_color_flag_command)),
-                                     i + 1,
-                                     weechat_color ("chat_delimiters"),
-                                     weechat_color ("reset"),
-                                     commands[i],
-                                     weechat_color ("chat_delimiters"));
+                weechat_printf_date_tags (
+                    NULL, 0, "no_trigger",
+                    "%s %s/%d %s\"%s%s%s\"",
+                    spaces,
+                    weechat_color (weechat_config_string (trigger_config_color_flag_command)),
+                    i + 1,
+                    weechat_color ("chat_delimiters"),
+                    weechat_color ("reset"),
+                    commands[i],
+                    weechat_color ("chat_delimiters"));
             }
         }
         if ((return_code >= 0) && (return_code != TRIGGER_RC_OK))
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 "%s %s=> %s%s",
-                                 spaces,
-                                 weechat_color (weechat_config_string (trigger_config_color_flag_return_code)),
-                                 weechat_color ("reset"),
-                                 trigger_return_code_string[return_code]);
+            weechat_printf_date_tags (
+                NULL, 0, "no_trigger",
+                "%s %s=> %s%s",
+                spaces,
+                weechat_color (weechat_config_string (trigger_config_color_flag_return_code)),
+                weechat_color ("reset"),
+                trigger_return_code_string[return_code]);
         }
     }
     else
@@ -190,8 +194,8 @@ trigger_command_display_trigger_internal (const char *name,
                       weechat_color (weechat_config_string (trigger_config_color_flag_return_code)),
                       weechat_color ("reset"));
         }
-        weechat_printf_tags (
-            NULL, "no_trigger",
+        weechat_printf_date_tags (
+            NULL, 0, "no_trigger",
             "  %s%s%s: %s%s%s%s%s%s%s%s%s%s%s%s",
             (enabled) ?
             weechat_color (weechat_config_string (trigger_config_color_trigger)) :
@@ -246,16 +250,17 @@ trigger_command_list (const char *message, int verbose)
 {
     struct t_trigger *ptr_trigger;
 
-    weechat_printf_tags (NULL, "no_trigger", "");
+    weechat_printf_date_tags (NULL, 0, "no_trigger", "");
     trigger_command_display_status ();
 
     if (!triggers)
     {
-        weechat_printf_tags (NULL, "no_trigger", _("No trigger defined"));
+        weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                  _("No trigger defined"));
         return;
     }
 
-    weechat_printf_tags (NULL, "no_trigger", message);
+    weechat_printf_date_tags (NULL, 0, "no_trigger", message);
 
     for (ptr_trigger = triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
@@ -280,8 +285,9 @@ trigger_command_list_default (int verbose)
     commands_count = 0;
     commands = NULL;
 
-    weechat_printf_tags (NULL, "no_trigger", "");
-    weechat_printf_tags (NULL, "no_trigger", _("List of default triggers:"));
+    weechat_printf_date_tags (NULL, 0, "no_trigger", "");
+    weechat_printf_date_tags (NULL, 0, "no_trigger",
+                              _("List of default triggers:"));
 
     for (i = 0; trigger_config_default_list[i][0]; i++)
     {
@@ -321,11 +327,12 @@ trigger_command_list_default (int verbose)
 void
 trigger_command_error_running (struct t_trigger *trigger, const char *action)
 {
-    weechat_printf_tags (NULL, "no_trigger",
-                         _("%s%s: action \"%s\" can not be executed on "
-                           "trigger \"%s\" because it is currently running"),
-                         weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                         action, trigger->name);
+    weechat_printf_date_tags (NULL, 0, "no_trigger",
+                              _("%s%s: action \"%s\" can not be executed on "
+                                "trigger \"%s\" because it is currently "
+                                "running"),
+                              weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
+                              action, trigger->name);
 }
 
 /*
@@ -354,16 +361,17 @@ trigger_command_set_enabled (struct t_trigger *trigger,
         if (weechat_config_boolean (trigger->options[TRIGGER_OPTION_ENABLED]))
         {
             trigger_hook (trigger);
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("Trigger \"%s\" restarted"),
-                                 trigger->name);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("Trigger \"%s\" restarted"),
+                                      trigger->name);
         }
         else if (display_error)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: a disabled trigger can not be "
-                                   "restarted"),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: a disabled trigger can not be "
+                                        "restarted"),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME);
         }
     }
     else
@@ -375,11 +383,11 @@ trigger_command_set_enabled (struct t_trigger *trigger,
         }
         weechat_config_option_set (trigger->options[TRIGGER_OPTION_ENABLED],
                                    (enable) ? "on" : "off", 1);
-        weechat_printf_tags (NULL, "no_trigger",
-                             (enable) ?
-                             _("Trigger \"%s\" enabled") :
-                             _("Trigger \"%s\" disabled"),
-                             trigger->name);
+        weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                  (enable) ?
+                                  _("Trigger \"%s\" enabled") :
+                                  _("Trigger \"%s\" disabled"),
+                                  trigger->name);
     }
 }
 
@@ -404,36 +412,38 @@ trigger_command_rename (struct t_trigger *trigger, const char *new_name)
         /* check that new name is valid */
         if (!trigger_name_valid (name2))
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: invalid trigger name: \"%s\""),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 name2);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: invalid trigger name: \"%s\""),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      name2);
             goto end;
         }
         /* check that no trigger already exists with the new name */
         if (trigger_search (name2))
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: trigger \"%s\" already "
-                                   "exists"),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 name2);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: trigger \"%s\" already "
+                                        "exists"),
+                                      weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
+                                      name2);
             goto end;
         }
         /* rename the trigger */
         if (trigger_rename (trigger, name2))
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("Trigger \"%s\" renamed to \"%s\""),
-                                 name, trigger->name);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("Trigger \"%s\" renamed to \"%s\""),
+                                      name, trigger->name);
         }
         else
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: failed to rename trigger "
-                                   "\"%s\""),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 name);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: failed to rename trigger "
+                                        "\"%s\""),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      name);
         }
     }
 
@@ -498,19 +508,21 @@ trigger_command_trigger (const void *pointer, void *data,
             goto error;
         if (!trigger_name_valid (sargv[0]))
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: invalid trigger name: \"%s\""),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 sargv[0]);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: invalid trigger name: \"%s\""),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      sargv[0]);
             goto end;
         }
         type = trigger_search_hook_type (sargv[1]);
         if (type < 0)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: invalid hook type: \"%s\""),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 sargv[1]);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: invalid hook type: \"%s\""),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      sargv[1]);
             goto end;
         }
         if ((sargc > 4) && sargv[4][0])
@@ -551,10 +563,11 @@ trigger_command_trigger (const void *pointer, void *data,
         if ((sargc > 6) && sargv[6][0]
             && (trigger_search_return_code (sargv[6]) < 0))
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: invalid return code: \"%s\""),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 sargv[6]);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: invalid return code: \"%s\""),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      sargv[6]);
             goto end;
         }
         ptr_trigger = trigger_search (sargv[0]);
@@ -574,22 +587,24 @@ trigger_command_trigger (const void *pointer, void *data,
             }
             else
             {
-                weechat_printf_tags (NULL, "no_trigger",
-                                     _("%s%s: trigger \"%s\" already exists "
-                                       "(choose another name or use option "
-                                       "\"addreplace\" to overwrite it)"),
-                                     weechat_prefix ("error"),
-                                     TRIGGER_PLUGIN_NAME, sargv[0]);
+                weechat_printf_date_tags (
+                    NULL, 0, "no_trigger",
+                    _("%s%s: trigger \"%s\" already exists "
+                      "(choose another name or use option "
+                      "\"addreplace\" to overwrite it)"),
+                    weechat_prefix ("error"),
+                    TRIGGER_PLUGIN_NAME, sargv[0]);
                 goto end;
             }
         }
         ptr_trigger = trigger_alloc (sargv[0]);
         if (!ptr_trigger)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: failed to create trigger \"%s\""),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 sargv[0]);
+            weechat_printf_date_tags (
+                NULL, 0, "no_trigger",
+                _("%s%s: failed to create trigger \"%s\""),
+                weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
+                sargv[0]);
             goto end;
         }
         ptr_trigger = trigger_new (
@@ -603,15 +618,17 @@ trigger_command_trigger (const void *pointer, void *data,
             (sargc > 6) ? sargv[6] : "");  /* return code */
         if (ptr_trigger)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("Trigger \"%s\" created"), sargv[0]);
+            weechat_printf_date_tags (
+                NULL, 0, "no_trigger",
+                _("Trigger \"%s\" created"), sargv[0]);
         }
         else
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: failed to create trigger \"%s\""),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 sargv[0]);
+            weechat_printf_date_tags (
+                NULL, 0, "no_trigger",
+                _("%s%s: failed to create trigger \"%s\""),
+                weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
+                sargv[0]);
         }
         goto end;
     }
@@ -625,10 +642,10 @@ trigger_command_trigger (const void *pointer, void *data,
             type = trigger_search_hook_type (argv[2]);
             if (type < 0)
             {
-                weechat_printf_tags (NULL, "no_trigger",
-                                     _("%s%s: invalid hook type: \"%s\""),
-                                     weechat_prefix ("error"),
-                                     TRIGGER_PLUGIN_NAME, argv[2]);
+                weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                          _("%s%s: invalid hook type: \"%s\""),
+                                          weechat_prefix ("error"),
+                                          TRIGGER_PLUGIN_NAME, argv[2]);
                 goto end;
             }
         }
@@ -664,10 +681,11 @@ trigger_command_trigger (const void *pointer, void *data,
         ptr_trigger = trigger_search (argv[2]);
         if (!ptr_trigger)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: trigger \"%s\" not found"),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 argv[2]);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: trigger \"%s\" not found"),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      argv[2]);
             goto end;
         }
         add_rc = trigger_hook_default_rc[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_HOOK])][0];
@@ -705,10 +723,11 @@ trigger_command_trigger (const void *pointer, void *data,
         ptr_trigger = trigger_search (argv[2]);
         if (!ptr_trigger)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: trigger \"%s\" not found"),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 argv[2]);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: trigger \"%s\" not found"),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      argv[2]);
             goto end;
         }
         if (ptr_trigger->hook_running)
@@ -729,17 +748,17 @@ trigger_command_trigger (const void *pointer, void *data,
             {
                 weechat_config_option_set (ptr_trigger->options[index_option],
                                            value, 1);
-                weechat_printf_tags (NULL, "no_trigger",
-                                     _("Trigger \"%s\" updated"),
-                                     ptr_trigger->name);
+                weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                          _("Trigger \"%s\" updated"),
+                                          ptr_trigger->name);
             }
             else
             {
-                weechat_printf_tags (NULL, "no_trigger",
-                                     _("%s%s: trigger option \"%s\" not "
-                                       "found"),
-                                     weechat_prefix ("error"),
-                                     TRIGGER_PLUGIN_NAME, argv[3]);
+                weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                          _("%s%s: trigger option \"%s\" not "
+                                            "found"),
+                                          weechat_prefix ("error"),
+                                          TRIGGER_PLUGIN_NAME, argv[3]);
             }
             free (value);
         }
@@ -754,10 +773,11 @@ trigger_command_trigger (const void *pointer, void *data,
         ptr_trigger = trigger_search (argv[2]);
         if (!ptr_trigger)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: trigger \"%s\" not found"),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 argv[2]);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: trigger \"%s\" not found"),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      argv[2]);
             goto end;
         }
         if (ptr_trigger->hook_running)
@@ -777,46 +797,50 @@ trigger_command_trigger (const void *pointer, void *data,
         ptr_trigger = trigger_search (argv[2]);
         if (!ptr_trigger)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: trigger \"%s\" not found"),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 argv[2]);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: trigger \"%s\" not found"),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      argv[2]);
             goto end;
         }
         /* check that new name is valid */
         if (!trigger_name_valid (argv[3]))
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: invalid trigger name: \"%s\""),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 argv[3]);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: invalid trigger name: \"%s\""),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      argv[3]);
             goto end;
         }
         /* check that no trigger already exists with the new name */
         if (trigger_search (argv[3]))
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: trigger \"%s\" already "
-                                   "exists"),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 argv[3]);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: trigger \"%s\" already "
+                                        "exists"),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      argv[3]);
             goto end;
         }
         /* copy the trigger */
         ptr_trigger2 = trigger_copy (ptr_trigger, argv[3]);
         if (ptr_trigger2)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("Trigger \"%s\" copied to \"%s\""),
-                                 ptr_trigger->name, ptr_trigger2->name);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("Trigger \"%s\" copied to \"%s\""),
+                                      ptr_trigger->name, ptr_trigger2->name);
         }
         else
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: failed to copy trigger "
-                                   "\"%s\""),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 ptr_trigger->name);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: failed to copy trigger "
+                                        "\"%s\""),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      ptr_trigger->name);
         }
         goto end;
     }
@@ -869,9 +893,10 @@ trigger_command_trigger (const void *pointer, void *data,
                                                  1);
                 else
                 {
-                    weechat_printf_tags (NULL, "no_trigger",
-                                         _("%sTrigger \"%s\" not found"),
-                                         weechat_prefix ("error"), argv[i]);
+                    weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                              _("%sTrigger \"%s\" not found"),
+                                              weechat_prefix ("error"),
+                                              argv[i]);
                 }
             }
         }
@@ -902,8 +927,8 @@ trigger_command_trigger (const void *pointer, void *data,
             }
             count = count - triggers_count;
             if (count > 0)
-                weechat_printf_tags (NULL, "no_trigger",
-                                     _("%d triggers removed"), count);
+                weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                          _("%d triggers removed"), count);
         }
         else
         {
@@ -919,15 +944,17 @@ trigger_command_trigger (const void *pointer, void *data,
                     else
                     {
                         trigger_free (ptr_trigger);
-                        weechat_printf_tags (NULL, "no_trigger",
-                                             _("Trigger \"%s\" removed"), argv[i]);
+                        weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                                  _("Trigger \"%s\" removed"),
+                                                  argv[i]);
                     }
                 }
                 else
                 {
-                    weechat_printf_tags (NULL, "no_trigger",
-                                         _("%sTrigger \"%s\" not found"),
-                                         weechat_prefix ("error"), argv[i]);
+                    weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                              _("%sTrigger \"%s\" not found"),
+                                              weechat_prefix ("error"),
+                                              argv[i]);
                 }
             }
         }
@@ -942,14 +969,15 @@ trigger_command_trigger (const void *pointer, void *data,
         ptr_trigger = trigger_search (argv[2]);
         if (!ptr_trigger)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%s%s: trigger \"%s\" not found"),
-                                 weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                                 argv[2]);
+            weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                      _("%s%s: trigger \"%s\" not found"),
+                                      weechat_prefix ("error"),
+                                      TRIGGER_PLUGIN_NAME,
+                                      argv[2]);
             goto end;
         }
-        weechat_printf_tags (NULL, "no_trigger", "");
-        weechat_printf_tags (NULL, "no_trigger", _("Trigger:"));
+        weechat_printf_date_tags (NULL, 0, "no_trigger", "");
+        weechat_printf_date_tags (NULL, 0, "no_trigger", _("Trigger:"));
         trigger_command_display_trigger (ptr_trigger, 2);
         goto end;
     }
@@ -989,16 +1017,17 @@ trigger_command_trigger (const void *pointer, void *data,
                         trigger_config_default_list[j][5],   /* regex */
                         trigger_config_default_list[j][6],   /* command */
                         trigger_config_default_list[j][7]);  /* return code */
-                    weechat_printf_tags (NULL, "no_trigger",
-                                         _("Trigger \"%s\" restored"),
-                                         argv[i]);
+                    weechat_printf_date_tags (NULL, 0, "no_trigger",
+                                              _("Trigger \"%s\" restored"),
+                                              argv[i]);
                 }
             }
             else
             {
-                weechat_printf_tags (NULL, "no_trigger",
-                                     _("%sDefault trigger \"%s\" not found"),
-                                     weechat_prefix ("error"), argv[i]);
+                weechat_printf_date_tags (
+                    NULL, 0, "no_trigger",
+                    _("%sDefault trigger \"%s\" not found"),
+                    weechat_prefix ("error"), argv[i]);
             }
         }
         goto end;

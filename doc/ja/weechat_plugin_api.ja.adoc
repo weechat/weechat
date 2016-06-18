@@ -6889,63 +6889,6 @@ weechat.prnt(buffer, "\t\t")  # empty line (without time)
 [NOTE]
 この関数をスクリプトの中で実行するには "print" (Python の場合は "prnt") と書きます。
 
-==== printf_date
-
-日付を指定してバッファにメッセージを表示。
-
-プロトタイプ:
-
-[source,C]
-----
-void weechat_printf_date (struct t_gui_buffer *buffer, time_t date,
-                          const char *message, ...);
-----
-
-引数:
-
-* _buffer_: バッファへのポインタ、NULL の場合、メッセージは WeeChat バッファに表示
-* _date_: メッセージの日付 (0 は現在の日付/時間を意味する)
-* _message_: 表示するメッセージ
-
-C 言語での使用例:
-
-[source,C]
-----
-weechat_printf_date (NULL, time (NULL) - 120, "Hello, 2 minutes ago");
-----
-
-[NOTE]
-スクリプト API ではこの関数を利用できません。
-
-==== printf_tags
-
-タグを指定してバッファにメッセージを表示。
-
-プロトタイプ:
-
-[source,C]
-----
-void weechat_printf_tags (struct t_gui_buffer *buffer, const char *tags,
-                          const char *message, ...);
-----
-
-引数:
-
-* _buffer_: バッファへのポインタ、NULL の場合、メッセージは WeeChat バッファに表示
-* _tags_: タグのコンマ区切りリスト
-* _message_: 表示するメッセージ
-
-C 言語での使用例:
-
-[source,C]
-----
-weechat_printf_tags (NULL, "notify_message",
-                     "Message with a tag 'notify_message'");
-----
-
-[NOTE]
-スクリプト API ではこの関数を利用できません。
-
 ==== printf_date_tags
 
 日付とタグを指定してバッファにメッセージを表示。

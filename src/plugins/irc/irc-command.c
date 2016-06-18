@@ -640,8 +640,9 @@ irc_command_me_channel_display (struct t_irc_server *server,
         irc_color_decode (arguments,
                           weechat_config_boolean (irc_config_network_colors_send)) : NULL;
     ptr_nick = irc_nick_search (server, channel, server->nick);
-    weechat_printf_tags (
+    weechat_printf_date_tags (
         channel->buffer,
+        0,
         irc_protocol_tags ("privmsg", "irc_action,notify_none,no_highlight",
                            server->nick, NULL),
         "%s%s%s%s%s%s%s",
@@ -726,16 +727,17 @@ irc_command_display_away (struct t_irc_server *server, const char *string1,
         if ((ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
             || (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE))
         {
-            weechat_printf_tags (ptr_channel->buffer,
-                                 "away_info",
-                                 "%s[%s%s%s %s: %s%s]",
-                                 IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_CHAT_NICK_SELF,
-                                 server->nick,
-                                 IRC_COLOR_RESET,
-                                 string1,
-                                 string2,
-                                 IRC_COLOR_CHAT_DELIMITERS);
+            weechat_printf_date_tags (ptr_channel->buffer,
+                                      0,
+                                      "away_info",
+                                      "%s[%s%s%s %s: %s%s]",
+                                      IRC_COLOR_CHAT_DELIMITERS,
+                                      IRC_COLOR_CHAT_NICK_SELF,
+                                      server->nick,
+                                      IRC_COLOR_RESET,
+                                      string1,
+                                      string2,
+                                      IRC_COLOR_CHAT_DELIMITERS);
         }
     }
 }
@@ -3163,8 +3165,9 @@ IRC_COMMAND_CALLBACK(msg)
                          * message to channel ops/voiced
                          * (to "@#channel" or "+#channel")
                          */
-                        weechat_printf_tags (
+                        weechat_printf_date_tags (
                             ptr_channel2->buffer,
+                            0,
                             "notify_none,no_highlight",
                             "%s%s%s -> %s%s%s: %s",
                             weechat_prefix ("network"),
@@ -3251,8 +3254,9 @@ IRC_COMMAND_CALLBACK(msg)
                     }
                     else
                     {
-                        weechat_printf_tags (
+                        weechat_printf_date_tags (
                             ptr_server->buffer,
+                            0,
                             irc_protocol_tags (
                                 "privmsg", "notify_none,no_highlight",
                                 ptr_server->nick, NULL),
@@ -3430,10 +3434,11 @@ IRC_COMMAND_CALLBACK(notice)
             string = irc_color_decode (
                 str_args,
                 weechat_config_boolean (irc_config_network_colors_send));
-            weechat_printf_tags (
+            weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
                     ptr_server, argv[arg_target], "notice", NULL,
                     (ptr_channel) ? ptr_channel->buffer : NULL),
+                0,
                 "notify_none,no_highlight",
                 "%s%s%s%s -> %s%s%s: %s",
                 weechat_prefix ("network"),

@@ -7064,65 +7064,6 @@ weechat.prnt(buffer, "\t\t")  # empty line (without time)
 [NOTE]
 La funzione è chiamata "print" negli script ("prnt" in Python).
 
-==== printf_date
-
-Visualizza un messaggio sul buffer, utilizzando una data personalizzata.
-
-Prototipo:
-
-[source,C]
-----
-void weechat_printf_date (struct t_gui_buffer *buffer, time_t date,
-                          const char *message, ...);
-----
-
-Argomenti:
-
-* _buffer_: puntatore al buffer, se NULL, il messaggio viene visualizzato
-  sul buffer di WeeChat
-* _date_: data per il messaggio (0 indica data/ora corrente)
-* _message_: messaggio da visualizzare
-
-Esempio in C:
-
-[source,C]
-----
-weechat_printf_date (NULL, time (NULL) - 120, "Ciao, 2 minuti fa");
-----
-
-[NOTE]
-Questa funzione non è disponibile nelle API per lo scripting.
-
-==== printf_tags
-
-Visualizza un messaggio sul buffer, utilizzando tag personalizzati.
-
-Prototipo:
-
-[source,C]
-----
-void weechat_printf_tags (struct t_gui_buffer *buffer, const char *tags,
-                          const char *message, ...);
-----
-
-Argomenti:
-
-* _buffer_: puntatore al buffer, se NULL il messaggio viene visualizzato
-  sul buffer di WeeChat
-* _tags_: lista di tag separati da virgole
-* _message_: messaggio da visualizzare
-
-Esempio in C:
-
-[source,C]
-----
-weechat_printf_tags (NULL, "notify_message",
-                     "Messaggio con tag 'notify_message'");
-----
-
-[NOTE]
-Questa funzione non è disponibile nelle API per lo scripting.
-
 ==== printf_date_tags
 
 Visualizza un messaggio sul buffer, usando tag e data personalizzati.

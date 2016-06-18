@@ -94,9 +94,9 @@ logger_config_flush_delay_change (const void *pointer, void *data,
     {
         if (weechat_logger_plugin->debug)
         {
-            weechat_printf_tags (NULL,
-                                 "no_log",
-                                 "%s: stopping timer", LOGGER_PLUGIN_NAME);
+            weechat_printf_date_tags (
+                NULL, 0, "no_log",
+                "%s: stopping timer", LOGGER_PLUGIN_NAME);
         }
         weechat_unhook (logger_timer);
         logger_timer = NULL;
@@ -106,11 +106,11 @@ logger_config_flush_delay_change (const void *pointer, void *data,
     {
         if (weechat_logger_plugin->debug)
         {
-            weechat_printf_tags (NULL,
-                                 "no_log",
-                                 "%s: starting timer (interval: %d seconds)",
-                                 LOGGER_PLUGIN_NAME,
-                                 weechat_config_integer (logger_config_file_flush_delay));
+            weechat_printf_date_tags (
+                NULL, 0, "no_log",
+                "%s: starting timer (interval: %d seconds)",
+                LOGGER_PLUGIN_NAME,
+                weechat_config_integer (logger_config_file_flush_delay));
         }
         logger_timer = weechat_hook_timer (weechat_config_integer (logger_config_file_flush_delay) * 1000,
                                            0, 0,

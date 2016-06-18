@@ -205,9 +205,9 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
         {
             if (trigger_buffer && display_monitor)
             {
-                weechat_printf_tags (trigger_buffer, "no_trigger",
-                                     "\t  regex %d: %s",
-                                     i + 1, _("no variable"));
+                weechat_printf_date_tags (trigger_buffer, 0, "no_trigger",
+                                          "\t  regex %d: %s",
+                                          i + 1, _("no variable"));
             }
             continue;
         }
@@ -217,9 +217,9 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
         {
             if (trigger_buffer && display_monitor)
             {
-                weechat_printf_tags (trigger_buffer, "no_trigger",
-                                     "\t  regex %d (%s): %s",
-                                     i + 1, ptr_key, _("empty variable"));
+                weechat_printf_date_tags (trigger_buffer, 0, "no_trigger",
+                                          "\t  regex %d (%s): %s",
+                                          i + 1, ptr_key, _("empty variable"));
             }
             continue;
         }
@@ -240,19 +240,19 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
             /* display debug info on trigger buffer */
             if (trigger_buffer && display_monitor)
             {
-                weechat_printf_tags (trigger_buffer, "no_trigger",
-                                     "\t  regex %d %s(%s%s%s)%s: "
-                                     "%s\"%s%s%s\"",
-                                     i + 1,
-                                     weechat_color ("chat_delimiters"),
-                                     weechat_color ("reset"),
-                                     ptr_key,
-                                     weechat_color ("chat_delimiters"),
-                                     weechat_color ("reset"),
-                                     weechat_color ("chat_delimiters"),
-                                     weechat_color ("reset"),
-                                     value,
-                                     weechat_color ("chat_delimiters"));
+                weechat_printf_date_tags (trigger_buffer, 0, "no_trigger",
+                                          "\t  regex %d %s(%s%s%s)%s: "
+                                          "%s\"%s%s%s\"",
+                                          i + 1,
+                                          weechat_color ("chat_delimiters"),
+                                          weechat_color ("reset"),
+                                          ptr_key,
+                                          weechat_color ("chat_delimiters"),
+                                          weechat_color ("reset"),
+                                          weechat_color ("chat_delimiters"),
+                                          weechat_color ("reset"),
+                                          value,
+                                          weechat_color ("chat_delimiters"));
             }
             weechat_hashtable_set (extra_vars, ptr_key, value);
             free (value);
@@ -299,19 +299,20 @@ trigger_callback_run_command (struct t_trigger *trigger,
             /* display debug info on trigger buffer */
             if (trigger_buffer && display_monitor)
             {
-                weechat_printf_tags (trigger_buffer, "no_trigger",
-                                     _("%s  running command %s\"%s%s%s\"%s "
-                                       "on buffer %s%s%s"),
-                                     "\t",
-                                     weechat_color ("chat_delimiters"),
-                                     weechat_color ("reset"),
-                                     command_eval,
-                                     weechat_color ("chat_delimiters"),
-                                     weechat_color ("reset"),
-                                     weechat_color ("chat_buffer"),
-                                     weechat_buffer_get_string (buffer,
-                                                                "full_name"),
-                                     weechat_color ("reset"));
+                weechat_printf_date_tags (
+                    trigger_buffer, 0, "no_trigger",
+                    _("%s  running command %s\"%s%s%s\"%s "
+                      "on buffer %s%s%s"),
+                    "\t",
+                    weechat_color ("chat_delimiters"),
+                    weechat_color ("reset"),
+                    command_eval,
+                    weechat_color ("chat_delimiters"),
+                    weechat_color ("reset"),
+                    weechat_color ("chat_buffer"),
+                    weechat_buffer_get_string (buffer,
+                                               "full_name"),
+                    weechat_color ("reset"));
             }
             weechat_command (buffer, command_eval);
             trigger->hook_count_cmd++;

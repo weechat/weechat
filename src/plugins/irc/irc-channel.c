@@ -1337,8 +1337,9 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
         {
             if (weechat_config_boolean (irc_config_look_display_pv_back))
             {
-                weechat_printf_tags (
+                weechat_printf_date_tags (
                     ptr_channel->buffer,
+                    0,
                     "irc_nick_back",
                     _("%s%s%s %s(%s%s%s)%s is back on server"),
                     weechat_prefix ("join"),

@@ -98,8 +98,9 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
         ptr_text = (text_decoded) ? text_decoded : ((text2) ? text2 : text);
         if (action)
         {
-            weechat_printf_tags (
+            weechat_printf_date_tags (
                 buffer,
+                0,
                 irc_protocol_tags (
                     "privmsg", str_tags,
                     (ptr_nick) ? ptr_nick->name : ptr_server->nick,
@@ -114,8 +115,9 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
         }
         else
         {
-            weechat_printf_tags (
+            weechat_printf_date_tags (
                 buffer,
+                0,
                 irc_protocol_tags (
                     "privmsg", str_tags,
                     (ptr_nick) ? ptr_nick->name : ptr_server->nick,

@@ -17,6 +17,20 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v1.6]]
+== Version 1.6 (under dev)
+
+[[v1.6_api_printf]]
+
+Some "printf" functions have been removed from C API (there were not in scripting API):
+
+* printf_date
+* printf_tags
+
+The function "printf_date_tags" must now be used instead of these functions
+(the two functions removed were just C macros on function "printf_date_tags"
+with tags set to NULL for "printf_date" and date set to 0 for "printf_tags").
+
 [[v1.5]]
 == Version 1.5 (2016-05-01)
 

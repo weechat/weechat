@@ -97,10 +97,9 @@ logger_get_file_path ()
 
     if (weechat_logger_plugin->debug)
     {
-        weechat_printf_tags (NULL,
-                             "no_log",
-                             "%s: file path = \"%s\"",
-                             LOGGER_PLUGIN_NAME, path2);
+        weechat_printf_date_tags (NULL, 0, "no_log",
+                                  "%s: file path = \"%s\"",
+                                  LOGGER_PLUGIN_NAME, path2);
     }
 
 end:
@@ -364,13 +363,12 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
 
     if (weechat_logger_plugin->debug)
     {
-        weechat_printf_tags (NULL,
-                             "no_log",
-                             "%s: buffer = \"%s\", mask = \"%s\", "
-                             "decoded mask = \"%s\"",
-                             LOGGER_PLUGIN_NAME,
-                             weechat_buffer_get_string (buffer, "name"),
-                             mask, mask_decoded5);
+        weechat_printf_date_tags (NULL, 0, "no_log",
+                                  "%s: buffer = \"%s\", mask = \"%s\", "
+                                  "decoded mask = \"%s\"",
+                                  LOGGER_PLUGIN_NAME,
+                                  weechat_buffer_get_string (buffer, "name"),
+                                  mask, mask_decoded5);
     }
 
 end:
@@ -417,12 +415,12 @@ logger_get_filename (struct t_gui_buffer *buffer)
     mask = logger_get_mask_for_buffer (buffer);
     if (!mask)
     {
-        weechat_printf_tags (NULL,
-                             "no_log",
-                             _("%s%s: unable to find filename mask for buffer "
-                               "\"%s\", logging is disabled for this buffer"),
-                             weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
-                             weechat_buffer_get_string (buffer, "name"));
+        weechat_printf_date_tags (
+            NULL, 0, "no_log",
+            _("%s%s: unable to find filename mask for buffer "
+              "\"%s\", logging is disabled for this buffer"),
+            weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
+            weechat_buffer_get_string (buffer, "name"));
         return NULL;
     }
 
@@ -470,11 +468,10 @@ logger_set_log_filename (struct t_logger_buffer *logger_buffer)
     log_filename = logger_get_filename (logger_buffer->buffer);
     if (!log_filename)
     {
-        weechat_printf_tags (NULL,
-                             "no_log",
-                             _("%s%s: not enough memory"),
-                             weechat_prefix ("error"),
-                             LOGGER_PLUGIN_NAME);
+        weechat_printf_date_tags (NULL, 0, "no_log",
+                                  _("%s%s: not enough memory"),
+                                  weechat_prefix ("error"),
+                                  LOGGER_PLUGIN_NAME);
         return;
     }
 
@@ -482,15 +479,15 @@ logger_set_log_filename (struct t_logger_buffer *logger_buffer)
     ptr_logger_buffer = logger_buffer_search_log_filename (log_filename);
     if (ptr_logger_buffer)
     {
-        weechat_printf_tags (NULL,
-                             "no_log",
-                             _("%s%s: unable to start logging for buffer "
-                               "\"%s\": filename \"%s\" is already used by "
-                               "another buffer (check your log settings)"),
-                             weechat_prefix ("error"),
-                             LOGGER_PLUGIN_NAME,
-                             weechat_buffer_get_string (logger_buffer->buffer, "name"),
-                             log_filename);
+        weechat_printf_date_tags (
+            NULL, 0, "no_log",
+            _("%s%s: unable to start logging for buffer "
+              "\"%s\": filename \"%s\" is already used by "
+              "another buffer (check your log settings)"),
+            weechat_prefix ("error"),
+            LOGGER_PLUGIN_NAME,
+            weechat_buffer_get_string (logger_buffer->buffer, "name"),
+            log_filename);
         free (log_filename);
         return;
     }
@@ -538,12 +535,12 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
         }
         if (!logger_create_directory ())
         {
-            weechat_printf_tags (NULL,
-                                 "no_log",
-                                 _("%s%s: unable to create directory for logs "
-                                   "(\"%s\")"),
-                                 weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
-                                 weechat_config_string (logger_config_file_path));
+            weechat_printf_date_tags (
+                NULL, 0, "no_log",
+                _("%s%s: unable to create directory for logs "
+                  "(\"%s\")"),
+                weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
+                weechat_config_string (logger_config_file_path));
             logger_buffer_free (logger_buffer);
             return;
         }
@@ -559,9 +556,8 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
             fopen (logger_buffer->log_filename, "a");
         if (!logger_buffer->log_file)
         {
-            weechat_printf_tags (
-                NULL,
-                "no_log",
+            weechat_printf_date_tags (
+                NULL, 0, "no_log",
                 _("%s%s: unable to write log file \"%s\": %s"),
                 weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
                 logger_buffer->log_filename, strerror (errno));
@@ -839,11 +835,10 @@ logger_flush ()
         {
             if (weechat_logger_plugin->debug >= 2)
             {
-                weechat_printf_tags (NULL,
-                                     "no_log",
-                                     "%s: flush file %s",
-                                     LOGGER_PLUGIN_NAME,
-                                     ptr_logger_buffer->log_filename);
+                weechat_printf_date_tags (NULL, 0, "no_log",
+                                          "%s: flush file %s",
+                                          LOGGER_PLUGIN_NAME,
+                                          ptr_logger_buffer->log_filename);
             }
             fflush (ptr_logger_buffer->log_file);
             ptr_logger_buffer->flush_needed = 0;

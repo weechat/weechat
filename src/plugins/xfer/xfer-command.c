@@ -62,14 +62,15 @@ xfer_command_me (const void *pointer, void *data,
     {
         xfer_chat_sendf (ptr_xfer, "\01ACTION %s\01\r\n",
                          (argv_eol[1]) ? argv_eol[1] : "");
-        weechat_printf_tags (buffer,
-                             "no_highlight",
-                             "%s%s%s %s%s",
-                             weechat_prefix ("action"),
-                             weechat_color ("chat_nick_self"),
-                             ptr_xfer->local_nick,
-                             weechat_color ("chat"),
-                             (argv_eol[1]) ? argv_eol[1] : "");
+        weechat_printf_date_tags (buffer,
+                                  0,
+                                  "no_highlight",
+                                  "%s%s%s %s%s",
+                                  weechat_prefix ("action"),
+                                  weechat_color ("chat_nick_self"),
+                                  ptr_xfer->local_nick,
+                                  weechat_color ("chat"),
+                                  (argv_eol[1]) ? argv_eol[1] : "");
     }
 
     return WEECHAT_RC_OK;

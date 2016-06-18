@@ -291,10 +291,11 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                 str_args_color = irc_color_decode (str_args, 1);
                 if (!str_args_color)
                     break;
-                weechat_printf_tags (
+                weechat_printf_date_tags (
                     irc_msgbuffer_get_target_buffer (
                         server, nick, NULL, "ctcp",
                         (channel) ? channel->buffer : NULL),
+                    0,
                     irc_protocol_tags (
                         command,
                         "irc_ctcp,irc_ctcp_reply,notify_none,no_highlight",
