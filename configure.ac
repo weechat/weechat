@@ -146,7 +146,7 @@ AC_ARG_ENABLE(script,       [  --disable-script        turn off Script plugin (d
 AC_ARG_ENABLE(scripts,      [  --disable-scripts       turn off script plugins (perl, python, ...) (default=compiled if found)],enable_scripts=$enableval,enable_scripts=yes)
 AC_ARG_ENABLE(perl,         [  --disable-perl          turn off Perl script plugin (default=compiled if found)],enable_perl=$enableval,enable_perl=yes)
 AC_ARG_ENABLE(python,       [  --disable-python        turn off Python script plugin (default=compiled if found)],enable_python=$enableval,enable_python=yes)
-AC_ARG_ENABLE(python3,      [  --enable-python3        use Python 3.x if found (NOT recommended) (default=off)],enable_python3=$enableval,enable_python3=no)
+AC_ARG_ENABLE(python3,      [  --enable-python3        use Python 3.x if found (NOT recommended because many "official" scripts won't work) (default=off)],enable_python3=$enableval,enable_python3=no)
 AC_ARG_ENABLE(ruby,         [  --disable-ruby          turn off Ruby script plugin (default=compiled if found)],enable_ruby=$enableval,enable_ruby=yes)
 AC_ARG_ENABLE(lua,          [  --disable-lua           turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
 AC_ARG_ENABLE(tcl,          [  --disable-tcl           turn off Tcl script plugin (default=compiled if found)],enable_tcl=$enableval,enable_tcl=yes)
