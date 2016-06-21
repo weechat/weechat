@@ -36,6 +36,10 @@ Documentation::
 
   * switch to asciidoctor to build docs and man page
 
+Build::
+
+  * python: add detection of Python 3.5
+
 [[v1.5]]
 == Version 1.5 (2016-05-01)
 
