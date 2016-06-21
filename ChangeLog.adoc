@@ -81,7 +81,7 @@ Bug fixes::
 
 Build::
 
-  * core: fix detection of Python shared libraries (issue #676)
+  * python: fix detection of Python shared libraries (issue #676)
   * ruby: add detection of Ruby 2.3 (issue #698)
 
 [[v1.4]]
@@ -817,8 +817,8 @@ Build::
 
   * core: install icon file (patch #7972)
   * core: fix detection of iconv with cmake on OS X (bug #38321)
-  * core: fix detection of Python on Ubuntu Raring
   * guile: fix compilation with Guile 2.0
+  * python: fix detection of Python on Ubuntu Raring
   * script: fix compilation on GNU/Hurd (patch #7977)
 
 [[v0.4.0]]
@@ -907,8 +907,8 @@ Bug fixes::
 Build::
 
   * core: add git version in build, display it in "weechat-curses --help" and /version
-  * core: fix detection of Guile in configure
   * core: stop cmake if gcrypt lib is not found (bug #37671)
+  * guile: fix detection of Guile in configure
   * script: fix compilation on OS X
 
 [[v0.3.9.2]]
