@@ -92,7 +92,7 @@ points ci-dessous :
 * vérifiez que weechat est lié avec libncursesw (attention : nécessaire
   sur beaucoup de distributions, mais pas toutes) :
   `ldd /chemin/vers/weechat`
-* vérifiez que l'extension "Charset" est chargée avec la commande `/plugin`
+* vérifiez que l'extension "charset" est chargée avec la commande `/plugin`
   (s'il ne l'est pas, vous devez peut-être installer le paquet
   "weechat-plugins")
 * vérifiez la sortie de la commande `/charset` (sur le tampon "core"), vous

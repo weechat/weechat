@@ -93,7 +93,7 @@ Jest to częsty problem, przeczytaj i sprawdź *WSZYSTKIE* poniższe rozwiązani
 
 * sprawdź czy weechat jest zlinkowany z libncursesw (uwaga: wymagane na
   większości dystrybucji ale nie wszystkich): `ldd /ścieżka/do/weechat`
-* sprawdź czy wtyczka "Charset" jest załadowana za pomocą komendy `/plugin`
+* sprawdź czy wtyczka "charset" jest załadowana za pomocą komendy `/plugin`
   (jeśli nie jest, to najprawdopodobniej potrzebujesz pakietu "weechat-plugins")
 * sprawdź wyjście komendy `/charset` (w głównym buforze). Powinieneś zobaczyć
   _ISO-XXXXXX_ lub _UTF-8_ dla kodowania terminala. Jeśli widzisz _ANSI_X3.4-1968_

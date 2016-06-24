@@ -93,7 +93,7 @@ https://weechat.org/doc
 
 * weechat が libncursesw にリンクされていることの確認 (警告:
   全てではありませんが、ほとんどのディストリビューションで必要です): `ldd /path/to/weechat`
-* `/plugin` コマンドで "Charset" プラグインがロード済みであることの確認
+* `/plugin` コマンドで "charset" プラグインがロード済みであることの確認
   (ロードされていない場合、"weechat-plugins" パッケージが必要かもしれません)。
 * `/charset` コマンドの出力を確認 (core バッファ上で)。端末の文字セットとして _ISO-XXXXXX_
   又は _UTF-8_ があるはずです。その他の値がある場合は、ロケールが間違っている可能性があります
