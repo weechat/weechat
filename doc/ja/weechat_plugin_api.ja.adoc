@@ -11780,7 +11780,10 @@ void weechat_window_set_title (const char *title);
 
 引数:
 
-* _title_: 端末の新しいタイトル (タイトルをリセットする場合は NULL)
+// TRANSLATION MISSING
+* _title_: 端末の新しいタイトル (タイトルをリセットする場合は NULL);
+  string is evaluated, so variables like `${info:version}` can be used
+  (see <<_string_eval_expression,weechat_string_eval_expression>>)
 
 C 言語での使用例:
 

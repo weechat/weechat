@@ -12046,7 +12046,9 @@ void weechat_window_set_title (const char *title);
 
 Paramètres :
 
-* _title_ : nouveau titre pour le terminal (NULL pour réinitialiser le titre)
+* _title_ : nouveau titre pour le terminal (NULL pour réinitialiser le titre);
+  la chaîne est évaluée, donc les variables comme `${info:version}` peuvent
+  être utilisées (voir <<_string_eval_expression,weechat_string_eval_expression>>)
 
 Exemple en C :
 
