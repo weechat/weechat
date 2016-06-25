@@ -809,7 +809,7 @@ _WeeChat ≥ 0.4.2._
 Retourner le nombre de caractères nécessaires pour afficher la chaîne UTF-8
 sur l'écran.
 Les caractères non affichables ont une longueur de 1 (c'est la différence avec
-la fonction <<_utf8_strlen_screen,weechat_utf8_strlen_screen>>).
+la fonction <<_utf8_strlen_screen,utf8_strlen_screen>>).
 
 Prototype :
 
@@ -943,9 +943,8 @@ _WeeChat ≥ 1.3._
 
 . remplacer le `%h` du début par le répertoire maison de WeeChat,
 . remplacer le `+~+` du début par le répertoire maison de l'utilisateur (appel à
-  <<_string_expand_home,weechat_string_expand_home>>),
-. évaluer les variables
-  (voir <<_string_eval_expression,weechat_string_eval_expression>>).
+  <<_string_expand_home,string_expand_home>>),
+. évaluer les variables (voir <<_string_eval_expression,string_eval_expression>>).
 
 Prototype :
 
@@ -961,11 +960,11 @@ Paramètres :
 
 * _path_ : chemin
 * _pointers_ : table de hachage pour l'appel à la fonction
-  <<_string_eval_expression,weechat_string_eval_expression>>
+  <<_string_eval_expression,string_eval_expression>>
 * _extra_vars_ : table de hachage pour l'appel à la fonction
-  <<_string_eval_expression,weechat_string_eval_expression>>
+  <<_string_eval_expression,string_eval_expression>>
 * _options_ : table de hachage pour l'appel à la fonction
-  <<_string_eval_expression,weechat_string_eval_expression>>
+  <<_string_eval_expression,string_eval_expression>>
 
 Valeur de retour :
 
@@ -1219,8 +1218,7 @@ Cette fonction n'est pas disponible dans l'API script.
 _WeeChat ≥ 0.3.7._
 
 Compiler une expression régulière avec des "flags" optionnels en début de chaîne
-(pour le format des "flags", voir
-<<_string_regex_flags,weechat_string_regex_flags>>).
+(pour le format des "flags", voir <<_string_regex_flags,string_regex_flags>>).
 
 Prototype :
 
@@ -1397,9 +1395,8 @@ Paramètres :
 
 * _string_ : chaîne
 * _regex_ : pointeur vers une expression régulière (structure _regex_t_)
-  compilée avec la fonction WeeChat
-  <<_string_regcomp,weechat_string_regcomp>> ou regcomp (voir
-  `man regcomp`)
+  compilée avec la fonction WeeChat <<_string_regcomp,string_regcomp>> ou regcomp
+  (voir `man regcomp`)
 * _replace_ : texte de remplacement, où les références suivantes sont
   autorisées :
 ** `+$0+` à `+$99+` : correspondance 0 à 99 dans l'expression régulière (0 est la
@@ -1476,7 +1473,7 @@ Paramètres :
 Valeur de retour :
 
 * tableau de chaînes, NULL en cas de problème (doit être supprimé par un appel à
-  <<_string_free_split,weechat_string_free_split>> après utilisation)
+  <<_string_free_split,string_free_split>> après utilisation)
 
 Exemples en C :
 
@@ -1542,7 +1539,7 @@ Paramètres :
 Valeur de retour :
 
 * tableau de chaînes, NULL en cas de problème (doit être supprimé par un appel à
-  <<_string_free_split,weechat_string_free_split>> après utilisation)
+  <<_string_free_split,string_free_split>> après utilisation)
 
 Exemple en C :
 
@@ -1576,8 +1573,7 @@ void weechat_string_free_split (char **split_string);
 
 Paramètres :
 
-* _split_string_ : chaîne découpée par
-  <<_string_split,weechat_string_split>>
+* _split_string_ : chaîne découpée par <<_string_split,string_split>>
 
 Exemple en C :
 
@@ -1607,8 +1603,7 @@ char *weechat_string_build_with_split_string (char **split_string
 
 Paramètres :
 
-* _split_string_ : chaîne découpée par la fonction
-  <<_string_split,weechat_string_split>>
+* _split_string_ : chaîne découpée par la fonction <<_string_split,string_split>>
 * _separator_ : chaîne utilisée pour séparer les différentes chaînes
 
 Valeur de retour :
@@ -1652,7 +1647,7 @@ Paramètres :
 Valeur de retour :
 
 * tableau de chaînes, NULL en cas de problème (doit être supprimé par un appel à
-  <<_free_split_command,weechat_free_split_command>> après utilisation)
+  <<_free_split_command,free_split_command>> après utilisation)
 
 Exemple en C :
 
@@ -1683,7 +1678,7 @@ void weechat_string_free_split_command (char **split_command);
 Paramètres :
 
 * _split_command_ : commande découpée par
-  <<_string_split_command,weechat_string_split_command>>
+  <<_string_split_command,string_split_command>>
 
 Exemple en C :
 
@@ -2024,8 +2019,8 @@ Paramètres :
   hachage (avec le pointer vers fenêtre/tampon courants) (peut être NULL) :
 ** _regex_ : pointeur vers une expression régulière (structure _regex_t_)
    compilée avec la fonction WeeChat
-   <<_string_regcomp,weechat_string_regcomp>> ou regcomp (voir
-   `man regcomp`) ; cette option est similaire à _regex_ dans la table de
+   <<_string_regcomp,string_regcomp>> ou regcomp (voir `man regcomp`) ;
+   cette option est similaire à _regex_ dans la table de
    hachage _options_ (ci-dessous), mais est utilisée pour de meilleures
    performances
 * _extra_vars_ : variables additionnelles qui seront étendues (peut être NULL)
@@ -2091,7 +2086,7 @@ première étendue à la dernière) :
 
 | `+${color:nom}+` |
   Code couleur WeeChat (le nom de couleur a des attributs facultatifs),
-  voir la fonction <<_color,weechat_color>> pour les formats supportés |
+  voir la fonction <<_color,color>> pour les formats supportés |
   `+${color:red}texte rouge+` +
   `+${color:*214}texte orange gras+` |
   `+texte rouge+` (en rouge) +
@@ -2099,8 +2094,7 @@ première étendue à la dernière) :
 
 | `+${info:nom}+` +
   `+${info:nom,paramètres}+` |
-  Info de WeeChat ou d'une extension, voir la fonction
-  <<_info_get,weechat_info_get>> |
+  Info de WeeChat ou d'une extension, voir la fonction <<_info_get,info_get>> |
   `+${info:version}+` +
   `+${info:irc_nick_color_name,foo}+` |
   `+1.0+` +
@@ -4377,10 +4371,10 @@ Valeur de retour :
 
 [NOTE]
 Le fichier n'est PAS créé sur le disque par cette fonction. Il sera créé par
-l'appel à la fonction <<_config_write,weechat_config_write>>.
+l'appel à la fonction <<_config_write,config_write>>.
 Vous ne devriez appeler cette fonction qu'après avoir créé les sections (avec
-<<_config_new_section,weechat_config_new_section>>) et les options (avec
-<<_config_new_option,weechat_config_new_option>>).
+<<_config_new_section,config_new_section>>) et les options (avec
+<<_config_new_option,config_new_option>>).
 
 Exemple en C :
 
@@ -5328,7 +5322,7 @@ Paramètres :
 
 [NOTE]
 Vous pouvez affecter "null" à une option seulement si c'est autorisé pour
-l'option (voir <<_config_new_option,weechat_config_new_option>>).
+l'option (voir <<_config_new_option,config_new_option>>).
 
 Valeur de retour :
 
@@ -6685,8 +6679,7 @@ Ajouter de nouvelles associations de touches.
 [NOTE]
 Contrairement à la commande `/key bind`, cette fonction ne changera jamais
 une association de touche existante, seulement des nouvelles touches seront
-créées. Pour supprimer une association de touche, utilisez
-<<_key_unbind,weechat_key_unbind>>.
+créées. Pour supprimer une association de touche, utilisez <<_key_unbind,key_unbind>>.
 
 Prototype :
 
@@ -6761,8 +6754,7 @@ int weechat_key_unbind (const char *context, const char *key);
 
 Paramètres :
 
-* _context_ : contexte pour les touches (voir
-   <<_key_bind,weechat_key_bind>>)
+* _context_ : contexte pour les touches (voir <<_key_bind,key_bind>>)
 * _key_ : touche à supprimer ou la valeur spéciale "area:XXX" pour supprimer
   toutes les touches ayant _XXX_ comme première ou deuxième zone
 
@@ -7590,7 +7582,7 @@ commande. WeeChat effectue un découpage automatique de la commande et de ses
 paramètres (comme le fait le shell). +
 Si le découpage n'est pas correct (selon les guillemets utilisés dans votre
 commande), ou si vous souhaitez utiliser le shell, vous pouvez utiliser la
-fonction <<_hook_process_hashtable,weechat_hook_process_hashtable>> avec
+fonction <<_hook_process_hashtable,hook_process_hashtable>> avec
 les paramètres dans la table de hachage _options_ _(WeeChat ≥ 0.4.0)_.
 
 Prototype :
@@ -7660,7 +7652,7 @@ toujours).
 La commande peut être une URL avec le format : "url:http://www.example.com",
 pour télécharger le contenu de l'URL _(WeeChat ≥ 0.3.7)_.
 Des options pour l'URL sont possibles avec la fonction
-<<_hook_process_hashtable,weechat_hook_process_hashtable>>.
+<<_hook_process_hashtable,hook_process_hashtable>>.
 
 La commande peut aussi être le nom d'une fonction avec le format : "func:nom",
 pour exécuter la fonction "nom" _(WeeChat ≥ 1.5)_. Cette fonction reçoit un
@@ -7841,8 +7833,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 ----
 
 Les paramètres sont les mêmes que ceux de la fonction
-<<_hook_process,weechat_hook_process>>, avec un paramètre
-supplémentaire :
+<<_hook_process,hook_process>>, avec un paramètre supplémentaire :
 
 * _options_ : options pour la commande exécutée; la table de hachage est
   dupliquée dans la fonction, donc il est possible de la supprimer après cet
@@ -7866,7 +7857,7 @@ sont disponibles :
   _(WeeChat ≥ 0.4.3)_ |
   (non utilisée) |
   Créer un tuyau pour écrire sur l'entrée standard (stdin) du processus fils
-  (voir la fonction <<_hook_set,weechat_hook_set>>)
+  (voir la fonction <<_hook_set,hook_set>>)
 
 | buffer_flush +
   _(WeeChat ≥ 1.0)_ |
@@ -9070,7 +9061,7 @@ Paramètres :
 
 * _signal_ : signal à envoyer
 * _type_data_ : type de données à envoyer avec le signal (voir
-  <<_hook_signal,weechat_hook_signal>>)
+  <<_hook_signal,hook_signal>>)
 * _signal_data_ : données envoyées avec le signal
 
 Valeur de retour _(WeeChat ≥ 1.0)_ :
@@ -9747,7 +9738,7 @@ Paramètres :
 ** _struct t_gui_buffer *buffer_ : tampon où la complétion est effectuée
 ** _struct t_gui_completion *completion_ : structure utilisée pour ajouter
    les mots pour la complétion (voir
-   <<_hook_completion_list_add,weechat_hook_completion_list_add>>)
+   <<_hook_completion_list_add,hook_completion_list_add>>)
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
@@ -9765,10 +9756,10 @@ Il est donc recommandé de choisir un nom avec un préfixe unique, comme
 
 [IMPORTANT]
 Le "callback" doit seulement appeler la fonction
-<<_hook_completion_list_add,weechat_hook_completion_list_add>>
+<<_hook_completion_list_add,hook_completion_list_add>>
 et ne doit *PAS* mettre à jour la ligne de commande. +
 Pour mettre à jour la ligne de commande quand key[Tab] est pressé, vous pouvez
-utiliser la fonction <<_hook_command_run,weechat_hook_command_run>>
+utiliser la fonction <<_hook_command_run,hook_command_run>>
 avec la commande : "/input complete_next" (et vous devez retourner
 _WEECHAT_RC_OK_EAT_ si votre "callback" a mis à jour la ligne de commande, de
 sorte que WeeChat n'exécute pas la complétion).
@@ -9896,7 +9887,7 @@ Paramètres :
 ** _WEECHAT_LIST_POS_BEGINNING_ : au début de la liste
 ** _WEECHAT_LIST_POS_END_ : à la fin de la liste
 
-Exemple en C : voir <<_hook_completion,weechat_hook_completion>>.
+Exemple en C : voir <<_hook_completion,hook_completion>>.
 
 Script (Python) :
 
@@ -11513,8 +11504,7 @@ Propriétés :
   "0" pour empêcher l'utilisateur d'effacer le tampon avec la commande
   `/buffer clear`, "1" pour autoriser l'utilisateur à effacer le tampon (par
    défaut pour un nouveau tampon) (note : même lorsque la valeur est "0", le
-   tampon peut toujours être effacé avec la fonction
-   <<_buffer_clear,weechat_buffer_clear>>)
+   tampon peut toujours être effacé avec la fonction <<_buffer_clear,buffer_clear>>)
 
 | filter +
   _(WeeChat ≥ 1.0)_ | "0" or "1" |
@@ -12046,9 +12036,9 @@ void weechat_window_set_title (const char *title);
 
 Paramètres :
 
-* _title_ : nouveau titre pour le terminal (NULL pour réinitialiser le titre);
+* _title_ : nouveau titre pour le terminal (NULL pour réinitialiser le titre) ;
   la chaîne est évaluée, donc les variables comme `${info:version}` peuvent
-  être utilisées (voir <<_string_eval_expression,weechat_string_eval_expression>>)
+  être utilisées (voir <<_string_eval_expression,string_eval_expression>>)
 
 Exemple en C :
 
@@ -12618,7 +12608,7 @@ Propriétés :
 
 | color | nom d'option de couleur WeeChat |
   Voir le paramètre "color" de la fonction
-  <<_nicklist_add_group,weechat_nicklist_add_group>>
+  <<_nicklist_add_group,nicklist_add_group>>
 
 | visible | "0", "1" |
   "0" = groupe caché, "1" = groupe visible
@@ -12823,14 +12813,14 @@ Propriétés :
 
 | color | nom d'option de couleur WeeChat |
   Voir le paramètre "color" de la fonction
-  <<_nicklist_add_nick,weechat_nicklist_add_nick>>
+  <<_nicklist_add_nick,nicklist_add_nick>>
 
 | prefix | toute chaîne |
   Préfixe du pseudo
 
 | prefix_color | nom d'option de couleur WeeChat |
   Voir le paramètre "prefix_color" de la fonction
-  <<_nicklist_add_nick,weechat_nicklist_add_nick>>
+  <<_nicklist_add_nick,nicklist_add_nick>>
 
 | visible | "0", "1" |
   "0" = pseudo caché, "1" = pseudo visible
@@ -13245,7 +13235,7 @@ Paramètres :
 * _bar_ : pointeur vers la barre
 * _property_ : name, hidden, priority, conditions, position, filling_top_bottom,
   filling_left_right, size, size_max, color_fg, color_delim, color_bg,
-  separator, items (voir <<_bar_new,weechat_bar_new>>)
+  separator, items (voir <<_bar_new,bar_new>>)
 * _value_ : nouvelle valeur pour la propriété
 
 Valeur de retour :
@@ -14453,7 +14443,7 @@ Le "hdata" fournit seulement un accès en lecture seule aux données. Il est
 *STRICTEMENT INTERDIT* d'écrire quelque chose dans une zone mémoire pointée par
 les variables du hdata. +
 Le seul moyen pour mettre à jour des données est d'appeler la fonction
-<<_hdata_update,weechat_hdata_update>>.
+<<_hdata_update,hdata_update>>.
 
 ==== hdata_new
 
@@ -14506,7 +14496,7 @@ Paramètres :
 ** _void *data_ : pointeur
 ** _struct t_hdata *hdata_ : pointeur vers le hdata
 ** _struct t_hashtable *hashtable_ : table de hachage avec les variables à
-   mettre à jour (voir <<_hdata_update,weechat_hdata_update>>)
+   mettre à jour (voir <<_hdata_update,hdata_update>>)
 ** valeur de retour : nombre de variables mises à jour
 * _callback_update_data_ : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat _(WeeChat ≥ 0.3.9)_
@@ -15126,8 +15116,8 @@ Paramètres :
 * _list_ : pointeur vers une liste; si NULL _(WeeChat ≥ 1.0)_, le pointeur est
   vérifié avec les listes dans le hdata qui ont le drapeau
   "vérifier les pointeurs" (voir
-  <<_hdata_new_list,weechat_hdata_new_list>>), et s'il n'y a pas de
-  telle liste, le pointeur est considéré comme valide
+  <<_hdata_new_list,hdata_new_list>>), et s'il n'y a pas de telle liste,
+  le pointeur est considéré comme valide
 * _pointer_ : pointeur à vérifier
 
 Valeur de retour :
@@ -15651,9 +15641,8 @@ Définir une nouvelle valeur pour une variable dans un hdata.
 
 [NOTE]
 Cette fonction ne peut être appelée que dans un "callback" de mise à jour
-(voir <<_hdata_new,weechat_hdata_new>> et
-<<_hdata_update,weechat_hdata_update>>), si la variable peut être mise à
-jour.
+(voir <<_hdata_new,hdata_new>> et <<_hdata_update,hdata_update>>), si la variable
+peut être mise à jour.
 
 Prototype :
 
