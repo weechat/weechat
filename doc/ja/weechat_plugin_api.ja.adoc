@@ -6842,9 +6842,8 @@ weechat.prnt("", "Color: %sblue %sdefault color %syellow on red"
 void weechat_printf (struct t_gui_buffer *buffer, const char *message, ...);
 ----
 
-// TRANSLATION MISSING
-This function is a shortcut for function printf_date_tags. These two calls give
-exactly same result:
+この関数は printf_date_tags
+関数の別名です。以下に示す通り、どちらの関数も同じ結果を返します:
 
 [source,C]
 ----
@@ -6915,8 +6914,7 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 
 * _buffer_: バッファへのポインタ、NULL の場合、メッセージは WeeChat バッファに表示
 * _date_: メッセージの日付 (0 は現在の日付/時間を意味する)
-// TRANSLATION MISSING
-* _tags_: タグのコンマ区切りリスト (NULL means no tags)
+* _tags_: タグのコンマ区切りリスト (タグを指定しない場合は NULL)
 * _message_: 表示するメッセージ
 
 通常使用するタグ (一部抜粋したリスト):
@@ -11780,10 +11778,9 @@ void weechat_window_set_title (const char *title);
 
 引数:
 
-// TRANSLATION MISSING
 * _title_: 端末の新しいタイトル (タイトルをリセットする場合は NULL);
-  string is evaluated, so variables like `${info:version}` can be used
-  (see <<_string_eval_expression,string_eval_expression>>)
+  この文字列は評価されるため、文字列内に `${info:version}` などの変数を含めることが可能です
+  (<<_string_eval_expression,string_eval_expression>> を参照)
 
 C 言語での使用例:
 
