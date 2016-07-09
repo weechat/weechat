@@ -890,7 +890,7 @@ irc_server_get_prefix_mode_for_char (struct t_irc_server *server,
  *
  * For example mode 'o' can return '@'.
  *
- * Returns return ' ' (space) if mode is not found.
+ * Returns a space if mode is not found.
  */
 
 char
