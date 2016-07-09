@@ -2845,7 +2845,7 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "hotlist_short_names", "boolean",
         N_("if set, uses short names to display buffer names in hotlist (start "
-           "after first '.' in name)"),
+           "after first \".\" in name)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         &config_change_buffer_content, NULL, NULL,
@@ -3462,7 +3462,7 @@ config_weechat_init_options ()
     config_color_bar_more = config_file_new_option (
         weechat_config_file, ptr_section,
         "bar_more", "color",
-        N_("text color for '+' when scrolling bars"),
+        N_("text color for \"+\" when scrolling bars"),
         NULL, -1, 0, "lightmagenta", NULL, 0,
         NULL, NULL, NULL,
         &config_change_color, NULL, NULL,
@@ -3700,7 +3700,7 @@ config_weechat_init_options ()
     config_color_chat_prefix_more = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_prefix_more", "color",
-        N_("text color for '+' when prefix is too long"),
+        N_("text color for \"+\" when prefix is too long"),
         NULL, GUI_COLOR_CHAT_PREFIX_MORE, 0, "lightmagenta", NULL, 0,
         NULL, NULL, NULL,
         &config_change_color, NULL, NULL,
@@ -4027,7 +4027,7 @@ config_weechat_init_options ()
         N_("if enabled, the commands inside command line are completed (the "
            "command at beginning of line has higher priority and is used "
            "first); note: when this option is enabled, there is no more "
-           "automatic completion of paths beginning with '/' (outside "
+           "automatic completion of paths beginning with \"/\" (outside "
            "commands arguments)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
