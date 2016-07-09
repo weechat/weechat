@@ -927,7 +927,7 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
             gui_buffer_ask_chat_refresh (buffer, 1);
         }
         else
-            string_iconv_fprintf (stdout, "%s\n", vbuffer);
+            string_fprintf (stdout, "%s\n", vbuffer);
     }
 
     free (vbuffer);
@@ -959,7 +959,7 @@ gui_chat_print_lines_waiting_buffer (FILE *f)
                 if (!f && gui_init_ok)
                     gui_chat_printf (NULL, "%s", lines[i]);
                 else
-                    string_iconv_fprintf ((f) ? f : stdout, "%s\n", lines[i]);
+                    string_fprintf ((f) ? f : stdout, "%s\n", lines[i]);
             }
             string_free_split (lines);
         }

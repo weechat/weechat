@@ -112,10 +112,10 @@ log_init ()
 {
     if (!log_open (NULL, "w"))
     {
-        string_iconv_fprintf (stderr,
-                              _("Error: unable to create/append to log file (weechat.log)\n"
-                                "If another WeeChat process is using this file, try to run WeeChat\n"
-                                "with another home using the \"--dir\" command line option.\n"));
+        string_fprintf (stderr,
+                        _("Error: unable to create/append to log file (weechat.log)\n"
+                          "If another WeeChat process is using this file, try to run WeeChat\n"
+                          "with another home using the \"--dir\" command line option.\n"));
         exit (1);
     }
     log_printf ("WeeChat %s (%s %s %s)",
@@ -159,18 +159,18 @@ log_printf (const char *message, ...)
             date_tmp = localtime (&seconds);
             if (date_tmp)
             {
-                string_iconv_fprintf (weechat_log_file,
-                                      "[%04d-%02d-%02d %02d:%02d:%02d] %s\n",
-                                      date_tmp->tm_year + 1900, date_tmp->tm_mon + 1,
-                                      date_tmp->tm_mday, date_tmp->tm_hour,
-                                      date_tmp->tm_min, date_tmp->tm_sec,
-                                      vbuffer);
+                string_fprintf (weechat_log_file,
+                                "[%04d-%02d-%02d %02d:%02d:%02d] %s\n",
+                                date_tmp->tm_year + 1900, date_tmp->tm_mon + 1,
+                                date_tmp->tm_mday, date_tmp->tm_hour,
+                                date_tmp->tm_min, date_tmp->tm_sec,
+                                vbuffer);
             }
             else
-                string_iconv_fprintf (weechat_log_file, "%s\n", vbuffer);
+                string_fprintf (weechat_log_file, "%s\n", vbuffer);
         }
         else
-            string_iconv_fprintf (weechat_log_file, "%s\n", vbuffer);
+            string_fprintf (weechat_log_file, "%s\n", vbuffer);
 
         fflush (weechat_log_file);
 
@@ -276,8 +276,8 @@ log_crash_rename ()
                   getpid());
         if (rename (old_name, new_name) == 0)
         {
-            string_iconv_fprintf (stderr, "*** Full crash dump was saved to %s file.\n",
-                                  new_name);
+            string_fprintf (stderr, "*** Full crash dump was saved to %s file.\n",
+                            new_name);
             log_open (new_name, "a");
             free (old_name);
             free (new_name);

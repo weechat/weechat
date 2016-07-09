@@ -110,8 +110,8 @@ char *weechat_startup_commands = NULL; /* startup commands (-r flag)        */
 void
 weechat_display_copyright ()
 {
-    string_iconv_fprintf (stdout, "\n");
-    string_iconv_fprintf (
+    string_fprintf (stdout, "\n");
+    string_fprintf (
         stdout,
         /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
         _("WeeChat %s Copyright %s, compiled on %s %s\n"
@@ -122,7 +122,7 @@ weechat_display_copyright ()
         version_get_compilation_date (),
         version_get_compilation_time (),
         WEECHAT_WEBSITE);
-    string_iconv_fprintf (stdout, "\n");
+    string_fprintf (stdout, "\n");
 }
 
 /*
@@ -133,12 +133,12 @@ void
 weechat_display_usage (char *exec_name)
 {
     weechat_display_copyright ();
-    string_iconv_fprintf (stdout, "\n");
-    string_iconv_fprintf (stdout,
-                          _("Usage: %s [option...] [plugin:option...]\n"),
-                          exec_name, exec_name);
-    string_iconv_fprintf (stdout, "\n");
-    string_iconv_fprintf (
+    string_fprintf (stdout, "\n");
+    string_fprintf (stdout,
+                    _("Usage: %s [option...] [plugin:option...]\n"),
+                    exec_name, exec_name);
+    string_fprintf (stdout, "\n");
+    string_fprintf (
         stdout,
         _("  -a, --no-connect         disable auto-connect to servers at "
           "startup\n"
@@ -158,7 +158,7 @@ weechat_display_usage (char *exec_name)
           "(see /help upgrade in WeeChat)\n"
           "  -v, --version            display WeeChat version\n"
           "  plugin:option            option for plugin (see man weechat)\n"));
-    string_iconv_fprintf(stdout, "\n");
+    string_fprintf(stdout, "\n");
 }
 
 /*
@@ -198,10 +198,9 @@ weechat_parse_args (int argc, char *argv[])
             }
             else
             {
-                string_iconv_fprintf (stderr,
-                                      _("Error: missing argument for \"%s\" "
-                                        "option\n"),
-                                      argv[i]);
+                string_fprintf (stderr,
+                                _("Error: missing argument for \"%s\" option\n"),
+                                argv[i]);
                 weechat_shutdown (EXIT_FAILURE, 0);
             }
         }
@@ -215,8 +214,8 @@ weechat_parse_args (int argc, char *argv[])
                  || (strcmp (argv[i], "--license") == 0))
         {
             weechat_display_copyright ();
-            string_iconv_fprintf (stdout, "\n");
-            string_iconv_fprintf (stdout, "%s%s", WEECHAT_LICENSE_TEXT);
+            string_fprintf (stdout, "\n");
+            string_fprintf (stdout, "%s%s", WEECHAT_LICENSE_TEXT);
             weechat_shutdown (EXIT_SUCCESS, 0);
         }
         else if (strcmp (argv[i], "--no-dlclose") == 0)
@@ -266,10 +265,9 @@ weechat_parse_args (int argc, char *argv[])
             }
             else
             {
-                string_iconv_fprintf (stderr,
-                                      _("Error: missing argument for \"%s\" "
-                                        "option\n"),
-                                      argv[i]);
+                string_fprintf (stderr,
+                                _("Error: missing argument for \"%s\" option\n"),
+                                argv[i]);
                 weechat_shutdown (EXIT_FAILURE, 0);
             }
         }
@@ -280,7 +278,7 @@ weechat_parse_args (int argc, char *argv[])
         else if ((strcmp (argv[i], "-v") == 0)
                  || (strcmp (argv[i], "--version") == 0))
         {
-            string_iconv_fprintf (stdout, version_get_version ());
+            string_fprintf (stdout, version_get_version ());
             fprintf (stdout, "\n");
             weechat_shutdown (EXIT_SUCCESS, 0);
         }
@@ -303,8 +301,7 @@ weechat_set_home_path (char *home_path)
         ptr_home = getenv ("HOME");
         if (!ptr_home)
         {
-            string_iconv_fprintf (stderr,
-                                  _("Error: unable to get HOME directory\n"));
+            string_fprintf (stderr, _("Error: unable to get HOME directory\n"));
             weechat_shutdown (EXIT_FAILURE, 0);
             /* make C static analyzer happy (never executed) */
             return;
@@ -324,9 +321,8 @@ weechat_set_home_path (char *home_path)
 
     if (!weechat_home)
     {
-        string_iconv_fprintf (stderr,
-                              _("Error: not enough memory for home "
-                                "directory\n"));
+        string_fprintf (stderr,
+                        _("Error: not enough memory for home directory\n"));
         weechat_shutdown (EXIT_FAILURE, 0);
         /* make C static analyzer happy (never executed) */
         return;
@@ -363,9 +359,9 @@ weechat_create_home_dir ()
         config_weechat_home = WEECHAT_HOME;
         if (!config_weechat_home[0])
         {
-            string_iconv_fprintf (stderr,
-                                  _("Error: WEECHAT_HOME is undefined, check "
-                                    "build options\n"));
+            string_fprintf (stderr,
+                            _("Error: WEECHAT_HOME is undefined, check build "
+                              "options\n"));
             weechat_shutdown (EXIT_FAILURE, 0);
             /* make C static analyzer happy (never executed) */
             return;
@@ -378,9 +374,9 @@ weechat_create_home_dir ()
     {
         if (!S_ISDIR (statinfo.st_mode))
         {
-            string_iconv_fprintf (stderr,
-                                  _("Error: home (%s) is not a directory\n"),
-                                  weechat_home);
+            string_fprintf (stderr,
+                            _("Error: home (%s) is not a directory\n"),
+                            weechat_home);
             weechat_shutdown (EXIT_FAILURE, 0);
             /* make C static analyzer happy (never executed) */
             return;
@@ -390,9 +386,9 @@ weechat_create_home_dir ()
     /* create home directory; error is fatal */
     if (!util_mkdir (weechat_home, 0755))
     {
-        string_iconv_fprintf (stderr,
-                              _("Error: cannot create directory \"%s\"\n"),
-                              weechat_home);
+        string_fprintf (stderr,
+                        _("Error: cannot create directory \"%s\"\n"),
+                        weechat_home);
         weechat_shutdown (EXIT_FAILURE, 0);
         /* make C static analyzer happy (never executed) */
         return;

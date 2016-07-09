@@ -56,7 +56,7 @@ weechat_backtrace_printf (const char *message, ...)
     weechat_va_format (message);
     if (vbuffer)
     {
-        string_iconv_fprintf (stderr, "%s\n", vbuffer);
+        string_fprintf (stderr, "%s\n", vbuffer);
         log_printf ("%s", vbuffer);
         free (vbuffer);
     }

@@ -2301,35 +2301,35 @@ config_file_write_option (struct t_config_file *config_file,
         switch (option->type)
         {
             case CONFIG_OPTION_TYPE_BOOLEAN:
-                rc = string_iconv_fprintf (config_file->file, "%s%s = %s\n",
-                                           config_file_option_escape (option->name),
-                                           option->name,
-                                           (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
-                                           "on" : "off");
+                rc = string_fprintf (config_file->file, "%s%s = %s\n",
+                                     config_file_option_escape (option->name),
+                                     option->name,
+                                     (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
+                                     "on" : "off");
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
                 if (option->string_values)
-                    rc = string_iconv_fprintf (config_file->file, "%s%s = %s\n",
-                                               config_file_option_escape (option->name),
-                                               option->name,
-                                               option->string_values[CONFIG_INTEGER(option)]);
+                    rc = string_fprintf (config_file->file, "%s%s = %s\n",
+                                         config_file_option_escape (option->name),
+                                         option->name,
+                                         option->string_values[CONFIG_INTEGER(option)]);
                 else
-                    rc = string_iconv_fprintf (config_file->file, "%s%s = %d\n",
-                                               config_file_option_escape (option->name),
-                                               option->name,
-                                               CONFIG_INTEGER(option));
+                    rc = string_fprintf (config_file->file, "%s%s = %d\n",
+                                         config_file_option_escape (option->name),
+                                         option->name,
+                                         CONFIG_INTEGER(option));
                 break;
             case CONFIG_OPTION_TYPE_STRING:
-                rc = string_iconv_fprintf (config_file->file, "%s%s = \"%s\"\n",
-                                           config_file_option_escape (option->name),
-                                           option->name,
-                                           (char *)option->value);
+                rc = string_fprintf (config_file->file, "%s%s = \"%s\"\n",
+                                     config_file_option_escape (option->name),
+                                     option->name,
+                                     (char *)option->value);
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
-                rc = string_iconv_fprintf (config_file->file, "%s%s = %s\n",
-                                           config_file_option_escape (option->name),
-                                           option->name,
-                                           gui_color_get_name (CONFIG_COLOR(option)));
+                rc = string_fprintf (config_file->file, "%s%s = %s\n",
+                                     config_file_option_escape (option->name),
+                                     option->name,
+                                     gui_color_get_name (CONFIG_COLOR(option)));
                 break;
             case CONFIG_NUM_OPTION_TYPES:
                 break;
@@ -2337,9 +2337,9 @@ config_file_write_option (struct t_config_file *config_file,
     }
     else
     {
-        rc = string_iconv_fprintf (config_file->file, "%s%s\n",
-                                   config_file_option_escape (option->name),
-                                   option->name);
+        rc = string_fprintf (config_file->file, "%s%s\n",
+                             config_file_option_escape (option->name),
+                             option->name);
     }
 
     return rc;
@@ -2371,9 +2371,9 @@ config_file_write_line (struct t_config_file *config_file,
         {
             if (vbuffer[0])
             {
-                rc = string_iconv_fprintf (config_file->file, "%s%s = %s\n",
-                                           config_file_option_escape (option_name),
-                                           option_name, vbuffer);
+                rc = string_fprintf (config_file->file, "%s%s = %s\n",
+                                     config_file_option_escape (option_name),
+                                     option_name, vbuffer);
                 free (vbuffer);
                 return rc;
             }
@@ -2381,8 +2381,8 @@ config_file_write_line (struct t_config_file *config_file,
         }
     }
 
-    return (string_iconv_fprintf (config_file->file, "\n[%s]\n",
-                                  option_name));
+    return (string_fprintf (config_file->file, "\n[%s]\n",
+                            option_name));
 }
 
 /*
@@ -2459,12 +2459,12 @@ config_file_write_internal (struct t_config_file *config_file,
     }
 
     /* write header with name of config file and WeeChat version */
-    if (!string_iconv_fprintf (config_file->file, "#\n"))
+    if (!string_fprintf (config_file->file, "#\n"))
         goto error;
-    if (!string_iconv_fprintf (config_file->file,
-                               "# %s -- %s\n#\n",
-                               version_get_name (),
-                               config_file->filename))
+    if (!string_fprintf (config_file->file,
+                         "# %s -- %s\n#\n",
+                         version_get_name (),
+                         config_file->filename))
         goto error;
 
     /* write all sections */
@@ -2493,8 +2493,8 @@ config_file_write_internal (struct t_config_file *config_file,
         else
         {
             /* write all options for section */
-            if (!string_iconv_fprintf (config_file->file,
-                                       "\n[%s]\n", ptr_section->name))
+            if (!string_fprintf (config_file->file,
+                                 "\n[%s]\n", ptr_section->name))
                 goto error;
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)

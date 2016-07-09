@@ -2385,7 +2385,7 @@ string_iconv_from_internal (const char *charset, const char *string)
  */
 
 int
-string_iconv_fprintf (FILE *file, const char *data, ...)
+string_fprintf (FILE *file, const char *data, ...)
 {
     char *buf2;
     int rc, num_written;

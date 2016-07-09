@@ -1008,7 +1008,7 @@ TEST(String, SplitBuildWithSplitString)
  *    string_iconv
  *    string_iconv_to_internal
  *    string_iconv_from_internal
- *    string_iconv_fprintf
+ *    string_fprintf
  */
 
 TEST(String, Iconv)
@@ -1038,12 +1038,12 @@ TEST(String, Iconv)
     WEE_TEST_STR("abc", string_iconv_from_internal (NULL, "abc"));
     WEE_TEST_STR(noel_iso, string_iconv_from_internal ("ISO-8859-15", noel_utf8));
 
-    /* string_iconv_fprintf */
+    /* string_fprintf */
     f = fopen ("/dev/null", "w");
-    LONGS_EQUAL(0, string_iconv_fprintf (f, NULL));
-    LONGS_EQUAL(1, string_iconv_fprintf (f, "abc"));
-    LONGS_EQUAL(1, string_iconv_fprintf (f, noel_utf8));
-    LONGS_EQUAL(1, string_iconv_fprintf (f, noel_iso));
+    LONGS_EQUAL(0, string_fprintf (f, NULL));
+    LONGS_EQUAL(1, string_fprintf (f, "abc"));
+    LONGS_EQUAL(1, string_fprintf (f, noel_utf8));
+    LONGS_EQUAL(1, string_fprintf (f, noel_iso));
     fclose (f);
 }
 

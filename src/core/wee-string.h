@@ -85,7 +85,7 @@ extern char *string_iconv (int from_utf8, const char *from_code,
 extern char *string_iconv_to_internal (const char *charset, const char *string);
 extern char *string_iconv_from_internal (const char *charset,
                                          const char *string);
-extern int string_iconv_fprintf (FILE *file, const char *data, ...);
+extern int string_fprintf (FILE *file, const char *data, ...);
 extern char *string_format_size (unsigned long long size);
 extern void string_encode_base16 (const char *from, int length, char *to);
 extern int string_decode_base16 (const char *from, char *to);

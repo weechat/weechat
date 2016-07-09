@@ -6099,12 +6099,12 @@ COMMAND_CALLBACK(upgrade)
     execvp (exec_args[0], exec_args);
 
     /* this code should not be reached if execvp is OK */
-    string_iconv_fprintf (stderr, "\n\n*****\n");
-    string_iconv_fprintf (stderr,
-                          _("***** Error: exec failed (program: \"%s\"), "
-                            "exiting WeeChat"),
-                          exec_args[0]);
-    string_iconv_fprintf (stderr, "\n*****\n\n");
+    string_fprintf (stderr, "\n\n*****\n");
+    string_fprintf (stderr,
+                    _("***** Error: exec failed (program: \"%s\"), "
+                      "exiting WeeChat"),
+                    exec_args[0]);
+    string_fprintf (stderr, "\n*****\n\n");
 
     free (exec_args[0]);
     free (exec_args[3]);

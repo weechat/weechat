@@ -156,18 +156,17 @@ debug_sigsegv ()
     unhook_all ();
     gui_main_end (0);
 
-    string_iconv_fprintf (
-        stderr,
-        "\n"
-        "*** Very bad! WeeChat is crashing (SIGSEGV received)\n");
+    string_fprintf (stderr,
+                    "\n*** Very bad! WeeChat is crashing (SIGSEGV received)"
+                    "\n");
     if (!log_crash_rename ())
     {
-        string_iconv_fprintf (
-            stderr,
-            "*** Full crash dump was saved to %s/weechat.log file.\n",
-            weechat_home);
+        string_fprintf (stderr,
+                        "*** Full crash dump was saved to %s/weechat.log file."
+                        "\n",
+                        weechat_home);
     }
-    string_iconv_fprintf (
+    string_fprintf (
         stderr,
         "***\n"
         "*** Please help WeeChat developers to fix this bug:\n"
