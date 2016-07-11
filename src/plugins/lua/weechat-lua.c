@@ -188,7 +188,11 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
                     lua_pushstring (lua_current_interpreter, (char *)argv[i]);
                     break;
                 case 'i': /* integer */
+#if LUA_VERSION_NUM >= 503
+                    lua_pushinteger (lua_current_interpreter, *((int *)argv[i]));
+#else
                     lua_pushnumber (lua_current_interpreter, *((int *)argv[i]));
+#endif /* LUA_VERSION_NUM >= 503 */
                     break;
                 case 'h': /* hash */
                     weechat_lua_pushhashtable (lua_current_interpreter,
@@ -267,7 +271,11 @@ weechat_lua_add_constant (lua_State *L, struct t_lua_const *ptr_const)
     if (ptr_const->str_value)
         lua_pushstring (L, ptr_const->str_value);
     else
+#if LUA_VERSION_NUM >= 503
+        lua_pushinteger (L, ptr_const->int_value);
+#else
         lua_pushnumber (L, ptr_const->int_value);
+#endif /* LUA_VERSION_NUM >= 503 */
     lua_settable(L, -3);
 }
 
