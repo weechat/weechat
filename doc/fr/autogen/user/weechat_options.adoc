@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_weechat.color.bar_more]] *weechat.color.bar_more*
-** description: pass:none[couleur du texte pour les '+' lors du défilement des barres]
+** description: pass:none[couleur du texte pour les "+" lors du défilement des barres]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+lightmagenta+`)
 
@@ -133,7 +133,7 @@
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+lightgreen+`)
 
 * [[option_weechat.color.chat_prefix_more]] *weechat.color.chat_prefix_more*
-** description: pass:none[couleur du texte pour les '+' lorsque le préfixe est trop long]
+** description: pass:none[couleur du texte pour les "+" lorsque le préfixe est trop long]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+lightmagenta+`)
 
@@ -328,7 +328,7 @@
 ** valeurs: on, off (valeur par défaut: `+on+`)
 
 * [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
-** description: pass:none[si activé, les commandes à l'intérieur de la ligne de commande sont complétées (la commande en début de ligne a une priorité plus élevée et est utilisée en premier) ; note : lorsque cette option est activée, il n'y a plus de complétion automatique des chemins commençant par '/' (en dehors des paramètres de commandes)]
+** description: pass:none[si activé, les commandes à l'intérieur de la ligne de commande sont complétées (la commande en début de ligne a une priorité plus élevée et est utilisée en premier) ; note : lorsque cette option est activée, il n'y a plus de complétion automatique des chemins commençant par "/" (en dehors des paramètres de commandes)]
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `+on+`)
 
@@ -643,7 +643,7 @@
 ** valeurs: buffer, merged (valeur par défaut: `+merged+`)
 
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
-** description: pass:none[si défini, utilise des noms courts pour afficher les noms de tampons dans la hotlist (commence après le premier '.' dans le nom)]
+** description: pass:none[si défini, utilise des noms courts pour afficher les noms de tampons dans la hotlist (commence après le premier "." dans le nom)]
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `+on+`)
 

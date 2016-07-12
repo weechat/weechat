@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_weechat.color.bar_more]] *weechat.color.bar_more*
-** description: pass:none[text color for '+' when scrolling bars]
+** description: pass:none[text color for "+" when scrolling bars]
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `+lightmagenta+`)
 
@@ -133,7 +133,7 @@
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `+lightgreen+`)
 
 * [[option_weechat.color.chat_prefix_more]] *weechat.color.chat_prefix_more*
-** description: pass:none[text color for '+' when prefix is too long]
+** description: pass:none[text color for "+" when prefix is too long]
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `+lightmagenta+`)
 
@@ -328,7 +328,7 @@
 ** values: on, off (default value: `+on+`)
 
 * [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
-** description: pass:none[if enabled, the commands inside command line are completed (the command at beginning of line has higher priority and is used first); note: when this option is enabled, there is no more automatic completion of paths beginning with '/' (outside commands arguments)]
+** description: pass:none[if enabled, the commands inside command line are completed (the command at beginning of line has higher priority and is used first); note: when this option is enabled, there is no more automatic completion of paths beginning with "/" (outside commands arguments)]
 ** type: boolean
 ** values: on, off (default value: `+on+`)
 
@@ -643,7 +643,7 @@
 ** values: buffer, merged (default value: `+merged+`)
 
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
-** description: pass:none[if set, uses short names to display buffer names in hotlist (start after first '.' in name)]
+** description: pass:none[if set, uses short names to display buffer names in hotlist (start after first "." in name)]
 ** type: boolean
 ** values: on, off (default value: `+on+`)
 

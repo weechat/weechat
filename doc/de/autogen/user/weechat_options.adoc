@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_weechat.color.bar_more]] *weechat.color.bar_more*
-** Beschreibung: pass:none[Farbe des '+' beim Scrollen von Info-Bars]
+** Beschreibung: pass:none[Farbe des "+" beim Scrollen von Info-Bars]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightmagenta+`)
 
@@ -133,7 +133,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightgreen+`)
 
 * [[option_weechat.color.chat_prefix_more]] *weechat.color.chat_prefix_more*
-** Beschreibung: pass:none[Farbe des '+' Zeichens, falls Präfix zu lang sein sollte]
+** Beschreibung: pass:none[Farbe des "+" Zeichens, falls Präfix zu lang sein sollte]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightmagenta+`)
 
@@ -328,7 +328,7 @@
 ** Werte: on, off (Standardwert: `+on+`)
 
 * [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
-** Beschreibung: pass:none[ist diese Einstellung aktiviert werden Befehle innerhalb der Eingabezeile vervollständigt (ein Befehl zu Beginn der Eingabezeile besitzt die höhere Priorität und wird zuerst verwendet). Hinweis: die Vervollständigung von Verzeichnissen, die mit '/' beginnen, funktioniert außerhalb von Befehlen nicht mehr]
+** Beschreibung: pass:none[ist diese Einstellung aktiviert werden Befehle innerhalb der Eingabezeile vervollständigt (ein Befehl zu Beginn der Eingabezeile besitzt die höhere Priorität und wird zuerst verwendet). Hinweis: die Vervollständigung von Verzeichnissen, die mit "/" beginnen, funktioniert außerhalb von Befehlen nicht mehr]
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `+on+`)
 
@@ -643,7 +643,7 @@
 ** Werte: buffer, merged (Standardwert: `+merged+`)
 
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
-** Beschreibung: pass:none[ist diese Einstellung aktiviert, wird der Kurzname der zusammengefügten Buffer in der Hotlist dargestellt (die Darstellung geschieht nach dem ersten '.' im Namen)]
+** Beschreibung: pass:none[ist diese Einstellung aktiviert, wird der Kurzname der zusammengefügten Buffer in der Hotlist dargestellt (die Darstellung geschieht nach dem ersten "." im Namen)]
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `+on+`)
 
