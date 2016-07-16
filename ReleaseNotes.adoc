@@ -21,6 +21,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 == Version 1.6 (under dev)
 
 [[v1.6_api_printf]]
+=== Printf API functions
 
 Some "printf" functions have been removed from C API (there were not in scripting API):
 
