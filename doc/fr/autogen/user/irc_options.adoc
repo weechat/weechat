@@ -502,21 +502,6 @@
 ** type: entier
 ** valeurs: 1 .. 3600 (valeur par défaut: `+60+`)
 
-* [[option_irc.server_default.default_msg_kick]] *irc.server_default.default_msg_kick*
-** description: pass:none[message par défaut pour l'éjection utilisé par les commandes "/kick" et "/kickban" (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)]
-** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+""+`)
-
-* [[option_irc.server_default.default_msg_part]] *irc.server_default.default_msg_part*
-** description: pass:none[message par défaut pour le part (en quittant un canal) ("%v" sera remplacé par la version de WeeChat dans la chaîne)]
-** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+"WeeChat %v"+`)
-
-* [[option_irc.server_default.default_msg_quit]] *irc.server_default.default_msg_quit*
-** description: pass:none[message de fin par défaut (lors de la déconnexion du serveur) ("%v" sera remplacé par la version de WeeChat dans la chaîne)]
-** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+"WeeChat %v"+`)
-
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
 ** description: pass:none[utiliser le protocole IPv6 pour la communication avec le serveur (essayer IPv6 puis repli sur l'IPv4) ; si désactivé, seulement l'IPv4 est utilisé]
 ** type: booléen
@@ -526,6 +511,21 @@
 ** description: pass:none[nom local de machine/IP personnalisé pour le serveur (optionnel, si non renseigné, le nom de machine local est utilisé)]
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `+""+`)
+
+* [[option_irc.server_default.msg_kick]] *irc.server_default.msg_kick*
+** description: pass:none[message par défaut pour l'éjection utilisé par les commandes "/kick" et "/kickban" (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeur)]
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `+""+`)
+
+* [[option_irc.server_default.msg_part]] *irc.server_default.msg_part*
+** description: pass:none[message par défaut pour le part (en quittant un canal) (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeur ; "%v" est remplacé par la version de WeeChat s'il n'y a pas de ${...} dans la chaîne)]
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `+"WeeChat ${info:version}"+`)
+
+* [[option_irc.server_default.msg_quit]] *irc.server_default.msg_quit*
+** description: pass:none[message de fin par défaut (lors de la déconnexion du serveur) (note : le contenu est évalué, voir /help eval ; les variables spéciales ${nick}, ${channel} et ${server} sont remplacées par leur valeur ; "%v" est remplacé par la version de WeeChat s'il n'y a pas de ${...} dans la chaîne)]
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `+"WeeChat ${info:version}"+`)
 
 * [[option_irc.server_default.nicks]] *irc.server_default.nicks*
 ** description: pass:none[pseudos à utiliser sur le serveur (séparés par des virgules) (note : le contenu est évalué, voir /help eval)]

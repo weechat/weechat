@@ -2148,13 +2148,15 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_DEFAULT_MSG_KICK:
+        case IRC_SERVER_OPTION_MSG_KICK:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
                 N_("default kick message used by commands \"/kick\" and "
-                   "\"/kickban\" (special variables $nick, $channel and $server "
-                   "are replaced by their value)"),
+                   "\"/kickban\" "
+                   "(note: content is evaluated, see /help eval; special "
+                   "variables ${nick}, ${channel} and ${server} are replaced "
+                   "by their value)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -2166,12 +2168,15 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_DEFAULT_MSG_PART:
+        case IRC_SERVER_OPTION_MSG_PART:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("default part message (leaving channel) (\"%v\" will be "
-                   "replaced by WeeChat version in string)"),
+                N_("default part message (leaving channel) "
+                   "(note: content is evaluated, see /help eval; special "
+                   "variables ${nick}, ${channel} and ${server} are replaced "
+                   "by their value; \"%v\" is replaced by WeeChat version if "
+                   "there is no ${...} in string)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -2183,12 +2188,15 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_DEFAULT_MSG_QUIT:
+        case IRC_SERVER_OPTION_MSG_QUIT:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("default quit message (disconnecting from server) (\"%v\" "
-                   "will be replaced by WeeChat version in string)"),
+                N_("default quit message (disconnecting from server) "
+                   "(note: content is evaluated, see /help eval; special "
+                   "variables ${nick}, ${channel} and ${server} are replaced "
+                   "by their value; \"%v\" is replaced by WeeChat version if "
+                   "there is no ${...} in string)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,

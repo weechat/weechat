@@ -20,6 +20,20 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v1.6]]
 == Version 1.6 (under dev)
 
+[[v1.6_irc_server_default_msg]]
+=== IRC kick/part/quit default messages
+
+Server options with default messages for kick/part/quit have been renamed:
+
+* options by default for all servers:
+** _irc.server_default.default_msg_kick_ has been renamed to _irc.server_default.msg_kick_
+** _irc.server_default.default_msg_part_ has been renamed to _irc.server_default.msg_part_
+** _irc.server_default.default_msg_quit_ has been renamed to _irc.server_default.msg_quit_
+* options in each server:
+** _irc.server.xxx.default_msg_kick_ has been renamed to _irc.server.xxx.msg_kick_
+** _irc.server.xxx.default_msg_part_ has been renamed to _irc.server.xxx.msg_part_
+** _irc.server.xxx.default_msg_quit_ has been renamed to _irc.server.xxx.msg_quit_
+
 [[v1.6_api_printf]]
 === Printf API functions
 

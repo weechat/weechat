@@ -605,7 +605,7 @@ irc_completion_msg_kick_cb (const void *pointer, void *data,
     if (ptr_server)
     {
         msg_kick = IRC_SERVER_OPTION_STRING(ptr_server,
-                                            IRC_SERVER_OPTION_DEFAULT_MSG_KICK);
+                                            IRC_SERVER_OPTION_MSG_KICK);
         if (msg_kick && msg_kick[0])
         {
             weechat_hook_completion_list_add (completion, msg_kick,
@@ -638,7 +638,7 @@ irc_completion_msg_part_cb (const void *pointer, void *data,
     if (ptr_server)
     {
         msg_part = IRC_SERVER_OPTION_STRING(ptr_server,
-                                            IRC_SERVER_OPTION_DEFAULT_MSG_PART);
+                                            IRC_SERVER_OPTION_MSG_PART);
         if (msg_part && msg_part[0])
         {
             weechat_hook_completion_list_add (completion, msg_part,

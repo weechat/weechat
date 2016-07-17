@@ -78,9 +78,9 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW,  /* anti-flood (low priority)     */
     IRC_SERVER_OPTION_AWAY_CHECK,           /* delay between away checks     */
     IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS, /* max nicks for away check      */
-    IRC_SERVER_OPTION_DEFAULT_MSG_KICK,     /* default kick message          */
-    IRC_SERVER_OPTION_DEFAULT_MSG_PART,     /* default part message          */
-    IRC_SERVER_OPTION_DEFAULT_MSG_QUIT,     /* default quit message          */
+    IRC_SERVER_OPTION_MSG_KICK,             /* default kick message          */
+    IRC_SERVER_OPTION_MSG_PART,             /* default part message          */
+    IRC_SERVER_OPTION_MSG_QUIT,             /* default quit message          */
     IRC_SERVER_OPTION_NOTIFY,               /* notify list                   */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
@@ -300,6 +300,9 @@ extern char irc_server_get_prefix_char_for_mode (struct t_irc_server *server,
 extern const char *irc_server_get_chanmodes (struct t_irc_server *server);
 extern int irc_server_prefix_char_statusmsg (struct t_irc_server *server,
                                              char prefix_char);
+extern char *irc_server_get_default_msg (const char *default_msg,
+                                         struct t_irc_server *server,
+                                         const char *channel_name);
 extern struct t_irc_server *irc_server_alloc (const char *name);
 extern struct t_irc_server *irc_server_alloc_with_url (const char *irc_url);
 extern void irc_server_apply_command_line_options (struct t_irc_server *server,

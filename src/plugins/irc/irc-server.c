@@ -75,45 +75,45 @@ char *irc_server_sasl_fail_string[IRC_SERVER_NUM_SASL_FAIL] =
 { "continue", "reconnect", "disconnect" };
 
 char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
-{ { "addresses",            ""                    },
-  { "proxy",                ""                    },
-  { "ipv6",                 "on"                  },
-  { "ssl",                  "off"                 },
-  { "ssl_cert",             ""                    },
-  { "ssl_priorities",       "NORMAL:-VERS-SSL3.0" },
-  { "ssl_dhkey_size",       "2048"                },
-  { "ssl_fingerprint",      ""                    },
-  { "ssl_verify",           "on"                  },
-  { "password",             ""                    },
-  { "capabilities",         ""                    },
-  { "sasl_mechanism",       "plain"               },
-  { "sasl_username",        ""                    },
-  { "sasl_password",        ""                    },
-  { "sasl_key",             "",                   },
-  { "sasl_timeout",         "15"                  },
-  { "sasl_fail",            "continue"            },
-  { "autoconnect",          "off"                 },
-  { "autoreconnect",        "on"                  },
-  { "autoreconnect_delay",  "10"                  },
-  { "nicks",                ""                    },
-  { "nicks_alternate",      "on"                  },
-  { "username",             ""                    },
-  { "realname",             ""                    },
-  { "local_hostname",       ""                    },
-  { "command",              ""                    },
-  { "command_delay",        "0"                   },
-  { "autojoin",             ""                    },
-  { "autorejoin",           "off"                 },
-  { "autorejoin_delay",     "30"                  },
-  { "connection_timeout",   "60"                  },
-  { "anti_flood_prio_high", "2"                   },
-  { "anti_flood_prio_low",  "2"                   },
-  { "away_check",           "0"                   },
-  { "away_check_max_nicks", "25"                  },
-  { "default_msg_kick",     ""                    },
-  { "default_msg_part",     "WeeChat %v"          },
-  { "default_msg_quit",     "WeeChat %v"          },
-  { "notify",               ""                    },
+{ { "addresses",            ""                        },
+  { "proxy",                ""                        },
+  { "ipv6",                 "on"                      },
+  { "ssl",                  "off"                     },
+  { "ssl_cert",             ""                        },
+  { "ssl_priorities",       "NORMAL:-VERS-SSL3.0"     },
+  { "ssl_dhkey_size",       "2048"                    },
+  { "ssl_fingerprint",      ""                        },
+  { "ssl_verify",           "on"                      },
+  { "password",             ""                        },
+  { "capabilities",         ""                        },
+  { "sasl_mechanism",       "plain"                   },
+  { "sasl_username",        ""                        },
+  { "sasl_password",        ""                        },
+  { "sasl_key",             "",                       },
+  { "sasl_timeout",         "15"                      },
+  { "sasl_fail",            "continue"                },
+  { "autoconnect",          "off"                     },
+  { "autoreconnect",        "on"                      },
+  { "autoreconnect_delay",  "10"                      },
+  { "nicks",                ""                        },
+  { "nicks_alternate",      "on"                      },
+  { "username",             ""                        },
+  { "realname",             ""                        },
+  { "local_hostname",       ""                        },
+  { "command",              ""                        },
+  { "command_delay",        "0"                       },
+  { "autojoin",             ""                        },
+  { "autorejoin",           "off"                     },
+  { "autorejoin_delay",     "30"                      },
+  { "connection_timeout",   "60"                      },
+  { "anti_flood_prio_high", "2"                       },
+  { "anti_flood_prio_low",  "2"                       },
+  { "away_check",           "0"                       },
+  { "away_check_max_nicks", "25"                      },
+  { "msg_kick",             ""                        },
+  { "msg_part",             "WeeChat ${info:version}" },
+  { "msg_quit",             "WeeChat ${info:version}" },
+  { "notify",               ""                        },
 };
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
@@ -947,6 +947,55 @@ irc_server_prefix_char_statusmsg (struct t_irc_server *server,
 
     return (irc_server_get_prefix_char_index (server, prefix_char) >= 0) ?
         1 : 0;
+}
+
+/*
+ * Gets an evaluated default_msg server option: replaces "%v" by WeeChat
+ * version if there's no ${...} in string, or just evaluates the string.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_server_get_default_msg (const char *default_msg,
+                            struct t_irc_server *server,
+                            const char *channel_name)
+{
+    const char *version;
+    struct t_hashtable *extra_vars;
+    char *msg;
+
+    /*
+     * "%v" for version is deprecated since WeeChat 1.6, where
+     * an expression ${info:version} is preferred, so we replace
+     * the "%v" with version only if there's no "${...}" in string
+     */
+    if (strstr (default_msg, "%v") && !strstr (default_msg, "${"))
+    {
+        version = weechat_info_get ("version", "");
+        return weechat_string_replace (default_msg, "%v",
+                                       (version) ? version : "");
+    }
+
+    extra_vars = weechat_hashtable_new (32,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        WEECHAT_HASHTABLE_POINTER,
+                                        NULL,
+                                        NULL);
+    if (extra_vars)
+    {
+        weechat_hashtable_set (extra_vars, "server", server->name);
+        weechat_hashtable_set (extra_vars, "channel",
+                               (channel_name) ? channel_name : "");
+        weechat_hashtable_set (extra_vars, "nick", server->nick);
+    }
+
+    msg = weechat_string_eval_expression (default_msg, NULL, extra_vars, NULL);
+
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+
+    return msg;
 }
 
 /*
@@ -5492,14 +5541,14 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "away_check_max_nicks",
                                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS)))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "default_msg_kick",
-                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_KICK)))
+    if (!weechat_infolist_new_var_string (ptr_item, "msg_kick",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_MSG_KICK)))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "default_msg_part",
-                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_PART)))
+    if (!weechat_infolist_new_var_string (ptr_item, "msg_part",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_MSG_PART)))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "default_msg_quit",
-                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_QUIT)))
+    if (!weechat_infolist_new_var_string (ptr_item, "msg_quit",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_MSG_QUIT)))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "temp_server", server->temp_server))
         return 0;
@@ -5851,27 +5900,27 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  away_check_max_nicks : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS]));
-        /* default_msg_kick */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_KICK]))
-            weechat_log_printf ("  default_msg_kick . . : null ('%s')",
-                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_DEFAULT_MSG_KICK));
+        /* msg_kick */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_MSG_KICK]))
+            weechat_log_printf ("  msg_kick . . . . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_MSG_KICK));
         else
-            weechat_log_printf ("  default_msg_kick . . : '%s'",
-                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_KICK]));
-        /* default_msg_part */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_PART]))
-            weechat_log_printf ("  default_msg_part . . : null ('%s')",
-                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_DEFAULT_MSG_PART));
+            weechat_log_printf ("  msg_kick . . . . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_MSG_KICK]));
+        /* msg_part */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_MSG_PART]))
+            weechat_log_printf ("  msg_part . . . . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_MSG_PART));
         else
-            weechat_log_printf ("  default_msg_part . . : '%s'",
-                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_PART]));
-        /* default_msg_quit */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_QUIT]))
-            weechat_log_printf ("  default_msg_quit . . : null ('%s')",
-                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_DEFAULT_MSG_QUIT));
+            weechat_log_printf ("  msg_part . . . . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_MSG_PART]));
+        /* msg_quit */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_MSG_QUIT]))
+            weechat_log_printf ("  msg_quit . . . . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_MSG_QUIT));
         else
-            weechat_log_printf ("  default_msg_quit . . : '%s'",
-                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_QUIT]));
+            weechat_log_printf ("  msg_quit . . . . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_MSG_QUIT]));
         /* other server variables */
         weechat_log_printf ("  temp_server. . . . . : %d",    ptr_server->temp_server);
         weechat_log_printf ("  reloading_from_config: %d",    ptr_server->reloaded_from_config);

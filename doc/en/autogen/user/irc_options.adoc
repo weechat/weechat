@@ -502,21 +502,6 @@
 ** type: integer
 ** values: 1 .. 3600 (default value: `+60+`)
 
-* [[option_irc.server_default.default_msg_kick]] *irc.server_default.default_msg_kick*
-** description: pass:none[default kick message used by commands "/kick" and "/kickban" (special variables $nick, $channel and $server are replaced by their value)]
-** type: string
-** values: any string (default value: `+""+`)
-
-* [[option_irc.server_default.default_msg_part]] *irc.server_default.default_msg_part*
-** description: pass:none[default part message (leaving channel) ("%v" will be replaced by WeeChat version in string)]
-** type: string
-** values: any string (default value: `+"WeeChat %v"+`)
-
-* [[option_irc.server_default.default_msg_quit]] *irc.server_default.default_msg_quit*
-** description: pass:none[default quit message (disconnecting from server) ("%v" will be replaced by WeeChat version in string)]
-** type: string
-** values: any string (default value: `+"WeeChat %v"+`)
-
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
 ** description: pass:none[use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); if disabled, only IPv4 is used]
 ** type: boolean
@@ -526,6 +511,21 @@
 ** description: pass:none[custom local hostname/IP for server (optional, if empty local hostname is used)]
 ** type: string
 ** values: any string (default value: `+""+`)
+
+* [[option_irc.server_default.msg_kick]] *irc.server_default.msg_kick*
+** description: pass:none[default kick message used by commands "/kick" and "/kickban" (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their value)]
+** type: string
+** values: any string (default value: `+""+`)
+
+* [[option_irc.server_default.msg_part]] *irc.server_default.msg_part*
+** description: pass:none[default part message (leaving channel) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their value; "%v" is replaced by WeeChat version if there is no ${...} in string)]
+** type: string
+** values: any string (default value: `+"WeeChat ${info:version}"+`)
+
+* [[option_irc.server_default.msg_quit]] *irc.server_default.msg_quit*
+** description: pass:none[default quit message (disconnecting from server) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their value; "%v" is replaced by WeeChat version if there is no ${...} in string)]
+** type: string
+** values: any string (default value: `+"WeeChat ${info:version}"+`)
 
 * [[option_irc.server_default.nicks]] *irc.server_default.nicks*
 ** description: pass:none[nicknames to use on server (separated by comma) (note: content is evaluated, see /help eval)]

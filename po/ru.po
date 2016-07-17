@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-06-22 10:25+0200\n"
+"POT-Creation-Date: 2016-07-16 09:54+0200\n"
 "PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6610,22 +6610,29 @@ msgstr ""
 "не проверять отсутствие на каналах с большим количеством ников (0=не "
 "ограничено)"
 
+#, fuzzy
 msgid ""
-"default kick message used by commands \"/kick\" and \"/kickban\" (special "
-"variables $nick, $channel and $server are replaced by their value)"
+"default kick message used by commands \"/kick\" and \"/kickban\" (note: "
+"content is evaluated, see /help eval; special variables ${nick}, ${channel} "
+"and ${server} are replaced by their value)"
+msgstr ""
+"      канал: канал, на котором присутствует пользователь\n"
+"        ник: цель для кика\n"
+"комментарий: причина кика"
+
+msgid ""
+"default part message (leaving channel) (note: content is evaluated, see /"
+"help eval; special variables ${nick}, ${channel} and ${server} are replaced "
+"by their value; \"%v\" is replaced by WeeChat version if there is no ${...} "
+"in string)"
 msgstr ""
 
-#, fuzzy
 msgid ""
-"default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
-"version in string)"
-msgstr "сообщение покидания канала ('%v' будет заменён на версию WeeChat)"
-
-#, fuzzy
-msgid ""
-"default quit message (disconnecting from server) (\"%v\" will be replaced by "
-"WeeChat version in string)"
-msgstr "сообщение о выходе по-умолчанию ('%v' будет заменён на версию WeeChat)"
+"default quit message (disconnecting from server) (note: content is "
+"evaluated, see /help eval; special variables ${nick}, ${channel} and "
+"${server} are replaced by their value; \"%v\" is replaced by WeeChat version "
+"if there is no ${...} in string)"
+msgstr ""
 
 msgid ""
 "notify list for server (you should not change this option but use /notify "
@@ -10677,3 +10684,16 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "default part message (leaving channel) (\"%v\" will be replaced by "
+#~ "WeeChat version in string)"
+#~ msgstr "сообщение покидания канала ('%v' будет заменён на версию WeeChat)"
+
+#, fuzzy
+#~ msgid ""
+#~ "default quit message (disconnecting from server) (\"%v\" will be replaced "
+#~ "by WeeChat version in string)"
+#~ msgstr ""
+#~ "сообщение о выходе по-умолчанию ('%v' будет заменён на версию WeeChat)"

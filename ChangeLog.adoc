@@ -26,6 +26,7 @@ Improvements::
 
   * core, irc, xfer: display more information in memory allocation errors (issue #573)
   * api: remove functions printf_date() and printf_tags()
+  * irc: rename server options "default_msg_{kick|part|quit}" to "msg_{kick|part|quit}", evaluate them
   * relay: allow escape of comma in command "init" (weechat protocol) (issue #730)
 
 Bug fixes::

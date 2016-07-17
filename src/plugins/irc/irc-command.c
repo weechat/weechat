@@ -1469,8 +1469,8 @@ IRC_COMMAND_CALLBACK(ctcp)
 
 IRC_COMMAND_CALLBACK(cycle)
 {
-    char *channel_name, *pos_args, *buf;
-    const char *version, *ptr_arg, *msg_part;
+    char *channel_name, *pos_args, *msg;
+    const char *ptr_arg;
     char **channels;
     int i, num_channels;
 
@@ -1545,24 +1545,24 @@ IRC_COMMAND_CALLBACK(cycle)
         ptr_channel->cycle = 1;
     }
 
-    msg_part = IRC_SERVER_OPTION_STRING(ptr_server,
-                                        IRC_SERVER_OPTION_DEFAULT_MSG_PART);
-    ptr_arg = (pos_args) ? pos_args :
-        ((msg_part && msg_part[0]) ? msg_part : NULL);
-
-    if (ptr_arg)
+    msg = NULL;
+    ptr_arg = (pos_args) ?
+        pos_args : IRC_SERVER_OPTION_STRING(ptr_server,
+                                            IRC_SERVER_OPTION_MSG_PART);
+    if (ptr_arg && ptr_arg[0])
     {
-        version = weechat_info_get ("version", "");
-        buf = weechat_string_replace (ptr_arg, "%v", (version) ? version : "");
+        msg = irc_server_get_default_msg (ptr_arg, ptr_server, channel_name);
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "PART %s :%s", channel_name,
-                          (buf) ? buf : ptr_arg);
-        if (buf)
-            free (buf);
+                          "PART %s :%s", channel_name, msg);
     }
     else
+    {
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "PART %s", channel_name);
+    }
+
+    if (msg)
+        free (msg);
 
     return WEECHAT_RC_OK;
 }
@@ -1817,29 +1817,28 @@ IRC_COMMAND_CALLBACK(die)
 void
 irc_command_quit_server (struct t_irc_server *server, const char *arguments)
 {
-    const char *ptr_arg, *version, *msg_quit;
-    char *buf;
+    const char *ptr_arg;
+    char *msg;
 
     if (!server || !server->is_connected)
         return;
 
-    msg_quit = IRC_SERVER_OPTION_STRING(server,
-                                        IRC_SERVER_OPTION_DEFAULT_MSG_QUIT);
-    ptr_arg = (arguments) ? arguments :
-        ((msg_quit && msg_quit[0]) ? msg_quit : NULL);
-
-    if (ptr_arg)
+    msg = NULL;
+    ptr_arg = (arguments) ?
+        arguments : IRC_SERVER_OPTION_STRING(server,
+                                             IRC_SERVER_OPTION_MSG_QUIT);
+    if (ptr_arg && ptr_arg[0])
     {
-        version = weechat_info_get ("version", "");
-        buf = weechat_string_replace (ptr_arg, "%v",
-                                      (version) ? version : "");
-        irc_server_sendf (server, 0, NULL, "QUIT :%s",
-                          (buf) ? buf : ptr_arg);
-        if (buf)
-            free (buf);
+        msg = irc_server_get_default_msg (ptr_arg, server, NULL);
+        irc_server_sendf (server, 0, NULL, "QUIT :%s", msg);
     }
     else
+    {
         irc_server_sendf (server, 0, NULL, "QUIT");
+    }
+
+    if (msg)
+        free (msg);
 }
 
 /*
@@ -2539,23 +2538,19 @@ irc_command_kick_channel (struct t_irc_server *server,
                           const char *channel_name, const char *nick_name,
                           const char *message)
 {
-    const char *msg_kick;
-    char *msg_vars_replaced;
+    const char *ptr_msg;
+    char *msg;
 
-    msg_kick = (message && message[0]) ?
+    msg = NULL;
+    ptr_msg = (message && message[0]) ?
         message : IRC_SERVER_OPTION_STRING(server,
-                                           IRC_SERVER_OPTION_DEFAULT_MSG_KICK);
-    if (msg_kick && msg_kick[0])
+                                           IRC_SERVER_OPTION_MSG_KICK);
+    if (ptr_msg && ptr_msg[0])
     {
-        msg_vars_replaced = irc_message_replace_vars (server,
-                                                      channel_name,
-                                                      msg_kick);
+        msg = irc_server_get_default_msg (ptr_msg, server, channel_name);
         irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "KICK %s %s :%s",
-                          channel_name, nick_name,
-                          (msg_vars_replaced) ? msg_vars_replaced : msg_kick);
-        if (msg_vars_replaced)
-            free (msg_vars_replaced);
+                          channel_name, nick_name, msg);
     }
     else
     {
@@ -2563,6 +2558,9 @@ irc_command_kick_channel (struct t_irc_server *server,
                           "KICK %s %s",
                           channel_name, nick_name);
     }
+
+    if (msg)
+        free (msg);
 }
 
 /*
@@ -3715,30 +3713,27 @@ void
 irc_command_part_channel (struct t_irc_server *server, const char *channel_name,
                           const char *part_message)
 {
-    const char *ptr_arg, *version, *msg_part;
-    char *buf;
+    const char *ptr_arg;
+    char *msg;
 
-    msg_part = IRC_SERVER_OPTION_STRING(server,
-                                        IRC_SERVER_OPTION_DEFAULT_MSG_PART);
-    ptr_arg = (part_message) ? part_message :
-        ((msg_part && msg_part[0]) ? msg_part : NULL);
-
-    if (ptr_arg)
+    msg = NULL;
+    ptr_arg = (part_message) ?
+        part_message : IRC_SERVER_OPTION_STRING(server,
+                                                IRC_SERVER_OPTION_MSG_PART);
+    if (ptr_arg && ptr_arg[0])
     {
-        version = weechat_info_get ("version", "");
-        buf = weechat_string_replace (ptr_arg, "%v", (version) ? version : "");
+        msg = irc_server_get_default_msg (ptr_arg, server, channel_name);
         irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "PART %s :%s",
-                          channel_name,
-                          (buf) ? buf : ptr_arg);
-        if (buf)
-            free (buf);
+                          "PART %s :%s", channel_name, msg);
     }
     else
     {
         irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "PART %s", channel_name);
     }
+
+    if (msg)
+        free (msg);
 }
 
 /*
@@ -4825,30 +4820,30 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  away_check_max_nicks : %s%d",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_integer (server->options[IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS]));
-        /* default_msg_kick */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_KICK]))
-            weechat_printf (NULL, "  default_msg_kick . . :   ('%s')",
-                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_KICK));
+        /* msg_kick */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_MSG_KICK]))
+            weechat_printf (NULL, "  msg_kick . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_MSG_KICK));
         else
-            weechat_printf (NULL, "  default_msg_kick . . : %s'%s'",
+            weechat_printf (NULL, "  msg_kick . . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_string (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_KICK]));
-        /* default_msg_part */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_PART]))
-            weechat_printf (NULL, "  default_msg_part . . :   ('%s')",
-                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_PART));
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_MSG_KICK]));
+        /* msg_part */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_MSG_PART]))
+            weechat_printf (NULL, "  msg_part . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_MSG_PART));
         else
-            weechat_printf (NULL, "  default_msg_part . . : %s'%s'",
+            weechat_printf (NULL, "  msg_part . . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_string (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_PART]));
-        /* default_msg_quit */
-        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_QUIT]))
-            weechat_printf (NULL, "  default_msg_quit . . :   ('%s')",
-                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_QUIT));
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_MSG_PART]));
+        /* msg_quit */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_MSG_QUIT]))
+            weechat_printf (NULL, "  msg_quit . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_MSG_QUIT));
         else
-            weechat_printf (NULL, "  default_msg_quit . . : %s'%s'",
+            weechat_printf (NULL, "  msg_quit . . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
-                            weechat_config_string (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_QUIT]));
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_MSG_QUIT]));
         /* notify */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_NOTIFY]))
             weechat_printf (NULL, "  notify . . . . . . . :   ('%s')",
