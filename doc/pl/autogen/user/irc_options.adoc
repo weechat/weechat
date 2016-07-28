@@ -115,7 +115,7 @@
 * [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
 ** opis: pass:none[format czasu używany w odpowiedzi na wiadomość CTCP TIME (zobacz man strftime dla specyfikatorów daty/czasu)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+"%a, %d %b %Y %T %z"+`)
+** wartości: dowolny ciąg (domyślna wartość: `+"%c"+`)
 
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** opis: pass:none[wyświetl wiadomość, kiedy w(y)łączamy tryb oddalenia (off: nie wyświetlaj/wysyłaj nic, local: wyświetl lokalnie, channel: wyślij akcję na kanały)]

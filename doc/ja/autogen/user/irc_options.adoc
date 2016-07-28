@@ -115,7 +115,7 @@
 * [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
 ** 説明: pass:none[CTCP TIME メッセージに対する応答に利用される時間書式 (日付/時間指定子は strftime の man を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"%a, %d %b %Y %T %z"+`)
+** 値: 未制約文字列 (デフォルト値: `+"%c"+`)
 
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** 説明: pass:none[離席状態が変更されたらメッセージを表示 (off: 何も表示/送信しない、local: ローカルに表示、channel: チャンネルにアクションを送信)]

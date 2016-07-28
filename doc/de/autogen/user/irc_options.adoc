@@ -115,7 +115,7 @@
 * [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
 ** Beschreibung: pass:none[Format für die Zeitanzeige die bei einer CTCP TIME Anfrage zurückgesendet wird (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"%a, %d %b %Y %T %z"+`)
+** Werte: beliebige Zeichenkette (Standardwert: `+"%c"+`)
 
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** Beschreibung: pass:none[zeigt eine Nachricht an, sobald der Abwesenheitsstatus ein- bzw. ausgeschaltet wird (off: zeigt/sendet keine Nachricht, local: eine Nachricht wird lokal angezeigt, channel: sendet eine Nachricht an die Channels)]

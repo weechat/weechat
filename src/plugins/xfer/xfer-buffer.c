@@ -149,7 +149,7 @@ xfer_buffer_refresh (const char *hotlist)
                 if (date_tmp)
                 {
                     strftime (date, sizeof (date),
-                              "%a, %d %b %Y %H:%M:%S", date_tmp);
+                              "%a, %d %b %Y %T", date_tmp);
                 }
                 weechat_printf_y (xfer_buffer, (line * 2) + 3,
                                   "%s%s%s %s%s%s%s%s",

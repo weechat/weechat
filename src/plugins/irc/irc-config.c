@@ -2537,7 +2537,7 @@ irc_config_init ()
         "ctcp_time_format", "string",
         N_("time format used in answer to message CTCP TIME (see man strftime "
            "for date/time specifiers)"),
-        NULL, 0, 0, "%a, %d %b %Y %T %z", NULL, 0,
+        NULL, 0, 0, "%c", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_display_away = weechat_config_new_option (
         irc_config_file, ptr_section,

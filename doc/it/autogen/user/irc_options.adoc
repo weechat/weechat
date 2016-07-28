@@ -115,7 +115,7 @@
 * [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
 ** descrizione: pass:none[formato dell'ora in risposta al messaggio CTCP TIME (consultare man strftime per i dettagli su data/ora)]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `+"%a, %d %b %Y %T %z"+`)
+** valori: qualsiasi stringa (valore predefinito: `+"%c"+`)
 
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** descrizione: pass:none[mostra messaggio quando (non) si risulta assenti (off: non mostra/invia nulla, local: mostra localmente, channel: invia azioni ai canali)]

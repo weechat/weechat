@@ -97,7 +97,7 @@ relay_buffer_refresh (const char *hotlist)
             if (date_tmp)
             {
                 strftime (str_date_start, sizeof (str_date_start),
-                          "%a, %d %b %Y %H:%M:%S", date_tmp);
+                          "%a, %d %b %Y %T", date_tmp);
             }
             str_date_end[0] = '-';
             str_date_end[1] = '\0';
@@ -107,7 +107,7 @@ relay_buffer_refresh (const char *hotlist)
                 if (date_tmp)
                 {
                     strftime (str_date_end, sizeof (str_date_end),
-                              "%a, %d %b %Y %H:%M:%S", date_tmp);
+                              "%a, %d %b %Y %T", date_tmp);
                 }
             }
 

@@ -135,7 +135,7 @@ xfer_command_xfer_list (int full)
                 if (date_tmp)
                 {
                     strftime (date, sizeof (date),
-                              "%a, %d %b %Y %H:%M:%S", date_tmp);
+                              "%a, %d %b %Y %T", date_tmp);
                 }
                 weechat_printf (NULL,
                                 /* TRANSLATORS: "%s" after "started on" is a date */
@@ -172,7 +172,7 @@ xfer_command_xfer_list (int full)
                     if (date_tmp)
                     {
                         strftime (date, sizeof (date),
-                                  "%a, %d %b %Y %H:%M:%S", date_tmp);
+                                  "%a, %d %b %Y %T", date_tmp);
                     }
                     weechat_printf (NULL,
                                     /* TRANSLATORS: "%s" after "started on" is a date */
