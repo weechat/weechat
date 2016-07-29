@@ -190,6 +190,9 @@ hdata buffer:gui_buffers(*)/lines/first_line(*)/data
 
 # demander le nom complet du premier tampon
 hdata buffer:gui_buffers full_name
+
+# demander le contenu de la hotlist
+hdata hotlist:gui_hotlist(*)
 ----
 
 [[command_info]]

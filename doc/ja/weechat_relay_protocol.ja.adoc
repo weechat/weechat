@@ -179,6 +179,7 @@ With older versions, nothing was returned.
 
 例:
 
+// TRANSLATION MISSING
 ----
 # すべてのバッファを要求、"buffer" 型の hdata が返される
 # それぞれのバッファについて "number" と "name" キーが返される
@@ -190,6 +191,9 @@ hdata buffer:gui_buffers(*)/lines/first_line(*)/data
 
 # 最初のバッファの完全な名前を要求
 hdata buffer:gui_buffers full_name
+
+# request the hotlist content
+hdata hotlist:gui_hotlist(*)
 ----
 
 [[command_info]]

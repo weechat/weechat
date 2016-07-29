@@ -182,6 +182,9 @@ hdata buffer:gui_buffers(*)/lines/first_line(*)/data
 
 # request full name of first buffer
 hdata buffer:gui_buffers full_name
+
+# request the hotlist content
+hdata hotlist:gui_hotlist(*)
 ----
 
 [[command_info]]
