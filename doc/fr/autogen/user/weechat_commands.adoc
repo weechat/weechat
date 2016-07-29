@@ -766,6 +766,9 @@ passphrase : modifier la phrase de chiffrement (sans phrase de chiffrement, les
 
 Sans paramètre, cette commande affiche les données sécurisées dans un nouveau tampon.
 
+Les touches sur le tampon des données sécurisées :
+  alt+v  afficher/cacher les valeurs
+
 Lorsqu'une phrase de chiffrement est utilisée (données chiffrées), elle est demandée au démarrage de WeeChat.
 Il est possible de définir la variable d'environnement WEECHAT_PASSPHRASE pour éviter la demande (cette même variable est utilisée par WeeChat sur le /upgrade).
 

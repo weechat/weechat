@@ -766,6 +766,9 @@ passphrase: change the passphrase (without passphrase, data is stored as plain t
 
 Without argument, this command displays secured data in a new buffer.
 
+Keys on secure buffer:
+  alt+v  toggle values
+
 When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
 It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
 
