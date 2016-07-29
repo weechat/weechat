@@ -231,11 +231,15 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(hdata)
     msg = relay_weechat_msg_new (id);
     if (msg)
     {
-        if (relay_weechat_msg_add_hdata (msg, argv[0],
-                                         (argc > 1) ? argv_eol[1] : NULL))
+        if (!relay_weechat_msg_add_hdata (msg, argv[0],
+                                          (argc > 1) ? argv_eol[1] : NULL))
         {
-            relay_weechat_msg_send (client, msg);
+            relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_HDATA);
+            relay_weechat_msg_add_string (msg, NULL);  /* h-path */
+            relay_weechat_msg_add_string (msg, NULL);  /* keys */
+            relay_weechat_msg_add_int (msg, 0);  /* count */
         }
+        relay_weechat_msg_send (client, msg);
         relay_weechat_msg_free (msg);
     }
 

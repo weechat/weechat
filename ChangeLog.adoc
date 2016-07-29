@@ -32,6 +32,7 @@ Improvements::
 Bug fixes::
 
   * api: fix crash in function string_split_command() when the separator is not a semicolon (issue #731)
+  * relay: return an empty hdata when the requested hdata or pointer is not found (issue #767)
 
 Documentation::
 

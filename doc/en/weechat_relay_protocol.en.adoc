@@ -164,6 +164,11 @@ values are:
 * negative number: iterate using previous element, N times
 * _*_: iterate using next element, until end of list
 
+[NOTE]
+With WeeChat ≥ 1.6, if the hdata path is invalid or if a NULL pointer is found,
+an empty hdata is returned (see example in <<object_hdata,hdata object>>). +
+With older versions, nothing was returned.
+
 Examples:
 
 ----
@@ -1616,6 +1621,20 @@ nicklist
              p-path                          objects
       └────────────────────────────────────────────────────────────────┘
                                nick (@ChanServ)
+....
+
+Example of empty hdata (hotlist is empty in WeeChat):
+
+....
+# command
+hdata hotlist:gui_hotlist(*)
+
+# response
+┌────────┬────────┬───┐
+│ (NULL) │ (NULL) │ 0 │
+└────────┴────────┴───┘
+ └──────┘ └──────┘ └─┘
+  h-path    keys  count
 ....
 
 [[object_info]]

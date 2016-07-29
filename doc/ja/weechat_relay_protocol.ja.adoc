@@ -171,6 +171,12 @@ _hdata_ を要求。
 * 負数: N 回前の要素への反復を繰り返す
 * _*_: 最後の要素まで、次の要素への反復を繰り返す
 
+[NOTE]
+// TRANSLATION MISSING
+With WeeChat ≥ 1.6, if the hdata path is invalid or if a NULL pointer is found,
+an empty hdata is returned (see example in <<object_hdata,hdata object>>). +
+With older versions, nothing was returned.
+
 例:
 
 ----
@@ -1622,6 +1628,21 @@ nicklist
              p-path                          objects
       └────────────────────────────────────────────────────────────────┘
                                nick (@ChanServ)
+....
+
+// TRANSLATION MISSING
+Example of empty hdata (hotlist is empty in WeeChat):
+
+....
+# コマンド
+hdata hotlist:gui_hotlist(*)
+
+# 応答
+┌────────┬────────┬───┐
+│ (NULL) │ (NULL) │ 0 │
+└────────┴────────┴───┘
+ └──────┘ └──────┘ └─┘
+  h-path    keys  count
 ....
 
 [[object_info]]

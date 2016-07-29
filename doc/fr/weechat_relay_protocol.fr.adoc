@@ -170,6 +170,12 @@ Les valeurs possibles sont :
 * nombre négatif : itérer en utilisant l'élément précédent, N fois
 * _*_ : itérer en utilisant l'élément suivant, jusqu'à la fin de la liste
 
+[NOTE]
+Avec WeeChat ≥ 1.6, si le chemin vers le hdata est invalide ou si un pointeur
+NULL est trouvé, un hdata vide est retourné (voir l'exemple dans
+<<object_hdata,l'objet hdata>>). +
+Avec des versions plus anciennes, rien n'était retourné.
+
 Exemples :
 
 ----
@@ -1649,6 +1655,20 @@ nicklist
              p-path                          objets
       └────────────────────────────────────────────────────────────────┘
                              pseudo (@ChanServ)
+....
+
+Exemple de hdata vide (la hotlist est vide dans WeeChat) :
+
+....
+# commande
+hdata hotlist:gui_hotlist(*)
+
+# réponse
+┌────────┬────────┬───┐
+│ (NULL) │ (NULL) │ 0 │
+└────────┴────────┴───┘
+ └──────┘ └──────┘ └─┘
+  h-path    clés  nombre
 ....
 
 [[object_info]]
