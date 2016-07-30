@@ -513,17 +513,17 @@
 ** 値: 未制約文字列 (デフォルト値: `+""+`)
 
 * [[option_irc.server_default.msg_kick]] *irc.server_default.msg_kick*
-** 説明: pass:none[default kick message used by commands "/kick" and "/kickban" (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their value)]
+** 説明: pass:none["/kick" と "/kickban" コマンドが使うデフォルトのキックメッセージ (注意: 値は評価されます、/help eval を参照。特殊変数 ${nick}、${channel}、${server} はそれぞれの値に置換されます)]
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `+""+`)
 
 * [[option_irc.server_default.msg_part]] *irc.server_default.msg_part*
-** 説明: pass:none[default part message (leaving channel) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their value; "%v" is replaced by WeeChat version if there is no ${...} in string)]
+** 説明: pass:none[デフォルトの退出メッセージ (チャンネルから退出する際に送信されるメッセージ) (注意: 値は評価されます、/help eval を参照。特殊変数 ${nick}、${channel}、${server} はそれぞれの値に置換されます。${...} が文字列に含まれない場合、"%v" は WeeChat バージョン番号に置換されます)]
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `+"WeeChat ${info:version}"+`)
 
 * [[option_irc.server_default.msg_quit]] *irc.server_default.msg_quit*
-** 説明: pass:none[default quit message (disconnecting from server) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their value; "%v" is replaced by WeeChat version if there is no ${...} in string)]
+** 説明: pass:none[デフォルトの終了メッセージ (サーバから切断する際に送信されるメッセージ) (注意: 値は評価されます、/help eval を参照。特殊変数 ${nick}、${channel}、${server} はそれぞれの値に置換されます。${...} が文字列に含まれない場合、"%v" は WeeChat バージョン番号に置換されます)]
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `+"WeeChat ${info:version}"+`)
 
