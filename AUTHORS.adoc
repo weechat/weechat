@@ -81,6 +81,7 @@ Alphabetically:
 * Rettub
 * Rudolf Polzer (divVerent)
 * Ryuunosuke Ayanokouzi
+* scumjr
 * Sergio Durigan Junior
 * Shane McCarron
 * Shawn Smith
