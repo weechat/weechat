@@ -101,6 +101,7 @@ AH_VERBATIM([WEECHAT_SHAREDIR], [#undef WEECHAT_SHAREDIR])
 AH_VERBATIM([HAVE_GNUTLS], [#undef HAVE_GNUTLS])
 AH_VERBATIM([HAVE_FLOCK], [#undef HAVE_FLOCK])
 AH_VERBATIM([HAVE_EAT_NEWLINE_GLITCH], [#undef HAVE_EAT_NEWLINE_GLITCH])
+AH_VERBATIM([HAVE_SOCKETPAIR_SOCK_DGRAM], [#undef HAVE_SOCKETPAIR_SOCK_DGRAM])
 AH_VERBATIM([HAVE_ASPELL_VERSION_STRING], [#undef HAVE_ASPELL_VERSION_STRING])
 AH_VERBATIM([HAVE_ENCHANT_GET_VERSION], [#undef HAVE_ENCHANT_GET_VERSION])
 AH_VERBATIM([HAVE_GUILE_GMP_MEMORY_FUNCTIONS], [#undef HAVE_GUILE_GMP_MEMORY_FUNCTIONS])
@@ -1048,6 +1049,28 @@ else
 fi
 
 # ------------------------------------------------------------------------------
+#                           socketpair (SOCK_DGRAM)
+# ------------------------------------------------------------------------------
+
+enable_socketpair_sock_dgram="no"
+AC_CACHE_CHECK([for socketpair with SOCK_DGRAM support], ac_cv_have_socketpair_sock_dgram, [
+AC_TRY_RUN([
+    #include <sys/types.h>
+    #include <sys/socket.h>
+    int main() {
+        int socket[2];
+        int rc = socketpair (AF_LOCAL, SOCK_DGRAM, 0, socket);
+        return (rc == 0) ? 0 : 1;
+    }],ac_have_socketpair_sock_dgram="yes", ac_have_socketpair_sock_dgram="no", ac_have_socketpair_sock_dgram="assume-yes")])
+
+if test "x$ac_have_socketpair_sock_dgram" = "xyes"; then
+    enable_have_socketpair_sock_dgram="yes"
+    AC_DEFINE(HAVE_SOCKETPAIR_SOCK_DGRAM)
+else
+    not_found="$not_found socketpair(SOCK_DGRAM)"
+fi
+
+# ------------------------------------------------------------------------------
 #                                     zlib
 # ------------------------------------------------------------------------------
 
@@ -1236,31 +1259,32 @@ CPPFLAGS="$CPPFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\" -DWEECHAT_LICENSE=\\\"$LI
 #                                output Makefiles
 # ------------------------------------------------------------------------------
 
-AM_CONDITIONAL(HAVE_GNUTLS,             test "$enable_gnutls" = "yes")
-AM_CONDITIONAL(HAVE_FLOCK,              test "$enable_flock" = "yes")
-AM_CONDITIONAL(HAVE_EAT_NEWLINE_GLITCH, test "$enable_eatnewlineglitch" = "yes")
-AM_CONDITIONAL(GUI_NCURSES,             test "$enable_ncurses" = "yes")
-AM_CONDITIONAL(PLUGIN_ALIAS,            test "$enable_alias" = "yes")
-AM_CONDITIONAL(PLUGIN_ASPELL,           test "$enable_aspell" = "yes")
-AM_CONDITIONAL(PLUGIN_CHARSET,          test "$enable_charset" = "yes")
-AM_CONDITIONAL(PLUGIN_EXEC,             test "$enable_exec" = "yes")
-AM_CONDITIONAL(PLUGIN_FIFO,             test "$enable_fifo" = "yes")
-AM_CONDITIONAL(PLUGIN_IRC,              test "$enable_irc" = "yes")
-AM_CONDITIONAL(PLUGIN_LOGGER,           test "$enable_logger" = "yes")
-AM_CONDITIONAL(PLUGIN_RELAY,            test "$enable_relay" = "yes")
-AM_CONDITIONAL(PLUGIN_SCRIPT,           test "$enable_script" = "yes")
-AM_CONDITIONAL(PLUGIN_PERL,             test "$enable_perl" = "yes")
-AM_CONDITIONAL(PLUGIN_PYTHON,           test "$enable_python" = "yes")
-AM_CONDITIONAL(PLUGIN_RUBY,             test "$enable_ruby" = "yes")
-AM_CONDITIONAL(PLUGIN_LUA,              test "$enable_lua" = "yes")
-AM_CONDITIONAL(PLUGIN_TCL,              test "$enable_tcl" = "yes")
-AM_CONDITIONAL(PLUGIN_GUILE,            test "$enable_guile" = "yes")
-AM_CONDITIONAL(PLUGIN_JAVASCRIPT,       test "$enable_javascript" = "yes")
-AM_CONDITIONAL(PLUGIN_TRIGGER,          test "$enable_trigger" = "yes")
-AM_CONDITIONAL(PLUGIN_XFER,             test "$enable_xfer" = "yes")
-AM_CONDITIONAL(TESTS,                   test "$enable_tests" = "yes")
-AM_CONDITIONAL(MAN,                     test "$enable_man" = "yes")
-AM_CONDITIONAL(DOC,                     test "$enable_doc" = "yes")
+AM_CONDITIONAL(HAVE_GNUTLS,                test "$enable_gnutls" = "yes")
+AM_CONDITIONAL(HAVE_FLOCK,                 test "$enable_flock" = "yes")
+AM_CONDITIONAL(HAVE_EAT_NEWLINE_GLITCH,    test "$enable_eatnewlineglitch" = "yes")
+AM_CONDITIONAL(HAVE_SOCKETPAIR_SOCK_DGRAM, test "$enable_socketpair_sock_dgram" = "yes")
+AM_CONDITIONAL(GUI_NCURSES,                test "$enable_ncurses" = "yes")
+AM_CONDITIONAL(PLUGIN_ALIAS,               test "$enable_alias" = "yes")
+AM_CONDITIONAL(PLUGIN_ASPELL,              test "$enable_aspell" = "yes")
+AM_CONDITIONAL(PLUGIN_CHARSET,             test "$enable_charset" = "yes")
+AM_CONDITIONAL(PLUGIN_EXEC,                test "$enable_exec" = "yes")
+AM_CONDITIONAL(PLUGIN_FIFO,                test "$enable_fifo" = "yes")
+AM_CONDITIONAL(PLUGIN_IRC,                 test "$enable_irc" = "yes")
+AM_CONDITIONAL(PLUGIN_LOGGER,              test "$enable_logger" = "yes")
+AM_CONDITIONAL(PLUGIN_RELAY,               test "$enable_relay" = "yes")
+AM_CONDITIONAL(PLUGIN_SCRIPT,              test "$enable_script" = "yes")
+AM_CONDITIONAL(PLUGIN_PERL,                test "$enable_perl" = "yes")
+AM_CONDITIONAL(PLUGIN_PYTHON,              test "$enable_python" = "yes")
+AM_CONDITIONAL(PLUGIN_RUBY,                test "$enable_ruby" = "yes")
+AM_CONDITIONAL(PLUGIN_LUA,                 test "$enable_lua" = "yes")
+AM_CONDITIONAL(PLUGIN_TCL,                 test "$enable_tcl" = "yes")
+AM_CONDITIONAL(PLUGIN_GUILE,               test "$enable_guile" = "yes")
+AM_CONDITIONAL(PLUGIN_JAVASCRIPT,          test "$enable_javascript" = "yes")
+AM_CONDITIONAL(PLUGIN_TRIGGER,             test "$enable_trigger" = "yes")
+AM_CONDITIONAL(PLUGIN_XFER,                test "$enable_xfer" = "yes")
+AM_CONDITIONAL(TESTS,                      test "$enable_tests" = "yes")
+AM_CONDITIONAL(MAN,                        test "$enable_man" = "yes")
+AM_CONDITIONAL(DOC,                        test "$enable_doc" = "yes")
 
 AC_OUTPUT([Makefile
            doc/Makefile

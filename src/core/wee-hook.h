@@ -27,7 +27,7 @@
 #include <gnutls/gnutls.h>
 #endif
 
-#if defined(__CYGWIN__) || defined(__APPLE__) || defined(__MACH__)
+#if !defined(HAVE_SOCKETPAIR_SOCK_DGRAM) || defined(__CYGWIN__) || defined(__APPLE__) || defined(__MACH__)
 /*
  * For the connect hook, when this is defined an array of sockets will
  * be passed from the parent process to the child process instead of using
