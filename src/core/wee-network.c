@@ -43,6 +43,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <resolv.h>
 #include <errno.h>
 #include <gcrypt.h>
 #include <sys/time.h>
@@ -310,6 +311,9 @@ network_resolve (const char *hostname, char *ip, int *version)
         *version = 0;
 
     res = NULL;
+
+    if (res_init() != 0)
+	return 0;
 
     if (getaddrinfo (hostname, NULL, NULL, &res) != 0)
         return 0;
@@ -696,6 +700,8 @@ network_connect_to (const char *proxy, struct sockaddr *address,
         hints.ai_flags = AI_NUMERICSERV;
         snprintf (str_port, sizeof (str_port), "%d",
                  CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
+	if (res_init() != 0)
+            goto error;
         if (getaddrinfo (CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]),
                          str_port, &hints, &proxy_addrinfo) != 0)
         {
@@ -806,7 +812,8 @@ network_connect_child (struct t_hook *hook_connect)
 #ifdef AI_ADDRCONFIG
     hints.ai_flags = AI_ADDRCONFIG;
 #endif /* AI_ADDRCONFIG */
-    if (ptr_proxy)
+    rc = res_init();
+    if (!rc && ptr_proxy)
     {
         hints.ai_family = (CONFIG_BOOLEAN(ptr_proxy->options[PROXY_OPTION_IPV6])) ?
             AF_UNSPEC : AF_INET;
