@@ -29,6 +29,7 @@
 #include <time.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/nameser.h>
 #include <netdb.h>
 #include <resolv.h>
 #include <gcrypt.h>
