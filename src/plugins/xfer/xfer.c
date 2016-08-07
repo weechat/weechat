@@ -30,6 +30,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <resolv.h>
 #include <gcrypt.h>
 #include <arpa/inet.h>
 
@@ -966,6 +967,8 @@ xfer_resolve_addr (const char *str_address, const char *str_port,
     hints.ai_addr = NULL;
     hints.ai_next = NULL;
 
+    if (res_init() != 0)
+        return 0;
     rc = getaddrinfo (str_address, str_port, &hints, &ainfo);
     if ((rc == 0) && ainfo && ainfo->ai_addr)
     {

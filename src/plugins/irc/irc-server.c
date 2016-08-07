@@ -38,6 +38,7 @@
 #endif /* _WIN32 */
 #include <sys/types.h>
 #include <netdb.h>
+#include <resolv.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
@@ -5132,7 +5133,8 @@ irc_server_xfer_send_ready_cb (const void *pointer, void *data,
                                                          "local_address");
                 if (local_address)
                 {
-                    rc = getaddrinfo (local_address, NULL, NULL, &ainfo);
+		    if ((rc = res_init()) == 0)
+			rc = getaddrinfo (local_address, NULL, NULL, &ainfo);
                     if ((rc == 0) && ainfo && ainfo->ai_addr)
                     {
                         if (ainfo->ai_family == AF_INET)
