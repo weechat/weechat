@@ -1,10 +1,12 @@
 # ignored files for Git
 
 *.a
+*.cmake
 *.gmo
 *.la
 *.lai
 *.lo
+*.out
 *.m4
 *.o
 *.Plo
@@ -17,6 +19,8 @@
 ABOUT-NLS
 autom4te*
 build*/*
+CMakeCache.txt
+CMakeFiles/
 compile
 config.guess
 config.h
@@ -34,6 +38,7 @@ debian-devel/*.log
 debian-stable/*.log
 depcomp
 insert-header.sin
+install_manifest.txt
 install-sh
 intl/*
 libtool
@@ -53,3 +58,4 @@ weechat-*.cygport
 stamp*
 
 src/gui/curses/weechat
+src/gui/curses/weechat-curses

@@ -849,7 +849,8 @@ xfer_set_remote_address (struct t_xfer *xfer, const struct sockaddr *address,
         free (xfer->remote_address);
     xfer->remote_address = malloc (length);
     xfer->remote_address_length = length;
-    memcpy (xfer->remote_address, address, length);
+    if (xfer->remote_address)
+	memcpy (xfer->remote_address, address, length);
 
     if (xfer->remote_address_str)
         free (xfer->remote_address_str);
@@ -867,7 +868,8 @@ xfer_set_local_address (struct t_xfer *xfer, const struct sockaddr *address,
         free (xfer->local_address);
     xfer->local_address = malloc (length);
     xfer->local_address_length = length;
-    memcpy (xfer->local_address, address, length);
+    if (xfer->local_address)
+	memcpy (xfer->local_address, address, length);
 
     if (xfer->local_address_str)
         free (xfer->local_address_str);

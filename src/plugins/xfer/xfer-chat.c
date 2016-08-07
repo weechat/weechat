@@ -373,7 +373,10 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
 
             /* failed to create buffer ? then return */
             if (!xfer->buffer)
-                return;
+            {
+		free (name);
+		return;
+            }
         }
 
         if (buffer_created)
