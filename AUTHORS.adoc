@@ -78,6 +78,7 @@ Alphabetically:
 * Quentin Glidic (SardemFF7)
 * Quentin Pradet
 * Quico Noizeux
+* Raghavendra Prabhu
 * Rettub
 * Rudolf Polzer (divVerent)
 * Ryuunosuke Ayanokouzi
