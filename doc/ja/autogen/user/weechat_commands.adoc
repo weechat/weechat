@@ -651,7 +651,7 @@ arguments: ロードするプラグインに与える引数
   コアバッファにエラーを表示:
     /print -core -error Some error here
   コアバッファにプレフィックス "abc" を付けてメッセージを表示:
-    /print -core abc	The message
+    /print -core abc\tThe message
   チャンネル #weechat にメッセージを表示:
     /print -buffer irc.freenode.#weechat Message on #weechat
   雪だるまを表示 (U+2603):
