@@ -5134,8 +5134,8 @@ irc_server_xfer_send_ready_cb (const void *pointer, void *data,
                                                          "local_address");
                 if (local_address)
                 {
-		    if ((rc = res_init()) == 0)
-			rc = getaddrinfo (local_address, NULL, NULL, &ainfo);
+                    res_init ();
+                    rc = getaddrinfo (local_address, NULL, NULL, &ainfo);
                     if ((rc == 0) && ainfo && ainfo->ai_addr)
                     {
                         if (ainfo->ai_family == AF_INET)

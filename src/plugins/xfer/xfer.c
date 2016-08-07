@@ -968,8 +968,7 @@ xfer_resolve_addr (const char *str_address, const char *str_port,
     hints.ai_addr = NULL;
     hints.ai_next = NULL;
 
-    if (res_init() != 0)
-        return 0;
+    res_init ();
     rc = getaddrinfo (str_address, str_port, &hints, &ainfo);
     if ((rc == 0) && ainfo && ainfo->ai_addr)
     {
