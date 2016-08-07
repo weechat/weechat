@@ -110,6 +110,11 @@ compilare WeeChat.
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
 | Pacchetto ^(1)^        | Versione      | Richiesto | Caratteristica
+// TRANSLATION MISSING
+| C compiler
+  (gcc, clang, ...)      |               | *sì*      | Build
+// TRANSLATION MISSING
+| C++ compiler           |               |           | Build and run tests, plugin Javascript
 | cmake                  |               | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake)
 // TRANSLATION MISSING
 | pkg-config             |               | *sì*      | Detect installed libraries
@@ -135,9 +140,7 @@ compilare WeeChat.
 // TRANSLATION MISSING
 | asciidoctor            | ≥ 1.5.4       |           | Build man page and documentation
 // TRANSLATION MISSING
-| libcpputest-dev        | ≥ 3.4         |           | Run tests
-// TRANSLATION MISSING
-| C++ compiler           |               |           | Run tests, plugin Javascript
+| libcpputest-dev        | ≥ 3.4         |           | Build and run tests
 |===
 
 // TRANSLATION MISSING (note 3)

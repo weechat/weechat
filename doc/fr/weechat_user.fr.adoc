@@ -97,6 +97,9 @@ compiler WeeChat.
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
 | Paquet ^(1)^           | Version       | Requis | Fonctionnalité
+| compilateur C
+  (gcc, clang, ...)      |               | *oui*  | Construction
+| compilateur C++        |               |        | Construction et lancement des tests, extension javascript
 | cmake                  |               | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé)
 | pkg-config             |               | *oui*  | Détection des bibliothèques installées
 | libncursesw5-dev ^(2)^ |               | *oui*  | Interface ncurses
@@ -116,8 +119,7 @@ compiler WeeChat.
 | guile-2.0-dev          | ≥ 2.0         |        | Extension guile (scheme)
 | libv8-dev              | ≤ 3.24.3      |        | Extension javascript
 | asciidoctor            | ≥ 1.5.4       |        | Construction de la page man et de la documentation
-| libcpputest-dev        | ≥ 3.4         |        | Lancement des tests
-| C++ compiler           |               |        | Lancement des tests, extension javascript
+| libcpputest-dev        | ≥ 3.4         |        | Construction et lancement des tests
 |===
 
 [NOTE]

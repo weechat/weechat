@@ -99,6 +99,11 @@ WeeChat.
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
 | Pakiet ^(1)^           | Wersja        | Wymagany | Opis
+// TRANSLATION MISSING
+| C compiler
+  (gcc, clang, ...)      |               | *tak*    | Build
+// TRANSLATION MISSING
+| C++ compiler           |               |          | Build and run tests, javascript plugin
 | cmake                  |               | *tak*    | Kompilacja (możliwe jest użycie autotools, jednak cmake jest zalecany)
 | pkg-config             |               | *tak*    | Wykrywa zainstalowane biblioteki
 | libncursesw5-dev ^(2)^ |               | *tak*    | Interfejs ncurses
@@ -118,8 +123,8 @@ WeeChat.
 | guile-2.0-dev          | ≥ 2.0         |          | Wtyczka guile (scheme)
 | libv8-dev              | ≤ 3.24.3      |          | Wtyczka javascript
 | asciidoctor            | ≥ 1.5.4       |          | Tworzenie strony man i dokumentacji
-| libcpputest-dev        | ≥ 3.4         |          | Uruchamianie testów
-| C++ compiler           |               |          | Uruchamianie testów, wtyczka javascript
+// TRANSLATION MISSING
+| libcpputest-dev        | ≥ 3.4         |          | Build and run tests
 |===
 
 [NOTE]
