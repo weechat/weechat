@@ -460,7 +460,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                 server->buffer, date, NULL,
                 _("%s%s: client capability, currently enabled: %s"),
                 weechat_prefix ("network"), IRC_PLUGIN_NAME, ptr_caps);
-	}
+        }
     }
     else if (strcmp (argv[3], "ACK") == 0)
     {
