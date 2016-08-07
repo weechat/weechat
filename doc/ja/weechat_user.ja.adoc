@@ -112,7 +112,7 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
   ∥ libenchant-dev       |                  |        | aspell プラグイン
 | python-dev             | 2.5 以上 ^(4)^   |        | python プラグイン
 | libperl-dev            |                  |        | perl プラグイン
-| ruby2.3-dev            | 1.8 以上         |        | ruby プラグイン
+| ruby2.3, ruby2.3-dev   | 1.8 以上         |        | ruby プラグイン
 | liblua5.3-dev          |                  |        | lua プラグイン
 | tcl-dev                | 8.5 以上         |        | tcl プラグイン
 | guile-2.0-dev          | 2.0 以上         |        | guile (scheme) プラグイン

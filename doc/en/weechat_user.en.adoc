@@ -107,7 +107,7 @@ compile WeeChat.
   ∥ libenchant-dev       |               |          | Aspell plugin
 | python-dev             | ≥ 2.5 ^(4)^   |          | Python plugin
 | libperl-dev            |               |          | Perl plugin
-| ruby2.3-dev            | ≥ 1.8         |          | Ruby plugin
+| ruby-2.3, ruby2.3-dev  | ≥ 1.8         |          | Ruby plugin
 | liblua5.3-dev          |               |          | Lua plugin
 | tcl-dev                | ≥ 8.5         |          | Tcl plugin
 | guile-2.0-dev          | ≥ 2.0         |          | Guile (scheme) plugin
