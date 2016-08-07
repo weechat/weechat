@@ -66,7 +66,7 @@
 
 | default_protocol | string |
 
-| socks5_gssapi_service | string |
+| tcp_fastopen | long |
 
 | netrc | long | ignored, optional, required
 
@@ -126,7 +126,7 @@
 
 | cookiejar | string |
 
-| http_version | long | none, 1_0, 1_1, 2_0, 2, 2tls
+| http_version | long | none, 1_0, 1_1, 2_0, 2, 2tls, 2_prior_knowledge
 
 | cookiesession | long |
 
@@ -163,6 +163,8 @@
 | mail_auth | string |
 
 | tftp_blksize | long |
+
+| tftp_no_options | long |
 
 | ftpport | string |
 
