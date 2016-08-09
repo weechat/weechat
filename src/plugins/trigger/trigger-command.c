@@ -723,7 +723,7 @@ trigger_command_trigger (const void *pointer, void *data,
         }
         add_rc = trigger_hook_default_rc[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_HOOK])][0];
         snprintf (input, sizeof (input),
-                  "//trigger %s %s %s \"%s\" \"%s\" \"%s\" \"%s\"%s%s%s",
+                  "//trigger %s %s %s \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
                   (weechat_strcasecmp (argv[1], "recreate") == 0) ? "addreplace" : "add",
                   ptr_trigger->name,
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
@@ -731,9 +731,8 @@ trigger_command_trigger (const void *pointer, void *data,
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]),
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_REGEX]),
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]),
-                  (add_rc) ? " \"" : "",
                   (add_rc) ? weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]) : "",
-                  (add_rc) ? "\"" : "");
+                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION]));
         if (weechat_strcasecmp (argv[1], "output") == 0)
         {
             weechat_command (buffer, input);
