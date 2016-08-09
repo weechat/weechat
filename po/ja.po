@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-07-29 10:01+0200\n"
+"POT-Creation-Date: 2016-08-09 21:29+0200\n"
 "PO-Revision-Date: 2016-08-07 16:37+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -11351,6 +11351,10 @@ msgstr "%s%s: 不正な正規表現 (コンパイル失敗)"
 msgid "%s%s: invalid return code: \"%s\""
 msgstr "%s%s: リターンコードが間違っています: \"%s\""
 
+#, fuzzy, c-format
+msgid "%s%s: invalid post action \"%s\""
+msgstr "%s%s: リターンコードが間違っています: \"%s\""
+
 #, c-format
 msgid ""
 "%s%s: trigger \"%s\" already exists (choose another name or use option "
@@ -11424,14 +11428,15 @@ msgstr ""
 msgid "manage triggers, the Swiss Army knife for WeeChat"
 msgstr "トリガ (WeeChat 用のスイスアーミーナイフ) の管理"
 
+#, fuzzy
 msgid ""
 "list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
 "[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
-"\" [\"<return_code>\"]]]]] || addinput [<hook>] || input|output|recreate "
-"<name> || set <name> <option> <value> || rename|copy <name> <new_name> || "
-"enable|disable|toggle [<name>|-all [<name>...]] || restart <name>|-all "
-"[<name>...] || show <name> || del <name>|-all [<name>...] || restore <name> "
-"[<name>...] || default -yes || monitor [<filter>]"
+"\" [\"<return_code>\" [\"<post_action>\"]]]]]] || addinput [<hook>] || input|"
+"output|recreate <name> || set <name> <option> <value> || rename|copy <name> "
+"<new_name> || enable|disable|toggle [<name>|-all [<name>...]] || restart "
+"<name>|-all [<name>...] || show <name> || del <name>|-all [<name>...] || "
+"restore <name> [<name>...] || default -yes || monitor [<filter>]"
 msgstr ""
 "list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
 "[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
@@ -11441,6 +11446,7 @@ msgstr ""
 "[<name>...] || show <name> || del <name>|-all [<name>...] || restore <name> "
 "[<name>...] || default -yes || monitor [<filter>]"
 
+#, fuzzy
 msgid ""
 "       list: list triggers (without argument, this list is displayed)\n"
 "   listfull: list triggers with detailed info for each trigger\n"
@@ -11468,6 +11474,8 @@ msgid ""
 "variables\n"
 "    command: command to execute (many commands can be separated by \";\"\n"
 "return_code: return code in callback (ok (default), ok_eat, error)\n"
+"post_action: action to take after execution (none (default), disable, "
+"delete)\n"
 "   addinput: set input with default arguments to create a trigger\n"
 "      input: set input with the command used to create the trigger\n"
 "     output: send the command to create the trigger on the buffer\n"
@@ -11634,6 +11642,9 @@ msgstr "フックに対するデフォルトコマンド"
 msgid "default return codes for hook callback"
 msgstr "フックコールバックに対するデフォルトのリターンコード"
 
+msgid "trigger post actions"
+msgstr ""
+
 #, c-format
 msgid ""
 "%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
@@ -11704,6 +11715,9 @@ msgstr ""
 "フックコールバックのリターンコード (ok_eat および error を効率的に利用する方"
 "法はプラグイン API リファレンスを参照)"
 
+msgid "action to take on the trigger after execution"
+msgstr ""
+
 msgid "enable trigger support"
 msgstr "トリガサポートの有効化"
 
@@ -11721,6 +11735,10 @@ msgstr "正規表現フラグに対するテキスト色 (/trigger list 用)"
 
 msgid "text color for return code flag (in /trigger list)"
 msgstr "リターンコードに対するテキスト色 (/trigger list 用)"
+
+#, fuzzy
+msgid "text color for post action flag (in /trigger list)"
+msgstr "状態フラグに対するテキスト色 (/trigger list 用)"
 
 msgid "text color for regular expressions"
 msgstr "正規表現に対するテキスト色"

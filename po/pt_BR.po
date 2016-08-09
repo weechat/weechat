@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-07-29 10:01+0200\n"
+"POT-Creation-Date: 2016-08-09 21:29+0200\n"
 "PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10361,6 +10361,10 @@ msgstr "%sErro: incapaz de salvar a sessão em arquivo"
 msgid "%s%s: invalid return code: \"%s\""
 msgstr "%sErro: não foi possível desassociar a tecla de atalho \"%s\""
 
+#, fuzzy, c-format
+msgid "%s%s: invalid post action \"%s\""
+msgstr "%sErro: não foi possível desassociar a tecla de atalho \"%s\""
+
 #, c-format
 msgid ""
 "%s%s: trigger \"%s\" already exists (choose another name or use option "
@@ -10436,11 +10440,11 @@ msgstr ""
 msgid ""
 "list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
 "[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
-"\" [\"<return_code>\"]]]]] || addinput [<hook>] || input|output|recreate "
-"<name> || set <name> <option> <value> || rename|copy <name> <new_name> || "
-"enable|disable|toggle [<name>|-all [<name>...]] || restart <name>|-all "
-"[<name>...] || show <name> || del <name>|-all [<name>...] || restore <name> "
-"[<name>...] || default -yes || monitor [<filter>]"
+"\" [\"<return_code>\" [\"<post_action>\"]]]]]] || addinput [<hook>] || input|"
+"output|recreate <name> || set <name> <option> <value> || rename|copy <name> "
+"<new_name> || enable|disable|toggle [<name>|-all [<name>...]] || restart "
+"<name>|-all [<name>...] || show <name> || del <name>|-all [<name>...] || "
+"restore <name> [<name>...] || default -yes || monitor [<filter>]"
 msgstr ""
 
 msgid ""
@@ -10470,6 +10474,8 @@ msgid ""
 "variables\n"
 "    command: command to execute (many commands can be separated by \";\"\n"
 "return_code: return code in callback (ok (default), ok_eat, error)\n"
+"post_action: action to take after execution (none (default), disable, "
+"delete)\n"
 "   addinput: set input with default arguments to create a trigger\n"
 "      input: set input with the command used to create the trigger\n"
 "     output: send the command to create the trigger on the buffer\n"
@@ -10569,6 +10575,9 @@ msgstr "comando padrão para um hook"
 msgid "default return codes for hook callback"
 msgstr "cor padrão do texto para a barra"
 
+msgid "trigger post actions"
+msgstr ""
+
 #, c-format
 msgid ""
 "%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
@@ -10618,6 +10627,9 @@ msgid ""
 "error can be used efficiently)"
 msgstr ""
 
+msgid "action to take on the trigger after execution"
+msgstr ""
+
 #, fuzzy
 msgid "enable trigger support"
 msgstr "habilita suporte à mouse"
@@ -10640,6 +10652,10 @@ msgstr "cor de texto para gropos na lista de apelidos"
 #, fuzzy
 msgid "text color for return code flag (in /trigger list)"
 msgstr "cor de texto para gropos na lista de apelidos"
+
+#, fuzzy
+msgid "text color for post action flag (in /trigger list)"
+msgstr "cor de texto para ações de linha de entrada"
 
 #, fuzzy
 msgid "text color for regular expressions"

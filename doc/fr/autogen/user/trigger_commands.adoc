@@ -7,7 +7,7 @@
 
 ----
 /trigger  list|listfull|listdefault
-          add|addoff|addreplace <nom> <hook> ["<paramètres>" ["<conditions>" ["<regex>" ["<commande>" ["<code_retour>"]]]]]
+          add|addoff|addreplace <nom> <hook> ["<paramètres>" ["<conditions>" ["<regex>" ["<commande>" ["<code_retour>" ["action_post"]]]]]]
           addinput [<hook>]
           input|output|recreate <nom>
           set <nom> <option> <valeur>
@@ -42,6 +42,7 @@ listdefault : lister les triggers par défaut
       regex : une ou plusieurs expressions régulières pour remplacer des chaînes dans les variables
    commande : commande à exécuter (plusieurs commandes peuvent être séparées par ";")
 code_retour : code retour dans le callback (ok (par défaut), ok_eat, error)
+action_post : action à effectuer après l'exécution (none (par défaut), disable, delete)
    addinput : définir la ligne de commande avec les paramètres par défaut pour créer un trigger
       input : définir la ligne de commande utilisée pour créer le trigger
      output : envoyer la commande pour créer le trigger sur le tampon

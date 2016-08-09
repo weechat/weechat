@@ -7,7 +7,7 @@
 
 ----
 /trigger  list|listfull|listdefault
-          add|addoff|addreplace <name> <hook> ["<arguments>" ["<conditions>" ["<regex>" ["<command>" ["<return_code>"]]]]]
+          add|addoff|addreplace <name> <hook> ["<arguments>" ["<conditions>" ["<regex>" ["<command>" ["<return_code>" ["<post_action>"]]]]]]
           addinput [<hook>]
           input|output|recreate <name>
           set <name> <option> <value>
@@ -42,6 +42,7 @@ listdefault: list default triggers
       regex: one or more regular expressions to replace strings in variables
     command: command to execute (many commands can be separated by ";"
 return_code: return code in callback (ok (default), ok_eat, error)
+post_action: action to take after execution (none (default), disable, delete)
    addinput: set input with default arguments to create a trigger
       input: set input with the command used to create the trigger
      output: send the command to create the trigger on the buffer

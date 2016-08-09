@@ -12,6 +12,11 @@
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+yellow+`)
 
+* [[option_trigger.color.flag_post_action]] *trigger.color.flag_post_action*
+** 説明: pass:none[text color for post action flag (in /trigger list)]
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightblue+`)
+
 * [[option_trigger.color.flag_regex]] *trigger.color.flag_regex*
 ** 説明: pass:none[正規表現フラグに対するテキスト色 (/trigger list 用)]
 ** タイプ: 色

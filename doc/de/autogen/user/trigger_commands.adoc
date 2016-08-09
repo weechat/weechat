@@ -7,7 +7,7 @@
 
 ----
 /trigger  list|listfull|listdefault
-          add|addoff|addreplace <name> <hook> ["<arguments>" ["<conditions>" ["<regex>" ["<command>" ["<return_code>"]]]]]
+          add|addoff|addreplace <name> <hook> ["<arguments>" ["<conditions>" ["<regex>" ["<command>" ["<return_code>" ["<post_action>"]]]]]]
           addinput [<hook>]
           input|output|recreate <name>
           set <name> <option> <value>
@@ -20,64 +20,65 @@
           default -yes
           monitor [<filter>]
 
-       list: zeigt eine Liste aller Trigger (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
-   listfull: zeigt eine detaillierte Liste, mit zusätzlichen Informationen, aller Trigger an
-listdefault: zeigt die standardmäßig genutzen Trigger an
-        add: fügt einen Trigger hinzu
-     addoff: fügt einen Trigger hinzu (deaktiviert)
- addreplace: fügt oder ersetzt einen schon existierenden Trigger
-       name: Name des Trigger
+       list: list triggers (without argument, this list is displayed)
+   listfull: list triggers with detailed info for each trigger
+listdefault: list default triggers
+        add: add a trigger
+     addoff: add a trigger (disabled)
+ addreplace: add or replace an existing trigger
+       name: name of trigger
        hook: signal, hsignal, modifier, print, command, command_run, timer, config, focus
-  arguments: Argumente für den Hook, abhängig vom genutzten Hook (getrennt durch Semikolon):
-             signal: Name(en) des signals (erforderlich)
-             hsignal: Name(en) des hsignal (erforderlich)
-             modifier: Name(en) des modifier (erforderlich)
+  arguments: arguments for the hook, depending on hook (separated by semicolons):
+             signal: name(s) of signal (required)
+             hsignal: name(s) of hsignal (required)
+             modifier: name(s) of modifier (required)
              print: buffer, tags, message, strip colors
-             command: Befehl (erforderlich), Beschreibung, Argumente, Beschreibung der Argumente, Vervollständigung
-             command_run: Befehl(e) (erforderlich)
-             timer: Intervall (erforderlich), Anpassung an Sekunden (erforderlich), maximale Anzahl an Aufrufen
-             config: Name der Einstellung (erforderlich)
-             focus: Name(n) für sichtbaren Bereich (erforderlich) (z.B. "chat" für Chatbereich)
- conditions: evaluierte Bedingungen für den Trigger
-      regex: einer oder mehrere reguläre Ausdrücke um Zeichenketten in Variablen zu ersetzen
-    command: Befehl welcher ausgeführt werden soll (mehrere Befehle müssen durch ";" voneinander getrennt werden
-return_code: Rückgabewert für Callback (ok (standard), ok_eat, error)
-   addinput: erstellt einen Trigger mit einer standardmäßigen Mustervorlage
-      input: kopiert den kompletten Trigger-Befehl in die Eingabezeile
-     output: schickt den Trigger-Befehl als Text in den Buffer
-   recreate: wie "input", allerdings wird die Einstellung "addreplace" anstelle von "add" genutzt
-        set: definiert, innerhalb eines Triggers, eine Einstellung neu
-     option: Name einer Einstellung: name, hook, arguments, conditions, regex, command, return_code
-             (um Hilfe über eine Einstellung zu erhalten: /help trigger.trigger.<name>.<option>)
-      value: neuer Wert für Einstellung
-     rename: benennt einen Trigger um
-       copy: kopiert einen Trigger
-     enable: aktiviert Trigger (ohne Angabe von Argumenten: aktiviert alle Trigger)
-    disable: deaktiviert Trigger (ohne Angabe von Argumenten: deaktiviert alle Trigger)
-     toggle: de-/aktiviert Trigger (ohne Angabe von Argumenten: de-/aktiviert alle Trigger)
-    restart: startet Trigger neu (Hook(s) werden neu erstellt)
-       show: zeigt detaillierte Informationen zu einem Trigger (inklusive einer kleinen Statistik)
-        del: entfernt einen Trigger
-       -all: führt eine Aktion aus, die alle Trigger beinhaltet
-    restore: stellt Trigger mit Standardwerten wieder her (funktioniert nur bei vorgegebenen Triggern)
-    default: stellt die standardmäßigen Trigger wieder her
-    monitor: öffnet den Trigger Monitor-Buffer, mit optionaler Filterfunktion:
-     Filter: zeigt Hooks/Trigger an (ein Hook muss mit "@" beginnen, zum Beispiel "@signal"), mehrere Filter können durch Kommata voneinander getrennt werden; Platzhalter "*" kann im Namen des Trigger verwendet werden
+             command: command (required), description, arguments, description of arguments, completion
+             command_run: command(s) (required)
+             timer: interval (required), align on second, max calls
+             config: name(s) of option (required)
+             focus: name(s) of area (required)
+ conditions: evaluated conditions for the trigger
+      regex: one or more regular expressions to replace strings in variables
+    command: command to execute (many commands can be separated by ";"
+return_code: return code in callback (ok (default), ok_eat, error)
+post_action: action to take after execution (none (default), disable, delete)
+   addinput: set input with default arguments to create a trigger
+      input: set input with the command used to create the trigger
+     output: send the command to create the trigger on the buffer
+   recreate: same as "input", with option "addreplace" instead of "add"
+        set: set an option in a trigger
+     option: name of option: name, hook, arguments, conditions, regex, command, return_code
+             (for help on option, you can type: /help trigger.trigger.<name>.<option>)
+      value: new value for the option
+     rename: rename a trigger
+       copy: copy a trigger
+     enable: enable trigger(s) (without arguments: enable triggers globally)
+    disable: disable trigger(s) (without arguments: disable triggers globally)
+     toggle: toggle trigger(s) (without arguments: toggle triggers globally)
+    restart: restart trigger(s) (recreate the hooks)
+       show: show detailed info on a trigger (with some stats)
+        del: delete a trigger
+       -all: do action on all triggers
+    restore: restore trigger(s) with the default values (works only for default triggers)
+    default: delete all triggers and restore default ones
+    monitor: open the trigger monitor buffer, with optional filter:
+     filter: filter hooks/triggers to display (a hook must start with "@", for example "@signal"), many filters can be separated by commas; wildcard "*" is allowed in each trigger name
 
-Wenn ein Trigger-Callback aufgerufen wird, dann wird folgende Befehlskette ausgeführt:
-  1. Überprüfung von Bedingungen; falls unwahr, beenden
-  2. ersetze Text mittels erweitertem regulärer POSIX Ausdruck (sofern im Trigger definiert)
-  3. ein oder mehrere Befehle werden ausgeführt (sofern im Trigger definiert)
-  4. Beendigung mit einem Rückgabewert (ausgenommen sind modifiers und focus)
+When a trigger callback is called, following actions are performed, in this order:
+  1. check conditions; if false, exit
+  2. replace text using POSIX extended regular expression(s) (if defined in trigger)
+  3. execute command(s) (if defined in trigger)
+  4. exit with a return code (except for modifiers and focus)
 
-Beispiele (die standardmäßig, eingebauten Trigger kann man sich mit "/trigger listdefault" anzeigen lassen):
-  fügt einer Nachricht die Textattribute *fett*, _unterstrichen_ und /kursiv/ hinzu:
+Examples (you can also look at default triggers with /trigger listdefault):
+  add text attributes *bold*, _underline_ and /italic/ (only in user messages):
     /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}${re:1}${color:-bold}*== ==_(\S+)_==_${color:underline}${re:1}${color:-underline}_== ==/(\S+)/==/${color:italic}${re:1}${color:-italic}/"
-  verbirgt die Nicklist auf kleineren Terminals:
+  hide nicklist bar on small terminals:
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
-  speichert die Konfiguration jede Stunde ab:
+  silently save config each hour:
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
-  öffnet den Trigger Monitor und zeigt ausschließlich modifier und Trigger an, die mit "resize" im Namen beginnen:
+  open trigger monitor and show only modifiers and triggers whose name starts with "resize":
     /trigger monitor @modifier,resize*
 ----

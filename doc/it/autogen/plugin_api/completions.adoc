@@ -102,6 +102,8 @@
 
 | trigger | trigger_options | options for triggers
 
+| trigger | trigger_post_action | trigger post actions
+
 | weechat | bars_names | nomi delle barre
 
 | weechat | bars_options | opzioni per le barre

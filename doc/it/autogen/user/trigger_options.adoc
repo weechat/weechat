@@ -12,6 +12,11 @@
 ** tipo: colore
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+yellow+`)
 
+* [[option_trigger.color.flag_post_action]] *trigger.color.flag_post_action*
+** descrizione: pass:none[text color for post action flag (in /trigger list)]
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+lightblue+`)
+
 * [[option_trigger.color.flag_regex]] *trigger.color.flag_regex*
 ** descrizione: pass:none[text color for regex flag (in /trigger list)]
 ** tipo: colore
