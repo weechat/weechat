@@ -3018,6 +3018,11 @@ Trigger posiada następujące opcje (nazwy to `trigger.trigger.<nazwa>.<opcja>`)
 | return_code | `ok`, `ok_eat`, `error` |
   Kod wiadomości zwrotnej (domyślnie jest to `ok`, które powinno być używane dla
   większości triggerów, pozostałe wartości są sporadycznie używane).
+
+// TRANSLATION MISSING
+| post_action | `none`, `disable`, `delete` |
+  Action to take on the trigger after execution (default is `none` which should
+  be used in almost all triggers, the other values are rarely used).
 |===
 
 Na przykład, domyślny trigger _beep_ ma następujące opcje:
@@ -3030,6 +3035,7 @@ trigger.trigger.beep.conditions = "${tg_highlight} || ${tg_msg_pv}"
 trigger.trigger.beep.regex = ""
 trigger.trigger.beep.command = "/print -beep"
 trigger.trigger.beep.return_code = ok
+trigger.trigger.beep.post_action = none
 ----
 
 [[trigger_execution]]
@@ -3041,7 +3047,9 @@ kolejności, jeśli triggery są globalnie włączone i jeśli sam trigger jest 
 . sprawdzenie warunków triggera: jeśli nie jest spełniony następuje wyjście
 . zastępowanie tekstu w triggerze za pomocą wyrażenia
 . wykonanie komend(-y)
-. wyjście ze zwróceniem kodu (za wyjątkiem uchwytów _modifier_ i _focus_).
+. wyjście ze zwróceniem kodu (za wyjątkiem uchwytów _modifier_ i _focus_)
+// TRANSLATION MISSING
+. perform post action (if different from `none`).
 
 [[trigger_hook_arguments]]
 ==== Argumenty uchwytów

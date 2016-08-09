@@ -3065,6 +3065,11 @@ Ein Trigger hat folgende Optionen (Benennung ist
 | return_code | `ok`, `ok_eat`, `error` |
   Rückgabewert des Callback (Standardwert: `ok`, sollte für fast jeden Trigger
   genutzt werden. Die anderen Werte werden höchst selten verwendet).
+
+// TRANSLATION MISSING
+| post_action | `none`, `disable`, `delete` |
+  Action to take on the trigger after execution (default is `none` which should
+  be used in almost all triggers, the other values are rarely used).
 |===
 
 Ein Beispiel ist der standardmäßig genutzte Trigger _beep_, der
@@ -3078,6 +3083,7 @@ trigger.trigger.beep.conditions = "${tg_highlight} || ${tg_msg_pv}"
 trigger.trigger.beep.regex = ""
 trigger.trigger.beep.command = "/print -beep"
 trigger.trigger.beep.return_code = ok
+trigger.trigger.beep.post_action = none
 ----
 
 [[trigger_execution]]
@@ -3090,6 +3096,8 @@ abgearbeitet:
 . ersetze Text mittels erweitertem regulärer POSIX Ausdruck (sofern im Trigger definiert)
 . ein oder mehrere Befehle werden ausgeführt (sofern im Trigger definiert)
 . Beendigung mit einem Rückgabewert (ausgenommen sind die Hooks _modifier_ und _focus_)
+// TRANSLATION MISSING
+. perform post action (if different from `none`).
 
 [[trigger_hook_arguments]]
 ==== Hook Argumente

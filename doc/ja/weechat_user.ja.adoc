@@ -2986,6 +2986,11 @@ include::autogen/user/trigger_commands.adoc[]
 | return_code | `ok` 、`ok_eat` 、`error` |
   コールバックの戻り値 (デフォルトは
   `ok` 、ほとんどすべてのトリガで戻り値はこれを使うべきで、ほかの値を使うことは極めてまれです)。
+
+// TRANSLATION MISSING
+| post_action | `none`, `disable`, `delete` |
+  Action to take on the trigger after execution (default is `none` which should
+  be used in almost all triggers, the other values are rarely used).
 |===
 
 例えば、デフォルトの _beep_ トリガは以下のオプションをとります:
@@ -2998,6 +3003,7 @@ trigger.trigger.beep.conditions = "${tg_highlight} || ${tg_msg_pv}"
 trigger.trigger.beep.regex = ""
 trigger.trigger.beep.command = "/print -beep"
 trigger.trigger.beep.return_code = ok
+trigger.trigger.beep.post_action = none
 ----
 
 [[trigger_execution]]
@@ -3008,7 +3014,9 @@ trigger.trigger.beep.return_code = ok
 . トリガ条件の確認: 偽の場合、終了
 . 正規表現を使ってトリガ内でテキスト置換
 . コマンドを実行
-. リターンコードを付けて終了 (_modifier_ と _focus_ フックの場合を除く)。
+. リターンコードを付けて終了 (_modifier_ と _focus_ フックの場合を除く)
+// TRANSLATION MISSING
+. perform post action (if different from `none`).
 
 [[trigger_hook_arguments]]
 ==== フック引数

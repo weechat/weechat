@@ -3079,6 +3079,11 @@ Un trigger a les options suivantes (les noms sont
 | return_code | `ok`, `ok_eat`, `error` |
   Le code retour du callback (`ok` par défaut, qui devrait être utilisé dans
   quasiment tous les triggers, les autres valeurs sont rarement utilisées).
+
+| post_action | `none`, `disable`, `delete` |
+  Action à effectuer sur le trigger après l'exécution (`none` par défaut, qui
+  devrait être utilisé dans quasiment tous les triggers, les autres valeurs sont
+  rarement utilisées).
 |===
 
 Par exemple, le trigger _beep_ par défaut a les options suivantes :
@@ -3091,6 +3096,7 @@ trigger.trigger.beep.conditions = "${tg_highlight} || ${tg_msg_pv}"
 trigger.trigger.beep.regex = ""
 trigger.trigger.beep.command = "/print -beep"
 trigger.trigger.beep.return_code = ok
+trigger.trigger.beep.post_action = none
 ----
 
 [[trigger_execution]]
@@ -3103,7 +3109,8 @@ trigger lui-même est activé :
 . vérifier les conditions du trigger : si faux, sortir
 . remplacer du texte dans le trigger en utilisant des expressions régulières
 . exécuter la/les commande(s)
-. sortir avec un code retour (sauf pour les "hooks" _modifier_ et _focus_).
+. sortir avec un code retour (sauf pour les "hooks" _modifier_ et _focus_)
+. effectuer l'action "post" (si différente de `none`).
 
 [[trigger_hook_arguments]]
 ==== Paramètres du hook
