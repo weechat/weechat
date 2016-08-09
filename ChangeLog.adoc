@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * relay: add option relay.network.allow_empty_password (issue #735)
+  * trigger: add support for one-time triggers (issue #399, issue #509)
 
 Improvements::
 
