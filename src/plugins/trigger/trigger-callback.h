@@ -64,14 +64,14 @@
         weechat_hashtable_free (extra_vars);                    \
     trigger->hook_running = 0;                                  \
     switch (weechat_config_integer (                            \
-                trigger->options[TRIGGER_OPTION_ONCE_ACTION]))  \
+                trigger->options[TRIGGER_OPTION_POST_ACTION]))  \
     {                                                           \
-        case TRIGGER_ONCE_DISABLE:                              \
+        case TRIGGER_POST_ACTION_DISABLE:                       \
             weechat_config_option_set (                         \
                 trigger->options[TRIGGER_OPTION_ENABLED],       \
                 "off", 1);                                      \
             break;                                              \
-        case TRIGGER_ONCE_DELETE:                               \
+        case TRIGGER_POST_ACTION_DELETE:                        \
             trigger_free (trigger);                             \
             break;                                              \
         default:                                                \

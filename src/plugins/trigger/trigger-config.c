@@ -42,7 +42,7 @@ struct t_config_option *trigger_config_color_flag_command;
 struct t_config_option *trigger_config_color_flag_conditions;
 struct t_config_option *trigger_config_color_flag_regex;
 struct t_config_option *trigger_config_color_flag_return_code;
-struct t_config_option *trigger_config_color_flag_once_action;
+struct t_config_option *trigger_config_color_flag_post_action;
 struct t_config_option *trigger_config_color_regex;
 struct t_config_option *trigger_config_color_replace;
 struct t_config_option *trigger_config_color_trigger;
@@ -366,11 +366,11 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                 "ok|ok_eat|error", 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             break;
-        case TRIGGER_OPTION_ONCE_ACTION:
+        case TRIGGER_OPTION_POST_ACTION:
             ptr_option = weechat_config_new_option (
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "integer",
-                N_("action to take after execution"),
+                N_("action to take on the trigger after execution"),
                 "none|disable|delete", 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             break;
@@ -683,10 +683,10 @@ trigger_config_init ()
         N_("text color for return code flag (in /trigger list)"),
         NULL, 0, 0, "lightmagenta", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    trigger_config_color_flag_once_action = weechat_config_new_option (
+    trigger_config_color_flag_post_action = weechat_config_new_option (
         trigger_config_file, ptr_section,
-        "flag_once_action", "color",
-        N_("text color for once action flag (in /trigger list)"),
+        "flag_post_action", "color",
+        N_("text color for post action flag (in /trigger list)"),
         NULL, 0, 0, "lightblue", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     trigger_config_color_regex = weechat_config_new_option (

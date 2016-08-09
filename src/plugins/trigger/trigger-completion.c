@@ -434,14 +434,14 @@ trigger_completion_hook_rc_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds default once actions to completion list.
+ * Adds default post actions to completion list.
  */
 
 int
-trigger_completion_once_cb (const void *pointer, void *data,
-                            const char *completion_item,
-                            struct t_gui_buffer *buffer,
-                            struct t_gui_completion *completion)
+trigger_completion_post_action_cb (const void *pointer, void *data,
+                                   const char *completion_item,
+                                   struct t_gui_buffer *buffer,
+                                   struct t_gui_completion *completion)
 {
     int i;
 
@@ -451,10 +451,11 @@ trigger_completion_once_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-    for (i = 0; i < TRIGGER_NUM_ONCE_ACTIONS; i++)
+    for (i = 0; i < TRIGGER_NUM_POST_ACTIONS; i++)
     {
         weechat_hook_completion_list_add (completion,
-            trigger_once_action_string[i], 0, WEECHAT_LIST_POS_END);
+                                          trigger_post_action_string[i],
+                                          0, WEECHAT_LIST_POS_END);
     }
 
     return WEECHAT_RC_OK;
@@ -501,7 +502,7 @@ trigger_completion_init ()
     weechat_hook_completion ("trigger_hook_rc",
                              N_("default return codes for hook callback"),
                              &trigger_completion_hook_rc_cb, NULL, NULL);
-    weechat_hook_completion ("trigger_once",
-                             N_("trigger once actions"),
-                             &trigger_completion_once_cb, NULL, NULL);
+    weechat_hook_completion ("trigger_post_action",
+                             N_("trigger post actions"),
+                             &trigger_completion_post_action_cb, NULL, NULL);
 }
