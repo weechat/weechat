@@ -99,11 +99,9 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
 | パッケージ ^(1)^       | バージョン       | 要件   | 機能
-// TRANSLATION MISSING
-| C compiler
-  (gcc, clang, ...)      |                  | *必須* | Build
-// TRANSLATION MISSING
-| C++ コンパイラ         |                  |        | Build and run tests, javascript plugin
+| C コンパイラ
+  (gcc, clang, ...)      |                  | *必須* | ビルド
+| C++ コンパイラ         |                  |        | ビルドとテストの実行、javascript プラグイン
 | cmake                  |                  | *必須* | ビルド (autotools でも可能ですが、cmake を推奨します)
 | pkg-config             |                  | *必須* | インストール済みライブラリを検出
 | libncursesw5-dev ^(2)^ |                  | *必須* | ncurses インターフェイス
@@ -123,8 +121,7 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 | guile-2.0-dev          | 2.0 以上         |        | guile (scheme) プラグイン
 | libv8-dev              | 3.24.3 以下      |        | javascript プラグイン
 | asciidoctor            | 1.5.4 以上       |        | man ページと文書のビルド
-// TRANSLATION MISSING
-| libcpputest-dev        | 3.4 以上         |        | Build and run tests
+| libcpputest-dev        | 3.4 以上         |        | ビルドとテストの実行
 |===
 
 [NOTE]
