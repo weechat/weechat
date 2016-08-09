@@ -453,9 +453,8 @@ trigger_completion_post_action_cb (const void *pointer, void *data,
 
     for (i = 0; i < TRIGGER_NUM_POST_ACTIONS; i++)
     {
-        weechat_hook_completion_list_add (completion,
-                                          trigger_post_action_string[i],
-                                          0, WEECHAT_LIST_POS_END);
+        trigger_completion_add_quoted_word (completion,
+                                            trigger_post_action_string[i]);
     }
 
     return WEECHAT_RC_OK;
