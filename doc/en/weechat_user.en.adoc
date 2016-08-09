@@ -2985,6 +2985,11 @@ A trigger has the following options (names are
 | return_code | `ok`, `ok_eat`, `error` |
   The return code of callback (default is `ok`, which should be used in almost
   all triggers, the other values are rarely used).
+
+| once_action | `none`, `disable`, `delete` |
+  Action to take with the trigger after the trigger executes once (default is
+  `none` which should be used in almost all triggers, the other values are
+  rarely used).
 |===
 
 For example, the default _beep_ trigger has following options:
@@ -2997,6 +3002,7 @@ trigger.trigger.beep.conditions = "${tg_highlight} || ${tg_msg_pv}"
 trigger.trigger.beep.regex = ""
 trigger.trigger.beep.command = "/print -beep"
 trigger.trigger.beep.return_code = ok
+trigger.trigger.beep.once_action = none
 ----
 
 [[trigger_execution]]
@@ -3009,6 +3015,7 @@ order, if triggers are globally enabled and if the trigger itself is enabled:
 . replace text in trigger using regular expression(s)
 . execute command(s)
 . exit with a return code (except for hooks _modifier_ and _focus_).
+. perform once action (when not `none`)
 
 [[trigger_hook_arguments]]
 ==== Hook arguments

@@ -63,6 +63,21 @@
     if (extra_vars)                                             \
         weechat_hashtable_free (extra_vars);                    \
     trigger->hook_running = 0;                                  \
+    switch (weechat_config_integer (                            \
+                trigger->options[TRIGGER_OPTION_ONCE_ACTION]))  \
+    {                                                           \
+        case TRIGGER_ONCE_DISABLE:                              \
+            weechat_config_option_set (                         \
+                trigger->options[TRIGGER_OPTION_ENABLED],       \
+                "off", 1);                                      \
+            break;                                              \
+        case TRIGGER_ONCE_DELETE:                               \
+            trigger_free (trigger);                             \
+            break;                                              \
+        default:                                                \
+            /* do nothing in the other cases */                 \
+            break;                                              \
+    }                                                           \
     return __rc;
 
 extern int trigger_callback_signal_cb (const void *pointer, void *data,
