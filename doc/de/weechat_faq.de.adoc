@@ -821,20 +821,17 @@ und zusätzlich diese Tipps beherzigen:
 * die Umgebungsvariable _TZ_ sollte gesetzt sein (zum Beispiel: `export TZ="Europe/Berlin"`). Dadurch wird
   verhindert, dass auf die Datei _/etc/localtime_ häufig zugegriffen wird.
 
-// TRANSLATION MISSING
 [[security]]
-=== I am paranoid about security, which settings could I change to be even more secure?
+=== Ich bin ein bisschen Paranoid was Sicherheit betrifft. Welche Einstellungen kann ich vornehmen um noch mehr Sicherheit zu erlangen?
 
-// TRANSLATION MISSING
-Disable IRC part and quit messages:
+Deaktiviere IRC part und quit Nachrichten:
 
 ----
 /set irc.server_default.default_msg_part ""
 /set irc.server_default.default_msg_quit ""
 ----
 
-// TRANSLATION MISSING
-Disable answers to all CTCP queries:
+Deaktiviere die automatische Antwort für alle CTCP Anfragen:
 
 ----
 /set irc.ctcp.clientinfo ""
@@ -846,20 +843,19 @@ Disable answers to all CTCP queries:
 /set irc.ctcp.ping ""
 ----
 
-// TRANSLATION MISSING
-Unload and disable auto-loading of "xfer" plugin (used for IRC DCC):
+Entferne und deaktiviere das automatische Ausführen der "xfer"-Erweiterung (für IRC DCC verantwortlich):
 
 ----
 /plugin unload xfer
 /set weechat.plugin.autoload "*,!xfer"
 ----
 
-// TRANSLATION MISSING
-Define a passphrase and use secured data wherever you can for sensitive data
-like passwords: see `/help secure` and `/help` on options
-(if you can use secured data, it is written in the help).
+Definiere eine Passphrase und nutze ausschließlich geschützte Daten wann immer
+es möglich ist, wie z.B. bei Passwörtern: siehe `/help secure` und nutze `/help`
+bei der entsprechenden Option (falls man geschützte Daten nutzen kann, wird es
+im Hilfstext erwähnt).
 
-For example:
+Beispiel:
 
 ----
 /secure passphrase xxxxxxxxxx

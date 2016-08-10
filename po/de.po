@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-08-09 21:29+0200\n"
-"PO-Revision-Date: 2016-07-30 10:29+0200\n"
+"PO-Revision-Date: 2016-08-10 11:11+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <>\n"
 "Language: de\n"
@@ -12059,9 +12059,9 @@ msgstr "%s%s: ungültiger regulärer Ausdruck (Kompilat fehlgeschlagen)"
 msgid "%s%s: invalid return code: \"%s\""
 msgstr "%s%s: ungültiger Rückgabewert: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid post action \"%s\""
-msgstr "%s%s: ungültiger Rückgabewert: \"%s\""
+msgstr "%s%s: ungültige nachfolgende Aktion: \"%s\""
 
 #, c-format
 msgid ""
@@ -12136,7 +12136,6 @@ msgstr ""
 msgid "manage triggers, the Swiss Army knife for WeeChat"
 msgstr "verwaltet Trigger, das Schweizer Armeemesser für WeeChat"
 
-#, fuzzy
 msgid ""
 "list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
 "[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
@@ -12148,13 +12147,12 @@ msgid ""
 msgstr ""
 "list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
 "[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
-"\" [\"<return_code>\"]]]]] || addinput [<hook>] || input|output|recreate "
-"<name> || set <name> <option> <value> || rename|copy <name> <new_name> || "
-"enable|disable|toggle [<name>|-all [<name>...]] || restart <name>|-all "
-"[<name>...] || show <name> || del <name>|-all [<name>...] || restore <name> "
-"[<name>...] || default -yes || monitor [<filter>]"
+"\" [\"<return_code>\" [\"<post_action>\"]]]]]] || addinput [<hook>] || input|"
+"output|recreate <name> || set <name> <option> <value> || rename|copy <name> "
+"<new_name> || enable|disable|toggle [<name>|-all [<name>...]] || restart "
+"<name>|-all [<name>...] || show <name> || del <name>|-all [<name>...] || "
+"restore <name> [<name>...] || default -yes || monitor [<filter>]"
 
-#, fuzzy
 msgid ""
 "       list: list triggers (without argument, this list is displayed)\n"
 "   listfull: list triggers with detailed info for each trigger\n"
@@ -12272,6 +12270,8 @@ msgstr ""
 "    command: Befehl welcher ausgeführt werden soll (mehrere Befehle müssen "
 "durch \";\" voneinander getrennt werden\n"
 "return_code: Rückgabewert für Callback (ok (standard), ok_eat, error)\n"
+"post_action: Aktion welche nach der Abarbeitung des Triggers ausgeführt "
+"werden soll (none (Standardwert), disable, delete)\n"
 "   addinput: erstellt einen Trigger mit einer standardmäßigen Mustervorlage\n"
 "      input: kopiert den kompletten Trigger-Befehl in die Eingabezeile\n"
 "     output: schickt den Trigger-Befehl als Text in den Buffer\n"
@@ -12369,7 +12369,7 @@ msgid "default return codes for hook callback"
 msgstr "Standardrückgabewerte für einen Hook-Callback"
 
 msgid "trigger post actions"
-msgstr ""
+msgstr "nachfolgende Aktion für Trigger"
 
 #, c-format
 msgid ""
@@ -12449,7 +12449,7 @@ msgstr ""
 "es sinnvoll ist ok_eat/error zu nutzen)"
 
 msgid "action to take on the trigger after execution"
-msgstr ""
+msgstr "Aktion welche nach der Abarbeitung des Triggers ausgeführt werden soll"
 
 msgid "enable trigger support"
 msgstr "Triggerunterstützung einschalten"
@@ -12470,9 +12470,10 @@ msgstr "Textfarbe für Regex-Flag (in /trigger list)"
 msgid "text color for return code flag (in /trigger list)"
 msgstr "Textfarbe für Rückgabewert-Flag (in /trigger list)"
 
-#, fuzzy
 msgid "text color for post action flag (in /trigger list)"
-msgstr "Textfarbe für Bedingungen-Flag (in /trigger list)"
+msgstr ""
+"Textfarbe für das Flag welches anzeigt welche nachfolgende Aktion ausgeführt "
+"werden soll (in /trigger list)"
 
 msgid "text color for regular expressions"
 msgstr "Textfarbe für reguläre Ausdrücke"

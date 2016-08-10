@@ -3,7 +3,6 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: de
-// TRANSLATION MISSING
 :man manual: WeeChat Manual
 :man source: WeeChat {revnumber}
 
@@ -100,7 +99,7 @@ Diese manpage wurde von {author} geschrieben.
 
 == COPYRIGHT
 
-WeeChat wird programmiert von Sébastien Helleu und weiteren Beitragenden (eine vollständige Auflistung
+WeeChat wird programmiert von Sébastien Helleu und weiteren Beteiligten (eine vollständige Auflistung
 findet man in der AUTHORS.adoc Datei).
 
 Copyright (C) 2003-2016 {author}
