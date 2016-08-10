@@ -70,6 +70,7 @@ When a trigger callback is called, following actions are performed, in this orde
   2. replace text using POSIX extended regular expression(s) (if defined in trigger)
   3. execute command(s) (if defined in trigger)
   4. exit with a return code (except for modifiers and focus)
+  5. perform post action
 
 Examples (you can also look at default triggers with /trigger listdefault):
   add text attributes *bold*, _underline_ and /italic/ (only in user messages):

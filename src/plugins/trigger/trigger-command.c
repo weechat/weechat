@@ -1213,6 +1213,7 @@ trigger_command_init ()
            "defined in trigger)\n"
            "  3. execute command(s) (if defined in trigger)\n"
            "  4. exit with a return code (except for modifiers and focus)\n"
+           "  5. perform post action\n"
            "\n"
            "Examples (you can also look at default triggers with /trigger "
            "listdefault):\n"

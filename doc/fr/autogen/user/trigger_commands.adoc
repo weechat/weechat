@@ -70,6 +70,7 @@ Lorsqu'un callback de trigger est appelé, les actions suivantes sont exécutée
   2. remplacer le texte en utilisant une/des expression(s)s régulière(s)s POSIX étendue(s)s (si définie(s) dans le trigger)
   3. exécuter le(s) commande(s) (si définie(s) dans le trigger)
   4. sortir avec le code retour (sauf pour les modificateurs et focus)
+  5. effectuer l'action "post"
 
 Exemples (vous pouvez aussi regarder les triggers par défaut avec /trigger listdefault) :
   ajouter des attributs *gras*, _souligné_ et /italique/ (seulement dans les messages d'utilisateurs) :
