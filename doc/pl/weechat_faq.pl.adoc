@@ -386,6 +386,19 @@ Następnie przypisz dwie kombinacje klawiszy dla stanu aktywności (zamień kome
 /key bind meta2-O /print -core unfocus
 ----
 
+// TRANSLATION MISSING
+[[screen_paste]]
+=== When WeeChat is running in screen, pasting text in another screen window adds ~0 and ~1 around text, why?
+
+This is caused by the bracketed paste option which is enabled by default, and
+not properly handled by screen in other windows.
+
+You can just disable bracketed paste mode:
+
+----
+/set weechat.look.paste_bracketed off
+----
+
 [[key_bindings]]
 == Przypisania klawiszy
 

@@ -400,6 +400,18 @@ les commandes de votre choix) :
 /key bind meta2-O /print -core unfocus
 ----
 
+[[screen_paste]]
+=== Lorsque WeeChat tourne sous screen, le collage de texte dans une autre fenêtre screen ajoute ~0 et ~1 autour du texte, pourquoi ?
+
+Cela est causé par l'option "bracketed paste" qui est activée par défaut, et
+pas correctement gérée par screen dans les autres fenêtres.
+
+Vous pouvez simplement désactiver le mode "bracketed paste" :
+
+----
+/set weechat.look.paste_bracketed off
+----
+
 [[key_bindings]]
 == Raccourcis clavier
 
