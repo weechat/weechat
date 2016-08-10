@@ -102,7 +102,7 @@
 
 | trigger | trigger_options | Einstellungen für Trigger
 
-| trigger | trigger_post_action | trigger post actions
+| trigger | trigger_post_action | nachfolgende Aktion für Trigger
 
 | weechat | bars_names | Namen der Infobars
 
