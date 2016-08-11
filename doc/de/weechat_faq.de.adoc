@@ -834,7 +834,7 @@ und zusätzlich diese Tipps beherzigen:
   verhindert, dass auf die Datei _/etc/localtime_ häufig zugegriffen wird.
 
 [[security]]
-=== Ich bin ein bisschen Paranoid was Sicherheit betrifft. Welche Einstellungen kann ich vornehmen um noch mehr Sicherheit zu erlangen?
+=== Ich bin ein bisschen Paranoid was Sicherheit betrifft. Welche Einstellungen kann ich vornehmen um noch mehr Privatsphäre zu erlangen?
 
 Deaktiviere IRC part und quit Nachrichten:
 
