@@ -53,3 +53,4 @@ weechat-*.cygport
 stamp*
 
 src/gui/curses/weechat
+src/gui/curses/weechat-curses
