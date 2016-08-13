@@ -32,11 +32,13 @@ i lekki, przeznaczony dla wielu systemów operacyjnych.
 
 Główne cechy to:
 
-* wsparcie dla wielu protokołów: IRC i Jabber (skrypt jabber.py lub bitlbee/minbif)
+// TRANSLATION MISSING
+* wsparcie dla wielu protokołów (mainly IRC)
 * połączenie z wieloma serwerami (z SSL, IPv6, proxy)
 * mały, szybki i lekki
 * konfigurowalny i rozszerzalny dzięki wtyczką i skryptom
-* zgodny z RFC dla IRC http://tools.ietf.org/html/rfc1459[1459],
+* zgodny z RFC dla IRC
+  http://tools.ietf.org/html/rfc1459[1459],
   http://tools.ietf.org/html/rfc2810[2810],
   http://tools.ietf.org/html/rfc2811[2811],
   http://tools.ietf.org/html/rfc2812[2812] i

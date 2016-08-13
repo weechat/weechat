@@ -32,12 +32,13 @@ schlanker Chat-Client der für unterschiedliche Betriebssysteme entwickelt wird.
 
 wesentliche Merkmale:
 
-* Unterstützung verschiedener Protokolle: IRC und Jabber (mittels Skript jabber.py
-  oder bitlbee/minbif)
+// TRANSLATION MISSING
+* Unterstützung verschiedener Protokolle (mainly IRC)
 * mehrere Server Verbindungen sind möglich (mittels SSL, IPv6, proxy)
 * klein, schnell und schlank
 * den eigenen persönlichen Bedürfnissen anpassbar und durch Erweiterungen und Skripten in der Funktionalität erweiterbar
-* IRC RFCs konform http://tools.ietf.org/html/rfc1459[1459],
+* IRC RFCs konform
+  http://tools.ietf.org/html/rfc1459[1459],
   http://tools.ietf.org/html/rfc2810[2810],
   http://tools.ietf.org/html/rfc2811[2811],
   http://tools.ietf.org/html/rfc2812[2812] und

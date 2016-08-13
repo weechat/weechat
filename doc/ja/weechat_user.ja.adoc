@@ -32,11 +32,13 @@ WeeChat (Wee Enhanced Environment for Chat)
 
 主な特徴:
 
-* マルチプロトコル: IRC 及び Jabber (jabber.py スクリプトや bitlbee/minbif が必要)
+// TRANSLATION MISSING
+* マルチプロトコル (mainly IRC)
 * 複数のサーバへの接続 (SSL、IPv6、プロキシをサポート)
 * コンパクト、高速、軽量
 * プラグインとスクリプトでカスタマイズや拡張が可能
-* IRC の RFC に準拠 http://tools.ietf.org/html/rfc1459[1459]、
+* IRC の RFC に準拠
+  http://tools.ietf.org/html/rfc1459[1459]、
   http://tools.ietf.org/html/rfc2810[2810]、
   http://tools.ietf.org/html/rfc2811[2811]、
   http://tools.ietf.org/html/rfc2812[2812]、

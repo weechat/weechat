@@ -35,11 +35,12 @@ libero, veloce e leggero, realizzato per diversi sistemi operativi.
 Le principali caratteristiche:
 
 // TRANSLATION MISSING
-* multi-protocollo: IRC and Jabber (with script jabber.py or bitlbee/minbif)
+* multi-protocollo (mainly IRC)
 * connessione a server multipli (con SSL, IPv6, proxy)
 * piccolo, veloce e leggero
 * personalizzabile ed estensibile con plugin e script
-* conforme alle RFC di IRC http://tools.ietf.org/html/rfc1459[1459],
+* conforme alle RFC di IRC
+  http://tools.ietf.org/html/rfc1459[1459],
   http://tools.ietf.org/html/rfc2810[2810],
   http://tools.ietf.org/html/rfc2811[2811],
   http://tools.ietf.org/html/rfc2812[2812] e

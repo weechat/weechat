@@ -26,11 +26,12 @@ light, designed for many operating systems.
 
 Main features are:
 
-* multi-protocols: IRC and Jabber (with script jabber.py or bitlbee/minbif)
+* multi-protocols (mainly IRC)
 * multi-servers connection (with SSL, IPv6, proxy)
 * small, fast and light
 * customizable and extensible with plugins and scripts
-* compliant with IRC RFCs http://tools.ietf.org/html/rfc1459[1459],
+* compliant with IRC RFCs
+  http://tools.ietf.org/html/rfc1459[1459],
   http://tools.ietf.org/html/rfc2810[2810],
   http://tools.ietf.org/html/rfc2811[2811],
   http://tools.ietf.org/html/rfc2812[2812] and
