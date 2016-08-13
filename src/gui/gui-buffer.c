@@ -537,7 +537,8 @@ gui_buffer_input_buffer_init (struct t_gui_buffer *buffer)
 {
     buffer->input_buffer_alloc = GUI_BUFFER_INPUT_BLOCK_SIZE;
     buffer->input_buffer = malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
-    buffer->input_buffer[0] = '\0';
+    if (buffer->input_buffer)
+	buffer->input_buffer[0] = '\0';
     buffer->input_buffer_size = 0;
     buffer->input_buffer_length = 0;
     buffer->input_buffer_pos = 0;

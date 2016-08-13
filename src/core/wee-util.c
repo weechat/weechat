@@ -674,25 +674,20 @@ util_file_get_content (const char *filename)
             buffer2 = (char *) realloc (buffer, (fp + (1024 * sizeof (char))));
             if (!buffer2)
             {
-                if (buffer)
-                    free (buffer);
-                return NULL;
+		goto fail;
             }
             buffer = buffer2;
             count = fread (&buffer[fp], sizeof(char), 1024, f);
             if (count <= 0)
             {
-                free (buffer);
-                return NULL;
+		goto fail;
             }
             fp += count;
         }
         buffer2 = (char *) realloc (buffer, fp + sizeof (char));
         if (!buffer2)
         {
-            if (buffer)
-                free (buffer);
-            return NULL;
+            goto fail;
         }
         buffer = buffer2;
         buffer[fp] = '\0';
@@ -700,6 +695,13 @@ util_file_get_content (const char *filename)
     }
 
     return buffer;
+
+fail:
+    if (buffer)
+	free (buffer);
+    if (f)
+	fclose(f);
+    return NULL;
 }
 
 /*

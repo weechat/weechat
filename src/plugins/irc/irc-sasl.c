@@ -343,6 +343,8 @@ irc_sasl_dh (const char *data_base64,
 
     /* decode data */
     data = malloc (strlen (data_base64) + 1);
+    if (!data)
+	goto dhend;
     length_data = weechat_string_decode_base64 (data_base64, data);
     ptr_data = (unsigned char *)data;
 
