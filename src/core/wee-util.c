@@ -667,39 +667,35 @@ util_file_get_content (const char *filename)
     fp = 0;
 
     f = fopen (filename, "r");
-    if (f)
+    if (!f)
+        goto error;
+
+    while (!feof (f))
     {
-        while (!feof (f))
-        {
-            buffer2 = (char *) realloc (buffer, (fp + (1024 * sizeof (char))));
-            if (!buffer2)
-            {
-                if (buffer)
-                    free (buffer);
-                return NULL;
-            }
-            buffer = buffer2;
-            count = fread (&buffer[fp], sizeof(char), 1024, f);
-            if (count <= 0)
-            {
-                free (buffer);
-                return NULL;
-            }
-            fp += count;
-        }
-        buffer2 = (char *) realloc (buffer, fp + sizeof (char));
+        buffer2 = (char *) realloc (buffer, (fp + (1024 * sizeof (char))));
         if (!buffer2)
-        {
-            if (buffer)
-                free (buffer);
-            return NULL;
-        }
+            goto error;
         buffer = buffer2;
-        buffer[fp] = '\0';
-        fclose (f);
+        count = fread (&buffer[fp], sizeof(char), 1024, f);
+        if (count <= 0)
+            goto error;
+        fp += count;
     }
+    buffer2 = (char *) realloc (buffer, fp + sizeof (char));
+    if (!buffer2)
+        goto error;
+    buffer = buffer2;
+    buffer[fp] = '\0';
+    fclose (f);
 
     return buffer;
+
+error:
+    if (buffer)
+	free (buffer);
+    if (f)
+	fclose(f);
+    return NULL;
 }
 
 /*
