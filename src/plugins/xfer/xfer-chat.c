@@ -358,45 +358,48 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
     length = strlen (xfer->plugin_name) + 8 + strlen (xfer->plugin_id) + 1
         + strlen (xfer->remote_nick) + 1;
     name = malloc (length);
-    if (name)
+    if (!name)
+        return;
+
+    snprintf (name, length, "%s_dcc.%s.%s",
+              xfer->plugin_name, xfer->plugin_id, xfer->remote_nick);
+    xfer->buffer = weechat_buffer_search (XFER_PLUGIN_NAME, name);
+    if (!xfer->buffer)
     {
-        snprintf (name, length, "%s_dcc.%s.%s",
-                  xfer->plugin_name, xfer->plugin_id, xfer->remote_nick);
-        xfer->buffer = weechat_buffer_search (XFER_PLUGIN_NAME, name);
+        xfer->buffer = weechat_buffer_new (
+            name,
+            &xfer_chat_buffer_input_cb, NULL, NULL,
+            &xfer_chat_buffer_close_cb, NULL, NULL);
+        buffer_created = 1;
+
+        /* failed to create buffer ? then return */
         if (!xfer->buffer)
         {
-            xfer->buffer = weechat_buffer_new (
-                name,
-                &xfer_chat_buffer_input_cb, NULL, NULL,
-                &xfer_chat_buffer_close_cb, NULL, NULL);
-            buffer_created = 1;
-
-            /* failed to create buffer ? then return */
-            if (!xfer->buffer)
-                return;
+            free (name);
+            return;
         }
-
-        if (buffer_created)
-        {
-            weechat_buffer_set (xfer->buffer, "title", _("xfer chat"));
-            if (!weechat_buffer_get_integer (xfer->buffer, "short_name_is_set"))
-            {
-                weechat_buffer_set (xfer->buffer, "short_name",
-                                    xfer->remote_nick);
-            }
-            weechat_buffer_set (xfer->buffer, "localvar_set_type", "private");
-            weechat_buffer_set (xfer->buffer, "localvar_set_nick", xfer->local_nick);
-            weechat_buffer_set (xfer->buffer, "localvar_set_channel", xfer->remote_nick);
-            weechat_buffer_set (xfer->buffer, "highlight_words_add", "$nick");
-        }
-
-        weechat_printf (xfer->buffer,
-                        _("%s%s: connected to %s (%s) via xfer chat"),
-                        weechat_prefix ("network"),
-                        XFER_PLUGIN_NAME,
-                        xfer->remote_nick,
-                        xfer->remote_address_str);
-
-        free (name);
     }
+
+    if (buffer_created)
+    {
+        weechat_buffer_set (xfer->buffer, "title", _("xfer chat"));
+        if (!weechat_buffer_get_integer (xfer->buffer, "short_name_is_set"))
+        {
+            weechat_buffer_set (xfer->buffer, "short_name",
+                                xfer->remote_nick);
+        }
+        weechat_buffer_set (xfer->buffer, "localvar_set_type", "private");
+        weechat_buffer_set (xfer->buffer, "localvar_set_nick", xfer->local_nick);
+        weechat_buffer_set (xfer->buffer, "localvar_set_channel", xfer->remote_nick);
+        weechat_buffer_set (xfer->buffer, "highlight_words_add", "$nick");
+    }
+
+    weechat_printf (xfer->buffer,
+                    _("%s%s: connected to %s (%s) via xfer chat"),
+                    weechat_prefix ("network"),
+                    XFER_PLUGIN_NAME,
+                    xfer->remote_nick,
+                    xfer->remote_address_str);
+
+    free (name);
 }
