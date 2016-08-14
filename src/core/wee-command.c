@@ -542,11 +542,12 @@ command_buffer_display_localvar (void *data,
 
 COMMAND_CALLBACK(buffer)
 {
-    struct t_gui_buffer *ptr_buffer, *ptr_buffer2, *ptr_prev_buffer;
-    struct t_gui_buffer *weechat_buffer;
+    struct t_gui_buffer *ptr_buffer, *ptr_buffer1, *ptr_buffer2;
+    struct t_gui_buffer *ptr_prev_buffer, *weechat_buffer;
     long number, number1, number2, numbers[3];
     char *error, *value, *pos, *str_number1, *pos_number2;
     int i, error_main_buffer, num_buffers, count, prev_number, clear_number;
+    int buffer_found;
 
     /* make C compiler happy */
     (void) pointer;
@@ -703,6 +704,54 @@ COMMAND_CALLBACK(buffer)
         }
 
         gui_buffer_swap (ptr_buffer->number, ptr_buffer2->number);
+
+        return WEECHAT_RC_OK;
+    }
+
+    /* cycle between a list of buffers */
+    if (string_strcasecmp (argv[1], "cycle") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "cycle");
+
+        /* first buffer found different from current one */
+        ptr_buffer1 = NULL;
+
+        /* boolean to check if current buffer was found in list */
+        buffer_found = 0;
+
+        for (i = 2; i < argc; i++)
+        {
+            ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+            if (!ptr_buffer)
+                continue;
+            if (ptr_buffer == buffer)
+            {
+                /* current buffer found */
+                buffer_found = 1;
+            }
+            else
+            {
+                if (!ptr_buffer1)
+                    ptr_buffer1 = ptr_buffer;
+                if (buffer_found)
+                {
+                    /*
+                     * we already found the current buffer in list,
+                     * so let's jump to this buffer
+                     */
+                    gui_window_switch_to_buffer (gui_current_window,
+                                                 ptr_buffer, 1);
+                    return WEECHAT_RC_OK;
+                }
+            }
+        }
+
+        /* cycle on the first buffer found if no other buffer was found */
+        if (ptr_buffer1)
+        {
+            gui_window_switch_to_buffer (gui_current_window,
+                                         ptr_buffer1, 1);
+        }
 
         return WEECHAT_RC_OK;
     }
@@ -6883,6 +6932,7 @@ command_init ()
            " || clear [<number>|<name>|-merged|-all [<number>|<name>...]]"
            " || move <number>|-|+"
            " || swap <number1>|<name1> [<number2>|<name2>]"
+           " || cycle <number>|<name> [<number>|<name>...]]"
            " || merge <number>"
            " || unmerge [<number>|-all]"
            " || hide [<number>|<name>|-all [<number>|<name>...]]"
@@ -6902,6 +6952,7 @@ command_init ()
            "number + 1\n"
            "    swap: swap two buffers (swap with current buffer if only one "
            "number/name given)\n"
+           "   cycle: jump loop between a list of buffers\n"
            "   merge: merge current buffer to another buffer (chat area will "
            "be mix of both buffers)\n"
            "          (by default ctrl-x switches between merged buffers)\n"
@@ -6939,6 +6990,8 @@ command_init ()
            "    /buffer swap 1 3\n"
            "  swap buffer #weechat with current buffer:\n"
            "    /buffer swap #weechat\n"
+           "  jump on #chan1, #chan2, #chan3 and loop:\n"
+           "    /buffer cycle #chan1 #chan2 #chan3\n"
            "  merge with core buffer:\n"
            "    /buffer merge 1\n"
            "  unmerge buffer:\n"
@@ -6957,6 +7010,7 @@ command_init ()
         "%(buffers_numbers)|%(buffers_plugins_names)|%*"
         " || move %(buffers_numbers)"
         " || swap %(buffers_numbers)"
+        " || cycle %(buffers_numbers)|%(buffers_plugins_names)|%*"
         " || merge %(buffers_numbers)"
         " || unmerge %(buffers_numbers)|-all"
         " || hide %(buffers_numbers)|%(buffers_plugins_names)|-all "
