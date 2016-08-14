@@ -32,8 +32,7 @@ schlanker Chat-Client der für unterschiedliche Betriebssysteme entwickelt wird.
 
 wesentliche Merkmale:
 
-// TRANSLATION MISSING
-* Unterstützung verschiedener Protokolle (mainly IRC)
+* Unterstützung verschiedener Protokolle (in der Hauptsache das IRC-Protokoll)
 * mehrere Server Verbindungen sind möglich (mittels SSL, IPv6, proxy)
 * klein, schnell und schlank
 * den eigenen persönlichen Bedürfnissen anpassbar und durch Erweiterungen und Skripten in der Funktionalität erweiterbar
