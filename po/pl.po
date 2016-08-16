@@ -8896,11 +8896,11 @@ msgstr "%s%s%s%s zmienił temat %s%s%s z \"%s%s%s\" na \"%s%s%s\""
 
 #, c-format
 msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
-msgstr "%s%s%s%s zmienił temat kanału %s%s%s na \"%s%s%s\""
+msgstr "%s%s%s%s zmienił temat kanału %s%s%s na „%s%s%s”"
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s%s\")"
-msgstr "%s%s%s%s skasował temat dla %s%s%s (stary temat: \"%s%s%s\")"
+msgstr "%s%s%s%s skasował temat dla %s%s%s (stary temat: „%s%s%s”)"
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s"
@@ -8975,7 +8975,7 @@ msgstr "%sBrak tematu dla kanału %s%s"
 
 #, c-format
 msgid "%sTopic for %s%s%s is \"%s%s%s\""
-msgstr "%sTemat kanału %s%s%s to \"%s%s%s\""
+msgstr "%sTemat kanału %s%s%s to „%s%s%s”"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
@@ -9033,7 +9033,7 @@ msgstr "%s%s[%s%s%s]%s wyjątek %s%s"
 
 #, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
-msgstr "%s%s: nie można utworzyć nicka \"%s\" dla kanału \"%s\""
+msgstr "%s%s: nie można utworzyć nicka „%s” dla kanału „%s”"
 
 #, c-format
 msgid "%sNicks %s%s%s: %s[%s%s%s]"
@@ -9094,7 +9094,7 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: nickname \"%s\" is invalid, trying nickname \"%s\""
-msgstr "%s%s: nick \"%s\" jest nieprawidłowy, próbuje nicku \"%s\""
+msgstr "%s%s: nick „%s” jest nieprawidłowy, próbuję nicku „%s”"
 
 #, c-format
 msgid ""
@@ -9106,11 +9106,11 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: nickname \"%s\" is already in use, trying nickname \"%s\""
-msgstr "%s%s: nick \"%s\" jest już używany, próbuje nick \"%s\""
+msgstr "%s%s: nick „%s” jest już używany, próbuje nick „%s”"
 
 #, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
-msgstr "%s%s: nick \"%s\" jest niedostępny, próbuje nicku \"%s\""
+msgstr "%s%s: nick „%s” jest niedostępny, próbuje nicku „%s”"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
@@ -9127,11 +9127,11 @@ msgstr "%s%s[%s%s%s] %s%s%s uciszony"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
-msgstr "%s%s: nie znaleziono komendy \"%s\":"
+msgstr "%s%s: nie znaleziono komendy „%s\”:"
 
 #, c-format
 msgid "%s%s: failed to parse command \"%s\" (please report to developers):"
-msgstr "%s%s: nie udało się wykonać komendy \"%s\" (zgłoś problem autorom):"
+msgstr "%s%s: nie udało się wykonać komendy „%s” (zgłoś problem autorom):"
 
 #, c-format
 msgid ""
@@ -9143,46 +9143,46 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: \"%s\" command received without host"
-msgstr "%s%s: \"%s\" komenda otrzymana bez hosta"
+msgstr "%s%s: „%s” komenda otrzymana bez hosta"
 
 msgid "IRC raw messages"
 msgstr "nieprzetworzone wiadomości IRC"
 
 #, c-format
 msgid "%s%s: missing argument \"%s\" for redirect pattern"
-msgstr "%s%s: brakuje argumentu \"%s\" dla przekierowania"
+msgstr "%s%s: brakuje argumentu „%s” dla przekierowania"
 
 #, c-format
 msgid "%s%s: redirect pattern \"%s\" already exists"
-msgstr "%s%s: wzór przekierowania \"%s\" już istnieje"
+msgstr "%s%s: wzór przekierowania „%s” już istnieje"
 
 #, c-format
 msgid "%s%s: no connection to server \"%s\" for redirect"
-msgstr "%s%s: nie połączony z serwerem \"%s\" dla przekierowania"
+msgstr "%s%s: nie połączony z serwerem „%s” dla przekierowania"
 
 #, c-format
 msgid "%s%s: missing argument \"%s\" for redirect"
-msgstr "%s%s: brakuje argumentu \"%s\" dla przekierowania"
+msgstr "%s%s: brakuje argumentu „%s” dla przekierowania"
 
 #, c-format
 msgid "%s%s: redirect pattern \"%s\" not found"
-msgstr "%s%s: wzór przekierowania \"%s\" nie został znaleziony"
+msgstr "%s%s: wzór przekierowania „%s” nie został znaleziony"
 
 #, c-format
 msgid ""
 "%s: starting redirection for command \"%s\" on server \"%s\" (redirect "
 "pattern: \"%s\")"
 msgstr ""
-"%s: zaczynam przekierowanie komendy \"%s\" na serwer \"%s\" (wzór "
-"przekierowania: \"%s\")"
+"%s: zaczynam przekierowanie komendy „%s” na serwer „%s” (wzór "
+"przekierowania: „%s”)"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found for redirect"
-msgstr "%s%s: serwer \"%s\" nie został znaleziony dla przekierowania"
+msgstr "%s%s: serwer „%s” nie został znaleziony dla przekierowania"
 
 #, c-format
 msgid "%s%s: unable to read private key in file \"%s\""
-msgstr "%s%s: nie można odczytać klucza prywatnego z pliku \"%s\""
+msgstr "%s%s: nie można odczytać klucza prywatnego z pliku „%s”"
 
 #, c-format
 msgid "%sgnutls: invalid private key file: error %d %s"
@@ -9204,8 +9204,8 @@ msgstr "%sgnutls: nie można podpisać zakodowanych danych: błąd %d %s"
 msgid ""
 "%sgnutls: version >= 3.0.21 is required for SASL \"ecdsa-nist256p-challenge\""
 msgstr ""
-"%sgnutls: wersja >= 3.0.21 jest wymagana dla SASL \"ecdsa-nist256p-challenge"
-"\""
+"%sgnutls: wersja >= 3.0.21 jest wymagana dla SASL „ecdsa-nist256p-challenge"
+"”"
 
 #, c-format
 msgid "%s%s: error when allocating new server"
@@ -9275,11 +9275,11 @@ msgstr "%s%s: połączono z %s/%d (%s)"
 
 #, c-format
 msgid "%s%s: proxy address \"%s\" not found"
-msgstr "%s%s: nie znaleziono adresu proxy \"%s\""
+msgstr "%s%s: nie znaleziono adresu proxy „%s”"
 
 #, c-format
 msgid "%s%s: address \"%s\" not found"
-msgstr "%s%s: nie znaleziono adresu \"%s\""
+msgstr "%s%s: nie znaleziono adresu „%s”"
 
 #, c-format
 msgid "%s%s: error: %s"
@@ -9391,7 +9391,7 @@ msgstr ""
 
 #, c-format
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
-msgstr "%sgnutls: nazwa hosta w certyfikacie NIE pasuje do \"%s\""
+msgstr "%sgnutls: nazwa hosta w certyfikacie NIE pasuje do „%s”"
 
 #, c-format
 msgid "%sgnutls: error while checking peer's certificate"
@@ -9419,7 +9419,7 @@ msgstr "%sgnutls: wysyłam jeden certyfikat"
 
 #, c-format
 msgid "%sgnutls: invalid certificate \"%s\", error: %s"
-msgstr "%sgnutls: błędny certyfikat \"%s\", błąd: %s"
+msgstr "%sgnutls: błędny certyfikat „%s”, błąd: %s"
 
 #, c-format
 msgid "%s - client certificate info (%s):"
@@ -9427,16 +9427,16 @@ msgstr "%s - informacje o certyfikacie klienta (%s):"
 
 #, c-format
 msgid "%sgnutls: unable to read certificate \"%s\""
-msgstr "%sgnutls: nie można odczytać certyfikatu \"%s\""
+msgstr "%sgnutls: nie można odczytać certyfikatu „%s”"
 
 #, c-format
 msgid "%s%s: unknown address for server \"%s\", cannot connect"
-msgstr "%s%s: nieznany adres serwera \"%s\", nie można połączyć"
+msgstr "%s%s: nieznany adres serwera „%s”, nie można połączyć"
 
 #, c-format
 msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
 msgstr ""
-"%s%s: nie znaleziono proxy \"%s\" dla serwer \"%s\", nie można połączyć"
+"%s%s: nie znaleziono proxy „%s” dla serwera „%s”, nie można połączyć"
 
 #, c-format
 msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
@@ -9444,7 +9444,7 @@ msgstr "%s%s: brakujące ustawienie proxy, sprawdź opcje proxy \"%s\""
 
 #, c-format
 msgid "%s%s: nicks not defined for server \"%s\", cannot connect"
-msgstr "%s%s: nie zdefiniowano nicków dla serwera \"%s\", nie można połączyć"
+msgstr "%s%s: nie zdefiniowano nicków dla serwera „%s”, nie można połączyć"
 
 #, c-format
 msgid ""
@@ -9480,11 +9480,11 @@ msgstr "%s%s: wyjątek %s"
 
 #, c-format
 msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: nie można wykonać funkcji \"%s\""
+msgstr "%s%s: nie można wykonać funkcji „%s”"
 
 #, c-format
 msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: nie znaleziono skryptu \"%s\""
+msgstr "%s%s: nie znaleziono skryptu „%s”"
 
 #, c-format
 msgid "%s%s: unable to create new sub-interpreter"
@@ -9492,11 +9492,11 @@ msgstr "%s%s: nie można stworzyć nowego pod-interpretatora"
 
 #, c-format
 msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: nie można wczytać pliku \"%s\""
+msgstr "%s%s: nie można wczytać pliku „%s”"
 
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: nie można wykonać pliku \"%s\""
+msgstr "%s%s: nie można wykonać pliku „%s”"
 
 msgid "Log buffers to files"
 msgstr "Zapisuj bufory do plików"
@@ -9506,7 +9506,7 @@ msgid ""
 "%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
 "for this buffer"
 msgstr ""
-"%s%s: nie można odnaleźć maski pliku dla bufora \"%s\", logowanie dla tego "
+"%s%s: nie można odnaleźć maski pliku dla bufora „%s”, logowanie dla tego "
 "bufora zostaje wyłączone"
 
 #, c-format
@@ -9518,16 +9518,16 @@ msgid ""
 "%s%s: unable to start logging for buffer \"%s\": filename \"%s\" is already "
 "used by another buffer (check your log settings)"
 msgstr ""
-"%s%s: nie można zacząć logowania dla bufora \"%s\": plik \"%s\" jest już "
+"%s%s: nie można zacząć logowania dla bufora „%s”: plik „%s” jest już "
 "użyty dla innego bufora (sprawdź ustawienia logów)"
 
 #, c-format
 msgid "%s%s: unable to create directory for logs (\"%s\")"
-msgstr "%s%s: nie można utworzyć katalogu dla logów (\"%s\")"
+msgstr "%s%s: nie można utworzyć katalogu dla logów („%s”)"
 
 #, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
-msgstr "%s%s: nie można zapisać pliku z logiem \"%s\": %s"
+msgstr "%s%s: nie można zapisać pliku z logiem „%s”: %s"
 
 #, c-format
 msgid "%s\t****  Beginning of log  ****"
@@ -9552,7 +9552,7 @@ msgstr "log nie uruchomiony"
 
 #, c-format
 msgid "%s: \"%s\" => level %d"
-msgstr "%s: \"%s\" => poziom %d"
+msgstr "%s: „%s” => poziom %d"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
@@ -9601,7 +9601,7 @@ msgstr ""
 "  flush: zapisuje natychmiast wszystkie pliki z logami\n"
 "disable: wyłącza logowanie dla obecnego bufora (ustawia poziom na 0)\n"
 "\n"
-"Opcje \"logger.level.*\" oraz \"logger.mask.*\" mogą być użyte do ustawienia "
+"Opcje „logger.level.*” oraz „logger.mask.*” mogą być użyte do ustawienia "
 "poziomu lub maski dla bufora lub buforów zaczynających się od nazwy.\n"
 "\n"
 "Poziomy logowania używane przez wtyczkę IRC:\n"
@@ -9673,8 +9673,8 @@ msgid ""
 "NOT use $server nor $channel); date specifiers are permitted (see man "
 "strftime)"
 msgstr ""
-"domyślna maska nazw plików z logami (format to \"ścieżka/do/pliku\" lub "
-"\"plik\", bez pierwszego \"/\" ponieważ opcja \"path\" jest użyta do "
+"domyślna maska nazw plików z logami (format to „ścieżka/do/pliku” lub "
+"„plik”, bez pierwszego „/” ponieważ opcja „path” jest użyta do "
 "stworzenia kompletnej ścieżki do pliku); lokalne zmienne buforów dozwolone; "
 "(powinno się używać tylko zmiennych zdefiniowanych dla wszytkich buforów, na "
 "przykład nie należy używać $server ani $channel); określenia dla daty są "
@@ -9685,18 +9685,18 @@ msgstr "używaj tylko małych liter dla nazw plików z logami"
 
 msgid "text to write before nick in prefix of message, example: \"<\""
 msgstr ""
-"tekst wyświetlany przed nickiem w przedrostku wiadomości, przykład: \"<\""
+"tekst wyświetlany przed nickiem w przedrostku wiadomości, przykład: „<”"
 
 msgid "text to write after nick in prefix of message, example: \">\""
-msgstr "tekst wyświetlany za nickiem w przedrostku wiadomości, przykład: \">\""
+msgstr "tekst wyświetlany za nickiem w przedrostku wiadomości, przykład: „>”"
 
 msgid ""
 "path for WeeChat log files; \"%h\" at beginning of string is replaced by "
 "WeeChat home (\"~/.weechat\" by default); date specifiers are permitted (see "
 "man strftime) (note: content is evaluated, see /help eval)"
 msgstr ""
-"ścieżka do plików z logami WeeChat; \"%h\" na początku ciągu zostanie "
-"zastąpione przez katalog domowy WeeChat (domyślnie \"~/.weechat\"); "
+"ścieżka do plików z logami WeeChat; „%h” na początku ciągu zostanie "
+"zastąpione przez katalog domowy WeeChat (domyślnie „~/.weechat”); "
 "określenia dla daty są dozwolone (zobacz man  strftime) (uwaga: zawartość "
 "jest przetwarzana, zobacz /help eval)"
 
@@ -9730,19 +9730,19 @@ msgstr "Wsparcie dla skryptów perla"
 
 #, c-format
 msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr "%s%s: funkcja \"%s\" musi zwrócić jedną poprawną wartość (%d)"
+msgstr "%s%s: funkcja „%s” musi zwrócić jedną poprawną wartość (%d)"
 
 #, c-format
 msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s%s: funkcja \"%s\" jest wewnętrznie źle użyta"
+msgstr "%s%s: funkcja „%s” jest wewnętrznie źle użyta"
 
 #, c-format
 msgid "%s%s: not enough memory in function \"%s\""
-msgstr "%s%s: za mało pamięci wewnątrz funkcji \"%s\""
+msgstr "%s%s: za mało pamięci wewnątrz funkcji „%s”"
 
 #, c-format
 msgid "%s%s: unable to parse file \"%s\""
-msgstr "%s%s: nie można przetworzyć pliku \"%s\""
+msgstr "%s%s: nie można przetworzyć pliku „%s”"
 
 #, c-format
 msgid "%s%s: unable to initialize %s"
@@ -9758,7 +9758,7 @@ msgid ""
 "WeeChat git version (output of command \"git describe\" for a development "
 "version only, empty for a stable release)"
 msgstr ""
-"wersja git WeeChat (wyjście komendy \"git describe\" dla tylko dla wersji "
+"wersja git WeeChat (wyjście komendy „git describe” dla tylko dla wersji "
 "rozwojowej, puste dla wersji stabilnej)"
 
 msgid "WeeChat compilation date"
@@ -9771,13 +9771,13 @@ msgid "WeeChat directory"
 msgstr "katalog Weechat"
 
 msgid "WeeChat \"lib\" directory"
-msgstr "katalog \"lib\" WeeChata"
+msgstr "katalog „lib” WeeChata"
 
 msgid "WeeChat \"share\" directory"
-msgstr "katalog \"share\" WeeChata"
+msgstr "katalog „share” WeeChata"
 
 msgid "WeeChat \"locale\" directory"
-msgstr "katalog \"locale\" WeeChata"
+msgstr "katalog „locale” WeeChata"
 
 msgid "WeeChat site"
 msgstr "Strona WeeChat"
@@ -9841,7 +9841,7 @@ msgid "bar pointer (optional)"
 msgstr "wskaźnik paska (opcjonalne)"
 
 msgid "bar name (wildcard \"*\" is allowed) (optional)"
-msgstr "nazwa paska (wildcard \"*\" jest dozwolony) (opcjonalne)"
+msgstr "nazwa paska (wildcard „*” jest dozwolony) (opcjonalne)"
 
 msgid "list of bar items"
 msgstr "lista elementów pasków"
@@ -9850,7 +9850,7 @@ msgid "bar item pointer (optional)"
 msgstr "wskaźnik elementu paska (opcjonalne)"
 
 msgid "bar item name (wildcard \"*\" is allowed) (optional)"
-msgstr "nazwa elementu paska (wildcard \"*\" jest dozwolony) (opcjonalne)"
+msgstr "nazwa elementu paska (wildcard „*” jest dozwolony) (opcjonalne)"
 
 msgid "list of bar windows"
 msgstr "lista pasków okien"
@@ -9865,7 +9865,7 @@ msgid "buffer pointer (optional)"
 msgstr "wskaźnik bufora (opcjonalne)"
 
 msgid "buffer name (wildcard \"*\" is allowed) (optional)"
-msgstr "nazwa bufora (wildcard \"*\" jest dozwolony) (opcjonalne)"
+msgstr "nazwa bufora (wildcard „*” jest dozwolony) (opcjonalne)"
 
 msgid "lines of a buffer"
 msgstr "linie w buforze"
@@ -9877,7 +9877,7 @@ msgid "list of filters"
 msgstr "lista filtrów"
 
 msgid "filter name (wildcard \"*\" is allowed) (optional)"
-msgstr "nazwa filtru (wildcard \"*\" jest dozwolony) (opcjonalne)"
+msgstr "nazwa filtru (wildcard „*” jest dozwolony) (opcjonalne)"
 
 msgid "history of commands"
 msgstr "historia komend"
@@ -9897,7 +9897,7 @@ msgid ""
 "(wildcard \"*\" is allowed), both are optional)"
 msgstr ""
 "typ,argumenty (typ to komenda/timer/.., argumenty do uzyskania tylko "
-"niektórych hooków (wildcard \"*\" jest dozwolony), oba są opcjonalne)"
+"niektórych hooków (wildcard „*” jest dozwolony), oba są opcjonalne)"
 
 msgid "list of buffers in hotlist"
 msgstr "lista buforów w hotliście"
@@ -9907,7 +9907,7 @@ msgstr "lista skrótów klawiszowych"
 
 msgid "context (\"default\", \"search\", \"cursor\" or \"mouse\") (optional)"
 msgstr ""
-"kontekst (\"default\", \"search\", \"cursor\" lub \"mouse\") (opcjonalne)"
+"kontekst („default”, „search”, „cursor” lub „mouse”) (opcjonalne)"
 
 msgid "list of layouts"
 msgstr "lista układów"
@@ -9923,7 +9923,7 @@ msgid "list of options"
 msgstr "lista opcji"
 
 msgid "option name (wildcard \"*\" is allowed) (optional)"
-msgstr "nazwa opcji (wildcard \"*\" jest dozwolony) (opcjonalne)"
+msgstr "nazwa opcji (wildcard „*” jest dozwolony) (opcjonalne)"
 
 msgid "list of plugins"
 msgstr "lista wtyczek"
@@ -9932,7 +9932,7 @@ msgid "plugin pointer (optional)"
 msgstr "wskaźnik wtyczki (opcjonalne)"
 
 msgid "plugin name (wildcard \"*\" is allowed) (optional)"
-msgstr "nazwa wtyczki (wildcard \"*\" jest dozwolony) (opcjonalne)"
+msgstr "nazwa wtyczki (wildcard „*” jest dozwolony) (opcjonalne)"
 
 msgid "list of proxies"
 msgstr "lista pośredników"
@@ -9941,7 +9941,7 @@ msgid "proxy pointer (optional)"
 msgstr "wskaźnik pośrednika (opcjonalny)"
 
 msgid "proxy name (wildcard \"*\" is allowed) (optional)"
-msgstr "nazwa pośrednika (wildcard \"*\" jest dozwolony) (opcjonalne)"
+msgstr "nazwa pośrednika (wildcard „*” jest dozwolony) (opcjonalne)"
 
 msgid "options for URL"
 msgstr "opcje dla URLi"
@@ -9953,7 +9953,7 @@ msgid "window pointer (optional)"
 msgstr "wskaźnik okna (opcjonalne)"
 
 msgid "\"current\" for current window or a window number (optional)"
-msgstr "\"current\" dla obecnego okna lub numer okna (opcjonalne)"
+msgstr "„current” dla obecnego okna lub numer okna (opcjonalne)"
 
 msgid "bar"
 msgstr "pasek"
@@ -10038,15 +10038,15 @@ msgstr "drzewo okien"
 
 #, c-format
 msgid "Initializing plugin \"%s\" (priority: %d)"
-msgstr "Inicjalizuję wtyczkę \"%s\" (priorytet: %d)"
+msgstr "Inicjalizuję wtyczkę „%s” (priorytet: %d)"
 
 #, c-format
 msgid "%sError: unable to initialize plugin \"%s\""
-msgstr "%sBłąd: nie można zainicjować wtyczki \"%s\""
+msgstr "%sBłąd: nie można zainicjować wtyczki „%s”"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
-msgstr "%sBłąd: nie można załadować wtyczki \"%s\": %s"
+msgstr "%sBłąd: nie można załadować wtyczki „%s”: %s"
 
 #, c-format
 msgid ""
@@ -10059,50 +10059,50 @@ msgstr ""
 #, c-format
 msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
-"%sBłąd: symbol \"%s\" nie znaleziony we wtyczce \"%s\", nie udało się "
+"%sBłąd: symbol „%s” nie znaleziony we wtyczce „%s”, nie udało się "
 "załadować"
 
 #, c-format
 msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
 msgstr ""
-"%sJeżeli wtyczka \"%s\" jest stara/przestarzała możesz usunąć ten plik."
+"%sJeżeli wtyczka „%s” jest stara/przestarzała, możesz usunąć ten plik."
 
 #, c-format
 msgid ""
 "%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: "
 "\"%s\"), failed to load"
 msgstr ""
-"%sBłąd: niedopasowane API \"%s\" (obecne API: \"%s\", API wtyczki: \"%s\"), "
+"%sBłąd: niedopasowane API „%s” (obecne API: „%s”, API wtyczki: „%s”), "
 "nie udało się załadować"
 
 #, c-format
 msgid ""
 "%sError: unable to load plugin \"%s\": a plugin with same name already exists"
 msgstr ""
-"%sBłąd: nie można załadować wtyczki \"%s\": wtyczka o takiej nazwie już "
+"%sBłąd: nie można załadować wtyczki „%s”: wtyczka o takiej nazwie już "
 "istnieje"
 
 #, c-format
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
-"%sBłąd: funkcja \"%s\" nie znaleziona we wtyczce \"%s\", nie udało się "
+"%sBłąd: funkcja „%s” nie znaleziona we wtyczce „%s”, nie udało się "
 "załadować"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
-msgstr "%sBłąd: nie można załadować wtyczki \"%s\" (za mało pamięci)"
+msgstr "%sBłąd: nie można załadować wtyczki „%s” (za mało pamięci)"
 
 #, c-format
 msgid "Plugin \"%s\" loaded"
-msgstr "Wtyczka \"%s\" załadowana"
+msgstr "Wtyczka „%s” załadowana"
 
 #, c-format
 msgid "Plugin \"%s\" unloaded"
-msgstr "Wtyczka \"%s\" wyładowana"
+msgstr "Wtyczka „%s” wyładowana"
 
 #, c-format
 msgid "%sError: plugin \"%s\" not found"
-msgstr "%sBłąd: nie znaleziono wtyczki \"%s\""
+msgstr "%sBłąd: nie znaleziono wtyczki „%s”"
 
 msgid "Plugins unloaded"
 msgstr "Wyładowano wtyczki"
@@ -10143,7 +10143,7 @@ msgstr ""
 "wszystkie wtyczki, następnie automatycznie załaduje wtyczki)\n"
 "  unload: wyładowuje jedną albo wszystkie wtyczki\n"
 "nazwa_pliku: skrypt (plik) do załadowania\n"
-"    nazwa: nazwa skryptu (nazwa użyta do wywołania funkcji \"register\")\n"
+"    nazwa: nazwa skryptu (nazwa użyta do wywołania funkcji „register”)\n"
 "      -q: tryb cichy: nie wyświetla wiadomości\n"
 "\n"
 "Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki."
@@ -10155,19 +10155,19 @@ msgid "script pointer (optional)"
 msgstr "wskaźnik skryptu (opcjonalne)"
 
 msgid "script name (wildcard \"*\" is allowed) (optional)"
-msgstr "nazwa skryptu (wildcard \"*\" jest dozwolony) (opcjonalne)"
+msgstr "nazwa skryptu (wildcard „*” jest dozwolony) (opcjonalne)"
 
 #, c-format
 msgid ""
 "%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
 msgstr ""
-"%s%s: ostrzeżenie, niewłaściwy wskaźnik (\"%s\") dla funkcji \"%s\" (skrypt: "
+"%s%s: ostrzeżenie, niewłaściwy wskaźnik („%s”) dla funkcji „%s” (skrypt: "
 "%s)"
 
 #, c-format
 msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
 msgstr ""
-"%s: błąd podczas ładowania skryptu \"%s\" (spacje lub pusta nazwa nie są "
+"%s: błąd podczas ładowania skryptu „%s” (spacje lub pusta nazwa nie są "
 "dozwolone)"
 
 #, c-format
@@ -10175,12 +10175,12 @@ msgid ""
 "%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
 "(\"%s\")"
 msgstr ""
-"%s%s: uwaga, licencja \"%s\" skryptu \"%s\" różni się od licencji wtyczki "
+"%s%s: uwaga, licencja „%s” skryptu „%s” różni się od licencji wtyczki "
 "(\"%s\")"
 
 #, c-format
 msgid "%s: error loading script \"%s\" (not enough memory)"
-msgstr "%s: błąd podczas ładowania skryptu \"%s\" (za mało pamięci)"
+msgstr "%s: błąd podczas ładowania skryptu  „%s” (za mało pamięci)"
 
 #, c-format
 msgid "%s: script removed: %s"
@@ -10192,7 +10192,7 @@ msgstr "%s%s: nie udało się usunąć skryptu: %s (%s)"
 
 #, c-format
 msgid "%s: script \"%s\" not found, nothing was removed"
-msgstr "%s: nie znaleziono skryptu \"%s\" , nic nie usunięto"
+msgstr "%s: nie znaleziono skryptu „%s” , nic nie usunięto"
 
 #, c-format
 msgid "%s%s: failed to move script %s to %s (%s)"
@@ -10209,7 +10209,7 @@ msgstr "    plik: %s"
 
 #, c-format
 msgid "    written by \"%s\", license: %s"
-msgstr "    napisane przez \"%s\", licencja: %s"
+msgstr "    napisane przez „%s”, licencja: %s"
 
 msgid "  (none)"
 msgstr "  (żaden)"
@@ -10222,11 +10222,11 @@ msgstr "%s: skryptów wyładowano"
 msgid ""
 "%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
 msgstr ""
-"%s%s: nie można wywołać funkcji \"%s\", skrypt niezainicjowany (skrypt: %s)"
+"%s%s: nie można wywołać funkcji „%s”, skrypt niezainicjowany (skrypt: %s)"
 
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
-msgstr "%s%s: nieprawidłowe argumenty dla funkcji \"%s\" (skrypt: %s)"
+msgstr "%s%s: nieprawidłowe argumenty dla funkcji „%s” (skrypt: %s)"
 
 msgid "Support of python scripts"
 msgstr "Wsparcie dla skryptów pythona"
@@ -10335,11 +10335,11 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: origin \"%s\" not allowed for websocket"
-msgstr "%s%s: źródło \"%s\" niedozwolone dla gniazda webowego"
+msgstr "%s%s: źródło „%s” niedozwolone dla gniazda webowego"
 
 #, c-format
 msgid "%s: websocket client %s%s%s has real IP address \"%s\""
-msgstr "%s: klient websocket %s%s%s posiada adres IP \"%s\""
+msgstr "%s: klient websocket %s%s%s posiada adres IP „%s”"
 
 #, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"
@@ -10417,15 +10417,15 @@ msgstr "Brak serwera dla relay"
 
 #, c-format
 msgid "%s: relay \"%s\" (port %s) added"
-msgstr "%s: relay \"%s\" (port %s) dodany"
+msgstr "%s: relay „%s” (port %s) dodany"
 
 #, c-format
 msgid "%s: relay \"%s\" (port %d) removed"
-msgstr "%s: relay \"%s\" (port %d) usunięty"
+msgstr "%s: relay „%s” (port %d) usunięty"
 
 #, c-format
 msgid "%s%s: relay \"%s\" not found"
-msgstr "%s%s: relay \"%s\" nie został znaleziony"
+msgstr "%s%s: relay „%s” nie został znaleziony"
 
 msgid "relay control"
 msgstr "zarządzanie przesyłaniem"
@@ -10506,14 +10506,14 @@ msgstr ""
 "         ipv6: wymusza użycie IPv6\n"
 "          ssl: włącza SSL\n"
 "protokół.nazwa: protokół i nazwa do przekazywania:\n"
-"                 - protokół \"irc\": nazwą jest serwer do współdzielenia "
+"                 - protokół „irc”: nazwą jest serwer do współdzielenia "
 "(opcjonalne, jeśli nie podane, nazwa serwera musi być wysłana przez klienta "
 "w komendzie \"PASS\", format: \"PASS serwer:hasło\")\n"
-"                 - protokół \"weechat\" (nazwa nie jest używana)\n"
+"                 - protokół „weechat” (nazwa nie jest używana)\n"
 "\n"
-"Protokół \"irc\" pozwala dowolnemu klientowi IRC (włączajac w to WeeChat) "
+"Protokół „irc” pozwala dowolnemu klientowi IRC (włączajac w to WeeChat) "
 "połączyć się na ustawionym porcie.\n"
-"Protokół \"weechat\" pozwala na połączenie się zdalnym interfejsem, lista "
+"Protokół „weechat” pozwala na połączenie się zdalnym interfejsem, lista "
 "dostępna pod adresem: https://weechat.org/download/\n"
 "\n"
 "Bez argumentu komenda otwiera bufor z listą klientów.\n"
@@ -10547,7 +10547,7 @@ msgstr "pierwszy wolny port dla wtyczki relay"
 
 #, c-format
 msgid "%s%s: error: port \"%d\" is already used"
-msgstr "%s%s: błąd: port \"%d\" jest już w użyciu"
+msgstr "%s%s: błąd: port „%d” jest już w użyciu"
 
 #, c-format
 msgid "%s%s: cannot use SSL because WeeChat was not built with GnuTLS support"
@@ -10557,15 +10557,15 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
-msgstr "%s%s: błąd: nieznany protokół \"%s\""
+msgstr "%s%s: błąd: nieznany protokół „%s”"
 
 #, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
-msgstr "%s%s: błąd: nie jest dozwolona dla protokołu \"%s\""
+msgstr "%s%s: błąd: nie jest dozwolona dla protokołu „%s”"
 
 #, c-format
 msgid "%s%s: error: relay for \"%s\" already exists"
-msgstr "%s%s: błąd: relay dla \"%s\" już istnieje"
+msgstr "%s%s: błąd: relay dla „%s” już istnieje"
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr "automatycznie otwiera bufor kiedy podłącza się nowy klient"
@@ -10574,19 +10574,19 @@ msgid "text color for client description"
 msgstr "kolor tekstu dla opisu klienta"
 
 msgid "text color for \"connecting\" status"
-msgstr "kolor statusu \"connecting\""
+msgstr "kolor statusu „connecting”"
 
 msgid "text color for \"waiting authentication\" status"
-msgstr "kolor statusu \"waiting authentication\""
+msgstr "kolor statusu „waiting authentication”"
 
 msgid "text color for \"connected\" status"
-msgstr "kolor statusu \"connected\""
+msgstr "kolor statusu „connected”"
 
 msgid "text color for \"authentication failed\" status"
-msgstr "kolor statusu \"authentication failed\""
+msgstr "kolor statusu „authentication failed”"
 
 msgid "text color for \"disconnected\" status"
-msgstr "kolor statusu \"disconnected\""
+msgstr "kolor statusu „disconnected”"
 
 msgid "text color in relay buffer"
 msgstr "kolor tekstu w buforze pośrednika"
@@ -10608,16 +10608,16 @@ msgid ""
 "\"^(123.45.67.89|192.160.*)$\""
 msgstr ""
 "rozszerzone wyrażenia regularne POSIX z adresami IP dozwolonymi dla "
-"pośrednika (nie wrażliwe na wielkość znaków, umieszczenie \"(?-i)\" na "
+"pośrednika (nie wrażliwe na wielkość znaków, umieszczenie „(?-i)” na "
 "początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "
-"\"^(123.45.67.89|192.160.*)$\""
+"„^(123.45.67.89|192.160.*)$”"
 
 msgid ""
 "address for bind (if empty, connection is possible on all interfaces, use "
 "\"127.0.0.1\" to allow connections from local machine only)"
 msgstr ""
 "adres do przypisania (jeśli puste, połączenie jest możliwe na wszystkich "
-"interfejsach, użyj \"127.0.0.1\", aby pozwolić tylko na połączenia z tej "
+"interfejsach, użyj „127.0.0.1”, aby pozwolić tylko na połączenia z tej "
 "maszyny)"
 
 msgid ""
@@ -10668,9 +10668,9 @@ msgid ""
 "\"^http://(www\\.)?example\\.(com|org)\""
 msgstr ""
 "rozszerzone wyrażenia regularne POSIX ze źródłami dozwolonymi dla gniazd "
-"webowych (nie wrażliwe na wielkość znaków, umieszczenie \"(?-i)\" na "
+"webowych (nie wrażliwe na wielkość znaków, umieszczenie „(?-i)” na "
 "początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "
-"\"^http://(www\\.)?przykład\\.(com|org)\""
+"„^http://(www\\.)?przykład\\.(com|org)”"
 
 msgid ""
 "maximum number of minutes in backlog per IRC channel (0 = unlimited, "
@@ -10698,8 +10698,8 @@ msgid ""
 "\", \"irc_privmsg\"), \"*\" = all supported tags"
 msgstr ""
 "oddzielona przecinkami lista tagów dla wiadomości, które są wyświetlane w "
-"backlogu dla kanałów IRC (wspierane tagi: \"irc_join\", \"irc_part\", "
-"\"irc_quit\", \"irc_nick\", \"irc_privmsg\"), \"*\" = dla wszystkich "
+"backlogu dla kanałów IRC (wspierane tagi: „irc_join”, „irc_part”, "
+"„irc_quit”, „irc_nick”, „irc_privmsg”), „*” = dla wszystkich "
 "wspieranych tagów"
 
 msgid ""
@@ -10708,7 +10708,7 @@ msgid ""
 "sent as irc tag); empty string = disable time in backlog messages"
 msgstr ""
 "format czasu wiadomości w backlogu (zobacz man strftime dla formatu) (nie "
-"używane jeśli dla serwera ustawiono \"server-time\" przez klienta, ponieważ "
+"używane jeśli dla serwera ustawiono „server-time” przez klienta, ponieważ "
 "czas jest wysyłany jako tag irc); pusty ciąg = wyłącza znacznik czasu w "
 "backlogu"
 
@@ -10770,16 +10770,16 @@ msgstr[2] ""
 
 #, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
-msgstr "%s%s: adres IP \"%s\" nie posiada zezwolenia na połączenie"
+msgstr "%s%s: adres IP „%s” nie posiada zezwolenia na połączenie"
 
 #, c-format
 msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
-msgstr "%s%s: nie można ustawić opcji gniazda \"%s\" na %d: błąd %d %s"
+msgstr "%s%s: nie można ustawić opcji gniazda „%s” na %d: błąd %d %s"
 
 #. TRANSLATORS: second "%s" is "IPv4" or "IPv6"
 #, c-format
 msgid "%s%s: invalid bind address \"%s\" for %s"
-msgstr "%s%s: niepoprawny adres powiązania \"%s\" dla %s"
+msgstr "%s%s: niepoprawny adres powiązania „%s” dla %s"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -10791,11 +10791,11 @@ msgstr "%s%s: spróbuj /set relay.network.ipv6 off"
 
 #, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
-msgstr "%s%s: nie można wykonać \"bind\" na porcie %d (%s): błąd %d %s"
+msgstr "%s%s: nie można wykonać „bind” na porcie %d (%s): błąd %d %s"
 
 #, c-format
 msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
-msgstr "%s%s: nie można wykonać \"listen\" na porcie %d (%s): błąd %d %s"
+msgstr "%s%s: nie można wykonać „listen” na porcie %d (%s): błąd %d %s"
 
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
@@ -10814,23 +10814,23 @@ msgstr "%s%s: za mało pamięci do nasłuchu na nowym porcie"
 
 #, c-format
 msgid "%s: invalid pointer in hdata path: \"%s\""
-msgstr "%s: nieprawidłowy wskaźnik w ścieżce hdata: \"%s\""
+msgstr "%s: nieprawidłowy wskaźnik w ścieżce hdata: „%s”"
 
 #, c-format
 msgid "%s: invalid buffer pointer in message: \"%s %s\""
-msgstr "%s: nieprawidłowy wskaźnik bufora w wiadomości: \"%s %s\""
+msgstr "%s: nieprawidłowy wskaźnik bufora w wiadomości: „%s %s”"
 
 #, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
-msgstr "%s%s: nie udało się wykonać komendy \"%s\" dla klienta %s%s%s"
+msgstr "%s%s: nie udało się wykonać komendy „%s” dla klienta %s%s%s"
 
 #, c-format
 msgid ""
 "%s%s: too few arguments received from client %s%s%s for command \"%s"
 "\" (received: %d arguments, expected: at least %d)"
 msgstr ""
-"%s%s: otrzymano za mało argumentów od klienta %s%s%s dla komendy \"%s"
-"\" (otrzymano: %d argumentów, spodziewano się: przynajmniej %d)"
+"%s%s: otrzymano za mało argumentów od klienta %s%s%s dla komendy „%s"
+"” (otrzymano: %d argumentów, spodziewano się: przynajmniej %d)"
 
 msgid "Support of ruby scripts"
 msgstr "Wsparcie dla skryptów ruby"
@@ -10849,11 +10849,11 @@ msgstr "%s%s: błąd podczas ładowania pliku \"%s\""
 
 #, c-format
 msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
-msgstr "%s%s: funkcja \"weechat_init\" nie znaleziona w pliku \"%s\""
+msgstr "%s%s: funkcja \"weechat_init\" nie znaleziona w pliku „%s”"
 
 #, c-format
 msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
-msgstr "%s%s: nie można dokonać oceny funkcji \"weechat_init\" w pliku \"%s\""
+msgstr "%s%s: nie można dokonać oceny funkcji „weechat_init” w pliku „%s”"
 
 #, c-format
 msgid "%s%s: unable to eval WeeChat ruby internal code"
@@ -10864,61 +10864,61 @@ msgstr "Załadowane skrypty:"
 
 #, c-format
 msgid "%s: unknown language for script \"%s\""
-msgstr "%s: nieznany język dla skryptu \"%s\""
+msgstr "%s: nieznany język dla skryptu „%s”"
 
 #, c-format
 msgid "%s: plugin \"%s\" is not loaded"
-msgstr "%s: wtyczka \"%s\" nie załadowana"
+msgstr "%s: wtyczka „%s” nie załadowana"
 
 #, c-format
 msgid "%s: script \"%s\" is not loaded"
-msgstr "%s: skrypt \"%s\" nie załadowany"
+msgstr "%s: skrypt „%s” nie załadowany"
 
 #, c-format
 msgid "%s: script \"%s\" not found"
-msgstr "%s: nie znaleziono skryptu \"%s\""
+msgstr "%s: nie znaleziono skryptu „%s”"
 
 #, c-format
 msgid "%s: script \"%s\" is not installed"
-msgstr "%s: skrypt \"%s\" nie zainstalowany"
+msgstr "%s: skrypt „%s” nie zainstalowany"
 
 #, c-format
 msgid "%s: autoload enabled for script \"%s\""
-msgstr "%s: automatyczne ładowanie włączone dla skryptu \"%s\""
+msgstr "%s: automatyczne ładowanie włączone dla skryptu „%s”"
 
 #, c-format
 msgid "%s: autoload disabled for script \"%s\""
-msgstr "%s: automatyczne ładowanie wyłączone dla skryptu \"%s\""
+msgstr "%s: automatyczne ładowanie wyłączone dla skryptu „%s”"
 
 #, c-format
 msgid "%s%s: error downloading script \"%s\": %s"
-msgstr "%s%s: błąd podczas pobierania skryptu \"%s\": %s"
+msgstr "%s%s: błąd podczas pobierania skryptu „%s”: %s"
 
 #, c-format
 msgid ""
 "%s: script \"%s\" can not be installed because plugin \"%s\" is not loaded"
 msgstr ""
-"%s: skrypt \"%s\" nie może zostać zainstalowany, ponieważ wtyczka \"%s\" nie "
+"%s: skrypt \"%s\" nie może zostać zainstalowany, ponieważ wtyczka „%s” nie "
 "jest załadowana"
 
 #, c-format
 msgid "%s: downloading script \"%s\"..."
-msgstr "%s: pobieram skrypt \"%s\"..."
+msgstr "%s: pobieram skrypt „%s”..."
 
 #, c-format
 msgid "%s: script \"%s\" is held"
-msgstr "%s: skrypt \"%s\" wystrzymano"
+msgstr "%s: skrypt „%s” wystrzymano"
 
 #, c-format
 msgid ""
 "%s: script \"%s\" can not be removed because plugin \"%s\" is not loaded"
 msgstr ""
-"%s: skrypt \"%s\" nie może zostać usunięty, ponieważ wtyczka \"%s\" nie jest "
+"%s: skrypt „%s” nie może zostać usunięty, ponieważ wtyczka „%s” nie jest "
 "załadowana"
 
 #, c-format
 msgid "%s: script \"%s\" is not held any more"
-msgstr "%s: skrypt \"%s\" nie jest już wstrzymywany"
+msgstr "%s: skrypt „%s” nie jest już wstrzymywany"
 
 msgid "Error: file not found"
 msgstr "Błąd: nie odnaleziono pliku"
@@ -10931,7 +10931,7 @@ msgstr "Pobieram skrypt..."
 
 #, c-format
 msgid "%s: script \"%s\" is already installed and up-to-date"
-msgstr "%s: skrypt \"%s\" jest już zainstalowany i jest aktualny"
+msgstr "%s: skrypt „%s” jest już zainstalowany i jest aktualny"
 
 #, c-format
 msgid "%s: all scripts are up-to-date"
@@ -10939,7 +10939,7 @@ msgstr "%s: wszystkie skrypty są aktualne"
 
 #, c-format
 msgid "configuration file \"%s\" (options %s.*)"
-msgstr "plik konfiguracyjny \"%s\" (opcje %s.*)"
+msgstr "plik konfiguracyjny „%s” (opcje %s.*)"
 
 #, c-format
 msgid "command /%s"
@@ -11225,9 +11225,9 @@ msgid ""
 "\"diff\")"
 msgstr ""
 "komenda używana do pokazania różnic pomiędzy załadowanym skryptem i nową "
-"wersją w repozytorium (\"auto\" = automatyczna detekcja polecenie diff (git "
+"wersją w repozytorium („auto” = automatyczna detekcja polecenie diff (git "
 "albo diff), pusta wartość = wyłączenie diffa, inny ciąg = nazwa komendy, na "
-"przykład \"diff\")"
+"przykład „diff”)"
 
 msgid ""
 "display source code of script on buffer with detail on a script (script is "
@@ -11255,8 +11255,8 @@ msgstr ""
 "domyślne sortowania dla skryptów: oddzielona przecinkami lista "
 "identyfikatorów: a=autor, A=automatycznie ładowany, d=data dodania, "
 "e=rozszerzenie, i=zainstalowany, l=język, n=nazwa, o=przestarzały, "
-"p=popularność, r=uruchomiony, u=data aktualizacji; znak \"-\" może zostać "
-"użyty przed identyfikatorem w celu odwrócenia kolejności; przykład: \"i,u\": "
+"p=popularność, r=uruchomiony, u=data aktualizacji; znak „-” może zostać "
+"użyty przed identyfikatorem w celu odwrócenia kolejności; przykład: „i,u”: "
 "najpierw zainstalowane skrypty, sortowane po dacie aktualizacji"
 
 msgid ""
@@ -11275,25 +11275,25 @@ msgstr ""
 "wprowadzanie: i, r, ..."
 
 msgid "color for status \"autoloaded\" (\"a\")"
-msgstr "kolor dla statusu \"automatycznie ładowany\" (\"a\")"
+msgstr "kolor dla statusu „automatycznie ładowany” („a”)"
 
-msgid "color for status \"held\" (\"H\")"
-msgstr "kolor dla statusu  \"wstrzymany\" (\"H\")"
+msgid "color for status \"held\" („H”)"
+msgstr "kolor dla statusu „wstrzymany” („H”)"
 
 msgid "color for status \"installed\" (\"i\")"
-msgstr "kolor dla statusu \"zainstalowany\" (\"i\")"
+msgstr "kolor dla statusu „zainstalowany” („i”)"
 
 msgid "color for status \"obsolete\" (\"N\")"
-msgstr "kolor dla statusu  \"przestarzały\" (\"N\")"
+msgstr "kolor dla statusu  „przestarzały” („N”)"
 
-msgid "color for status \"popular\" (\"*\")"
-msgstr "kolor dla statusu \"popularny\" (\"*\")"
+msgid "color for status \"popular\" („*\")"
+msgstr "kolor dla statusu „popularny” („*”)"
 
 msgid "color for status \"running\" (\"r\")"
-msgstr "kolor dla statusu  \"uruchomiony\" (\"r\")"
+msgstr "kolor dla statusu  „uruchomiony” („r”)"
 
 msgid "color for status \"unknown\" (\"?\")"
-msgstr "kolor dla statusu  \"nieznany\" (\"?\")"
+msgstr "kolor dla statusu  „nieznany” („?”)"
 
 msgid "text color in script buffer"
 msgstr "kolor tekstu w buforze skryptów"
@@ -11357,8 +11357,8 @@ msgid ""
 "autoload scripts installed (make a link in \"autoload\" directory to script "
 "in parent directory)"
 msgstr ""
-"automatycznie ładuj zainstalowane skrypty (tworzy link w katalogu \"autoload"
-"\" do skryptu w katalogu nadrzędnym)"
+"automatycznie ładuj zainstalowane skrypty (tworzy link w katalogu „autoload"
+"” do skryptu w katalogu nadrzędnym)"
 
 msgid ""
 "local cache expiration time, in minutes (-1 = never expires, 0 = always "
@@ -11375,17 +11375,17 @@ msgid ""
 "by WeeChat home (\"~/.weechat\" by default) (note: content is evaluated, "
 "see /help eval)"
 msgstr ""
-"lokalny katalog z cache skryptów; \"%h\" na początku ciągu zostanie "
-"zastąpione przez katalog domowy WeeChat (domyślnie \"~/.weechat\")  (uwaga: "
+"lokalny katalog z cache skryptów;„%h” na początku ciągu zostanie "
+"zastąpione przez katalog domowy WeeChat (domyślnie „~/.weechat”)  (uwaga: "
 "zawartość jest przetwarzana, zobacz /help eval)"
 
 msgid ""
 "scripts to \"hold\": comma-separated list of scripts which will never been "
 "upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
 msgstr ""
-"skrypty do \"wstrzymania\": oddzielona przecinkami lista skryptów, które "
+"skrypty do „wstrzymania”: oddzielona przecinkami lista skryptów, które "
 "nigdy nie zostaną zaktualizowane i nie mogą być usunięte, na przykład: "
-"\"buffers.pl,iset.pl\""
+"„buffers.pl,iset.pl”"
 
 msgid ""
 "URL for file with list of scripts; by default HTTPS is forced, see option "
@@ -11403,7 +11403,7 @@ msgstr ""
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr ""
-"nazwa skryptu z rozszerzeniem (wildcard \"*\" jest dozwolony) (opcjonalne)\""
+"nazwa skryptu z rozszerzeniem (wildcard „*” jest dozwolony) (opcjonalne)"
 
 msgid "scripts from repository"
 msgstr "skrypty z repozytorium"
@@ -11461,7 +11461,7 @@ msgstr "Wsparcie dla skryptów tcl"
 
 #, c-format
 msgid "%s%s: unable to run function \"%s\": %s"
-msgstr "%s%s: nie można wykonać funkcji \"%s\": %s"
+msgstr "%s%s: nie można wykonać funkcji „%s”: %s"
 
 #, c-format
 msgid "%s%s: unable to create new interpreter"
@@ -11469,7 +11469,7 @@ msgstr "%s%s: nie można utworzyć nowego interpretera"
 
 #, c-format
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
-msgstr "%s%s: wystąpił błąd podczas przetwarzania pliku \"%s\": %s"
+msgstr "%s%s: wystąpił błąd podczas przetwarzania pliku „%s”: %s"
 
 msgid ""
 "Text replacement and command execution on events triggered by WeeChat/plugins"
@@ -11479,11 +11479,11 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
-msgstr "%s%s: nie można utworzyć hooka dla triggera \"%s\" (złe argumenty)"
+msgstr "%s%s: nie można utworzyć hooka dla triggera „%s” (złe argumenty)"
 
 #, c-format
 msgid "%s%s: invalid regular expression in trigger: \"%s\""
-msgstr "%s%s: nieprawidłowe wyrażenie regularne w triggerze: \"%s\""
+msgstr "%s%s: nieprawidłowe wyrażenie regularne w triggerze: „%s”"
 
 #, c-format
 msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
@@ -11516,12 +11516,12 @@ msgid ""
 "%s%s: action \"%s\" can not be executed on trigger \"%s\" because it is "
 "currently running"
 msgstr ""
-"%s%s: akcja \"%s\" nie może być wykonana na triggerze \"%s\" ponieważ jest "
+"%s%s: akcja „%s” nie może być wykonana na triggerze „%s” ponieważ jest "
 "on aktualnie wykonywany"
 
 #, c-format
 msgid "Trigger \"%s\" restarted"
-msgstr "Trigger \"%s\" został zrestartowany"
+msgstr "Trigger „%s” został zrestartowany"
 
 #, c-format
 msgid "%s%s: a disabled trigger can not be restarted"
@@ -11529,11 +11529,11 @@ msgstr "%s%s: wyłączony trigger nie może być zrestartowany"
 
 #, c-format
 msgid "Trigger \"%s\" enabled"
-msgstr "Trigger \"%s\" włączony"
+msgstr "Trigger „%s” włączony"
 
 #, c-format
 msgid "Trigger \"%s\" disabled"
-msgstr "Trigger \"%s\" wyłączony"
+msgstr "Trigger „%s” wyłączony"
 
 #, c-format
 msgid "%s%s: invalid trigger name: \"%s\""
@@ -11541,22 +11541,22 @@ msgstr "%s%s: nieprawidłowe nazwa triggera: \"%s\""
 
 #, c-format
 msgid "%s%s: trigger \"%s\" already exists"
-msgstr "%s%s: trigger \"%s\" już istnieje"
+msgstr "%s%s: trigger „%s” już istnieje"
 
 #, c-format
 msgid "Trigger \"%s\" renamed to \"%s\""
-msgstr "Zmieniono nazwę triggera z \"%s\" na \"%s\""
+msgstr "Zmieniono nazwę triggera z „%s” na „%s”"
 
 #, c-format
 msgid "%s%s: failed to rename trigger \"%s\""
-msgstr "%s%s: zmiana nazwy triggera \"%s\" nie powiodła się"
+msgstr "%s%s: zmiana nazwy triggera „%s” nie powiodła się"
 
 msgid "List of triggers:"
 msgstr "Lista triggerów:"
 
 #, c-format
 msgid "%s%s: invalid hook type: \"%s\""
-msgstr "%s%s: nieprawidłowy typ hooka: \"%s\""
+msgstr "%s%s: nieprawidłowy typ hooka: „%s”"
 
 #, c-format
 msgid "%s%s: invalid format for regular expression"
@@ -11568,51 +11568,51 @@ msgstr "%s%s: nieprawidłowe wyrażenie regularne (kompilacja nieudana)"
 
 #, c-format
 msgid "%s%s: invalid return code: \"%s\""
-msgstr "%s%s: niepoprawny kod powrotu: \"%s\""
+msgstr "%s%s: niepoprawny kod powrotu: „%s”"
 
 #, fuzzy, c-format
 msgid "%s%s: invalid post action \"%s\""
-msgstr "%s%s: niepoprawny kod powrotu: \"%s\""
+msgstr "%s%s: niepoprawny kod powrotu: „%s”"
 
 #, c-format
 msgid ""
 "%s%s: trigger \"%s\" already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
-"%s%s: trigger \"%s\" już istnieje (wybierz inną nazwę lub użyj opcji "
-"\"addreplace\" żeby nadpisać istniejący)"
+"%s%s: trigger „%s” już istnieje (wybierz inną nazwę lub użyj opcji "
+"„addreplace” żeby nadpisać istniejący)"
 
 #, c-format
 msgid "%s%s: failed to create trigger \"%s\""
-msgstr "%s%s: nie udało się utworzyć triggera \"%s\""
+msgstr "%s%s: nie udało się utworzyć triggera „%s”"
 
 #, c-format
 msgid "Trigger \"%s\" created"
-msgstr "Utworzono trigger \"%s\""
+msgstr "Utworzono trigger „%s”"
 
 #, c-format
 msgid "%s%s: trigger \"%s\" not found"
-msgstr "%s%s: trigger \"%s\" nie został znaleziony"
+msgstr "%s%s: trigger „%s” nie został znaleziony"
 
 #, c-format
 msgid "Trigger \"%s\" updated"
-msgstr "Uaktualniono trigger \"%s\""
+msgstr "Uaktualniono trigger „%s”"
 
 #, c-format
 msgid "%s%s: trigger option \"%s\" not found"
-msgstr "%s%s: nie znaleziono opcji triggera \"%s\""
+msgstr "%s%s: nie znaleziono opcji triggera „%s”"
 
 #, c-format
 msgid "Trigger \"%s\" copied to \"%s\""
-msgstr "Trigger \"%s\" skopiowano do \"%s\""
+msgstr "Trigger „%s” skopiowano do „%s”"
 
 #, c-format
 msgid "%s%s: failed to copy trigger \"%s\""
-msgstr "%s%s: nieudane kopiowanie triggera \"%s\""
+msgstr "%s%s: nieudane kopiowanie triggera „%s”"
 
 #, c-format
 msgid "%sTrigger \"%s\" not found"
-msgstr "%sTrigger \"%s\" nie został znaleziony"
+msgstr "%sTrigger „%s” nie został znaleziony"
 
 #, c-format
 msgid "%d triggers removed"
@@ -11620,18 +11620,18 @@ msgstr "%d triggerów usunięto"
 
 #, c-format
 msgid "Trigger \"%s\" removed"
-msgstr "Trigger \"%s\" został usunięty"
+msgstr "Trigger „%s” został usunięty"
 
 msgid "Trigger:"
 msgstr "Trigger:"
 
 #, c-format
 msgid "Trigger \"%s\" restored"
-msgstr "Trigger \"%s\" został przywrócony"
+msgstr "Trigger „%s” został przywrócony"
 
 #, c-format
 msgid "%sDefault trigger \"%s\" not found"
-msgstr "%sDomyślny trigger \"%s\" nie został znaleziony"
+msgstr "%sDomyślny trigger „%s” nie został znaleziony"
 
 msgid "Default triggers restored:"
 msgstr "Przywrócono domyślne triggery:"
@@ -11641,7 +11641,7 @@ msgid ""
 "%s%s: \"-yes\" argument is required for restoring default triggers (security "
 "reason)"
 msgstr ""
-"%s%s: argument \"-yes\" jest wymagany do przywrócenia domyślnych triggerów "
+"%s%s: argument „-yes” jest wymagany do przywrócenia domyślnych triggerów "
 "(względy bezpieczeństwa)"
 
 msgid "manage triggers, the Swiss Army knife for WeeChat"
@@ -11808,8 +11808,8 @@ msgstr ""
 "    default: przywraca domyślne triggery\n"
 "    monitor: otwiera bufor monitorowania triggerów, z opcjonalnym filtrem:\n"
 "     filtr: filtruje uchwyty/triggery do wyświetlenia (uchwyt musi się "
-"zaczynać od \"@\", na przykład \"@signal\"), wiele filtrów może być "
-"oddzielonych przecinkiem; dzika karta \"*\" jest dozwolona w nazwie każdego "
+"zaczynać od „@”, na przykład „@signal”), wiele filtrów może być "
+"oddzielonych przecinkiem; dzika karta „*” jest dozwolona w nazwie każdego "
 "triggera\n"
 "\n"
 "Kiedy callback triggera jest wywoływany, wykonywane są następujące akcje, w "
@@ -11887,7 +11887,7 @@ msgid ""
 "%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
 msgstr ""
-"%s%s: niepoprawne wyrażenie regularne w opcji \"regex\", zobacz /help "
+"%s%s: niepoprawne wyrażenie regularne w opcji „regex”, zobacz /help "
 "trigger.trigger.%s.regex"
 
 msgid ""
@@ -11925,11 +11925,11 @@ msgstr ""
 "zastępuje tekst za pomocą rozszerzonego wyrażenia regularnego POSIX "
 "(następuje to tylko wtedy, jeśli warunki są spełnione i przed wykonaniem "
 "komendy) (uwaga: zawartość jest przetwarzana, kiedy trigger jest "
-"uruchamiany, zobacz /help eval); format to: \"/regex/zastąp/zmienna"
-"\" (zmienna to zmienna w tablicy hashy do zamiany, jest to opcjonalne), "
-"wiele wyrażeń można oddzielić spacja, na przykład: \"/regex1/replace1/var1 /"
-"regex2/replace2/var2\"; wyescapowane znaki są interpretowane w wyrażeniu (na "
-"przykład \"\\n\"); separator \"/\" może być zastąpiony dowolnym znakiem "
+"uruchamiany, zobacz /help eval); format to: „/regex/zastąp/zmienna"
+"” (zmienna to zmienna w tablicy hashy do zamiany, jest to opcjonalne), "
+"wiele wyrażeń można oddzielić spacja, na przykład: „/regex1/replace1/var1 /"
+"regex2/replace2/var2”; wyescapowane znaki są interpretowane w wyrażeniu (na "
+"przykład \"\\n\"); separator „/” może być zastąpiony dowolnym znakiem "
 "(jednym lub więcej identycznych znaków); pasujące grupy mogą być użyte w "
 "zastępowaniu: ${re:0} do ${re:99}, ${re:+} dla ostatniego dopasowania i "
 "${hide:c,${re:N}} do zastąpienia wszystkich znaków w grupie N znakiem 'c'"
@@ -12099,11 +12099,11 @@ msgstr "%s: plik %s (lokalna nazwa: %s) zostanie wznowiony od pozycji%llu"
 
 #, c-format
 msgid "%s%s: address \"%s\" resolved to a larger sockaddr than expected"
-msgstr "%s%s: adres \"%s\" wskazuje na większy sockaddr niż przypuszczano"
+msgstr "%s%s: adres „%s” wskazuje na większy sockaddr niż przypuszczano"
 
 #, c-format
 msgid "%s%s: invalid address \"%s\": error %d %s"
-msgstr "%s%s: niewłaściwy adres \"%s\": błąd %d %s"
+msgstr "%s%s: niewłaściwy adres „%s”: błąd %d %s"
 
 #, c-format
 msgid "%s%s: missing arguments (%s)"
@@ -12111,15 +12111,15 @@ msgstr "%s%s: brakujące argumenty (%s)"
 
 #, c-format
 msgid "%s%s: unknown xfer type \"%s\""
-msgstr "%s%s: nieznany typ xfer \"%s\""
+msgstr "%s%s: nieznany typ xfer „%s”"
 
 #, c-format
 msgid "%s%s: unknown xfer protocol \"%s\""
-msgstr "%s%s: nieznany protokół xfer \"%s\""
+msgstr "%s%s: nieznany protokół xfer „%s”"
 
 #, c-format
 msgid "%s%s: cannot access file \"%s\""
-msgstr "%s%s: nie można uzyskać dostępu do pliku \"%s\""
+msgstr "%s%s: nie można uzyskać dostępu do pliku „%s”"
 
 #, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
@@ -12138,7 +12138,7 @@ msgid ""
 "%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
 "not found or not ready for transfer"
 msgstr ""
-"%s%s: nie można wznowić pliku \"%s\" (port: %d, pozycja startowa: %llu): "
+"%s%s: nie można wznowić pliku „%s” (port: %d, pozycja startowa: %llu): "
 "xfer nie znaleziony lub nie gotowy do transferu"
 
 #, c-format
@@ -12150,12 +12150,12 @@ msgid ""
 "%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
 "xfer not found or not ready for transfer"
 msgstr ""
-"%s%s: nie można zaakceptować wznowienia pliku \"%s\" (port: %d, pozycja "
+"%s%s: nie można zaakceptować wznowienia pliku „%s” (port: %d, pozycja "
 "startowa: %llu): xfer nie znaleziony lub nie gotowy do transferu"
 
 #, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
-msgstr "%s%s: błąd podczas wysyłania danych do \"%s\" przez rozmowę xfer"
+msgstr "%s%s: błąd podczas wysyłania danych do „%s” przez rozmowę xfer"
 
 #, c-format
 msgid "%s%s: connected to %s (%s) via xfer chat"
@@ -12163,7 +12163,7 @@ msgstr "%s%s: połączono z %s (%s) poprzez chat xfer"
 
 #, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
-msgstr "%s%s: nie można znaleźć xfer dla bufora \"%s\""
+msgstr "%s%s: nie można znaleźć xfer dla bufora „%s”"
 
 msgid "Xfer list:"
 msgstr "Lista xferów:"
@@ -12172,7 +12172,7 @@ msgstr "Lista xferów:"
 msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%llu %%)"
 msgstr ""
-"%3d. %s (%s), plik: \"%s\" (lokalnie: \"%s\"), %s %s, status: %s%s%s (%llu "
+"%3d. %s (%s), plik: „%s” (lokalnie: „%s”), %s %s, status: %s%s%s (%llu "
 "%%)"
 
 #. TRANSLATORS: "%s" after "started on" is a date
@@ -12328,9 +12328,9 @@ msgid ""
 "by WeeChat home (\"~/.weechat\" by default) (note: content is evaluated, "
 "see /help eval)"
 msgstr ""
-"ścieżka, do której zapisywane będą pliki przychodzące; \"%h\" na początku "
-"ciągu zostanie zastąpione przez katalog domowy WeeChat (domyślnie \"~/."
-"weechat\")  (uwaga: zawartość jest przetwarzana, zobacz /help eval)"
+"ścieżka, do której zapisywane będą pliki przychodzące; „%h” na początku "
+"ciągu zostanie zastąpione przez katalog domowy WeeChat (domyślnie „~/."
+"weechat”)  (uwaga: zawartość jest przetwarzana, zobacz /help eval)"
 
 msgid ""
 "path for reading files when sending (when no path is specified by user): \"%h"
@@ -12338,8 +12338,8 @@ msgid ""
 "default) (note: content is evaluated, see /help eval)"
 msgstr ""
 "ścieżka do wysyłanych plików (jeśli nie zostanie ona podana przez "
-"użykownika); \"%h\" na początku ciągu zostanie zastąpione przez katalog "
-"domowy WeeChat (domyślnie \"~/.weechat\")  (uwaga: zawartość jest "
+"użykownika); „%h” na początku ciągu zostanie zastąpione przez katalog "
+"domowy WeeChat (domyślnie „~/.weechat”)  (uwaga: zawartość jest "
 "przetwarzana, zobacz /help eval)"
 
 msgid "use remote nick as prefix in local filename when receiving a file"
@@ -12409,11 +12409,11 @@ msgstr "%s%s: nie można otworzyć gniazda do wysłania pliku: błąd %d %s"
 
 #, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
-msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda: błąd %d %s"
+msgstr "%s%s: nie można ustawić opcji „nonblock” dla gniazda: błąd %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
-msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+msgstr "%s%s: przekroczono czas na „%s” z %s"
 
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
@@ -12423,12 +12423,12 @@ msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
 #~ "default part message (leaving channel) (\"%v\" will be replaced by "
 #~ "WeeChat version in string)"
 #~ msgstr ""
-#~ "domyślna wiadomość opuszczenia kanału (\"%v\" zostanie zastąpione wersja "
+#~ "domyślna wiadomość opuszczenia kanału („%v” zostanie zastąpione wersja "
 #~ "WeeChat)"
 
 #~ msgid ""
 #~ "default quit message (disconnecting from server) (\"%v\" will be replaced "
 #~ "by WeeChat version in string)"
 #~ msgstr ""
-#~ "domyślna wiadomość wyjścia z IRC (rozłączenia z serwerem) (\"%v\" "
+#~ "domyślna wiadomość wyjścia z IRC (rozłączenia z serwerem) („%v” "
 #~ "zostanie zastąpione wersją WeeChat)"
