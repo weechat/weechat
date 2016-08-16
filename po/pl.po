@@ -11286,7 +11286,7 @@ msgstr "kolor dla statusu „zainstalowany” („i”)"
 msgid "color for status \"obsolete\" (\"N\")"
 msgstr "kolor dla statusu  „przestarzały” („N”)"
 
-msgid "color for status \"popular\" („*\")"
+msgid "color for status \"popular\" (\"*\")"
 msgstr "kolor dla statusu „popularny” („*”)"
 
 msgid "color for status \"running\" (\"r\")"
