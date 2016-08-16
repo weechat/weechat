@@ -2813,7 +2813,7 @@ config_weechat_init_options ()
         N_("level for displaying names in hotlist (combination "
            "of: 1=join/part, 2=message, 4=private, 8=highlight, "
            "for example: 12=private+highlight)"),
-        NULL, 1, 15, "12", NULL, 0,
+        NULL, 1, GUI_HOTLIST_MASK_MAX, "12", NULL, 0,
         NULL, NULL, NULL,
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);

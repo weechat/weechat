@@ -723,7 +723,7 @@ upgrade_weechat_read_hotlist (struct t_infolist *infolist)
 
     if (!hotlist_reset)
     {
-        gui_hotlist_clear ();
+        gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
         hotlist_reset = 1;
     }
     plugin_name = infolist_string (infolist, "plugin_name");
@@ -846,7 +846,7 @@ upgrade_weechat_load ()
     upgrade_file_close (upgrade_file);
 
     if (!hotlist_reset)
-        gui_hotlist_clear ();
+        gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
 
     gui_color_buffer_assign ();
     gui_color_buffer_display ();

@@ -3047,7 +3047,7 @@ COMMAND_CALLBACK(input)
     else if (string_strcasecmp (argv[1], "jump_next_visited_buffer") == 0)
         gui_input_jump_next_visited_buffer (buffer);
     else if (string_strcasecmp (argv[1], "hotlist_clear") == 0)
-        gui_input_hotlist_clear (buffer);
+        gui_input_hotlist_clear (buffer, (argc > 2) ? argv[2] : NULL);
     else if (string_strcasecmp (argv[1], "grab_key") == 0)
         gui_input_grab_key (buffer, 0, (argc > 2) ? argv[2] : NULL);
     else if (string_strcasecmp (argv[1], "grab_key_command") == 0)
@@ -7412,7 +7412,10 @@ command_init ()
            "last jump to a buffer)\n"
            "  jump_previously_visited_buffer: jump to previously visited buffer\n"
            "  jump_next_visited_buffer: jump to next visited buffer\n"
-           "  hotlist_clear: clear hotlist\n"
+           "  hotlist_clear: clear hotlist (optional argument: \"lowest\" to "
+           "clear only lowest level in hotlist, \"highest\" to clear only "
+           "highest level in hotlist, or level mask: integer which is a "
+           "combination of 1=join/part, 2=message, 4=private, 8=highlight)\n"
            "  grab_key: grab a key (optional argument: delay for end of grab, "
             "default is 500 milliseconds)\n"
            "  grab_key_command: grab a key with its associated command (optional "
@@ -7431,20 +7434,23 @@ command_init ()
            "  paste_stop: stop paste (bracketed paste mode)\n"
            "\n"
            "This command is used by key bindings or plugins."),
-        "return|complete_next|complete_previous|search_text_here|search_text|"
-        "search_switch_case|search_switch_regex|search_switch_where|"
-        "search_previous|search_next|search_stop_here|search_stop|"
-        "delete_previous_char|delete_next_char|delete_previous_word|"
-        "delete_next_word|delete_beginning_of_line|delete_end_of_line|"
-        "delete_line|clipboard_paste|transpose_chars|undo|redo|"
-        "move_beginning_of_line|move_end_of_line|move_previous_char|"
-        "move_next_char|move_previous_word|move_next_word|history_previous|"
-        "history_next|history_global_previous|history_global_next|jump_smart|"
-        "jump_last_buffer_displayed|jump_previously_visited_buffer|"
-        "jump_next_visited_buffer|hotlist_clear|grab_key|grab_key_command|"
-        "grab_mouse|grab_mouse_area|set_unread|set_unread_current_buffer|"
-        "switch_active_buffer|switch_active_buffer_previous|"
-        "zoom_merged_buffer|insert|send|paste_start|paste_stop",
+        "return || complete_next || complete_previous || search_text_here || "
+        "search_text || search_switch_case || search_switch_regex || "
+        "search_switch_where || search_previous || search_next || "
+        "search_stop_here || search_stop || delete_previous_char || "
+        "delete_next_char || delete_previous_word || delete_next_word || "
+        "delete_beginning_of_line || delete_end_of_line || delete_line || "
+        "clipboard_paste || transpose_chars || undo || redo || "
+        "move_beginning_of_line || move_end_of_line || move_previous_char || "
+        "move_next_char || move_previous_word || move_next_word || "
+        "history_previous || history_next || history_global_previous || "
+        "history_global_next || jump_smart || jump_last_buffer_displayed || "
+        "jump_previously_visited_buffer || jump_next_visited_buffer || "
+        "hotlist_clear 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|lowest|highest || "
+        "grab_key || grab_key_command || grab_mouse || grab_mouse_area || "
+        "set_unread || set_unread_current_buffer || switch_active_buffer || "
+        "switch_active_buffer_previous || zoom_merged_buffer || insert || "
+        "send || paste_start || paste_stop",
         &command_input, NULL, NULL);
     hook_command (
         NULL, "key",

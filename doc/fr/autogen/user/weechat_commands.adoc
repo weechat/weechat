@@ -456,7 +456,7 @@ liste des actions :
   jump_last_buffer_displayed : sauter au dernier tampon affiché (avant le dernier saut vers un tampon)
   jump_previously_visited_buffer : sauter au tampon visité précédemment
   jump_next_visited_buffer : sauter au tampon visité après
-  hotlist_clear : effacer la hotlist
+  hotlist_clear : effacer la hotlist (paramètre facultatif : "lowest" pour effacer seulement le plus petit niveau dans la hotlist, "highest" pour effacer seulement le niveau le plus haut dans la hotlist, ou un masque de niveaux : entier qui est une combinaison de 1=join/part, 2=message, 4=privé, 8=highlight)
   grab_key : capturer une touche (paramètre facultatif : délai pour la fin de la capture, par défaut 500 millisecondes)
   grab_key_command : capturer une touche avec sa commande associée (paramètre facultatif : délai pour la fin de la capture, par défaut 500 millisecondes)
   grab_mouse : capturer un évènement de la souris

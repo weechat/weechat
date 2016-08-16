@@ -75,7 +75,8 @@ extern void gui_input_jump_smart (struct t_gui_buffer *buffer);
 extern void gui_input_jump_last_buffer_displayed (struct t_gui_buffer *buffer);
 extern void gui_input_jump_previously_visited_buffer (struct t_gui_buffer *buffer);
 extern void gui_input_jump_next_visited_buffer (struct t_gui_buffer *buffer);
-extern void gui_input_hotlist_clear (struct t_gui_buffer *buffer);
+extern void gui_input_hotlist_clear (struct t_gui_buffer *buffer,
+                                     const char *level_mask);
 extern void gui_input_grab_key (struct t_gui_buffer *buffer, int command,
                                 const char *delay);
 extern void gui_input_grab_mouse (struct t_gui_buffer *buffer, int area);

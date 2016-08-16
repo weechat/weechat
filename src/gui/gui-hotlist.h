@@ -34,6 +34,8 @@ enum t_gui_hotlist_priority
 #define GUI_HOTLIST_MIN 0
 #define GUI_HOTLIST_MAX (GUI_HOTLIST_NUM_PRIORITIES - 1)
 
+#define GUI_HOTLIST_MASK_MAX ((1 << GUI_HOTLIST_NUM_PRIORITIES) - 1)
+
 struct t_gui_hotlist
 {
     enum t_gui_hotlist_priority priority;  /* 0=crappy msg (join/part),     */
@@ -58,7 +60,7 @@ extern struct t_gui_hotlist *gui_hotlist_add (struct t_gui_buffer *buffer,
                                               enum t_gui_hotlist_priority priority,
                                               struct timeval *creation_time);
 extern void gui_hotlist_resort ();
-extern void gui_hotlist_clear ();
+extern void gui_hotlist_clear (int level_mask);
 extern void gui_hotlist_remove_buffer (struct t_gui_buffer *buffer,
                                        int force_remove_buffer);
 extern struct t_hdata *gui_hotlist_hdata_hotlist_cb (const void *pointer,
