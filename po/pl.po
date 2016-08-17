@@ -9127,7 +9127,7 @@ msgstr "%s%s[%s%s%s] %s%s%s uciszony"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
-msgstr "%s%s: nie znaleziono komendy „%s\”:"
+msgstr "%s%s: nie znaleziono komendy „%s”:"
 
 #, c-format
 msgid "%s%s: failed to parse command \"%s\" (please report to developers):"
