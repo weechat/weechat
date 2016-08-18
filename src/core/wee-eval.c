@@ -1156,7 +1156,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         if (ptr_value && (strcmp (ptr_value, "condition") == 0))
             condition = 1;
 
-        /* */
+        /* check if extra vars must be evaluated */
         ptr_value = hashtable_get (options, "extra");
         if (ptr_value && (strcmp (ptr_value, "eval") == 0))
             extra_vars_eval = 1;
