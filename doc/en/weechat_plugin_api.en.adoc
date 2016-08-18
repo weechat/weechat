@@ -1993,6 +1993,10 @@ Arguments:
     parentheses are used, result is a boolean ("0" or "1")
 ** _prefix_: prefix before variables to replace (default: `+${+`)
 ** _suffix_: suffix after variables to replace (default: `+}+`)
+** _extra_: default behavior is to just replace extra variables (_extra_vars_),
+   other behavior can be selected:
+*** _eval_: extra variables (_extra_vars_) are evaluated themselves before
+    replacing
 ** _regex_: a regex used to replace text in _expr_ (which is then not
    evaluated)
 ** _regex_replace_: the replacement text to use with _regex_, to replace
