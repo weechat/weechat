@@ -22,6 +22,7 @@ New features::
 
   * core: add optional argument "lowest", "highest" or level mask in command /input hotlist_clear
   * core: add option "cycle" in command /buffer
+  * api: add "extra" argument to evaluate extra variables in function string_eval_expression() (issue #534)
   * relay: add option relay.network.allow_empty_password (issue #735)
   * trigger: add support for one-time triggers (issue #399, issue #509)
 
