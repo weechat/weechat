@@ -2032,6 +2032,10 @@ Paramètres :
     et parenthèses sont utilisés, le résultat est un booléen ("0" ou "1")
 ** _prefix_ : préfixe avant les variables à remplacer (par défaut : `+${+`)
 ** _suffix_ : suffixe après les variables à remplacer (par défaut : `+}+`)
+** _extra_ : le comportement par défaut est juste de remplacer les variables
+   additionnelles (_extra_vars_), un autre comportement peut être sélectionné :
+*** _eval_ : les variables additionnelles (_extra_vars_) sont évaluées
+    elles-mêmes avant remplacement
 ** _regex_ : une expression regulière pour remplacer du texte dans _expr_ (qui
    n'est alors pas évalué)
 ** _regex_replace_ : le texte de remplacement à utiliser avec _regex_, pour

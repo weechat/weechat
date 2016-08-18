@@ -1999,6 +1999,12 @@ char *weechat_string_eval_expression (const char *expr,
     演算子と括弧が使われます、結果はブール値 ("0" または "1") です
 ** _prefix_: 置換する変数のプレフィックス (デフォルト: `+${+`)
 ** _suffix_: 置換する変数のサフィックス (デフォルト: `+}+`)
+// TRANSLATION MISSING
+** _extra_: default behavior is to just replace extra variables (_extra_vars_),
+   other behavior can be selected:
+// TRANSLATION MISSING
+*** _eval_: extra variables (_extra_vars_) are evaluated themselves before
+    replacing
 ** _regex_: _expr_ のテキストを置換する正規表現
    (この場合 _expr_ は評価されません)
 ** _regex_replace_: _regex_ と一緒に使われる置換テキスト、_expr_
