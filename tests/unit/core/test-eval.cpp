@@ -162,6 +162,11 @@ TEST(Eval, EvalCondition)
     WEE_CHECK_EVAL("1", "${buffer.number} == 1");
     WEE_CHECK_EVAL("1", "${window.buffer.number} == 1");
 
+    /* evaluation of extra_vars */
+    hashtable_set (options, "extra", "eval");
+    hashtable_set (extra_vars, "test", "${buffer.number}");
+    WEE_CHECK_EVAL("1", "${test} == 1");
+
     hashtable_free (extra_vars);
     hashtable_free (options);
 }
