@@ -754,16 +754,12 @@ network_connect_child (struct t_hook *hook_connect)
     char status_without_string[1 + 5 + 1];
     const char *error;
     int rc, length, num_written;
-    int sock, set, flags;
-#ifdef HOOK_CONNECT_MAX_SOCKETS
-    int j;
-#else
+    int sock, set, flags, j;
     struct msghdr msg;
     struct cmsghdr *cmsg;
     char msg_buf[CMSG_SPACE(sizeof (sock))];
     struct iovec iov[1];
     char iov_data[1] = { 0 };
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
     /*
      * indicates that something is wrong with whichever group of
      * servers is being tried first after connecting, so start at
@@ -1050,38 +1046,41 @@ network_connect_child (struct t_hook *hook_connect)
     {
         ptr_res = res_reorder[i];
 
-#ifdef HOOK_CONNECT_MAX_SOCKETS
-        /* use pre-created socket pool */
-        sock = -1;
-        for (j = 0; j < HOOK_CONNECT_MAX_SOCKETS; j++)
+        if (hook_socketpair_ok)
         {
-            if (ptr_res->ai_family == AF_INET)
-            {
-                sock = HOOK_CONNECT(hook_connect, sock_v4[j]);
-                if (sock != -1)
-                {
-                    HOOK_CONNECT(hook_connect, sock_v4[j]) = -1;
-                    break;
-                }
-            }
-            else if (ptr_res->ai_family == AF_INET6)
-            {
-                sock = HOOK_CONNECT(hook_connect, sock_v6[j]);
-                if (sock != -1)
-                {
-                    HOOK_CONNECT(hook_connect, sock_v6[j]) = -1;
-                    break;
-                }
-            }
+            /* create a socket */
+            sock = socket (ptr_res->ai_family,
+                           ptr_res->ai_socktype,
+                           ptr_res->ai_protocol);
         }
-        if (sock < 0)
-            continue;
-#else
-        /* create a socket */
-        sock = socket (ptr_res->ai_family,
-                       ptr_res->ai_socktype,
-                       ptr_res->ai_protocol);
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
+        else
+        {
+            /* use pre-created socket pool */
+            sock = -1;
+            for (j = 0; j < HOOK_CONNECT_MAX_SOCKETS; j++)
+            {
+                if (ptr_res->ai_family == AF_INET)
+                {
+                    sock = HOOK_CONNECT(hook_connect, sock_v4[j]);
+                    if (sock != -1)
+                    {
+                        HOOK_CONNECT(hook_connect, sock_v4[j]) = -1;
+                        break;
+                    }
+                }
+                else if (ptr_res->ai_family == AF_INET6)
+                {
+                    sock = HOOK_CONNECT(hook_connect, sock_v6[j]);
+                    if (sock != -1)
+                    {
+                        HOOK_CONNECT(hook_connect, sock_v6[j]) = -1;
+                        break;
+                    }
+                }
+            }
+            if (sock < 0)
+                continue;
+        }
         if (sock < 0)
         {
             status_str[0] = '0' + WEECHAT_HOOK_CONNECT_SOCKET_ERROR;
@@ -1189,30 +1188,33 @@ network_connect_child (struct t_hook *hook_connect)
         }
 
         /* send the socket to the parent process */
-#ifndef HOOK_CONNECT_MAX_SOCKETS
-        memset (&msg, 0, sizeof (msg));
-        msg.msg_control = msg_buf;
-        msg.msg_controllen = sizeof (msg_buf);
+        if (hook_socketpair_ok)
+        {
+            memset (&msg, 0, sizeof (msg));
+            msg.msg_control = msg_buf;
+            msg.msg_controllen = sizeof (msg_buf);
 
-        /* send 1 byte of data (not required on Linux, required by BSD/OSX) */
-        memset (iov, 0, sizeof (iov));
-        iov[0].iov_base = iov_data;
-        iov[0].iov_len = 1;
-        msg.msg_iov = iov;
-        msg.msg_iovlen = 1;
+            /* send 1 byte of data (not required on Linux, required by BSD/OSX) */
+            memset (iov, 0, sizeof (iov));
+            iov[0].iov_base = iov_data;
+            iov[0].iov_len = 1;
+            msg.msg_iov = iov;
+            msg.msg_iovlen = 1;
 
-        cmsg = CMSG_FIRSTHDR(&msg);
-        cmsg->cmsg_level = SOL_SOCKET;
-        cmsg->cmsg_type = SCM_RIGHTS;
-        cmsg->cmsg_len = CMSG_LEN(sizeof (sock));
-        memcpy(CMSG_DATA(cmsg), &sock, sizeof (sock));
-        msg.msg_controllen = cmsg->cmsg_len;
-        num_written = sendmsg (HOOK_CONNECT(hook_connect, child_send), &msg, 0);
-        (void) num_written;
-#else
-        num_written = write (HOOK_CONNECT(hook_connect, child_write), &sock, sizeof (sock));
-        (void) num_written;
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
+            cmsg = CMSG_FIRSTHDR(&msg);
+            cmsg->cmsg_level = SOL_SOCKET;
+            cmsg->cmsg_type = SCM_RIGHTS;
+            cmsg->cmsg_len = CMSG_LEN(sizeof (sock));
+            memcpy(CMSG_DATA(cmsg), &sock, sizeof (sock));
+            msg.msg_controllen = cmsg->cmsg_len;
+            num_written = sendmsg (HOOK_CONNECT(hook_connect, child_send), &msg, 0);
+            (void) num_written;
+        }
+        else
+        {
+            num_written = write (HOOK_CONNECT(hook_connect, child_write), &sock, sizeof (sock));
+            (void) num_written;
+        }
     }
     else
     {
@@ -1394,16 +1396,12 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
 #ifdef HAVE_GNUTLS
     int rc, direction;
 #endif /* HAVE_GNUTLS */
-    int sock;
-#ifdef HOOK_CONNECT_MAX_SOCKETS
-    int i;
-#else
+    int sock, i;
     struct msghdr msg;
     struct cmsghdr *cmsg;
     char msg_buf[CMSG_SPACE(sizeof (sock))];
     struct iovec iov[1];
     char iov_data[1];
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
 
     /* make C compiler happy */
     (void) data;
@@ -1447,44 +1445,47 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
                 }
             }
 
-#ifndef HOOK_CONNECT_MAX_SOCKETS
-            /* receive the socket from the child process */
-            memset (&msg, 0, sizeof (msg));
-            msg.msg_control = msg_buf;
-            msg.msg_controllen = sizeof (msg_buf);
-
-            /* recv 1 byte of data (not required on Linux, required by BSD/OSX) */
-            memset (iov, 0, sizeof (iov));
-            iov[0].iov_base = iov_data;
-            iov[0].iov_len = 1;
-            msg.msg_iov = iov;
-            msg.msg_iovlen = 1;
-
-            if (recvmsg (HOOK_CONNECT(hook_connect, child_recv), &msg, 0) >= 0)
+            if (hook_socketpair_ok)
             {
-                cmsg = CMSG_FIRSTHDR(&msg);
-                if (cmsg != NULL
-                    && cmsg->cmsg_level == SOL_SOCKET
-                    && cmsg->cmsg_type == SCM_RIGHTS
-                    && cmsg->cmsg_len >= sizeof (sock))
+                /* receive the socket from the child process */
+                memset (&msg, 0, sizeof (msg));
+                msg.msg_control = msg_buf;
+                msg.msg_controllen = sizeof (msg_buf);
+
+                /* recv 1 byte of data (not required on Linux, required by BSD/OSX) */
+                memset (iov, 0, sizeof (iov));
+                iov[0].iov_base = iov_data;
+                iov[0].iov_len = 1;
+                msg.msg_iov = iov;
+                msg.msg_iovlen = 1;
+
+                if (recvmsg (HOOK_CONNECT(hook_connect, child_recv), &msg, 0) >= 0)
                 {
-                    memcpy(&sock, CMSG_DATA(cmsg), sizeof (sock));
+                    cmsg = CMSG_FIRSTHDR(&msg);
+                    if (cmsg != NULL
+                        && cmsg->cmsg_level == SOL_SOCKET
+                        && cmsg->cmsg_type == SCM_RIGHTS
+                        && cmsg->cmsg_len >= sizeof (sock))
+                    {
+                        memcpy(&sock, CMSG_DATA(cmsg), sizeof (sock));
+                    }
                 }
             }
-#else
-            num_read = read (HOOK_CONNECT(hook_connect, child_read), &sock, sizeof (sock));
-            (void) num_read;
-
-            /* prevent unhook process from closing the socket */
-            for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+            else
             {
-                if (HOOK_CONNECT(hook_connect, sock_v4[i]) == sock)
-                    HOOK_CONNECT(hook_connect, sock_v4[i]) = -1;
+                num_read = read (HOOK_CONNECT(hook_connect, child_read), &sock, sizeof (sock));
+                (void) num_read;
 
-                if (HOOK_CONNECT(hook_connect, sock_v6[i]) == sock)
-                    HOOK_CONNECT(hook_connect, sock_v6[i]) = -1;
+                /* prevent unhook process from closing the socket */
+                for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+                {
+                    if (HOOK_CONNECT(hook_connect, sock_v4[i]) == sock)
+                        HOOK_CONNECT(hook_connect, sock_v4[i]) = -1;
+
+                    if (HOOK_CONNECT(hook_connect, sock_v6[i]) == sock)
+                        HOOK_CONNECT(hook_connect, sock_v6[i]) = -1;
+                }
             }
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
 
             HOOK_CONNECT(hook_connect, sock) = sock;
 
@@ -1634,12 +1635,7 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
 void
 network_connect_with_fork (struct t_hook *hook_connect)
 {
-    int child_pipe[2], rc;
-#ifdef HOOK_CONNECT_MAX_SOCKETS
-    int i;
-#else
-    int child_socket[2];
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
+    int child_pipe[2], child_socket[2], rc, i;
 #ifdef HAVE_GNUTLS
     const char *pos_error;
 #endif /* HAVE_GNUTLS */
@@ -1708,27 +1704,30 @@ network_connect_with_fork (struct t_hook *hook_connect)
     HOOK_CONNECT(hook_connect, child_read) = child_pipe[0];
     HOOK_CONNECT(hook_connect, child_write) = child_pipe[1];
 
-#ifndef HOOK_CONNECT_MAX_SOCKETS
-    /* create socket for child process */
-    if (socketpair (AF_LOCAL, SOCK_DGRAM, 0, child_socket) < 0)
+    if (hook_socketpair_ok)
     {
-        (void) (HOOK_CONNECT(hook_connect, callback))
-            (hook_connect->callback_pointer,
-             hook_connect->callback_data,
-             WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
-             0, -1, "socketpair", NULL);
-        unhook (hook_connect);
-        return;
+        /* create socket for child process */
+        if (socketpair (AF_LOCAL, SOCK_DGRAM, 0, child_socket) < 0)
+        {
+            (void) (HOOK_CONNECT(hook_connect, callback))
+                (hook_connect->callback_pointer,
+                 hook_connect->callback_data,
+                 WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
+                 0, -1, "socketpair", NULL);
+            unhook (hook_connect);
+            return;
+        }
+        HOOK_CONNECT(hook_connect, child_recv) = child_socket[0];
+        HOOK_CONNECT(hook_connect, child_send) = child_socket[1];
     }
-    HOOK_CONNECT(hook_connect, child_recv) = child_socket[0];
-    HOOK_CONNECT(hook_connect, child_send) = child_socket[1];
-#else
-    for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+    else
     {
-        HOOK_CONNECT(hook_connect, sock_v4[i]) = socket (AF_INET, SOCK_STREAM, 0);
-        HOOK_CONNECT(hook_connect, sock_v6[i]) = socket (AF_INET6, SOCK_STREAM, 0);
+        for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+        {
+            HOOK_CONNECT(hook_connect, sock_v4[i]) = socket (AF_INET, SOCK_STREAM, 0);
+            HOOK_CONNECT(hook_connect, sock_v6[i]) = socket (AF_INET6, SOCK_STREAM, 0);
+        }
     }
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
 
     switch (pid = fork ())
     {
@@ -1746,9 +1745,8 @@ network_connect_with_fork (struct t_hook *hook_connect)
             rc = setuid (getuid ());
             (void) rc;
             close (HOOK_CONNECT(hook_connect, child_read));
-#ifndef HOOK_CONNECT_MAX_SOCKETS
-            close (HOOK_CONNECT(hook_connect, child_recv));
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
+            if (hook_socketpair_ok)
+                close (HOOK_CONNECT(hook_connect, child_recv));
             network_connect_child (hook_connect);
             _exit (EXIT_SUCCESS);
     }
@@ -1756,10 +1754,11 @@ network_connect_with_fork (struct t_hook *hook_connect)
     HOOK_CONNECT(hook_connect, child_pid) = pid;
     close (HOOK_CONNECT(hook_connect, child_write));
     HOOK_CONNECT(hook_connect, child_write) = -1;
-#ifndef HOOK_CONNECT_MAX_SOCKETS
-    close (HOOK_CONNECT(hook_connect, child_send));
-    HOOK_CONNECT(hook_connect, child_send) = -1;
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
+    if (hook_socketpair_ok)
+    {
+        close (HOOK_CONNECT(hook_connect, child_send));
+        HOOK_CONNECT(hook_connect, child_send) = -1;
+    }
     HOOK_CONNECT(hook_connect, hook_child_timer) = hook_timer (hook_connect->plugin,
                                                                CONFIG_INTEGER(config_network_connection_timeout) * 1000,
                                                                0, 1,

@@ -36,6 +36,7 @@ Improvements::
 Bug fixes::
 
   * core, irc, xfer: refresh domain name and name server addresses before connection to servers (issue #771)
+  * api: fix connection to servers with hook_connect() on Windows 10 with Windows subsystem for Linux (issue #770)
   * api: fix crash in function string_split_command() when the separator is not a semicolon (issue #731)
   * irc: fix NULL pointer dereference in 734 command callback (issue #738)
   * relay: return an empty hdata when the requested hdata or pointer is not found (issue #767)
