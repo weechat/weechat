@@ -674,6 +674,9 @@ network_connect_to (const char *proxy, struct sockaddr *address,
     sock = -1;
     proxy_addrinfo = NULL;
 
+    if (!address || (address_length == 0))
+        return -1;
+
     ptr_proxy = NULL;
     if (proxy && proxy[0])
     {
