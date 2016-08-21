@@ -32,8 +32,7 @@ WeeChat (Wee Enhanced Environment for Chat)
 
 主な特徴:
 
-// TRANSLATION MISSING
-* マルチプロトコル (mainly IRC)
+* マルチプロトコル (主に IRC)
 * 複数のサーバへの接続 (SSL、IPv6、プロキシをサポート)
 * コンパクト、高速、軽量
 * プラグインとスクリプトでカスタマイズや拡張が可能
@@ -2986,10 +2985,9 @@ include::autogen/user/trigger_commands.adoc[]
   コールバックの戻り値 (デフォルトは
   `ok` 、ほとんどすべてのトリガで戻り値はこれを使うべきで、ほかの値を使うことは極めてまれです)。
 
-// TRANSLATION MISSING
-| post_action | `none`, `disable`, `delete` |
-  Action to take on the trigger after execution (default is `none` which should
-  be used in almost all triggers, the other values are rarely used).
+| post_action | `none` (何もしない)、`disable` (無効化)、`delete` (削除) |
+  実行後のトリガに対する処遇 (ほとんどすべてのトリガではデフォルトの `none`
+  を設定するべきで、それ以外の値を設定することはほとんどありません)。
 |===
 
 例えば、デフォルトの _beep_ トリガは以下のオプションをとります:
@@ -3014,8 +3012,7 @@ trigger.trigger.beep.post_action = none
 . 正規表現を使ってトリガ内でテキスト置換
 . コマンドを実行
 . リターンコードを付けて終了 (_modifier_ と _focus_ フックの場合を除く)
-// TRANSLATION MISSING
-. perform post action (if different from `none`).
+. トリガ実行後の処遇を適用 (`none` 以外の場合)。
 
 [[trigger_hook_arguments]]
 ==== フック引数

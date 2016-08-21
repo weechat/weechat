@@ -114,7 +114,7 @@ WeeChat は UTF-8 ロケールを推奨します。ISO
 が ISO であり、UTF-8 *でない* ことを確認してください。
 
 [[unicode_chars]]
-=== 端末で表示されるユニコード文字が WeeChat では表示されない場合があります、なぜでしょうか?
+=== 端末で表示されるユニコード文字が WeeChat では表示されない場合があります。なぜでしょうか。
 
 この問題は libc の _wcwidth_ 関数のバグによって引き起こされている可能性があります。これは glibc 2.22
 で修正されているはずです (使用中のディストリビューションではまだ提供されていないかもしれません)
@@ -384,14 +384,13 @@ WeeChat の開始時にコードを送信するには:
 /key bind meta2-O /print -core unfocus
 ----
 
-// TRANSLATION MISSING
 [[screen_paste]]
-=== When WeeChat is running in screen, pasting text in another screen window adds ~0 and ~1 around text, why?
+=== WeeChat を screen の内部で実行している場合、別の screen ウィンドウ内に貼り付けられるテキストの周りに ~0 と ~1 が追加されます。なぜでしょうか。
 
-This is caused by the bracketed paste option which is enabled by default, and
-not properly handled by screen in other windows.
+scrreen
+がデフォルトで有効化されている括弧付きペーストオプションの挙動を別のウィンドウ内で適切に処理できないことが原因です。
 
-You can just disable bracketed paste mode:
+括弧付きペーストモードを無効化するには以下のコマンドを使います:
 
 ----
 /set weechat.look.paste_bracketed off
