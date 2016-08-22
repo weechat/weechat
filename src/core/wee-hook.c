@@ -119,6 +119,8 @@ hook_init ()
 
 #if defined(__CYGWIN__) || defined(__APPLE__) || defined(__MACH__)
     hook_socketpair_ok = 0;
+    (void) sock;
+    (void) rc;
 #else
     /*
      * Test if socketpair() function is working fine: this is NOT the case
