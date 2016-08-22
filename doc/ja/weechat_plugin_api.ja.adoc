@@ -1994,17 +1994,15 @@ char *weechat_string_eval_expression (const char *expr,
 * _options_: いくつかのオプションを含むハッシュテーブル (キーと値は必ず文字列)
   (NULL でも可):
 ** _type_:
-   デフォルトの挙動では式中の変数をその値で置換するだけです、その他に以下のタイプを使うことができます:
+   デフォルトの挙動では式中の変数をその値で置換するだけですが、この挙動を変更します。設定可能なタイプは以下です:
 *** _condition_: 条件式として式を評価します:
     演算子と括弧が使われます、結果はブール値 ("0" または "1") です
 ** _prefix_: 置換する変数のプレフィックス (デフォルト: `+${+`)
 ** _suffix_: 置換する変数のサフィックス (デフォルト: `+}+`)
-// TRANSLATION MISSING
-** _extra_: default behavior is to just replace extra variables (_extra_vars_),
-   other behavior can be selected:
-// TRANSLATION MISSING
-*** _eval_: extra variables (_extra_vars_) are evaluated themselves before
-    replacing
+** _extra_: デフォルトの挙動では追加変数 (_extra_vars_)
+   を単純に置換するだけですが、この挙動を変更します。設定可能な値は以下です:
+*** _eval_: 置換前に追加変数 (_extra_vars_)
+    を評価します
 ** _regex_: _expr_ のテキストを置換する正規表現
    (この場合 _expr_ は評価されません)
 ** _regex_replace_: _regex_ と一緒に使われる置換テキスト、_expr_
