@@ -49,6 +49,7 @@ Documentation::
 
 Build::
 
+  * cygwin: disable build of man page and documentation
   * python: add detection of Python 3.5
 
 [[v1.5]]

@@ -46,20 +46,19 @@ HOMEPAGE="https://weechat.org/"
 SRC_URI="https://weechat.org/files/src/weechat-${VERSION}.tar.bz2"
 
 # Build dependencies only
-DEPEND="asciidoc cmake docbook-xml-simple11 docbook-xsl gettext gettext-devel \
-gnutls-devel libaspell-devel libcurl-devel libgcrypt-devel libncursesw-devel \
-lua perl pkg-config python ruby source-highlight tcl zlib-devel"
+DEPEND="cmake gettext gettext-devel libgnutls-devel libaspell-devel \
+libcurl-devel libgcrypt-devel libncurses-devel lua perl pkg-config python \
+ruby tcl-devel zlib-devel"
 
 #
 # CMake compilation of WeeChat:
 #   1. set prefix to /usr
-#   2. enable build of man pages and documentation
-#   3. disable Guile plugin because WeeChat requires Guile >= 2.0,
+#   2. disable Guile plugin because WeeChat requires Guile >= 2.0,
 #      which is not yet available in Cygwin
-#   4. disable Javascript plugin because libv8 is not available in Cygwin
+#   3. disable Javascript plugin because libv8 is not available in Cygwin
 #
-CYGCMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=/usr -DENABLE_MAN=ON -DENABLE_DOC=ON \
--DENABLE_GUILE=OFF -DENABLE_JAVASCRIPT=OFF"
+CYGCMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=/usr -DENABLE_GUILE=OFF \
+-DENABLE_JAVASCRIPT=OFF"
 
 #
 # Build 8 Cygwin packages:
@@ -70,15 +69,14 @@ CYGCMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=/usr -DENABLE_MAN=ON -DENABLE_DOC=ON \
 #   weechat-lua
 #   weechat-tcl
 #   weechat-devel
-#   weechat-doc
 #
 PKG_NAMES="${PN} ${PN}-python ${PN}-perl ${PN}-ruby ${PN}-lua ${PN}-tcl \
-${PN}-devel ${PN}-doc"
-PKG_HINTS="setup python perl ruby lua tcl devel doc"
+${PN}-devel"
+PKG_HINTS="setup python perl ruby lua tcl devel"
 
 #
 # Package "weechat": binary, all plugins except scripting languages,
-# translations, icon, man pages
+# translations, icon
 #
 weechat_SUMMARY="Fast, light and extensible chat client (IRC/XMPP)"
 weechat_DESCRIPTION="WeeChat (Wee Enhanced Environment for Chat) is a fast, \
@@ -99,7 +97,6 @@ weechat_CONTENTS="
     usr/lib/weechat/plugins/xfer.dll
     usr/share/locale/
     usr/share/icons/
-    usr/share/man/
     usr/share/doc/weechat/AUTHORS.adoc
     usr/share/doc/weechat/ChangeLog.adoc
     usr/share/doc/weechat/Contributing.adoc
@@ -154,10 +151,3 @@ weechat_tcl_REQUIRES="weechat"
 weechat_devel_CATEGORY="Net Devel"
 weechat_devel_SUMMARY="Development files to build WeeChat plugins"
 weechat_devel_CONTENTS="usr/include/ usr/lib/pkgconfig/"
-
-#
-# Package "weechat-doc": documentation
-#
-weechat_doc_CATEGORY="Net Doc"
-weechat_doc_SUMMARY="Documentation for WeeChat"
-weechat_doc_CONTENTS="usr/share/doc/weechat/*.html"
