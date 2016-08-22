@@ -102,7 +102,7 @@
 
 | trigger | trigger_options | トリガに対するオプション
 
-| trigger | trigger_post_action | trigger post actions
+| trigger | trigger_post_action | トリガ実行後の処遇
 
 | weechat | bars_names | バーの名前
 
