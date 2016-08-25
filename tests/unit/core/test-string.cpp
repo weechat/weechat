@@ -344,6 +344,14 @@ TEST(String, ExpandHome)
     LONGS_EQUAL(length_home + 8, strlen (result));
     STRCMP_EQUAL(result + length_home, "/abc.txt");
     free (result);
+
+    result = string_expand_home ("~/bla.log:~/abc.txt");
+    LONGS_EQUAL(length_home * 2 + 9 + 8, strlen (result));
+    CHECK(strncmp (result, home, length_home) == 0);
+    CHECK(strncmp (result + length_home + 9, home, length_home) == 0);
+    CHECK(strncmp (result + length_home, "/bla.log", 8) == 0);
+    STRCMP_EQUAL(result + 9 + length_home * 2, "/abc.txt");
+    free (result);
 }
 
 /*
