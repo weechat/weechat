@@ -107,9 +107,32 @@ network_set_gnutls_ca_file ()
         ca_path2 = string_replace (ca_path, "%h", weechat_home);
         if (ca_path2)
         {
-            gnutls_certificate_set_x509_trust_file (gnutls_xcred, ca_path2,
-                                                    GNUTLS_X509_FMT_PEM);
+            char *ca_path3 = ca_path2;
+            char *single_path = malloc (strlen (ca_path3) + 1);
+
+            while (1) {
+                if (strchr (ca_path3, ':') == NULL)
+                {
+                    /* If there is no colon, just use the whole string and 
+                     * return. */
+                    gnutls_certificate_set_x509_trust_file (gnutls_xcred,
+                            ca_path3, GNUTLS_X509_FMT_PEM);
+                    break;
+                }
+                else
+                {
+                    /* If there is a colon in ca_path3, use the path up to the
+                     * colon, and feed it to the function */
+                    strncpy (single_path, ca_path3, 
+                            strchr (ca_path3, ':') - ca_path3);
+                    gnutls_certificate_set_x509_trust_file (gnutls_xcred,
+                            single_path, GNUTLS_X509_FMT_PEM);
+                    /* Then advance ca_path3 to the character after the colon */
+                    ca_path3 = strchr (ca_path3, ':') + 1;
+                }
+            };
             free (ca_path2);
+            free (single_path);
         }
         free (ca_path);
     }
