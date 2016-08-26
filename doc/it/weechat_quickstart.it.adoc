@@ -326,6 +326,13 @@ Per esempio, per dividere verticalmente lo schermo in una finestra piccola
 /window splitv 33
 ----
 
+// TRANSLATION MISSING
+To remove the split:
+
+----
+/window merge
+----
+
 [[key_bindings]]
 == Associazione tasti
 

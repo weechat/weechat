@@ -327,6 +327,13 @@ und ein größeres Fenster (2/3 Bildschirmbreite) aufzuteilen:
 /window splitv 33
 ----
 
+// TRANSLATION MISSING
+To remove the split:
+
+----
+/window merge
+----
+
 [[key_bindings]]
 == Tastaturbelegung
 

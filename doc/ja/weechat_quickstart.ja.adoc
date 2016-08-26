@@ -304,6 +304,13 @@ _command_ オプションに複数のコマンドを含める場合は `;` (セ�
 /window splitv 33
 ----
 
+// TRANSLATION MISSING
+To remove the split:
+
+----
+/window merge
+----
+
 [[key_bindings]]
 == キー割り当て設定
 

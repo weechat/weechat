@@ -333,6 +333,13 @@ junto a otras mas grande (2/3) use el comando
 /window splitv 33
 ----
 
+// TRANSLATION MISSING
+To remove the split:
+
+----
+/window merge
+----
+
 [[key_bindings]]
 == Atajos de teclado
 

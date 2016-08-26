@@ -304,6 +304,13 @@ oraz duże okno (2/3), użyj komendy:
 /window splitv 33
 ----
 
+// TRANSLATION MISSING
+To remove the split:
+
+----
+/window merge
+----
+
 [[key_bindings]]
 == Skróty klawiszowe
 

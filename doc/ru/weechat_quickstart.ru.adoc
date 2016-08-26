@@ -318,6 +318,13 @@ _foo_):
 /window splitv 33
 ----
 
+// TRANSLATION MISSING
+To remove the split:
+
+----
+/window merge
+----
+
 [[key_bindings]]
 == Сочетания клавиш
 

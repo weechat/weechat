@@ -306,6 +306,13 @@ okno (2/3), použijte příkaz:
 /window splitv 33
 ----
 
+// TRANSLATION MISSING
+To remove the split:
+
+----
+/window merge
+----
+
 [[key_bindings]]
 == Předvoblby klávesových zkratek
 

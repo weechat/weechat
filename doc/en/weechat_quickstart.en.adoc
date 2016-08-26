@@ -300,6 +300,12 @@ and a large window (2/3), use command:
 /window splitv 33
 ----
 
+To remove the split:
+
+----
+/window merge
+----
+
 [[key_bindings]]
 == Key bindings
 

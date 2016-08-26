@@ -311,6 +311,12 @@ Par exemple, pour découper verticalement l'écran en une petite fenêtre
 /window splitv 33
 ----
 
+Pour supprimer le découpage :
+
+----
+/window merge
+----
+
 [[key_bindings]]
 == Raccourcis clavier
 
