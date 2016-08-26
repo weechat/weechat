@@ -83,6 +83,15 @@
     #define DIR_SEPARATOR_CHAR  '/'
 #endif /* _WIN32 */
 
+/* path separator, depending on OS as well (see PATH variables) */
+#ifdef _WIN32
+    #define PATH_SEPARATOR      ";"
+    #define PATH_SEPARATOR_CHAR ';'
+#else
+    #define PATH_SEPARATOR      ":"
+    #define PATH_SEPARATOR_CHAR ':'
+#endif
+
 /* some systems like GNU/Hurd do not define PATH_MAX */
 #ifndef PATH_MAX
     #define PATH_MAX 4096

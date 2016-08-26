@@ -489,8 +489,8 @@ string_expand_home (const char *path)
 
     /* 
      * Count the parts separated by colons...
-     * a:b => parts = 2
-     * a => parts = 1
+     * a:~/b => replacements = 1
+     * a => replacements = 0
      */
     path_start = 1;
     replacements = 0;
@@ -499,12 +499,11 @@ string_expand_home (const char *path)
     {
         if (path_start && strncmp(c, "~/", 2) == 0)
             replacements++;
-        path_start = (*c == ':');
+        path_start = (*c == PATH_SEPARATOR_CHAR);
     }
 
     str = malloc (strlen (path) + 1
                   + replacements * (strlen (ptr_home) - strlen ("~")));
-    str[0] = '\0';
     d = str;
     path_start = 1;
 
@@ -517,7 +516,7 @@ string_expand_home (const char *path)
         }
         else
             *d++ = *c;
-        path_start = (*c == ':');
+        path_start = (*c == PATH_SEPARATOR_CHAR);
     }
     *d = '\0';
 
