@@ -107,13 +107,13 @@ network_set_gnutls_ca_file ()
         ca_path2 = string_replace (ca_path, "%h", weechat_home);
         if (ca_path2)
         {
-            int num_paths;
+            int num_paths, i;
             char **single_paths;
 
             single_paths = string_split(ca_path2, PATH_SEPARATOR, 0, 0, 
                                         &num_paths);
 
-            for (int i = 0; i < num_paths; i++)
+            for (i = 0; i < num_paths; i++)
             {
                 gnutls_certificate_set_x509_trust_file (gnutls_xcred,
                             single_paths[i], GNUTLS_X509_FMT_PEM);
