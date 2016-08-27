@@ -958,8 +958,8 @@ Exemples :
          left : sauter à la fenêtre à gauche
         right : sauter à la fenêtre à droite
        numéro : numéro de fenêtre (voir /window list)
-       splith : éclater la fenêtre en deux horizontalement
-       splitv : éclater la fenêtre en deux verticalement
+       splith : éclater la fenêtre en deux horizontalement (pour défaire : /window merge)
+       splitv : éclater la fenêtre en deux verticalement (pour défaire : /window merge)
        resize : redimensionner une fenêtre, la nouvelle taille est <pct> pourcentage de la fenêtre parent
       balance : équilibrer la taille de toutes les fenêtres
         merge : fusionner la fenêtre avec une autre
@@ -993,6 +993,10 @@ Exemples :
     /window scroll -d
   zoom sur la fenêtre numéro 2 :
     /window zoom -window 2
+  éclater la fenêtre horizontalement en utilisant 30%% de l'espace pour la fenêtre du haut :
+    /window splith 30
+  supprimer l'éclatement :
+    /window merge
   activer le mode d'affichage dépouillé pendant 2 secondes :
     /window bare 2
 ----
