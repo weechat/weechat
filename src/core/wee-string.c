@@ -478,47 +478,26 @@ string_match (const char *string, const char *mask, int case_sensitive)
 char *
 string_expand_home (const char *path)
 {
-    char *ptr_home, *str, *d;
-    const char *c;
-    int path_start, replacements;
+    char *ptr_home, *str;
+    int length;
 
     if (!path)
         return NULL;
 
+    if (!path[0] || (path[0] != '~')
+        || ((path[1] && path[1] != DIR_SEPARATOR_CHAR)))
+    {
+        return strdup (path);
+    }
+
     ptr_home = getenv ("HOME");
 
-    /* 
-     * Count the parts separated by colons...
-     * a:~/b => replacements = 1
-     * a => replacements = 0
-     */
-    path_start = 1;
-    replacements = 0;
+    length = strlen (ptr_home) + strlen (path + 1) + 1;
+    str = malloc (length);
+    if (!str)
+        return strdup (path);
 
-    for (c = path; *c != '\0'; c++)
-    {
-        if (path_start && strncmp(c, "~/", 2) == 0)
-            replacements++;
-        path_start = (*c == PATH_SEPARATOR_CHAR);
-    }
-
-    str = malloc (strlen (path) + 1
-                  + replacements * (strlen (ptr_home) - strlen ("~")));
-    d = str;
-    path_start = 1;
-
-    for (c = path; *c != '\0'; c++)
-    {
-        if (path_start && strncmp(c, "~/", 2) == 0)
-        {
-            strcpy (d, ptr_home);
-            d += strlen (ptr_home);
-        }
-        else
-            *d++ = *c;
-        path_start = (*c == PATH_SEPARATOR_CHAR);
-    }
-    *d = '\0';
+    snprintf (str, length, "%s%s", ptr_home, path + 1);
 
     return str;
 }

@@ -96,35 +96,30 @@ void
 network_set_gnutls_ca_file ()
 {
 #ifdef HAVE_GNUTLS
-    char *ca_path, *ca_path2;
+    char *ca_path, *ca_path2, **single_paths;
+    int i;
 
     if (weechat_no_gnutls)
         return;
 
-    ca_path = string_expand_home (CONFIG_STRING(config_network_gnutls_ca_file));
-    if (ca_path)
+    single_paths = string_split(CONFIG_STRING(config_network_gnutls_ca_file), 
+                                PATH_SEPARATOR, 0, 0, NULL);
+    for (i = 0; single_paths[i]; i++)
     {
-        ca_path2 = string_replace (ca_path, "%h", weechat_home);
-        if (ca_path2)
+        ca_path = string_expand_home (single_paths[i]);
+        if (ca_path)
         {
-            int num_paths, i;
-            char **single_paths;
-
-            single_paths = string_split(ca_path2, PATH_SEPARATOR, 0, 0, 
-                                        &num_paths);
-
-            for (i = 0; i < num_paths; i++)
+            ca_path2 = string_replace (ca_path, "%h", weechat_home);
+            if (ca_path2)
             {
                 gnutls_certificate_set_x509_trust_file (gnutls_xcred,
-                            single_paths[i], GNUTLS_X509_FMT_PEM);
-                free (single_paths[i]);
-                single_paths[i] = NULL;
+                            ca_path2, GNUTLS_X509_FMT_PEM);
+                free (ca_path2);
             }
-            free (ca_path2);
-            free (single_paths);
+            free (ca_path);
         }
-        free (ca_path);
     }
+    string_free_split (single_paths);
 #endif /* HAVE_GNUTLS */
 }
 
