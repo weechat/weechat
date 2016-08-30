@@ -64,13 +64,11 @@ msgstr "varsayılan değer"
 msgid "undefined value allowed (null)"
 msgstr ""
 
-#, fuzzy
 msgid "IRC color"
-msgstr "renk"
+msgstr "İRC rengi"
 
-#, fuzzy
 msgid "WeeChat color"
-msgstr "Weechat temel renkler:"
+msgstr "WeeChat rengi"
 
 msgid "Plugin"
 msgstr "Eklenti"
@@ -6684,7 +6682,7 @@ msgstr "%s Artık  %s%s%s olarak biliniyorsunuz"
 
 #, c-format
 msgid "%s%s%s%s is now known as %s%s%s"
-msgstr "%s%s%s şimdi %s%s%s%s  olarak biliniyormode"
+msgstr "%s%s%s şimdi %s%s%s%s  olarak biliniyor"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
