@@ -30,7 +30,7 @@ please include:
   If WeeChat does not start at all, please include the version displayed by
   `weechat --help` (or the version installed with your package manager).
 * your *operating system*: its name and version (examples: Linux Debian Wheezy,
-  FreeBSD 10.0, Windows/Cygwin 64-bit, ...).
+  FreeBSD 10.0, Windows/Cygwin 64-bit, Windows/Ubuntu 64-bit...).
 * the *steps to reproduce*: if possible, please include a reproducible example:
   explain the steps which led you to the problem. +
   It's even better if you can reproduce the problem with a new config (and no
