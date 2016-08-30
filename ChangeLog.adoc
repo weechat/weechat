@@ -45,7 +45,7 @@ Bug fixes::
 
 Documentation::
 
-  * switch to asciidoctor to build docs and man page
+  * switch to asciidoctor to build docs and man page (issue #722)
 
 Build::
 
