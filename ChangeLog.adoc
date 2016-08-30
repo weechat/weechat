@@ -39,6 +39,7 @@ Bug fixes::
   * api: fix crash in function network_connect_to() if address is NULL
   * api: fix connection to servers with hook_connect() on Windows 10 with Windows subsystem for Linux (issue #770)
   * api: fix crash in function string_split_command() when the separator is not a semicolon (issue #731)
+  * irc: fix display of service notice mask (message 008) (issue #429)
   * irc: fix NULL pointer dereference in 734 command callback (issue #738)
   * relay: return an empty hdata when the requested hdata or pointer is not found (issue #767)
   * xfer: fix crash on DCC send if option xfer.file.auto_accept_nicks is set (issue #781)

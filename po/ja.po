@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-08-27 11:58+0200\n"
+"POT-Creation-Date: 2016-08-30 18:33+0200\n"
 "PO-Revision-Date: 2016-08-21 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -8735,8 +8735,8 @@ msgstr "%s%s%s%s が %s%s%s のトピックを削除"
 msgid "%sWallops from %s: %s"
 msgstr "%s%s からの wallops メッセージ: %s"
 
-#, c-format
-msgid "%sServer notice mask for %s%s%s is %s[%s%s%s]"
+#, fuzzy, c-format
+msgid "%sServer notice mask for %s%s%s: %s"
 msgstr "%s%s%s%s のサーバ通知マスクは %s[%s%s%s] です"
 
 #, c-format

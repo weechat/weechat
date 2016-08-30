@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-08-27 11:58+0200\n"
+"POT-Creation-Date: 2016-08-30 18:33+0200\n"
 "PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6727,7 +6727,7 @@ msgid "%sWallops from %s: %s"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sServer notice mask for %s%s%s is %s[%s%s%s]"
+msgid "%sServer notice mask for %s%s%s: %s"
 msgstr "%s %s%s%s kanalının konusu \"%s%s\""
 
 #, c-format

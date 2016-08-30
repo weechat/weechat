@@ -2688,15 +2688,12 @@ IRC_PROTOCOL_CALLBACK(008)
         irc_msgbuffer_get_target_buffer (server, argv[2], command, NULL, NULL),
         date,
         irc_protocol_tags (command, "irc_numeric", NULL, address),
-        _("%sServer notice mask for %s%s%s is %s[%s%s%s]"),
+        _("%sServer notice mask for %s%s%s: %s"),
         weechat_prefix ("network"),
         irc_nick_color_for_msg (server, 1, NULL, argv[2]),
         argv[2],
         IRC_COLOR_RESET,
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
-        (argv[3][0] == ':') ? argv[3] + 1 : argv[3],
-        IRC_COLOR_CHAT_DELIMITERS);
+        (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]);
 
     return WEECHAT_RC_OK;
 }
