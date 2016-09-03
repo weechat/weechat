@@ -703,7 +703,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `+"M"+`)
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
-** opis: pass:none[format czasu dla elementu paska "time" (zobacz man strftime dla specyfikatorów daty/czasu)]
+** opis: pass:none[time format for "time" bar item (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `+"%H:%M"+`)
 

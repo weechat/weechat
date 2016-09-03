@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-08-30 18:33+0200\n"
-"PO-Revision-Date: 2016-05-18 07:43+0200\n"
+"POT-Creation-Date: 2016-09-03 08:21+0200\n"
+"PO-Revision-Date: 2016-09-03 08:24+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -2825,9 +2825,12 @@ msgstr ""
 msgid "string used to show if mouse is enabled (bar item \"mouse_status\")"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"time format for \"time\" bar item (see man strftime for date/time specifiers)"
-msgstr ""
+"time format for \"time\" bar item (see man strftime for date/time "
+"specifiers) (note: content is evaluated, so you can use colors with format "
+"\"${color:xxx}\", see /help eval)"
+msgstr "отображение маркера даты при смене дня"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -10714,16 +10717,3 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "default part message (leaving channel) (\"%v\" will be replaced by "
-#~ "WeeChat version in string)"
-#~ msgstr "сообщение покидания канала ('%v' будет заменён на версию WeeChat)"
-
-#, fuzzy
-#~ msgid ""
-#~ "default quit message (disconnecting from server) (\"%v\" will be replaced "
-#~ "by WeeChat version in string)"
-#~ msgstr ""
-#~ "сообщение о выходе по-умолчанию ('%v' будет заменён на версию WeeChat)"

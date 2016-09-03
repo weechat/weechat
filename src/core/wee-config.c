@@ -37,6 +37,7 @@
 
 #include "weechat.h"
 #include "wee-config.h"
+#include "wee-eval.h"
 #include "wee-hashtable.h"
 #include "wee-hook.h"
 #include "wee-log.h"
@@ -314,6 +315,7 @@ int config_word_chars_input_count = 0;
 char **config_nick_colors = NULL;
 int config_num_nick_colors = 0;
 struct t_hashtable *config_hashtable_nick_color_force = NULL;
+char *config_item_time_evaluated = NULL;
 
 
 /*
@@ -951,6 +953,49 @@ config_change_item_away (const void *pointer, void *data,
     (void) option;
 
     gui_bar_item_update ("away");
+}
+
+/*
+ * Callback for changes on options "weechat.look.item_time_format".
+ */
+
+void
+config_change_item_time_format (const void *pointer, void *data,
+                                struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (config_item_time_evaluated)
+        free (config_item_time_evaluated);
+    config_item_time_evaluated = eval_expression (
+        CONFIG_STRING(config_look_item_time_format), NULL, NULL, NULL);
+
+    config_change_buffer_content (NULL, NULL, NULL);
+}
+
+/*
+ * Gets the current time formatted for the bar item status.
+ */
+
+void
+config_get_item_time (char *text_time, int max_length)
+{
+    time_t date;
+    struct tm *local_time;
+
+    if (!config_item_time_evaluated)
+        config_change_item_time_format (NULL, NULL, NULL);
+
+    text_time[0] = '\0';
+
+    date = time (NULL);
+    local_time = localtime (&date);
+    strftime (text_time, max_length,
+              config_item_time_evaluated,
+              local_time);
 }
 
 /*
@@ -2948,10 +2993,11 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "item_time_format", "string",
         N_("time format for \"time\" bar item (see man strftime for date/time "
-           "specifiers)"),
+           "specifiers) (note: content is evaluated, so you can use colors "
+           "with format \"${color:xxx}\", see /help eval)"),
         NULL, 0, 0, "%H:%M", NULL, 0,
         NULL, NULL, NULL,
-        &config_change_buffer_content, NULL, NULL,
+        &config_change_item_time_format, NULL, NULL,
         NULL, NULL, NULL);
     config_look_jump_current_to_previous_buffer = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -4508,5 +4554,11 @@ config_weechat_free ()
     {
         hashtable_free (config_hashtable_nick_color_force);
         config_hashtable_nick_color_force = NULL;
+    }
+
+    if (config_item_time_evaluated)
+    {
+        free (config_item_time_evaluated);
+        config_item_time_evaluated = NULL;
     }
 }

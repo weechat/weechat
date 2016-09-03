@@ -703,7 +703,7 @@
 ** values: any string (default value: `+"M"+`)
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
-** description: pass:none[time format for "time" bar item (see man strftime for date/time specifiers)]
+** description: pass:none[time format for "time" bar item (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
 ** type: string
 ** values: any string (default value: `+"%H:%M"+`)
 
