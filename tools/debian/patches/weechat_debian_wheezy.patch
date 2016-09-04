@@ -1,16 +1,18 @@
 diff --git a/debian-devel/control b/debian-devel/control
-index 809e059..d1cd9c8 100644
+index 809e059..35e19b8 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
-@@ -5,7 +5,6 @@ Maintainer: Sébastien Helleu <flashcode@flashtux.org>
+@@ -3,9 +3,7 @@ Section: net
+ Priority: optional
+ Maintainer: Sébastien Helleu <flashcode@flashtux.org>
  Build-Depends:
-     asciidoctor (>= 1.5.4),
+-    asciidoctor (>= 1.5.4),
      debhelper (>= 9),
 -    dh-exec,
      cmake, pkg-config,
      libncursesw5-dev,
      gem2deb,
-@@ -13,12 +12,12 @@ Build-Depends:
+@@ -13,12 +11,12 @@ Build-Depends:
      python-dev,
      libaspell-dev,
      liblua5.1-0-dev,
@@ -28,18 +30,20 @@ index 809e059..d1cd9c8 100644
  Standards-Version: 3.9.8
  Homepage: https://weechat.org/
 diff --git a/debian-stable/control b/debian-stable/control
-index 74d134c..8a72fed 100644
+index 74d134c..9780937 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
-@@ -5,7 +5,6 @@ Maintainer: Emmanuel Bouthenot <kolter@debian.org>
+@@ -3,9 +3,7 @@ Section: net
+ Priority: optional
+ Maintainer: Emmanuel Bouthenot <kolter@debian.org>
  Build-Depends:
-     asciidoctor (>= 1.5.4),
+-    asciidoctor (>= 1.5.4),
      debhelper (>= 9),
 -    dh-exec,
      cmake, pkg-config,
      libncursesw5-dev,
      gem2deb,
-@@ -13,12 +12,12 @@ Build-Depends:
+@@ -13,12 +11,12 @@ Build-Depends:
      python-dev,
      libaspell-dev,
      liblua5.1-0-dev,
