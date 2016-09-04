@@ -1,32 +1,28 @@
-#
 # Copyright (C) 2005 Rudolf Polzer <weechat-te@durchnull.de>
 # Copyright (C) 2006-2007 Thomas Schuetz <i18n@internet-villa.de>
 # Copyright (C) 2009-2016 Nils Görs <weechatter@arcor.de>
 # Copyright (C) 2015 Sven Knurr <zeug@tuxproject.de>
-#
 # This file is part of WeeChat, the extensible chat client.
-#
 # WeeChat is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
-#
 # WeeChat is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-#
 # You should have received a copy of the GNU General Public License
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
-#
+# nils <weechatter@arcor.de>, 2016.
+# w8rabbit <w8rabbit@mail.i2p>, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-09-03 08:21+0200\n"
-"PO-Revision-Date: 2016-09-03 08:23+0200\n"
+"PO-Revision-Date: 2016-09-04 11:45+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
-"Language-Team: German <>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2998,7 +2994,7 @@ msgstr ""
 "scroll_next_highlight|scroll_unread [-window <number>] || swap [-window "
 "<number>] [up|down|left|right] || zoom [-window <number>] || bare [<delay>]"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "         list: list opened windows (without argument, this list is "
 "displayed)\n"
@@ -3099,7 +3095,7 @@ msgstr ""
 "scroll_unread: springt zur ersten ungelesenen Zeile in einem Buffer\n"
 "         swap: tauscht die Buffer von zwei Fenstern (mit optionaler Angabe "
 "für das Zielfenster)\n"
-"         zoom: vergrößert ein Fenster auf 100%\n"
+"         zoom: vergrößert ein Fenster auf 100%%\n"
 "         bare: wechselt zum einfachen Anzeigemodus (optional kann eine "
 "Wartezeit, in Sekunden, angegeben werden, wann zum Standardmodus zurück "
 "gewechselt werden soll)\n"
@@ -3119,6 +3115,11 @@ msgstr ""
 "    /window scroll -d\n"
 "  Fenster #2 wird vergrößert:\n"
 "    /window zoom -window 2\n"
+"  teilt das Fenster horizontal, wobei das obere Fenster 30%% an Platz "
+"zugeteilt bekommt:\n"
+"    /window splith 30\n"
+"  eine Teilung wird rückgängig gemacht:\n"
+"    /window merge\n"
 "  aktiviert den einfachen Anzeigemodus für zwei Sekunden:\n"
 "    /window bare 2"
 
@@ -3799,15 +3800,15 @@ msgstr ""
 "Zeichen mit welchem signalisiert wird ob die Mausfunktionalität "
 "eingeschaltet ist (durch Bar-Item \"mouse_status\")"
 
-#, fuzzy
 msgid ""
 "time format for \"time\" bar item (see man strftime for date/time "
 "specifiers) (note: content is evaluated, so you can use colors with format "
 "\"${color:xxx}\", see /help eval)"
 msgstr ""
-"Präfix, dass bei einer Fehlernachricht genutzt wird (Hinweis: Inhalt wird "
-"evaluiert, somit kann mittels des Formats \"${color:xxx} Farben gesetzt "
-"werden, siehe /help eval)"
+"Format für die Zeitanzeige des Bar-Items, \"time\" (siehe man strftime, "
+"welche Platzhalter für das Datum und die Uhrzeit verwendet werden)(Hinweis: "
+"Inhalt wird evaluiert, somit kann mittels des Formats \"${color:xxx} Farben "
+"gesetzt werden, siehe /help eval)"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
