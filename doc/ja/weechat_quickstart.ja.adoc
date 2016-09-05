@@ -304,8 +304,7 @@ _command_ オプションに複数のコマンドを含める場合は `;` (セ�
 /window splitv 33
 ----
 
-// TRANSLATION MISSING
-To remove the split:
+分割を元に戻す:
 
 ----
 /window merge
