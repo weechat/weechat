@@ -703,7 +703,7 @@
 ** 値: 未制約文字列 (デフォルト値: `+"M"+`)
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
-** 説明: pass:none[time format for "time" bar item (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
+** 説明: pass:none["time" バー要素の時間書式 (日付/時間指定子は strftime の man を参照) (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `+"%H:%M"+`)
 
