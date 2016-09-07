@@ -317,8 +317,7 @@ Befehle, zum Verwalten von Buffern und Fenstern:
 /window
 ----
 
-(Ich muss nicht erwähnen, dass man zu diesen Befehlen eine Hilfe mit /help
-erhält)
+(Ich muss nicht erwähnen, dass man mit /help einen Hilfstext zu dem Befehl erhält)
 
 Beispiel: Um den Bildschirm vertikal in ein kleineres Fenster (1/3 Bildschirmbreite)
 und ein größeres Fenster (2/3 Bildschirmbreite) aufzuteilen:
@@ -327,8 +326,7 @@ und ein größeres Fenster (2/3 Bildschirmbreite) aufzuteilen:
 /window splitv 33
 ----
 
-// TRANSLATION MISSING
-To remove the split:
+Um die Teilung des Bildschirms rückgängig zu machen:
 
 ----
 /window merge
