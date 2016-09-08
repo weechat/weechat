@@ -7392,7 +7392,7 @@ command_init ()
            "cursor\n"
            "  delete_end_of_line: delete from cursor until end of line\n"
            "  delete_line: delete entire line\n"
-           "  clipboard_paste: paste from clipboard\n"
+           "  clipboard_paste: paste from the internal clipboard\n"
            "  transpose_chars: transpose two chars\n"
            "  undo: undo last command line action\n"
            "  redo: redo last command line action\n"

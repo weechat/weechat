@@ -1078,12 +1078,16 @@ Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buff
   kbd:[Ctrl+d]    | Usuń następny znak w linii poleceń | `/input delete_next_char`
 | kbd:[Backsp.] +
   kbd:[Ctrl+h]    | Usuń poprzedni znak w linii poleceń | `/input delete_previous_char`
-| kbd:[Ctrl+k]    | Usuń od znacznika kursora do końca linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_end_of_line`
+// TRANSLATION MISSING
+| kbd:[Ctrl+k]    | Usuń od znacznika kursora do końca linii poleceń (deleted string is copied to the internal clipboard) | `/input delete_end_of_line`
 | kbd:[Ctrl+r]    | Wyszukaj tekst w historii bufora (zobacz <<key_bindings_search_context,skróty dla kontekstu wyszukiwania>>) | `/input search_text_here`
 | kbd:[Ctrl+t]    | Przestaw znaki | `/input transpose_chars`
-| kbd:[Ctrl+u]    | Usuń od znaku kursora do początku linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_beginning_of_line`
-| kbd:[Ctrl+w]    | Usuń poprzednie słowo w linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_previous_word`
-| kbd:[Ctrl+y]    | Wklej zawartość schowka | `/input clipboard_paste`
+// TRANSLATION MISSING
+| kbd:[Ctrl+u]    | Usuń od znaku kursora do początku linii poleceń (deleted string is copied to the internal clipboard) | `/input delete_beginning_of_line`
+// TRANSLATION MISSING
+| kbd:[Ctrl+w]    | Usuń poprzednie słowo w linii poleceń (deleted string is copied to the internal clipboard) | `/input delete_previous_word`
+// TRANSLATION MISSING
+| kbd:[Ctrl+y]    | Paste the internal clipboard content | `/input clipboard_paste`
 | kbd:[Ctrl+_]    | Cofnij poprzednia akcję w linii poleceń | `/input undo`
 | kbd:[Alt+_]     | Powtórz ostatnią akcję w linii poleceń | `/input redo`
 | kbd:[Tab]       | Dopełnij komendę lub nick (ponowne wciśnięcie kbd:[Tab]: znajdź następne dopełnienie) | `/input complete_next`
@@ -1095,7 +1099,8 @@ Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buff
 | kbd:[↓]         | Pokaż następną komendę/wiadomość (w trybie wyszukiwania: szukaj w dół) | `/input history_next`
 | kbd:[Ctrl+↑]    | Pokaż poprzednią komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów) | `/input history_global_previous`
 | kbd:[Ctrl+↓]    | Pokaż następną komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów) | `/input history_global_next`
-| kbd:[Alt+d]     | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_next_word`
+// TRANSLATION MISSING
+| kbd:[Alt+d]     | Usuń następne słowo w linii poleceń (deleted string is copied to the internal clipboard) | `/input delete_next_word`
 | kbd:[Alt+k]     | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń | `/input grab_key_command`
 | kbd:[Alt+r]     | Usuń całą zawartość linii poleceń | `/input delete_line`
 | kbd:[Alt+s]     | Przełącz aspell | `/mute aspell toggle`

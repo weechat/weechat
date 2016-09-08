@@ -45,7 +45,7 @@
 #include "gui-window.h"
 
 
-char *gui_input_clipboard = NULL;      /* clipboard content                 */
+char *gui_input_clipboard = NULL;      /* internal clipboard content        */
 
 
 /*
@@ -355,7 +355,7 @@ gui_input_move_to_buffer (struct t_gui_buffer *from_buffer,
 }
 
 /*
- * Copies string into clipboard.
+ * Copies string into the internal clipboard.
  */
 
 void
@@ -377,7 +377,8 @@ gui_input_clipboard_copy (const char *buffer, int size)
 }
 
 /*
- * Pastes clipboard at cursor pos in input line (default key: ctrl-Y).
+ * Pastes the internal clipboard at cursor pos in input line
+ * (default key: ctrl-Y).
  */
 
 void

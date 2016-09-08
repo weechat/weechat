@@ -438,7 +438,7 @@ list of actions:
   delete_beginning_of_line: delete from beginning of line until cursor
   delete_end_of_line: delete from cursor until end of line
   delete_line: delete entire line
-  clipboard_paste: paste from clipboard
+  clipboard_paste: paste from the internal clipboard
   transpose_chars: transpose two chars
   undo: undo last command line action
   redo: redo last command line action

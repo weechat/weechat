@@ -1064,12 +1064,16 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
   kbd:[Ctrl+d]    | コマンドラインで次の文字を削除 | `/input delete_next_char`
 | kbd:[Backsp.] +
   kbd:[Ctrl+h]    | コマンドラインで前の文字を削除 | `/input delete_previous_char`
-| kbd:[Ctrl+k]    | コマンドラインでカーソルより後の文字列を削除 (削除された文字列はクリップボードに保存) | `/input delete_end_of_line`
+// TRANSLATION MISSING
+| kbd:[Ctrl+k]    | コマンドラインでカーソルより後の文字列を削除 (deleted string is copied to the internal clipboard) | `/input delete_end_of_line`
 | kbd:[Ctrl+r]    | バッファ中の履歴からテキスト検索 (<<key_bindings_search_context,検索モード用のキー>>を参照) | `/input search_text_here`
 | kbd:[Ctrl+t]    | 文字の入れ替え | `/input transpose_chars`
-| kbd:[Ctrl+u]    | コマンドラインでカーソルより前の文字列を削除 (削除された文字列はクリップボードに保存) | `/input delete_beginning_of_line`
-| kbd:[Ctrl+w]    | コマンドラインで前の単語を削除 (削除された文字列はクリップボードに保存) | `/input delete_previous_word`
-| kbd:[Ctrl+y]    | クリップボードの内容をペースト | `/input clipboard_paste`
+// TRANSLATION MISSING
+| kbd:[Ctrl+u]    | コマンドラインでカーソルより前の文字列を削除 (deleted string is copied to the internal clipboard) | `/input delete_beginning_of_line`
+// TRANSLATION MISSING
+| kbd:[Ctrl+w]    | コマンドラインで前の単語を削除 (deleted string is copied to the internal clipboard) | `/input delete_previous_word`
+// TRANSLATION MISSING
+| kbd:[Ctrl+y]    | Paste the internal clipboard content | `/input clipboard_paste`
 | kbd:[Ctrl+_]    | コマンドラインの最後の動作をやり直す | `/input undo`
 | kbd:[Alt+_]     | コマンドラインの最後の動作を取り消す | `/input redo`
 | kbd:[Tab]       | コマンドやニックネームを補完 (再度 kbd:[Tab] することで次の補完候補を表示) | `/input complete_next`
@@ -1081,7 +1085,8 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | kbd:[↓]         | 次のコマンド/メッセージを呼び出す (検索モードの場合: 下方向に検索) | `/input history_next`
 | kbd:[Ctrl+↑]    | グローバル履歴から前のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | `/input history_global_previous`
 | kbd:[Ctrl+↓]    | グローバル履歴から次のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | `/input history_global_next`
-| kbd:[Alt+d]     | コマンドラインで次の単語を削除 (削除された文字列はクリップボードに保存) | `/input delete_next_word`
+// TRANSLATION MISSING
+| kbd:[Alt+d]     | コマンドラインで次の単語を削除 (deleted string is copied to the internal clipboard) | `/input delete_next_word`
 | kbd:[Alt+k]     | キー入力を奪って、コマンドラインにコード (キーが割り当てられていればコマンド) を入力 | `/input grab_key_command`
 | kbd:[Alt+r]     | コマンドラインへの入力をすべて削除 | `/input delete_line`
 | kbd:[Alt+s]     | aspell の有効無効を切り替え | `/mute aspell toggle`

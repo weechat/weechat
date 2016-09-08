@@ -1117,12 +1117,16 @@ Il livello di notifica per un buffer può essere impostato con il comando `/buff
   kbd:[Ctrl+d]    | Elimina il carattere successivo nella riga di comando | `/input delete_next_char`
 | kbd:[Backsp.] +
   kbd:[Ctrl+h]    | Elimina il carattere precedente nella riga di comando | `/input delete_previous_char`
-| kbd:[Ctrl+k]    | Elimina dal cursore fino alla fine della riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_end_of_line`
+// TRANSLATION MISSING
+| kbd:[Ctrl+k]    | Elimina dal cursore fino alla fine della riga di comando (deleted string is copied to the internal clipboard) | `/input delete_end_of_line`
 | kbd:[Ctrl+r]      | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>) | `/input search_text_here`
 | kbd:[Ctrl+t]    | Inverti caratteri | `/input transpose_chars`
-| kbd:[Ctrl+u]    | Elimina dal cursore fino all'inizio della riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_beginning_of_line`
-| kbd:[Ctrl+w]    | Elimina la parola precedente nella riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_previous_word`
-| kbd:[Ctrl+y]    | Incolla il contenuto degli appunti | `/input clipboard_paste`
+// TRANSLATION MISSING
+| kbd:[Ctrl+u]    | Elimina dal cursore fino all'inizio della riga di comando (deleted string is copied to the internal clipboard) | `/input delete_beginning_of_line`
+// TRANSLATION MISSING
+| kbd:[Ctrl+w]    | Elimina la parola precedente nella riga di comando (deleted string is copied to the internal clipboard) | `/input delete_previous_word`
+// TRANSLATION MISSING
+| kbd:[Ctrl+y]    | Paste the internal clipboard content | `/input clipboard_paste`
 | kbd:[Ctrl+_]    | Annulla l'ultima azione sulla riga di comando | `/input undo`
 | kbd:[Alt+_]     | Ripete l'ultima azione sulla riga di comando | `/input redo`
 | kbd:[Tab]       | Completa comando o nick (kbd:[Tab] di nuovo: trova prossimo completamento) | `/input complete_next`
@@ -1134,7 +1138,8 @@ Il livello di notifica per un buffer può essere impostato con il comando `/buff
 | kbd:[↓]         | Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso) | `/input history_next`
 | kbd:[Ctrl+↑]    | Chiama il comando/messaggio precedente nella cronologia globale (identico per tutti i buffer) | `/input history_global_previous`
 | kbd:[Ctrl+↓]    | Chiama il comando/messaggio successivo nella cronologia globale (identico per tutti i buffer) | `/input history_global_next`
-| kbd:[Alt+d]     | Elimina la parola successiva nella riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_next_word`
+// TRANSLATION MISSING
+| kbd:[Alt+d]     | Elimina la parola successiva nella riga di comando (deleted string is copied to the internal clipboard) | `/input delete_next_word`
 | kbd:[Alt+k]     | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando | `/input grab_key_command`
 | kbd:[Alt+r]     | Elimina l'intera riga di comando | `/input delete_line`
 | kbd:[Alt+s]     | Abilita/disabilita aspell | `/mute aspell toggle`

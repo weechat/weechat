@@ -1090,12 +1090,12 @@ commande `/buffer` :
   kbd:[Ctrl+d]    | Effacer le caractère suivant sur la ligne de commande | `/input delete_next_char`
 | kbd:[Backsp.] +
   kbd:[Ctrl+h]    | Effacer le caractère précédent sur la ligne de commande | `/input delete_previous_char`
-| kbd:[Ctrl+k]    | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_end_of_line`
+| kbd:[Ctrl+k]    | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne) | `/input delete_end_of_line`
 | kbd:[Ctrl+r]    | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>) | `/input search_text_here`
 | kbd:[Ctrl+t]    | Inverser deux caractères | `/input transpose_chars`
-| kbd:[Ctrl+u]    | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_beginning_of_line`
-| kbd:[Ctrl+w]    | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_previous_word`
-| kbd:[Ctrl+y]    | Coller le contenu du presse-papiers | `/input clipboard_paste`
+| kbd:[Ctrl+u]    | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne) | `/input delete_beginning_of_line`
+| kbd:[Ctrl+w]    | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne) | `/input delete_previous_word`
+| kbd:[Ctrl+y]    | Coller le contenu du presse-papiers interne | `/input clipboard_paste`
 | kbd:[Ctrl+_]    | Défaire la dernière action sur la ligne de commande | `/input undo`
 | kbd:[Alt+_]     | Refaire la dernière action sur la ligne de commande | `/input redo`
 | kbd:[Tab]       | Compléter la commande ou le pseudo (kbd:[Tab] de nouveau : trouver la complétion suivante) | `/input complete_next`
@@ -1107,7 +1107,7 @@ commande `/buffer` :
 | kbd:[↓]         | Rappeler la commande suivante (en mode recherche : chercher plus bas) | `/input history_next`
 | kbd:[Ctrl+↑]    | Rappeler la commande précédente dans l'historique global (commun à tous les tampons) | `/input history_global_previous`
 | kbd:[Ctrl+↓]    | Rappeler la commande suivante dans l'historique global (commun à tous les tampons) | `/input history_global_next`
-| kbd:[Alt+d]     | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_next_word`
+| kbd:[Alt+d]     | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers interne) | `/input delete_next_word`
 | kbd:[Alt+k]     | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande | `/input grab_key_command`
 | kbd:[Alt+r]     | Effacer entièrement la ligne de commande | `/input delete_line`
 | kbd:[Alt+s]     | Activer/désactiver aspell | `/mute aspell toggle`

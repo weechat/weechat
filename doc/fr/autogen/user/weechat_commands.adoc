@@ -438,7 +438,7 @@ liste des actions :
   delete_beginning_of_line : effacer du début de la ligne jusqu'au curseur
   delete_end_of_line : effacer du curseur jusqu'à la fin de la ligne
   delete_line : effacer la ligne entière
-  clipboard_paste : coller depuis le presse-papiers
+  clipboard_paste : coller depuis le presse-papiers interne
   transpose_chars : inverser deux caractères
   undo : défaire la dernière action de la ligne de commande
   redo : refaire la dernière action de la ligne de commande
