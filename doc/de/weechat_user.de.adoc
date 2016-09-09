@@ -1083,16 +1083,12 @@ Befehl festgelegt werden:
   kbd:[Ctrl+d]    | entfernt in der Befehlszeile das nächste Zeichen | `/input delete_next_char`
 | kbd:[Backsp.] +
   kbd:[Ctrl+h]    | entfernt in der Befehlszeile das vorherige Zeichen | `/input delete_previous_char`
-// TRANSLATION MISSING
-| kbd:[Ctrl+k]    | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (deleted string is copied to the internal clipboard) | `/input delete_end_of_line`
+| kbd:[Ctrl+k]    | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert) | `/input delete_end_of_line`
 | kbd:[Ctrl+r]    | Textsuche im Verlaufsspeicher des Buffers (siehe <<key_bindings_search_context,Tasten für Such-Kontext>>) | `/input search_text_here`
 | kbd:[Ctrl+t]    | Zeichen austauschen | `/input transpose_chars`
-// TRANSLATION MISSING
-| kbd:[Ctrl+u]    | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (deleted string is copied to the internal clipboard) | `/input delete_beginning_of_line`
-// TRANSLATION MISSING
-| kbd:[Ctrl+w]    | entfernt das Wort links vom Cursor (deleted string is copied to the internal clipboard) | `/input delete_previous_word`
-// TRANSLATION MISSING
-| kbd:[Ctrl+y]    | Paste the internal clipboard content | `/input clipboard_paste`
+| kbd:[Ctrl+u]    | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert) | `/input delete_beginning_of_line`
+| kbd:[Ctrl+w]    | entfernt das Wort links vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert) | `/input delete_previous_word`
+| kbd:[Ctrl+y]    | fügt den Inhalt der internen Zwischenablage ein | `/input clipboard_paste`
 | kbd:[Ctrl+_]    | Rückgängig machen der letzten Aktion, in der Befehlszeile | `/input undo`
 | kbd:[Alt+_]     | Wiederherstellen der letzten Aktion, in der Befehlszeile | `/input redo`
 | kbd:[Tab]       | Vervollständigung von Befehlen oder Nicks (nochmaliges kbd:[Tab]: findet nächste Vervollständigung) | `/input complete_next`
@@ -1104,8 +1100,7 @@ Befehl festgelegt werden:
 | kbd:[↓]         | ruft nächsten Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: vorwärts suchen) | `/input history_next`
 | kbd:[Ctrl+↑]    | ruft vorherigen Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer) | `/input history_global_previous`
 | kbd:[Ctrl+↓]    | ruft nächsten Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer) | `/input history_global_next`
-// TRANSLATION MISSING
-| kbd:[Alt+d]     | löscht das Wort rechts vom Cursor (deleted string is copied to the internal clipboard) | `/input delete_next_word`
+| kbd:[Alt+d]     | löscht das Wort rechts vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert) | `/input delete_next_word`
 | kbd:[Alt+k]     | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein | `/input grab_key_command`
 | kbd:[Alt+r]     | komplette Eingabezeile löschen| `/input delete_line`
 | kbd:[Alt+s]     | schaltet die Aspell Funktion an/aus | `/mute aspell toggle`
