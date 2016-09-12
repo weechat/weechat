@@ -3588,7 +3588,7 @@ weechat.list_remove(list, item)
 
 ==== list_remove_all
 
-Remove all items in a list.
+Remove all items from a list.
 
 Prototype:
 
@@ -4178,7 +4178,7 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 0.3.3._
 
-Remove an item in a hashtable.
+Remove an item from a hashtable.
 
 Prototype:
 
@@ -4206,7 +4206,7 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 0.3.3._
 
-Remove all items in a hashtable.
+Remove all items from a hashtable.
 
 Prototype:
 
