@@ -196,6 +196,25 @@ W celu ograniczenia rozmiaru paska:
 /set weechat.bar.buffers.position bottom
 ----
 
+// TRANSLATION MISSING
+To scroll the bar: if mouse is enabled (key: kbd:[Alt+m]), you can scroll the
+bar with your mouse wheel.
+
+// TRANSLATION MISSING
+Or you can define keys, similar to the existing keys to scroll nicklist.
+For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
+
+----
+/key bind meta-OP /bar scroll buffers * -100%
+/key bind meta-OQ /bar scroll buffers * +100%
+/key bind meta-meta-OP /bar scroll buffers * b
+/key bind meta-meta-OQ /bar scroll buffers * e
+----
+
+[NOTE]
+Klawisze "meta-OP" i "meta-OQ" mogą być inne dla twojego terminala. W celu
+znalezienia ich kodów wciśnij kbd:[Alt+k] następnie przycisk.
+
 [[customize_prefix]]
 === Jak mogę ograniczyć długość wyświetlanych nicków lub usunąć wyrównanie w oknie rozmowy?
 
@@ -456,7 +475,7 @@ Przykład:
 
 [NOTE]
 Klawisze "meta2-A" i "meta2-B" mogą być inne dla twojego terminala. W celu
-znalezienia ich kodów wciśnij kbd:[Alt+k] następnie przycisk (góra lub dół).
+znalezienia ich kodów wciśnij kbd:[Alt+k] następnie przycisk.
 
 [[mouse]]
 == Obsługa myszy

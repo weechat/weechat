@@ -195,6 +195,25 @@ _buffers.pl_ スクリプトを使ってください:
 /set weechat.bar.buffers.position bottom
 ----
 
+// TRANSLATION MISSING
+To scroll the bar: if mouse is enabled (key: kbd:[Alt+m]), you can scroll the
+bar with your mouse wheel.
+
+// TRANSLATION MISSING
+Or you can define keys, similar to the existing keys to scroll nicklist.
+For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
+
+----
+/key bind meta-OP /bar scroll buffers * -100%
+/key bind meta-OQ /bar scroll buffers * +100%
+/key bind meta-meta-OP /bar scroll buffers * b
+/key bind meta-meta-OQ /bar scroll buffers * e
+----
+
+[NOTE]
+"meta-OP" と "meta-OQ" キーは端末によって異なります。キーコードを見つけるには
+kbd:[Alt+k] の後にキー を押してください。
+
 [[customize_prefix]]
 === どうすればチャットエリア内のニックネームの最大長さを短く、又はニックネーム整列機能を無効化できますか。
 
@@ -452,7 +471,7 @@ UXTerm*metaSendsEscape: true
 
 [NOTE]
 "meta2-A" と "meta2-B" キーは端末によって異なります。キーコードを見つけるには
-kbd:[Alt+k] の後にキー (上矢印又は下矢印) を押してください。
+kbd:[Alt+k] の後にキー を押してください。
 
 [[mouse]]
 == マウス

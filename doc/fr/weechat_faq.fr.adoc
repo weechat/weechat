@@ -198,6 +198,24 @@ Pour déplacer la barre en bas :
 /set weechat.bar.buffers.position bottom
 ----
 
+Pour faire défiler la barre : si la souris est activée (touche : kbd:[Alt+m]),
+vous pouvez faire défiler avec la roulette de votre souris.
+
+Ou vous pouvez définir des touches, comme les touches déjà existantes pour faire
+défiler la liste de pseudos.
+Par exemple pour utiliser kbd:[F1], kbd:[F2], kbd:[Alt+F1] et kbd:[Alt+F2] :
+
+----
+/key bind meta-OP /bar scroll buffers * -100%
+/key bind meta-OQ /bar scroll buffers * +100%
+/key bind meta-meta-OP /bar scroll buffers * b
+/key bind meta-meta-OQ /bar scroll buffers * e
+----
+
+[NOTE]
+Les touches "meta-OP" et "meta-OQ" peuvent être différentes dans votre terminal.
+Pour trouver le code de la touche appuyez sur kbd:[Alt+k] puis la touche.
+
 [[customize_prefix]]
 === Comment puis-je réduire la longueur des pseudos ou supprimer l'alignement des pseudos dans la zone de discussion ?
 
@@ -470,8 +488,7 @@ Exemple :
 
 [NOTE]
 Les touches "meta2-A" et "meta2-B" peuvent être différentes dans votre terminal.
-Pour trouver le code de la touche appuyez sur kbd:[Alt+k] puis la touche (haut
-ou bas).
+Pour trouver le code de la touche appuyez sur kbd:[Alt+k] puis la touche.
 
 [[mouse]]
 == Souris
