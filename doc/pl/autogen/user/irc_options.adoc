@@ -513,17 +513,17 @@
 ** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_irc.server_default.msg_kick]] *irc.server_default.msg_kick*
-** opis: pass:none[default kick message used by commands "/kick" and "/kickban" (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their value)]
+** opis: pass:none[domyślna wiadomość dla wykopania z kanału używana przez komendy "/kick" i "/kickban" (uwaga: zawartość jest przetwarzana zobacz /help eval; specjalne zmienne jak ${nick}, ${channel} i ${server} są zamieniane na odpowiednie wartości)]
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `+""+`)
 
 * [[option_irc.server_default.msg_part]] *irc.server_default.msg_part*
-** opis: pass:none[default part message (leaving channel) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their value; "%v" is replaced by WeeChat version if there is no ${...} in string)]
+** opis: pass:none[domyślna wiadomość przy wyjściu z kanału (uwaga: zawartość jest przetwarzana zobacz /help eval; specjalne zmienne jak ${nick}, ${channel} i ${server} są zamieniane na odpowiednie wartości); "%v" jest zamieniane na wersję WeeChat jeśli w ciągu nie ma ${...})]
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `+"WeeChat ${info:version}"+`)
 
 * [[option_irc.server_default.msg_quit]] *irc.server_default.msg_quit*
-** opis: pass:none[default quit message (disconnecting from server) (note: content is evaluated, see /help eval; special variables ${nick}, ${channel} and ${server} are replaced by their value; "%v" is replaced by WeeChat version if there is no ${...} in string)]
+** opis: pass:none[domyślna wiadomość przy odłączeniu od serwera (uwaga: zawartość jest przetwarzana zobacz /help eval; specjalne zmienne jak ${nick}, ${channel} i ${server} są zamieniane na odpowiednie wartości); "%v" jest zamieniane na wersję WeeChat jeśli w ciągu nie ma ${...})]
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `+"WeeChat ${info:version}"+`)
 

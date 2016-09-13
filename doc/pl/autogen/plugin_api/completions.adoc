@@ -102,7 +102,7 @@
 
 | trigger | trigger_options | opcje dla triggerów
 
-| trigger | trigger_post_action | trigger post actions
+| trigger | trigger_post_action | triggeruje akcje końcowe
 
 | weechat | bars_names | nazwy pasków
 

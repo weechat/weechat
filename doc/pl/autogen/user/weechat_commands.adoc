@@ -69,75 +69,75 @@ Przykłady:
 
 ----
 /buffer  list
-         clear [<number>|<name>|-merged|-all [<number>|<name>...]]
-         move <number>|-|+
-         swap <number1>|<name1> [<number2>|<name2>]
-         cycle <number>|<name> [<number>|<name>...]]
-         merge <number>
-         unmerge [<number>|-all]
-         hide [<number>|<name>|-all [<number>|<name>...]]
-         unhide [<number>|<name>|-all [<number>|<name>...]]
-         renumber [<number1> [<number2> [<start>]]]
-         close [<n1>[-<n2>]|<name>]
-         notify <level>
+         clear [<numer>|<nazwa>|-merged|-all [<numer>|<nazwa>...]]
+         move <numer>|-|+
+         swap <numer1>|<nazwa1> [<numer2>|<nazwa2>]
+         cycle <numer>|<nazwa> [<numer>|<nazwa>...]]
+         merge <numer>
+         unmerge [<numer>|-all]
+         hide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
+         unhide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
+         renumber [<numer1> [<numer2> [<start>]]]
+         close [<n1>[-<n2>]|<nazwa>]
+         notify <poziom>
          localvar
-         set <property> <value>
-         get <property>
-         <number>|-|+|<name>
+         set <opcja> <wartość>
+         get <opcja>
+         <numer>|-|+|<nazwa>
 
-    list: list buffers (without argument, this list is displayed)
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
-    swap: swap two buffers (swap with current buffer if only one number/name given)
-   cycle: jump loop between a list of buffers
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-    hide: hide the buffer
-  unhide: unhide the buffer
-renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
-   close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-       -: jump to first buffer number
-       +: jump to last buffer number
-    name: jump to buffer by (partial) name
+    list: wyświetla listę buforów (bez podania argumenty wyświetlana jest ta lista)
+   clear: czyści zawartość bufora (numer bufora, -merged dla połączonych buforów, -all dla wszystkich buforów, lub nic dla obecnego bufora)
+    move: przesuwa bufor na liście (może być względne, np -1); "-" = przesuwa na pierwszy numer, "+" = przesuwa na ostatni numer bufora +1
+    swap: zamienia miejscami dwa bufory (zamienia z obecnym buforem, jeśli podano tylko jeden numer/nazwę)
+   cycle: przełącza w pętli między listą buforów
+   merge: łączy obecny bufor z innym (obszar rozmowy zostanie pomieszany między oba bufory)
+          (domyślnie ctrl-x przełącza pomiędzy połączonymi buforami)
+ unmerge: odłącza bufor od innych mających taki sam numer
+    hide: ukrywa bufor
+  unhide: przywraca ukryty bufor
+renumber: zmienia numer bufora (działa tylko, jeśli opcja weechat.look.buffer_auto_renumber jest wyłączona)
+   close: zamyka bufor (numer/przedział są opcjonalne)
+  notify: ustawia poziom powiadomień dla obecnego bufora: ten poziom określa czy bufor zostanie dodany do hotlisty czy nie:
+               none: nigdy
+          highlight: tylko dla higlightów
+            message: wiadomości od użytkowników + highlighty
+                all: wszystkie wiadomości
+              reset: przywraca wartości domyślne (all)
+localvar: wyświetla zmienne lokalne obecnego bufora
+     set: ustawia właściwość obecnego bufora
+     get: wyświetla właściwości obecnego bufora
+  numer: przechodzi do bufora o numerze, dostępne prefiksy:
+          '+': przejście względne, dodaje numer do obecnego
+          '-': przejście względne, odejmuje numer od obecnego
+          '*': przejście do numeru, używając opcji "weechat.look.jump_current_to_previous_buffer"
+       -: przejście do pierwszego bufora
+       +: przejście do ostatniego bufora
+    nazwa: przejście do bufora o (częściowej) nazwie
 
-Examples:
-  clear current buffer:
+Przykłady:
+  czyści zawartość obecnego bufora:
     /buffer clear
-  move buffer to number 5:
+  przenosi bufor na numer 5:
     /buffer move 5
-  swap buffer 1 with 3:
+  zamienia bufor 1 z 3:
     /buffer swap 1 3
-  swap buffer #weechat with current buffer:
+  zamienia bufor #weechat z obecnym buforem:
     /buffer swap #weechat
-  jump on #chan1, #chan2, #chan3 and loop:
+  przełączajw pętli między #chan1, #chan2, #chan3:
     /buffer cycle #chan1 #chan2 #chan3
-  merge with core buffer:
+  łączy z głównym buforem:
     /buffer merge 1
-  unmerge buffer:
+  odłącza bufory:
     /buffer unmerge
-  close current buffer:
+  zamyka obecny bufor:
     /buffer close
-  close buffers 5 to 7:
+  zamyka bufory od 5 do 7:
     /buffer close 5-7
-  jump to #weechat:
+  przechodzi do #weechat:
     /buffer #weechat
-  jump to next buffer:
+  przechodzi do następnego bufora:
     /buffer +1
-  jump to last buffer number:
+  przechodzi do ostatniego bufora:
     /buffer +
 ----
 
@@ -418,60 +418,60 @@ Wartość: ilość elementów historii do pokazania
 ----
 /input  <akcja> [<argumenty>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text_here: search text in buffer at current position
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_switch_regex: switch search type: string/regular expression
-  search_switch_where: switch search in messages/prefixes
-  search_previous: search previous line
-  search_next: search next line
-  search_stop_here: stop search at current position
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from the internal clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist (optional argument: "lowest" to clear only lowest level in hotlist, "highest" to clear only highest level in hotlist, or level mask: integer which is a combination of 1=join/part, 2=message, 4=private, 8=highlight)
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  zoom_merged_buffer: zoom on merged buffer
-  insert: insert text in command line (escaped chars are allowed, see /help print)
-  send: send text to the buffer
-  paste_start: start paste (bracketed paste mode)
-  paste_stop: stop paste (bracketed paste mode)
+lista akcji:
+  return: symuluje klawisz "enter"
+  complete_next: dopełnia słowo następnym dopełnieniem
+  complete_previous: dopełnia słowo poprzednim dopełnieniem
+  search_text_here: szuka testu w obecnej pozycji w buforze
+  search_text: szuka tekstu w buforze
+  search_switch_case: przełącza na dokładne dopasowanie przy szukaniu
+  search_switch_regex: przełącza typy wyszukiwania ciąg/wyrażenie regularne
+  search_switch_where: zmienia miejsce przeszukiwania na wiadomości/przedrostki
+  search_previous: szuka poprzednich linii
+  search_next: szuka następnych linii
+  search_stop_here: zatrzymuje wyszukiwanie na obecnej pozycji
+  search_stop: zatrzymuje wyszukiwanie
+  delete_previous_char: usuwa poprzedni znak
+  delete_next_char: usuwa następny znak
+  delete_previous_word: usuwa poprzednie słowo
+  delete_next_word: usuwa następne słowo
+  delete_beginning_of_line: usuwa od początku linii do kursora
+  delete_end_of_line: usuwa od kursora do końca linii
+  delete_line: usuwa cała linię
+  clipboard_paste: wkleja ze schowka
+  transpose_chars: zamienia dwa znaki
+  undo: cofa ostatnia akcję w linii poleceń
+  redo: ponownie wykonuje cofniętą akcję w linii poleceń
+  move_beginning_of_line: przesuwa kursor na początek linii
+  move_end_of_line: przesuwa kursor na koniec linii
+  move_previous_char: przesuwa kursor do poprzedniego znaku
+  move_next_char: przesuwa kursor do następnego znaku
+  move_previous_word: przesuwa kursor do poprzedniego słowa
+  move_next_word: przesuwa kursor do następnego słowa
+  history_previous: przywołuje poprzednia komendę z historii obecnego bufora
+  history_next: przywołuje następną komendę z historii obecnego bufora
+  history_global_previous: przywołuje poprzednią komendę z globalnej historii
+  history_global_next: przywołuje następną komendę z globalnej historii
+  jump_smart: przechodzi do następnego bufora z aktywnością
+  jump_last_buffer_displayed: przechodzi do ostatnio wyświetlanego bufora (przed ostatnim przeskoczeniem do bufora)
+  jump_previously_visited_buffer: przeskakuje do poprzedniego bufora
+  jump_next_visited_buffer: przeskakuje to następnego bufora
+  hotlist_clear: czyści hotlistę (opcjonaly argument: "lowest" czyści najniższy poziom na hotliście, "highest" czyści najwyższy poziom na hotliście, albo maska poziomu: liczba będąca kombinacją 1=join/part, 2=wiadomość, 4=prywatny, 8=podświetlenie)
+  grab_key: przechwytuje klawisz (opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
+  grab_key_command: przechwytuje klawisz z przypisaną komendą (opcjonalny argument: opóźnienie końca przechwycenia, domyślnie jest to 500 milisekund)
+  grab_mouse: przechwytuje kod zdarzenia myszy
+  grab_mouse_area: przechwytuje kod zdarzenia myszy z obszarem
+  set_unread: ustawia znacznik nie przeczytania dla wszystkich buforów
+  set_unread_current_buffer: ustawia znacznik nie przeczytania dla obecnego bufora
+  switch_active_buffer: przełącza do następnego połączonego buforu
+  switch_active_buffer_previous: przełącza do poprzedniego połączonego buforu
+  zoom_merged_buffer: zoom na połączony bufor
+  insert: wkleja tekst do linii poleceń (dozwolone są wyescapowane znaki, zobacz /help print)
+  send: wysyła tekst do bufora
+  paste_start: zaczyna wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
+  paste_stop: kończy wklejanie (tryb z rozpoznawaniem wklejanego tekstu)
 
-This command is used by key bindings or plugins.
+Ta komenda jest używana do przypisywania klawiszy lub przez wtyczki.
 ----
 
 [[command_weechat_key]]
@@ -761,38 +761,38 @@ Domyślnie zapisywane na dysku są wszystkie pliki konfiguracyjne podczas wykony
          set <nazwa> <wartość>
          del <nazwa>
 
-passphrase: change the passphrase (without passphrase, data is stored as plain text in file sec.conf)
-   -delete: delete passphrase
-   decrypt: decrypt data still encrypted (it happens only if passphrase was not given on startup)
-  -discard: discard all data still encrypted
-       set: add or change secured data
-       del: delete secured data
+passphrase: zmienia hasło (bez hasła dane są przechowywane w postaci tekstu w pliku sec.conf)
+   -delete: kasuje hasło
+   decrypt: rozszyfrowuje dane będące ciągle zaszyfrowane (zdarza się to tylko jeśli hasło nie zostało podane przy uruchomieniu)
+  -discard: odrzuca wszystkie nadal zaszyfrowane dane
+       set: dodaje lub zmienia zaszyfrowane dane
+       del: kasuje zaszyfrowane dane
 
-Without argument, this command displays secured data in a new buffer.
+Bez argumentu, komenda wyświetli zabezpieczone dane w nowym buforze.
 
-Keys on secure buffer:
-  alt+v  toggle values
+Kombinacje klawiszy w bezpiecznym buforze:
+  alt+v  przełącza wartości
 
-When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
-It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
+Jeśli używane jest hasło (dane zaszyfrowane), należy je podać podczas startu WeeChat.
+Jest możliwe ustawienie zmiennej środowiskowej "WEECHAT_PASSPHRASE", aby nie podawać hasła przy uruchomieniu (ta sama zmienna jest używana przez WeeChat podczas wykonywania /upgrade).
 
-Secured data with format ${sec.data.xxx} can be used in:
-  - command /eval
-  - command line argument "--run-command"
-  - options weechat.startup.command_{before|after}_plugins
-  - other options that may contain a password or sensitive data (for example proxy, irc server and relay); see /help on the options to check if they are evaluated.
+Zabezpieczone dane w formacie ${sec.data.xxx} można użyć w:
+  - komendzie /eval
+  - argumencie w linii poleceń "--run-command"
+  - opcjach weechat.startup.command_{before|after}_plugins
+  - innych opcjach, które mogą zawierać hasło lub wrażliwe dane (na przykład proxy, serwer irc i relay); zobacz /help na opcjach żeby sprawdzić czy są przetwarzane.
 
-Examples:
-  set a passphrase:
-    /secure passphrase this is my passphrase
-  encrypt freenode SASL password:
-    /secure set freenode mypassword
+Przykłady:
+  ustawienie hasła:
+    /secure passphrase to jest moje hasło
+  zaszyfrowanie hasła dla freenode SASL:
+    /secure set freenode mojehasło
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"
-  encrypt oftc password for nickserv:
-    /secure set oftc mypassword
+  zaszyfrowanie hasła dla nickserva na serwerze oftc:
+    /secure set oftc mojehasło
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
-  alias to ghost the nick "mynick":
-    /alias add ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
+  alias dla polecenia ghost dla nicka "mójnick":
+    /alias ghost /eval /msg -server freenode nickserv ghost mójnick ${sec.data.freenode}
 ----
 
 [[command_weechat_set]]
@@ -949,54 +949,54 @@ Przykłady:
          zoom[-window <numer>]
          bare [<opóźnienie>]
 
-         list: list opened windows (without argument, this list is displayed)
-           -1: jump to previous window
-           +1: jump to next window
-           b#: jump to next window displaying buffer number #
-           up: switch to window above current one
-         down: switch to window below current one
-         left: switch to window on the left
-        right: switch to window on the right
-       number: window number (see /window list)
-       splith: split current window horizontally (to undo: /window merge)
-       splitv: split current window vertically (to undo: /window merge)
-       resize: resize window size, new size is <pct> percentage of parent window
-      balance: balance the sizes of all windows
-        merge: merge window with another (all = keep only one window)
-      page_up: scroll one page up
-    page_down: scroll one page down
-      refresh: refresh screen
-       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
- scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
-    scroll_up: scroll a few lines up
-  scroll_down: scroll a few lines down
-   scroll_top: scroll to top of buffer
-scroll_bottom: scroll to bottom of buffer
-scroll_beyond_end: scroll beyond the end of buffer
-scroll_previous_highlight: scroll to previous highlight
-scroll_next_highlight: scroll to next highlight
-scroll_unread: scroll to unread marker
-         swap: swap buffers of two windows (with optional direction for target window)
-         zoom: zoom on window
-         bare: toggle bare display (with optional delay in seconds for automatic return to standard display mode)
+         list: lista otwartych okien (bez argumentu wyświetlana jest ta lista)
+           -1: skok do poprzedniego okna
+           +1: skok do następnego okna
+           b#: skok do następnego okna pokazującego bufor o numerze #
+           up: przełączenie na okno ponad obecnym
+         down: przełączenie na okno pod obecnym
+         left: przełączenie na okno po lewej
+        right: przełączenie na okno po prawej
+       numer: okno numer (zobacz /window list)
+       splith: dzieli obecne okno poziomo
+       splitv: dzieli obecne okno pionowo
+       resize: zmienia rozmiar okna, nowy rozmiar to <pct> procent okna nadrzędnego
+      balance: balansuje rozmiary pomiędzy oknami
+        merge: łączy okno z innym (all = posiadanie tylko jednego okna)
+      page_up: przewija stronę do góry
+    page_down: przewija stronę w dół
+      refresh: odświeża ekran
+       scroll: przewija ilość linii (+/-N) lub o czas: s=sekundy, m=minuty, h=godziny, d=dni, M=miesiące, y=lata
+ scroll_horiz: przewija poziomo ilość kolumn (+/-N) lub procent rozmiaru okna (takie przewijanie jest możliwe tylko w buforach z wolną zawartością)
+    scroll_up: przewija kilka linii w gorę
+  scroll_down: przewija kilka linii w dół
+   scroll_top: przewija na samą górę bufora
+scroll_bottom: przewija na spód bufora
+scroll_beyond_end: przewija poza koniec bufora
+scroll_previous_highlight: przewija do poprzedniego highlighta
+scroll_next_highlight: przewija do następnego highlighta
+scroll_unread: przewija do znacznika nie przeczytania
+         swap: zamienia bufory między dwoma oknami (z opcjonalnym kierunkiem dla docelowego okna)
+         zoom: powiększa okno
+         bare: przełącza niesformatowane wysiwetlanie (z opcjonalnym czasem, po jakim nastąpi automatyczny powrót do standardowego trybu)
 
-For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+Dla splith i splitv, pct oznacza procent reprezentujący rozmiar nowego okna, porównany z obecnym oknem jako odniesieniem. Na przykład 25 oznacza utworzenie nowego okna o rozmiarze = obecny_rozmiar / 4
 
-Examples:
-  jump to window displaying buffer #1:
+Przykłady:
+  skok do okna wyświetlającego bufor #1:
     /window b1
-  scroll 2 lines up:
+  przewiń 2 linie do góry:
     /window scroll -2
-  scroll 2 days up:
+  przewiń 2 dni do góry:
     /window scroll -2d
-  scroll to beginning of current day:
+  przewiń do początku obecnego dnia:
     /window scroll -d
-  zoom on window #2:
+  powiększ okno 2 #2:
     /window zoom -window 2
-  split window horizontally using 30%% of space for the window on top:
+  podziel okno poziomo dając 30%% miejsca oknu na górze:
     /window splith 30
-  remove the split:
+  usuń podział:
     /window merge
-  enable bare display for 2 seconds:
+  włączenie trybu niesformatowanego na 2 sekundy:
     /window bare 2
 ----
