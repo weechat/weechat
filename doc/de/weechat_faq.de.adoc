@@ -847,8 +847,7 @@ und zusätzlich diese Tipps beherzigen:
 * "nicklist"-Bar sollte versteckt werden: `/bar hide nicklist`
 * die Sekundenanzeigen in der Statusbar sollte deaktiviert werden:
   `/set weechat.look.item_time_format "%H:%M"` (dies ist die Standardeinstellung)
-// TRANSLATION MISSING
-* disable real time check of misspelled words in command line (if you enabled it):
+* die Echtzeit Rechtschreibkorrektur sollte deaktiviert werden (falls sie aktiviert wurde):
   `/set aspell.check.real_time off`
 * die Umgebungsvariable _TZ_ sollte gesetzt sein (zum Beispiel: `export TZ="Europe/Berlin"`). Dadurch wird
   verhindert, dass auf die Datei _/etc/localtime_ häufig zugegriffen wird.
