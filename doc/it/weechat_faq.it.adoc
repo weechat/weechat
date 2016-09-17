@@ -853,6 +853,9 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
 * hide "nicklist" bar: `/bar hide nicklist`
 * remove display of seconds in status bar time:
   `/set weechat.look.item_time_format "%H:%M"` (this is the default value)
+// TRANSLATION MISSING
+* disable real time check of misspelled words in command line (if you enabled it):
+  `/set aspell.check.real_time off`
 * set the _TZ_ variable (for example: `export TZ="Europe/Paris"`), to prevent
   frequent access to file _/etc/localtime_
 

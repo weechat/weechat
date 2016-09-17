@@ -834,6 +834,8 @@ celles-ci :
 * cacher la barre "nicklist" : `/bar hide nicklist`
 * supprimer l'affichage des secondes dans l'heure de la barre de statut :
   `/set weechat.look.item_time_format "%H:%M"` (ceci est la valeur par défaut)
+* désactiver la vérification en temps réel des mots mal orthographiés dans la
+  ligne de commande (si vous l'avez activée) : `/set aspell.check.real_time off`
 * définir la variable _TZ_ (par exemple : `export TZ="Europe/Paris"`), pour
   éviter un accès fréquent au fichier _/etc/localtime_
 

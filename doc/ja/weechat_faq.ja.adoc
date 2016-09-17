@@ -802,6 +802,9 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 * "nicklist" バーを非表示にする: `/bar hide nicklist`
 * ステータスバー時間に秒の表示を止める:
   `/set weechat.look.item_time_format "%H:%M"` (これはデフォルト値です)
+// TRANSLATION MISSING
+* disable real time check of misspelled words in command line (if you enabled it):
+  `/set aspell.check.real_time off`
 * _TZ_ 変数を設定する (例: `export TZ="Europe/Paris"`)、こうすることで
   _/etc/localtime_ ファイルへ頻繁にアクセスしないようになります。
 
