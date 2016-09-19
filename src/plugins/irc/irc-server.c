@@ -3504,12 +3504,13 @@ irc_server_connect_cb (const void *pointer, void *data,
     proxy = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY);
 
     server->hook_connect = NULL;
+    /* set socket */
+    server->sock = sock;
 
     switch (status)
     {
         case WEECHAT_HOOK_CONNECT_OK:
-            /* set socket and IP */
-            server->sock = sock;
+            /* set IP */
             if (server->current_ip)
                 free (server->current_ip);
             server->current_ip = (ip_address) ? strdup (ip_address) : NULL;
