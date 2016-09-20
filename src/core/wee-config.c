@@ -83,6 +83,7 @@ struct t_config_option *config_startup_sys_rlimit;
 /* config, look & feel section */
 
 struct t_config_option *config_look_align_end_of_lines;
+struct t_config_option *config_look_align_multiline_words;
 struct t_config_option *config_look_bar_more_down;
 struct t_config_option *config_look_bar_more_left;
 struct t_config_option *config_look_bar_more_right;
@@ -2455,6 +2456,14 @@ config_weechat_init_options ()
            "are starting under this data (time, buffer, prefix, suffix, "
            "message (default))"),
         "time|buffer|prefix|suffix|message", 0, 0, "message", NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_buffers, NULL, NULL,
+        NULL, NULL, NULL);
+    config_look_align_multiline_words = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "align_multiline_words", "boolean",
+        N_("align multiline words according to weechat.look.align_end_of_lines"),
+        NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         &config_change_buffers, NULL, NULL,
         NULL, NULL, NULL);
