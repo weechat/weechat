@@ -3504,7 +3504,7 @@ irc_server_connect_cb (const void *pointer, void *data,
     proxy = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY);
 
     server->hook_connect = NULL;
-    /* set socket */
+
     server->sock = sock;
 
     switch (status)
