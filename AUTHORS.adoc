@@ -80,6 +80,7 @@ Alphabetically:
 * Quico Noizeux
 * Raghavendra Prabhu
 * Rettub
+* Rob Campbell
 * Rudolf Polzer (divVerent)
 * Ryuunosuke Ayanokouzi
 * scumjr
