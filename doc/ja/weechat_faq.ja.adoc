@@ -195,13 +195,11 @@ _buffers.pl_ スクリプトを使ってください:
 /set weechat.bar.buffers.position bottom
 ----
 
-// TRANSLATION MISSING
-To scroll the bar: if mouse is enabled (key: kbd:[Alt+m]), you can scroll the
-bar with your mouse wheel.
+バーをスクロールするには: マウスが有効化されているならば
+(キー: kbd:[Alt+m])、マウスホイールでバーをスクロールできます。
 
-// TRANSLATION MISSING
-Or you can define keys, similar to the existing keys to scroll nicklist.
-For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
+スクロール機能を果たすキーが割り当てられているならば、それらを使ってスクロールすることも可能です。以下ではニックネームリストをスクロールする既存のキーに合わせて
+kbd:[F1]、kbd:[F2]、kbd:[Alt+F1]、kbd:[Alt+F2] を定義しています:
 
 ----
 /key bind meta-OP /bar scroll buffers * -100%
@@ -212,7 +210,7 @@ For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
 
 [NOTE]
 "meta-OP" と "meta-OQ" キーは端末によって異なります。キーコードを見つけるには
-kbd:[Alt+k] の後にキー を押してください。
+kbd:[Alt+k] の後にキーを押してください。
 
 [[customize_prefix]]
 === どうすればチャットエリア内のニックネームの最大長さを短く、又はニックネーム整列機能を無効化できますか。
@@ -802,8 +800,7 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 * "nicklist" バーを非表示にする: `/bar hide nicklist`
 * ステータスバー時間に秒の表示を止める:
   `/set weechat.look.item_time_format "%H:%M"` (これはデフォルト値です)
-// TRANSLATION MISSING
-* disable real time check of misspelled words in command line (if you enabled it):
+* コマンドライン内の単語スペルミスのリアルタイムチェックを無効にする (有効にしていた場合):
   `/set aspell.check.real_time off`
 * _TZ_ 変数を設定する (例: `export TZ="Europe/Paris"`)、こうすることで
   _/etc/localtime_ ファイルへ頻繁にアクセスしないようになります。
