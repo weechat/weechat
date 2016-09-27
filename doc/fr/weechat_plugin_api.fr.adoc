@@ -974,7 +974,7 @@ Exemple en C :
 
 [source,C]
 ----
-char *str = weechat_string_expand_home ("%h/test");
+char *str = weechat_string_eval_path_home ("%h/test", NULL, NULL, NULL);
 /* résultat : "/home/xxx/.weechat/test" */
 /* ... */
 free (str);
@@ -988,7 +988,7 @@ Script (Python) :
 path = weechat.string_eval_path_home(path, pointers, extra_vars, options)
 
 # exemple
-path = weechat.string_eval_path_home("%h/test", "", "", "")
+path = weechat.string_eval_path_home("%h/test", {}, {}, {})
 # path == "/home/xxx/.weechat/test"
 ----
 
