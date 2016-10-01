@@ -806,8 +806,7 @@ Możesz skorzystać z tych samych porad jak dla  <<memory_usage,memory>>, oraz t
 * schowaj pasek "nicklist": `/bar hide nicklist`
 * usuń wyświetlanie sekund w czasie na pasku statusu:
   `/set weechat.look.item_time_format "%H:%M"` (domyślna wartość)
-// TRANSLATION MISSING
-* disable real time check of misspelled words in command line (if you enabled it):
+* wyłącz automatyczne sprawdzanie poprawności wpisywanych słów w linii poleceń (o ile je włączyłeś):
   `/set aspell.check.real_time off`
 * ustaw zmienną _TZ_ (na przykład: `export TZ="Europe/Warsaw"`), w celu zmniejszenia
   częstotliwości czytania pliku _/etc/localtime_
