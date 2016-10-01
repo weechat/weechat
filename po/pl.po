@@ -11987,9 +11987,8 @@ msgstr "kolor tekstu dla flag wyrażeń regularnych (w /trigger list)"
 msgid "text color for return code flag (in /trigger list)"
 msgstr "kolor tekstu dla flagi zwracanego kodu (w /trigger list)"
 
-#, fuzzy
 msgid "text color for post action flag (in /trigger list)"
-msgstr "kolor tekstu dla flag akcji kończących (w /trigger list)"
+msgstr "kolor tekstu dla flagi końca akcji (w /trigger list)"
 
 msgid "text color for regular expressions"
 msgstr "kolor tekstu dla wyrażeń regularnych"
