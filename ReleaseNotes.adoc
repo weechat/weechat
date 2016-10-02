@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v1.6]]
-== Version 1.6 (under dev)
+== Version 1.6 (2016-10-02)
 
 [[v1.6_irc_server_default_msg]]
 === IRC kick/part/quit default messages
