@@ -21,6 +21,7 @@
 SUBDIRS = . cs de en es fr it ja pl ru
 
 EXTRA_DIST = docgen.py \
+             docinfo.html \
              CMakeLists.txt
 
 uninstall-hook:
