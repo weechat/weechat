@@ -378,7 +378,7 @@ string_strcasestr (const char *string, const char *search)
 int
 string_match (const char *string, const char *mask, int case_sensitive)
 {
-    const char *ptr_string, *ptr_mask, *pos_word, *pos_end;
+    const char *ptr_string, *ptr_mask, *pos_word, *pos_word2, *pos_end;
     char *word;
     int wildcard, length_word;
 
@@ -429,13 +429,25 @@ string_match (const char *string, const char *mask, int case_sensitive)
         /* check if the word is matching */
         if (wildcard)
         {
-            /* search the word anywhere in the string (from current position) */
+            /*
+             * search the word anywhere in the string (from current position),
+             * multiple times if needed
+             */
             pos_word = (case_sensitive) ?
                 strstr (ptr_string, word) : string_strcasestr (ptr_string, word);
             if (!pos_word)
             {
                 free (word);
                 return 0;
+            }
+            while (1)
+            {
+                pos_word2 = (case_sensitive) ?
+                    strstr (pos_word + length_word, word) :
+                    string_strcasestr (pos_word + length_word, word);
+                if (!pos_word2)
+                    break;
+                pos_word = pos_word2;
             }
             ptr_string = pos_word + length_word;
         }

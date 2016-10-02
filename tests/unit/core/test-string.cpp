@@ -322,6 +322,24 @@ TEST(String, Match)
     LONGS_EQUAL(1, string_match ("test", "*es*", 1));
     LONGS_EQUAL(1, string_match ("test", "*ES*", 0));
     LONGS_EQUAL(0, string_match ("test", "*ES*", 1));
+    LONGS_EQUAL(1, string_match ("TEST", "*es*", 0));
+    LONGS_EQUAL(0, string_match ("TEST", "*es*", 1));
+    LONGS_EQUAL(0, string_match ("aaba", "*aa", 0));
+    LONGS_EQUAL(0, string_match ("aaba", "*aa", 1));
+    LONGS_EQUAL(1, string_match ("abaa", "*aa", 0));
+    LONGS_EQUAL(1, string_match ("abaa", "*aa", 1));
+    LONGS_EQUAL(1, string_match ("aabaa", "*aa", 0));
+    LONGS_EQUAL(1, string_match ("aabaa", "*aa", 1));
+    LONGS_EQUAL(1, string_match ("aabaabaabaa", "*aa", 0));
+    LONGS_EQUAL(1, string_match ("aabaabaabaa", "*aa", 1));
+    LONGS_EQUAL(0, string_match ("abaa", "aa*", 0));
+    LONGS_EQUAL(0, string_match ("abaa", "aa*", 1));
+    LONGS_EQUAL(1, string_match ("aaba", "aa*", 0));
+    LONGS_EQUAL(1, string_match ("aaba", "aa*", 1));
+    LONGS_EQUAL(1, string_match ("aabaa", "aa*", 0));
+    LONGS_EQUAL(1, string_match ("aabaa", "aa*", 1));
+    LONGS_EQUAL(1, string_match ("aabaabaabaa", "aa*", 0));
+    LONGS_EQUAL(1, string_match ("aabaabaabaa", "aa*", 1));
 }
 
 /*

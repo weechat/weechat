@@ -36,6 +36,7 @@ Improvements::
 Bug fixes::
 
   * core, irc, xfer: refresh domain name and name server addresses before connection to servers (fix connection to servers after suspend mode) (issue #771)
+  * api: fix return of function string_match() when there are multiple masks in the string (issue #812)
   * api: fix crash in function network_connect_to() if address is NULL
   * api: fix connection to servers with hook_connect() on Windows 10 with Windows subsystem for Linux (issue #770)
   * api: fix crash in function string_split_command() when the separator is not a semicolon (issue #731)
