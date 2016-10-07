@@ -63,19 +63,19 @@ dem Suchmuster entsprechen.
 
 Zum Beispiel:
 
-Zeit alle Optionen an (WeeChat und Erweiterungen):
+zeigt alle Optionen an (WeeChat und Erweiterungen):
 
 ----
 /set
 ----
 
-Zeit alle WeeChat Optionen an:
+zeigt alle WeeChat Optionen an:
 
 ----
 /set weechat.*
 ----
 
-Zeit alle Optionen der IRC-Erweiterung an:
+zeigt alle Optionen der IRC-Erweiterung an:
 
 ----
 /set irc.*
