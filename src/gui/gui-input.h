@@ -35,8 +35,8 @@ extern void gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buf
                                                         int save_undo,
                                                         int stop_completion);
 extern void gui_input_set_pos (struct t_gui_buffer *buffer, int pos);
-extern int gui_input_insert_string (struct t_gui_buffer *buffer,
-                                    const char *string, int pos);
+extern void gui_input_insert_string (struct t_gui_buffer *buffer,
+                                     const char *string, int pos);
 extern void gui_input_move_to_buffer (struct t_gui_buffer *from_buffer,
                                       struct t_gui_buffer *to_buffer);
 extern void gui_input_clipboard_paste (struct t_gui_buffer *buffer);
