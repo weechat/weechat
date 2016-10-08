@@ -24,6 +24,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stdint.h>
 #include <errno.h>
 #include <string.h>
 #include <sys/types.h>
@@ -672,6 +673,8 @@ util_file_get_content (const char *filename)
 
     while (!feof (f))
     {
+        if (fp > SIZE_MAX - (1024 * sizeof (char)))
+            goto error;
         buffer2 = (char *) realloc (buffer, (fp + (1024 * sizeof (char))));
         if (!buffer2)
             goto error;
@@ -681,6 +684,8 @@ util_file_get_content (const char *filename)
             goto error;
         fp += count;
     }
+    if (fp > SIZE_MAX - sizeof (char))
+        goto error;
     buffer2 = (char *) realloc (buffer, fp + sizeof (char));
     if (!buffer2)
         goto error;
