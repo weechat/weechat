@@ -25,21 +25,21 @@ email to <security@weechat.org> instead.
 When reporting https://github.com/weechat/weechat/issues[issues] on GitHub,
 please include:
 
-* your *WeeChat version*: the output of `/v` in WeeChat, for example:
-  _WeeChat 1.0-dev (git: v0.4.3-475-gb174b3c)_. +
+* Your *WeeChat version*: the output of `/v` in WeeChat, for example:
+  _WeeChat 1.7-dev (git: v1.6-6-g997f47f)_. +
   If WeeChat does not start at all, please include the version displayed by
   `weechat --help` (or the version installed with your package manager).
-* your *operating system*: its name and version (examples: Linux Debian Wheezy,
+* Your *operating system*: its name and version (examples: Linux Debian Wheezy,
   FreeBSD 10.0, Windows/Cygwin 64-bit, Windows/Ubuntu 64-bit...).
-* the *steps to reproduce*: if possible, please include a reproducible example:
+* The *steps to reproduce*: if possible, please include a reproducible example:
   explain the steps which led you to the problem. +
   It's even better if you can reproduce the problem with a new config (and no
   scripts loaded): try `weechat --dir /tmp/weechat` and check if you have the
   problem here.
-* the *gdb's backtrace* (only for a crash): if you can reproduce the crash
-(or if you have a core file), please include the backtrace from gdb (look at
-https://weechat.org/files/doc/devel/weechat_user.en.html#report_crashes[User's guide]
-for more info).
+* The *gdb's backtrace* (only for a crash): if you can reproduce the crash
+  (or if you have a core file), please include the backtrace from gdb (look at
+  https://weechat.org/files/doc/devel/weechat_user.en.html#report_crashes[User's guide]
+  for more info).
 
 [IMPORTANT]
 Most of times, the WeeChat crash log file (_weechat_crash_YYYYMMDD_xxx.log_) is
@@ -63,8 +63,8 @@ instead.
 == Translations
 
 Pull requests on GitHub for fixes or new translations are welcome at any
-time, for https://github.com/weechat/weechat[WeeChat] and
-the web site https://github.com/weechat/weechat.org[weechat.org].
+time, for https://github.com/weechat/weechat[WeeChat] and the web site
+https://github.com/weechat/weechat.org[weechat.org].
 
 To start a translation in a new language (not yet supported), please look at
 https://weechat.org/files/doc/devel/weechat_dev.en.html#translations[translations]
