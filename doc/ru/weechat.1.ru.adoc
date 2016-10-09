@@ -22,10 +22,9 @@ weechat - расширяемый чат-клиент
 
 == ОПИСАНИЕ
 
-// TRANSLATION MISSING
-WeeChat (Wee Enhanced Environment for Chat) is a free chat client, fast and
-light, designed for many operating systems.
-It is highly customizable and extensible with scripts.
+WeeChat (Wee Enhanced Environment for Chat) это свободный чат-клиент - быстрый и легкий, 
+он подходит для большинства операционных систем. 
+Его легко настроить, кроме того, вы можете расширить его функицонал при помощи скриптов.
 
 == ПАРАМЕТРЫ
 
