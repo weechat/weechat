@@ -116,6 +116,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "msg_part",             "WeeChat ${info:version}" },
   { "msg_quit",             "WeeChat ${info:version}" },
   { "notify",               ""                        },
+  { "umodes",               ""                        },
 };
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
@@ -5554,6 +5555,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "msg_quit",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_MSG_QUIT)))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "umodes",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_UMODES)))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "temp_server", server->temp_server))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "index_current_address", server->index_current_address))
@@ -5925,6 +5929,13 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  msg_quit . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_MSG_QUIT]));
+        /* umodes */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_UMODES]))
+            weechat_log_printf ("  umodes . . . . . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_UMODES));
+        else
+            weechat_log_printf ("  umodes . . . . . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_UMODES]));
         /* other server variables */
         weechat_log_printf ("  temp_server. . . . . : %d",    ptr_server->temp_server);
         weechat_log_printf ("  reloading_from_config: %d",    ptr_server->reloaded_from_config);
