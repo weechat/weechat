@@ -12,7 +12,7 @@
 * Stalwart <stlwrt@gmail.com>, 2006
 * Алексей Бортник <thebosha@gmail.com>, 2009
 * Alexander Turenko <totktonada.ru@gmail.com>, 2014-2015
-
+* Evgeny Shmarnev <eshmarnev@suse.com>, 2016
 
 [[start]]
 == Запуск WeeChat
@@ -171,27 +171,23 @@ WeeChat немедленно применяет все изменения (ва�
 В параметре _command_ можно записать несколько команд через `;` (точку с
 запятой).
 
-// TRANSLATION MISSING
-If you want to protect your password in configuration files, you can use
-secured data.
+Если вы хотите защитить ваш пароль в конфигурационном файле, вы можете 
+воспользоваться функцией защиты данных
 
-// TRANSLATION MISSING
-First setup a passphrase:
+Для начала, создайте ключевую фразу:
 
 ----
 /secure passphrase this is my secret passphrase
 ----
 
-// TRANSLATION MISSING
-Then add a secured data with your freenode password:
+Затем добавьте защищенные данные с помощью вашего freenode пароля:
 
 ----
 /secure set freenode_password xxxxxxx
 ----
 
-// TRANSLATION MISSING
-Then you can use `+${sec.data.freenode_password}+` instead of your password in
-IRC options mentioned above, for example:
+Вы также можете использоавть `+${sec.data.freenode_password}+` вместо вашего
+пароля в опциях IRC, например:
 
 ----
 /set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
@@ -255,20 +251,17 @@ IRC options mentioned above, for example:
 /part [quit message]
 ----
 
-// TRANSLATION MISSING
-Close a server, channel or private buffer (`/close` is an alias for
-`/buffer close`):
+Закрыть соединение с сервером, каналом или частным буфером (`/close` - 
+псевдоним для `/buffer close`):
 
 ----
 /close
 ----
 
-// TRANSLATION MISSING
 [WARNING]
-Closing the server buffer will close all channel/private buffers.
+Закрытие соединения с сервером закроет все каналы/частные буферы.
 
-// TRANSLATION MISSING
-Disconnect from server, on the server buffer:
+Отключиться от сервера, на серверном буфере:
 
 ----
 /disconnect
@@ -318,8 +311,7 @@ _foo_):
 /window splitv 33
 ----
 
-// TRANSLATION MISSING
-To remove the split:
+Отменить разделение экрана:
 
 ----
 /window merge
