@@ -35,6 +35,7 @@ Alphabetically:
 * Elián Hanisch (m4v)
 * Emanuele Giaquinta
 * Esteban I. Ruiz Moreno (Exio)
+* Evgeny Shmarnev
 * Felix Eckhofer
 * Frank Zacharias
 * Gu1ll4um3r0m41n
