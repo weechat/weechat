@@ -395,7 +395,7 @@
 * [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
 ** 説明: pass:none[遅延時間がこの値以上に長くなった場合は再接続 (秒単位、0 = 再接続しない); この値は必ず irc.network.lag_max 以下にしてください]
 ** タイプ: 整数
-** 値: 0 .. 604800 (デフォルト値: `+0+`)
+** 値: 0 .. 604800 (デフォルト値: `+300+`)
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
 ** 説明: pass:none[遅延時間が増加する場合、遅延要素の 2 回のリフレッシュの間のインターバル (秒単位)]

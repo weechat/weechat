@@ -3139,7 +3139,7 @@ irc_config_init ()
         N_("reconnect to server if lag is greater than or equal to this value "
            "(in seconds, 0 = never reconnect); this value must be less than or "
            "equal to irc.network.lag_max"),
-        NULL, 0, 3600 * 24 * 7, "0", NULL, 0,
+        NULL, 0, 3600 * 24 * 7, "300", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_lag_refresh_interval = weechat_config_new_option (
         irc_config_file, ptr_section,

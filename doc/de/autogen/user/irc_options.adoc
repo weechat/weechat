@@ -395,7 +395,7 @@
 * [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
 ** Beschreibung: pass:none[erneut mit Server verbinden, falls die maximal Verzögerung (Lag) erreicht wurde (Zeit in Sekunden, 0 = keine automatische Neuverbindung, zum Server); dieser Wert muss geringer oder gleich dem Wert in irc.network.lag_max sein]
 ** Typ: integer
-** Werte: 0 .. 604800 (Standardwert: `+0+`)
+** Werte: 0 .. 604800 (Standardwert: `+300+`)
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
 ** Beschreibung: pass:none[Intervall zwischen zwei Aktualisierungen für die Anzeige der Verzögerung (Lag-Item), wenn die Verzögerungszeit sich erhöht (in Sekunden)]

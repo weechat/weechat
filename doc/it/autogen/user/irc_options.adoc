@@ -395,7 +395,7 @@
 * [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
 ** descrizione: pass:none[reconnect to server if lag is greater than or equal to this value (in seconds, 0 = never reconnect); this value must be less than or equal to irc.network.lag_max]
 ** tipo: intero
-** valori: 0 .. 604800 (valore predefinito: `+0+`)
+** valori: 0 .. 604800 (valore predefinito: `+300+`)
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
 ** descrizione: pass:none[intervallo tra due aggiornamenti per l'elemento ritardo, quando è in aumento (in secondi)]

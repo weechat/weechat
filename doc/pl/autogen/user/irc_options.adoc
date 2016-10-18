@@ -395,7 +395,7 @@
 * [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
 ** opis: pass:none[łączy ponownie, jeśli serwer posiada opóźnienie większe lub równe tej wartości (w sekundach, 0 = nigdy nie łącz ponownie); wartość musi być mniejsza lub równa irc.network.lag_max]
 ** typ: liczba
-** wartości: 0 .. 604800 (domyślna wartość: `+0+`)
+** wartości: 0 .. 604800 (domyślna wartość: `+300+`)
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
 ** opis: pass:none[przerwa między dwoma odświeżeniami wskaźnika lagu, kiedy się on zwiększa (w sekundach)]
