@@ -503,6 +503,8 @@ string_expand_home (const char *path)
     }
 
     ptr_home = getenv ("HOME");
+    if (!ptr_home)
+        return NULL;
 
     length = strlen (ptr_home) + strlen (path + 1) + 1;
     str = malloc (length);
