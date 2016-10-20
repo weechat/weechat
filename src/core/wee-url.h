@@ -31,6 +31,7 @@ enum t_url_type
     URL_TYPE_LONG,
     URL_TYPE_LONGLONG,
     URL_TYPE_MASK,
+    URL_TYPE_LIST,
 };
 
 struct t_url_constant

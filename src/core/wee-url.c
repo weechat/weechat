@@ -43,7 +43,7 @@
     { #__name, CURLOPT_##__name, URL_TYPE_##__type, __constants }
 
 
-char *url_type_string[] = { "string", "long", "long long", "mask" };
+char *url_type_string[] = { "string", "long", "long long", "mask", "list" };
 
 /*
  * Constants/options for Curl 7.52.0
@@ -477,10 +477,10 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(PUT, LONG, NULL),
     URL_DEF_OPTION(POST, LONG, NULL),
     URL_DEF_OPTION(POSTFIELDS, STRING, NULL),
-    /*URL_DEF_OPTION(HTTPPOST, LIST, NULL),*/
+    URL_DEF_OPTION(HTTPPOST, LIST, NULL),
     URL_DEF_OPTION(REFERER, STRING, NULL),
     URL_DEF_OPTION(USERAGENT, STRING, NULL),
-    /*URL_DEF_OPTION(HTTPHEADER, LIST, NULL),*/
+    URL_DEF_OPTION(HTTPHEADER, LIST, NULL),
     URL_DEF_OPTION(COOKIE, STRING, NULL),
     URL_DEF_OPTION(COOKIEFILE, STRING, NULL),
 #endif
@@ -503,7 +503,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(COOKIESESSION, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A03 /* 7.10.3 */
-    /*URL_DEF_OPTION(HTTP200ALIASES, LIST, NULL),*/
+    URL_DEF_OPTION(HTTP200ALIASES, LIST, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A04 /* 7.10.4 */
     URL_DEF_OPTION(UNRESTRICTED_AUTH, LONG, NULL),
@@ -534,7 +534,7 @@ struct t_url_option url_options[] =
 #endif
 #if LIBCURL_VERSION_NUM >= 0x072500 /* 7.37.0 */
     URL_DEF_OPTION(HEADEROPT, MASK, url_header),
-    /*URL_DEF_OPTION(PROXYHEADER, LIST, NULL),*/
+    URL_DEF_OPTION(PROXYHEADER, LIST, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x072B00 /* 7.43.0 */
     URL_DEF_OPTION(PIPEWAIT, LONG, NULL),
@@ -548,7 +548,7 @@ struct t_url_option url_options[] =
      */
 #if LIBCURL_VERSION_NUM >= 0x071400 /* 7.20.0 */
     URL_DEF_OPTION(MAIL_FROM, STRING, NULL),
-    /*URL_DEF_OPTION(MAIL_RCPT, LIST, NULL),*/
+    URL_DEF_OPTION(MAIL_RCPT, LIST, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071900 /* 7.25.0 */
     URL_DEF_OPTION(MAIL_AUTH, STRING, NULL),
@@ -569,14 +569,14 @@ struct t_url_option url_options[] =
      */
 #if LIBCURL_VERSION_NUM >= 0x070100 /* 7.1.0 */
     URL_DEF_OPTION(FTPPORT, STRING, NULL),
-    /*URL_DEF_OPTION(QUOTE, LIST, NULL),*/
-    /*URL_DEF_OPTION(POSTQUOTE, LIST, NULL),*/
+    URL_DEF_OPTION(QUOTE, LIST, NULL),
+    URL_DEF_OPTION(POSTQUOTE, LIST, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070902 /* 7.9.2 */
     URL_DEF_OPTION(FTP_USE_EPSV, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070905 /* 7.9.5 */
-    /*URL_DEF_OPTION(PREQUOTE, LIST, NULL),*/
+    URL_DEF_OPTION(PREQUOTE, LIST, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A05 /* 7.10.5 */
     URL_DEF_OPTION(FTP_USE_EPRT, LONG, NULL),
@@ -691,7 +691,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(USE_SSL, LONG, url_use_ssl),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071503 /* 7.21.3 */
-    /*URL_DEF_OPTION(RESOLVE, LIST, NULL),*/
+    URL_DEF_OPTION(RESOLVE, LIST, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071800 /* 7.24.0 */
     URL_DEF_OPTION(DNS_SERVERS, STRING, NULL),
@@ -703,7 +703,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(DNS_LOCAL_IP6, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x073100 /* 7.49.0 */
-    /*URL_DEF_OPTION(CONNECT_TO, LIST, NULL),*/
+    URL_DEF_OPTION(CONNECT_TO, LIST, NULL),
 #endif
 
     /*
@@ -819,7 +819,7 @@ struct t_url_option url_options[] =
      * telnet options
      */
 #if LIBCURL_VERSION_NUM >= 0x070700 /* 7.7 */
-    /*URL_DEF_OPTION(TELNET_OPTIONS, LIST, NULL),*/
+    URL_DEF_OPTION(TELNETOPTIONS, LIST, NULL),
 #endif
     { NULL, 0, 0, NULL },
 };
@@ -943,6 +943,9 @@ weeurl_option_map_cb (void *data,
     int index, index_constant, rc;
     long long_value;
     long long long_long_value;
+    struct curl_slist *slist;
+    char *list_copy, *list_entry_walker;
+    const char *list_entry_start;
 
     /* make C compiler happy */
     (void) hashtable;
@@ -1009,6 +1012,30 @@ weeurl_option_map_cb (void *data,
                                                         (const char *)value);
                     curl_easy_setopt (curl, url_options[index].option,
                                       long_value);
+                }
+                break;
+            case URL_TYPE_LIST:
+                slist = NULL;
+                list_copy = malloc (strlen ((const char *)value) + 1);
+                if (list_copy)
+                {
+                    strcpy (list_copy, (const char *)value);
+                    list_entry_start = list_copy;
+                    list_entry_walker = list_copy;
+                    while (*list_entry_walker)
+                    {
+                        if (*list_entry_walker == '\n')
+                        {
+                            *list_entry_walker = '\0';
+                            slist = curl_slist_append (slist, list_entry_start);
+                            list_entry_start = list_entry_walker + 1;
+                        }
+                        ++list_entry_walker;
+                    }
+                    slist = curl_slist_append (slist, list_entry_start);
+                    free (list_copy);
+                    curl_easy_setopt (curl, url_options[index].option,
+                                      slist);
                 }
                 break;
         }
