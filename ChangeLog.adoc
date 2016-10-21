@@ -22,6 +22,10 @@ Improvements::
 
   * irc: change default value of option irc.network.lag_reconnect to 300 (issue #818)
 
+Bug fixes::
+
+  * relay: set status to "authentication failed" and close immediately connection in case of authentication failure in weechat protocol (issue #825)
+
 [[v1.6]]
 == Version 1.6 (2016-10-02)
 
