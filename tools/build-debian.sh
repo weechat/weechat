@@ -171,7 +171,7 @@ else
 fi
 
 if [ "${VERSION}" = "devel" ]; then
-    # packages are like: weechat-devel(-xxx)_X.Y-1~dev20150511_arch.deb
+    # devel packages: weechat-devel(-xxx)_X.Y-1~dev20150511_arch.deb
     DEB_DIR="debian-devel"
     DEB_NAME="weechat-devel"
     DEB_VERSION="$(${ROOT_DIR}/version.sh devel)-1~dev$(date '+%Y%m%d')"
@@ -182,7 +182,7 @@ if [ "${VERSION}" = "devel" ]; then
     DCH_URGENCY="low"
     DCH_CHANGELOG="Repository snapshot"
 else
-    # packages are like: weechat-(-xxx)_X.Y-1_arch.deb
+    # stable packages: weechat-(-xxx)_X.Y-1_arch.deb
     DEB_DIR="debian-stable"
     DEB_NAME="weechat"
     DEB_VERSION="${VERSION}-${DEB_REVISION}"
