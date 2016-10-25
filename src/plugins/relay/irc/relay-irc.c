@@ -1452,7 +1452,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                                  ":%s ERROR :WeeChat: password error",
                                  RELAY_IRC_DATA(client, address));
                 relay_client_set_status (client,
-                                         RELAY_STATUS_DISCONNECTED);
+                                         RELAY_STATUS_AUTH_FAILED);
                 goto end;
             }
 

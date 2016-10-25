@@ -24,7 +24,7 @@ Improvements::
 
 Bug fixes::
 
-  * relay: set status to "authentication failed" and close immediately connection in case of authentication failure in weechat protocol (issue #825)
+  * relay: set status to "authentication failed" and close immediately connection in case of authentication failure in weechat and irc protocols (issue #825)
 
 [[v1.6]]
 == Version 1.6 (2016-10-02)
