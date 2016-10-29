@@ -1335,6 +1335,10 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     }
 
     /* display message */
+    ptr_data = NULL;
+    message_with_tags = NULL;
+    message_with_search = NULL;
+
     if (line->data->message && line->data->message[0])
     {
         message_with_tags = (gui_chat_display_tags) ?
@@ -1354,6 +1358,10 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
             if (message_with_search)
                 ptr_data = message_with_search;
         }
+    }
+
+    if (ptr_data && ptr_data[0])
+    {
         while (ptr_data && ptr_data[0])
         {
             gui_chat_get_word_info (window,
@@ -1443,10 +1451,6 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 ptr_data = NULL;
             }
         }
-        if (message_with_tags)
-            free (message_with_tags);
-        if (message_with_search)
-            free (message_with_search);
     }
     else
     {
@@ -1454,6 +1458,11 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         gui_chat_display_new_line (window, num_lines, count,
                                    &lines_displayed, simulate);
     }
+
+    if (message_with_tags)
+        free (message_with_tags);
+    if (message_with_search)
+        free (message_with_search);
 
     /* display message if day has changed after this line */
     if ((line->data->date != 0)

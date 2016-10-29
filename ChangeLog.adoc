@@ -24,6 +24,7 @@ Improvements::
 
 Bug fixes::
 
+  * core: fix display of empty lines in search mode (issue #829)
   * relay: set status to "authentication failed" and close immediately connection in case of authentication failure in weechat and irc protocols (issue #825)
 
 [[v1.6]]
