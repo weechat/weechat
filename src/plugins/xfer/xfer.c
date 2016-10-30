@@ -1147,6 +1147,14 @@ xfer_add_cb (const void *pointer, void *data,
             free (path);
         }
 #endif /* _WIN32 */
+        if (!filename2)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: not enough memory (%s)"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                            "xfer_add, filename2");
+            goto error;
+        }
         /* check if file exists */
         if (stat (filename2, &st) == -1)
         {
