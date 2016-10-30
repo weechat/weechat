@@ -7206,7 +7206,7 @@ msgid ""
 "\"NORMAL\", \"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"
 msgstr ""
 "texto con prioridades para gnutls (para ver la sintáxis, vee documentación "
-"de la función gnytls_priority_init en el manual gnutls, cadenas comunes son: "
+"de la función gnutls_priority_init en el manual gnutls, cadenas comunes son: "
 "\"PERFORMANCE\", \"NORMAL\", \"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE"
 "\")"
 
