@@ -26,6 +26,7 @@ Bug fixes::
 
   * core: fix display of empty lines in search mode (issue #829)
   * api: fix crash in function string_expand_home() when the HOME environment variable is not set (issue #827)
+  * lua: fix integers returned in Lua >= 5.3 (issue #834)
   * relay: set status to "authentication failed" and close immediately connection in case of authentication failure in weechat and irc protocols (issue #825)
 
 [[v1.6]]
