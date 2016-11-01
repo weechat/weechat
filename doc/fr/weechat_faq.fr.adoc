@@ -231,6 +231,36 @@ Pour supprimer l'alignement sur les pseudos :
 /set weechat.look.prefix_align none
 ----
 
+[[status_hotlist]]
+=== Que signifie [H: 3(1,8), 2(4)] dans la barre de statut ?
+
+Il s'agit de la "hotlist", une liste de tampons avec le nombre de messages non
+lus, par ordre : highlights, messages privés, messages, autres messages
+(comme join/part). +
+Le nombre de "messages non lus" est le nombre de nouveaux messages affichés/reçus
+depuis que vous avez visité le tampon.
+
+Dans l'exemple `[H: 3(1,8), 2(4)]`, il y a :
+
+* un highlight et 8 messages non lus sur le tampon n°3,
+* 4 messages non lus sur le tampon n°2.
+
+La couleur du tampon/compter dépend du type de message, les couleurs par défaut
+sont :
+
+* highlight : `lightmagenta` / `magenta`
+* message privé : `lightgreen` / `green`
+* message : `yellow` / `brown`
+* autre message : `default` / `default` (couleur du texte dans le terminal)
+
+Ces couleurs peuvent être changées via les options __weechat.color.status_data_*__
+(tampons) et __weechat.color.status_count_*__ (compteurs). +
+Les autres options pour la "hotlist" peuvent être changées via les options
+__weechat.look.hotlist_*__.
+
+Voir le guide utilisateur pour plus d'information sur la "hotlist" (organisation
+de l'écran).
+
 [[input_bar_size]]
 === Comment utiliser une ligne de commande sur plusieurs lignes ?
 

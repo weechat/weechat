@@ -227,6 +227,35 @@ kbd:[Alt+k] の後にキーを押してください。
 /set weechat.look.prefix_align none
 ----
 
+// TRANSLATION MISSING
+[[status_hotlist]]
+=== What does mean the [H: 3(1,8), 2(4)] in status bar?
+
+This is called the "hotlist", a list of buffers with the number of unread
+messages, by order: highlights, private messages, messages, other messages
+(like join/part). +
+The number of "unread message" is the number of new messages displayed/received
+since you visited the buffer.
+
+In the example `[H: 3(1,8), 2(4)]`, there are:
+
+* one highlight and 8 unread messages on buffer #3,
+* 4 unread messages on buffer #2.
+
+The color of the buffer/counter depends on the type of message, default colors
+are:
+
+* highlight: `lightmagenta` / `magenta`
+* private message: `lightgreen` / `green`
+* message: `yellow` / `brown`
+* other message: `default` / `default` (color of text in terminal)
+
+These colors can be changed with the options __weechat.color.status_data_*__
+(buffers) and __weechat.color.status_count_*__ (counters). +
+Other hotlist options can be changed with the options __weechat.look.hotlist_*__.
+
+See user's guide for more info about the hotlist (screen layout).
+
 [[input_bar_size]]
 === コマンドラインの行数を増やすにはどうすればいいですか。
 
