@@ -96,6 +96,7 @@ Alphabetically:
 * Sven Knurr (Cthulhux)
 * Tim D. Smith
 * Tom Alsberg
+* Tomoe Mami
 * Tor Hveem (xt)
 * Valentin Lorentz (progval)
 * Vasco Almeida
