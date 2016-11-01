@@ -82,12 +82,21 @@
     if (__string)                                                       \
         free (__string);                                                \
     return 1
+#if LUA_VERSION_NUM >= 503
+#define API_RETURN_INT(__int)                                           \
+    lua_pushinteger (L, __int);                                          \
+    return 1
+#define API_RETURN_LONG(__long)                                         \
+    lua_pushinteger (L, __long);                                         \
+    return 1
+#else
 #define API_RETURN_INT(__int)                                           \
     lua_pushnumber (L, __int);                                          \
     return 1
 #define API_RETURN_LONG(__long)                                         \
     lua_pushnumber (L, __long);                                         \
     return 1
+#endif /* LUA_VERSION_NUM >= 503 */
 
 
 /*
