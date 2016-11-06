@@ -9574,7 +9574,7 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 コールバックは
 <<_hook_completion_list_add,hook_completion_list_add>>
 関数を呼び出すだけで、コマンドラインをコールバックで絶対に *変更しない*でください。 +
-key[Tab] が押された時にコマンドラインを更新するためには、関数
+kbd:[Tab] が押された時にコマンドラインを更新するためには、関数
 <<_hook_command_run,hook_command_run>> を使ってコマンド
 "/input complete_next" をフックしてください (コールバックがコマンドラインを更新する場合は必ず
 _WEECHAT_RC_OK_EAT_ を返してください。そうすれば WeeChat は補完を行いません)。

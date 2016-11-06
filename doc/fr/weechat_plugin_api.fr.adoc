@@ -9762,7 +9762,7 @@ Il est donc recommandé de choisir un nom avec un préfixe unique, comme
 Le "callback" doit seulement appeler la fonction
 <<_hook_completion_list_add,hook_completion_list_add>>
 et ne doit *PAS* mettre à jour la ligne de commande. +
-Pour mettre à jour la ligne de commande quand key[Tab] est pressé, vous pouvez
+Pour mettre à jour la ligne de commande quand kbd:[Tab] est pressé, vous pouvez
 utiliser la fonction <<_hook_command_run,hook_command_run>>
 avec la commande : "/input complete_next" (et vous devez retourner
 _WEECHAT_RC_OK_EAT_ si votre "callback" a mis à jour la ligne de commande, de
