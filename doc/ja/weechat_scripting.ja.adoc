@@ -1,4 +1,4 @@
-= WeeChat スクリプト製作ガイド
+= WeeChat スクリプト作成ガイド
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ja
