@@ -32,7 +32,7 @@ include::cmdline_options.ja.adoc[]
 == プラグインオプション
 
 プラグインオプションに関する完全な文書は
-https://weechat.org/doc[WeeChat ユーザーガイド] のプラグインリファレンスを参照してください。
+https://weechat.org/doc[WeeChat ユーザーズガイド] のプラグインの章を参照してください。
 
 irc プラグインでは以下の様な URL で一時的なサーバに接続することができます:
 
