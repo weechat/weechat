@@ -54,7 +54,7 @@ WeeChat のホームページ: https://weechat.org/
 WeeChat をインストールするには、以下のものが必要です:
 
 * GNU/Linux が稼動しているシステム
-  (ソースパッケージを使う場合は、コンパイラツールも必要)、又は互換 OS
+  (ソースパッケージを使う場合は、コンパイラツールも必要)、または互換 OS
 * _root_ 特権 (WeeChat をシステムディレクトリにインストールする場合)
 * 一部のライブラリ (<<dependencies,依存関係>>を参照)。
 
@@ -87,7 +87,7 @@ WeeChat をインストールするには、以下のものが必要です:
 WeeChat は cmake または autotools を使ってコンパイルできます (cmake を使うことが推奨されています)。
 
 [NOTE]
-OS X では、http://brew.sh/[Homebrew] を使ってください:
+OS X では http://brew.sh/[Homebrew] を使ってください:
 `brew install weechat --with-python --with-perl`
 (ヘルプを見るには: `brew info weechat`)。
 
@@ -128,7 +128,7 @@ OS X では、http://brew.sh/[Homebrew] を使ってください:
 [NOTE]
 ^(1)^ Debian GNU/Linux
 ディストリビューションにおけるパッケージ名です。他のディストリビューションではバージョンとパッケージ名が異なるかもしれません。 +
-^(2)^ WeeChat は libncurses5-dev でもコンパイル可能ですが、これは推奨*されません*
+^(2)^ WeeChat は libncurses5-dev でもコンパイル可能ですが、これは推奨 *されません*
 (ワイドキャラクタの表示にバグを生じるでしょう)。 +
 ^(3)^ IRC SASL 認証で ECDSA-NIST256P-CHALLENGE を使うには、Gnutls
 バージョン 3.0.21 以上が必要です。 +
@@ -241,7 +241,7 @@ cmake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
   Python 3 を使った <<scripts_plugins,Python プラグイン>>のコンパイル
-  (多くのスクリプトは Python 3 と互換性がないため*非推奨* です)。
+  (多くのスクリプトは Python 3 と互換性がないため *非推奨*です)。
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   <<relay_plugin,リレープラグイン>>のコンパイル。
@@ -387,7 +387,7 @@ ulimit -c 200000
 WeeChat がクラッシュすると、_core_ または _core.12345_ ファイルが作られます
 (_12345_ はプロセス番号です)。
 このファイルは WeeChat を起動したディレクトリに作られます (これは
-WeeChat がインストールされているディレクトリでは*ありません*!)。
+WeeChat がインストールされているディレクトリでは *ありません*!)。
 
 例えば、_weechat_ が _/usr/bin/_ にインストールされ、_core_ ファイルが
 _/home/xxx/_ にある場合、以下のコマンドで gdb を起動してください:
@@ -566,7 +566,7 @@ WeeChat を起動した端末の例:
 [[buffers_and_windows]]
 === バッファとウィンドウ
 
-_バッファ_ は番号、名前、表示された行
+_バッファ_は番号、名前、表示された行
 (とその他の情報) で構成されています。
 
 バッファの例:
@@ -677,7 +677,7 @@ _window_
 [[bars]]
 === バー
 
-_バー_ とは任意のテキストを含めることができるチャットエリア以外の場所です。
+_バー_とは任意のテキストを含めることができるチャットエリア以外の場所です。
 
 バーオプションは `weechat.bar.name.option` オプションで設定します。ここで
 `name` はバーの名前、`option` はこのバーのオプション名です。
@@ -688,16 +688,16 @@ _バー_ とは任意のテキストを含めることができるチャット�
 |===
 | オプション名 | 値 | 説明
 
-| type | `root` 、`window` |
+| type | `root`、`window` |
   `root` 型のバーは画面に (全てのウィンドウの外に) 1 回だけ表示されます。デフォルトでは
   root バーはありませんが、_buffers.pl_ スクリプトが作成する _buffers_ バー
   (バッファのリストを含むサイドバー) が例の 1 つです。 +
   `window` 型のバーは各ウィンドウに対して表示されます。例えば (`/window splith`
   や `/window splitv` で) 画面を 1 回分割する場合、それぞれのウィンドウにバーが
-  1 つ表示されます。4 つのデフォルトバー (_title_ 、_status_ 、_input_ 、_nicklist_)
+  1 つ表示されます。4 つのデフォルトバー (_title_、_status_、_input_、_nicklist_)
   は `window` 型のバーです。
 
-| position | `top` 、`bottom` 、`left` 、`right` |
+| position | `top`、`bottom`、`left`、`right` |
   バーの位置: チャットエリアの上、下、左、右。
 
 | priority | 0 以上の整数 |
@@ -726,23 +726,23 @@ _バー_ とは任意のテキストを含めることができるチャット�
 | color_delim | 色 |
   バーの区切り文字の色
 
-| hidden | `on` 、`off` |
+| hidden | `on`、`off` |
   このオプションが `on` の場合、バーは表示されません。 +
   注意: このオプションを変更する代わりに、`/bar` コマンドを使うと便利です。例:
   `/bar toggle nicklist` (<<command_weechat_bar,/bar>> コマンドを参照)。
 
-| separator | `on` 、`off` |
+| separator | `on`、`off` |
   このオプションが `on` の場合、セパレータ (区切り線)
   がバー同士またはバーとチャットエリアの間に表示されます。
 
 | items | 文字列 |
   _items_ のリスト (詳細は<<bar_items,バー要素>>を参照)。
 
-| filling_left_right | `horizontal` 、`vertical` 、`columns_horizontal` 、`columns_vertical` |
+| filling_left_right | `horizontal`、`vertical`、`columns_horizontal`、`columns_vertical` |
   位置が `left` または `right` のバーに対するフィリングタイプ
   (詳細は<<bar_filling,バーフィリング>>を参照)。
 
-| filling_top_bottom | `horizontal` 、`vertical` 、`columns_horizontal` 、`columns_vertical` |
+| filling_top_bottom | `horizontal`、`vertical`、`columns_horizontal`、`columns_vertical` |
   位置が `top` または `bottom` のバーに対するフィリングタイプ
   (詳細は<<bar_filling,バーフィリング>>を参照)。
 
@@ -800,7 +800,7 @@ _items_ オプションはバー要素をコンマ (画面上の要素同士に�
 * `columns_vertical`: テキストを左寄せして、列形式で要素を表示。最初の要素は左上、2
   番目は同じ列の 1 行下側。
 
-デフォルトバーである _title_ 、_status_ 、_input_ は
+デフォルトバーである _title_、_status_、_input_ は
 _horizontal_ フィリング、_nicklist_ は _vertical_ フィリング。
 
 _nicklist_ バーに対するフィリングの例:
@@ -1425,7 +1425,7 @@ include::autogen/user/irc_colors.adoc[]
 
 [NOTE]
 端末で利用可能なすべての色を表示するには、WeeChat で `/color` を実行した後
-kbd:[Alt+c] を入力するか、端末で以下のコマンドを実行してください: `weechat --colors` 。
+kbd:[Alt+c] を入力するか、端末で以下のコマンドを実行してください: `weechat --colors`。
 
 例:
 「こんにちは皆さん!」の「こんにちは」を太字の明るい青、「皆さん」を下線付きの明るい赤に表示したい場合:
@@ -1464,8 +1464,8 @@ _TERM_ 環境変数の値によって、WeeChat
 256 色を利用したい場合に推奨される _TERM_ 環境変数の値は:
 
 * screen 内の場合: _screen-256color_
-* tmux 内の場合: _screen-256color_ 、_tmux-256color_
-* screen および tmux の外の場合: _xterm-256color_ 、_rxvt-256color_ 、_putty-256color_ 、...
+* tmux 内の場合: _screen-256color_、_tmux-256color_
+* screen および tmux の外の場合: _xterm-256color_、_rxvt-256color_、_putty-256color_、...
 
 [NOTE]
 _TERM_ 環境変数の値に上の値を設定するには、"ncurses-term"
@@ -1553,7 +1553,7 @@ WeeChat は画面に色が表示された時点で色ペアを動的に割り当
 ==== 属性
 
 色に対していくつかの属性を付加することができます。1
-つ以上の属性を色名又は色番号の前に付加できます:
+つ以上の属性を色名または色番号の前に付加できます:
 
 * `+*+` : テキストを太字に
 * `+!+` : テキストを反転
@@ -1735,9 +1735,9 @@ include::autogen/user/weechat_commands.adoc[]
 見つかったプラグインは WeeChat の起動時に自動的に読み込まれます。WeeChat
 の起動時にプラグインを読み込むか否かは選択可能です。
 
-_プラグイン_ と _スクリプト_ の違いを明らかにすることは重要です:
-_プラグイン_ とは `/plugin` コマンドで読み込まれるコンパイル済みバイナリファイルです。これに対して、
-_スクリプト_ とは `/python` 等のコマンドで _python_
+_プラグイン_と _スクリプト_の違いを明らかにすることは重要です:
+_プラグイン_とは `/plugin` コマンドで読み込まれるコンパイル済みバイナリファイルです。これに対して、
+_スクリプト_とは `/python` 等のコマンドで _python_
 等のプラグインとともに読み込まれるテキストファイルです。
 
 `/plugin`
@@ -1777,7 +1777,7 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 |===
 
 API を使ったプラグインやスクリプトの開発についてより詳しく学ぶには、_WeeChat
-プラグイン API リファレンス_ 又は _WeeChat スクリプト製作ガイド_ を参照してください。
+プラグイン API リファレンス_または _WeeChat スクリプト製作ガイド_を参照してください。
 
 [[alias_plugin]]
 === Alias プラグイン
@@ -2200,8 +2200,8 @@ WeeChat は SASL 認証をサポートします、以下の認証メカニズム
 * _plain_: 平文パスワード (デフォルト)
 * _ecdsa-nist256p-challenge_: 公開鍵/秘密鍵を使うチャレンジ認証
 * _external_: クライアント側 SSL 証明書
-* _dh-blowfish_: blowfish 暗号パスワード (*危険* 、非推奨)
-* _dh-aes_: AES 暗号パスワード (*危険* 、非推奨)
+* _dh-blowfish_: blowfish 暗号パスワード (*危険*、非推奨)
+* _dh-aes_: AES 暗号パスワード (*危険*、非推奨)
 
 [NOTE]
 "dh-blowfish" メカニズムを利用する場合、"gcrypt" ライブラリが
@@ -2326,7 +2326,7 @@ Freenode と TOR に関するより詳しい情報: http://freenode.net/irc_serv
 /filter add irc_smart_weechats irc.freenode.#weechat* irc_smart_filter *
 ----
 
-以下のコマンドで参加メッセージだけ、又は退出/終了メッセージだけを隠すこともできます:
+以下のコマンドで参加メッセージだけ、または退出/終了メッセージだけを隠すこともできます:
 
 ----
 /set irc.look.smart_filter_join on
@@ -2851,7 +2851,7 @@ Python、Perl、Ruby、Lua、Tcl、Guile
 のスクリプトをインストール/削除したりする事が可能です。
 
 スクリプトの書き方やスクリプト用の WeeChat API
-についての詳しい情報は、_WeeChat スクリプト製作ガイド_ を参照してください。
+についての詳しい情報は、_WeeChat スクリプト製作ガイド_を参照してください。
 
 [[script_options]]
 ==== スクリプトオプション (script.conf)
@@ -2920,7 +2920,7 @@ include::autogen/user/javascript_commands.adoc[]
 
 トリガを使うにはシグナル、修飾子、...
 がどのように動いているかを知らなければいけません。これを知るには _WeeChat
-プラグイン API リファレンス_ の _フック_ の章を読むことをお勧めします。
+プラグイン API リファレンス_の _フック_の章を読むことをお勧めします。
 
 [[trigger_options]]
 ==== オプション (trigger.conf)
@@ -2956,14 +2956,14 @@ include::autogen/user/trigger_commands.adoc[]
 |===
 | オプション | 値 | 説明
 
-| enabled | `on` 、`off` |
+| enabled | `on`、`off` |
   オプションが `off`
   の場合、トリガは無効化され、アクションは実行されません。
 
-| hook | `signal` 、`hsignal` 、`modifier` 、`print` 、`command` 、`command_run` 、`timer` 、`config` 、`focus`
+| hook | `signal`、`hsignal`、`modifier`、`print`、`command`、`command_run`、`timer`、`config`、`focus`
   |
   トリガの中で使われるフック。より詳しい情報は、_WeeChat
-  プラグイン API リファレンス_ の _フック_ の章を参照してください。
+  プラグイン API リファレンス_の _フック_の章を参照してください。
 
 | arguments | 文字列 |
   フックに対する引数、指定したフックの型に依存します。
@@ -2981,9 +2981,9 @@ include::autogen/user/trigger_commands.adoc[]
   実行するコマンド (複数のコマンドを使う場合には各コマンドをセミコロンで区切ってください);
   内容は評価されます (コマンド <<command_weechat_eval,/eval>> を参照)。
 
-| return_code | `ok` 、`ok_eat` 、`error` |
+| return_code | `ok`、`ok_eat`、`error` |
   コールバックの戻り値 (デフォルトは
-  `ok` 、ほとんどすべてのトリガで戻り値はこれを使うべきで、ほかの値を使うことは極めてまれです)。
+  `ok`、ほとんどすべてのトリガで戻り値はこれを使うべきで、ほかの値を使うことは極めてまれです)。
 
 | post_action | `none` (何もしない)、`disable` (無効化)、`delete` (削除) |
   実行後のトリガに対する処遇 (ほとんどすべてのトリガではデフォルトの `none`
@@ -3308,7 +3308,7 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 | tg_tag_nick        | string | ニックネーム ("nick_xxx" タグから)
 | tg_tag_prefix_nick | string | プレフィックスで使うニックネームの色 ("prefix_nick_ccc" タグから)
 | tg_tag_host        | string | ユーザ名とホスト名、書式: username@host ("host_xxx" タグから)
-| tg_tag_notify      | string | 通知レベル (_none_ 、_message_ 、_private_ 、_highlight_)
+| tg_tag_notify      | string | 通知レベル (_none_、_message_、_private_、_highlight_)
 | tg_notify          | string | 通知レベルが _none_ 以外の場合、その通知レベル
 | tg_msg_pv          | string | プライベートメッセージの場合 "1"、それ以外は "0"
 |===

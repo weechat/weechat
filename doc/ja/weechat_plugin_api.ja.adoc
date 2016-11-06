@@ -1968,7 +1968,7 @@ _WeeChat バージョン 0.4.0 以上で利用可、バージョン 0.4.2、1.0�
 
 [NOTE]
 WeeChat バージョン 1.0 以上の場合、入れ子変数を使えるようになりました、例:
-`+${color:${variable}}+` 。
+`+${color:${variable}}+`。
 
 プロトタイプ:
 
@@ -4908,7 +4908,7 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 [NOTE]
 Ruby では、3 組のコールバックとデータ (合わせて 6 つの文字列) を渡すために必ず 6 つの文字列をからなる配列を
 1 つ渡してください (これは Ruby が 関数に 15 個以上の引数を渡せないことが原因です)、より詳しい内容は
-_WeeChat スクリプト作成ガイド_ を参照してください _(WeeChat バージョン 0.4.1 で修正済み)_ 。
+_WeeChat スクリプト作成ガイド_ を参照してください _(WeeChat バージョン 0.4.1 で修正済み)_。
 
 ==== config_search_option
 
@@ -7457,7 +7457,7 @@ WeeChat バージョン 0.3.9.2
 分割 (クォートに基づくコマンド分割)
 に失敗する場合、またはシェルを使いたい場合は、ハッシュテーブル _options_
 に引数を入れて <<_hook_process_hashtable,hook_process_hashtable>>
-関数を使ってください _(WeeChat バージョン 0.4.0 以上で利用可)_ 。
+関数を使ってください _(WeeChat バージョン 0.4.0 以上で利用可)_。
 
 プロトタイプ:
 
@@ -7517,11 +7517,11 @@ struct t_hook *weechat_hook_process (const char *command,
 (プロセスが実行中であればプロセスを kill します)。
 
 コマンドを "url:http://www.example.com" の書式に従う URL にすることで、URL
-の内容がダウンロードされます _(WeeChat バージョン 0.3.7 以上で利用可)_ 。<<_hook_process_hashtable,hook_process_hashtable>>
+の内容がダウンロードされます _(WeeChat バージョン 0.3.7 以上で利用可)_。<<_hook_process_hashtable,hook_process_hashtable>>
 関数を使えば URL に対してオプションを与えることもできます。
 
 _command_ には関数名を指定することも可能です。"name" という関数を実行するには "func:name"
-のように指定します _(WeeChat バージョン 1.5 以上で利用可)_ 。ここで指定した関数 "name" は単独の引数 (_data_)
+のように指定します _(WeeChat バージョン 1.5 以上で利用可)_。ここで指定した関数 "name" は単独の引数 (_data_)
 を受け取り、文字列を返すものでなければいけません。関数から返された文字列が _callback_ コールバックに送られます。 +
 C API の場合、_callback_ コールバックが _return_code_ リターンコードに
 _WEECHAT_HOOK_PROCESS_CHILD_ が設定された状態で呼び出されます。すなわち (フォークの後に)
@@ -8244,12 +8244,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 
 | irc | xxx,irc_in_yyy ^(1)^ |
   String: メッセージ |
-  サーバから IRC メッセージを受信 (メッセージを*無視しない* 場合のみ irc
+  サーバから IRC メッセージを受信 (メッセージを *無視しない*場合のみ irc
   プラグインがメッセージを処理する前に、シグナルが送信される)
 
 | irc | xxx,irc_in2_yyy ^(1)^ |
   String: メッセージ |
-  サーバから IRC メッセージを受信 (メッセージを*無視しない* 場合のみ irc
+  サーバから IRC メッセージを受信 (メッセージを *無視しない*場合のみ irc
   プラグインがメッセージを処理した後に、シグナルが送信される)
 
 | irc | xxx,irc_raw_in_yyy ^(1)^ +
@@ -9313,7 +9313,7 @@ hsignal "irc_redirect_command" は irc
 
 コマンドに対する応答を完全に受信したら、hsignal が送信されます。この
 hsignal は _irc_redirection_xxx_yyy_ という名前で、ここで _xxx_ は
-_signal_ 、_yyy_ は _pattern_ で指定したものになります。
+_signal_、_yyy_ は _pattern_ で指定したものになります。
 
 以下の内容からなるハッシュテーブルが hsignal で送信されます (キーと値は文字列):
 
@@ -9392,7 +9392,7 @@ hsignal "irc_redirect_pattern" は irc 転送用のパターンを作成する�
 * _cmd_extra_: コマンドを停止した後に受信する可能性のあるコマンドのコンマ区切りリスト
   (任意)
 
-_cmd_start_ 、_cmd_stop_ 、_cmd_extra_
+_cmd_start_、_cmd_stop_、_cmd_extra_
 には受け取ったメッセージに必ず含まれていなければいけない
 "string" の位置を示す整数を与えることが可能、例:
 
@@ -9573,7 +9573,7 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 [IMPORTANT]
 コールバックは
 <<_hook_completion_list_add,hook_completion_list_add>>
-関数を呼び出すだけで、コマンドラインをコールバックで絶対に*変更しない* でください。 +
+関数を呼び出すだけで、コマンドラインをコールバックで絶対に *変更しない*でください。 +
 key[Tab] が押された時にコマンドラインを更新するためには、関数
 <<_hook_command_run,hook_command_run>> を使ってコマンド
 "/input complete_next" をフックしてください (コールバックがコマンドラインを更新する場合は必ず
@@ -10312,7 +10312,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 マウスジェスチャの場合、コールバックを 2 回呼び出します: 1
 回目はボタンが押された時 (この時のエリアはジェスチャ対象のエリアです)、2
 回目はボタンが離された時 (この時のエリアはマスジェスチャを開始したエリアとは異なる場合があります):
-このため、必ず*毎回* コールバックをテストして、ハッシュテーブルに含まれる
+このため、必ず *毎回*コールバックをテストして、ハッシュテーブルに含まれる
 info を使う前にエリアが一致していることを確認して下さい。
 
 コールバックに送られるハッシュテーブルの内容 (キーと値は "string" 型):
@@ -10508,19 +10508,19 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 
 | stdin +
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
-  _process_ 、_process_hashtable_ | 任意の文字列 |
+  _process_、_process_hashtable_ | 任意の文字列 |
   子プロセスの標準入力 (_stdin_) にデータを送信
 
 | stdin_close +
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
-  _process_ 、_process_hashtable_ | (非使用) |
+  _process_、_process_hashtable_ | (非使用) |
   子プロセスの標準入力 (_stdin_) にデータを送信するパイプを閉じる
 
 | signal +
   _(WeeChat バージョン 1.0 以上で利用可)_ |
-  _process_ 、_process_hashtable_ |
+  _process_、_process_hashtable_ |
   シグナル番号または以下の名前から 1 つ:
-  `hup` 、`int` 、`quit` 、`kill` 、`term` 、`usr1` 、`usr2` |
+  `hup`、`int`、`quit`、`kill`、`term`、`usr1`、`usr2` |
   子プロセスにシグナルを送信
 |===
 
@@ -11109,7 +11109,7 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _name_: バッファの名前
 ** _full_name_: バッファの完全な名前 ("plugin.name") _(WeeChat バージョン 0.3.7 以上で利用可)_
 ** _short_name_: バッファの短縮名 (注意:
-   表示目的以外に使用するのは禁止、ユーザは書き換えることが可能、バッファを検索する際にこれを使ってはいけない、_name_ 、_full_name_ 、またはローカル変数
+   表示目的以外に使用するのは禁止、ユーザは書き換えることが可能、バッファを検索する際にこれを使ってはいけない、_name_、_full_name_、またはローカル変数
    _channel_ を使うこと)
 ** _title_: バッファのタイトル
 ** _input_: 入力テキスト
@@ -12720,7 +12720,7 @@ struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
 
 [IMPORTANT]
 WeeChat バージョン 0.4.1 以下に対する互換性のために、デフォルトのコールバックに渡す引数の個数は
-3 個です: _data_ 、_item_ 、_window_ (_buffer_ と _extra_info_ は渡されません)。 +
+3 個です: _data_、_item_、_window_ (_buffer_ と _extra_info_ は渡されません)。 +
 全ての引数を受け取るコールバックを使う場合は、名前の前に "(extra)"
 をつけてください、以下の例を参照 (WeeChat バージョン 0.4.2 以上で利用可)。
 
@@ -12884,8 +12884,8 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 ** _active_: アクティブウィンドウのみに表示されているバー
 ** _inactive_: 非アクティブウィンドウのみに表示されているバー
 ** _nicklist_: ニックネームリストを持つウィンドウに表示されているバー
-** 評価された式: _WeeChat ユーザガイド_ のバーに関する章を参照
-* _position_: _top_ 、_bottom_ 、_left_ 、_right_
+** 評価された式: _WeeChat ユーザーズガイド_のバーに関する章を参照
+* _position_: _top_、_bottom_、_left_、_right_
 * _filling_top_bottom_:
 ** _horizontal_: 要素は水平方向に詰め込まれている (各要素の後に間隔)
 ** _vertical_: 要素は垂直方向に詰め込まれている (各要素の後に行)
@@ -14151,7 +14151,7 @@ hdata に対する関数 (WeeChat またはプラグインデータへの直ア�
 
 [IMPORTANT]
 hdata を使うことで読み取り専用でデータにアクセスできます。hdata
-変数が示すメモリ領域に何かを書き込むことは*厳禁* です。 +
+変数が示すメモリ領域に何かを書き込むことは *厳禁*です。 +
 データを更新する場合は必ず関数
 <<_hdata_update,hdata_update>> を使ってください。
 
@@ -14197,7 +14197,7 @@ struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev,
 * _delete_allowed_: 構造体の削除を許可する場合は 1、それ以外の場合は 0
   _(WeeChat バージョン 0.3.9 以上で利用可)_
 * _callback_update_: hdata 内のデータを更新する際のコールバック関数、データの更新を禁止する場合は NULL
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ 、引数と戻り値:
+  _(WeeChat バージョン 0.3.9 以上で利用可)_、引数と戻り値:
 ** _void *data_: ポインタ
 ** _struct t_hdata *hdata_: hdata へのポインタ
 ** _struct t_hashtable *hashtable_: 更新する変数を含むハッシュテーブル
@@ -14811,7 +14811,7 @@ int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointe
 引数:
 
 * _hdata_: hdata へのポインタ
-* _list_: リストポインタ; NULL の場合 _(WeeChat バージョン 1.0 以上)_ 、ポインタは
+* _list_: リストポインタ; NULL の場合 _(WeeChat バージョン 1.0 以上)_、ポインタは
    hdata に含まれる "check pointers" フラグを持つリストでチェックされます
   (<<_hdata_new_list,hdata_new_list>>
   を参照)、このフラグを持つリストがない場合、ポインタは妥当とされます。
@@ -14934,7 +14934,7 @@ void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *se
 * _pointer_: WeeChat および plugin オブジェクトへのポインタ
 * _search_: 評価する式、式中のデフォルトポインタは hdata の名前
   (デフォルトポインタはリストに含まれる各要素で置換される); 式に関する詳細は
-  _WeeChat ユーザガイド_ のコマンド `/eval` を参照
+  _WeeChat ユーザーズガイド_のコマンド `/eval` を参照
 * _move_: 検索に失敗した後に移動を実行する回数
   (負および正の整数、ゼロは禁止)
 
@@ -15379,7 +15379,7 @@ int weechat_hdata_update (struct t_hdata *hdata, void *pointer, struct t_hashtab
    1、許可しない場合は 0 を返す _(WeeChat バージョン 0.4.0 以上で利用可)_
 ** キー `__delete_allowed` (値は任意): 構造体の削除を許可する場合は
    1、許可しない場合は 0 を返す
-** キー `__update_allowed` 、値は変数の名前: この変数の更新を許可する場合は
+** キー `__update_allowed`、値は変数の名前: この変数の更新を許可する場合は
    1、許可しない場合は 0 を返す
 ** キー `__delete` (値は任意): 構造体を削除 (許可されている場合)
 

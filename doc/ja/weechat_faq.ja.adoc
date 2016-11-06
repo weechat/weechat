@@ -89,14 +89,14 @@ https://weechat.org/doc
 [[charset]]
 === いくつかの文字が見えません。どうすれば良いですか。
 
-これは良くある問題です。以下の内容をよく読んで、*全ての* 解決策をチェックしてください:
+これは良くある問題です。以下の内容をよく読んで、*全ての*解決策をチェックしてください:
 
 * weechat が libncursesw にリンクされていることの確認 (警告:
   全てではありませんが、ほとんどのディストリビューションで必要です): `ldd /path/to/weechat`
 * `/plugin` コマンドで "charset" プラグインがロード済みであることの確認
   (ロードされていない場合、"weechat-plugins" パッケージが必要かもしれません)。
 * `/charset` コマンドの出力を確認 (core バッファ上で)。端末の文字セットとして _ISO-XXXXXX_
-  又は _UTF-8_ があるはずです。その他の値がある場合は、ロケールが間違っている可能性があります
+  または _UTF-8_ があるはずです。その他の値がある場合は、ロケールが間違っている可能性があります
   ($LANG を修正してください)。
 * グローバルデコードを設定、例えば:
   `/set charset.default.decode "ISO-8859-15"`
@@ -104,14 +104,14 @@ https://weechat.org/doc
 ** 端末で UTF-8 が使えることを確認 (UTF-8 対応の端末としては
    rxvt-unicode を推奨)
 ** screen を使っている場合は、UTF-8 モードで起動されていることを確認
-   (~/.screenrc に "`defutf8 on`" の記述があるか又は `screen -U` のようにして起動)。
+   (~/.screenrc に "`defutf8 on`" の記述があるかまたは `screen -U` のようにして起動)。
 * _weechat.look.eat_newline_glitch_ オプションが off であることを確認してください
   (このオプションは表示上のバグを引き起こす可能性があります)
 
 [NOTE]
 WeeChat は UTF-8 ロケールを推奨します。ISO
-又はその他のロケールを使う場合、*全ての* 設定 (端末、screen、..)
-が ISO であり、UTF-8 *でない* ことを確認してください。
+またはその他のロケールを使う場合、*全ての*設定 (端末、screen、..)
+が ISO であり、UTF-8 *でない*ことを確認してください。
 
 [[unicode_chars]]
 === 端末で表示されるユニコード文字が WeeChat では表示されない場合があります。なぜでしょうか。
@@ -135,10 +135,10 @@ WeeChat を起動した場所に依存しますが、以下の値を持つはず
 
 * WeeChat を screen および tmux
   を使わずにローカルまたはリモートマシンで実行している場合、使用中の端末に依存します:
-  _xterm_ 、_xterm-256color_ 、_rxvt-unicode_ 、_rxvt-256color_ 、...
+  _xterm_、_xterm-256color_、_rxvt-unicode_、_rxvt-256color_、...
 * WeeChat を screen 内で実行している場合、_screen_ または _screen-256color_ です、
 * WeeChat を tmux
-  内で実行している場合、_tmux_ 、_tmux-256color_、_screen_ 、_screen-256color_ です。
+  内で実行している場合、_tmux_、_tmux-256color_、_screen_、_screen-256color_ です。
 
 もし必要であれば、TERM 変数を修正してください: `export TERM="xxx"`
 
@@ -146,7 +146,7 @@ WeeChat を起動した場所に依存しますが、以下の値を持つはず
 === weechat を screen/tmux の中で使っている場合、おかしなランダム文字列が表示されます。どうすれば直りますか。
 
 シェルの TERM 変数に間違った値が設定されている可能性があります
-(端末、*screen/tmux の外* で `echo $TERM` の出力を確認してください)。
+(端末、*screen/tmux の外*で `echo $TERM` の出力を確認してください)。
 
 例えば、_xterm-color_ の場合、おかしな文字列が表示される可能性があります。_xterm_
 と設定すればこのようなことは起こらないので (その他多くの値でも問題は起きません)、これを使ってください。
@@ -165,7 +165,7 @@ WeeChat をインストールすることをお勧めします。
 [[buffer_vs_window]]
 === 「バッファ」と「ウィンドウ」の違いは何ですか。
 
-_バッファ_ とは番号、名前、表示行 (とその他のデータ)
+_バッファ_とは番号、名前、表示行 (とその他のデータ)
 からなります。
 
 _ウィンドウ_
@@ -213,7 +213,7 @@ kbd:[F1]、kbd:[F2]、kbd:[Alt+F1]、kbd:[Alt+F2] を定義しています:
 kbd:[Alt+k] の後にキーを押してください。
 
 [[customize_prefix]]
-=== どうすればチャットエリア内のニックネームの最大長さを短く、又はニックネーム整列機能を無効化できますか。
+=== どうすればチャットエリア内のニックネームの最大長さを短く、またはニックネーム整列機能を無効化できますか。
 
 チャットエリアのニックネームの最大長を短くするには:
 
@@ -227,40 +227,37 @@ kbd:[Alt+k] の後にキーを押してください。
 /set weechat.look.prefix_align none
 ----
 
-// TRANSLATION MISSING
 [[status_hotlist]]
-=== What does mean the [H: 3(1,8), 2(4)] in status bar?
+=== ステータスバーに表示される [H: 3(1,8), 2(4)] の意味を教えてください。
 
-This is called the "hotlist", a list of buffers with the number of unread
-messages, by order: highlights, private messages, messages, other messages
-(like join/part). +
-The number of "unread message" is the number of new messages displayed/received
-since you visited the buffer.
+これは「ホットリスト」と呼ばれ、ここにはバッファ番号およびそのバッファの未読メッセージカウンタが表示されます。未読メッセージカウンタの表示順はハイライト、プライベートメッセージ、一般メッセージ、その他のメッセージ
+(参加/退出メッセージなど)
+の順です。 +
+バッファの「未読メッセージ」とは、最後にそのバッファにフォーカスが移された以降に表示されたり受信した新しいメッセージを意味します。
 
-In the example `[H: 3(1,8), 2(4)]`, there are:
+上記の例 `[H: 3(1,8), 2(4)]` の場合:
 
-* one highlight and 8 unread messages on buffer #3,
-* 4 unread messages on buffer #2.
+* バッファ 3 番にハイライトが 1 通、未読が 8 通あり、
+* バッファ 2 番に未読が 4 通あることを意味します。
 
-The color of the buffer/counter depends on the type of message, default colors
-are:
+バッファおよびカウンタのテキスト色はメッセージの種類を意味します。色のデフォルト設定は以下です:
 
-* highlight: `lightmagenta` / `magenta`
-* private message: `lightgreen` / `green`
-* message: `yellow` / `brown`
-* other message: `default` / `default` (color of text in terminal)
+* ハイライト: `lightmagenta` および `magenta`
+* プライベートメッセージ: `lightgreen` および `green`
+* 一般メッセージ: `yellow` および `brown`
+* その他のメッセージ: `default` および `default` (端末のテキスト色)
 
-These colors can be changed with the options __weechat.color.status_data_*__
-(buffers) and __weechat.color.status_count_*__ (counters). +
-Other hotlist options can be changed with the options __weechat.look.hotlist_*__.
+これらの色を変えるには、__weechat.color.status_data_*__ オプション (バッファ)
+および __weechat.color.status_count_*__ オプション (カウンタ) を設定します。 +
+その他のホットリスト関連オプションは __weechat.look.hotlist_*__ オプションを使って変更します。
 
-See user's guide for more info about the hotlist (screen layout).
+ホットリストに関する詳しい情報はユーザーズガイド (画面レイアウト) をご覧ください。
 
 [[input_bar_size]]
 === コマンドラインの行数を増やすにはどうすればいいですか。
 
 インプットバーの _size_ オプションには 1 (サイズ固定、デフォルト値)
-以上の値又は動的なサイズの意味で 0 を設定できます。_size_max_
+以上の値または動的なサイズの意味で 0 を設定できます。_size_max_
 オプションではサイズの最大値を設定できます (0 = 制限なし)。
 
 動的サイズを設定する例:
@@ -371,7 +368,7 @@ WeeChat バージョン 0.3.4 以上の場合、256 色がサポートされま�
 
 * screen 内の場合: _screen-256color_
 * tmux 内の場合: _screen-256color_ または _tmux-256color_
-* screen および tmux の外の場合: _xterm-256color_ 、_rxvt-256color_ 、_putty-256color_ 、...
+* screen および tmux の外の場合: _xterm-256color_、_rxvt-256color_、_putty-256color_、...
 
 [NOTE]
 これらの値を _TERM_ に設定するには、"ncurses-term"
@@ -396,7 +393,7 @@ WeeChat バージョン 0.3.4 の場合、新しい色を追加するには `/co
 WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用できます (オプション:
 色の別名を追加するには `/color` コマンドを使ってください)。
 
-色管理に関するより詳しい情報はユーザーガイドを読んでください。
+色管理に関するより詳しい情報はユーザーズガイドを読んでください。
 
 [[search_text]]
 === どうすればバッファ内の文字列を検索できますか (irssi の /lastlog の様に)。
@@ -404,7 +401,7 @@ WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用で�
 デフォルトのキーは kbd:[Ctrl+r] です (コマンドは: `/input search_text_here`)。
 ハイライト部分へのジャンプは: kbd:[Alt+p] / kbd:[Alt+n]
 
-この機能に関するより詳しい情報はユーザーガイドを参照してください (デフォルトのキー割り当て)。
+この機能に関するより詳しい情報はユーザーズガイドを参照してください (デフォルトのキー割り当て)。
 
 [[terminal_focus]]
 === どうすれば端末にフォーカスが合った時や外れた時にコマンドを実行できますか。
@@ -413,8 +410,8 @@ WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用で�
 
 *重要*:
 
-* 現時点では、_xterm_ を除いてこの機能をサポートする端末は*存在しない* ようです。
-* screen および tmux ではこの機能を*使うことができません* 。
+* 現時点では、_xterm_ を除いてこの機能をサポートする端末は *存在しない*ようです。
+* screen および tmux ではこの機能を *使うことができません*。
 
 WeeChat の開始時にコードを送信するには:
 
@@ -431,7 +428,7 @@ WeeChat の開始時にコードを送信するには:
 ----
 
 [[screen_paste]]
-=== WeeChat を screen の内部で実行している場合、別の screen ウィンドウ内に貼り付けられるテキストの周りに ~0 と ~1 が追加されます。なぜでしょうか。
+=== WeeChat を screen の内部で実行している場合、別の screen ウィンドウ内にペーストされるテキストの周りに ~0 と ~1 が追加されます。なぜでしょうか。
 
 scrreen
 がデフォルトで有効化されている括弧付きペーストオプションの挙動を別のウィンドウ内で適切に処理できないことが原因です。
@@ -460,7 +457,7 @@ XTerm*metaSendsEscape: true
 UXTerm*metaSendsEscape: true
 ----
 
-このファイルを再読み込みするか (`xrdb -override ~/.Xresources`) 又は X を再起動してください。
+このファイルを再読み込みするか (`xrdb -override ~/.Xresources`) または X を再起動してください。
 
 [[customize_key_bindings]]
 === どうすればキー割り当てをカスタマイズできますか。
@@ -470,7 +467,7 @@ UXTerm*metaSendsEscape: true
 デフォルトキー kbd:[Alt+k] でキーコードを取り込み、これをコマンドラインに入力できます。
 
 [[jump_to_buffer_11_or_higher]]
-=== バッファ 11 番 (又はそれ以上の番号) にジャンプするキーは何ですか。
+=== バッファ 11 番 (またはそれ以上の番号) にジャンプするキーは何ですか。
 
 キー kbd:[Alt+j] の後に 2 桁の数字を入力します、例えば kbd:[Alt+j]
 その後に kbd:[1]、kbd:[1] でバッファ 11 番にジャンプします。
@@ -481,7 +478,7 @@ UXTerm*metaSendsEscape: true
 /key bind meta-q /buffer *11
 ----
 
-デフォルトキー割り当てのリストはユーザーガイドを参照してください。
+デフォルトキー割り当てのリストはユーザーズガイドを参照してください。
 
 [[global_history]]
 === どうすればグローバルヒストリを (バッファヒストリの代わりに) 上下矢印キーで使えますか。
@@ -533,7 +530,7 @@ $ printf '\033[?1002l'
 ----
 
 [[mouse_coords]]
-=== マウスの位置座標 X 又は Y が 94 (または 222) よりも大きい場合にマウス機能が正しく動きません。
+=== マウスの位置座標 X または Y が 94 (または 222) よりも大きい場合にマウス機能が正しく動きません。
 
 一部の端末ではマウスの位置座標を指定するために ISO 文字だけを使います、
 このため X/Y が 94 (または 222) よりも大きい場合は正しく動きません。
@@ -815,7 +812,7 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 * 使わないプラグインのロードを禁止する、例えば:
   aspell、fifo、logger、perl、python、ruby、lua、tcl、guile、javascript、xfer (DCC で使用)
 * 本当に必要なスクリプトだけをロード
-* SSL を*使わない* なら、証明書を読み込まないでください: オプション
+* SSL を *使わない*なら、証明書を読み込まないでください: オプション
   _weechat.network.gnutls_ca_file_ に空文字列を設定してください。
 * _weechat.history.max_buffer_lines_number_
   オプションの値を減らすか、_weechat.history.max_buffer_lines_minutes_ オプションに値を設定してください。
