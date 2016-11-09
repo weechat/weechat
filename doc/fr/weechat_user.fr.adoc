@@ -493,17 +493,17 @@ Les répertoires sont :
 |    logs/          | Fichiers de log (un fichier par tampon)
 |    python/        | Scripts Python
 |       autoload/   | Scripts Python chargés automatiquement au démarrage ^(1)^
-|    perl/          | Perl scripts
+|    perl/          | Scripts Perl
 |       autoload/   | Scripts Perl chargés automatiquement au démarrage ^(1)^
-|    ruby/          | Ruby scripts
+|    ruby/          | Scripts Ruby
 |       autoload/   | Scripts Ruby chargés automatiquement au démarrage ^(1)^
-|    lua/           | Lua scripts
+|    lua/           | Scripts Lua
 |       autoload/   | Scripts Lua chargés automatiquement au démarrage ^(1)^
-|    tcl/           | Tcl scripts
+|    tcl/           | Scripts Tcl
 |       autoload/   | Scripts Tcl chargés automatiquement au démarrage ^(1)^
-|    guile/         | Guile scripts
+|    guile/         | Scripts Guile
 |       autoload/   | Scripts Guile chargés automatiquement au démarrage ^(1)^
-|    javascript/    | Javascript scripts
+|    javascript/    | Scripts Javascript
 |       autoload/   | Scripts Javascript chargés automatiquement au démarrage ^(1)^
 |===
 
