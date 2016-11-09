@@ -478,6 +478,69 @@ Vous pouvez éditer ce fichier pour configurer WeeChat à votre convenance ou
 vous pouvez modifier les paramètres dans WeeChat avec la commande `/set`
 (voir <<weechat_commands,commandes WeeChat>>).
 
+[[files_and_directories]]
+=== Fichiers et répertoires
+
+WeeChat écrit ses fichiers de configuration et les autres données dans
+`~/.weechat` par défaut.
+
+Les répertoires sont :
+
+[width="100%",cols="1m,3",options="header"]
+|===
+| Chemin/fichier    | Description
+| ~/.weechat/       | Répertoire principal de WeeChat (peut être changé, voir <<running_weechat,Lancer WeeChat>>)
+|    logs/          | Fichiers de log (un fichier par tampon)
+|    python/        | Scripts Python
+|       autoload/   | Scripts Python chargés automatiquement au démarrage ^(1)^
+|    perl/          | Perl scripts
+|       autoload/   | Scripts Perl chargés automatiquement au démarrage ^(1)^
+|    ruby/          | Ruby scripts
+|       autoload/   | Scripts Ruby chargés automatiquement au démarrage ^(1)^
+|    lua/           | Lua scripts
+|       autoload/   | Scripts Lua chargés automatiquement au démarrage ^(1)^
+|    tcl/           | Tcl scripts
+|       autoload/   | Scripts Tcl chargés automatiquement au démarrage ^(1)^
+|    guile/         | Guile scripts
+|       autoload/   | Scripts Guile chargés automatiquement au démarrage ^(1)^
+|    javascript/    | Javascript scripts
+|       autoload/   | Scripts Javascript chargés automatiquement au démarrage ^(1)^
+|===
+
+[NOTE]
+^(1)^ Ce répertoire contient souvent seulement des liens symboliques vers les
+scripts dans le répertoire parent.
+
+Les fichiers dans le répertoire principal sont :
+
+[width="100%",cols="1m,3,6",options="header"]
+|===
+| Fichier      | Description                                          | Données sensibles
+| weechat.conf | Fichier de configuration principal de WeeChat        | Possible (par exemple : liste des canaux sauvés dans la disposition des tampons)
+| sec.conf     | Fichier de configuration avec les données sécurisées | *Oui, très sensibles*: ce fichier ne doit jamais être partagé avec quiconque
+| plugins.conf | Fichier de configuration des extensions              | Possible, cela dépend des extensions/scripts
+| alias.conf   | Fichier de configuration de l'extension _alias_      | Possible, cela dépend des alias
+| aspell.conf  | Fichier de configuration de l'extension _aspell_     | Non
+| charset.conf | Fichier de configuration de l'extension _charset_    | No,
+| exec.conf    | Fichier de configuration de l'extension _exec_       | No,
+| irc.conf     | Fichier de configuration de l'extension _irc_        | *Oui*: il peut contenir des mots de passes pour les serveurs, nickserv et les canaux (si non stockés dans `sec.conf`)
+| logger.conf  | Fichier de configuration de l'extension _logger_     | Non
+| relay.conf   | Fichier de configuration de l'extension _relay_      | Non
+| script.conf  | Fichier de configuration de l'extension _script_     | Non
+| trigger.conf | Fichier de configuration de l'extension _trigger_    | Possible, cela dépend des triggers
+| xfer.conf    | Fichier de configuration de l'extension _xfer_       | Non
+| weechat.log  | Fichier de log WeeChat                               | Non
+|===
+
+[IMPORTANT]
+Il n'est *pas recommandé* de modifier les fichiers de configuration à la main
+car WeeChat peut les écrire à tout moment (par exemple sur
+<<command_weechat_quit,/quit>>) et après chaque changement vous devez lancer la
+commande <<command_weechat_reload,/reload>> (avec le risque de perdre d'autres
+changements qui n'auraient pas été sauvés avec <<command_weechat_save,/save>>). +
+Vous pouvez utiliser la commande <<command_weechat_set,/set>>, qui vérifie la
+valeur et applique les changements immédiatement.
+
 [[screen_layout]]
 === Organisation de l'écran
 

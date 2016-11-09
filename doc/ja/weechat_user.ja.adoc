@@ -472,6 +472,68 @@ WeeChat を設定するにはこのファイルを編集するか、WeeChat
 内で `/set` コマンドにパラメータを付けて設定します
 (<<weechat_commands,WeeChat コマンド>>を参照)。
 
+[[files_and_directories]]
+=== Files and directories
+
+WeeChat writes configuration files and other data in directory `~/.weechat`
+by default.
+
+The directories are:
+
+[width="100%",cols="1m,3",options="header"]
+|===
+| Path/file         | Description
+| ~/.weechat/       | WeeChat home directory (can be changed, see <<running_weechat,Running WeeChat>>)
+|    logs/          | Log files (one file per buffer)
+|    python/        | Python scripts
+|       autoload/   | Python scripts auto-loaded on startup ^(1)^
+|    perl/          | Perl scripts
+|       autoload/   | Perl scripts auto-loaded on startup ^(1)^
+|    ruby/          | Ruby scripts
+|       autoload/   | Ruby scripts auto-loaded on startup ^(1)^
+|    lua/           | Lua scripts
+|       autoload/   | Lua scripts auto-loaded on startup ^(1)^
+|    tcl/           | Tcl scripts
+|       autoload/   | Tcl scripts auto-loaded on startup ^(1)^
+|    guile/         | Guile scripts
+|       autoload/   | Guile scripts auto-loaded on startup ^(1)^
+|    javascript/    | Javascript scripts
+|       autoload/   | Javascript scripts auto-loaded on startup ^(1)^
+|===
+
+[NOTE]
+^(1)^ This directory often contains only symbolic links to scripts in parent directory.
+
+The files in home directory are:
+
+[width="100%",cols="1m,3,6",options="header"]
+|===
+| File         | Description                             | Sensitive data
+| weechat.conf | Main WeeChat configuration file         | Possible (example: list of channels in a saved buffers layout)
+| sec.conf     | Configuration file with secured data    | *Yes, highly sensitive*: this file must never be shared with anyone
+| plugins.conf | Plugins configuration file              | Possible, depends on plugins/scripts
+| alias.conf   | Configuration file for _alias_ plugin   | Possible, depends on aliases
+| aspell.conf  | Configuration file for _aspell_ plugin  | No
+| charset.conf | Configuration file for _charset_ plugin | No
+| exec.conf    | Configuration file for _exec_ plugin    | No
+| irc.conf     | Configuration file for _irc_ plugin     | *Yes*: it can contain passwords for servers, nickserv and channels (if not stored in `sec.conf`)
+| logger.conf  | Configuration file for _logger_ plugin  | No
+| relay.conf   | Configuration file for _relay_ plugin   | No
+| script.conf  | Configuration file for _script_ plugin  | No
+| trigger.conf | Configuration file for _trigger_ plugin | Possible, depends on triggers
+| xfer.conf    | Configuration file for _xfer_ plugin    | No
+| weechat.log  | WeeChat log file                        | No
+|===
+
+[IMPORTANT]
+It is *not recommended* to edit configuration files by hand because WeeChat
+may write them at any time (for example on <<command_weechat_quit,/quit>>)
+and after any change you must run the command <<command_weechat_reload,/reload>>
+(with the risk of loosing other changes that were not yet saved with
+<<command_weechat_save,/save>>). +
+You can use the command <<command_weechat_set,/set>>, which checks the value
+and applies immediately the changes.
+
 [[screen_layout]]
 === 画面レイアウト
 
