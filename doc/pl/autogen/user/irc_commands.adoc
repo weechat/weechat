@@ -258,23 +258,23 @@ nick: nick lub maska (wildcard "*" jest dozwolony)
          add [re:]<nick> [<serwer> [<kanał>]]
          del <numer>|-all
 
-     list: wyświetla wszystkie ignorowane osoby
-      add: dodaje nową osobę do ignorowania
-     nick: nick lub host (jeśli dodamy "re:" można użyć rozszerzonego wyrażenia regularnego POSIX lub maska używając "*", aby zastąpić jeden lub więcej znaków)
-      del: usuwa wpis o ignorowanej osobie
-   numer: numer wpisu do usunięcia (znajduję się na liście)
-     -all: usuwa wszystkie wpisy z listy ignorowanych
-   serwer: wewnętrzna nazwa serwera, na którym dana osoba ma być ignorowana
-  kanał: nazwa kanału, na którym dana osoba ma być ignorowana
+     list: list all ignores
+      add: add an ignore
+     nick: nick or hostname (can be a POSIX extended regular expression if "re:" is given or a mask using "*" to replace zero or more chars)
+      del: delete an ignore
+   number: number of ignore to delete (look at list to find it)
+     -all: delete all ignores
+   server: internal server name where ignore is working
+  channel: channel name where ignore is working
 
-Uwaga: wyrażenie regularne może zaczynać się od "(?-i)" jeśli wielkość znaków ma mieć znaczenie.
+Note: the regular expression can start with "(?-i)" to become case sensitive.
 
-Przykłady:
-  ignoruje wszędzie nick "toto":
+Examples:
+  ignore nick "toto" everywhere:
     /ignore add toto
-  ignoruje host "toto@domain.com" na serwerze freenode:
+  ignore host "toto@domain.com" on freenode server:
     /ignore add toto@domain.com freenode
-  ignoruje host "toto*@*.domain.com" na freenode/#weechat:
+  ignore host "toto*@*.domain.com" on freenode/#weechat:
     /ignore add toto*@*.domain.com freenode #weechat
 ----
 
