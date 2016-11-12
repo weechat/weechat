@@ -476,6 +476,7 @@ Die Einstellungen für WeeChat können an die eigenen Bedürfnisse angepasst wer
 Veränderungen an der Konfigurationsdatei mit dem internen Befehl `/set` durchführt werden. (siehe
 <<weechat_commands,WeeChat Befehle>>).
 
+// TRANSLATION MISSING
 [[files_and_directories]]
 === Files and directories
 

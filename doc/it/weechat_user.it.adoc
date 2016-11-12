@@ -505,6 +505,7 @@ _~/.weechat/weechat.conf_.
 proprie esigenze, oppure impostando i parametri con il comando `/set`
 all'interno di WeeChat (consultare <<weechat_commands,comandi di WeeChat>>).
 
+// TRANSLATION MISSING
 [[files_and_directories]]
 === Files and directories
 

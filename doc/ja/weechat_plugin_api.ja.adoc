@@ -95,8 +95,8 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 
 戻り値:
 
-* _WEECHAT_RC_OK_ 成功した場合 (プラグインを読み込みます)
-* _WEECHAT_RC_ERROR_ エラーが起きた場合 (プラグインを読み込みません)
+* _WEECHAT_RC_OK_ 成功した場合 (プラグインをロードします)
+* _WEECHAT_RC_ERROR_ エラーが起きた場合 (プラグインをロードしません)
 
 [[plugin_priority]]
 ===== プラグインの優先度
@@ -114,7 +114,7 @@ include::autogen/plugin_api/plugins_priority.adoc[]
 
 ==== weechat_plugin_end
 
-WeeChat プラグインを再読み込みする際にこの関数を呼び出します。
+WeeChat プラグインをリロードする際にこの関数を呼び出します。
 
 プロトタイプ:
 
@@ -3687,7 +3687,7 @@ struct t_hashtable *weechat_hashtable_new (int size,
 
 * _size_:
   ハッシュキーを保存している内部配列のサイズ、値が大きければ多くのメモリを使う反面パフォーマンスがよくなります
-  (これはハッシュテーブルの要素数の上限を決めるもの*ではありません*)
+  (これはハッシュテーブルの要素数の上限を決めるもの *ではありません*)
 * _type_keys_: ハッシュテーブルのキーの種類:
 ** _WEECHAT_HASHTABLE_INTEGER_
 ** _WEECHAT_HASHTABLE_STRING_
@@ -4288,7 +4288,7 @@ struct t_config_file *weechat_config_new (const char *name,
 引数:
 
 * _name_: 設定ファイルの名前 (パスと拡張子は不要)
-* _callback_reload_: `/reload` で設定ファイルを再読み込みする際に呼び出すコールバック関数
+* _callback_reload_: `/reload` で設定ファイルをリロードする際に呼び出すコールバック関数
   (任意、NULL でも可)、引数と戻り値:
 ** _const void *pointer_: ポインタ
 ** _void *data_: ポインタ
@@ -6088,7 +6088,7 @@ elif rc == weechat.WEECHAT_CONFIG_READ_FILE_NOT_FOUND:
 
 ==== config_reload
 
-設定ファイルをディスクから再読み込みする。
+設定ファイルをディスクからリロードする。
 
 プロトタイプ:
 
@@ -6103,7 +6103,7 @@ int weechat_config_reload (struct t_config_file *config_file);
 
 戻り値:
 
-* 設定を再読み込みした場合は _WEECHAT_CONFIG_READ_OK_
+* 設定をリロードした場合は _WEECHAT_CONFIG_READ_OK_
 * メモリ不足の合は _WEECHAT_CONFIG_READ_MEMORY_ERROR_
 * ファイルが見つからない場合は _WEECHAT_CONFIG_READ_FILE_NOT_FOUND_
 
@@ -7390,7 +7390,7 @@ struct t_hook *weechat_hook_fd (int fd,
 引数:
 
 * _fd_: ファイルディスクリプタ
-* _flag_read_: 1 = 読み込みイベントをキャッチ、0 = 無視
+* _flag_read_: 1 = ロードイベントをキャッチ、0 = 無視
 * _flag_write_: 1 = 書き込みイベントをキャッチ、0 = 無視
 * _flag_exception_: 1 = 例外イベントをキャッチ、0 = 無視
   (_WeeChat バージョン 1.3 以上の場合_: この引数は無視され、使われません)
@@ -7712,7 +7712,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   任意の文字列 |
   コマンドの引数;
   このオプションを使って引数を渡さない場合、シェルと同じように引数を自動的に分割します
-  (_command_ 引数からコマンド引数を読み込みます)
+  (_command_ 引数からコマンド引数をロードします)
 
 | stdin +
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
@@ -8225,12 +8225,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | guile | guile_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Scheme スクリプトを読み込み
+  Scheme スクリプトをロード
 
 | guile | guile_script_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Scheme スクリプトを再読み込み
+  Scheme スクリプトをリロード
 
 | guile | guile_script_installed +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8244,12 +8244,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 
 | irc | xxx,irc_in_yyy ^(1)^ |
   String: メッセージ |
-  サーバから IRC メッセージを受信 (メッセージを *無視しない*場合のみ irc
+  サーバから IRC メッセージを受信 (メッセージを *無視しない* 場合のみ irc
   プラグインがメッセージを処理する前に、シグナルが送信される)
 
 | irc | xxx,irc_in2_yyy ^(1)^ |
   String: メッセージ |
-  サーバから IRC メッセージを受信 (メッセージを *無視しない*場合のみ irc
+  サーバから IRC メッセージを受信 (メッセージを *無視しない* 場合のみ irc
   プラグインがメッセージを処理した後に、シグナルが送信される)
 
 | irc | xxx,irc_raw_in_yyy ^(1)^ +
@@ -8351,12 +8351,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | javascript | javascript_script_loaded +
   _(WeeChat バージョン 1.2 以上で利用可)_ |
   String: スクリプトへのパス |
-  Javascript スクリプトを読み込み
+  Javascript スクリプトをロード
 
 | javascript | javascript_script_unloaded +
   _(WeeChat バージョン 1.2 以上で利用可)_ |
   String: スクリプトへのパス |
-  Javascript スクリプトを再読み込み
+  Javascript スクリプトをリロード
 
 | javascript | javascript_script_installed +
   _(WeeChat バージョン 1.2 以上で利用可)_ |
@@ -8383,12 +8383,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | lua | lua_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Lua スクリプトを読み込み
+  Lua スクリプトをロード
 
 | lua | lua_script_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Lua スクリプトを再読み込み
+  Lua スクリプトをリロード
 
 | lua | lua_script_installed +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8403,12 +8403,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | perl | perl_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Perl スクリプトを読み込み
+  Perl スクリプトをロード
 
 | perl | perl_script_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Perl スクリプトを再読み込み
+  Perl スクリプトをリロード
 
 | perl | perl_script_installed +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8423,12 +8423,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | python | python_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Python スクリプトを読み込み
+  Python スクリプトをロード
 
 | python | python_script_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Python スクリプトを再読み込み
+  Python スクリプトをリロード
 
 | python | python_script_installed +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8473,12 +8473,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | ruby | ruby_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Ruby スクリプトを読み込み
+  Ruby スクリプトをロード
 
 | ruby | ruby_script_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Ruby スクリプトを再読み込み
+  Ruby スクリプトをリロード
 
 | ruby | ruby_script_installed +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8493,12 +8493,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | tcl | tcl_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Tcl スクリプトを読み込み
+  Tcl スクリプトをロード
 
 | tcl | tcl_script_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Tcl スクリプトを再読み込み
+  Tcl スクリプトをリロード
 
 | tcl | tcl_script_installed +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8730,12 +8730,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | weechat | plugin_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: 読み込んだプラグインへのパス |
-  プラグインを読み込み
+  プラグインをロード
 
 | weechat | plugin_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
-  String: 再読み込みしたプラグインの名前 (例: "irc") |
-  プラグインを再読み込み
+  String: リロードしたプラグインの名前 (例: "irc") |
+  プラグインをリロード
 
 | weechat | quit |
   String: /quit の引数 |
@@ -8968,7 +8968,7 @@ weechat.hook_signal_send("logger_backlog", weechat.WEECHAT_HOOK_SIGNAL_POINTER, 
 
 シグナルを受け取ったらコールバックは以下のように働きます:
 
-. インストール済みスクリプトを再読み込みして削除。
+. インストール済みスクリプトをリロードして削除。
 . 新しいスクリプトをディレクトリ _~/.weechat/xxx/_ に移動 (_xxx_ はプログラミング言語)
 . 新しいスクリプトへのリンクをディレクトリ _~/.weechat/xxx/autoload/_ に作成
 . 新しいスクリプトを読み込む
@@ -9006,7 +9006,7 @@ weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
 * _guile_script_remove_
 * _javascript_script_remove_
 
-リスト文字列に含まれるそれぞれのスクリプトについて、コールバックはスクリプトを再読み込みして削除します。
+リスト文字列に含まれるそれぞれのスクリプトについて、コールバックはスクリプトをリロードして削除します。
 
 _script_ プラグインはスクリプトを削除する際にこれらのシグナルを使っています。
 
@@ -9573,7 +9573,7 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 [IMPORTANT]
 コールバックは
 <<_hook_completion_list_add,hook_completion_list_add>>
-関数を呼び出すだけで、コマンドラインをコールバックで絶対に *変更しない*でください。 +
+関数を呼び出すだけで、コマンドラインをコールバックで絶対に *変更しない* でください。 +
 kbd:[Tab] が押された時にコマンドラインを更新するためには、関数
 <<_hook_command_run,hook_command_run>> を使ってコマンド
 "/input complete_next" をフックしてください (コールバックがコマンドラインを更新する場合は必ず
@@ -10312,7 +10312,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 マウスジェスチャの場合、コールバックを 2 回呼び出します: 1
 回目はボタンが押された時 (この時のエリアはジェスチャ対象のエリアです)、2
 回目はボタンが離された時 (この時のエリアはマスジェスチャを開始したエリアとは異なる場合があります):
-このため、必ず *毎回*コールバックをテストして、ハッシュテーブルに含まれる
+このため、必ず *毎回* コールバックをテストして、ハッシュテーブルに含まれる
 info を使う前にエリアが一致していることを確認して下さい。
 
 コールバックに送られるハッシュテーブルの内容 (キーと値は "string" 型):
@@ -12884,7 +12884,7 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 ** _active_: アクティブウィンドウのみに表示されているバー
 ** _inactive_: 非アクティブウィンドウのみに表示されているバー
 ** _nicklist_: ニックネームリストを持つウィンドウに表示されているバー
-** 評価された式: _WeeChat ユーザーズガイド_のバーに関する章を参照
+** 評価された式: _WeeChat ユーザーズガイド_ のバーに関する章を参照
 * _position_: _top_、_bottom_、_left_、_right_
 * _filling_top_bottom_:
 ** _horizontal_: 要素は水平方向に詰め込まれている (各要素の後に間隔)
@@ -14151,7 +14151,7 @@ hdata に対する関数 (WeeChat またはプラグインデータへの直ア�
 
 [IMPORTANT]
 hdata を使うことで読み取り専用でデータにアクセスできます。hdata
-変数が示すメモリ領域に何かを書き込むことは *厳禁*です。 +
+変数が示すメモリ領域に何かを書き込むことは *厳禁* です。 +
 データを更新する場合は必ず関数
 <<_hdata_update,hdata_update>> を使ってください。
 
@@ -14369,12 +14369,12 @@ WEECHAT_HDATA_LIST(last_buffer, 0);
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
-WeeChat 及びプラグイン構造体に対する hdata を返す。
+WeeChat およびプラグイン構造体に対する hdata を返す。
 
 [NOTE]
 hdata はデータを含みません、hdata
 は構造体における変数の位置を含むただのハッシュテーブル。つまりデータを読み出すためには
-hdata と WeeChat 及びプラグインへのポインタが必要です。
+hdata と WeeChat およびプラグインへのポインタが必要です。
 
 プロトタイプ:
 
@@ -14934,7 +14934,7 @@ void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *se
 * _pointer_: WeeChat および plugin オブジェクトへのポインタ
 * _search_: 評価する式、式中のデフォルトポインタは hdata の名前
   (デフォルトポインタはリストに含まれる各要素で置換される); 式に関する詳細は
-  _WeeChat ユーザーズガイド_のコマンド `/eval` を参照
+  _WeeChat ユーザーズガイド_ のコマンド `/eval` を参照
 * _move_: 検索に失敗した後に移動を実行する回数
   (負および正の整数、ゼロは禁止)
 
@@ -15508,7 +15508,7 @@ WeeChat をアップグレードする (コマンド "/upgrade") 関数。
 
 _WeeChat バージョン 1.5 で更新。_
 
-アップグレード用のファイルを作成または読み込み。
+アップグレード用のファイルを作成またはロード。
 
 プロトタイプ:
 

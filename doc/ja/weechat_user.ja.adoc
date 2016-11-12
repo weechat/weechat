@@ -241,7 +241,7 @@ cmake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
   Python 3 を使った <<scripts_plugins,Python プラグイン>>のコンパイル
-  (多くのスクリプトは Python 3 と互換性がないため *非推奨*です)。
+  (多くのスクリプトは Python 3 と互換性がないため *非推奨* です)。
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   <<relay_plugin,リレープラグイン>>のコンパイル。
@@ -473,66 +473,66 @@ WeeChat を設定するにはこのファイルを編集するか、WeeChat
 (<<weechat_commands,WeeChat コマンド>>を参照)。
 
 [[files_and_directories]]
-=== Files and directories
+=== ファイルとディレクトリ
 
-WeeChat writes configuration files and other data in directory `~/.weechat`
-by default.
+デフォルト状態の WeeChat は `~/.weechat`
+ディレクトリ内に設定ファイルおよびその他のデータを書き込みます。
 
-The directories are:
+このディレクトリには以下の内容が含まれます:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| Path/file         | Description
-| ~/.weechat/       | WeeChat home directory (can be changed, see <<running_weechat,Running WeeChat>>)
-|    logs/          | Log files (one file per buffer)
-|    python/        | Python scripts
-|       autoload/   | Python scripts auto-loaded on startup ^(1)^
-|    perl/          | Perl scripts
-|       autoload/   | Perl scripts auto-loaded on startup ^(1)^
-|    ruby/          | Ruby scripts
-|       autoload/   | Ruby scripts auto-loaded on startup ^(1)^
-|    lua/           | Lua scripts
-|       autoload/   | Lua scripts auto-loaded on startup ^(1)^
-|    tcl/           | Tcl scripts
-|       autoload/   | Tcl scripts auto-loaded on startup ^(1)^
-|    guile/         | Guile scripts
-|       autoload/   | Guile scripts auto-loaded on startup ^(1)^
-|    javascript/    | Javascript scripts
-|       autoload/   | Javascript scripts auto-loaded on startup ^(1)^
+| パス/ファイル     | 説明
+| ~/.weechat/       | WeeChat ホームディレクトリ (変更するには <<running_weechat,WeeChat の起動>>を参照してください)
+|    logs/          | ログファイル (バッファごとに 1 つのファイル)
+|    python/        | Python スクリプト
+|       autoload/   | 起動時に自動ロードされる Python スクリプト ^(1)^
+|    perl/          | Perl スクリプト
+|       autoload/   | 起動時に自動ロードされる Perl スクリプト ^(1)^
+|    ruby/          | Ruby スクリプト
+|       autoload/   | 起動時に自動ロードされる Ruby スクリプト ^(1)^
+|    lua/           | Lua スクリプト
+|       autoload/   | 起動時に自動ロードされる Lua スクリプト ^(1)^
+|    tcl/           | Tcl スクリプト
+|       autoload/   | 起動時に自動ロードされる Tcl スクリプト ^(1)^
+|    guile/         | Guile スクリプト
+|       autoload/   | 起動時に自動ロードされる Guile スクリプト ^(1)^
+|    javascript/    | Javascript スクリプト
+|       autoload/   | 起動時に自動ロードされる Javascript スクリプト ^(1)^
 |===
 
 [NOTE]
-^(1)^ This directory often contains only symbolic links to scripts in parent directory.
+^(1)^ このディレクトリには親ディレクトリ内にあるスクリプトへのシンボリックリンクのみが含まれることが多いです。
 
-The files in home directory are:
+ホームディレクトリには以下の内容が含まれます:
 
 [width="100%",cols="1m,3,6",options="header"]
 |===
-| File         | Description                             | Sensitive data
-| weechat.conf | Main WeeChat configuration file         | Possible (example: list of channels in a saved buffers layout)
-| sec.conf     | Configuration file with secured data    | *Yes, highly sensitive*: this file must never be shared with anyone
-| plugins.conf | Plugins configuration file              | Possible, depends on plugins/scripts
-| alias.conf   | Configuration file for _alias_ plugin   | Possible, depends on aliases
-| aspell.conf  | Configuration file for _aspell_ plugin  | No
-| charset.conf | Configuration file for _charset_ plugin | No
-| exec.conf    | Configuration file for _exec_ plugin    | No
-| irc.conf     | Configuration file for _irc_ plugin     | *Yes*: it can contain passwords for servers, nickserv and channels (if not stored in `sec.conf`)
-| logger.conf  | Configuration file for _logger_ plugin  | No
-| relay.conf   | Configuration file for _relay_ plugin   | No
-| script.conf  | Configuration file for _script_ plugin  | No
-| trigger.conf | Configuration file for _trigger_ plugin | Possible, depends on triggers
-| xfer.conf    | Configuration file for _xfer_ plugin    | No
-| weechat.log  | WeeChat log file                        | No
+| ファイル     | 説明                                    | データ保護
+| weechat.conf | WeeChat の主要設定ファイル              | 保護される場合もあります (例: 保存されたバッファレイアウトに含まれるチャンネルのリスト)
+| sec.conf     | 機密データを含む設定ファイル            | *保護されます、機密性の高いデータ*: このファイルを誰かと共有してはいけません
+| plugins.conf | プラグイン設定ファイル                  | 保護される場合もあります、プラグインおよびスクリプトに依存します
+| alias.conf   | _alias_ プラグイン用の設定ファイル      | 保護される場合もあります、エイリアスに依存します
+| aspell.conf  | _aspell_ プラグイン用の設定ファイル     | 保護されません
+| charset.conf | _charset_ プラグイン用の設定ファイル    | 保護されません
+| exec.conf    | _exec_ プラグイン用の設定ファイル       | 保護されません
+| irc.conf     | _irc_ プラグイン用の設定ファイル        | *保護されます*: サーバ、nickserv、チャンネルのパスワードを保存することが可能です (これらのデータが `sec.conf` に保存されない場合)
+| logger.conf  | _logger_ プラグイン用の設定ファイル     | 保護されません
+| relay.conf   | _relay_ プラグイン用の設定ファイル      | 保護されません
+| script.conf  | _script_ プラグイン用の設定ファイル     | 保護されません
+| trigger.conf | _trigger_ プラグイン用の設定ファイル    | 保護される場合もあります、トリガに依存します
+| xfer.conf    | _xfer_ プラグイン用の設定ファイル       | 保護されません
+| weechat.log  | WeeChat ログファイル                    | 保護されません
 |===
 
 [IMPORTANT]
-It is *not recommended* to edit configuration files by hand because WeeChat
-may write them at any time (for example on <<command_weechat_quit,/quit>>)
-and after any change you must run the command <<command_weechat_reload,/reload>>
-(with the risk of loosing other changes that were not yet saved with
-<<command_weechat_save,/save>>). +
-You can use the command <<command_weechat_set,/set>>, which checks the value
-and applies immediately the changes.
+手作業で設定ファイルを編集することは *推奨されません*。なぜなら
+WeeChat は常時 (例えば <<command_weechat_quit,/quit>> コマンドの実行時など)
+設定ファイルに書き込む可能性がありますし、手作業で修正を加えた後には必ず <<command_weechat_reload,/reload>>
+コマンドを実行しなければいけない (これには <<command_weechat_save,/save>>
+を使って保存されていない変更を失うリスクがあります) からです。 +
+設定を編集するには <<command_weechat_set,/set>>
+コマンドを使ってください。これは値を検査し、設定の変更をすぐに適用します。
 
 [[screen_layout]]
 === 画面レイアウト
@@ -628,7 +628,7 @@ WeeChat を起動した端末の例:
 [[buffers_and_windows]]
 === バッファとウィンドウ
 
-_バッファ_は番号、名前、表示された行
+_バッファ_ は番号、名前、表示された行
 (とその他の情報) で構成されています。
 
 バッファの例:
@@ -636,7 +636,7 @@ _バッファ_は番号、名前、表示された行
 * コアバッファ (起動時に WeeChat が作成、閉じることはできません)
 * irc サーバ (サーバからのメッセージを表示)
 * irc チャンネル
-* irc プライベート
+* irc プライベートメッセージ
 
 _window_
 はバッファを表示する画面エリアのことです。画面を複数のウィンドウに分割することができます。
@@ -739,7 +739,7 @@ _window_
 [[bars]]
 === バー
 
-_バー_とは任意のテキストを含めることができるチャットエリア以外の場所です。
+_バー_ とは任意のテキストを含めることができるチャットエリア以外の場所です。
 
 バーオプションは `weechat.bar.name.option` オプションで設定します。ここで
 `name` はバーの名前、`option` はこのバーのオプション名です。
@@ -1651,11 +1651,11 @@ WeeChat は画面に色が表示された時点で色ペアを動的に割り当
 [[secured_data_storage]]
 ==== データの保存
 
-WeeChat はパスワード及び _sec.conf_
+WeeChat はパスワードおよび _sec.conf_
 ファイルに保存されている個人データを暗号化することができます。
 
 この設定ファイルは他のどのファイルよりも先に読まれ、ファイルに保存されている値を
-WeeChat 及びプラグイン/スクリプトのオプションで使うことができます。
+WeeChat およびプラグイン/スクリプトのオプションで使うことができます。
 
 _sec.conf_
 に含まれるデータを暗号化するパスフレーズを設定することが可能です。これは必須ではありませんが、パスフレーズを設定することを強く勧めます。パスフレーズを設定しない場合、データは平文でファイルに保存されます。
@@ -1797,9 +1797,9 @@ include::autogen/user/weechat_commands.adoc[]
 見つかったプラグインは WeeChat の起動時に自動的に読み込まれます。WeeChat
 の起動時にプラグインを読み込むか否かは選択可能です。
 
-_プラグイン_と _スクリプト_の違いを明らかにすることは重要です:
-_プラグイン_とは `/plugin` コマンドで読み込まれるコンパイル済みバイナリファイルです。これに対して、
-_スクリプト_とは `/python` 等のコマンドで _python_
+_プラグイン_ と _スクリプト_ の違いを明らかにすることは重要です:
+_プラグイン_ とは `/plugin` コマンドで読み込まれるコンパイル済みバイナリファイルです。これに対して、
+_スクリプト_ とは `/python` 等のコマンドで _python_
 等のプラグインとともに読み込まれるテキストファイルです。
 
 `/plugin`
@@ -1839,7 +1839,7 @@ _スクリプト_とは `/python` 等のコマンドで _python_
 |===
 
 API を使ったプラグインやスクリプトの開発についてより詳しく学ぶには、_WeeChat
-プラグイン API リファレンス_または _WeeChat スクリプト作成ガイド_を参照してください。
+プラグイン API リファレンス_ または _WeeChat スクリプト作成ガイド_ を参照してください。
 
 [[alias_plugin]]
 === Alias プラグイン
@@ -2824,7 +2824,7 @@ $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out rel
 ----
 
 WeeChat
-が既に起動している場合、以下のコマンドで証明書と秘密鍵を再読み込みできます:
+が既に起動している場合、以下のコマンドで証明書と秘密鍵をリロードできます:
 
 ----
 /relay sslcertkey
@@ -2913,7 +2913,7 @@ Python、Perl、Ruby、Lua、Tcl、Guile
 のスクリプトをインストール/削除したりする事が可能です。
 
 スクリプトの書き方やスクリプト用の WeeChat API
-についての詳しい情報は、_WeeChat スクリプト作成ガイド_を参照してください。
+についての詳しい情報は、_WeeChat スクリプト作成ガイド_ を参照してください。
 
 [[script_options]]
 ==== スクリプトオプション (script.conf)
@@ -2982,7 +2982,7 @@ include::autogen/user/javascript_commands.adoc[]
 
 トリガを使うにはシグナル、修飾子、...
 がどのように動いているかを知らなければいけません。これを知るには _WeeChat
-プラグイン API リファレンス_の _フック_の章を読むことをお勧めします。
+プラグイン API リファレンス_ の _フック_ の章を読むことをお勧めします。
 
 [[trigger_options]]
 ==== オプション (trigger.conf)
@@ -3025,7 +3025,7 @@ include::autogen/user/trigger_commands.adoc[]
 | hook | `signal`、`hsignal`、`modifier`、`print`、`command`、`command_run`、`timer`、`config`、`focus`
   |
   トリガの中で使われるフック。より詳しい情報は、_WeeChat
-  プラグイン API リファレンス_の _フック_の章を参照してください。
+  プラグイン API リファレンス_ の _フック_ の章を参照してください。
 
 | arguments | 文字列 |
   フックに対する引数、指定したフックの型に依存します。

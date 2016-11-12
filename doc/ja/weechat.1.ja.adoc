@@ -50,7 +50,7 @@ IPv6 アドレスの後にポートを指定するには IPv6
 == ファイル
 
 $HOME/.weechat/weechat.conf::
-    WeeChat の主設定ファイル
+    WeeChat の主要設定ファイル
 
 $HOME/.weechat/plugins.conf::
     プラグイン設定ファイル
