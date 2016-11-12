@@ -476,6 +476,7 @@ Możesz edytować ten plik wedle upodobań, żeby skonfigurować WeeChat, lub mo
 ustawić parametry za pomocą komendy `/set` z poziomu WeeChat (zobacz
 <<weechat_commands,Komendy WeeChat>>).
 
+// TRANSLATION MISSING
 [[files_and_directories]]
 === Files and directories
 
