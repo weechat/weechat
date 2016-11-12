@@ -633,7 +633,7 @@ Examples of buffers:
 * core buffer (created by WeeChat on startup, can not be closed)
 * irc server (displays messages from server)
 * irc channel
-* irc private
+* irc private messages
 
 A _window_ is a screen area which displays a buffer. It is possible to split
 your screen into many windows.

@@ -644,7 +644,7 @@ Exemples de tampons :
 * tampon core (créé par WeeChat au démarrage, ne peut pas être fermé)
 * serveur irc (affiche les messages du serveur)
 * canal irc
-* privé irc
+* messages privés irc
 
 Une fenêtre (_window_) est une zone de l'écran affichant un tampon. Il est
 possible de découper l'écran horizontalement ou verticalement en plusieurs
