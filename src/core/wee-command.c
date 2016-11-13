@@ -4907,6 +4907,10 @@ COMMAND_CALLBACK(quit)
     (void) data;
     (void) buffer;
 
+    /* already quitting? just ignore the command */
+    if (weechat_quit)
+        return WEECHAT_RC_OK;
+
     confirm_ok = 0;
     pos_args = NULL;
     if (argc > 1)

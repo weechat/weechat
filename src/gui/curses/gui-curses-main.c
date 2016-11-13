@@ -60,7 +60,8 @@
 #include "gui-curses.h"
 
 
-int gui_signal_sigwinch_received = 0;  /* sigwinch signal (term resized)    */
+volatile sig_atomic_t gui_signal_sigwinch_received = 0;  /* sigwinch signal */
+                                       /* (terminal has been resized)       */
 int gui_term_cols = 0;                 /* number of columns in terminal     */
 int gui_term_lines = 0;                /* number of lines in terminal       */
 
@@ -249,8 +250,51 @@ void
 gui_main_signal_sigwinch ()
 {
     gui_signal_sigwinch_received = 1;
+}
 
-    gui_window_ask_refresh (2);
+/*
+ * Callback for signals received that will make WeeChat quit.
+ */
+
+void
+gui_main_handle_quit_signals ()
+{
+    char str_signal[64], str_weechat_signal[64];
+    int rc;
+
+    switch (weechat_quit_signal)
+    {
+        case SIGHUP:
+            snprintf (str_signal, sizeof(str_signal), "SIGHUP");
+            break;
+        case SIGQUIT:
+            snprintf (str_signal, sizeof(str_signal), "SIGQUIT");
+            break;
+        case SIGTERM:
+            snprintf (str_signal, sizeof(str_signal), "SIGTERM");
+            break;
+        default:
+            str_signal[0] = '\0';
+            break;
+    }
+
+    if (str_signal[0])
+    {
+        snprintf (str_weechat_signal, sizeof(str_weechat_signal),
+                  "signal_%s", str_signal);
+        string_tolower(str_weechat_signal);
+        rc = hook_signal_send (str_weechat_signal,
+                               WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        if ((rc != WEECHAT_RC_OK_EAT) && !weechat_quit)
+        {
+            log_printf (_("Signal %s received, exiting WeeChat..."),
+                        str_signal);
+            (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+            weechat_quit = 1;
+        }
+    }
+
+    weechat_quit_signal = 0;
 }
 
 /*
@@ -416,6 +460,7 @@ gui_main_loop ()
             (void) hook_signal_send ("signal_sigwinch",
                                      WEECHAT_HOOK_SIGNAL_STRING, NULL);
             gui_signal_sigwinch_received = 0;
+            gui_window_ask_refresh (2);
         }
 
         gui_color_pairs_auto_reset_pending = 0;
@@ -425,6 +470,10 @@ gui_main_loop ()
 
         /* run process (with fork) */
         hook_process_exec ();
+
+        /* handle signals received */
+        if (weechat_quit_signal > 0)
+            gui_main_handle_quit_signals ();
     }
 
     /* remove keyboard hook */

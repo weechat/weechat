@@ -525,9 +525,12 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
     if (ret == 0)
     {
         /* no data on stdin, terminal lost */
-        log_printf (_("Terminal lost, exiting WeeChat..."));
-        (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-        weechat_quit = 1;
+        if (!weechat_quit)
+        {
+            log_printf (_("Terminal lost, exiting WeeChat..."));
+            (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+            weechat_quit = 1;
+        }
         return WEECHAT_RC_OK;
     }
     if (ret < 0)
