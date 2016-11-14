@@ -30,6 +30,10 @@ Bug fixes::
   * lua: fix integers returned in Lua >= 5.3 (issue #834)
   * relay: set status to "authentication failed" and close immediately connection in case of authentication failure in weechat and irc protocols (issue #825)
 
+Build::
+
+  * core: add build of xz package with make dist (cmake)
+
 [[v1.6]]
 == Version 1.6 (2016-10-02)
 
