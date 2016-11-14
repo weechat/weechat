@@ -19,7 +19,7 @@
 #
 
 #
-# Build tarballs (.tar.gz and .tar.bz2) for WeeChat using git-archive.
+# Build gzip/bzip2/xz tarballs for WeeChat using git-archive.
 #
 # Syntax:
 #    makedist.sh <version> <tree-ish> [<path>]
@@ -45,8 +45,11 @@ fi
 PREFIX="weechat-${VERSION}/"
 FILE="weechat-${VERSION}.tar"
 
+echo "Building file ${FILE}.gz"
+git archive --prefix=${PREFIX} ${TREEISH} | gzip -c >${OUTPATH}/${FILE}.gz
+
 echo "Building file ${FILE}.bz2"
 git archive --prefix=${PREFIX} ${TREEISH} | bzip2 -c >${OUTPATH}/${FILE}.bz2
 
-echo "Building file ${FILE}.gz"
-git archive --prefix=${PREFIX} ${TREEISH} | gzip -c >${OUTPATH}/${FILE}.gz
+echo "Building file ${FILE}.xz"
+git archive --prefix=${PREFIX} ${TREEISH} | xz -c >${OUTPATH}/${FILE}.xz
