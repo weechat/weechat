@@ -837,8 +837,8 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 IRC の退出および終了メッセージを無効化します:
 
 ----
-/set irc.server_default.default_msg_part ""
-/set irc.server_default.default_msg_quit ""
+/set irc.server_default.msg_part ""
+/set irc.server_default.msg_quit ""
 ----
 
 すべての CTCP クエリに対する応答を無効化します:

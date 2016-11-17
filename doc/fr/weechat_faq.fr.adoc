@@ -875,8 +875,8 @@ celles-ci :
 Désactivez les messages de part et quit IRC :
 
 ----
-/set irc.server_default.default_msg_part ""
-/set irc.server_default.default_msg_quit ""
+/set irc.server_default.msg_part ""
+/set irc.server_default.msg_quit ""
 ----
 
 Désactivez les réponses à toutes les demandes CTCP :

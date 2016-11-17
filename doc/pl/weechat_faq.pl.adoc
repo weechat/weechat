@@ -846,8 +846,8 @@ Możesz skorzystać z tych samych porad jak dla  <<memory_usage,memory>>, oraz t
 Wyłącz wiadomości o wyjściu z kanału i rozłączenia z serwerem:
 
 ----
-/set irc.server_default.default_msg_part ""
-/set irc.server_default.default_msg_quit ""
+/set irc.server_default.msg_part ""
+/set irc.server_default.msg_quit ""
 ----
 
 Wyłącz odpowiedzi na wszystkie zapytania CTCP:

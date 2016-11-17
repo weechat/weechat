@@ -835,8 +835,8 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
 Disable IRC part and quit messages:
 
 ----
-/set irc.server_default.default_msg_part ""
-/set irc.server_default.default_msg_quit ""
+/set irc.server_default.msg_part ""
+/set irc.server_default.msg_quit ""
 ----
 
 Disable answers to all CTCP queries:

@@ -887,8 +887,8 @@ und zusätzlich diese Tipps beherzigen:
 Deaktiviere IRC part und quit Nachrichten:
 
 ----
-/set irc.server_default.default_msg_part ""
-/set irc.server_default.default_msg_quit ""
+/set irc.server_default.msg_part ""
+/set irc.server_default.msg_quit ""
 ----
 
 Deaktiviere die automatische Antwort für alle CTCP Anfragen:
