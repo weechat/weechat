@@ -50,7 +50,14 @@ struct t_config_option *trigger_config_color_trigger_disabled;
 
 char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
 {
-    /* beep on highlight/private message */
+    /*
+     * beep on highlight/private message, on following conditions:
+     *   - message is displayed (not filtered)
+     *     AND:
+     *       - message is a highlight
+     *         OR:
+     *       - message is a message in a private buffer
+     */
     { "beep", "on",
       "print",
       "",
@@ -59,7 +66,14 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "/print -beep",
       "ok",
       "" },
-    /* hide passwords in commands (except "/msg nickserv register") */
+    /*
+     * hide passwords in commands:
+     *   - /msg nickserv id|identify|ghost|release|regain|recover
+     *   - /oper
+     *   - /quote pass
+     *   - /set *password*
+     *   - /secure passphrase|decrypt|set
+     */
     { "cmd_pass", "on",
       "modifier",
       "5000|input_text_display;5000|history_add;5000|irc_command_auth",
@@ -77,7 +91,10 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "",
       "" },
-    /* hide passwords in command "/msg nickserv register" */
+    /*
+     * hide passwords in commands:
+     *   - /msg nickserv register
+     */
     { "cmd_pass_register", "on",
       "modifier",
       "5000|input_text_display;5000|history_add;5000|irc_command_auth",
@@ -87,7 +104,10 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "",
       "" },
-    /* hide password in IRC auth message displayed */
+    /*
+     * hide password in IRC auth message displayed
+     * (message received from server after the user issued the command)
+     */
     { "msg_auth", "on",
       "modifier",
       "5000|irc_message_auth",
@@ -98,7 +118,11 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "",
       "" },
-    /* hide server password in commands /server and /connect */
+    /*
+     * hide server password in commands:
+     *   - /server
+     *   - /connect
+     */
     { "server_pass", "on",
       "modifier",
       "5000|input_text_display;5000|history_add",
