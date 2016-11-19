@@ -17,6 +17,21 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v1.7]]
+== Version 1.7 (under dev)
+
+A new trigger "cmd_pass_register" has been added to hide only password and not
+email in command `/msg nickserv register password email`. +
+The existing trigger "cmd_pass" has been updated to hide password in all
+commands except `/msg nickserv register`.
+
+You can add the new trigger and restore the other one with the following
+command:
+
+----
+/trigger restore cmd_pass_register cmd_pass
+----
+
 [[v1.6]]
 == Version 1.6 (2016-10-02)
 

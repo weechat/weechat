@@ -59,14 +59,14 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "/print -beep",
       "ok",
       "" },
-    /* hide passwords in commands */
+    /* hide passwords in commands (except "/msg nickserv register") */
     { "cmd_pass", "on",
       "modifier",
       "5000|input_text_display;5000|history_add;5000|irc_command_auth",
       "",
       "==^("
       "(/(msg|m|quote) +nickserv "
-      "+(id|identify|register|ghost +[^ ]+|release +[^ ]+|regain +[^ ]+|"
+      "+(id|identify|ghost +[^ ]+|release +[^ ]+|regain +[^ ]+|"
       "recover +[^ ]+) +)|"
       "/oper +[^ ]+ +|"
       "/quote +pass +|"
@@ -74,6 +74,16 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "/secure +(passphrase|decrypt|set +[^ ]+) +)"
       "(.*)"
       "==${re:1}${hide:*,${re:+}}",
+      "",
+      "",
+      "" },
+    /* hide passwords in command "/msg nickserv register" */
+    { "cmd_pass_register", "on",
+      "modifier",
+      "5000|input_text_display;5000|history_add;5000|irc_command_auth",
+      "",
+      "==^(/(msg|m|quote) +nickserv +register +)([^ ]+)(.*)"
+      "==${re:1}${hide:*,${re:3}}${re:4}",
       "",
       "",
       "" },
