@@ -802,6 +802,25 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 [[settings]]
 == 設定
 
+// TRANSLATION MISSING
+[[editing_config_files]]
+=== Can I edit configuration files (*.conf) by hand?
+
+You can, but this is *NOT* recommended.
+
+Command `/set` in WeeChat is recommended:
+
+* you can complete value with the Tab key
+* the value is checked, a message is displayed in case of error
+* the value is used immediately, you don't need to restart anything
+
+If you still want to edit files by hand, you should be careful:
+
+* if you put an invalid value for an option, WeeChat will display an error
+  on load and discard the value (the default value for option will be used)
+* if WeeChat is running, you'll have to issue the command `/reload`, and if
+  some settings were changed but not saved with `/save`, you will lose them
+
 [[memory_usage]]
 === どうすれば WeeChat のメモリ使用量を節約できますか。
 

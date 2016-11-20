@@ -838,6 +838,27 @@ Les scripts ne sont pas compatibles avec d'autres clients IRC.
 [[settings]]
 == Réglages
 
+[[editing_config_files]]
+=== Puis-je éditer les fichiers de configuration (*.conf) à la main ?
+
+Vous pouvez, mais ce n'est *PAS* recommandé.
+
+La commande `/set` in WeeChat est recommandée :
+
+* vous pouvez compléter la valeur avec la touche Tab
+* la valeur est vérifiée, un message est affichée en cas d'erreur
+* la valeur est utilisée immédiatement, et vous n'avez pas besoin de redémarrer
+  quoi que ce soit
+
+Si vous souhaitez quand même éditer les fichiers à la main, vous devez faire
+attention :
+
+* si vous mettez une valeur invalide pour une option, WeeChat affichera une
+  erreur au chargement et ne tiendra pas compte de la valeur (la valeur par
+  défaut pour l'option sera utilisée)
+* si WeeChat tourne, vous devrez utiliser la commande `/reload`, et si des
+  options ont été changées mais non sauvées avec `/save`, vous les perdrez
+
 [[memory_usage]]
 === Comment configurer WeeChat pour consommer moins de mémoire ?
 
