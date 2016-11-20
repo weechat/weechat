@@ -93,7 +93,7 @@
 ** 値: on, off (デフォルト値: `+on+`)
 
 * [[option_irc.look.color_nicks_in_names]] *irc.look.color_nicks_in_names*
-** 説明: pass:none[/names の出力にニックネーム色を使用 (又はチャンネル参加時に表示されるニックネームのリスト)]
+** 説明: pass:none[/names の出力にニックネーム色を使用 (またはチャンネル参加時に表示されるニックネームのリスト)]
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `+off+`)
 
@@ -428,7 +428,7 @@
 ** 値: on, off (デフォルト値: `+off+`)
 
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
-** 説明: pass:none[サーバのホスト名/ポート番号又は IP アドレス/ポート番号のリスト (コンマ区切り) (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[サーバのホスト名/ポート番号または IP アドレス/ポート番号のリスト (コンマ区切り) (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `+""+`)
 
@@ -463,7 +463,7 @@
 ** 値: 1 .. 65535 (デフォルト値: `+10+`)
 
 * [[option_irc.server_default.autorejoin]] *irc.server_default.autorejoin*
-** 説明: pass:none[キックされた後のチャンネルへの最参加を自動的に行う; あるチャンネルに対して設定を上書きするにはバッファローカル変数を定義してください (変数の名前: "autorejoin"、値: "on" 又は "off")]
+** 説明: pass:none[キックされた後のチャンネルへの最参加を自動的に行う; あるチャンネルに対して設定を上書きするにはバッファローカル変数を定義してください (変数の名前: "autorejoin"、値: "on" または "off")]
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `+off+`)
 

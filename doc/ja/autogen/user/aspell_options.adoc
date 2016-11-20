@@ -8,7 +8,7 @@
 ** 値: 未制約文字列 (デフォルト値: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`)
 
 * [[option_aspell.check.default_dict]] *aspell.check.default_dict*
-** 説明: pass:none[バッファに辞書が定義されていない場合に使用されるデフォルト辞書 (又は辞書のコンマ区切りリスト) (空のままであれば明示的に有効化されたバッファを除いて aspell を利用しない)]
+** 説明: pass:none[バッファに辞書が定義されていない場合に使用されるデフォルト辞書 (または辞書のコンマ区切りリスト) (空のままであれば明示的に有効化されたバッファを除いて aspell を利用しない)]
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `+""+`)
 

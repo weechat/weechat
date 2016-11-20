@@ -363,7 +363,7 @@ disable: フィルタを無効化
   notify_none、notify_message、notify_private、notify_highlight、
   nick_xxx (xxx はメッセージのニックネーム部分)、prefix_nick_ccc (ccc はニックネームの色)、
   host_xxx (xxx はメッセージのユーザ名 + ホスト名部分)、
-  irc_xxx (xxx はコマンド名又は番号、/server raw または /debug tags で確認)、
+  irc_xxx (xxx はコマンド名または番号、/server raw または /debug tags で確認)、
   irc_numeric、irc_error、irc_action、irc_ctcp、irc_ctcp_reply、irc_smart_filter、away_info。
 バッファ内でタグを見るには: /debug tags
 
@@ -712,14 +712,14 @@ arguments: "quit" シグナルと共に送られるテキスト
 ----
 
 [[command_weechat_reload]]
-* `+reload+`: ディスクから設定ファイルを再読み込み
+* `+reload+`: ディスクから設定ファイルをリロード
 
 ----
 /reload  [<file> [<file>...]]
 
-file: 再読み込みする設定ファイル (拡張子 ".conf" は不要)
+file: リロードする設定ファイル (拡張子 ".conf" は不要)
 
-引数無しでは、全てのファイル (WeeChat とプラグイン) が再読み込みされます。
+引数無しでは、全てのファイル (WeeChat とプラグイン) がリロードされます。
 ----
 
 [[command_weechat_repeat]]
@@ -859,9 +859,9 @@ option: オプションの名前
           -yes: "weechat.look.confirm_upgrade" オプションが有効化されていた場合、このオプションは必須です。
 path_to_binary: WeeChat バイナリへのパス (デフォルトは現在のバイナリ)
         -dummy: 何もしない (補完された "-quit" オプションを不用意に使わないためのオプション)
-         -quit: *すべての*接続を閉じ、セッションを保存して WeeChat を終了。遅延復帰 (詳しくは後述) が可能になります。
+         -quit: *すべての* 接続を閉じ、セッションを保存して WeeChat を終了。遅延復帰 (詳しくは後述) が可能になります。
 
-このコマンドは起動中の WeeChat セッションのアップグレードと再読み込みを行います。このコマンドを実行する前に、新しい WeeChat バイナリをコンパイルするか、パッケージマネージャでインストールしなければいけません。
+このコマンドは起動中の WeeChat セッションのアップグレードとリロードを行います。このコマンドを実行する前に、新しい WeeChat バイナリをコンパイルするか、パッケージマネージャでインストールしなければいけません。
 
 注意: SSL 接続はアップグレード中に破棄されます、これは今のところ GnuTLS では SSL セッションのリロードができないからです。アップグレードの後に自動的に再接続されます。
 
@@ -872,7 +872,7 @@ path_to_binary: WeeChat バイナリへのパス (デフォルトは現在のバ
   4. 新しい WeeChat バイナリを実行してセッションをリロード。
 
 オプション "-quit" を使うと、上の挙動が少し変わります:
-  1. *すべての*接続を閉じる (irc、xfer、relay、...)
+  1. *すべての* 接続を閉じる (irc、xfer、relay、...)
   2. すべてのセッションをファイルに保存 (*.upgrade)
   3. すべてのプラグインをアンロード
   4. WeeChat 設定を保存
