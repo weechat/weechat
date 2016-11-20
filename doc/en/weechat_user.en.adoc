@@ -50,7 +50,7 @@ In order to install WeeChat, you need:
 * a running GNU/Linux system (with compiler tools for source
   package), or a compatible OS
 * _root_ privileges (to install WeeChat in a system directory)
-* some libraries (see <<dependencies,dependencies>>).
+* some libraries (see <<dependencies,dependencies>>)
 
 [[install]]
 == Installation
@@ -335,9 +335,9 @@ Then follow instructions for source package (see
 If you experienced crashes, or if you want to report any future WeeChat crash,
 you have to:
 
-* compile it with debug info (or install binary package with debug info)
-* enable _core_ files on your system
-* install gdb
+* Compile it with debug info (or install binary package with debug info).
+* Enable _core_ files on your system.
+* Install gdb.
 
 [[debug_info]]
 ==== Debug info
@@ -969,11 +969,11 @@ and selection of text (using the mouse).
 
 The bare display has following features:
 
-* it displays only the content of current buffer: no window split neither bars
-  (no title, nicklist, status, input, ...)
-* the WeeChat mouse support is disabled (if it was enabled): you can use your
-  mouse like you do in the terminal to click on URLs and select text
-* ncurses is not used, therefore URLs are not cut at the end of lines.
+* It displays only the content of current buffer: no window split neither bars
+  (no title, nicklist, status, input, ...).
+* The WeeChat mouse support is disabled (if it was enabled): you can use your
+  mouse like you do in the terminal to click on URLs and select text.
+* Ncurses is not used, therefore URLs are not cut at the end of lines.
 
 The default key to enabled bare display is kbd:[Alt+l], and same key to exit (or
 by default anything changing the input will exit the bare display, see option
@@ -2588,25 +2588,25 @@ Message can be prefixed by server name to be specific to an irc server
 
 Some examples:
 
-* display result of `/whois` on private buffer:
+* Display result of `/whois` on private buffer:
 
 ----
 /set irc.msgbuffer.whois private
 ----
 
-* restore default buffer for whois (server buffer):
+* Restore default buffer for whois (server buffer):
 
 ----
 /unset irc.msgbuffer.whois
 ----
 
-* display invitation on current buffer, only for "freenode" server:
+* Display invitation on current buffer, only for "freenode" server:
 
 ----
 /set irc.msgbuffer.freenode.invite current
 ----
 
-* display message "303" (ison) on WeeChat "core" buffer:
+* Display message "303" (ison) on WeeChat "core" buffer:
 
 ----
 /set irc.msgbuffer.303 weechat
@@ -2665,25 +2665,25 @@ but not join/part/quit.
 
 Some examples:
 
-* set level 3 for IRC channel #weechat:
+* Set level 3 for IRC channel #weechat:
 
 ----
 /set logger.level.irc.freenode.#weechat 3
 ----
 
-* set level 3 for freenode server buffer:
+* Set level 3 for freenode server buffer:
 
 ----
 /set logger.level.irc.server.freenode 3
 ----
 
-* set level 3 for all channels on server freenode:
+* Set level 3 for all channels on server freenode:
 
 ----
 /set logger.level.irc.freenode 3
 ----
 
-* set level 2 for all IRC buffers:
+* Set level 2 for all IRC buffers:
 
 ----
 /set logger.level.irc 2

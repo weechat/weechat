@@ -55,19 +55,19 @@ ces lettres.
 Par exemple :
 
 
-* afficher toutes les options (WeeChat et extensions) :
+* Afficher toutes les options (WeeChat et extensions) :
 
 ----
 /set
 ----
 
-* afficher les options WeeChat :
+* Afficher les options WeeChat :
 
 ----
 /set weechat.*
 ----
 
-* afficher les options de l'extension IRC :
+* Afficher les options de l'extension IRC :
 
 ----
 /set irc.*

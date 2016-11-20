@@ -55,9 +55,9 @@ GIT.
 
 Vous pouvez décider de le construire manuellement (méthode recommandée) :
 
-* la version GIT peut être construite et installée en parallèle de la version
+* La version GIT peut être construite et installée en parallèle de la version
   stable,
-* vous n'avez pas besoin d'accès root ni de sacrifier votre version stable de
+* Vous n'avez pas besoin d'accès root ni de sacrifier votre version stable de
   WeeChat.
 
 [[get_sources]]

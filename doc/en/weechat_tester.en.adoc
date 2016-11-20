@@ -49,8 +49,8 @@ Fresh code (with latest bugs and features) is stored in a GIT repository.
 
 You may decide to build it manually (recommended way):
 
-* the GIT version can be built and installed in parallel to the stable version,
-* you don't need root access, and you don't need to sacrifice the stable
+* The GIT version can be built and installed in parallel to the stable version.
+* You don't need root access, and you don't need to sacrifice the stable
   version of WeeChat.
 
 [[get_sources]]

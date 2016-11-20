@@ -340,10 +340,10 @@ Suivez alors les instructions du paquet source (voir
 Si vous avez eu des plantages, ou si vous souhaitez rapporter tout plantage
 futur de WeeChat, vous devez :
 
-* compiler avec les infos de debug (ou installer un paquet binaire avec les
-  infos de debug)
-* activer les fichiers _core_ sur votre système
-* installer gdb
+* Compiler avec les infos de debug (ou installer un paquet binaire avec les
+  infos de debug).
+* Activer les fichiers _core_ sur votre système.
+* Installer gdb.
 
 [[debug_info]]
 ==== Infos de debug
@@ -993,12 +993,12 @@ un clic facile sur les URLs longs et la sélection de texte (avec la souris).
 
 L'affichage dépouillé a les caractéristiques suivantes :
 
-* il n'affiche que le contenu du tampon courant : pas de découpage de fenêtres
-  ni de barre (pas de titre, liste de pseudos, statut, ligne de commande, ...)
-* le support souris de WeeChat est désactivé (s'il avait été activé) : vous
+* Il n'affiche que le contenu du tampon courant : pas de découpage de fenêtres
+  ni de barre (pas de titre, liste de pseudos, statut, ligne de commande, ...).
+* Le support souris de WeeChat est désactivé (s'il avait été activé) : vous
   pouvez utiliser votre souris comme vous le faites dans le terminal pour
-  cliquer sur les URLs et sélectionner du texte
-* ncurses n'est pas utilisé, par conséquent les URLs ne sont pas coupés en fin
+  cliquer sur les URLs et sélectionner du texte.
+* Ncurses n'est pas utilisé, par conséquent les URLs ne sont pas coupés en fin
   de ligne.
 
 La touche par défaut pour activer l'affichage dépouillé est kbd:[Alt+l], et la
@@ -2155,25 +2155,25 @@ des suivantes :
 
 Quelques exemples :
 
-* changement du pseudo sur freenode en "autrepseudo" :
+* Changement du pseudo sur freenode en "autrepseudo" :
 
 ----
 $ echo 'irc.server.freenode */nick autrepseudo' >~/.weechat/weechat_fifo_12345
 ----
 
-* affichage de texte sur le canal IRC #weechat :
+* Affichage de texte sur le canal IRC #weechat :
 
 ----
 $ echo 'irc.freenode.#weechat *bonjour !' >~/.weechat/weechat_fifo_12345
 ----
 
-* affichage de texte sur le tampon courant :
+* Affichage de texte sur le tampon courant :
 
 ----
 $ echo '*bonjour !' >~/.weechat/weechat_fifo_12345
 ----
 
-* envoyer deux commandes pour décharger/recharger les scripts Python (vous devez
+* Envoyer deux commandes pour décharger/recharger les scripts Python (vous devez
   les séparer par "\n") :
 
 ----
@@ -2668,26 +2668,26 @@ serveur IRC (par exemple: `freenode.whois`).
 
 Quelques exemples :
 
-* afficher le résultat de `/whois` sur le tampon privé :
+* Afficher le résultat de `/whois` sur le tampon privé :
 
 ----
 /set irc.msgbuffer.whois private
 ----
 
-* restaurer le tampon par défaut pour whois (tampon du serveur) :
+* Restaurer le tampon par défaut pour whois (tampon du serveur) :
 
 ----
 /unset irc.msgbuffer.whois
 ----
 
-* afficher une invitation sur le tampon courant, pour le serveur "freenode"
+* Afficher une invitation sur le tampon courant, pour le serveur "freenode"
 seulement :
 
 ----
 /set irc.msgbuffer.freenode.invite current
 ----
 
-* afficher le message "303" (ison) sur le tampon "core" WeeChat :
+* Afficher le message "303" (ison) sur le tampon "core" WeeChat :
 
 ----
 /set irc.msgbuffer.303 weechat
@@ -2746,25 +2746,25 @@ tous les messages sauf les join/part/quit.
 
 Quelques exemples :
 
-* affecter le niveau 3 pour le canal IRC #weechat :
+* Affecter le niveau 3 pour le canal IRC #weechat :
 
 ----
 /set logger.level.irc.freenode.#weechat 3
 ----
 
-* affecter le niveau 3 pour le tampon serveur freenode :
+* Affecter le niveau 3 pour le tampon serveur freenode :
 
 ----
 /set logger.level.irc.server.freenode 3
 ----
 
-* affecter le niveau 3 pour tous les canaux sur le serveur freenode :
+* Affecter le niveau 3 pour tous les canaux sur le serveur freenode :
 
 ----
 /set logger.level.irc.freenode 3
 ----
 
-* affecter le niveau 2 pour tous les tampons IRC :
+* Affecter le niveau 2 pour tous les tampons IRC :
 
 ----
 /set logger.level.irc 2

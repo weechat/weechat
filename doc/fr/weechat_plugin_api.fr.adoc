@@ -14461,11 +14461,11 @@ Créer un "hdata".
 Le "hdata" est un moyen rapide de lire des données de WeeChat ou des extensions.
 Il est similaire à l'infolist, mais il y a quelques différences :
 
-* il est plus rapide et utilise moins de mémoire : accès direct aux données sans
-  duplication
-* il peut contenir des informations différentes de l'infolist : il contient
+* Il est plus rapide et utilise moins de mémoire : accès direct aux données sans
+  duplication.
+* Il peut contenir des informations différentes de l'infolist : il contient
   seulement les données brutes des structures (l'infolist peut ajouter des
-  données supplémentaires pour plus de commodité)
+  données supplémentaires pour plus de commodité).
 ====
 
 Prototype :

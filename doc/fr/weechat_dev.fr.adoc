@@ -1012,9 +1012,9 @@ Où _component_ est :
 
 Quelques règles à suivre :
 
-* utilisez seulement l'anglais
-* utilisez des verbes à l'infinitif
-* si le commit est relatif au tracker, écrivez-le entre parenthèses après le
+* Utilisez seulement l'anglais.
+* Utilisez des verbes à l'infinitif.
+* Si le commit est relatif au tracker, écrivez-le entre parenthèses après le
   message, avec ce format :
 ** GitHub : closes #123
 ** Savannah : bug #12345, task #12345, patch #12345

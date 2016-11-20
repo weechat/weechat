@@ -45,19 +45,19 @@ l'API est la même pour les autres langages.
 
 ==== Python
 
-* Vous devez utiliser `import weechat`
+* Vous devez utiliser `import weechat`.
 * Les fonctions `+print*+` se nomment `+prnt*+` en python (car _print_ est un mot
-  clé réservé)
-* Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`
+  clé réservé).
+* Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`.
 
 ==== Perl
 
-* Les fonctions sont appelées par `weechat::xxx(arg1, arg2, ...);`
+* Les fonctions sont appelées par `weechat::xxx(arg1, arg2, ...);`.
 
 ==== Ruby
 
-* Vous devez définir _weechat_init_ et appeler _register_ dedans
-* Les fonctions sont appelées par `Weechat.xxx(arg1, arg2, ...)`
+* Vous devez définir _weechat_init_ et appeler _register_ dedans.
+* Les fonctions sont appelées par `Weechat.xxx(arg1, arg2, ...)`.
 * En raison d'une limitation de Ruby (15 paramètres maximum par fonction), la
   fonction `Weechat.config_new_option` reçoit les "callbacks" dans un tableau de
   6 chaînes de caractères (3 callbacks + 3 chaînes de données), donc un appel à
@@ -71,15 +71,15 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 
 ==== Lua
 
-* Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`
+* Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`.
 
 ==== Tcl
 
-* Les fonctions sont appelées par `weechat::xxx arg1 arg2 ...`
+* Les fonctions sont appelées par `weechat::xxx arg1 arg2 ...`.
 
 ==== Guile (scheme)
 
-* Les fonctions sont appelées par `(weechat:xxx arg1 arg2 ...)`
+* Les fonctions sont appelées par `(weechat:xxx arg1 arg2 ...)`.
 * Les fonctions suivantes prennent une liste de paramètres en entrée (au lieu
   de plusieurs paramètres pour les autres fonctions), car le nombre de
   paramètres excède la limite de Guile :
@@ -89,7 +89,7 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 
 ==== Javascript
 
-* Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...);`
+* Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...);`.
 
 [[register_function]]
 === Fonction register

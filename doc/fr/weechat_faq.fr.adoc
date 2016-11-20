@@ -89,25 +89,25 @@ rapide : https://weechat.org/doc
 C'est un problème courant, merci de lire attentivement et vérifier *TOUS* les
 points ci-dessous :
 
-* vérifiez que weechat est lié avec libncursesw (attention : nécessaire
+* Vérifiez que weechat est lié avec libncursesw (attention : nécessaire
   sur beaucoup de distributions, mais pas toutes) :
-  `ldd /chemin/vers/weechat`
-* vérifiez que l'extension "charset" est chargée avec la commande `/plugin`
+  `ldd /chemin/vers/weechat`.
+* Vérifiez que l'extension "charset" est chargée avec la commande `/plugin`
   (s'il ne l'est pas, vous devez peut-être installer le paquet
-  "weechat-plugins")
-* vérifiez la sortie de la commande `/charset` (sur le tampon "core"), vous
+  "weechat-plugins").
+* Vérifiez la sortie de la commande `/charset` (sur le tampon "core"), vous
   devriez voir _ISO-XXXXXX_ ou _UTF-8_ pour le charset du terminal. Si vous
   voyez _ANSI_X3.4-1968_ ou d'autres valeurs, votre locale est probablement
   erronée (corrigez votre $LANG).
-* affectez la valeur pour le décodage global, par exemple :
-  `/set charset.default.decode "ISO-8859-15"`
-* si vous utilisez la locale UTF-8 :
-** vérifiez que votre terminal est compatible UTF-8
-   (un terminal conseillé pour l'UTF-8 est rxvt-unicode)
-** si vous utilisez screen, vérifiez qu'il est lancé en mode UTF-8
-   ("`defutf8 on`" dans ~/.screenrc ou `screen -U` pour lancer screen)
-* vérifiez que l'option _weechat.look.eat_newline_glitch_ est désactivée (cette
-  option peut causer des problèmes d'affichage)
+* Affectez la valeur pour le décodage global, par exemple :
+  `/set charset.default.decode "ISO-8859-15"`.
+* Si vous utilisez la locale UTF-8 :
+** Vérifiez que votre terminal est compatible UTF-8
+   (un terminal conseillé pour l'UTF-8 est rxvt-unicode).
+** Si vous utilisez screen, vérifiez qu'il est lancé en mode UTF-8
+   ("`defutf8 on`" dans ~/.screenrc ou `screen -U` pour lancer screen).
+* Vérifiez que l'option _weechat.look.eat_newline_glitch_ est désactivée (cette
+  option peut causer des problèmes d'affichage).
 
 [NOTE]
 La locale UTF-8 est recommandée pour WeeChat. Si vous utilisez ISO ou une autre
@@ -135,11 +135,11 @@ sortie de `echo $TERM` dans votre terminal).
 
 Selon la façon de lancer WeeChat, vous devriez avoir :
 
-* si WeeChat tourne en local ou sur une machine distante sans screen ni tmux :
+* Si WeeChat tourne en local ou sur une machine distante sans screen ni tmux :
   cela dépend du terminal utilisé : _xterm_, _xterm-256color_, _rxvt-unicode_,
   _rxvt-256color_, etc...
-* si WeeChat tourne sous screen, vous devriez avoir _screen_ ou _screen-256color_,
-* si WeeChat tourne sous tmux, vous devriez avoir _tmux_, _tmux-256color_,
+* Si WeeChat tourne sous screen, vous devriez avoir _screen_ ou _screen-256color_.
+* Si WeeChat tourne sous tmux, vous devriez avoir _tmux_, _tmux-256color_,
   _screen_ ou _screen-256color_.
 
 Si besoin, corrigez la variable TERM : `export TERM="xxx"`.
@@ -470,11 +470,11 @@ Si vous utilisez certains terminaux comme xterm ou uxterm, quelques touches
 meta ne fonctionnent pas par défaut. Vous pouvez ajouter cette ligne dans le
 fichier _~/.Xresources_ :
 
-* pour xterm :
+* Pour xterm :
 ----
 XTerm*metaSendsEscape: true
 ----
-* pour uxterm :
+* Pour uxterm :
 ----
 UXTerm*metaSendsEscape: true
 ----
@@ -845,36 +845,36 @@ Vous pouvez, mais ce n'est *PAS* recommandé.
 
 La commande `/set` in WeeChat est recommandée :
 
-* vous pouvez compléter la valeur avec la touche Tab
-* la valeur est vérifiée, un message est affichée en cas d'erreur
-* la valeur est utilisée immédiatement, et vous n'avez pas besoin de redémarrer
-  quoi que ce soit
+* Vous pouvez compléter la valeur avec la touche Tab.
+* La valeur est vérifiée, un message est affichée en cas d'erreur.
+* La valeur est utilisée immédiatement, et vous n'avez pas besoin de redémarrer
+  quoi que ce soit.
 
 Si vous souhaitez quand même éditer les fichiers à la main, vous devez faire
 attention :
 
-* si vous mettez une valeur invalide pour une option, WeeChat affichera une
+* Si vous mettez une valeur invalide pour une option, WeeChat affichera une
   erreur au chargement et ne tiendra pas compte de la valeur (la valeur par
-  défaut pour l'option sera utilisée)
-* si WeeChat tourne, vous devrez utiliser la commande `/reload`, et si des
-  options ont été changées mais non sauvées avec `/save`, vous les perdrez
+  défaut pour l'option sera utilisée).
+* Si WeeChat tourne, vous devrez utiliser la commande `/reload`, et si des
+  options ont été changées mais non sauvées avec `/save`, vous les perdrez.
 
 [[memory_usage]]
 === Comment configurer WeeChat pour consommer moins de mémoire ?
 
 Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
 
-* utiliser la dernière version stable (elle est supposée avoir moins de fuites
-  de mémoire que les versions plus anciennes)
-* ne pas charger les extensions si vous ne les utilisez pas, par exemple :
+* Utiliser la dernière version stable (elle est supposée avoir moins de fuites
+  de mémoire que les versions plus anciennes).
+* Ne pas charger les extensions si vous ne les utilisez pas, par exemple :
   aspell, fifo, logger, perl, python, ruby, lua, tcl, guile, javascript,
-  xfer (utilisé pour les DCC)
-* charger uniquement les scripts dont vous avez vraiment besoin
-* ne pas charger les certificats si SSL n'est *PAS* utilisé : affecter une
-  chaîne vide pour l'option _weechat.network.gnutls_ca_file_
-* réduire la valeur de l'option _weechat.history.max_buffer_lines_number_ ou
-  affecter une valeur à l'option _weechat.history.max_buffer_lines_minutes_
-* réduire la valeur de l'option _weechat.history.max_commands_
+  xfer (utilisé pour les DCC).
+* Charger uniquement les scripts dont vous avez vraiment besoin.
+* Ne pas charger les certificats si SSL n'est *PAS* utilisé : affecter une
+  chaîne vide pour l'option _weechat.network.gnutls_ca_file_.
+* Réduire la valeur de l'option _weechat.history.max_buffer_lines_number_ ou
+  affecter une valeur à l'option _weechat.history.max_buffer_lines_minutes_.
+* Réduire la valeur de l'option _weechat.history.max_commands_.
 
 [[cpu_usage]]
 === Comment configurer WeeChat pour moins utiliser le processeur ?
@@ -882,13 +882,13 @@ Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
 Vous pouvez suivre les mêmes astuces que pour la <<memory_usage,mémoire>>, et
 celles-ci :
 
-* cacher la barre "nicklist" : `/bar hide nicklist`
-* supprimer l'affichage des secondes dans l'heure de la barre de statut :
-  `/set weechat.look.item_time_format "%H:%M"` (ceci est la valeur par défaut)
-* désactiver la vérification en temps réel des mots mal orthographiés dans la
-  ligne de commande (si vous l'avez activée) : `/set aspell.check.real_time off`
-* définir la variable _TZ_ (par exemple : `export TZ="Europe/Paris"`), pour
-  éviter un accès fréquent au fichier _/etc/localtime_
+* Cacher la barre "nicklist" : `/bar hide nicklist`.
+* Supprimer l'affichage des secondes dans l'heure de la barre de statut :
+  `/set weechat.look.item_time_format "%H:%M"` (ceci est la valeur par défaut).
+* Désactiver la vérification en temps réel des mots mal orthographiés dans la
+  ligne de commande (si vous l'avez activée) : `/set aspell.check.real_time off`.
+* Définir la variable _TZ_ (par exemple : `export TZ="Europe/Paris"`), pour
+  éviter un accès fréquent au fichier _/etc/localtime_.
 
 [[security]]
 === Je suis paranoïaque sur la sécurité, quels paramètres puis-je changer pour être encore plus sûr ?

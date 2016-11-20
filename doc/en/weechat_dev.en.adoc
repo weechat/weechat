@@ -995,9 +995,9 @@ Where _component_ is one of following:
 
 Some rules to follow:
 
-* use only English
-* use infinitive form of verb
-* if commit is related to something in tracker, write it in parenthesis after
+* Use only English.
+* Use infinitive form of verb.
+* If commit is related to something in tracker, write it in parenthesis after
   the message, with this format:
 ** GitHub: closes #123
 ** Savannah: bug #12345, task #12345, patch #12345

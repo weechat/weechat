@@ -51,19 +51,19 @@ You can use `/set` option with partial name and wildcard "*" at the beginning
 or end to display all options containing letters.
 For example:
 
-* display all options (WeeChat and plugins):
+* Display all options (WeeChat and plugins):
 
 ----
 /set
 ----
 
-* display WeeChat options:
+* Display WeeChat options:
 
 ----
 /set weechat.*
 ----
 
-* display IRC plugin options:
+* Display IRC plugin options:
 
 ----
 /set irc.*

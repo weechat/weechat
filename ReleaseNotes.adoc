@@ -919,9 +919,9 @@ Options _weechat.look.prefix_align_more_ and
 _weechat.look.prefix_buffer_align_more_ have been converted from type boolean
 to string:
 
-* if the value was on (default), new value is "+" and you can now customize
-  this char
-* if the value was off, you have to set " " (string with one space)
+* If the value was on (default), new value is "+" and you can now customize
+  this char.
+* If the value was off, you have to set " " (string with one space).
 
 [[v0.3.8_paste_detection]]
 === Paste detection
@@ -1056,12 +1056,12 @@ to see differences between your current keys and WeeChat default keys.
 
 If you are using `/upgrade` from a previous release:
 
-* some nick prefixes can be wrong, so it is recommended to do `/allchan names`
-* nick colors are defined with a new option _weechat.color.chat_nick_colors_,
+* Some nick prefixes can be wrong, so it is recommended to do `/allchan names`.
+* Nick colors are defined with a new option _weechat.color.chat_nick_colors_,
   therefore old options _weechat.color.chat_nick_color1..10_ will be lost when
-  upgrading
-* nick colors in messages displayed will be wrong if you changed some nick
-  colors (old default colors will be used)
+  upgrading.
+* Nick colors in messages displayed will be wrong if you changed some nick
+  colors (old default colors will be used).
 
 [[v0.3.4_options]]
 === Options
@@ -1153,15 +1153,15 @@ plugin API and is not compatible with previous versions.
 
 Major differences:
 
-* it is *NOT POSSIBLE* to use command `/upgrade` from a version 0.2.x to 0.3.x;
+* It is *NOT POSSIBLE* to use command `/upgrade` from a version 0.2.x to 0.3.x;
   you have to quit your old WeeChat, then run new version.
-* new configuration files (`*.conf`) are not compatible with old files
+* New configuration files (`*.conf`) are not compatible with old files
   (`*.rc`).
-* name of options is similar to old versions, but there is now one
+* Name of options is similar to old versions, but there is now one
   configuration file by plugin, and one file for WeeChat core; there is
   *no automatic conversion* for your old options to new configuration files,
   so you'll have to setup again your IRC servers and all other options.
-* plugin API has been rewritten and is not compatible with previous versions;
+* Plugin API has been rewritten and is not compatible with previous versions;
   accordingly, scripts and plugins must have been designed for version 0.3.x to
   be loaded into WeeChat.
 
