@@ -240,34 +240,36 @@ um die Ausrichtung für Nicks zu entfernen:
 /set weechat.look.prefix_align none
 ----
 
-// TRANSLATION MISSING
 [[status_hotlist]]
-=== What does mean the [H: 3(1,8), 2(4)] in status bar?
+=== Was bedeutet die Anzeige [H: 3(1,8), 2(4)] in der Status-Bar?
 
-This is called the "hotlist", a list of buffers with the number of unread
-messages, by order: highlights, private messages, messages, other messages
-(like join/part). +
-The number of "unread message" is the number of new messages displayed/received
-since you visited the buffer.
+Dabei handelt es sich um die sogenannte "hotlist", eine Auflistung der
+Buffer mit der Anzahl der ungelesenen Nachrichten. Die Reihenfolge ist:
+highlights, private Nachrichten, Nachrichten, Nachrichten mit niedriger
+Priorität (z.B. join/part). +
+Die Anzahl der "ungelesen Nachrichten" ist die Anzahl der neuen Nachrichten
+die man empfangen hat bzw. angezeigt werden seitdem man den Buffer
+das letzte mal betreten hat.
 
-In the example `[H: 3(1,8), 2(4)]`, there are:
+Im Beispiel `[H: 3(1,8), 2(4)]`, handelt es sich um:
 
-* one highlight and 8 unread messages on buffer #3,
-* 4 unread messages on buffer #2.
+* eine highlight Nachricht und 8 ungelesene Nachrichten im Buffer #3
+* 4 ungelesene Nachrichten im Buffer #2.
 
-The color of the buffer/counter depends on the type of message, default colors
-are:
+Die Farbe des Buffers/Zählers hängt ab um welche Art von Nachrichten es
+sich handelt. Standardfarben:
 
 * highlight: `lightmagenta` / `magenta`
-* private message: `lightgreen` / `green`
-* message: `yellow` / `brown`
-* other message: `default` / `default` (color of text in terminal)
+* private Nachrichten: `lightgreen` / `green`
+* Nachrichten: `yellow` / `brown`
+* Nachrichten mit niedriger Priorität: `default` / `default` (Textfarbe des Terminal)
 
-These colors can be changed with the options __weechat.color.status_data_*__
-(buffers) and __weechat.color.status_count_*__ (counters). +
-Other hotlist options can be changed with the options __weechat.look.hotlist_*__.
+Diese Farben können mit den Optionen __weechat.color.status_data_*__
+(Buffers) und __weechat.color.status_count_*__ (Zähler) angepasst werden. +
+Weitere hotlist Eigenschaften können den Optionen  __weechat.look.hotlist_*__
+verändert werden.
 
-See user's guide for more info about the hotlist (screen layout).
+siehe Benutzeranleitung für weitere Informationen bezüglich der Hotlist (screen layout).
 
 [[input_bar_size]]
 === Wie kann man eine mehrzeilige Eingabezeile einstellen?

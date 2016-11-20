@@ -476,68 +476,67 @@ Die Einstellungen für WeeChat können an die eigenen Bedürfnisse angepasst wer
 Veränderungen an der Konfigurationsdatei mit dem internen Befehl `/set` durchführt werden. (siehe
 <<weechat_commands,WeeChat Befehle>>).
 
-// TRANSLATION MISSING
 [[files_and_directories]]
-=== Files and directories
+=== Dateien und Verzeichnisse
 
-WeeChat writes configuration files and other data in directory `~/.weechat`
-by default.
+WeeChat schreibt standardmäßig seine Konfiguration und andere
+Daten in folgendes Verzeichnis:  `~/.weechat`
 
-The directories are:
+Verzeichnisse:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| Path/file         | Description
-| ~/.weechat/       | WeeChat home directory (can be changed, see <<running_weechat,Running WeeChat>>)
-|    logs/          | Log files (one file per buffer)
-|    python/        | Python scripts
-|       autoload/   | Python scripts auto-loaded on startup ^(1)^
-|    perl/          | Perl scripts
-|       autoload/   | Perl scripts auto-loaded on startup ^(1)^
-|    ruby/          | Ruby scripts
-|       autoload/   | Ruby scripts auto-loaded on startup ^(1)^
-|    lua/           | Lua scripts
-|       autoload/   | Lua scripts auto-loaded on startup ^(1)^
-|    tcl/           | Tcl scripts
-|       autoload/   | Tcl scripts auto-loaded on startup ^(1)^
-|    guile/         | Guile scripts
-|       autoload/   | Guile scripts auto-loaded on startup ^(1)^
-|    javascript/    | Javascript scripts
-|       autoload/   | Javascript scripts auto-loaded on startup ^(1)^
+| Pfad/Datei        | Beschreibung
+| ~/.weechat/       | WeeChat Heimatverzeichnis (kann angepasst werden, siehe <<running_weechat,Running WeeChat>>)
+|    logs/          | Logdateien (eine Datei pro Buffer)
+|    python/        | Python-Skripten
+|       autoload/   | Python-Skripten die beim Start automatisch ausgeführt werden ^(1)^
+|    perl/          | Perl-Skripten
+|       autoload/   | Perl-Skripten die beim Start automatisch ausgeführt werden ^(1)^
+|    ruby/          | Ruby-Skripten
+|       autoload/   | Ruby-Skripten die beim Start automatisch ausgeführt werden ^(1)^
+|    lua/           | Lua-Skripten
+|       autoload/   | Lua-Skripten die beim Start automatisch ausgeführt werden ^(1)^
+|    tcl/           | Tcl-Skripten
+|       autoload/   | Tcl-Skripten die beim Start automatisch ausgeführt werden ^(1)^
+|    guile/         | Guile-Skripten
+|       autoload/   | Guile-Skripten die beim Start automatisch ausgeführt werden ^(1)^
+|    javascript/    | Javascript-Skripten
+|       autoload/   | Javascript-Skripten die beim Start automatisch ausgeführt werden ^(1)^
 |===
 
 [NOTE]
-^(1)^ This directory often contains only symbolic links to scripts in parent directory.
+^(1)^ Das Verzeichnis besteht meistens aus symbolischen Links welche auf das eigentliche Skript zeigen.
 
-The files in home directory are:
+Folgende Dateien findet man im Heimatverzeichnis:
 
 [width="100%",cols="1m,3,6",options="header"]
 |===
-| File         | Description                             | Sensitive data
-| weechat.conf | Main WeeChat configuration file         | Possible (example: list of channels in a saved buffers layout)
-| sec.conf     | Configuration file with secured data    | *Yes, highly sensitive*: this file must never be shared with anyone
-| plugins.conf | Plugins configuration file              | Possible, depends on plugins/scripts
-| alias.conf   | Configuration file for _alias_ plugin   | Possible, depends on aliases
-| aspell.conf  | Configuration file for _aspell_ plugin  | No
-| charset.conf | Configuration file for _charset_ plugin | No
-| exec.conf    | Configuration file for _exec_ plugin    | No
-| irc.conf     | Configuration file for _irc_ plugin     | *Yes*: it can contain passwords for servers, nickserv and channels (if not stored in `sec.conf`)
-| logger.conf  | Configuration file for _logger_ plugin  | No
-| relay.conf   | Configuration file for _relay_ plugin   | No
-| script.conf  | Configuration file for _script_ plugin  | No
-| trigger.conf | Configuration file for _trigger_ plugin | Possible, depends on triggers
-| xfer.conf    | Configuration file for _xfer_ plugin    | No
-| weechat.log  | WeeChat log file                        | No
+| Datei        | Beschreibung                            | sensible Daten
+| weechat.conf | Hauptkonfiguration von WeeChat         | möglich (Beispiel: Auflistung der Channels im Buffers-Layout)
+| sec.conf     | Konfigurationsdatei mit sensiblen Daten | *Ja, hoch sensibel*: diese Datei sollte niemals weitergegeben werden
+| plugins.conf | Konfigurationsdatei für Erweiterungen   | möglich, hängt von der Erweiterung/Skript ab
+| alias.conf   | Konfigurationsdatei: Alias-Erweiterung  | möglich, hängt von den Aliases ab
+| aspell.conf  | Konfiguration für _aspell_-Erweiterung  | Nein
+| charset.conf | Konfiguration für _charset_-Erweiterung | Nein
+| exec.conf    | Konfiguration für _exec_-Erweiterung    | Nein
+| irc.conf     | Konfiguration für _irc_-Erweiterung     | *Ja*: Datei kann Passwörter für Server, Nickserv oder Channels enthalten (sofern diese nicht in `sec.conf` gesichert sind)
+| logger.conf  | Konfiguration für _logger_-Erweiterung  | Nein
+| relay.conf   | Konfiguration für _relay_-Erweiterung   | Nein
+| script.conf  | Konfiguration für _script_-Erweiterung  | Nein
+| trigger.conf | Konfiguration für _trigger_-Erweiterung | möglich, hängt von den Triggern ab
+| xfer.conf    | Konfiguration für _xfer_-Erweiterung | Nein
+| weechat.log  | WeeChat Logdateien                      | Nein
 |===
 
 [IMPORTANT]
-It is *not recommended* to edit configuration files by hand because WeeChat
-may write them at any time (for example on <<command_weechat_quit,/quit>>)
-and after any change you must run the command <<command_weechat_reload,/reload>>
-(with the risk of loosing other changes that were not yet saved with
-<<command_weechat_save,/save>>). +
-You can use the command <<command_weechat_set,/set>>, which checks the value
-and applies immediately the changes.
+Es wird *nicht empfohlen* die Konfigurationsdateien manuell zu editieren, da WeeChat
+diese Dateien zu jeder Zeit überschreiben kann (zum Beispiel:  <<command_weechat_quit,/quit>>)
+und man eine veränderte Datei mit dem Befehl <<command_weechat_reload,/reload>> neu
+laden muss (mit dem Risiko von Datenverlust da Daten kommentarlos überschrieben werden,
+bevor man diese ggf. gesichert hat <<command_weechat_save,/save>>). +
+Man sollte immer den <<command_weechat_set,/set>> Befehl nutzen, da der Befehl die
+Eingabe prüft und Änderungen sofort wirksam werden.
 
 [[screen_layout]]
 === Screen layout
