@@ -843,10 +843,10 @@ Les scripts ne sont pas compatibles avec d'autres clients IRC.
 
 Vous pouvez, mais ce n'est *PAS* recommandé.
 
-La commande `/set` in WeeChat est recommandée :
+La commande `/set` dans WeeChat est recommandée :
 
 * Vous pouvez compléter la valeur avec la touche Tab.
-* La valeur est vérifiée, un message est affichée en cas d'erreur.
+* La valeur est vérifiée, un message est affiché en cas d'erreur.
 * La valeur est utilisée immédiatement, et vous n'avez pas besoin de redémarrer
   quoi que ce soit.
 
