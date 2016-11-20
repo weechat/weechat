@@ -88,9 +88,15 @@ Todas las opciones se salvarán de manera automática cuando cierre
 WeeChat o usando el comando `/save` para forzar la forzar a WeeChat a
 guardar todos los archivos de configuración.
 
-Puede editar los ficheros de configuración (*.conf) directamente y
-después recargarlos con el comando `/reload` si no desea usar el
-comando `/set`.
+// TRANSLATION MISSING
+[IMPORTANT]
+It is *not recommended* to edit configuration files by hand because WeeChat
+may write them at any time (for example on <<command_weechat_quit,/quit>>)
+and after any change you must run the command <<command_weechat_reload,/reload>>
+(with the risk of loosing other changes that were not yet saved with
+<<command_weechat_save,/save>>). +
+You can use the command <<command_weechat_set,/set>>, which checks the value
+and applies immediately the changes.
 
 [[core_vs_plugins]]
 == Núcleo vs Plugins

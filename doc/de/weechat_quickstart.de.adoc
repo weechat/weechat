@@ -90,9 +90,14 @@ Du kannst dir mit dem Befehl `/help` eine Hilfe für Optionen anzeigen lassen, z
 Beim Beenden von WeeChat werden alle Einstellungen gespeichert (mittels des
 Befehls `/save` kann das Sichern der Optionen manuell durchgeführt werden).
 
-Konfigurationsdateien (*.conf) können auch per Hand editiert und mit dem Befehl
-`/reload` neu eingelesen werden (falls man z.B. den `/set` Befehl nicht
-verwenden möchte).
+[IMPORTANT]
+Es wird *nicht empfohlen* die Konfigurationsdateien manuell zu editieren, da WeeChat
+diese Dateien zu jeder Zeit überschreiben kann (zum Beispiel:  <<command_weechat_quit,/quit>>)
+und man eine veränderte Datei mit dem Befehl <<command_weechat_reload,/reload>> neu
+laden muss (mit dem Risiko von Datenverlust da Daten kommentarlos überschrieben werden,
+bevor man diese ggf. gesichert hat <<command_weechat_save,/save>>). +
+Man sollte immer den <<command_weechat_set,/set>> Befehl nutzen, da der Befehl die
+Eingabe prüft und Änderungen sofort wirksam werden.
 
 [[core_vs_plugins]]
 == Kern (Core) vs Erweiterungen
