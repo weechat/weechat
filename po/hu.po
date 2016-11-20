@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-09 17:48+0100\n"
+"POT-Creation-Date: 2016-11-20 15:55+0100\n"
 "PO-Revision-Date: 2016-09-03 08:23+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -221,10 +221,6 @@ msgstr ""
 msgid ""
 "%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
 "correct"
-msgstr ""
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
 msgstr ""
 
 #, fuzzy
@@ -3901,6 +3897,10 @@ msgid "WeeChat colors (in use: %d, left: %d):"
 msgstr ""
 
 msgid "Terminal lost, exiting WeeChat..."
+msgstr ""
+
+#, c-format
+msgid "Signal %s received, exiting WeeChat..."
 msgstr ""
 
 #, fuzzy
@@ -8246,6 +8246,9 @@ msgstr ""
 #, fuzzy
 msgid "WeeChat compilation date"
 msgstr "Konfigurációs fájl elmentve\n"
+
+msgid "WeeChat PID (process ID)"
+msgstr ""
 
 #, fuzzy
 msgid "directory separator"

@@ -58,6 +58,8 @@
 
 | weechat | nick_color_name | ニックネームの色名を取得 | ニックネーム
 
+| weechat | pid | WeeChat PID (process ID) | -
+
 | weechat | term_height | 端末の高さ | -
 
 | weechat | term_width | 端末の幅 | -

@@ -58,6 +58,8 @@
 
 | weechat | nick_color_name | zeigt Farbnamen des Nick | Nickname
 
+| weechat | pid | WeeChat PID (process ID) | -
+
 | weechat | term_height | Höhe des Terminals | -
 
 | weechat | term_width | Breite des Terminals | -

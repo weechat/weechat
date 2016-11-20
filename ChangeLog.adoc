@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v1.7]]
 == Version 1.7 (under dev)
 
+New features::
+
+  * api: add info "pid" (WeeChat PID) (issue #850)
+
 Improvements::
 
   * irc: change default value of option irc.network.lag_reconnect to 300 (issue #818)

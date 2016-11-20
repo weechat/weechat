@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-09 17:48+0100\n"
+"POT-Creation-Date: 2016-11-20 15:55+0100\n"
 "PO-Revision-Date: 2016-09-03 08:23+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -241,10 +241,6 @@ msgid ""
 msgstr ""
 "%sVarování: nemohu nastavit lokalizaci; zkontrolujte že $LANG a $LC_* "
 "promněné jsou nastaveny správně"
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
-msgstr "Obdržen signál %s, ukončuji WeeChat..."
 
 msgid "List of bars:"
 msgstr "Seznam polí:"
@@ -4327,6 +4323,10 @@ msgstr "Barvy Weechat (použité: %d, zbývá: %d):"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminál ztracen, ukončuji WeeChat..."
+
+#, c-format
+msgid "Signal %s received, exiting WeeChat..."
+msgstr "Obdržen signál %s, ukončuji WeeChat..."
 
 msgid "Mouse is enabled"
 msgstr "Myš je zapnuta"
@@ -8892,6 +8892,9 @@ msgstr ""
 
 msgid "WeeChat compilation date"
 msgstr "datum kompilace WeeChat"
+
+msgid "WeeChat PID (process ID)"
+msgstr ""
 
 msgid "directory separator"
 msgstr "dělič adresáře"

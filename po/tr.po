@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-09 17:48+0100\n"
+"POT-Creation-Date: 2016-11-20 15:55+0100\n"
 "PO-Revision-Date: 2016-05-18 07:43+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -191,10 +191,6 @@ msgstr ""
 msgid ""
 "%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
 "correct"
-msgstr ""
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
 msgstr ""
 
 msgid "List of bars:"
@@ -3534,6 +3530,10 @@ msgid "WeeChat colors (in use: %d, left: %d):"
 msgstr ""
 
 msgid "Terminal lost, exiting WeeChat..."
+msgstr ""
+
+#, c-format
+msgid "Signal %s received, exiting WeeChat..."
 msgstr ""
 
 msgid "Mouse is enabled"
@@ -7484,6 +7484,9 @@ msgid ""
 msgstr ""
 
 msgid "WeeChat compilation date"
+msgstr ""
+
+msgid "WeeChat PID (process ID)"
 msgstr ""
 
 msgid "directory separator"

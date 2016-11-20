@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-09 17:48+0100\n"
+"POT-Creation-Date: 2016-11-20 15:55+0100\n"
 "PO-Revision-Date: 2016-11-12 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -237,10 +237,6 @@ msgid ""
 msgstr ""
 "%s警告: このロケールは設定できません; $LANG および $LC_* 変数が正しいことを確"
 "認してください"
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
-msgstr "シグナル %s を受け取りました、WeeChat の終了中..."
 
 msgid "List of bars:"
 msgstr "バーのリスト:"
@@ -4779,6 +4775,10 @@ msgstr "WeeChat 色 (使用中: %d、残り: %d):"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "端末が見つかりません、WeeChat の終了中..."
+
+#, c-format
+msgid "Signal %s received, exiting WeeChat..."
+msgstr "シグナル %s を受け取りました、WeeChat の終了中..."
 
 msgid "Mouse is enabled"
 msgstr "マウスを有効化しました"
@@ -9592,6 +9592,9 @@ msgstr ""
 
 msgid "WeeChat compilation date"
 msgstr "WeeChat のコンパイル日"
+
+msgid "WeeChat PID (process ID)"
+msgstr ""
 
 msgid "directory separator"
 msgstr "ディレクトリ区切り"
