@@ -90,7 +90,7 @@ WeeChat немедленно применяет все изменения (ва�
 It is *not recommended* to edit configuration files by hand because WeeChat
 may write them at any time (for example on <<command_weechat_quit,/quit>>)
 and after any change you must run the command <<command_weechat_reload,/reload>>
-(with the risk of loosing other changes that were not yet saved with
+(with the risk of losing other changes that were not yet saved with
 <<command_weechat_save,/save>>). +
 You can use the command <<command_weechat_set,/set>>, which checks the value
 and applies immediately the changes.
