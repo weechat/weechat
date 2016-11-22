@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-20 15:55+0100\n"
+"POT-Creation-Date: 2016-11-22 15:12+0100\n"
 "PO-Revision-Date: 2016-09-03 08:24+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys1@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5763,8 +5763,8 @@ msgid "FIFO pipe for remote control"
 msgstr "kolejka FIFO dla zdalnego sterowania"
 
 #, c-format
-msgid "%s: removing old fifo pipe \"%s\""
-msgstr "%s: usuwam stary strumień fifo \"%s\""
+msgid "%s%s: not enough memory (%s)"
+msgstr "%s%s: za mało pamięci (%s)"
 
 #, c-format
 msgid "%s: pipe opened (file: %s)"
@@ -5813,6 +5813,7 @@ msgstr "konfiguracja wtyczki fifo"
 msgid "enable|disable|toggle"
 msgstr "enable|disable|toggle"
 
+#, fuzzy
 msgid ""
 " enable: enable FIFO pipe\n"
 "disable: disable FIFO pipe\n"
@@ -5820,15 +5821,14 @@ msgid ""
 "\n"
 "FIFO pipe is used as remote control of WeeChat: you can send commands or "
 "text to the FIFO pipe from your shell.\n"
-"By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx (\"xxx\" is the "
-"WeeChat PID).\n"
+"By default the FIFO pipe is in ~/.weechat/weechat_fifo\n"
 "\n"
 "The expected format is one of:\n"
 "  plugin.buffer *text or command here\n"
 "  *text or command here\n"
 "\n"
 "For example to change your freenode nick:\n"
-"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo\n"
 "\n"
 "Please read the user's guide for more info and examples.\n"
 "\n"
@@ -5855,6 +5855,20 @@ msgstr ""
 "\n"
 "Przykłady:\n"
 "  /fifo toggle"
+
+#, fuzzy
+msgid "enable FIFO pipe"
+msgstr "nazwa strumienia FIFO"
+
+#, fuzzy
+msgid ""
+"path for FIFO file; \"%h\" at beginning of string is replaced by WeeChat "
+"home (\"~/.weechat\" by default); WeeChat PID can be used in path with "
+"${info:pid} (note: content is evaluated, see /help eval)"
+msgstr ""
+"ścieżka, do której zapisywane będą pliki przychodzące; \"%h\" na początku "
+"ciągu zostanie zastąpione przez katalog domowy WeeChat (domyślnie \"~/."
+"weechat\")  (uwaga: zawartość jest przetwarzana, zobacz /help eval)"
 
 msgid "name of FIFO pipe"
 msgstr "nazwa strumienia FIFO"
@@ -9347,10 +9361,6 @@ msgstr ""
 "wartość to %d, spróbuj niższej wartości jak %d lub %d)"
 
 #, c-format
-msgid "%s%s: not enough memory (%s)"
-msgstr "%s%s: za mało pamięci (%s)"
-
-#, c-format
 msgid "%s%s: timeout"
 msgstr "%s%s: timeout"
 
@@ -12440,3 +12450,6 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid "%s: removing old fifo pipe \"%s\""
+#~ msgstr "%s: usuwam stary strumień fifo \"%s\""

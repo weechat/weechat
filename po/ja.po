@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-20 15:55+0100\n"
+"POT-Creation-Date: 2016-11-22 15:12+0100\n"
 "PO-Revision-Date: 2016-11-12 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5635,8 +5635,8 @@ msgid "FIFO pipe for remote control"
 msgstr "リモート操作用の FIFO パイプ"
 
 #, c-format
-msgid "%s: removing old fifo pipe \"%s\""
-msgstr "%s: 古い fifo パイプ \"%s\" の削除中"
+msgid "%s%s: not enough memory (%s)"
+msgstr "%s%s: メモリが足りません (%s)"
 
 #, c-format
 msgid "%s: pipe opened (file: %s)"
@@ -5684,6 +5684,7 @@ msgstr "fifo プラグイン設定"
 msgid "enable|disable|toggle"
 msgstr "enable|disable|toggle"
 
+#, fuzzy
 msgid ""
 " enable: enable FIFO pipe\n"
 "disable: disable FIFO pipe\n"
@@ -5691,15 +5692,14 @@ msgid ""
 "\n"
 "FIFO pipe is used as remote control of WeeChat: you can send commands or "
 "text to the FIFO pipe from your shell.\n"
-"By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx (\"xxx\" is the "
-"WeeChat PID).\n"
+"By default the FIFO pipe is in ~/.weechat/weechat_fifo\n"
 "\n"
 "The expected format is one of:\n"
 "  plugin.buffer *text or command here\n"
 "  *text or command here\n"
 "\n"
 "For example to change your freenode nick:\n"
-"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo\n"
 "\n"
 "Please read the user's guide for more info and examples.\n"
 "\n"
@@ -5726,6 +5726,20 @@ msgstr ""
 "\n"
 "例:\n"
 "  /fifo toggle"
+
+#, fuzzy
+msgid "enable FIFO pipe"
+msgstr "FIFO パイプの名前"
+
+#, fuzzy
+msgid ""
+"path for FIFO file; \"%h\" at beginning of string is replaced by WeeChat "
+"home (\"~/.weechat\" by default); WeeChat PID can be used in path with "
+"${info:pid} (note: content is evaluated, see /help eval)"
+msgstr ""
+"受信ファイルのパス: 文字列最初の \"%h\" は WeeChat ホーム に置換されます (デ"
+"フォルトでは \"~/.weechat\" に置換されます) (注意: 内容は評価されます、/help "
+"eval 参照)"
 
 msgid "name of FIFO pipe"
 msgstr "FIFO パイプの名前"
@@ -9166,10 +9180,6 @@ msgstr ""
 "在の値は %d、%d や %d などの低い値を試してください)"
 
 #, c-format
-msgid "%s%s: not enough memory (%s)"
-msgstr "%s%s: メモリが足りません (%s)"
-
-#, c-format
 msgid "%s%s: timeout"
 msgstr "%s%s: タイムアウト"
 
@@ -12212,3 +12222,6 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "%s: removing old fifo pipe \"%s\""
+#~ msgstr "%s: 古い fifo パイプ \"%s\" の削除中"

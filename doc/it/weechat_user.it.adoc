@@ -2187,10 +2187,10 @@ include::autogen/user/exec_commands.adoc[]
 === Plugin Fifo
 
 È possibile controllare da remoto WeeChat, inviando comandi o del testo ad una
-pipe FIFO (se l'opzione "plugins.var.fifo.fifo" è abilitata, e lo è per default).
+pipe FIFO (se l'opzione "fifo.file.enabled" è abilitata, e lo è per default).
 
-La pipe FIFO si trova in _~/.weechat/_ ed è chiamata _weechat_fifo_xxxx_
-(dove _xxxx_ è l'ID del processo (PID) dell'istanza di WeeChat in esecuzione).
+// TRANSLATION MISSING
+The FIFO pipe is located in _~/.weechat/_ and is called _weechat_fifo_ by default.
 
 La sintassi per i comandi/testo della pipe FIFO è una delle seguenti:
 
@@ -2201,51 +2201,51 @@ La sintassi per i comandi/testo della pipe FIFO è una delle seguenti:
 
 Alcuni esempi:
 
-* cambiare il nick sul server IRC freenode in "nuovonick":
+// TRANSLATION MISSING
+* Change nick on IRC server freenode to "newnick":
 
 ----
-$ echo 'irc.server.freenode */nick nuovonick' >~/.weechat/weechat_fifo_12345
+$ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
 ----
 
-* visualizazre del testo sul canale IRC #weechat:
+// TRANSLATION MISSING
+* Send a message on IRC #weechat channel:
 
 ----
-$ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo_12345
+$ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo
 ----
 
-* visualizzare del testo sul buffer attivo:
+// TRANSLATION MISSING
+* Send a message on current buffer:
 
 ----
-$ echo '*hello!' >~/.weechat/weechat_fifo_12345
+$ echo '*hello!' >~/.weechat/weechat_fifo
 ----
 
-* inviare due comandi per scaricare/caricare gli script Python (è necessario
+* Inviare due comandi per scaricare/caricare gli script Python (è necessario
   separarli con "\n"):
 
 ----
-$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo_12345
+$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 ----
 
-È possibile realizzare uno script per inviare un comando a tutte le istanze di
-WeeChat in esecuzione, per esempio:
+[[fifo_options]]
+==== Opzioni (fifo.conf)
 
-[source,shell]
-----
-#!/bin/sh
-if [ $# -eq 1 ]; then
-    for fifo in ~/.weechat/weechat_fifo_*
-    do
-        printf '%b\n' "$1" >"$fifo"
-    done
-fi
-----
+// TRANSLATION MISSING
+Sections:
 
-Se lo script viene chiamato "auto_weechat_command", può essere
-eseguito con:
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command  | Description
+| file    | /set fifo.file.* | FIFO pipe control
+|===
 
-----
-$ ./auto_weechat_command 'irc.freenode.#weechat *ciao'
-----
+// TRANSLATION MISSING
+Options:
+
+include::autogen/user/fifo_options.adoc[]
 
 [[fifo_commands]]
 ==== Comandi

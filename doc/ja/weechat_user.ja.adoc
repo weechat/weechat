@@ -2071,11 +2071,11 @@ include::autogen/user/exec_commands.adoc[]
 [[fifo_plugin]]
 === Fifo プラグイン
 
-外部から WeeChat を操作するには、FIFO パイプにコマンドやテキストを書き込んでください ("plugins.var.fifo.fifo"
+外部から WeeChat を操作するには、FIFO パイプにコマンドやテキストを書き込んでください ("fifo.file.enabled"
 オプションが有効化されている必要がありますが、デフォルトで有効化されているはずです)。
 
-FIFO パイプは _~/.weechat/_ の下にあり、_weechat_fifo_xxxx_
-のような名前になっています (_xxxx_ は実行中の WeeChat のプロセス ID (PID) です)。
+// TRANSLATION MISSING
+The FIFO pipe is located in _~/.weechat/_ and is called _weechat_fifo_ by default.
 
 FIFO パイプに書き込むコマンド/テキストの文法は以下の例の一つです:
 
@@ -2086,50 +2086,49 @@ FIFO パイプに書き込むコマンド/テキストの文法は以下の例�
 
 例:
 
-* IRC サーバ freenode のニックネームを "newnick" に変更する:
+// TRANSLATION MISSING
+* Change nick on IRC server freenode to "newnick":
 
 ----
-$ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345
+$ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
 ----
 
-* IRC の #weechat チャンネルに対してテキストを送信:
+// TRANSLATION MISSING
+* Send a message on IRC #weechat channel:
 
 ----
-$ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo_12345
+$ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo
 ----
 
-* 現在のバッファに対してテキストを送信:
+// TRANSLATION MISSING
+* Send a message on current buffer:
 
 ----
-$ echo '*hello!' >~/.weechat/weechat_fifo_12345
+$ echo '*hello!' >~/.weechat/weechat_fifo
 ----
 
 * Python スクリプトのアンロードとロードを行う 2 つのコマンドを送信
   (複数のコマンドは "\n" で分割してください):
 
 ----
-$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo_12345
+$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 ----
 
-実行中の WeeChat
-すべてに対してコマンドを送信するスクリプトは以下のように書けます。例えば:
+[[fifo_options]]
+==== オプション (fifo.conf)
 
-[source,shell]
-----
-#!/bin/sh
-if [ $# -eq 1 ]; then
-    for fifo in ~/.weechat/weechat_fifo_*
-    do
-        printf '%b\n' "$1" >"$fifo"
-    done
-fi
-----
+セクション:
 
-このスクリプトを "auto_weechat_command" というファイル名で保存した場合、以下のように実行できます:
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド     | 説明
+// TRANSLATION MISSING
+| file       | /set fifo.file.* | FIFO pipe control
+|===
 
-----
-$ ./auto_weechat_command 'irc.freenode.#weechat *hello'
-----
+オプション:
+
+include::autogen/user/fifo_options.adoc[]
 
 [[fifo_commands]]
 ==== コマンド

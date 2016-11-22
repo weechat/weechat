@@ -20,6 +20,18 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v1.7]]
 == Version 1.7 (under dev)
 
+[[v1.7_fifo_options]]
+=== FIFO options
+
+A new configuration file "fifo.conf" has been added and the old option
+_plugins.var.fifo.fifo_ has been moved to _fifo.file.enabled_.
+
+A new option _fifo.file.path_ can be used to customize the FIFO pipe
+path/filename.
+
+[[v1.7_default_triggers]]
+=== Default triggers
+
 A new trigger "cmd_pass_register" has been added to hide only password and not
 email in command `/msg nickserv register password email`. +
 The existing trigger "cmd_pass" has been updated to hide password in all

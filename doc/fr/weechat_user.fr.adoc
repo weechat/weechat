@@ -2138,12 +2138,11 @@ include::autogen/user/exec_commands.adoc[]
 === Extension Fifo
 
 Vous pouvez contrôler WeeChat à distance, en envoyant des commandes ou du
-texte dans un tube FIFO (si l'option _plugins.var.fifo.fifo_ est activée,
+texte dans un tube FIFO (si l'option _fifo.file.enabled_ est activée,
 elle l'est par défaut).
 
-Le tube FIFO est dans le répertoire _~/.weechat/_ et s'appelle
-_weechat_fifo_xxxx_ (où _xxxx_ est l'ID du processus (PID) du WeeChat qui
-tourne).
+Le tube FIFO est dans le répertoire _~/.weechat/_ et s'appelle _weechat_fifo_
+par défaut.
 
 La syntaxe pour envoyer des commandes ou du texte dans le tube FIFO est une
 des suivantes :
@@ -2155,50 +2154,45 @@ des suivantes :
 
 Quelques exemples :
 
-* Changement du pseudo sur freenode en "autrepseudo" :
+* Changer le pseudo sur freenode en "autrepseudo" :
 
 ----
-$ echo 'irc.server.freenode */nick autrepseudo' >~/.weechat/weechat_fifo_12345
+$ echo 'irc.server.freenode */nick autrepseudo' >~/.weechat/weechat_fifo
 ----
 
-* Affichage de texte sur le canal IRC #weechat :
+* Envoyer un message sur le canal IRC #weechat :
 
 ----
-$ echo 'irc.freenode.#weechat *bonjour !' >~/.weechat/weechat_fifo_12345
+$ echo 'irc.freenode.#weechat *bonjour !' >~/.weechat/weechat_fifo
 ----
 
-* Affichage de texte sur le tampon courant :
+* Envoyer un message sur le tampon courant :
 
 ----
-$ echo '*bonjour !' >~/.weechat/weechat_fifo_12345
+$ echo '*bonjour !' >~/.weechat/weechat_fifo
 ----
 
 * Envoyer deux commandes pour décharger/recharger les scripts Python (vous devez
   les séparer par "\n") :
 
 ----
-$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo_12345
+$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 ----
 
-Vous pouvez écrire un script qui envoie les commandes à tous les WeeChat qui
-tournent en même temps, par exemple :
+[[fifo_options]]
+==== Options (fifo.conf)
 
-[source,shell]
-----
-#!/bin/sh
-if [ $# -eq 1 ]; then
-    for fifo in ~/.weechat/weechat_fifo_*
-    do
-        printf '%b\n' "$1" >"$fifo"
-    done
-fi
-----
+Sections :
 
-Si le script s'appelle "auto_weechat_command", vous pouvez le lancer ainsi :
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| file    | /set fifo.file.*     | Contrôle du tube FIFO
+|===
 
-----
-$ ./auto_weechat_command 'irc.freenode.#weechat *bonjour'
-----
+Options :
+
+include::autogen/user/fifo_options.adoc[]
 
 [[fifo_commands]]
 ==== Commandes

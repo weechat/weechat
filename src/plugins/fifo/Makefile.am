@@ -27,6 +27,8 @@ fifo_la_SOURCES = fifo.c \
                   fifo.h \
                   fifo-command.c \
                   fifo-command.h \
+                  fifo-config.c \
+                  fifo-config.h \
                   fifo-info.c \
                   fifo-info.h
 fifo_la_LDFLAGS = -module -no-undefined

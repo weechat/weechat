@@ -206,6 +206,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    fifo/                          | Extension Fifo
 |       fifo.c                      | Fonctions principales de Fifo
 |       fifo-command.c              | Commandes pour Fifo
+|       fifo-config.c               | Options de configuration pour Fifo (fichier fifo.conf)
 |       fifo-info.c                 | Info/infolists/hdata pour Fifo
 |    guile/                         | Extension Guile (scheme)
 |       weechat-guile.c             | Fonctions principales pour Guile (chargement/déchargement des scripts, exécution de code Guile)

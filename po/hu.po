@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-20 15:55+0100\n"
+"POT-Creation-Date: 2016-11-22 15:12+0100\n"
 "PO-Revision-Date: 2016-09-03 08:23+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4626,8 +4626,8 @@ msgid "FIFO pipe for remote control"
 msgstr "%s nem sikerült a FIFO csövet létrehozni a távoli felügyelethez (%s)\n"
 
 #, fuzzy, c-format
-msgid "%s: removing old fifo pipe \"%s\""
-msgstr "%s nincs elég memória az információs pult üzenethez\n"
+msgid "%s%s: not enough memory (%s)"
+msgstr "Nincs elég memória az új sorhoz\n"
 
 #, fuzzy, c-format
 msgid "%s: pipe opened (file: %s)"
@@ -4683,21 +4683,32 @@ msgid ""
 "\n"
 "FIFO pipe is used as remote control of WeeChat: you can send commands or "
 "text to the FIFO pipe from your shell.\n"
-"By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx (\"xxx\" is the "
-"WeeChat PID).\n"
+"By default the FIFO pipe is in ~/.weechat/weechat_fifo\n"
 "\n"
 "The expected format is one of:\n"
 "  plugin.buffer *text or command here\n"
 "  *text or command here\n"
 "\n"
 "For example to change your freenode nick:\n"
-"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo\n"
 "\n"
 "Please read the user's guide for more info and examples.\n"
 "\n"
 "Examples:\n"
 "  /fifo toggle"
 msgstr ""
+
+msgid "enable FIFO pipe"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"path for FIFO file; \"%h\" at beginning of string is replaced by WeeChat "
+"home (\"~/.weechat\" by default); WeeChat PID can be used in path with "
+"${info:pid} (note: content is evaluated, see /help eval)"
+msgstr ""
+"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 msgid "name of FIFO pipe"
 msgstr ""
@@ -7857,10 +7868,6 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: not enough memory (%s)"
-msgstr "Nincs elég memória az új sorhoz\n"
-
-#, fuzzy, c-format
 msgid "%s%s: timeout"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
@@ -10688,3 +10695,7 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid "%s: removing old fifo pipe \"%s\""
+#~ msgstr "%s nincs elég memória az információs pult üzenethez\n"

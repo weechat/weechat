@@ -2121,11 +2121,11 @@ include::autogen/user/exec_commands.adoc[]
 === Fifo Erweiterung
 
 Sie können WeeChat fern steuern indem Sie Befehle oder einen Text an die FIFO Pipe
-schicken (dazu muss die Option "plugins.var.fifo.fifo" aktiviert sein (standardmäßig
+schicken (dazu muss die Option "fifo.file.enabled" aktiviert sein (standardmäßig
 ist diese Option aktiviert).
 
-Die FIFO pipe findet man in _~/.weechat/_ und heisst _weechat_fifo_xxxx_
-(_xxxx_ ist dabei die ID (PID) der laufenden WeeChat Session).
+// TRANSLATION MISSING
+The FIFO pipe is located in _~/.weechat/_ and is called _weechat_fifo_ by default.
 
 Die Syntax der FIFO Pipe Befehle/Text sieht wie folgt aus:
 
@@ -2136,49 +2136,46 @@ Die Syntax der FIFO Pipe Befehle/Text sieht wie folgt aus:
 
 einige Beispiele:
 
-* Den eigenen Nick auf dem IRC Server freenode in "newnick" ändern:
+* Change nick on IRC server freenode to "newnick":
 
 ----
-$ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345
+$ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
 ----
 
-* Den Text _Hallo!_ in den Channel #weechat schreiben:
+* Send a message on IRC #weechat channel:
 
 ----
-$ echo 'irc.freenode.#weechat *Hallo!' >~/.weechat/weechat_fifo_12345
+$ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo
 ----
 
-* Einen Text im aktuellen Buffer ausgeben:
+* Send a message on current buffer:
 
 ----
-$ echo '*hello!' >~/.weechat/weechat_fifo_12345
+$ echo '*hello!' >~/.weechat/weechat_fifo
 ----
 
-* sendet zwei Befehle um alle Python-Skripten zu entfernen und dann neu zu laden (die beiden Befehle müssen
+* Sendet zwei Befehle um alle Python-Skripten zu entfernen und dann neu zu laden (die beiden Befehle müssen
   mit "\n" getrennt werden):
 
 ----
-$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo_12345
+$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 ----
 
-Das nachfolgende Skript sendet einen Befehl an alle laufenden WeeChat Instanzen:
+[[fifo_options]]
+==== Optionen (fifo.conf)
 
-[source,shell]
-----
-#!/bin/sh
-if [ $# -eq 1 ]; then
-    for fifo in ~/.weechat/weechat_fifo_*
-    do
-        echo -e "$1" >$fifo
-    done
-fi
-----
+Sektionen:
 
-Falls man das Skript "auto_weechat_command" benennt ruft man es wie folgt auf:
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl     | Beschreibung
+// TRANSLATION MISSING
+| file    | /set fifo.file.* | FIFO pipe control
+|===
 
-----
-$ ./auto_weechat_command 'irc.freenode.#weechat *Hallo'
-----
+Optionen:
+
+include::autogen/user/fifo_options.adoc[]
 
 [[fifo_commands]]
 ==== Befehle

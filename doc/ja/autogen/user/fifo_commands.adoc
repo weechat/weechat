@@ -8,22 +8,22 @@
 ----
 /fifo  enable|disable|toggle
 
- enable: FIFO パイプを有効化します
-disable: FIFO パイプを無効化します
- toggle: FIFO パイプの有効無効を切り替えます
+ enable: enable FIFO pipe
+disable: disable FIFO pipe
+ toggle: toggle FIFO pipe
 
-FIFO パイプは WeeChat をリモート操作する際に使われます: FIFO パイプを通じてシェルからコマンドやテキストを送信できます。
-デフォルトの場合 FIFO パイプは ~/.weechat/weechat_fifo_xxx です ("xxx" は WeeChat の PID です)。
+FIFO pipe is used as remote control of WeeChat: you can send commands or text to the FIFO pipe from your shell.
+By default the FIFO pipe is in ~/.weechat/weechat_fifo
 
-書式は次のうちのどれか 1 つを使ってください:
-  plugin.buffer *テキストまたはコマンド
-  *テキストまたはコマンド
+The expected format is one of:
+  plugin.buffer *text or command here
+  *text or command here
 
-freenode のニックネームを変更する例:
-  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345
+For example to change your freenode nick:
+  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
 
-詳しい情報と例はユーザーズガイドを参照してください。
+Please read the user's guide for more info and examples.
 
-例:
+Examples:
   /fifo toggle
 ----

@@ -33,6 +33,7 @@
 #include "../weechat-plugin.h"
 #include "fifo.h"
 #include "fifo-command.h"
+#include "fifo-config.h"
 #include "fifo-info.h"
 
 
@@ -43,71 +44,18 @@ WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 WEECHAT_PLUGIN_PRIORITY(7000);
 
-#define FIFO_FILENAME_PREFIX "weechat_fifo_"
-
 struct t_weechat_plugin *weechat_fifo_plugin = NULL;
 #define weechat_plugin weechat_fifo_plugin
 
 int fifo_quiet = 0;
 int fifo_fd = -1;
 struct t_hook *fifo_fd_hook = NULL;
-char *fifo_filename;
+char *fifo_filename = NULL;
 char *fifo_unterminated = NULL;
 
 
 int fifo_fd_cb ();
 
-
-/*
- * Removes old FIFO pipes in directory.
- */
-
-void
-fifo_remove_old_pipes ()
-{
-    char *buf;
-    int buf_len, prefix_len;
-    const char *weechat_home, *dir_separator;
-    DIR *dp;
-    struct dirent *entry;
-    struct stat statbuf;
-
-    buf_len = PATH_MAX;
-    buf = malloc (buf_len);
-    if (!buf)
-        return;
-
-    weechat_home = weechat_info_get ("weechat_dir", "");
-    dir_separator = weechat_info_get ("dir_separator", "");
-
-    prefix_len = strlen (FIFO_FILENAME_PREFIX);
-
-    dp = opendir (weechat_home);
-    if (dp != NULL)
-    {
-        while ((entry = readdir (dp)) != NULL)
-        {
-            if (strcmp (entry->d_name, ".") == 0 || strcmp (entry->d_name, "..") == 0)
-                continue;
-
-            if (strncmp (entry->d_name, FIFO_FILENAME_PREFIX, prefix_len) == 0)
-            {
-                snprintf (buf, buf_len, "%s%s%s",
-                          weechat_home, dir_separator, entry->d_name);
-                if (stat (buf, &statbuf) != -1)
-                {
-                    weechat_printf (NULL,
-                                    _("%s: removing old fifo pipe \"%s\""),
-                                    FIFO_PLUGIN_NAME, buf);
-                    unlink (buf);
-                }
-            }
-        }
-        closedir (dp);
-    }
-
-    free (buf);
-}
 
 /*
  * Creates FIFO pipe for remote control.
@@ -116,72 +64,71 @@ fifo_remove_old_pipes ()
 void
 fifo_create ()
 {
-    int filename_length;
-    const char *fifo_option, *weechat_home;
+    struct stat st;
 
-    fifo_option = weechat_config_get_plugin ("fifo");
-    if (!fifo_option)
+    if (!weechat_config_boolean (fifo_config_file_enabled))
+        return;
+
+    if (!fifo_filename)
     {
-        weechat_config_set_plugin ("fifo", "on");
-        fifo_option = weechat_config_get_plugin ("fifo");
+        /* replace %h and "~", evaluate path */
+        fifo_filename = weechat_string_eval_path_home (
+            weechat_config_string (fifo_config_file_path),
+            NULL, NULL, NULL);
     }
 
-    weechat_home = weechat_info_get ("weechat_dir", "");
-
-    if (fifo_option && weechat_home)
+    if (!fifo_filename)
     {
-        fifo_remove_old_pipes ();
+        weechat_printf (NULL,
+                        _("%s%s: not enough memory (%s)"),
+                        weechat_prefix ("error"), FIFO_PLUGIN_NAME,
+                        "fifo_filename");
+        return;
+    }
 
-        if (weechat_strcasecmp (fifo_option, "on") == 0)
+    /* remove a pipe with same name (if exists) */
+    if (stat (fifo_filename, &st) == 0)
+    {
+        /* if the file is a FIFO pipe, delete it */
+        if (S_ISFIFO(st.st_mode))
+            unlink (fifo_filename);
+    }
+
+    fifo_fd = -1;
+
+    /* create FIFO pipe, writable for user only */
+    if (mkfifo (fifo_filename, 0600) == 0)
+    {
+        /* open FIFO pipe in read-only, non-blocking mode */
+        if ((fifo_fd = open (fifo_filename,
+                             O_RDONLY | O_NONBLOCK)) != -1)
         {
-            /*
-             * build FIFO filename:
-             *   "<weechat_home>/weechat_fifo_" + process PID
-             */
-            if (!fifo_filename)
-            {
-                filename_length = strlen (weechat_home) + 64;
-                fifo_filename = malloc (filename_length);
-                snprintf (fifo_filename, filename_length,
-                          "%s/%s%d",
-                          weechat_home, FIFO_FILENAME_PREFIX, (int) getpid());
-            }
-
-            fifo_fd = -1;
-
-            /* create FIFO pipe, writable for user only */
-            if (mkfifo (fifo_filename, 0600) == 0)
-            {
-                /* open FIFO pipe in read-only, non-blocking mode */
-                if ((fifo_fd = open (fifo_filename,
-                                     O_RDONLY | O_NONBLOCK)) != -1)
-                {
-                    if ((weechat_fifo_plugin->debug >= 1) || !fifo_quiet)
-                    {
-                        weechat_printf (NULL,
-                                        _("%s: pipe opened (file: %s)"),
-                                        FIFO_PLUGIN_NAME,
-                                        fifo_filename);
-                    }
-                    fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0,
-                                                    &fifo_fd_cb, NULL, NULL);
-                }
-                else
-                    weechat_printf (NULL,
-                                    _("%s%s: unable to open pipe (%s) for "
-                                      "reading"),
-                                    weechat_prefix ("error"), FIFO_PLUGIN_NAME,
-                                    fifo_filename);
-            }
-            else
+            if ((weechat_fifo_plugin->debug >= 1) || !fifo_quiet)
             {
                 weechat_printf (NULL,
-                                _("%s%s: unable to create pipe for remote "
-                                  "control (%s): error %d %s"),
-                                weechat_prefix ("error"), FIFO_PLUGIN_NAME,
-                                fifo_filename, errno, strerror (errno));
+                                _("%s: pipe opened (file: %s)"),
+                                FIFO_PLUGIN_NAME,
+                                fifo_filename);
             }
+            fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0,
+                                            &fifo_fd_cb, NULL, NULL);
         }
+        else
+        {
+            weechat_printf (NULL,
+                            _("%s%s: unable to open pipe (%s) for "
+                              "reading"),
+                            weechat_prefix ("error"), FIFO_PLUGIN_NAME,
+                            fifo_filename);
+        }
+    }
+    else
+    {
+        weechat_printf (NULL,
+                        _("%s%s: unable to create pipe for remote "
+                          "control (%s): error %d %s"),
+                        weechat_prefix ("error"), FIFO_PLUGIN_NAME,
+                        fifo_filename, errno, strerror (errno));
     }
 }
 
@@ -192,6 +139,10 @@ fifo_create ()
 void
 fifo_remove ()
 {
+    int fifo_found;
+
+    fifo_found = (fifo_fd != -1);
+
     /* remove fd hook */
     if (fifo_fd_hook)
     {
@@ -206,10 +157,6 @@ fifo_remove ()
         fifo_fd = -1;
     }
 
-    /* remove FIFO from disk */
-    if (fifo_filename)
-        unlink (fifo_filename);
-
     /* remove any unterminated message */
     if (fifo_unterminated)
     {
@@ -217,16 +164,20 @@ fifo_remove ()
         fifo_unterminated = NULL;
     }
 
-    /* free filename */
+    /* remove FIFO from disk */
     if (fifo_filename)
     {
+        unlink (fifo_filename);
         free (fifo_filename);
         fifo_filename = NULL;
     }
 
-    weechat_printf (NULL,
-                    _("%s: pipe closed"),
-                    FIFO_PLUGIN_NAME);
+    if (fifo_found && !fifo_quiet)
+    {
+        weechat_printf (NULL,
+                        _("%s: pipe closed"),
+                        FIFO_PLUGIN_NAME);
+    }
 }
 
 /*
@@ -398,54 +349,26 @@ fifo_fd_cb (const void *pointer, void *data, int fd)
 }
 
 /*
- * Callback for changes on option "plugins.var.fifo.fifo".
- */
-
-int
-fifo_config_cb (const void *pointer, void *data,
-                const char *option, const char *value)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) option;
-
-    if (weechat_strcasecmp (value, "on") == 0)
-    {
-        if (fifo_fd < 0)
-            fifo_create ();
-    }
-    else
-    {
-        if (fifo_fd >= 0)
-            fifo_remove ();
-    }
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Initializes fifo plugin.
  */
 
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    char str_option[256];
-
     /* make C compiler happy */
     (void) argc;
     (void) argv;
 
     weechat_plugin = plugin;
 
+    if (!fifo_config_init ())
+        return WEECHAT_RC_ERROR;
+
+    fifo_config_read ();
+
     fifo_quiet = 1;
 
     fifo_create ();
-
-    snprintf (str_option, sizeof (str_option),
-              "plugins.var.fifo.%s", FIFO_OPTION_NAME);
-    weechat_hook_config (str_option, &fifo_config_cb, NULL, NULL);
 
     fifo_command_init ();
     fifo_info_init ();
@@ -466,6 +389,9 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     (void) plugin;
 
     fifo_remove ();
+
+    fifo_config_write ();
+    fifo_config_free ();
 
     return WEECHAT_RC_OK;
 }

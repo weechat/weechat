@@ -17,19 +17,18 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_FIFO_H
-#define WEECHAT_FIFO_H 1
+#ifndef WEECHAT_FIFO_CONFIG_H
+#define WEECHAT_FIFO_CONFIG_H 1
 
-#define weechat_plugin weechat_fifo_plugin
-#define FIFO_PLUGIN_NAME "fifo"
-#define FIFO_OPTION_NAME "fifo"
+#define FIFO_CONFIG_NAME "fifo"
 
-extern struct t_weechat_plugin *weechat_fifo_plugin;
-extern int fifo_quiet;
-extern int fifo_fd;
-extern char *fifo_filename;
 
-extern void fifo_create ();
-extern void fifo_remove ();
+extern struct t_config_option *fifo_config_file_enabled;
+extern struct t_config_option *fifo_config_file_path;
 
-#endif /* WEECHAT_FIFO_H */
+extern int fifo_config_init ();
+extern int fifo_config_read ();
+extern int fifo_config_write ();
+extern void fifo_config_free ();
+
+#endif /* WEECHAT_FIFO_CONFIG_H */

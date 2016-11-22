@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-20 15:55+0100\n"
+"POT-Creation-Date: 2016-11-22 15:12+0100\n"
 "PO-Revision-Date: 2016-09-03 08:24+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4664,8 +4664,8 @@ msgid "FIFO pipe for remote control"
 msgstr "%s не могу создать FIFO pipe для удалённого управления (%s)\n"
 
 #, fuzzy, c-format
-msgid "%s: removing old fifo pipe \"%s\""
-msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+msgid "%s%s: not enough memory (%s)"
+msgstr "Недостаточно памяти для новой строчки\n"
 
 #, fuzzy, c-format
 msgid "%s: pipe opened (file: %s)"
@@ -4721,21 +4721,32 @@ msgid ""
 "\n"
 "FIFO pipe is used as remote control of WeeChat: you can send commands or "
 "text to the FIFO pipe from your shell.\n"
-"By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx (\"xxx\" is the "
-"WeeChat PID).\n"
+"By default the FIFO pipe is in ~/.weechat/weechat_fifo\n"
 "\n"
 "The expected format is one of:\n"
 "  plugin.buffer *text or command here\n"
 "  *text or command here\n"
 "\n"
 "For example to change your freenode nick:\n"
-"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo\n"
 "\n"
 "Please read the user's guide for more info and examples.\n"
 "\n"
 "Examples:\n"
 "  /fifo toggle"
 msgstr ""
+
+msgid "enable FIFO pipe"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"path for FIFO file; \"%h\" at beginning of string is replaced by WeeChat "
+"home (\"~/.weechat\" by default); WeeChat PID can be used in path with "
+"${info:pid} (note: content is evaluated, see /help eval)"
+msgstr ""
+"путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
+"умолчанию - ~/.weechat)"
 
 msgid "name of FIFO pipe"
 msgstr ""
@@ -7898,10 +7909,6 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: not enough memory (%s)"
-msgstr "Недостаточно памяти для новой строчки\n"
-
-#, fuzzy, c-format
 msgid "%s%s: timeout"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
@@ -10720,3 +10727,7 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+#~ msgid "%s: removing old fifo pipe \"%s\""
+#~ msgstr "%s недостаточно памяти для сообщения в строке информации\n"

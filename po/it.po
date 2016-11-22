@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-20 15:55+0100\n"
+"POT-Creation-Date: 2016-11-22 15:12+0100\n"
 "PO-Revision-Date: 2016-09-03 08:24+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5439,9 +5439,9 @@ msgstr "colore del testo per le azioni sulla riga di input"
 msgid "FIFO pipe for remote control"
 msgstr "Pipe FIFO per il controllo remoto"
 
-#, c-format
-msgid "%s: removing old fifo pipe \"%s\""
-msgstr "%s: rimozione della pipe fifo %s precedente"
+#, fuzzy, c-format
+msgid "%s%s: not enough memory (%s)"
+msgstr "%s%s: memoria non sufficiente"
 
 #, fuzzy, c-format
 msgid "%s: pipe opened (file: %s)"
@@ -5499,21 +5499,34 @@ msgid ""
 "\n"
 "FIFO pipe is used as remote control of WeeChat: you can send commands or "
 "text to the FIFO pipe from your shell.\n"
-"By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx (\"xxx\" is the "
-"WeeChat PID).\n"
+"By default the FIFO pipe is in ~/.weechat/weechat_fifo\n"
 "\n"
 "The expected format is one of:\n"
 "  plugin.buffer *text or command here\n"
 "  *text or command here\n"
 "\n"
 "For example to change your freenode nick:\n"
-"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo\n"
 "\n"
 "Please read the user's guide for more info and examples.\n"
 "\n"
 "Examples:\n"
 "  /fifo toggle"
 msgstr ""
+
+#, fuzzy
+msgid "enable FIFO pipe"
+msgstr "nome della pipe FIFO"
+
+#, fuzzy
+msgid ""
+"path for FIFO file; \"%h\" at beginning of string is replaced by WeeChat "
+"home (\"~/.weechat\" by default); WeeChat PID can be used in path with "
+"${info:pid} (note: content is evaluated, see /help eval)"
+msgstr ""
+"path per i file di log di WeeChat: \"%h\" all'inizio della stringa viene "
+"sostituito dalla directory home di WeeChat (predefinita è \"~/.weechat); "
+"sono ammessi gli specificatori di data (consultare man strftime)"
 
 msgid "name of FIFO pipe"
 msgstr "nome della pipe FIFO"
@@ -8923,10 +8936,6 @@ msgstr ""
 "%s%s: è necessario modificare l'opzione irc.server.%s.ssl_dhkey_size (il "
 "valore corrente è %d)"
 
-#, fuzzy, c-format
-msgid "%s%s: not enough memory (%s)"
-msgstr "%s%s: memoria non sufficiente"
-
 #, c-format
 msgid "%s%s: timeout"
 msgstr "%s%s: timeout"
@@ -11835,3 +11844,6 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#~ msgid "%s: removing old fifo pipe \"%s\""
+#~ msgstr "%s: rimozione della pipe fifo %s precedente"
