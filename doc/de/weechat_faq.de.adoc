@@ -850,24 +850,24 @@ Die Skripten für WeeChat sind mit anderer IRC-Clients nicht kompatibel und vice
 [[settings]]
 == Einstellungen
 
-// TRANSLATION MISSING
 [[editing_config_files]]
-=== Can I edit configuration files (*.conf) by hand?
+=== Kann ich die Konfigurationsdateien (*.conf) händisch verändern?
 
-You can, but this is *NOT* recommended.
+Das ist möglich, wird aber *NICHT* empfohlen.
 
-Command `/set` in WeeChat is recommended:
+Der interne WeeChat Befehl `/set` sollte genutzt werden:
 
-* you can complete value with the Tab key
-* the value is checked, a message is displayed in case of error
-* the value is used immediately, you don't need to restart anything
+* da die TAB Vervollständigung unterstützt wird
+* der neue Wert wird auf Legalität geprüft und bei einem Fehler eine entsprechende Meldung ausgegeben
+* der neue Wert wird umgehend genutzt. Es ist nicht notwendig WeeChat neu zu starten oder irgendwelche Daten neu zu laden
 
-If you still want to edit files by hand, you should be careful:
+Solltest Du die Dateien weiter händisch ändern wollen, dann solltest Du vorsichtig sein:
 
-* if you put an invalid value for an option, WeeChat will display an error
-  on load and discard the value (the default value for option will be used)
-* if WeeChat is running, you'll have to issue the command `/reload`, and if
-  some settings were changed but not saved with `/save`, you will lose them
+* wird ein ungültiger Wert eingetragen, gibt WeeChat einen Fehler beim Start aus und
+  der ungültigen Wert wird verworfen (der Standardwert, für die entsprechende Option, wird
+  dann genutzt)
+* sollte WeeChat laufen und man nutzt den `/reload` Befehl aber Einstellungen wurden nicht
+  vorher mit `/save` gesichert, ist ein Datenverlust unvermeidbar
 
 [[memory_usage]]
 === Wie kann ich WeeChat dazu bringen weniger Speicher zu verbrauchen?

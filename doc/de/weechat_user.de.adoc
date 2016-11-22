@@ -2124,8 +2124,7 @@ Sie können WeeChat fern steuern indem Sie Befehle oder einen Text an die FIFO P
 schicken (dazu muss die Option "fifo.file.enabled" aktiviert sein (standardmäßig
 ist diese Option aktiviert).
 
-// TRANSLATION MISSING
-The FIFO pipe is located in _~/.weechat/_ and is called _weechat_fifo_ by default.
+Die FIFO-Pipe befindet sich standardmäßig im Pfad _~/.weechat/_ und heißt _weechat_fifo_.
 
 Die Syntax der FIFO Pipe Befehle/Text sieht wie folgt aus:
 
@@ -2136,19 +2135,19 @@ Die Syntax der FIFO Pipe Befehle/Text sieht wie folgt aus:
 
 einige Beispiele:
 
-* Change nick on IRC server freenode to "newnick":
+* Ändert den eigenen Nick auf dem IRC Server freenode in "newnick":
 
 ----
 $ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
 ----
 
-* Send a message on IRC #weechat channel:
+* Schickt eine Nachrich in den IRC #weechat Channel:
 
 ----
 $ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo
 ----
 
-* Send a message on current buffer:
+* Schickt eine Nachricht in den aktuellen Buffer:
 
 ----
 $ echo '*hello!' >~/.weechat/weechat_fifo
@@ -2169,8 +2168,7 @@ Sektionen:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Sektion | Steuerbefehl     | Beschreibung
-// TRANSLATION MISSING
-| file    | /set fifo.file.* | FIFO pipe control
+| file    | /set fifo.file.* | FIFO Pipe Optionen
 |===
 
 Optionen:
