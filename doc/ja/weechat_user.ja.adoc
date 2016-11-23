@@ -530,7 +530,7 @@ WeeChat を設定するにはこのファイルを編集するか、WeeChat
 WeeChat は常時 (例えば <<command_weechat_quit,/quit>> コマンドの実行時など)
 設定ファイルに書き込む可能性がありますし、手作業で修正を加えた後には必ず <<command_weechat_reload,/reload>>
 コマンドを実行しなければいけない (これには <<command_weechat_save,/save>>
-を使って保存されていない変更を失うリスクがあります) からです。 +
+を使って保存されていない変更を失うリスクがある) からです。 +
 設定を編集するには <<command_weechat_set,/set>>
 コマンドを使ってください。これは値を検査し、設定の変更をすぐに適用します。
 
@@ -2074,8 +2074,7 @@ include::autogen/user/exec_commands.adoc[]
 外部から WeeChat を操作するには、FIFO パイプにコマンドやテキストを書き込んでください ("fifo.file.enabled"
 オプションが有効化されている必要がありますが、デフォルトで有効化されているはずです)。
 
-// TRANSLATION MISSING
-The FIFO pipe is located in _~/.weechat/_ and is called _weechat_fifo_ by default.
+FIFO パイプは _~/.weechat/_ の中にあり、デフォルトで _weechat_fifo_ という名前を付けられています。
 
 FIFO パイプに書き込むコマンド/テキストの文法は以下の例の一つです:
 
@@ -2086,22 +2085,19 @@ FIFO パイプに書き込むコマンド/テキストの文法は以下の例�
 
 例:
 
-// TRANSLATION MISSING
-* Change nick on IRC server freenode to "newnick":
+* IRC サーバ freenode で使うニックネームを "newnick" に変更する:
 
 ----
 $ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
 ----
 
-// TRANSLATION MISSING
-* Send a message on IRC #weechat channel:
+* IRC チャンネル #weechat に対してテキストを送信:
 
 ----
 $ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo
 ----
 
-// TRANSLATION MISSING
-* Send a message on current buffer:
+* 現在のバッファに対してテキストを送信:
 
 ----
 $ echo '*hello!' >~/.weechat/weechat_fifo
@@ -2122,8 +2118,7 @@ $ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | セクション | 操作コマンド     | 説明
-// TRANSLATION MISSING
-| file       | /set fifo.file.* | FIFO pipe control
+| file       | /set fifo.file.* | FIFO パイプに関するオプション
 |===
 
 オプション:
