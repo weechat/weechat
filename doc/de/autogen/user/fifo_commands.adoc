@@ -8,22 +8,22 @@
 ----
 /fifo  enable|disable|toggle
 
- enable: enable FIFO pipe
-disable: disable FIFO pipe
- toggle: toggle FIFO pipe
+ enable: aktivieren der FIFO pipe
+disable: deaktivieren der FIFO pipe
+ toggle: Status der FIFO pipe umschalten
 
-FIFO pipe is used as remote control of WeeChat: you can send commands or text to the FIFO pipe from your shell.
-By default the FIFO pipe is in ~/.weechat/weechat_fifo
+Die FIFO-Pipe wird als Fernbedienung genutzt, es können Befehle oder Text von der Shell an die FIFO-Pipe geschickt werden
+Standardmäßig ist die FIFO-Pipe in ~/.weechat/weechat_fifo
 
-The expected format is one of:
-  plugin.buffer *text or command here
-  *text or command here
+Folgendes Format wird erwartet:
+  plugin.buffer *Text oder Befehl an dieser Stelle
+  *Text oder Befehl an dieser Stelle
 
-For example to change your freenode nick:
+Beispiel um den eigenen Nick auf dem Server freenode zu ändern:
   echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
 
-Please read the user's guide for more info and examples.
+Bitte lese die Benutzeranleitung für weitere Informationen und Beispiele.
 
-Examples:
+Beispiele:
   /fifo toggle
 ----

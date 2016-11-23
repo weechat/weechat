@@ -3,11 +3,11 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_fifo.file.enabled]] *fifo.file.enabled*
-** Beschreibung: pass:none[enable FIFO pipe]
+** Beschreibung: pass:none[FIFO-Pipe aktivieren]
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `+on+`)
 
 * [[option_fifo.file.path]] *fifo.file.path*
-** Beschreibung: pass:none[path for FIFO file; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default); WeeChat PID can be used in path with ${info:pid} (note: content is evaluated, see /help eval)]
+** Beschreibung: pass:none[Pfad für eingehende Dateien: "%h" wird durch das WeeChat Verzeichnis ersetzt (Standardpfad: "~/.weechat"); WeeChat PID kann mit ${info:pid} genutzt werden (Hinweis: Inhalt wird evaluiert, siehe /help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `+"%h/weechat_fifo"+`)
