@@ -1062,6 +1062,10 @@ natürlich voraus, dass der Terminal das Anwählen von URLs unterstützt).
 [[notify_levels]]
 === Benachrichtigungsstufen
 
+// TRANSLATION MISSING
+[[setup_notify_levels]]
+==== Setup notify levels
+
 Es gibt vier Benachrichtigungsstufen für Nachrichten, welche in Buffern dargestellt
 werden. Nachfolgend eine Liste, sortiert von niedrig nach hoch:
 
@@ -1106,6 +1110,82 @@ Befehl festgelegt werden:
 
 ----
 /buffer notify highlight
+----
+
+// TRANSLATION MISSING
+[[max_hotlist_level_nicks]]
+==== Max hotlist level for nicks
+
+It is possible to set max hotlist level for some nicks, per buffer, or per group
+of buffers (like IRC servers).
+
+The buffer property "hotlist_max_level_nicks" can be set with a list of nicks
+and for each nick the max hotlist level to trigger, possible levels are:
+
+* -1: no hotlist changes for nick
+* 0: low priority (like join/part messages)
+* 1: message
+* 2: private message
+* 3: highlight (in fact useless, since it's already the default max for all messages)
+
+For example to disable highlights from "joe" and "mike" on current buffer:
+
+----
+/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+----
+
+[NOTE]
+The buffer property "hotlist_max_level_nicks" is not saved in configuration. +
+You can easily save it with the script _buffer_autoset.py_: you can install it
+with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`.
+
+// TRANSLATION MISSING
+[[highlights]]
+=== Highlights
+
+[[highlights_words]]
+==== Add words to highlight
+
+By default, WeeChat highlights messages from other users containing your nick,
+therefore the highlight depends on the buffer (the nick can be different from
+one buffer to another).
+
+You can add other words to highlight with the option
+<<option_weechat.look.highlight,weechat.look.highlight>>, for example to
+highlight your nick and "word1", "word2" and all words beginning with "test":
+
+----
+/set weechat.look.highlight word1,word2,test*
+----
+
+If you need a more specific rule for the word, you can use regular expressions
+with the option <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
+for example to highlight words "flashcode", "flashcöde" and "flashy":
+
+----
+/set weechat.look.highlight_regex flashc[oö]de|flashy
+----
+
+The delimiters around words to highlight can be customized with the option
+<<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
+
+[[highlights_tags]]
+==== Add tags to highlight
+
+Lines displayed can contain "tags", which give some info about the origin of
+message or the message itself. +
+You can display tags with the command `/debug tags` (same command to hide them).
+
+You can add specific tags to highlight with the option
+<<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
+Tags are separated by commas, and multiple tags can be separated by "+" to do
+a logical "and" between them.
+
+For example to highlight all messages from nick "FlashCode" and all notices
+from nicks beginning with "toto":
+
+----
+/set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
 ----
 
 [[key_bindings]]

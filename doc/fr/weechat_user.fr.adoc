@@ -1072,6 +1072,10 @@ entendu cela suppose que votre terminal permet le clic sur les URLs).
 [[notify_levels]]
 === Niveaux de notification
 
+// TRANSLATION MISSING
+[[setup_notify_levels]]
+==== Configurer les niveaux de notification
+
 Quatre niveaux sont possibles dans les messages affichés dans les tampons, du
 moins important au plus important :
 
@@ -1114,6 +1118,87 @@ commande `/buffer` :
 
 ----
 /buffer notify highlight
+----
+
+[[max_hotlist_level_nicks]]
+==== Niveau maximal de hotlist pour des pseudos
+
+Il est possible de définir un niveau maximal de hotlist pour certains pseudos,
+par tampon ou groupe de tampons (comme des serveurs IRC).
+
+La propriété de tampon "hotlist_max_level_nicks" peut être définie avec une
+liste de pseudos et pour chaque pseudo le niveau maximal de hotlist à déclencher,
+les niveaux possibles sont :
+
+* -1 : pas de changement dans la hotlist pour ce pseudo
+* 0 : faible priorité (comme les messages join/part)
+* 1 : message
+* 2 : message privé
+* 3 : highlight (en réalité inutile, car il s'agit déjà du niveau maximal par
+  défaut pour tous les messages)
+
+Par exemple pour désactiver les « highlights » de "joe" et "mike" sur le tampon
+courant :
+
+----
+/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+----
+
+[NOTE]
+La propriété de tampon "hotlist_max_level_nicks" n'est pas sauvegardée dans la
+configuration. +
+Vous pouvez facilement la sauvegarder avec le script _buffer_autoset.py_ : vous
+pouvez l'installer avec `/script install buffer_autoset.py` et obtenir de l'aide
+avec `/help autosetbuffer`.
+
+[[highlights]]
+=== Highlights
+
+[[highlights_words]]
+==== Ajouter des mots pour le « highlight »
+
+Par défaut, WeeChat met en valeur les messages des autres utilisateurs qui
+contiennent votre pseudo, par conséquent le highlight dépend du tampon
+(le pseudo peut être différent d'un tampon à l'autre).
+
+Vous pouvez ajouter d'autres mots à mettre en valeur avec l'option
+<<option_weechat.look.highlight,weechat.look.highlight>>, par exemple pour mettre
+en valeur votre pseudo, "mot1", "mot2" et tous les mots commençants par "test" :
+
+----
+/set weechat.look.highlight mot1,mot2,test*
+----
+
+Si vous avez besoin d'une règle plus spécifique pour un mot, vous pouvez utiliser
+des expressions régulières avec l'option
+<<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
+par exemple pour mettre en valeur les mots "flashcode", "flashcöde" et "flashy" :
+
+----
+/set weechat.look.highlight_regex flashc[oö]de|flashy
+----
+
+Les délimiteurs autour des mots à mettre en valeur peuvent être paramétrés avec
+l'option <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
+
+[[highlights_tags]]
+==== Ajouter des étiquettes pour le « highlight »
+
+Les lignes affichées contiennent des étiquettes (« tags »), qui donnent des
+informations sur l'origine du message ou le message lui-même. +
+Vous pouvez afficher les étiquettes avec la commande `/debug tags` (même commande
+pour les cacher).
+
+Vous pouvez ajouter des étiquettes à mettre en valeur avec l'option
+<<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
+Les étiquettes sont séparées par des virgules, et plusieurs étiquettes peuvent
+être séparées par "+" pour faire un "et" logique entre elles.
+
+Par exemple pour mettre en valeur tous les messages du pseudo "FlashCode" et
+toutes les notices des pseudos commençant par "toto" :
+
+----
+/set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
 ----
 
 [[key_bindings]]
