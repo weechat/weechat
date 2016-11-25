@@ -63,7 +63,7 @@
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
 
 * [[option_weechat.color.chat_nick]] *weechat.color.chat_nick*
-** opis: pass:none[kolor nicków w oknie rozmowy]
+** opis: pass:none[text color for nicks in chat window: used in some server messages and as fallback when a nick color is not found; most of times nick color comes from option weechat.color.chat_nick_colors]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightcyan+`)
 

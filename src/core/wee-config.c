@@ -3607,7 +3607,9 @@ config_weechat_init_options ()
     config_color_chat_nick = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick", "color",
-        N_("text color for nicks in chat window"),
+        N_("text color for nicks in chat window: used in some server messages "
+           "and as fallback when a nick color is not found; most of times "
+           "nick color comes from option weechat.color.chat_nick_colors"),
         NULL, GUI_COLOR_CHAT_NICK, 0, "lightcyan", NULL, 0,
         NULL, NULL, NULL,
         &config_change_color, NULL, NULL,

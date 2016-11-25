@@ -63,7 +63,7 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
 
 * [[option_weechat.color.chat_nick]] *weechat.color.chat_nick*
-** 説明: pass:none[チャットウィンドウ内のニックネームのテキスト色]
+** 説明: pass:none[text color for nicks in chat window: used in some server messages and as fallback when a nick color is not found; most of times nick color comes from option weechat.color.chat_nick_colors]
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightcyan+`)
 

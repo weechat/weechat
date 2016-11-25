@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-22 15:12+0100\n"
+"POT-Creation-Date: 2016-11-25 20:05+0100\n"
 "PO-Revision-Date: 2016-09-03 08:23+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3111,9 +3111,11 @@ msgid ""
 "text color for chat when window is inactive (not current selected window)"
 msgstr ""
 
-#, fuzzy
-msgid "text color for nicks in chat window"
-msgstr "idő színe a beszédablakban"
+msgid ""
+"text color for nicks in chat window: used in some server messages and as "
+"fallback when a nick color is not found; most of times nick color comes from "
+"option weechat.color.chat_nick_colors"
+msgstr ""
 
 #. TRANSLATORS: please do not translate "lightred:blue"
 #, fuzzy
@@ -10695,6 +10697,10 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid "text color for nicks in chat window"
+#~ msgstr "idő színe a beszédablakban"
 
 #, fuzzy
 #~ msgid "%s: removing old fifo pipe \"%s\""
