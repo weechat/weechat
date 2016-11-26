@@ -630,6 +630,227 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 | window_number     | `2`                 | Numer obecnego okna
 |===
 
+[[command_line]]
+=== Linia poleceń
+
+Linia poleceń WeeChat (na dole okna) pozwala na wykonywanie komend lub wysłanie
+tekstu do bufora.
+
+[[command_line_syntax]]
+==== Składnia
+
+Komendy zaczynają się od znaku "/", następnie wpisujemy komendę. Na przykład,
+aby zobaczyć listę wszystkich opcji:
+
+----
+/set
+----
+
+Tekst wysłany do buforu to dowolny tekst, który nie zaczyna się od znaku "/".
+Na przykład, żeby wysłać tekst _hello_ do obecnego buforu wystarczy:
+
+----
+hello
+----
+
+Jednak możliwe jest rozpoczęcie tekstu znakiem "/", wpisując go podwójnie.
+Na przykład, żeby wysłać tekst `/set` do obecnego buforu:
+
+----
+//set
+----
+
+[[command_line_colors]]
+==== Kody kolorów
+
+Dla niektórych wtyczek jak IRC, można użyć kolorów i atrybutów w następujący sposób
+(wciśnij kbd:[Ctrl+c] następnie literę z opcjonalną wartością):
+
+[width="60%",cols="3,5",options="header"]
+|===
+| Klawisz                | Opis
+| kbd:[Ctrl+c], kbd:[b]  | pogrubiony tekst
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx]               | kolor tekstu `xx` (zgodnie z poniższą listą kolorów)
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx], kbd:[,],
+  kbd:[yy]               | kolor tekstu `xx` i tła `yy` (zgodnie z poniższą listą kolorów)
+| kbd:[Ctrl+c], kbd:[i]  | pochyły tekst
+| kbd:[Ctrl+c], kbd:[o]  | wyłącza kolory i atrybuty
+| kbd:[Ctrl+c], kbd:[v]  | odwróć video (przywraca kolor tekstu i tła)
+| kbd:[Ctrl+c], kbd:[_]  | podkreślony tekst
+|===
+
+[NOTE]
+Ten sam sktót (bez numeru dla kbd:[Ctrl+c], kbd:[c]) może zostać użyty do zatrzymania
+atrybutu.
+
+Kody kolorów dla kbd:[Ctrl+c], kbd:[c]:
+
+include::autogen/user/irc_colors.adoc[]
+
+[NOTE]
+W celu wyświetlenia wszystkich dostępnych kolorów dla terminala możesz wykonać
+komendę `/color` następnie kbd:[Alt+c] (w WeeChat) lub wywołać w terminalu:
+`weechat --colors`.
+
+Przykład: wyświetlenie "hello everybody!" z pogrubionym jasno niebieskim "hello"
+i podkreślonym jasno czerwonym "everybody":
+
+----
+^Cc12^Cbhello ^Cb^Cc04^C_everybody^C_^Cc!
+----
+
+[NOTE]
+We wtyczce irc, można zmienić przypisania tych kolorów za pomocą opcji
+<<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
+
+[[colors]]
+=== Kolory
+
+WeeChat może użyć do 256 par kolorów do wyświetlania tekstu w paskach i obszarze
+rozmów (twój terminal musi wspierać do 256 par kolorów, aby użyć ich w WeeChat).
+
+Zgodnie z wartością zmiennej środowiskowej _TERM_, możesz posiadać następujące
+limity dla kolorów w WeeChat:
+
+[width="50%",cols="8,>2,>2",options="header"]
+|===
+| $TERM                                  | Kolory | Pary
+| "rxvt-unicode", "xterm", ...           |     88 |  256
+| "rxvt-256color", "xterm-256color", ... |    256 |  256
+| "screen"                               |      8 |   64
+| "screen-256color"                      |    256 |  256
+| "tmux"                                 |      8 |   64
+| "tmux-256color"                        |    256 |  256
+|===
+
+Możesz wykonać `weechat --colors` lub użyć komendy `/color` w WeeChat, aby
+wyświetlić limity dla twojego środowiska.
+
+Niektóre z zalecanych wartości dla _TERM_ jeśli chcesz używać 256 kolorów:
+
+* dla screena: _screen-256color_
+* pod tmux: _screen-256color_ lub _tmux-256color_
+* poza screenem/tmuxem: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
+
+[NOTE]
+Być może konieczne jest zainstalowanie pakietu "ncurses-term", w celu użycia
+tych wartości dla zmiennej _TERM_.
+
+Jeśli używasz screena, możesz dodać to do swojego _~/.screenrc_:
+
+----
+term screen-256color
+----
+
+Jeśli wartość zmiennej _TERM_ ma złą wartość, a WeeChat jest już uruchomiony,
+możesz ją zmienić za pomocą tych dwóch komend:
+
+----
+/set env TERM screen-256color
+/upgrade
+----
+
+[[colors_basic]]
+==== Podstawowe kolory
+
+Podstawowe kolory w WeeChat to:
+
+[width="50%",cols="^3m,8",options="header"]
+|===
+| Nazwa        | Kolor
+| default      | Domyślny kolor terminala (przezroczysty dla tła)
+| black        | Czarny
+| darkgray     | Ciemny szary
+| red          | Ciemny czerwony
+| lightred     | Jasny czerwony
+| green        | Ciemny zielony
+| lightgreen   | Jasny zielony
+| brown        | Brązowy
+| yellow       | Żółty
+| blue         | Ciemny niebieski
+| lightblue    | Jasny niebieski
+| magenta      | Ciemny karmazynowy
+| lightmagenta | Jasny karmazynowy
+| cyan         | Ciemny błękitny
+| lightcyan    | Jasny błękitny
+| gray         | Szary
+| white        | Biały
+|===
+
+[[colors_extended]]
+==== Rozszerzone kolory
+
+Weechat dynamicznie alokuje pary kolorów, kiedy kolory są używane na ekranie (do
+wyświetlania buforów i pasków).
+
+W dodatku do podstawowych kolorów, możesz użyć numer koloru pomiędzy 1 a limitem
+twojego terminala.
+
+Użyj komendy `/color`, aby zobaczyć obecne kolory i limity. Za pomocą kbd:[Alt+c]
+możesz tymczasowo przełączyć się na kolory terminala, żeby wybrać kolor.
+
+Na przykład jeśli chcesz wyświetlać czas na pomarańczowo w buforze:
+
+----
+/set weechat.color.chat_time 214
+----
+
+Lub jeśli chcesz mocno ciemno zielonego tła dla pasku statusu:
+
+----
+/set weechat.bar.status.color_bg 22
+----
+
+[[colors_aliases]]
+==== Aliasy
+
+Możesz dodać aliasy do kolorów za pomocą komendy `/color alias` i używać ich w
+dowolnej opcji jako koloru.
+
+Na przykład:
+
+----
+/color alias 214 orange
+/set weechat.color.chat_delimiters orange
+----
+
+[[colors_attributes]]
+==== Atrybuty
+
+Możliwe jest użycie niektórych atrybutów dla kolorów. Jeden lub więcej z nich
+może zostać użyty przed nazwą lub numerem koloru:
+
+* `+*+` : pogrubiony tekst
+* `+!+` : odwrócenie video
+* `+/+` : pochyły
+* `+_+` : podkreślony tekst
+* `+|+` : zachowaj atrybuty: nie resetuj pogrubienia/odwrócenia/pochylenia/podkreślenia,
+  podczas zmiany koloru
+
+Na przykład jeśli chcesz, żeby twój nick był biały i podkreślony:
+
+----
+/set weechat.color.chat_nick_self _white
+----
+
+Lub jeśli chcesz, żeby czas w pasku statusu był pomarańczowy, podkreślony i
+pogrubiony:
+
+----
+/set weechat.color.status_time *_214
+----
+
+Aby użyć atrybutu z domyślnym kolorem terminala (-1), należy użyć numeru większego
+od ostatniego koloru terminala, na przykład maksymalny kolor w WeeChat: 99999.
+
+Przykład pogrubienia z domyślnym kolorem terminala:
+
+----
+/set weechat.color.status_time *99999
+----
+
 [[buffers_and_windows]]
 === Bufory i okna
 
@@ -1536,227 +1757,6 @@ przycisku myszy.
 [TIP]
 Możesz znaleźć nazwę zdarzenia za pomocą komendy `/input grab_mouse` wykonując
 następnie zdarzenie za pomocą myszy. Umieści to zdarzenie w linii poleceń.
-
-[[command_line]]
-=== Linia poleceń
-
-Linia poleceń WeeChat (na dole okna) pozwala na wykonywanie komend lub wysłanie
-tekstu do bufora.
-
-[[command_line_syntax]]
-==== Składnia
-
-Komendy zaczynają się od znaku "/", następnie wpisujemy komendę. Na przykład,
-aby zobaczyć listę wszystkich opcji:
-
-----
-/set
-----
-
-Tekst wysłany do buforu to dowolny tekst, który nie zaczyna się od znaku "/".
-Na przykład, żeby wysłać tekst _hello_ do obecnego buforu wystarczy:
-
-----
-hello
-----
-
-Jednak możliwe jest rozpoczęcie tekstu znakiem "/", wpisując go podwójnie.
-Na przykład, żeby wysłać tekst `/set` do obecnego buforu:
-
-----
-//set
-----
-
-[[command_line_colors]]
-==== Kody kolorów
-
-Dla niektórych wtyczek jak IRC, można użyć kolorów i atrybutów w następujący sposób
-(wciśnij kbd:[Ctrl+c] następnie literę z opcjonalną wartością):
-
-[width="60%",cols="3,5",options="header"]
-|===
-| Klawisz                | Opis
-| kbd:[Ctrl+c], kbd:[b]  | pogrubiony tekst
-| kbd:[Ctrl+c], kbd:[c],
-  kbd:[xx]               | kolor tekstu `xx` (zgodnie z poniższą listą kolorów)
-| kbd:[Ctrl+c], kbd:[c],
-  kbd:[xx], kbd:[,],
-  kbd:[yy]               | kolor tekstu `xx` i tła `yy` (zgodnie z poniższą listą kolorów)
-| kbd:[Ctrl+c], kbd:[i]  | pochyły tekst
-| kbd:[Ctrl+c], kbd:[o]  | wyłącza kolory i atrybuty
-| kbd:[Ctrl+c], kbd:[v]  | odwróć video (przywraca kolor tekstu i tła)
-| kbd:[Ctrl+c], kbd:[_]  | podkreślony tekst
-|===
-
-[NOTE]
-Ten sam sktót (bez numeru dla kbd:[Ctrl+c], kbd:[c]) może zostać użyty do zatrzymania
-atrybutu.
-
-Kody kolorów dla kbd:[Ctrl+c], kbd:[c]:
-
-include::autogen/user/irc_colors.adoc[]
-
-[NOTE]
-W celu wyświetlenia wszystkich dostępnych kolorów dla terminala możesz wykonać
-komendę `/color` następnie kbd:[Alt+c] (w WeeChat) lub wywołać w terminalu:
-`weechat --colors`.
-
-Przykład: wyświetlenie "hello everybody!" z pogrubionym jasno niebieskim "hello"
-i podkreślonym jasno czerwonym "everybody":
-
-----
-^Cc12^Cbhello ^Cb^Cc04^C_everybody^C_^Cc!
-----
-
-[NOTE]
-We wtyczce irc, można zmienić przypisania tych kolorów za pomocą opcji
-<<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
-
-[[colors]]
-=== Kolory
-
-WeeChat może użyć do 256 par kolorów do wyświetlania tekstu w paskach i obszarze
-rozmów (twój terminal musi wspierać do 256 par kolorów, aby użyć ich w WeeChat).
-
-Zgodnie z wartością zmiennej środowiskowej _TERM_, możesz posiadać następujące
-limity dla kolorów w WeeChat:
-
-[width="50%",cols="8,>2,>2",options="header"]
-|===
-| $TERM                                  | Kolory | Pary
-| "rxvt-unicode", "xterm", ...           |     88 |  256
-| "rxvt-256color", "xterm-256color", ... |    256 |  256
-| "screen"                               |      8 |   64
-| "screen-256color"                      |    256 |  256
-| "tmux"                                 |      8 |   64
-| "tmux-256color"                        |    256 |  256
-|===
-
-Możesz wykonać `weechat --colors` lub użyć komendy `/color` w WeeChat, aby
-wyświetlić limity dla twojego środowiska.
-
-Niektóre z zalecanych wartości dla _TERM_ jeśli chcesz używać 256 kolorów:
-
-* dla screena: _screen-256color_
-* pod tmux: _screen-256color_ lub _tmux-256color_
-* poza screenem/tmuxem: _xterm-256color_, _rxvt-256color_, _putty-256color_, ...
-
-[NOTE]
-Być może konieczne jest zainstalowanie pakietu "ncurses-term", w celu użycia
-tych wartości dla zmiennej _TERM_.
-
-Jeśli używasz screena, możesz dodać to do swojego _~/.screenrc_:
-
-----
-term screen-256color
-----
-
-Jeśli wartość zmiennej _TERM_ ma złą wartość, a WeeChat jest już uruchomiony,
-możesz ją zmienić za pomocą tych dwóch komend:
-
-----
-/set env TERM screen-256color
-/upgrade
-----
-
-[[colors_basic]]
-==== Podstawowe kolory
-
-Podstawowe kolory w WeeChat to:
-
-[width="50%",cols="^3m,8",options="header"]
-|===
-| Nazwa        | Kolor
-| default      | Domyślny kolor terminala (przezroczysty dla tła)
-| black        | Czarny
-| darkgray     | Ciemny szary
-| red          | Ciemny czerwony
-| lightred     | Jasny czerwony
-| green        | Ciemny zielony
-| lightgreen   | Jasny zielony
-| brown        | Brązowy
-| yellow       | Żółty
-| blue         | Ciemny niebieski
-| lightblue    | Jasny niebieski
-| magenta      | Ciemny karmazynowy
-| lightmagenta | Jasny karmazynowy
-| cyan         | Ciemny błękitny
-| lightcyan    | Jasny błękitny
-| gray         | Szary
-| white        | Biały
-|===
-
-[[colors_extended]]
-==== Rozszerzone kolory
-
-Weechat dynamicznie alokuje pary kolorów, kiedy kolory są używane na ekranie (do
-wyświetlania buforów i pasków).
-
-W dodatku do podstawowych kolorów, możesz użyć numer koloru pomiędzy 1 a limitem
-twojego terminala.
-
-Użyj komendy `/color`, aby zobaczyć obecne kolory i limity. Za pomocą kbd:[Alt+c]
-możesz tymczasowo przełączyć się na kolory terminala, żeby wybrać kolor.
-
-Na przykład jeśli chcesz wyświetlać czas na pomarańczowo w buforze:
-
-----
-/set weechat.color.chat_time 214
-----
-
-Lub jeśli chcesz mocno ciemno zielonego tła dla pasku statusu:
-
-----
-/set weechat.bar.status.color_bg 22
-----
-
-[[colors_aliases]]
-==== Aliasy
-
-Możesz dodać aliasy do kolorów za pomocą komendy `/color alias` i używać ich w
-dowolnej opcji jako koloru.
-
-Na przykład:
-
-----
-/color alias 214 orange
-/set weechat.color.chat_delimiters orange
-----
-
-[[colors_attributes]]
-==== Atrybuty
-
-Możliwe jest użycie niektórych atrybutów dla kolorów. Jeden lub więcej z nich
-może zostać użyty przed nazwą lub numerem koloru:
-
-* `+*+` : pogrubiony tekst
-* `+!+` : odwrócenie video
-* `+/+` : pochyły
-* `+_+` : podkreślony tekst
-* `+|+` : zachowaj atrybuty: nie resetuj pogrubienia/odwrócenia/pochylenia/podkreślenia,
-  podczas zmiany koloru
-
-Na przykład jeśli chcesz, żeby twój nick był biały i podkreślony:
-
-----
-/set weechat.color.chat_nick_self _white
-----
-
-Lub jeśli chcesz, żeby czas w pasku statusu był pomarańczowy, podkreślony i
-pogrubiony:
-
-----
-/set weechat.color.status_time *_214
-----
-
-Aby użyć atrybutu z domyślnym kolorem terminala (-1), należy użyć numeru większego
-od ostatniego koloru terminala, na przykład maksymalny kolor w WeeChat: 99999.
-
-Przykład pogrubienia z domyślnym kolorem terminala:
-
-----
-/set weechat.color.status_time *99999
-----
 
 [[secured_data]]
 === Zabezpieczone dane

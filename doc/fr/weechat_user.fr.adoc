@@ -633,6 +633,233 @@ Autres objets (non utilisés dans des barres par défaut) :
 | window_number     | `2`                 | Numéro de la fenêtre courante
 |===
 
+[[command_line]]
+=== Ligne de commande
+
+La ligne de commande WeeChat (située en bas de la fenêtre) permet d'exécuter
+des commandes ou d'envoyer du texte vers le tampon.
+
+[[command_line_syntax]]
+==== Syntaxe
+
+Les commandes débutent par un caractère "/", suivi du nom de la
+commande. Par exemple pour afficher la liste de toutes les options :
+
+----
+/set
+----
+
+Le texte envoyé à un tampon est tout texte ne commençant pas par le
+caractère "/", par exemple pour envoyer _bonjour_ sur le tampon courant :
+
+----
+bonjour
+----
+
+Il est cependant possible de faire débuter un texte par "/" en le
+doublant. Par exemple pour envoyer le texte `/set` sur le tampon courant :
+
+----
+//set
+----
+
+[[command_line_colors]]
+==== Codes couleurs
+
+Pour certaines extensions comme IRC, il est possible d'utiliser des codes
+couleur et attributs comme suit (appuyer sur kbd:[Ctrl+c] puis sur la lettre qui
+suit et éventuellement une valeur) :
+
+[width="60%",cols="3,5",options="header"]
+|===
+| Touche                 | Description
+| kbd:[Ctrl+c], kbd:[b]  | texte gras
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx]               | couleur du texte `xx` (voir la liste des couleurs ci-dessous)
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx], kbd:[,],
+  kbd:[yy]               | couleur du texte `xx` et du fond `yy` (voir la liste des couleurs ci-dessous)
+| kbd:[Ctrl+c], kbd:[i]  | texte en italique
+| kbd:[Ctrl+c], kbd:[o]  | désactiver la couleur et tous les attributs
+| kbd:[Ctrl+c], kbd:[v]  | vidéo inverse (inversion de la couleur d'écriture et du fond)
+| kbd:[Ctrl+c], kbd:[_]  | texte souligné
+|===
+
+[NOTE]
+Le même code (sans le numéro pour kbd:[Ctrl+c], kbd:[c]) peut être utilisé pour
+stopper l'attribut défini.
+
+Les codes couleur pour kbd:[Ctrl+c], kbd:[c] sont :
+
+include::autogen/user/irc_colors.adoc[]
+
+[NOTE]
+Pour voir toutes les couleurs disponibles dans votre terminal, vous pouvez
+taper `/color` puis kbd:[Alt+c] dans WeeChat ou lancez cette commande dans le
+terminal : `weechat --colors`.
+
+Exemple : affichage de "bonjour tout le monde !" avec "bonjour" en bleu clair
+gras, et "tout le monde" en rouge clair souligné :
+
+----
+^Cc12^Cbbonjour ^Cb^Cc04^C_tout le monde^C_^Cc !
+----
+
+[NOTE]
+Dans l'extension irc, vous pouvez réassigner les couleurs en utilisant l'option
+<<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
+
+[[colors]]
+=== Couleurs
+
+WeeChat peut utiliser jusqu'à 256 paires de couleur pour afficher le texte dans
+les barres et la zone de discussion (votre terminal doit supporter 256 couleurs
+pour pouvoir les utiliser dans WeeChat).
+
+Selon la valeur de la variable d'environnement _TERM_, vous pouvez avoir les
+limites suivantes pour les couleurs dans WeeChat :
+
+[width="50%",cols="8,>2,>2",options="header"]
+|===
+| $TERM                                  | Couleurs | Paires
+| "rxvt-unicode", "xterm", ...           |       88 |    256
+| "rxvt-256color", "xterm-256color", ... |      256 |    256
+| "screen"                               |        8 |     64
+| "screen-256color"                      |      256 |    256
+| "tmux"                                 |        8 |     64
+| "tmux-256color"                        |      256 |    256
+|===
+
+Vous pouvez lancer `weechat --colors` ou utiliser la commande `/color`
+dans WeeChat pour afficher les limites de votre environnement.
+
+Quelques valeurs recommandées pour _TERM_ si vous voulez 256 couleurs :
+
+* sous screen : _screen-256color_
+* sous tmux : _screen-256color_ ou _tmux-256color_
+* en dehors de screen/tmux : _xterm-256color_, _rxvt-256color_,
+  _putty-256color_, ...
+
+Si vous utilisez screen, vous pouvez ajouter cette ligne dans votre
+_~/.screenrc_ :
+
+[NOTE]
+Vous devrez peut-être installer le paquet "ncurses-term" pour utiliser ces
+valeurs dans la variable _TERM_.
+
+----
+term screen-256color
+----
+
+Si votre variable _TERM_ a une valeur erronée et que WeeChat est déjà lancé,
+vous pouvez la changer avec ces deux commandes :
+
+----
+/set env TERM screen-256color
+/upgrade
+----
+
+[[colors_basic]]
+==== Couleurs de base
+
+Les couleurs de base dans WeeChat sont :
+
+[width="50%",cols="^3m,8",options="header"]
+|===
+| Nom          | Couleur
+| default      | Couleur par défaut du terminal (transparent pour le fond)
+| black        | Noir
+| darkgray     | Gris foncé
+| red          | Rouge foncé
+| lightred     | Rouge clair
+| green        | Vert foncé
+| lightgreen   | Vert clair
+| brown        | Marron
+| yellow       | Jaune
+| blue         | Bleu foncé
+| lightblue    | Bleu clair
+| magenta      | Violet foncé
+| lightmagenta | Violet clair
+| cyan         | Cyan foncé
+| lightcyan    | Cyan clair
+| gray         | Gris
+| white        | Blanc
+|===
+
+[[colors_extended]]
+==== Couleurs étendues
+
+WeeChat alloue dynamiquement les paires de couleurs quand elles sont utilisées
+sur l'écran (pour afficher les tampons et les barres).
+
+En plus des couleurs de base, vous pouvez utiliser un numéro de couleur entre 1
+et la limite de votre terminal.
+
+Utilisez la commande `/color` pour voir les couleurs et les limites. Avec la
+touche kbd:[Alt+c], vous pouvez basculer temporairement vers les couleurs du
+terminal pour choisir une couleur.
+
+Par exemple si vous souhaitez afficher l'heure en orange dans le tampon,
+faites :
+
+----
+/set weechat.color.chat_time 214
+----
+
+Ou si vous voulez un fond vert très foncé pour la barre de statut :
+
+----
+/set weechat.bar.status.color_bg 22
+----
+
+[[colors_aliases]]
+==== Alias
+
+Vous pouvez ajouter des alias de couleur avec la commande `/color alias` puis
+utiliser cet alias dans n'importe quelle option de couleur.
+
+Par exemple :
+
+----
+/color alias 214 orange
+/set weechat.color.chat_delimiters orange
+----
+
+[[colors_attributes]]
+==== Attributs
+
+Il est possible d'utiliser des attributs pour les couleurs. Un ou plusieurs
+attributs peuvent être ajoutés avant le nom ou le numéro de la couleur :
+
+* `+*+` : texte gras
+* `+!+` : mode vidéo inverse
+* `+/+` : italique
+* `+_+` : texte souligné
+* `+|+` : garder les attributs : ne pas réinitialiser gras/inverse/souligné lors
+  du changement de couleur
+
+Par exemple si vous voulez votre pseudo en blanc souligné, faites :
+
+----
+/set weechat.color.chat_nick_self _white
+----
+
+Ou si vous voulez l'heure dans la barre de statut en orange souligné avec gras :
+
+----
+/set weechat.color.status_time *_214
+----
+
+Pour utiliser un attribut avec la couleur par défaut du terminal (-1), vous
+devez utiliser un nombre supérieur à la dernière couleur du terminal, par
+exemple la couleur maximum de WeeChat : 99999.
+
+Exemple de gras avec la couleur de texte du terminal :
+
+----
+/set weechat.color.status_time *99999
+----
+
 [[buffers_and_windows]]
 === Tampons et fenêtres
 
@@ -1566,233 +1793,6 @@ effectué avec le bouton gauche.
 Vous pouvez trouver le nom de l'évènement avec la commande `/input grab_mouse`
 puis en faisant l'action avec la souris. Cela insérera le nom de l'évènement
 sur la ligne de commande.
-
-[[command_line]]
-=== Ligne de commande
-
-La ligne de commande WeeChat (située en bas de la fenêtre) permet d'exécuter
-des commandes ou d'envoyer du texte vers le tampon.
-
-[[command_line_syntax]]
-==== Syntaxe
-
-Les commandes débutent par un caractère "/", suivi du nom de la
-commande. Par exemple pour afficher la liste de toutes les options :
-
-----
-/set
-----
-
-Le texte envoyé à un tampon est tout texte ne commençant pas par le
-caractère "/", par exemple pour envoyer _bonjour_ sur le tampon courant :
-
-----
-bonjour
-----
-
-Il est cependant possible de faire débuter un texte par "/" en le
-doublant. Par exemple pour envoyer le texte `/set` sur le tampon courant :
-
-----
-//set
-----
-
-[[command_line_colors]]
-==== Codes couleurs
-
-Pour certaines extensions comme IRC, il est possible d'utiliser des codes
-couleur et attributs comme suit (appuyer sur kbd:[Ctrl+c] puis sur la lettre qui
-suit et éventuellement une valeur) :
-
-[width="60%",cols="3,5",options="header"]
-|===
-| Touche                 | Description
-| kbd:[Ctrl+c], kbd:[b]  | texte gras
-| kbd:[Ctrl+c], kbd:[c],
-  kbd:[xx]               | couleur du texte `xx` (voir la liste des couleurs ci-dessous)
-| kbd:[Ctrl+c], kbd:[c],
-  kbd:[xx], kbd:[,],
-  kbd:[yy]               | couleur du texte `xx` et du fond `yy` (voir la liste des couleurs ci-dessous)
-| kbd:[Ctrl+c], kbd:[i]  | texte en italique
-| kbd:[Ctrl+c], kbd:[o]  | désactiver la couleur et tous les attributs
-| kbd:[Ctrl+c], kbd:[v]  | vidéo inverse (inversion de la couleur d'écriture et du fond)
-| kbd:[Ctrl+c], kbd:[_]  | texte souligné
-|===
-
-[NOTE]
-Le même code (sans le numéro pour kbd:[Ctrl+c], kbd:[c]) peut être utilisé pour
-stopper l'attribut défini.
-
-Les codes couleur pour kbd:[Ctrl+c], kbd:[c] sont :
-
-include::autogen/user/irc_colors.adoc[]
-
-[NOTE]
-Pour voir toutes les couleurs disponibles dans votre terminal, vous pouvez
-taper `/color` puis kbd:[Alt+c] dans WeeChat ou lancez cette commande dans le
-terminal : `weechat --colors`.
-
-Exemple : affichage de "bonjour tout le monde !" avec "bonjour" en bleu clair
-gras, et "tout le monde" en rouge clair souligné :
-
-----
-^Cc12^Cbbonjour ^Cb^Cc04^C_tout le monde^C_^Cc !
-----
-
-[NOTE]
-Dans l'extension irc, vous pouvez réassigner les couleurs en utilisant l'option
-<<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
-
-[[colors]]
-=== Couleurs
-
-WeeChat peut utiliser jusqu'à 256 paires de couleur pour afficher le texte dans
-les barres et la zone de discussion (votre terminal doit supporter 256 couleurs
-pour pouvoir les utiliser dans WeeChat).
-
-Selon la valeur de la variable d'environnement _TERM_, vous pouvez avoir les
-limites suivantes pour les couleurs dans WeeChat :
-
-[width="50%",cols="8,>2,>2",options="header"]
-|===
-| $TERM                                  | Couleurs | Paires
-| "rxvt-unicode", "xterm", ...           |       88 |    256
-| "rxvt-256color", "xterm-256color", ... |      256 |    256
-| "screen"                               |        8 |     64
-| "screen-256color"                      |      256 |    256
-| "tmux"                                 |        8 |     64
-| "tmux-256color"                        |      256 |    256
-|===
-
-Vous pouvez lancer `weechat --colors` ou utiliser la commande `/color`
-dans WeeChat pour afficher les limites de votre environnement.
-
-Quelques valeurs recommandées pour _TERM_ si vous voulez 256 couleurs :
-
-* sous screen : _screen-256color_
-* sous tmux : _screen-256color_ ou _tmux-256color_
-* en dehors de screen/tmux : _xterm-256color_, _rxvt-256color_,
-  _putty-256color_, ...
-
-Si vous utilisez screen, vous pouvez ajouter cette ligne dans votre
-_~/.screenrc_ :
-
-[NOTE]
-Vous devrez peut-être installer le paquet "ncurses-term" pour utiliser ces
-valeurs dans la variable _TERM_.
-
-----
-term screen-256color
-----
-
-Si votre variable _TERM_ a une valeur erronée et que WeeChat est déjà lancé,
-vous pouvez la changer avec ces deux commandes :
-
-----
-/set env TERM screen-256color
-/upgrade
-----
-
-[[colors_basic]]
-==== Couleurs de base
-
-Les couleurs de base dans WeeChat sont :
-
-[width="50%",cols="^3m,8",options="header"]
-|===
-| Nom          | Couleur
-| default      | Couleur par défaut du terminal (transparent pour le fond)
-| black        | Noir
-| darkgray     | Gris foncé
-| red          | Rouge foncé
-| lightred     | Rouge clair
-| green        | Vert foncé
-| lightgreen   | Vert clair
-| brown        | Marron
-| yellow       | Jaune
-| blue         | Bleu foncé
-| lightblue    | Bleu clair
-| magenta      | Violet foncé
-| lightmagenta | Violet clair
-| cyan         | Cyan foncé
-| lightcyan    | Cyan clair
-| gray         | Gris
-| white        | Blanc
-|===
-
-[[colors_extended]]
-==== Couleurs étendues
-
-WeeChat alloue dynamiquement les paires de couleurs quand elles sont utilisées
-sur l'écran (pour afficher les tampons et les barres).
-
-En plus des couleurs de base, vous pouvez utiliser un numéro de couleur entre 1
-et la limite de votre terminal.
-
-Utilisez la commande `/color` pour voir les couleurs et les limites. Avec la
-touche kbd:[Alt+c], vous pouvez basculer temporairement vers les couleurs du
-terminal pour choisir une couleur.
-
-Par exemple si vous souhaitez afficher l'heure en orange dans le tampon,
-faites :
-
-----
-/set weechat.color.chat_time 214
-----
-
-Ou si vous voulez un fond vert très foncé pour la barre de statut :
-
-----
-/set weechat.bar.status.color_bg 22
-----
-
-[[colors_aliases]]
-==== Alias
-
-Vous pouvez ajouter des alias de couleur avec la commande `/color alias` puis
-utiliser cet alias dans n'importe quelle option de couleur.
-
-Par exemple :
-
-----
-/color alias 214 orange
-/set weechat.color.chat_delimiters orange
-----
-
-[[colors_attributes]]
-==== Attributs
-
-Il est possible d'utiliser des attributs pour les couleurs. Un ou plusieurs
-attributs peuvent être ajoutés avant le nom ou le numéro de la couleur :
-
-* `+*+` : texte gras
-* `+!+` : mode vidéo inverse
-* `+/+` : italique
-* `+_+` : texte souligné
-* `+|+` : garder les attributs : ne pas réinitialiser gras/inverse/souligné lors
-  du changement de couleur
-
-Par exemple si vous voulez votre pseudo en blanc souligné, faites :
-
-----
-/set weechat.color.chat_nick_self _white
-----
-
-Ou si vous voulez l'heure dans la barre de statut en orange souligné avec gras :
-
-----
-/set weechat.color.status_time *_214
-----
-
-Pour utiliser un attribut avec la couleur par défaut du terminal (-1), vous
-devez utiliser un nombre supérieur à la dernière couleur du terminal, par
-exemple la couleur maximum de WeeChat : 99999.
-
-Exemple de gras avec la couleur de texte du terminal :
-
-----
-/set weechat.color.status_time *99999
-----
 
 [[secured_data]]
 === Données sécurisées

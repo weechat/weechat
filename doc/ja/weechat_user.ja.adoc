@@ -625,6 +625,225 @@ WeeChat を起動した端末の例:
 | window_number     | `2`                 | 現在のウィンドウ番号
 |===
 
+[[command_line]]
+=== コマンドライン
+
+WeeChat コマンドライン (ウィンドウの一番下にあります)
+はコマンドの実行やバッファにテキストを送信するために利用します。
+
+[[command_line_syntax]]
+==== 文法
+
+コマンドは "/"
+文字で始まり、コマンドの名前を続けます。例えば、すべてのオプションを表示するには:
+
+----
+/set
+----
+
+"/" が最初に無い場合、そのテキストはバッファに送信されます。例えば、_hello_
+というテキストをバッファに送信するには:
+
+----
+hello
+----
+
+"/" 文字から始まるテキストを送信したい場合、2 重に "/" をつけます。例えば、`/set`
+というテキストを現在のバッファに送信するには:
+
+----
+//set
+----
+
+[[command_line_colors]]
+==== 色コード
+
+IRC 等のプラグインでは、以下の色コードと属性を利用できます
+(kbd:[Ctrl+c] の後に、オプションとともに以下のキーを押してください):
+
+[width="60%",cols="3,5",options="header"]
+|===
+| キー                   | 説明
+| kbd:[Ctrl+c], kbd:[b]  | テキストを太字に
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx]               | テキスト表示色を `xx` に (以下の色リストを参照)
+| kbd:[Ctrl+c], kbd:[c],
+  kbd:[xx], kbd:[,],
+  kbd:[yy]               | テキスト表示色を `xx` に、背景色を `yy` に (以下の色リストを参照)
+| kbd:[Ctrl+c], kbd:[i]  | テキストをイタリック体に
+| kbd:[Ctrl+c], kbd:[o]  | テキスト表示色と属性をリセット
+| kbd:[Ctrl+c], kbd:[v]  | テキストを反転 (テキスト表示色と背景色の入れ替え)
+| kbd:[Ctrl+c], kbd:[_]  | テキストに下線を引く
+|===
+
+[NOTE]
+同じコードで (色コードを入力せずに kbd:[Ctrl+c], kbd:[c]
+を使うことで) 属性をキャンセルすることができます。
+
+kbd:[Ctrl+c], kbd:[c] 用の色コード:
+
+include::autogen/user/irc_colors.adoc[]
+
+[NOTE]
+端末で利用可能なすべての色を表示するには、WeeChat で `/color` を実行した後
+kbd:[Alt+c] を入力するか、端末で以下のコマンドを実行してください: `weechat --colors`。
+
+例:
+「こんにちは皆さん!」の「こんにちは」を太字の明るい青、「皆さん」を下線付きの明るい赤に表示したい場合:
+
+----
+^Cc12^Cbこんにちは^Cb^Cc04^C_皆さん^C_^Cc!
+----
+
+[NOTE]
+irc プラグインでは、<<option_irc.color.mirc_remap,irc.color.mirc_remap>>
+を使ってこれらの色を別の色に対応付けることができます。
+
+[[colors]]
+=== 色
+
+WeeChat ではバーやチャットエリアにおけるテキスト表示に 256 個の色ペアを利用できます
+(この機能を利用するには WeeChat が実行されている端末が 256 色表示に対応している必要があります)。
+
+_TERM_ 環境変数の値によって、WeeChat
+で利用できる色と色ペアに以下の制限があります:
+
+[width="50%",cols="8,>2,>2",options="header"]
+|===
+| $TERM                                  | 色     | ペア
+| "rxvt-unicode", "xterm", ...           |     88 |  256
+| "rxvt-256color", "xterm-256color", ... |    256 |  256
+| "screen"                               |      8 |   64
+| "screen-256color"                      |    256 |  256
+| "tmux"                                 |      8 |   64
+| "tmux-256color"                        |    256 |  256
+|===
+
+`weechat --colors` を実行するか、`/color` コマンドを WeeChat
+の中で実行することで、色表示の制限を確認できます。
+
+256 色を利用したい場合に推奨される _TERM_ 環境変数の値は:
+
+* screen 内の場合: _screen-256color_
+* tmux 内の場合: _screen-256color_、_tmux-256color_
+* screen および tmux の外の場合: _xterm-256color_、_rxvt-256color_、_putty-256color_、...
+
+[NOTE]
+_TERM_ 環境変数の値に上の値を設定するには、"ncurses-term"
+パッケージをインストールする必要があるかもしれません。
+
+screen を使っている場合、_~/.screenrc_ に以下の内容を追加してください:
+
+----
+term screen-256color
+----
+
+_TERM_ 変数が間違った値に設定された状態で WeeChat が起動完了している場合は、以下の
+2 つのコマンドを使って変数の値を変更してください:
+
+----
+/set env TERM screen-256color
+/upgrade
+----
+
+[[colors_basic]]
+==== 基本色
+
+WeeChat における基本色とは:
+
+[width="50%",cols="^3m,8",options="header"]
+|===
+| 名前         | 色
+| default      | デフォルトの端末色 (背景色を透過色とする)
+| black        | 黒
+| darkgray     | 暗い灰色
+| red          | 暗い赤
+| lightred     | 明るい赤
+| green        | 暗い緑色
+| lightgreen   | 明るい緑色
+| brown        | 茶色
+| yellow       | 黄色
+| blue         | 暗い青
+| lightblue    | 明るい青
+| magenta      | 暗い赤紫色
+| lightmagenta | 明るい赤紫色
+| cyan         | 暗い青緑色
+| lightcyan    | 明るい青緑色
+| gray         | 灰色
+| white        | 白
+|===
+
+[[colors_extended]]
+==== 拡張色
+
+WeeChat は画面に色が表示された時点で色ペアを動的に割り当てます
+(バッファとバーを表示する時点で)。
+
+基本色に加えて、1 番
+から端末の対応状況に依存する番号までの色番号を利用できます。
+
+`/color` コマンドで現在の色と色制限を確認できます。kbd:[Alt+c]
+をタイプすることで、一時的に端末色を選択された色に変更できます。
+
+例えば、バッファ中のに表示される時刻をオレンジ色にしたい場合、以下のようにしてください:
+
+----
+/set weechat.color.chat_time 214
+----
+
+ステータスバーの色を非常に暗い緑色にしたい場合:
+
+----
+/set weechat.bar.status.color_bg 22
+----
+
+[[colors_aliases]]
+==== 別名
+
+`/color alias` コマンドを使えば色の別名を追加できます。
+追加後は任意の色関連オプションで別名を使えます。
+
+例:
+
+----
+/color alias 214 orange
+/set weechat.color.chat_delimiters orange
+----
+
+[[colors_attributes]]
+==== 属性
+
+色に対していくつかの属性を付加することができます。1
+つ以上の属性を色名または色番号の前に付加できます:
+
+* `+*+` : テキストを太字に
+* `+!+` : テキストを反転
+* `+/+` : テキストをイタリック体に
+* `+_+` : テキストに下線を引く
+* `+|+` : 属性を保持:
+  色を変えた際に太字/反転/下線属性をリセットしない
+
+例えば、自分自身のニックネームの表示色を白にして、下線を引きたい場合:
+
+----
+/set weechat.color.chat_nick_self _white
+----
+
+ステータスバーの時刻の表示色を橙色にして、下線を引いて、太字にしたい場合:
+
+----
+/set weechat.color.status_time *_214
+----
+
+デフォルト端末色 (-1) に対して属性を設定したい場合、端末色番号の最大値よりも大きな値を利用してください。例えば、WeeChat
+における色番号の最大値は 99999 です。
+
+端末の表示色に太字の属性を付加する例:
+
+----
+/set weechat.color.status_time *99999
+----
+
 [[buffers_and_windows]]
 === バッファとウィンドウ
 
@@ -1522,225 +1741,6 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 [TIP]
 `/input grab_mouse`
 コマンドの後にマウスを動かすことでコマンドラインにマウスイベントが入力されます。これにより対応するイベントを確認できます。
-
-[[command_line]]
-=== コマンドライン
-
-WeeChat コマンドライン (ウィンドウの一番下にあります)
-はコマンドの実行やバッファにテキストを送信するために利用します。
-
-[[command_line_syntax]]
-==== 文法
-
-コマンドは "/"
-文字で始まり、コマンドの名前を続けます。例えば、すべてのオプションを表示するには:
-
-----
-/set
-----
-
-"/" が最初に無い場合、そのテキストはバッファに送信されます。例えば、_hello_
-というテキストをバッファに送信するには:
-
-----
-hello
-----
-
-"/" 文字から始まるテキストを送信したい場合、2 重に "/" をつけます。例えば、`/set`
-というテキストを現在のバッファに送信するには:
-
-----
-//set
-----
-
-[[command_line_colors]]
-==== 色コード
-
-IRC 等のプラグインでは、以下の色コードと属性を利用できます
-(kbd:[Ctrl+c] の後に、オプションとともに以下のキーを押してください):
-
-[width="60%",cols="3,5",options="header"]
-|===
-| キー                   | 説明
-| kbd:[Ctrl+c], kbd:[b]  | テキストを太字に
-| kbd:[Ctrl+c], kbd:[c],
-  kbd:[xx]               | テキスト表示色を `xx` に (以下の色リストを参照)
-| kbd:[Ctrl+c], kbd:[c],
-  kbd:[xx], kbd:[,],
-  kbd:[yy]               | テキスト表示色を `xx` に、背景色を `yy` に (以下の色リストを参照)
-| kbd:[Ctrl+c], kbd:[i]  | テキストをイタリック体に
-| kbd:[Ctrl+c], kbd:[o]  | テキスト表示色と属性をリセット
-| kbd:[Ctrl+c], kbd:[v]  | テキストを反転 (テキスト表示色と背景色の入れ替え)
-| kbd:[Ctrl+c], kbd:[_]  | テキストに下線を引く
-|===
-
-[NOTE]
-同じコードで (色コードを入力せずに kbd:[Ctrl+c], kbd:[c]
-を使うことで) 属性をキャンセルすることができます。
-
-kbd:[Ctrl+c], kbd:[c] 用の色コード:
-
-include::autogen/user/irc_colors.adoc[]
-
-[NOTE]
-端末で利用可能なすべての色を表示するには、WeeChat で `/color` を実行した後
-kbd:[Alt+c] を入力するか、端末で以下のコマンドを実行してください: `weechat --colors`。
-
-例:
-「こんにちは皆さん!」の「こんにちは」を太字の明るい青、「皆さん」を下線付きの明るい赤に表示したい場合:
-
-----
-^Cc12^Cbこんにちは^Cb^Cc04^C_皆さん^C_^Cc!
-----
-
-[NOTE]
-irc プラグインでは、<<option_irc.color.mirc_remap,irc.color.mirc_remap>>
-を使ってこれらの色を別の色に対応付けることができます。
-
-[[colors]]
-=== 色
-
-WeeChat ではバーやチャットエリアにおけるテキスト表示に 256 個の色ペアを利用できます
-(この機能を利用するには WeeChat が実行されている端末が 256 色表示に対応している必要があります)。
-
-_TERM_ 環境変数の値によって、WeeChat
-で利用できる色と色ペアに以下の制限があります:
-
-[width="50%",cols="8,>2,>2",options="header"]
-|===
-| $TERM                                  | 色     | ペア
-| "rxvt-unicode", "xterm", ...           |     88 |  256
-| "rxvt-256color", "xterm-256color", ... |    256 |  256
-| "screen"                               |      8 |   64
-| "screen-256color"                      |    256 |  256
-| "tmux"                                 |      8 |   64
-| "tmux-256color"                        |    256 |  256
-|===
-
-`weechat --colors` を実行するか、`/color` コマンドを WeeChat
-の中で実行することで、色表示の制限を確認できます。
-
-256 色を利用したい場合に推奨される _TERM_ 環境変数の値は:
-
-* screen 内の場合: _screen-256color_
-* tmux 内の場合: _screen-256color_、_tmux-256color_
-* screen および tmux の外の場合: _xterm-256color_、_rxvt-256color_、_putty-256color_、...
-
-[NOTE]
-_TERM_ 環境変数の値に上の値を設定するには、"ncurses-term"
-パッケージをインストールする必要があるかもしれません。
-
-screen を使っている場合、_~/.screenrc_ に以下の内容を追加してください:
-
-----
-term screen-256color
-----
-
-_TERM_ 変数が間違った値に設定された状態で WeeChat が起動完了している場合は、以下の
-2 つのコマンドを使って変数の値を変更してください:
-
-----
-/set env TERM screen-256color
-/upgrade
-----
-
-[[colors_basic]]
-==== 基本色
-
-WeeChat における基本色とは:
-
-[width="50%",cols="^3m,8",options="header"]
-|===
-| 名前         | 色
-| default      | デフォルトの端末色 (背景色を透過色とする)
-| black        | 黒
-| darkgray     | 暗い灰色
-| red          | 暗い赤
-| lightred     | 明るい赤
-| green        | 暗い緑色
-| lightgreen   | 明るい緑色
-| brown        | 茶色
-| yellow       | 黄色
-| blue         | 暗い青
-| lightblue    | 明るい青
-| magenta      | 暗い赤紫色
-| lightmagenta | 明るい赤紫色
-| cyan         | 暗い青緑色
-| lightcyan    | 明るい青緑色
-| gray         | 灰色
-| white        | 白
-|===
-
-[[colors_extended]]
-==== 拡張色
-
-WeeChat は画面に色が表示された時点で色ペアを動的に割り当てます
-(バッファとバーを表示する時点で)。
-
-基本色に加えて、1 番
-から端末の対応状況に依存する番号までの色番号を利用できます。
-
-`/color` コマンドで現在の色と色制限を確認できます。kbd:[Alt+c]
-をタイプすることで、一時的に端末色を選択された色に変更できます。
-
-例えば、バッファ中のに表示される時刻をオレンジ色にしたい場合、以下のようにしてください:
-
-----
-/set weechat.color.chat_time 214
-----
-
-ステータスバーの色を非常に暗い緑色にしたい場合:
-
-----
-/set weechat.bar.status.color_bg 22
-----
-
-[[colors_aliases]]
-==== 別名
-
-`/color alias` コマンドを使えば色の別名を追加できます。
-追加後は任意の色関連オプションで別名を使えます。
-
-例:
-
-----
-/color alias 214 orange
-/set weechat.color.chat_delimiters orange
-----
-
-[[colors_attributes]]
-==== 属性
-
-色に対していくつかの属性を付加することができます。1
-つ以上の属性を色名または色番号の前に付加できます:
-
-* `+*+` : テキストを太字に
-* `+!+` : テキストを反転
-* `+/+` : テキストをイタリック体に
-* `+_+` : テキストに下線を引く
-* `+|+` : 属性を保持:
-  色を変えた際に太字/反転/下線属性をリセットしない
-
-例えば、自分自身のニックネームの表示色を白にして、下線を引きたい場合:
-
-----
-/set weechat.color.chat_nick_self _white
-----
-
-ステータスバーの時刻の表示色を橙色にして、下線を引いて、太字にしたい場合:
-
-----
-/set weechat.color.status_time *_214
-----
-
-デフォルト端末色 (-1) に対して属性を設定したい場合、端末色番号の最大値よりも大きな値を利用してください。例えば、WeeChat
-における色番号の最大値は 99999 です。
-
-端末の表示色に太字の属性を付加する例:
-
-----
-/set weechat.color.status_time *99999
-----
 
 [[secured_data]]
 === 暗号化データ
