@@ -1299,7 +1299,6 @@ entendu cela suppose que votre terminal permet le clic sur les URLs).
 [[notify_levels]]
 === Niveaux de notification
 
-// TRANSLATION MISSING
 [[setup_notify_levels]]
 ==== Configurer les niveaux de notification
 
