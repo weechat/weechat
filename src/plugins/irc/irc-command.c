@@ -1441,9 +1441,13 @@ IRC_COMMAND_CALLBACK(ctcp)
                               ctcp_type,
                               (ctcp_args) ? " " : "",
                               (ctcp_args) ? ctcp_args : "");
-            weechat_printf (
+            weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
                     ptr_server, ctcp_target, NULL, "ctcp", NULL),
+                0,
+                irc_protocol_tags ("privmsg",
+                                   "irc_ctcp,notify_none,no_highlight",
+                                   NULL, NULL),
                 _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
                 weechat_prefix ("network"),
                 irc_nick_color_for_msg (ptr_server, 0, NULL, ctcp_target),
