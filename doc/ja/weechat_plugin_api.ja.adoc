@@ -6921,31 +6921,9 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 * _tags_: タグのコンマ区切りリスト (タグを指定しない場合は NULL)
 * _message_: 表示するメッセージ
 
-通常使用するタグ (一部抜粋したリスト):
-
-[width="70%",cols="^1,4",options="header"]
-|===
-| タグ             | 説明
-| no_filter        | フィルタできない行
-| no_highlight     | ハイライトできない行
-| no_log           | ログファイルに書き込まれない行
-| log0 ... log9    | 行に対するログレベル (`/help logger` を参照)
-| notify_none      | この行を含むバッファはホットリストに追加されない
-| notify_message   | この行を含むバッファは "message" レベルでホットリストに追加される
-| notify_private   | この行を含むバッファは "private" レベルでホットリストに追加される
-| notify_highlight | この行を含むバッファは "highlight" レベルでホットリストに追加される
-| nick_xxx         | ニックネーム "xxx" からのメッセージ
-| prefix_nick_ccc  | プレフィックスを色 "ccc" のニックネームにする
-| host_xxx         | メッセージ中のユーザ名とホスト
-| irc_xxx          | IRC メッセージ "xxx" (コマンドまたは 3 桁の番号)
-| irc_numeric      | IRC 番号メッセージ
-| irc_error        | IRC からのエラー
-| irc_action       | あるニックネームからのアクション (`/me` コマンド)
-| irc_ctcp         | CTCP メッセージ
-| irc_ctcp_reply   | CTCP メッセージに対する返信
-| irc_smart_filter | "smart filter" でフィルタリング可能な IRC メッセージ
-| away_info        | 離席状態のメッセージ
-|===
+// TRANSLATION MISSING
+See chapter about line tags in _WeeChat User's guide_ for a list of commonly
+used tags in WeeChat.
 
 C 言語での使用例:
 

@@ -969,6 +969,66 @@ Beispiele für eine vertikale und horizontale Fensteraufteilung:
       ▲ Fenster #1 (Buffer #3)              ▲ Fenster #2 (Buffer #4)
 ....
 
+// TRANSLATION MISSING
+[[buffers_lines]]
+=== Buffers lines
+
+[[lines_format]]
+==== Format of lines
+
+Lines displayed in formatted buffers have following fields:
+
+[width="100%",cols="2,2,10",options="header"]
+|===
+| Field               | Displayed          | Description
+| date/time (message) | Yes                | Date/time of message (may be past).
+| date/time (print)   | No                 | Date/time when WeeChat prints the message.
+| prefix              | Yes                | Prefix of message, commonly a nick.
+| message             | Yes                | The message itself.
+| displayed           | No                 | Boolean: true if line is displayed, false if line is filtered with command <<command_weechat_filter,/filter>>.
+| highlight           | No                 | Boolean: true if line has a highlight, false otherwise.
+| tags                | With `/debug tags` | Tags associated with the line (see <<lines_tags,lines tags>>).
+|===
+
+[[lines_tags]]
+==== Lines tags
+
+WeeChat uses tags in lines for different purposes:
+
+* highlight
+* notify level
+* logging
+* use of command <<command_weechat_filter,/filter>>
+
+Tags can be displayed with the command `/debug tags` (same command to hide them).
+
+Tags commonly used (non-exhaustive list):
+
+[width="70%",cols="1m,4",options="header"]
+|===
+| Tag              | Description
+| no_filter        | Line can not be filtered.
+| no_highlight     | No highlight is possible on line.
+| no_log           | Line is not written in log file.
+| log0 ... log9    | Level of log for line (see `/help logger`).
+| notify_none      | Buffer with line is not added to hotlist.
+| notify_message   | Buffer with line is added to hotlist with level "message".
+| notify_private   | Buffer with line is added to hotlist with level "private".
+| notify_highlight | Buffer with line is added to hotlist with level "highlight".
+| self_msg         | Self message.
+| nick_xxx         | Message is from nick "xxx".
+| prefix_nick_ccc  | Prefix is a nick with color "ccc".
+| host_xxx         | Username and host in message.
+| irc_xxx          | IRC message "xxx" (can be a command or a 3-digits number).
+| irc_numeric      | IRC numeric message.
+| irc_error        | Error from IRC server.
+| irc_action       | Action from a nick (command `/me`).
+| irc_ctcp         | CTCP message.
+| irc_ctcp_reply   | Reply to CTCP message.
+| irc_smart_filter | IRC message that can be filtered with the "smart filter".
+| away_info        | Message with away info.
+|===
+
 [[bars]]
 === Bars
 

@@ -7094,32 +7094,9 @@ Argomenti:
 * _tags_: lista di tag separati da virgole (NULL means no tags)
 * _message_: messaggio da visualizzare
 
-Tag usati di frequente (elenco non esaustivo):
-
-[width="70%",cols="^1,4",options="header"]
-|===
-| Tag              | Descrizione
-| no_filter        | La riga non può essere filtrata
-| no_highlight     | Evidenziazione non possibile sulla riga
-| no_log           | La riga non viene scritta nel file di log
-| log0 ... log9    | Livello di log per la riga (consultare `/help logger`)
-| notify_none      | Il buffer con la riga non viene aggiunto alla hotlist
-| notify_message   | Il buffer con la riga viene aggiunto alla hotlist con il livello "message"
-| notify_private   | Il buffer con la riga viene aggiunto alla hotlist con il livello "private"
-| notify_highlight | Il buffer con la riga viene aggiunto alla hotlist con il livello "higlight"
-| nick_xxx         | Il messaggio viene dal nick "xxx"
-| prefix_nick_ccc  | Il prefisso è un nick con il colore "ccc"
 // TRANSLATION MISSING
-| host_xxx         | Username and host in message
-| irc_xxx          | Messaggio IRC "xxx" (può essere un comando o un numero di 3 cifre)
-| irc_numeric      | Messaggio IRC numerico
-| irc_error        | Errore dal server IRC
-| irc_action       | Azione da un nic (comando `/me`)
-| irc_ctcp         | Messaggio CTCP
-| irc_ctcp_reply   | Risposta ad un messaggio CTCP
-| irc_smart_filter | Messaggio IRC filtrabile tramite lo "smart filter" (filtro intelligente)
-| away_info        | Messagio con informazioni sull'assenza
-|===
+See chapter about line tags in _WeeChat User's guide_ for a list of commonly
+used tags in WeeChat.
 
 Esempio in C:
 

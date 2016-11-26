@@ -1011,6 +1011,68 @@ Esempio di split orizzontale + verticale:
 ....
 
 // TRANSLATION MISSING
+[[buffers_lines]]
+=== Buffers lines
+
+[[lines_format]]
+==== Format of lines
+
+Lines displayed in formatted buffers have following fields:
+
+[width="100%",cols="2,2,10",options="header"]
+|===
+| Field               | Displayed          | Description
+| date/time (message) | Yes                | Date/time of message (may be past).
+| date/time (print)   | No                 | Date/time when WeeChat prints the message.
+| prefix              | Yes                | Prefix of message, commonly a nick.
+| message             | Yes                | The message itself.
+| displayed           | No                 | Boolean: true if line is displayed, false if line is filtered with command <<command_weechat_filter,/filter>>.
+| highlight           | No                 | Boolean: true if line has a highlight, false otherwise.
+| tags                | With `/debug tags` | Tags associated with the line (see <<lines_tags,lines tags>>).
+|===
+
+[[lines_tags]]
+==== Lines tags
+
+WeeChat uses tags in lines for different purposes:
+
+* highlight
+* notify level
+* logging
+* use of command <<command_weechat_filter,/filter>>
+
+Tags can be displayed with the command `/debug tags` (same command to hide them).
+
+Tag usati di frequente (elenco non esaustivo):
+
+[width="70%",cols="1m,4",options="header"]
+|===
+| Tag              | Descrizione
+| no_filter        | La riga non può essere filtrata.
+| no_highlight     | Evidenziazione non possibile sulla riga.
+| no_log           | La riga non viene scritta nel file di log.
+| log0 ... log9    | Livello di log per la riga (consultare `/help logger`).
+| notify_none      | Il buffer con la riga non viene aggiunto alla hotlist.
+| notify_message   | Il buffer con la riga viene aggiunto alla hotlist con il livello "message".
+| notify_private   | Il buffer con la riga viene aggiunto alla hotlist con il livello "private".
+| notify_highlight | Il buffer con la riga viene aggiunto alla hotlist con il livello "higlight".
+// TRANSLATION MISSING
+| self_msg         | Self message.
+| nick_xxx         | Il messaggio viene dal nick "xxx".
+| prefix_nick_ccc  | Il prefisso è un nick con il colore "ccc".
+// TRANSLATION MISSING
+| host_xxx         | Username and host in message.
+| irc_xxx          | Messaggio IRC "xxx" (può essere un comando o un numero di 3 cifre).
+| irc_numeric      | Messaggio IRC numerico.
+| irc_error        | Errore dal server IRC.
+| irc_action       | Azione da un nic (comando `/me`).
+| irc_ctcp         | Messaggio CTCP.
+| irc_ctcp_reply   | Risposta ad un messaggio CTCP.
+| irc_smart_filter | Messaggio IRC filtrabile tramite lo "smart filter" (filtro intelligente).
+| away_info        | Messagio con informazioni sull'assenza.
+|===
+
+// TRANSLATION MISSING
 [[bars]]
 === Bars
 

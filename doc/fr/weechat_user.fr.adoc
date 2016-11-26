@@ -972,6 +972,66 @@ Exemple de découpage vertical + horizontal :
       ▲ fenêtre n°1 (tampon n°3)            ▲ fenêtre n°2 (tampon n°4)
 ....
 
+[[buffers_lines]]
+=== Lignes des tampons
+
+[[lines_format]]
+==== Format des lignes
+
+Les lignes affichées dans les tampons formatés ont les champs suivants :
+
+[width="100%",cols="2,2,10",options="header"]
+|===
+| Champ                | Affiché            | Description
+| date/heure (message) | Oui                | Date/heure du message (peut être dans le passé).
+| date/heure (print)   | Non                | Date/heure lorsque WeeChat affiche le message.
+| préfixe              | Oui                | Préfixe du message, couramment un pseudo.
+| message              | Oui                | Le message lui-même.
+| affichée             | Non                | Booléen : vrai si la ligne est affichée, faux si la ligne est filtrée avec la commande <<command_weechat_filter,/filter>>.
+| highlight            | Non                | Booléen : vrai si la ligne a un highlight, faux sinon.
+| étiquettes           | Avec `/debug tags` | Étiquettes associées avec la ligne (voir <<lines_tags,les étiquettes des lignes>>).
+|===
+
+[[lines_tags]]
+==== Étiquettes des lignes
+
+WeeChat utilise des étiquettes (« tags ») dans les lignes pour différentes raisons :
+
+* highlight
+* niveau de notification
+* enregistrement (« log »)
+* utilisation de la commande <<command_weechat_filter,/filter>>
+
+Les étiquettes peuvent être affichées avec la commande `/debug tags`
+(même commande pour les cacher).
+
+Les étiquettes couramment utilisées (liste non exhaustive) :
+
+[width="70%",cols="1m,4",options="header"]
+|===
+| Étiquette        | Description
+| no_filter        | La ligne ne peut pas être filtrée.
+| no_highlight     | Aucun highlight n'est possible sur cette ligne.
+| no_log           | La ligne n'est pas écrite dans le fichier de log.
+| log0 ... log9    | Niveau de log pour la ligne (voir `/help logger`).
+| notify_none      | Le tampon avec la ligne ne sera pas ajouté à la "hotlist".
+| notify_message   | Le tampon avec la ligne sera ajouté à la "hotlist" avec le niveau "message".
+| notify_private   | Le tampon avec la ligne sera ajouté à la "hotlist" avec le niveau "private".
+| notify_highlight | Le tampon avec la ligne sera ajouté à la "hotlist" avec le niveau "highlight".
+| self_msg         | Message de soi-même.
+| nick_xxx         | Le message vient du pseudo "xxx".
+| prefix_nick_ccc  | Le préfixe est un pseudo avec la couleur "ccc".
+| host_xxx         | Nom d'utilisateur et hôte dans le message.
+| irc_xxx          | Message IRC "xxx" (peut-être une commande ou un numérique sur 3 chiffres).
+| irc_numeric      | Message IRC numérique.
+| irc_error        | Erreur du serveur IRC.
+| irc_action       | Action d'un pseudo (commande `/me`).
+| irc_ctcp         | Message CTCP.
+| irc_ctcp_reply   | Réponse à un message CTCP.
+| irc_smart_filter | Message IRC qui peut être filtré avec le "smart filter" (filtre intelligent).
+| away_info        | Message avec une info d'absence.
+|===
+
 [[bars]]
 === Barres
 
