@@ -1223,6 +1223,23 @@ from nicks beginning with "toto":
 /set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
 ----
 
+[[highlights_regex_buffer]]
+==== Set extra highlights on buffer
+
+You can force highlight using a regular expression with the buffer property
+"highlight_regex".
+
+For example to force the highlight on all messages in the current buffer:
+
+----
+/buffer set highlight_regex .*
+----
+
+[NOTE]
+The buffer property "highlight_regex" is not saved in configuration. +
+You can easily save it with the script _buffer_autoset.py_: you can install it
+with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`.
+
 [[key_bindings]]
 === Associazione tasti predefinita
 
