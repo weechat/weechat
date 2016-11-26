@@ -298,7 +298,8 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                     0,
                     irc_protocol_tags (
                         command,
-                        "irc_ctcp,irc_ctcp_reply,notify_none,no_highlight",
+                        "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
+                        "no_highlight",
                         NULL, NULL),
                     _("%sCTCP reply to %s%s%s: %s%s%s%s%s"),
                     weechat_prefix ("network"),
@@ -1015,11 +1016,12 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
                 weechat_printf_date_tags (
                     channel->buffer,
                     date,
-                    irc_protocol_tags (command,
-                                       (nick_is_me) ?
-                                       "irc_action,notify_none,no_highlight" :
-                                       "irc_action,notify_message",
-                                       nick, address),
+                    irc_protocol_tags (
+                        command,
+                        (nick_is_me) ?
+                        "irc_action,self_msg,notify_none,no_highlight" :
+                        "irc_action,notify_message",
+                        nick, address),
                     "%s%s%s%s%s%s%s",
                     weechat_prefix ("action"),
                     irc_nick_mode_for_display (server, ptr_nick, 0),
@@ -1054,11 +1056,12 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
                     weechat_printf_date_tags (
                         ptr_channel->buffer,
                         date,
-                        irc_protocol_tags (command,
-                                           (nick_is_me) ?
-                                           "irc_action,notify_none,no_highlight" :
-                                           "irc_action,notify_private",
-                                           nick, address),
+                        irc_protocol_tags (
+                            command,
+                            (nick_is_me) ?
+                            "irc_action,self_msg,notify_none,no_highlight" :
+                            "irc_action,notify_private",
+                            nick, address),
                         "%s%s%s%s%s%s",
                         weechat_prefix ("action"),
                         (nick_is_me) ?

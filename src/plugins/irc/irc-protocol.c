@@ -2043,7 +2043,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         if (nick_is_me)
         {
             snprintf (str_tags, sizeof (str_tags),
-                      "notify_none,no_highlight,prefix_nick_%s",
+                      "self_msg,notify_none,no_highlight,prefix_nick_%s",
                       (str_color) ? str_color : "default");
         }
         else
