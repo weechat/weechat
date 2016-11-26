@@ -88,15 +88,15 @@ Liste des commandes disponibles (détail dans les chapitres suivants) :
 [width="80%",cols="^3m,14",options="header"]
 |===
 | Commande | Description
-| init     | Initialiser la connexion avec _relay_
-| hdata    | Demander un _hdata_
-| info     | Demander une _info_
-| infolist | Demander une _infolist_
-| nicklist | Demander une _nicklist_ (liste de pseudos)
-| input    | Envoyer des données à un tampon (texte ou commande)
-| sync     | Synchroniser un/des tampon(s) (recevoir les mises à jour pour le(s) tampon(s))
-| desync   | Désynchroniser un/des tampon(s) (stopper les mises à jour pour le(s) tampon(s))
-| quit     | Se déconnecter de _relay_
+| init     | Initialiser la connexion avec _relay_.
+| hdata    | Demander un _hdata_.
+| info     | Demander une _info_.
+| infolist | Demander une _infolist_.
+| nicklist | Demander une _nicklist_ (liste de pseudos).
+| input    | Envoyer des données à un tampon (texte ou commande).
+| sync     | Synchroniser un/des tampon(s) (recevoir les mises à jour pour le(s) tampon(s)).
+| desync   | Désynchroniser un/des tampon(s) (stopper les mises à jour pour le(s) tampon(s)).
+| quit     | Se déconnecter de _relay_.
 |===
 
 [[command_init]]
@@ -550,64 +550,64 @@ Les identifiants réservés par WeeChat :
   Description | Action recommandée dans le client
 
 | _buffer_opened | buffers / buffer | hdata : buffer |
-  Tampon ouvert | Ouvrir le tampon
+  Tampon ouvert. | Ouvrir le tampon.
 
 | _buffer_type_changed | buffers / buffer | hdata : buffer |
-  Type de tampon changé | Changer le type de tampon
+  Type de tampon changé. | Changer le type de tampon.
 
 | _buffer_moved | buffers / buffer | hdata : buffer |
-  Tampon déplacé | Déplacer le tampon
+  Tampon déplacé. | Déplacer le tampon.
 
 | _buffer_merged | buffers / buffer | hdata : buffer |
-  Tampon mélangé | Mélanger le tampon
+  Tampon mélangé. | Mélanger le tampon.
 
 | _buffer_unmerged | buffers / buffer | hdata : buffer |
-  Tampon sorti du mélange | Sortir le tampon du mélange
+  Tampon sorti du mélange. | Sortir le tampon du mélange.
 
 | _buffer_hidden | buffers / buffer | hdata : buffer |
-  Tampon masqué | Masquer le le tampon
+  Tampon masqué. | Masquer le le tampon.
 
 | _buffer_unmerged | buffers / buffer | hdata : buffer |
-  Tampon démasqué | Démasquer le tampon
+  Tampon démasqué. | Démasquer le tampon.
 
 | _buffer_renamed | buffers / buffer | hdata : buffer |
-  Tampon renommé | Renommer le tampon
+  Tampon renommé. | Renommer le tampon.
 
 | _buffer_title_changed | buffers / buffer | hdata : buffer |
-  Titre du tampon changé | Changer le titre du tampon
+  Titre du tampon changé. | Changer le titre du tampon.
 
 | _buffer_localvar_added | buffers / buffer | hdata : buffer |
-  Variable locale ajoutée | Ajouter la variable locale dans le tampon
+  Variable locale ajoutée. | Ajouter la variable locale dans le tampon.
 
 | _buffer_localvar_changed | buffers / buffer | hdata : buffer |
-  Variable locale changée | Changer la variable locale dans le tampon
+  Variable locale changée. | Changer la variable locale dans le tampon.
 
 | _buffer_localvar_removed | buffers / buffer | hdata : buffer |
-  Variable locale supprimée | Supprimer la variable locale du tampon
+  Variable locale supprimée. | Supprimer la variable locale du tampon.
 
 | _buffer_closing | buffers / buffer | hdata : buffer |
-  Tampon qui se ferme | Fermer le tampon
+  Tampon qui se ferme. | Fermer le tampon.
 
 | _buffer_cleared | buffer | hdata : buffer |
-  Tampon qui est vidé | Vider le tampon
+  Tampon qui est vidé. | Vider le tampon.
 
 | _buffer_line_added | buffer | hdata : line |
-  Ligne ajoutée dans le tampon | Afficher la ligne dans le tampon
+  Ligne ajoutée dans le tampon. | Afficher la ligne dans le tampon.
 
 | _nicklist | nicklist | hdata : nicklist_item |
-  Liste de pseudos pour un tampon | Remplacer la liste de pseudos
+  Liste de pseudos pour un tampon. | Remplacer la liste de pseudos.
 
 | _nicklist_diff | nicklist | hdata : nicklist_item |
-  Différence de liste de pseudos pour un tampon  | Mettre à jour la liste de pseudos
+  Différence de liste de pseudos pour un tampon . | Mettre à jour la liste de pseudos.
 
 | _pong | (always) | chaîne : paramètres du ping |
-  Réponse à un "ping" | Mesurer le temps de réponse
+  Réponse à un "ping". | Mesurer le temps de réponse.
 
 | _upgrade | upgrade | (vide) |
-  WeeChat se met à jour | Se désynchroniser de WeeChat (ou quitter)
+  WeeChat se met à jour. | Se désynchroniser de WeeChat (ou quitter).
 
 | _upgrade_ended | upgrade | (vide) |
-  WeeChat a été mis à jour | (Re)synchroniser avec WeeChat
+  WeeChat a été mis à jour. | (Re)synchroniser avec WeeChat.
 |===
 
 [[message_buffer_opened]]
@@ -621,14 +621,14 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom             | Type             | Description
-| number          | entier           | Numéro de tampon (≥ 1)
-| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_)
-| short_name      | chaîne           | Nom court (exemple : _#weechat_)
-| nicklist        | entier           | 1 si le tampon a une liste de pseudos, sinon 0
-| title           | chaîne           | Titre du tampon
-| local_variables | table de hachage | Variables locales
-| prev_buffer     | pointeur         | Pointeur vers le tampon précédent
-| next_buffer     | pointeur         | Pointeur vers le tampon suivant
+| number          | entier           | Numéro de tampon (≥ 1).
+| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_).
+| short_name      | chaîne           | Nom court (exemple : _#weechat_).
+| nicklist        | entier           | 1 si le tampon a une liste de pseudos, sinon 0.
+| title           | chaîne           | Titre du tampon.
+| local_variables | table de hachage | Variables locales.
+| prev_buffer     | pointeur         | Pointeur vers le tampon précédent.
+| next_buffer     | pointeur         | Pointeur vers le tampon suivant.
 |===
 
 Exemple : canal _#weechat_ rejoint sur freenode, nouveau tampon
@@ -664,10 +664,10 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom         | Type     | Description
-| number      | entier   | Numéro de tampon (≥ 1)
-| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_)
-| prev_buffer | pointeur | Pointeur vers le tampon précédent
-| next_buffer | pointeur | Pointeur vers le tampon suivant
+| number      | entier   | Numéro de tampon (≥ 1).
+| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_).
+| prev_buffer | pointeur | Pointeur vers le tampon précédent.
+| next_buffer | pointeur | Pointeur vers le tampon suivant.
 |===
 
 Exemple : tampon _irc.freenode.#weechat_ déplacé vers le numéro 2 :
@@ -697,10 +697,10 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom         | Type     | Description
-| number      | entier   | Numéro de tampon (≥ 1)
-| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_)
-| prev_buffer | pointeur | Pointeur vers le tampon précédent
-| next_buffer | pointeur | Pointeur vers le tampon suivant
+| number      | entier   | Numéro de tampon (≥ 1).
+| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_).
+| prev_buffer | pointeur | Pointeur vers le tampon précédent.
+| next_buffer | pointeur | Pointeur vers le tampon suivant.
 |===
 
 Exemple : tampon _irc.freenode.#weechat_ mélangé avec le tampon n°2 :
@@ -730,10 +730,10 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom         | Type     | Description
-| number      | entier   | Numéro de tampon (≥ 1)
-| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_)
-| prev_buffer | pointeur | Pointeur vers le tampon précédent
-| next_buffer | pointeur | Pointeur vers le tampon suivant
+| number      | entier   | Numéro de tampon (≥ 1).
+| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_).
+| prev_buffer | pointeur | Pointeur vers le tampon précédent.
+| next_buffer | pointeur | Pointeur vers le tampon suivant.
 |===
 
 Exemple : tampon _irc.freenode.#weechat_ sorti du mélange :
@@ -765,10 +765,10 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom         | Type     | Description
-| number      | entier   | Numéro de tampon (≥ 1)
-| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_)
-| prev_buffer | pointeur | Pointeur vers le tampon précédent
-| next_buffer | pointeur | Pointeur vers le tampon suivant
+| number      | entier   | Numéro de tampon (≥ 1).
+| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_).
+| prev_buffer | pointeur | Pointeur vers le tampon précédent.
+| next_buffer | pointeur | Pointeur vers le tampon suivant.
 |===
 
 Exemple : tampon _irc.freenode.#weechat_ masqué :
@@ -800,10 +800,10 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom         | Type     | Description
-| number      | entier   | Numéro de tampon (≥ 1)
-| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_)
-| prev_buffer | pointeur | Pointeur vers le tampon précédent
-| next_buffer | pointeur | Pointeur vers le tampon suivant
+| number      | entier   | Numéro de tampon (≥ 1).
+| full_name   | chaîne   | Nom complet (exemple : _irc.freenode.#weechat_).
+| prev_buffer | pointeur | Pointeur vers le tampon précédent.
+| next_buffer | pointeur | Pointeur vers le tampon suivant.
 |===
 
 Exemple : tampon _irc.freenode.#weechat_ démasqué :
@@ -833,10 +833,10 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom             | Type             | Description
-| number          | entier           | Numéro de tampon (≥ 1)
-| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_)
-| short_name      | chaîne           | Nom court (exemple : _#weechat_)
-| local_variables | table de hachage | Variables locales
+| number          | entier           | Numéro de tampon (≥ 1).
+| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_).
+| short_name      | chaîne           | Nom court (exemple : _#weechat_).
+| local_variables | table de hachage | Variables locales.
 |===
 
 Exemple : tampon privé renommé de _FlashCode_ en _Flash2_ :
@@ -867,9 +867,9 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom       | Type   | Description
-| number    | entier | Numéro de tampon (≥ 1)
-| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_)
-| title     | chaîne | Titre du tampon
+| number    | entier | Numéro de tampon (≥ 1).
+| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_).
+| title     | chaîne | Titre du tampon.
 |===
 
 Exemple : titre changé sur le canal _#weechat_ :
@@ -900,8 +900,8 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom       | Type   | Description
-| number    | entier | Numéro de tampon (≥ 1)
-| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_)
+| number    | entier | Numéro de tampon (≥ 1).
+| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_).
 |===
 
 Exemple : tampon _irc.freenode.#weechat_ vidé :
@@ -929,9 +929,9 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom       | Type   | Description
-| number    | entier | Numéro de tampon (≥ 1)
-| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_)
-| type      | entier | Type de tampon : 0 = formaté (par défaut), 1 = contenu libre
+| number    | entier | Numéro de tampon (≥ 1).
+| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_).
+| type      | entier | Type de tampon : 0 = formaté (par défaut), 1 = contenu libre.
 |===
 
 Exemple : type de tampon _script.scripts_ changé de formaté (0) à contenu
@@ -961,9 +961,9 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom             | Type             | Description
-| number          | entier           | Numéro de tampon (≥ 1)
-| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_)
-| local_variables | table de hachage | Variables locales
+| number          | entier           | Numéro de tampon (≥ 1).
+| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_).
+| local_variables | table de hachage | Variables locales.
 |===
 
 Exemple : variable locale _test_ ajoutée dans le tampon
@@ -995,9 +995,9 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom             | Type             | Description
-| number          | entier           | Numéro de tampon (≥ 1)
-| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_)
-| local_variables | table de hachage | Variables locales
+| number          | entier           | Numéro de tampon (≥ 1).
+| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_).
+| local_variables | table de hachage | Variables locales.
 |===
 
 Exemple : variable locale _test_ mise à jour dans le tampon
@@ -1029,9 +1029,9 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom             | Type             | Description
-| number          | entier           | Numéro de tampon (≥ 1)
-| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_)
-| local_variables | table de hachage | Variables locales
+| number          | entier           | Numéro de tampon (≥ 1).
+| full_name       | chaîne           | Nom complet (exemple : _irc.freenode.#weechat_).
+| local_variables | table de hachage | Variables locales.
 |===
 
 Exemple : variable locale _test_ supprimée du tampon _irc.freenode.#weechat_ :
@@ -1061,14 +1061,14 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom             | Type               | Description
-| buffer          | pointeur           | Pointeur vers le tampon
-| date            | date/heure         | Date du message
-| date_printed    | date/heure         | Date d'affichage du message
-| displayed       | caractère          | 1 si le message est affiché, 0 si le message est filtré (caché)
-| highlight       | caractère          | 1 si la ligne a un highlight, sinon 0
-| tags_array      | tableau de chaînes | Liste des étiquettes de la ligne
-| prefix          | chaîne             | Préfixe
-| message         | chaîne             | Message
+| buffer          | pointeur           | Pointeur vers le tampon.
+| date            | date/heure         | Date du message.
+| date_printed    | date/heure         | Date d'affichage du message.
+| displayed       | caractère          | 1 si le message est affiché, 0 si le message est filtré (caché).
+| highlight       | caractère          | 1 si la ligne a un highlight, sinon 0.
+| tags_array      | tableau de chaînes | Liste des étiquettes de la ligne.
+| prefix          | chaîne             | Préfixe.
+| message         | chaîne             | Message.
 |===
 
 Exemple : nouveau message _hello!_ du pseudo _FlashCode_ sur le tampon
@@ -1104,8 +1104,8 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom       | Type   | Description
-| number    | entier | Numéro de tampon (≥ 1)
-| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_)
+| number    | entier | Numéro de tampon (≥ 1).
+| full_name | chaîne | Nom complet (exemple : _irc.freenode.#weechat_).
 |===
 
 Exemple : tampon _irc.freenode.#weechat_ en cours de fermeture par WeeChat :
@@ -1138,13 +1138,13 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom          | Type      | Description
-| group        | caractère | 1 pour un groupe, 0 pour un pseudo
-| visible      | caractère | 1 si le groupe/pseudo est affiché, sinon 0
-| level        | entier    | Niveau du groupe (0 pour un pseudo)
-| name         | chaîne    | Nom du groupe/pseudo
-| color        | chaîne    | Couleur du nom
-| prefix       | chaîne    | Préfixe (seulement pour un pseudo)
-| prefix_color | chaîne    | Couleur du préfixe (seulement pour un pseudo)
+| group        | caractère | 1 pour un groupe, 0 pour un pseudo.
+| visible      | caractère | 1 si le groupe/pseudo est affiché, sinon 0.
+| level        | entier    | Niveau du groupe (0 pour un pseudo).
+| name         | chaîne    | Nom du groupe/pseudo.
+| color        | chaîne    | Couleur du nom.
+| prefix       | chaîne    | Préfixe (seulement pour un pseudo).
+| prefix_color | chaîne    | Couleur du préfixe (seulement pour un pseudo).
 |===
 
 Exemple : liste de pseudos pour le tampon _irc.freenode.#weechat_ :
@@ -1227,14 +1227,14 @@ Données envoyées dans le hdata :
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Nom          | Type      | Description
-| _diff        | caractère | Type de différence (voir ci-dessous)
-| group        | caractère | 1 pour un groupe, 0 pour un pseudo
-| visible      | caractère | 1 si le groupe/pseudo est affiché, sinon 0
-| level        | entier    | Niveau du groupe (0 pour un pseudo)
-| name         | chaîne    | Nom du groupe/pseudo
-| color        | chaîne    | Couleur du nom
-| prefix       | chaîne    | Préfixe (seulement pour un pseudo)
-| prefix_color | chaîne    | Couleur du préfixe (seulement pour un pseudo)
+| _diff        | caractère | Type de différence (voir ci-dessous).
+| group        | caractère | 1 pour un groupe, 0 pour un pseudo.
+| visible      | caractère | 1 si le groupe/pseudo est affiché, sinon 0.
+| level        | entier    | Niveau du groupe (0 pour un pseudo).
+| name         | chaîne    | Nom du groupe/pseudo.
+| color        | chaîne    | Couleur du nom.
+| prefix       | chaîne    | Préfixe (seulement pour un pseudo).
+| prefix_color | chaîne    | Couleur du préfixe (seulement pour un pseudo).
 |===
 
 La valeur de __diff_ peut être :

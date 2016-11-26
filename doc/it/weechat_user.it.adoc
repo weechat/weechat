@@ -113,35 +113,35 @@ compilare WeeChat.
 | Pacchetto ^(1)^        | Versione      | Richiesto | Caratteristica
 // TRANSLATION MISSING
 | C compiler
-  (gcc, clang, ...)      |               | *sì*      | Build
+  (gcc, clang, ...)      |               | *sì*      | Build.
 // TRANSLATION MISSING
-| C++ compiler           |               |           | Build and run tests, plugin Javascript
-| cmake                  |               | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake)
+| C++ compiler           |               |           | Build and run tests, plugin Javascript.
+| cmake                  |               | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake).
 // TRANSLATION MISSING
-| pkg-config             |               | *sì*      | Detect installed libraries
-| libncursesw5-dev ^(2)^ |               | *sì*      | Interfaccia ncurses
-| libcurl4-gnutls-dev    |               | *sì*      | Trasferimento URL
+| pkg-config             |               | *sì*      | Detect installed libraries.
+| libncursesw5-dev ^(2)^ |               | *sì*      | Interfaccia ncurses.
+| libcurl4-gnutls-dev    |               | *sì*      | Trasferimento URL.
 // TRANSLATION MISSING
-| zlib1g-dev             |               | *sì*      | Compression of packets in relay plugin (weechat protocol), script plugin
+| zlib1g-dev             |               | *sì*      | Compression of packets in relay plugin (weechat protocol), script plugin.
 // TRANSLATION MISSING
-| libgcrypt20-dev        |               | *sì*      | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
+| libgcrypt20-dev        |               | *sì*      | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin.
 // TRANSLATION MISSING
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ |           | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE)
-| gettext                |               |           | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
-| ca-certificates        |               |           | Certificati per le connessioni SSL
+| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ |           | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
+| gettext                |               |           | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
+| ca-certificates        |               |           | Certificati per le connessioni SSL.
 | libaspell-dev
-  ∥ libenchant-dev       |               |           | Plugin aspell
-| python-dev             | ≥ 2.5 ^(4)^   |           | Plugin python
-| libperl-dev            |               |           | Plugin perl
-| ruby-2.3, ruby2.3-dev  | ≥ 1.8         |           | Plugin ruby
-| liblua5.3-dev          |               |           | Plugin lua
-| tcl-dev                | ≥ 8.5         |           | Plugin tcl
-| guile-2.0-dev          | ≥ 2.0         |           | Plugin guile (scheme)
-| libv8-dev              | ≤ 3.24.3      |           | Plugin Javascript
+  ∥ libenchant-dev       |               |           | Plugin aspell.
+| python-dev             | ≥ 2.5 ^(4)^   |           | Plugin python.
+| libperl-dev            |               |           | Plugin perl.
+| ruby-2.3, ruby2.3-dev  | ≥ 1.8         |           | Plugin ruby.
+| liblua5.3-dev          |               |           | Plugin lua.
+| tcl-dev                | ≥ 8.5         |           | Plugin tcl.
+| guile-2.0-dev          | ≥ 2.0         |           | Plugin guile (scheme).
+| libv8-dev              | ≤ 3.24.3      |           | Plugin Javascript.
 // TRANSLATION MISSING
-| asciidoctor            | ≥ 1.5.4       |           | Build man page and documentation
+| asciidoctor            | ≥ 1.5.4       |           | Build man page and documentation.
 // TRANSLATION MISSING
-| libcpputest-dev        | ≥ 3.4         |           | Build and run tests
+| libcpputest-dev        | ≥ 3.4         |           | Build and run tests.
 |===
 
 // TRANSLATION MISSING (note 3)
@@ -517,22 +517,22 @@ The directories are:
 [width="100%",cols="1m,3",options="header"]
 |===
 | Path/file         | Description
-| ~/.weechat/       | WeeChat home directory (can be changed, see <<running_weechat,Running WeeChat>>)
-|    logs/          | Log files (one file per buffer)
-|    python/        | Python scripts
-|       autoload/   | Python scripts auto-loaded on startup ^(1)^
-|    perl/          | Perl scripts
-|       autoload/   | Perl scripts auto-loaded on startup ^(1)^
-|    ruby/          | Ruby scripts
-|       autoload/   | Ruby scripts auto-loaded on startup ^(1)^
-|    lua/           | Lua scripts
-|       autoload/   | Lua scripts auto-loaded on startup ^(1)^
-|    tcl/           | Tcl scripts
-|       autoload/   | Tcl scripts auto-loaded on startup ^(1)^
-|    guile/         | Guile scripts
-|       autoload/   | Guile scripts auto-loaded on startup ^(1)^
-|    javascript/    | Javascript scripts
-|       autoload/   | Javascript scripts auto-loaded on startup ^(1)^
+| ~/.weechat/       | WeeChat home directory (can be changed, see <<running_weechat,Running WeeChat>>).
+|    logs/          | Log files (one file per buffer).
+|    python/        | Python scripts.
+|       autoload/   | Python scripts auto-loaded on startup ^(1)^.
+|    perl/          | Perl scripts.
+|       autoload/   | Perl scripts auto-loaded on startup ^(1)^.
+|    ruby/          | Ruby scripts.
+|       autoload/   | Ruby scripts auto-loaded on startup ^(1)^.
+|    lua/           | Lua scripts.
+|       autoload/   | Lua scripts auto-loaded on startup ^(1)^.
+|    tcl/           | Tcl scripts.
+|       autoload/   | Tcl scripts auto-loaded on startup ^(1)^.
+|    guile/         | Guile scripts.
+|       autoload/   | Guile scripts auto-loaded on startup ^(1)^.
+|    javascript/    | Javascript scripts.
+|       autoload/   | Javascript scripts auto-loaded on startup ^(1)^.
 |===
 
 [NOTE]
@@ -543,20 +543,20 @@ The files in home directory are:
 [width="100%",cols="1m,3,6",options="header"]
 |===
 | File         | Description                             | Sensitive data
-| weechat.conf | Main WeeChat configuration file         | Possible (example: list of channels in a saved buffers layout)
-| sec.conf     | Configuration file with secured data    | *Yes, highly sensitive*: this file must never be shared with anyone
-| plugins.conf | Plugins configuration file              | Possible, depends on plugins/scripts
-| alias.conf   | Configuration file for _alias_ plugin   | Possible, depends on aliases
-| aspell.conf  | Configuration file for _aspell_ plugin  | No
-| charset.conf | Configuration file for _charset_ plugin | No
-| exec.conf    | Configuration file for _exec_ plugin    | No
-| irc.conf     | Configuration file for _irc_ plugin     | *Yes*: it can contain passwords for servers, nickserv and channels (if not stored in `sec.conf`)
-| logger.conf  | Configuration file for _logger_ plugin  | No
-| relay.conf   | Configuration file for _relay_ plugin   | No
-| script.conf  | Configuration file for _script_ plugin  | No
-| trigger.conf | Configuration file for _trigger_ plugin | Possible, depends on triggers
-| xfer.conf    | Configuration file for _xfer_ plugin    | No
-| weechat.log  | WeeChat log file                        | No
+| weechat.conf | Main WeeChat configuration file         | Possible (example: list of channels in a saved buffers layout).
+| sec.conf     | Configuration file with secured data    | *Yes, highly sensitive*: this file must never be shared with anyone.
+| plugins.conf | Plugins configuration file              | Possible, depends on plugins/scripts.
+| alias.conf   | Configuration file for _alias_ plugin   | Possible, depends on aliases.
+| aspell.conf  | Configuration file for _aspell_ plugin  | No.
+| charset.conf | Configuration file for _charset_ plugin | No.
+| exec.conf    | Configuration file for _exec_ plugin    | No.
+| irc.conf     | Configuration file for _irc_ plugin     | *Yes*: it can contain passwords for servers, nickserv and channels (if not stored in `sec.conf`).
+| logger.conf  | Configuration file for _logger_ plugin  | No.
+| relay.conf   | Configuration file for _relay_ plugin   | No.
+| script.conf  | Configuration file for _script_ plugin  | No.
+| trigger.conf | Configuration file for _trigger_ plugin | Possible, depends on triggers.
+| xfer.conf    | Configuration file for _xfer_ plugin    | No.
+| weechat.log  | WeeChat log file                        | No.
 |===
 
 [IMPORTANT]
@@ -618,21 +618,21 @@ La barra _stato_ ha i seguenti elementi predefiniti:
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Elemento              | Esempio               | Descrizione
-| time                  | `[12:55]`             | Ora
+| time                  | `[12:55]`             | Ora.
 // TRANSLATION MISSING
-| buffer_last_number    | `[6]`                 | Number of last buffer in list
-| buffer_plugin         | `[irc/freenode]`      | Plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer)
-| buffer_number         | `3`                   | Numero del buffer corrente
-| buffer_name           | `#test`               | Nome del buffer attivo
-| buffer_modes          | `+n`                  | Modalità canale IRC
-| buffer_nicklist_count | `{4}`                 | Numero di nick nella lista nick
+| buffer_last_number    | `[6]`                 | Number of last buffer in list.
+| buffer_plugin         | `[irc/freenode]`      | Plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer).
+| buffer_number         | `3`                   | Numero del buffer corrente.
+| buffer_name           | `#test`               | Nome del buffer attivo.
+| buffer_modes          | `+n`                  | Modalità canale IRC.
+| buffer_nicklist_count | `{4}`                 | Numero di nick nella lista nick.
 // TRANSLATION MISSING
-| buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed
-| buffer_filter         | `+*+`                 | Indicatore filtraggio: `+*+` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate
-| scroll                | `-ANCORA(50)-`        | Indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata
-| lag                   | `[Ritardo: 2.5]`      | Indicatore ritardo, in secondi (nascosto se il ritardo è basso)
-| hotlist               | `[H: 4:#abc(2,5), 6]` | Elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 notifiche e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #6)
-| completion            | `abc(2) def(5)`       | Elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola
+| buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed.
+| buffer_filter         | `+*+`                 | Indicatore filtraggio: `+*+` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate.
+| scroll                | `-ANCORA(50)-`        | Indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata.
+| lag                   | `[Ritardo: 2.5]`      | Indicatore ritardo, in secondi (nascosto se il ritardo è basso).
+| hotlist               | `[H: 4:#abc(2,5), 6]` | Elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 notifiche e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #6).
+| completion            | `abc(2) def(5)`       | Elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola.
 |===
 
 La barra _input_ ha i seguenti elementi predefiniti:
@@ -641,12 +641,12 @@ La barra _input_ ha i seguenti elementi predefiniti:
 |===
 | Elemento     | Esempio                                         | Descrizione
 // TRANSLATION MISSING
-| input_prompt | `[@Flashy(i)]`                                  | Prompt per l'input, for irc: nick and modes (mode "+i" means invisible on freenode)
-| away         | `(assente)`                                     | Indicatore di assenza
+| input_prompt | `[@Flashy(i)]`                                  | Prompt per l'input, for irc: nick and modes (mode "+i" means invisible on freenode).
+| away         | `(assente)`                                     | Indicatore di assenza.
 // TRANSLATION MISSING
-| input_search | `[Search (~ str,msg)]`                          | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
-| input_paste  | `[Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No]` | Chiede all'utente se incollare le righe
-| input_text   | `ciao peter!`                                   | Testo in input
+| input_search | `[Search (~ str,msg)]`                          | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages).
+| input_paste  | `[Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No]` | Chiede all'utente se incollare le righe.
+| input_text   | `ciao peter!`                                   | Testo in input.
 |===
 
 // TRANSLATION MISSING
@@ -656,14 +656,14 @@ Other items available (not used in bars by default):
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item              | Example             | Description
-| aspell_dict       | `fr,en`             | Spelling dictionaries used on current buffer
-| aspell_suggest    | `print,prone,prune` | Spelling suggestions for word under cursor (if misspelled)
-| buffer_count      | `10`                | Total number of buffers opened
-| buffer_short_name | `#test`             | Current buffer short name
-| irc_channel       | `#test`             | Current IRC channel name
-| irc_nick_modes    | `@`                 | IRC modes for self nick
-| mouse_status      | `M`                 | Mouse status (empty if mouse is disabled)
-| window_number     | `2`                 | Current window number
+| aspell_dict       | `fr,en`             | Spelling dictionaries used on current buffer.
+| aspell_suggest    | `print,prone,prune` | Spelling suggestions for word under cursor (if misspelled).
+| buffer_count      | `10`                | Total number of buffers opened.
+| buffer_short_name | `#test`             | Current buffer short name.
+| irc_channel       | `#test`             | Current IRC channel name.
+| irc_nick_modes    | `@`                 | IRC modes for self nick.
+| mouse_status      | `M`                 | Mouse status (empty if mouse is disabled).
+| window_number     | `2`                 | Current window number.
 |===
 
 [[command_line]]
@@ -708,17 +708,17 @@ opzionale):
 |===
 // TRANSLATIION MISSING
 | Key                    | Description
-| kbd:[Ctrl+c], kbd:[b]  | testo in grassetto
+| kbd:[Ctrl+c], kbd:[b]  | testo in grassetto.
 | kbd:[Ctrl+c], kbd:[c],
-  kbd:[xx]               | colore del testo `xx` (consultare la lista di colori che segue)
+  kbd:[xx]               | colore del testo `xx` (consultare la lista di colori che segue).
 | kbd:[Ctrl+c], kbd:[c],
   kbd:[xx], kbd:[,],
-  kbd:[yy]               | colore del testo `xx` e di sfondo `yy` (consultare la lista di colori che segue)
+  kbd:[yy]               | colore del testo `xx` e di sfondo `yy` (consultare la lista di colori che segue).
 // TRANSLATION MISSING
-| kbd:[Ctrl+c], kbd:[i]  | italic text
-| kbd:[Ctrl+c], kbd:[o]  | disabilita colori ed attributi
-| kbd:[Ctrl+c], kbd:[v]  | video inverso (inverte il colore del testo con quello di sfondo)
-| kbd:[Ctrl+c], kbd:[_]  | testo sottolineato
+| kbd:[Ctrl+c], kbd:[i]  | italic text.
+| kbd:[Ctrl+c], kbd:[o]  | disabilita colori ed attributi.
+| kbd:[Ctrl+c], kbd:[v]  | video inverso (inverte il colore del testo con quello di sfondo).
+| kbd:[Ctrl+c], kbd:[_]  | testo sottolineato.
 |===
 
 [NOTE]
@@ -1542,59 +1542,59 @@ with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`
 |===
 | Tasti           | Descrizione | Comando
 | kbd:[←] +
-  kbd:[Ctrl+b]    | Passa al carattere precedente nella riga di comando | `/input move_previous_char`
+  kbd:[Ctrl+b]    | Passa al carattere precedente nella riga di comando. | `/input move_previous_char`
 | kbd:[→] +
-  kbd:[Ctrl+f]    | Passa al carattere successivo nella riga di comando | `/input move_next_char`
+  kbd:[Ctrl+f]    | Passa al carattere successivo nella riga di comando. | `/input move_next_char`
 | kbd:[Ctrl+←] +
-  kbd:[Alt+b]     | Passa alla parola precedente nella riga di comando | `/input move_previous_word`
+  kbd:[Alt+b]     | Passa alla parola precedente nella riga di comando. | `/input move_previous_word`
 | kbd:[Ctrl+→] +
-  kbd:[Alt+f]     | Passa alla parola successiva nella riga di comando | `/input move_next_word`
+  kbd:[Alt+f]     | Passa alla parola successiva nella riga di comando. | `/input move_next_word`
 | kbd:[Home] +
-  kbd:[Ctrl+a]    | Si sposta all'inizio della riga di comando | `/input move_beginning_of_line`
+  kbd:[Ctrl+a]    | Si sposta all'inizio della riga di comando. | `/input move_beginning_of_line`
 | kbd:[End] +
-  kbd:[Ctrl+e]    | Si sposta alla fine della riga di comando | `/input move_end_of_line`
+  kbd:[Ctrl+e]    | Si sposta alla fine della riga di comando. | `/input move_end_of_line`
 | kbd:[Ctrl+c],
-  kbd:[b]         | Inserisce il codice per il testo in grassetto | `/input insert \x02`
+  kbd:[b]         | Inserisce il codice per il testo in grassetto. | `/input insert \x02`
 | kbd:[Ctrl+c],
-  kbd:[c]         | Inserisce il codice per il testo colorato | `/input insert \x03`
+  kbd:[c]         | Inserisce il codice per il testo colorato. | `/input insert \x03`
 | kbd:[Ctrl+c],
-  kbd:[i]         | Inserisce il codice per il testo in corsivo | `/input insert \x1D`
+  kbd:[i]         | Inserisce il codice per il testo in corsivo. | `/input insert \x1D`
 | kbd:[Ctrl+c],
-  kbd:[o]         | Inserisce il codice per il reset dei colori | `/input insert \x0F`
+  kbd:[o]         | Inserisce il codice per il reset dei colori. | `/input insert \x0F`
 | kbd:[Ctrl+c],
-  kbd:[v]         | Inserisce il codice per l'inversione dei colori | `/input insert \x16`
+  kbd:[v]         | Inserisce il codice per l'inversione dei colori. | `/input insert \x16`
 | kbd:[Ctrl+c],
-  kbd:[_]         | Inserisce il codice per il testo sottolineato | `/input insert \x1F`
+  kbd:[_]         | Inserisce il codice per il testo sottolineato. | `/input insert \x1F`
 | kbd:[Del] +
-  kbd:[Ctrl+d]    | Elimina il carattere successivo nella riga di comando | `/input delete_next_char`
+  kbd:[Ctrl+d]    | Elimina il carattere successivo nella riga di comando. | `/input delete_next_char`
 | kbd:[Backsp.] +
-  kbd:[Ctrl+h]    | Elimina il carattere precedente nella riga di comando | `/input delete_previous_char`
+  kbd:[Ctrl+h]    | Elimina il carattere precedente nella riga di comando. | `/input delete_previous_char`
 // TRANSLATION MISSING
-| kbd:[Ctrl+k]    | Elimina dal cursore fino alla fine della riga di comando (deleted string is copied to the internal clipboard) | `/input delete_end_of_line`
-| kbd:[Ctrl+r]      | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>) | `/input search_text_here`
-| kbd:[Ctrl+t]    | Inverti caratteri | `/input transpose_chars`
+| kbd:[Ctrl+k]    | Elimina dal cursore fino alla fine della riga di comando (deleted string is copied to the internal clipboard). | `/input delete_end_of_line`
+| kbd:[Ctrl+r]      | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>). | `/input search_text_here`
+| kbd:[Ctrl+t]    | Inverti caratteri. | `/input transpose_chars`
 // TRANSLATION MISSING
-| kbd:[Ctrl+u]    | Elimina dal cursore fino all'inizio della riga di comando (deleted string is copied to the internal clipboard) | `/input delete_beginning_of_line`
+| kbd:[Ctrl+u]    | Elimina dal cursore fino all'inizio della riga di comando (deleted string is copied to the internal clipboard). | `/input delete_beginning_of_line`
 // TRANSLATION MISSING
-| kbd:[Ctrl+w]    | Elimina la parola precedente nella riga di comando (deleted string is copied to the internal clipboard) | `/input delete_previous_word`
+| kbd:[Ctrl+w]    | Elimina la parola precedente nella riga di comando (deleted string is copied to the internal clipboard). | `/input delete_previous_word`
 // TRANSLATION MISSING
-| kbd:[Ctrl+y]    | Paste the internal clipboard content | `/input clipboard_paste`
-| kbd:[Ctrl+_]    | Annulla l'ultima azione sulla riga di comando | `/input undo`
-| kbd:[Alt+_]     | Ripete l'ultima azione sulla riga di comando | `/input redo`
-| kbd:[Tab]       | Completa comando o nick (kbd:[Tab] di nuovo: trova prossimo completamento) | `/input complete_next`
-| kbd:[Shift+Tab] | Senza completamento: effettua un completamento parziale, con completamento in sospeso: completa con il completamento precedente | `/input complete_previous`
+| kbd:[Ctrl+y]    | Paste the internal clipboard content. | `/input clipboard_paste`
+| kbd:[Ctrl+_]    | Annulla l'ultima azione sulla riga di comando. | `/input undo`
+| kbd:[Alt+_]     | Ripete l'ultima azione sulla riga di comando. | `/input redo`
+| kbd:[Tab]       | Completa comando o nick (kbd:[Tab] di nuovo: trova prossimo completamento). | `/input complete_next`
+| kbd:[Shift+Tab] | Senza completamento: effettua un completamento parziale, con completamento in sospeso: completa con il completamento precedente. | `/input complete_previous`
 | kbd:[Invio] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]    | Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca) | `/input return`
-| kbd:[↑]         | Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto) | `/input history_previous`
-| kbd:[↓]         | Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso) | `/input history_next`
-| kbd:[Ctrl+↑]    | Chiama il comando/messaggio precedente nella cronologia globale (identico per tutti i buffer) | `/input history_global_previous`
-| kbd:[Ctrl+↓]    | Chiama il comando/messaggio successivo nella cronologia globale (identico per tutti i buffer) | `/input history_global_next`
+  kbd:[Ctrl+m]    | Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca). | `/input return`
+| kbd:[↑]         | Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto). | `/input history_previous`
+| kbd:[↓]         | Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso). | `/input history_next`
+| kbd:[Ctrl+↑]    | Chiama il comando/messaggio precedente nella cronologia globale (identico per tutti i buffer). | `/input history_global_previous`
+| kbd:[Ctrl+↓]    | Chiama il comando/messaggio successivo nella cronologia globale (identico per tutti i buffer). | `/input history_global_next`
 // TRANSLATION MISSING
-| kbd:[Alt+d]     | Elimina la parola successiva nella riga di comando (deleted string is copied to the internal clipboard) | `/input delete_next_word`
-| kbd:[Alt+k]     | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando | `/input grab_key_command`
-| kbd:[Alt+r]     | Elimina l'intera riga di comando | `/input delete_line`
-| kbd:[Alt+s]     | Abilita/disabilita aspell | `/mute aspell toggle`
+| kbd:[Alt+d]     | Elimina la parola successiva nella riga di comando (deleted string is copied to the internal clipboard). | `/input delete_next_word`
+| kbd:[Alt+k]     | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando. | `/input grab_key_command`
+| kbd:[Alt+r]     | Elimina l'intera riga di comando. | `/input delete_line`
+| kbd:[Alt+s]     | Abilita/disabilita aspell. | `/mute aspell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -1603,73 +1603,73 @@ with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Tasti           | Descrizione | Comando
-| kbd:[Ctrl+l]    | Ridisegna l'intera finestra | `/window refresh`
+| kbd:[Ctrl+l]    | Ridisegna l'intera finestra. | `/window refresh`
 | kbd:[Ctrl+s],
-  kbd:[ctrl-u]    | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer | `/input set_unread`
-| kbd:[Ctrl+x]    | Passa al buffer attivo se i buffer sono collegati con lo stesso numero | `/input switch_active_buffer`
+  kbd:[ctrl-u]    | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `/input set_unread`
+| kbd:[Ctrl+x]    | Passa al buffer attivo se i buffer sono collegati con lo stesso numero. | `/input switch_active_buffer`
 // TRANSLATION MISSING
-| kbd:[Alt+x]     | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers) | `/input zoom_merged_buffer`
-| kbd:[PgUp]      | Scorre in alto di una pagina nella cronologia del buffer | `/window page_up`
-| kbd:[PgDn]      | Scorre di una pagina in basso nella cronologia del buffer | `/window page_down`
-| kbd:[Alt+PgUp]  | Scorre di qualche riga in alto nella cronologia del buffer | `/window scroll_up`
-| kbd:[Alt+PgDn]  | Scorre di qualche riga in basso nella cronologia del buffer | `/window scroll_down`
-| kbd:[Alt+Home]  | Scorre in cima al buffer | `/window scroll_top`
-| kbd:[Alt+End]   | Scorre alla fine del del buffer | `/window scroll_bottom`
+| kbd:[Alt+x]     | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `/input zoom_merged_buffer`
+| kbd:[PgUp]      | Scorre in alto di una pagina nella cronologia del buffer. | `/window page_up`
+| kbd:[PgDn]      | Scorre di una pagina in basso nella cronologia del buffer. | `/window page_down`
+| kbd:[Alt+PgUp]  | Scorre di qualche riga in alto nella cronologia del buffer. | `/window scroll_up`
+| kbd:[Alt+PgDn]  | Scorre di qualche riga in basso nella cronologia del buffer. | `/window scroll_down`
+| kbd:[Alt+Home]  | Scorre in cima al buffer. | `/window scroll_top`
+| kbd:[Alt+End]   | Scorre alla fine del del buffer. | `/window scroll_bottom`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]        | Passa al buffer precedente | `/buffer -1`
+  kbd:[F5]        | Passa al buffer precedente. | `/buffer -1`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]        | Passa al buffer successivo | `/buffer +1`
-| kbd:[F7]        | Passa alla finestra precedente | `/window -1`
-| kbd:[F8]        | Passa alla finestra successiva | `/window +1`
-| kbd:[F9]        | Scorre il titolo del buffer sulla sinistra | `+/bar scroll title * -30%+`
-| kbd:[F10]       | Scorre il titolo del buffer sulla destra | `+/bar scroll title * +30%+`
-| kbd:[F11]       | Scorre di una pagina in alto nella lista nick | `/bar scroll nicklist * -100%`
-| kbd:[F12]       | Scorre di una pagina in basso nella lista nick | `/bar scroll nicklist * +100%`
-| kbd:[Alt+F11]   | Sposta all'inizio della lista nick | `/bar scroll nicklist * b`
-| kbd:[Alt+F12]   | Sposta alla fine della lista nick | `/bar scroll nicklist * e`
-| kbd:[Alt+a]     | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro) | `/input jump_smart`
-| kbd:[Alt+h]     | Pulisce hotlist (notifica di attività su altri buffer) | `/input hotlist_clear`
+  kbd:[F6]        | Passa al buffer successivo. | `/buffer +1`
+| kbd:[F7]        | Passa alla finestra precedente. | `/window -1`
+| kbd:[F8]        | Passa alla finestra successiva. | `/window +1`
+| kbd:[F9]        | Scorre il titolo del buffer sulla sinistra. | `+/bar scroll title * -30%+`
+| kbd:[F10]       | Scorre il titolo del buffer sulla destra. | `+/bar scroll title * +30%+`
+| kbd:[F11]       | Scorre di una pagina in alto nella lista nick. | `/bar scroll nicklist * -100%`
+| kbd:[F12]       | Scorre di una pagina in basso nella lista nick. | `/bar scroll nicklist * +100%`
+| kbd:[Alt+F11]   | Sposta all'inizio della lista nick. | `/bar scroll nicklist * b`
+| kbd:[Alt+F12]   | Sposta alla fine della lista nick. | `/bar scroll nicklist * e`
+| kbd:[Alt+a]     | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro). | `/input jump_smart`
+| kbd:[Alt+h]     | Pulisce hotlist (notifica di attività su altri buffer). | `/input hotlist_clear`
 // TRANSLATION MISSING
 | kbd:[Alt+j],
-  kbd:[alt-f]     | Switch to first buffer | `/buffer -`
+  kbd:[alt-f]     | Switch to first buffer. | `/buffer -`
 | kbd:[Alt+j],
-  kbd:[alt-l]     | Passa all'ultimo buffer | `/buffer +`
+  kbd:[alt-l]     | Passa all'ultimo buffer. | `/buffer +`
 | kbd:[Alt+j],
-  kbd:[alt-r]     | Passa al buffer raw IRC | `/server raw`
+  kbd:[alt-r]     | Passa al buffer raw IRC. | `/server raw`
 | kbd:[Alt+j],
-  kbd:[alt-s]     | Passa al buffer server IRC | `/server jump`
-| kbd:[Alt+0...9] | Passa al buffer numero (0 = 10) | `/buffer *N`
+  kbd:[alt-s]     | Passa al buffer server IRC. | `/server jump`
+| kbd:[Alt+0...9] | Passa al buffer numero (0 = 10). | `/buffer *N`
 | kbd:[Alt+j],
-  kbd:[01...99]   | Passa al buffer numero | `/buffer *NN`
+  kbd:[01...99]   | Passa al buffer numero. | `/buffer *NN`
 // TRANSLATION MISSING
-| kbd:[Alt+l]     | Toggle bare display on/off | `/window bare`
-| kbd:[Alt+m]     | Abilita/disabilita | `/mouse toggle`
-| kbd:[Alt+n]     | Scorre fino alla notifica successiva | `/window scroll_next_highlight`
-| kbd:[Alt+p]     | Scorre fino alla notifica precedente | `/window scroll_previous_highlight`
-| kbd:[Alt+u]     | Scorre fino alla prima riga non letta nel buffer | `/window scroll_unread`
+| kbd:[Alt+l]     | Toggle bare display on/off. | `/window bare`
+| kbd:[Alt+m]     | Abilita/disabilita. | `/mouse toggle`
+| kbd:[Alt+n]     | Scorre fino alla notifica successiva. | `/window scroll_next_highlight`
+| kbd:[Alt+p]     | Scorre fino alla notifica precedente. | `/window scroll_previous_highlight`
+| kbd:[Alt+u]     | Scorre fino alla prima riga non letta nel buffer. | `/window scroll_unread`
 | kbd:[Alt+w],
-  kbd:[alt-↑]     | Passa alla finestra in alto | `/window up`
+  kbd:[alt-↑]     | Passa alla finestra in alto. | `/window up`
 | kbd:[Alt+w],
-  kbd:[alt-↓]     | Passa alla finestra in basso | `/window down`
+  kbd:[alt-↓]     | Passa alla finestra in basso. | `/window down`
 | kbd:[Alt+w],
-  kbd:[alt-←]     | Passa alla finestra sulla sinistra | `/window left`
+  kbd:[alt-←]     | Passa alla finestra sulla sinistra. | `/window left`
 | kbd:[Alt+w],
-  kbd:[alt-→]     | Passa alla finestrs sulla destra | `/window right`
+  kbd:[alt-→]     | Passa alla finestrs sulla destra. | `/window right`
 | kbd:[Alt+w],
-  kbd:[alt-b]     | Bilancia le dimensioni di tutte le finestre | `/window balance`
+  kbd:[alt-b]     | Bilancia le dimensioni di tutte le finestre. | `/window balance`
 | kbd:[Alt+w],
-  kbd:[alt-s]     | Scambia i buffer di due finestra | `/window swap`
-| kbd:[Alt+z]     | Ingrandimento sulla finestra attiva (kbd:[Alt+z] di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento) | `/window zoom`
-| kbd:[Alt+<]     | Passa al buffer precedente nella lista dei buffer visitati | `/input jump_previously_visited_buffer`
-| kbd:[Alt+>]     | Passa al buffer successivo nella lista dei buffer visitati | `/input jump_next_visited_buffer`
-| kbd:[Alt+/]     | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer) | `/input jump_last_buffer_displayed`
-| kbd:[Alt+=]     | Attiva/disattiva filtri | `/filter toggle`
+  kbd:[alt-s]     | Scambia i buffer di due finestra. | `/window swap`
+| kbd:[Alt+z]     | Ingrandimento sulla finestra attiva (kbd:[Alt+z] di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento). | `/window zoom`
+| kbd:[Alt+<]     | Passa al buffer precedente nella lista dei buffer visitati. | `/input jump_previously_visited_buffer`
+| kbd:[Alt+>]     | Passa al buffer successivo nella lista dei buffer visitati. | `/input jump_next_visited_buffer`
+| kbd:[Alt+/]     | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer). | `/input jump_last_buffer_displayed`
+| kbd:[Alt+=]     | Attiva/disattiva filtri. | `/filter toggle`
 // TRANSLATION MISSING
-| kbd:[Alt+-]     | Toggle filters on/off in current buffer | `/filter toggle @`
+| kbd:[Alt+-]     | Toggle filters on/off in current buffer. | `/filter toggle @`
 |===
 
 [[key_bindings_search_context]]
@@ -1682,18 +1682,18 @@ kbd:[Ctrl+r] per cercare del testo nel buffer).
 |===
 | Key            | Descrizione | Comando
 // TRANSLATION MISSING
-| kbd:[Ctrl+r]   | Switch search type: string (default), regular expression | `/input search_switch_regex`
-| kbd:[Alt+c]    | Passa alla ricerca esatta | `/input search_switch_case`
+| kbd:[Ctrl+r]   | Switch search type: string (default), regular expression. | `/input search_switch_regex`
+| kbd:[Alt+c]    | Passa alla ricerca esatta. | `/input search_switch_case`
 // TRANSLATION MISSING
-| kbd:[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages | `/input search_switch_where`
-| kbd:[↑]        | Cerca riga precedente | `/input search_previous`
-| kbd:[↓]        | Cerca riga successiva | `/input search_next`
+| kbd:[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages. | `/input search_switch_where`
+| kbd:[↑]        | Cerca riga precedente. | `/input search_previous`
+| kbd:[↓]        | Cerca riga successiva. | `/input search_next`
 // TRANSLATION MISSING
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | Stop search at current position | `/input search_stop_here`
+  kbd:[Ctrl+m]   | Stop search at current position. | `/input search_stop_here`
 // TRANSLATION MISSING
-| kbd:[Ctrl+q]   | Stop search and scroll to bottom of buffer | `/input search_stop`
+| kbd:[Ctrl+q]   | Stop search and scroll to bottom of buffer. | `/input search_stop`
 |===
 
 [[key_bindings_cursor_context]]
@@ -1705,25 +1705,25 @@ sullo schermo.
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
 | Tasto          | Zona       | Descrizione | Comando
-| kbd:[↑]        | -          | Sposta il cursore di una riga in alto | `/cursor move up`
-| kbd:[↓]        | -          | Sposta il cursore di una riga in basso | `/cursor move down`
-| kbd:[←]        | -          | Sposta il cursore di una colonna a sinistra | `/cursor move left`
-| kbd:[→]        | -          | Sposta il cursore di una colonna a destra | `/cursor move right`
-| kbd:[Alt+↑]    | -          | Sposta il cursore nell'area in alto | `/cursor move area_up`
-| kbd:[Alt+↓]    | -          | Sposta il cursore nell'area in basso | `/cursor move area_down`
-| kbd:[Alt+←]    | -          | Sposta il cursore nell'area a sinistra | `/cursor move area_left`
-| kbd:[Alt+→]    | -          | Sposta il cursore nell'area a destra | `/cursor move area_right`
-| kbd:[m]        | chat       | Cita messaggio | `hsignal:chat_quote_message;/cursor stop`
-| kbd:[q]        | chat       | Cita prefisso + messaggio | `hsignal:chat_quote_prefix_message;/cursor stop`
-| kbd:[Q]        | chat       | Cita ora + prefisso + messaggio | `hsignal:chat_quote_time_prefix_message;/cursor stop`
-| kbd:[b]        | lista nick | Ban di un nick | `/window ${_window_number};/ban ${nick}`
-| kbd:[k]        | lista nick | Kick di un nick | `/window ${_window_number};/kick ${nick}`
-| kbd:[K]        | lista nick | Kick e ban di un nick | `/window ${_window_number};/kickban ${nick}`
-| kbd:[q]        | lista nick | Apri query con il nick | `/window ${_window_number};/query ${nick};/cursor stop`
-| kbd:[w]        | lista nick | Effettua un whois sul nick | `/window ${_window_number};/whois ${nick}`
+| kbd:[↑]        | -          | Sposta il cursore di una riga in alto. | `/cursor move up`
+| kbd:[↓]        | -          | Sposta il cursore di una riga in basso. | `/cursor move down`
+| kbd:[←]        | -          | Sposta il cursore di una colonna a sinistra. | `/cursor move left`
+| kbd:[→]        | -          | Sposta il cursore di una colonna a destra. | `/cursor move right`
+| kbd:[Alt+↑]    | -          | Sposta il cursore nell'area in alto. | `/cursor move area_up`
+| kbd:[Alt+↓]    | -          | Sposta il cursore nell'area in basso. | `/cursor move area_down`
+| kbd:[Alt+←]    | -          | Sposta il cursore nell'area a sinistra. | `/cursor move area_left`
+| kbd:[Alt+→]    | -          | Sposta il cursore nell'area a destra. | `/cursor move area_right`
+| kbd:[m]        | chat       | Cita messaggio. | `hsignal:chat_quote_message;/cursor stop`
+| kbd:[q]        | chat       | Cita prefisso + messaggio. | `hsignal:chat_quote_prefix_message;/cursor stop`
+| kbd:[Q]        | chat       | Cita ora + prefisso + messaggio. | `hsignal:chat_quote_time_prefix_message;/cursor stop`
+| kbd:[b]        | lista nick | Ban di un nick. | `/window ${_window_number};/ban ${nick}`
+| kbd:[k]        | lista nick | Kick di un nick. | `/window ${_window_number};/kick ${nick}`
+| kbd:[K]        | lista nick | Kick e ban di un nick. | `/window ${_window_number};/kickban ${nick}`
+| kbd:[q]        | lista nick | Apri query con il nick. | `/window ${_window_number};/query ${nick};/cursor stop`
+| kbd:[w]        | lista nick | Effettua un whois sul nick. | `/window ${_window_number};/whois ${nick}`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -          | Ferma la modalità cursore | `/cursor stop`
+  kbd:[Ctrl+m]   | -          | Ferma la modalità cursore. | `/cursor stop`
 |===
 
 [[key_bindings_mouse_context]]
@@ -1736,32 +1736,32 @@ evento del mouse.
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
 | Tasto ^(1)^  | Azione           | Zona                 | Descrizione | Comando
-| ◾◽◽          | -                | chat                 | Passa alla finestra | `/window ${_window_number}`
-| ◾◽◽          | sinistra         | chat                 | Passa al buffer precedente | `/window ${_window_number};/buffer +1`
-| ◾◽◽          | destra           | chat                 | Passa al buffer successivo | `/window ${_window_number};/buffer +1`
-| ◾◽◽          | sinistra (lungo) | chat                 | Switch to first buffer | `/window ${_window_number};/buffer 1`
-| ◾◽◽          | destra (lungo)   | chat                 | Passa all'ultimo buffer | `/window ${_window_number};/input jump_last_buffer`
-| ◾◽◽          | -                | chat (script buffer) | Select line in script buffer | `/script go ${_chat_line_y}`
-| ◽◽◾          | -                | chat (script buffer) | Install/remove script | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
-| ⇑            | -                | chat                 | Scorre di qualche riga in alto nella cronologia del buffer | `/window scroll_up -window ${_window_number}`
-| ⇓            | -                | chat                 | Scorre di qualche riga in basso nella cronologia del buffer | `/window scroll_down -window ${_window_number}`
-| ⇑            | -                | chat (script buffer) | Move 5 lines up in script buffer | `/script up 5`
-| ⇓            | -                | chat (script buffer) | Move 5 lines down in script buffer | `/script down 5`
-| kbd:[Ctrl+⇑] | -                | chat                 | Scroll horizontally to the left | `/window scroll_horiz -window ${_window_number} -10%`
-| kbd:[Ctrl+⇓] | -                | chat                 | Scroll horizontally to the right | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽          | su               | lista nick           | Scorre di una pagina in alto nella lista nick | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽          | giù              | lista nick           | Scorre di una pagina in basso nella lista nick | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽          | up (lungo)       | lista nick           | Sposta all'inizio della lista nick | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽          | giù (lungo)      | lista nick           | Sposta alla fine della lista nick | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽          | -                | lista nick           | Apre una query con un nick | `/window ${_window_number};/query ${nick}`
-| ◽◽◾          | -                | lista nick           | Effettua un whois su un nick | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽          | sinistra         | lista nick           | Kick di un nick | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽          | sinistra (lungo) | lista nick           | Kick e ban di un nick | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾          | sinistra         | lista nick           | Ban di un nick | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾          | -                | input                | Cattura un evento del mouse e inserisce il codice nella riga di comando | `/input grab_mouse_area`
-| ⇑            | -                | ogni barra           | Scorre la barra del -20% | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| ⇓            | -                | ogni barra           | Scorre la barra del +20% | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽          | -                | ovunque              | Avvia la modalità cursore in questo punto | `/cursor go ${_x},${_y}`
+| ◾◽◽          | -                | chat                 | Passa alla finestra. | `/window ${_window_number}`
+| ◾◽◽          | sinistra         | chat                 | Passa al buffer precedente. | `/window ${_window_number};/buffer +1`
+| ◾◽◽          | destra           | chat                 | Passa al buffer successivo. | `/window ${_window_number};/buffer +1`
+| ◾◽◽          | sinistra (lungo) | chat                 | Switch to first buffer. | `/window ${_window_number};/buffer 1`
+| ◾◽◽          | destra (lungo)   | chat                 | Passa all'ultimo buffer. | `/window ${_window_number};/input jump_last_buffer`
+| ◾◽◽          | -                | chat (script buffer) | Select line in script buffer. | `/script go ${_chat_line_y}`
+| ◽◽◾          | -                | chat (script buffer) | Install/remove script. | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
+| ⇑            | -                | chat                 | Scorre di qualche riga in alto nella cronologia del buffer. | `/window scroll_up -window ${_window_number}`
+| ⇓            | -                | chat                 | Scorre di qualche riga in basso nella cronologia del buffer. | `/window scroll_down -window ${_window_number}`
+| ⇑            | -                | chat (script buffer) | Move 5 lines up in script buffer. | `/script up 5`
+| ⇓            | -                | chat (script buffer) | Move 5 lines down in script buffer. | `/script down 5`
+| kbd:[Ctrl+⇑] | -                | chat                 | Scroll horizontally to the left. | `/window scroll_horiz -window ${_window_number} -10%`
+| kbd:[Ctrl+⇓] | -                | chat                 | Scroll horizontally to the right. | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽          | su               | lista nick           | Scorre di una pagina in alto nella lista nick. | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽          | giù              | lista nick           | Scorre di una pagina in basso nella lista nick. | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽          | up (lungo)       | lista nick           | Sposta all'inizio della lista nick. | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽          | giù (lungo)      | lista nick           | Sposta alla fine della lista nick. | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽          | -                | lista nick           | Apre una query con un nick. | `/window ${_window_number};/query ${nick}`
+| ◽◽◾          | -                | lista nick           | Effettua un whois su un nick. | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽          | sinistra         | lista nick           | Kick di un nick. | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽          | sinistra (lungo) | lista nick           | Kick e ban di un nick. | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾          | sinistra         | lista nick           | Ban di un nick. | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾          | -                | input                | Cattura un evento del mouse e inserisce il codice nella riga di comando. | `/input grab_mouse_area`
+| ⇑            | -                | ogni barra           | Scorre la barra del -20%. | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| ⇓            | -                | ogni barra           | Scorre la barra del +20%. | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽          | -                | ovunque              | Avvia la modalità cursore in questo punto. | `/cursor go ${_x},${_y}`
 |===
 
 // TRANSLATION MISSING
@@ -1989,8 +1989,8 @@ Sections:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Control command                    | Description
-| crypt   | /set sec.crypt.*                   | Options for encryption
-| data    | <<command_weechat_secure,/secure>> | Secured data
+| crypt   | /set sec.crypt.*                   | Options for encryption.
+| data    | <<command_weechat_secure,/secure>> | Secured data.
 |===
 
 // TRANSLATION MISSING
@@ -2009,26 +2009,26 @@ Sections:
 |===
 | Section    | Control command                           | Description
 | debug      | <<command_weechat_debug,/debug set>>      +
-               /set weechat.debug.*                      | Debug level, for core and plugins (options can be added/removed in section)
-| startup    | /set weechat.startup.*                    | Startup options
-| look       | /set weechat.look.*                       | Look and feel
+               /set weechat.debug.*                      | Debug level, for core and plugins (options can be added/removed in section).
+| startup    | /set weechat.startup.*                    | Startup options.
+| look       | /set weechat.look.*                       | Look and feel.
 | palette    | <<command_weechat_color,/color alias>>    +
-               /set weechat.palette.*                    | Color aliases (options can be added/removed in section)
-| color      | /set weechat.color.*                      | Colors
-| completion | /set weechat.completion.*                 | Completion options
-| history    | /set weechat.history.*                    | History options (commands and buffers)
+               /set weechat.palette.*                    | Color aliases (options can be added/removed in section).
+| color      | /set weechat.color.*                      | Colors.
+| completion | /set weechat.completion.*                 | Completion options.
+| history    | /set weechat.history.*                    | History options (commands and buffers).
 | proxy      | <<command_weechat_proxy,/proxy>>          +
-               /set weechat.proxy.*                      | Proxy options
-| network    | /set weechat.network.*                    | Network/SSL options
+               /set weechat.proxy.*                      | Proxy options.
+| network    | /set weechat.network.*                    | Network/SSL options.
 | bar        | <<command_weechat_bar,/bar>>              +
-               /set weechat.bar.*                        | Bar options
-| layout     | <<command_weechat_layout,/layout>>        | Layouts
-| notify     | <<command_weechat_buffer,/buffer notify>> | Notify levels for buffers (options can be added/removed in section)
-| filter     | <<command_weechat_filter,/filter>>        | Filters
-| key        | <<command_weechat_key,/key>>              | Keys in default context
-| key_search | <<command_weechat_key,/key>>              | Keys in search context
-| key_cursor | <<command_weechat_key,/key>>              | Keys in cursor context
-| key_mouse  | <<command_weechat_key,/key>>              | Keys in mouse context
+               /set weechat.bar.*                        | Bar options.
+| layout     | <<command_weechat_layout,/layout>>        | Layouts.
+| notify     | <<command_weechat_buffer,/buffer notify>> | Notify levels for buffers (options can be added/removed in section).
+| filter     | <<command_weechat_filter,/filter>>        | Filters.
+| key        | <<command_weechat_key,/key>>              | Keys in default context.
+| key_search | <<command_weechat_key,/key>>              | Keys in search context.
+| key_cursor | <<command_weechat_key,/key>>              | Keys in cursor context.
+| key_mouse  | <<command_weechat_key,/key>>              | Keys in mouse context.
 |===
 
 // TRANSLATION MISSING
@@ -2074,26 +2074,26 @@ I plugin predefiniti sono:
 [width="100%",cols="^1,5",options="header"]
 |===
 | Plugin     | Descrizione
-| alias      | Definisce gli alias per i comandi
-| aspell     | Controllo ortografico per la riga di comando
-| charset    | Set di caratteri per la codifica/decodifica nei buffer
+| alias      | Definisce gli alias per i comandi.
+| aspell     | Controllo ortografico per la riga di comando.
+| charset    | Set di caratteri per la codifica/decodifica nei buffer.
 // TRANSLATION MISSING
-| exec       | Execution of external commands in WeeChat
-| fifo       | pipe FIFO utilizzata per inviare comandi da remoto su WeeChat
-| irc        | protocollo chat per IRC
-| logger     | Registra i buffer su file
-| relay      | Relay dei dati via rete
-| script     | Gestore script
-| python     | API per lo scripting in Python
-| perl       | API per lo scripting in Perl
-| ruby       | API per lo scripting in Ruby
-| lua        | API per lo scripting in Lua
-| tcl        | API per lo scripting in TCL
-| guile      | API per lo scripting in Guile (scheme)
-| javascript | API per lo scripting in Javascript
+| exec       | Execution of external commands in WeeChat.
+| fifo       | pipe FIFO utilizzata per inviare comandi da remoto su WeeChat.
+| irc        | protocollo chat per IRC.
+| logger     | Registra i buffer su file.
+| relay      | Relay dei dati via rete.
+| script     | Gestore script.
+| python     | API per lo scripting in Python.
+| perl       | API per lo scripting in Perl.
+| ruby       | API per lo scripting in Ruby.
+| lua        | API per lo scripting in Lua.
+| tcl        | API per lo scripting in TCL.
+| guile      | API per lo scripting in Guile (scheme).
+| javascript | API per lo scripting in Javascript.
 // TRANSLATION MISSING
-| trigger    | Text replacement and command execution on events triggered by WeeChat/plugins
-| xfer       | Trasferimento file e chat diretta
+| trigger    | Text replacement and command execution on events triggered by WeeChat/plugins.
+| xfer       | Trasferimento file e chat diretta.
 |===
 
 Per saperne di più riguardo lo sviluppo di plugin o script (tramite le API), per
@@ -2127,11 +2127,11 @@ Sections:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section    | Control command                           | Description
-| color      | /set aspell.color.*                       | Colors
-| check      | /set aspell.check.*                       | Options to control spell checking
+| color      | /set aspell.color.*                       | Colors.
+| check      | /set aspell.check.*                       | Options to control spell checking.
 | dict       | <<command_aspell_aspell,/aspell setdict>> +
-               /set aspell.dict.*                        | Dictionaries used by buffer (options can be added/removed in section)
-| option     | /set aspell.option.*                      | <<aspell_speller_options,Opzioni ortografiche>> (options can be added/removed in section)
+               /set aspell.dict.*                        | Dictionaries used by buffer (options can be added/removed in section).
+| option     | /set aspell.option.*                      | <<aspell_speller_options,Opzioni ortografiche>> (options can be added/removed in section).
 |===
 
 // TRANSLATION MISSING
@@ -2237,11 +2237,11 @@ Sections:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Control command                             | Description
-| default | /set charset.default.*                      | Default decoding/encoding charset
+| default | /set charset.default.*                      | Default decoding/encoding charset.
 | decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section)
+            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section).
 | encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section)
+            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section).
 |===
 
 // TRANSLATION MISSING
@@ -2329,8 +2329,8 @@ Sections:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Control command     | Description
-| command | /set exec.command.* | Options for commands
-| color   | /set exec.color.*   | Colors
+| command | /set exec.command.* | Options for commands.
+| color   | /set exec.color.*   | Colors.
 |===
 
 Options:
@@ -2398,7 +2398,7 @@ Sections:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Control command  | Description
-| file    | /set fifo.file.* | FIFO pipe control
+| file    | /set fifo.file.* | FIFO pipe control.
 |===
 
 // TRANSLATION MISSING
@@ -2445,15 +2445,15 @@ Sections:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section        | Control command                | Description
-| look           | /set irc.look.*                | Look and feel
-| color          | /set irc.color.*               | Colors
-| network        | /set irc.network.*             | Network options
-| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Buffer di destinazione per i messaggi IRC>> (options can be added/removed in section)
-| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,Risposte CTCP>> (options can be added/removed in section)
-| ignore         | <<command_irc_ignore,/ignore>> | Ignore people
-| server_default | /set irc.server_default.*      | Default values for servers (used when options in server are not defined)
+| look           | /set irc.look.*                | Look and feel.
+| color          | /set irc.color.*               | Colors.
+| network        | /set irc.network.*             | Network options.
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Buffer di destinazione per i messaggi IRC>> (options can be added/removed in section).
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,Risposte CTCP>> (options can be added/removed in section).
+| ignore         | <<command_irc_ignore,/ignore>> | Ignore people.
+| server_default | /set irc.server_default.*      | Default values for servers (used when options in server are not defined).
 | server         | <<command_irc_server,/server>> +
-                   /set irc.server.*              | Servers
+                   /set irc.server.*              | Servers.
 |===
 
 // TRANSLATION MISSING
@@ -2939,11 +2939,11 @@ Sections:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Control command     | Description
-| look    | /set logger.look.*  | Look and feel
-| color   | /set logger.color.* | Colors
-| file    | /set logger.file.*  | Options for log files
-| level   | /set logger.level.* | Log level by buffer (options can be added/removed in section)
-| mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section)
+| look    | /set logger.look.*  | Look and feel.
+| color   | /set logger.color.* | Colors.
+| file    | /set logger.file.*  | Options for log files.
+| level   | /set logger.level.* | Log level by buffer (options can be added/removed in section).
+| mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section).
 |===
 
 // TRANSLATION MISSING
@@ -3099,12 +3099,12 @@ Sections:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Control command                    | Description
-| look    | /set relay.look.*                  | Look and feel
-| color   | /set relay.color.*                 | Colors
-| network | /set relay.network.*               | Network options
-| irc     | /set relay.irc.*                   | Options specific to irc protocol (irc proxy)
+| look    | /set relay.look.*                  | Look and feel.
+| color   | /set relay.color.*                 | Colors.
+| network | /set relay.network.*               | Network options.
+| irc     | /set relay.irc.*                   | Options specific to irc protocol (irc proxy).
 | port    | <<command_relay_relay,/relay add>> +
-            /set relay.port.*                  | Ports used for relay (irc and weechat protocols) (options can be added/removed in section)
+            /set relay.port.*                  | Ports used for relay (irc and weechat protocols) (options can be added/removed in section).
 |===
 
 // TRANSLATION MISSING
@@ -3256,9 +3256,9 @@ Sections:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Control command       | Description
-| look    | /set script.look.*    | Look and feel
-| color   | /set script.color.*   | Colors
-| scripts | /set script.scripts.* | Options for download of scripts
+| look    | /set script.look.*    | Look and feel.
+| color   | /set script.color.*   | Colors.
+| scripts | /set script.scripts.* | Options for download of scripts.
 |===
 
 // TRANSLATION MISSING
@@ -3327,11 +3327,11 @@ Sections:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Control command                          | Description
-| look    | /set trigger.look.*                      | Look and feel
-| color   | /set trigger.color.*                     | Colors
+| look    | /set trigger.look.*                      | Look and feel.
+| color   | /set trigger.color.*                     | Colors.
 | trigger | <<command_trigger_trigger,/trigger add>> +
             <<command_trigger_trigger,/trigger set>> +
-            /set trigger.trigger.*                   | Trigger options
+            /set trigger.trigger.*                   | Trigger options.
 |===
 
 Options:
@@ -3601,8 +3601,8 @@ The "signal" callback sets following variables in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable       | Type   | Description
-| tg_signal      | string | Name of signal
-| tg_signal_data | string | Data sent with the signal
+| tg_signal      | string | Name of signal.
+| tg_signal_data | string | Data sent with the signal.
 |===
 
 If the signal contains an IRC message, the message is parsed and following data
@@ -3611,23 +3611,23 @@ is added in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable             | Type   | Description
-| server               | string | Name of server (example: "freenode")
-| tags                 | string | Tags in message (rarely used)
-| message_without_tags | string | Message without tags
-| nick                 | string | Nick
-| host                 | string | Hostname
-| command              | string | IRC command (example: "PRIVMSG", "NOTICE", ...)
-| channel              | string | IRC channel
-| arguments            | string | Arguments of command (includes value of _channel_)
-| text                 | string | Text (for example user message)
+| server               | string | Name of server (example: "freenode").
+| tags                 | string | Tags in message (rarely used).
+| message_without_tags | string | Message without tags.
+| nick                 | string | Nick.
+| host                 | string | Hostname.
+| command              | string | IRC command (example: "PRIVMSG", "NOTICE", ...).
+| channel              | string | IRC channel.
+| arguments            | string | Arguments of command (includes value of _channel_).
+| text                 | string | Text (for example user message).
 // TRANSLATION MISSING
-| pos_command          | string | The index of _command_ in message ("-1" if _command_ was not found)
+| pos_command          | string | The index of _command_ in message ("-1" if _command_ was not found).
 // TRANSLATION MISSING
-| pos_arguments        | string | The index of _arguments_ in message ("-1" if _arguments_ was not found)
+| pos_arguments        | string | The index of _arguments_ in message ("-1" if _arguments_ was not found).
 // TRANSLATION MISSING
-| pos_channel          | string | The index of _channel_ in message ("-1" if _channel_ was not found)
+| pos_channel          | string | The index of _channel_ in message ("-1" if _channel_ was not found).
 // TRANSLATION MISSING
-| pos_text             | string | The index of _text_ in message ("-1" if _text_ was not found)
+| pos_text             | string | The index of _text_ in message ("-1" if _text_ was not found).
 |===
 
 When the data is a pointer, the variable `tg_signal_data` can be used like this
@@ -3645,7 +3645,7 @@ The "hsignal" callback sets following variables in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable  | Type   | Description
-| tg_signal | string | Name of signal
+| tg_signal | string | Name of signal.
 |===
 
 The hashtable contains all keys/values from hashtable received (type:
@@ -3659,10 +3659,10 @@ The "modifier" callback sets following variables in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable          | Type   | Description
-| tg_modifier       | string | Name of modifier
-| tg_modifier_data  | string | Data sent with modifier
-| tg_string         | string | The string that can be modified
-| tg_string_nocolor | string | The string without color codes
+| tg_modifier       | string | Name of modifier.
+| tg_modifier_data  | string | Data sent with modifier.
+| tg_string         | string | The string that can be modified.
+| tg_string_nocolor | string | The string without color codes.
 |===
 
 For the _weechat_print_ modifier, variables using message tags are added (see
@@ -3671,13 +3671,13 @@ For the _weechat_print_ modifier, variables using message tags are added (see
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Type    | Description
-| buffer             | pointer | Buffer where message is printed
-| tg_plugin          | string  | Plugin of buffer where message is printed
-| tg_buffer          | string  | Full name of buffer where message is printed
-| tg_prefix          | string  | Prefix of message printed
-| tg_prefix_nocolor  | string  | Prefix without color codes
-| tg_message         | string  | Message printed
-| tg_message_nocolor | string  | Message without color codes
+| buffer             | pointer | Buffer where message is printed.
+| tg_plugin          | string  | Plugin of buffer where message is printed.
+| tg_buffer          | string  | Full name of buffer where message is printed.
+| tg_prefix          | string  | Prefix of message printed.
+| tg_prefix_nocolor  | string  | Prefix without color codes.
+| tg_message         | string  | Message printed.
+| tg_message_nocolor | string  | Message without color codes.
 |===
 
 If the modifier contains an IRC message, the message is parsed and extra data is
@@ -3691,14 +3691,14 @@ The "print" callback sets following variables in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Type    | Description
-| buffer             | pointer | Buffer
-| tg_date            | string  | Message date/time (format: `YYYY-MM-DD hh:mm:ss`)
-| tg_displayed       | string  | "1" if displayed, "0" if line filtered
-| tg_highlight       | string  | "1" if highlight, otherwise "0"
-| tg_prefix          | string  | Prefix
-| tg_prefix_nocolor  | string  | Prefix without color codes
-| tg_message         | string  | Message
-| tg_message_nocolor | string  | Message without color codes
+| buffer             | pointer | Buffer.
+| tg_date            | string  | Message date/time (format: `YYYY-MM-DD hh:mm:ss`).
+| tg_displayed       | string  | "1" if displayed, "0" if line filtered.
+| tg_highlight       | string  | "1" if highlight, otherwise "0".
+| tg_prefix          | string  | Prefix.
+| tg_prefix_nocolor  | string  | Prefix without color codes.
+| tg_message         | string  | Message.
+| tg_message_nocolor | string  | Message without color codes.
 |===
 
 Variables set using tags in message (they are set in modifier _weechat_print_
@@ -3707,15 +3707,15 @@ too):
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Type   | Description
-| tg_tags            | string | Tags of message (with comma added at beginning/end of string)
-| tg_tags_count      | string | Number of tags in message
-| tg_tag_nick        | string | Nick (from tag "nick_xxx")
-| tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc")
+| tg_tags            | string | Tags of message (with comma added at beginning/end of string).
+| tg_tags_count      | string | Number of tags in message.
+| tg_tag_nick        | string | Nick (from tag "nick_xxx").
+| tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc").
 // TRANSLATION MISSING
-| tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx")
-| tg_tag_notify      | string | Notify level (_none_, _message_, _private_, _highlight_)
-| tg_notify          | string | Notify level, if different from _none_
-| tg_msg_pv          | string | "1" for a private message, otherwise "0"
+| tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx").
+| tg_tag_notify      | string | Notify level (_none_, _message_, _private_, _highlight_).
+| tg_notify          | string | Notify level, if different from _none_.
+| tg_msg_pv          | string | "1" for a private message, otherwise "0".
 |===
 
 [[trigger_data_command]]
@@ -3726,9 +3726,9 @@ The "command" callback sets following variables in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable     | Type    | Description
-| buffer       | pointer | Buffer
-| tg_argvN     | string  | Argument #N
-| tg_argv_eolN | string  | From argument #N until end of arguments
+| buffer       | pointer | Buffer.
+| tg_argvN     | string  | Argument #N.
+| tg_argv_eolN | string  | From argument #N until end of arguments.
 |===
 
 [[trigger_data_command_run]]
@@ -3739,8 +3739,8 @@ The "command_run" callback sets following variables in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable   | Type    | Description
-| buffer     | pointer | Buffer
-| tg_command | string  | Command executed
+| buffer     | pointer | Buffer.
+| tg_command | string  | Command executed.
 |===
 
 [[trigger_data_timer]]
@@ -3751,8 +3751,8 @@ The "timer" callback sets following variables in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Type   | Description
-| tg_remaining_calls | string | Number of remaining calls
-| tg_date            | string | Current date/time (format: `YYYY-MM-DD hh:mm:ss`)
+| tg_remaining_calls | string | Number of remaining calls.
+| tg_date            | string | Current date/time (format: `YYYY-MM-DD hh:mm:ss`).
 |===
 
 [[trigger_data_config]]
@@ -3763,8 +3763,8 @@ The "config" callback sets following variables in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable  | Type   | Description
-| tg_option | string | Option
-| tg_value  | string | Value
+| tg_option | string | Option.
+| tg_value  | string | Value.
 |===
 
 [[trigger_data_focus]]
@@ -3775,8 +3775,8 @@ The "focus" callback sets following variables in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable | Type    | Description
-| window   | pointer | Window
-| buffer   | pointer | Buffer
+| window   | pointer | Window.
+| buffer   | pointer | Buffer.
 |===
 
 The hashtable contains all keys/values from hashtable received (type:
@@ -3866,10 +3866,10 @@ Sections:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Control command     | Description
-| look    | /set xfer.look.*    | Look and feel
-| color   | /set xfer.color.*   | Colors
-| network | /set xfer.network.* | Network options
-| file    | /set xfer.file.*    | Options for files sent/received
+| look    | /set xfer.look.*    | Look and feel.
+| color   | /set xfer.color.*   | Colors.
+| network | /set xfer.network.* | Network options.
+| file    | /set xfer.file.*    | Options for files sent/received.
 |===
 
 // TRANSLATION MISSING

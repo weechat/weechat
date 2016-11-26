@@ -2094,40 +2094,40 @@ expanded to last):
 | Format | Description | Examples | Results
 
 | `+${name}+` |
-  Variable `name` from hashtable _extra_vars_ |
+  Variable `name` from hashtable _extra_vars_. |
   `+${name}+` |
   `+value+`
 
 // TRANSLATION MISSING
 | `+${eval:xxx}+` +
   (_WeeChat ≥ 1.3_) |
-  String to evaluate |
+  String to evaluate. |
   `+${eval:${date:${weechat.look.buffer_time_format}}}+` |
  `+19:02:45+` (with colors if there are color codes in the option
  weechat.look.buffer_time_format)
 
 | `+${esc:xxx}+` +
   `+${\xxx}+` |
-  String with escaped chars |
+  String with escaped chars. |
   `+${esc:prefix\tmessage}+` +
   `+${\ua9}+` |
   `+prefix<TAB>message+` +
   `+©+`
 
 | `+${hide:x,value}+` |
-  String with hidden chars (all chars in `value` replaced `x`) |
+  String with hidden chars (all chars in `value` replaced `x`). |
   `+${hide:*,password}+` |
   `+********+`
 
 | `+${re:N}+` |
   Regex captured group: `0` = whole string matching, `1` to `99` = group
-  captured, `+++` = last group captured |
+  captured, `+++` = last group captured. |
   `+${re:1}+` |
   `+test+`
 
 | `+${color:name}+` |
   WeeChat color code (the name of color has optional attributes),
-  see function <<_color,color>> for supported formats |
+  see function <<_color,color>> for supported formats. |
   `+${color:red}red text+` +
   `+${color:*214}bold orange text+` |
   `+red text+` (in red) +
@@ -2135,7 +2135,7 @@ expanded to last):
 
 | `+${info:name}+` +
   `+${info:name,arguments}+` |
-  Info from WeeChat or a plugin, see function <<_info_get,info_get>> |
+  Info from WeeChat or a plugin, see function <<_info_get,info_get>>. |
   `+${info:version}+` +
   `+${info:irc_nick_color_name,foo}+` |
   `+1.0+` +
@@ -2146,7 +2146,7 @@ expanded to last):
   `+${date:xxx}+` +
   (_WeeChat ≥ 1.3_) |
   Current date/time, with custom format (see `man strftime`),
-  default format is `%F %T` |
+  default format is `%F %T`. |
   `+${date}+` +
   `+${date:%H:%M:%S}+` |
   `+2015-06-30 19:02:45+` +
@@ -2154,29 +2154,29 @@ expanded to last):
 
 | `+${env:NAME}+` +
   (_WeeChat ≥ 1.2_) |
-  Value of the environment variable `NAME` |
+  Value of the environment variable `NAME`. |
   `+${env:HOME}+` |
   `+/home/user+`
 
 | `+${sec.data.name}+` |
-  Value of the secured data `name` |
+  Value of the secured data `name`. |
   `+${sec.data.freenode_pass}+` |
   `+my_password+`
 
 | `+${file.section.option}+` |
-  Value of the option |
+  Value of the option. |
   `+${weechat.look.buffer_time_format}+` |
   `+%H:%M:%S+`
 
 | `+${name}+` |
-  Value of local variable `name` in buffer |
+  Value of local variable `name` in buffer. |
   `+${nick}+` |
   `+FlashCode+`
 
 | `+${hdata.var1.var2...}+` +
   `+${hdata[list].var1.var2...}+` |
   Hdata value (pointers `window` and `buffer` are set by default with current
-  window/buffer) |
+  window/buffer). |
   `+${buffer[gui_buffers].full_name}+` +
   `+${window.buffer.number}+` |
   `+core.weechat+` +
@@ -6887,11 +6887,11 @@ List of prefixes:
 [width="70%",cols="^2m,^1,^3,5",options="header"]
 |===
 | Prefisso | Valore   | Colore       | Descrizione
-| error    | `+=!=+`  | giallo       | Messaggio di errore
-| network  | `+--+`   | magenta      | Messaggio dalla rete
-| action   | `+*+`    | bianco       | Azione automatica
-| join     | `+-->+`  | verde chiaro | Qualcuno entra nella chat corrente
-| quit     | `+<--+`  | rosso chiaro | Qualcuno lascia la chat corrente
+| error    | `+=!=+`  | giallo       | Messaggio di errore.
+| network  | `+--+`   | magenta      | Messaggio dalla rete.
+| action   | `+*+`    | bianco       | Azione automatica.
+| join     | `+-->+`  | verde chiaro | Qualcuno entra nella chat corrente.
+| quit     | `+<--+`  | rosso chiaro | Qualcuno lascia la chat corrente.
 |===
 
 [NOTE]
@@ -7902,28 +7902,28 @@ available:
   any string |
   Arguments for command; if no argument is given with these options,
   the command is automatically split like the shell does (and then command
-  arguments are read in the _command_ argument)
+  arguments are read in the _command_ argument).
 
 // TRANSLATION MISSING
 | stdin +
   _(WeeChat ≥ 0.4.3)_ |
   (not used) |
   Create a pipe for writing data on standard input (stdin) of child process
-  (see function <<_hook_set,hook_set>>)
+  (see function <<_hook_set,hook_set>>).
 
 // TRANSLATION MISSING
 | buffer_flush +
   _(WeeChat ≥ 1.0)_ |
   number of bytes |
   Minimum number of bytes to flush stdout/stderr (to send output to callback),
-  between 1 and 65536 (default); 1 = send any output immediately to the callback
+  between 1 and 65536 (default); 1 = send any output immediately to the callback.
 
 // TRANSLATION MISSING
 | detached +
   _(WeeChat ≥ 1.0)_ |
   (not used) |
   Run the process in a detached mode: stdout and stderr are redirected to
-  _/dev/null_
+  _/dev/null_.
 |===
 
 Per il comando "url:..." sono disponibili le seguenti opzioni (consultare
@@ -8433,706 +8433,706 @@ List of signals sent by WeeChat and plugins:
 // TRANSLATION MISSING
 | aspell | aspell_suggest +
   _(WeeChat ≥ 0.4.0)_ |
-  Pointer: buffer |
-  New suggestions for a misspelled word
+  Pointer: buffer. |
+  New suggestions for a misspelled word.
 
 // TRANSLATION MISSING
 | guile | guile_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to script |
-  Scheme script loaded
+  String: path to script. |
+  Scheme script loaded.
 
 // TRANSLATION MISSING
 | guile | guile_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to script |
-  Scheme script unloaded
+  String: path to script. |
+  Scheme script unloaded.
 
 // TRANSLATION MISSING
 | guile | guile_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
-  String: comma-separated list of paths to scripts installed |
-  Scheme script(s) installed
+  String: comma-separated list of paths to scripts installed. |
+  Scheme script(s) installed.
 
 // TRANSLATION MISSING
 | guile | guile_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
-  String: comma-separated list of scripts removed |
-  Scheme script(s) removed
+  String: comma-separated list of scripts removed. |
+  Scheme script(s) removed.
 
 | irc | xxx,irc_in_yyy ^(1)^ |
-  String: messaggio |
+  String: messaggio. |
   Messaggio IRC dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato solo se il
-  messaggio *non* viene ignorato)
+  messaggio *non* viene ignorato).
 
 | irc | xxx,irc_in2_yyy ^(1)^ |
-  String: messaggio |
+  String: messaggio. |
   Messaggio IRC dal server (dopo essere stato
   utilizzato dal plugin irc, il segnale viene inviato
-  solo se il messaggio *non* viene ignorato)
+  solo se il messaggio *non* viene ignorato).
 
 | irc | xxx,irc_raw_in_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.2)_ |
-  String: messaggio |
+  String: messaggio. |
   Messaggio IRC dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato anche se il
-  messaggio è stato ignorato)
+  messaggio è stato ignorato).
 
 | irc | xxx,irc_raw_in2_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.2)_ |
-  String: messaggio |
+  String: messaggio. |
   Messaggio IRC dal server (dopo essere stato
   utilizzato dal plugin irc, il segnale viene inviato
-  anche se il messaggio è stato ignorato)
+  anche se il messaggio è stato ignorato).
 
 | irc | xxx,irc_out1_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
-  String: messaggio |
-  Messaggio IRC inviato al server (prima della divisione automatica da adattare in 512 byte)
+  String: messaggio. |
+  Messaggio IRC inviato al server (prima della divisione automatica da adattare in 512 byte).
 
 | irc | xxx,irc_out_yyy ^(1)^ |
-  String: messaggio |
-  Messaggio IRC inviato al server (dopo la divisione automatica da adattare in 512 byte)
+  String: messaggio. |
+  Messaggio IRC inviato al server (dopo la divisione automatica da adattare in 512 byte).
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.4)_ |
-  Stringa: tag + ";" + messaggio |
-  Tag + messaggio IRC inviato al server
+  Stringa: tag + ";" + messaggio. |
+  Tag + messaggio IRC inviato al server.
 
 | irc | irc_ctcp |
-  String: messaggio |
-  CTCP ricevuto
+  String: messaggio. |
+  CTCP ricevuto.
 
 | irc | irc_dcc |
-  String: messaggio |
-  Nuova DCC
+  String: messaggio. |
+  Nuova DCC.
 
 | irc | irc_pv |
-  String: messaggio |
-  Messaggio privato ricevuto
+  String: messaggio. |
+  Messaggio privato ricevuto.
 
 | irc | irc_channel_opened |
-  Puntatore: buffer |
-  Canale aperto
+  Puntatore: buffer. |
+  Canale aperto.
 
 | irc | irc_pv_opened |
-  Puntatore: buffer |
-  Chat privata aperta
+  Puntatore: buffer. |
+  Chat privata aperta.
 
 | irc | irc_server_opened +
   _(WeeChat ≥ 0.3.7)_ |
-  Puntatore: buffer |
-  Server del buffer aperto
+  Puntatore: buffer. |
+  Server del buffer aperto.
 
 | irc | irc_server_connecting |
-  String: nome server |
-  Connessione al server
+  String: nome server. |
+  Connessione al server.
 
 | irc | irc_server_connected |
-  String: nome server |
-  Connesso al server
+  String: nome server. |
+  Connesso al server.
 
 | irc | irc_server_disconnected |
-  String: nome server |
-  Disconnesso dal server
+  String: nome server. |
+  Disconnesso dal server.
 
 | irc | irc_ignore_removing |
-  Puntatore: ignore |
-  Rimozione dell'ignore
+  Puntatore: ignore. |
+  Rimozione dell'ignore.
 
 | irc | irc_ignore_removed |
   - |
-  Ignore rimosso
+  Ignore rimosso.
 
 | irc | irc_notify_join +
   _(WeeChat ≥ 0.3.8)_ |
-  String: nome server + "," + nick |
-  Un nick nella lista notifiche è entrato sul server
+  String: nome server + "," + nick. |
+  Un nick nella lista notifiche è entrato sul server.
 
 | irc | irc_notify_quit +
   _(WeeChat ≥ 0.3.8)_ |
-  String: nome server + "," + nick |
-  Un nick nella lista notifiche è uscito dal server
+  String: nome server + "," + nick. |
+  Un nick nella lista notifiche è uscito dal server.
 
 | irc | irc_notify_away +
   _(WeeChat ≥ 0.3.8)_ |
-  String: nome server + "," + nick + "," + messaggio di assenza |
-  Un nick nella lista notifiche è ora assente sul server
+  String: nome server + "," + nick + "," + messaggio di assenza. |
+  Un nick nella lista notifiche è ora assente sul server.
 
 | irc | irc_notify_still_away +
   _(WeeChat ≥ 0.3.8)_ |
-  String: nome server + "," + nick + "," + messaggio di assenza |
-  Un nick nella lista notifiche è ancora assente sul server (messaggio di assenza cambiato)
+  String: nome server + "," + nick + "," + messaggio di assenza. |
+  Un nick nella lista notifiche è ancora assente sul server (messaggio di assenza cambiato).
 
 | irc | irc_notify_back +
   _(WeeChat ≥ 0.3.8)_ |
-  String: nome server + "," + nick |
-  Un nick nella lista notifiche è tornato (messaggio di assenza rimosso)
+  String: nome server + "," + nick. |
+  Un nick nella lista notifiche è tornato (messaggio di assenza rimosso).
 
 // TRANSLATION MISSING
 | javascript | javascript_script_loaded +
   _(WeeChat ≥ 1.2)_ |
-  String: path to script |
-  Javascript script loaded
+  String: path to script. |
+  Javascript script loaded.
 
 // TRANSLATION MISSING
 | javascript | javascript_script_unloaded +
   _(WeeChat ≥ 1.2)_ |
-  String: path to script |
-  Javascript script unloaded
+  String: path to script. |
+  Javascript script unloaded.
 
 // TRANSLATION MISSING
 | javascript | javascript_script_installed +
   _(WeeChat ≥ 1.2)_ |
-  String: comma-separated list of paths to scripts installed |
-  Javascript script(s) installed
+  String: comma-separated list of paths to scripts installed. |
+  Javascript script(s) installed.
 
 // TRANSLATION MISSING
 | javascript | javascript_script_removed +
   _(WeeChat ≥ 1.2)_ |
-  String: comma-separated list of scripts removed |
-  Javascript script(s) removed
+  String: comma-separated list of scripts removed. |
+  Javascript script(s) removed.
 
 | logger | logger_start |
-  Puntatore: buffer |
-  Avvia il logging per il buffer
+  Puntatore: buffer. |
+  Avvia il logging per il buffer.
 
 | logger | logger_stop |
-  Puntatore: buffer |
-  Ferma il logging per il buffer
+  Puntatore: buffer. |
+  Ferma il logging per il buffer.
 
 | logger | logger_backlog |
-  Puntatore: buffer |
-  Visualizza log precedenti per il buffer
+  Puntatore: buffer. |
+  Visualizza log precedenti per il buffer.
 
 // TRANSLATION MISSING
 | lua | lua_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to script |
-  Lua script loaded
+  String: path to script. |
+  Lua script loaded.
 
 // TRANSLATION MISSING
 | lua | lua_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to script |
-  Lua script unloaded
+  String: path to script. |
+  Lua script unloaded.
 
 // TRANSLATION MISSING
 | lua | lua_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
-  String: comma-separated list of paths to scripts installed |
-  Lua script(s) installed
+  String: comma-separated list of paths to scripts installed. |
+  Lua script(s) installed.
 
 // TRANSLATION MISSING
 | lua | lua_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
-  String: comma-separated list of scripts removed |
-  Lua script(s) removed
+  String: comma-separated list of scripts removed. |
+  Lua script(s) removed.
 
 // TRANSLATION MISSING
 | perl | perl_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to script |
-  Perl script loaded
+  String: path to script. |
+  Perl script loaded.
 
 // TRANSLATION MISSING
 | perl | perl_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to script |
-  Perl script unloaded
+  String: path to script. |
+  Perl script unloaded.
 
 // TRANSLATION MISSING
 | perl | perl_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
-  String: comma-separated list of paths to scripts installed |
-  Perl script(s) installed
+  String: comma-separated list of paths to scripts installed. |
+  Perl script(s) installed.
 
 // TRANSLATION MISSING
 | perl | perl_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
-  String: comma-separated list of scripts removed |
-  Perl script(s) removed
+  String: comma-separated list of scripts removed. |
+  Perl script(s) removed.
 
 // TRANSLATION MISSING
 | python | python_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to script |
-  Python script loaded
+  String: path to script. |
+  Python script loaded.
 
 // TRANSLATION MISSING
 | python | python_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to script |
-  Python script unloaded
+  String: path to script. |
+  Python script unloaded.
 
 // TRANSLATION MISSING
 | python | python_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
-  String: comma-separated list of paths to scripts installed |
-  Python script(s) installed
+  String: comma-separated list of paths to scripts installed. |
+  Python script(s) installed.
 
 // TRANSLATION MISSING
 | python | python_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
-  String: comma-separated list of scripts removed |
-  Python script(s) removed
+  String: comma-separated list of scripts removed. |
+  Python script(s) removed.
 
 // TRANSLATION MISSING
 | relay | relay_client_connecting +
   _(WeeChat ≥ 1.0)_ |
-  Pointer: relay client |
-  A relay client is connecting
+  Pointer: relay client. |
+  A relay client is connecting.
 
 // TRANSLATION MISSING
 | relay | relay_client_waiting_auth +
   _(WeeChat ≥ 1.0)_ |
-  Pointer: relay client |
-  Waiting for authentication from a relay client
+  Pointer: relay client. |
+  Waiting for authentication from a relay client.
 
 // TRANSLATION MISSING
 | relay | relay_client_auth_ok +
   _(WeeChat ≥ 1.0)_ |
-  Pointer: relay client |
-  Successful authentication from a relay client
+  Pointer: relay client. |
+  Successful authentication from a relay client.
 
 // TRANSLATION MISSING
 | relay | relay_client_connected +
   _(WeeChat ≥ 1.0)_ |
-  Pointer: relay client |
-  A relay client is connected
+  Pointer: relay client. |
+  A relay client is connected.
 
 // TRANSLATION MISSING
 | relay | relay_client_auth_failed +
   _(WeeChat ≥ 1.0)_ |
-  Pointer: relay client |
-  Authentication of a relay client has failed
+  Pointer: relay client. |
+  Authentication of a relay client has failed.
 
 // TRANSLATION MISSING
 | relay | relay_client_disconnected +
   _(WeeChat ≥ 1.0)_ |
-  Pointer: relay client |
-  A relay client is disconnected
+  Pointer: relay client. |
+  A relay client is disconnected.
 
 // TRANSLATION MISSING
 | ruby | ruby_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to script |
-  Ruby script loaded
+  String: path to script. |
+  Ruby script loaded.
 
 // TRANSLATION MISSING
 | ruby | ruby_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to script |
-  Ruby script unloaded
+  String: path to script. |
+  Ruby script unloaded.
 
 // TRANSLATION MISSING
 | ruby | ruby_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
-  String: comma-separated list of paths to scripts installed |
-  Ruby script(s) installed
+  String: comma-separated list of paths to scripts installed. |
+  Ruby script(s) installed.
 
 // TRANSLATION MISSING
 | ruby | ruby_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
-  String: comma-separated list of scripts removed |
-  Ruby script(s) removed
+  String: comma-separated list of scripts removed. |
+  Ruby script(s) removed.
 
 // TRANSLATION MISSING
 | tcl | tcl_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to script |
-  Tcl script loaded
+  String: path to script. |
+  Tcl script loaded.
 
 // TRANSLATION MISSING
 | tcl | tcl_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to script |
-  Tcl script unloaded
+  String: path to script. |
+  Tcl script unloaded.
 
 // TRANSLATION MISSING
 | tcl | tcl_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
-  String: comma-separated list of paths to scripts installed |
-  Tcl script(s) installed
+  String: comma-separated list of paths to scripts installed. |
+  Tcl script(s) installed.
 
 // TRANSLATION MISSING
 | tcl | tcl_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
-  String: comma-separated list of scripts removed |
-  Tcl script(s) removed
+  String: comma-separated list of scripts removed. |
+  Tcl script(s) removed.
 
 | weechat | buffer_opened |
-  Puntatore: buffer |
-  Buffer aperto
+  Puntatore: buffer. |
+  Buffer aperto.
 
 | weechat | buffer_closing |
-  Puntatore: buffer |
-  Chiusura del buffer
+  Puntatore: buffer. |
+  Chiusura del buffer.
 
 | weechat | buffer_closed |
-  Puntatore: buffer |
-  Buffer chiuso
+  Puntatore: buffer. |
+  Buffer chiuso.
 
 // TRANSLATION MISSING
 | weechat | buffer_cleared |
-  Puntatore: buffer |
-  Buffer cleared
+  Puntatore: buffer. |
+  Buffer cleared.
 
 // TRANSLATION MISSING
 | weechat | buffer_hidden |
-  Pointer: buffer |
-  Buffer hidden
+  Pointer: buffer. |
+  Buffer hidden.
 
 // TRANSLATION MISSING
 | weechat | buffer_unhidden |
-  Pointer: buffer |
-  Buffer unhidden
+  Pointer: buffer. |
+  Buffer unhidden.
 
 | weechat | buffer_line_added +
   _(WeeChat ≥ 0.3.7)_ |
-  Puntatore: riga |
-  Riga aggiunta in un buffer
+  Puntatore: riga. |
+  Riga aggiunta in un buffer.
 
 | weechat | buffer_lines_hidden |
-  Puntatore: buffer |
-  Righe nascoste nel buffer
+  Puntatore: buffer. |
+  Righe nascoste nel buffer.
 
 | weechat | buffer_localvar_added |
-  Puntatore: buffer |
-  Variabili locali aggiunte
+  Puntatore: buffer. |
+  Variabili locali aggiunte.
 
 | weechat | buffer_localvar_changed |
-  Puntatore: buffer |
-  Variabili locali modificate
+  Puntatore: buffer. |
+  Variabili locali modificate.
 
 | weechat | buffer_localvar_removed |
-  Puntatore: buffer |
-  Variabili locali rimosse
+  Puntatore: buffer. |
+  Variabili locali rimosse.
 
 // TRANSLATION MISSING
 | weechat | buffer_merged |
-  Puntatore: buffer |
-  Buffer merged
+  Puntatore: buffer. |
+  Buffer merged.
 
 // TRANSLATION MISSING
 | weechat | buffer_unmerged |
-  Puntatore: buffer |
-  Buffer unmerged
+  Puntatore: buffer. |
+  Buffer unmerged.
 
 | weechat | buffer_moved |
-  Puntatore: buffer |
-  Buffer spostato
+  Puntatore: buffer. |
+  Buffer spostato.
 
 | weechat | buffer_renamed |
-  Puntatore: buffer |
-  Buffer rinominato
+  Puntatore: buffer. |
+  Buffer rinominato.
 
 | weechat | buffer_switch |
-  Puntatore: buffer |
-  Passaggio tra buffer
+  Puntatore: buffer. |
+  Passaggio tra buffer.
 
 | weechat | buffer_title_changed |
-  Puntatore: buffer |
-  Titolo del buffer modificato
+  Puntatore: buffer. |
+  Titolo del buffer modificato.
 
 | weechat | buffer_type_changed |
-  Puntatore: buffer |
-  Tipo di buffer modificato
+  Puntatore: buffer. |
+  Tipo di buffer modificato.
 
 // TRANSLATION MISSING
 | weechat | buffer_zoomed +
   _(WeeChat ≥ 0.4.3)_ |
-  Puntatore: buffer |
-  Merged buffer zoomed
+  Puntatore: buffer. |
+  Merged buffer zoomed.
 
 // TRANSLATION MISSING
 | weechat | buffer_unzoomed +
   _(WeeChat ≥ 0.4.3)_ |
-  Puntatore: buffer |
-  Merged buffer unzoomed
+  Puntatore: buffer. |
+  Merged buffer unzoomed.
 
 | weechat | day_changed +
   _(WeeChat ≥ 0.3.2)_ |
-  String: nuova data, formato: "2010-01-31" |
-  Data di sistema modificata
+  String: nuova data, formato: "2010-01-31". |
+  Data di sistema modificata.
 
 | weechat | debug_dump |
-  Stringa: nome plugin |
-  Richiesta di dump
+  Stringa: nome plugin. |
+  Richiesta di dump.
 
 // TRANSLATION MISSING
 | weechat | debug_libs |
   - |
-  Display external libraries used
+  Display external libraries used.
 
 | weechat | filter_added |
-  Puntatore: filtro |
-  Filtro aggiunto
+  Puntatore: filtro. |
+  Filtro aggiunto.
 
 | weechat | filter_removing |
-  Puntatore: filtro |
-  Rimozione del filtro
+  Puntatore: filtro. |
+  Rimozione del filtro.
 
 | weechat | filter_removed |
   - |
-  Filtro rimosso
+  Filtro rimosso.
 
 | weechat | filters_enabled |
   - |
-  Filtri abilitati
+  Filtri abilitati.
 
 | weechat | filters_disabled |
   - |
-  Filtri disabilitati
+  Filtri disabilitati.
 
 | weechat | hotlist_changed |
   - |
-  Hotlist modificata
+  Hotlist modificata.
 
 | weechat | input_paste_pending |
   - |
-  Incolla testo in attesa
+  Incolla testo in attesa.
 
 | weechat | input_search |
-  Puntatore: buffer |
-  Ricerca testo nel buffer
+  Puntatore: buffer. |
+  Ricerca testo nel buffer.
 
 | weechat | input_text_changed |
-  Puntatore: buffer |
-  Testo in input modificato
+  Puntatore: buffer. |
+  Testo in input modificato.
 
 | weechat | input_text_cursor_moved |
-  Puntatore: buffer |
-  Cursore del testo di input spostato
+  Puntatore: buffer. |
+  Cursore del testo di input spostato.
 
 // TRANSLATION MISSING
 | weechat | key_bind |
-  String: key |
-  Key added
+  String: key. |
+  Key added.
 
 // TRANSLATION MISSING
 | weechat | key_unbind |
-  String: key |
-  Key removed
+  String: key. |
+  Key removed.
 
 | weechat | key_pressed |
-  String: tasto digitato |
-  Tasto digitato
+  String: tasto digitato. |
+  Tasto digitato.
 
 // TRANSLATION MISSING
 | weechat | key_combo_default +
   _(WeeChat ≥ 1.0)_ |
-  String: key combo |
-  Key combo in _default_ context
+  String: key combo. |
+  Key combo in _default_ context.
 
 // TRANSLATION MISSING
 | weechat | key_combo_search +
   _(WeeChat ≥ 1.0)_ |
-  String: key combo |
-  Key combo in _search_ context
+  String: key combo. |
+  Key combo in _search_ context.
 
 // TRANSLATION MISSING
 | weechat | key_combo_cursor +
   _(WeeChat ≥ 1.0)_ |
-  String: key combo |
-  Key combo in _cursor_ context
+  String: key combo. |
+  Key combo in _cursor_ context.
 
 // TRANSLATION MISSING
 | weechat | mouse_enabled +
   _(WeeChat ≥ 1.1)_ |
   - |
-  Mouse enabled
+  Mouse enabled.
 
 // TRANSLATION MISSING
 | weechat | mouse_disabled +
   _(WeeChat ≥ 1.1)_ |
   - |
-  Mouse disabled
+  Mouse disabled.
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_added +
   _(WeeChat ≥ 0.3.2)_ |
-  String: buffer pointer + "," + group name |
-  Group added in nicklist
+  String: buffer pointer + "," + group name. |
+  Group added in nicklist.
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_changed +
   _(WeeChat ≥ 0.3.4)_ |
-  String: buffer pointer + "," + group name |
-  Group changed in nicklist
+  String: buffer pointer + "," + group name. |
+  Group changed in nicklist.
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_removing +
   _(WeeChat ≥ 0.4.1)_ |
-  String: buffer pointer + "," + group name |
-  Removing group from nicklist
+  String: buffer pointer + "," + group name. |
+  Removing group from nicklist.
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_removed +
   _(WeeChat ≥ 0.3.2)_ |
-  String: buffer pointer + "," + group name |
-  Group removed from nicklist
+  String: buffer pointer + "," + group name. |
+  Group removed from nicklist.
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_added +
   _(WeeChat ≥ 0.3.2)_ |
-  String: buffer pointer + "," + nick name |
-  Nick added in nicklist
+  String: buffer pointer + "," + nick name. |
+  Nick added in nicklist.
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_changed +
   _(WeeChat ≥ 0.3.4)_ |
-  String: buffer pointer + "," + nick name |
-  Nick changed in nicklist
+  String: buffer pointer + "," + nick name. |
+  Nick changed in nicklist.
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_removing +
   _(WeeChat ≥ 0.4.1)_ |
-  String: buffer pointer + "," + nick name |
-  Removing nick from nicklist
+  String: buffer pointer + "," + nick name. |
+  Removing nick from nicklist.
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_removed +
   _(WeeChat ≥ 0.3.2)_ |
-  String: buffer pointer + "," + nick name |
-  Nick removed from nicklist
+  String: buffer pointer + "," + nick name. |
+  Nick removed from nicklist.
 
 | weechat | partial_completion |
   - |
-  Completamento parziale avvenuto
+  Completamento parziale avvenuto.
 
 // TRANSLATION MISSING
 | weechat | plugin_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: path to plugin loaded |
-  Plugin loaded
+  String: path to plugin loaded. |
+  Plugin loaded.
 
 // TRANSLATION MISSING
 | weechat | plugin_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  String: name of plugin unloaded (example: "irc") |
-  Plugin unloaded
+  String: name of plugin unloaded (example: "irc"). |
+  Plugin unloaded.
 
 | weechat | quit |
-  String: argomenti per /quit |
-  Comando `/quit` digitato dall'utente
+  String: argomenti per /quit. |
+  Comando `/quit` digitato dall'utente.
 
 // TRANSLATION MISSING
 | weechat | signal_sighup +
   _(WeeChat ≥ 1.3)_ |
   - |
-  Signal SIGHUP received
+  Signal SIGHUP received.
 
 // TRANSLATION MISSING
 | weechat | signal_sigquit +
   _(WeeChat ≥ 1.2)_ |
   - |
-  Signal SIGQUIT received (quit request with core dump)
+  Signal SIGQUIT received (quit request with core dump).
 
 // TRANSLATION MISSING
 | weechat | signal_sigterm +
   _(WeeChat ≥ 1.2)_ |
   - |
-  Signal SIGTERM received (graceful termination of WeeChat process)
+  Signal SIGTERM received (graceful termination of WeeChat process).
 
 // TRANSLATION MISSING
 | weechat | signal_sigwinch +
   _(WeeChat ≥ 0.4.3)_ |
   - |
-  Signal SIGWINCH received (terminal was resized)
+  Signal SIGWINCH received (terminal was resized).
 
 // TRANSLATION MISSING
 | weechat | upgrade |
-  String: "quit" if "-quit" argument was given for /upgrade, otherwise NULL |
-  Comando `/upgrade` digitato dall'utente
+  String: "quit" if "-quit" argument was given for /upgrade, otherwise NULL. |
+  Comando `/upgrade` digitato dall'utente.
 
 | weechat | upgrade_ended +
   _(WeeChat ≥ 0.3.4)_ |
   - |
-  Fine del processo di aggiornamento (comando `/upgrade`)
+  Fine del processo di aggiornamento (comando `/upgrade`).
 
 | weechat | weechat_highlight |
-  String: messaggio con prefisso |
-  Evento accaduto
+  String: messaggio con prefisso. |
+  Evento accaduto.
 
 | weechat | weechat_pv |
-  String: messaggio con prefisso |
-  Messaggio privato visualizzato
+  String: messaggio con prefisso. |
+  Messaggio privato visualizzato.
 
 // TRANSLATION MISSING
 | weechat | window_closing +
   _(WeeChat ≥ 0.3.6)_ |
-  Puntatore: finestra |
-  Closing window
+  Puntatore: finestra. |
+  Closing window.
 
 // TRANSLATION MISSING
 | weechat | window_closed +
   _(WeeChat ≥ 0.3.6)_ |
-  Puntatore: finestra |
-  Window closed
+  Puntatore: finestra. |
+  Window closed.
 
 // TRANSLATION MISSING
 | weechat | window_opened +
   _(WeeChat ≥ 0.4.1)_ |
-  Puntatore: finestra |
-  Window opened
+  Puntatore: finestra. |
+  Window opened.
 
 | weechat | window_scrolled |
-  Puntatore: finestra |
-  Scroll nella finestra
+  Puntatore: finestra. |
+  Scroll nella finestra.
 
 | weechat | window_switch +
   _(WeeChat ≥ 0.3.7)_ |
-  Puntatore: finestra |
-  Passaggio alla finestra
+  Puntatore: finestra. |
+  Passaggio alla finestra.
 
 | weechat | window_zoom |
-  Puntatore: finestra corrente |
-  Massimizzazione della finestra
+  Puntatore: finestra corrente. |
+  Massimizzazione della finestra.
 
 | weechat | window_zoomed |
-  Puntatore: finestra corrente |
-  Finestra massimizzata
+  Puntatore: finestra corrente. |
+  Finestra massimizzata.
 
 | weechat | window_unzoom |
-  Puntatore: finestra corrente |
-  Minimizzazione della finestra
+  Puntatore: finestra corrente. |
+  Minimizzazione della finestra.
 
 | weechat | window_unzoomed |
-  Puntatore: finestra corrente |
-  Finestra minimizzata
+  Puntatore: finestra corrente. |
+  Finestra minimizzata.
 
 | xfer | xfer_add |
-  Puntatore: lista info con info per xfer|
-  Nuovo xfer
+  Puntatore: lista info con info per xfe.r|
+  Nuovo xfer.
 
 | xfer | xfer_send_ready |
-  Puntatore: lista info xon info per xfer |
-  Xfer pronto
+  Puntatore: lista info xon info per xfer. |
+  Xfer pronto.
 
 // TRANSLATION MISSING
 | xfer | xfer_accept_resume |
-  Puntatore: lista info con info per xfer |
-  Accept xfer resume
+  Puntatore: lista info con info per xfer. |
+  Accept xfer resume.
 
 // TRANSLATION MISSING
 | xfer | xfer_send_accept_resume |
-  Puntatore: lista info con info per xfer |
-  Xfer resumed
+  Puntatore: lista info con info per xfer. |
+  Xfer resumed.
 
 | xfer | xfer_start_resume |
-  Puntatore: lista info con info per xfer |
-  Avvia ripresa
+  Puntatore: lista info con info per xfer. |
+  Avvia ripresa.
 
 | xfer | xfer_resume_ready |
-  Puntatore: lista info con info per xfer |
-  Ripresa xfer pronta
+  Puntatore: lista info con info per xfer. |
+  Ripresa xfer pronta.
 
 | xfer | xfer_ended +
   _(WeeChat ≥ 0.3.2)_ |
-  Puntatore: lista info con info per xfer |
-  Xfer terminato
+  Puntatore: lista info con info per xfer. |
+  Xfer terminato.
 |===
 
 [NOTE]
@@ -9437,7 +9437,7 @@ List of hsignals sent by WeeChat and plugins:
 | irc | irc_redirection_xxx_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.4)_ |
   Consultare <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
-  Redirection output
+  Redirection output.
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_added +
@@ -9445,7 +9445,7 @@ List of hsignals sent by WeeChat and plugins:
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _group_ (_struct t_gui_nick_group *_): group |
-  Group added in nicklist
+  Group added in nicklist.
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_added +
@@ -9453,7 +9453,7 @@ List of hsignals sent by WeeChat and plugins:
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _nick_ (_struct t_gui_nick *_): nick |
-  Nick added in nicklist
+  Nick added in nicklist.
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_removing +
@@ -9461,7 +9461,7 @@ List of hsignals sent by WeeChat and plugins:
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _group_ (_struct t_gui_nick_group *_): group |
-  Removing group from nicklist
+  Removing group from nicklist.
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_removing +
@@ -9469,7 +9469,7 @@ List of hsignals sent by WeeChat and plugins:
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _nick_ (_struct t_gui_nick *_): nick |
-  Removing nick from nicklist
+  Removing nick from nicklist.
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_changed +
@@ -9477,7 +9477,7 @@ List of hsignals sent by WeeChat and plugins:
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _group_ (_struct t_gui_nick_group *_): group |
-  Group changed in nicklist
+  Group changed in nicklist.
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_changed +
@@ -9485,7 +9485,7 @@ List of hsignals sent by WeeChat and plugins:
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _nick_ (_struct t_gui_nick *_): nick |
-  Nick changed in nicklist
+  Nick changed in nicklist.
 |===
 
 [NOTE]
@@ -10092,112 +10092,112 @@ List of modifiers used by WeeChat and plugins:
 
 | charset_decode |
   plugin.buffer_name |
-  Qualsiasi stringa |
-  Stringa codificata dal set caratteri trovato per plugin/buffer in UTF-8
+  Qualsiasi stringa. |
+  Stringa codificata dal set caratteri trovato per plugin/buffer in UTF-8.
 
 | charset_encode |
   plugin.buffer_name |
-  Qualsiasi stringa |
-  Stringa codificata da UTF-8 al set caratteri trovato per il plugin/buffer
+  Qualsiasi stringa. |
+  Stringa codificata da UTF-8 al set caratteri trovato per il plugin/buffer.
 
 // TRANSLATION MISSING
 | irc_color_decode |
   "1" per mantenere i colori, "0" per rimuovere i colori |
-  Qualsiasi stringa |
-  String with IRC colors converted to WeeChat colors (or IRC colors removed)
+  Qualsiasi stringa. |
+  String with IRC colors converted to WeeChat colors (or IRC colors removed).
 
 // TRANSLATION MISSING
 | irc_color_encode |
   "1" per mantenere i colori, "0" per rimuovere i colori |
-  Qualsiasi stringa |
-  String with IRC colors (or IRC colors removed)
+  Qualsiasi stringa. |
+  String with IRC colors (or IRC colors removed).
 
 // TRANSLATION MISSING
 | irc_color_decode_ansi +
   _(WeeChat ≥ 1.0)_ |
   "1" per mantenere i colori, "0" per rimuovere i colori |
-  Qualsiasi stringa |
-  String with ANSI colors converted to IRC colors (or ANSI colors removed)
+  Qualsiasi stringa. |
+  String with ANSI colors converted to IRC colors (or ANSI colors removed).
 
 // TRANSLATION MISSING
 | irc_command_auth +
   _(WeeChat ≥ 0.4.1)_ |
   Nome server |
-  Authentication command (for example: `+/msg nickserv identify password+`) |
-  Command with hidden password (for example: `+/msg nickserv identify ********+`)
+  Authentication command (for example: `+/msg nickserv identify password+`). |
+  Command with hidden password (for example: `+/msg nickserv identify ********+`).
 
 // TRANSLATION MISSING
 | irc_message_auth +
   _(WeeChat ≥ 0.4.1)_ |
   Nome server |
-  Message displayed after `/msg` sent to nickserv |
-  Message with hidden password
+  Message displayed after `/msg` sent to nickserv. |
+  Message with hidden password.
 
 | irc_in_xxx ^(1)^ |
   Nome server |
-  Contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri) |
-  Nuovo contenuto del messaggio
+  Contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri). |
+  Nuovo contenuto del messaggio.
 
 | irc_in2_xxx ^(1)^ +
   _(WeeChat ≥ 0.3.5)_ |
   Nome server |
-  Contenuto del messaggio ricevuto dal server IRC (dopo la codifica del set caratteri) |
-  Nuovo contenuto del messaggio
+  Contenuto del messaggio ricevuto dal server IRC (dopo la codifica del set caratteri). |
+  Nuovo contenuto del messaggio.
 
 | irc_out1_xxx ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   Nome server |
-  Contenuto del messaggio che sta per essere inviato al server IRC (prima della divisione automatica da adattare in 512 byte) |
-  Nuovo contenuto del messaggio
+  Contenuto del messaggio che sta per essere inviato al server IRC (prima della divisione automatica da adattare in 512 byte). |
+  Nuovo contenuto del messaggio.
 
 | irc_out_xxx ^(1)^ |
   Nome server |
-  Contenuto del messaggio che sta per essere inviato al server IRC (dopo la divisione automatica da adattare in 512 byte) |
-  Nuovo contenuto del messaggio
+  Contenuto del messaggio che sta per essere inviato al server IRC (dopo la divisione automatica da adattare in 512 byte). |
+  Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
 | color_decode_ansi +
   _(WeeChat ≥ 1.0)_ |
   "1" per mantenere i colori, "0" per rimuovere i colori |
-  Qualsiasi stringa |
-  String with ANSI colors converted to WeeChat colors (or ANSI colors removed)
+  Qualsiasi stringa. |
+  String with ANSI colors converted to WeeChat colors (or ANSI colors removed).
 
 | bar_condition_yyy ^(2)^ |
   Stringa con puntatore alla finestra ("0x123..") |
-  Stringa vuota |
-  "1" per visualizzare la barra, "0" per nasconderla
+  Stringa vuota. |
+  "1" per visualizzare la barra, "0" per nasconderla.
 
 | history_add +
   _(WeeChat ≥ 0.3.2)_ |
   Stringa con puntatore al buffer ("0x123..") |
-  Contenuto della riga di comando da aggiungere nella cronologia comandi (buffer e globale |
-  Stringa aggiunta alla cronologia comandi
+  Contenuto della riga di comando da aggiungere nella cronologia comandi (buffer e globale). |
+  Stringa aggiunta alla cronologia comandi.
 
 | input_text_content |
   Stringa con puntatore al buffer ("0x123..") |
-  Contenuto della riga di comando |
-  Nuovo contenuto della riga di comando
+  Contenuto della riga di comando. |
+  Nuovo contenuto della riga di comando.
 
 | input_text_display |
   Stringa con puntatore al buffer ("0x123..") |
-  Contenuto della riga di comando, senza tag al cursore |
-  Nuova stringa, solo da mostrare (la riga di comando non viene modificata)
+  Contenuto della riga di comando, senza tag al cursore. |
+  Nuova stringa, solo da mostrare (la riga di comando non viene modificata).
 
 | input_text_display_with_cursor |
   Stringa con puntatore al buffer ("0x123..") |
-  Contenuto della riga di comando, con tag al cursore |
-  Nuova stringa, solo da mostrare (la riga di comando non viene modificata)
+  Contenuto della riga di comando, con tag al cursore. |
+  Nuova stringa, solo da mostrare (la riga di comando non viene modificata).
 
 | input_text_for_buffer +
   _(WeeChat ≥ 0.3.7)_ |
   Stringa con puntatore al buffer ("0x123..") |
-  Contenuto della riga di comando inviata al buffer (testo o comando) |
-  Nuovo contenuto della riga di comando inviata al buffer
+  Contenuto della riga di comando inviata al buffer (testo o comando). |
+  Nuovo contenuto della riga di comando inviata al buffer.
 
 | weechat_print |
   plugin + ";" + buffer_name + ";" + tags |
-  Messaggio stampato |
-  Nuovo messaggio stampato
+  Messaggio stampato. |
+  Nuovo messaggio stampato.
 |===
 
 [NOTE]
@@ -10671,96 +10671,96 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 |===
 | Key ^(1)^ | Descrizione | Valori di esempio | Valore se N/D
 
-| _x | Colonna sullo schermo |
+| _x | Colonna sullo schermo. |
   "0" ... "n" |
 
-| _y | Riga sullo schermo |
+| _y | Riga sullo schermo. |
   "0" ... "n" |
 
-| _key | Evento tasto o mouse |
+| _key | Evento tasto o mouse. |
   "button1", "button2-gesture-left", ... |
 
-| _window | Puntatore alla finestra |
+| _window | Puntatore alla finestra. |
   "0x12345678" | ""
 
-| _window_number | Numero della finestra |
+| _window_number | Numero della finestra. |
   "1" ... "n" | "*"
 
-| _buffer | Puntatore al buffer |
+| _buffer | Puntatore al buffer. |
   "0x12345678" | ""
 
-| _buffer_number | Numero del buffer |
+| _buffer_number | Numero del buffer. |
   "1" ... "n" | "-1"
 
-| _buffer_plugin | Nome plugin del buffer |
+| _buffer_plugin | Nome plugin del buffer. |
   "core", "irc", ... | ""
 
-| _buffer_name | Nome del buffer |
+| _buffer_name | Nome del buffer. |
   "weechat", "freenode.#weechat", ... | ""
 
-| _buffer_full_name | Nome completo del buffer |
+| _buffer_full_name | Nome completo del buffer. |
   "core.weechat", "irc.freenode.#weechat", ... | ""
 
-| _buffer_localvar_XXX ^(2)^ | Variabili locali del buffer |
+| _buffer_localvar_XXX ^(2)^ | Variabili locali del buffer. |
   qualsiasi valore | non impostato
 
-| _chat | Indicatore area di chat |
+| _chat | Indicatore area di chat. |
   "0" o "1" | "0"
 
 // TRANSLATION MISSING
 | _chat_line | Pointer to line +
-  _(WeeChat ≥ 1.2)_ |
+  _(WeeChat ≥ 1.2)_. |
   "0x12345678" | ""
 
-| _chat_line_x | Colonna nella riga ^(3)^ |
+| _chat_line_x | Colonna nella riga ^(3)^. |
   "0" ... "n" | "-1"
 
-| _chat_line_y | Numero della riga ^(3)^ |
+| _chat_line_y | Numero della riga ^(3)^. |
   "0" ... "n" | "-1"
 
-| _chat_line_date | Riga con data/ora |
+| _chat_line_date | Riga con data/ora. |
   "1313237175" | "0"
 
-| _chat_line_date_printed | Riga con data/ora ^(4)^ |
+| _chat_line_date_printed | Riga con data/ora ^(4)^. |
   "1313237175" | "0"
 
-| _chat_line_time | Ora visualizzata |
+| _chat_line_time | Ora visualizzata. |
   "14:06:15" | ""
 
-| _chat_line_tags | Tag della riga |
+| _chat_line_tags | Tag della riga. |
   "irc_privmsg,nick_flashy,log1" | ""
 
-| _chat_line_nick | Nick della riga |
+| _chat_line_nick | Nick della riga. |
   "FlashCode" | ""
 
-| _chat_line_prefix | Prefisso della riga |
+| _chat_line_prefix | Prefisso della riga. |
   "@FlashCode" | ""
 
-| _chat_line_message | Messaggio della riga |
+| _chat_line_message | Messaggio della riga. |
   "Hello world!" | ""
 
-| _chat_word | Parola a (x,y) |
+| _chat_word | Parola a (x,y). |
   "Hello" | ""
 
-| _chat_bol | Inizio della riga ⇒ (x-1,y) |
+| _chat_bol | Inizio della riga ⇒ (x-1,y). |
   "He" | ""
 
-| _chat_eol | (x,y) ⇒ fine della riga |
+| _chat_eol | (x,y) ⇒ fine della riga. |
   "llo world!" | ""
 
-| _bar_name | Nome della barra |
+| _bar_name | Nome della barra. |
   "title", "nicklist", ... | ""
 
-| _bar_filling | Riempimento della barra |
+| _bar_filling | Riempimento della barra. |
   "horizontal", "vertical", ... | ""
 
-| _bar_item_name | Nome dell'elemento barra |
+| _bar_item_name | Nome dell'elemento barra. |
   "buffer_nicklist", "hotlist", ... | ""
 
-| _bar_item_line | Riga nell'elemento barra |
+| _bar_item_line | Riga nell'elemento barra. |
   "0" ... "n" | "-1"
 
-| _bar_item_col | Colonna nell'elemento barra |
+| _bar_item_col | Colonna nell'elemento barra. |
   "0" ... "n" | "-1"
 |===
 
@@ -10778,10 +10778,10 @@ Informazioni aggiuntive per l'elemento barra "buffer_nicklist":
 [width="60%",cols="1,1,5",options="header"]
 |===
 | Chiave   | Plugin ^(1)^ | Descrizione
-| nick     | core         | Nick
-| prefix   | core         | Prefisso per il nick
-| group    | core         | Nome gruppo
-| irc_host | irc          | Host per il nick (se conosciuto)
+| nick     | core         | Nick.
+| prefix   | core         | Prefisso per il nick.
+| group    | core         | Nome gruppo.
+| irc_host | irc          | Host per il nick (se conosciuto).
 |===
 
 [NOTE]
@@ -10862,20 +10862,20 @@ Properties:
 | subplugin | any type | qualsiasi stringa |
 // TRANSLATION MISSING
   Name of sub plugin (commonly script name, which is displayed in
-  `/help command` for a hook of type _command_)
+  `/help command` for a hook of type _command_).
 
 | stdin +
   _(WeeChat ≥ 0.4.3)_ |
   _process_, _process_hashtable_ | qualsiasi stringa |
 // TRANSLATION MISSING
-  Send data on standard input (_stdin_) of child process
+  Send data on standard input (_stdin_) of child process.
 
 | stdin_close +
   _(WeeChat ≥ 0.4.3)_ |
 // TRANSLATION MISSING
   _process_, _process_hashtable_ | (not used) |
 // TRANSLATION MISSING
-  Close pipe used to send data on standard input (_stdin_) of child process
+  Close pipe used to send data on standard input (_stdin_) of child process.
 
 | signal +
   _(WeeChat ≥ 1.0)_ |
@@ -10884,7 +10884,7 @@ Properties:
   signal number or one of these names: `hup`, `int`, `quit`, `kill`, `term`,
   `usr1`, `usr2` |
 // TRANSLATION MISSING
-  Send a signal to the child process
+  Send a signal to the child process.
 |===
 
 Esempio in C:
@@ -11616,58 +11616,58 @@ Properties:
   "-": disabilita hotlist (impostazione globale, il puntatore al buffer non è
   utilizzato) +
   priorità: aggiunge il buffer alla hotlist con questa proprietà +
-  "-1": remove buffer from hotlist _(WeeChat ≥ 1.0)_
+  "-1": remove buffer from hotlist _(WeeChat ≥ 1.0)_.
 
 // TRANSLATION MISSING
 | completion_freeze | "0" oppure "1" |
   "0": no freeze of completion (default value)
   (impostazione globale, il puntatore al buffer non è utilizzato) +
   "1": do not stop completion when command line is updated
-  (impostazione globale, il puntatore al buffer non è utilizzato)
+  (impostazione globale, il puntatore al buffer non è utilizzato).
 
 | unread | - |
-  Imposta l'evidenziatore di lettura dopo l'ultima riga del buffer
+  Imposta l'evidenziatore di lettura dopo l'ultima riga del buffer.
 
 | display | "1" oppure "auto" |
   "1": passa a questo buffer nella finestra corrente +
   "auto": passa a questo buffer nella finestra corrente, l'evidenziatore di
-  lettura non viene resettato
+  lettura non viene resettato.
 
 // TRANSLATION MISSING
 | hidden +
   _(WeeChat ≥ 1.0)_ | "0" oppure "1" |
   "0": unhide the buffer +
-  "1": hide the buffer
+  "1": hide the buffer.
 
 | number | numero |
-  Sposta buffer a questo numero
+  Sposta buffer a questo numero.
 
 | name | qualsiasi stringa |
-  Imposta nuovo nome per il buffer
+  Imposta nuovo nome per il buffer.
 
 | short_name | qualsiasi stringa |
-  Imposta nuovo nome breve per il buffer
+  Imposta nuovo nome breve per il buffer.
 
 // TRANSLATION MISSING
 | type | "formatted" oppure "free" |
   Imposta tipo per il: "formatted" (per stampare i messaggi di chat),
   oppure "free" (per contenuto libero); when the value is "free", the property
-  _clear_ is forced to "0" _(WeeChat ≥ 1.0)_
+  _clear_ is forced to "0" _(WeeChat ≥ 1.0)_.
 
 | notify | "0", "1", "2", "3" |
   Imposta il livello di notifica per il buffer: "0" = non aggiungere alla hotlist,
   "1" = aggiungere solo per gli eventi, "2" = aggiungere per eventi e
-  messaggi, "3" = aggiungere per tutti i messaggi
+  messaggi, "3" = aggiungere per tutti i messaggi.
 
 // TRANSLATION MISSING
 | print_hooks_enabled | "0" oppure "1" |
-  "0" to disable print hooks, "1" to enable them (default for a new buffer)
+  "0" to disable print hooks, "1" to enable them (default for a new buffer).
 
 // TRANSLATION MISSING
 | day_change +
   _(WeeChat ≥ 0.4.3)_ | "0" oppure "1" |
   "0" to hide messages for the day change, "1" to see them
-  (default for a new buffer)
+  (default for a new buffer).
 
 // TRANSLATION MISSING
 | clear +
@@ -11675,102 +11675,102 @@ Properties:
   "0" to prevent user from clearing buffer with the command `/buffer clear`,
   "1" to let user clear the buffer (default for a new buffer)
    (note: even when it is set to "0", the buffer can still be cleared with
-   the function <<_buffer_clear,buffer_clear>>)
+   the function <<_buffer_clear,buffer_clear>>).
 
 // TRANSLATION MISSING
 | filter +
   _(WeeChat ≥ 1.0)_ | "0" or "1" |
   "0": disable filters on buffer +
-  "1": enable filters on buffer
+  "1": enable filters on buffer.
 
 | title | qualsiasi stringa |
-  Imposta nuovo titolo per il buffer
+  Imposta nuovo titolo per il buffer.
 
 | time_for_each_line | "0" oppure "1" |
   "0" per nascondere l'orario in tutte le righe del buffer, "1" per
-  visualizzarlo su tutte le righe (predefinito per un nuovo buffer)
+  visualizzarlo su tutte le righe (predefinito per un nuovo buffer).
 
 | nicklist | "0" oppure "1" |
   "0" per rimuovere la lista nick per il buffer, "1" per aggiungere
-  la lista nick per il buffer
+  la lista nick per il buffer.
 
 | nicklist_case_sensitive | "0" oppure "1" |
   "0" per avere una lista nick non sensibile alle maiuscole, "1" per
-  una lista nick sensibile alle maiuscole
+  una lista nick sensibile alle maiuscole.
 
 | nicklist_display_groups | "0" oppure "1" |
   "0" per nascondere i gruppi nella lista nick, "1" per visualizzare
-  i gruppi della lista nick
+  i gruppi della lista nick.
 
 | highlight_words | "-" oppure elenco di parole separato da virgole |
   "-" è un valore speciale per disabilitare qualsiasi evento su questo
   buffer, o un elenco di parole separate da virgole da evidenziare in
-  questo buffer, ad esempio: "abc,def,ghi"
+  questo buffer, ad esempio: "abc,def,ghi".
 
 | highlight_words_add | elenco di parole separate da virgole |
   Elenco di parole separate da virgole da evidenziare in questo buffer,
   queste parole vengono aggiunte alle parole evidenziate esistenti nel
-  buffer
+  buffer.
 
 | highlight_words_del | elenco di parole separate da virgole |
   Elenco di parole separate da virgole da rimuovere dalle
-  parole evidenziate nel buffer
+  parole evidenziate nel buffer.
 
 // TRANSLATION MISSING
 | highlight_regex | qualsiasi stringa |
-  POSIX extended regular expression for highlight
+  POSIX extended regular expression for highlight.
 
 // TRANSLATION MISSING
 | highlight_tags_restrict | elenco separato da virgole di tag |
   Restrict highlights to messages with these tags in this buffer
   (it is possible to combine many tags as a logical "and" with separator "+",
-  for example: "nick_toto+irc_action")
+  for example: "nick_toto+irc_action").
 
 // TRANSLATION MISSING
 | highlight_tags | elenco separato da virgole di tag |
   Force highlight on messages with these tags in this buffer
   (it is possible to combine many tags as a logical "and" with separator "+",
-  for example: "nick_toto+irc_action")
+  for example: "nick_toto+irc_action").
 
 | hotlist_max_level_nicks | elenco separado da virgole di "nick:livello" |
   Elenco separato da virgole di nick con il livello massimo per la hotlist
   su questo buffer (il livello può essere: -1: mai nella hotlist, 0: basso,
   1: messaggio, 2: privato, 3: evento), ad esempio: "joe:2,mike:-1,robert:-1"
-  (joe non produce eventi sul buffer, mike e robert non modificano la hotlist)
+  (joe non produce eventi sul buffer, mike e robert non modificano la hotlist).
 
 | hotlist_max_level_nicks_add | elenco separato da virgole di "nick:livello" |
   Elenco separato da virgole di nick con il livello per la hotlist, questi
-  nick vengono aggiunti a quelli esistenti nel buffer
+  nick vengono aggiunti a quelli esistenti nel buffer.
 
 | hotlist_max_level_nicks_del | elenco separato da virgole di nick |
   Elenco separato da virgole di nick da rimuovere dai livelli massimi della
-  hotlist
+  hotlist.
 
 | key_bind_xxx | qualsiasi stringa |
   Assegna un nuovo tasto _xxx_, specifico per questo buffer, il valore è il
-  comando da eseguire per questo tasto
+  comando da eseguire per questo tasto.
 
 | key_unbind_xxx | - |
-  Rimuove l'assegnazione del tasto _xxx_ per questo buffer
+  Rimuove l'assegnazione del tasto _xxx_ per questo buffer.
 
 | input | qualsiasi stringa |
-  Imposta un nuovo valore per l'input del buffer
+  Imposta un nuovo valore per l'input del buffer.
 
 | input_pos | posizione |
-  Imposta la posizione del cursore per l'input del buffer
+  Imposta la posizione del cursore per l'input del buffer.
 
 | input_get_unknown_commands | "0" oppure "1" |
   "0" per disabilitare i comandi sconosciuti per questo buffer (comportamento
   predefinito), "1" per ricevere i comandi sconosciuti, ad esempio se l'utente
   digita "/unknowncmd", verrà ricevuto dal buffer (nessun errore riguardo il
-  comando sconosciuto)
+  comando sconosciuto).
 
 | localvar_set_xxx | qualsiasi stringa |
   Imposta il nuovo valore per la variabile locale _xxx_ (la variabile verrà
-  creata se non esiste)
+  creata se non esiste).
 
 | localvar_del_xxx | - |
-  Rimuove la variabile locale _xxx_
+  Rimuove la variabile locale _xxx_.
 |===
 
 Esempio in C:
@@ -12783,10 +12783,10 @@ Properties:
 
 | color | nome per l'opzione del colore per WeeChat |
   Consultare l'argomento "color" della funzione
-  <<_nicklist_add_group,nicklist_add_group>>
+  <<_nicklist_add_group,nicklist_add_group>>.
 
 | visible | "0", "1" |
-  "0" = gruppo nascosto, "1" = gruppo visibile
+  "0" = gruppo nascosto, "1" = gruppo visibile.
 |===
 
 Esempio in C:
@@ -12991,17 +12991,17 @@ Properties:
 
 | color | nome per l'opzione del colore di WeeChat |
   Consultare l'argomento "color" della funzione
-  <<_nicklist_add_nick,nicklist_add_nick>>
+  <<_nicklist_add_nick,nicklist_add_nick>>.
 
 | prefix | qualsiasi stringa |
-  Prefisso del nick
+  Prefisso del nick.
 
 | prefix_color | nome per l'opzione del colore di WeeChat |
   Consultare l'argomento "prefix_color" della funzione
-  <<_nicklist_add_nick,nicklist_add_nick>>
+  <<_nicklist_add_nick,nicklist_add_nick>>.
 
 | visible | "0", "1" |
-  "0" = nick nascosto, "1" = nick visibile
+  "0" = nick nascosto, "1" = nick visibile.
 |===
 
 Esempi in C:

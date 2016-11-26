@@ -1110,51 +1110,51 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
 | Schlüssel | WeeChat version | Beschreibung | Beispiel
 
 | Tags | ≥ 0.4.0 |
-  Tags in der Nachricht (kann leer sein) |
+  Tags in der Nachricht (kann leer sein). |
   `time=2015-06-27T16:40:35.000Z`
 
 | message_without_tags | ≥ 0.4.0 |
-  Die IRC Nachricht ohne Tags (wie eine Nachricht ohne Tags) |
+  Die IRC Nachricht ohne Tags (wie eine Nachricht ohne Tags). |
   `:nick!user@host PRIVMSG #weechat :hello!`
 
 | nick | ≥ 0.3.4 |
-  der ursprüngliche Nick |
+  der ursprüngliche Nick. |
   `nick`
 
 | host | ≥ 0.3.4 |
-  der ursprüngliche Host (beinhaltet den Nick) |
+  der ursprüngliche Host (beinhaltet den Nick). |
   `nick!user@host`
 
 | command | ≥ 0.3.4 |
-  der Befehl (_PRIVMSG_, _NOTICE_, ...) |
+  der Befehl (_PRIVMSG_, _NOTICE_, ...). |
   `PRIVMSG`
 
 | channel | ≥ 0.3.4 |
-  der Zielchannel|
+  der Zielchanne.l|
   `#weechat`
 
 | arguments | ≥ 0.3.4 |
-  das Argument des Befehls (beinhaltet den Channel) |
+  das Argument des Befehls (beinhaltet den Channel). |
   `#weechat :hello!`
 
 | text | ≥ 1.3 |
-  der Text (zum Beispiel eine Nachricht eines Users) |
+  der Text (zum Beispiel eine Nachricht eines Users). |
   `hello!`
 
 | pos_command | ≥ 1.3 |
-  Index von _command_ innerhalb einer Nachricht ("-1" falls _command_ nicht gefunden wird) |
+  Index von _command_ innerhalb einer Nachricht ("-1" falls _command_ nicht gefunden wird). |
   `47`
 
 | pos_arguments | ≥ 1.3 |
-  Index von_arguments_ innerhalb einer Nachricht ("-1" falls _arguments_ nicht gefunden wird) |
+  Index von_arguments_ innerhalb einer Nachricht ("-1" falls _arguments_ nicht gefunden wird). |
   `55`
 
 | pos_channel | ≥ 1.3 |
-  Index von _channel_ innerhalb einer Nachricht ("-1" falls _channel_ nicht gefunden wird) |
+  Index von _channel_ innerhalb einer Nachricht ("-1" falls _channel_ nicht gefunden wird). |
   `55`
 
 | pos_text | ≥ 1.3 |
-  Index von _text_ innerhalb einer Nachricht ("-1" falls _text_ nicht gefunden wird) |
+  Index von _text_ innerhalb einer Nachricht ("-1" falls _text_ nicht gefunden wird). |
   `65`
 |===
 

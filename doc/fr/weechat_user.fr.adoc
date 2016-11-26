@@ -99,28 +99,28 @@ compiler WeeChat.
 |===
 | Paquet ^(1)^           | Version       | Requis | Fonctionnalité
 | compilateur C
-  (gcc, clang, ...)      |               | *oui*  | Construction
-| compilateur C++        |               |        | Construction et lancement des tests, extension javascript
-| cmake                  |               | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé)
-| pkg-config             |               | *oui*  | Détection des bibliothèques installées
-| libncursesw5-dev ^(2)^ |               | *oui*  | Interface ncurses
-| libcurl4-gnutls-dev    |               | *oui*  | Transfert d'URL
-| zlib1g-dev             |               | *oui*  | Compression des paquets dans l'extension relay (protocole weechat), extension script
-| libgcrypt20-dev        |               | *oui*  | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ |        | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE)
-| gettext                |               |        | Internationalisation (traduction des messages; la langue de base est l'anglais)
-| ca-certificates        |               |        | Certificats pour les connexions SSL
+  (gcc, clang, ...)      |               | *oui*  | Construction.
+| compilateur C++        |               |        | Construction et lancement des tests, extension javascript.
+| cmake                  |               | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé).
+| pkg-config             |               | *oui*  | Détection des bibliothèques installées.
+| libncursesw5-dev ^(2)^ |               | *oui*  | Interface ncurses.
+| libcurl4-gnutls-dev    |               | *oui*  | Transfert d'URL.
+| zlib1g-dev             |               | *oui*  | Compression des paquets dans l'extension relay (protocole weechat), extension script.
+| libgcrypt20-dev        |               | *oui*  | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script.
+| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ |        | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
+| gettext                |               |        | Internationalisation (traduction des messages; la langue de base est l'anglais).
+| ca-certificates        |               |        | Certificats pour les connexions SSL.
 | libaspell-dev
-  ∥ libenchant-dev       |               |        | Extension aspell
-| python-dev             | ≥ 2.5 ^(4)^   |        | Extension python
-| libperl-dev            |               |        | Extension perl
-| ruby-2.3, ruby2.3-dev  | ≥ 1.8         |        | Extension ruby
-| liblua5.3-dev          |               |        | Extension lua
-| tcl-dev                | ≥ 8.5         |        | Extension tcl
-| guile-2.0-dev          | ≥ 2.0         |        | Extension guile (scheme)
-| libv8-dev              | ≤ 3.24.3      |        | Extension javascript
-| asciidoctor            | ≥ 1.5.4       |        | Construction de la page man et de la documentation
-| libcpputest-dev        | ≥ 3.4         |        | Construction et lancement des tests
+  ∥ libenchant-dev       |               |        | Extension aspell.
+| python-dev             | ≥ 2.5 ^(4)^   |        | Extension python.
+| libperl-dev            |               |        | Extension perl.
+| ruby-2.3, ruby2.3-dev  | ≥ 1.8         |        | Extension ruby.
+| liblua5.3-dev          |               |        | Extension lua.
+| tcl-dev                | ≥ 8.5         |        | Extension tcl.
+| guile-2.0-dev          | ≥ 2.0         |        | Extension guile (scheme).
+| libv8-dev              | ≤ 3.24.3      |        | Extension javascript.
+| asciidoctor            | ≥ 1.5.4       |        | Construction de la page man et de la documentation.
+| libcpputest-dev        | ≥ 3.4         |        | Construction et lancement des tests.
 |===
 
 [NOTE]
@@ -489,22 +489,22 @@ Les répertoires sont :
 [width="100%",cols="1m,3",options="header"]
 |===
 | Chemin/fichier    | Description
-| ~/.weechat/       | Répertoire principal de WeeChat (peut être changé, voir <<running_weechat,Lancer WeeChat>>)
-|    logs/          | Fichiers de log (un fichier par tampon)
-|    python/        | Scripts Python
-|       autoload/   | Scripts Python chargés automatiquement au démarrage ^(1)^
-|    perl/          | Scripts Perl
-|       autoload/   | Scripts Perl chargés automatiquement au démarrage ^(1)^
-|    ruby/          | Scripts Ruby
-|       autoload/   | Scripts Ruby chargés automatiquement au démarrage ^(1)^
-|    lua/           | Scripts Lua
-|       autoload/   | Scripts Lua chargés automatiquement au démarrage ^(1)^
-|    tcl/           | Scripts Tcl
-|       autoload/   | Scripts Tcl chargés automatiquement au démarrage ^(1)^
-|    guile/         | Scripts Guile
-|       autoload/   | Scripts Guile chargés automatiquement au démarrage ^(1)^
-|    javascript/    | Scripts Javascript
-|       autoload/   | Scripts Javascript chargés automatiquement au démarrage ^(1)^
+| ~/.weechat/       | Répertoire principal de WeeChat (peut être changé, voir <<running_weechat,Lancer WeeChat>>).
+|    logs/          | Fichiers de log (un fichier par tampon).
+|    python/        | Scripts Python.
+|       autoload/   | Scripts Python chargés automatiquement au démarrage ^(1)^.
+|    perl/          | Scripts Perl.
+|       autoload/   | Scripts Perl chargés automatiquement au démarrage ^(1)^.
+|    ruby/          | Scripts Ruby.
+|       autoload/   | Scripts Ruby chargés automatiquement au démarrage ^(1)^.
+|    lua/           | Scripts Lua.
+|       autoload/   | Scripts Lua chargés automatiquement au démarrage ^(1)^.
+|    tcl/           | Scripts Tcl.
+|       autoload/   | Scripts Tcl chargés automatiquement au démarrage ^(1)^.
+|    guile/         | Scripts Guile.
+|       autoload/   | Scripts Guile chargés automatiquement au démarrage ^(1)^.
+|    javascript/    | Scripts Javascript.
+|       autoload/   | Scripts Javascript chargés automatiquement au démarrage ^(1)^.
 |===
 
 [NOTE]
@@ -516,20 +516,20 @@ Les fichiers dans le répertoire principal sont :
 [width="100%",cols="1m,3,6",options="header"]
 |===
 | Fichier      | Description                                          | Données sensibles
-| weechat.conf | Fichier de configuration principal de WeeChat        | Possible (par exemple : liste des canaux sauvés dans la disposition des tampons)
-| sec.conf     | Fichier de configuration avec les données sécurisées | *Oui, très sensibles*: ce fichier ne doit jamais être partagé avec quiconque
-| plugins.conf | Fichier de configuration des extensions              | Possible, cela dépend des extensions/scripts
-| alias.conf   | Fichier de configuration de l'extension _alias_      | Possible, cela dépend des alias
-| aspell.conf  | Fichier de configuration de l'extension _aspell_     | Non
-| charset.conf | Fichier de configuration de l'extension _charset_    | No,
-| exec.conf    | Fichier de configuration de l'extension _exec_       | No,
-| irc.conf     | Fichier de configuration de l'extension _irc_        | *Oui*: il peut contenir des mots de passes pour les serveurs, nickserv et les canaux (si non stockés dans `sec.conf`)
-| logger.conf  | Fichier de configuration de l'extension _logger_     | Non
-| relay.conf   | Fichier de configuration de l'extension _relay_      | Non
-| script.conf  | Fichier de configuration de l'extension _script_     | Non
-| trigger.conf | Fichier de configuration de l'extension _trigger_    | Possible, cela dépend des triggers
-| xfer.conf    | Fichier de configuration de l'extension _xfer_       | Non
-| weechat.log  | Fichier de log WeeChat                               | Non
+| weechat.conf | Fichier de configuration principal de WeeChat        | Possible (par exemple : liste des canaux sauvés dans la disposition des tampons).
+| sec.conf     | Fichier de configuration avec les données sécurisées | *Oui, très sensibles*: ce fichier ne doit jamais être partagé avec quiconque.
+| plugins.conf | Fichier de configuration des extensions              | Possible, cela dépend des extensions/scripts.
+| alias.conf   | Fichier de configuration de l'extension _alias_      | Possible, cela dépend des alias.
+| aspell.conf  | Fichier de configuration de l'extension _aspell_     | Non.
+| charset.conf | Fichier de configuration de l'extension _charset_    | Non
+| exec.conf    | Fichier de configuration de l'extension _exec_       | Non
+| irc.conf     | Fichier de configuration de l'extension _irc_        | *Oui*: il peut contenir des mots de passes pour les serveurs, nickserv et les canaux (si non stockés dans `sec.conf`).
+| logger.conf  | Fichier de configuration de l'extension _logger_     | Non.
+| relay.conf   | Fichier de configuration de l'extension _relay_      | Non.
+| script.conf  | Fichier de configuration de l'extension _script_     | Non.
+| trigger.conf | Fichier de configuration de l'extension _trigger_    | Possible, cela dépend des triggers.
+| xfer.conf    | Fichier de configuration de l'extension _xfer_       | Non.
+| weechat.log  | Fichier de log WeeChat                               | Non.
 |===
 
 [IMPORTANT]
@@ -591,19 +591,19 @@ La barre _status_ contient les objets (items) suivants par défaut :
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Objet (item)          | Exemple               | Description
-| time                  | `[12:55]`             | Heure
-| buffer_last_number    | `[6]`                 | Numéro du dernier tampon de la liste
-| buffer_plugin         | `[irc/freenode]`      | Extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon)
-| buffer_number         | `3`                   | Numéro du tampon courant
-| buffer_name           | `#test`               | Nom du tampon courant
-| buffer_modes          | `+n`                  | Modes du canal IRC
-| buffer_nicklist_count | `{4}`                 | Nombre de pseudos dans la liste des pseudos
-| buffer_zoom           | !                     | `!` signifie que le tampon mélangé est zoomé, une valeur vide signifie que tous les tampons mélangés sont affichés
-| buffer_filter         | `+*+`                 | Indicateur de filtrage : `+*+` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées
-| scroll                | `-PLUS(50)-`          | Indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée
-| lag                   | `[Lag: 2.5]`          | Indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible)
-| hotlist               | `[H: 4:#abc(2,5), 6]` | Liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur _#abc_, un message non lu sur le tampon numéro 6)
-| completion            | `abc(2) def(5)`       | Liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot
+| time                  | `[12:55]`             | Heure.
+| buffer_last_number    | `[6]`                 | Numéro du dernier tampon de la liste.
+| buffer_plugin         | `[irc/freenode]`      | Extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon).
+| buffer_number         | `3`                   | Numéro du tampon courant.
+| buffer_name           | `#test`               | Nom du tampon courant.
+| buffer_modes          | `+n`                  | Modes du canal IRC.
+| buffer_nicklist_count | `{4}`                 | Nombre de pseudos dans la liste des pseudos.
+| buffer_zoom           | !                     | `!` signifie que le tampon mélangé est zoomé, une valeur vide signifie que tous les tampons mélangés sont affichés.
+| buffer_filter         | `+*+`                 | Indicateur de filtrage : `+*+` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées.
+| scroll                | `-PLUS(50)-`          | Indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée.
+| lag                   | `[Lag: 2.5]`          | Indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible).
+| hotlist               | `[H: 4:#abc(2,5), 6]` | Liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur _#abc_, un message non lu sur le tampon numéro 6).
+| completion            | `abc(2) def(5)`       | Liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot.
 |===
 
 La barre _input_ contient les objets (items) suivants par défaut :
@@ -611,11 +611,11 @@ La barre _input_ contient les objets (items) suivants par défaut :
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Objet (item) | Exemple                                         | Description
-| input_prompt | `[@Flashy(i)]`                                  | Prompt, pour irc : pseudo et modes (le mode "+i" signifie invisible sur freenode)
-| away         | `(absent)`                                      | Indicateur d'absence
-| input_search | `[Recherche (~ str,msg)]`                       | Indicateur de recherche de texte ("`~`" : insensible à la casse, "`==`" : sensible à la casse, "`str`" : recherche de chaîne, "`regex`" : recherche d'expression régulière, "`msg`" : recherche dans les messages, "`pre`" : recherche dans les préfixes, "`pre\|msg`" : recherche dans les préfixes et messages)
-| input_paste  | `[Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non]` | Question à l'utilisateur pour coller des lignes
-| input_text   | `salut peter !`                                 | Texte entré
+| input_prompt | `[@Flashy(i)]`                                  | Prompt, pour irc : pseudo et modes (le mode "+i" signifie invisible sur freenode).
+| away         | `(absent)`                                      | Indicateur d'absence.
+| input_search | `[Recherche (~ str,msg)]`                       | Indicateur de recherche de texte ("`~`" : insensible à la casse, "`==`" : sensible à la casse, "`str`" : recherche de chaîne, "`regex`" : recherche d'expression régulière, "`msg`" : recherche dans les messages, "`pre`" : recherche dans les préfixes, "`pre\|msg`" : recherche dans les préfixes et messages).
+| input_paste  | `[Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non]` | Question à l'utilisateur pour coller des lignes.
+| input_text   | `salut peter !`                                 | Texte entré.
 |===
 
 Autres objets (non utilisés dans des barres par défaut) :
@@ -623,14 +623,14 @@ Autres objets (non utilisés dans des barres par défaut) :
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Objet (item)      | Exemple             | Description
-| aspell_dict       | `fr,en`             | Dictionnaires utilisés pour la vérification de l'orthographe sur le tampon courant
-| aspell_suggest    | `print,prone,prune` | Suggestions pour le mot sous le curseur (si mal orthographié)
-| buffer_count      | `10`                | Nombre total de tampons ouverts
-| buffer_short_name | `#test`             | Nom court du tampon courant
-| irc_channel       | `#test`             | Nom de canal IRC courant
-| irc_nick_modes    | `@`                 | Modes IRC pour le pseudo
-| mouse_status      | `M`                 | Statut de la souris (vide si la souris est désactivée)
-| window_number     | `2`                 | Numéro de la fenêtre courante
+| aspell_dict       | `fr,en`             | Dictionnaires utilisés pour la vérification de l'orthographe sur le tampon courant.
+| aspell_suggest    | `print,prone,prune` | Suggestions pour le mot sous le curseur (si mal orthographié).
+| buffer_count      | `10`                | Nombre total de tampons ouverts.
+| buffer_short_name | `#test`             | Nom court du tampon courant.
+| irc_channel       | `#test`             | Nom de canal IRC courant.
+| irc_nick_modes    | `@`                 | Modes IRC pour le pseudo.
+| mouse_status      | `M`                 | Statut de la souris (vide si la souris est désactivée).
+| window_number     | `2`                 | Numéro de la fenêtre courante.
 |===
 
 [[command_line]]
@@ -673,16 +673,16 @@ suit et éventuellement une valeur) :
 [width="60%",cols="3,5",options="header"]
 |===
 | Touche                 | Description
-| kbd:[Ctrl+c], kbd:[b]  | texte gras
+| kbd:[Ctrl+c], kbd:[b]  | Texte gras.
 | kbd:[Ctrl+c], kbd:[c],
-  kbd:[xx]               | couleur du texte `xx` (voir la liste des couleurs ci-dessous)
+  kbd:[xx]               | Couleur du texte `xx` (voir la liste des couleurs ci-dessous).
 | kbd:[Ctrl+c], kbd:[c],
   kbd:[xx], kbd:[,],
-  kbd:[yy]               | couleur du texte `xx` et du fond `yy` (voir la liste des couleurs ci-dessous)
-| kbd:[Ctrl+c], kbd:[i]  | texte en italique
-| kbd:[Ctrl+c], kbd:[o]  | désactiver la couleur et tous les attributs
-| kbd:[Ctrl+c], kbd:[v]  | vidéo inverse (inversion de la couleur d'écriture et du fond)
-| kbd:[Ctrl+c], kbd:[_]  | texte souligné
+  kbd:[yy]               | Couleur du texte `xx` et du fond `yy` (voir la liste des couleurs ci-dessous).
+| kbd:[Ctrl+c], kbd:[i]  | Texte en italique.
+| kbd:[Ctrl+c], kbd:[o]  | Désactiver la couleur et tous les attributs.
+| kbd:[Ctrl+c], kbd:[v]  | Vidéo inverse (inversion de la couleur d'écriture et du fond).
+| kbd:[Ctrl+c], kbd:[_]  | Texte souligné.
 |===
 
 [NOTE]
@@ -1517,54 +1517,54 @@ avec `/help autosetbuffer`.
 |===
 | Touche          | Description | Commande
 | kbd:[←] +
-  kbd:[Ctrl+b]    | Aller au caractère précédent sur la ligne de commande | `/input move_previous_char`
+  kbd:[Ctrl+b]    | Aller au caractère précédent sur la ligne de commande. | `/input move_previous_char`
 | kbd:[→] +
-  kbd:[Ctrl+f]    | Aller au caractère suivant sur la ligne de commande | `/input move_next_char`
+  kbd:[Ctrl+f]    | Aller au caractère suivant sur la ligne de commande. | `/input move_next_char`
 | kbd:[Ctrl+←] +
-  kbd:[Alt+b]     | Aller au mot précédent sur la ligne de commande | `/input move_previous_word`
+  kbd:[Alt+b]     | Aller au mot précédent sur la ligne de commande. | `/input move_previous_word`
 | kbd:[Ctrl+→] +
-  kbd:[Alt+f]     | Aller au mot suivant sur la ligne de commande | `/input move_next_word`
+  kbd:[Alt+f]     | Aller au mot suivant sur la ligne de commande. | `/input move_next_word`
 | kbd:[Home] +
-  kbd:[Ctrl+a]    | Aller au début de la ligne de commande | `/input move_beginning_of_line`
+  kbd:[Ctrl+a]    | Aller au début de la ligne de commande. | `/input move_beginning_of_line`
 | kbd:[End] +
-  kbd:[Ctrl+e]    | Aller à la fin de la ligne de commande | `/input move_end_of_line`
+  kbd:[Ctrl+e]    | Aller à la fin de la ligne de commande. | `/input move_end_of_line`
 | kbd:[Ctrl+c],
-  kbd:[b]         | Insérer le code pour mettre le texte en gras | `/input insert \x02`
+  kbd:[b]         | Insérer le code pour mettre le texte en gras. | `/input insert \x02`
 | kbd:[Ctrl+c],
-  kbd:[c]         | Insérer le code pour écrire en couleur | `/input insert \x03`
+  kbd:[c]         | Insérer le code pour écrire en couleur. | `/input insert \x03`
 | kbd:[Ctrl+c],
-  kbd:[i]         | Insérer le code pour mettre le texte en italique | `/input insert \x1D`
+  kbd:[i]         | Insérer le code pour mettre le texte en italique. | `/input insert \x1D`
 | kbd:[Ctrl+c],
-  kbd:[o]         | Insérer le code pour réinitialiser la couleur | `/input insert \x0F`
+  kbd:[o]         | Insérer le code pour réinitialiser la couleur. | `/input insert \x0F`
 | kbd:[Ctrl+c],
-  kbd:[v]         | Insérer le code pour écrire en couleur inversée | `/input insert \x16`
+  kbd:[v]         | Insérer le code pour écrire en couleur inversée. | `/input insert \x16`
 | kbd:[Ctrl+c],
-  kbd:[_]         | Insérer le code pour écrire en souligné | `/input insert \x1F`
+  kbd:[_]         | Insérer le code pour écrire en souligné. | `/input insert \x1F`
 | kbd:[Del] +
-  kbd:[Ctrl+d]    | Effacer le caractère suivant sur la ligne de commande | `/input delete_next_char`
+  kbd:[Ctrl+d]    | Effacer le caractère suivant sur la ligne de commande. | `/input delete_next_char`
 | kbd:[Backsp.] +
-  kbd:[Ctrl+h]    | Effacer le caractère précédent sur la ligne de commande | `/input delete_previous_char`
-| kbd:[Ctrl+k]    | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne) | `/input delete_end_of_line`
-| kbd:[Ctrl+r]    | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>) | `/input search_text_here`
-| kbd:[Ctrl+t]    | Inverser deux caractères | `/input transpose_chars`
-| kbd:[Ctrl+u]    | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne) | `/input delete_beginning_of_line`
-| kbd:[Ctrl+w]    | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne) | `/input delete_previous_word`
-| kbd:[Ctrl+y]    | Coller le contenu du presse-papiers interne | `/input clipboard_paste`
-| kbd:[Ctrl+_]    | Défaire la dernière action sur la ligne de commande | `/input undo`
-| kbd:[Alt+_]     | Refaire la dernière action sur la ligne de commande | `/input redo`
-| kbd:[Tab]       | Compléter la commande ou le pseudo (kbd:[Tab] de nouveau : trouver la complétion suivante) | `/input complete_next`
-| kbd:[Shift+Tab] | Sans complétion, effectue une complétion partielle. Avec une complétion en cours, complète avec la complétion précédente | `/input complete_previous`
+  kbd:[Ctrl+h]    | Effacer le caractère précédent sur la ligne de commande. | `/input delete_previous_char`
+| kbd:[Ctrl+k]    | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `/input delete_end_of_line`
+| kbd:[Ctrl+r]    | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>). | `/input search_text_here`
+| kbd:[Ctrl+t]    | Inverser deux caractères. | `/input transpose_chars`
+| kbd:[Ctrl+u]    | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `/input delete_beginning_of_line`
+| kbd:[Ctrl+w]    | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers interne). | `/input delete_previous_word`
+| kbd:[Ctrl+y]    | Coller le contenu du presse-papiers interne. | `/input clipboard_paste`
+| kbd:[Ctrl+_]    | Défaire la dernière action sur la ligne de commande. | `/input undo`
+| kbd:[Alt+_]     | Refaire la dernière action sur la ligne de commande. | `/input redo`
+| kbd:[Tab]       | Compléter la commande ou le pseudo (kbd:[Tab] de nouveau : trouver la complétion suivante). | `/input complete_next`
+| kbd:[Shift+Tab] | Sans complétion, effectue une complétion partielle. Avec une complétion en cours, complète avec la complétion précédente. | `/input complete_previous`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]    | Exécuter la commande ou envoyer le message (en mode recherche : arrêter la recherche) | `/input return`
-| kbd:[↑]         | Rappeler la commande précédente (en mode recherche : chercher plus haut) | `/input history_previous`
-| kbd:[↓]         | Rappeler la commande suivante (en mode recherche : chercher plus bas) | `/input history_next`
-| kbd:[Ctrl+↑]    | Rappeler la commande précédente dans l'historique global (commun à tous les tampons) | `/input history_global_previous`
-| kbd:[Ctrl+↓]    | Rappeler la commande suivante dans l'historique global (commun à tous les tampons) | `/input history_global_next`
-| kbd:[Alt+d]     | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers interne) | `/input delete_next_word`
-| kbd:[Alt+k]     | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande | `/input grab_key_command`
-| kbd:[Alt+r]     | Effacer entièrement la ligne de commande | `/input delete_line`
-| kbd:[Alt+s]     | Activer/désactiver aspell | `/mute aspell toggle`
+  kbd:[Ctrl+m]    | Exécuter la commande ou envoyer le message (en mode recherche : arrêter la recherche). | `/input return`
+| kbd:[↑]         | Rappeler la commande précédente (en mode recherche : chercher plus haut). | `/input history_previous`
+| kbd:[↓]         | Rappeler la commande suivante (en mode recherche : chercher plus bas). | `/input history_next`
+| kbd:[Ctrl+↑]    | Rappeler la commande précédente dans l'historique global (commun à tous les tampons). | `/input history_global_previous`
+| kbd:[Ctrl+↓]    | Rappeler la commande suivante dans l'historique global (commun à tous les tampons). | `/input history_global_next`
+| kbd:[Alt+d]     | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers interne). | `/input delete_next_word`
+| kbd:[Alt+k]     | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande. | `/input grab_key_command`
+| kbd:[Alt+r]     | Effacer entièrement la ligne de commande. | `/input delete_line`
+| kbd:[Alt+s]     | Activer/désactiver aspell. | `/mute aspell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -1573,69 +1573,69 @@ avec `/help autosetbuffer`.
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Touche          | Description | Commande
-| kbd:[Ctrl+l]    | Réafficher toute la fenêtre | `/window refresh`
+| kbd:[Ctrl+l]    | Réafficher toute la fenêtre. | `/window refresh`
 | kbd:[Ctrl+s],
-  kbd:[Ctrl+u]    | Positionner le marqueur de données non lues sur tous les tampons | `/input set_unread`
-| kbd:[Ctrl+x]    | Changer de tampon courant si plusieurs tampons sont attachés avec le même numéro | `/input switch_active_buffer`
-| kbd:[Alt+x]     | Zoomer sur le tampon mélangé (kbd:[Alt+x] de nouveau : afficher tous les tampons mélangés) | `/input zoom_merged_buffer`
-| kbd:[PgUp]      | Monter d'une page dans l'historique du tampon | `/window page_up`
-| kbd:[PgDn]      | Descendre d'une page dans l'historique du tampon | `/window page_down`
-| kbd:[Alt+PgUp]  | Monter de quelques lignes dans l'historique du tampon | `/window scroll_up`
-| kbd:[Alt+PgDn]  | Descendre de quelques lignes dans l'historique du tampon | `/window scroll_down`
-| kbd:[Alt+Home]  | Aller au début du tampon | `/window scroll_top`
-| kbd:[Alt+End]   | Aller à la fin du tampon | `/window scroll_bottom`
+  kbd:[Ctrl+u]    | Positionner le marqueur de données non lues sur tous les tampons. | `/input set_unread`
+| kbd:[Ctrl+x]    | Changer de tampon courant si plusieurs tampons sont attachés avec le même numéro. | `/input switch_active_buffer`
+| kbd:[Alt+x]     | Zoomer sur le tampon mélangé (kbd:[Alt+x] de nouveau : afficher tous les tampons mélangés). | `/input zoom_merged_buffer`
+| kbd:[PgUp]      | Monter d'une page dans l'historique du tampon. | `/window page_up`
+| kbd:[PgDn]      | Descendre d'une page dans l'historique du tampon. | `/window page_down`
+| kbd:[Alt+PgUp]  | Monter de quelques lignes dans l'historique du tampon. | `/window scroll_up`
+| kbd:[Alt+PgDn]  | Descendre de quelques lignes dans l'historique du tampon. | `/window scroll_down`
+| kbd:[Alt+Home]  | Aller au début du tampon. | `/window scroll_top`
+| kbd:[Alt+End]   | Aller à la fin du tampon. | `/window scroll_bottom`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]        | Aller au tampon précédent | `/buffer -1`
+  kbd:[F5]        | Aller au tampon précédent. | `/buffer -1`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]        | Aller au tampon suivant | `/buffer +1`
-| kbd:[F7]        | Aller à la fenêtre précédente | `/window -1`
-| kbd:[F8]        | Aller à la fenêtre suivante | `/window +1`
-| kbd:[F9]        | Faire défiler le titre du tampon vers la gauche | `+/bar scroll title * -30%+`
-| kbd:[F10]       | Faire défiler le titre du tampon vers la droite | `+/bar scroll title * +30%+`
-| kbd:[F11]       | Monter d'une page dans la liste des pseudos | `/bar scroll nicklist * -100%`
-| kbd:[F12]       | Descendre d'une page dans la liste des pseudos | `/bar scroll nicklist * +100%`
-| kbd:[Alt+F11]   | Aller au début de la liste des pseudos | `/bar scroll nicklist * b`
-| kbd:[Alt+F12]   | Aller à la fin de la liste des pseudos | `/bar scroll nicklist * e`
-| kbd:[Alt+a]     | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre) | `/input jump_smart`
-| kbd:[Alt+h]     | Vider la hotlist (notification d'activité sur les autres tampons) | `/input hotlist_clear`
+  kbd:[F6]        | Aller au tampon suivant. | `/buffer +1`
+| kbd:[F7]        | Aller à la fenêtre précédente. | `/window -1`
+| kbd:[F8]        | Aller à la fenêtre suivante. | `/window +1`
+| kbd:[F9]        | Faire défiler le titre du tampon vers la gauche. | `+/bar scroll title * -30%+`
+| kbd:[F10]       | Faire défiler le titre du tampon vers la droite. | `+/bar scroll title * +30%+`
+| kbd:[F11]       | Monter d'une page dans la liste des pseudos. | `/bar scroll nicklist * -100%`
+| kbd:[F12]       | Descendre d'une page dans la liste des pseudos. | `/bar scroll nicklist * +100%`
+| kbd:[Alt+F11]   | Aller au début de la liste des pseudos. | `/bar scroll nicklist * b`
+| kbd:[Alt+F12]   | Aller à la fin de la liste des pseudos. | `/bar scroll nicklist * e`
+| kbd:[Alt+a]     | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `/input jump_smart`
+| kbd:[Alt+h]     | Vider la hotlist (notification d'activité sur les autres tampons). | `/input hotlist_clear`
 | kbd:[Alt+j],
-  kbd:[Alt+f]     | Sauter au premier tampon | `/buffer -`
+  kbd:[Alt+f]     | Sauter au premier tampon. | `/buffer -`
 | kbd:[Alt+j],
-  kbd:[Alt+l]     | Sauter au dernier tampon | `/buffer +`
+  kbd:[Alt+l]     | Sauter au dernier tampon. | `/buffer +`
 | kbd:[Alt+j],
-  kbd:[Alt+r]     | Sauter au tampon IRC de données brutes | `/server raw`
+  kbd:[Alt+r]     | Sauter au tampon IRC de données brutes. | `/server raw`
 | kbd:[Alt+j],
-  kbd:[Alt+s]     | Sauter au tampon IRC du serveur | `/server jump`
-| kbd:[Alt+0...9] | Sauter au tampon qui porte ce numéro (0 = 10) | `/buffer *N`
+  kbd:[Alt+s]     | Sauter au tampon IRC du serveur. | `/server jump`
+| kbd:[Alt+0...9] | Sauter au tampon qui porte ce numéro (0 = 10). | `/buffer *N`
 | kbd:[Alt+j],
-  kbd:[01...99]   | Sauter au tampon qui porte ce numéro | `/buffer *NN`
-| kbd:[Alt+l]     | Activer/désactiver le mode d'affichage dépouillé | `/window bare`
-| kbd:[Alt+m]     | Activer/désactiver la souris | `/mouse toggle`
-| kbd:[Alt+n]     | Se positionner sur le highlight suivant | `/window scroll_next_highlight`
-| kbd:[Alt+p]     | Se positionner sur le highlight précédent | `/window scroll_previous_highlight`
-| kbd:[Alt+u]     | Se positionner sur la première ligne non lue du tampon | `/window scroll_unread`
+  kbd:[01...99]   | Sauter au tampon qui porte ce numéro. | `/buffer *NN`
+| kbd:[Alt+l]     | Activer/désactiver le mode d'affichage dépouillé. | `/window bare`
+| kbd:[Alt+m]     | Activer/désactiver la souris. | `/mouse toggle`
+| kbd:[Alt+n]     | Se positionner sur le highlight suivant. | `/window scroll_next_highlight`
+| kbd:[Alt+p]     | Se positionner sur le highlight précédent. | `/window scroll_previous_highlight`
+| kbd:[Alt+u]     | Se positionner sur la première ligne non lue du tampon. | `/window scroll_unread`
 | kbd:[Alt+w],
-  kbd:[Alt+↑]     | Sauter à la fenêtre au dessus | `/window up`
+  kbd:[Alt+↑]     | Sauter à la fenêtre au dessus. | `/window up`
 | kbd:[Alt+w],
-  kbd:[Alt+↓]     | Sauter à la fenêtre en dessous | `/window down`
+  kbd:[Alt+↓]     | Sauter à la fenêtre en dessous. | `/window down`
 | kbd:[Alt+w],
-  kbd:[Alt+←]     | Sauter à la fenêtre de gauche | `/window left`
+  kbd:[Alt+←]     | Sauter à la fenêtre de gauche. | `/window left`
 | kbd:[Alt+w],
-  kbd:[Alt+→]     | Sauter à la fenêtre de droite | `/window right`
+  kbd:[Alt+→]     | Sauter à la fenêtre de droite. | `/window right`
 | kbd:[Alt+w],
-  kbd:[Alt+b]     | Équilibrer la taille de toutes les fenêtres | `/window balance`
+  kbd:[Alt+b]     | Équilibrer la taille de toutes les fenêtres. | `/window balance`
 | kbd:[Alt+w],
-  kbd:[Alt+s]     | Échanger les tampons de deux fenêtres | `/window swap`
-| kbd:[Alt+z]     | Zoomer sur la fenêtre courante (kbd:[Alt+z] de nouveau : restaurer l'état initial des fenêtres, avant le zoom) | `/window zoom`
-| kbd:[Alt+<]     | Sauter au tampon précédent dans la liste des tampons visités | `/input jump_previously_visited_buffer`
-| kbd:[Alt+>]     | Sauter au tampon suivant dans la liste des tampons visités | `/input jump_next_visited_buffer`
-| kbd:[Alt+/]     | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon) | `/input jump_last_buffer_displayed`
-| kbd:[Alt+=]     | Activer/désactiver les filtres | `/filter toggle`
-| kbd:[Alt+-]     | Activer/désactiver les filtres dans le tampon courant | `/filter toggle @`
+  kbd:[Alt+s]     | Échanger les tampons de deux fenêtres. | `/window swap`
+| kbd:[Alt+z]     | Zoomer sur la fenêtre courante (kbd:[Alt+z] de nouveau : restaurer l'état initial des fenêtres, avant le zoom). | `/window zoom`
+| kbd:[Alt+<]     | Sauter au tampon précédent dans la liste des tampons visités. | `/input jump_previously_visited_buffer`
+| kbd:[Alt+>]     | Sauter au tampon suivant dans la liste des tampons visités. | `/input jump_next_visited_buffer`
+| kbd:[Alt+/]     | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon). | `/input jump_last_buffer_displayed`
+| kbd:[Alt+=]     | Activer/désactiver les filtres. | `/filter toggle`
+| kbd:[Alt+-]     | Activer/désactiver les filtres dans le tampon courant. | `/filter toggle @`
 |===
 
 [[key_bindings_search_context]]
@@ -1647,15 +1647,15 @@ pressé pour chercher du texte dans le tampon).
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Touche         | Description | Commande
-| kbd:[Ctrl+r]   | Basculer le type de recherche : chaîne (par défaut), expression régulière | `/input search_switch_regex`
-| kbd:[Alt+c]    | Basculer la casse exacte pour la recherche | `/input search_switch_case`
-| kbd:[Tab]      | Basculer la recherche dans : les messages (par défaut), les préfixes, les préfixes + messages | `/input search_switch_where`
-| kbd:[↑]        | Chercher la ligne précédente | `/input search_previous`
-| kbd:[↓]        | Chercher la ligne suivante | `/input search_next`
+| kbd:[Ctrl+r]   | Basculer le type de recherche : chaîne (par défaut), expression régulière. | `/input search_switch_regex`
+| kbd:[Alt+c]    | Basculer la casse exacte pour la recherche. | `/input search_switch_case`
+| kbd:[Tab]      | Basculer la recherche dans : les messages (par défaut), les préfixes, les préfixes + messages. | `/input search_switch_where`
+| kbd:[↑]        | Chercher la ligne précédente. | `/input search_previous`
+| kbd:[↓]        | Chercher la ligne suivante. | `/input search_next`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | Arrêter la recherche à la position courante | `/input search_stop_here`
-| kbd:[Ctrl+q]   | Arrêter la recherche et aller à la fin du tampon | `/input search_stop`
+  kbd:[Ctrl+m]   | Arrêter la recherche à la position courante. | `/input search_stop_here`
+| kbd:[Ctrl+q]   | Arrêter la recherche et aller à la fin du tampon. | `/input search_stop`
 |===
 
 [[key_bindings_cursor_context]]
@@ -1667,25 +1667,25 @@ Ces touches sont utilisées dans le contexte "cursor" (mouvement libre du curseu
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
 | Touche         | Zone              | Description | Commande
-| kbd:[↑]        | -                 | Déplacer le curseur d'une ligne vers le haut | `/cursor move up`
-| kbd:[↓]        | -                 | Déplacer le curseur d'une ligne vers le bas | `/cursor move down`
-| kbd:[←]        | -                 | Déplacer le curseur d'une colonne vers la gauche | `/cursor move left`
-| kbd:[→]        | -                 | Déplacer le curseur d'une colonne vers la droite | `/cursor move right`
-| kbd:[Alt+↑]    | -                 | Déplacer le curseur vers la zone au dessus | `/cursor move area_up`
-| kbd:[Alt+↓]    | -                 | Déplacer le curseur vers la zone en dessous | `/cursor move area_down`
-| kbd:[Alt+←]    | -                 | Déplacer le curseur vers la zone sur la gauche | `/cursor move area_left`
-| kbd:[Alt+→]    | -                 | Déplacer le curseur vers la zone sur la droite | `/cursor move area_right`
-| kbd:[m]        | chat              | Citer le message | `hsignal:chat_quote_message;/cursor stop`
-| kbd:[q]        | chat              | Citer le préfixe + le message | `hsignal:chat_quote_prefix_message;/cursor stop`
-| kbd:[Q]        | chat              | Citer l'heure + le préfixe + le message | `hsignal:chat_quote_time_prefix_message;/cursor stop`
-| kbd:[b]        | liste des pseudos | Bannir le pseudo | `/window ${_window_number};/ban ${nick}`
-| kbd:[k]        | liste des pseudos | Retirer par la force le pseudo | `/window ${_window_number};/kick ${nick}`
-| kbd:[K]        | liste des pseudos | Retirer par la force et bannir le pseudo | `/window ${_window_number};/kickban ${nick}`
-| kbd:[q]        | liste des pseudos | Ouvrir une discussion avec le pseudo | `/window ${_window_number};/query ${nick};/cursor stop`
-| kbd:[w]        | liste des pseudos | Effectuer un whois sur le pseudo | `/window ${_window_number};/whois ${nick}`
+| kbd:[↑]        | -                 | Déplacer le curseur d'une ligne vers le haut. | `/cursor move up`
+| kbd:[↓]        | -                 | Déplacer le curseur d'une ligne vers le bas. | `/cursor move down`
+| kbd:[←]        | -                 | Déplacer le curseur d'une colonne vers la gauche. | `/cursor move left`
+| kbd:[→]        | -                 | Déplacer le curseur d'une colonne vers la droite. | `/cursor move right`
+| kbd:[Alt+↑]    | -                 | Déplacer le curseur vers la zone au dessus. | `/cursor move area_up`
+| kbd:[Alt+↓]    | -                 | Déplacer le curseur vers la zone en dessous. | `/cursor move area_down`
+| kbd:[Alt+←]    | -                 | Déplacer le curseur vers la zone sur la gauche. | `/cursor move area_left`
+| kbd:[Alt+→]    | -                 | Déplacer le curseur vers la zone sur la droite. | `/cursor move area_right`
+| kbd:[m]        | chat              | Citer le message. | `hsignal:chat_quote_message;/cursor stop`
+| kbd:[q]        | chat              | Citer le préfixe + le message. | `hsignal:chat_quote_prefix_message;/cursor stop`
+| kbd:[Q]        | chat              | Citer l'heure + le préfixe + le message. | `hsignal:chat_quote_time_prefix_message;/cursor stop`
+| kbd:[b]        | liste des pseudos | Bannir le pseudo. | `/window ${_window_number};/ban ${nick}`
+| kbd:[k]        | liste des pseudos | Retirer par la force le pseudo. | `/window ${_window_number};/kick ${nick}`
+| kbd:[K]        | liste des pseudos | Retirer par la force et bannir le pseudo. | `/window ${_window_number};/kickban ${nick}`
+| kbd:[q]        | liste des pseudos | Ouvrir une discussion avec le pseudo. | `/window ${_window_number};/query ${nick};/cursor stop`
+| kbd:[w]        | liste des pseudos | Effectuer un whois sur le pseudo. | `/window ${_window_number};/whois ${nick}`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -                 | Arrêter le mode curseur ("cursor") | `/cursor stop`
+  kbd:[Ctrl+m]   | -                 | Arrêter le mode curseur ("cursor"). | `/cursor stop`
 |===
 
 [[key_bindings_mouse_context]]
@@ -1697,32 +1697,32 @@ Ces touches sont utilisées dans le contexte "mouse", c'est-à-dire lorsqu'un
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
 | Bouton ^(1)^ | Geste | Zone | Description | Commande
-| ◾◽◽          | -            | chat                 | Aller à la fenêtre | `/window ${_window_number}`
-| ◾◽◽          | left         | chat                 | Aller au tampon précédent | `/window ${_window_number};/buffer +1`
-| ◾◽◽          | right        | chat                 | Aller au tampon suivant | `/window ${_window_number};/buffer +1`
-| ◾◽◽          | left (long)  | chat                 | Aller au premier tampon | `/window ${_window_number};/buffer 1`
-| ◾◽◽          | right (long) | chat                 | Aller au dernier tampon | `/window ${_window_number};/input jump_last_buffer`
-| ◾◽◽          | -            | chat (tampon script) | Sélectionner la ligne dans le tampon script | `/script go ${_chat_line_y}`
-| ◽◽◾          | -            | chat (tampon script) | Installer/supprimer un script | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
-| ⇑            | -            | chat                 | Monter de quelques lignes dans l'historique du tampon | `/window scroll_up -window ${_window_number}`
-| ⇓            | -            | chat                 | Descendre de quelques lignes dans l'historique du tampon | `/window scroll_down -window ${_window_number}`
-| ⇑            | -            | chat (tampon script) | Monter de 5 lignes dans le tampon script | `/script up 5`
-| ⇓            | -            | chat (tampon script) | Descendre de 5 lignes dans le tampon script | `/script down 5`
-| kbd:[Ctrl+⇑] | -            | chat                 | Faire défiler horizontalement vers la gauche | `/window scroll_horiz -window ${_window_number} -10%`
-| kbd:[Ctrl+⇓] | -            | chat                 | Faire défiler horizontalement vers la droite | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽          | up           | liste des pseudos    | Monter d'une page dans la liste des pseudos | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽          | down         | liste des pseudos    | Descendre d'une page dans la liste des pseudos | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽          | up (long)    | liste des pseudos    | Aller au début de la liste des pseudos | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽          | down (long)  | liste des pseudos    | Aller à la fin de la liste des pseudos | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽          | -            | liste des pseudos    | Ouvrir une discussion avec le pseudo | `/window ${_window_number};/query ${nick}`
-| ◽◽◾          | -            | liste des pseudos    | Effectuer un whois sur le pseudo | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽          | left         | liste des pseudos    | Retirer par la force le pseudo | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽          | left (long)  | liste des pseudos    | Retirer par la force et bannir le pseudo | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾          | left         | liste des pseudos    | Bannir le pseudo | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾          | -            | ligne de commande    | Capturer un évènement de la souris et insérer son code sur la ligne de commande | `/input grab_mouse_area`
-| ⇑            | -            | toute barre          | Faire défiler la barre de -20% | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| ⇓            | -            | toute barre          | Faire défiler la barre de +20% | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽          | -            | n'importe où         | Démarrer le mode curseur ("cursor") à ce point | `/cursor go ${_x},${_y}`
+| ◾◽◽          | -            | chat                 | Aller à la fenêtre. | `/window ${_window_number}`
+| ◾◽◽          | left         | chat                 | Aller au tampon précédent. | `/window ${_window_number};/buffer +1`
+| ◾◽◽          | right        | chat                 | Aller au tampon suivant. | `/window ${_window_number};/buffer +1`
+| ◾◽◽          | left (long)  | chat                 | Aller au premier tampon. | `/window ${_window_number};/buffer 1`
+| ◾◽◽          | right (long) | chat                 | Aller au dernier tampon. | `/window ${_window_number};/input jump_last_buffer`
+| ◾◽◽          | -            | chat (tampon script) | Sélectionner la ligne dans le tampon script. | `/script go ${_chat_line_y}`
+| ◽◽◾          | -            | chat (tampon script) | Installer/supprimer un script. | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
+| ⇑            | -            | chat                 | Monter de quelques lignes dans l'historique du tampon. | `/window scroll_up -window ${_window_number}`
+| ⇓            | -            | chat                 | Descendre de quelques lignes dans l'historique du tampon. | `/window scroll_down -window ${_window_number}`
+| ⇑            | -            | chat (tampon script) | Monter de 5 lignes dans le tampon script. | `/script up 5`
+| ⇓            | -            | chat (tampon script) | Descendre de 5 lignes dans le tampon script. | `/script down 5`
+| kbd:[Ctrl+⇑] | -            | chat                 | Faire défiler horizontalement vers la gauche. | `/window scroll_horiz -window ${_window_number} -10%`
+| kbd:[Ctrl+⇓] | -            | chat                 | Faire défiler horizontalement vers la droite. | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽          | up           | liste des pseudos    | Monter d'une page dans la liste des pseudos. | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽          | down         | liste des pseudos    | Descendre d'une page dans la liste des pseudos. | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽          | up (long)    | liste des pseudos    | Aller au début de la liste des pseudos. | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽          | down (long)  | liste des pseudos    | Aller à la fin de la liste des pseudos. | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽          | -            | liste des pseudos    | Ouvrir une discussion avec le pseudo. | `/window ${_window_number};/query ${nick}`
+| ◽◽◾          | -            | liste des pseudos    | Effectuer un whois sur le pseudo. | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽          | left         | liste des pseudos    | Retirer par la force le pseudo. | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽          | left (long)  | liste des pseudos    | Retirer par la force et bannir le pseudo. | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾          | left         | liste des pseudos    | Bannir le pseudo. | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾          | -            | ligne de commande    | Capturer un évènement de la souris et insérer son code sur la ligne de commande. | `/input grab_mouse_area`
+| ⇑            | -            | toute barre          | Faire défiler la barre de -20%. | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| ⇓            | -            | toute barre          | Faire défiler la barre de +20%. | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽          | -            | n'importe où         | Démarrer le mode curseur ("cursor") à ce point. | `/cursor go ${_x},${_y}`
 |===
 
 [NOTE]
@@ -1955,8 +1955,8 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle               | Description
-| crypt   | /set sec.crypt.*                   | Options pour le chiffrement
-| data    | <<command_weechat_secure,/secure>> | Données sécurisées
+| crypt   | /set sec.crypt.*                   | Options pour le chiffrement.
+| data    | <<command_weechat_secure,/secure>> | Données sécurisées.
 |===
 
 Options :
@@ -1972,26 +1972,26 @@ Sections :
 |===
 | Section    | Commande de contrôle                      | Description
 | debug      | <<command_weechat_debug,/debug set>>      +
-               /set weechat.debug.*                      | Niveau de debug, pour le cœur et les extensions (les options peuvent être ajoutées/supprimées dans la section)
-| startup    | /set weechat.startup.*                    | Options de démarrage
-| look       | /set weechat.look.*                       | Aspect/présentation
+               /set weechat.debug.*                      | Niveau de debug, pour le cœur et les extensions (les options peuvent être ajoutées/supprimées dans la section).
+| startup    | /set weechat.startup.*                    | Options de démarrage.
+| look       | /set weechat.look.*                       | Aspect/présentation.
 | palette    | <<command_weechat_color,/color alias>>    +
-               /set weechat.palette.*                    | Alias de couleurs (les options peuvent être ajoutées/supprimées dans la section)
-| color      | /set weechat.color.*                      | Couleurs
-| completion | /set weechat.completion.*                 | Options de complétion
-| history    | /set weechat.history.*                    | Options d'historique (commandes et tampons)
+               /set weechat.palette.*                    | Alias de couleurs (les options peuvent être ajoutées/supprimées dans la section).
+| color      | /set weechat.color.*                      | Couleurs.
+| completion | /set weechat.completion.*                 | Options de complétion.
+| history    | /set weechat.history.*                    | Options d'historique (commandes et tampons).
 | proxy      | <<command_weechat_proxy,/proxy>>          +
-               /set weechat.proxy.*                      | Options des proxies
-| network    | /set weechat.network.*                    | Options réseau/SSL
+               /set weechat.proxy.*                      | Options des proxies.
+| network    | /set weechat.network.*                    | Options réseau/SSL.
 | bar        | <<command_weechat_bar,/bar>>              +
-               /set weechat.bar.*                        | Options des barres
-| layout     | <<command_weechat_layout,/layout>>        | Dispositions
-| notify     | <<command_weechat_buffer,/buffer notify>> | Niveaux de notification des tampons (les options peuvent être ajoutées/supprimées dans la section)
-| filter     | <<command_weechat_filter,/filter>>        | Filtres
-| key        | <<command_weechat_key,/key>>              | Touches pour le contexte "default"
-| key_search | <<command_weechat_key,/key>>              | Touches pour le contexte "search"
-| key_cursor | <<command_weechat_key,/key>>              | Touches pour le contexte "cursor"
-| key_mouse  | <<command_weechat_key,/key>>              | Touches pour le contexte "mouse"
+               /set weechat.bar.*                        | Options des barres.
+| layout     | <<command_weechat_layout,/layout>>        | Dispositions.
+| notify     | <<command_weechat_buffer,/buffer notify>> | Niveaux de notification des tampons (les options peuvent être ajoutées/supprimées dans la section).
+| filter     | <<command_weechat_filter,/filter>>        | Filtres.
+| key        | <<command_weechat_key,/key>>              | Touches pour le contexte "default".
+| key_search | <<command_weechat_key,/key>>              | Touches pour le contexte "search".
+| key_cursor | <<command_weechat_key,/key>>              | Touches pour le contexte "cursor".
+| key_mouse  | <<command_weechat_key,/key>>              | Touches pour le contexte "mouse".
 |===
 
 Options :
@@ -2037,24 +2037,24 @@ Les extensions par défaut sont :
 [width="100%",cols="^1,5",options="header"]
 |===
 | Extension  | Description
-| alias      | Définir des alias pour les commandes
-| aspell     | Vérification orthographique de la ligne de commande
-| charset    | Encodage/encodage avec jeu de caractère sur les tampons
-| exec       | Exécution de commandes externes dans WeeChat
-| fifo       | Tube FIFO pour envoyer des commandes à distance vers WeeChat
-| irc        | Discussion avec le protocole IRC
-| logger     | Enregistrement des tampons dans des fichiers
-| relay      | Relai de données via le réseau
-| script     | Gestionnaire de scripts
-| python     | Interface (API) pour scripts Python
-| perl       | Interface (API) pour scripts Perl
-| ruby       | Interface (API) pour scripts Ruby
-| lua        | Interface (API) pour scripts Lua
-| tcl        | Interface (API) pour scripts Tcl
-| guile      | Interface (API) pour scripts Guile (scheme)
-| javascript | Interface (API) pour scripts Javascript
-| trigger    | Remplacement de texte et exécution de commande sur des évènements de WeeChat ou des extensions
-| xfer       | Transfert de fichier et discussion directe
+| alias      | Définir des alias pour les commandes.
+| aspell     | Vérification orthographique de la ligne de commande.
+| charset    | Encodage/encodage avec jeu de caractère sur les tampons.
+| exec       | Exécution de commandes externes dans WeeChat.
+| fifo       | Tube FIFO pour envoyer des commandes à distance vers WeeChat.
+| irc        | Discussion avec le protocole IRC.
+| logger     | Enregistrement des tampons dans des fichiers.
+| relay      | Relai de données via le réseau.
+| script     | Gestionnaire de scripts.
+| python     | Interface (API) pour scripts Python.
+| perl       | Interface (API) pour scripts Perl.
+| ruby       | Interface (API) pour scripts Ruby.
+| lua        | Interface (API) pour scripts Lua.
+| tcl        | Interface (API) pour scripts Tcl.
+| guile      | Interface (API) pour scripts Guile (scheme).
+| javascript | Interface (API) pour scripts Javascript.
+| trigger    | Remplacement de texte et exécution de commande sur des évènements de WeeChat ou des extensions.
+| xfer       | Transfert de fichier et discussion directe.
 |===
 
 Pour en apprendre plus sur le développement d'extension ou de script (via
@@ -2086,11 +2086,11 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section    | Commande de contrôle                      | Description
-| color      | /set aspell.color.*                       | Couleurs
-| check      | /set aspell.check.*                       | Options pour contrôler la vérification orthographique
+| color      | /set aspell.color.*                       | Couleurs.
+| check      | /set aspell.check.*                       | Options pour contrôler la vérification orthographique.
 | dict       | <<command_aspell_aspell,/aspell setdict>> +
-               /set aspell.dict.*                        | Dictionnaires utilisés par tampon (les options peuvent être ajoutées/supprimées dans la section)
-| option     | /set aspell.option.*                      | <<aspell_speller_options,Options du vérificateur d'orthographe>> (les options peuvent être ajoutées/supprimées dans la section)
+               /set aspell.dict.*                        | Dictionnaires utilisés par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| option     | /set aspell.option.*                      | <<aspell_speller_options,Options du vérificateur d'orthographe>> (les options peuvent être ajoutées/supprimées dans la section).
 |===
 
 Options :
@@ -2194,11 +2194,11 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle                        | Description
-| default | /set charset.default.*                      | Jeu de caractère d'encodage/décodage par défaut
+| default | /set charset.default.*                      | Jeu de caractère d'encodage/décodage par défaut.
 | decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Jeu de caractère d'encodage par tampon (les options peuvent être ajoutées/supprimées dans la section)
+            /set charset.decode.*                       | Jeu de caractère d'encodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
 | encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Jeu de caractère de décodage par tampon (les options peuvent être ajoutées/supprimées dans la section)
+            /set charset.encode.*                       | Jeu de caractère de décodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
 |===
 
 Options :
@@ -2285,8 +2285,8 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle | Description
-| command | /set exec.command.*  | Options pour les commandes
-| color   | /set exec.color.*    | Couleurs
+| command | /set exec.command.*  | Options pour les commandes.
+| color   | /set exec.color.*    | Couleurs.
 |===
 
 Options :
@@ -2351,7 +2351,7 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle | Description
-| file    | /set fifo.file.*     | Contrôle du tube FIFO
+| file    | /set fifo.file.*     | Contrôle du tube FIFO.
 |===
 
 Options :
@@ -2397,15 +2397,15 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section        | Commande de contrôle           | Description
-| look           | /set irc.look.*                | Aspect/présentation
-| color          | /set irc.color.*               | Couleurs
-| network        | /set irc.network.*             | Options réseau
-| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Tampon cible pour les messages IRC>> (les options peuvent être ajoutées/supprimées dans la section)
-| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,Réponses CTCP>> (les options peuvent être ajoutées/supprimées dans la section)
-| ignore         | <<command_irc_ignore,/ignore>> | Personnes ignorées
-| server_default | /set irc.server_default.*      | Valeurs par défaut pour serveurs (les options peuvent être ajoutées/supprimées dans la section)
+| look           | /set irc.look.*                | Aspect/présentation.
+| color          | /set irc.color.*               | Couleurs.
+| network        | /set irc.network.*             | Options réseau.
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Tampon cible pour les messages IRC>> (les options peuvent être ajoutées/supprimées dans la section).
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,Réponses CTCP>> (les options peuvent être ajoutées/supprimées dans la section).
+| ignore         | <<command_irc_ignore,/ignore>> | Personnes ignorées.
+| server_default | /set irc.server_default.*      | Valeurs par défaut pour serveurs (les options peuvent être ajoutées/supprimées dans la section).
 | server         | <<command_irc_server,/server>> +
-                   /set irc.server.*              | Serveurs
+                   /set irc.server.*              | Serveurs.
 |===
 
 Options :
@@ -2865,11 +2865,11 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle | Description
-| look    | /set logger.look.*   | Aspect/présentation
-| color   | /set logger.color.*  | Couleurs
-| file    | /set logger.file.*   | Options pour les fichiers de log
-| level   | /set logger.level.*  | Niveau de log par tampon (les options peuvent être ajoutées/supprimées dans la section)
-| mask    | /set logger.mask.*   | Masque de nom de fichier par tampon (les options peuvent être ajoutées/supprimées dans la section)
+| look    | /set logger.look.*   | Aspect/présentation.
+| color   | /set logger.color.*  | Couleurs.
+| file    | /set logger.file.*   | Options pour les fichiers de log.
+| level   | /set logger.level.*  | Niveau de log par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| mask    | /set logger.mask.*   | Masque de nom de fichier par tampon (les options peuvent être ajoutées/supprimées dans la section).
 |===
 
 Options :
@@ -3022,12 +3022,12 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle               | Description
-| look    | /set relay.look.*                  | Aspect/présentation
-| color   | /set relay.color.*                 | Couleurs
-| network | /set relay.network.*               | Options réseau
-| irc     | /set relay.irc.*                   | Options spécifiques au protocole irc (proxy irc)
+| look    | /set relay.look.*                  | Aspect/présentation.
+| color   | /set relay.color.*                 | Couleurs.
+| network | /set relay.network.*               | Options réseau.
+| irc     | /set relay.irc.*                   | Options spécifiques au protocole irc (proxy irc).
 | port    | <<command_relay_relay,/relay add>> +
-            /set relay.port.*                  | Ports utilisés pour le relai (protocoles irc et weechat) (les options peuvent être ajoutées/supprimées dans la section)
+            /set relay.port.*                  | Ports utilisés pour le relai (protocoles irc et weechat) (les options peuvent être ajoutées/supprimées dans la section).
 |===
 
 Options :
@@ -3177,9 +3177,9 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle  | Description
-| look    | /set script.look.*    | Aspect/présentation
-| color   | /set script.color.*   | Couleurs
-| scripts | /set script.scripts.* | Options pour le téléchargement des scripts
+| look    | /set script.look.*    | Aspect/présentation.
+| color   | /set script.color.*   | Couleurs.
+| scripts | /set script.scripts.* | Options pour le téléchargement des scripts.
 |===
 
 Options :
@@ -3246,11 +3246,11 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle                     | Description
-| look    | /set trigger.look.*                      | Aspect/présentation
-| color   | /set trigger.color.*                     | Couleurs
+| look    | /set trigger.look.*                      | Aspect/présentation.
+| color   | /set trigger.color.*                     | Couleurs.
 | trigger | <<command_trigger_trigger,/trigger add>> +
             <<command_trigger_trigger,/trigger set>> +
-            /set trigger.trigger.*                   | Options des triggers
+            /set trigger.trigger.*                   | Options des triggers.
 |===
 
 Options :
@@ -3529,8 +3529,8 @@ Le callback "signal" définit les variables suivantes dans la table de hachage :
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable       | Type   | Description
-| tg_signal      | chaîne | Nom du signal
-| tg_signal_data | chaîne | Données envoyées avec le signal
+| tg_signal      | chaîne | Nom du signal.
+| tg_signal_data | chaîne | Données envoyées avec le signal.
 |===
 
 Si le signal contient un message IRC, le message est analysé et les données
@@ -3539,19 +3539,19 @@ suivantes sont ajoutées dans la table de hachage :
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable             | Type   | Description
-| server               | chaîne | Nom du serveur (exemple : "freenode")
-| tags                 | chaîne | Étiquettes dans le message (rarement utilisées)
-| message_without_tags | chaîne | Message sans les étiquettes
-| nick                 | chaîne | Pseudo
-| host                 | chaîne | Nom d'hôte
-| command              | chaîne | Commande IRC (exemple : "PRIVMSG", "NOTICE", ...)
-| channel              | chaîne | Canal IRC
-| arguments            | chaîne | Paramètres de la commande (inclut la valeur de _channel_)
-| text                 | chaîne | Texte (par exemple message utilisateur)
-| pos_command          | chaîne | L'index de _command_ dans le message ("-1" si _command_ n'a pas été trouvé)
-| pos_arguments        | chaîne | L'index de _arguments_ dans le message ("-1" si _arguments_ n'a pas été trouvé)
-| pos_channel          | chaîne | L'index de _channel_ dans le message ("-1" si _channel_ n'a pas été trouvé)
-| pos_text             | chaîne | L'index de _text_ dans le message ("-1" si _text_ n'a pas été trouvé)
+| server               | chaîne | Nom du serveur (exemple : "freenode").
+| tags                 | chaîne | Étiquettes dans le message (rarement utilisées).
+| message_without_tags | chaîne | Message sans les étiquettes.
+| nick                 | chaîne | Pseudo.
+| host                 | chaîne | Nom d'hôte.
+| command              | chaîne | Commande IRC (exemple : "PRIVMSG", "NOTICE", ...).
+| channel              | chaîne | Canal IRC.
+| arguments            | chaîne | Paramètres de la commande (inclut la valeur de _channel_).
+| text                 | chaîne | Texte (par exemple message utilisateur).
+| pos_command          | chaîne | L'index de _command_ dans le message ("-1" si _command_ n'a pas été trouvé).
+| pos_arguments        | chaîne | L'index de _arguments_ dans le message ("-1" si _arguments_ n'a pas été trouvé).
+| pos_channel          | chaîne | L'index de _channel_ dans le message ("-1" si _channel_ n'a pas été trouvé).
+| pos_text             | chaîne | L'index de _text_ dans le message ("-1" si _text_ n'a pas été trouvé).
 |===
 
 Lorsque la donnée est un pointeur, la variable `tg_signal_data` peut être
@@ -3584,10 +3584,10 @@ Le callback "modifier" définit les variables suivantes dans la table de hachage
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable          | Type   | Description
-| tg_modifier       | chaîne | Nom du modificateur
-| tg_modifier_data  | chaîne | Données envoyées avec le modificateur
-| tg_string         | chaîne | La chaîne qui peut être modifiée
-| tg_string_nocolor | chaîne | La chaîne sans les codes couleur
+| tg_modifier       | chaîne | Nom du modificateur.
+| tg_modifier_data  | chaîne | Données envoyées avec le modificateur.
+| tg_string         | chaîne | La chaîne qui peut être modifiée.
+| tg_string_nocolor | chaîne | La chaîne sans les codes couleur.
 |===
 
 Pour le modificateur _weechat_print_, les variables en utilisant les étiquettes
@@ -3597,13 +3597,13 @@ ainsi que les variables suivantes :
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Type     | Description
-| buffer             | pointeur | Tampon où le message est affiché
-| tg_plugin          | chaîne   | Extension du tampon où le message est affiché
-| tg_buffer          | chaîne   | Nom complet du tampon où le message est affiché
-| tg_prefix          | chaîne   | Préfixe du message affiché
-| tg_prefix_nocolor  | chaîne   | Préfixe sans les codes couleur
-| tg_message         | chaîne   | Message affiché
-| tg_message_nocolor | chaîne   | Message sans les codes couleur
+| buffer             | pointeur | Tampon où le message est affiché.
+| tg_plugin          | chaîne   | Extension du tampon où le message est affiché.
+| tg_buffer          | chaîne   | Nom complet du tampon où le message est affiché.
+| tg_prefix          | chaîne   | Préfixe du message affiché.
+| tg_prefix_nocolor  | chaîne   | Préfixe sans les codes couleur.
+| tg_message         | chaîne   | Message affiché.
+| tg_message_nocolor | chaîne   | Message sans les codes couleur.
 |===
 
 Si le modificateur contient un message IRC, le message est analysé et des
@@ -3618,14 +3618,14 @@ Le callback "print" définit les variables suivantes dans la table de hachage :
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Type     | Description
-| buffer             | pointeur | Tampon
-| tg_date            | chaîne   | Date/heure du message (format : `YYYY-MM-DD hh:mm:ss`)
-| tg_displayed       | chaîne   | "1" si affiché, "0" si ligne filtrée
-| tg_highlight       | chaîne   | "1" si highlight, sinon "0"
-| tg_prefix          | chaîne   | Préfixe
-| tg_prefix_nocolor  | chaîne   | Préfixe sans les codes couleur
-| tg_message         | chaîne   | Message
-| tg_message_nocolor | chaîne   | Message sans les codes couleur
+| buffer             | pointeur | Tampon.
+| tg_date            | chaîne   | Date/heure du message (format : `YYYY-MM-DD hh:mm:ss`).
+| tg_displayed       | chaîne   | "1" si affiché, "0" si ligne filtrée.
+| tg_highlight       | chaîne   | "1" si highlight, sinon "0".
+| tg_prefix          | chaîne   | Préfixe.
+| tg_prefix_nocolor  | chaîne   | Préfixe sans les codes couleur.
+| tg_message         | chaîne   | Message.
+| tg_message_nocolor | chaîne   | Message sans les codes couleur.
 |===
 
 Variables définies avec les étiquettes du message (elles sont définies aussi
@@ -3634,14 +3634,14 @@ pour le modificateur _weechat_print_) :
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Type   | Description
-| tg_tags            | chaîne | Étiquettes du message (avec une virgule en début/fin de chaîne)
-| tg_tags_count      | chaîne | Nombre d'étiquettes dans le message
-| tg_tag_nick        | chaîne | Pseudo (depuis l'étiquette "nick_xxx")
-| tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc")
-| tg_tag_host        | chaîne | Nom d'utilisateur et hôte, format : utilisateur@hôte (depuis l'étiquette "host_xxx")
-| tg_tag_notify      | chaîne | Niveau de notification (_none_, _message_, _private_, _highlight_)
-| tg_notify          | chaîne | Niveau de notification, si différent de _none_
-| tg_msg_pv          | chaîne | "1" pour un message privé, sinon "0"
+| tg_tags            | chaîne | Étiquettes du message (avec une virgule en début/fin de chaîne).
+| tg_tags_count      | chaîne | Nombre d'étiquettes dans le message.
+| tg_tag_nick        | chaîne | Pseudo (depuis l'étiquette "nick_xxx").
+| tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc").
+| tg_tag_host        | chaîne | Nom d'utilisateur et hôte, format : utilisateur@hôte (depuis l'étiquette "host_xxx").
+| tg_tag_notify      | chaîne | Niveau de notification (_none_, _message_, _private_, _highlight_).
+| tg_notify          | chaîne | Niveau de notification, si différent de _none_.
+| tg_msg_pv          | chaîne | "1" pour un message privé, sinon "0".
 |===
 
 [[trigger_data_command]]
@@ -3652,9 +3652,9 @@ Le callback "command" définit les variables suivantes dans la table de hachage 
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable     | Type     | Description
-| buffer       | pointeur | Tampon
-| tg_argvN     | chaîne   | Paramètre n°N
-| tg_argv_eolN | chaîne   | Depuis le paramètre n°N jusqu'à la fin des paramètres
+| buffer       | pointeur | Tampon.
+| tg_argvN     | chaîne   | Paramètre n°N.
+| tg_argv_eolN | chaîne   | Depuis le paramètre n°N jusqu'à la fin des paramètres.
 |===
 
 [[trigger_data_command_run]]
@@ -3666,8 +3666,8 @@ hachage :
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable   | Type     | Description
-| buffer     | pointeur | Tampon
-| tg_command | chaîne   | Commande exécutée
+| buffer     | pointeur | Tampon.
+| tg_command | chaîne   | Commande exécutée.
 |===
 
 [[trigger_data_timer]]
@@ -3678,8 +3678,8 @@ Le callback "timer" définit les variables suivantes dans la table de hachage :
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Type   | Description
-| tg_remaining_calls | chaîne | Nombre d'appels restants
-| tg_date            | chaîne | Date/heure courante (format : `YYYY-MM-DD hh:mm:ss`)
+| tg_remaining_calls | chaîne | Nombre d'appels restants.
+| tg_date            | chaîne | Date/heure courante (format : `YYYY-MM-DD hh:mm:ss`).
 |===
 
 [[trigger_data_config]]
@@ -3690,8 +3690,8 @@ Le callback "config" définit les variables suivantes dans la table de hachage :
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable  | Type   | Description
-| tg_option | chaîne | Option
-| tg_value  | chaîne | Valeur
+| tg_option | chaîne | Option.
+| tg_value  | chaîne | Valeur.
 |===
 
 [[trigger_data_focus]]
@@ -3702,8 +3702,8 @@ Le callback "focus" définit les variables suivantes dans la table de hachage :
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable | Type     | Description
-| window   | pointeur | Fenêtre
-| buffer   | pointeur | Tampon
+| window   | pointeur | Fenêtre.
+| buffer   | pointeur | Tampon.
 |===
 
 La table de hachage contient toutes les clés/valeurs de la table de hachage
@@ -3794,10 +3794,10 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle | Description
-| look    | /set xfer.look.*     | Aspect/présentation
-| color   | /set xfer.color.*    | Couleurs
-| network | /set xfer.network.*  | Options réseau
-| file    | /set xfer.file.*     | Options pour les fichiers envoyés/reçus
+| look    | /set xfer.look.*     | Aspect/présentation.
+| color   | /set xfer.color.*    | Couleurs.
+| network | /set xfer.network.*  | Options réseau.
+| file    | /set xfer.file.*     | Options pour les fichiers envoyés/reçus.
 |===
 
 Options :
