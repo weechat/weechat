@@ -797,7 +797,7 @@ All combinations are summarized in this table:
 [width="100%",cols="4,2,2,8",options="header"]
 |===
 | Code                                 | Example                      | Areas       | Description
-| [hex]#19# + STD                      | [hex]#19# `+01++`            | chat + bars | Set attributes and color using option, see table below.
+| [hex]#19# + STD                      | [hex]#19# `+01+`             | chat + bars | Set attributes and color using option, see table below.
 | [hex]#19# + EXT                      | [hex]#19# `+@00001+`         | chat        | Set color with a ncurses pair (used only on `/color` buffer).
 | [hex]#19# + "F" + (A)STD             | [hex]#19# `+F*05+`           | chat + bars | Set foreground (WeeChat color).
 | [hex]#19# + "F" + (A)EXT             | [hex]#19# `+F@00214+`        | chat + bars | Set foreground (extended color).
