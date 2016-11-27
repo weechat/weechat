@@ -1031,6 +1031,9 @@ Lines displayed in formatted buffers have following fields:
 | tags                | With `/debug tags` | Tags associated with the line (see <<lines_tags,lines tags>>).
 |===
 
+The display of lines can be customized with many look options
+(_pass:[weechat.look.*]_) and color options (_pass:[weechat.color.chat_*]_).
+
 [[lines_tags]]
 ==== Lines tags
 

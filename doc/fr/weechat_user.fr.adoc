@@ -992,6 +992,9 @@ Les lignes affichées dans les tampons formatés ont les champs suivants :
 | étiquettes           | Avec `/debug tags` | Étiquettes associées avec la ligne (voir <<lines_tags,les étiquettes des lignes>>).
 |===
 
+L'affichage des lignes peut être personnalisé avec des nombreuses options de
+présentation (_pass:[weechat.look.*]_) et de couleur (_pass:[weechat.color.chat_*]_).
+
 [[lines_tags]]
 ==== Étiquettes des lignes
 
