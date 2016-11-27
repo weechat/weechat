@@ -1974,6 +1974,107 @@ weechat_guile_api_hook_command (SCM command, SCM description, SCM args,
 }
 
 int
+weechat_guile_api_hook_completion_cb (const void *pointer, void *data,
+                                      const char *completion_item,
+                                      struct t_gui_buffer *buffer,
+                                      struct t_gui_completion *completion)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    int *rc, ret;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
+        func_argv[2] = API_PTR2STR(buffer);
+        func_argv[3] = API_PTR2STR(completion);
+
+        rc = (int *) weechat_guile_exec (script,
+                                         WEECHAT_SCRIPT_EXEC_INT,
+                                         ptr_function,
+                                         "ssss", func_argv);
+
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (func_argv[2])
+            free (func_argv[2]);
+        if (func_argv[3])
+            free (func_argv[3]);
+
+        return ret;
+    }
+
+    return WEECHAT_RC_ERROR;
+}
+
+SCM
+weechat_guile_api_hook_completion (SCM completion, SCM description,
+                                   SCM function, SCM data)
+{
+    char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
+    if (!scm_is_string (completion) || !scm_is_string (description)
+        || !scm_is_string (function) || !scm_is_string (data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(plugin_script_api_hook_completion (weechat_guile_plugin,
+                                                            guile_current_script,
+                                                            API_SCM_TO_STRING(completion),
+                                                            API_SCM_TO_STRING(description),
+                                                            &weechat_guile_api_hook_completion_cb,
+                                                            API_SCM_TO_STRING(function),
+                                                            API_SCM_TO_STRING(data)));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+SCM
+weechat_guile_api_hook_completion_get_string (SCM completion, SCM property)
+{
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
+    if (!scm_is_string (completion) || !scm_is_string (property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_hook_completion_get_string (
+        API_STR2PTR(API_SCM_TO_STRING(completion)),
+        API_SCM_TO_STRING(property));
+
+    API_RETURN_STRING(result);
+}
+
+SCM
+weechat_guile_api_hook_completion_list_add (SCM completion, SCM word,
+                                            SCM nick_completion, SCM where)
+{
+    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
+    if (!scm_is_string (completion) || !scm_is_string (word)
+        || !scm_is_integer (nick_completion) || !scm_is_string (where))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_hook_completion_list_add (API_STR2PTR(API_SCM_TO_STRING(completion)),
+                                      API_SCM_TO_STRING(word),
+                                      scm_to_int (nick_completion),
+                                      API_SCM_TO_STRING(where));
+
+    API_RETURN_OK;
+}
+
+int
 weechat_guile_api_hook_command_run_cb (const void *pointer, void *data,
                                        struct t_gui_buffer *buffer,
                                        const char *command)
@@ -2713,107 +2814,6 @@ weechat_guile_api_hook_config (SCM option, SCM function, SCM data)
                                                         API_SCM_TO_STRING(data)));
 
     API_RETURN_STRING_FREE(result);
-}
-
-int
-weechat_guile_api_hook_completion_cb (const void *pointer, void *data,
-                                      const char *completion_item,
-                                      struct t_gui_buffer *buffer,
-                                      struct t_gui_completion *completion)
-{
-    struct t_plugin_script *script;
-    void *func_argv[4];
-    char empty_arg[1] = { '\0' };
-    const char *ptr_function, *ptr_data;
-    int *rc, ret;
-
-    script = (struct t_plugin_script *)pointer;
-    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
-
-    if (ptr_function && ptr_function[0])
-    {
-        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
-        func_argv[2] = API_PTR2STR(buffer);
-        func_argv[3] = API_PTR2STR(completion);
-
-        rc = (int *) weechat_guile_exec (script,
-                                         WEECHAT_SCRIPT_EXEC_INT,
-                                         ptr_function,
-                                         "ssss", func_argv);
-
-        if (!rc)
-            ret = WEECHAT_RC_ERROR;
-        else
-        {
-            ret = *rc;
-            free (rc);
-        }
-        if (func_argv[2])
-            free (func_argv[2]);
-        if (func_argv[3])
-            free (func_argv[3]);
-
-        return ret;
-    }
-
-    return WEECHAT_RC_ERROR;
-}
-
-SCM
-weechat_guile_api_hook_completion (SCM completion, SCM description,
-                                   SCM function, SCM data)
-{
-    char *result;
-    SCM return_value;
-
-    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
-    if (!scm_is_string (completion) || !scm_is_string (description)
-        || !scm_is_string (function) || !scm_is_string (data))
-        API_WRONG_ARGS(API_RETURN_EMPTY);
-
-    result = API_PTR2STR(plugin_script_api_hook_completion (weechat_guile_plugin,
-                                                            guile_current_script,
-                                                            API_SCM_TO_STRING(completion),
-                                                            API_SCM_TO_STRING(description),
-                                                            &weechat_guile_api_hook_completion_cb,
-                                                            API_SCM_TO_STRING(function),
-                                                            API_SCM_TO_STRING(data)));
-
-    API_RETURN_STRING_FREE(result);
-}
-
-SCM
-weechat_guile_api_hook_completion_get_string (SCM completion, SCM property)
-{
-    const char *result;
-
-    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
-    if (!scm_is_string (completion) || !scm_is_string (property))
-        API_WRONG_ARGS(API_RETURN_EMPTY);
-
-    result = weechat_hook_completion_get_string (
-        API_STR2PTR(API_SCM_TO_STRING(completion)),
-        API_SCM_TO_STRING(property));
-
-    API_RETURN_STRING(result);
-}
-
-SCM
-weechat_guile_api_hook_completion_list_add (SCM completion, SCM word,
-                                            SCM nick_completion, SCM where)
-{
-    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
-    if (!scm_is_string (completion) || !scm_is_string (word)
-        || !scm_is_integer (nick_completion) || !scm_is_string (where))
-        API_WRONG_ARGS(API_RETURN_ERROR);
-
-    weechat_hook_completion_list_add (API_STR2PTR(API_SCM_TO_STRING(completion)),
-                                      API_SCM_TO_STRING(word),
-                                      scm_to_int (nick_completion),
-                                      API_SCM_TO_STRING(where));
-
-    API_RETURN_OK;
 }
 
 char *
@@ -4886,6 +4886,9 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(print_y, 3);
     API_DEF_FUNC(log_print, 1);
     API_DEF_FUNC(hook_command, 7);
+    API_DEF_FUNC(hook_completion, 4);
+    API_DEF_FUNC(hook_completion_get_string, 2);
+    API_DEF_FUNC(hook_completion_list_add, 4);
     API_DEF_FUNC(hook_command_run, 3);
     API_DEF_FUNC(hook_timer, 5);
     API_DEF_FUNC(hook_fd, 6);
@@ -4898,9 +4901,6 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(hook_hsignal, 3);
     API_DEF_FUNC(hook_hsignal_send, 2);
     API_DEF_FUNC(hook_config, 3);
-    API_DEF_FUNC(hook_completion, 4);
-    API_DEF_FUNC(hook_completion_get_string, 2);
-    API_DEF_FUNC(hook_completion_list_add, 4);
     API_DEF_FUNC(hook_modifier, 3);
     API_DEF_FUNC(hook_modifier_exec, 3);
     API_DEF_FUNC(hook_info, 5);

@@ -2451,6 +2451,139 @@ weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
 }
 
 int
+weechat_ruby_api_hook_completion_cb (const void *pointer, void *data,
+                                     const char *completion_item,
+                                     struct t_gui_buffer *buffer,
+                                     struct t_gui_completion *completion)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    int *rc, ret;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
+        func_argv[2] = API_PTR2STR(buffer);
+        func_argv[3] = API_PTR2STR(completion);
+
+        rc = (int *) weechat_ruby_exec (script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        ptr_function,
+                                        "ssss", func_argv);
+
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (func_argv[2])
+            free (func_argv[2]);
+        if (func_argv[3])
+            free (func_argv[3]);
+
+        return ret;
+    }
+
+    return WEECHAT_RC_ERROR;
+}
+
+static VALUE
+weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
+                                  VALUE description, VALUE function,
+                                  VALUE data)
+{
+    char *c_completion, *c_description, *c_function, *c_data, *result;
+    VALUE return_value;
+
+    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
+    if (NIL_P (completion) || NIL_P (description) || NIL_P (function)
+        || NIL_P (data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (completion, T_STRING);
+    Check_Type (description, T_STRING);
+    Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
+
+    c_completion = StringValuePtr (completion);
+    c_description = StringValuePtr (description);
+    c_function = StringValuePtr (function);
+    c_data = StringValuePtr (data);
+
+    result = API_PTR2STR(plugin_script_api_hook_completion (weechat_ruby_plugin,
+                                                            ruby_current_script,
+                                                            c_completion,
+                                                            c_description,
+                                                            &weechat_ruby_api_hook_completion_cb,
+                                                            c_function,
+                                                            c_data));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+static VALUE
+weechat_ruby_api_hook_completion_get_string (VALUE class, VALUE completion,
+                                             VALUE property)
+{
+    char *c_completion, *c_property;
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
+    if (NIL_P (completion) || NIL_P (property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (completion, T_STRING);
+    Check_Type (property, T_STRING);
+
+    c_completion = StringValuePtr (completion);
+    c_property = StringValuePtr (property);
+
+    result = weechat_hook_completion_get_string (API_STR2PTR(c_completion),
+                                                 c_property);
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
+weechat_ruby_api_hook_completion_list_add (VALUE class, VALUE completion,
+                                           VALUE word, VALUE nick_completion,
+                                           VALUE where)
+{
+    char *c_completion, *c_word, *c_where;
+    int c_nick_completion;
+
+    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
+    if (NIL_P (completion) || NIL_P (word) || NIL_P (nick_completion)
+        || NIL_P (where))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    Check_Type (completion, T_STRING);
+    Check_Type (word, T_STRING);
+    Check_Type (nick_completion, T_FIXNUM);
+    Check_Type (where, T_STRING);
+
+    c_completion = StringValuePtr (completion);
+    c_word = StringValuePtr (word);
+    c_nick_completion = FIX2INT (nick_completion);
+    c_where = StringValuePtr (where);
+
+    weechat_hook_completion_list_add (API_STR2PTR(c_completion),
+                                      c_word,
+                                      c_nick_completion,
+                                      c_where);
+
+    API_RETURN_OK;
+}
+
+int
 weechat_ruby_api_hook_command_run_cb (const void *pointer, void *data,
                                       struct t_gui_buffer *buffer,
                                       const char *command)
@@ -3310,139 +3443,6 @@ weechat_ruby_api_hook_config (VALUE class, VALUE option, VALUE function,
                                                         c_data));
 
     API_RETURN_STRING_FREE(result);
-}
-
-int
-weechat_ruby_api_hook_completion_cb (const void *pointer, void *data,
-                                     const char *completion_item,
-                                     struct t_gui_buffer *buffer,
-                                     struct t_gui_completion *completion)
-{
-    struct t_plugin_script *script;
-    void *func_argv[4];
-    char empty_arg[1] = { '\0' };
-    const char *ptr_function, *ptr_data;
-    int *rc, ret;
-
-    script = (struct t_plugin_script *)pointer;
-    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
-
-    if (ptr_function && ptr_function[0])
-    {
-        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
-        func_argv[2] = API_PTR2STR(buffer);
-        func_argv[3] = API_PTR2STR(completion);
-
-        rc = (int *) weechat_ruby_exec (script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        ptr_function,
-                                        "ssss", func_argv);
-
-        if (!rc)
-            ret = WEECHAT_RC_ERROR;
-        else
-        {
-            ret = *rc;
-            free (rc);
-        }
-        if (func_argv[2])
-            free (func_argv[2]);
-        if (func_argv[3])
-            free (func_argv[3]);
-
-        return ret;
-    }
-
-    return WEECHAT_RC_ERROR;
-}
-
-static VALUE
-weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
-                                  VALUE description, VALUE function,
-                                  VALUE data)
-{
-    char *c_completion, *c_description, *c_function, *c_data, *result;
-    VALUE return_value;
-
-    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
-    if (NIL_P (completion) || NIL_P (description) || NIL_P (function)
-        || NIL_P (data))
-        API_WRONG_ARGS(API_RETURN_EMPTY);
-
-    Check_Type (completion, T_STRING);
-    Check_Type (description, T_STRING);
-    Check_Type (function, T_STRING);
-    Check_Type (data, T_STRING);
-
-    c_completion = StringValuePtr (completion);
-    c_description = StringValuePtr (description);
-    c_function = StringValuePtr (function);
-    c_data = StringValuePtr (data);
-
-    result = API_PTR2STR(plugin_script_api_hook_completion (weechat_ruby_plugin,
-                                                            ruby_current_script,
-                                                            c_completion,
-                                                            c_description,
-                                                            &weechat_ruby_api_hook_completion_cb,
-                                                            c_function,
-                                                            c_data));
-
-    API_RETURN_STRING_FREE(result);
-}
-
-static VALUE
-weechat_ruby_api_hook_completion_get_string (VALUE class, VALUE completion,
-                                             VALUE property)
-{
-    char *c_completion, *c_property;
-    const char *result;
-
-    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
-    if (NIL_P (completion) || NIL_P (property))
-        API_WRONG_ARGS(API_RETURN_EMPTY);
-
-    Check_Type (completion, T_STRING);
-    Check_Type (property, T_STRING);
-
-    c_completion = StringValuePtr (completion);
-    c_property = StringValuePtr (property);
-
-    result = weechat_hook_completion_get_string (API_STR2PTR(c_completion),
-                                                 c_property);
-
-    API_RETURN_STRING(result);
-}
-
-static VALUE
-weechat_ruby_api_hook_completion_list_add (VALUE class, VALUE completion,
-                                           VALUE word, VALUE nick_completion,
-                                           VALUE where)
-{
-    char *c_completion, *c_word, *c_where;
-    int c_nick_completion;
-
-    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
-    if (NIL_P (completion) || NIL_P (word) || NIL_P (nick_completion)
-        || NIL_P (where))
-        API_WRONG_ARGS(API_RETURN_ERROR);
-
-    Check_Type (completion, T_STRING);
-    Check_Type (word, T_STRING);
-    Check_Type (nick_completion, T_FIXNUM);
-    Check_Type (where, T_STRING);
-
-    c_completion = StringValuePtr (completion);
-    c_word = StringValuePtr (word);
-    c_nick_completion = FIX2INT (nick_completion);
-    c_where = StringValuePtr (where);
-
-    weechat_hook_completion_list_add (API_STR2PTR(c_completion),
-                                      c_word,
-                                      c_nick_completion,
-                                      c_where);
-
-    API_RETURN_OK;
 }
 
 char *
@@ -6246,6 +6246,9 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(print_y, 3);
     API_DEF_FUNC(log_print, 1);
     API_DEF_FUNC(hook_command, 7);
+    API_DEF_FUNC(hook_completion, 4);
+    API_DEF_FUNC(hook_completion_get_string, 2);
+    API_DEF_FUNC(hook_completion_list_add, 4);
     API_DEF_FUNC(hook_command_run, 3);
     API_DEF_FUNC(hook_timer, 5);
     API_DEF_FUNC(hook_fd, 6);
@@ -6258,9 +6261,6 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(hook_hsignal, 3);
     API_DEF_FUNC(hook_hsignal_send, 2);
     API_DEF_FUNC(hook_config, 3);
-    API_DEF_FUNC(hook_completion, 4);
-    API_DEF_FUNC(hook_completion_get_string, 2);
-    API_DEF_FUNC(hook_completion_list_add, 4);
     API_DEF_FUNC(hook_modifier, 3);
     API_DEF_FUNC(hook_modifier_exec, 3);
     API_DEF_FUNC(hook_info, 5);

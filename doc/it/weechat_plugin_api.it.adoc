@@ -7375,6 +7375,204 @@ hook = weechat.hook_command("myfilter", "descrizione di myfilter",
     "my_command_cb", "")
 ----
 
+==== hook_completion
+
+// TRANSLATION MISSING
+_Updated in 1.5._
+
+Hook su un completamento.
+
+Prototipo:
+
+[source,C]
+----
+struct t_hook *weechat_hook_completion (const char *completion_item,
+                                        const char *description,
+                                        int (*callback)(const void *pointer,
+                                                        void *data,
+                                                        const char *completion_item,
+                                                        struct t_gui_buffer *buffer,
+                                                        struct t_gui_completion *completion),
+                                        const void *callback_pointer,
+                                        void *callback_data);
+----
+
+Argomenti:
+
+* _completion_item_: nome dell'elemento del completamento, è possibile usare
+  in seguito _%(name)_ in un comando con un hook (argomento _completion_)
+  (priorità consentita, consultare la nota riguardo la
+  <<hook_priority,priority>>)
+* _callback_: funzione chiamata quando viene usato l'elemento completamento
+  (l'utente sta completando qualcosa usando questo elemento), argomenti e valore
+  restituito:
+** _const void *pointer_: puntatore
+** _void *data_: puntatore
+** _const char *completion_item_: nome dell'elemento del completamento
+** _struct t_gui_buffer *buffer_: buffer dove viene eseguito il completamento
+** _struct t_gui_completion *completion_: struttura usata per aggiungere
+   parole per il completamento (consultare
+   <<_hook_completion_list_add,hook_completion_list_add>>)
+** valore restituito:
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: puntatore fornito alla callback quando chiamata da WeeChat
+// TRANSLATION MISSING
+* _callback_data_: puntatore fornito alla callback quando chiamata da WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it is automatically freed when the hook is deleted
+
+[NOTE]
+I nomi del completamento sono globali (condivisi tra WeeChat e plugin). Si
+raccomanda pertanto di scegliere un nome con un prefisso unico, come
+"plugin_xxx" (dove "xxx" è il nome del proprio elemento).
+
+// TRANSLATION MISSING
+[IMPORTANT]
+The callback must only call function
+<<_hook_completion_list_add,hook_completion_list_add>>
+and must *NOT* update the command line. +
+To update the command line when kbd:[Tab] is pressed, you can use the function
+<<_hook_command_run,hook_command_run>> with command:
+"/input complete_next" (and you must return _WEECHAT_RC_OK_EAT_ if your callback
+has updated the command line, so that WeeChat will not perform the completion).
+
+Valore restituito:
+
+* puntatore al nuovo hook, NULL in caso di errore
+
+Esempio in C:
+
+[source,C]
+----
+int
+my_completion_cb (const void *pointer, void *data, const char *completion_item,
+                  struct t_gui_buffer *buffer,
+                  struct t_gui_completion *completion)
+{
+    weechat_hook_completion_list_add (completion, "word1",
+                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_hook_completion_list_add (completion, "test_word2",
+                                      0, WEECHAT_LIST_POS_SORT);
+    return WEECHAT_RC_OK;
+}
+
+struct t_hook *my_completion_hook = weechat_hook_completion ("plugin_item",
+                                                             "my custom completion!",
+                                                             &my_completion_cb, NULL, NULL);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+hook = weechat.hook_completion(completion_item, description, callback, callback_data)
+
+# esempio
+def my_completion_cb(data, completion_item, buffer, completion):
+    weechat.hook_completion_list_add(completion, "word1", 0, weechat.WEECHAT_LIST_POS_SORT)
+    weechat.hook_completion_list_add(completion, "test_word2", 0, weechat.WEECHAT_LIST_POS_SORT)
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_completion("plugin_item", "my custom completion!",
+                               "my_completion_cb", "")
+----
+
+==== hook_completion_get_string
+
+_Novità nella versioe 0.3.4._
+
+Ottiene il completamento di una proprietà come stringa.
+
+Prototipo:
+
+[source,C]
+----
+const char *weechat_hook_completion_get_string (struct t_gui_completion *completion,
+                                                const char *property);
+----
+
+Argomenti:
+
+* _completion_: puntatore al completamento
+* _property_: nome della proprietà:
+** _base_command_: comando usato per il completamento
+** _base_word_: parola che viene completata
+** _args_: argomenti del comando (inclusa la parola base)
+
+Esempio in C:
+
+[source,C]
+----
+int
+my_completion_cb (const void *pointer, void *data, const char *completion_item,
+                  struct t_gui_buffer *buffer,
+                  struct t_gui_completion *completion)
+{
+    /* ottiene l'argomento del comando */
+    const char *args = weechat_hook_completion_get_string (completion, "args");
+
+    /* completamento che dipende dagli argomenti */
+    /* ... */
+
+    return WEECHAT_RC_OK;
+}
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+value = weechat.hook_completion_get_string(completion, property)
+
+# esempio
+def my_completion_cb(data, completion_item, buffer, completion):
+    # ottiene l'argomento del comando
+    args = weechat.hook_completion_get_string(completion, "args")
+    # completamento che dipende dagli argomenti
+    # ...
+    return weechat.WEECHAT_RC_OK
+----
+
+==== hook_completion_list_add
+
+Aggiunge una parola per il completamento.
+
+Prototipo:
+
+[source,C]
+----
+void weechat_hook_completion_list_add (struct t_gui_completion *completion,
+                                       const char *word,
+                                       int nick_completion,
+                                       const char *where);
+----
+
+Argomenti:
+
+* _completion_: puntatore al completamento
+* _word_: parola da aggiungere
+* _nick_completion_: 1 se la parola è un nick, altrimenti 0
+* _where_: posizione in cui la parola sarà inserita nella lista:
+** _WEECHAT_LIST_POS_SORT_: qualunque posizione, per mantenere
+   la lista ordinata
+** _WEECHAT_LIST_POS_BEGINNING_: inizio della lista
+** _WEECHAT_LIST_POS_END_: fine della lista
+
+Esempio in C: consultare <<_hook_completion,hook_completion>>.
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+weechat.hook_completion_list_add(completion, word, nick_completion, where)
+
+# esempio: consultare function hook_completion precedente
+----
+
 ==== hook_command_run
 
 // TRANSLATION MISSING
@@ -9838,204 +10036,6 @@ def my_config_cb(data, option, value):
 
 # cattura le modifiche dell'opzione "weechat.look.item_time_format"
 hook = weechat.hook_config("weechat.look.item_time_format", "my_config_cb", "")
-----
-
-==== hook_completion
-
-// TRANSLATION MISSING
-_Updated in 1.5._
-
-Hook su un completamento.
-
-Prototipo:
-
-[source,C]
-----
-struct t_hook *weechat_hook_completion (const char *completion_item,
-                                        const char *description,
-                                        int (*callback)(const void *pointer,
-                                                        void *data,
-                                                        const char *completion_item,
-                                                        struct t_gui_buffer *buffer,
-                                                        struct t_gui_completion *completion),
-                                        const void *callback_pointer,
-                                        void *callback_data);
-----
-
-Argomenti:
-
-* _completion_item_: nome dell'elemento del completamento, è possibile usare
-  in seguito _%(name)_ in un comando con un hook (argomento _completion_)
-  (priorità consentita, consultare la nota riguardo la
-  <<hook_priority,priority>>)
-* _callback_: funzione chiamata quando viene usato l'elemento completamento
-  (l'utente sta completando qualcosa usando questo elemento), argomenti e valore
-  restituito:
-** _const void *pointer_: puntatore
-** _void *data_: puntatore
-** _const char *completion_item_: nome dell'elemento del completamento
-** _struct t_gui_buffer *buffer_: buffer dove viene eseguito il completamento
-** _struct t_gui_completion *completion_: struttura usata per aggiungere
-   parole per il completamento (consultare
-   <<_hook_completion_list_add,hook_completion_list_add>>)
-** valore restituito:
-*** _WEECHAT_RC_OK_
-*** _WEECHAT_RC_ERROR_
-* _callback_pointer_: puntatore fornito alla callback quando chiamata da WeeChat
-// TRANSLATION MISSING
-* _callback_data_: puntatore fornito alla callback quando chiamata da WeeChat;
-  if not NULL, it must have been allocated with malloc (or similar function)
-  and it is automatically freed when the hook is deleted
-
-[NOTE]
-I nomi del completamento sono globali (condivisi tra WeeChat e plugin). Si
-raccomanda pertanto di scegliere un nome con un prefisso unico, come
-"plugin_xxx" (dove "xxx" è il nome del proprio elemento).
-
-// TRANSLATION MISSING
-[IMPORTANT]
-The callback must only call function
-<<_hook_completion_list_add,hook_completion_list_add>>
-and must *NOT* update the command line. +
-To update the command line when kbd:[Tab] is pressed, you can use the function
-<<_hook_command_run,hook_command_run>> with command:
-"/input complete_next" (and you must return _WEECHAT_RC_OK_EAT_ if your callback
-has updated the command line, so that WeeChat will not perform the completion).
-
-Valore restituito:
-
-* puntatore al nuovo hook, NULL in caso di errore
-
-Esempio in C:
-
-[source,C]
-----
-int
-my_completion_cb (const void *pointer, void *data, const char *completion_item,
-                  struct t_gui_buffer *buffer,
-                  struct t_gui_completion *completion)
-{
-    weechat_hook_completion_list_add (completion, "word1",
-                                      0, WEECHAT_LIST_POS_SORT);
-    weechat_hook_completion_list_add (completion, "test_word2",
-                                      0, WEECHAT_LIST_POS_SORT);
-    return WEECHAT_RC_OK;
-}
-
-struct t_hook *my_completion_hook = weechat_hook_completion ("plugin_item",
-                                                             "my custom completion!",
-                                                             &my_completion_cb, NULL, NULL);
-----
-
-Script (Python):
-
-[source,python]
-----
-# prototipo
-hook = weechat.hook_completion(completion_item, description, callback, callback_data)
-
-# esempio
-def my_completion_cb(data, completion_item, buffer, completion):
-    weechat.hook_completion_list_add(completion, "word1", 0, weechat.WEECHAT_LIST_POS_SORT)
-    weechat.hook_completion_list_add(completion, "test_word2", 0, weechat.WEECHAT_LIST_POS_SORT)
-    return weechat.WEECHAT_RC_OK
-
-hook = weechat.hook_completion("plugin_item", "my custom completion!",
-                               "my_completion_cb", "")
-----
-
-==== hook_completion_get_string
-
-_Novità nella versioe 0.3.4._
-
-Ottiene il completamento di una proprietà come stringa.
-
-Prototipo:
-
-[source,C]
-----
-const char *weechat_hook_completion_get_string (struct t_gui_completion *completion,
-                                                const char *property);
-----
-
-Argomenti:
-
-* _completion_: puntatore al completamento
-* _property_: nome della proprietà:
-** _base_command_: comando usato per il completamento
-** _base_word_: parola che viene completata
-** _args_: argomenti del comando (inclusa la parola base)
-
-Esempio in C:
-
-[source,C]
-----
-int
-my_completion_cb (const void *pointer, void *data, const char *completion_item,
-                  struct t_gui_buffer *buffer,
-                  struct t_gui_completion *completion)
-{
-    /* ottiene l'argomento del comando */
-    const char *args = weechat_hook_completion_get_string (completion, "args");
-
-    /* completamento che dipende dagli argomenti */
-    /* ... */
-
-    return WEECHAT_RC_OK;
-}
-----
-
-Script (Python):
-
-[source,python]
-----
-# prototipo
-value = weechat.hook_completion_get_string(completion, property)
-
-# esempio
-def my_completion_cb(data, completion_item, buffer, completion):
-    # ottiene l'argomento del comando
-    args = weechat.hook_completion_get_string(completion, "args")
-    # completamento che dipende dagli argomenti
-    # ...
-    return weechat.WEECHAT_RC_OK
-----
-
-==== hook_completion_list_add
-
-Aggiunge una parola per il completamento.
-
-Prototipo:
-
-[source,C]
-----
-void weechat_hook_completion_list_add (struct t_gui_completion *completion,
-                                       const char *word,
-                                       int nick_completion,
-                                       const char *where);
-----
-
-Argomenti:
-
-* _completion_: puntatore al completamento
-* _word_: parola da aggiungere
-* _nick_completion_: 1 se la parola è un nick, altrimenti 0
-* _where_: posizione in cui la parola sarà inserita nella lista:
-** _WEECHAT_LIST_POS_SORT_: qualunque posizione, per mantenere
-   la lista ordinata
-** _WEECHAT_LIST_POS_BEGINNING_: inizio della lista
-** _WEECHAT_LIST_POS_END_: fine della lista
-
-Esempio in C: consultare <<_hook_completion,hook_completion>>.
-
-Script (Python):
-
-[source,python]
-----
-# prototipo
-weechat.hook_completion_list_add(completion, word, nick_completion, where)
-
-# esempio: consultare function hook_completion precedente
 ----
 
 ==== hook_modifier
