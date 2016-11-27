@@ -161,7 +161,7 @@ WeeChat の中で:
 [[plugin_example]]
 === プラグインの例
 
-コマンド _/double_ を追加するプラグインの例: 引数を 2
+コマンド `/double` を追加するプラグインの例: 引数を 2
 倍して現在のバッファに表示するか、コマンドを 2 回実行する
 (これは実用的なコマンドというよりも、ただの例です!):
 
@@ -7247,7 +7247,7 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 関数を呼び出すだけで、コマンドラインをコールバックで絶対に *変更しない* でください。 +
 kbd:[Tab] が押された時にコマンドラインを更新するためには、関数
 <<_hook_command_run,hook_command_run>> を使ってコマンド
-"/input complete_next" をフックしてください (コールバックがコマンドラインを更新する場合は必ず
+`/input complete_next` をフックしてください (コールバックがコマンドラインを更新する場合は必ず
 _WEECHAT_RC_OK_EAT_ を返してください。そうすれば WeeChat は補完を行いません)。
 
 戻り値:

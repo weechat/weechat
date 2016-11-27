@@ -171,7 +171,7 @@ In WeeChat:
 [[plugin_example]]
 === Plugin di esempio
 
-Un esempio completo di plugin, che aggiunge un comando _/double_:
+Un esempio completo di plugin, che aggiunge un comando `/double`:
 visualizza due volte gli argomenti nel buffer corrente, oppure esegue un
 comando due volte (ok, non sarà molto utile, ma è solo un esempio!):
 
@@ -7434,7 +7434,7 @@ The callback must only call function
 and must *NOT* update the command line. +
 To update the command line when kbd:[Tab] is pressed, you can use the function
 <<_hook_command_run,hook_command_run>> with command:
-"/input complete_next" (and you must return _WEECHAT_RC_OK_EAT_ if your callback
+`/input complete_next` (and you must return _WEECHAT_RC_OK_EAT_ if your callback
 has updated the command line, so that WeeChat will not perform the completion).
 
 Valore restituito:

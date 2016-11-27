@@ -155,7 +155,7 @@ Under WeeChat:
 [[plugin_example]]
 === Plugin example
 
-Full example of plugin, which adds a command _/double_: displays two times
+Full example of plugin, which adds a command `/double`: displays two times
 arguments on current buffer, or execute two times a command (OK that's not
 very useful, but that's just an example!):
 
@@ -7240,7 +7240,7 @@ recommended to choose a name with a unique prefix, like "plugin_xxx" (where
 The callback must only call function <<_hook_completion_list_add,hook_completion_list_add>>
 and must *NOT* update the command line. +
 To update the command line when kbd:[Tab] is pressed, you can use the function
-<<_hook_command_run,hook_command_run>> with command: "/input complete_next"
+<<_hook_command_run,hook_command_run>> with command: `/input complete_next`
 (and you must return _WEECHAT_RC_OK_EAT_ if your callback has updated the command line,
 so that WeeChat will not perform the completion).
 

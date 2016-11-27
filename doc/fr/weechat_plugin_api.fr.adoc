@@ -160,7 +160,7 @@ Sous WeeChat :
 [[plugin_example]]
 === Exemple d'extension
 
-Exemple complet d'extension, qui ajoute une commande _/double_ : affiche deux
+Exemple complet d'extension, qui ajoute une commande `/double` : affiche deux
 fois les paramètres sur le tampon courant, ou exécute deux fois une commande
 (ok ce n'est pas très utile, mais c'est juste un exemple !) :
 
@@ -7368,7 +7368,7 @@ Le "callback" doit seulement appeler la fonction
 et ne doit *PAS* mettre à jour la ligne de commande. +
 Pour mettre à jour la ligne de commande quand kbd:[Tab] est pressé, vous pouvez
 utiliser la fonction <<_hook_command_run,hook_command_run>>
-avec la commande : "/input complete_next" (et vous devez retourner
+avec la commande : `/input complete_next` (et vous devez retourner
 _WEECHAT_RC_OK_EAT_ si votre "callback" a mis à jour la ligne de commande, de
 sorte que WeeChat n'exécute pas la complétion).
 
