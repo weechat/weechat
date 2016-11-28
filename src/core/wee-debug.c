@@ -65,9 +65,6 @@
 
 int debug_dump_active = 0;
 
-char *debug_time_name = NULL;
-struct timeval debug_timeval_start = { 0, 0 };
-
 
 /*
  * Writes dump of data to WeeChat log file.
@@ -584,39 +581,21 @@ debug_directories ()
 }
 
 /*
- * Starts time measure.
- */
-
-void
-debug_time_start (const char *name)
-{
-    if (debug_time_name)
-    {
-        free (debug_time_name);
-        debug_time_name = NULL;
-    }
-    if (name)
-        debug_time_name = strdup (name);
-
-    gettimeofday (&debug_timeval_start, NULL);
-}
-
-/*
- * Ends time measure and display elapsed time.
+ * Display time elapsed between two times.
  *
  * If display is 1, the message is displayed in core buffer, otherwise it's
  * written in log file.
  */
 
 void
-debug_time_end (int display)
+debug_display_time_elapsed (struct timeval *time1, struct timeval *time2,
+                            const char *message, int display)
 {
     struct timeval debug_timeval_end;
     long long diff, diff_hour, diff_min, diff_sec, diff_usec;
 
     gettimeofday (&debug_timeval_end, NULL);
-    diff = util_timeval_diff (&debug_timeval_start,
-                              &debug_timeval_end);
+    diff = util_timeval_diff (time1, time2);
 
     diff_usec = diff % 1000000;
     diff_sec = (diff / 1000000) % 60;
@@ -627,13 +606,13 @@ debug_time_end (int display)
     {
         gui_chat_printf (NULL,
                          "debug: time[%s] -> %lld:%02lld:%02lld.%06d",
-                         (debug_time_name) ? debug_time_name : "?",
+                         (message) ? message : "?",
                          diff_hour, diff_min, diff_sec, diff_usec);
     }
     else
     {
         log_printf ("debug: time[%s] -> %lld:%02lld:%02lld.%06d",
-                    (debug_time_name) ? debug_time_name : "?",
+                    (message) ? message : "?",
                     diff_hour, diff_min, diff_sec, diff_usec);
     }
 }
@@ -661,9 +640,4 @@ debug_init ()
 void
 debug_end ()
 {
-    if (debug_time_name)
-    {
-        free (debug_time_name);
-        debug_time_name = NULL;
-    }
 }

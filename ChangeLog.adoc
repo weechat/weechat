@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add option "time" in command /debug
   * api: add info "pid" (WeeChat PID) (issue #850)
   * fifo: add file fifo.conf and option fifo.file.path to customize FIFO pipe path/filename (issue #850)
   * irc: add tag "self_msg" on self messages (issue #840)

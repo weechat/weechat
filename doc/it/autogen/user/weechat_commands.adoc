@@ -218,15 +218,16 @@ Examples:
 ----
 
 [[command_weechat_debug]]
-* `+debug+`: attiva debug per core/plugin
+* `+debug+`: debug functions
 
 ----
 /debug  list
-        set <plugin> <livello>
+        set <plugin> <level>
         dump [<plugin>]
         buffer|color|infolists|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
+        time <command>
 
      list: list plugins with debug levels
       set: set debug level for plugin
@@ -246,6 +247,7 @@ infolists: display infos about infolists
      tags: display tags for lines
      term: display infos about terminal
   windows: display windows tree
+     time: measure time to execute a command or to send text to the current buffer
 ----
 
 [[command_weechat_eval]]

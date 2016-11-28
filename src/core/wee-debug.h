@@ -29,8 +29,10 @@ extern void debug_hdata ();
 extern void debug_hooks ();
 extern void debug_infolists ();
 extern void debug_directories ();
-extern void debug_time_start (const char *name);
-extern void debug_time_end (int display);
+extern void debug_display_time_elapsed (struct timeval *time1,
+                                        struct timeval *time2,
+                                        const char *message,
+                                        int display);
 extern void debug_init ();
 extern void debug_end ();
 

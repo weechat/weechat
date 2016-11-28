@@ -1688,6 +1688,7 @@ COMMAND_CALLBACK(debug)
 {
     struct t_config_option *ptr_option;
     struct t_weechat_plugin *ptr_plugin;
+    struct timeval time_start, time_end;
     int debug;
 
     /* make C compiler happy */
@@ -1858,6 +1859,16 @@ COMMAND_CALLBACK(debug)
                 }
             }
         }
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "time") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "time");
+        gettimeofday (&time_start, NULL);
+        (void) input_data (buffer, argv_eol[2]);
+        gettimeofday (&time_end, NULL);
+        debug_display_time_elapsed (&time_start, &time_end, argv_eol[2], 1);
         return WEECHAT_RC_OK;
     }
 
@@ -7127,13 +7138,14 @@ command_init ()
         &command_cursor, NULL, NULL);
     hook_command (
         NULL, "debug",
-        N_("control debug for core/plugins"),
+        N_("debug functions"),
         N_("list"
            " || set <plugin> <level>"
            " || dump [<plugin>]"
            " || buffer|color|infolists|memory|tags|term|windows"
            " || mouse|cursor [verbose]"
-           " || hdata [free]"),
+           " || hdata [free]"
+           " || time <command>"),
         N_("     list: list plugins with debug levels\n"
            "      set: set debug level for plugin\n"
            "   plugin: name of plugin (\"core\" for WeeChat core)\n"
@@ -7153,7 +7165,9 @@ command_init ()
            "    mouse: toggle debug for mouse\n"
            "     tags: display tags for lines\n"
            "     term: display infos about terminal\n"
-           "  windows: display windows tree"),
+           "  windows: display windows tree\n"
+           "     time: measure time to execute a command or to send text to "
+           "the current buffer"),
         "list"
         " || set %(plugins_names)|core"
         " || dump %(plugins_names)|core"
@@ -7169,7 +7183,8 @@ command_init ()
         " || mouse verbose"
         " || tags"
         " || term"
-        " || windows",
+        " || windows"
+        " || time %(commands)",
         &command_debug, NULL, NULL);
     hook_command (
         NULL, "eval",

@@ -218,7 +218,7 @@ Exemples :
 ----
 
 [[command_weechat_debug]]
-* `+debug+`: contrôle du debug pour le cœur/les extensions
+* `+debug+`: fonctions de debug
 
 ----
 /debug  list
@@ -227,6 +227,7 @@ Exemples :
         buffer|color|infolists|memory|tags|term|windows
         cursor|mouse [verbose]
         hdata [free]
+        time <commande>
 
      list : lister les extensions avec leur niveau de debug
       set : définir le niveau de debug pour l'extension
@@ -246,6 +247,7 @@ infolists : afficher des infos sur les infolists
      tags : afficher les étiquettes pour les lignes
      term : afficher des infos sur le terminal
   windows : afficher l'arbre des fenêtres
+     time : mesurer le temps pour exécuter une commande ou pour envoyer du texte au tampon courant
 ----
 
 [[command_weechat_eval]]

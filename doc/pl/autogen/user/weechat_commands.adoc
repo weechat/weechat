@@ -218,34 +218,36 @@ Przykłady:
 ----
 
 [[command_weechat_debug]]
-* `+debug+`: kontrola debugu dla rdzenia/wtyczek
+* `+debug+`: debug functions
 
 ----
 /debug  list
-        set <wtyczka> <poziom>
-        dump [<wtyczka>]
+        set <plugin> <level>
+        dump [<plugin>]
         buffer|color|infolists|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
+        time <command>
 
-     list: wyświetla wtyczki z poziomem debugowania
-      set: ustawia poziom debugowania dla wtyczki
-   plugin: nazwa wtyczki ("core" dla rdzenia WeeChat)
-    poziom: poziom debugowania wtyczki (0 = wyłączony)
-     dump: zachowuje zrzut pamięci w pliku z logiem WeeChat (taki sam zrzut jest zapisywany podczas awarii WeeChat)
-   buffer: zrzuca zawartość bufora z wartościami heksadecymalnymi do pliku z logiem
-    color: wyświetla informacje na temat obecnych par kolorów
-   cursor: przełącza debugowanie dla trybu kursora
-     dirs: wyświetla katalogi
-    hdata: wyświetla informacje o hdata (z free: usuwa wszystkie hdata z pamięci)
-    hooks: wyświetla informacje o hooks
-infolists: wyświetla informacje o infolistach
-     libs: wyświetla informacje o użytych zewnętrznych bibliotekach
-   memory: wyświetla informacje o zużyciu pamięci
-    mouse: przełącza debugowanie myszy
-     tags: wyświetla tagi dla linii
-     term: wyświetla informacje o terminalu
-  windows: wyświetla drzewo okien
+     list: list plugins with debug levels
+      set: set debug level for plugin
+   plugin: name of plugin ("core" for WeeChat core)
+    level: debug level for plugin (0 = disable debug)
+     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+   buffer: dump buffer content with hexadecimal values in log file
+    color: display infos about current color pairs
+   cursor: toggle debug for cursor mode
+     dirs: display directories
+    hdata: display infos about hdata (with free: remove all hdata in memory)
+    hooks: display infos about hooks
+infolists: display infos about infolists
+     libs: display infos about external libraries used
+   memory: display infos about memory usage
+    mouse: toggle debug for mouse
+     tags: display tags for lines
+     term: display infos about terminal
+  windows: display windows tree
+     time: measure time to execute a command or to send text to the current buffer
 ----
 
 [[command_weechat_eval]]
