@@ -7053,7 +7053,7 @@ config, completion, modifier, info, info_hashtable, infolist, hdata, focus.
 
 ==== hook_command
 
-_Updated in 1.5._
+_Updated in 1.5, 1.7._
 
 Hook a command.
 
@@ -7083,10 +7083,7 @@ Arguments:
 * _description_: description for command (displayed with `/help command`)
 * _args_: arguments for command (displayed with `/help command`)
 * _args_description_: description of arguments (displayed with `/help command`)
-* _completion_: completion template for command: list of completions for each
-  argument, separated by space. Many completions are possible for one
-  argument, separated by `+|+`. Many templates are possible for same command,
-  separated by `+||+`.
+* _completion_: completion template for command (see format below)
 * _callback_: function called when command is used, arguments and return value:
 ** _const void *pointer_: pointer
 ** _void *data_: pointer
@@ -7102,6 +7099,26 @@ Arguments:
 * _callback_data_: pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
   and it is automatically freed when the hook is deleted
+
+The _completion_ template is a list of completions for each argument, separated
+by spaces. Many completions are possible for one argument, separated by `+|+`.
+Many templates are possible for same command, separated by `+||+`.
+
+The format of a completion can be:
+
+* _%(name)_: the completion _name_
+* _%(name:arguments)_: the completion _name_ with _arguments_ sent to the
+  callback _(WeeChat ≥ 1.7)_
+* any string: it is used as-is in completion
+
+For example the template `list || add %(filters_names) || del %(filters_names)|-all`
+will complete with following values in command arguments:
+
+* first argument: `list`, `add` and `del`
+* second argument, depending on first argument:
+** `list`: nothing
+** `add`: names of filters
+** `del`: names of filters and `-all`
 
 Default completion codes are:
 
@@ -7189,7 +7206,7 @@ hook = weechat.hook_command("myfilter", "description of myfilter",
 
 ==== hook_completion
 
-_Updated in 1.5._
+_Updated in 1.5, 1.7._
 
 Hook a completion.
 
@@ -7210,15 +7227,17 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 
 Arguments:
 
-* _completion_item_: name of completion item, after you can use _%(name)_ in
-  a command hooked (argument _completion_)
+* _completion_item_: name of completion item, after you can use _%(name)_
+  (or _%(name:arguments)_ with WeeChat ≥ 1.7) in a command hooked
+  (argument _completion_)
   (priority allowed, see note about <<hook_priority,priority>>)
 * _description_: description of completion
 * _callback_: function called when completion item is used (user is completing
   something using this item), arguments and return value:
 ** _const void *pointer_: pointer
 ** _void *data_: pointer
-** _const char *completion_item_: name of completion item
+** _const char *completion_item_: name of completion item (with WeeChat ≥ 1.7 it
+   can include arguments, with the format: _name:arguments_)
 ** _struct t_gui_buffer *buffer_: buffer where completion is made
 ** _struct t_gui_completion *completion_: structure used to add words for
    completion (see

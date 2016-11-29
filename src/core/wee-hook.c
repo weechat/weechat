@@ -2869,11 +2869,20 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
                       struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook, *next_hook;
+    const char *pos;
+    char *item;
 
     /* make C compiler happy */
     (void) plugin;
 
     hook_exec_start ();
+
+    pos = strchr (completion_item, ':');
+    item = (pos) ?
+        string_strndup (completion_item, pos - completion_item) :
+        strdup (completion_item);
+    if (!item)
+        return;
 
     ptr_hook = weechat_hooks[HOOK_TYPE_COMPLETION];
     while (ptr_hook)
@@ -2883,7 +2892,7 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
         if (!ptr_hook->deleted
             && !ptr_hook->running
             && (string_strcasecmp (HOOK_COMPLETION(ptr_hook, completion_item),
-                                   completion_item) == 0))
+                                   item) == 0))
         {
             ptr_hook->running = 1;
             (void) (HOOK_COMPLETION(ptr_hook, callback))
@@ -2897,6 +2906,8 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
 
         ptr_hook = next_hook;
     }
+
+    free (item);
 
     hook_exec_end ();
 }

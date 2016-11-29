@@ -7171,7 +7171,7 @@ hdata, focus.
 
 ==== hook_command
 
-_Mis à jour dans la 1.5._
+_Mis à jour dans la 1.5, 1.7._
 
 Accrocher une commande.
 
@@ -7202,11 +7202,7 @@ Paramètres :
 * _args_ : paramètres pour la commande (affichés avec `/help command`)
 * _args_description_ : description des paramètres (affichée avec
   `/help command`)
-* _completion_ : modèle pour la complétion de la commande : liste des
-  complétions pour chaque paramètre, séparés par des espaces. Plusieurs
-  complétions sont possibles pour un paramètre, séparées par `+|+`. Plusieurs
-  modèles de complétions sont possibles pour une même commande, séparés par
-  `+||+`.
+* _completion_ : modèle pour la complétion de la commande (voir le format ci-dessous)
 * _callback_ : fonction appelée lorsque la commande est utilisée, paramètres et
   valeur de retour :
 ** _const void *pointer_ : pointeur
@@ -7225,6 +7221,27 @@ Paramètres :
   WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
   similaire) et est automatiquement libéré (par free) lorsque le "hook" est
   supprimé
+
+Le modèle de complétion est une liste de complétions pour chaque paramètre,
+séparés par des espaces. Plusieurs complétions sont possibles pour un paramètre,
+séparées par `+|+`. Plusieurs modèles de complétions sont possibles pour une
+même commande, séparés par `+||+`.
+
+Le format de la complétion peut être :
+
+* _%(nom)_ : la complétion _nom_
+* _%(nom:paramètres)_ : la complétion _nom_ avec des _paramètres_ envoyés au
+  « callback » _(WeeChat ≥ 1.7)_
+* toute chaîne : elle est utilisée telle quelle dans la complétion
+
+Par exemple le modèle `list || add %(filters_names) || del %(filters_names)|-all`
+complètera avec les valeurs suivantes dans les paramètres de commande :
+
+* premier paramètre : `list`, `add` et `del`
+* second paramètre, cela dépend du premier paramètre :
+** `list` : rien
+** `add` : noms des filtres
+** `del` : noms des filtres et `-all`
 
 Les codes complétions par défaut sont :
 
@@ -7312,7 +7329,7 @@ hook = weechat.hook_command("monfiltre", "description de monfiltre",
 
 ==== hook_completion
 
-_Mis à jour dans la 1.5._
+_Mis à jour dans la 1.5, 1.7._
 
 Accrocher une complétion.
 
@@ -7334,7 +7351,8 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 Paramètres :
 
 * _completion_item_ : nom de l'objet de complétion, après vous pouvez utiliser
-  _%(nom)_ dans une commande (paramètre _completion_)
+  _%(nom)_ (ou _%(nom:paramètres)_ avec WeeChat ≥ 1.7) dans une commande
+  (paramètre _completion_)
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
 * _description_ : description de la complétion
 * _callback_ : fonction appelée lorsque la complétion est utilisée
@@ -7342,7 +7360,8 @@ Paramètres :
   complétion), paramètres et valeur de retour :
 ** _const void *pointer_ : pointeur
 ** _void *data_ : pointeur
-** _const char *completion_item_ : nom de la complétion
+** _const char *completion_item_ : nom de la complétion (avec WeeChat ≥ 1.7 il
+   peut inclure des paramètres, avec le format : _nom:paramètres_)
 ** _struct t_gui_buffer *buffer_ : tampon où la complétion est effectuée
 ** _struct t_gui_completion *completion_ : structure utilisée pour ajouter
    les mots pour la complétion (voir

@@ -7058,7 +7058,7 @@ command、command_run、signal、hsignal、config、completion、modifier、info
 
 ==== hook_command
 
-_WeeChat バージョン 1.5 で更新。_
+_WeeChat バージョン 1.5 と 1.7 で更新。_
 
 コマンドをフックする。
 
@@ -7088,10 +7088,8 @@ struct t_hook *weechat_hook_command (const char *command,
 * _description_: コマンドの説明 (`/help command` で表示されます)
 * _args_: コマンドの引数 (`/help command` で表示されます)
 * _args_description_: 引数の説明 (`/help command` で表示されます)
-* _completion_: コマンドの補完候補テンプレート: 各引数に対する補完候補の空白区切りリスト。1
-  つの引数に対して複数の補完候補を設定するには補完候補同士を `+|+`
-  で区切ってください。1 つのコマンドに対して複数のテンプレートを設定するにはテンプレート同士を
-  `+||+` で区切ってください。
+// TRANSLATION MISSING
+* _completion_: completion template for command (see format below)
 * _callback_: コマンドが使用された際に呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
 ** _void *data_: ポインタ
@@ -7107,6 +7105,29 @@ struct t_hook *weechat_hook_command (const char *command,
 * _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
+
+// TRANSLATION MISSING
+The _completion_ template is a list of completions for each argument, separated
+by spaces. Many completions are possible for one argument, separated by `+|+`.
+Many templates are possible for same command, separated by `+||+`.
+
+// TRANSLATION MISSING
+The format of a completion can be:
+
+* _%(name)_: the completion _name_
+* _%(name:arguments)_: the completion _name_ with _arguments_ sent to the
+  callback _(WeeChat ≥ 1.7)_
+* any string: it is used as-is in completion
+
+// TRANSLATION MISSING
+For example the template `list || add %(filters_names) || del %(filters_names)|-all`
+will complete with following values in command arguments:
+
+* first argument: `list`, `add` and `del`
+* second argument, depending on first argument:
+** `list`: nothing
+** `add`: names of filters
+** `del`: names of filters and `-all`
 
 デフォルトの補完候補コードは:
 
@@ -7194,7 +7215,7 @@ hook = weechat.hook_command("myfilter", "description of myfilter",
 
 ==== hook_completion
 
-_WeeChat バージョン 1.5 で更新。_
+_WeeChat バージョン 1.5 と 1.7 で更新。_
 
 補完をフック。
 
@@ -7215,15 +7236,19 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 
 引数:
 
-* _completion_item_: 補完要素の名前、この後フックされたコマンドで
-  _%(name)_ を使うことができます (_completion_ 引数)
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+// TRANSLATION MISSING
+* _completion_item_: name of completion item, after you can use _%(name)_
+  (or _%(name:arguments)_ with WeeChat ≥ 1.7) in a command hooked
+  (argument _completion_)
+  (priority allowed, see note about <<hook_priority,priority>>)
 * _description_: 補完の説明
 * _callback_: 補完要素 (ユーザはこの要素を使って何かを補完している)
   が使われた場合に呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
 ** _void *data_: ポインタ
-** _const char *completion_item_: 補完要素の名前
+// TRANSLATION MISSING
+** _const char *completion_item_: 補完要素の名前 (with WeeChat ≥ 1.7 it
+   can include arguments, with the format: _name:arguments_)
 ** _struct t_gui_buffer *buffer_: 補完が行われたバッファ
 ** _struct t_gui_completion *completion_:
    補完に際して単語を追加するために使われる構造体

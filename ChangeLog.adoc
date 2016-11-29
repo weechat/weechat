@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add optional arguments in completion template, sent to the callback
   * core: add option "time" in command /debug
   * api: add info "pid" (WeeChat PID) (issue #850)
   * fifo: add file fifo.conf and option fifo.file.path to customize FIFO pipe path/filename (issue #850)
