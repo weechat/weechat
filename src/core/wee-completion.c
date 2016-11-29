@@ -594,13 +594,18 @@ completion_list_add_commands_cb (const void *pointer, void *data,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
 {
+    const char *pos;
+    char str_command[512];
     struct t_hook *ptr_hook;
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
-    (void) completion_item;
     (void) buffer;
+
+    pos = strchr (completion_item, ':');
+    if (pos)
+        pos++;
 
     for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
@@ -608,9 +613,23 @@ completion_list_add_commands_cb (const void *pointer, void *data,
         if (!ptr_hook->deleted
             && (HOOK_COMMAND(ptr_hook, command))
             && (HOOK_COMMAND(ptr_hook, command)[0]))
-            gui_completion_list_add (completion,
-                                     HOOK_COMMAND(ptr_hook, command),
-                                     0, WEECHAT_LIST_POS_SORT);
+        {
+            if (pos)
+            {
+                snprintf (str_command, sizeof(str_command),
+                          "%s%s",
+                          pos,
+                          HOOK_COMMAND(ptr_hook, command));
+                gui_completion_list_add (completion, str_command,
+                                         0, WEECHAT_LIST_POS_SORT);
+            }
+            else
+            {
+                gui_completion_list_add (completion,
+                                         HOOK_COMMAND(ptr_hook, command),
+                                         0, WEECHAT_LIST_POS_SORT);
+            }
+        }
     }
 
     return WEECHAT_RC_OK;
@@ -914,7 +933,8 @@ completion_list_add_plugins_commands_cb (const void *pointer, void *data,
                                          struct t_gui_buffer *buffer,
                                          struct t_gui_completion *completion)
 {
-    char **argv;
+    char **argv, str_command[512];
+    const char *pos;
     int argc, arg_index;
     struct t_weechat_plugin *ptr_plugin;
     struct t_hook *ptr_hook;
@@ -922,38 +942,55 @@ completion_list_add_plugins_commands_cb (const void *pointer, void *data,
     /* make C compiler happy */
     (void) pointer;
     (void) data;
-    (void) completion_item;
     (void) buffer;
 
-    if (completion->args)
-    {
-        argv = string_split (completion->args, " ", 0, 0, &argc);
-        if (!argv)
-            return WEECHAT_RC_OK;
+    if (!completion->args)
+        return WEECHAT_RC_OK;
 
-        if (argc > 0)
+    argv = string_split (completion->args, " ", 0, 0, &argc);
+    if (!argv)
+        return WEECHAT_RC_OK;
+
+    if (argc > 0)
+    {
+        pos = strchr (completion_item, ':');
+        if (pos)
+            pos++;
+
+        arg_index = completion->base_command_arg_index - 2;
+        if ((arg_index < 0) || (arg_index > argc - 1))
+            arg_index = argc - 1;
+
+        ptr_plugin = NULL;
+        if (string_strcasecmp (argv[arg_index], PLUGIN_CORE) != 0)
         {
-            arg_index = completion->base_command_arg_index - 2;
-            if ((arg_index < 0) || (arg_index > argc - 1))
-                arg_index = argc - 1;
-            ptr_plugin = NULL;
-            if (string_strcasecmp (argv[arg_index], PLUGIN_CORE) != 0)
+            /*
+             * plugin name is different from "core", then search it in
+             * plugin list
+             */
+            ptr_plugin = plugin_search (argv[arg_index]);
+            if (!ptr_plugin)
+                return WEECHAT_RC_OK;
+        }
+
+        for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if (!ptr_hook->deleted
+                && (ptr_hook->plugin == ptr_plugin)
+                && HOOK_COMMAND(ptr_hook, command)
+                && HOOK_COMMAND(ptr_hook, command)[0])
             {
-                /*
-                 * plugin name is different from "core", then search it in
-                 * plugin list
-                 */
-                ptr_plugin = plugin_search (argv[arg_index]);
-                if (!ptr_plugin)
-                    return WEECHAT_RC_OK;
-            }
-            for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
-                 ptr_hook = ptr_hook->next_hook)
-            {
-                if (!ptr_hook->deleted
-                    && (ptr_hook->plugin == ptr_plugin)
-                    && HOOK_COMMAND(ptr_hook, command)
-                    && HOOK_COMMAND(ptr_hook, command)[0])
+                if (pos)
+                {
+                    snprintf (str_command, sizeof(str_command),
+                              "%s%s",
+                              pos,
+                              HOOK_COMMAND(ptr_hook, command));
+                    gui_completion_list_add (completion, str_command,
+                                             0, WEECHAT_LIST_POS_SORT);
+                }
+                else
                 {
                     gui_completion_list_add (completion,
                                              HOOK_COMMAND(ptr_hook, command),
@@ -961,8 +998,9 @@ completion_list_add_plugins_commands_cb (const void *pointer, void *data,
                 }
             }
         }
-        string_free_split( argv);
     }
+
+    string_free_split(argv);
 
     return WEECHAT_RC_OK;
 }
@@ -1204,12 +1242,17 @@ completion_list_add_weechat_commands_cb (const void *pointer, void *data,
                                          struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook;
+    const char *pos;
+    char str_command[512];
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
-    (void) completion_item;
     (void) buffer;
+
+    pos = strchr (completion_item, ':');
+    if (pos)
+        pos++;
 
     for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
@@ -1219,9 +1262,21 @@ completion_list_add_weechat_commands_cb (const void *pointer, void *data,
             && HOOK_COMMAND(ptr_hook, command)
             && HOOK_COMMAND(ptr_hook, command)[0])
         {
-            gui_completion_list_add (completion,
-                                     HOOK_COMMAND(ptr_hook, command),
-                                     0, WEECHAT_LIST_POS_SORT);
+            if (pos)
+            {
+                snprintf (str_command, sizeof(str_command),
+                          "%s%s",
+                          pos,
+                          HOOK_COMMAND(ptr_hook, command));
+                gui_completion_list_add (completion, str_command,
+                                         0, WEECHAT_LIST_POS_SORT);
+            }
+            else
+            {
+                gui_completion_list_add (completion,
+                                         HOOK_COMMAND(ptr_hook, command),
+                                         0, WEECHAT_LIST_POS_SORT);
+            }
         }
     }
 
@@ -1640,7 +1695,8 @@ completion_init ()
                      N_("names of filters"),
                      &completion_list_add_filters_cb, NULL, NULL);
     hook_completion (NULL, "commands", /* formerly "%h" */
-                     N_("commands (weechat and plugins)"),
+                     N_("commands (weechat and plugins); "
+                        "optional argument: prefix to add before the commands"),
                      &completion_list_add_commands_cb, NULL, NULL);
     hook_completion (NULL, "infos", /* formerly "%i" */
                      N_("names of infos hooked"),
@@ -1661,7 +1717,8 @@ completion_init ()
                      N_("names of plugins installed"),
                      &completion_list_add_plugins_installed_cb, NULL, NULL);
     hook_completion (NULL, "plugins_commands", /* formerly "%P" */
-                     N_("commands defined by plugins"),
+                     N_("commands defined by plugins; "
+                        "optional argument: prefix to add before the commands"),
                      &completion_list_add_plugins_commands_cb, NULL, NULL);
     hook_completion (NULL, "bars_names", /* formerly "%r" */
                      N_("names of bars"),
@@ -1670,7 +1727,8 @@ completion_init ()
                      N_("values for a configuration option"),
                      &completion_list_add_config_option_values_cb, NULL, NULL);
     hook_completion (NULL, "weechat_commands", /* formerly "%w" */
-                     N_("weechat commands"),
+                     N_("weechat commands; "
+                        "optional argument: prefix to add before the commands"),
                      &completion_list_add_weechat_commands_cb, NULL, NULL);
     hook_completion (NULL, "proxies_names", /* formerly "%y" */
                      N_("names of proxies"),

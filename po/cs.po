@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-28 21:48+0100\n"
+"POT-Creation-Date: 2016-11-29 23:33+0100\n"
 "PO-Revision-Date: 2016-09-03 08:23+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2685,8 +2685,10 @@ msgstr "jméno souboru"
 msgid "names of filters"
 msgstr "jména filtrů"
 
-msgid "commands (weechat and plugins)"
-msgstr "příkazy (weechat a pluginů)"
+msgid ""
+"commands (weechat and plugins); optional argument: prefix to add before the "
+"commands"
+msgstr ""
 
 #, fuzzy
 msgid "names of infos hooked"
@@ -2709,8 +2711,10 @@ msgstr "jména pluginů"
 msgid "names of plugins installed"
 msgstr "jména bufferů (včetně jmen pluginů)"
 
-msgid "commands defined by plugins"
-msgstr "příkazy definované pluginy"
+msgid ""
+"commands defined by plugins; optional argument: prefix to add before the "
+"commands"
+msgstr ""
 
 msgid "names of bars"
 msgstr "jména polí"
@@ -2718,8 +2722,8 @@ msgstr "jména polí"
 msgid "values for a configuration option"
 msgstr "hodnoty pro konfigurační nastavení"
 
-msgid "weechat commands"
-msgstr "příkazy weechat"
+msgid "weechat commands; optional argument: prefix to add before the commands"
+msgstr ""
 
 msgid "names of proxies"
 msgstr "jména proxy"
@@ -11402,6 +11406,15 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid "commands defined by plugins"
+#~ msgstr "příkazy definované pluginy"
+
+#~ msgid "weechat commands"
+#~ msgstr "příkazy weechat"
+
+#~ msgid "commands (weechat and plugins)"
+#~ msgstr "příkazy (weechat a pluginů)"
 
 #~ msgid "control debug for core/plugins"
 #~ msgstr "spřáva ladění pro jádro/pluginy"

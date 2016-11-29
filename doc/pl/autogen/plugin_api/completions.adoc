@@ -120,7 +120,7 @@
 
 | weechat | colors | nazwy kolorów
 
-| weechat | commands | komendy (weechata i wtyczek)
+| weechat | commands | commands (weechat and plugins); optional argument: prefix to add before the commands
 
 | weechat | config_files | pliki konfiguracyjne
 
@@ -154,7 +154,7 @@
 
 | weechat | palette_colors | paleta kolorów
 
-| weechat | plugins_commands | komendy zdefiniowane przez wtyczki
+| weechat | plugins_commands | commands defined by plugins; optional argument: prefix to add before the commands
 
 | weechat | plugins_installed | nazwy zainstalowanych wtyczek
 
@@ -166,7 +166,7 @@
 
 | weechat | secured_data | nazwy zabezpieczonych danych (plik sec.conf, sekcja data)
 
-| weechat | weechat_commands | komendy WeeChat
+| weechat | weechat_commands | weechat commands; optional argument: prefix to add before the commands
 
 | weechat | windows_numbers | liczba okien
 

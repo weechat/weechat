@@ -120,7 +120,7 @@
 
 | weechat | colors | 色名
 
-| weechat | commands | コマンド (weechat とプラグイン)
+| weechat | commands | commands (weechat and plugins); optional argument: prefix to add before the commands
 
 | weechat | config_files | 設定ファイル
 
@@ -154,7 +154,7 @@
 
 | weechat | palette_colors | パレット色
 
-| weechat | plugins_commands | プラグインの定義するコマンド
+| weechat | plugins_commands | commands defined by plugins; optional argument: prefix to add before the commands
 
 | weechat | plugins_installed | インストールされたプラグインの名前
 
@@ -166,7 +166,7 @@
 
 | weechat | secured_data | 保護データの名前 (sec.conf ファイル、セクションデータ)
 
-| weechat | weechat_commands | weechat コマンド
+| weechat | weechat_commands | weechat commands; optional argument: prefix to add before the commands
 
 | weechat | windows_numbers | ウィンドウの数
 

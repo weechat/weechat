@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-28 21:48+0100\n"
+"POT-Creation-Date: 2016-11-29 23:33+0100\n"
 "PO-Revision-Date: 2016-09-03 08:23+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2322,9 +2322,10 @@ msgstr "a felhasználók le lettek tiltva"
 msgid "names of filters"
 msgstr "Aliaszok listája:\n"
 
-#, fuzzy
-msgid "commands (weechat and plugins)"
-msgstr "  (nem található bővítőmodul)\n"
+msgid ""
+"commands (weechat and plugins); optional argument: prefix to add before the "
+"commands"
+msgstr ""
 
 #, fuzzy
 msgid "names of infos hooked"
@@ -2350,9 +2351,10 @@ msgstr "konfigurációs paraméterek beállítása"
 msgid "names of plugins installed"
 msgstr "konfigurációs paraméterek beállítása"
 
-#, fuzzy
-msgid "commands defined by plugins"
-msgstr "  (nem található bővítőmodul)\n"
+msgid ""
+"commands defined by plugins; optional argument: prefix to add before the "
+"commands"
+msgstr ""
 
 #, fuzzy
 msgid "names of bars"
@@ -2362,9 +2364,8 @@ msgstr "Aliaszok listája:\n"
 msgid "values for a configuration option"
 msgstr "Nem található az opció\n"
 
-#, fuzzy
-msgid "weechat commands"
-msgstr "%s belső parancsok:\n"
+msgid "weechat commands; optional argument: prefix to add before the commands"
+msgstr ""
 
 #, fuzzy
 msgid "names of proxies"
@@ -10700,6 +10701,18 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid "commands defined by plugins"
+#~ msgstr "  (nem található bővítőmodul)\n"
+
+#, fuzzy
+#~ msgid "weechat commands"
+#~ msgstr "%s belső parancsok:\n"
+
+#, fuzzy
+#~ msgid "commands (weechat and plugins)"
+#~ msgstr "  (nem található bővítőmodul)\n"
 
 #, fuzzy
 #~ msgid "text color for nicks in chat window"

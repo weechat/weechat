@@ -120,7 +120,7 @@
 
 | weechat | colors | noms des couleurs
 
-| weechat | commands | commandes (weechat et extensions)
+| weechat | commands | commandes (weechat et extensions) ; paramètre optionnel : préfixe à ajouter avant les commandes
 
 | weechat | config_files | fichiers de configuration
 
@@ -154,7 +154,7 @@
 
 | weechat | palette_colors | couleurs de la palette
 
-| weechat | plugins_commands | commandes définies par les extensions
+| weechat | plugins_commands | commandes définies par les extensions ; paramètre optionnel : préfixe à ajouter avant les commandes
 
 | weechat | plugins_installed | noms des extensions installées
 
@@ -166,7 +166,7 @@
 
 | weechat | secured_data | noms de données sécurisées (fichier sec.conf, section data)
 
-| weechat | weechat_commands | commandes weechat
+| weechat | weechat_commands | commandes weechat ; paramètre optionnel : préfixe à ajouter avant les commandes
 
 | weechat | windows_numbers | numéros des fenêtres
 

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-11-28 21:48+0100\n"
+"POT-Creation-Date: 2016-11-29 23:33+0100\n"
 "PO-Revision-Date: 2016-09-03 08:24+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2345,9 +2345,10 @@ msgstr "команда users отключена"
 msgid "names of filters"
 msgstr "Список сокращений:\n"
 
-#, fuzzy
-msgid "commands (weechat and plugins)"
-msgstr "  (нет pluginа)\n"
+msgid ""
+"commands (weechat and plugins); optional argument: prefix to add before the "
+"commands"
+msgstr ""
 
 #, fuzzy
 msgid "names of infos hooked"
@@ -2373,9 +2374,10 @@ msgstr "настроить параметры конфигурации"
 msgid "names of plugins installed"
 msgstr "настроить параметры конфигурации"
 
-#, fuzzy
-msgid "commands defined by plugins"
-msgstr "  (нет pluginа)\n"
+msgid ""
+"commands defined by plugins; optional argument: prefix to add before the "
+"commands"
+msgstr ""
 
 #, fuzzy
 msgid "names of bars"
@@ -2385,9 +2387,8 @@ msgstr "Список сокращений:\n"
 msgid "values for a configuration option"
 msgstr "Не найден параметр\n"
 
-#, fuzzy
-msgid "weechat commands"
-msgstr "Внутренние команды %s:\n"
+msgid "weechat commands; optional argument: prefix to add before the commands"
+msgstr ""
 
 #, fuzzy
 msgid "names of proxies"
@@ -10732,6 +10733,18 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+#~ msgid "commands defined by plugins"
+#~ msgstr "  (нет pluginа)\n"
+
+#, fuzzy
+#~ msgid "weechat commands"
+#~ msgstr "Внутренние команды %s:\n"
+
+#, fuzzy
+#~ msgid "commands (weechat and plugins)"
+#~ msgstr "  (нет pluginа)\n"
 
 #, fuzzy
 #~ msgid "text color for nicks in chat window"

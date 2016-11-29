@@ -286,8 +286,8 @@ alias_command_init ()
            "completion of /sajoin:\n"
            "    /alias addcompletion %%sajoin forcejoin /quote forcejoin"),
         "list %(alias)"
-        " || add %(alias) %(commands)|%(alias_value)"
-        " || addcompletion %- %(alias) %(commands)|%(alias_value)"
+        " || add %(alias) %(commands:/)|%(alias_value)"
+        " || addcompletion %- %(alias) %(commands:/)|%(alias_value)"
         " || del %(alias)|%*",
         &alias_command_cb, NULL, NULL);
 }

@@ -7184,7 +7184,7 @@ command_init ()
         " || tags"
         " || term"
         " || windows"
-        " || time %(commands)",
+        " || time %(commands:/)",
         &command_debug, NULL, NULL);
     hook_command (
         NULL, "eval",
@@ -7540,8 +7540,8 @@ command_init ()
         "list %(keys_contexts)"
         " || listdefault %(keys_contexts)"
         " || listdiff %(keys_contexts)"
-        " || bind %(keys_codes) %(commands)"
-        " || bindctxt %(keys_contexts) %(keys_codes) %(commands)"
+        " || bind %(keys_codes) %(commands:/)"
+        " || bindctxt %(keys_contexts) %(keys_codes) %(commands:/)"
         " || unbind %(keys_codes)"
         " || unbindctxt %(keys_contexts) %(keys_codes)"
         " || reset %(keys_codes_for_reset)"
@@ -7620,9 +7620,9 @@ command_init ()
            "    /mute -current msg * hi!\n"
            "  message to #weechat channel:\n"
            "    /mute -buffer irc.freenode.#weechat msg #weechat hi!"),
-        "-core|-current %(commands)|%*"
-        " || -buffer %(buffers_plugins_names) %(commands)|%*"
-        " || %(commands)|%*",
+        "-core|-current %(commands:/)|%*"
+        " || -buffer %(buffers_plugins_names) %(commands:/)|%*"
+        " || %(commands:/)|%*",
         &command_mute, NULL, NULL);
     hook_command (
         NULL, "plugin",
@@ -7780,7 +7780,7 @@ command_init ()
            "Example:\n"
            "  scroll 2 pages up:\n"
            "    /repeat 2 /window page_up"),
-        "%- %(commands)",
+        "%- %(commands:/)",
         &command_repeat, NULL, NULL);
     hook_command (
         NULL, "save",
@@ -7994,7 +7994,7 @@ command_init ()
            "    /wait 15m /away -all I'm away\n"
            "  say 'hello' in 2 minutes:\n"
            "    /wait 2m hello"),
-        "%- %(commands)",
+        "%- %(commands:/)",
         &command_wait, NULL, NULL);
     hook_command (
         NULL, "window",
