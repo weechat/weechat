@@ -29,7 +29,9 @@ New features::
 
 Improvements::
 
+  * core: add a slash before commands completed in arguments of /command, /debug time, /key bind, /key bindctxt, /mute, /repeat, /wait
   * core: add a warning in header of configuration files to not edit by hand (issue #851)
+  * alias: add a slash before commands completed in arguments of /alias
   * irc: change default value of option irc.network.lag_reconnect to 300 (issue #818)
   * trigger: do not hide email in command "/msg nickserv register password email" (issue #849)
 
