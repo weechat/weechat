@@ -7095,8 +7095,8 @@ command_init ()
            "command: command to execute (a '/' is automatically added if not "
            "found at beginning of command)"),
         "-buffer %(buffers_plugins_names) "
-        "%(plugins_names)|" PLUGIN_CORE " %(plugins_commands)"
-        " || %(plugins_names)|" PLUGIN_CORE " %(plugins_commands)",
+        "%(plugins_names)|" PLUGIN_CORE " %(plugins_commands:/)"
+        " || %(plugins_names)|" PLUGIN_CORE " %(plugins_commands:/)",
         &command_command, NULL, NULL);
     hook_command (
         NULL, "cursor",
