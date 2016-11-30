@@ -7169,8 +7169,8 @@ command_init ()
            "     time: measure time to execute a command or to send text to "
            "the current buffer"),
         "list"
-        " || set %(plugins_names)|core"
-        " || dump %(plugins_names)|core"
+        " || set %(plugins_names)|" PLUGIN_CORE
+        " || dump %(plugins_names)|" PLUGIN_CORE
         " || buffer"
         " || color"
         " || cursor verbose"
