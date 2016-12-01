@@ -1085,7 +1085,7 @@ plugin_script_remove_file (struct t_weechat_plugin *weechat_plugin,
  *   2. removes script file(s)
  *   3. moves script file from "install" dir to language dir
  *   4. makes link in autoload dir (if option "-a" is given)
- *   5. loads script.
+ *   5. loads script (if it was loaded).
  */
 
 void
@@ -1099,7 +1099,7 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
     char **argv, *name, *ptr_base_name, *base_name, *new_path, *autoload_path;
     char *symlink_path, str_signal[128], *ptr_list;
     const char *dir_home, *dir_separator;
-    int argc, i, length, rc, autoload;
+    int argc, i, length, rc, autoload, script_loaded;
     struct t_plugin_script *ptr_script;
 
     if (!*list)
@@ -1120,7 +1120,7 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
         {
             switch (ptr_list[1])
             {
-                case 'a': /* no autoload */
+                case 'a': /* autoload */
                     autoload = 1;
                     break;
                 case 'q': /* quiet mode */
@@ -1144,10 +1144,14 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                 if (base_name)
                 {
                     /* unload script, if script is loaded */
+                    script_loaded = 0;
                     ptr_script = plugin_script_search_by_full_name (scripts,
                                                                     base_name);
                     if (ptr_script)
+                    {
+                        script_loaded = 1;
                         (*script_unload) (ptr_script);
+                    }
 
                     /* remove script file(s) */
                     plugin_script_remove_file (weechat_plugin, base_name,
@@ -1193,8 +1197,9 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                                 }
                             }
 
-                            /* load script */
-                            (*script_load) (new_path);
+                            /* load script (only if script was loaded) */
+                            if (script_loaded)
+                                (*script_load) (new_path);
                         }
                         else
                         {

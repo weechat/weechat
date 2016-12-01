@@ -506,7 +506,7 @@ script_action_install_process_cb (const void *pointer, void *data,
                                   const char *err)
 {
     char *pos, *filename, *filename2, str_signal[256];
-    int quiet, length;
+    int quiet, auto_load, length;
     struct t_script_repo *ptr_script;
 
     /* make C compiler happy */
@@ -543,10 +543,21 @@ script_action_install_process_cb (const void *pointer, void *data,
                     filename2 = malloc (length);
                     if (filename2)
                     {
+                        auto_load = 0;
+                        if (ptr_script->status & SCRIPT_STATUS_INSTALLED)
+                        {
+                            auto_load = (ptr_script->status & SCRIPT_STATUS_AUTOLOADED) ?
+                                1 : 0;
+                        }
+                        else
+                        {
+                            auto_load = weechat_config_boolean (
+                                script_config_scripts_autoload);
+                        }
                         snprintf (filename2, length,
                                   "%s%s%s",
                                   (quiet && weechat_config_boolean (script_config_look_quiet_actions)) ? "-q " : "",
-                                  (weechat_config_boolean (script_config_scripts_autoload)) ? "-a " : "",
+                                  (auto_load) ? "-a " : "",
                                   filename);
                         snprintf (str_signal, sizeof (str_signal),
                                   "%s_script_install",
