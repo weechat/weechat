@@ -603,7 +603,7 @@
 ** 値: 0 .. 2147483647 (デフォルト値: `+2048+`)
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** 説明: pass:none[信頼でき、通信を認めるサーバ証明書の指紋; 16 進数で使える文字 (0-9, a-f) 以外は指定できません: SHA-512 の場合 64 文字、SHA-256 の場合 32 文字、SHA-1 の場合 20 文字 (危険、非推奨) です。複数の指紋を設定する場合はコンマで区切ってください; このオプションを設定した場合、証明書に対する他の妥当性確認は行われません (オプション "ssl_verify")]
+** 説明: pass:none[fingerprint of certificate which is trusted and accepted for the server; only hexadecimal digits are allowed (0-9, a-f): 64 chars for SHA-512, 32 chars for SHA-256, 20 chars for SHA-1 (insecure, not recommended); many fingerprints can be separated by commas; if this option is set, the other checks on certificates are NOT performed (option "ssl_verify") (note: content is evaluated, see /help eval)]
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `+""+`)
 

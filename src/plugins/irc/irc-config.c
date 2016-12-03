@@ -997,7 +997,7 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
     const char *pos_error, *proxy_name;
     struct t_infolist *infolist;
 #ifdef HAVE_GNUTLS
-    char **fingerprints, *str_sizes;
+    char *fingerprint_eval, **fingerprints, *str_sizes;
     int i, j, rc, algo, length;
 #endif /* HAVE_GNUTLS */
 
@@ -1053,60 +1053,77 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
                 break;
             case IRC_SERVER_OPTION_SSL_FINGERPRINT:
 #ifdef HAVE_GNUTLS
-                if (value && value[0])
+                if (!value || !value[0])
+                    break;
+                fingerprint_eval = weechat_string_eval_expression (
+                    value, NULL, NULL, NULL);
+                if (!fingerprint_eval || !fingerprint_eval[0])
                 {
-                    fingerprints = weechat_string_split (value, ",", 0, 0,
-                                                         NULL);
-                    if (fingerprints)
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: the evaluated fingerprint must not be "
+                          "empty"),
+                        weechat_prefix ("error"),
+                        IRC_PLUGIN_NAME);
+                    if (fingerprint_eval)
+                        free (fingerprint_eval);
+                    return 0;
+                }
+                fingerprints = weechat_string_split (
+                    (fingerprint_eval) ? fingerprint_eval : value,
+                    ",", 0, 0, NULL);
+                if (!fingerprints)
+                {
+                    free (fingerprint_eval);
+                    return 1;
+                }
+                rc = 0;
+                for (i = 0; fingerprints[i]; i++)
+                {
+                    length = strlen (fingerprints[i]);
+                    algo = irc_server_fingerprint_search_algo_with_size (
+                        length * 4);
+                    if (algo < 0)
                     {
-                        rc = 0;
-                        for (i = 0; fingerprints[i]; i++)
+                        rc = -1;
+                        break;
+                    }
+                    for (j = 0; j < length; j++)
+                    {
+                        if (!isxdigit ((unsigned char)fingerprints[i][j]))
                         {
-                            length = strlen (fingerprints[i]);
-                            algo = irc_server_fingerprint_search_algo_with_size (
-                                length * 4);
-                            if (algo < 0)
-                            {
-                                rc = -1;
-                                break;
-                            }
-                            for (j = 0; j < length; j++)
-                            {
-                                if (!isxdigit ((unsigned char)fingerprints[i][j]))
-                                {
-                                    rc = -2;
-                                    break;
-                                }
-                            }
-                            if (rc < 0)
-                                break;
-                        }
-                        weechat_string_free_split (fingerprints);
-                        switch (rc)
-                        {
-                            case -1:  /* invalid size */
-                                str_sizes = irc_server_fingerprint_str_sizes ();
-                                weechat_printf (
-                                    NULL,
-                                    _("%s%s: invalid fingerprint size, the "
-                                      "number of hexadecimal digits must be "
-                                      "one of: %s"),
-                                    weechat_prefix ("error"),
-                                    IRC_PLUGIN_NAME,
-                                    (str_sizes) ? str_sizes : "?");
-                                if (str_sizes)
-                                    free (str_sizes);
-                                return 0;
-                            case -2:  /* invalid content */
-                                weechat_printf (
-                                    NULL,
-                                    _("%s%s: invalid fingerprint, it must "
-                                      "contain only hexadecimal digits (0-9, "
-                                      "a-f)"),
-                                    weechat_prefix ("error"), IRC_PLUGIN_NAME);
-                                return 0;
+                            rc = -2;
+                            break;
                         }
                     }
+                    if (rc < 0)
+                        break;
+                }
+                weechat_string_free_split (fingerprints);
+                free (fingerprint_eval);
+                switch (rc)
+                {
+                    case -1:  /* invalid size */
+                        str_sizes = irc_server_fingerprint_str_sizes ();
+                        weechat_printf (
+                            NULL,
+                            _("%s%s: invalid fingerprint size, the "
+                              "number of hexadecimal digits must be "
+                              "one of: %s"),
+                            weechat_prefix ("error"),
+                            IRC_PLUGIN_NAME,
+                            (str_sizes) ? str_sizes : "?");
+                        if (str_sizes)
+                            free (str_sizes);
+                        return 0;
+                    case -2:  /* invalid content */
+                        weechat_printf (
+                            NULL,
+                            _("%s%s: invalid fingerprint, it must "
+                              "contain only hexadecimal digits (0-9, "
+                              "a-f)"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                        return 0;
                 }
 #endif /* HAVE_GNUTLS */
                 break;
@@ -1642,7 +1659,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "20 chars for SHA-1 (insecure, not recommended); many "
                    "fingerprints can be separated by commas; if this option "
                    "is set, the other checks on certificates are NOT "
-                   "performed (option \"ssl_verify\")"),
+                   "performed (option \"ssl_verify\") "
+                   "(note: content is evaluated, see /help eval)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
