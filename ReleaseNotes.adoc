@@ -61,6 +61,8 @@ Server options with default messages for kick/part/quit have been renamed:
 ** _irc.server.xxx.default_msg_part_ has been renamed to _irc.server.xxx.msg_part_
 ** _irc.server.xxx.default_msg_quit_ has been renamed to _irc.server.xxx.msg_quit_
 
+If you changed the value of these options, you must set them again after upgrade.
+
 [[v1.6_api_printf]]
 === Printf API functions
 
@@ -236,6 +238,8 @@ And the alias is removed with this command:
 
 The option _script.scripts.dir_ has been renamed to _script.scripts.path_
 (and the content is now evaluated, see `/help eval`).
+
+If you changed the value of this option, you must set it again after upgrade.
 
 [[v1.2]]
 == Version 1.2 (2015-05-10)
@@ -678,6 +682,8 @@ languages. A new cmake option `ENABLE_MAN` has been added to compile man page
 
 Option _aspell.look.color_ has been renamed to _aspell.color.misspelled_.
 
+If you changed the value of this option, you must set it again after upgrade.
+
 [[v0.4.1]]
 == Version 0.4.1 (2013-05-20)
 
@@ -760,6 +766,8 @@ New options in logger plugin (logger.conf):
 Option _irc.network.lag_disconnect_ has been renamed to
 _irc.network.lag_reconnect_ and value is now a number of seconds (instead of
 minutes).
+
+If you changed the value of this option, you must set it again after upgrade.
 
 [[v0.4.1_irc_passwords_hidden]]
 === IRC passwords hidden
@@ -983,6 +991,8 @@ new default value:
 Option _weechat.history.max_lines_ has been renamed to
 _weechat.history.max_buffer_lines_number_.
 
+If you changed the value of this option, you must set it again after upgrade.
+
 Option _weechat.plugin.extension_ now supports list of extensions, and new
 default value is ".so,.dll" (with this value, weechat.conf is compatible with
 Cygwin).
@@ -1006,6 +1016,8 @@ make it case sensitive, use "(?-i)" at beginning of string, for example:
 
 Option _weechat.look.hline_char_ has been renamed to
 _weechat.look.separator_horizontal_.
+
+If you changed the value of this option, you must set it again after upgrade.
 
 [[v0.3.6_colors_bold]]
 === Bold in colors
