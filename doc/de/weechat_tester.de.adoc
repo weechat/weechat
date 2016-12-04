@@ -130,9 +130,6 @@ Abhängig Deiner Linux Distribution:
 [[run]]
 == WeeChat starten
 
-Es wird empfohlen WeeChat durch die Option `--dir` mit einem anderen Ordner zu
-starten (nicht mit dem Ordner der stabilen Version).
-
 Die Befehlszeile lautet:
 
 ----

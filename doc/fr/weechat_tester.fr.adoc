@@ -122,9 +122,6 @@ Selon votre distribution Linux :
 [[run]]
 == Lancer WeeChat
 
-Il est conseillé de lancer WeeChat avec un répertoire différent de la version
-stable, avec l'option `--dir`.
-
 La commande est :
 
 ----

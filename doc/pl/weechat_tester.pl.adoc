@@ -123,9 +123,6 @@ W zależności od dystrybucji Linuksa:
 [[run]]
 == Uruchomienie WeeChat
 
-Zaleca się uruchomianie WeeChat z innym katalogiem (różnym od wersji stabilnej),
-za pomocą opcji `--dir`.
-
 Komenda to:
 
 ----

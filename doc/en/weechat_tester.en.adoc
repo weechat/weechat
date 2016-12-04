@@ -116,9 +116,6 @@ According to your Linux distribution:
 [[run]]
 == Run WeeChat
 
-It's recommended to run WeeChat with another directory (different from stable
-version), with option `--dir`.
-
 Command is:
 
 ----

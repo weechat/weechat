@@ -127,9 +127,6 @@ A seconda della distribuzione Linux:
 [[run]]
 == Eseguire WeeChat
 
-Si raccomanda di avviare WeeChat con un'altra directory (diversa dalla versione
-stabile), con l'opzione `--dir`.
-
 Il comando è:
 
 ----
