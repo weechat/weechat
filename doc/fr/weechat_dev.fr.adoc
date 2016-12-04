@@ -745,8 +745,8 @@ avec un "callback".
 [[doubly_linked_lists]]
 === Listes doublement chaînées
 
-La plupart des listes chaînes WeeChat sont doublement chaînées : chaque nœud a
-un pointeur vers le nœud précédent/suivant.
+La plupart des listes WeeChat sont doublement chaînées : chaque nœud a un
+pointeur vers le nœud précédent/suivant.
 
 Exemple : liste des tampons (de _src/gui/gui-buffer.h_) :
 

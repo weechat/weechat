@@ -732,8 +732,8 @@ If for some reasons you have to sleep a while, use `hook_timer` with a callback.
 [[doubly_linked_lists]]
 === Doubly linked lists
 
-Most of WeeChat linked lists are doubly linked lists: each node has pointer to
-previous and next node.
+Most of WeeChat lists are doubly linked lists: each node has pointer to previous
+and next node.
 
 Example: list of buffers (from _src/gui/gui-buffer.h_):
 
