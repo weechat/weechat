@@ -86,7 +86,7 @@
 
 | trigger | trigger_hook_conditions | conditions par défaut pour un hook
 
-| trigger | trigger_hook_rc | code retour par défaut pour un callback de hook
+| trigger | trigger_hook_rc | code retour par défaut pour une fonction de rappel de hook
 
 | trigger | trigger_hook_regex | expression régulière par défaut pour le hook
 

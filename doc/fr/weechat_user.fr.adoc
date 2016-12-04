@@ -3293,8 +3293,8 @@ Un trigger a les options suivantes (les noms sont
 
 | regex | chaîne |
   Une ou plusieurs expressions régulières POSIX étendues, pour modifier les
-  données reçues dans le callback du "hook" (et d'autres choses ajoutées par
-  l'extension trigger), voir <<trigger_regex,expression régulière>>.
+  données reçues dans la fonction de rappel du "hook" (et d'autres choses
+  ajoutées par l'extension trigger), voir <<trigger_regex,expression régulière>>.
 
 | command | chaîne |
   Commande à exécuter (plusieurs commandes peuvent être séparées par des
@@ -3302,8 +3302,9 @@ Un trigger a les options suivantes (les noms sont
   <<command_weechat_eval,/eval>>).
 
 | return_code | `ok`, `ok_eat`, `error` |
-  Le code retour du callback (`ok` par défaut, qui devrait être utilisé dans
-  quasiment tous les triggers, les autres valeurs sont rarement utilisées).
+  Le code retour de la fonction de rappel (`ok` par défaut, qui devrait être
+  utilisé dans quasiment tous les triggers, les autres valeurs sont rarement
+  utilisées).
 
 | post_action | `none`, `disable`, `delete` |
   Action à effectuer sur le trigger après l'exécution (`none` par défaut, qui
@@ -3327,9 +3328,9 @@ trigger.trigger.beep.post_action = none
 [[trigger_execution]]
 ==== Exécution
 
-Lorsque le callback d'un trigger est appelé, les actions suivantes sont
-exécutées, dans cet ordre, si les triggers sont globalement activés et si le
-trigger lui-même est activé :
+Lorsque la fonction de rappel d'un trigger est appelée, les actions suivantes
+sont exécutées, dans cet ordre, si les triggers sont globalement activés et si
+le trigger lui-même est activé :
 
 . vérifier les conditions du trigger : si faux, sortir
 . remplacer du texte dans le trigger en utilisant des expressions régulières
@@ -3419,9 +3420,10 @@ points-virgules.
 Les conditions sont utilisées pour continuer l'exécution du trigger, ou tout
 stopper.
 
-Elles sont évaluées, et les données disponibles dans le callback peuvent être
-utilisées (voir <<trigger_callback_data,données dans les callbacks>> et la
-commande <<command_weechat_eval,/eval>>).
+Elles sont évaluées, et les données disponibles dans la fonction de rappel
+peuvent être utilisées (voir
+<<trigger_callback_data,données dans les callbacks>> et la commande
+<<command_weechat_eval,/eval>>).
 
 Exemple : le trigger _beep_ par défaut utilise cette condition pour faire un
 beep seulement sur un highlight ou un message privé :
@@ -3433,8 +3435,8 @@ ${tg_highlight} || ${tg_msg_pv}
 [[trigger_regex]]
 ==== Expression régulière
 
-L'expression régulière est utilisée pour modifier des variables dans la table de
-hachage du callback.
+L'expression régulière est utilisée pour modifier des variables dans la table
+de hachage de la fonction de rappel.
 
 Le format est : "/regex/remplacement" ou "/regex/remplacement/var" (où _var_ est
 une variable de la table de hachage). +
@@ -3506,10 +3508,11 @@ beep (BEL) :
 ----
 
 [[trigger_callback_data]]
-==== Données dans les callbacks
+==== Données dans les fonctions de rappel
 
-Les données reçues dans les callbacks sont stockées dans des tables de hachage
-(pointeurs et chaînes) et peuvent être utilisées dans les options suivantes :
+Les données reçues dans les fonctions de rappel sont stockées dans des tables
+de hachage (pointeurs et chaînes) et peuvent être utilisées dans les options
+suivantes :
 
 * _conditions_
 * _regex_
@@ -3527,7 +3530,8 @@ moniteur des triggers :
 [[trigger_data_signal]]
 ===== Signal
 
-Le callback "signal" définit les variables suivantes dans la table de hachage :
+La fonction de rappel "signal" définit les variables suivantes dans la table de
+hachage :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -3568,7 +3572,8 @@ ${buffer[${tg_signal_data}].full_name}
 [[trigger_data_hsignal]]
 ===== Hsignal
 
-Le callback "hsignal" définit les variables suivantes dans la table de hachage :
+La fonction de rappel "hsignal" définit les variables suivantes dans la table
+de hachage :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -3582,7 +3587,8 @@ reçue (type : chaîne/chaîne).
 [[trigger_data_modifier]]
 ===== Modifier
 
-Le callback "modifier" définit les variables suivantes dans la table de hachage :
+La fonction de rappel "modifier" définit les variables suivantes dans la table
+de hachage :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -3616,7 +3622,8 @@ données supplémentaires sont ajoutées dans la table de hachage (voir le
 [[trigger_data_print]]
 ===== Print
 
-Le callback "print" définit les variables suivantes dans la table de hachage :
+La fonction de rappel "print" définit les variables suivantes dans la table de
+hachage :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -3650,7 +3657,8 @@ pour le modificateur _weechat_print_) :
 [[trigger_data_command]]
 ===== Command
 
-Le callback "command" définit les variables suivantes dans la table de hachage :
+La fonction de rappel "command" définit les variables suivantes dans la table
+de hachage :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -3663,8 +3671,8 @@ Le callback "command" définit les variables suivantes dans la table de hachage�
 [[trigger_data_command_run]]
 ===== Command_run
 
-Le callback "command_run" définit les variables suivantes dans la table de
-hachage :
+La fonction de rappel "command_run" définit les variables suivantes dans la
+table de hachage :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -3676,7 +3684,8 @@ hachage :
 [[trigger_data_timer]]
 ===== Timer
 
-Le callback "timer" définit les variables suivantes dans la table de hachage :
+La fonction de rappel "timer" définit les variables suivantes dans la table de
+hachage :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -3688,7 +3697,8 @@ Le callback "timer" définit les variables suivantes dans la table de hachage :
 [[trigger_data_config]]
 ===== Config
 
-Le callback "config" définit les variables suivantes dans la table de hachage :
+La fonction de rappel "config" définit les variables suivantes dans la table de
+hachage :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -3700,7 +3710,8 @@ Le callback "config" définit les variables suivantes dans la table de hachage 
 [[trigger_data_focus]]
 ===== Focus
 
-Le callback "focus" définit les variables suivantes dans la table de hachage :
+La fonction de rappel "focus" définit les variables suivantes dans la table de
+hachage :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -3772,8 +3783,8 @@ Vous pouvez sauvegarder automatiquement les fichiers de configuration
 
 Les paramètres pour le minuteur sont :
 
-* _3600000_ : 3600 * 1000 millisecondes, le callback est appelé toutes les
-  heures
+* _3600000_ : 3600 * 1000 millisecondes, la fonction de rappel est appelée
+  toutes les heures
 * _0_ : alignement sur la seconde (pas d'alignement ici)
 * _0_ : nombre maximum d'appels (0 = pas de fin pour le minuteur)
 

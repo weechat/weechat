@@ -41,7 +41,7 @@ listdefault : lister les triggers par défaut
  conditions : conditions évaluées pour le trigger
       regex : une ou plusieurs expressions régulières pour remplacer des chaînes dans les variables
    commande : commande à exécuter (plusieurs commandes peuvent être séparées par ";")
-code_retour : code retour dans le callback (ok (par défaut), ok_eat, error)
+code_retour : code retour dans la fonction de rappel (ok (par défaut), ok_eat, error)
 action_post : action à effectuer après l'exécution (none (par défaut), disable, delete)
    addinput : définir la ligne de commande avec les paramètres par défaut pour créer un trigger
       input : définir la ligne de commande utilisée pour créer le trigger
@@ -65,7 +65,7 @@ action_post : action à effectuer après l'exécution (none (par défaut), disa
     monitor : ouvrir le tampon moniteur des triggers
      filtre : filtrer les hooks/triggers à afficher (un hook doit commencer par "@", par exemple "@signal"), plusieurs filtres peuvent être séparés par des virgules ; le caractère joker "*" est autorisé dans chaque nom de trigger
 
-Lorsqu'un callback de trigger est appelé, les actions suivantes sont exécutées, dans cet ordre :
+Lorsqu'une fonction de rappel de trigger est appelée, les actions suivantes sont exécutées, dans cet ordre :
   1. vérifier les conditions ; si faux, sortir
   2. remplacer le texte en utilisant une/des expression(s)s régulière(s)s POSIX étendue(s)s (si définie(s) dans le trigger)
   3. exécuter le(s) commande(s) (si définie(s) dans le trigger)

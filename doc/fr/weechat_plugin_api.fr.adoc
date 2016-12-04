@@ -179,7 +179,7 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 struct t_weechat_plugin *weechat_plugin = NULL;
 
 
-/* callback pour la commande "/double" */
+/* fonction de rappel pour la commande "/double" */
 
 int
 commande_double_cb (const void *pointer, void *data,
@@ -1379,7 +1379,7 @@ Cette fonction n'est pas disponible dans l'API script.
 _WeeChat ≥ 1.0._
 
 Remplacer du texte dans une chaîne en utilisant une expression régulière, du
-texte de remplacement et un "callback" optionnel.
+texte de remplacement et une fonction de rappel optionnelle.
 
 Prototype :
 
@@ -1407,14 +1407,15 @@ Paramètres :
    caractère entre l'espace (32) et `+~+` (126))
 * _reference_char_ : le caractère utilisé pour les références aux
   correspondances (en général `+$+`)
-* _callback_ : un "callback" optionnel appelé pour chaque référence dans
-  _replace_ (sauf pour les correspondances remplacées par un caractère); le
-  "callback" doit retourner :
+* _callback_ : une fonction de rappel optionnelle appelé pour chaque référence
+  dans _replace_ (sauf pour les correspondances remplacées par un caractère);
+  la fonction de rappel doit retourner :
 ** une chaîne nouvellement allouée : elle est utilisée en texte de remplacement
    (elle est libérée après utilisation)
-** NULL : le texte reçu dans le "callback" est utilisé comme texte de
+** NULL : le texte reçu dans la fonction de rappel est utilisé comme texte de
    remplacement (sans changement)
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée
 
 Valeur de retour :
 
@@ -2896,8 +2897,8 @@ weechat.mkdir_parents("/tmp/my/dir", 0755)
 
 _Mis à jour dans la 1.5._
 
-Balayer les fichiers dans un répertoire et exécuter un "callback" pour chaque
-fichier.
+Balayer les fichiers dans un répertoire et exécuter une fonction de rappel
+pour chaque fichier.
 
 Prototype :
 
@@ -2917,8 +2918,8 @@ Paramètres :
 * _callback_ : fonction appelée pour chaque fichier trouvé, paramètres :
 ** _void *data_ : pointeur
 ** _const char *filename_ : nom de fichier trouvé
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
 
 Exemple en C :
 
@@ -3957,7 +3958,8 @@ Paramètres :
 
 * _hashtable_ : pointeur vers la table de hachage
 * _callback_map_ : fonction appelée pour chaque entrée de la table de hachage
-* _callback_map_data_ : pointeur donné au "callback" lorsqu'il est appelé
+* _callback_map_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée
 
 Exemple en C :
 
@@ -4002,11 +4004,12 @@ Paramètres :
 
 * _hashtable_ : pointeur vers la table de hachage
 * _callback_map_ : fonction appelée pour chaque entrée de la table de hachage
-* _callback_map_data_ : pointeur donné au "callback" lorsqu'il est appelé
+* _callback_map_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée
 
 [NOTE]
-Les chaînes _key_ et _value_ envoyées au "callback" sont des chaînes
-temporaires, elles sont supprimées après l'appel au "callback".
+Les chaînes _key_ et _value_ envoyées à la fonction de rappel sont des chaînes
+temporaires, elles sont supprimées après l'appel à cette fonction.
 
 Exemple en C :
 
@@ -4169,9 +4172,9 @@ Paramètres :
 
 * _hashtable_ : pointeur vers la table de hachage
 * _property_ : nom de la propriété :
-** _callback_free_key_ : définit la fonction "callback" pour supprimer les clés
+** _callback_free_key_ : définit la fonction de rappel pour supprimer les clés
    de la table de hachage _(WeeChat ≥ 0.4.2)_
-** _callback_free_value_ : définit la fonction "callback" pour supprimer les
+** _callback_free_value_ : définit la fonction de rappel pour supprimer les
    valeurs de la table de hachage
 * _pointer_ : nouvelle valeur de pointeur pour la propriété
 
@@ -4362,12 +4365,12 @@ Paramètres :
 *** _WEECHAT_CONFIG_READ_OK_
 *** _WEECHAT_CONFIG_READ_MEMORY_ERROR_
 *** _WEECHAT_CONFIG_READ_FILE_NOT_FOUND_
-* _callback_reload_pointer_ : pointeur donné au "callback" de rechargement
-  lorsqu'il est appelé par WeeChat
-* _callback_reload_data_ : pointeur donné au "callback" lorsqu'il est appelé
-  par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le fichier de
-  configuration est libéré
+* _callback_reload_pointer_ : pointeur donné à la fonction de rappel de
+  rechargement lorsqu'elle est appelée par WeeChat
+* _callback_reload_data_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée  par WeeChat; si non NULL, doit avoir été alloué par malloc (ou
+  une fonction similaire) et est automatiquement libéré (par free) lorsque le
+  fichier de configuration est libéré
 
 Valeur de retour :
 
@@ -4488,12 +4491,12 @@ Paramètres :
 *** _WEECHAT_CONFIG_READ_OK_
 *** _WEECHAT_CONFIG_READ_MEMORY_ERROR_
 *** _WEECHAT_CONFIG_READ_FILE_NOT_FOUND_
-* _callback_read_pointer_ : pointeur donné au "callback" quand il est appelé
-   par WeeChat
-* _callback_read_data_ : pointeur donné au "callback" lorsqu'il est appelé
-  par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque la section est
-  libérée
+* _callback_read_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat
+* _callback_read_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque la
+  section est libérée
 * _callback_write_ : fonction appelée lorsque la section est écrite dans le
   fichier (devrait être NULL dans la plupart des cas, sauf si la section
   nécessite d'être écrite par une fonction personnalisée), paramètres et valeur
@@ -4507,12 +4510,12 @@ Paramètres :
 *** _WEECHAT_CONFIG_WRITE_OK_
 *** _WEECHAT_CONFIG_WRITE_ERROR_
 *** _WEECHAT_CONFIG_WRITE_MEMORY_ERROR_
-* _callback_write_pointer_ : pointeur donné au "callback" lorsqu'il est appelé
-  par WeeChat
-* _callback_write_data_ : pointeur donné au "callback" lorsqu'il est appelé
-  par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque la section est
-  libérée
+* _callback_write_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat
+* _callback_write_data_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou
+  une fonction similaire) et est automatiquement libéré (par free) lorsque la
+  section est libérée
 * _callback_write_default_ : fonction appelée lorsque les valeurs par défaut
   doivent être écrites dans le fichier, paramètres et valeur de retour :
 ** _const void *pointer_ : pointeur
@@ -4524,12 +4527,12 @@ Paramètres :
 *** _WEECHAT_CONFIG_WRITE_OK_
 *** _WEECHAT_CONFIG_WRITE_ERROR_
 *** _WEECHAT_CONFIG_WRITE_MEMORY_ERROR_
-* _callback_write_default_pointer_ : pointeur donné au "callback" lorsqu'il est
-  appelé par WeeChat
-* _callback_write_default_data_ : pointeur donné au "callback" lorsqu'il est
-  appelé par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
-  fonction similaire) et est automatiquement libéré (par free) lorsque la
-  section est libérée
+* _callback_write_default_pointer_ : pointeur donné à la fonction de rappel
+  lorsqu'elle est appelé par WeeChat
+* _callback_write_default_data_ : pointeur donné à la fonction de rappel
+  lorsqu'elle est appelée par WeeChat; si non NULL, doit avoir été alloué par
+  malloc (ou une fonction similaire) et est automatiquement libéré (par free)
+  lorsque la section est libérée
 * _callback_create_option_ : fonction appelée lorsqu'une nouvelle option est
   créée dans la section (NULL si la section n'autorise pas la création de
   nouvelles options), paramètres et valeur de retour :
@@ -4540,12 +4543,12 @@ Paramètres :
 ** _struct t_config_section *section_ : pointeur vers la section
 ** _const char *option_name_ : nom de l'option
 ** _const char *value_ : valeur
-* _callback_create_option_pointer_ : pointeur donné au "callback" lorsqu'il est
-  appelé par WeeChat
-* _callback_create_option_data_ : pointeur donné au "callback" lorsqu'il est
-  appelé par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
-  fonction similaire) et est automatiquement libéré (par free) lorsque la
-  section est libérée
+* _callback_create_option_pointer_ : pointeur donné à la fonction de rappel
+  lorsqu'elle est appelée par WeeChat
+* _callback_create_option_data_ : pointeur donné à la fonction de rappel
+  lorsqu'elle est appelée par WeeChat; si non NULL, doit avoir été alloué par
+  malloc (ou une fonction similaire) et est automatiquement libéré (par free)
+  lorsque la section est libérée
 * _callback_delete_option_ : fonction appelée lorsqu'une option est supprimée
   de la section (NULL si la section n'autorise pas la suppression d'options),
   paramètres et valeur de retour :
@@ -4560,12 +4563,12 @@ Paramètres :
 *** _WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE_
 *** _WEECHAT_CONFIG_OPTION_SET_ERROR_
 *** _WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND_
-* _callback_delete_option_pointer_ : pointeur donné au "callback" lorsqu'il est
-  appelé par WeeChat
-* _callback_delete_option_data_ : pointeur donné au "callback" lorsqu'il est
-  appelé par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
-  fonction similaire) et est automatiquement libéré (par free) lorsque la
-  section est libérée
+* _callback_delete_option_pointer_ : pointeur donné à la fonction de rappel
+  lorsqu'elle est appelée par WeeChat
+* _callback_delete_option_data_ : pointeur donné à la fonction de rappel
+  lorsqu'elle est appelée par WeeChat; si non NULL, doit avoir été alloué par
+  malloc (ou une fonction similaire) et est automatiquement libéré (par free)
+  lorsque la section est libérée
 
 Valeur de retour :
 
@@ -4653,7 +4656,7 @@ struct t_config_section *new_section1 =
                                 NULL, NULL, NULL);
 
 /* section spéciale, l'utilisateur peut ajouter/supprimer des options, et les
-   options nécessitent un callback pour la lecture/écriture */
+   options nécessitent une fonction de rappel pour la lecture/écriture */
 struct t_config_section *new_section2 =
     weechat_config_new_section (config_file, "section2", 1, 1,
                                 &my_section_read_cb, NULL, NULL,
@@ -4820,34 +4823,34 @@ Paramètres :
 ** valeur de retour :
 *** 1 si la valeur est ok
 *** 0 si la valeur est invalide
-* _callback_check_value_pointer_ : pointeur donné au "callback" lorsqu'il est
-  appelé par WeeChat
-* _callback_check_value_data_ : pointeur donné au "callback" lorsqu'il est
-  appelé par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
-  fonction similaire) et est automatiquement libéré (par free) lorsque
-  l'option est libérée
+* _callback_check_value_pointer_ : pointeur donné à la fonction de rappel
+  lorsqu'elle est appelée par WeeChat
+* _callback_check_value_data_ : pointeur donné à la fonction de rappel
+  lorsqu'elle est appelée par WeeChat; si non NULL, doit avoir été alloué par
+  malloc (ou une fonction similaire) et est automatiquement libéré (par free)
+  lorsque l'option est libérée
 * _callback_change_ : fonction appelée lorsque la valeur de l'option a changé
   (optionnel), paramètres :
 ** _const void *pointer_ : pointeur
 ** _void *data_ : pointeur
 ** _struct t_config_option *option_ : pointeur vers l'option
-* _callback_change_pointer_ : pointeur donné au "callback" lorsqu'il est appelé
-  par WeeChat
-* _callback_change_data_ : pointeur donné au "callback" lorsqu'il est appelé
-  par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque l'option est
-  libérée
+* _callback_change_pointer_ : pointeur donné à la fonction de rappel
+  lorsqu'elle est appelée par WeeChat
+* _callback_change_data_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou
+  une fonction similaire) et est automatiquement libéré (par free) lorsque
+  l'option est libérée
 * _callback_delete_ : fonction appelée lorsque l'option est supprimée
   (optionnel), paramètres :
 ** _const void *pointer_ : pointeur
 ** _void *data_ : pointeur
 ** _struct t_config_option *option_ : pointeur vers l'option
-* _callback_delete_pointer_ : pointeur donné au "callback" lorsqu'il est appelé
-  par WeeChat
-* _callback_delete_data_ : pointeur donné au "callback" lorsqu'il est appelé
-  par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque l'option est
-  libérée
+* _callback_delete_pointer_ : pointeur donné à la fonction de rappel
+  lorsqu'elle est appelée par WeeChat
+* _callback_delete_data_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou
+  une fonction similaire) et est automatiquement libéré (par free) lorsque
+  l'option est libérée
 
 Valeur de retour :
 
@@ -4985,10 +4988,10 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 ----
 
 [NOTE]
-En Ruby, les 3 "callbacks" + "data" (6 chaînes) doivent être données dans un
-tableau de 6 chaînes de caractères (en raison d'une limitation de Ruby à 15
-paramètres par fonction), voir le _Guide pour Scripts WeeChat_ pour plus d'infos
-_(corrigé dans la version 0.4.1)_.
+En Ruby, les 3 fonctions de rappel + "data" (6 chaînes) doivent être données
+dans un tableau de 6 chaînes de caractères (en raison d'une limitation de Ruby
+à 15 paramètres par fonction), voir le _Guide pour Scripts WeeChat_ pour plus
+d'infos _(corrigé dans la version 0.4.1)_.
 
 ==== config_search_option
 
@@ -5201,8 +5204,8 @@ int weechat_config_option_reset (struct t_config_option *option,
 Paramètres :
 
 * _option_ : pointeur vers l'option
-* _run_callback_ : 1 pour appeler le "callback" si la valeur de l'option est
-  changée, sinon 0
+* _run_callback_ : 1 pour appeler la fonction de rappel si la valeur de
+  l'option est changée, sinon 0
 
 Valeur de retour :
 
@@ -5262,8 +5265,8 @@ Paramètres :
 
 * _option_ : pointeur vers l'option
 * _value_ : nouvelle valeur pour l'option
-* _run_callback_ : 1 pour appeler le "callback" si la valeur de l'option est
-  changée, sinon 0
+* _run_callback_ : 1 pour appeler la fonction de rappel si la valeur de
+  l'option est changée, sinon 0
 
 Valeur de retour :
 
@@ -5321,8 +5324,8 @@ int weechat_config_option_set_null (struct t_config_option *option,
 Paramètres :
 
 * _option_ : pointeur vers l'option
-* _run_callback_ : 1 pour appeler le "callback" si la valeur de l'option est
-  changée (elle n'était pas "null"), sinon 0
+* _run_callback_ : 1 pour appeler la fonction de rappel si la valeur de
+  l'option est changée (elle n'était pas "null"), sinon 0
 
 [NOTE]
 Vous pouvez affecter "null" à une option seulement si c'est autorisé pour
@@ -5964,8 +5967,8 @@ value = weechat.config_color_default(option)
 ==== config_write_option
 
 Écrire une ligne dans le fichier de configuration avec l'option et sa valeur
-(cette fonction doit être appelée uniquement dans un "callback" "write" ou
-"write_default" pour une section).
+(cette fonction doit être appelée uniquement dans une fonction de rappel
+"write" ou "write_default" pour une section).
 
 Prototype :
 
@@ -6014,8 +6017,8 @@ def my_section_write_cb(data, config_file, section_name):
 ==== config_write_line
 
 Écrire une ligne dans un fichier de configuration (cette fonction doit être
-appelée uniquement dans un "callback" "write" ou "write_default" pour une
-section).
+appelée uniquement dans une fonction de rappel "write" ou "write_default" pour
+une section).
 
 Prototype :
 
@@ -7215,12 +7218,12 @@ Paramètres :
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Le modèle de complétion est une liste de complétions pour chaque paramètre,
 séparés par des espaces. Plusieurs complétions sont possibles pour un paramètre,
@@ -7230,8 +7233,8 @@ même commande, séparés par `+||+`.
 Le format de la complétion peut être :
 
 * _%(nom)_ : la complétion _nom_
-* _%(nom:paramètres)_ : la complétion _nom_ avec des _paramètres_ envoyés au
-  « callback » _(WeeChat ≥ 1.7)_
+* _%(nom:paramètres)_ : la complétion _nom_ avec des _paramètres_ envoyés à la
+  fonction de rappel _(WeeChat ≥ 1.7)_
 * toute chaîne : elle est utilisée telle quelle dans la complétion
 
 Par exemple le modèle `list || add %(filters_names) || del %(filters_names)|-all`
@@ -7369,12 +7372,12 @@ Paramètres :
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 [NOTE]
 Les noms de complétion sont globaux (partagés entre WeeChat et les extensions).
@@ -7382,14 +7385,14 @@ Il est donc recommandé de choisir un nom avec un préfixe unique, comme
 "monextension_xxx" (où "xxx" est le nom de votre complétion).
 
 [IMPORTANT]
-Le "callback" doit seulement appeler la fonction
+La fonction de rappel doit seulement appeler la fonction
 <<_hook_completion_list_add,hook_completion_list_add>>
 et ne doit *PAS* mettre à jour la ligne de commande. +
 Pour mettre à jour la ligne de commande quand kbd:[Tab] est pressé, vous pouvez
 utiliser la fonction <<_hook_command_run,hook_command_run>>
 avec la commande : `/input complete_next` (et vous devez retourner
-_WEECHAT_RC_OK_EAT_ si votre "callback" a mis à jour la ligne de commande, de
-sorte que WeeChat n'exécute pas la complétion).
+_WEECHAT_RC_OK_EAT_ si votre fonction de rappel a mis à jour la ligne de
+commande, de sorte que WeeChat n'exécute pas la complétion).
 
 Valeur de retour :
 
@@ -7559,16 +7562,16 @@ Paramètres :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_OK_EAT_
 *** _WEECHAT_RC_ERROR_
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 [NOTE]
-Le "callback" peut retourner _WEECHAT_RC_OK_ ou _WEECHAT_RC_OK_EAT_ (la
-commande ne sera pas exécutée par WeeChat après le "callback").
+La fonction de rappel peut retourner _WEECHAT_RC_OK_ ou _WEECHAT_RC_OK_EAT_ (la
+commande ne sera pas exécutée par WeeChat après la fonction de rappel).
 
 Valeur de retour :
 
@@ -7644,12 +7647,12 @@ Paramètres :
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
@@ -7723,12 +7726,12 @@ Paramètres :
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
@@ -7822,8 +7825,8 @@ Paramètres :
 **** _WEECHAT_HOOK_PROCESS_RUNNING_ : données disponibles, mais le fils tourne
      toujours
 **** _WEECHAT_HOOK_PROCESS_ERROR_ : erreur en lançant la commande
-**** _WEECHAT_HOOK_PROCESS_CHILD_: le "callback" est appelé dans le processus
-     fils
+**** _WEECHAT_HOOK_PROCESS_CHILD_: la fonction de rappel est appelée dans le
+     processus fils
 ** _out_ : sortie standard de la commande (stdout)
 ** _err_ : erreurs de la commande (stderr)
 ** valeur de retour :
@@ -7831,12 +7834,12 @@ Paramètres :
 *** _WEECHAT_RC_ERROR_
 *** code retour du processus fils (dans le cas d'une fonction avec "func:" dans
     la commande)
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
@@ -7854,13 +7857,13 @@ Des options pour l'URL sont possibles avec la fonction
 La commande peut aussi être le nom d'une fonction avec le format : "func:nom",
 pour exécuter la fonction "nom" _(WeeChat ≥ 1.5)_. Cette fonction reçoit un
 paramètre (_data_) et doit retourner une chaîne de caractères, qui sera envoyée
-au "callback". +
-Dans l'API C, le "callback" est appelé avec le code retour qui vaut
-_WEECHAT_HOOK_PROCESS_CHILD_, cela signifie que le "callback" tourne dans le
-processus fils (après le fork). +
+à la fonction de rappel. +
+Dans l'API C, la fonction de rappel est appelée avec le code retour qui vaut
+_WEECHAT_HOOK_PROCESS_CHILD_, cela signifie que la fonction de rappel tourne
+dans le processus fils (après le fork). +
 Dans l'API script, la fonction _nom_ est appelée directement et le résultat
-(chaîne de caractères) est envoyé au "callback" (comme la sortie d'une commande
-externe).
+(chaîne de caractères) est envoyé à la fonction de rappel (comme la sortie
+d'une commande externe).
 
 [TIP]
 Si vous souhaitez récupérer des infos à propos de WeeChat (comme la version
@@ -7868,16 +7871,16 @@ stable actuelle, le dernier commit git, etc...), vous pouvez utiliser les URLs
 sur la page https://weechat.org/dev/info
 
 [NOTE]
-La taille du tampon pour l'envoi des données au "callback" est de 64 Ko (il y a
-2 tampons : un pour stdout et un pour stderr).
-Si la sortie du processus fils (stdout ou stderr) est plus longue que 64 Ko, le
-"callback" sera appelé plusieurs fois.
+La taille du tampon pour l'envoi des données à la fonction de rappel est de
+64 Ko (il y a 2 tampons : un pour stdout et un pour stderr).
+Si la sortie du processus fils (stdout ou stderr) est plus longue que 64 Ko, la
+fonction de rappel sera appelée plusieurs fois.
 
 [IMPORTANT]
-Même si la plupart du temps le "callback" n'est appelé qu'une seule fois, vous
-devez vous assurer que plusieurs appels au "callback" sont ok dans votre code :
-vous devez concaténer les données issues de plusieurs appels et n'utiliser les
-données que lorsque le code retour est positif ou nul.
+Même si la plupart du temps la fonction de rappel n'est appelée qu'une seule
+fois, vous devez vous assurer que plusieurs appels à la fonction de rappel sont
+OK dans votre code : vous devez concaténer les données issues de plusieurs
+appels et n'utiliser les données que lorsque le code retour est positif ou nul.
 
 Exemple en C :
 
@@ -7915,7 +7918,7 @@ my_process_cb (const void *pointer, void *data, const char *command,
 struct t_hook *my_process_hook = weechat_hook_process ("ls", 5000,
                                                        &my_process_cb, NULL, NULL);
 
-/* exemple avec le "callback" appelé dans le processus fils */
+/* exemple avec la fonction de rappel appelée dans le processus fils */
 int
 my_process_cb (const void *pointer, void *data, const char *command,
                int return_code, const char *out, const char *err)
@@ -7925,7 +7928,7 @@ my_process_cb (const void *pointer, void *data, const char *command,
         /* faire quelque chose de bloquant... */
         /* ... */
 
-        /* la sortie "stdout" sera envoyée comme "out" au "callback" parent */
+        /* la sortie "stdout" sera envoyée comme "out" à la fonction de rappel parente */
         printf ("ceci est le résultat");
 
         /* code retour du processus */
@@ -8059,9 +8062,9 @@ sont disponibles :
 | buffer_flush +
   _(WeeChat ≥ 1.0)_ |
   nombre d'octets |
-  Nombre minimum d'octets pour vider stdout/stderr (pour envoyer la sortie au
-  "callback"), entre 1 et 65536 (par défaut); 1 = envoyer toute sortie
-  immédiatement au "callback".
+  Nombre minimum d'octets pour vider stdout/stderr (pour envoyer la sortie à la
+  fonction de rappel), entre 1 et 65536 (par défaut); 1 = envoyer toute sortie
+  immédiatement à la fonction de rappel.
 
 | detached +
   _(WeeChat ≥ 1.0)_ |
@@ -8258,7 +8261,7 @@ Paramètres :
 * _retry_ : numéro de nouvelle tentative, utilisé pour se rabattre sur les
   adresses IPv4 si la connexion IPv6 échoue
 * _gnutls_sess_ : session GnuTLS (optionnel)
-* _gnutls_cb_ : callback pour GnuTLS (optionnel)
+* _gnutls_cb_ : fonction de rappel pour GnuTLS (optionnelle)
 * _gnutls_dhkey_size_ : taille de clé utilisée pour l'échange de clé
   Diffie-Hellman (GnuTLS)
 * _gnutls_priorities_ : priorités pour gnutls (pour la syntaxe, voir la
@@ -8272,7 +8275,7 @@ Paramètres :
 ** _NONE_
 * _local_hostname_ : nom de machine local à utiliser pour la connexion
   (optionnel)
-* _callback_ : fonction appelée lorsque la connexion est ok ou a échoué,
+* _callback_ : fonction appelée lorsque la connexion est OK ou a échoué,
   paramètres et valeur de retour :
 ** _const void *pointer_ : pointeur
 ** _void *data_ : pointeur
@@ -8296,12 +8299,12 @@ Paramètres :
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
@@ -8442,7 +8445,7 @@ Paramètres :
 * _message_ : seulement les messages contenant cette chaîne seront interceptés
   (optionnel, insensible à la casse)
 * _strip_colors_ : si 1, les couleurs seront supprimées du message affiché,
-  avant d'appeler le "callback"
+  avant d'appeler la fonction de rappel
 * _callback_ : fonction appelée lorsqu'un message est affiché, paramètres et
   valeur de retour :
 ** _const void *pointer_ : pointeur
@@ -8458,20 +8461,21 @@ Paramètres :
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
 * pointeur vers le nouveau "hook", NULL en cas d'erreur
 
 [IMPORTANT]
-Dans les scripts, avec WeeChat ≥ 1.0, les paramètres du callback _displayed_ et
-_highlight_ sont des entiers (avec WeeChat ≤ 0.4.3, ils étaient des chaînes). +
+Dans les scripts, avec WeeChat ≥ 1.0, les paramètres de la fonction de rappel
+_displayed_ et _highlight_ sont des entiers (avec WeeChat ≤ 0.4.3, ils étaient
+des chaînes). +
 Pour être compatible avec toutes les versions, il est recommandé de convertir
 le paramètre en entier avant de le tester, par exemple en Python :
 `if int(highlight):`.
@@ -8552,12 +8556,12 @@ Paramètres :
 *** _WEECHAT_RC_OK_EAT_ (arrêter l'envoi du signal immédiatement)
     _(WeeChat ≥ 0.4.0)_
 *** _WEECHAT_RC_ERROR_
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
@@ -9263,8 +9267,8 @@ Paramètres :
 
 Valeur de retour _(WeeChat ≥ 1.0)_ :
 
-* code retour du dernier "callback" exécuté (_WEECHAT_RC_OK_ si aucun "callback"
-  n'a été exécuté) :
+* code retour de la dernière fonction de rappel exécutée (_WEECHAT_RC_OK_ si
+  aucune fonction de rappel n'a été exécuté) :
 ** _WEECHAT_RC_OK_
 ** _WEECHAT_RC_OK_EAT_
 ** _WEECHAT_RC_ERROR_
@@ -9323,7 +9327,8 @@ Cinq signaux peuvent être envoyés pour installer un script, selon le langage 
 * _guile_script_install_
 * _javascript_script_install_
 
-Le "callback" effectuera les actions suivantes lorsqu'il recevra le signal :
+La fonction de rappel effectuera les actions suivantes lorsqu'elle recevra le
+signal :
 
 . déchargement et suppression du script installé
 . déplacement du nouveau script vers le répertoire _~/.weechat/xxx/_ (où _xxx_
@@ -9366,8 +9371,8 @@ langage :
 * _guile_script_remove_
 * _javascript_script_remove_
 
-Pour chaque script dans la liste, le "callback" déchargera et supprimera le
-script.
+Pour chaque script dans la liste, la fonction de rappel déchargera et
+supprimera le script.
 
 Ces signaux sont utilisés par l'extension _script_ pour supprimer des scripts.
 
@@ -9479,12 +9484,12 @@ Paramètres :
 *** _WEECHAT_RC_OK_EAT_ (arrêter l'envoi du signal immédiatement)
     _(WeeChat ≥ 0.4.0)_
 *** _WEECHAT_RC_ERROR_
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
@@ -9599,8 +9604,8 @@ Paramètres :
 
 Valeur de retour _(WeeChat ≥ 1.0)_ :
 
-* code retour du dernier "callback" exécuté (_WEECHAT_RC_OK_ si aucun "callback"
-  n'a été exécuté) :
+* code retour de la dernière fonction de rappel exécutée (_WEECHAT_RC_OK_ si
+  aucune fonction de rappel n'a été exécutée) :
 ** _WEECHAT_RC_OK_
 ** _WEECHAT_RC_OK_EAT_
 ** _WEECHAT_RC_ERROR_
@@ -9640,7 +9645,7 @@ rc = weechat.hook_hsignal_send("my_hsignal", {"clé": "valeur"})
 _WeeChat ≥ 0.3.4._
 
 Le hsignal "irc_redirect_command" peut être envoyé pour rediriger la sortie
-d'une commande irc vers un "callback".
+d'une commande irc vers une fonction de rappel.
 
 Le paramètre est une table de hachage avec les entrées suivantes (les clés et
 valeurs sont des chaînes) :
@@ -9673,8 +9678,8 @@ valeurs sont des chaînes) :
 * _timeout_ : temps d'attente maximum pour la redirection, en secondes
   (optionnel, 60 par défaut)
 * _cmd_filter_ : liste de commandes irc (séparées par des virgules) à filtrer
-  (seules ces commandes seront transmises au "callback", les autres seront
-  ignorées) (optionnel)
+  (seules ces commandes seront transmises à la fonction de rappel, les autres
+  seront ignorées) (optionnel)
 
 Immédiatement après l'envoi de ce hsignal, vous devez envoyer la commande au
 serveur irc, et la redirection sera utilisée pour cette commande.
@@ -9855,12 +9860,12 @@ Paramètres :
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelé par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
@@ -9933,12 +9938,12 @@ Paramètres :
 ** _const char *modifier_data_ : données pour le modificateur
 ** _const char *string_ : chaîne à modifier
 ** valeur de retour : nouvelle chaîne
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
@@ -10158,7 +10163,7 @@ weechat.hook_modifier_exec("mon_modifier", mes_donnees, ma_chaine)
 
 _Mis à jour dans la 1.5._
 
-Accrocher une information (le "callback" prend et retourne une chaîne).
+Accrocher une information (la fonction de rappel prend et retourne une chaîne).
 
 Prototype :
 
@@ -10189,12 +10194,12 @@ Paramètres :
 ** _const char *arguments_ : paramètres additionnels, dépendant de
    l'information
 ** valeur de retour : valeur de l'information demandée
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
@@ -10239,7 +10244,7 @@ hook = weechat.hook_info("mon_info", "Une information", "Info sur les paramètre
 
 _WeeChat ≥ 0.3.4, mis à jour dans la 1.5._
 
-Accrocher une information (le "callback" prend et retourne une table de
+Accrocher une information (la fonction de rappel prend et retourne une table de
 hachage).
 
 Prototype :
@@ -10265,8 +10270,8 @@ Paramètres :
 * _description_ : description
 * _args_description_ : description de la table de hachage attendue
   (optionnel, peut être NULL)
-* _output_description_ : description de la table de hachage retournée par le
-  "callback" (optionnel, peut être NULL)
+* _output_description_ : description de la table de hachage retournée par la
+  fonction de rappel (optionnel, peut être NULL)
 * _callback_ : fonction appelée quand l'information est demandée, paramètres et
   valeur de retour :
 ** _const void *pointer_ : pointeur
@@ -10275,12 +10280,12 @@ Paramètres :
 ** _struct t_hashtable *hashtable_ : table de hachage, dépendant de
    l'information
 ** valeur de retour : table de hachage demandée
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
@@ -10328,8 +10333,8 @@ hook = weechat.hook_info_hashtable("mon_info_hashtable", "Une information",
 
 _Mis à jour dans la 1.5._
 
-Accrocher une infolist : le "callback" retournera un pointeur vers l'infolist
-demandée.
+Accrocher une infolist : la fonction de rappel retournera un pointeur vers
+l'infolist demandée.
 
 Prototype :
 
@@ -10364,12 +10369,12 @@ Paramètres :
    obtenir uniquement cet objet dans l'infolist)
 ** _const char *arguments_ : paramètres additionnels, dépendant de l'infolist
 ** valeur de retour : infolist demandée
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
@@ -10422,7 +10427,8 @@ hook = weechat.hook_infolist("mon_infolist", "Mon infolist",
 
 _Mis à jour dans la 1.5._
 
-Accrocher un hdata : le "callback" retournera un pointeur vers le hdata demandé.
+Accrocher un hdata : la fonction de rappel retournera un pointeur vers le hdata
+demandé.
 
 Prototype :
 
@@ -10448,12 +10454,12 @@ Paramètres :
 ** _void *data_ : pointeur
 ** _const char *hdata_name_ : nom du hdata
 ** valeur de retour : hdata demandé
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 Valeur de retour :
 
@@ -10511,29 +10517,29 @@ Paramètres :
 ** _const void *pointer_ : pointeur
 ** _void *data_ : pointeur
 ** _struct t_hashtable *info_ : table de hachage avec les informations sur le
-   focus et les chaînes retournées par les autres appels aux "callbacks" de
-   focus (avec plus haute priorité) (voir le tableau ci-dessous)
+   focus et les chaînes retournées par les autres appels aux fonctions de
+   rappel de focus (avec plus haute priorité) (voir le tableau ci-dessous)
 ** valeur de retour : soit le pointeur vers la table de hachage "info" (avec la
    table de hachage complétée), ou un pointeur vers une nouvelle table de
-   hachage (créée par le "callback", avec clés et valeurs de type "string"), le
-   contenu de cette nouvelle table de hachage sera ajouté à _info_ pour les
-   autres appels aux "callbacks" focus
-* _callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-* _callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le "hook" est
-  supprimé
+   hachage (créée par la fonction de rappel, avec clés et valeurs de type
+   "string"), le contenu de cette nouvelle table de hachage sera ajouté à
+   _info_ pour les autres appels aux fonctions de rappel focus
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
 
 [IMPORTANT]
-Pour un geste de souris, votre "callback" sera appelé deux fois : la première
-lorsque le bouton est pressé (ici la zone correspond à vôtre zone), la seconde
-fois lorsque le bouton est relâché, et la zone peut ne pas correspondre à la
-vôtre : donc vous devez *toujours* tester dans le "callback" si la zone
-correspond avant d'utiliser les informations de la table de hachage.
+Pour un geste de souris, votre fonction de rappel sera appelée deux fois : la
+première lorsque le bouton est pressé (ici la zone correspond à vôtre zone), la
+seconde fois lorsque le bouton est relâché, et la zone peut ne pas correspondre
+à la vôtre : donc vous devez *toujours* tester dans la fonction de rappel si la
+zone correspond avant d'utiliser les informations de la table de hachage.
 
-Contenu de la table de hachage envoyée au "callback" (les clés et valeurs sont
-de type "string") :
+Contenu de la table de hachage envoyée à la fonction de rappel (les clés et
+valeurs sont de type "string") :
 
 [width="100%",cols="5,5,8,3",options="header"]
 |===
@@ -10885,12 +10891,12 @@ Paramètres :
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
-* _input_callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé
-  par WeeChat
-* _input_callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le tampon est
-  fermé
+* _input_callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat
+* _input_callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou
+  une fonction similaire) et est automatiquement libéré (par free) lorsque le
+  tampon est fermé
 * _close_callback_ : fonction appelée lorsque le tampon est fermé, paramètres et
   valeur de retour :
 ** _const void *pointer_ : pointeur
@@ -10899,12 +10905,12 @@ Paramètres :
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
-* _close_callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé
-  par WeeChat
-* _close_callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le tampon est
-  fermé
+* _close_callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat
+* _close_callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou
+  une fonction similaire) et est automatiquement libéré (par free) lorsque le
+  tampon est fermé
 
 Valeur de retour :
 
@@ -11277,7 +11283,7 @@ Paramètres :
 ** _nicklist_visible_count_ : nombre de pseudos/groupes affichés
 ** _input_ : 1 si la zone de saisie est activée, sinon 0
 ** _input_get_unknown_commands_ : 1 si les commandes inconnues sont envoyées
-   au "callback input", sinon 0
+   à la fonction de rappel "input", sinon 0
 ** _input_size_ : taille de la zone de saisie (en octets)
 ** _input_length_ : longueur de la zone de saisie (nombre de caractères)
 ** _input_pos_ : position du curseur dans la zone de saisie
@@ -11658,21 +11664,20 @@ Paramètres :
 
 * _buffer_ : pointeur vers le tampon
 * _property_ : nom de la propriété :
-** _close_callback_ : définit la fonction "callback" de fermeture du tampon
-** _close_callback_data_ : définit les données pour le "callback" de fermeture
-   du tampon
-** _input_callback_ : définit la fonction de "callback" pour les données en
-   entrée
-** _input_callback_data_ : définit les données pour le "callback" des données
-   en entrée
-** _nickcmp_callback_ : définit la fonction "callback" de comparaison de pseudos
-   (ce "callback" est appelé lors de la recherche d'un pseudo dans la liste des
-   pseudos) _(WeeChat ≥ 0.3.9)_
-** _nickcmp_callback_data_ : définit les données pour le "callback" de
+** _close_callback_ : définit la fonction de rappel de fermeture du tampon
+** _close_callback_data_ : définit les données pour la fonction de rappel de
+   fermeture du tampon
+** _input_callback_ : définit la fonction de rappel pour les données en entrée
+** _input_callback_data_ : définit les données pour la fonction de rappel des
+   données en entrée
+** _nickcmp_callback_ : définit la fonction de rappel de comparaison de pseudos
+   (cette fonction de rappel est appelée lors de la recherche d'un pseudo dans
+   la liste des pseudos) _(WeeChat ≥ 0.3.9)_
+** _nickcmp_callback_data_ : définit les données pour la fonction de rappel de
    comparaison de pseudos _(WeeChat ≥ 0.3.9)_
 * _pointer_ : nouvelle valeur de pointeur pour la propriété
 
-Prototypes pour les "callbacks" :
+Prototypes pour les fonctions de rappel :
 
 [source,C]
 ----
@@ -12944,12 +12949,12 @@ Paramètres :
 ** _struct t_hashtable *extra_info_ : toujours NULL (le paramètre est réservé
    pour une version future) _(WeeChat ≥ 0.4.2)_
 ** valeur de retour : contenu de l'objet de barre
-* _build_callback_pointer_ : pointeur donné au "callback" lorsqu'il est appelé
-  par WeeChat
-* _build_callback_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque l'objet de barre
-  est supprimé
+* _build_callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat
+* _build_callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou
+  une fonction similaire) et est automatiquement libéré (par free) lorsque
+  l'objet de barre est supprimé
 
 Valeur de retour :
 
@@ -12977,25 +12982,25 @@ struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
 Script (Python) :
 
 [IMPORTANT]
-Pour la compatibilité avec les versions ≤ 0.4.1, le "callback" par défaut a
-seulement 3 paramètres : _data_, _item_ et _window_ (pas de _buffer_ et
-_extra_info_). +
-Pour utiliser le callback avec tous les paramètres, vous devez ajouter "(extra)"
-avant le nom, voir l'exemple ci-dessous (supporté seulement dans
-WeeChat ≥ 0.4.2).
+Pour la compatibilité avec les versions ≤ 0.4.1, la fonction de rappel par
+défaut a seulement 3 paramètres : _data_, _item_ et _window_ (pas de _buffer_
+et _extra_info_). +
+Pour utiliser la fonction de rappel avec tous les paramètres, vous devez
+ajouter "(extra)" avant le nom, voir l'exemple ci-dessous (supporté seulement
+dans WeeChat ≥ 0.4.2).
 
 [source,python]
 ----
 # prototype
 bar_item = weechat.bar_item_new(name, build_callback, build_callback_data)
 
-# exemple (callback sans "buffer" et "extra_info")
+# exemple (fonction de rappel sans "buffer" et "extra_info")
 def my_build_callback(data, item, window):
     return "mon contenu"
 
 bar_item = weechat.bar_item_new("myitem", "my_build_callback", "")
 
-# example (callback avec tous les paramètres, pour WeeChat ≥ 0.4.2)
+# exemple (fonction de rappel avec tous les paramètres, pour WeeChat ≥ 0.4.2)
 def my_build_callback2(data, item, window, buffer, extra_info):
     return "mon contenu"
 
@@ -13004,8 +13009,8 @@ bar_item2 = weechat.bar_item_new("(extra)myitem2", "my_build_callback2", "")  # 
 
 ==== bar_item_update
 
-Mettre à jour le contenu d'un objet de barre, en appelant son "callback" de
-construction.
+Mettre à jour le contenu d'un objet de barre, en appelant sa fonction de rappel
+de construction.
 
 Prototype :
 
@@ -14498,8 +14503,8 @@ Paramètres :
 ** _struct t_hashtable *hashtable_ : table de hachage avec les variables à
    mettre à jour (voir <<_hdata_update,hdata_update>>)
 ** valeur de retour : nombre de variables mises à jour
-* _callback_update_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat _(WeeChat ≥ 0.3.9)_
+* _callback_update_data_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat _(WeeChat ≥ 0.3.9)_
 
 Valeur de retour :
 
@@ -15640,9 +15645,9 @@ _WeeChat ≥ 0.3.9._
 Définir une nouvelle valeur pour une variable dans un hdata.
 
 [NOTE]
-Cette fonction ne peut être appelée que dans un "callback" de mise à jour
-(voir <<_hdata_new,hdata_new>> et <<_hdata_update,hdata_update>>), si la variable
-peut être mise à jour.
+Cette fonction ne peut être appelée que dans une fonction de rappel de mise à
+jour (voir <<_hdata_new,hdata_new>> et <<_hdata_update,hdata_update>>), si la
+variable peut être mise à jour.
 
 Prototype :
 
@@ -15861,12 +15866,12 @@ Paramètres :
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
-* _callback_read_pointer_ : pointeur donné au "callback" lorsqu'il est appelé
-  par WeeChat
-* _callback_read_data_ : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat; si non NULL, doit avoir été alloué par malloc (ou une fonction
-  similaire) et est automatiquement libéré (par free) lorsque le fichier de
-  mise à jour est fermé
+* _callback_read_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle
+  est appelée par WeeChat
+* _callback_read_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  fichier de mise à jour est fermé
 
 Valeur de retour :
 

@@ -293,7 +293,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    trigger/                       | Extension Trigger.
 |       trigger.c                   | Fonctions principales de Trigger.
 |       trigger-buffer.c            | Tampon Trigger.
-|       trigger-callback.c          | Callbacks de Trigger.
+|       trigger-callback.c          | Fonctions de rappel de Trigger.
 |       trigger-command.c           | Commandes pour Trigger.
 |       trigger-completion.c        | Complétions pour Trigger.
 |       trigger-config.c            | Options de configuration pour Trigger (fichier trigger.conf).
@@ -740,7 +740,7 @@ s'exécuter très rapidement, et que les appels aux fonctions comme `sleep` sont
 extensions et les scripts).
 
 Si pour une raison quelconque vous devez attendre un peu, utilisez `hook_timer`
-avec un "callback".
+avec une fonction de rappel.
 
 [[doubly_linked_lists]]
 === Listes doublement chaînées

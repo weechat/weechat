@@ -59,8 +59,8 @@ l'API est la même pour les autres langages.
 * Vous devez définir _weechat_init_ et appeler _register_ dedans.
 * Les fonctions sont appelées par `Weechat.xxx(arg1, arg2, ...)`.
 * En raison d'une limitation de Ruby (15 paramètres maximum par fonction), la
-  fonction `Weechat.config_new_option` reçoit les "callbacks" dans un tableau de
-  6 chaînes de caractères (3 callbacks + 3 chaînes de données), donc un appel à
+  fonction `Weechat.config_new_option` reçoit les fonctions de rappel dans un tableau de
+  6 chaînes de caractères (3 fonctions de rappel + 3 chaînes de données), donc un appel à
   cette fonction ressemble à ceci :
 
 [source,ruby]
@@ -245,7 +245,7 @@ test.py ─────► │ API script │  API C  │ ─────► ║
                └────────────┴─────────┘        ╚═════════╧════════╝
 ....
 
-Quand WeeChat appelle un "callback" dans votre script _test.py_, le chemin
+Quand WeeChat appelle une fonction de rappel dans votre script _test.py_, le chemin
 est inversé :
 
 ....
@@ -286,17 +286,17 @@ vérifier que vous donnez un pointeur valide, sinon vous pourriez voir un joli
 rapport de crash ;)
 
 [[callbacks]]
-=== Callbacks
+=== Fonctions de rappel
 
-Tous les "callbacks" WeeChat doivent retourner WEECHAT_RC_OK ou
-WEECHAT_RC_ERROR (l'exception est le callback du modificateur, qui retourne une
-chaîne de caractères).
+Toutes les fonction de rappel WeeChat doivent retourner WEECHAT_RC_OK ou
+WEECHAT_RC_ERROR (l'exception est la fonction de rappel du modificateur, qui
+retourne une chaîne de caractères).
 
-Les "callbacks" C utilisent un paramètre "data", qui est un pointeur. Dans
-l'API script, ce "data" est une chaîne de caractères avec n'importe quelle
+Les fonction de rappel C utilisent un paramètre "data", qui est un pointeur.
+Dans l'API script, ce "data" est une chaîne de caractères avec n'importe quelle
 valeur (ce n'est pas un pointeur).
 
-Exemple de callback, pour chaque langage :
+Exemple de fonction de rappel, pour chaque langage :
 
 * Python :
 
@@ -766,20 +766,21 @@ weechat.command(buffer, "bonjour")
 Vous pouvez créer un nouveau tampon dans votre script, et l'utiliser pour
 afficher des messages.
 
-Deux "callbacks" peuvent être appelés (ils sont optionnels) : un pour les données
-en entrée (quand vous tapez du texte et pressez [Enter] sur le tampon), l'autre
-est appelé lorsque le tampon est fermé (par exemple avec `/buffer close`).
+Deux fonctions de rappel peuvent être appelés (ils sont optionnels) : une pour
+les données en entrée (quand vous tapez du texte et pressez [Enter] sur le
+tampon), l'autre est appelée lorsque le tampon est fermé (par exemple avec
+`/buffer close`).
 
 Exemple :
 
 [source,python]
 ----
-# callback pour les données reçues en entrée
+# fonction de rappel pour les données reçues en entrée
 def buffer_input_cb(data, buffer, input_data):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# callback appelé lorsque le tampon est fermé
+# fonction de rappel appelée lorsque le tampon est fermé
 def buffer_close_cb(data, buffer):
     # ...
     return weechat.WEECHAT_RC_OK
@@ -891,11 +892,11 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 ==== Lancer un processus en tâche de fond
 
 Vous pouvez lancer un processus en tâche de fond avec `hook_process`. Votre
-"callback" sera appelé quand des données seront prêtes. Il peut être appelé
-plusieurs fois.
+fonction de rappel sera appelée quand des données seront prêtes. Elle peut être
+appelée plusieurs fois.
 
-Pour le dernier appel à votre "callback", _rc_ est positionné à 0 ou une valeur
-positive, c'est le code retour de la commande.
+Pour le dernier appel à votre fonction de rappel, _rc_ est positionné à 0 ou
+une valeur positive, c'est le code retour de la commande.
 
 Exemple :
 
@@ -924,7 +925,7 @@ fonction `hook_process`, ou `hook_process_hashtable` si vous avez besoin
 d'options pour le transfert d'URL.
 
 Exemple de transfert d'URL sans option : la page HTML sera reçue comme "out"
-dans le "callback" (sortie standard du processus) :
+dans la fonction de rappel (sortie standard du processus) :
 
 [source,python]
 ----
