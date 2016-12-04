@@ -969,67 +969,66 @@ Beispiele für eine vertikale und horizontale Fensteraufteilung:
       ▲ Fenster #1 (Buffer #3)              ▲ Fenster #2 (Buffer #4)
 ....
 
-// TRANSLATION MISSING
 [[buffers_lines]]
-=== Buffers lines
+=== Zeilen in Buffern
 
 [[lines_format]]
-==== Format of lines
+==== Format von Zeilen
 
-Lines displayed in formatted buffers have following fields:
+Zeilen die in einem formatierten Buffer dargestellt werden haben folgende Felder:
 
 [width="100%",cols="2,2,10",options="header"]
 |===
-| Field               | Displayed          | Description
-| date/time (message) | Yes                | Date/time of message (may be past).
-| date/time (print)   | No                 | Date/time when WeeChat prints the message.
-| prefix              | Yes                | Prefix of message, commonly a nick.
-| message             | Yes                | The message itself.
-| displayed           | No                 | Boolean: true if line is displayed, false if line is filtered with command <<command_weechat_filter,/filter>>.
-| highlight           | No                 | Boolean: true if line has a highlight, false otherwise.
-| tags                | With `/debug tags` | Tags associated with the line (see <<lines_tags,lines tags>>).
+| Feld                 | Ansicht               | Beschreibung
+| Datum/Zeit(Nachricht)| Ja                    | Datum/Zeit einer Nachricht (möglicherweise die Vergangenheit).
+| Datum/Zeit(Ausgabe)  | Nein                  | Datum/Zeit wenn WeeChat eine Nachricht ausgibt.
+| Präfix               | Ja                    | Präfix einer Nachricht, gewöhnlich der Nick.
+| Nachricht            | Ja                    | Die eigentliche Nachricht.
+| Ansicht              | Nein                  | Boolean: wahr, falls Zeile angezeigt wird, unwahr, falls die Zeile if line gefiltert wird. Siehe Befehl <<command_weechat_filter,/filter>>.
+| Highlight            | Nein                  | Boolean: wahr, falls die Zeile ein Highlight enthält, unwahr, falls nicht.
+| Tags                 | mittels `/debug tags` | Tags die im Zusammenhang mit der Zeile stehen (siehe <<lines_tags,lines tags>>).
 |===
 
-The display of lines can be customized with many look options
-(_pass:[weechat.look.*]_) and color options (_pass:[weechat.color.chat_*]_).
+Die Darstellung von Zeilen kann mittels Optionen individualisiert werden. Zum einen mittels der "look"-Optionen
+(_pass:[weechat.look.*]_) und der Color-Optionen (_pass:[weechat.color.chat_*]_).
 
 [[lines_tags]]
-==== Lines tags
+==== Tags in Zeilen
 
-WeeChat uses tags in lines for different purposes:
+WeeChat nutzt Tags für unterschiedliche Aufgaben:
 
 * highlight
-* notify level
+* Benachrichtigungsstufe
 * logging
-* use of command <<command_weechat_filter,/filter>>
+* für Befehle <<command_weechat_filter,/filter>>
 
-Tags can be displayed with the command `/debug tags` (same command to hide them).
+Tags kann man sich mit dem Befehl `/debug tags` anzeigen lassen (den Befehl ein zweites mal ausführen um die Tags wieder unsichtbar zu machen).
 
-Tags commonly used (non-exhaustive list):
+Tags die häufig verwendet werden (keine vollständige Auflistung):
 
 [width="70%",cols="1m,4",options="header"]
 |===
-| Tag              | Description
-| no_filter        | Line can not be filtered.
-| no_highlight     | No highlight is possible on line.
-| no_log           | Line is not written in log file.
-| log0 ... log9    | Level of log for line (see `/help logger`).
-| notify_none      | Buffer with line is not added to hotlist.
-| notify_message   | Buffer with line is added to hotlist with level "message".
-| notify_private   | Buffer with line is added to hotlist with level "private".
-| notify_highlight | Buffer with line is added to hotlist with level "highlight".
-| self_msg         | Self message.
-| nick_xxx         | Message is from nick "xxx".
-| prefix_nick_ccc  | Prefix is a nick with color "ccc".
-| host_xxx         | Username and host in message.
-| irc_xxx          | IRC message "xxx" (can be a command or a 3-digits number).
-| irc_numeric      | IRC numeric message.
-| irc_error        | Error from IRC server.
-| irc_action       | Action from a nick (command `/me`).
-| irc_ctcp         | CTCP message.
-| irc_ctcp_reply   | Reply to CTCP message.
-| irc_smart_filter | IRC message that can be filtered with the "smart filter".
-| away_info        | Message with away info.
+| Tag              | Beschreibung
+| no_filter        | Zeile kann nicht gefiltert werden.
+| no_highlight     | die Zeile kann nicht gehiglighted werden.
+| no_log           | Zeile wird nicht in die Log-Datei geschrieben.
+| log0 ... log9    | Grad der Protokollierung (siehe `/help logger`).
+| notify_none      | Buffer welche die Zeile enthält wird nicht zur Hotlist hinzufügt.
+| notify_message   | Buffer welche die Zeile enthält wird mit der Stufe "message" zur Hotlist hinzugefügt.
+| notify_private   | Buffer welche die Zeile enthält wird mit der Stufe "private" zur Hotlist hinzugefügt.
+| notify_highlight | Buffer welche die Zeile enthält wird mit der Stufe "highlight" zur Hotlist hinzugefügt.
+| self_msg         | eigene Nachricht.
+| nick_xxx         | Nachricht ist vom Nick "xxx".
+| prefix_nick_ccc  | Präfix für den Nick mit der Farbe "ccc".
+| host_xxx         | Username und Host in der Nachricht.
+| irc_xxx          | IRC Nachricht "xxx" (kann ein Befehl oder eine dreistellige Zahl sein).
+| irc_numeric      | IRC nummerische Nachricht.
+| irc_error        | Fehler vom IRC Server.
+| irc_action       | Action von einem Nick (Befehl `/me`).
+| irc_ctcp         | CTCP Nachricht.
+| irc_ctcp_reply   | Antwort auf eine CTCP Nachricht.
+| irc_smart_filter | IRC Nachricht die mittels "smart filter" unterdrückt werden kann.
+| away_info        | Nachricht mit "away" Information.
 |===
 
 [[bars]]
@@ -1353,9 +1352,8 @@ natürlich voraus, dass der Terminal das Anwählen von URLs unterstützt).
 [[notify_levels]]
 === Benachrichtigungsstufen
 
-// TRANSLATION MISSING
 [[setup_notify_levels]]
-==== Setup notify levels
+==== Benachrichtigungsstufen einstellen
 
 Es gibt vier Benachrichtigungsstufen für Nachrichten, welche in Buffern dargestellt
 werden. Nachfolgend eine Liste, sortiert von niedrig nach hoch:
@@ -1403,98 +1401,102 @@ Befehl festgelegt werden:
 /buffer notify highlight
 ----
 
-// TRANSLATION MISSING
 [[max_hotlist_level_nicks]]
-==== Max hotlist level for nicks
+==== Maximaler Hotlist-Level für Nicks
 
-It is possible to set max hotlist level for some nicks, per buffer, or per group
-of buffers (like IRC servers).
+Es ist möglich den sogeannten maximalen Hotlist-Level für einzele Nicks einzustellen,
+per Buffer oder für mehrere Gruppen (wie IRC Server).
 
-The buffer property "hotlist_max_level_nicks" can be set with a list of nicks
-and for each nick the max hotlist level to trigger, possible levels are:
+Die Buffer-Eigenschaft "hotlist_max_level_nicks" kann mit einer Anzahl von Nicks genutzt werden
+und für jeden einzelen Nick kann ein maximler Hotlist-Level eingestellt wertden. Mögliche Stufen sind:
 
-* -1: no hotlist changes for nick
-* 0: low priority (like join/part messages)
-* 1: message
-* 2: private message
-* 3: highlight (in fact useless, since it's already the default max for all messages)
+* -1: keine Änderungen an der Hotlist für den entsprechenden Nick
+* 0: niedrige Priorität (zum Beispiel join/part Nachrichten)
+* 1: Nachricht
+* 2: private Nachricht
+* 3: Highlight (eigentlich unnötigt, da es standardmäßig die höchste Stufe für alle Nachrichten ist)
 
-For example to disable highlights from "joe" and "mike" on current buffer:
+Um zum Bespiel Highlights von "joe" und "mike" im aktuellen Buffer zu deaktivieren:
 
 ----
 /buffer set hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
 [NOTE]
-The buffer property "hotlist_max_level_nicks" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`.
+Die Buffer-Eigenschaft "hotlist_max_level_nicks" ist keine permanente Einstellung und wird nicht
+in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
+das Skript _buffer_autoset.py_: Um das Skript zu installieren `/script install buffer_autoset.py`
+und um eine Hilfe zu erhalten wie man es nutzt: `/help autosetbuffer`.
 
-// TRANSLATION MISSING
 [[highlights]]
 === Highlights
 
 [[highlights_words]]
-==== Add words to highlight
+==== Worte als Highlights hinzufügen
 
-By default, WeeChat highlights messages from other users containing your nick,
-therefore the highlight depends on the buffer (the nick can be different from
-one buffer to another).
+Standardmäßig werden in WeeChat alle Nachrichten von anderen Personen als highlight
+deklariert wenn diese den eigenen Nick beinhalten, deshalb ist ein highlight abhängig
+vom jeweiligen Buffer (ein Nick kann in je nach Buffer unterschiedlich sein)
 
-You can add other words to highlight with the option
-<<option_weechat.look.highlight,weechat.look.highlight>>, for example to
-highlight your nick and "word1", "word2" and all words beginning with "test":
+Es können weitere Wörter zu den highlights hinzugefügt werden, mit der Option
+<<option_weechat.look.highlight,weechat.look.highlight>>,  zum Beispiel um
+neben dem eigenen Nick auch die Wörter "Wort1","Wort2" und alle Wörter die mit
+"Test" beginnen zu highlighten:
 
 ----
-/set weechat.look.highlight word1,word2,test*
+/set weechat.look.highlight Wort1,Wort2,Test*
 ----
 
-If you need a more specific rule for the word, you can use regular expressions
-with the option <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
-for example to highlight words "flashcode", "flashcöde" and "flashy":
+Wird eine spezielle Regel benötigt, dann können reguläre Ausdrücke
+verwendet werden. Dazu sollte man folgende Option nutzen:
+<<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
+um zum Beispiel die Wörter "flashcode", "flashcöde" und "flashy"
+zu highlighten:
 
 ----
 /set weechat.look.highlight_regex flashc[oö]de|flashy
 ----
 
-The delimiters around words to highlight can be customized with the option
-<<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
+Die Trennzeichen die Wörter umschließen können angepasst werden, mit der
+Option:  <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
 
 [[highlights_tags]]
-==== Add tags to highlight
+==== Tags zu highlight hinzufügen
 
-Lines displayed can contain "tags", which give some info about the origin of
-message or the message itself. +
-You can display tags with the command `/debug tags` (same command to hide them).
+Zeilen die in einem Buffer dargestellt werden enthalten "tags" welche zusätzliche
+Informationen über die Herkunft der Nachricht oder über die Nachricht selbst
+beinhalten. + Diese "tags" können mit dem Befehl `/debug tags` dargestellt werden
+(um die Anzeige wieder zu entfernen, nochmals den Befehl ausführen).
 
-You can add specific tags to highlight with the option
+Um Tags als Highlights zu nutzen wird folgende Option verwendet:
 <<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
-Tags are separated by commas, and multiple tags can be separated by "+" to do
-a logical "and" between them.
+Tags werden durch Kommata getrennt und mehrere Tags können mit 
+"+" genutzt werden um ein logischen "und" zu erstellen.
 
-For example to highlight all messages from nick "FlashCode" and all notices
-from nicks beginning with "toto":
+Zum Beispiel um alle Nachrichten vom Nick "FlashCode" und alle notice-Nachrichten
+von Nicks die mit "toto" beginnen zu highlighten:
 
 ----
 /set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
 ----
 
 [[highlights_regex_buffer]]
-==== Set extra highlights on buffer
+==== Highlights mit regulärem Ausdruck für einen Buffer nutzen
 
-You can force highlight using a regular expression with the buffer property
-"highlight_regex".
+Man kann reguläre Ausdrücke für Highlights in einem Buffer nutzen indem man
+die Eigenschaft des Buffers mittels "highlight_regex" anpasst.
 
-For example to force the highlight on all messages in the current buffer:
+Um zum Beispiel jede Nachricht im aktuellen Buffer als Highlight-Nachricht einzustufen:
 
 ----
 /buffer set highlight_regex .*
 ----
 
 [NOTE]
-The buffer property "highlight_regex" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`.
+Die Buffer-Eigenschaft "highlight_regex" ist keine permanente Einstellung und wird nicht
+in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
+das Skript _buffer_autoset.py_: Um das Skript zu installieren `/script install buffer_autoset.py`
+und um eine Hilfe zu erhalten wie man es nutzt: `/help autosetbuffer`.
 
 [[key_bindings]]
 === Standard Tastenbelegung
