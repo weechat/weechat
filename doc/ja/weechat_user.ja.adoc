@@ -135,6 +135,15 @@ OS X では http://brew.sh/[Homebrew] を使ってください:
 ^(4)^ Python はバージョン 2.7 をお勧めします (全てのスクリプトはバージョン 2.7
 で正しく動きますが、バージョン 2.6 以下または 3.0 以上では正しく動きません)。
 
+// TRANSLATION MISSING
+If you are using a Debian/Ubuntu based distribution, and if you have some
+"deb-src" source entries in your file _/etc/apt/sources.list_, you can install
+all dependencies with the command:
+
+----
+# apt-get build-dep weechat
+----
+
 [[compile_with_cmake]]
 ==== cmake によるコンパイル
 

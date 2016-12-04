@@ -135,6 +135,15 @@ mechanizmu ECDSA-NIST256P-CHALLENGE. +
 ^(4)^ Zalecana wersja Pythona to 2.7 (wszystkie skrypty działają z wersją 2.7,
 ale nie w wersjami ≤ 2.6 lub ≥ 3.0).
 
+// TRANSLATION MISSING
+If you are using a Debian/Ubuntu based distribution, and if you have some
+"deb-src" source entries in your file _/etc/apt/sources.list_, you can install
+all dependencies with the command:
+
+----
+# apt-get build-dep weechat
+----
+
 [[compile_with_cmake]]
 ==== Kompilacja z użyciem cmake
 
