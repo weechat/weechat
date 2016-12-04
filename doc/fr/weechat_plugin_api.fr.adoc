@@ -9330,12 +9330,14 @@ Cinq signaux peuvent être envoyés pour installer un script, selon le langage 
 La fonction de rappel effectuera les actions suivantes lorsqu'elle recevra le
 signal :
 
-. déchargement et suppression du script installé
-. déplacement du nouveau script vers le répertoire _~/.weechat/xxx/_ (où _xxx_
-  est le langage)
-. création d'un lien vers le nouveau script dans le répertoire
-  _~/.weechat/xxx/autoload/_
-. chargement du nouveau script
+. Déchargement et suppression du script installé.
+. Déplacement du nouveau script vers le répertoire _~/.weechat/xxx/_ (où _xxx_
+  est le langage).
+. Création d'un lien vers le nouveau script dans le répertoire
+  _~/.weechat/xxx/autoload/_ (seulement si le script était déjà automatiquement
+  chargé ou si l'option _script.scripts.autoload_ est activée pour un nouveau
+  script).
+. Chargement du nouveau script (si le script était chargé).
 
 Ces signaux sont utilisés par l'extension _script_ pour installer des scripts.
 
