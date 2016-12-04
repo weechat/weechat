@@ -64,8 +64,8 @@ Les paquets binaires sont disponibles pour beaucoup de distributions, dont :
 
 * Arch Linux : `pacman -S weechat`
 * Cygwin (Windows) : sélectionnez les paquets WeeChat dans setup.exe
-* Debian (ou toute distribution compatible Debian) :
-  `apt-get install weechat-curses`
+* Debian/Ubuntu (ou toute distribution compatible Debian) :
+  `apt-get install weechat-curses weechat-plugins`
 * Fedora Core : `dnf install weechat`
 * Gentoo : `emerge weechat`
 * Mandriva/RedHat (ou toute distribution compatible avec les RPM) :
