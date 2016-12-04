@@ -15930,7 +15930,7 @@ Esempio in C:
 
 struct t_gui_lines *own_lines;
 struct t_gui_line *line;
-struct t_gui_line_data  *line_data;
+struct t_gui_line_data *line_data;
 struct t_hdata *hdata;
 struct t_hashtable *hashtable;
 char str_date[64];
