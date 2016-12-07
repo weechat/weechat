@@ -137,10 +137,10 @@ ECDSA-NIST256P-CHALLENGE durchzuführen. +
 ^(4)^ Die empfohlene Version ist 2.7 (alle Skripten laufen mit der Version 2.7,
 aber nicht mit Version ≤ 2.6 oder ≥ 3.0).
 
-// TRANSLATION MISSING
-If you are using a Debian/Ubuntu based distribution, and if you have some
-"deb-src" source entries in your file _/etc/apt/sources.list_, you can install
-all dependencies with the command:
+Falls eine Debian/Ubuntu basierte Distribution genutzt wird und man einen
+"deb-src" Quelleintrag in _/etc/apt/sources.list_ eingetragen hat, dann ist
+es mit folgendem Befehl möglich alle notwendigen Abhängigkeiten zu
+installieren:
 
 ----
 # apt-get build-dep weechat
