@@ -4858,6 +4858,14 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  notify . . . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[IRC_SERVER_OPTION_NOTIFY]));
+        /* umodes*/
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_UMODES]))
+            weechat_printf (NULL, "  umodes . . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_UMODES));
+        else
+            weechat_printf (NULL, "  umodes . . . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_UMODES]));
     }
     else
     {

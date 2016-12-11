@@ -82,6 +82,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_MSG_PART,             /* default part message          */
     IRC_SERVER_OPTION_MSG_QUIT,             /* default quit message          */
     IRC_SERVER_OPTION_NOTIFY,               /* notify list                   */
+    IRC_SERVER_OPTION_UMODES,               /* umodes to set once connected  */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };

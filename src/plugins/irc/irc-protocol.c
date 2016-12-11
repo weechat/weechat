@@ -2453,6 +2453,7 @@ IRC_PROTOCOL_CALLBACK(wallops)
 IRC_PROTOCOL_CALLBACK(001)
 {
     char *server_command, **commands, **ptr_command, *vars_replaced, *away_msg;
+    const char *umodes;
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
@@ -2491,6 +2492,16 @@ IRC_PROTOCOL_CALLBACK(001)
     /* send signal "irc_server_connected" with server name */
     (void) weechat_hook_signal_send ("irc_server_connected",
                                      WEECHAT_HOOK_SIGNAL_STRING, server->name);
+
+    /* set umodes when connected */
+    umodes = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_UMODES);
+    if (umodes && umodes[0])
+    {
+        irc_server_sendf (server,
+                          IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "MODE %s %s",
+                          server->nick, umodes);
+    }
 
     /* execute command when connected */
     server_command = weechat_string_eval_expression (IRC_SERVER_OPTION_STRING(server,
