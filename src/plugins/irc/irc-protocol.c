@@ -2453,7 +2453,7 @@ IRC_PROTOCOL_CALLBACK(wallops)
 IRC_PROTOCOL_CALLBACK(001)
 {
     char *server_command, **commands, **ptr_command, *vars_replaced, *away_msg;
-    const char *usermode;
+    char *usermode;
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
@@ -2494,7 +2494,9 @@ IRC_PROTOCOL_CALLBACK(001)
                                      WEECHAT_HOOK_SIGNAL_STRING, server->name);
 
     /* set usermode when connected */
-    usermode = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERMODE);
+    usermode = weechat_string_eval_expression (
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERMODE),
+        NULL, NULL, NULL);
     if (usermode && usermode[0])
     {
         irc_server_sendf (server,
@@ -2502,11 +2504,13 @@ IRC_PROTOCOL_CALLBACK(001)
                           "MODE %s %s",
                           server->nick, usermode);
     }
+    if (usermode)
+        free (usermode);
 
     /* execute command when connected */
-    server_command = weechat_string_eval_expression (IRC_SERVER_OPTION_STRING(server,
-                                                                              IRC_SERVER_OPTION_COMMAND),
-                                                     NULL, NULL, NULL);
+    server_command = weechat_string_eval_expression (
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND),
+        NULL, NULL, NULL);
     if (server_command && server_command[0])
     {
         /* split command on ';' which can be escaped with '\;' */
@@ -2531,8 +2535,9 @@ IRC_PROTOCOL_CALLBACK(001)
             irc_server_autojoin_channels (server);
     }
     else
+    {
         irc_server_autojoin_channels (server);
-
+    }
     if (server_command)
         free (server_command);
 
