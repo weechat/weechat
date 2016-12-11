@@ -2244,12 +2244,14 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_UMODES:
+        case IRC_SERVER_OPTION_USERMODE:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("umode(s) to set after connection to server and before "
-                   "auto-join of channels"),
+                N_("usermode to set after connection to server and before "
+                   "executing command and the auto-join of channels; this "
+                   "option gives same result as defining a command "
+                   "\"/mode $nick <mode>\""),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,

@@ -617,6 +617,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `+on+`)
 
+* [[option_irc.server_default.usermode]] *irc.server_default.usermode*
+** Beschreibung: pass:none[usermode to set after connection to server and before executing command and the auto-join of channels; this option gives same result as defining a command "/mode $nick <mode>"]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+
 * [[option_irc.server_default.username]] *irc.server_default.username*
 ** Beschreibung: pass:none[Username der auf dem Server genutzt werden soll (Hinweis: Inhalt wird evaluiert, siehe /help eval)]
 ** Typ: Zeichenkette

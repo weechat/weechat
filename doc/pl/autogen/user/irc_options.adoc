@@ -617,6 +617,11 @@
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `+on+`)
 
+* [[option_irc.server_default.usermode]] *irc.server_default.usermode*
+** opis: pass:none[usermode to set after connection to server and before executing command and the auto-join of channels; this option gives same result as defining a command "/mode $nick <mode>"]
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `+""+`)
+
 * [[option_irc.server_default.username]] *irc.server_default.username*
 ** opis: pass:none[nazwa użytkownika do użycia na serwerze (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg

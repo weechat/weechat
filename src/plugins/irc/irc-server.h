@@ -68,6 +68,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_USERNAME,      /* user name                            */
     IRC_SERVER_OPTION_REALNAME,      /* real name                            */
     IRC_SERVER_OPTION_LOCAL_HOSTNAME,/* custom local hostname                */
+    IRC_SERVER_OPTION_USERMODE,      /* usermode to set once connected       */
     IRC_SERVER_OPTION_COMMAND,       /* command to run once connected        */
     IRC_SERVER_OPTION_COMMAND_DELAY, /* delay after execution of command     */
     IRC_SERVER_OPTION_AUTOJOIN,      /* channels to automatically join       */
@@ -82,7 +83,6 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_MSG_PART,             /* default part message          */
     IRC_SERVER_OPTION_MSG_QUIT,             /* default quit message          */
     IRC_SERVER_OPTION_NOTIFY,               /* notify list                   */
-    IRC_SERVER_OPTION_UMODES,               /* umodes to set once connected  */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };

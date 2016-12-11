@@ -617,6 +617,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `+on+`)
 
+* [[option_irc.server_default.usermode]] *irc.server_default.usermode*
+** 説明: pass:none[usermode to set after connection to server and before executing command and the auto-join of channels; this option gives same result as defining a command "/mode $nick <mode>"]
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `+""+`)
+
 * [[option_irc.server_default.username]] *irc.server_default.username*
 ** 説明: pass:none[サーバで使用するユーザ名 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
