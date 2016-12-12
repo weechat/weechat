@@ -618,7 +618,7 @@
 ** Werte: on, off (Standardwert: `+on+`)
 
 * [[option_irc.server_default.usermode]] *irc.server_default.usermode*
-** Beschreibung: pass:none[usermode to set after connection to server and before executing command and the auto-join of channels; this option gives same result as defining a command "/mode $nick <mode>" (note: content is evaluated, see /help eval)]
+** Beschreibung: pass:none[Usermode der direkt nach der Verbindung zum Server gesetzt werden soll. Dies geschieht bevor Befehle für den Server ausgeführt werden und bevor die auto-join für Channels abgearbeitet wird; diese Option ersetzt den Befehl "/mode $nick <mode>" (Hinweis: Inhalt wird evaluiert, siehe /help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
 
