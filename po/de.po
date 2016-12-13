@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-12-13 18:21+0100\n"
-"PO-Revision-Date: 2016-12-11 20:05+0100\n"
+"PO-Revision-Date: 2016-12-13 18:49+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -375,8 +375,7 @@ msgstr "%sFehler: Der Hauptbuffer von WeeChat kann nicht geschlossen werden"
 
 #, c-format
 msgid "%sError: unable to set notify level \"%s\""
-msgstr ""
-"%sFehler: Stufe für Benachrichtigung, \"%s\", kann nicht gesetzt werden"
+msgstr "%sFehler: Benachrichtigungsstufe, \"%s\", kann nicht gesetzt werden"
 
 #, c-format
 msgid "Local variables for buffer \"%s\":"
@@ -12979,9 +12978,9 @@ msgstr "%s%s: Datei %s besitzt fehlerhafte CRC32 Prüfsumme"
 msgid "%s%s: CRC32 error while resuming"
 msgstr "%s%s: CRC32 Fehler bei der Wiederaufnahme"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to fork (%s)"
-msgstr "%s%s: es kann kein fork erstellt werden"
+msgstr "%s%s: ein Fork kann nicht erstellt werden (%s)"
 
 #, c-format
 msgid ""
