@@ -30,6 +30,7 @@ New features::
 
 Improvements::
 
+  * core, xfer: display more information on fork errors (issue #573)
   * core: add a slash before commands completed in arguments of /command, /debug time, /key bind, /key bindctxt, /mute, /repeat, /wait
   * core: add a warning in header of configuration files to not edit by hand (issue #851)
   * alias: add a slash before commands completed in arguments of /alias
@@ -64,7 +65,7 @@ New features::
 
 Improvements::
 
-  * core, irc, xfer: display more information in memory allocation errors (issue #573)
+  * core, irc, xfer: display more information on memory allocation errors (issue #573)
   * api: remove functions printf_date() and printf_tags()
   * irc: rename server options "default_msg_{kick|part|quit}" to "msg_{kick|part|quit}", evaluate them
   * relay: allow escape of comma in command "init" (weechat protocol) (issue #730)

@@ -2062,6 +2062,7 @@ void
 hook_process_run (struct t_hook *hook_process)
 {
     int pipes[3][2], timeout, max_calls, rc, i;
+    char str_error[1024];
     long interval;
     pid_t pid;
 
@@ -2100,12 +2101,15 @@ hook_process_run (struct t_hook *hook_process)
     {
         /* fork failed */
         case -1:
+            snprintf (str_error, sizeof (str_error),
+                      "fork error: %s",
+                      strerror (errno));
             (void) (HOOK_PROCESS(hook_process, callback))
                 (hook_process->callback_pointer,
                  hook_process->callback_data,
                  HOOK_PROCESS(hook_process, command),
                  WEECHAT_HOOK_PROCESS_ERROR,
-                 NULL, NULL);
+                 NULL, str_error);
             unhook (hook_process);
             return;
         /* child process */

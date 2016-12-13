@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-12-11 13:49+0100\n"
+"POT-Creation-Date: 2016-12-13 18:21+0100\n"
 "PO-Revision-Date: 2016-09-27 12:29+0000\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -12461,8 +12461,8 @@ msgstr "%s%s: CRC32 do ficheiro %s incorreto"
 msgid "%s%s: CRC32 error while resuming"
 msgstr "%s%s: erro de CRC32 ao resumir"
 
-#, c-format
-msgid "%s%s: unable to fork"
+#, fuzzy, c-format
+msgid "%s%s: unable to fork (%s)"
 msgstr "%s%s: não foi possível criar processo (fork)"
 
 #, c-format

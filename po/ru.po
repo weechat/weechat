@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-12-11 13:49+0100\n"
+"POT-Creation-Date: 2016-12-13 18:21+0100\n"
 "PO-Revision-Date: 2016-09-03 08:24+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10720,7 +10720,7 @@ msgid "%s%s: CRC32 error while resuming"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to fork"
+msgid "%s%s: unable to fork (%s)"
 msgstr "%s DCC: не могу forkнуться\n"
 
 #, fuzzy, c-format

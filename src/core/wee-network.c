@@ -1639,6 +1639,7 @@ void
 network_connect_with_fork (struct t_hook *hook_connect)
 {
     int child_pipe[2], child_socket[2], rc, i;
+    char str_error[1024];
 #ifdef HAVE_GNUTLS
     const char *pos_error;
 #endif /* HAVE_GNUTLS */
@@ -1736,11 +1737,14 @@ network_connect_with_fork (struct t_hook *hook_connect)
     {
         /* fork failed */
         case -1:
+            snprintf (str_error, sizeof (str_error),
+                      "fork error: %s",
+                      strerror (errno));
             (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_pointer,
                  hook_connect->callback_data,
                  WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
-                 0, -1, "fork", NULL);
+                 0, -1, str_error, NULL);
             unhook (hook_connect);
             return;
         /* child process */
