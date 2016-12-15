@@ -618,7 +618,7 @@
 ** 値: on, off (デフォルト値: `+on+`)
 
 * [[option_irc.server_default.usermode]] *irc.server_default.usermode*
-** 説明: pass:none[usermode to set after connection to server and before executing command and the auto-join of channels; this option gives same result as defining a command "/mode $nick <mode>" (note: content is evaluated, see /help eval)]
+** 説明: pass:none[user mode(s) to set after connection to server and before executing command and the auto-join of channels; examples: "+R" (to set mode "R"), "+R-i" (to set mode "R" and remove "i"); see /help mode for the complete mode syntax (note: content is evaluated, see /help eval)]
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `+""+`)
 

@@ -618,7 +618,7 @@
 ** valeurs: on, off (valeur par défaut: `+on+`)
 
 * [[option_irc.server_default.usermode]] *irc.server_default.usermode*
-** description: pass:none[mode utilisateur à définir après la connexion au serveur et avant d'exécuter la commande et de rejoindre automatiquement les canaux ; cette option donne le même résultat que la définition de la commande "/mode $nick <mode>" (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[mode(s) utilisateur à définir après la connexion au serveur et avant d'exécuter la commande et de rejoindre automatiquement les canaux ; exemples : "+R" (pour définir le mode "R"), "+R-i" (pour définir le mode "R" et supprimer "i") ; voir /help mode pour la syntaxe complète du mode (note : le contenu est évalué, voir /help eval)]
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `+""+`)
 

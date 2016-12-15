@@ -1985,11 +1985,11 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("usermode to set after connection to server and before "
-                   "executing command and the auto-join of channels; this "
-                   "option gives same result as defining a command "
-                   "\"/mode $nick <mode>\" "
-                   "(note: content is evaluated, see /help eval)"),
+                N_("user mode(s) to set after connection to server and before "
+                   "executing command and the auto-join of channels; examples: "
+                   "\"+R\" (to set mode \"R\"), \"+R-i\" (to set mode \"R\" "
+                   "and remove \"i\"); see /help mode for the complete mode "
+                   "syntax (note: content is evaluated, see /help eval)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
