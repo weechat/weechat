@@ -73,7 +73,10 @@ list(APPEND EXTRA_LIBS "m")
 
 list(APPEND EXTRA_LIBS ${CURL_LIBRARIES})
 
-list(APPEND EXTRA_LIBS "resolv")
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  # link with resolv lib on Mac OS X
+  list(APPEND EXTRA_LIBS "resolv")
+endif()
 
 include_directories(.. ../../core ../../plugins ${NCURSES_INCLUDE_PATH})
 
