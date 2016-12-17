@@ -2462,7 +2462,10 @@ config_weechat_init_options ()
     config_look_align_multiline_words = config_file_new_option (
         weechat_config_file, ptr_section,
         "align_multiline_words", "boolean",
-        N_("align multiline words according to weechat.look.align_end_of_lines"),
+        N_("alignment for multiline words according to option "
+           "weechat.look.align_end_of_lines; if disabled, the multiline words "
+           "will have no alignment will not be aligned, which can be useful "
+           "to not break long URLs"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         &config_change_buffers, NULL, NULL,
