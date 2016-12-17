@@ -412,6 +412,11 @@
 ** タイプ: 整数
 ** 値: time, buffer, prefix, suffix, message (デフォルト値: `+message+`)
 
+* [[option_weechat.look.align_multiline_words]] *weechat.look.align_multiline_words*
+** 説明: pass:none[alignment for multiline words according to option weechat.look.align_end_of_lines; if disabled, the multiline words will have no alignment will not be aligned, which can be useful to not break long URLs]
+** タイプ: ブール
+** 値: on, off (デフォルト値: `+on+`)
+
 * [[option_weechat.look.bar_more_down]] *weechat.look.bar_more_down*
 ** 説明: pass:none[バーを下方向にスクロール出来る場合に表示される文字列 (水平方向詰め以外の属性を持つバー)]
 ** タイプ: 文字列

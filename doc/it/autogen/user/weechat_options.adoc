@@ -412,6 +412,11 @@
 ** tipo: intero
 ** valori: time, buffer, prefix, suffix, message (valore predefinito: `+message+`)
 
+* [[option_weechat.look.align_multiline_words]] *weechat.look.align_multiline_words*
+** descrizione: pass:none[alignment for multiline words according to option weechat.look.align_end_of_lines; if disabled, the multiline words will have no alignment will not be aligned, which can be useful to not break long URLs]
+** tipo: bool
+** valori: on, off (valore predefinito: `+on+`)
+
 * [[option_weechat.look.bar_more_down]] *weechat.look.bar_more_down*
 ** descrizione: pass:none[stringa visualizzata quando si può effettuare lo scroll della barra il basso (per le barre che hanno il riempimento "horizontal")]
 ** tipo: stringa
