@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add option weechat.look.align_multiline_words (issue #411, issue #802)
   * core: add optional command prefix in completion templates "commands", "plugins_commands" and ""weechat_commands"
   * core: add optional arguments in completion template, sent to the callback
   * core: add option "time" in command /debug
