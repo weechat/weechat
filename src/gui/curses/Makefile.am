@@ -45,7 +45,8 @@ weechat_LDADD = ./../../core/lib_weechat_core.a \
                 $(GCRYPT_LFLAGS) \
                 $(GNUTLS_LFLAGS) \
                 $(CURL_LFLAGS) \
-                -lm
+                -lm \
+                -lresolv
 
 weechat_SOURCES = main.c
 

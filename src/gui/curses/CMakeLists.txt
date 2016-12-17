@@ -73,6 +73,8 @@ list(APPEND EXTRA_LIBS "m")
 
 list(APPEND EXTRA_LIBS ${CURL_LIBRARIES})
 
+list(APPEND EXTRA_LIBS "resolv")
+
 include_directories(.. ../../core ../../plugins ${NCURSES_INCLUDE_PATH})
 
 add_library(weechat_gui_curses STATIC ${LIB_GUI_CURSES_SRC})
