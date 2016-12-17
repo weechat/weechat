@@ -133,6 +133,7 @@ extern struct t_config_option *config_startup_display_version;
 extern struct t_config_option *config_startup_sys_rlimit;
 
 extern struct t_config_option *config_look_align_end_of_lines;
+extern struct t_config_option *config_look_align_multiline_words;
 extern struct t_config_option *config_look_bar_more_down;
 extern struct t_config_option *config_look_bar_more_left;
 extern struct t_config_option *config_look_bar_more_right;
