@@ -24,7 +24,7 @@ image:https://travis-ci.org/weechat/weechat.svg?branch=master["Build Status", li
 * Developed from scratch.
 * Free software, released under GPLv3.
 
-image::http://static.weechat.org/images/screenshots/weechat/medium/weechat_2013-04-27_phlux_shadow.png[align="center"]
+image::https://weechat.org/media/images/screenshots/weechat/medium/weechat_2013-04-27_phlux_shadow.png[align="center"]
 
 == Install
 
