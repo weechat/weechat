@@ -5,204 +5,245 @@
 * [[option_script.color.status_autoloaded]] *script.color.status_autoloaded*
 ** descrizione: pass:none[colore per lo status "caricato automaticamente" ("a")]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+cyan+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+cyan+`
 
 * [[option_script.color.status_held]] *script.color.status_held*
 ** descrizione: pass:none[colore per lo status "bloccato" ("H")]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+white+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+white+`
 
 * [[option_script.color.status_installed]] *script.color.status_installed*
 ** descrizione: pass:none[colore per lo status "installato" ("i")]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+lightcyan+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+lightcyan+`
 
 * [[option_script.color.status_obsolete]] *script.color.status_obsolete*
 ** descrizione: pass:none[colore per lo status "obsoleto" ("N")]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+lightmagenta+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+lightmagenta+`
 
 * [[option_script.color.status_popular]] *script.color.status_popular*
 ** descrizione: pass:none[colore per lo status "popolare" ("*")]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+yellow+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+yellow+`
 
 * [[option_script.color.status_running]] *script.color.status_running*
 ** descrizione: pass:none[colore per lo status "in esecuzione" ("r")]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+lightgreen+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+lightgreen+`
 
 * [[option_script.color.status_unknown]] *script.color.status_unknown*
 ** descrizione: pass:none[colore per lo status "sconosciuto" ("?")]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+lightred+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+lightred+`
 
 * [[option_script.color.text]] *script.color.text*
 ** descrizione: pass:none[colore del testo nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+default+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+default+`
 
 * [[option_script.color.text_bg]] *script.color.text_bg*
 ** descrizione: pass:none[colore di sfondo nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+default+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+default+`
 
 * [[option_script.color.text_bg_selected]] *script.color.text_bg_selected*
 ** descrizione: pass:none[colore di sfondo per la riga selezionata nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+red+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+red+`
 
 * [[option_script.color.text_date]] *script.color.text_date*
 ** descrizione: pass:none[colore del testo delle date nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+default+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+default+`
 
 * [[option_script.color.text_date_selected]] *script.color.text_date_selected*
 ** descrizione: pass:none[colore del testo delle date per la riga selezionata nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+white+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+white+`
 
 * [[option_script.color.text_delimiters]] *script.color.text_delimiters*
 ** descrizione: pass:none[colore del testo dei delimitatori nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+default+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+default+`
 
 * [[option_script.color.text_description]] *script.color.text_description*
 ** descrizione: pass:none[colore del testo della descrizione nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+default+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+default+`
 
 * [[option_script.color.text_description_selected]] *script.color.text_description_selected*
 ** descrizione: pass:none[colore del testo della descrizione per la riga selezionata nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+white+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+white+`
 
 * [[option_script.color.text_extension]] *script.color.text_extension*
 ** descrizione: pass:none[colore del testo dell'estensione nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+default+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+default+`
 
 * [[option_script.color.text_extension_selected]] *script.color.text_extension_selected*
 ** descrizione: pass:none[colore del testo dell'estensione per la riga selezionata nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+white+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+white+`
 
 * [[option_script.color.text_name]] *script.color.text_name*
 ** descrizione: pass:none[colore del testo del nome dello script nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+cyan+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+cyan+`
 
 * [[option_script.color.text_name_selected]] *script.color.text_name_selected*
 ** descrizione: pass:none[colore del testo del nome dello script per la riga selezionata nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+lightcyan+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+lightcyan+`
 
 * [[option_script.color.text_selected]] *script.color.text_selected*
 ** descrizione: pass:none[colore del testo della riga selezionata nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+white+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+white+`
 
 * [[option_script.color.text_tags]] *script.color.text_tags*
 ** descrizione: pass:none[colore del testo dei tag nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+brown+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+brown+`
 
 * [[option_script.color.text_tags_selected]] *script.color.text_tags_selected*
 ** descrizione: pass:none[colore del testo dei tag per la riga selezionata nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+yellow+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+yellow+`
 
 * [[option_script.color.text_version]] *script.color.text_version*
 ** descrizione: pass:none[colore del testo della versione nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+magenta+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+magenta+`
 
 * [[option_script.color.text_version_loaded]] *script.color.text_version_loaded*
 ** descrizione: pass:none[colore del testo della versione caricata nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+default+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+default+`
 
 * [[option_script.color.text_version_loaded_selected]] *script.color.text_version_loaded_selected*
 ** descrizione: pass:none[colore del testo della versione attiva per la riga selezionata nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+white+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+white+`
 
 * [[option_script.color.text_version_selected]] *script.color.text_version_selected*
 ** descrizione: pass:none[colore del testo della versione per la riga selezionata nel buffer degli script]
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `+lightmagenta+`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+lightmagenta+`
 
 * [[option_script.look.columns]] *script.look.columns*
 ** descrizione: pass:none[format of columns displayed in script buffer: following column identifiers are replaced by their value: %a=author, %d=description, %D=date added, %e=extension, %l=language, %L=license, %n=name with extension, %N=name, %r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version loaded, %w=min_weechat, %W=max_weechat)]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `+"%s %n %V %v %u | %d | %t"+`)
+** valori: qualsiasi stringa
+** valore predefinito: `+"%s %n %V %v %u | %d | %t"+`
 
 * [[option_script.look.diff_color]] *script.look.diff_color*
 ** descrizione: pass:none[colora l'output di diff]
 ** tipo: bool
-** valori: on, off (valore predefinito: `+on+`)
+** valori: on, off
+** valore predefinito: `+on+`
 
 * [[option_script.look.diff_command]] *script.look.diff_command*
 ** descrizione: pass:none[comando usato per mostrare le differenze tra lo script installato e la nuova versione nel repository ("auto" = rileva automaticamente il comando diff (git o diff), valore vuoto = disabilita diff, altra stringa = nome del comando, ad esempio "diff")]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `+"auto"+`)
+** valori: qualsiasi stringa
+** valore predefinito: `+"auto"+`
 
 * [[option_script.look.display_source]] *script.look.display_source*
 ** descrizione: pass:none[mostra il codice sorgente dello script sul buffer ed i relativi dettagli (lo script viene scaricato in un file temporaneo)]
 ** tipo: bool
-** valori: on, off (valore predefinito: `+on+`)
+** valori: on, off
+** valore predefinito: `+on+`
 
 * [[option_script.look.quiet_actions]] *script.look.quiet_actions*
 ** descrizione: pass:none[quiet actions on script buffer: do not display messages on core buffer when scripts are installed/removed/loaded/unloaded (only errors are displayed)]
 ** tipo: bool
-** valori: on, off (valore predefinito: `+on+`)
+** valori: on, off
+** valore predefinito: `+on+`
 
 * [[option_script.look.sort]] *script.look.sort*
 ** descrizione: pass:none[default sort keys for scripts: comma-separated list of identifiers: a=author, A=autoloaded, d=date added, e=extension, i=installed, l=language, n=name, o=obsolete, p=popularity, r=running, u=date updated; char "-" can be used before identifier to reverse order; example: "i,u": installed scripts first, sorted by update date]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `+"p,n"+`)
+** valori: qualsiasi stringa
+** valore predefinito: `+"p,n"+`
 
 * [[option_script.look.translate_description]] *script.look.translate_description*
 ** descrizione: pass:none[translate description of scripts (if translation is available in your language, otherwise English version is used)]
 ** tipo: bool
-** valori: on, off (valore predefinito: `+on+`)
+** valori: on, off
+** valore predefinito: `+on+`
 
 * [[option_script.look.use_keys]] *script.look.use_keys*
 ** descrizione: pass:none[use keys alt+X in script buffer to do actions on scripts (alt+i = install, alt+r = remove, ...); if disabled, only the input is allowed: i, r, ...]
 ** tipo: bool
-** valori: on, off (valore predefinito: `+on+`)
+** valori: on, off
+** valore predefinito: `+on+`
 
 * [[option_script.scripts.autoload]] *script.scripts.autoload*
 ** descrizione: pass:none[autoload scripts installed (make a link in "autoload" directory to script in parent directory)]
 ** tipo: bool
-** valori: on, off (valore predefinito: `+on+`)
+** valori: on, off
+** valore predefinito: `+on+`
 
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** descrizione: pass:none[local cache expiration time, in minutes (-1 = never expires, 0 = always expire)]
 ** tipo: intero
-** valori: -1 .. 525600 (valore predefinito: `+1440+`)
+** valori: -1 .. 525600
+** valore predefinito: `+1440+`
 
 * [[option_script.scripts.download_timeout]] *script.scripts.download_timeout*
 ** descrizione: pass:none[timeout (in seconds) for download of scripts and list of scripts]
 ** tipo: intero
-** valori: 1 .. 3600 (valore predefinito: `+30+`)
+** valori: 1 .. 3600
+** valore predefinito: `+30+`
 
 * [[option_script.scripts.hold]] *script.scripts.hold*
 ** descrizione: pass:none[scripts to "hold": comma-separated list of scripts which will never been upgraded and can not be removed, for example: "buffers.pl,iset.pl"]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `+""+`)
+** valori: qualsiasi stringa
+** valore predefinito: `+""+`
 
 * [[option_script.scripts.path]] *script.scripts.path*
 ** descrizione: pass:none[local cache directory for scripts; "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `+"%h/script"+`)
+** valori: qualsiasi stringa
+** valore predefinito: `+"%h/script"+`
 
 * [[option_script.scripts.url]] *script.scripts.url*
 ** descrizione: pass:none[URL for file with list of scripts; by default HTTPS is forced, see option script.scripts.url_force_https]
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `+"http://weechat.org/files/plugins.xml.gz"+`)
+** valori: qualsiasi stringa
+** valore predefinito: `+"http://weechat.org/files/plugins.xml.gz"+`
 
 * [[option_script.scripts.url_force_https]] *script.scripts.url_force_https*
 ** descrizione: pass:none[force use of HTTPS for downloads (index and scripts); you should disable this option only if you have problems with the downloads]
 ** tipo: bool
-** valori: on, off (valore predefinito: `+on+`)
+** valori: on, off
+** valore predefinito: `+on+`

@@ -5,1049 +5,1259 @@
 * [[option_weechat.color.bar_more]] *weechat.color.bar_more*
 ** Beschreibung: pass:none[Farbe des "+" beim Scrollen von Info-Bars]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightmagenta+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+lightmagenta+`
 
 * [[option_weechat.color.chat]] *weechat.color.chat*
 ** Beschreibung: pass:none[Farbe des Chat-Textes]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.color.chat_bg]] *weechat.color.chat_bg*
 ** Beschreibung: pass:none[Hintergrundfarbe des Chats]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.color.chat_buffer]] *weechat.color.chat_buffer*
 ** Beschreibung: pass:none[Textfarbe für den Namen des Buffers]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+white+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+white+`
 
 * [[option_weechat.color.chat_channel]] *weechat.color.chat_channel*
 ** Beschreibung: pass:none[Farbe für den Channel-Namen]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+white+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+white+`
 
 * [[option_weechat.color.chat_day_change]] *weechat.color.chat_day_change*
 ** Beschreibung: pass:none[Textfarbe für die Nachricht die beim Datumswechsel angezeigt wird]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+cyan+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+cyan+`
 
 * [[option_weechat.color.chat_delimiters]] *weechat.color.chat_delimiters*
 ** Beschreibung: pass:none[Farbe der Infobar-Trennzeichen]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+green+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+green+`
 
 * [[option_weechat.color.chat_highlight]] *weechat.color.chat_highlight*
 ** Beschreibung: pass:none[Textfarbe für Highlight-Präfix]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+yellow+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+yellow+`
 
 * [[option_weechat.color.chat_highlight_bg]] *weechat.color.chat_highlight_bg*
 ** Beschreibung: pass:none[Hintergrundfarbe für Highlight-Präfix]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+magenta+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+magenta+`
 
 * [[option_weechat.color.chat_host]] *weechat.color.chat_host*
 ** Beschreibung: pass:none[Textfarbe für Host-Namen]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+cyan+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+cyan+`
 
 * [[option_weechat.color.chat_inactive_buffer]] *weechat.color.chat_inactive_buffer*
 ** Beschreibung: pass:none[Textfarbe für inaktive Zeilen im Chatfenster (Buffer wurde mit anderen Buffern zusammengefügt und der Buffer ist nicht aktiv)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.color.chat_inactive_window]] *weechat.color.chat_inactive_window*
 ** Beschreibung: pass:none[Textfarbe für Chat wenn das Fenster inaktiv ist (betrifft nicht das aktuell ausgewählte Fenster)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.color.chat_nick]] *weechat.color.chat_nick*
 ** Beschreibung: pass:none[Textfarbe für Nicks im Chatfenster: Farbe wird für einige Server-Nachrichten verwendet und als Ersatz falls eine Farbe für einen Nick nicht gefunden wird;  normalerweise wird die Farbe von der Option weechat.color.chat_nick_colors bereitgestellt]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightcyan+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+lightcyan+`
 
 * [[option_weechat.color.chat_nick_colors]] *weechat.color.chat_nick_colors*
 ** Beschreibung: pass:none[Textfarbe für Nicks (durch Kommata getrennte Liste von Farben. Eine Hintergrundfarbe kann durch das folgende Format genutzt werden: "fg:bg". Zum Beispiel: "lightred:blue")]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"+`
 
 * [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
 ** Beschreibung: pass:none[Textfarbe für Nicks die nicht angemeldet sind (nicht in der Benutzerliste aufgeführt sind); diese Farbeinstellung wird aber nur verwendet wenn die Einstellung weechat.look.color_nick_offline aktiviert ist]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
 ** Beschreibung: pass:none[Textfarbe bei Highlights für Nicks die nicht angemeldet sind; diese Farbeinstellung wird aber nur verwendet wenn die Einstellung weechat.look.color_nick_offline aktiviert ist]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
 ** Beschreibung: pass:none[Hintergrundfarbe bei Highlights für Nicks die nicht angemeldet sind, diese Farbeinstellung wird aber nur verwendet wenn die Einstellung weechat.look.color_nick_offline aktiviert ist]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+blue+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+blue+`
 
 * [[option_weechat.color.chat_nick_other]] *weechat.color.chat_nick_other*
 ** Beschreibung: pass:none[Farbe des anderen Nicknamens in einem privaten Buffer]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+cyan+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+cyan+`
 
 * [[option_weechat.color.chat_nick_prefix]] *weechat.color.chat_nick_prefix*
 ** Beschreibung: pass:none[Farbe für den Nick-Präfix (Zeichenkette die vor dem Nick steht)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+green+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+green+`
 
 * [[option_weechat.color.chat_nick_self]] *weechat.color.chat_nick_self*
 ** Beschreibung: pass:none[Textfarbe für den eigenen Nicknamen, im lokalen Chat-Fenster]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+white+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+white+`
 
 * [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
 ** Beschreibung: pass:none[Farbe für den Nick-Suffix (Zeichenkette die nach dem Nick steht)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+green+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+green+`
 
 * [[option_weechat.color.chat_prefix_action]] *weechat.color.chat_prefix_action*
 ** Beschreibung: pass:none[Textfarbe für Action-Präfix]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+white+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+white+`
 
 * [[option_weechat.color.chat_prefix_buffer]] *weechat.color.chat_prefix_buffer*
 ** Beschreibung: pass:none[Textfarbe des Buffer-Namens (vor dem Präfix, wenn mehrere Buffer mit der selben Nummer zusammengefügt worden sind)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+brown+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+brown+`
 
 * [[option_weechat.color.chat_prefix_buffer_inactive_buffer]] *weechat.color.chat_prefix_buffer_inactive_buffer*
 ** Beschreibung: pass:none[Textfarbe für den inaktiven Namen des Buffer (vor dem Präfix, falls mehrere Buffer zu einem zusammengefügt worden sind und der Buffer nicht ausgewählt ist)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.color.chat_prefix_error]] *weechat.color.chat_prefix_error*
 ** Beschreibung: pass:none[Textfarbe für Fehler-Präfix]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+yellow+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+yellow+`
 
 * [[option_weechat.color.chat_prefix_join]] *weechat.color.chat_prefix_join*
 ** Beschreibung: pass:none[Textfarbe für Join-Präfix]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightgreen+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+lightgreen+`
 
 * [[option_weechat.color.chat_prefix_more]] *weechat.color.chat_prefix_more*
 ** Beschreibung: pass:none[Farbe des "+" Zeichens, falls Präfix zu lang sein sollte]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightmagenta+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+lightmagenta+`
 
 * [[option_weechat.color.chat_prefix_network]] *weechat.color.chat_prefix_network*
 ** Beschreibung: pass:none[Textfarbe für Netzwerk-Präfix]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+magenta+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+magenta+`
 
 * [[option_weechat.color.chat_prefix_quit]] *weechat.color.chat_prefix_quit*
 ** Beschreibung: pass:none[Textfarbe für Quit-Präfix]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightred+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+lightred+`
 
 * [[option_weechat.color.chat_prefix_suffix]] *weechat.color.chat_prefix_suffix*
 ** Beschreibung: pass:none[Textfarbe für den Suffix (senkrechter Strich)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+green+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+green+`
 
 * [[option_weechat.color.chat_read_marker]] *weechat.color.chat_read_marker*
 ** Beschreibung: pass:none[Farbe in der das Lesezeichen dargestellt werden soll]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+magenta+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+magenta+`
 
 * [[option_weechat.color.chat_read_marker_bg]] *weechat.color.chat_read_marker_bg*
 ** Beschreibung: pass:none[Hintergrundfarbe für das Lesezeichen]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.color.chat_server]] *weechat.color.chat_server*
 ** Beschreibung: pass:none[Textfarbe für den Namen des Servers]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+brown+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+brown+`
 
 * [[option_weechat.color.chat_tags]] *weechat.color.chat_tags*
 ** Beschreibung: pass:none[Textfarbe in der die Schlagwörter, die nach der jeweiligen Nachricht angezeigt werden, dargestellt werden sollen (wird durch den Befehl "/debug tags" angezeigt)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+red+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+red+`
 
 * [[option_weechat.color.chat_text_found]] *weechat.color.chat_text_found*
 ** Beschreibung: pass:none[Farbe zur Hervorhebung des gesuchten Textes in einer Zeile]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+yellow+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+yellow+`
 
 * [[option_weechat.color.chat_text_found_bg]] *weechat.color.chat_text_found_bg*
 ** Beschreibung: pass:none[Hintergrundfarbe zur Hervorhebung des gesuchten Textes in einer Zeile]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightmagenta+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+lightmagenta+`
 
 * [[option_weechat.color.chat_time]] *weechat.color.chat_time*
 ** Beschreibung: pass:none[Textfarbe der Zeit im Chatfenster]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.color.chat_time_delimiters]] *weechat.color.chat_time_delimiters*
 ** Beschreibung: pass:none[Farbe in der das Trennzeichen für die Uhrzeit dargestellt werden soll]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+brown+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+brown+`
 
 * [[option_weechat.color.chat_value]] *weechat.color.chat_value*
 ** Beschreibung: pass:none[Farbe für Werte]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+cyan+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+cyan+`
 
 * [[option_weechat.color.chat_value_null]] *weechat.color.chat_value_null*
 ** Beschreibung: pass:none[Textfarbe für null-Werte (undefiniert)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+blue+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+blue+`
 
 * [[option_weechat.color.emphasized]] *weechat.color.emphasized*
 ** Beschreibung: pass:none[Textfarbe um Text hervorzuheben (zum Beispiel bei der Textsuche); wird ausschließlich dann genutzt, falls die Einstellung weechat.look.emphasized_attributes keinen Eintrag besitzt (Standardwert)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+yellow+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+yellow+`
 
 * [[option_weechat.color.emphasized_bg]] *weechat.color.emphasized_bg*
 ** Beschreibung: pass:none[Hintergrundfarbe um Textpassagen hervorzuheben (zum Beispiel bei der Textsuche); wird ausschließlich dann genutzt, falls die Einstellung weechat.look.emphasized_attributes keinen Eintrag besitzt (Standardwert)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+magenta+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+magenta+`
 
 * [[option_weechat.color.input_actions]] *weechat.color.input_actions*
 ** Beschreibung: pass:none[Textfarbe in der Eingabezeile bei Aktivität (z.B. beim Einfügen von Zeilen)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightgreen+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+lightgreen+`
 
 * [[option_weechat.color.input_text_not_found]] *weechat.color.input_text_not_found*
 ** Beschreibung: pass:none[Textfarbe in der Eingabezeile bei einer erfolglosen Textsuche]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+red+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+red+`
 
 * [[option_weechat.color.item_away]] *weechat.color.item_away*
 ** Beschreibung: pass:none[Textfarbe für das Abwesenheitsitem]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+yellow+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+yellow+`
 
 * [[option_weechat.color.nicklist_away]] *weechat.color.nicklist_away*
 ** Beschreibung: pass:none[Textfarbe von abwesenden Nicknamen]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+cyan+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+cyan+`
 
 * [[option_weechat.color.nicklist_group]] *weechat.color.nicklist_group*
 ** Beschreibung: pass:none[Textfarbe für Gruppen in Benutzerliste]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+green+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+green+`
 
 * [[option_weechat.color.separator]] *weechat.color.separator*
 ** Beschreibung: pass:none[Farbe der Trennlinie von Fenstern (bei Fenster geteilt sind) und Bars (wie z.B. Nicklist)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+blue+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+blue+`
 
 * [[option_weechat.color.status_count_highlight]] *weechat.color.status_count_highlight*
 ** Beschreibung: pass:none[Farbe für die Anzahl der Highlight-Nachrichten die in der Hotlist dargestellt werden (Statusbar)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+magenta+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+magenta+`
 
 * [[option_weechat.color.status_count_msg]] *weechat.color.status_count_msg*
 ** Beschreibung: pass:none[Farbe für die Anzahl der Nachrichten die in der Hotlist dargestellt werden (Statusbar)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+brown+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+brown+`
 
 * [[option_weechat.color.status_count_other]] *weechat.color.status_count_other*
 ** Beschreibung: pass:none[Farbe für die Anzahl aller anderen Nachrichten die in der Hotlist dargestellt werden (Statusbar)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.color.status_count_private]] *weechat.color.status_count_private*
 ** Beschreibung: pass:none[Farbe für die Anzahl der privaten Nachrichten die in der Hotlist dargestellt werden (Statusbar)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+green+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+green+`
 
 * [[option_weechat.color.status_data_highlight]] *weechat.color.status_data_highlight*
 ** Beschreibung: pass:none[Farbe eines Buffers mit Highlight-Nachricht (Statusbar)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightmagenta+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+lightmagenta+`
 
 * [[option_weechat.color.status_data_msg]] *weechat.color.status_data_msg*
 ** Beschreibung: pass:none[Farbe eines Buffers der neue Nachrichten enthält (Statusbar)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+yellow+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+yellow+`
 
 * [[option_weechat.color.status_data_other]] *weechat.color.status_data_other*
 ** Beschreibung: pass:none[Farbe eines Buffers mit neuen Daten (keine Nachrichten) (Statusbar)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.color.status_data_private]] *weechat.color.status_data_private*
 ** Beschreibung: pass:none[Farbe eines Buffers mit privater Nachricht (Statusbar)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightgreen+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+lightgreen+`
 
 * [[option_weechat.color.status_filter]] *weechat.color.status_filter*
 ** Beschreibung: pass:none[Farbe des Filterkennzeichens in der Statuszeile]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+green+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+green+`
 
 * [[option_weechat.color.status_more]] *weechat.color.status_more*
 ** Beschreibung: pass:none[Farbe eines Buffers mit neuen Daten (Statusbar)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+yellow+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+yellow+`
 
 * [[option_weechat.color.status_mouse]] *weechat.color.status_mouse*
 ** Beschreibung: pass:none[Farbe des Zeichens welches den Status der Maus anzeigt]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+green+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+green+`
 
 * [[option_weechat.color.status_name]] *weechat.color.status_name*
 ** Beschreibung: pass:none[Farbe des aktuellen Buffer-Namens in der Statuszeile]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+white+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+white+`
 
 * [[option_weechat.color.status_name_ssl]] *weechat.color.status_name_ssl*
 ** Beschreibung: pass:none[Farbe in der der aktuelle Buffer-Name in der Statuszeile angezeigt werden soll, sofern die Verbindung durch ein Protokoll, zum Beispiel, SSL geschützt ist]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+lightgreen+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+lightgreen+`
 
 * [[option_weechat.color.status_nicklist_count]] *weechat.color.status_nicklist_count*
 ** Beschreibung: pass:none[Textfarbe für die Anzahl der Nicks in der Benutzerliste (Statusbar)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.color.status_number]] *weechat.color.status_number*
 ** Beschreibung: pass:none[Farbe des aktuellen Channels in der Statuszeile]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+yellow+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+yellow+`
 
 * [[option_weechat.color.status_time]] *weechat.color.status_time*
 ** Beschreibung: pass:none[Textfarbe für die Uhrzeit (Statusbar)]
 ** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `+default+`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+default+`
 
 * [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
 ** Beschreibung: pass:none[ist diese Einstellung aktiviert wird ein zu vervollständigendes Wort in den fließenden Text, mit einem Leerzeichen, hinzugefügt. Ist diese Einstellung deaktiviert, muss in den fließenden Text ein Leerzeichen manuell einfügt werden, um eine Vervollständigung durchführen zu können (Beispiel: In einen schon geschriebenen Text, einen Nick einzufügen)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
 ** Beschreibung: pass:none[ist diese Einstellung aktiviert werden Befehle innerhalb der Eingabezeile vervollständigt (ein Befehl zu Beginn der Eingabezeile besitzt die höhere Priorität und wird zuerst verwendet). Hinweis: die Vervollständigung von Verzeichnissen, die mit "/" beginnen, funktioniert außerhalb von Befehlen nicht mehr]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
 ** Beschreibung: pass:none[Standardvorlage für die automatische Vervollständigung (in der API-Dokumentation findet man die vorgegebenen Codes und Werte, Funktion "weechat_hook_command")]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"%(nicks)|%(irc_channels)"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"%(nicks)|%(irc_channels)"+`
 
 * [[option_weechat.completion.nick_add_space]] *weechat.completion.nick_add_space*
 ** Beschreibung: pass:none[fügt ein Leerzeichen hinter die Nick-Vervollständigung ein (sofern der Nickname nicht das erste Wort in einer Kommandozeile darstellt)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.completion.nick_completer]] *weechat.completion.nick_completer*
 ** Beschreibung: pass:none[fügt eine Zeichenkette hinter die Nick-Vervollständigung ein (sofern ein Nickname das erste Wort in der Kommandozeile ist)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+":"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+":"+`
 
 * [[option_weechat.completion.nick_first_only]] *weechat.completion.nick_first_only*
 ** Beschreibung: pass:none[es wird ausschließlich mit dem ersten, passendem Nick-Namen vervollständigt]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.completion.nick_ignore_chars]] *weechat.completion.nick_ignore_chars*
 ** Beschreibung: pass:none[Zeichen, die bei der Vervollständigung von Nicks ignoriert werden]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"[]`_-^"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"[]`_-^"+`
 
 * [[option_weechat.completion.partial_completion_alert]] *weechat.completion.partial_completion_alert*
 ** Beschreibung: pass:none[informiert User wenn eine teilweise Vervollständigung auftritt]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.completion.partial_completion_command]] *weechat.completion.partial_completion_command*
 ** Beschreibung: pass:none[teilweise Vervollständigung von Befehlen (bricht ab, falls zu viele Befehle mit dem selben Buchstaben beginnen)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.completion.partial_completion_command_arg]] *weechat.completion.partial_completion_command_arg*
 ** Beschreibung: pass:none[teilweise Vervollständigung von Befehls-Argumenten (bricht ab, falls zu viele Befehle mit dem selben Präfix beginnen)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.completion.partial_completion_count]] *weechat.completion.partial_completion_count*
 ** Beschreibung: pass:none[zeigt bei einer teilweisen Vervollständigung die Anzahl der jeweiligen Möglichkeiten in der Bar-Item an]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.completion.partial_completion_other]] *weechat.completion.partial_completion_other*
 ** Beschreibung: pass:none[teilweise Vervollständigung von externen Befehlen (bricht ab, falls zu viele Befehle mit dem selben Buchstaben beginnen)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.history.display_default]] *weechat.history.display_default*
 ** Beschreibung: pass:none[Wert für die maximale Anzahl der angezeigten Befehle im Verlaufsspeicher, die mittels /history angezeigt werden (0: unbegrenzt)]
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: `+5+`)
+** Werte: 0 .. 2147483647
+** Standardwert: `+5+`
 
 * [[option_weechat.history.max_buffer_lines_minutes]] *weechat.history.max_buffer_lines_minutes*
 ** Beschreibung: pass:none[Dauer in Minuten, wie lange die Zeilen im Verlaufsspeicher, pro Buffer, gehalten werden sollen (0 = unbegrenzt); Beispiele: 1440 = einen Tag, 10080 = eine Woche, 43200 = einen Monat, 525600 = ein Jahr; 0 sollte nur genutzt werden sofern weechat.history.max_buffer_lines_number nicht ebenfalls 0 ist]
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: `+0+`)
+** Werte: 0 .. 2147483647
+** Standardwert: `+0+`
 
 * [[option_weechat.history.max_buffer_lines_number]] *weechat.history.max_buffer_lines_number*
 ** Beschreibung: pass:none[maximale Anzahl an Zeilen im Verlaufsspeicher, dies gilt pro Buffer (0: keine Zeilenbegrenzung); 0 sollte nur genutzt werden sofern weechat.history.max_buffer_lines_minutes nicht ebenfalls 0 ist]
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: `+4096+`)
+** Werte: 0 .. 2147483647
+** Standardwert: `+4096+`
 
 * [[option_weechat.history.max_commands]] *weechat.history.max_commands*
 ** Beschreibung: pass:none[maximale Anzahl an Befehlen im Verlaufsspeicher (0: kein Begrenzung, NICHT EMPFOHLEN: keine Begrenzung des Speicherverbrauches)]
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: `+100+`)
+** Werte: 0 .. 2147483647
+** Standardwert: `+100+`
 
 * [[option_weechat.history.max_visited_buffers]] *weechat.history.max_visited_buffers*
 ** Beschreibung: pass:none[maximale Anzahl an besuchten Buffern, welche im Speicher gehalten werden sollen]
 ** Typ: integer
-** Werte: 0 .. 1000 (Standardwert: `+50+`)
+** Werte: 0 .. 1000
+** Standardwert: `+50+`
 
 * [[option_weechat.look.align_end_of_lines]] *weechat.look.align_end_of_lines*
 ** Beschreibung: pass:none[Einstellung für einen Zeilenumbruch (betrifft alle Zeilen, außer der ersten Zeile). Die Darstellung der nachfolgenden Zeile beginnt unter: Uhrzeit = time, Buffer = buffer, Präfix = prefix, Suffix = suffix, Nachricht = message (Standardwert)]
 ** Typ: integer
-** Werte: time, buffer, prefix, suffix, message (Standardwert: `+message+`)
+** Werte: time, buffer, prefix, suffix, message
+** Standardwert: `+message+`
 
 * [[option_weechat.look.align_multiline_words]] *weechat.look.align_multiline_words*
 ** Beschreibung: pass:none[alignment for multiline words according to option weechat.look.align_end_of_lines; if disabled, the multiline words will have no alignment will not be aligned, which can be useful to not break long URLs]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.bar_more_down]] *weechat.look.bar_more_down*
 ** Beschreibung: pass:none[Zeichen welches anzeigt, dass die Bar nach unten gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Einstellung "/set *.filling_*" nicht auf "horizontal" eingestellt ist)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"++"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"++"+`
 
 * [[option_weechat.look.bar_more_left]] *weechat.look.bar_more_left*
 ** Beschreibung: pass:none[Zeichen welches anzeigt, dass die Bar nach links gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Einstellung "/set *.filling_*" nicht auf "horizontal" eingestellt ist)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"<<"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"<<"+`
 
 * [[option_weechat.look.bar_more_right]] *weechat.look.bar_more_right*
 ** Beschreibung: pass:none[Zeichen welches anzeigt, dass die Bar nach rechts gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Einstellung "/set *.filling_*" nicht auf "horizontal" eingestellt ist)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+">>"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+">>"+`
 
 * [[option_weechat.look.bar_more_up]] *weechat.look.bar_more_up*
 ** Beschreibung: pass:none[Zeichen welches anzeigt, dass die Bar nach oben gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"--"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"--"+`
 
 * [[option_weechat.look.bare_display_exit_on_input]] *weechat.look.bare_display_exit_on_input*
 ** Beschreibung: pass:none[beendet den einfachen Anzeigemodus durch Tastendruck]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.bare_display_time_format]] *weechat.look.bare_display_time_format*
 ** Beschreibung: pass:none[Format für die Zeitanzeige im einfachen Anzeigemodus, "time" (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"%H:%M"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"%H:%M"+`
 
 * [[option_weechat.look.buffer_auto_renumber]] *weechat.look.buffer_auto_renumber*
 ** Beschreibung: pass:none[automatisches nummerieren von Buffern um ausschließlich eine aufeinander folgende Durchnummerierung zu besitzen, die bei 1 beginnt; ist diese Einstellung deaktiviert sind Lücken zwischen den Buffern möglich und der erste Buffer muss nicht mit der Zahl 1 beginnen]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.buffer_notify_default]] *weechat.look.buffer_notify_default*
 ** Beschreibung: pass:none[Standardeinstellung der Benachrichtigungsstufe für Buffer (dies wird genutzt um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden soll oder nicht, entsprechend der Wichtigkeit der Nachricht): all=alle Nachrichten (Standard), message=Nachrichten+Highlights, highlights=nur Highlights, none=Hotlist wird niemals angezeigt]
 ** Typ: integer
-** Werte: none, highlight, message, all (Standardwert: `+all+`)
+** Werte: none, highlight, message, all
+** Standardwert: `+all+`
 
 * [[option_weechat.look.buffer_position]] *weechat.look.buffer_position*
 ** Beschreibung: pass:none[Position auf der ein neuer Buffer geöffnet werden soll: end = am Ende der Liste (Nummer = letzter Buffer + 1) (Standard), first_gap = erste mögliche Nummer die frei ist (wird das Ende der Liste erreicht, wird der Buffer hinten angehängt); diese Einstellung wird nur angewendet sofern dem Buffer keine Position, durch Layout, zugeordnet wurde]
 ** Typ: integer
-** Werte: end, first_gap (Standardwert: `+end+`)
+** Werte: end, first_gap
+** Standardwert: `+end+`
 
 * [[option_weechat.look.buffer_search_case_sensitive]] *weechat.look.buffer_search_case_sensitive*
 ** Beschreibung: pass:none[standardmäßige Textsuche im Buffer: zwischen Groß-und Kleinschreibung wird unterschieden]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.buffer_search_force_default]] *weechat.look.buffer_search_force_default*
 ** Beschreibung: pass:none[es werden immer die Standardeinstellungen verwendet (anstelle der zuletzt genutzten Sucheinstellungen)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.buffer_search_regex]] *weechat.look.buffer_search_regex*
 ** Beschreibung: pass:none[standardmäßige Textsuche im Buffer: falls aktiviert wird mittels erweiterten regulären POSIX Ausdrücken gesucht, andernfalls findet eine genaue Textsuche statt]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.buffer_search_where]] *weechat.look.buffer_search_where*
 ** Beschreibung: pass:none[standardmäßige Textsuche im Buffer: in der Nachricht (message), im Präfix (prefix), Präfix und Nachricht (prefix_message)]
 ** Typ: integer
-** Werte: prefix, message, prefix_message (Standardwert: `+prefix_message+`)
+** Werte: prefix, message, prefix_message
+** Standardwert: `+prefix_message+`
 
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
 ** Beschreibung: pass:none[Format für die Uhrzeit, die in jeder Zeile eines Buffers dargestellt wird (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden) (Hinweis: Inhalt wird evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval). Beispiel: Uhrzeit in Graustufen (Unterstützung von 256 Farben notwendig): "${color:252}%H${color:245}%M${color:240}%S"]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"%H:%M:%S"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"%H:%M:%S"+`
 
 * [[option_weechat.look.color_basic_force_bold]] *weechat.look.color_basic_force_bold*
 ** Beschreibung: pass:none[erzwingt das Textattribut "fett" für helle Farben und "darkgray", um diese Farben stärker hervorzuheben (diese Einstellung ist standardmäßig deaktiviert: "fett" findet ausschließlich dann Verwendung falls das Terminal weniger als 16 Farben zur Verfügung stellt)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.color_inactive_buffer]] *weechat.look.color_inactive_buffer*
 ** Beschreibung: pass:none[Textfarbe für Zeilen in einem inaktiven Buffer (betrifft Zeilen in einem zusammengefügt Buffer, welcher nicht aktiv ist)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.color_inactive_message]] *weechat.look.color_inactive_message*
 ** Beschreibung: pass:none[nutzt eine andere Farbe um die inaktiven Nachrichten darzustellen (Fenster ist nicht das aktuelle Fenster oder wenn die Zeile des zusammengefügten Buffers nicht die aktiv Zeile ist)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.color_inactive_prefix]] *weechat.look.color_inactive_prefix*
 ** Beschreibung: pass:none[nutzt eine andere Farbe um den inaktiven Präfix darzustellen (Fenster ist nicht das aktuelle Fenster oder wenn die Zeile des zusammengefügten Buffers nicht die aktiv Zeile ist)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.color_inactive_prefix_buffer]] *weechat.look.color_inactive_prefix_buffer*
 ** Beschreibung: pass:none[nutzt eine andere Farbe für den inaktiven Buffernamen im Präfix (das Fenster ist nicht das aktuelle aktive Fenster oder wenn die Zeile des zusammengefügten Buffers nicht die aktiv Zeile ist)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.color_inactive_time]] *weechat.look.color_inactive_time*
 ** Beschreibung: pass:none[nutzt eine andere Farbe um die inaktive Zeitangabe darzustellen (Fenster ist nicht das aktuelle Fenster oder wenn die Zeile des zusammengefügten Buffers nicht die aktiv Zeile ist)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.color_inactive_window]] *weechat.look.color_inactive_window*
 ** Beschreibung: pass:none[Textfarbe für Zeilen in einem inaktiven Fenster (betrifft das Fenster, welches nicht aktiv ist)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
 ** Beschreibung: pass:none[Nicks die Offline sind werden im Buffer in einer anderen Farbe dargestellt (dies betrifft Nicks, die nicht in der Benutzerliste vorhanden sind!)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.color_pairs_auto_reset]] *weechat.look.color_pairs_auto_reset*
 ** Beschreibung: pass:none[automatischer Reset der Farbpaarungen sobald die verfügbare Anzahl an Paaren kleiner oder gleich der hier angegebenen Anzahl ist (-1 = deaktiviert den automatischen Reset, dann ist ein manueller Reset mittels "/color reset" notwendig falls alle Farbpaarungen belegt sind)]
 ** Typ: integer
-** Werte: -1 .. 256 (Standardwert: `+5+`)
+** Werte: -1 .. 256
+** Standardwert: `+5+`
 
 * [[option_weechat.look.color_real_white]] *weechat.look.color_real_white*
 ** Beschreibung: pass:none[falls diese Einstellung aktiviert ist, wird echtes weiß als Farbe genutzt. Standardmäßig ist diese Einstellung deaktiviert, damit keine Probleme bei Terminals auftreten, die einen weißen Hintergrund nutzen (falls man keinen weißen Hintergrund nutzt, dann ist es ratsam diese Einstellung zu aktivieren. Andernfalls wird die voreingestellte Vordergrundfarbe des Terminals verwendet)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.command_chars]] *weechat.look.command_chars*
 ** Beschreibung: pass:none[Bestimmt ein- oder mehrere Zeichen mit denen man ebenfalls einen Befehl ausführen kann. Zum Beispiel mittels ".$". Der Schrägstrich (slash: "/") ist ein reserviertes Zeichen und wird immer genutzt]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.look.command_incomplete]] *weechat.look.command_incomplete*
 ** Beschreibung: pass:none[ist diese Einstellung aktiviert werden unvollständige und eindeutige Befehle akzeptiert, zum Beispiel /he für /help]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.confirm_quit]] *weechat.look.confirm_quit*
 ** Beschreibung: pass:none[ist diese Einstellung aktiviert, muss der "/quit" Befehl mit dem Argument "-yes" ausgeführt werden (siehe /help quit)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.confirm_upgrade]] *weechat.look.confirm_upgrade*
 ** Beschreibung: pass:none[ist diese Einstellung aktiviert, muss der "/upgrade" Befehl mit dem Argument "-yes" ausgeführt werden (siehe /help upgrade)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.day_change]] *weechat.look.day_change*
 ** Beschreibung: pass:none[bei einem Datumswechsel wird eine entsprechende Nachricht angezeigt]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.day_change_message_1date]] *weechat.look.day_change_message_1date*
 ** Beschreibung: pass:none[Nachricht welche bei einem Datumswechsel angezeigt wird (zum Beispiel als erste Zeile im Buffer) (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden) (Hinweis: Inhalt wird evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"-- %a, %d %b %Y --"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"-- %a, %d %b %Y --"+`
 
 * [[option_weechat.look.day_change_message_2dates]] *weechat.look.day_change_message_2dates*
 ** Beschreibung: pass:none[Nachricht welche bei einem Datumswechsel angezeigt wird, dabei werden zwei Daten angegeben die zwischen zwei Nachrichten liegen; der zweite Platzhalter muss mit zwei "%" angegeben werden, da strftime auch zweimal aufgerufen wird (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden) (Hinweis: Inhalt wird evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"-- %%a, %%d %%b %%Y (%a, %d %b %Y) --"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"-- %%a, %%d %%b %%Y (%a, %d %b %Y) --"+`
 
 * [[option_weechat.look.eat_newline_glitch]] *weechat.look.eat_newline_glitch*
 ** Beschreibung: pass:none[aktiviert man diese Einstellung, dann wird "eat_newline_glitch" auf 0 gesetzt; dies bedeutet, dass am Ende einer Zeile kein Zeilenumbruch angehängt wird und somit der Text beim kopieren aus WeeChat und beim einfügen in einer anderen Applikation nicht umgebrochen wird (diese Einstellung ist standardmäßig deaktiviert, da es zu schwerwiegenden Grafikfehlern kommen kann)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.emphasized_attributes]] *weechat.look.emphasized_attributes*
 ** Beschreibung: pass:none[Attribute um Textpassagen hervorzuheben: Das setzen von ein- oder mehreren Attributen ist möglich ("*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen); falls die Einstellung weechat.look.emphasized_attributes keinen Eintrag besitzt, werden die Farben genutzt die durch weechat.color.emphasized* definiert sind]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.look.highlight]] *weechat.look.highlight*
 ** Beschreibung: pass:none[eine durch Kommata getrennte Liste der hervorzuhebenden Wörter. Groß- und Kleinschreibung wird dabei standardmäßig nicht beachtet (um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden). Schlagwörter können mit "*", als Joker, beginnen oder enden; Beispiel: "test,(?-i)*toto*,flash*"]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
 ** Beschreibung: pass:none[Suchmuster (erweiterter regulärer POSIX Ausdruck) welches genutzt werden soll, um zu überprüfen ob eine Nachricht ein Highlight enthält oder nicht. Mindestens eine Zeichenkette muss dabei auf das Suchmuster passen (alphanumerisch, "-", "_" oder "|"). Das Suchmuster unterscheidet dabei nicht zwischen Groß-und Kleinschreibung (um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden). Beispiele: "flashcode|flashy", "(?-i)FlashCode|flashy"]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
 ** Beschreibung: pass:none[eine durch Kommata getrennte Liste von Tags, die eine highlight-Nachricht erzeugen; Groß- und Kleinschreibung wird dabei nicht beachtet; der Platzhalter "*" darf in einem Tag genutzt werden. Um eine logische "und" Verknüpfung zu verwenden, können mehrere Tags durch "+" zusammengefügt werden. Beispiele: "nick_flashcode" für Nachrichten von "FlashCode", "irc_notice+nick_toto*" für Notice-Nachrichten von Nicks, die mit "toto" beginnen]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.look.hotlist_add_conditions]] *weechat.look.hotlist_add_conditions*
 ** Beschreibung: pass:none[Bedingungen um einen Buffer in die Hotlist einzutragen (sofern der Notify-Level für den Buffer korrekt ist); es können folgende Bedingungen genutzt werden: "window" (zur Zeit genutzter Window-Pointer), "buffer" (Buffer-Pointer welcher zur Hotlist hinzugefügt werden soll), "priority" (0 = niedrig, 1 = Nachricht, 2 = Privat, 3 = Highlight); standardmäßig wird ein Buffer in die Hotlist eingetragen falls man abwesend sein sollte oder falls der Buffer nicht auf dem Bildschirm sichtbar ist (Buffer wird nicht in einem Fenster dargestellt)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"${away} || ${buffer.num_displayed} == 0"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"${away} || ${buffer.num_displayed} == 0"+`
 
 * [[option_weechat.look.hotlist_buffer_separator]] *weechat.look.hotlist_buffer_separator*
 ** Beschreibung: pass:none[Zeichen welches zum Trennen zwischen den verschiedenen Buffern in der Hotlist genutzt werden soll]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+", "+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+", "+`
 
 * [[option_weechat.look.hotlist_count_max]] *weechat.look.hotlist_count_max*
 ** Beschreibung: pass:none[maximale Anzahl an Nachrichten für den Nachrichtenzähler in der Hotlist, für jeden Buffer (0 = der Nachrichtenzähler wird nicht dargestellt, siehe weechat.look.buffer_notify_default)]
 ** Typ: integer
-** Werte: 0 .. 4 (Standardwert: `+2+`)
+** Werte: 0 .. 4
+** Standardwert: `+2+`
 
 * [[option_weechat.look.hotlist_count_min_msg]] *weechat.look.hotlist_count_min_msg*
 ** Beschreibung: pass:none[zeigt einen Nachrichtenzähler an, sofern die Anzahl der Nachrichten größer oder gleich dem hier angegebenen Wertes ist]
 ** Typ: integer
-** Werte: 1 .. 100 (Standardwert: `+2+`)
+** Werte: 1 .. 100
+** Standardwert: `+2+`
 
 * [[option_weechat.look.hotlist_names_count]] *weechat.look.hotlist_names_count*
 ** Beschreibung: pass:none[maximale Anzahl an Namen in der Hotlist (0 = es werden keine Namen angezeigt, sondern nur die entsprechenden Nummern der Buffer)]
 ** Typ: integer
-** Werte: 0 .. 10000 (Standardwert: `+3+`)
+** Werte: 0 .. 10000
+** Standardwert: `+3+`
 
 * [[option_weechat.look.hotlist_names_length]] *weechat.look.hotlist_names_length*
 ** Beschreibung: pass:none[maximale Länge der Namen in der Hotlist (0: kein Limitierung)]
 ** Typ: integer
-** Werte: 0 .. 32 (Standardwert: `+0+`)
+** Werte: 0 .. 32
+** Standardwert: `+0+`
 
 * [[option_weechat.look.hotlist_names_level]] *weechat.look.hotlist_names_level*
 ** Beschreibung: pass:none[Grad für die Darstellung wann der Namen eines Buffers in der Hotlist angezeigt werden soll (Kombination aus: 1=join/part, 2=Nachricht, 4=Query, 8=Highlight, z.B. 12=Query+Highlight)]
 ** Typ: integer
-** Werte: 1 .. 15 (Standardwert: `+12+`)
+** Werte: 1 .. 15
+** Standardwert: `+12+`
 
 * [[option_weechat.look.hotlist_names_merged_buffers]] *weechat.look.hotlist_names_merged_buffers*
 ** Beschreibung: pass:none[ist diese Einstellung aktiviert, werden die Namen der zusammengefügten Buffer in der Hotlist dargestellt]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.hotlist_prefix]] *weechat.look.hotlist_prefix*
 ** Beschreibung: pass:none[Text der vor der Hotlist angezeigt werden soll]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"H: "+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"H: "+`
 
 * [[option_weechat.look.hotlist_remove]] *weechat.look.hotlist_remove*
 ** Beschreibung: pass:none[entfernt Buffer aus der Hotlist: buffer = entfernt einen einzelnen Buffer, merged = entfernt alle zusammengefügten Buffer auf einmal]
 ** Typ: integer
-** Werte: buffer, merged (Standardwert: `+merged+`)
+** Werte: buffer, merged
+** Standardwert: `+merged+`
 
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
 ** Beschreibung: pass:none[ist diese Einstellung aktiviert, wird der Kurzname der zusammengefügten Buffer in der Hotlist dargestellt (die Darstellung geschieht nach dem ersten "." im Namen)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.hotlist_sort]] *weechat.look.hotlist_sort*
 ** Beschreibung: pass:none[Sortierung der Hotlist: group_time_*: nach Benachrichtigungstufe (Highlights zuerst) und dann nach Uhrzeit, group_number_*: nach Benachrichtigungstufe (Highlights zuerst) und dann nach Buffer-Nummer, number_*: sortiert nach Buffer-Nummer; asc = aufsteigende Sortierung, desc = absteigende Sortierung]
 ** Typ: integer
-** Werte: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (Standardwert: `+group_time_asc+`)
+** Werte: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc
+** Standardwert: `+group_time_asc+`
 
 * [[option_weechat.look.hotlist_suffix]] *weechat.look.hotlist_suffix*
 ** Beschreibung: pass:none[Text der am Ende der Hotlist angezeigt werden soll]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.look.hotlist_unique_numbers]] *weechat.look.hotlist_unique_numbers*
 ** Beschreibung: pass:none[die Nummer des Buffers wird nur einmal in der Hotlist angezeigt (diese Einstellung kommt nur zum Tragen sofern KEINE Buffernamen angezeigt werden)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.input_cursor_scroll]] *weechat.look.input_cursor_scroll*
 ** Beschreibung: pass:none[Anzahl an Zeichen die nach links verschoben werden sollen, falls das Ende der Eingabezeile erreicht wird]
 ** Typ: integer
-** Werte: 0 .. 100 (Standardwert: `+20+`)
+** Werte: 0 .. 100
+** Standardwert: `+20+`
 
 * [[option_weechat.look.input_share]] *weechat.look.input_share*
 ** Beschreibung: pass:none[diese Einstellung erlaubt es den Inhalt der aktuellen Eingabezeile in andere Buffern zu übernehmen. Dabei kann unterschieden werden, ob ausschließlich Befehle (commands), nur Text (text) oder beides (all) berücksichtigt werden soll (der Befehlsverlauf der einzelnen Buffer bleibt davon unberührt)]
 ** Typ: integer
-** Werte: none, commands, text, all (Standardwert: `+none+`)
+** Werte: none, commands, text, all
+** Standardwert: `+none+`
 
 * [[option_weechat.look.input_share_overwrite]] *weechat.look.input_share_overwrite*
 ** Beschreibung: pass:none[ist diese Einstellung aktiviert und die Eingabezeile wird für alle Buffer gleichberechtigt genutzt, dann wird der Inhalt im Zielbuffer überschrieben]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.input_undo_max]] *weechat.look.input_undo_max*
 ** Beschreibung: pass:none[maximale Anzahl von "Rücknahmen" für Befehle im Verlauf, pro Buffer (0: deaktiviert die Funktion)]
 ** Typ: integer
-** Werte: 0 .. 65535 (Standardwert: `+32+`)
+** Werte: 0 .. 65535
+** Standardwert: `+32+`
 
 * [[option_weechat.look.item_away_message]] *weechat.look.item_away_message*
 ** Beschreibung: pass:none[Abwesenheitsnachricht im Away-Bar-Item anzeigen]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.item_buffer_filter]] *weechat.look.item_buffer_filter*
 ** Beschreibung: pass:none[Zeichen mit welchem signalisiert wird ob im aktuellen Buffer die Filterfunktion eingeschaltet ist (durch Bar-Item "buffer_filter")]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"*"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"*"+`
 
 * [[option_weechat.look.item_buffer_zoom]] *weechat.look.item_buffer_zoom*
 ** Beschreibung: pass:none[Zeichen mit welchem signalisiert wird ob im aktuellen Buffer der Zoom aktiviert ist (durch Bar-Item "buffer_zoom")]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"!"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"!"+`
 
 * [[option_weechat.look.item_mouse_status]] *weechat.look.item_mouse_status*
 ** Beschreibung: pass:none[Zeichen mit welchem signalisiert wird ob die Mausfunktionalität eingeschaltet ist (durch Bar-Item "mouse_status")]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"M"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"M"+`
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
 ** Beschreibung: pass:none[Format für die Zeitanzeige des Bar-Items, "time" (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden)(Hinweis: Inhalt wird evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"%H:%M"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"%H:%M"+`
 
 * [[option_weechat.look.jump_current_to_previous_buffer]] *weechat.look.jump_current_to_previous_buffer*
 ** Beschreibung: pass:none[wechselt zum vorher genutzten Buffer falls man mit dem Befehl /buffer *N (N ist die Buffer-Nummer) zum aktuellen Buffer gewechselt hat. Dies dient dazu um zwischen den letzten beiden Buffern hin- und her zu springen]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.jump_previous_buffer_when_closing]] *weechat.look.jump_previous_buffer_when_closing*
 ** Beschreibung: pass:none[wechselt zum vorher genutzten Buffer, falls der aktuelle Buffer geschlossen wird (wenn diese Funktion deaktiviert ist wird zum Buffer gewechselt der die relative Position -1 einnimmt)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.jump_smart_back_to_buffer]] *weechat.look.jump_smart_back_to_buffer*
 ** Beschreibung: pass:none[falls keine weiteren Einträge in der Hotlist vorhanden sind wird zum Ausgangsbuffer zurückgekehrt]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.key_bind_safe]] *weechat.look.key_bind_safe*
 ** Beschreibung: pass:none[Es dürfen nur "geschützte" Tasten zugeordnet werden (Tasten, die mittels ctrl oder meta verwendet werden)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.key_grab_delay]] *weechat.look.key_grab_delay*
 ** Beschreibung: pass:none[Standardverzögerung (in Millisekunden) um eine Tasteneingabe zu greifen (Standardtastenbelegung: alt-k); die Verzögerung kann mit dem /input Befehl angepasst werden (siehe /help input)]
 ** Typ: integer
-** Werte: 1 .. 10000 (Standardwert: `+800+`)
+** Werte: 1 .. 10000
+** Standardwert: `+800+`
 
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
 ** Beschreibung: pass:none[Mausunterstützung einschalten]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.mouse_timer_delay]] *weechat.look.mouse_timer_delay*
 ** Beschreibung: pass:none[Verzögerung (in Millisekunden) um eine Mauseingabe zu fangen: WeeChat wartet zuerst diese Verzögerung ab bevor das Kommando verarbeitet wird]
 ** Typ: integer
-** Werte: 1 .. 10000 (Standardwert: `+100+`)
+** Werte: 1 .. 10000
+** Standardwert: `+100+`
 
 * [[option_weechat.look.nick_color_force]] *weechat.look.nick_color_force*
 ** Beschreibung: pass:none[erzwingt für einen Nick eine spezielle Farbe. Die standardmäßig, mittels Streuwertfunktion aus dem Nicknamen, generierte Farbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Zuerst wird beim Namen des Nick nach Groß- und Kleinschreibung unterschieden. Sollte der Nick nicht gefunden werden findet keine Unterscheidung mehr statt. Somit ist es möglich die Nicks, für diese Einstellung, ausschließlich in Kleinschrift aufzuführen]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.look.nick_color_hash]] *weechat.look.nick_color_hash*
 ** Beschreibung: pass:none[Gibt an welcher Hash-Algorithmus zur Farbauswahl für Nicks genutzt werden soll: djb2 = Variante des djb2 (Position der Buchstaben innerhalb des Nicks werden berücksichtigt: Anagramme eines Nick erhalten eine andere Farbe), sum = hier ist nur die Anzahl der Buchstaben maßgeblich]
 ** Typ: integer
-** Werte: djb2, sum (Standardwert: `+djb2+`)
+** Werte: djb2, sum
+** Standardwert: `+djb2+`
 
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
 ** Beschreibung: pass:none[Zeichen die genutzt werden sollen damit bei der Generierung der Farbe für einen Nicknamen abgebrochen wird. Es muss mindestens ein Zeichen im Nicknamen enthalten sein der nicht in dieser Liste aufgeführt wird, damit eine Farbe für den Nicknamen erstellt werden kann (Beispiel: Der Nickname lautet "|nick|abwesend" wobei das Zeichen "|" ignoriert werden soll. Die Farbe für den Nicknamen wird nun für "|nick" anstelle von "|nick|abwesend" erstellt)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"_|["+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"_|["+`
 
 * [[option_weechat.look.nick_prefix]] *weechat.look.nick_prefix*
 ** Beschreibung: pass:none[Text, der vor dem Nick dargestellt werden soll, Beispiel: "<"]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.look.nick_suffix]] *weechat.look.nick_suffix*
 ** Beschreibung: pass:none[Text, der nach dem Nick dargestellt werden soll, Beispiel: ">"]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
 ** Beschreibung: pass:none[fügt automatisch einen Zeilenumbruch nach dem Einfügen eines Textes hinzu, sofern mindestens zwei Zeilen eingefügt wurden und nach einer Bestätigung gefragt wurde]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** Beschreibung: pass:none[aktiviert den "bracketed paste mode" des Terminals (wird nicht durch alle Terminals/Multiplexer unterstützt): Dieser Modus erlaubt das Einfügen von Steuersequenzen die in Klammern gesetzt sind. WeeChat kann dadurch ermitteln ob ein Text eingefügt oder geschrieben wurde ("ESC[200~", gefolgt von dem einzufügenden Text und einem abschließenden "ESC[201~")]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.paste_bracketed_timer_delay]] *weechat.look.paste_bracketed_timer_delay*
 ** Beschreibung: pass:none[erzwingt beim Einfügen von Steuersequenzen, nach einer vorgegeben Zeit (in Sekunden), dessen Ende, sofern die Steuersequenz zum Beenden ("ESC[201~") nicht innerhalb dieser Zeitvorgabe empfangen wurde]
 ** Typ: integer
-** Werte: 1 .. 60 (Standardwert: `+10+`)
+** Werte: 1 .. 60
+** Standardwert: `+10+`
 
 * [[option_weechat.look.paste_max_lines]] *weechat.look.paste_max_lines*
 ** Beschreibung: pass:none[maximale Anzahl an Zeilen die eingefügt werden dürfen, ohne dass der Anwender gefragt wird (-1 = schaltet diese Funktion ab)]
 ** Typ: integer
-** Werte: -1 .. 2147483647 (Standardwert: `+1+`)
+** Werte: -1 .. 2147483647
+** Standardwert: `+1+`
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
 ** Beschreibung: pass:none[Präfix, dass bei einer Action-Nachricht genutzt wird (Hinweis: Inhalt wird evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+" *"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+" *"+`
 
 * [[option_weechat.look.prefix_align]] *weechat.look.prefix_align*
 ** Beschreibung: pass:none[Einstellung für Präfix (keine = none, links = left, rechts = right (Voreinstellung))]
 ** Typ: integer
-** Werte: none, left, right (Standardwert: `+right+`)
+** Werte: none, left, right
+** Standardwert: `+right+`
 
 * [[option_weechat.look.prefix_align_max]] *weechat.look.prefix_align_max*
 ** Beschreibung: pass:none[maximale Größe des Präfix (0 = keine Limitierung)]
 ** Typ: integer
-** Werte: 0 .. 128 (Standardwert: `+0+`)
+** Werte: 0 .. 128
+** Standardwert: `+0+`
 
 * [[option_weechat.look.prefix_align_min]] *weechat.look.prefix_align_min*
 ** Beschreibung: pass:none[minimale Größe des Präfix]
 ** Typ: integer
-** Werte: 0 .. 128 (Standardwert: `+0+`)
+** Werte: 0 .. 128
+** Standardwert: `+0+`
 
 * [[option_weechat.look.prefix_align_more]] *weechat.look.prefix_align_more*
 ** Beschreibung: pass:none[Zeichen welches dargestellt werden soll, falls der Nickname abgeschnitten wird (es darf nur ein Zeichen genutzt werden)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"+"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"+"+`
 
 * [[option_weechat.look.prefix_align_more_after]] *weechat.look.prefix_align_more_after*
 ** Beschreibung: pass:none[Das Zeichen welches zum Verkürzen angezeigt wird (Standardzeichen: "+"), nach dem Nick-Suffix darstellen (das vorhandene Leerzeichen wird ersetzt); wird diese Funktion deaktiviert, dann wird das Zeichen nach dem Nick dargestellt]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.prefix_buffer_align]] *weechat.look.prefix_buffer_align*
 ** Beschreibung: pass:none[Einstellung des Präfix für den Namen des Buffers, falls viele Buffer zu einem Buffer zusammengefügt wurden (keine = none, links = left, rechts = right (Standardwert))]
 ** Typ: integer
-** Werte: none, left, right (Standardwert: `+right+`)
+** Werte: none, left, right
+** Standardwert: `+right+`
 
 * [[option_weechat.look.prefix_buffer_align_max]] *weechat.look.prefix_buffer_align_max*
 ** Beschreibung: pass:none[maximale Größe für den Namen des Buffers, falls mehrere Buffer zusammengefügt worden sind (0 = keine Größenbegrenzung)]
 ** Typ: integer
-** Werte: 0 .. 128 (Standardwert: `+0+`)
+** Werte: 0 .. 128
+** Standardwert: `+0+`
 
 * [[option_weechat.look.prefix_buffer_align_more]] *weechat.look.prefix_buffer_align_more*
 ** Beschreibung: pass:none[Zeichen welches dargestellt werden soll falls der Name des Buffers abgeschnitten wird (wenn mehrere Buffer zusammengefügt wurden und diese somit die selbe Nummer besitzen) (es darf nur ein Zeichen genutzt werden)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"+"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"+"+`
 
 * [[option_weechat.look.prefix_buffer_align_more_after]] *weechat.look.prefix_buffer_align_more_after*
 ** Beschreibung: pass:none[Das Zeichen welches zum Verkürzen angezeigt wird (Standardzeichen: "+"), nach dem Nick-Suffix darstellen (das vorhandene Leerzeichen wird ersetzt); wird diese Funktion deaktiviert, dann wird das Zeichen nach dem Nick dargestellt]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
 ** Beschreibung: pass:none[Präfix, dass bei einer Fehlernachricht genutzt wird (Hinweis: Inhalt wird evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"=!="+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"=!="+`
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
 ** Beschreibung: pass:none[Präfix, dass bei einer Join-Nachricht genutzt wird (Hinweis: Inhalt wird evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"-->"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"-->"+`
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
 ** Beschreibung: pass:none[Präfix, dass bei einer Netzwerknachricht genutzt wird (Hinweis: Inhalt wird evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"--"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"--"+`
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
 ** Beschreibung: pass:none[Präfix, dass bei einer Quit-Nachricht genutzt wird (Hinweis: Inhalt wird evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"<--"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"<--"+`
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
 ** Beschreibung: pass:none[setzt ein Präfix welches anstelle des Nicks der Nachricht vorangestellt wird, sofern die vorherige Nachricht von dem selben Nick geschrieben wurde. Wird ein Leerzeichen (" ") genutzt, dann wird der Nachricht kein Präfix vorangestellt. Um diese Funktion zu deaktivieren und den Nick als Präfix zu nutzen darf keine Zeichenkette angegeben werden]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.look.prefix_suffix]] *weechat.look.prefix_suffix*
 ** Beschreibung: pass:none[Nach dem Präfix anzufügende Zeichenfolge]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"|"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"|"+`
 
 * [[option_weechat.look.quote_nick_prefix]] *weechat.look.quote_nick_prefix*
 ** Beschreibung: pass:none[Text der vor dem Nick dargestellt werden soll, wenn die Nachricht gequotet wird (siehe /help cursor)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"<"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"<"+`
 
 * [[option_weechat.look.quote_nick_suffix]] *weechat.look.quote_nick_suffix*
 ** Beschreibung: pass:none[Text der nach dem Nick dargestellt werden soll, wenn die Nachricht gequotet wird (siehe /help cursor)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+">"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+">"+`
 
 * [[option_weechat.look.quote_time_format]] *weechat.look.quote_time_format*
 ** Beschreibung: pass:none[Zeitformat wenn eine Nachricht gequotet wird (siehe /help cursor)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"%H:%M:%S"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"%H:%M:%S"+`
 
 * [[option_weechat.look.read_marker]] *weechat.look.read_marker*
 ** Beschreibung: pass:none[nutzt eine Linie oder ein Zeichen, als Lesezeichen, um die erste ungelesene Nachricht in einem Buffer hervorzuheben]
 ** Typ: integer
-** Werte: none, line, char (Standardwert: `+line+`)
+** Werte: none, line, char
+** Standardwert: `+line+`
 
 * [[option_weechat.look.read_marker_always_show]] *weechat.look.read_marker_always_show*
 ** Beschreibung: pass:none[ist diese Einstellung gesetzt wird das Lesezeichen immer im Buffer dargestellt, auch wenn noch keine neue Nachricht geschrieben wurde]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.read_marker_string]] *weechat.look.read_marker_string*
 ** Beschreibung: pass:none[Zeichen, das als Lesezeichen genutzt werden soll (das Zeichen wird bis zum Ende der Zeile wiederholt)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"- "+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"- "+`
 
 * [[option_weechat.look.save_config_on_exit]] *weechat.look.save_config_on_exit*
 ** Beschreibung: pass:none[die aktuelle Konfiguration wird beim Beenden automatisch gesichert]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
 ** Beschreibung: pass:none[beim Beenden wird das aktuelle Layout gesichert (Buffer, Fenster oder beides)]
 ** Typ: integer
-** Werte: none, buffers, windows, all (Standardwert: `+none+`)
+** Werte: none, buffers, windows, all
+** Standardwert: `+none+`
 
 * [[option_weechat.look.scroll_amount]] *weechat.look.scroll_amount*
 ** Beschreibung: pass:none[Anzahl der zu scrollenden Zeilen wenn seitenweise geblättert wird (Bild hoch/runter)]
 ** Typ: integer
-** Werte: 1 .. 2147483647 (Standardwert: `+3+`)
+** Werte: 1 .. 2147483647
+** Standardwert: `+3+`
 
 * [[option_weechat.look.scroll_bottom_after_switch]] *weechat.look.scroll_bottom_after_switch*
 ** Beschreibung: pass:none[scrollt zum unteren Ende des Fensters nachdem zu einem anderen Buffer gewechselt wurde (die aktuelle Position wird dabei nicht gesichert); diese Funktion hat nur einen Einfluss auf Buffer mit einem formatierten Inhalt und nicht auf Buffer mit einem freien Inhalt]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.scroll_page_percent]] *weechat.look.scroll_page_percent*
 ** Beschreibung: pass:none[Angabe in Prozent, die die Seite hoch oder runter gescrollt werden soll (Beispiel: 100 für eine ganze Seite, 50 für eine halbe Seite)]
 ** Typ: integer
-** Werte: 1 .. 100 (Standardwert: `+100+`)
+** Werte: 1 .. 100
+** Standardwert: `+100+`
 
 * [[option_weechat.look.search_text_not_found_alert]] *weechat.look.search_text_not_found_alert*
 ** Beschreibung: pass:none[Informiert den Anwender falls der gesuchte Text nicht im Buffer gefunden wurde]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
 ** Beschreibung: pass:none[das angegebene Zeichen wird verwendet um die horizontalen Linien zu zeichnen. Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. Dies kann allerdings bei einigen Terminals zu Problemen führen, falls die URL Auswahl genutzt wird. Die Schriftbreite muss exakt ein Zeichen betragen]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"-"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"-"+`
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
 ** Beschreibung: pass:none[das angegebene Zeichen wird verwendet um die vertikale Linien zu zeichnen. Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. Die Schriftbreite muss exakt ein Zeichen betragen]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.look.tab_width]] *weechat.look.tab_width*
 ** Beschreibung: pass:none[Anzahl an Leerzeichen um Tabulatoren in Nachrichten darzustellen]
 ** Typ: integer
-** Werte: 1 .. 64 (Standardwert: `+1+`)
+** Werte: 1 .. 64
+** Standardwert: `+1+`
 
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
 ** Beschreibung: pass:none[Format für das Datum, wenn dieses in eine Zeichenkette umgewandelt und in Nachrichten dargestellt wird (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"%a, %d %b %Y %T"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"%a, %d %b %Y %T"+`
 
 * [[option_weechat.look.window_auto_zoom]] *weechat.look.window_auto_zoom*
 ** Beschreibung: pass:none[automatischer Zoom für aktuelles Fenster, sobald das Terminalfenster zu klein wird um alle Fenster darstellen zu können (mit der Tastenkombination alt-z kann der Zoom rückgängig gemacht werden, sobald das Terminal wieder groß genug ist)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.look.window_separator_horizontal]] *weechat.look.window_separator_horizontal*
 ** Beschreibung: pass:none[ist die Einstellung aktiviert dann wird eine horizontale Trennlinie zwischen Fenstern gezeichnet]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.window_separator_vertical]] *weechat.look.window_separator_vertical*
 ** Beschreibung: pass:none[ist die Einstellung aktiviert dann wird eine vertikale Trennlinie zwischen Fenstern gezeichnet]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.window_title]] *weechat.look.window_title*
 ** Beschreibung: pass:none[Fenstertitel setzen (Terminal in dem Curses GUI läuft), wird beim Programmstart gesetzt; ein leerer Eintrag belässt den original Fenstertitel (Hinweis: Inhalt wird evaluiert, siehe /help eval)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"WeeChat ${info:version}"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"WeeChat ${info:version}"+`
 
 * [[option_weechat.look.word_chars_highlight]] *weechat.look.word_chars_highlight*
 ** Beschreibung: pass:none[durch Kommata getrennte Liste von Zeichen (oder eine Auswahl von Zeichen) bei denen bei einem Highlight keine Worttrennung erfolgt; jeder Eintrag kann ein einzelnes Zeichen oder eine Auswahl von Zeichen sein (Format: a-z), eine Auswahl von Breitzeichen (wide character; zum Beispiel "alnum", siehe man wctype); beginnt das Item mit einem "!" wird die Auswahl umgekehrt (bedeutet, das Zeichen ist NICHT Bestandteil eines Wortes); das Zeichen "*" wird als Platzhalter verwendet; Unicode Zeichen müssen folgendes Format nutzen \u1234, zum Beispiel \u00A0 für geschütztes Leerzeichen (siehe /help print für unterstützte Formate)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"!\u00A0,-,_,|,alnum"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"!\u00A0,-,_,|,alnum"+`
 
 * [[option_weechat.look.word_chars_input]] *weechat.look.word_chars_input*
 ** Beschreibung: pass:none[durch Kommata getrennte Liste von Zeichen (oder eine Auswahl von Zeichen) bei denen in der Eingabezeile keine Worttrennung erfolgt; jeder Eintrag kann ein einzelnes Zeichen oder eine Auswahl von Zeichen sein (Format: a-z), eine Auswahl von Breitzeichen (wide character; zum Beispiel "alnum", siehe man wctype); beginnt das Item mit einem "!" wird die Auswahl umgekehrt (bedeutet, das Zeichen ist NICHT Bestandteil eines Wortes); das Zeichen "*" wird als Platzhalter verwendet; Unicode Zeichen müssen folgendes Format nutzen \u1234, zum Beispiel \u00A0 für geschütztes Leerzeichen (siehe /help print für unterstützte Formate)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"!\u00A0,-,_,|,alnum"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"!\u00A0,-,_,|,alnum"+`
 
 * [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
 ** Beschreibung: pass:none[Zeitüberschreitung (in Sekunden) für eine Verbindung zu einem entfernten Rechner (mittels einem Kindprozess)]
 ** Typ: integer
-** Werte: 1 .. 2147483647 (Standardwert: `+60+`)
+** Werte: 1 .. 2147483647
+** Standardwert: `+60+`
 
 * [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
 ** Beschreibung: pass:none[Datei beinhaltet die digitalen Zertifikate ("%h" wird durch das WeeChat Verzeichnis ersetzt, Standardverzeichnis: "~/.weechat")]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"/etc/ssl/certs/ca-certificates.crt"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"/etc/ssl/certs/ca-certificates.crt"+`
 
 * [[option_weechat.network.gnutls_handshake_timeout]] *weechat.network.gnutls_handshake_timeout*
 ** Beschreibung: pass:none[Zeitüberschreitung für gnutls Handshake (in Sekunden)]
 ** Typ: integer
-** Werte: 1 .. 2147483647 (Standardwert: `+30+`)
+** Werte: 1 .. 2147483647
+** Standardwert: `+30+`
 
 * [[option_weechat.network.proxy_curl]] *weechat.network.proxy_curl*
 ** Beschreibung: pass:none[Name des Proxy welcher für URL Downloads mittels Curl genutzt werden soll (wird verwendet um das Inhaltsverzeichnis für Skript-Erweiterung herunterzuladen oder in Skripten, welche die Funktion hook_process nutzen); der Proxy muss mit dem Befehl /proxy eingerichtet werden]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
 ** Beschreibung: pass:none[durch Kommata getrennte Liste der Erweiterungen, die beim Programmstart automatisch geladen werden sollen; "*" lädt alle vorhandenen Erweiterungen. Beginnt der Name hingegen mit "!" wird die Erweiterung nicht geladen. Im Namen der Erweiterung kann der Platzhalter "*" verwendet werden (Beispiele: "*" oder "*,!lua,!tcl")]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"*"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"*"+`
 
 * [[option_weechat.plugin.debug]] *weechat.plugin.debug*
 ** Beschreibung: pass:none[aktiviert Debug-Nachrichten für alle Erweiterungen (diese Einstellung ist standardmäßig deaktiviert und das ist auch gut so)]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+off+`)
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
 ** Beschreibung: pass:none[durch Kommata getrennte Liste von Dateinamenserweiterungen, welche für die Erweiterungen genutzt werden sollen]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+".so,.dll"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+".so,.dll"+`
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
 ** Beschreibung: pass:none[Suchpfad für Erweiterungen ("%h"' wird durch das WeeChat-Basisverzeichnis ersetzt, voreingestellt ist "~/.weechat")]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+"%h/plugins"+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"%h/plugins"+`
 
 * [[option_weechat.plugin.save_config_on_unload]] *weechat.plugin.save_config_on_unload*
 ** Beschreibung: pass:none[speichert Konfigurationen, falls Erweiterungen beendet werden]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
 ** Beschreibung: pass:none[Nach dem Start von WeeChat wird dieser Befehl aufgerufen. Dies geschieht nachdem die Erweiterungen geladen worden sind (mehrere Befehle sind durch ";" zu trennen) (Hinweis: Inhalt wird evaluiert, siehe /help eval)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
 ** Beschreibung: pass:none[Nach dem Start von WeeChat wird dieser Befehl aufgerufen. Dies geschieht bevor die Erweiterungen geladen werden (mehrere Befehle sind durch ";" zu trennen) (Hinweis: Inhalt wird evaluiert, siehe /help eval)]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
 
 * [[option_weechat.startup.display_logo]] *weechat.startup.display_logo*
 ** Beschreibung: pass:none[WeeChat-Logo beim Start anzeigen]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.startup.display_version]] *weechat.startup.display_version*
 ** Beschreibung: pass:none[WeeChat-Version beim Start anzeigen]
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `+on+`)
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.startup.sys_rlimit]] *weechat.startup.sys_rlimit*
 ** Beschreibung: pass:none[setzt Ressourcenbeschränkungen für den WeeChat Prozess. (Format: "res1:limit1,res2:limit2"; Ressourcenname ist das Ende der Konstanten (RLIMIT_XXX) in Kleinbuchstaben (siehe man setrlimit für Werte); limit -1 bedeutet "unbegrenzt"; Beispiele: für die Core-Datei wird eine unbegrenzte Dateigröße bestimmt und die virtuelle Speicherkapazität auf maximal 1GB festgelegt: "core:-1,as:1000000000"]
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `+""+`)
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`

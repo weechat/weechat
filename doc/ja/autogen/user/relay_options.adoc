@@ -5,139 +5,167 @@
 * [[option_relay.color.client]] *relay.color.client*
 ** 説明: pass:none[クライアント説明用のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+cyan+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+cyan+`
 
 * [[option_relay.color.status_active]] *relay.color.status_active*
 ** 説明: pass:none["接続済み" 状態のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightblue+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightblue+`
 
 * [[option_relay.color.status_auth_failed]] *relay.color.status_auth_failed*
 ** 説明: pass:none["認証失敗" 状態のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightred+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightred+`
 
 * [[option_relay.color.status_connecting]] *relay.color.status_connecting*
 ** 説明: pass:none["接続中" 状態のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+yellow+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+yellow+`
 
 * [[option_relay.color.status_disconnected]] *relay.color.status_disconnected*
 ** 説明: pass:none["接続切断" 状態のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightred+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightred+`
 
 * [[option_relay.color.status_waiting_auth]] *relay.color.status_waiting_auth*
 ** 説明: pass:none["認証待ち" 状態のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+brown+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+brown+`
 
 * [[option_relay.color.text]] *relay.color.text*
 ** 説明: pass:none[リレーバッファ内のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_relay.color.text_bg]] *relay.color.text_bg*
 ** 説明: pass:none[リレーバッファ内の背景色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_relay.color.text_selected]] *relay.color.text_selected*
 ** 説明: pass:none[リレーバッファ内の選択行のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+white+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+white+`
 
 * [[option_relay.irc.backlog_max_minutes]] *relay.irc.backlog_max_minutes*
 ** 説明: pass:none[IRC チャンネルごとのバックログの最大時間 (分) (0 = 制限無し、例: 1440 = 1 日、10080 = 1 週間、43200 = 1 ヶ月、525600 = 1 年間)]
 ** タイプ: 整数
-** 値: 0 .. 2147483647 (デフォルト値: `+1440+`)
+** 値: 0 .. 2147483647
+** デフォルト値: `+1440+`
 
 * [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
 ** 説明: pass:none[IRC チャンネルごとのバックログの最大行数 (0 = 制限無し)]
 ** タイプ: 整数
-** 値: 0 .. 2147483647 (デフォルト値: `+256+`)
+** 値: 0 .. 2147483647
+** デフォルト値: `+256+`
 
 * [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
 ** 説明: pass:none[最後にクライアントを切断した以降のバックログを表示]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_relay.irc.backlog_since_last_message]] *relay.irc.backlog_since_last_message*
 ** 説明: pass:none[最後に自分が送信したメッセージ以降のバックログを表示]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
 ** 説明: pass:none[IRC チャンネルごとのバックログに表示するメッセージタグのコンマ区切りリスト (利用可能なタグ: "irc_join"、"irc_part"、"irc_quit"、"irc_nick"、"irc_privmsg")、"*" = 利用可能な全てのタグ]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"irc_privmsg"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"irc_privmsg"+`
 
 * [[option_relay.irc.backlog_time_format]] *relay.irc.backlog_time_format*
 ** 説明: pass:none[バックログメッセージの時間書式 (書式は man strftime を参照) (メッセージの irc タグ内に時間の情報が含まれるため、クライアントがサーバの "server-time" 機能を利用可能にした場合、これは利用されません); 空文字列 = バックログメッセージで時間を表示しない]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"[%H:%M] "+`)
+** 値: 未制約文字列
+** デフォルト値: `+"[%H:%M] "+`
 
 * [[option_relay.look.auto_open_buffer]] *relay.look.auto_open_buffer*
 ** 説明: pass:none[新しいクライアントが接続したらリレーバッファを自動的に開く]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_relay.look.raw_messages]] *relay.look.raw_messages*
 ** 説明: pass:none[生データバッファが閉じられた時にメモリに保存する生メッセージの数 (生データバッファを開いたときに表示されるメッセージ)]
 ** タイプ: 整数
-** 値: 0 .. 65535 (デフォルト値: `+256+`)
+** 値: 0 .. 65535
+** デフォルト値: `+256+`
 
 * [[option_relay.network.allow_empty_password]] *relay.network.allow_empty_password*
 ** 説明: pass:none[リレーで空パスワードの利用を許可します (テストおよびローカルネットワークでリレーを利用する場合を除き、これを有効化するべきではありません)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
 ** 説明: pass:none[リレーの利用を許可する IP アドレスの POSIX 拡張正規表現 (大文字小文字の区別無し、最初に "(?-i)" をつければ区別有り)、例: "^(123.45.67.89|192.160.*)$"]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_relay.network.bind_address]] *relay.network.bind_address*
 ** 説明: pass:none[割り当てるアドレス (空の場合、全てのインターフェイスからの接続を受け付ける、"127.0.0.1" を使えばローカルマシンからの接続のみ許可)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_relay.network.clients_purge_delay]] *relay.network.clients_purge_delay*
 ** 説明: pass:none[接続を切ったクライアントを追い出すまでの遅延時間 (分単位、0 = すぐにクライアントを追い出す、-1 = 追い出さない)]
 ** タイプ: 整数
-** 値: -1 .. 43200 (デフォルト値: `+0+`)
+** 値: -1 .. 43200
+** デフォルト値: `+0+`
 
 * [[option_relay.network.compression_level]] *relay.network.compression_level*
 ** 説明: pass:none[WeeChat プロトコルでクライアントに送信するパケットの圧縮レベル (0 = 圧縮しない、1 = 低圧縮 ... 9 = 高圧縮)]
 ** タイプ: 整数
-** 値: 0 .. 9 (デフォルト値: `+6+`)
+** 値: 0 .. 9
+** デフォルト値: `+6+`
 
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** 説明: pass:none[デフォルトで IPv6 ソケットをリッスン (デフォルトの IPv4 に加えて); 特定のプロトコルでプロトコルに IPv4 と IPv6 (個別または両方) を強制 (/help relay を参照)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
 ** 説明: pass:none[ポートに接続するクライアントの最大数 (0 = 制限なし)]
 ** タイプ: 整数
-** 値: 0 .. 2147483647 (デフォルト値: `+5+`)
+** 値: 0 .. 2147483647
+** デフォルト値: `+5+`
 
 * [[option_relay.network.password]] *relay.network.password*
 ** 説明: pass:none[このリレーを利用するためにクライアントが必要なパスワード (空の場合パスワードなし、オプション relay.network.allow_empty_password を参照してください) (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
 ** 説明: pass:none[SSL 証明書と秘密鍵のファイル (SSL 接続を利用するクライアント用)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"%h/ssl/relay.pem"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"%h/ssl/relay.pem"+`
 
 * [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
 ** 説明: pass:none[gnutls の優先度を示した文字列 (構文は、gnutls マニュアルの gnutls_priority_init 関数のドキュメントを参照、通例: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"NORMAL:-VERS-SSL3.0"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"NORMAL:-VERS-SSL3.0"+`
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** 説明: pass:none[ウェブソケットに使うことを許可する origin の "POSIX 拡張正規表現 (大文字小文字を区別しない、"(?-i)" を先頭に置くと大文字小文字を区別する)、例: "^http://(www\.)?example\.(com|org)"]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`

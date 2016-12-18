@@ -5,139 +5,167 @@
 * [[option_relay.color.client]] *relay.color.client*
 ** description: pass:none[couleur du texte pour la description du client]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+cyan+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+cyan+`
 
 * [[option_relay.color.status_active]] *relay.color.status_active*
 ** description: pass:none[couleur du texte pour le statut "connecté"]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+lightblue+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+lightblue+`
 
 * [[option_relay.color.status_auth_failed]] *relay.color.status_auth_failed*
 ** description: pass:none[couleur du texte pour le statut "échec auth"]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+lightred+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+lightred+`
 
 * [[option_relay.color.status_connecting]] *relay.color.status_connecting*
 ** description: pass:none[couleur du texte pour le statut "connexion"]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+yellow+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+yellow+`
 
 * [[option_relay.color.status_disconnected]] *relay.color.status_disconnected*
 ** description: pass:none[couleur du texte pour le statut "déconnecté"]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+lightred+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+lightred+`
 
 * [[option_relay.color.status_waiting_auth]] *relay.color.status_waiting_auth*
 ** description: pass:none[couleur du texte pour le statut "attente auth"]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+brown+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+brown+`
 
 * [[option_relay.color.text]] *relay.color.text*
 ** description: pass:none[couleur du texte dans le tampon relay]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+default+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+default+`
 
 * [[option_relay.color.text_bg]] *relay.color.text_bg*
 ** description: pass:none[couleur du fond dans le tampon relay]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+default+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+default+`
 
 * [[option_relay.color.text_selected]] *relay.color.text_selected*
 ** description: pass:none[couleur du texte pour la ligne sélectionnée dans le tampon relay]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+white+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+white+`
 
 * [[option_relay.irc.backlog_max_minutes]] *relay.irc.backlog_max_minutes*
 ** description: pass:none[nombre maximum de minutes dans l'historique par canal IRC (0 = sans limite, exemples : 1440 = une journée, 10080 = une semaine, 43200 = un mois, 525600 = une année)]
 ** type: entier
-** valeurs: 0 .. 2147483647 (valeur par défaut: `+1440+`)
+** valeurs: 0 .. 2147483647
+** valeur par défaut: `+1440+`
 
 * [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
 ** description: pass:none[nombre maximum de lignes dans l'historique par canal IRC (0 = sans limite)]
 ** type: entier
-** valeurs: 0 .. 2147483647 (valeur par défaut: `+256+`)
+** valeurs: 0 .. 2147483647
+** valeur par défaut: `+256+`
 
 * [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
 ** description: pass:none[afficher l'historique en démarrant depuis la dernière déconnexion du client]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+on+`)
+** valeurs: on, off
+** valeur par défaut: `+on+`
 
 * [[option_relay.irc.backlog_since_last_message]] *relay.irc.backlog_since_last_message*
 ** description: pass:none[afficher l'historique en démarrant depuis votre dernier message envoyé]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+off+`)
+** valeurs: on, off
+** valeur par défaut: `+off+`
 
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
 ** description: pass:none[liste d'étiquettes de messages (séparées par des virgules) qui sont affichés dans l'historique par canal IRC (étiquettes supportées : "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = toutes les étiquettes supportées]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+"irc_privmsg"+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+"irc_privmsg"+`
 
 * [[option_relay.irc.backlog_time_format]] *relay.irc.backlog_time_format*
 ** description: pass:none[format pour l'heure dans les messages d'historique (voir man strftime pour le format) (non utilisé si la capacité de serveur "server-time" a été activée par le client, car l'heure est envoyée sous forme d'étiquette irc) ; chaîne vide = désactiver l'heure dans les messages d'historique]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+"[%H:%M] "+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+"[%H:%M] "+`
 
 * [[option_relay.look.auto_open_buffer]] *relay.look.auto_open_buffer*
 ** description: pass:none[ouvrir automatiquement le tampon des clients pour le relai lorsqu'un nouveau client est ajouté à la liste]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+on+`)
+** valeurs: on, off
+** valeur par défaut: `+on+`
 
 * [[option_relay.look.raw_messages]] *relay.look.raw_messages*
 ** description: pass:none[nombre de messages bruts à sauvegarder en mémoire lorsque le tampon des données brutes est fermé (ces messages seront affichés lors de l'ouverture du tampon des données brutes)]
 ** type: entier
-** valeurs: 0 .. 65535 (valeur par défaut: `+256+`)
+** valeurs: 0 .. 65535
+** valeur par défaut: `+256+`
 
 * [[option_relay.network.allow_empty_password]] *relay.network.allow_empty_password*
 ** description: pass:none[autoriser un mot de passe vide dans relay (devrait être activé seulement pour des tests ou sur le réseau local)]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+off+`)
+** valeurs: on, off
+** valeur par défaut: `+off+`
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
 ** description: pass:none[expression régulière POSIX étendue avec les IPs autorisées pour le relai (insensible à la casse, utilisez "(?-i)" en début de chaîne pour la rendre insensible à la casse), exemple : "^(123.45.67.89|192.160.*)$"]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+""+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`
 
 * [[option_relay.network.bind_address]] *relay.network.bind_address*
 ** description: pass:none[adresse pour le bind (si vide, la connexion est possible sur toutes les interfaces, utiliser "127.0.0.1" pour autoriser les connections depuis la machine locale seulement)]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+""+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`
 
 * [[option_relay.network.clients_purge_delay]] *relay.network.clients_purge_delay*
 ** description: pass:none[délai pour purger les clients déconnectés (en minutes, 0 = purger les clients immédiatement, -1 = ne jamais purger)]
 ** type: entier
-** valeurs: -1 .. 43200 (valeur par défaut: `+0+`)
+** valeurs: -1 .. 43200
+** valeur par défaut: `+0+`
 
 * [[option_relay.network.compression_level]] *relay.network.compression_level*
 ** description: pass:none[niveau de compression pour les paquets envoyés au client avec le protocole WeeChat (0 = désactiver la compression, 1 = peu de compression ... 9 = meilleure compression)]
 ** type: entier
-** valeurs: 0 .. 9 (valeur par défaut: `+6+`)
+** valeurs: 0 .. 9
+** valeur par défaut: `+6+`
 
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** description: pass:none[écouter en IPv6 sur le socket par défaut (en plus de l'IPv4 qui est par défaut) ; les protocoles IPv4 et IPv6 peuvent être forcés (individuellement ou ensemble) dans le nom du protocole (voir /help relay)]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+on+`)
+** valeurs: on, off
+** valeur par défaut: `+on+`
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
 ** description: pass:none[nombre maximum de clients qui se connectent sur un port (0 = pas de limite)]
 ** type: entier
-** valeurs: 0 .. 2147483647 (valeur par défaut: `+5+`)
+** valeurs: 0 .. 2147483647
+** valeur par défaut: `+5+`
 
 * [[option_relay.network.password]] *relay.network.password*
 ** description: pass:none[mot de passe requis par les clients pour accéder à ce relai (une valeur vide indique que le mot de passe n'est pas nécessaire, voir l'option relay.network.allow_empty_password) (note : le contenu est évalué, voir /help eval)]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+""+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`
 
 * [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
 ** description: pass:none[fichier avec le certificat et la clé privée SSL (pour servir les clients avec SSL)]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+"%h/ssl/relay.pem"+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+"%h/ssl/relay.pem"+`
 
 * [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
 ** description: pass:none[chaîne avec les priorités pour gnutls (pour la syntaxe, voir la documentation de la fonction gnutls_priority_init du manuel gnutls, les chaînes courantes sont : "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+"NORMAL:-VERS-SSL3.0"+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+"NORMAL:-VERS-SSL3.0"+`
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** description: pass:none[expression régulière POSIX étendue avec les origines autorisées dans les websockets (insensible à la casse, utilisez "(?-i)" en début de chaîne pour la rendre insensible à la casse), exemple : "^http://(www\.)?example\.(com|org)"]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+""+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`

@@ -5,54 +5,65 @@
 * [[option_trigger.color.flag_command]] *trigger.color.flag_command*
 ** opis: pass:none[kolor tekstu dla flag komend (w /trigger list)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightgreen+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightgreen+`
 
 * [[option_trigger.color.flag_conditions]] *trigger.color.flag_conditions*
 ** opis: pass:none[kolor tekstu dla flag warunków (w /trigger list)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+yellow+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+yellow+`
 
 * [[option_trigger.color.flag_post_action]] *trigger.color.flag_post_action*
 ** opis: pass:none[kolor tekstu dla flagi końca akcji (w /trigger list)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightblue+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightblue+`
 
 * [[option_trigger.color.flag_regex]] *trigger.color.flag_regex*
 ** opis: pass:none[kolor tekstu dla flag wyrażeń regularnych (w /trigger list)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightcyan+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightcyan+`
 
 * [[option_trigger.color.flag_return_code]] *trigger.color.flag_return_code*
 ** opis: pass:none[kolor tekstu dla flagi zwracanego kodu (w /trigger list)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightmagenta+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightmagenta+`
 
 * [[option_trigger.color.regex]] *trigger.color.regex*
 ** opis: pass:none[kolor tekstu dla wyrażeń regularnych]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+white+`
 
 * [[option_trigger.color.replace]] *trigger.color.replace*
 ** opis: pass:none[kolor tekstu dla tekstu zastępczego (dla wyrażeń regularnych)]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+cyan+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+cyan+`
 
 * [[option_trigger.color.trigger]] *trigger.color.trigger*
 ** opis: pass:none[kolor tekstu dla nazwy triggera]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+green+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+green+`
 
 * [[option_trigger.color.trigger_disabled]] *trigger.color.trigger_disabled*
 ** opis: pass:none[kolor tekstu dla nazwy wyłączonego triggera]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+red+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+red+`
 
 * [[option_trigger.look.enabled]] *trigger.look.enabled*
 ** opis: pass:none[włącza wsparcie dla triggerów]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+on+`)
+** wartości: on, off
+** domyślna wartość: `+on+`
 
 * [[option_trigger.look.monitor_strip_colors]] *trigger.look.monitor_strip_colors*
 ** opis: pass:none[usuń kolory w wartościach tablic haszy wyświetlanych w buforze monitorującym]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+off+`)
+** wartości: on, off
+** domyślna wartość: `+off+`

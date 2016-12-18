@@ -555,9 +555,9 @@ def docgen_cmd_cb(data, buf, args):
                     doc.write('** {0}: pass:none[{1}]\n'.format(
                         _('description'), desc.replace(']', '\\]')))
                     doc.write('** {0}: {1}\n'.format(_('type'), type_nls))
-                    doc.write('** {0}: {1} ({2}: `+{3}+`)\n'
-                              ''.format(_('values'), values,
-                                        _('default value'), default_value))
+                    doc.write('** {0}: {1}\n'.format(_('values'), values))
+                    doc.write('** {0}: `+{1}+`\n'
+                              ''.format(_('default value'), default_value))
                     if null_value_allowed:
                         doc.write('** {0}\n'.format(
                             _('undefined value allowed (null)')))

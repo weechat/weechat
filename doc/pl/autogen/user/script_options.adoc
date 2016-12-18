@@ -5,204 +5,245 @@
 * [[option_script.color.status_autoloaded]] *script.color.status_autoloaded*
 ** opis: pass:none[kolor dla statusu "automatycznie ładowany" ("a")]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+cyan+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+cyan+`
 
 * [[option_script.color.status_held]] *script.color.status_held*
 ** opis: pass:none[kolor dla statusu  "wstrzymany" ("H")]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+white+`
 
 * [[option_script.color.status_installed]] *script.color.status_installed*
 ** opis: pass:none[kolor dla statusu "zainstalowany" ("i")]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightcyan+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightcyan+`
 
 * [[option_script.color.status_obsolete]] *script.color.status_obsolete*
 ** opis: pass:none[kolor dla statusu  "przestarzały" ("N")]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightmagenta+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightmagenta+`
 
 * [[option_script.color.status_popular]] *script.color.status_popular*
 ** opis: pass:none[kolor dla statusu "popularny" ("*")]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+yellow+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+yellow+`
 
 * [[option_script.color.status_running]] *script.color.status_running*
 ** opis: pass:none[kolor dla statusu  "uruchomiony" ("r")]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightgreen+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightgreen+`
 
 * [[option_script.color.status_unknown]] *script.color.status_unknown*
 ** opis: pass:none[kolor dla statusu  "nieznany" ("?")]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightred+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightred+`
 
 * [[option_script.color.text]] *script.color.text*
 ** opis: pass:none[kolor tekstu w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+default+`
 
 * [[option_script.color.text_bg]] *script.color.text_bg*
 ** opis: pass:none[kolor tła w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+default+`
 
 * [[option_script.color.text_bg_selected]] *script.color.text_bg_selected*
 ** opis: pass:none[kolor tła dla zaznaczonej linii w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+red+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+red+`
 
 * [[option_script.color.text_date]] *script.color.text_date*
 ** opis: pass:none[kolor dat w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+default+`
 
 * [[option_script.color.text_date_selected]] *script.color.text_date_selected*
 ** opis: pass:none[kolor daty w zaznaczonej linii w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+white+`
 
 * [[option_script.color.text_delimiters]] *script.color.text_delimiters*
 ** opis: pass:none[kolor ograniczników w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+default+`
 
 * [[option_script.color.text_description]] *script.color.text_description*
 ** opis: pass:none[kolor opisu w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+default+`
 
 * [[option_script.color.text_description_selected]] *script.color.text_description_selected*
 ** opis: pass:none[kolor opisu w zaznaczonej linii w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+white+`
 
 * [[option_script.color.text_extension]] *script.color.text_extension*
 ** opis: pass:none[kolor rozszerzenia w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+default+`
 
 * [[option_script.color.text_extension_selected]] *script.color.text_extension_selected*
 ** opis: pass:none[kolor rozszerzenia w zaznaczonej linii w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+white+`
 
 * [[option_script.color.text_name]] *script.color.text_name*
 ** opis: pass:none[kolor nazwy skryptu w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+cyan+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+cyan+`
 
 * [[option_script.color.text_name_selected]] *script.color.text_name_selected*
 ** opis: pass:none[kolor nazwy skryptu w zaznaczonej linii w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightcyan+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightcyan+`
 
 * [[option_script.color.text_selected]] *script.color.text_selected*
 ** opis: pass:none[kolor tekstu w zaznaczonej linii w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+white+`
 
 * [[option_script.color.text_tags]] *script.color.text_tags*
 ** opis: pass:none[kolor tagów w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+brown+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+brown+`
 
 * [[option_script.color.text_tags_selected]] *script.color.text_tags_selected*
 ** opis: pass:none[kolor tagów w zaznaczonej linii w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+yellow+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+yellow+`
 
 * [[option_script.color.text_version]] *script.color.text_version*
 ** opis: pass:none[kolor wersji w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+magenta+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+magenta+`
 
 * [[option_script.color.text_version_loaded]] *script.color.text_version_loaded*
 ** opis: pass:none[kolor wersji załadowanego skryptu w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+default+`
 
 * [[option_script.color.text_version_loaded_selected]] *script.color.text_version_loaded_selected*
 ** opis: pass:none[kolor załadowanej wersji skryptu w zaznaczonej linii w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+white+`
 
 * [[option_script.color.text_version_selected]] *script.color.text_version_selected*
 ** opis: pass:none[kolor wersji w zaznaczonej linii w buforze skryptów]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightmagenta+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightmagenta+`
 
 * [[option_script.look.columns]] *script.look.columns*
 ** opis: pass:none[format kolumn wyświetlanych w buforze skryptów: następujące identyfikatory kolumn są zastępowane przez ich wartość: %a=autor, %d=opis, %D=data dodania, %e=rozszerzenie, %l=język, %L=licencja, %n=nazwa z rozszerzeniem, %N=nazwa, %r=wymagania, %s=status, %t=tagi, %u=data wgrania, %v=wersja, %V=załadowana wersja, %w=min_weechat, %W=max_weechat)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+"%s %n %V %v %u | %d | %t"+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+"%s %n %V %v %u | %d | %t"+`
 
 * [[option_script.look.diff_color]] *script.look.diff_color*
 ** opis: pass:none[koloruj wyjście diffa]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+on+`)
+** wartości: on, off
+** domyślna wartość: `+on+`
 
 * [[option_script.look.diff_command]] *script.look.diff_command*
 ** opis: pass:none[komenda używana do pokazania różnic pomiędzy załadowanym skryptem i nową wersją w repozytorium ("auto" = automatyczna detekcja polecenie diff (git albo diff), pusta wartość = wyłączenie diffa, inny ciąg = nazwa komendy, na przykład "diff")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+"auto"+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+"auto"+`
 
 * [[option_script.look.display_source]] *script.look.display_source*
 ** opis: pass:none[wyświetl kod źródłowy skryptu w buforze ze szczegółami o skrypcie (skrypt jest pobierany do pliku tymczasowego, kiedy pokazywane są szczegółowe informacje na jego temat)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+on+`)
+** wartości: on, off
+** domyślna wartość: `+on+`
 
 * [[option_script.look.quiet_actions]] *script.look.quiet_actions*
 ** opis: pass:none[ciche akcje na buforze skryptów: nie wyświetlaj wiadomości w głównym buforze, kiedy skrypty są instalowane/usuwane/ładowane/wyładowywane (wyświetlane są tylko błędy)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+on+`)
+** wartości: on, off
+** domyślna wartość: `+on+`
 
 * [[option_script.look.sort]] *script.look.sort*
 ** opis: pass:none[domyślne sortowania dla skryptów: oddzielona przecinkami lista identyfikatorów: a=autor, A=automatycznie ładowany, d=data dodania, e=rozszerzenie, i=zainstalowany, l=język, n=nazwa, o=przestarzały, p=popularność, r=uruchomiony, u=data aktualizacji; znak "-" może zostać użyty przed identyfikatorem w celu odwrócenia kolejności; przykład: "i,u": najpierw zainstalowane skrypty, sortowane po dacie aktualizacji]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+"p,n"+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+"p,n"+`
 
 * [[option_script.look.translate_description]] *script.look.translate_description*
 ** opis: pass:none[przetłumaczony opis skryptu (jeśli tłumaczenie jest dostępne w twoim języku, w przeciwnym wypadku zostanie użyta angielska wersja)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+on+`)
+** wartości: on, off
+** domyślna wartość: `+on+`
 
 * [[option_script.look.use_keys]] *script.look.use_keys*
 ** opis: pass:none[użyj skrótu alt+X w buforze skryptów, aby wykonać akcję na skrypcie (alt+i = zainstaluj, alt+r = usuń, ...); jeśli wyłączone dozwolone jest tylko wprowadzanie: i, r, ...]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+on+`)
+** wartości: on, off
+** domyślna wartość: `+on+`
 
 * [[option_script.scripts.autoload]] *script.scripts.autoload*
 ** opis: pass:none[automatycznie ładuj zainstalowane skrypty (tworzy link w katalogu "autoload" do skryptu w katalogu nadrzędnym)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+on+`)
+** wartości: on, off
+** domyślna wartość: `+on+`
 
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** opis: pass:none[lokalnie zapisany czas wygaśnięcia, w minutach (-1 = nigdy nie wygasa, 0 = zawsze wygasa)]
 ** typ: liczba
-** wartości: -1 .. 525600 (domyślna wartość: `+1440+`)
+** wartości: -1 .. 525600
+** domyślna wartość: `+1440+`
 
 * [[option_script.scripts.download_timeout]] *script.scripts.download_timeout*
 ** opis: pass:none[czas oczekiwania (w sekundach) na pobranie skryptu i listy skryptów]
 ** typ: liczba
-** wartości: 1 .. 3600 (domyślna wartość: `+30+`)
+** wartości: 1 .. 3600
+** domyślna wartość: `+30+`
 
 * [[option_script.scripts.hold]] *script.scripts.hold*
 ** opis: pass:none[skrypty do "wstrzymania": oddzielona przecinkami lista skryptów, które nigdy nie zostaną zaktualizowane i nie mogą być usunięte, na przykład: "buffers.pl,iset.pl"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+""+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+""+`
 
 * [[option_script.scripts.path]] *script.scripts.path*
 ** opis: pass:none[lokalny katalog z cache skryptów; "%h" na początku ciągu zostanie zastąpione przez katalog domowy WeeChat (domyślnie "~/.weechat")  (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+"%h/script"+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+"%h/script"+`
 
 * [[option_script.scripts.url]] *script.scripts.url*
 ** opis: pass:none[adres pliku z listą skryptów; domyśłnie wymuszany jest protokół HTTPS, zobacz opcje script.scripts.url_force_https]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+"http://weechat.org/files/plugins.xml.gz"+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+"http://weechat.org/files/plugins.xml.gz"+`
 
 * [[option_script.scripts.url_force_https]] *script.scripts.url_force_https*
 ** opis: pass:none[wymusza użycie HTTPS do pobierania (listy i skryptów); powinieneś wyłączyć tą opcję tylko jeśli występują problemy z pobieraniem]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+on+`)
+** wartości: on, off
+** domyślna wartość: `+on+`
