@@ -495,7 +495,7 @@
 ** Standardwert: `+message+`
 
 * [[option_weechat.look.align_multiline_words]] *weechat.look.align_multiline_words*
-** Beschreibung: pass:none[alignment for multiline words according to option weechat.look.align_end_of_lines; if disabled, the multiline words will have no alignment will not be aligned, which can be useful to not break long URLs]
+** Beschreibung: pass:none[Einstellung für Zeilenumbruch gemäß weechat.look.align_end_of_lines; falls deaktiviert wird ein Wort welches durch einen Zeilenumbruch in die nächste Zeile gezwungen wird nicht in der neuen Zeile eingeschoben, sondern beginnt direkt am Zeilenanfang. Dies kann sinnvoll sein um lange URLs weiterhin anklicken zu können und kein Leerzeichen innerhalb der URL zu erhalten]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`

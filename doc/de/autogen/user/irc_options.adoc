@@ -741,7 +741,7 @@
 ** Standardwert: `+on+`
 
 * [[option_irc.server_default.usermode]] *irc.server_default.usermode*
-** Beschreibung: pass:none[user mode(s) to set after connection to server and before executing command and the auto-join of channels; examples: "+R" (to set mode "R"), "+R-i" (to set mode "R" and remove "i"); see /help mode for the complete mode syntax (note: content is evaluated, see /help eval)]
+** Beschreibung: pass:none[Usermode der direkt nach der Verbindung zum Server gesetzt werden soll. Dies geschieht bevor Befehle für den Server ausgeführt und bevor Channels automatisch betreten werden; Beispiele: "+R" (um den Modus "R" zu setzen), "+R-i" (setzt den Modus "R" und entfernt den Modus "i"); siehe /help mode um den Befehlssatz angezeigt zu bekommen (Hinweis: Inhalt wird evaluiert, siehe /help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
