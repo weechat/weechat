@@ -495,7 +495,7 @@
 ** domyślna wartość: `+message+`
 
 * [[option_weechat.look.align_multiline_words]] *weechat.look.align_multiline_words*
-** opis: pass:none[alignment for multiline words according to option weechat.look.align_end_of_lines; if disabled, the multiline words will have no alignment will not be aligned, which can be useful to not break long URLs]
+** opis: pass:none[alignment for multiline words according to option weechat.look.align_end_of_lines; if disabled, the multiline words will not be aligned, which can be useful to not break long URLs]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`

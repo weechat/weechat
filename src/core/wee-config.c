@@ -2464,8 +2464,7 @@ config_weechat_init_options ()
         "align_multiline_words", "boolean",
         N_("alignment for multiline words according to option "
            "weechat.look.align_end_of_lines; if disabled, the multiline words "
-           "will have no alignment will not be aligned, which can be useful "
-           "to not break long URLs"),
+           "will not be aligned, which can be useful to not break long URLs"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         &config_change_buffers, NULL, NULL,

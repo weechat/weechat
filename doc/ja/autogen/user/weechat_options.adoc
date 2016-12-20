@@ -495,7 +495,7 @@
 ** デフォルト値: `+message+`
 
 * [[option_weechat.look.align_multiline_words]] *weechat.look.align_multiline_words*
-** 説明: pass:none[alignment for multiline words according to option weechat.look.align_end_of_lines; if disabled, the multiline words will have no alignment will not be aligned, which can be useful to not break long URLs]
+** 説明: pass:none[alignment for multiline words according to option weechat.look.align_end_of_lines; if disabled, the multiline words will not be aligned, which can be useful to not break long URLs]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
