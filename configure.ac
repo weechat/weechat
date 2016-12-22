@@ -991,10 +991,10 @@ AC_CACHE_CHECK([for flock() support], ac_cv_have_flock, [
 AC_LINK_IFELSE([AC_LANG_PROGRAM(
 [[ #include <sys/file.h>]],
 [[ flock(0, LOCK_SH); ]])],
-[ ac_have_flock="yes" ],
-[ ac_have_flock="no" ])])
+[ ac_cv_have_flock="yes" ],
+[ ac_cv_have_flock="no" ])])
 
-if test "x$ac_have_flock" = "xyes"; then
+if test "x$ac_cv_have_flock" = "xyes"; then
     enable_flock="yes"
     AC_DEFINE(HAVE_FLOCK)
 else
@@ -1021,9 +1021,9 @@ if test "x$debug" != "x0" ; then
         AC_LINK_IFELSE([AC_LANG_PROGRAM(
             [[ #include <execinfo.h> ]],
             [[ void *trace[128]; int n = backtrace(trace, 128); ]])],
-            [ ac_have_backtrace="yes" ],
-            [ ac_have_backtrace="no"  ])])
-    if test "x$ac_have_backtrace" = "xyes"; then
+            [ ac_cv_have_backtrace="yes" ],
+            [ ac_cv_have_backtrace="no"  ])])
+    if test "x$ac_cv_have_backtrace" = "xyes"; then
         enable_backtrace="yes"
         AC_DEFINE(HAVE_BACKTRACE,1,[glibc backtrace function])
     else
@@ -1040,10 +1040,10 @@ AC_CACHE_CHECK([for eat_newline_glitch support], ac_cv_have_eatnewlineglitch, [
 AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
 [[ #include <term.h> ]],
 [[ eat_newline_glitch = 0; ]])],
-[ ac_have_eatnewlineglitch="yes" ],
-[ ac_have_eatnewlineglitch="no" ])])
+[ ac_cv_have_eatnewlineglitch="yes" ],
+[ ac_cv_have_eatnewlineglitch="no" ])])
 
-if test "x$ac_have_eatnewlineglitch" = "xyes"; then
+if test "x$ac_cv_have_eatnewlineglitch" = "xyes"; then
     enable_eatnewlineglitch="yes"
     AC_DEFINE(HAVE_EAT_NEWLINE_GLITCH)
 else
