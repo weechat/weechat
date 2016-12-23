@@ -218,7 +218,7 @@ stop: カーソルモードを終了
 ----
 
 [[command_weechat_debug]]
-* `+debug+`: debug functions
+* `+debug+`: デバッグ関数
 
 ----
 /debug  list
@@ -229,25 +229,25 @@ stop: カーソルモードを終了
         hdata [free]
         time <command>
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-    hooks: display infos about hooks
-infolists: display infos about infolists
-     libs: display infos about external libraries used
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
-     time: measure time to execute a command or to send text to the current buffer
+     list: デバッグレベルの設定されたプラグインをリストアップ
+      set: プラグインのデバッグレベルを設定
+   plugin: プラグインの名前 ("core" は WeeChat コアを意味する)
+    level: プラグインのデバッグレベル (0 はデバッグの無効化)
+     dump: WeeChat ログファイルにメモリダンプを保存 (WeeChat がクラッシュした場合と同じダンプが書き込まれます)
+   buffer: ログファイルに 16 進値でバッファの内容をダンプ
+    color: 現在の色ペアに関する情報を表示
+   cursor: カーソルモードのデバッグを切り替え
+     dirs: ディレクトリを表示
+    hdata: hdata に関する情報を表示 (free を付けた場合: メモリから全ての hdata を削除)
+    hooks: フックに関する情報を表示
+infolists: インフォリストに関する情報を表示
+     libs: 使用中の外部ライブラリに関する情報を表示
+   memory: メモリ使用量に関する情報を表示
+    mouse: マウスのデバックを切り替え
+     tags: 行のタグを表示
+     term: 端末に関する情報を表示
+  windows: ウィンドウツリーの情報を表示
+     time: コマンドの実行時間や現在のバッファへのテキスト送信にかかった時間を測定
 ----
 
 [[command_weechat_eval]]
@@ -334,57 +334,57 @@ hdata と変数の名前については、"プラグイン API リファレン�
          rename <name> <new_name>
          del <name>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name ("@" = enable/disable all filters in current buffer)
-    add: add a filter
- rename: rename a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat" or "irc.server.freenode")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - wildcard "*" is allowed
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - wildcard "*" is allowed
-         - if tag starts with '!', then it is excluded and must NOT be in message
-  regex: POSIX extended regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: 全てのフィルタをリストアップ
+ enable: フィルタを有効化 (フィルタはデフォルトで有効になっています)
+disable: フィルタを無効化
+ toggle: フィルタの有効無効を切り替え
+   name: フィルタの名前 ("@" = 現在のバッファに設定されている全てのフィルタを有効化/無効化)
+    add: フィルタを追加
+ rename: フィルタをリネーム
+    del: フィルタを削除
+   -all: 全てのフィルタを削除
+ buffer: フィルタが有効化されているバッファのコンマ区切りリスト:
+         - これはプラグイン名を含む完全な名前です (例: "irc.freenode.#weechat" または "irc.server.freenode")
+         - "*" は全てのバッファを意味します
+         - 名前が '!' から始まるものは除外されます
+         - ワイルドカード "*" を使うことができます
+   tags: タグのコンマ区切りリスト、例えば "irc_join,irc_part,irc_quit"
+         - 論理積 "and": タグ同士を "+" でつなげてください (例: "nick_toto+irc_action")
+         - ワイルドカード "*" を使うことができます
+         - タグを '!' で始めると、そのタグが付けられたメッセージとそのタグを含むメッセージはフィルタされません
+  regex: 行単位検索の正規表現
+         - '\t' を使うと、プレフィックスをメッセージから分離できます。'|' 等の特別な文字は '\|' のようにエスケープしなければいけません
+         - 正規表現の最初に '!' が含まれる場合は、マッチ結果が反転されます (最初の '!' にマッチさせたければ、'\!' を使ってください)
+         - 2 種類の正規表現があります: 一方はプレフィックス用、他方はメッセージ用
+         - 正規表現は大文字小文字を区別しません、"(?-i)" から始まる場合は区別します
 
-The default key alt+'=' toggles filtering on/off.
+デフォルトではキー alt+'=' でフィルタリングの on/off を切り替えられます。
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
-  notify_none, notify_message, notify_private, notify_highlight,
-  self_msg, nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  host_xxx (xxx is username + host in message),
-  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
-  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+よく使われるタグ:
+  no_filter、no_highlight、no_log、log0..log9 (ログレベル)、
+  notify_none、notify_message、notify_private、notify_highlight、
+  self_msg、nick_xxx (xxx はメッセージのニックネーム部分)、prefix_nick_ccc (ccc はニックネームの色)、
+  host_xxx (xxx はメッセージのユーザ名 + ホスト名部分)、
+  irc_xxx (xxx はコマンド名または番号、/server raw または /debug tags で確認)、
+  irc_numeric、irc_error、irc_action、irc_ctcp、irc_ctcp_reply、irc_smart_filter、away_info。
+バッファ内でタグを見るには: /debug tags
 
-Examples:
-  use IRC smart filter on all buffers:
+例:
+  全てのバッファで IRC スマートフィルタを使用:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  名前に "#weechat" を含むバッファを除いた全てのバッファで IRC スマートフィルタを使用:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  全ての IRC join/part/quit メッセージをフィルタ:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  チャンネルに入った時や /names で表示されるニックネームをフィルタ:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  IRC チャンネル #weechat で "toto" を含むニックネームをフィルタ:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  ニックネーム "toto" からの IRC の参加/アクションメッセージをフィルタ:
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  IRC チャンネル #weechat で "weechat sucks" を含む行をフィルタ:
     /filter add sucks irc.freenode.#weechat * weechat sucks
-  filter lines that are strictly equal to "WeeChat sucks" on all buffers:
+  すべてのバッファで "WeeChat sucks" と完全に一致する行をフィルタ:
     /filter add sucks2 * * (?-i)^WeeChat sucks$
 ----
 

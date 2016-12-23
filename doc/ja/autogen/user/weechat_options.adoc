@@ -75,7 +75,7 @@
 ** デフォルト値: `+default+`
 
 * [[option_weechat.color.chat_nick]] *weechat.color.chat_nick*
-** 説明: pass:none[text color for nicks in chat window: used in some server messages and as fallback when a nick color is not found; most of times nick color comes from option weechat.color.chat_nick_colors]
+** 説明: pass:none[チャットウィンドウのニックネームのテキスト色: 一部のサーバメッセージおよびニックネーム色が見つからない場合の代替色として使われます; 多くの場合、ニックネーム色を指定するには weechat.color.chat_nick_colors オプションを使うと良いでしょう]
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
 ** デフォルト値: `+lightcyan+`
@@ -495,7 +495,7 @@
 ** デフォルト値: `+message+`
 
 * [[option_weechat.look.align_multiline_words]] *weechat.look.align_multiline_words*
-** 説明: pass:none[alignment for multiline words according to option weechat.look.align_end_of_lines; if disabled, the multiline words will not be aligned, which can be useful to not break long URLs]
+** 説明: pass:none[weechat.look.align_end_of_lines オプションに依存する単語内での改行抑制; 無効化した場合、単語という単位を無視して改行が行われます。これは長い URL が改行されなくなるという意味で便利です]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
