@@ -135,10 +135,9 @@ OS X では http://brew.sh/[Homebrew] を使ってください:
 ^(4)^ Python はバージョン 2.7 をお勧めします (全てのスクリプトはバージョン 2.7
 で正しく動きますが、バージョン 2.6 以下または 3.0 以上では正しく動きません)。
 
-// TRANSLATION MISSING
-If you are using a Debian/Ubuntu based distribution, and if you have some
-"deb-src" source entries in your file _/etc/apt/sources.list_, you can install
-all dependencies with the command:
+Debian および Ubuntu
+ベースのディストリビューションを使っており、_/etc/apt/sources.list_ ファイルで "deb-src"
+ソースエントリを指定しているならば、すべての依存関係にあるパッケージを以下のコマンドでインストール可能です:
 
 ----
 # apt-get build-dep weechat
@@ -964,41 +963,40 @@ _window_
       ▲ ウィンドウ #1 (バッファ #3)         ▲ ウィンドウ #2 (バッファ #4)
 ....
 
-// TRANSLATION MISSING
 [[buffers_lines]]
-=== Buffers lines
+=== バッファの行
 
 [[lines_format]]
-==== Format of lines
+==== 行の書式
 
-Lines displayed in formatted buffers have following fields:
+書式付きバッファに表示される各行は以下のフィールドから構成されます:
 
 [width="100%",cols="2,2,10",options="header"]
 |===
-| Field               | Displayed          | Description
-| date/time (message) | Yes                | Date/time of message (may be past).
-| date/time (print)   | No                 | Date/time when WeeChat prints the message.
-| prefix              | Yes                | Prefix of message, commonly a nick.
-| message             | Yes                | The message itself.
-| displayed           | No                 | Boolean: true if line is displayed, false if line is filtered with command <<command_weechat_filter,/filter>>.
-| highlight           | No                 | Boolean: true if line has a highlight, false otherwise.
-| tags                | With `/debug tags` | Tags associated with the line (see <<lines_tags,lines tags>>).
+| フィールド          | 表示状態           | 説明
+| 日付/時間 (メッセージ) | 表示            | メッセージの日付および時間 (おそらく過去)。
+| 日付/時間 (表示)    | 非表示             | WeeChat がメッセージを表示した時間。
+| プレフィックス      | 表示               | メッセージのプレフィックス、通常ニックネーム。
+| メッセージ          | 表示               | メッセージ自体。
+| 表示状態            | 非表示             | ブール値: 行が表示された場合には真、行が <<command_weechat_filter,/filter>> コマンドでフィルタされた場合には偽。
+| ハイライト          | 非表示             | ブール値: 行がハイライトされている場合には真、それ以外の場合には偽。
+| タグ | `/debug tags` の実行で表示状態を切り替え | 行に関連付けられたタグ (<<lines_tags,行のタグ>>参照)。
 |===
 
-The display of lines can be customized with many look options
-(_pass:[weechat.look.*]_) and color options (_pass:[weechat.color.chat_*]_).
+外観オプション(_pass:[weechat.look.*]_) と色オプション (_pass:[weechat.color.chat_*]_)
+を使えば、行の表示をカスタマイズすることが可能です。
 
 [[lines_tags]]
-==== Lines tags
+==== 行のタグ
 
-WeeChat uses tags in lines for different purposes:
+WeeChat は様々な目的で各行にタグを付けます:
 
-* highlight
-* notify level
-* logging
-* use of command <<command_weechat_filter,/filter>>
+* ハイライト
+* 通知レベル
+* ログ記録
+* <<command_weechat_filter,/filter>> コマンドの使用
 
-Tags can be displayed with the command `/debug tags` (same command to hide them).
+`/debug tags` コマンドでタグを表示することが可能です (タグを非表示にする場合も同じコマンドを使います)。
 
 通常使用するタグ (一部抜粋したリスト):
 
@@ -1009,14 +1007,13 @@ Tags can be displayed with the command `/debug tags` (same command to hide them)
 | no_highlight     | ハイライトできない行
 | no_log           | ログファイルに書き込まれない行
 | log0 ... log9    | 行に対するログレベル (`/help logger` を参照)
-| notify_none      | この行を含むバッファはホットリストに追加されない
-| notify_message   | この行を含むバッファは "message" レベルでホットリストに追加される
-| notify_private   | この行を含むバッファは "private" レベルでホットリストに追加される
-| notify_highlight | この行を含むバッファは "highlight" レベルでホットリストに追加される
-// TRANSLATION MISSING
-| self_msg         | Self message.
+| notify_none      | この行を含むバッファはホットリストに追加されません
+| notify_message   | この行を含むバッファは "message" レベルでホットリストに追加されます
+| notify_private   | この行を含むバッファは "private" レベルでホットリストに追加されます
+| notify_highlight | この行を含むバッファは "highlight" レベルでホットリストに追加されます
+| self_msg         | 自分のメッセージ
 | nick_xxx         | ニックネーム "xxx" からのメッセージ
-| prefix_nick_ccc  | プレフィックスを色 "ccc" のニックネームにする
+| prefix_nick_ccc  | プレフィックスを色 "ccc" のニックネームにします
 | host_xxx         | メッセージ中のユーザ名とホスト
 | irc_xxx          | IRC メッセージ "xxx" (コマンドまたは 3 桁の番号)
 | irc_numeric      | IRC 番号メッセージ
@@ -1340,9 +1337,8 @@ WeeChat が以下のような表示状態の場合:
 [[notify_levels]]
 === 通知レベル
 
-// TRANSLATION MISSING
 [[setup_notify_levels]]
-==== Setup notify levels
+==== 通知レベルの設定
 
 バッファに表示された各メッセージには 4 つのレベルが設定されています。レベルの低いものから順に:
 
@@ -1385,98 +1381,96 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 /buffer notify highlight
 ----
 
-// TRANSLATION MISSING
 [[max_hotlist_level_nicks]]
-==== Max hotlist level for nicks
+==== ニックネームに対するホットリストレベルの最大値
 
-It is possible to set max hotlist level for some nicks, per buffer, or per group
-of buffers (like IRC servers).
+ニックネーム、バッファ、バッファグループ (IRC サーバなど)
+に対してホットリストレベルの最大値を設定することが可能です。
 
-The buffer property "hotlist_max_level_nicks" can be set with a list of nicks
-and for each nick the max hotlist level to trigger, possible levels are:
+あるニックネームのリストに対してバッファプロパティ "hotlist_max_level_nicks"
+を設定したり、各ニックネームに対してホットリストレベルの最大値を設定することも可能です。設定可能なレベルは以下です:
 
-* -1: no hotlist changes for nick
-* 0: low priority (like join/part messages)
-* 1: message
-* 2: private message
-* 3: highlight (in fact useless, since it's already the default max for all messages)
+* -1: ニックネームがホットリストを変更しない優先度
+* 0: 低優先度 (参加および退出メッセージなど)
+* 1: 通常メッセージ
+* 2: プライベートメッセージ
+* 3: ハイライト (これはすべてのメッセージのデフォルト最大値であるため、通常これを指定することはありません)
 
-For example to disable highlights from "joe" and "mike" on current buffer:
+例えば現在のバッファで "joe" と "mike" からのメッセージに対するハイライトを無効化するには以下のように設定します:
 
 ----
 /buffer set hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
 [NOTE]
-The buffer property "hotlist_max_level_nicks" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`.
+バッファプロパティ "hotlist_max_level_nicks" は設定ファイルに保存されません。 +
+これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
+`/script install buffer_autoset.py` コマンドを使い、ヘルプを見るには `/help autosetbuffer` コマンドを使ってください。
 
-// TRANSLATION MISSING
 [[highlights]]
-=== Highlights
+=== ハイライト
 
 [[highlights_words]]
-==== Add words to highlight
+==== ハイライトする単語の追加
 
-By default, WeeChat highlights messages from other users containing your nick,
-therefore the highlight depends on the buffer (the nick can be different from
-one buffer to another).
+デフォルトで WeeChat
+は自分のニックネームが含まれる他のユーザからのメッセージをハイライトします。このため、ハイライトはバッファに依存します
+(ニックネームはバッファごとに異なる場合があります)。
 
-You can add other words to highlight with the option
-<<option_weechat.look.highlight,weechat.look.highlight>>, for example to
-highlight your nick and "word1", "word2" and all words beginning with "test":
+他の単語を追加するには <<option_weechat.look.highlight,weechat.look.highlight>>
+オプションを使います。例えば自分のニックネーム、"word1"、"word2"、"test"
+から始まる任意の単語をハイライトするには以下のように設定します:
 
 ----
 /set weechat.look.highlight word1,word2,test*
 ----
 
-If you need a more specific rule for the word, you can use regular expressions
-with the option <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
-for example to highlight words "flashcode", "flashcöde" and "flashy":
+単語に対してさらに具体的なルールを設定する必要がある場合、<<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>
+オプションを使って正規表現で指定することも可能です。例えば "flashcode"、"flashcöde"、"flashy"
+という単語をハイライトするには以下のように設定します:
 
 ----
 /set weechat.look.highlight_regex flashc[oö]de|flashy
 ----
 
-The delimiters around words to highlight can be customized with the option
-<<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
+ハイライトする単語の区切りは <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>
+オプションを使って設定します。
 
 [[highlights_tags]]
-==== Add tags to highlight
+==== ハイライトするタグの追加
 
-Lines displayed can contain "tags", which give some info about the origin of
-message or the message itself. +
-You can display tags with the command `/debug tags` (same command to hide them).
+表示される行には「タグ」を含めることが可能です。「タグ」とはメッセージの出自やメッセージ自身に関する情報を与えるものです。 +
+`/debug tags` コマンドでタグを表示することが可能です
+(タグを非表示にする場合も同じコマンドを使います)。
 
-You can add specific tags to highlight with the option
-<<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
-Tags are separated by commas, and multiple tags can be separated by "+" to do
-a logical "and" between them.
+ハイライトするタグを明示するには
+<<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>
+オプションを使います。複数のタグを指定するにはコンマで区切り、複数のタグの論理
+"and" を表すには "+" で区切ります。
 
-For example to highlight all messages from nick "FlashCode" and all notices
-from nicks beginning with "toto":
+例えば "FlashCode" というニックネームからのすべてのメッセージと "toto"
+で始まるニックネームからのすべての通知メッセージをハイライトするには以下のように設定します:
 
 ----
 /set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
 ----
 
 [[highlights_regex_buffer]]
-==== Set extra highlights on buffer
+==== バッファに対する特別なハイライトの設定
 
-You can force highlight using a regular expression with the buffer property
-"highlight_regex".
+バッファプロパティ "highlight_regex"
+と正規表現を使ってハイライトを強制できます。
 
-For example to force the highlight on all messages in the current buffer:
+例えば現在のバッファ宛のすべてのメッセージをハイライトするには以下のように設定します:
 
 ----
 /buffer set highlight_regex .*
 ----
 
 [NOTE]
-The buffer property "highlight_regex" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`.
+バッファプロパティ "highlight_regex" は設定ファイルに保存されません。 +
+これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
+`/script install buffer_autoset.py` コマンドを使い、ヘルプを見るには `/help autosetbuffer` コマンドを使ってください。
 
 [[key_bindings]]
 === デフォルトのキー割り当て

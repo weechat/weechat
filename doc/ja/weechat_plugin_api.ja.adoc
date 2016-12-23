@@ -6921,9 +6921,8 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 * _tags_: タグのコンマ区切りリスト (タグを指定しない場合は NULL)
 * _message_: 表示するメッセージ
 
-// TRANSLATION MISSING
-See chapter about line tags in _WeeChat User's guide_ for a list of commonly
-used tags in WeeChat.
+WeeChat で共通に使われるタグのリストは _WeeChat ユーザーズガイド_
+の行のタグに関する章をご覧ください
 
 C 言語での使用例:
 
@@ -7084,12 +7083,11 @@ struct t_hook *weechat_hook_command (const char *command,
 引数:
 
 * _command_: コマンド名
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _description_: コマンドの説明 (`/help command` で表示されます)
 * _args_: コマンドの引数 (`/help command` で表示されます)
 * _args_description_: 引数の説明 (`/help command` で表示されます)
-// TRANSLATION MISSING
-* _completion_: completion template for command (see format below)
+* _completion_: コマンドに対する補完候補テンプレート (書式は以下をご覧ください)
 * _callback_: コマンドが使用された際に呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
 ** _void *data_: ポインタ
@@ -7106,28 +7104,25 @@ struct t_hook *weechat_hook_command (const char *command,
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
-// TRANSLATION MISSING
-The _completion_ template is a list of completions for each argument, separated
-by spaces. Many completions are possible for one argument, separated by `+|+`.
-Many templates are possible for same command, separated by `+||+`.
+上の _completion_ テンプレートは各引数に関する補完候補の空白区切りリストです。1
+つの引数に対して複数の補完候補を設定するには補完候補同士を `+|+` で区切ってください。1
+つのコマンドに対して複数のテンプレートを設定するにはテンプレート同士を `+||+` で区切ってください。
 
-// TRANSLATION MISSING
-The format of a completion can be:
+補完候補テンプレートには以下の書式を使えます:
 
-* _%(name)_: the completion _name_
-* _%(name:arguments)_: the completion _name_ with _arguments_ sent to the
-  callback _(WeeChat ≥ 1.7)_
-* any string: it is used as-is in completion
+* _%(name)_: _name_ という補完候補テンプレート
+* _%(name:arguments)_: _arguments_ という引数をつけた _name_
+  という補完候補テンプレートがコールバックに送信されます _(WeeChat バージョン 1.7 以上)_
+* 任意の文字列: 補完候補としてそのまま使われる文字列
 
-// TRANSLATION MISSING
-For example the template `list || add %(filters_names) || del %(filters_names)|-all`
-will complete with following values in command arguments:
+例えば `list || add %(filters_names) || del %(filters_names)|-all`
+という補完候補テンプレートはコマンド引数として以下の値を補完します:
 
-* first argument: `list`, `add` and `del`
-* second argument, depending on first argument:
-** `list`: nothing
-** `add`: names of filters
-** `del`: names of filters and `-all`
+* 第 1 引数: `list`、`add`、`del`
+* 第 2 引数、第 1 引数に依存:
+** `list`: 第 2 引数なし
+** `add`: フィルタ名
+** `del`: フィルタ名および `-all`
 
 デフォルトの補完候補コードは:
 
@@ -7236,19 +7231,17 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 
 引数:
 
-// TRANSLATION MISSING
-* _completion_item_: name of completion item, after you can use _%(name)_
-  (or _%(name:arguments)_ with WeeChat ≥ 1.7) in a command hooked
-  (argument _completion_)
-  (priority allowed, see note about <<hook_priority,priority>>)
-* _description_: 補完の説明
-* _callback_: 補完要素 (ユーザはこの要素を使って何かを補完している)
+* _completion_item_: 補完候補テンプレートの名前、これ以降コマンドフックの
+  _completion_ 引数で _%(name)_ という補完候補テンプレートを使えます
+  (WeeChat バージョン 1.7 以上の場合 _%(name:arguments)_ も使えます)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+* _description_: 補完候補テンプレートの説明
+* _callback_: 補完候補テンプレート (ユーザはこの関数を使って何かを補完します)
   が使われた場合に呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
 ** _void *data_: ポインタ
-// TRANSLATION MISSING
-** _const char *completion_item_: 補完要素の名前 (with WeeChat ≥ 1.7 it
-   can include arguments, with the format: _name:arguments_)
+** _const char *completion_item_: 補完候補テンプレートの名前 (WeeChat バージョン 1.7
+   以上の場合、次の書式で引数を含めることも可能です: _name:arguments_)
 ** _struct t_gui_buffer *buffer_: 補完が行われたバッファ
 ** _struct t_gui_completion *completion_:
    補完に際して単語を追加するために使われる構造体
@@ -7432,7 +7425,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 引数:
 
 * _command_: フックするコマンド (ワイルドカード `+*+` を使うことができます)
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _callback_: コマンドが実行される際に呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
 ** _void *data_: ポインタ
@@ -8381,7 +8374,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 引数:
 
 * _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
   (以下の表を参照)
 * _callback_:
   シグナルを受信した際に呼び出すコールバック関数、引数と戻り値:
@@ -9166,12 +9159,10 @@ weechat.hook_signal_send("logger_backlog", weechat.WEECHAT_HOOK_SIGNAL_POINTER, 
 
 . インストール済みスクリプトをリロードして削除。
 . 新しいスクリプトをディレクトリ _~/.weechat/xxx/_ に移動 (_xxx_ はプログラミング言語)
-// TRANSLATION MISSING
 . 新しいスクリプトへのリンクをディレクトリ _~/.weechat/xxx/autoload/_ に作成
-  (only if the script was already auto-loaded, or if the option
-  _script.scripts.autoload_ is enabled for a new script)
-// TRANSLATION MISSING
-. 新しいスクリプトを読み込む (if the script was loaded)
+  (古いスクリプトがすでに自動ロードされていた場合、もしくは新しいスクリプトに対してオプション
+  _script.scripts.autoload_ が有効化されている場合のみ作成されます)
+. 新しいスクリプトを読み込む (古いスクリプトがロードされていた場合のみ)
 
 _script_ プラグインはスクリプトをインストールする際にこれらのシグナルを使っています。
 
@@ -9304,7 +9295,7 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 Arguments:
 
 * _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
   (以下の表を参照)
 * _callback_:
   シグナルを受信した際に呼び出すコールバック関数、引数と戻り値:
@@ -9669,7 +9660,7 @@ struct t_hook *weechat_hook_config (const char *option,
 
 * _option_: オプション、書式は完全な名前、コマンド `/set` で使うのと同じ
   (例: `weechat.look.item_time_format`)、ワイルドカード `+*+` を使うことができます
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _callback_:
   設定オプションが変更されたら呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
@@ -9744,7 +9735,7 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 引数:
 
 * _modifier_: 修飾子名、Weechat またはプラグインが使う修飾子のリスト
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
   (以下の表を参照)
 * _callback_: 修飾子が使われた際に呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
@@ -9988,7 +9979,7 @@ struct t_hook *weechat_hook_info (const char *info_name,
 引数:
 
 * _info_name_: インフォの名前
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _description_: 説明
 * _args_description_: 引数の説明 (任意、NULL にすることも可)
 * _callback_: インフォが要求されたら呼び出すコールバック関数、引数と戻り値:
@@ -10065,7 +10056,7 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 引数:
 
 * _info_name_: インフォの名前
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _description_: 説明
 * _args_description_: 引数ハッシュテーブルの説明 (任意、NULL でも可)
 * _output_description_: コールバックが返すハッシュテーブルの説明
@@ -10149,7 +10140,7 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 引数:
 
 * _infolist_name_: インフォリストの名前
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _description_: 説明
 * _pointer_description_: ポインタの説明 (任意、NULL でも可)
 * _args_description_: 引数の説明 (任意、NULL でも可)
@@ -10236,7 +10227,7 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 引数:
 
 * _hdata_name_: hdata の名前
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _description_: 説明
 * _callback_:
   hdata が要求された際に呼び出すコールバック関数、引数と戻り値:
@@ -10299,7 +10290,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 引数:
 
 * _area_: チャットエリアの場合は "chat"、またはバー要素の名前
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _callback_:
   フォーカスが当たったら呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
