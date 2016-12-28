@@ -43,19 +43,19 @@ other languages.
 
 ==== Python
 
-* You have to `import weechat`
+* You have to `import weechat`.
 * Functions `+print*+` are called `+prnt*+` in python (because _print_ is reserved
-  keyword)
-* Functions are called with `weechat.xxx(arg1, arg2, ...)`
+  keyword).
+* Functions are called with `weechat.xxx(arg1, arg2, ...)`.
 
 ==== Perl
 
-* Functions are called with `weechat::xxx(arg1, arg2, ...);`
+* Functions are called with `weechat::xxx(arg1, arg2, ...);`.
 
 ==== Ruby
 
-* You have to define _weechat_init_ and call _register_ inside
-* Functions are called with `Weechat.xxx(arg1, arg2, ...)`
+* You have to define _weechat_init_ and call _register_ inside.
+* Functions are called with `Weechat.xxx(arg1, arg2, ...)`.
 * Due to a limitation of Ruby (15 arguments max by function), the function
   `Weechat.config_new_option` receives the callbacks in an array of 6 strings
   (3 callbacks + 3 data strings), so a call to this function looks like:
@@ -68,15 +68,15 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 
 ==== Lua
 
-* Functions are called with `weechat.xxx(arg1, arg2, ...)`
+* Functions are called with `weechat.xxx(arg1, arg2, ...)`.
 
 ==== Tcl
 
-* Functions are called with `weechat::xxx arg1 arg2 ...`
+* Functions are called with `weechat::xxx arg1 arg2 ...`.
 
 ==== Guile (scheme)
 
-* Functions are called with `(weechat:xxx arg1 arg2 ...)`
+* Functions are called with `(weechat:xxx arg1 arg2 ...)`.
 * Following functions take one list of arguments (instead of many arguments
   for other functions), because number of arguments exceed number of allowed
   arguments in Guile:
@@ -86,7 +86,7 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 
 ==== Javascript
 
-* Functions are called with `weechat.xxx(arg1, arg2, ...);`
+* Functions are called with `weechat.xxx(arg1, arg2, ...);`.
 
 [[register_function]]
 === Register function
@@ -1087,51 +1087,51 @@ The result is a hashtable with following keys
 | Key | WeeChat version | Description | Example
 
 | tags | ≥ 0.4.0 |
-  The tags in message (can be empty) |
+  The tags in message (can be empty). |
   `time=2015-06-27T16:40:35.000Z`
 
 | message_without_tags | ≥ 0.4.0 |
-  The message without the tags (the same as message if there are no tags) |
+  The message without the tags (the same as message if there are no tags). |
   `:nick!user@host PRIVMSG #weechat :hello!`
 
 | nick | ≥ 0.3.4 |
-  The origin nick |
+  The origin nick. |
   `nick`
 
 | host | ≥ 0.3.4 |
-  The origin host (includes the nick) |
+  The origin host (includes the nick). |
   `nick!user@host`
 
 | command | ≥ 0.3.4 |
-  The command (_PRIVMSG_, _NOTICE_, ...) |
+  The command (_PRIVMSG_, _NOTICE_, ...). |
   `PRIVMSG`
 
 | channel | ≥ 0.3.4 |
-  The target channel |
+  The target channel. |
   `#weechat`
 
 | arguments | ≥ 0.3.4 |
-  The command arguments (includes the channel) |
+  The command arguments (includes the channel). |
   `#weechat :hello!`
 
 | text | ≥ 1.3 |
-  The text (for example user message) |
+  The text (for example user message). |
   `hello!`
 
 | pos_command | ≥ 1.3 |
-  The index of _command_ in message ("-1" if _command_ was not found) |
+  The index of _command_ in message ("-1" if _command_ was not found). |
   `47`
 
 | pos_arguments | ≥ 1.3 |
-  The index of _arguments_ in message ("-1" if _arguments_ was not found) |
+  The index of _arguments_ in message ("-1" if _arguments_ was not found). |
   `55`
 
 | pos_channel | ≥ 1.3 |
-  The index of _channel_ in message ("-1" if _channel_ was not found) |
+  The index of _channel_ in message ("-1" if _channel_ was not found). |
   `55`
 
 | pos_text | ≥ 1.3 |
-  The index of _text_ in message ("-1" if _text_ was not found) |
+  The index of _text_ in message ("-1" if _text_ was not found). |
   `65`
 |===
 

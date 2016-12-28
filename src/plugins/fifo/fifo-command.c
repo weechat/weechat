@@ -23,6 +23,7 @@
 
 #include "../weechat-plugin.h"
 #include "fifo.h"
+#include "fifo-config.h"
 
 
 /*
@@ -60,22 +61,24 @@ fifo_command_fifo (const void *pointer, void *data,
     /* enable pipe */
     if (weechat_strcasecmp (argv[1], "enable") == 0)
     {
-        weechat_config_set_plugin (FIFO_OPTION_NAME, "on");
+        weechat_config_option_set (fifo_config_file_enabled, "on", 1);
         return WEECHAT_RC_OK;
     }
 
     /* disable pipe */
     if (weechat_strcasecmp (argv[1], "disable") == 0)
     {
-        weechat_config_set_plugin (FIFO_OPTION_NAME, "off");
+        weechat_config_option_set (fifo_config_file_enabled, "off", 1);
         return WEECHAT_RC_OK;
     }
 
     /* toggle pipe */
     if (weechat_strcasecmp (argv[1], "toggle") == 0)
     {
-        weechat_config_set_plugin (FIFO_OPTION_NAME,
-                                   (fifo_fd == -1) ? "on" : "off");
+        weechat_config_option_set (
+            fifo_config_file_enabled,
+            (weechat_config_boolean (fifo_config_file_enabled)) ? "off" : "on",
+            1);
         return WEECHAT_RC_OK;
     }
 
@@ -99,8 +102,7 @@ fifo_command_init ()
            "\n"
            "FIFO pipe is used as remote control of WeeChat: you can send "
            "commands or text to the FIFO pipe from your shell.\n"
-           "By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx "
-           "(\"xxx\" is the WeeChat PID).\n"
+           "By default the FIFO pipe is in ~/.weechat/weechat_fifo\n"
            "\n"
            "The expected format is one of:\n"
            "  plugin.buffer *text or command here\n"
@@ -108,7 +110,7 @@ fifo_command_init ()
            "\n"
            "For example to change your freenode nick:\n"
            "  echo 'irc.server.freenode */nick newnick' "
-           ">~/.weechat/weechat_fifo_12345\n"
+           ">~/.weechat/weechat_fifo\n"
            "\n"
            "Please read the user's guide for more info and examples.\n"
            "\n"

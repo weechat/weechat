@@ -82,12 +82,21 @@
     if (__string)                                                       \
         free (__string);                                                \
     return 1
+#if LUA_VERSION_NUM >= 503
+#define API_RETURN_INT(__int)                                           \
+    lua_pushinteger (L, __int);                                          \
+    return 1
+#define API_RETURN_LONG(__long)                                         \
+    lua_pushinteger (L, __long);                                         \
+    return 1
+#else
 #define API_RETURN_INT(__int)                                           \
     lua_pushnumber (L, __int);                                          \
     return 1
 #define API_RETURN_LONG(__long)                                         \
     lua_pushnumber (L, __long);                                         \
     return 1
+#endif /* LUA_VERSION_NUM >= 503 */
 
 
 /*
@@ -2062,6 +2071,115 @@ API_FUNC(hook_command)
 }
 
 int
+weechat_lua_api_hook_completion_cb (const void *pointer, void *data,
+                                    const char *completion_item,
+                                    struct t_gui_buffer *buffer,
+                                    struct t_gui_completion *completion)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    int *rc, ret;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
+        func_argv[2] = API_PTR2STR(buffer);
+        func_argv[3] = API_PTR2STR(completion);
+
+        rc = (int *) weechat_lua_exec (script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       ptr_function,
+                                       "ssss", func_argv);
+
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (func_argv[2])
+            free (func_argv[2]);
+        if (func_argv[3])
+            free (func_argv[3]);
+
+        return ret;
+    }
+
+    return WEECHAT_RC_ERROR;
+}
+
+API_FUNC(hook_completion)
+{
+    const char *completion, *description, *function, *data;
+    char *result;
+
+    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 4)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    completion = lua_tostring (L, -4);
+    description = lua_tostring (L, -3);
+    function = lua_tostring (L, -2);
+    data = lua_tostring (L, -1);
+
+    result = API_PTR2STR(plugin_script_api_hook_completion (weechat_lua_plugin,
+                                                            lua_current_script,
+                                                            completion,
+                                                            description,
+                                                            &weechat_lua_api_hook_completion_cb,
+                                                            function,
+                                                            data));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+API_FUNC(hook_completion_get_string)
+{
+    const char *completion, *property, *result;
+
+    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    completion = lua_tostring (L, -2);
+    property = lua_tostring (L, -1);
+
+    result = weechat_hook_completion_get_string (API_STR2PTR(completion),
+                                                 property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(hook_completion_list_add)
+{
+    const char *completion, *word, *where;
+    int nick_completion;
+
+    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
+    if (lua_gettop (L) < 4)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = lua_tostring (L, -4);
+    word = lua_tostring (L, -3);
+    nick_completion = lua_tonumber (L, -2);
+    where = lua_tostring (L, -1);
+
+    weechat_hook_completion_list_add (API_STR2PTR(completion),
+                                      word,
+                                      nick_completion,
+                                      where);
+
+    API_RETURN_OK;
+}
+
+int
 weechat_lua_api_hook_command_run_cb (const void *pointer, void *data,
                                      struct t_gui_buffer *buffer,
                                      const char *command)
@@ -2825,115 +2943,6 @@ API_FUNC(hook_config)
                                                         data));
 
     API_RETURN_STRING_FREE(result);
-}
-
-int
-weechat_lua_api_hook_completion_cb (const void *pointer, void *data,
-                                    const char *completion_item,
-                                    struct t_gui_buffer *buffer,
-                                    struct t_gui_completion *completion)
-{
-    struct t_plugin_script *script;
-    void *func_argv[4];
-    char empty_arg[1] = { '\0' };
-    const char *ptr_function, *ptr_data;
-    int *rc, ret;
-
-    script = (struct t_plugin_script *)pointer;
-    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
-
-    if (ptr_function && ptr_function[0])
-    {
-        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
-        func_argv[2] = API_PTR2STR(buffer);
-        func_argv[3] = API_PTR2STR(completion);
-
-        rc = (int *) weechat_lua_exec (script,
-                                       WEECHAT_SCRIPT_EXEC_INT,
-                                       ptr_function,
-                                       "ssss", func_argv);
-
-        if (!rc)
-            ret = WEECHAT_RC_ERROR;
-        else
-        {
-            ret = *rc;
-            free (rc);
-        }
-        if (func_argv[2])
-            free (func_argv[2]);
-        if (func_argv[3])
-            free (func_argv[3]);
-
-        return ret;
-    }
-
-    return WEECHAT_RC_ERROR;
-}
-
-API_FUNC(hook_completion)
-{
-    const char *completion, *description, *function, *data;
-    char *result;
-
-    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
-    if (lua_gettop (L) < 4)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
-
-    completion = lua_tostring (L, -4);
-    description = lua_tostring (L, -3);
-    function = lua_tostring (L, -2);
-    data = lua_tostring (L, -1);
-
-    result = API_PTR2STR(plugin_script_api_hook_completion (weechat_lua_plugin,
-                                                            lua_current_script,
-                                                            completion,
-                                                            description,
-                                                            &weechat_lua_api_hook_completion_cb,
-                                                            function,
-                                                            data));
-
-    API_RETURN_STRING_FREE(result);
-}
-
-API_FUNC(hook_completion_get_string)
-{
-    const char *completion, *property, *result;
-
-    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
-    if (lua_gettop (L) < 2)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
-
-    completion = lua_tostring (L, -2);
-    property = lua_tostring (L, -1);
-
-    result = weechat_hook_completion_get_string (API_STR2PTR(completion),
-                                                 property);
-
-    API_RETURN_STRING(result);
-}
-
-API_FUNC(hook_completion_list_add)
-{
-    const char *completion, *word, *where;
-    int nick_completion;
-
-    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
-    if (lua_gettop (L) < 4)
-        API_WRONG_ARGS(API_RETURN_ERROR);
-
-    completion = lua_tostring (L, -4);
-    word = lua_tostring (L, -3);
-    nick_completion = lua_tonumber (L, -2);
-    where = lua_tostring (L, -1);
-
-    weechat_hook_completion_list_add (API_STR2PTR(completion),
-                                      word,
-                                      nick_completion,
-                                      where);
-
-    API_RETURN_OK;
 }
 
 char *
@@ -5175,6 +5184,9 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(print_y),
     API_DEF_FUNC(log_print),
     API_DEF_FUNC(hook_command),
+    API_DEF_FUNC(hook_completion),
+    API_DEF_FUNC(hook_completion_get_string),
+    API_DEF_FUNC(hook_completion_list_add),
     API_DEF_FUNC(hook_command_run),
     API_DEF_FUNC(hook_timer),
     API_DEF_FUNC(hook_fd),
@@ -5187,9 +5199,6 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(hook_hsignal),
     API_DEF_FUNC(hook_hsignal_send),
     API_DEF_FUNC(hook_config),
-    API_DEF_FUNC(hook_completion),
-    API_DEF_FUNC(hook_completion_get_string),
-    API_DEF_FUNC(hook_completion_list_add),
     API_DEF_FUNC(hook_modifier),
     API_DEF_FUNC(hook_modifier_exec),
     API_DEF_FUNC(hook_info),

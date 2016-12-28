@@ -27,17 +27,8 @@
 #include <gnutls/gnutls.h>
 #endif
 
-#if !defined(HAVE_SOCKETPAIR_SOCK_DGRAM) || defined(__CYGWIN__) || defined(__APPLE__) || defined(__MACH__)
-/*
- * For the connect hook, when this is defined an array of sockets will
- * be passed from the parent process to the child process instead of using
- * SCM_RIGHTS to pass a socket back from the child process to parent process.
- *
- * This allows connections to work on Windows but it limits the number of
- * IPs that can be attempted each time.
- */
+/* used if socketpair() function is NOT available */
 #define HOOK_CONNECT_MAX_SOCKETS 4
-#endif
 
 struct t_gui_bar;
 struct t_gui_buffer;
@@ -285,10 +276,9 @@ struct t_hook_connect
     struct t_hook *handshake_hook_timer; /* timer for handshake timeout     */
     int handshake_fd_flags;            /* socket flags saved for handshake  */
     char *handshake_ip_address;        /* ip address (used for handshake)   */
-#ifdef HOOK_CONNECT_MAX_SOCKETS
+    /* sockets used if socketpair() is NOT available */
     int sock_v4[HOOK_CONNECT_MAX_SOCKETS];  /* IPv4 sockets for connecting  */
     int sock_v6[HOOK_CONNECT_MAX_SOCKETS];  /* IPv6 sockets for connecting  */
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
 };
 
 /* hook print */
@@ -454,6 +444,7 @@ extern struct t_hook *weechat_hooks[];
 extern struct t_hook *last_weechat_hook[];
 extern int hooks_count[];
 extern int hooks_count_total;
+extern int hook_socketpair_ok;
 
 /* hook functions */
 

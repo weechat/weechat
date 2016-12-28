@@ -63,19 +63,19 @@ dem Suchmuster entsprechen.
 
 Zum Beispiel:
 
-Zeit alle Optionen an (WeeChat und Erweiterungen):
+zeigt alle Optionen an (WeeChat und Erweiterungen):
 
 ----
 /set
 ----
 
-Zeit alle WeeChat Optionen an:
+zeigt alle WeeChat Optionen an:
 
 ----
 /set weechat.*
 ----
 
-Zeit alle Optionen der IRC-Erweiterung an:
+zeigt alle Optionen der IRC-Erweiterung an:
 
 ----
 /set irc.*
@@ -90,9 +90,14 @@ Du kannst dir mit dem Befehl `/help` eine Hilfe für Optionen anzeigen lassen, z
 Beim Beenden von WeeChat werden alle Einstellungen gespeichert (mittels des
 Befehls `/save` kann das Sichern der Optionen manuell durchgeführt werden).
 
-Konfigurationsdateien (*.conf) können auch per Hand editiert und mit dem Befehl
-`/reload` neu eingelesen werden (falls man z.B. den `/set` Befehl nicht
-verwenden möchte).
+[IMPORTANT]
+Es wird *nicht empfohlen* die Konfigurationsdateien manuell zu editieren, da WeeChat
+diese Dateien zu jeder Zeit überschreiben kann (zum Beispiel:  <<command_weechat_quit,/quit>>)
+und man eine veränderte Datei mit dem Befehl <<command_weechat_reload,/reload>> neu
+laden muss (mit dem Risiko von Datenverlust da Daten kommentarlos überschrieben werden,
+bevor man diese ggf. gesichert hat <<command_weechat_save,/save>>). +
+Man sollte immer den <<command_weechat_set,/set>> Befehl nutzen, da der Befehl die
+Eingabe prüft und Änderungen sofort wirksam werden.
 
 [[core_vs_plugins]]
 == Kern (Core) vs Erweiterungen
@@ -317,14 +322,19 @@ Befehle, zum Verwalten von Buffern und Fenstern:
 /window
 ----
 
-(Ich muss nicht erwähnen, dass man zu diesen Befehlen eine Hilfe mit /help
-erhält)
+(Ich muss nicht erwähnen, dass man mit /help einen Hilfstext zu dem Befehl erhält)
 
 Beispiel: Um den Bildschirm vertikal in ein kleineres Fenster (1/3 Bildschirmbreite)
 und ein größeres Fenster (2/3 Bildschirmbreite) aufzuteilen:
 
 ----
 /window splitv 33
+----
+
+Um die Teilung des Bildschirms rückgängig zu machen:
+
+----
+/window merge
 ----
 
 [[key_bindings]]

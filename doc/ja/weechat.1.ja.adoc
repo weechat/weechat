@@ -32,7 +32,7 @@ include::cmdline_options.ja.adoc[]
 == プラグインオプション
 
 プラグインオプションに関する完全な文書は
-https://weechat.org/doc[WeeChat ユーザーガイド] のプラグインリファレンスを参照してください。
+https://weechat.org/doc[WeeChat ユーザーズガイド] のプラグインの章を参照してください。
 
 irc プラグインでは以下の様な URL で一時的なサーバに接続することができます:
 
@@ -50,7 +50,7 @@ IPv6 アドレスの後にポートを指定するには IPv6
 == ファイル
 
 $HOME/.weechat/weechat.conf::
-    WeeChat の主設定ファイル
+    WeeChat の主要設定ファイル
 
 $HOME/.weechat/plugins.conf::
     プラグイン設定ファイル

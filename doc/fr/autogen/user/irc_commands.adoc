@@ -260,7 +260,7 @@ pseudo : pseudo ou masque (le caractère joker "*" est autorisé)
 
        list : lister tous les ignores
         add : ajouter un ignore
-     pseudo : pseudo ou hôte (peut être une expression régulière POSIX étendue si "re:" est donné ou un masque avec "*" pour remplacer un ou plusieurs caractères)
+     pseudo : pseudo ou hôte (peut être une expression régulière POSIX étendue si "re:" est donné ou un masque avec "*" pour remplacer zéro ou plusieurs caractères)
         del : supprimer un ignore
      numéro : numéro du ignore à supprimer (voir la liste des ignore pour le trouver)
        -all : supprimer tous les ignores

@@ -5,1044 +5,1259 @@
 * [[option_weechat.color.bar_more]] *weechat.color.bar_more*
 ** 説明: pass:none[バーをスクロールする際の "+" のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightmagenta+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightmagenta+`
 
 * [[option_weechat.color.chat]] *weechat.color.chat*
 ** 説明: pass:none[チャットのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.color.chat_bg]] *weechat.color.chat_bg*
 ** 説明: pass:none[チャットの背景色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.color.chat_buffer]] *weechat.color.chat_buffer*
 ** 説明: pass:none[バッファ名のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+white+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+white+`
 
 * [[option_weechat.color.chat_channel]] *weechat.color.chat_channel*
 ** 説明: pass:none[チャンネル名のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+white+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+white+`
 
 * [[option_weechat.color.chat_day_change]] *weechat.color.chat_day_change*
 ** 説明: pass:none[日付が変わった時に表示されるメッセージのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+cyan+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+cyan+`
 
 * [[option_weechat.color.chat_delimiters]] *weechat.color.chat_delimiters*
 ** 説明: pass:none[区切りのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+green+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+green+`
 
 * [[option_weechat.color.chat_highlight]] *weechat.color.chat_highlight*
 ** 説明: pass:none[ハイライトされたプレフィックスのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+yellow+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+yellow+`
 
 * [[option_weechat.color.chat_highlight_bg]] *weechat.color.chat_highlight_bg*
 ** 説明: pass:none[ハイライトされたプレフィックスの背景色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+magenta+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+magenta+`
 
 * [[option_weechat.color.chat_host]] *weechat.color.chat_host*
 ** 説明: pass:none[ホスト名のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+cyan+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+cyan+`
 
 * [[option_weechat.color.chat_inactive_buffer]] *weechat.color.chat_inactive_buffer*
 ** 説明: pass:none[行へのフォーカスがなくなった場合の (バッファが他のバッファとマージされていて選択されていない場合の) のチャットのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.color.chat_inactive_window]] *weechat.color.chat_inactive_window*
 ** 説明: pass:none[ウィンドウへのフォーカスがなくなった場合 (選択されていないウィンドウ) のチャットのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.color.chat_nick]] *weechat.color.chat_nick*
-** 説明: pass:none[チャットウィンドウ内のニックネームのテキスト色]
+** 説明: pass:none[チャットウィンドウのニックネームのテキスト色: 一部のサーバメッセージおよびニックネーム色が見つからない場合の代替色として使われます; 多くの場合、ニックネーム色を指定するには weechat.color.chat_nick_colors オプションを使うと良いでしょう]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightcyan+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightcyan+`
 
 * [[option_weechat.color.chat_nick_colors]] *weechat.color.chat_nick_colors*
 ** 説明: pass:none[ニックネームのテキスト色 (コンマ区切りの色リスト、背景色は以下の書式で指定: "fg:bg"、例: "lightred:blue")]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"+`
 
 * [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
 ** 説明: pass:none[オフラインのニックネームのテキスト色 (ニックネームリストにも表示されない); この色はオプション weechat.look.color_nick_offline が有効化されている場合にのみ使われます]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
 ** 説明: pass:none[ハイライトされたオフラインのニックネームのテキスト色; この色はオプション weechat.look.color_nick_offline が有効化されている場合にのみ使われます]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
 ** 説明: pass:none[ハイライトされたオフラインのニックネームの背景色; この色はオプション weechat.look.color_nick_offline が有効化されている場合にのみ使われます]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+blue+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+blue+`
 
 * [[option_weechat.color.chat_nick_other]] *weechat.color.chat_nick_other*
 ** 説明: pass:none[プライベートバッファ内の他のニックネームのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+cyan+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+cyan+`
 
 * [[option_weechat.color.chat_nick_prefix]] *weechat.color.chat_nick_prefix*
 ** 説明: pass:none[ニックネームプレフィックスの色 (プレフィックス中のニックネームの前に表示される文字列)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+green+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+green+`
 
 * [[option_weechat.color.chat_nick_self]] *weechat.color.chat_nick_self*
 ** 説明: pass:none[チャットウィンドウ内のローカルニックネームのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+white+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+white+`
 
 * [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
 ** 説明: pass:none[ニックネームサフィックスの色 (プレフィックス中のニックネームの後に表示される文字列)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+green+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+green+`
 
 * [[option_weechat.color.chat_prefix_action]] *weechat.color.chat_prefix_action*
 ** 説明: pass:none[アクションプレフィックスのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+white+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+white+`
 
 * [[option_weechat.color.chat_prefix_buffer]] *weechat.color.chat_prefix_buffer*
 ** 説明: pass:none[バッファ名のテキスト色 (多くのバッファが同じ番号を持つものにマージされている場合は、プレフィックスの前)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+brown+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+brown+`
 
 * [[option_weechat.color.chat_prefix_buffer_inactive_buffer]] *weechat.color.chat_prefix_buffer_inactive_buffer*
 ** 説明: pass:none[非アクティブバッファ名のテキスト色 (多くのバッファが同じ番号を持つものにマージされ、バッファが選択されていない場合は、プレフィックスの前)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.color.chat_prefix_error]] *weechat.color.chat_prefix_error*
 ** 説明: pass:none[エラープレフィックスのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+yellow+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+yellow+`
 
 * [[option_weechat.color.chat_prefix_join]] *weechat.color.chat_prefix_join*
 ** 説明: pass:none[join プレフィックスのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightgreen+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightgreen+`
 
 * [[option_weechat.color.chat_prefix_more]] *weechat.color.chat_prefix_more*
 ** 説明: pass:none[プレフィックスが長すぎる場合の "+" のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightmagenta+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightmagenta+`
 
 * [[option_weechat.color.chat_prefix_network]] *weechat.color.chat_prefix_network*
 ** 説明: pass:none[ネットワークプレフィックスのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+magenta+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+magenta+`
 
 * [[option_weechat.color.chat_prefix_quit]] *weechat.color.chat_prefix_quit*
 ** 説明: pass:none[quit プレフィックスのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightred+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightred+`
 
 * [[option_weechat.color.chat_prefix_suffix]] *weechat.color.chat_prefix_suffix*
 ** 説明: pass:none[サフィックスのテキスト色 (プレフィックスの後ろ)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+green+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+green+`
 
 * [[option_weechat.color.chat_read_marker]] *weechat.color.chat_read_marker*
 ** 説明: pass:none[未読データマーカーのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+magenta+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+magenta+`
 
 * [[option_weechat.color.chat_read_marker_bg]] *weechat.color.chat_read_marker_bg*
 ** 説明: pass:none[未読データマーカーの背景色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.color.chat_server]] *weechat.color.chat_server*
 ** 説明: pass:none[サーバ名のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+brown+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+brown+`
 
 * [[option_weechat.color.chat_tags]] *weechat.color.chat_tags*
 ** 説明: pass:none[メッセージの後ろのタグのテキスト色 (/debug tags コマンドで表示)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+red+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+red+`
 
 * [[option_weechat.color.chat_text_found]] *weechat.color.chat_text_found*
 ** 説明: pass:none[テキスト検索にヒットした行のマーカーのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+yellow+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+yellow+`
 
 * [[option_weechat.color.chat_text_found_bg]] *weechat.color.chat_text_found_bg*
 ** 説明: pass:none[テキスト検索にヒットした行のマーカーの背景色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightmagenta+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightmagenta+`
 
 * [[option_weechat.color.chat_time]] *weechat.color.chat_time*
 ** 説明: pass:none[チャットウィンドウ内の時間のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.color.chat_time_delimiters]] *weechat.color.chat_time_delimiters*
 ** 説明: pass:none[時間区切りのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+brown+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+brown+`
 
 * [[option_weechat.color.chat_value]] *weechat.color.chat_value*
 ** 説明: pass:none[値のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+cyan+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+cyan+`
 
 * [[option_weechat.color.chat_value_null]] *weechat.color.chat_value_null*
 ** 説明: pass:none[値が null (未定義) の場合のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+blue+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+blue+`
 
 * [[option_weechat.color.emphasized]] *weechat.color.emphasized*
 ** 説明: pass:none[強調テキストの色 (テキスト検索する際など); このオプションは weechat.look.emphasized_attributes オプションが空文字列 (デフォルト値) の場合のみ使われます]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+yellow+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+yellow+`
 
 * [[option_weechat.color.emphasized_bg]] *weechat.color.emphasized_bg*
 ** 説明: pass:none[強調テキストの背景色 (テキスト検索する際など); このオプションは weechat.look.emphasized_attributes オプションが空文字列 (デフォルト値) の場合のみ使われます]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+magenta+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+magenta+`
 
 * [[option_weechat.color.input_actions]] *weechat.color.input_actions*
 ** 説明: pass:none[入力がアクションの場合のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightgreen+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightgreen+`
 
 * [[option_weechat.color.input_text_not_found]] *weechat.color.input_text_not_found*
 ** 説明: pass:none[入力行のテキスト検索に失敗した場合のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+red+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+red+`
 
 * [[option_weechat.color.item_away]] *weechat.color.item_away*
 ** 説明: pass:none[離席要素のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+yellow+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+yellow+`
 
 * [[option_weechat.color.nicklist_away]] *weechat.color.nicklist_away*
 ** 説明: pass:none[離席状態のニックネームのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+cyan+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+cyan+`
 
 * [[option_weechat.color.nicklist_group]] *weechat.color.nicklist_group*
 ** 説明: pass:none[ニックネームリスト内のグループのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+green+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+green+`
 
 * [[option_weechat.color.separator]] *weechat.color.separator*
 ** 説明: pass:none[ウィンドウセパレータ (分割時) とバーセパレータ (ニックネームリスト等) の色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+blue+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+blue+`
 
 * [[option_weechat.color.status_count_highlight]] *weechat.color.status_count_highlight*
 ** 説明: pass:none[ホットリスト内のハイライトメッセージ数のテキスト色 (ステータスバー)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+magenta+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+magenta+`
 
 * [[option_weechat.color.status_count_msg]] *weechat.color.status_count_msg*
 ** 説明: pass:none[ホットリスト内のメッセージ数のテキスト色 (ステータスバー)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+brown+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+brown+`
 
 * [[option_weechat.color.status_count_other]] *weechat.color.status_count_other*
 ** 説明: pass:none[ホットリスト内のその他のメッセージ数のテキスト色 (ステータスバー)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.color.status_count_private]] *weechat.color.status_count_private*
 ** 説明: pass:none[ホットリスト内のプライベートメッセージ数のテキスト色 (ステータスバー)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+green+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+green+`
 
 * [[option_weechat.color.status_data_highlight]] *weechat.color.status_data_highlight*
 ** 説明: pass:none[ハイライトメッセージを受け取ったバッファのテキスト色 (ステータスバー)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightmagenta+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightmagenta+`
 
 * [[option_weechat.color.status_data_msg]] *weechat.color.status_data_msg*
 ** 説明: pass:none[新しいメッセージを受け取ったバッファのテキスト色 (ステータスバー)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+yellow+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+yellow+`
 
 * [[option_weechat.color.status_data_other]] *weechat.color.status_data_other*
 ** 説明: pass:none[新しいデータ (メッセージ以外) を受け取ったバッファのテキスト色 (ステータスバー)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.color.status_data_private]] *weechat.color.status_data_private*
 ** 説明: pass:none[プライベートメッセージを受けとったバッファのテキスト色 (ステータスバー)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightgreen+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightgreen+`
 
 * [[option_weechat.color.status_filter]] *weechat.color.status_filter*
 ** 説明: pass:none[ステータスバー内のフィルタインジケータのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+green+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+green+`
 
 * [[option_weechat.color.status_more]] *weechat.color.status_more*
 ** 説明: pass:none[新しいデータを受け取ったバッファのテキスト色 (ステータスバー)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+yellow+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+yellow+`
 
 * [[option_weechat.color.status_mouse]] *weechat.color.status_mouse*
 ** 説明: pass:none[ステータスバー内のマウスインジケータのテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+green+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+green+`
 
 * [[option_weechat.color.status_name]] *weechat.color.status_name*
 ** 説明: pass:none[ステータスバー内の現在のバッファ名のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+white+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+white+`
 
 * [[option_weechat.color.status_name_ssl]] *weechat.color.status_name_ssl*
 ** 説明: pass:none[バッファで SSL などのセキュリティプロトコルを使っている場合に、ステータスバー内の現在のバッファ名に使うテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+lightgreen+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+lightgreen+`
 
 * [[option_weechat.color.status_nicklist_count]] *weechat.color.status_nicklist_count*
 ** 説明: pass:none[ニックネームリスト内のニックネーム数のテキスト色 (ステータスバー)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.color.status_number]] *weechat.color.status_number*
 ** 説明: pass:none[ステータスバー内の現在のバッファ番号のテキスト色]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+yellow+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+yellow+`
 
 * [[option_weechat.color.status_time]] *weechat.color.status_time*
 ** 説明: pass:none[時間のテキスト色 (ステータスバー)]
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `+default+`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
 ** 説明: pass:none[これが有効な場合、補完する元単語はカーソル前の文字で終了; そうでなければ元単語はカーソル後の最初の文字で終了]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.completion.command_inline]] *weechat.completion.command_inline*
 ** 説明: pass:none[これが有効な場合、コマンドライン中のコマンドを補完します (行頭のコマンドが最も優先度が高く、最初に評価されます); 注意: このオプションが有効な場合、"/" で始まるパスの自動補完は行われません (外部コマンドの引数)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
 ** 説明: pass:none[デフォルトの補完テンプレート (テンプレートコードと値のドキュメントを参照: プラグイン API リファレンス、"weechat_hook_command" 関数)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"%(nicks)|%(irc_channels)"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"%(nicks)|%(irc_channels)"+`
 
 * [[option_weechat.completion.nick_add_space]] *weechat.completion.nick_add_space*
 ** 説明: pass:none[ニックネーム補完の後に空白を追加 (コマンドラインの最初がニックネームでない場合は)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.completion.nick_completer]] *weechat.completion.nick_completer*
 ** 説明: pass:none[ニックネーム補完の後に追加する文字列 (ニックネームがコマンドラインの最初にある場合)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+":"+`)
+** 値: 未制約文字列
+** デフォルト値: `+":"+`
 
 * [[option_weechat.completion.nick_first_only]] *weechat.completion.nick_first_only*
 ** 説明: pass:none[最初に見つかったニックネームだけを補完]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.completion.nick_ignore_chars]] *weechat.completion.nick_ignore_chars*
 ** 説明: pass:none[ニックネーム補完で無視する文字]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"[]`_-^"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"[]`_-^"+`
 
 * [[option_weechat.completion.partial_completion_alert]] *weechat.completion.partial_completion_alert*
 ** 説明: pass:none[補完候補が複数あった場合にユーザに警告]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.completion.partial_completion_command]] *weechat.completion.partial_completion_command*
 ** 説明: pass:none[コマンドでの部分補完 (同じ文字を含む多くのコマンドが見つかった場合は止める)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.completion.partial_completion_command_arg]] *weechat.completion.partial_completion_command_arg*
 ** 説明: pass:none[コマンド引数での部分補完 (同じプレフィックスを持つ多くの引数が見つかった場合は止める)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.completion.partial_completion_count]] *weechat.completion.partial_completion_count*
 ** 説明: pass:none[バー要素内の部分補完数を表示]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.completion.partial_completion_other]] *weechat.completion.partial_completion_other*
 ** 説明: pass:none[コマンド外での部分補完 (同じ文字を含む多くのコマンドが見つかった場合は止め)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.history.display_default]] *weechat.history.display_default*
 ** 説明: pass:none[履歴をリストアップする際にデフォルトで表示するコマンドの最大数 (0 = 制限無し)]
 ** タイプ: 整数
-** 値: 0 .. 2147483647 (デフォルト値: `+5+`)
+** 値: 0 .. 2147483647
+** デフォルト値: `+5+`
 
 * [[option_weechat.history.max_buffer_lines_minutes]] *weechat.history.max_buffer_lines_minutes*
 ** 説明: pass:none[バッファ毎の履歴の保存時間 (分) (0 = 制限無し); 例: 1440 = 一日、10080 = 一週間、43200 = 一ヶ月、525600 = 一年間; weechat.history.max_buffer_lines_number オプションが 0 以外の場合には 0 を指定してください]
 ** タイプ: 整数
-** 値: 0 .. 2147483647 (デフォルト値: `+0+`)
+** 値: 0 .. 2147483647
+** デフォルト値: `+0+`
 
 * [[option_weechat.history.max_buffer_lines_number]] *weechat.history.max_buffer_lines_number*
 ** 説明: pass:none[バッファ毎の履歴行数 (0 = 制限無し); weechat.history.max_buffer_lines_minutes オプションが 0 以外の場合には 0 を指定してください]
 ** タイプ: 整数
-** 値: 0 .. 2147483647 (デフォルト値: `+4096+`)
+** 値: 0 .. 2147483647
+** デフォルト値: `+4096+`
 
 * [[option_weechat.history.max_commands]] *weechat.history.max_commands*
 ** 説明: pass:none[履歴に保存するユーザコマンド数 (0 = 制限無し、メモリ使用量の制限が無くなるため非推奨)]
 ** タイプ: 整数
-** 値: 0 .. 2147483647 (デフォルト値: `+100+`)
+** 値: 0 .. 2147483647
+** デフォルト値: `+100+`
 
 * [[option_weechat.history.max_visited_buffers]] *weechat.history.max_visited_buffers*
 ** 説明: pass:none[メモリに保存する観覧バッファの数]
 ** タイプ: 整数
-** 値: 0 .. 1000 (デフォルト値: `+50+`)
+** 値: 0 .. 1000
+** デフォルト値: `+50+`
 
 * [[option_weechat.look.align_end_of_lines]] *weechat.look.align_end_of_lines*
 ** 説明: pass:none[行末の調節 (2 行以上になる行): このデータ (time、buffer、prefix、suffix、message (デフォルト)) の下から始められる]
 ** タイプ: 整数
-** 値: time, buffer, prefix, suffix, message (デフォルト値: `+message+`)
+** 値: time, buffer, prefix, suffix, message
+** デフォルト値: `+message+`
+
+* [[option_weechat.look.align_multiline_words]] *weechat.look.align_multiline_words*
+** 説明: pass:none[weechat.look.align_end_of_lines オプションに依存する単語内での改行抑制; 無効化した場合、単語という単位を無視して改行が行われます。これは長い URL が改行されなくなるという意味で便利です]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.bar_more_down]] *weechat.look.bar_more_down*
 ** 説明: pass:none[バーを下方向にスクロール出来る場合に表示される文字列 (水平方向詰め以外の属性を持つバー)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"++"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"++"+`
 
 * [[option_weechat.look.bar_more_left]] *weechat.look.bar_more_left*
 ** 説明: pass:none[バーを左方向にスクロール出来る場合に表示される文字列 (水平方向詰めの属性を持つバー用)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"<<"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"<<"+`
 
 * [[option_weechat.look.bar_more_right]] *weechat.look.bar_more_right*
 ** 説明: pass:none[バーを右方向にスクロール出来る場合に表示される文字列 (水平方向詰めの属性を持つバー用)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+">>"+`)
+** 値: 未制約文字列
+** デフォルト値: `+">>"+`
 
 * [[option_weechat.look.bar_more_up]] *weechat.look.bar_more_up*
 ** 説明: pass:none[バーを上方向にスクロール出来る場合に表示される文字列 (水平方向詰め以外の属性を持つバー)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"--"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"--"+`
 
 * [[option_weechat.look.bare_display_exit_on_input]] *weechat.look.bare_display_exit_on_input*
 ** 説明: pass:none[入力の変更に対する最小限表示モードを終了する]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.bare_display_time_format]] *weechat.look.bare_display_time_format*
 ** 説明: pass:none[最小限表示モードで使う時間書式 (日付/時間指定子は strftime の man を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"%H:%M"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"%H:%M"+`
 
 * [[option_weechat.look.buffer_auto_renumber]] *weechat.look.buffer_auto_renumber*
 ** 説明: pass:none[自動的に番号を割り当てる場合、1 から始まる連番になります; 無効にした場合、バッファ番号に欠番が許され、最初のバッファに1より大きなバッファ番号を割り当てることが可能になります]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.buffer_notify_default]] *weechat.look.buffer_notify_default*
 ** 説明: pass:none[バッファに対するデフォルトの通知レベル (メッセージの重要度に従い、バッファがホットリストに表示されるかどうかを WeeChat に教えるために使われる): all=全てのメッセージ (デフォルト)、message=メッセージとハイライト、highlight=ハイライトのみ、none=ホットリストに表示されない]
 ** タイプ: 整数
-** 値: none, highlight, message, all (デフォルト値: `+all+`)
+** 値: none, highlight, message, all
+** デフォルト値: `+all+`
 
 * [[option_weechat.look.buffer_position]] *weechat.look.buffer_position*
 ** 説明: pass:none[新しいバッファの位置: end = リストの最後 (番号 = 最後の番号 + 1) (デフォルト)、first_gap = リスト中に最初に現れる利用可能な番号 (どの番号も使えない場合、リストの最後); このオプションはレイアウト番号を持たないバッファの場合に利用されます]
 ** タイプ: 整数
-** 値: end, first_gap (デフォルト値: `+end+`)
+** 値: end, first_gap
+** デフォルト値: `+end+`
 
 * [[option_weechat.look.buffer_search_case_sensitive]] *weechat.look.buffer_search_case_sensitive*
 ** 説明: pass:none[デフォルトのバッファテキスト検索: 大文字小文字を区別するかしないか]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.buffer_search_force_default]] *weechat.look.buffer_search_force_default*
 ** 説明: pass:none[バッファテキスト検索のデフォルト値を強制する (バッファで最後に検索した値を使わない)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.buffer_search_regex]] *weechat.look.buffer_search_regex*
 ** 説明: pass:none[デフォルトのバッファテキスト検索: 有効の場合は正規表現で検索、無効の場合は単純な文字列で検索]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.buffer_search_where]] *weechat.look.buffer_search_where*
 ** 説明: pass:none[デフォルトのバッファテキスト検索: メッセージ中、プレフィックス中、プレフィックスとメッセージ中]
 ** タイプ: 整数
-** 値: prefix, message, prefix_message (デフォルト値: `+prefix_message+`)
+** 値: prefix, message, prefix_message
+** デフォルト値: `+prefix_message+`
 
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
 ** 説明: pass:none[バッファに表示される行に付く時間書式 (日付/時間の指定子は strftime の man を参照) (注意: 値は評価されるため "${color:xxx}" 書式で色を指定出来ます、/help eval を参照); 例えばグレースケールを使う時間の例 (256 色のサポートが必要): "${color:252}%H${color:245}%M${color:240}%S"]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"%H:%M:%S"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"%H:%M:%S"+`
 
 * [[option_weechat.look.color_basic_force_bold]] *weechat.look.color_basic_force_bold*
 ** 説明: pass:none[明るい色と標準的な色の "darkgray" には "太字" 属性を強制 (このオプションはデフォルトでは無効: 太字は端末が 16 色以下の表示能力しかない場合に利用される)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.color_inactive_buffer]] *weechat.look.color_inactive_buffer*
 ** 説明: pass:none[アクティブでないバッファでは行に異なる色を使用 (行が未選択のマージバッファからの場合)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.color_inactive_message]] *weechat.look.color_inactive_message*
 ** 説明: pass:none[アクティブでないメッセージに異なる色を使用 (ウィンドウにフォーカスが無いか、行が未選択のマージバッファからの場合)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.color_inactive_prefix]] *weechat.look.color_inactive_prefix*
 ** 説明: pass:none[アクティブでないプレフィックスに異なる色を使用 (ウィンドウにフォーカスが無いか、行が未選択のマージバッファからの場合)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.color_inactive_prefix_buffer]] *weechat.look.color_inactive_prefix_buffer*
 ** 説明: pass:none[アクティブでないバッファ名のプレフィックスに異なる色を使用 (ウィンドウにフォーカスが無いか、行が未選択のマージバッファからの場合)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.color_inactive_time]] *weechat.look.color_inactive_time*
 ** 説明: pass:none[アクティブでない時間は異なる色を使用 (ウィンドウにフォーカスが無いか、行が未選択のマージバッファからの場合)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.color_inactive_window]] *weechat.look.color_inactive_window*
 ** 説明: pass:none[アクティブでないウィンドウでは行に異なる色を使用 (ウィンドウにフォーカスが無い場合)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
 ** 説明: pass:none[オフライン状態のニックネームに異なる色を使用 (ニックネームリストにも表示しない)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.color_pairs_auto_reset]] *weechat.look.color_pairs_auto_reset*
 ** 説明: pass:none[利用可能なペアの数がこの数以下になった場合、色ペアテーブルを自動的にリセット (-1 = 自動リセットを無効化、テーブルが一杯になったら手動で "/color reset")]
 ** タイプ: 整数
-** 値: -1 .. 256 (デフォルト値: `+5+`)
+** 値: -1 .. 256
+** デフォルト値: `+5+`
 
 * [[option_weechat.look.color_real_white]] *weechat.look.color_real_white*
 ** 説明: pass:none[セットされた場合、本当の白色が使われる、白色背景の端末ではデフォルトで無効 (白色背景を絶対に使わないなら、端末の前景色の代わりに本当の白色を表示するためにはこれを on にするべき)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.command_chars]] *weechat.look.command_chars*
 ** 説明: pass:none[入力文字列がコマンドかどうかを決定する文字列: 入力はこれらの文字の内の一つから始まらなければいけない; スラッシュ ("/") は常にコマンドプレフィックスとして扱われる (例: ".$")]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.look.command_incomplete]] *weechat.look.command_incomplete*
 ** 説明: pass:none[これを設定した場合、不完全なコマンドと完全なコマンドを両方使えるようになります、例えば /he は /help の意味で使うことができます]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.confirm_quit]] *weechat.look.confirm_quit*
 ** 説明: pass:none[これを設定した場合、/quit コマンド使う際には必ず "-yes" 引数と共に使う必要があります (/help quit 参照)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.confirm_upgrade]] *weechat.look.confirm_upgrade*
 ** 説明: pass:none[これを設定した場合、/upgrade コマンド使う際には必ず "-yes" 引数と共に使う必要があります (/help upgrade 参照)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.day_change]] *weechat.look.day_change*
 ** 説明: pass:none[日付が変わった際に特殊メッセージを表示]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.day_change_message_1date]] *weechat.look.day_change_message_1date*
 ** 説明: pass:none[日付が変わった時に表示される時間の書式、1 つの日付を表示 (例えばバッファの最初に) (日付/時間指定子は strftime の man を参照) (注意: 値は評価されるため "${color:xxx}" 書式で色を指定出来ます、/help eval を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"-- %a, %d %b %Y --"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"-- %a, %d %b %Y --"+`
 
 * [[option_weechat.look.day_change_message_2dates]] *weechat.look.day_change_message_2dates*
 ** 説明: pass:none[日付が変わった時に表示される時間の書式、2 つの日付を表示 (2 つのメッセージの間に); 文字列に対して strftime は 2 回呼び出されるため、2 番目の日付指定子は 2 つの "%" で始めてください (日付/時間指定子は strftime の man を参照) (注意: 値は評価されるため "${color:xxx}" 書式で色を指定出来ます、/help eval を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"-- %%a, %%d %%b %%Y (%a, %d %b %Y) --"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"-- %%a, %%d %%b %%Y (%a, %d %b %Y) --"+`
 
 * [[option_weechat.look.eat_newline_glitch]] *weechat.look.eat_newline_glitch*
 ** 説明: pass:none[セットされた場合、eat_newline_glitch は 0 になる; これは各行の末尾に新しい行を追加しないために使われ、WeeChat から別のアプリケーションにテキストをコピー/ペーストする際にテキストの改行を行わない (致命的な表示上の問題を引き起こすため、このオプションはデフォルトで無効化されている)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.emphasized_attributes]] *weechat.look.emphasized_attributes*
 ** 説明: pass:none[強調テキストの属性: 1 つまたは複数の属性文字 ("*" は太字、"!" は反転、"/" はイタリック、"_" は下線); 文字列が空の場合、weechat.color.emphasized* の色が使われます]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.look.highlight]] *weechat.look.highlight*
 ** 説明: pass:none[コンマ区切りのハイライトされる単語リスト; 大文字小文字の区別無し (単語の最初に "(?-i)" をつければ区別有り)、部分マッチさせるには単語の最初か最後に "*" をつける; 例: "test,(?-i)*toto*,flash*"]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
 ** 説明: pass:none[メッセージ中のハイライトの有無を判断する POSIX 拡張正規表現、マッチ部分は必ず区切り文字 (アルファベット、"-"、"_"、"|" 以外の文字) で囲まれていなければいけない、正規表現は大文字小文字を区別しない (最初に "(?-i)" がある場合は区別する)、例: "flashcode|flashy"、"(?-i)FlashCode|flashy"]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
 ** 説明: pass:none[ハイライトするタグのコンマ区切りリスト; 大文字小文字の区別なし; 各タグでワイルドカード "*" を使うことができます; 論理積 "and" を取るにはタグ同士を "+" でつなげてください; 例: ニックネーム "FlashCode" からのメッセージは "nick_flashcode"、ニックネームが "toto" で始まるユーザからの notice メッセージは "irc_notice+nick_toto*"]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.look.hotlist_add_conditions]] *weechat.look.hotlist_add_conditions*
 ** 説明: pass:none[ホットリストでバッファを追加する条件 (追加するバッファの通知レベルが OK の場合); 以下の条件を使うことができます: "window" (現在のウィンドウポインタ)、"buffer" (ホットリストに追加するバッファポインタ)、"priority" (0 = 低い、1 = メッセージ、2 = プライベートメッセージ、3 = ハイライト); デフォルトでは離席状態またはバッファが画面に表示されていない場合にホットリストへバッファを追加します]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"${away} || ${buffer.num_displayed} == 0"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"${away} || ${buffer.num_displayed} == 0"+`
 
 * [[option_weechat.look.hotlist_buffer_separator]] *weechat.look.hotlist_buffer_separator*
 ** 説明: pass:none[ホットリストにあるバッファの間に表示される文字列]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+", "+`)
+** 値: 未制約文字列
+** デフォルト値: `+", "+`
 
 * [[option_weechat.look.hotlist_count_max]] *weechat.look.hotlist_count_max*
 ** 説明: pass:none[任意のバッファに関するホットリストに表示されるメッセージ数の最大値 (0 = メッセージ数は非表示)]
 ** タイプ: 整数
-** 値: 0 .. 4 (デフォルト値: `+2+`)
+** 値: 0 .. 4
+** デフォルト値: `+2+`
 
 * [[option_weechat.look.hotlist_count_min_msg]] *weechat.look.hotlist_count_min_msg*
 ** 説明: pass:none[メッセージの数がこの値以上の場合にメッセージ数を表示]
 ** タイプ: 整数
-** 値: 1 .. 100 (デフォルト値: `+2+`)
+** 値: 1 .. 100
+** デフォルト値: `+2+`
 
 * [[option_weechat.look.hotlist_names_count]] *weechat.look.hotlist_names_count*
 ** 説明: pass:none[ホットリストに載せるバッファ名の数の最大値 (0 = バッファ名は無し、番号のみ)]
 ** タイプ: 整数
-** 値: 0 .. 10000 (デフォルト値: `+3+`)
+** 値: 0 .. 10000
+** デフォルト値: `+3+`
 
 * [[option_weechat.look.hotlist_names_length]] *weechat.look.hotlist_names_length*
 ** 説明: pass:none[ホットリストに載せるバッファ名の長さの最大値 (0 = 制限無し)]
 ** タイプ: 整数
-** 値: 0 .. 32 (デフォルト値: `+0+`)
+** 値: 0 .. 32
+** デフォルト値: `+0+`
 
 * [[option_weechat.look.hotlist_names_level]] *weechat.look.hotlist_names_level*
 ** 説明: pass:none[ホットリストに載せる名前のレベル (次の組み合わせ: 1=join/part、2=メッセージ、4=プライベートメッセージ、8=ハイライト、例: 12=プライベートメッセージとハイライト)]
 ** タイプ: 整数
-** 値: 1 .. 15 (デフォルト値: `+12+`)
+** 値: 1 .. 15
+** デフォルト値: `+12+`
 
 * [[option_weechat.look.hotlist_names_merged_buffers]] *weechat.look.hotlist_names_merged_buffers*
 ** 説明: pass:none[セットされた場合、マージバッファに対してホットリストにバッファ名を載せることを強制]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.hotlist_prefix]] *weechat.look.hotlist_prefix*
 ** 説明: pass:none[ホットリストの最初に表示されるテキスト]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"H: "+`)
+** 値: 未制約文字列
+** デフォルト値: `+"H: "+`
 
 * [[option_weechat.look.hotlist_remove]] *weechat.look.hotlist_remove*
 ** 説明: pass:none[ホットリストに含まれるバッファを削除: buffer = バッファを削除、merged = すべての可視状態でマージされたバッファを一括削除]
 ** タイプ: 整数
-** 値: buffer, merged (デフォルト値: `+merged+`)
+** 値: buffer, merged
+** デフォルト値: `+merged+`
 
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
 ** 説明: pass:none[セットされた場合、ホットリストではバッファ名に短い名前を使う (名前に含まれる最初の "." 以降)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.hotlist_sort]] *weechat.look.hotlist_sort*
 ** 説明: pass:none[ホットリストのソート: group_time_*: 通知レベルでグループ化した (ハイライトを前にした) 後に時間でソート、group_number_*: 通知レベルでグループ化した (ハイライトを前にした) 後に番号でソート、number_*: 番号でソート; asc = 昇順、desc = 降順]
 ** タイプ: 整数
-** 値: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (デフォルト値: `+group_time_asc+`)
+** 値: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc
+** デフォルト値: `+group_time_asc+`
 
 * [[option_weechat.look.hotlist_suffix]] *weechat.look.hotlist_suffix*
 ** 説明: pass:none[ホットリストの最後に表示されるテキスト]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.look.hotlist_unique_numbers]] *weechat.look.hotlist_unique_numbers*
 ** 説明: pass:none[ホットリストには一意の番号だけを保持 (これは番号の後ろに名前が表示されていないホットリスト要素だけに適用されます)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.input_cursor_scroll]] *weechat.look.input_cursor_scroll*
 ** 説明: pass:none[行の最後までスクロールする際に入力行の最後に続けて表示される文字の数]
 ** タイプ: 整数
-** 値: 0 .. 100 (デフォルト値: `+20+`)
+** 値: 0 .. 100
+** デフォルト値: `+20+`
 
 * [[option_weechat.look.input_share]] *weechat.look.input_share*
 ** 説明: pass:none[全てのバッファでコマンド、テキスト、または両方の入力を共有 (バッファごとのローカル履歴に影響無し)]
 ** タイプ: 整数
-** 値: none, commands, text, all (デフォルト値: `+none+`)
+** 値: none, commands, text, all
+** デフォルト値: `+none+`
 
 * [[option_weechat.look.input_share_overwrite]] *weechat.look.input_share_overwrite*
 ** 説明: pass:none[セットされ、入力が共有された場合、ターゲットバッファの入力は常に上書きされます]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.input_undo_max]] *weechat.look.input_undo_max*
 ** 説明: pass:none[バッファごとのコマンドラインの "undo" 回数の上限値 (0 = アンドゥは無効)]
 ** タイプ: 整数
-** 値: 0 .. 65535 (デフォルト値: `+32+`)
+** 値: 0 .. 65535
+** デフォルト値: `+32+`
 
 * [[option_weechat.look.item_away_message]] *weechat.look.item_away_message*
 ** 説明: pass:none[サーバの離席メッセージを離席バー要素に表示]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.item_buffer_filter]] *weechat.look.item_buffer_filter*
 ** 説明: pass:none[現在のバッファで何行かがフィルタされたことを示す文字列 (バー要素 "buffer_filter")]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"*"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"*"+`
 
 * [[option_weechat.look.item_buffer_zoom]] *weechat.look.item_buffer_zoom*
 ** 説明: pass:none[マージされたバッファがズーム状態であることを示す文字列 (バー要素 "buffer_zoom")]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"!"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"!"+`
 
 * [[option_weechat.look.item_mouse_status]] *weechat.look.item_mouse_status*
 ** 説明: pass:none[マウスが有効であることを示す文字列 (バー要素 "mouse_status")]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"M"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"M"+`
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
-** 説明: pass:none["time" バー要素の時間書式 (日付/時間指定子は strftime の man を参照)]
+** 説明: pass:none["time" バー要素の時間書式 (日付/時間指定子は strftime の man を参照) (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"%H:%M"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"%H:%M"+`
 
 * [[option_weechat.look.jump_current_to_previous_buffer]] *weechat.look.jump_current_to_previous_buffer*
 ** 説明: pass:none[他のバッファへの移動と現在のバッファに戻ることを簡単にするために、/buffer *N (N はバッファ番号) で現在のバッファ番号に移動した場合は、表示上の一つ前のバッファに移動する]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.jump_previous_buffer_when_closing]] *weechat.look.jump_previous_buffer_when_closing*
 ** 説明: pass:none[バッファを閉じた場合は一つ前に訪れていたバッファに移動 (無効にされた場合は、バッファ番号の一つ少ないものに移動)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.jump_smart_back_to_buffer]] *weechat.look.jump_smart_back_to_buffer*
 ** 説明: pass:none[ホットリストの最後に到達したら最初のバッファに移動する]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.key_bind_safe]] *weechat.look.key_bind_safe*
 ** 説明: pass:none["危険な" キー (ctrl または meta コードで始まらないキー) の割り当てを禁止]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.key_grab_delay]] *weechat.look.key_grab_delay*
 ** 説明: pass:none[キーを横取りするためのデフォルト遅延時間 (ミリ秒単位) (デフォルトキー alt-k を使います); /input コマンドではこの遅延時間を無視します (/help input 参照)]
 ** タイプ: 整数
-** 値: 1 .. 10000 (デフォルト値: `+800+`)
+** 値: 1 .. 10000
+** デフォルト値: `+800+`
 
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
 ** 説明: pass:none[マウスサポートの有効化]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.mouse_timer_delay]] *weechat.look.mouse_timer_delay*
 ** 説明: pass:none[マウスイベントを横取りするための遅延 (ミリ秒): WeeChat はイベント処理前にこの遅延時間だけ待つ]
 ** タイプ: 整数
-** 値: 1 .. 10000 (デフォルト値: `+100+`)
+** 値: 1 .. 10000
+** デフォルト値: `+100+`
 
 * [[option_weechat.look.nick_color_force]] *weechat.look.nick_color_force*
 ** 説明: pass:none[一部のニックネームでニックネーム色を強制する: ニックネームから計算されるハッシュを元にした色を利用しない (書式: "nick1:color1;nick2:color2"); ニックネームの検索はまず大文字小文字が区別された状態で行われ、そのあとに小文字で行われます。このため、このオプションのニックネーム部分を小文字だけで書く事もできます]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.look.nick_color_hash]] *weechat.look.nick_color_hash*
 ** 説明: pass:none[ニックネームに対する色を見つけるハッシュアルゴリズム: djb2 = djb2 (文字の位置が重要: ニックネームに同じ色が使われにくくなる) の亜種、sum = 文字の総和]
 ** タイプ: 整数
-** 値: djb2, sum (デフォルト値: `+djb2+`)
+** 値: djb2, sum
+** デフォルト値: `+djb2+`
 
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
 ** 説明: pass:none[ニックネーム内の色計算に使用する部分を制限する文字 (このリストに含まれない文字が、このリストの文字の前に少なくとも一つ以上含まれなければいけない) (例: "|" を設定した場合、"|nick|away" はニックネーム "|nick" と同じ色になる)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"_|["+`)
+** 値: 未制約文字列
+** デフォルト値: `+"_|["+`
 
 * [[option_weechat.look.nick_prefix]] *weechat.look.nick_prefix*
 ** 説明: pass:none[メッセージプレフィックス中のニックネームの前に表示するテキスト、例: "<"]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.look.nick_suffix]] *weechat.look.nick_suffix*
 ** 説明: pass:none[メッセージプレフィックス中のニックネームの後に表示するテキスト、例: ">"]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.look.paste_auto_add_newline]] *weechat.look.paste_auto_add_newline*
 ** 説明: pass:none[少なくとも 2 行以上をペースト、確認のための質問に回答した場合に、ペーストしたテキストの末尾に新しい行を自動的に追加する]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** 説明: pass:none[端末の「括弧付きペーストモード」を有効化 (一部の端末/マルチプレクサで利用可能): このモードでは、ペーストされたテキストはコントロールシーケンスで括られます。これにより WeeChat はペーストされたテキストとタイプされたテキストを区別する ("ESC[200~"、ペーストされたテキスト、"ESC[201~")]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.paste_bracketed_timer_delay]] *weechat.look.paste_bracketed_timer_delay*
 ** 説明: pass:none[括弧付きペーストの終了を示すコントロールシーケンス ("ESC[201~") が入力されなかった場合に、括弧付きペーストを強制終了させるまでの待ち時間 (秒単位)]
 ** タイプ: 整数
-** 値: 1 .. 60 (デフォルト値: `+10+`)
+** 値: 1 .. 60
+** デフォルト値: `+10+`
 
 * [[option_weechat.look.paste_max_lines]] *weechat.look.paste_max_lines*
 ** 説明: pass:none[ユーザへの確認無しにペーストする行数の最大値 (-1 = この機能を無効化)]
 ** タイプ: 整数
-** 値: -1 .. 2147483647 (デフォルト値: `+1+`)
+** 値: -1 .. 2147483647
+** デフォルト値: `+1+`
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
 ** 説明: pass:none[アクションメッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+" *"+`)
+** 値: 未制約文字列
+** デフォルト値: `+" *"+`
 
 * [[option_weechat.look.prefix_align]] *weechat.look.prefix_align*
 ** 説明: pass:none[プレフィックスの調節 (none、left、right (デフォルト))]
 ** タイプ: 整数
-** 値: none, left, right (デフォルト値: `+right+`)
+** 値: none, left, right
+** デフォルト値: `+right+`
 
 * [[option_weechat.look.prefix_align_max]] *weechat.look.prefix_align_max*
 ** 説明: pass:none[プレフィックスのサイズの最大値 (0 = 最大値の指定無し)]
 ** タイプ: 整数
-** 値: 0 .. 128 (デフォルト値: `+0+`)
+** 値: 0 .. 128
+** デフォルト値: `+0+`
 
 * [[option_weechat.look.prefix_align_min]] *weechat.look.prefix_align_min*
 ** 説明: pass:none[プレフィックスサイズの最小値]
 ** タイプ: 整数
-** 値: 0 .. 128 (デフォルト値: `+0+`)
+** 値: 0 .. 128
+** デフォルト値: `+0+`
 
 * [[option_weechat.look.prefix_align_more]] *weechat.look.prefix_align_more*
 ** 説明: pass:none[プレフィックスが切り詰められた場合に表示する文字 (画面上のちょうど 1 文字)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"+"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"+"+`
 
 * [[option_weechat.look.prefix_align_more_after]] *weechat.look.prefix_align_more_after*
 ** 説明: pass:none[テキストの後ろに切り捨て文字 (デフォルトでは "+") を表示 (この場所に表示されるべき空白を置換する); 無効化した場合、テキストの最後の文字が切り捨て文字になります]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.prefix_buffer_align]] *weechat.look.prefix_buffer_align*
 ** 説明: pass:none[多くのバッファが同じ番号を持つようにマージされた場合に、バッファ名のプレフィックスを調節 (none, left, right (デフォルト))]
 ** タイプ: 整数
-** 値: none, left, right (デフォルト値: `+right+`)
+** 値: none, left, right
+** デフォルト値: `+right+`
 
 * [[option_weechat.look.prefix_buffer_align_max]] *weechat.look.prefix_buffer_align_max*
 ** 説明: pass:none[多くのバッファが同じ番号を持つようにマージされた場合の、バッファ名のサイズの最大値 (0 = 最大値の指定無し)]
 ** タイプ: 整数
-** 値: 0 .. 128 (デフォルト値: `+0+`)
+** 値: 0 .. 128
+** デフォルト値: `+0+`
 
 * [[option_weechat.look.prefix_buffer_align_more]] *weechat.look.prefix_buffer_align_more*
 ** 説明: pass:none[バッファ名が切り詰められた場合に表示する文字 (多くのバッファが同じ番号を持つようにマージされた場合) (画面上のちょうど 1 文字)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"+"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"+"+`
 
 * [[option_weechat.look.prefix_buffer_align_more_after]] *weechat.look.prefix_buffer_align_more_after*
 ** 説明: pass:none[テキストの後ろに切り捨て文字 (デフォルトでは "+") を表示 (この場所に表示されるべき空白を置換する); 無効化した場合、テキストの最後の文字が切り捨て文字になります]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
 ** 説明: pass:none[エラーメッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"=!="+`)
+** 値: 未制約文字列
+** デフォルト値: `+"=!="+`
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
 ** 説明: pass:none[参加メッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"-->"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"-->"+`
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
 ** 説明: pass:none[ネットワークメッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"--"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"--"+`
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
 ** 説明: pass:none[終了メッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"<--"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"<--"+`
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
 ** 説明: pass:none[同じニックネームからの連続したメッセージに前置するプレフィックス: 空白文字 " " の場合はプレフィックスを隠す、これ以外の文字列の場合はそれをプレフィックスとして用いる、空文字の場合はプレフィックス表示機能を使わない]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.look.prefix_suffix]] *weechat.look.prefix_suffix*
 ** 説明: pass:none[プレフィックスの後ろに表示される文字列]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"|"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"|"+`
 
 * [[option_weechat.look.quote_nick_prefix]] *weechat.look.quote_nick_prefix*
 ** 説明: pass:none[メッセージを引用する際にニックネームの前につけるテキスト (/help cursor 参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"<"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"<"+`
 
 * [[option_weechat.look.quote_nick_suffix]] *weechat.look.quote_nick_suffix*
 ** 説明: pass:none[メッセージを引用する際にニックネームの後につけるテキスト (/help cursor 参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+">"+`)
+** 値: 未制約文字列
+** デフォルト値: `+">"+`
 
 * [[option_weechat.look.quote_time_format]] *weechat.look.quote_time_format*
 ** 説明: pass:none[メッセージを引用する際の時間書式 (/help cursor を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"%H:%M:%S"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"%H:%M:%S"+`
 
 * [[option_weechat.look.read_marker]] *weechat.look.read_marker*
 ** 説明: pass:none[最初の未読行を表示するマーカー (line か char) をバッファ内で使用]
 ** タイプ: 整数
-** 値: none, line, char (デフォルト値: `+line+`)
+** 値: none, line, char
+** デフォルト値: `+line+`
 
 * [[option_weechat.look.read_marker_always_show]] *weechat.look.read_marker_always_show*
 ** 説明: pass:none[バッファの最終行であっても、常にリードマーカーを表示]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.read_marker_string]] *weechat.look.read_marker_string*
 ** 説明: pass:none[リードマーカー行の表示に使われる文字列 (行末まで文字列が繰り返される)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"- "+`)
+** 値: 未制約文字列
+** デフォルト値: `+"- "+`
 
 * [[option_weechat.look.save_config_on_exit]] *weechat.look.save_config_on_exit*
 ** 説明: pass:none[終了時に設定ファイルを保存]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
 ** 説明: pass:none[終了時にレイアウトを保存 (バッファ、ウィンドウ、両方)]
 ** タイプ: 整数
-** 値: none, buffers, windows, all (デフォルト値: `+none+`)
+** 値: none, buffers, windows, all
+** デフォルト値: `+none+`
 
 * [[option_weechat.look.scroll_amount]] *weechat.look.scroll_amount*
 ** 説明: pass:none[scroll_up と scroll_down でスクロールする行数]
 ** タイプ: 整数
-** 値: 1 .. 2147483647 (デフォルト値: `+3+`)
+** 値: 1 .. 2147483647
+** デフォルト値: `+3+`
 
 * [[option_weechat.look.scroll_bottom_after_switch]] *weechat.look.scroll_bottom_after_switch*
 ** 説明: pass:none[別のバッファに移動した後にウィンドウの最後までスクロール (ウィンドウのスクロール位置を記憶しない); 自動スクロールは書式ありバッファだけで有効 (自由内容バッファでは無効)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.scroll_page_percent]] *weechat.look.scroll_page_percent*
 ** 説明: pass:none[1 ページ上方向か下方向にスクロールする場合のスクロールの割合 (例えば 100 は 1 ページ、50 は半ページ)]
 ** タイプ: 整数
-** 値: 1 .. 100 (デフォルト値: `+100+`)
+** 値: 1 .. 100
+** デフォルト値: `+100+`
 
 * [[option_weechat.look.search_text_not_found_alert]] *weechat.look.search_text_not_found_alert*
 ** 説明: pass:none[バッファ内に検索テキストが見つからなかった場合はユーザに警告]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
 ** 説明: pass:none[バーとウィンドウ周囲の水平セパレータ文字 (空の場合は ncurses で線を描画するが、一部の端末では URL 選択の際にバグを生ずる可能性がある); 必ず画面上に描画した時の文字幅が 1 の文字を指定してください]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"-"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"-"+`
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
 ** 説明: pass:none[バーとウィンドウ周囲の垂直セパレータ文字 (空の場合は ncurses で線を描画するが、いくつかの端末では URL 選択の際にバグを生ずる可能性がある); 必ず画面上に描画した時の文字幅が 1 の文字を指定してください]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.look.tab_width]] *weechat.look.tab_width*
 ** 説明: pass:none[メッセージに含まれるタブ文字を表示する際に使う空白文字の数]
 ** タイプ: 整数
-** 値: 1 .. 64 (デフォルト値: `+1+`)
+** 値: 1 .. 64
+** デフォルト値: `+1+`
 
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
 ** 説明: pass:none[文字列へ変換されてメッセージ中に表示される日付の時間書式 (日付/時間指定子は strftime の man を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"%a, %d %b %Y %T"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"%a, %d %b %Y %T"+`
 
 * [[option_weechat.look.window_auto_zoom]] *weechat.look.window_auto_zoom*
 ** 説明: pass:none[端末のサイズがすべてのウィンドウを表示するには小さすぎる場合、自動的に現在のウィンドウにズームする (端末のサイズが十分に大きい場合は、alt-z を使ってウィンドウのズームを戻してください)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.look.window_separator_horizontal]] *weechat.look.window_separator_horizontal*
 ** 説明: pass:none[ウィンドウ間に水平セパレータを表示]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.window_separator_vertical]] *weechat.look.window_separator_vertical*
 ** 説明: pass:none[ウィンドウ間に垂直セパレータを表示]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.window_title]] *weechat.look.window_title*
 ** 説明: pass:none[起動時に設定するウィンドウタイトル (Curses GUI 端末タイトル); 空文字列の場合、タイトルは変更されません (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"WeeChat ${info:version}"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"WeeChat ${info:version}"+`
 
 * [[option_weechat.look.word_chars_highlight]] *weechat.look.word_chars_highlight*
 ** 説明: pass:none[ハイライトする部分または文字と見なす文字 (または文字範囲) のカンマ区切りリスト; それぞれの要素は単一文字、文字範囲 (書式: a-z)、全角文字のクラス (例えば "alnum"、wctype の man 参照); 要素の前の "!" は否定を意味します (この文字は単語の一部とみなされません); "*" は任意の文字にマッチします; unicode 文字は \u1234 書式で使うことができます、例えば \u00A0 は固定スペースを意味します (サポートされる書式は /help print を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"!\u00A0,-,_,|,alnum"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"!\u00A0,-,_,|,alnum"+`
 
 * [[option_weechat.look.word_chars_input]] *weechat.look.word_chars_input*
 ** 説明: pass:none[コマンドラインの一部または単語と見なす文字 (または文字範囲) のカンマ区切りリスト; それぞれの要素は単一文字、文字範囲 (書式: a-z)、全角文字のクラス (例えば "alnum"、wctype の man 参照); 要素の前の "!" は否定を意味します (この文字は単語の一部とみなされません); "*" は任意の文字にマッチします; unicode 文字は \u1234 書式で使うことができます、例えば \u00A0 は固定スペースを意味します (サポートされる書式は /help print を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"!\u00A0,-,_,|,alnum"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"!\u00A0,-,_,|,alnum"+`
 
 * [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
 ** 説明: pass:none[リモートホストへの接続タイムアウト時間 (秒単位) (子プロセスが行う)]
 ** タイプ: 整数
-** 値: 1 .. 2147483647 (デフォルト値: `+60+`)
+** 値: 1 .. 2147483647
+** デフォルト値: `+60+`
 
 * [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
 ** 説明: pass:none[認証局を含むファイル ("%h" は WeeChat ホームに置換されます、デフォルトでは "~/.weechat" です)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"/etc/ssl/certs/ca-certificates.crt"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"/etc/ssl/certs/ca-certificates.crt"+`
 
 * [[option_weechat.network.gnutls_handshake_timeout]] *weechat.network.gnutls_handshake_timeout*
 ** 説明: pass:none[gnutls ハンドシェイクのタイムアウト (秒単位)]
 ** タイプ: 整数
-** 値: 1 .. 2147483647 (デフォルト値: `+30+`)
+** 値: 1 .. 2147483647
+** デフォルト値: `+30+`
 
 * [[option_weechat.network.proxy_curl]] *weechat.network.proxy_curl*
 ** 説明: pass:none[Curl を利用した URL のダウンロード時に利用するプロキシの名前 (スクリプトのリストをダウンロードする際および hook_process 関数から呼び出されるスクリプト内で利用); プロキシを定義するには /proxy コマンドを利用してください]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
 ** 説明: pass:none[スタートアップ時にロードするプラグインのコンマ区切りリスト、"*" は見つかった全てのプラグイン、"!" から始まる名前はロードしないプラグイン、名前にワイルドカード "*" を使うことができます (例: "*" または "*,!lua,!tcl")]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"*"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"*"+`
 
 * [[option_weechat.plugin.debug]] *weechat.plugin.debug*
 ** 説明: pass:none[全てのプラグインに対してデバッグメッセージを有効化 (デフォルトでは無効、無効を推奨)]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+off+`)
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
 ** 説明: pass:none[プラグインのファイル拡張子のコンマ区切りリスト]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+".so,.dll"+`)
+** 値: 未制約文字列
+** デフォルト値: `+".so,.dll"+`
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
 ** 説明: pass:none[プラグイン検索パス ("%h" は WeeChat ホームに置換されます、デフォルトでは "~/.weechat" です)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+"%h/plugins"+`)
+** 値: 未制約文字列
+** デフォルト値: `+"%h/plugins"+`
 
 * [[option_weechat.plugin.save_config_on_unload]] *weechat.plugin.save_config_on_unload*
 ** 説明: pass:none[プラグインをアンロードする際に設定ファイルをセーブ]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
 ** 説明: pass:none[WeeChat が実行され、プラグインのロード後に実行されるコマンド (注意: 値は評価されます、/help eval を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
 ** 説明: pass:none[WeeChat が実行され、プラグインのロード前に実行されるコマンド (注意: 値は評価されます、/help eval を参照)]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`
 
 * [[option_weechat.startup.display_logo]] *weechat.startup.display_logo*
 ** 説明: pass:none[WeeChat ロゴを開始時に表示]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.startup.display_version]] *weechat.startup.display_version*
 ** 説明: pass:none[WeeChat バージョンを開始時に表示]
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `+on+`)
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.startup.sys_rlimit]] *weechat.startup.sys_rlimit*
 ** 説明: pass:none[WeeChat プロセスのリソースを制限する、書式: "res1:limit1,res2:limit2"; リソース名は定数 (RLIMIT_XXX) の最後の語を小文字で (値は man setrlimit を参照) 記述; 値の -1 は "無制限" の意; 例: core ファイルのサイズ制限を無制限に仮想メモリを 1GB に制限: "core:-1,as:1000000000"]
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `+""+`)
+** 値: 未制約文字列
+** デフォルト値: `+""+`

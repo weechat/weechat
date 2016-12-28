@@ -218,15 +218,16 @@ Examples:
 ----
 
 [[command_weechat_debug]]
-* `+debug+`: attiva debug per core/plugin
+* `+debug+`: debug functions
 
 ----
 /debug  list
-        set <plugin> <livello>
+        set <plugin> <level>
         dump [<plugin>]
         buffer|color|infolists|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
+        time <command>
 
      list: list plugins with debug levels
       set: set debug level for plugin
@@ -246,6 +247,7 @@ infolists: display infos about infolists
      tags: display tags for lines
      term: display infos about terminal
   windows: display windows tree
+     time: measure time to execute a command or to send text to the current buffer
 ----
 
 [[command_weechat_eval]]
@@ -361,7 +363,7 @@ The default key alt+'=' toggles filtering on/off.
 Tags most commonly used:
   no_filter, no_highlight, no_log, log0..log9 (log level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
+  self_msg, nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
   host_xxx (xxx is username + host in message),
   irc_xxx (xxx is command name or number, see /server raw or /debug tags),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
@@ -438,7 +440,7 @@ list of actions:
   delete_beginning_of_line: delete from beginning of line until cursor
   delete_end_of_line: delete from cursor until end of line
   delete_line: delete entire line
-  clipboard_paste: paste from clipboard
+  clipboard_paste: paste from the internal clipboard
   transpose_chars: transpose two chars
   undo: undo last command line action
   redo: redo last command line action
@@ -456,7 +458,7 @@ list of actions:
   jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
   jump_previously_visited_buffer: jump to previously visited buffer
   jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist
+  hotlist_clear: clear hotlist (optional argument: "lowest" to clear only lowest level in hotlist, "highest" to clear only highest level in hotlist, or level mask: integer which is a combination of 1=join/part, 2=message, 4=private, 8=highlight)
   grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
   grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
   grab_mouse: grab mouse event code
@@ -958,8 +960,8 @@ Esempi:
          left: switch to window on the left
         right: switch to window on the right
        number: window number (see /window list)
-       splith: split current window horizontally
-       splitv: split current window vertically
+       splith: split current window horizontally (to undo: /window merge)
+       splitv: split current window vertically (to undo: /window merge)
        resize: resize window size, new size is <pct> percentage of parent window
       balance: balance the sizes of all windows
         merge: merge window with another (all = keep only one window)
@@ -993,6 +995,10 @@ Examples:
     /window scroll -d
   zoom on window #2:
     /window zoom -window 2
+  split window horizontally using 30%% of space for the window on top:
+    /window splith 30
+  remove the split:
+    /window merge
   enable bare display for 2 seconds:
     /window bare 2
 ----

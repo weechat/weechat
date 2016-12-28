@@ -210,6 +210,25 @@ Per spostare la barra in basso:
 /set weechat.bar.buffers.position bottom
 ----
 
+// TRANSLATION MISSING
+To scroll the bar: if mouse is enabled (key: kbd:[Alt+m]), you can scroll the
+bar with your mouse wheel.
+
+// TRANSLATION MISSING
+Or you can define keys, similar to the existing keys to scroll nicklist.
+For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
+
+----
+/key bind meta-OP /bar scroll buffers * -100%
+/key bind meta-OQ /bar scroll buffers * +100%
+/key bind meta-meta-OP /bar scroll buffers * b
+/key bind meta-meta-OQ /bar scroll buffers * e
+----
+
+[NOTE]
+I tasti "meta-OP" e "meta-OQ" possono essere differenti nel proprio terminale.
+Per trovare il codice tasto digitare kbd:[Alt+k] poi il tast.
+
 [[customize_prefix]]
 === Come si può ridurre la lunghezza dei nick o rimuovere l'allineamento nella finestra di chat?
 
@@ -225,6 +244,35 @@ Per rimuovere l'allineamento dei nick:
 ----
 /set weechat.look.prefix_align none
 ----
+
+// TRANSLATION MISSING
+[[status_hotlist]]
+=== What does mean the [H: 3(1,8), 2(4)] in status bar?
+
+This is called the "hotlist", a list of buffers with the number of unread
+messages, by order: highlights, private messages, messages, other messages
+(like join/part). +
+The number of "unread message" is the number of new messages displayed/received
+since you visited the buffer.
+
+In the example `[H: 3(1,8), 2(4)]`, there are:
+
+* one highlight and 8 unread messages on buffer #3,
+* 4 unread messages on buffer #2.
+
+The color of the buffer/counter depends on the type of message, default colors
+are:
+
+* highlight: `lightmagenta` / `magenta`
+* private message: `lightgreen` / `green`
+* message: `yellow` / `brown`
+* other message: `default` / `default` (color of text in terminal)
+
+These colors can be changed with the options __weechat.color.status_data_*__
+(buffers) and __weechat.color.status_count_*__ (counters). +
+Other hotlist options can be changed with the options __weechat.look.hotlist_*__.
+
+See user's guide for more info about the hotlist (screen layout).
 
 [[input_bar_size]]
 === Come posso usare la riga di comando con più di una riga?
@@ -485,7 +533,7 @@ Esempio:
 
 [NOTE]
 I tasti "meta2-A" e "meta2-B" possono essere differenti nel proprio terminale.
-Per trovare il codice tasto digitare kbd:[Alt+k] poi il tast (su o giù).
+Per trovare il codice tasto digitare kbd:[Alt+k] poi il tast.
 
 [[mouse]]
 == Mouse
@@ -808,6 +856,25 @@ Gli script non sono compatibili con altri client IRC.
 [[settings]]
 == Impostazioni
 
+// TRANSLATION MISSING
+[[editing_config_files]]
+=== Can I edit configuration files (*.conf) by hand?
+
+You can, but this is *NOT* recommended.
+
+Command `/set` in WeeChat is recommended:
+
+* you can complete value with the Tab key
+* the value is checked, a message is displayed in case of error
+* the value is used immediately, you don't need to restart anything
+
+If you still want to edit files by hand, you should be careful:
+
+* if you put an invalid value for an option, WeeChat will display an error
+  on load and discard the value (the default value for option will be used)
+* if WeeChat is running, you'll have to issue the command `/reload`, and if
+  some settings were changed but not saved with `/save`, you will lose them
+
 [[memory_usage]]
 === Come posso ottimizzare WeeChat per poter utilizzare meno memoria?
 
@@ -834,6 +901,9 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
 * hide "nicklist" bar: `/bar hide nicklist`
 * remove display of seconds in status bar time:
   `/set weechat.look.item_time_format "%H:%M"` (this is the default value)
+// TRANSLATION MISSING
+* disable real time check of misspelled words in command line (if you enabled it):
+  `/set aspell.check.real_time off`
 * set the _TZ_ variable (for example: `export TZ="Europe/Paris"`), to prevent
   frequent access to file _/etc/localtime_
 
@@ -845,8 +915,8 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
 Disable IRC part and quit messages:
 
 ----
-/set irc.server_default.default_msg_part ""
-/set irc.server_default.default_msg_quit ""
+/set irc.server_default.msg_part ""
+/set irc.server_default.msg_quit ""
 ----
 
 // TRANSLATION MISSING

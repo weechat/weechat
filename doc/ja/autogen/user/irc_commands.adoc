@@ -119,7 +119,7 @@ WeeChat がサポートする機能: account-notify、away-notify、cap-notify�
 
     server: サーバ名、これは:
             - 内部サーバ名 (/server add で追加されたもの、利用推奨)
-            - ホスト名/ポート番号又は IP アドレス/ポート番号、デフォルトのポート番号は 6667
+            - ホスト名/ポート番号または IP アドレス/ポート番号、デフォルトのポート番号は 6667
             - 次の書式に従う URL: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
             注意: アドレス/IP/URL を指定した場合、サーバを一時的に追加します (保存しません)、/help irc.look.temporary_servers を参照してください。
     option: サーバに関するオプション (ブール型オプションでは、value は無視される)
@@ -149,7 +149,7 @@ WeeChat がサポートする機能: account-notify、away-notify、cap-notify�
 /ctcp  [-server <server>] <target>[,<target>...] <type> [<arguments>]
 
    server: 送信先サーバ名 (内部名)
-   target: 送信先ニックネーム又はチャンネル ('*' の場合現在のチャンネル宛に送信)
+   target: 送信先ニックネームまたはチャンネル ('*' の場合現在のチャンネル宛に送信)
      type: CTCP タイプ (例: "version"、"ping"、..)
 arguments: CTCP の引数
 
@@ -260,7 +260,7 @@ nick: ニックネームまたはマスク (ワイルドカード "*" を使う�
 
      list: 無視エントリをリストアップ
       add: 無視エントリを追加
-     nick: ニックネーム又はホスト名 ("re:" を付けることで POSIX 拡張正規表現を使えます、"*" は 1 つ以上の文字にマッチします)
+     nick: ニックネームまたはホスト名 ("re:" を付けることで POSIX 拡張正規表現を使えます、"*" は 0 個以上の文字にマッチします)
       del: 無視エントリの削除
    number: 削除する無視エントリ番号 (番号はリストを参照)
      -all: 全ての無視エントリを削除
@@ -469,7 +469,7 @@ target: サーバ名
 /msg  [-server <server>] <target>[,<target>...] <text>
 
 server: このサーバに送信 (内部サーバ名)
-target: ニックネーム又はチャンネル名 (マスクを使えるかもしれない、'*' = 現在のチャンネル)
+target: ニックネームまたはチャンネル名 (マスクを使えるかもしれない、'*' = 現在のチャンネル)
   text: 送信するテキスト
 ----
 
@@ -499,7 +499,7 @@ nick: 新しいニックネーム
 /notice  [-server <server>] <target> <text>
 
 server: このサーバに送信 (内部サーバ名)
-target: ニックネーム又はチャンネル名
+target: ニックネームまたはチャンネル名
   text: 送信するテキスト
 ----
 
@@ -598,7 +598,7 @@ daemon2: メッセージをデーモンに転送
 /quiet  [<channel>] [<nick> [<nick>...]]
 
 channel: チャンネル名
-   nick: ニックネーム又はホスト名
+   nick: ニックネームまたはホスト名
 
 引数無しの場合は、現在のチャンネルの発言禁止リストを表示。
 ----
@@ -627,7 +627,7 @@ server: 送信先サーバ (内部サーバ名)
 ----
 
 [[command_irc_rehash]]
-* `+rehash+`: サーバに設定ファイルの読み込みを指示
+* `+rehash+`: サーバに設定ファイルのリロードを指示
 
 ----
 /rehash  [<option>]
@@ -842,17 +842,17 @@ target: サーバ名
 /unban  [<channel>] <nick> [<nick>...]
 
 channel: チャンネル名
-   nick: ニックネーム又はホスト名
+   nick: ニックネームまたはホスト名
 ----
 
 [[command_irc_unquiet]]
-* `+unquiet+`: ニックネーム又はホスト名に対する発言禁止を解除
+* `+unquiet+`: ニックネームまたはホスト名に対する発言禁止を解除
 
 ----
 /unquiet  [<channel>] <nick> [<nick>...]
 
 channel: チャンネル名
-   nick: ニックネーム又はホスト名
+   nick: ニックネームまたはホスト名
 ----
 
 [[command_irc_userhost]]

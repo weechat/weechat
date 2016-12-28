@@ -85,59 +85,59 @@ message: 離席メッセージ (メッセージが無い場合は、離席状態
          get <property>
          <number>|-|+|<name>
 
-    list: list buffers (without argument, this list is displayed)
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
-    swap: swap two buffers (swap with current buffer if only one number/name given)
-   cycle: jump loop between a list of buffers
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-    hide: hide the buffer
-  unhide: unhide the buffer
-renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
-   close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-       -: jump to first buffer number
-       +: jump to last buffer number
-    name: jump to buffer by (partial) name
+    list: バッファをリストアップ (引数無しの場合、このリストが表示されます)
+   clear: バッファの内容を削除 (number はバッファ番号、マージバッファに対しては -merged、全てのバッファに対しては -all、何も無ければ現在のバッファ)
+    move: リストにバッファを移動 (相対指定も可能、例えば -1); "-" = 最初のバッファ番号に移動、"+" = 最後のバッファ番号 + 1 に移動
+    swap: 2 つのバッファを入れ替え (現在のバッファと引数で与えた番号/名称で指定されるバッファを入れ替える)
+   cycle: 指定したバッファ間でバッファを循環させる
+   merge: 現在のバッファを他のバッファにマージ (2 つのバッファのチャットエリアが一緒になります)
+          (デフォルトでは ctrl-x でマージバッファの切り替え)
+ unmerge: 同じ番号を持つ他のバッファとのマージを解除
+    hide: バッファを隠す
+  unhide: バッファを隠すことを止める
+renumber: バッファを記憶 (weechat.look.buffer_auto_renumber オプションがオフの場合にのみ有効)
+   close: バッファを閉じる (番号/範囲または名前は任意)
+  notify: 現在のバッファの通知レベルを設定: このレベルでバッファがホットリストに追加されるかどうかを定義します:
+               none: 通知しない
+          highlight: ハイライトがあった場合のみ通知
+            message: ユーザからのメッセージとハイライトがあった場合に通知
+                all: 全てのメッセージを通知
+              reset: デフォルトの値 (all) にリセット
+localvar: 現在のバッファのローカル変数を表示
+     set: 現在のバッファのプロパティを設定
+     get: 現在のバッファのプロパティを表示
+  number: 番号でバッファ移動、可能なプレフィックス:
+          '+': 相対移動、現在の番号に数を足す
+          '-': 相対移動、現在の番号から数を引く
+          '*': 番号に移動、オプション "weechat.look.jump_current_to_previous_buffer" が使われる
+       -: 最初のバッファ番号に移動
+       +: 最後のバッファ番号に移動
+    name: バッファ名 (一部) でバッファに移動
 
-Examples:
-  clear current buffer:
+例:
+  現在のバッファの内容を消去:
     /buffer clear
-  move buffer to number 5:
+  バッファを 5 番に移動:
     /buffer move 5
-  swap buffer 1 with 3:
+  バッファ 1 番と 3 番を入れ替え:
     /buffer swap 1 3
-  swap buffer #weechat with current buffer:
+  現在のバッファと #weechat バッファを入れ替え:
     /buffer swap #weechat
-  jump on #chan1, #chan2, #chan3 and loop:
+  #chan1、#chan2、#chan3 に移動してそれを繰り返す:
     /buffer cycle #chan1 #chan2 #chan3
-  merge with core buffer:
+  コアバッファとマージ:
     /buffer merge 1
-  unmerge buffer:
+  バッファマージの解除:
     /buffer unmerge
-  close current buffer:
+  現在のバッファを閉じる:
     /buffer close
-  close buffers 5 to 7:
+  バッファ番号 5 から 7 を閉じる:
     /buffer close 5-7
-  jump to #weechat:
+  #weechat バッファに移動:
     /buffer #weechat
-  jump to next buffer:
+  次のバッファに移動:
     /buffer +1
-  jump to last buffer number:
+  最後のバッファ番号に移動:
     /buffer +
 ----
 
@@ -218,7 +218,7 @@ stop: カーソルモードを終了
 ----
 
 [[command_weechat_debug]]
-* `+debug+`: core やプラグインのデバッグ管理
+* `+debug+`: デバッグ関数
 
 ----
 /debug  list
@@ -227,6 +227,7 @@ stop: カーソルモードを終了
         buffer|color|infolists|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
+        time <command>
 
      list: デバッグレベルの設定されたプラグインをリストアップ
       set: プラグインのデバッグレベルを設定
@@ -246,6 +247,7 @@ infolists: インフォリストに関する情報を表示
      tags: 行のタグを表示
      term: 端末に関する情報を表示
   windows: ウィンドウツリーの情報を表示
+     time: コマンドの実行時間や現在のバッファへのテキスト送信にかかった時間を測定
 ----
 
 [[command_weechat_eval]]
@@ -361,9 +363,9 @@ disable: フィルタを無効化
 よく使われるタグ:
   no_filter、no_highlight、no_log、log0..log9 (ログレベル)、
   notify_none、notify_message、notify_private、notify_highlight、
-  nick_xxx (xxx はメッセージのニックネーム部分)、prefix_nick_ccc (ccc はニックネームの色)、
+  self_msg、nick_xxx (xxx はメッセージのニックネーム部分)、prefix_nick_ccc (ccc はニックネームの色)、
   host_xxx (xxx はメッセージのユーザ名 + ホスト名部分)、
-  irc_xxx (xxx はコマンド名又は番号、/server raw または /debug tags で確認)、
+  irc_xxx (xxx はコマンド名または番号、/server raw または /debug tags で確認)、
   irc_numeric、irc_error、irc_action、irc_ctcp、irc_ctcp_reply、irc_smart_filter、away_info。
 バッファ内でタグを見るには: /debug tags
 
@@ -438,7 +440,7 @@ value: 表示する履歴エントリの数
   delete_beginning_of_line: 行の最初からカーソル位置までを削除
   delete_end_of_line: カーソルから行の最後までを削除
   delete_line: 行を削除
-  clipboard_paste: クリップボードからペースト
+  clipboard_paste: WeeChat 専用の内部クリップボードの内容をペースト
   transpose_chars: 2 つの文字を入れ替え
   undo: 最新のコマンドラインアクションまで元に戻す
   redo: 最新のコマンドラインアクションまでやり直す
@@ -456,7 +458,7 @@ value: 表示する履歴エントリの数
   jump_last_buffer_displayed: 表示されている最後のバッファに移動 (最新のバッファ移動の一つ前に表示されていたバッファ)
   jump_previously_visited_buffer: 一つ前に訪れたバッファに移動
   jump_next_visited_buffer: 次に訪れたバッファに移動
-  hotlist_clear: ホットリストを消去
+  hotlist_clear: ホットリストを消去 (オプション引数: "lowest" はホットリスト内の最も低いレベルだけを消去。"highest" はホットリスト内の最も高いレベルだけを消去。レベルマスクは 1 (参加/退出)、2 (メッセージ)、4 (プライベートメッセージ)、8 (ハイライト) を合計した整数値で指定したレベルを消去)
   grab_key: キーを横取り (任意引数: 最後の横取りからの遅延時間、デフォルトは 500 ミリ秒)
   grab_key_command: あるコマンドに関連してキーを横取り (任意引数: 最後の横取りからの遅延時間、デフォルトは 500 ミリ秒)
   grab_mouse: grab マウスイベントコードを横取り
@@ -712,14 +714,14 @@ arguments: "quit" シグナルと共に送られるテキスト
 ----
 
 [[command_weechat_reload]]
-* `+reload+`: ディスクから設定ファイルを再読み込み
+* `+reload+`: ディスクから設定ファイルをリロード
 
 ----
 /reload  [<file> [<file>...]]
 
-file: 再読み込みする設定ファイル (拡張子 ".conf" は不要)
+file: リロードする設定ファイル (拡張子 ".conf" は不要)
 
-引数無しでは、全てのファイル (WeeChat とプラグイン) が再読み込みされます。
+引数無しでは、全てのファイル (WeeChat とプラグイン) がリロードされます。
 ----
 
 [[command_weechat_repeat]]
@@ -859,9 +861,9 @@ option: オプションの名前
           -yes: "weechat.look.confirm_upgrade" オプションが有効化されていた場合、このオプションは必須です。
 path_to_binary: WeeChat バイナリへのパス (デフォルトは現在のバイナリ)
         -dummy: 何もしない (補完された "-quit" オプションを不用意に使わないためのオプション)
-         -quit: *すべての*接続を閉じ、セッションを保存して WeeChat を終了。遅延復帰 (詳しくは後述) が可能になります。
+         -quit: *すべての* 接続を閉じ、セッションを保存して WeeChat を終了。遅延復帰 (詳しくは後述) が可能になります。
 
-このコマンドは起動中の WeeChat セッションのアップグレードと再読み込みを行います。このコマンドを実行する前に、新しい WeeChat バイナリをコンパイルするか、パッケージマネージャでインストールしなければいけません。
+このコマンドは起動中の WeeChat セッションのアップグレードとリロードを行います。このコマンドを実行する前に、新しい WeeChat バイナリをコンパイルするか、パッケージマネージャでインストールしなければいけません。
 
 注意: SSL 接続はアップグレード中に破棄されます、これは今のところ GnuTLS では SSL セッションのリロードができないからです。アップグレードの後に自動的に再接続されます。
 
@@ -872,7 +874,7 @@ path_to_binary: WeeChat バイナリへのパス (デフォルトは現在のバ
   4. 新しい WeeChat バイナリを実行してセッションをリロード。
 
 オプション "-quit" を使うと、上の挙動が少し変わります:
-  1. *すべての*接続を閉じる (irc、xfer、relay、...)
+  1. *すべての* 接続を閉じる (irc、xfer、relay、...)
   2. すべてのセッションをファイルに保存 (*.upgrade)
   3. すべてのプラグインをアンロード
   4. WeeChat 設定を保存
@@ -958,8 +960,8 @@ command: 実行するコマンド (コマンドが '/' で始まらない場合�
          left: 左のウィンドウに移動
         right: 右のウィンドウに移動
        number: ウィンドウ番号 (/window list を参照)
-       splith: 現在のウィンドウを水平分割
-       splitv: 現在のウィンドウを垂直分割
+       splith: 現在のウィンドウを水平分割 (/window merge で元に戻る)
+       splitv: 現在のウィンドウを垂直分割 (/window merge で元に戻る)
        resize: ウィンドウサイズの変更、新しいサイズは親ウィンドウの <pct> パーセントで指定
       balance: 全てのウィンドウのサイズを均等にする
         merge: ウィンドウを他のものをマージする (all = 一つのウィンドウにまとめる)
@@ -993,6 +995,10 @@ splith と splitv に関しては、pct は新しいウィンドウのパーセ�
     /window scroll -d
   ウィンドウ #2 を拡大:
     /window zoom -window 2
+  ウィンドウを水平分割 (上側ウィンドウの縦幅は現在のウィンドウの縦幅の 30%%):
+    /window splith 30
+  分割を元に戻す:
+    /window merge
   最小限表示を 2 秒間有効にする:
     /window bare 2
 ----

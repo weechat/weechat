@@ -73,6 +73,11 @@ list(APPEND EXTRA_LIBS "m")
 
 list(APPEND EXTRA_LIBS ${CURL_LIBRARIES})
 
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  # link with resolv lib on Mac OS X
+  list(APPEND EXTRA_LIBS "resolv")
+endif()
+
 include_directories(.. ../../core ../../plugins ${NCURSES_INCLUDE_PATH})
 
 add_library(weechat_gui_curses STATIC ${LIB_GUI_CURSES_SRC})

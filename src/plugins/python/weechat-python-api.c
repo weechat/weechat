@@ -2003,6 +2003,115 @@ API_FUNC(hook_command)
 }
 
 int
+weechat_python_api_hook_completion_cb (const void *pointer, void *data,
+                                       const char *completion_item,
+                                       struct t_gui_buffer *buffer,
+                                       struct t_gui_completion *completion)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    int *rc, ret;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
+        func_argv[2] = API_PTR2STR(buffer);
+        func_argv[3] = API_PTR2STR(completion);
+
+        rc = (int *) weechat_python_exec (script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          ptr_function,
+                                          "ssss", func_argv);
+
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (func_argv[2])
+            free (func_argv[2]);
+        if (func_argv[3])
+            free (func_argv[3]);
+
+        return ret;
+    }
+
+    return WEECHAT_RC_ERROR;
+}
+
+API_FUNC(hook_completion)
+{
+    char *completion, *description, *function, *data, *result;
+    PyObject *return_value;
+
+    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
+    completion = NULL;
+    description = NULL;
+    function = NULL;
+    data = NULL;
+    if (!PyArg_ParseTuple (args, "ssss", &completion, &description, &function,
+                           &data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(plugin_script_api_hook_completion (weechat_python_plugin,
+                                                            python_current_script,
+                                                            completion,
+                                                            description,
+                                                            &weechat_python_api_hook_completion_cb,
+                                                            function,
+                                                            data));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+API_FUNC(hook_completion_get_string)
+{
+    char *completion, *property;
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
+    completion = NULL;
+    property = NULL;
+    if (!PyArg_ParseTuple (args, "ss", &completion, &property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_hook_completion_get_string (API_STR2PTR(completion),
+                                                 property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(hook_completion_list_add)
+{
+    char *completion, *word, *where;
+    int nick_completion;
+
+    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
+    completion = NULL;
+    word = NULL;
+    nick_completion = 0;
+    where = NULL;
+    if (!PyArg_ParseTuple (args, "ssis", &completion, &word, &nick_completion,
+                           &where))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_hook_completion_list_add (API_STR2PTR(completion),
+                                      word,
+                                      nick_completion,
+                                      where);
+
+    API_RETURN_OK;
+}
+
+int
 weechat_python_api_hook_command_run_cb (const void *pointer, void *data,
                                         struct t_gui_buffer *buffer,
                                         const char *command)
@@ -2780,115 +2889,6 @@ API_FUNC(hook_config)
                                                         data));
 
     API_RETURN_STRING_FREE(result);
-}
-
-int
-weechat_python_api_hook_completion_cb (const void *pointer, void *data,
-                                       const char *completion_item,
-                                       struct t_gui_buffer *buffer,
-                                       struct t_gui_completion *completion)
-{
-    struct t_plugin_script *script;
-    void *func_argv[4];
-    char empty_arg[1] = { '\0' };
-    const char *ptr_function, *ptr_data;
-    int *rc, ret;
-
-    script = (struct t_plugin_script *)pointer;
-    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
-
-    if (ptr_function && ptr_function[0])
-    {
-        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
-        func_argv[2] = API_PTR2STR(buffer);
-        func_argv[3] = API_PTR2STR(completion);
-
-        rc = (int *) weechat_python_exec (script,
-                                          WEECHAT_SCRIPT_EXEC_INT,
-                                          ptr_function,
-                                          "ssss", func_argv);
-
-        if (!rc)
-            ret = WEECHAT_RC_ERROR;
-        else
-        {
-            ret = *rc;
-            free (rc);
-        }
-        if (func_argv[2])
-            free (func_argv[2]);
-        if (func_argv[3])
-            free (func_argv[3]);
-
-        return ret;
-    }
-
-    return WEECHAT_RC_ERROR;
-}
-
-API_FUNC(hook_completion)
-{
-    char *completion, *description, *function, *data, *result;
-    PyObject *return_value;
-
-    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
-    completion = NULL;
-    description = NULL;
-    function = NULL;
-    data = NULL;
-    if (!PyArg_ParseTuple (args, "ssss", &completion, &description, &function,
-                           &data))
-        API_WRONG_ARGS(API_RETURN_EMPTY);
-
-    result = API_PTR2STR(plugin_script_api_hook_completion (weechat_python_plugin,
-                                                            python_current_script,
-                                                            completion,
-                                                            description,
-                                                            &weechat_python_api_hook_completion_cb,
-                                                            function,
-                                                            data));
-
-    API_RETURN_STRING_FREE(result);
-}
-
-API_FUNC(hook_completion_get_string)
-{
-    char *completion, *property;
-    const char *result;
-
-    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
-    completion = NULL;
-    property = NULL;
-    if (!PyArg_ParseTuple (args, "ss", &completion, &property))
-        API_WRONG_ARGS(API_RETURN_EMPTY);
-
-    result = weechat_hook_completion_get_string (API_STR2PTR(completion),
-                                                 property);
-
-    API_RETURN_STRING(result);
-}
-
-API_FUNC(hook_completion_list_add)
-{
-    char *completion, *word, *where;
-    int nick_completion;
-
-    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
-    completion = NULL;
-    word = NULL;
-    nick_completion = 0;
-    where = NULL;
-    if (!PyArg_ParseTuple (args, "ssis", &completion, &word, &nick_completion,
-                           &where))
-        API_WRONG_ARGS(API_RETURN_ERROR);
-
-    weechat_hook_completion_list_add (API_STR2PTR(completion),
-                                      word,
-                                      nick_completion,
-                                      where);
-
-    API_RETURN_OK;
 }
 
 char *
@@ -5100,6 +5100,9 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(prnt_y),
     API_DEF_FUNC(log_print),
     API_DEF_FUNC(hook_command),
+    API_DEF_FUNC(hook_completion),
+    API_DEF_FUNC(hook_completion_get_string),
+    API_DEF_FUNC(hook_completion_list_add),
     API_DEF_FUNC(hook_command_run),
     API_DEF_FUNC(hook_timer),
     API_DEF_FUNC(hook_fd),
@@ -5112,9 +5115,6 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(hook_hsignal),
     API_DEF_FUNC(hook_hsignal_send),
     API_DEF_FUNC(hook_config),
-    API_DEF_FUNC(hook_completion),
-    API_DEF_FUNC(hook_completion_get_string),
-    API_DEF_FUNC(hook_completion_list_add),
     API_DEF_FUNC(hook_modifier),
     API_DEF_FUNC(hook_modifier_exec),
     API_DEF_FUNC(hook_info),

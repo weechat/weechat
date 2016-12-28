@@ -12,10 +12,10 @@
 == Démarrer WeeChat
 
 Un émulateur de terminal recommandé pour X (mais pas obligatoire) est
-rxvt-unicode : il a un bon support UTF-8, et aucun problème avec les
+rxvt-unicode : il a un bon support UTF-8, et aucun problème avec les
 touches par défaut.
 
-Lancer depuis votre shell :
+Lancer depuis votre shell :
 
 ----
 $ weechat
@@ -24,19 +24,19 @@ $ weechat
 [[help_options]]
 == Aide en ligne / options
 
-WeeChat dispose d'aide pour toutes les commandes, tapez simplement :
+WeeChat dispose d'aide pour toutes les commandes, tapez simplement :
 
 ----
 /help
 ----
 
-Pour avoir de l'aide sur une commande, tapez :
+Pour avoir de l'aide sur une commande, tapez :
 
 ----
 /help commande
 ----
 
-Pour modifier des options, tapez :
+Pour modifier des options, tapez :
 
 ----
 /set config.section.option valeur
@@ -52,28 +52,28 @@ besoin de redémarrer WeeChat après avoir changé la configuration).
 Vous pouvez utiliser `/set` avec un nom partiel d'option et le caractère
 joker "*" au début ou à la fin pour afficher toutes les options contenant
 ces lettres.
-Par exemple :
 
+Par exemple :
 
-* afficher toutes les options (WeeChat et extensions) :
+* Afficher toutes les options (WeeChat et extensions) :
 
 ----
 /set
 ----
 
-* afficher les options WeeChat :
+* Afficher les options WeeChat :
 
 ----
 /set weechat.*
 ----
 
-* afficher les options de l'extension IRC :
+* Afficher les options de l'extension IRC :
 
 ----
 /set irc.*
 ----
 
-Vous pouvez afficher de l'aide sur une option avec `/help`, par exemple :
+Vous pouvez afficher de l'aide sur une option avec `/help`, par exemple :
 
 ----
 /help weechat.look.highlight
@@ -82,16 +82,21 @@ Vous pouvez afficher de l'aide sur une option avec `/help`, par exemple :
 Toutes les options sont sauvées quand WeeChat quitte (ou avec la commande
 `/save` pour forcer une écriture des options).
 
-Vous pouvez éditer les fichiers de configuration (*.conf) à la main et les
-recharger par la commande `/reload` si vous ne souhaitez pas utiliser la
-commande `/set`.
+[IMPORTANT]
+Il n'est *pas recommandé* de modifier les fichiers de configuration à la main
+car WeeChat peut les écrire à tout moment (par exemple sur
+<<command_weechat_quit,/quit>>) et après chaque changement vous devez lancer la
+commande <<command_weechat_reload,/reload>> (avec le risque de perdre d'autres
+changements qui n'auraient pas été sauvés avec <<command_weechat_save,/save>>). +
+Vous pouvez utiliser la commande <<command_weechat_set,/set>>, qui vérifie la
+valeur et applique les changements immédiatement.
 
 [[core_vs_plugins]]
 == Cœur vs extensions
 
 Le cœur de WeeChat ("core") ne fait qu'afficher les données à l'écran et
 interagir avec l'utilisateur, cela signifie que le cœur sans extension
-n'a pas grand intérêt (utilisateurs fidèles : IRC faisait partie du cœur
+n'a pas grand intérêt (utilisateurs fidèles : IRC faisait partie du cœur
 dans les versions ≤ 0.2.6).
 
 Tous les protocoles réseau comme IRC sont fournis sous forme d'extensions.
@@ -102,13 +107,13 @@ devriez voir "irc" et d'autres extensions dans cette liste.
 [[add_irc_server]]
 == Ajouter un serveur IRC
 
-Vous pouvez ajouter un serveur IRC avec la commande `/server`, par exemple :
+Vous pouvez ajouter un serveur IRC avec la commande `/server`, par exemple :
 
 ----
 /server add freenode chat.freenode.net
 ----
 
-Comme d'habitude, de l'aide est disponible si vous êtes perdus :
+Comme d'habitude, de l'aide est disponible si vous êtes perdus :
 
 ----
 /help server
@@ -126,26 +131,26 @@ définie (non "null"). Sinon WeeChat utilise la valeur par défaut
 ("irc.server_default.xxx").
 
 Par exemple il y a des pseudos par défaut (basés sur votre login un*x), et
-vous pouvez les écraser pour le serveur freenode avec la commande suivante :
+vous pouvez les écraser pour le serveur freenode avec la commande suivante :
 
 ----
 /set irc.server.freenode.nicks "pseudo,pseudo2,pseudo3,pseudo4,pseudo5"
 ----
 
-Pour modifier le nom d'utilisateur et nom réel :
+Pour modifier le nom d'utilisateur et nom réel :
 
 ----
 /set irc.server.freenode.username "Mon nom d'utilisateur"
 /set irc.server.freenode.realname "Mon nom réel"
 ----
 
-Pour activer la connexion automatique au serveur lors du démarrage :
+Pour activer la connexion automatique au serveur lors du démarrage :
 
 ----
 /set irc.server.freenode.autoconnect on
 ----
 
-Pour se connecter avec SSL :
+Pour se connecter avec SSL :
 
 ----
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
@@ -153,7 +158,7 @@ Pour se connecter avec SSL :
 ----
 
 Si SASL est disponible sur le serveur, vous pouvez l'utiliser pour
-l'authentification (vous serez identifié avant de rejoindre les canaux) :
+l'authentification (vous serez identifié avant de rejoindre les canaux) :
 
 ----
 /set irc.server.freenode.sasl_username "pseudo"
@@ -162,7 +167,7 @@ l'authentification (vous serez identifié avant de rejoindre les canaux) :
 
 Pour lancer une commande après connexion au serveur, par exemple pour
 s'authentifier auprès de nickserv (seulement si vous n'utilisez pas SASL pour
-l'authentification) :
+l'authentification) :
 
 ----
 /set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
@@ -175,26 +180,26 @@ Plusieurs commandes dans l'option _command_ peuvent être séparées par `;`
 Si vous souhaitez protéger votre mot de passe dans les fichiers de
 configuration, vous pouvez utiliser les données sécurisées.
 
-Définissez d'abord une phrase de chiffrement :
+Définissez d'abord une phrase de chiffrement :
 
 ----
 /secure passphrase this is my secret passphrase
 ----
 
-Puis ajoutez une donnée sécurisée avec votre mot de passe freenode :
+Puis ajoutez une donnée sécurisée avec votre mot de passe freenode :
 
 ----
 /secure set freenode_password xxxxxxx
 ----
 
 Vous pouvez alors utiliser `+${sec.data.freenode_password}+` au lieu de votre
-mot de passe dans les options IRC mentionnées ci-dessus, par exemple :
+mot de passe dans les options IRC mentionnées ci-dessus, par exemple :
 
 ----
 /set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
 ----
 
-Pour rejoindre automatiquement des canaux lors de la connexion au serveur :
+Pour rejoindre automatiquement des canaux lors de la connexion au serveur :
 
 ----
 /set irc.server.freenode.autojoin "#canal1,#canal2"
@@ -202,14 +207,14 @@ Pour rejoindre automatiquement des canaux lors de la connexion au serveur :
 
 Pour supprimer la valeur d'une option du serveur et utiliser sa valeur par
 défaut à la place, par exemple pour utiliser les pseudos par défaut
-(irc.server_default.nicks) :
+(irc.server_default.nicks) :
 
 ----
 /set irc.server.freenode.nicks null
 ----
 
-Autres options : vous pouvez modifier les autres options avec la commande
-suivante ("xxx" est le nom d'une option) :
+Autres options : vous pouvez modifier les autres options avec la commande
+suivante ("xxx" est le nom d'une option) :
 
 ----
 /set irc.server.freenode.xxx valeur
@@ -232,7 +237,7 @@ WeeChat. Pour basculer entre le tampon _core_ et les tampons des serveurs, il
 faut utiliser la touche kbd:[Ctrl+x].
 
 Il est possible de désactiver le mélange des tampons serveurs pour avoir un
-tampon distinct par serveur :
+tampon distinct par serveur :
 
 ----
 /set irc.look.server_buffer independent
@@ -241,20 +246,20 @@ tampon distinct par serveur :
 [[join_part_irc_channels]]
 == Rejoindre/quitter les canaux IRC
 
-Rejoindre un canal :
+Rejoindre un canal :
 
 ----
 /join #channel
 ----
 
-Quitter un canal (en laissant le tampon ouvert) :
+Quitter un canal (en laissant le tampon ouvert) :
 
 ----
 /part [message de fin]
 ----
 
 Fermer un tampon serveur, canal ou privé (`/close` est un alias sur
-`/buffer close`) :
+`/buffer close`) :
 
 ----
 /close
@@ -263,7 +268,7 @@ Fermer un tampon serveur, canal ou privé (`/close` est un alias sur
 [WARNING]
 Fermer le tampon du serveur fermera tous les tampons canaux/privés.
 
-Se déconnecter du serveur, sur le tampon du serveur :
+Se déconnecter du serveur, sur le tampon du serveur :
 
 ----
 /disconnect
@@ -272,13 +277,13 @@ Se déconnecter du serveur, sur le tampon du serveur :
 [[irc_private_messages]]
 == Messages privés IRC
 
-Ouvrir un tampon et envoyer un message à un autre utilisateur (pseudo _foo_) :
+Ouvrir un tampon et envoyer un message à un autre utilisateur (pseudo _foo_) :
 
 ----
 /query foo ceci est un message
 ----
 
-Fermer le tampon privé :
+Fermer le tampon privé :
 
 ----
 /close
@@ -294,7 +299,7 @@ Une fenêtre ("window") est une vue sur un tampon. Par défaut il n'y a
 qu'une fenêtre affichant un tampon. Si vous divisez l'écran, vous verrez
 alors plusieurs fenêtres avec plusieurs tampons en même temps.
 
-Commandes pour gérer les tampons et les fenêtres :
+Commandes pour gérer les tampons et les fenêtres :
 
 ----
 /buffer
@@ -305,10 +310,16 @@ Commandes pour gérer les tampons et les fenêtres :
 avec /help)
 
 Par exemple, pour découper verticalement l'écran en une petite fenêtre
-(1/3 de la largeur) et une large (2/3), utilisez la commande :
+(1/3 de la largeur) et une large (2/3), utilisez la commande :
 
 ----
 /window splitv 33
+----
+
+Pour supprimer le découpage :
+
+----
+/window merge
 ----
 
 [[key_bindings]]
@@ -316,35 +327,35 @@ Par exemple, pour découper verticalement l'écran en une petite fenêtre
 
 WeeChat utilise un certain nombre de touches par défaut. Toutes ces
 touches sont dans la documentation, mais vous devriez connaître au moins
-les touches vitales :
+les touches vitales :
 
-- kbd:[Alt+←] / kbd:[Alt+→] ou kbd:[F5] / kbd:[F6] : aller au tampon
+- kbd:[Alt+←] / kbd:[Alt+→] ou kbd:[F5] / kbd:[F6] : aller au tampon
   précédent/suivant
-- kbd:[F7] / kbd:[F8] : aller à la fenêtre précédente/suivante (quand l'écran
+- kbd:[F7] / kbd:[F8] : aller à la fenêtre précédente/suivante (quand l'écran
   est divisé)
-- kbd:[F9] / kbd:[F10] : faire défiler la barre de titre
-- kbd:[F11] / kbd:[F12] : faire défiler la liste des pseudos
-- kbd:[Tab] : compléter le texte de la barre d'entrée, comme avec votre shell
-- kbd:[PgUp] / kbd:[PgDn] : faire défiler le texte dans le tampon courant
-- kbd:[Alt+a] : sauter au tampon avec de l'activité (dans la "hotlist")
+- kbd:[F9] / kbd:[F10] : faire défiler la barre de titre
+- kbd:[F11] / kbd:[F12] : faire défiler la liste des pseudos
+- kbd:[Tab] : compléter le texte de la barre d'entrée, comme avec votre shell
+- kbd:[PgUp] / kbd:[PgDn] : faire défiler le texte dans le tampon courant
+- kbd:[Alt+a] : sauter au tampon avec de l'activité (dans la "hotlist")
 
 Selon votre clavier et/ou vos besoins, vous pouvez associer n'importe
 quelle touche à une commande avec la commande `/key`.
 Une touche utile est kbd:[Alt+k] pour trouver le code des touches.
 
-Par exemple, pour associer kbd:[Alt+!] à la commande `/buffer close` :
+Par exemple, pour associer kbd:[Alt+!] à la commande `/buffer close` :
 
 ----
 /key bind (pressez alt-k) (pressez alt-!) /buffer close
 ----
 
-Vous aurez une ligne de commande qui ressemble à ceci :
+Vous aurez une ligne de commande qui ressemble à ceci :
 
 ----
 /key bind meta-! /buffer close
 ----
 
-Pour enlever la touche :
+Pour enlever la touche :
 
 ----
 /key unbind meta-!
@@ -361,7 +372,7 @@ extensions ou des scripts).
 
 De nombreux scripts externes (de contributeurs) sont disponibles pour WeeChat,
 vous pouvez télécharger et installer les scripts avec la commande `/script`,
-par exemple :
+par exemple :
 
 ----
 /script install iset.pl
@@ -369,13 +380,13 @@ par exemple :
 
 Voir `/help script` pour plus d'infos.
 
-Une liste des scripts est disponible avec `/script` ou à cette URL :
+Une liste des scripts est disponible avec `/script` ou à cette URL :
 https://weechat.org/scripts
 
 [[more_doc]]
 == Plus de documentation
 
 Vous pouvez maintenant utiliser WeeChat et lire la FAQ/documentation pour
-toute autre question : https://weechat.org/doc
+toute autre question : https://weechat.org/doc
 
 Bon WeeChat !

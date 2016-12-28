@@ -1,4 +1,4 @@
-= WeeChat スクリプト製作ガイド
+= WeeChat スクリプト作成ガイド
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ja
@@ -230,8 +230,8 @@ $ ln -s ../script.py
 に含まれる各関数の詳細については、_WeeChat プラグイン API リファレンス_
 をご覧ください: プロトタイプ、引数、戻り値、例。
 
-_プラグイン_ と_スクリプト_ の違いを理解することは重要です: _プラグイン_
-とはコンパイル済みバイナリファイルで `/plugin` コマンドを使ってロードします、これに対して
+_プラグイン_ と _スクリプト_ の違いを理解することは重要です:
+_プラグイン_ とはコンパイル済みバイナリファイルで `/plugin` コマンドを使ってロードします、これに対して
 _スクリプト_ とはテキストファイルで例えば _python_ プラグインであれば `/python`
 コマンドを使ってロードします。
 
@@ -287,7 +287,7 @@ WeeChat の多くのスクリプト API
 [[callbacks]]
 === コールバック
 
-ほとんど全ての WeeChat コールバックは WEECHAT_RC_OK 又は WEECHAT_RC_ERROR
+ほとんど全ての WeeChat コールバックは WEECHAT_RC_OK または WEECHAT_RC_ERROR
 を返さなければいけません (modifier コールバックは例外で、これは文字列を返します)。
 
 C 言語コールバックはポインタ型の "data" 引数を利用します。スクリプト API
@@ -383,7 +383,7 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 == スクリプト API
 
 API に含まれる関数の詳しい情報は
-_WeeChat プラグイン API リファレンス_ をご覧ください。.
+_WeeChat プラグイン API リファレンス_ をご覧ください。
 
 [[script_api_functions]]
 === 関数
@@ -804,14 +804,14 @@ name = weechat.buffer_get_string(buffer, "name")
 short_name = weechat.buffer_get_string(buffer, "short_name")
 ----
 
-バッファに対するローカル変数を追加、読み込み、削除することができます:
+バッファに対するローカル変数を追加、ロード、削除することができます:
 
 [source,python]
 ----
 # ローカル変数の追加
 weechat.buffer_set(buffer, "localvar_set_myvar", "my_value")
 
-# ローカル変数の読み込み
+# ローカル変数のロード
 myvar = weechat.buffer_get_string(buffer, "localvar_myvar")
 
 # ローカル変数の削除
@@ -909,7 +909,7 @@ weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
 
 _WeeChat バージョン 0.3.7 以上で利用可。_
 
-URL をダウンロードする (又は URL にポストする) には、関数 `hook_process` 又は URL
+URL をダウンロードする (または URL にポストする) には、関数 `hook_process` または URL
 転送にオプションが必要な場合は `hook_process_hashtable` を使わなければいけません。
 
 オプション無しの URL 転送の例: HTML ページの内容はコールバックの
@@ -1002,10 +1002,10 @@ weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
 ----
 
 [[config_options_weechat]]
-==== WeeChat オプションの読み込み
+==== WeeChat オプションのロード
 
 `config_get` 関数はオプションへのポインタを返します。オプションの型に従って
-`config_string` 、`config_boolean` 、`config_integer` 、`config_color`
+`config_string`、`config_boolean`、`config_integer`、`config_color`
 を呼び出さなければいけません。
 
 [source,python]
@@ -1111,7 +1111,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
   `nick!user@host`
 
 | command | 0.3.4 以上 |
-  コマンド (_PRIVMSG_ 、_NOTICE_ 、...) |
+  コマンド (_PRIVMSG_、_NOTICE_、...) |
   `PRIVMSG`
 
 | channel | 0.3.4 以上 |
@@ -1213,7 +1213,7 @@ weechat.prnt("", "Inactivity since %s seconds" % weechat.info_get("inactivity", 
 === インフォリスト
 
 [[infolists_read]]
-==== インフォリストの読み込み
+==== インフォリストのロード
 
 WeeChat や他のプラグインによって作られたインフォリストを読み込むことができます。
 

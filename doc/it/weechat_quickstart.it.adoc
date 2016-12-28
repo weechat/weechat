@@ -86,8 +86,15 @@ Per esempio:
 Tutte le impostazioni vengono salvato all'uscita di WeeChat (o con il comando
 `/save` per forzare il salvataggio di una o più opzioni).
 
-Si possono modificare manualmente i file di configurazione (*.conf) e
-ricaricarli con il comando `/reload` se non si vuole usare il comando `/set`.
+// TRANSLATION MISSING
+[IMPORTANT]
+It is *not recommended* to edit configuration files by hand because WeeChat
+may write them at any time (for example on <<command_weechat_quit,/quit>>)
+and after any change you must run the command <<command_weechat_reload,/reload>>
+(with the risk of losing other changes that were not yet saved with
+<<command_weechat_save,/save>>). +
+You can use the command <<command_weechat_set,/set>>, which checks the value
+and applies immediately the changes.
 
 [[core_vs_plugins]]
 == Core vs plugin
@@ -324,6 +331,13 @@ Per esempio, per dividere verticalmente lo schermo in una finestra piccola
 
 ----
 /window splitv 33
+----
+
+// TRANSLATION MISSING
+To remove the split:
+
+----
+/window merge
 ----
 
 [[key_bindings]]

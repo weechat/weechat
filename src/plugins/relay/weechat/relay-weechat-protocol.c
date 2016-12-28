@@ -211,6 +211,9 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
         weechat_string_free_split_command (options);
     }
 
+    if (!RELAY_WEECHAT_DATA(client, password_ok))
+        relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
+
     return WEECHAT_RC_OK;
 }
 
@@ -1383,7 +1386,7 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
                  * then close connection!
                  */
                 relay_client_set_status (client,
-                                         RELAY_STATUS_DISCONNECTED);
+                                         RELAY_STATUS_AUTH_FAILED);
             }
             else
             {

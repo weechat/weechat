@@ -26,15 +26,15 @@ if(ENABLE_MAN OR ENABLE_DOC)
 
     set(ASCIIDOCTOR_ARGS -a experimental -a icons=font -a revnumber="${VERSION}" -a sectanchors -a source-highlighter=prettify)
 
+    add_subdirectory(cs)
+    add_subdirectory(de)
     add_subdirectory(en)
+    add_subdirectory(es)
     add_subdirectory(fr)
     add_subdirectory(it)
-    add_subdirectory(de)
-    add_subdirectory(pl)
-    add_subdirectory(es)
-    add_subdirectory(ru)
     add_subdirectory(ja)
-    add_subdirectory(cs)
+    add_subdirectory(pl)
+    add_subdirectory(ru)
 
   endif()
 

@@ -13,14 +13,14 @@ disable: deaktivieren der FIFO pipe
  toggle: Status der FIFO pipe umschalten
 
 Die FIFO-Pipe wird als Fernbedienung genutzt, es können Befehle oder Text von der Shell an die FIFO-Pipe geschickt werden
-Standardmäßig ist die FIFO-Pipe in ~/.weechat/weechat_fifo_xxx ("xxx" ist die PID von WeeChat).
+Standardmäßig ist die FIFO-Pipe in ~/.weechat/weechat_fifo
 
 Folgendes Format wird erwartet:
   plugin.buffer *Text oder Befehl an dieser Stelle
   *Text oder Befehl an dieser Stelle
 
-Beispiel um den Nick auf dem Server freenode zu ändern:
-  echo 'irc.server.freenode */nick neuer_Nick' >~/.weechat/weechat_fifo_12345
+Beispiel um den eigenen Nick auf dem Server freenode zu ändern:
+  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
 
 Bitte lese die Benutzeranleitung für weitere Informationen und Beispiele.
 

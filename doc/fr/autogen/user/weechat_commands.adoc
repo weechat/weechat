@@ -218,7 +218,7 @@ Exemples :
 ----
 
 [[command_weechat_debug]]
-* `+debug+`: contrôle du debug pour le cœur/les extensions
+* `+debug+`: fonctions de debug
 
 ----
 /debug  list
@@ -227,6 +227,7 @@ Exemples :
         buffer|color|infolists|memory|tags|term|windows
         cursor|mouse [verbose]
         hdata [free]
+        time <commande>
 
      list : lister les extensions avec leur niveau de debug
       set : définir le niveau de debug pour l'extension
@@ -246,6 +247,7 @@ infolists : afficher des infos sur les infolists
      tags : afficher les étiquettes pour les lignes
      term : afficher des infos sur le terminal
   windows : afficher l'arbre des fenêtres
+     time : mesurer le temps pour exécuter une commande ou pour envoyer du texte au tampon courant
 ----
 
 [[command_weechat_eval]]
@@ -361,7 +363,7 @@ La touche par défaut alt+'=' active/désactive le filtrage.
 Les étiquettes les plus couramment utilisées :
   no_filter, no_highlight, no_log, log0..log9 (niveau de log),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx est le pseudo dans le message), prefix_nick_ccc (ccc est la couleur du pseudo),
+  self_msg, nick_xxx (xxx est le pseudo dans le message), prefix_nick_ccc (ccc est la couleur du pseudo),
   host_xxx (xxx est le nom d'utilisateur + hôte dans le message),
   irc_xxx (xxx est un nom de commande ou nombre, voir /server raw ou /debug tags),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
@@ -438,7 +440,7 @@ liste des actions :
   delete_beginning_of_line : effacer du début de la ligne jusqu'au curseur
   delete_end_of_line : effacer du curseur jusqu'à la fin de la ligne
   delete_line : effacer la ligne entière
-  clipboard_paste : coller depuis le presse-papiers
+  clipboard_paste : coller depuis le presse-papiers interne
   transpose_chars : inverser deux caractères
   undo : défaire la dernière action de la ligne de commande
   redo : refaire la dernière action de la ligne de commande
@@ -456,7 +458,7 @@ liste des actions :
   jump_last_buffer_displayed : sauter au dernier tampon affiché (avant le dernier saut vers un tampon)
   jump_previously_visited_buffer : sauter au tampon visité précédemment
   jump_next_visited_buffer : sauter au tampon visité après
-  hotlist_clear : effacer la hotlist
+  hotlist_clear : effacer la hotlist (paramètre facultatif : "lowest" pour effacer seulement le plus petit niveau dans la hotlist, "highest" pour effacer seulement le niveau le plus haut dans la hotlist, ou un masque de niveaux : entier qui est une combinaison de 1=join/part, 2=message, 4=privé, 8=highlight)
   grab_key : capturer une touche (paramètre facultatif : délai pour la fin de la capture, par défaut 500 millisecondes)
   grab_key_command : capturer une touche avec sa commande associée (paramètre facultatif : délai pour la fin de la capture, par défaut 500 millisecondes)
   grab_mouse : capturer un évènement de la souris
@@ -958,8 +960,8 @@ Exemples :
          left : sauter à la fenêtre à gauche
         right : sauter à la fenêtre à droite
        numéro : numéro de fenêtre (voir /window list)
-       splith : éclater la fenêtre en deux horizontalement
-       splitv : éclater la fenêtre en deux verticalement
+       splith : éclater la fenêtre en deux horizontalement (pour défaire : /window merge)
+       splitv : éclater la fenêtre en deux verticalement (pour défaire : /window merge)
        resize : redimensionner une fenêtre, la nouvelle taille est <pct> pourcentage de la fenêtre parent
       balance : équilibrer la taille de toutes les fenêtres
         merge : fusionner la fenêtre avec une autre
@@ -993,6 +995,10 @@ Exemples :
     /window scroll -d
   zoom sur la fenêtre numéro 2 :
     /window zoom -window 2
+  éclater la fenêtre horizontalement en utilisant 30%% de l'espace pour la fenêtre du haut :
+    /window splith 30
+  supprimer l'éclatement :
+    /window merge
   activer le mode d'affichage dépouillé pendant 2 secondes :
     /window bare 2
 ----

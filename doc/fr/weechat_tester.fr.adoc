@@ -20,7 +20,7 @@ sont implémentées, elles doivent être testées, mais pour certaines
 fonctionnalités il y a trop de cas à tester et les développeurs ne
 peuvent pas tout tester.
 
-Par exemple : l'extension charset introduite dans WeeChat WeeChat 0.2.2 : aucun
+Par exemple : l'extension charset introduite dans WeeChat WeeChat 0.2.2 : aucun
 de nous (développeurs, contributeurs et testeurs) n'utilisait de canaux avec
 des caractères spéciaux dans leurs noms et quand la version 0.2.2 a été rendue
 disponible, nous avons reçu de nombreuses remontées d'utilisateurs russes.
@@ -35,12 +35,12 @@ fonctionnalités (et à corriger des anciens bugs).
 [[prepare_system]]
 == Préparez votre système
 
-Cela nous aiderait beaucoup si vous activiez les fichiers _core_ Linux : si
+Cela nous aiderait beaucoup si vous activiez les fichiers _core_ Linux : si
 WeeChat se plante, Linux écrit un fichier _core_. Ce fichier contient des
 informations importantes pour le debug, pour savoir exactement où le problème
 se situe dans WeeChat).
 
-Si vous utilisez le shell _bash_, ajoutez cette ligne dans votre _~/.bashrc_ :
+Si vous utilisez le shell _bash_, ajoutez cette ligne dans votre _~/.bashrc_ :
 
 ----
 ulimit -c unlimited
@@ -53,24 +53,24 @@ ulimit -c unlimited
 Le code tout frais (avec les derniers bugs et fonctionnalités) est stocké dans
 GIT.
 
-Vous pouvez décider de le construire manuellement (méthode recommandée) :
+Vous pouvez décider de le construire manuellement (méthode recommandée) :
 
-* la version GIT peut être construite et installée en parallèle de la version
+* La version GIT peut être construite et installée en parallèle de la version
   stable,
-* vous n'avez pas besoin d'accès root ni de sacrifier votre version stable de
+* Vous n'avez pas besoin d'accès root ni de sacrifier votre version stable de
   WeeChat.
 
 [[get_sources]]
 === Obtenir et compiler les sources
 
-Créez tout d'abord un répertoire, par exemple _weechat-git_ :
+Créez tout d'abord un répertoire, par exemple _weechat-git_ :
 
 ----
 $ mkdir ~/weechat-git
 $ cd ~/weechat-git
 ----
 
-Si vous avez git installé, vous pouvez cloner la base GIT (recommandé) :
+Si vous avez git installé, vous pouvez cloner la base GIT (recommandé) :
 
 ----
 $ git clone https://github.com/weechat/weechat.git
@@ -81,7 +81,7 @@ $ cd weechat
 Plus tard, vous pourrez utiliser la commande `git pull` dans ce répertoire
 pour obtenir juste les deltas avec la version d'aujourd'hui.
 
-Sinon vous pouvez installer le paquet _devel_ :
+Sinon vous pouvez installer le paquet _devel_ :
 
 ----
 $ wget https://weechat.org/files/src/weechat-devel.tar.bz2
@@ -89,7 +89,7 @@ $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
 ----
 
-Pour compiler les sources, cmake est recommandé :
+Pour compiler les sources, cmake est recommandé :
 
 ----
 $ mkdir build
@@ -99,7 +99,7 @@ $ make
 $ make install
 ----
 
-Si vous n'avez pas cmake, il est toujours possible d'utiliser les autotools :
+Si vous n'avez pas cmake, il est toujours possible d'utiliser les autotools :
 
 ----
 $ ./autogen.sh
@@ -111,28 +111,25 @@ $ make install
 [[install_binary_package]]
 === Obtenir un paquet binaire
 
-Selon votre distribution Linux :
+Selon votre distribution Linux :
 
-* Debian : https://weechat.org/download/debian
-* Gentoo : https://weechat.org/download
-* ArchLinux : PKGBUILD depuis http://aur.archlinux.org/
-* autre : nous ne savons pas ! Eheh.
+* Debian : https://weechat.org/download/debian
+* Gentoo : https://weechat.org/download
+* ArchLinux : PKGBUILD depuis http://aur.archlinux.org/
+* autre : nous ne savons pas ! Eheh.
 
 
 [[run]]
 == Lancer WeeChat
 
-Il est conseillé de lancer WeeChat avec un répertoire différent de la version
-stable, avec l'option `--dir`.
-
-La commande est :
+La commande est :
 
 ----
 $ ~/weechat-git/bin/weechat
 ----
 
 Si vous êtes encore éveillé, vous devriez voir une interface familière et
-pouvoir vous vanter d'utiliser la version la plus récente possible de WeeChat ;)
+pouvoir vous vanter d'utiliser la version la plus récente possible de WeeChat ;)
 
 Maintenant si vous obtenez un comportement étrange ou un plantage, n'hésitez
 pas à nous en avertir sur _#weechat_, serveur _chat.freenode.net_.

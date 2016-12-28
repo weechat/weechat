@@ -2043,7 +2043,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         if (nick_is_me)
         {
             snprintf (str_tags, sizeof (str_tags),
-                      "notify_none,no_highlight,prefix_nick_%s",
+                      "self_msg,notify_none,no_highlight,prefix_nick_%s",
                       (str_color) ? str_color : "default");
         }
         else
@@ -2453,6 +2453,7 @@ IRC_PROTOCOL_CALLBACK(wallops)
 IRC_PROTOCOL_CALLBACK(001)
 {
     char *server_command, **commands, **ptr_command, *vars_replaced, *away_msg;
+    char *usermode;
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
@@ -2492,10 +2493,24 @@ IRC_PROTOCOL_CALLBACK(001)
     (void) weechat_hook_signal_send ("irc_server_connected",
                                      WEECHAT_HOOK_SIGNAL_STRING, server->name);
 
+    /* set usermode when connected */
+    usermode = weechat_string_eval_expression (
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERMODE),
+        NULL, NULL, NULL);
+    if (usermode && usermode[0])
+    {
+        irc_server_sendf (server,
+                          IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "MODE %s %s",
+                          server->nick, usermode);
+    }
+    if (usermode)
+        free (usermode);
+
     /* execute command when connected */
-    server_command = weechat_string_eval_expression (IRC_SERVER_OPTION_STRING(server,
-                                                                              IRC_SERVER_OPTION_COMMAND),
-                                                     NULL, NULL, NULL);
+    server_command = weechat_string_eval_expression (
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND),
+        NULL, NULL, NULL);
     if (server_command && server_command[0])
     {
         /* split command on ';' which can be escaped with '\;' */
@@ -2520,8 +2535,9 @@ IRC_PROTOCOL_CALLBACK(001)
             irc_server_autojoin_channels (server);
     }
     else
+    {
         irc_server_autojoin_channels (server);
-
+    }
     if (server_command)
         free (server_command);
 
@@ -2688,15 +2704,12 @@ IRC_PROTOCOL_CALLBACK(008)
         irc_msgbuffer_get_target_buffer (server, argv[2], command, NULL, NULL),
         date,
         irc_protocol_tags (command, "irc_numeric", NULL, address),
-        _("%sServer notice mask for %s%s%s is %s[%s%s%s]"),
+        _("%sServer notice mask for %s%s%s: %s"),
         weechat_prefix ("network"),
         irc_nick_color_for_msg (server, 1, NULL, argv[2]),
         argv[2],
         IRC_COLOR_RESET,
-        IRC_COLOR_CHAT_DELIMITERS,
-        IRC_COLOR_RESET,
-        (argv[3][0] == ':') ? argv[3] + 1 : argv[3],
-        IRC_COLOR_CHAT_DELIMITERS);
+        (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]);
 
     return WEECHAT_RC_OK;
 }

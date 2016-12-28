@@ -2459,13 +2459,23 @@ config_file_write_internal (struct t_config_file *config_file,
     }
 
     /* write header with name of config file and WeeChat version */
-    if (!string_fprintf (config_file->file, "#\n"))
+    if (!string_fprintf (
+            config_file->file,
+            "#\n"
+            "# %s -- %s\n"
+            "#\n"
+            "# WARNING: It is NOT recommended to edit this file by hand,\n"
+            "# especially if WeeChat is running.\n"
+            "#\n"
+            "# Use /set or similar command to change settings in WeeChat.\n"
+            "#\n"
+            "# For more info, see: https://weechat.org/doc/quickstart\n"
+            "#\n",
+            version_get_name (),
+            config_file->filename))
+    {
         goto error;
-    if (!string_fprintf (config_file->file,
-                         "# %s -- %s\n#\n",
-                         version_get_name (),
-                         config_file->filename))
-        goto error;
+    }
 
     /* write all sections */
     for (ptr_section = config_file->sections; ptr_section;

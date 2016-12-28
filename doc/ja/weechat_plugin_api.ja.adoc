@@ -95,8 +95,8 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 
 戻り値:
 
-* _WEECHAT_RC_OK_ 成功した場合 (プラグインを読み込みます)
-* _WEECHAT_RC_ERROR_ エラーが起きた場合 (プラグインを読み込みません)
+* _WEECHAT_RC_OK_ 成功した場合 (プラグインをロードします)
+* _WEECHAT_RC_ERROR_ エラーが起きた場合 (プラグインをロードしません)
 
 [[plugin_priority]]
 ===== プラグインの優先度
@@ -114,7 +114,7 @@ include::autogen/plugin_api/plugins_priority.adoc[]
 
 ==== weechat_plugin_end
 
-WeeChat プラグインを再読み込みする際にこの関数を呼び出します。
+WeeChat プラグインをリロードする際にこの関数を呼び出します。
 
 プロトタイプ:
 
@@ -161,7 +161,7 @@ WeeChat の中で:
 [[plugin_example]]
 === プラグインの例
 
-コマンド _/double_ を追加するプラグインの例: 引数を 2
+コマンド `/double` を追加するプラグインの例: 引数を 2
 倍して現在のバッファに表示するか、コマンドを 2 回実行する
 (これは実用的なコマンドというよりも、ただの例です!):
 
@@ -968,7 +968,7 @@ C 言語での使用例:
 
 [source,C]
 ----
-char *str = weechat_string_expand_home ("%h/test");
+char *str = weechat_string_eval_path_home ("%h/test", NULL, NULL, NULL);
 /* result: "/home/xxx/.weechat/test" */
 /* ... */
 free (str);
@@ -982,7 +982,7 @@ free (str);
 path = weechat.string_eval_path_home(path, pointers, extra_vars, options)
 
 # 例
-path = weechat.string_eval_path_home("%h/test", "", "", "")
+path = weechat.string_eval_path_home("%h/test", {}, {}, {})
 # path == "/home/xxx/.weechat/test"
 ----
 
@@ -1968,7 +1968,7 @@ _WeeChat バージョン 0.4.0 以上で利用可、バージョン 0.4.2、1.0�
 
 [NOTE]
 WeeChat バージョン 1.0 以上の場合、入れ子変数を使えるようになりました、例:
-`+${color:${variable}}+` 。
+`+${color:${variable}}+`。
 
 プロトタイプ:
 
@@ -1994,11 +1994,15 @@ char *weechat_string_eval_expression (const char *expr,
 * _options_: いくつかのオプションを含むハッシュテーブル (キーと値は必ず文字列)
   (NULL でも可):
 ** _type_:
-   デフォルトの挙動では式中の変数をその値で置換するだけです、その他に以下のタイプを使うことができます:
+   デフォルトの挙動では式中の変数をその値で置換するだけですが、この挙動を変更します。設定可能なタイプは以下です:
 *** _condition_: 条件式として式を評価します:
     演算子と括弧が使われます、結果はブール値 ("0" または "1") です
 ** _prefix_: 置換する変数のプレフィックス (デフォルト: `+${+`)
 ** _suffix_: 置換する変数のサフィックス (デフォルト: `+}+`)
+** _extra_: デフォルトの挙動では追加変数 (_extra_vars_)
+   を単純に置換するだけですが、この挙動を変更します。設定可能な値は以下です:
+*** _eval_: 置換前に追加変数 (_extra_vars_)
+    を評価します
 ** _regex_: _expr_ のテキストを置換する正規表現
    (この場合 _expr_ は評価されません)
 ** _regex_replace_: _regex_ と一緒に使われる置換テキスト、_expr_
@@ -3683,7 +3687,7 @@ struct t_hashtable *weechat_hashtable_new (int size,
 
 * _size_:
   ハッシュキーを保存している内部配列のサイズ、値が大きければ多くのメモリを使う反面パフォーマンスがよくなります
-  (これはハッシュテーブルの要素数の上限を決めるもの*ではありません*)
+  (これはハッシュテーブルの要素数の上限を決めるもの *ではありません*)
 * _type_keys_: ハッシュテーブルのキーの種類:
 ** _WEECHAT_HASHTABLE_INTEGER_
 ** _WEECHAT_HASHTABLE_STRING_
@@ -4284,7 +4288,7 @@ struct t_config_file *weechat_config_new (const char *name,
 引数:
 
 * _name_: 設定ファイルの名前 (パスと拡張子は不要)
-* _callback_reload_: `/reload` で設定ファイルを再読み込みする際に呼び出すコールバック関数
+* _callback_reload_: `/reload` で設定ファイルをリロードする際に呼び出すコールバック関数
   (任意、NULL でも可)、引数と戻り値:
 ** _const void *pointer_: ポインタ
 ** _void *data_: ポインタ
@@ -4904,7 +4908,7 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 [NOTE]
 Ruby では、3 組のコールバックとデータ (合わせて 6 つの文字列) を渡すために必ず 6 つの文字列をからなる配列を
 1 つ渡してください (これは Ruby が 関数に 15 個以上の引数を渡せないことが原因です)、より詳しい内容は
-_WeeChat スクリプト作成ガイド_ を参照してください _(WeeChat バージョン 0.4.1 で修正済み)_ 。
+_WeeChat スクリプト作成ガイド_ を参照してください _(WeeChat バージョン 0.4.1 で修正済み)_。
 
 ==== config_search_option
 
@@ -6084,7 +6088,7 @@ elif rc == weechat.WEECHAT_CONFIG_READ_FILE_NOT_FOUND:
 
 ==== config_reload
 
-設定ファイルをディスクから再読み込みする。
+設定ファイルをディスクからリロードする。
 
 プロトタイプ:
 
@@ -6099,7 +6103,7 @@ int weechat_config_reload (struct t_config_file *config_file);
 
 戻り値:
 
-* 設定を再読み込みした場合は _WEECHAT_CONFIG_READ_OK_
+* 設定をリロードした場合は _WEECHAT_CONFIG_READ_OK_
 * メモリ不足の合は _WEECHAT_CONFIG_READ_MEMORY_ERROR_
 * ファイルが見つからない場合は _WEECHAT_CONFIG_READ_FILE_NOT_FOUND_
 
@@ -6917,31 +6921,8 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 * _tags_: タグのコンマ区切りリスト (タグを指定しない場合は NULL)
 * _message_: 表示するメッセージ
 
-通常使用するタグ (一部抜粋したリスト):
-
-[width="70%",cols="^1,4",options="header"]
-|===
-| タグ             | 説明
-| no_filter        | フィルタできない行
-| no_highlight     | ハイライトできない行
-| no_log           | ログファイルに書き込まれない行
-| log0 ... log9    | 行に対するログレベル (`/help logger` を参照)
-| notify_none      | この行を含むバッファはホットリストに追加されない
-| notify_message   | この行を含むバッファは "message" レベルでホットリストに追加される
-| notify_private   | この行を含むバッファは "private" レベルでホットリストに追加される
-| notify_highlight | この行を含むバッファは "highlight" レベルでホットリストに追加される
-| nick_xxx         | ニックネーム "xxx" からのメッセージ
-| prefix_nick_ccc  | プレフィックスを色 "ccc" のニックネームにする
-| host_xxx         | メッセージ中のユーザ名とホスト
-| irc_xxx          | IRC メッセージ "xxx" (コマンドまたは 3 桁の番号)
-| irc_numeric      | IRC 番号メッセージ
-| irc_error        | IRC からのエラー
-| irc_action       | あるニックネームからのアクション (`/me` コマンド)
-| irc_ctcp         | CTCP メッセージ
-| irc_ctcp_reply   | CTCP メッセージに対する返信
-| irc_smart_filter | "smart filter" でフィルタリング可能な IRC メッセージ
-| away_info        | 離席状態のメッセージ
-|===
+WeeChat で共通に使われるタグのリストは _WeeChat ユーザーズガイド_
+の行のタグに関する章をご覧ください
 
 C 言語での使用例:
 
@@ -7076,7 +7057,7 @@ command、command_run、signal、hsignal、config、completion、modifier、info
 
 ==== hook_command
 
-_WeeChat バージョン 1.5 で更新。_
+_WeeChat バージョン 1.5 と 1.7 で更新。_
 
 コマンドをフックする。
 
@@ -7102,14 +7083,11 @@ struct t_hook *weechat_hook_command (const char *command,
 引数:
 
 * _command_: コマンド名
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _description_: コマンドの説明 (`/help command` で表示されます)
 * _args_: コマンドの引数 (`/help command` で表示されます)
 * _args_description_: 引数の説明 (`/help command` で表示されます)
-* _completion_: コマンドの補完候補テンプレート: 各引数に対する補完候補の空白区切りリスト。1
-  つの引数に対して複数の補完候補を設定するには補完候補同士を `+|+`
-  で区切ってください。1 つのコマンドに対して複数のテンプレートを設定するにはテンプレート同士を
-  `+||+` で区切ってください。
+* _completion_: コマンドに対する補完候補テンプレート (書式は以下をご覧ください)
 * _callback_: コマンドが使用された際に呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
 ** _void *data_: ポインタ
@@ -7125,6 +7103,26 @@ struct t_hook *weechat_hook_command (const char *command,
 * _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
+
+上の _completion_ テンプレートは各引数に関する補完候補の空白区切りリストです。1
+つの引数に対して複数の補完候補を設定するには補完候補同士を `+|+` で区切ってください。1
+つのコマンドに対して複数のテンプレートを設定するにはテンプレート同士を `+||+` で区切ってください。
+
+補完候補テンプレートには以下の書式を使えます:
+
+* _%(name)_: _name_ という補完候補テンプレート
+* _%(name:arguments)_: _arguments_ という引数をつけた _name_
+  という補完候補テンプレートがコールバックに送信されます _(WeeChat バージョン 1.7 以上)_
+* 任意の文字列: 補完候補としてそのまま使われる文字列
+
+例えば `list || add %(filters_names) || del %(filters_names)|-all`
+という補完候補テンプレートはコマンド引数として以下の値を補完します:
+
+* 第 1 引数: `list`、`add`、`del`
+* 第 2 引数、第 1 引数に依存:
+** `list`: 第 2 引数なし
+** `add`: フィルタ名
+** `del`: フィルタ名および `-all`
 
 デフォルトの補完候補コードは:
 
@@ -7210,6 +7208,201 @@ hook = weechat.hook_command("myfilter", "description of myfilter",
     "my_command_cb", "")
 ----
 
+==== hook_completion
+
+_WeeChat バージョン 1.5 と 1.7 で更新。_
+
+補完をフック。
+
+プロトタイプ:
+
+[source,C]
+----
+struct t_hook *weechat_hook_completion (const char *completion_item,
+                                        const char *description,
+                                        int (*callback)(const void *pointer,
+                                                        void *data,
+                                                        const char *completion_item,
+                                                        struct t_gui_buffer *buffer,
+                                                        struct t_gui_completion *completion),
+                                        const void *callback_pointer,
+                                        void *callback_data);
+----
+
+引数:
+
+* _completion_item_: 補完候補テンプレートの名前、これ以降コマンドフックの
+  _completion_ 引数で _%(name)_ という補完候補テンプレートを使えます
+  (WeeChat バージョン 1.7 以上の場合 _%(name:arguments)_ も使えます)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
+* _description_: 補完候補テンプレートの説明
+* _callback_: 補完候補テンプレート (ユーザはこの関数を使って何かを補完します)
+  が使われた場合に呼び出すコールバック関数、引数と戻り値:
+** _const void *pointer_: ポインタ
+** _void *data_: ポインタ
+** _const char *completion_item_: 補完候補テンプレートの名前 (WeeChat バージョン 1.7
+   以上の場合、次の書式で引数を含めることも可能です: _name:arguments_)
+** _struct t_gui_buffer *buffer_: 補完が行われたバッファ
+** _struct t_gui_completion *completion_:
+   補完に際して単語を追加するために使われる構造体
+   (<<_hook_completion_list_add,hook_completion_list_add>> を参照)
+** 戻り値:
+*** _WEECHAT_RC_OK_
+*** _WEECHAT_RC_ERROR_
+* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
+* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
+  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
+  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
+
+[NOTE]
+補完名はグローバルです (WeeChat
+とプラグインで共有されます)。このため、"plugin_xxx" (ここで "xxx" は要素の名前)
+などの一意的なプレフィックスをつけた名前を使うことをおすすめします。
+
+[IMPORTANT]
+コールバックは
+<<_hook_completion_list_add,hook_completion_list_add>>
+関数を呼び出すだけで、コマンドラインをコールバックで絶対に *変更しない* でください。 +
+kbd:[Tab] が押された時にコマンドラインを更新するためには、関数
+<<_hook_command_run,hook_command_run>> を使ってコマンド
+`/input complete_next` をフックしてください (コールバックがコマンドラインを更新する場合は必ず
+_WEECHAT_RC_OK_EAT_ を返してください。そうすれば WeeChat は補完を行いません)。
+
+戻り値:
+
+* 新しいフックへのポインタ、エラーが起きた場合は NULL
+
+C 言語での使用例:
+
+[source,C]
+----
+int
+my_completion_cb (const void *pointer, void *data, const char *completion_item,
+                  struct t_gui_buffer *buffer,
+                  struct t_gui_completion *completion)
+{
+    weechat_hook_completion_list_add (completion, "word1",
+                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_hook_completion_list_add (completion, "test_word2",
+                                      0, WEECHAT_LIST_POS_SORT);
+    return WEECHAT_RC_OK;
+}
+
+struct t_hook *my_completion_hook = weechat_hook_completion ("plugin_item",
+                                                             "my custom completion!",
+                                                             &my_completion_cb, NULL, NULL);
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+hook = weechat.hook_completion(completion_item, description, callback, callback_data)
+
+# 例
+def my_completion_cb(data, completion_item, buffer, completion):
+    weechat.hook_completion_list_add(completion, "word1", 0, weechat.WEECHAT_LIST_POS_SORT)
+    weechat.hook_completion_list_add(completion, "test_word2", 0, weechat.WEECHAT_LIST_POS_SORT)
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_completion("plugin_item", "my custom completion!",
+                               "my_completion_cb", "")
+----
+
+==== hook_completion_get_string
+
+_WeeChat バージョン 0.3.4 以上で利用可。_
+
+補完プロパティを文字列で取得。
+
+プロトタイプ:
+
+[source,C]
+----
+const char *weechat_hook_completion_get_string (struct t_gui_completion *completion,
+                                                const char *property);
+----
+
+引数:
+
+* _completion_: 補完へのポインタ
+* _property_: プロパティ名:
+** _base_command_: 補完に使ったコマンド
+** _base_word_: 補完された単語
+** _args_: コマンド引数 (元の単語を含む)
+
+C 言語での使用例:
+
+[source,C]
+----
+int
+my_completion_cb (const void *pointer, void *data, const char *completion_item,
+                  struct t_gui_buffer *buffer,
+                  struct t_gui_completion *completion)
+{
+    /* get arguments of command */
+    const char *args = weechat_hook_completion_get_string (completion, "args");
+
+    /* completion depending on args */
+    /* ... */
+
+    return WEECHAT_RC_OK;
+}
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+value = weechat.hook_completion_get_string(completion, property)
+
+# 例
+def my_completion_cb(data, completion_item, buffer, completion):
+    # get arguments of command
+    args = weechat.hook_completion_get_string(completion, "args")
+    # completion depending on args
+    # ...
+    return weechat.WEECHAT_RC_OK
+----
+
+==== hook_completion_list_add
+
+補完用に単語を追加。
+
+プロトタイプ:
+
+[source,C]
+----
+void weechat_hook_completion_list_add (struct t_gui_completion *completion,
+                                       const char *word,
+                                       int nick_completion,
+                                       const char *where);
+----
+
+引数:
+
+* _completion_: 補完へのポインタ
+* _word_: 追加する単語
+* _nick_completion_: 単語がニックネームの場合は 1、そうでなければ 0
+* _where_: 単語を追加するリスト上での位置:
+** _WEECHAT_LIST_POS_SORT_: リストがソートされた状態になるような位置
+** _WEECHAT_LIST_POS_BEGINNING_: リストの最初
+** _WEECHAT_LIST_POS_END_: リストの最後
+
+C 言語での使用例: <<_hook_completion,hook_completion>> を参照。
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+weechat.hook_completion_list_add(completion, word, nick_completion, where)
+
+# 例: 前の hook_completion 関数を参照
+----
+
 ==== hook_command_run
 
 _WeeChat バージョン 1.5 で更新。_
@@ -7232,7 +7425,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 引数:
 
 * _command_: フックするコマンド (ワイルドカード `+*+` を使うことができます)
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _callback_: コマンドが実行される際に呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
 ** _void *data_: ポインタ
@@ -7386,7 +7579,7 @@ struct t_hook *weechat_hook_fd (int fd,
 引数:
 
 * _fd_: ファイルディスクリプタ
-* _flag_read_: 1 = 読み込みイベントをキャッチ、0 = 無視
+* _flag_read_: 1 = ロードイベントをキャッチ、0 = 無視
 * _flag_write_: 1 = 書き込みイベントをキャッチ、0 = 無視
 * _flag_exception_: 1 = 例外イベントをキャッチ、0 = 無視
   (_WeeChat バージョン 1.3 以上の場合_: この引数は無視され、使われません)
@@ -7453,7 +7646,7 @@ WeeChat バージョン 0.3.9.2
 分割 (クォートに基づくコマンド分割)
 に失敗する場合、またはシェルを使いたい場合は、ハッシュテーブル _options_
 に引数を入れて <<_hook_process_hashtable,hook_process_hashtable>>
-関数を使ってください _(WeeChat バージョン 0.4.0 以上で利用可)_ 。
+関数を使ってください _(WeeChat バージョン 0.4.0 以上で利用可)_。
 
 プロトタイプ:
 
@@ -7513,11 +7706,11 @@ struct t_hook *weechat_hook_process (const char *command,
 (プロセスが実行中であればプロセスを kill します)。
 
 コマンドを "url:http://www.example.com" の書式に従う URL にすることで、URL
-の内容がダウンロードされます _(WeeChat バージョン 0.3.7 以上で利用可)_ 。<<_hook_process_hashtable,hook_process_hashtable>>
+の内容がダウンロードされます _(WeeChat バージョン 0.3.7 以上で利用可)_。<<_hook_process_hashtable,hook_process_hashtable>>
 関数を使えば URL に対してオプションを与えることもできます。
 
 _command_ には関数名を指定することも可能です。"name" という関数を実行するには "func:name"
-のように指定します _(WeeChat バージョン 1.5 以上で利用可)_ 。ここで指定した関数 "name" は単独の引数 (_data_)
+のように指定します _(WeeChat バージョン 1.5 以上で利用可)_。ここで指定した関数 "name" は単独の引数 (_data_)
 を受け取り、文字列を返すものでなければいけません。関数から返された文字列が _callback_ コールバックに送られます。 +
 C API の場合、_callback_ コールバックが _return_code_ リターンコードに
 _WEECHAT_HOOK_PROCESS_CHILD_ が設定された状態で呼び出されます。すなわち (フォークの後に)
@@ -7708,7 +7901,7 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   任意の文字列 |
   コマンドの引数;
   このオプションを使って引数を渡さない場合、シェルと同じように引数を自動的に分割します
-  (_command_ 引数からコマンド引数を読み込みます)
+  (_command_ 引数からコマンド引数をロードします)
 
 | stdin +
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
@@ -8181,7 +8374,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 引数:
 
 * _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
   (以下の表を参照)
 * _callback_:
   シグナルを受信した際に呼び出すコールバック関数、引数と戻り値:
@@ -8221,12 +8414,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | guile | guile_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Scheme スクリプトを読み込み
+  Scheme スクリプトをロード
 
 | guile | guile_script_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Scheme スクリプトを再読み込み
+  Scheme スクリプトをリロード
 
 | guile | guile_script_installed +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8240,12 +8433,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 
 | irc | xxx,irc_in_yyy ^(1)^ |
   String: メッセージ |
-  サーバから IRC メッセージを受信 (メッセージを*無視しない* 場合のみ irc
+  サーバから IRC メッセージを受信 (メッセージを *無視しない* 場合のみ irc
   プラグインがメッセージを処理する前に、シグナルが送信される)
 
 | irc | xxx,irc_in2_yyy ^(1)^ |
   String: メッセージ |
-  サーバから IRC メッセージを受信 (メッセージを*無視しない* 場合のみ irc
+  サーバから IRC メッセージを受信 (メッセージを *無視しない* 場合のみ irc
   プラグインがメッセージを処理した後に、シグナルが送信される)
 
 | irc | xxx,irc_raw_in_yyy ^(1)^ +
@@ -8347,12 +8540,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | javascript | javascript_script_loaded +
   _(WeeChat バージョン 1.2 以上で利用可)_ |
   String: スクリプトへのパス |
-  Javascript スクリプトを読み込み
+  Javascript スクリプトをロード
 
 | javascript | javascript_script_unloaded +
   _(WeeChat バージョン 1.2 以上で利用可)_ |
   String: スクリプトへのパス |
-  Javascript スクリプトを再読み込み
+  Javascript スクリプトをリロード
 
 | javascript | javascript_script_installed +
   _(WeeChat バージョン 1.2 以上で利用可)_ |
@@ -8379,12 +8572,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | lua | lua_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Lua スクリプトを読み込み
+  Lua スクリプトをロード
 
 | lua | lua_script_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Lua スクリプトを再読み込み
+  Lua スクリプトをリロード
 
 | lua | lua_script_installed +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8399,12 +8592,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | perl | perl_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Perl スクリプトを読み込み
+  Perl スクリプトをロード
 
 | perl | perl_script_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Perl スクリプトを再読み込み
+  Perl スクリプトをリロード
 
 | perl | perl_script_installed +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8419,12 +8612,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | python | python_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Python スクリプトを読み込み
+  Python スクリプトをロード
 
 | python | python_script_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Python スクリプトを再読み込み
+  Python スクリプトをリロード
 
 | python | python_script_installed +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8469,12 +8662,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | ruby | ruby_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Ruby スクリプトを読み込み
+  Ruby スクリプトをロード
 
 | ruby | ruby_script_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Ruby スクリプトを再読み込み
+  Ruby スクリプトをリロード
 
 | ruby | ruby_script_installed +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8489,12 +8682,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | tcl | tcl_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Tcl スクリプトを読み込み
+  Tcl スクリプトをロード
 
 | tcl | tcl_script_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
-  Tcl スクリプトを再読み込み
+  Tcl スクリプトをリロード
 
 | tcl | tcl_script_installed +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8726,12 +8919,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | weechat | plugin_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: 読み込んだプラグインへのパス |
-  プラグインを読み込み
+  プラグインをロード
 
 | weechat | plugin_unloaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
-  String: 再読み込みしたプラグインの名前 (例: "irc") |
-  プラグインを再読み込み
+  String: リロードしたプラグインの名前 (例: "irc") |
+  プラグインをリロード
 
 | weechat | quit |
   String: /quit の引数 |
@@ -8964,10 +9157,12 @@ weechat.hook_signal_send("logger_backlog", weechat.WEECHAT_HOOK_SIGNAL_POINTER, 
 
 シグナルを受け取ったらコールバックは以下のように働きます:
 
-. インストール済みスクリプトを再読み込みして削除。
+. インストール済みスクリプトをリロードして削除。
 . 新しいスクリプトをディレクトリ _~/.weechat/xxx/_ に移動 (_xxx_ はプログラミング言語)
 . 新しいスクリプトへのリンクをディレクトリ _~/.weechat/xxx/autoload/_ に作成
-. 新しいスクリプトを読み込む
+  (古いスクリプトがすでに自動ロードされていた場合、もしくは新しいスクリプトに対してオプション
+  _script.scripts.autoload_ が有効化されている場合のみ作成されます)
+. 新しいスクリプトを読み込む (古いスクリプトがロードされていた場合のみ)
 
 _script_ プラグインはスクリプトをインストールする際にこれらのシグナルを使っています。
 
@@ -9002,7 +9197,7 @@ weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
 * _guile_script_remove_
 * _javascript_script_remove_
 
-リスト文字列に含まれるそれぞれのスクリプトについて、コールバックはスクリプトを再読み込みして削除します。
+リスト文字列に含まれるそれぞれのスクリプトについて、コールバックはスクリプトをリロードして削除します。
 
 _script_ プラグインはスクリプトを削除する際にこれらのシグナルを使っています。
 
@@ -9100,7 +9295,7 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 Arguments:
 
 * _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
   (以下の表を参照)
 * _callback_:
   シグナルを受信した際に呼び出すコールバック関数、引数と戻り値:
@@ -9309,7 +9504,7 @@ hsignal "irc_redirect_command" は irc
 
 コマンドに対する応答を完全に受信したら、hsignal が送信されます。この
 hsignal は _irc_redirection_xxx_yyy_ という名前で、ここで _xxx_ は
-_signal_ 、_yyy_ は _pattern_ で指定したものになります。
+_signal_、_yyy_ は _pattern_ で指定したものになります。
 
 以下の内容からなるハッシュテーブルが hsignal で送信されます (キーと値は文字列):
 
@@ -9388,7 +9583,7 @@ hsignal "irc_redirect_pattern" は irc 転送用のパターンを作成する�
 * _cmd_extra_: コマンドを停止した後に受信する可能性のあるコマンドのコンマ区切りリスト
   (任意)
 
-_cmd_start_ 、_cmd_stop_ 、_cmd_extra_
+_cmd_start_、_cmd_stop_、_cmd_extra_
 には受け取ったメッセージに必ず含まれていなければいけない
 "string" の位置を示す整数を与えることが可能、例:
 
@@ -9465,7 +9660,7 @@ struct t_hook *weechat_hook_config (const char *option,
 
 * _option_: オプション、書式は完全な名前、コマンド `/set` で使うのと同じ
   (例: `weechat.look.item_time_format`)、ワイルドカード `+*+` を使うことができます
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _callback_:
   設定オプションが変更されたら呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
@@ -9517,199 +9712,6 @@ def my_config_cb(data, option, value):
 hook = weechat.hook_config("weechat.look.item_time_format", "my_config_cb", "")
 ----
 
-==== hook_completion
-
-_WeeChat バージョン 1.5 で更新。_
-
-補完をフック。
-
-プロトタイプ:
-
-[source,C]
-----
-struct t_hook *weechat_hook_completion (const char *completion_item,
-                                        const char *description,
-                                        int (*callback)(const void *pointer,
-                                                        void *data,
-                                                        const char *completion_item,
-                                                        struct t_gui_buffer *buffer,
-                                                        struct t_gui_completion *completion),
-                                        const void *callback_pointer,
-                                        void *callback_data);
-----
-
-引数:
-
-* _completion_item_: 補完要素の名前、この後フックされたコマンドで
-  _%(name)_ を使うことができます (_completion_ 引数)
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-* _description_: 補完の説明
-* _callback_: 補完要素 (ユーザはこの要素を使って何かを補完している)
-  が使われた場合に呼び出すコールバック関数、引数と戻り値:
-** _const void *pointer_: ポインタ
-** _void *data_: ポインタ
-** _const char *completion_item_: 補完要素の名前
-** _struct t_gui_buffer *buffer_: 補完が行われたバッファ
-** _struct t_gui_completion *completion_:
-   補完に際して単語を追加するために使われる構造体
-   (<<_hook_completion_list_add,hook_completion_list_add>> を参照)
-** 戻り値:
-*** _WEECHAT_RC_OK_
-*** _WEECHAT_RC_ERROR_
-* _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
-* _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
-  このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
-  によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
-
-[NOTE]
-補完名はグローバルです (WeeChat
-とプラグインで共有されます)。このため、"plugin_xxx" (ここで "xxx" は要素の名前)
-などの一意的なプレフィックスをつけた名前を使うことをおすすめします。
-
-[IMPORTANT]
-コールバックは
-<<_hook_completion_list_add,hook_completion_list_add>>
-関数を呼び出すだけで、コマンドラインをコールバックで絶対に*変更しない* でください。 +
-key[Tab] が押された時にコマンドラインを更新するためには、関数
-<<_hook_command_run,hook_command_run>> を使ってコマンド
-"/input complete_next" をフックしてください (コールバックがコマンドラインを更新する場合は必ず
-_WEECHAT_RC_OK_EAT_ を返してください。そうすれば WeeChat は補完を行いません)。
-
-戻り値:
-
-* 新しいフックへのポインタ、エラーが起きた場合は NULL
-
-C 言語での使用例:
-
-[source,C]
-----
-int
-my_completion_cb (const void *pointer, void *data, const char *completion_item,
-                  struct t_gui_buffer *buffer,
-                  struct t_gui_completion *completion)
-{
-    weechat_hook_completion_list_add (completion, "word1",
-                                      0, WEECHAT_LIST_POS_SORT);
-    weechat_hook_completion_list_add (completion, "test_word2",
-                                      0, WEECHAT_LIST_POS_SORT);
-    return WEECHAT_RC_OK;
-}
-
-struct t_hook *my_completion_hook = weechat_hook_completion ("plugin_item",
-                                                             "my custom completion!",
-                                                             &my_completion_cb, NULL, NULL);
-----
-
-スクリプト (Python) での使用例:
-
-[source,python]
-----
-# プロトタイプ
-hook = weechat.hook_completion(completion_item, description, callback, callback_data)
-
-# 例
-def my_completion_cb(data, completion_item, buffer, completion):
-    weechat.hook_completion_list_add(completion, "word1", 0, weechat.WEECHAT_LIST_POS_SORT)
-    weechat.hook_completion_list_add(completion, "test_word2", 0, weechat.WEECHAT_LIST_POS_SORT)
-    return weechat.WEECHAT_RC_OK
-
-hook = weechat.hook_completion("plugin_item", "my custom completion!",
-                               "my_completion_cb", "")
-----
-
-==== hook_completion_get_string
-
-_WeeChat バージョン 0.3.4 以上で利用可。_
-
-補完プロパティを文字列で取得。
-
-プロトタイプ:
-
-[source,C]
-----
-const char *weechat_hook_completion_get_string (struct t_gui_completion *completion,
-                                                const char *property);
-----
-
-引数:
-
-* _completion_: 補完へのポインタ
-* _property_: プロパティ名:
-** _base_command_: 補完に使ったコマンド
-** _base_word_: 補完された単語
-** _args_: コマンド引数 (元の単語を含む)
-
-C 言語での使用例:
-
-[source,C]
-----
-int
-my_completion_cb (const void *pointer, void *data, const char *completion_item,
-                  struct t_gui_buffer *buffer,
-                  struct t_gui_completion *completion)
-{
-    /* get arguments of command */
-    const char *args = weechat_hook_completion_get_string (completion, "args");
-
-    /* completion depending on args */
-    /* ... */
-
-    return WEECHAT_RC_OK;
-}
-----
-
-スクリプト (Python) での使用例:
-
-[source,python]
-----
-# プロトタイプ
-value = weechat.hook_completion_get_string(completion, property)
-
-# 例
-def my_completion_cb(data, completion_item, buffer, completion):
-    # get arguments of command
-    args = weechat.hook_completion_get_string(completion, "args")
-    # completion depending on args
-    # ...
-    return weechat.WEECHAT_RC_OK
-----
-
-==== hook_completion_list_add
-
-補完用に単語を追加。
-
-プロトタイプ:
-
-[source,C]
-----
-void weechat_hook_completion_list_add (struct t_gui_completion *completion,
-                                       const char *word,
-                                       int nick_completion,
-                                       const char *where);
-----
-
-引数:
-
-* _completion_: 補完へのポインタ
-* _word_: 追加する単語
-* _nick_completion_: 単語がニックネームの場合は 1、そうでなければ 0
-* _where_: 単語を追加するリスト上での位置:
-** _WEECHAT_LIST_POS_SORT_: リストがソートされた状態になるような位置
-** _WEECHAT_LIST_POS_BEGINNING_: リストの最初
-** _WEECHAT_LIST_POS_END_: リストの最後
-
-C 言語での使用例: <<_hook_completion,hook_completion>> を参照。
-
-スクリプト (Python) での使用例:
-
-[source,python]
-----
-# プロトタイプ
-weechat.hook_completion_list_add(completion, word, nick_completion, where)
-
-# 例: 前の hook_completion 関数を参照
-----
-
 ==== hook_modifier
 
 _WeeChat バージョン 1.5 で更新。_
@@ -9733,7 +9735,7 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 引数:
 
 * _modifier_: 修飾子名、Weechat またはプラグインが使う修飾子のリスト
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
   (以下の表を参照)
 * _callback_: 修飾子が使われた際に呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
@@ -9977,7 +9979,7 @@ struct t_hook *weechat_hook_info (const char *info_name,
 引数:
 
 * _info_name_: インフォの名前
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _description_: 説明
 * _args_description_: 引数の説明 (任意、NULL にすることも可)
 * _callback_: インフォが要求されたら呼び出すコールバック関数、引数と戻り値:
@@ -10054,7 +10056,7 @@ struct t_hook *weechat_hook_info_hashtable (const char *info_name,
 引数:
 
 * _info_name_: インフォの名前
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _description_: 説明
 * _args_description_: 引数ハッシュテーブルの説明 (任意、NULL でも可)
 * _output_description_: コールバックが返すハッシュテーブルの説明
@@ -10138,7 +10140,7 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
 引数:
 
 * _infolist_name_: インフォリストの名前
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _description_: 説明
 * _pointer_description_: ポインタの説明 (任意、NULL でも可)
 * _args_description_: 引数の説明 (任意、NULL でも可)
@@ -10225,7 +10227,7 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 引数:
 
 * _hdata_name_: hdata の名前
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _description_: 説明
 * _callback_:
   hdata が要求された際に呼び出すコールバック関数、引数と戻り値:
@@ -10288,7 +10290,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 引数:
 
 * _area_: チャットエリアの場合は "chat"、またはバー要素の名前
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
 * _callback_:
   フォーカスが当たったら呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
@@ -10308,7 +10310,7 @@ struct t_hook *weechat_hook_focus (const char *area,
 マウスジェスチャの場合、コールバックを 2 回呼び出します: 1
 回目はボタンが押された時 (この時のエリアはジェスチャ対象のエリアです)、2
 回目はボタンが離された時 (この時のエリアはマスジェスチャを開始したエリアとは異なる場合があります):
-このため、必ず*毎回* コールバックをテストして、ハッシュテーブルに含まれる
+このため、必ず *毎回* コールバックをテストして、ハッシュテーブルに含まれる
 info を使う前にエリアが一致していることを確認して下さい。
 
 コールバックに送られるハッシュテーブルの内容 (キーと値は "string" 型):
@@ -10504,19 +10506,19 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 
 | stdin +
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
-  _process_ 、_process_hashtable_ | 任意の文字列 |
+  _process_、_process_hashtable_ | 任意の文字列 |
   子プロセスの標準入力 (_stdin_) にデータを送信
 
 | stdin_close +
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
-  _process_ 、_process_hashtable_ | (非使用) |
+  _process_、_process_hashtable_ | (非使用) |
   子プロセスの標準入力 (_stdin_) にデータを送信するパイプを閉じる
 
 | signal +
   _(WeeChat バージョン 1.0 以上で利用可)_ |
-  _process_ 、_process_hashtable_ |
+  _process_、_process_hashtable_ |
   シグナル番号または以下の名前から 1 つ:
-  `hup` 、`int` 、`quit` 、`kill` 、`term` 、`usr1` 、`usr2` |
+  `hup`、`int`、`quit`、`kill`、`term`、`usr1`、`usr2` |
   子プロセスにシグナルを送信
 |===
 
@@ -11105,7 +11107,7 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _name_: バッファの名前
 ** _full_name_: バッファの完全な名前 ("plugin.name") _(WeeChat バージョン 0.3.7 以上で利用可)_
 ** _short_name_: バッファの短縮名 (注意:
-   表示目的以外に使用するのは禁止、ユーザは書き換えることが可能、バッファを検索する際にこれを使ってはいけない、_name_ 、_full_name_ 、またはローカル変数
+   表示目的以外に使用するのは禁止、ユーザは書き換えることが可能、バッファを検索する際にこれを使ってはいけない、_name_、_full_name_、またはローカル変数
    _channel_ を使うこと)
 ** _title_: バッファのタイトル
 ** _input_: 入力テキスト
@@ -12716,7 +12718,7 @@ struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
 
 [IMPORTANT]
 WeeChat バージョン 0.4.1 以下に対する互換性のために、デフォルトのコールバックに渡す引数の個数は
-3 個です: _data_ 、_item_ 、_window_ (_buffer_ と _extra_info_ は渡されません)。 +
+3 個です: _data_、_item_、_window_ (_buffer_ と _extra_info_ は渡されません)。 +
 全ての引数を受け取るコールバックを使う場合は、名前の前に "(extra)"
 をつけてください、以下の例を参照 (WeeChat バージョン 0.4.2 以上で利用可)。
 
@@ -12880,8 +12882,8 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 ** _active_: アクティブウィンドウのみに表示されているバー
 ** _inactive_: 非アクティブウィンドウのみに表示されているバー
 ** _nicklist_: ニックネームリストを持つウィンドウに表示されているバー
-** 評価された式: _WeeChat ユーザガイド_ のバーに関する章を参照
-* _position_: _top_ 、_bottom_ 、_left_ 、_right_
+** 評価された式: _WeeChat ユーザーズガイド_ のバーに関する章を参照
+* _position_: _top_、_bottom_、_left_、_right_
 * _filling_top_bottom_:
 ** _horizontal_: 要素は水平方向に詰め込まれている (各要素の後に間隔)
 ** _vertical_: 要素は垂直方向に詰め込まれている (各要素の後に行)
@@ -14147,7 +14149,7 @@ hdata に対する関数 (WeeChat またはプラグインデータへの直ア�
 
 [IMPORTANT]
 hdata を使うことで読み取り専用でデータにアクセスできます。hdata
-変数が示すメモリ領域に何かを書き込むことは*厳禁* です。 +
+変数が示すメモリ領域に何かを書き込むことは *厳禁* です。 +
 データを更新する場合は必ず関数
 <<_hdata_update,hdata_update>> を使ってください。
 
@@ -14193,7 +14195,7 @@ struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev,
 * _delete_allowed_: 構造体の削除を許可する場合は 1、それ以外の場合は 0
   _(WeeChat バージョン 0.3.9 以上で利用可)_
 * _callback_update_: hdata 内のデータを更新する際のコールバック関数、データの更新を禁止する場合は NULL
-  _(WeeChat バージョン 0.3.9 以上で利用可)_ 、引数と戻り値:
+  _(WeeChat バージョン 0.3.9 以上で利用可)_、引数と戻り値:
 ** _void *data_: ポインタ
 ** _struct t_hdata *hdata_: hdata へのポインタ
 ** _struct t_hashtable *hashtable_: 更新する変数を含むハッシュテーブル
@@ -14365,12 +14367,12 @@ WEECHAT_HDATA_LIST(last_buffer, 0);
 
 _WeeChat バージョン 0.3.6 以上で利用可。_
 
-WeeChat 及びプラグイン構造体に対する hdata を返す。
+WeeChat およびプラグイン構造体に対する hdata を返す。
 
 [NOTE]
 hdata はデータを含みません、hdata
 は構造体における変数の位置を含むただのハッシュテーブル。つまりデータを読み出すためには
-hdata と WeeChat 及びプラグインへのポインタが必要です。
+hdata と WeeChat およびプラグインへのポインタが必要です。
 
 プロトタイプ:
 
@@ -14807,7 +14809,7 @@ int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointe
 引数:
 
 * _hdata_: hdata へのポインタ
-* _list_: リストポインタ; NULL の場合 _(WeeChat バージョン 1.0 以上)_ 、ポインタは
+* _list_: リストポインタ; NULL の場合 _(WeeChat バージョン 1.0 以上)_、ポインタは
    hdata に含まれる "check pointers" フラグを持つリストでチェックされます
   (<<_hdata_new_list,hdata_new_list>>
   を参照)、このフラグを持つリストがない場合、ポインタは妥当とされます。
@@ -14930,7 +14932,7 @@ void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *se
 * _pointer_: WeeChat および plugin オブジェクトへのポインタ
 * _search_: 評価する式、式中のデフォルトポインタは hdata の名前
   (デフォルトポインタはリストに含まれる各要素で置換される); 式に関する詳細は
-  _WeeChat ユーザガイド_ のコマンド `/eval` を参照
+  _WeeChat ユーザーズガイド_ のコマンド `/eval` を参照
 * _move_: 検索に失敗した後に移動を実行する回数
   (負および正の整数、ゼロは禁止)
 
@@ -15375,7 +15377,7 @@ int weechat_hdata_update (struct t_hdata *hdata, void *pointer, struct t_hashtab
    1、許可しない場合は 0 を返す _(WeeChat バージョン 0.4.0 以上で利用可)_
 ** キー `__delete_allowed` (値は任意): 構造体の削除を許可する場合は
    1、許可しない場合は 0 を返す
-** キー `__update_allowed` 、値は変数の名前: この変数の更新を許可する場合は
+** キー `__update_allowed`、値は変数の名前: この変数の更新を許可する場合は
    1、許可しない場合は 0 を返す
 ** キー `__delete` (値は任意): 構造体を削除 (許可されている場合)
 
@@ -15391,7 +15393,7 @@ C 言語での使用例:
 
 struct t_gui_lines *own_lines;
 struct t_gui_line *line;
-struct t_gui_line_data  *line_data;
+struct t_gui_line_data *line_data;
 struct t_hdata *hdata;
 struct t_hashtable *hashtable;
 char str_date[64];
@@ -15504,7 +15506,7 @@ WeeChat をアップグレードする (コマンド "/upgrade") 関数。
 
 _WeeChat バージョン 1.5 で更新。_
 
-アップグレード用のファイルを作成または読み込み。
+アップグレード用のファイルを作成またはロード。
 
 プロトタイプ:
 

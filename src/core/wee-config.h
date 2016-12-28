@@ -133,6 +133,7 @@ extern struct t_config_option *config_startup_display_version;
 extern struct t_config_option *config_startup_sys_rlimit;
 
 extern struct t_config_option *config_look_align_end_of_lines;
+extern struct t_config_option *config_look_align_multiline_words;
 extern struct t_config_option *config_look_bar_more_down;
 extern struct t_config_option *config_look_bar_more_left;
 extern struct t_config_option *config_look_bar_more_right;
@@ -358,6 +359,7 @@ extern int config_weechat_debug_set (const char *plugin_name,
 extern void config_weechat_debug_set_all ();
 extern int config_weechat_notify_set (struct t_gui_buffer *buffer,
                                       const char *notify);
+extern void config_get_item_time (char *text_time, int max_length);
 extern int config_weechat_init ();
 extern int config_weechat_read ();
 extern int config_weechat_write ();

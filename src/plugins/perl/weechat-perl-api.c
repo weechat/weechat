@@ -2007,6 +2007,116 @@ API_FUNC(hook_command)
 }
 
 int
+weechat_perl_api_hook_completion_cb (const void *pointer, void *data,
+                                     const char *completion_item,
+                                     struct t_gui_buffer *buffer,
+                                     struct t_gui_completion *completion)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    int *rc, ret;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
+        func_argv[2] = API_PTR2STR(buffer);
+        func_argv[3] = API_PTR2STR(completion);
+
+        rc = (int *) weechat_perl_exec (script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        ptr_function,
+                                        "ssss", func_argv);
+
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (func_argv[2])
+            free (func_argv[2]);
+        if (func_argv[3])
+            free (func_argv[3]);
+
+        return ret;
+    }
+
+    return WEECHAT_RC_ERROR;
+}
+
+API_FUNC(hook_completion)
+{
+    char *result, *completion, *description, *function, *data;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
+    if (items < 4)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    completion = SvPV_nolen (ST (0));
+    description = SvPV_nolen (ST (1));
+    function = SvPV_nolen (ST (2));
+    data = SvPV_nolen (ST (3));
+
+    result = API_PTR2STR(plugin_script_api_hook_completion (weechat_perl_plugin,
+                                                            perl_current_script,
+                                                            completion,
+                                                            description,
+                                                            &weechat_perl_api_hook_completion_cb,
+                                                            function,
+                                                            data));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+API_FUNC(hook_completion_get_string)
+{
+    char *completion, *property;
+    const char *result;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
+    if (items < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    completion = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
+
+    result = weechat_hook_completion_get_string (API_STR2PTR(completion),
+                                                 property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(hook_completion_list_add)
+{
+    char *completion, *word, *where;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
+    if (items < 4)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = SvPV_nolen (ST (0));
+    word = SvPV_nolen (ST (1));
+    where = SvPV_nolen (ST (3));
+
+    weechat_hook_completion_list_add (API_STR2PTR(completion),
+                                      word,
+                                      SvIV (ST (2)), /* nick_completion */
+                                      where);
+
+    API_RETURN_OK;
+}
+
+int
 weechat_perl_api_hook_command_run_cb (const void *pointer, void *data,
                                       struct t_gui_buffer *buffer,
                                       const char *command)
@@ -2747,116 +2857,6 @@ API_FUNC(hook_config)
                                                         data));
 
     API_RETURN_STRING_FREE(result);
-}
-
-int
-weechat_perl_api_hook_completion_cb (const void *pointer, void *data,
-                                     const char *completion_item,
-                                     struct t_gui_buffer *buffer,
-                                     struct t_gui_completion *completion)
-{
-    struct t_plugin_script *script;
-    void *func_argv[4];
-    char empty_arg[1] = { '\0' };
-    const char *ptr_function, *ptr_data;
-    int *rc, ret;
-
-    script = (struct t_plugin_script *)pointer;
-    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
-
-    if (ptr_function && ptr_function[0])
-    {
-        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
-        func_argv[2] = API_PTR2STR(buffer);
-        func_argv[3] = API_PTR2STR(completion);
-
-        rc = (int *) weechat_perl_exec (script,
-                                        WEECHAT_SCRIPT_EXEC_INT,
-                                        ptr_function,
-                                        "ssss", func_argv);
-
-        if (!rc)
-            ret = WEECHAT_RC_ERROR;
-        else
-        {
-            ret = *rc;
-            free (rc);
-        }
-        if (func_argv[2])
-            free (func_argv[2]);
-        if (func_argv[3])
-            free (func_argv[3]);
-
-        return ret;
-    }
-
-    return WEECHAT_RC_ERROR;
-}
-
-API_FUNC(hook_completion)
-{
-    char *result, *completion, *description, *function, *data;
-    dXSARGS;
-
-    API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
-    if (items < 4)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
-
-    completion = SvPV_nolen (ST (0));
-    description = SvPV_nolen (ST (1));
-    function = SvPV_nolen (ST (2));
-    data = SvPV_nolen (ST (3));
-
-    result = API_PTR2STR(plugin_script_api_hook_completion (weechat_perl_plugin,
-                                                            perl_current_script,
-                                                            completion,
-                                                            description,
-                                                            &weechat_perl_api_hook_completion_cb,
-                                                            function,
-                                                            data));
-
-    API_RETURN_STRING_FREE(result);
-}
-
-API_FUNC(hook_completion_get_string)
-{
-    char *completion, *property;
-    const char *result;
-    dXSARGS;
-
-    API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
-    if (items < 2)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
-
-    completion = SvPV_nolen (ST (0));
-    property = SvPV_nolen (ST (1));
-
-    result = weechat_hook_completion_get_string (API_STR2PTR(completion),
-                                                 property);
-
-    API_RETURN_STRING(result);
-}
-
-API_FUNC(hook_completion_list_add)
-{
-    char *completion, *word, *where;
-    dXSARGS;
-
-    API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
-    if (items < 4)
-        API_WRONG_ARGS(API_RETURN_ERROR);
-
-    completion = SvPV_nolen (ST (0));
-    word = SvPV_nolen (ST (1));
-    where = SvPV_nolen (ST (3));
-
-    weechat_hook_completion_list_add (API_STR2PTR(completion),
-                                      word,
-                                      SvIV (ST (2)), /* nick_completion */
-                                      where);
-
-    API_RETURN_OK;
 }
 
 char *
@@ -5124,6 +5124,9 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(print_y);
     API_DEF_FUNC(log_print);
     API_DEF_FUNC(hook_command);
+    API_DEF_FUNC(hook_completion);
+    API_DEF_FUNC(hook_completion_get_string);
+    API_DEF_FUNC(hook_completion_list_add);
     API_DEF_FUNC(hook_command_run);
     API_DEF_FUNC(hook_timer);
     API_DEF_FUNC(hook_fd);
@@ -5136,9 +5139,6 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(hook_hsignal);
     API_DEF_FUNC(hook_hsignal_send);
     API_DEF_FUNC(hook_config);
-    API_DEF_FUNC(hook_completion);
-    API_DEF_FUNC(hook_completion_get_string);
-    API_DEF_FUNC(hook_completion_list_add);
     API_DEF_FUNC(hook_modifier);
     API_DEF_FUNC(hook_modifier_exec);
     API_DEF_FUNC(hook_info);

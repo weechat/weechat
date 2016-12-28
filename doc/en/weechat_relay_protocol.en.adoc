@@ -83,15 +83,15 @@ List of available commands (detail in next chapters):
 [width="80%",cols="^3m,14",options="header"]
 |===
 | Command  | Description
-| init     | Initialize connection with _relay_
-| hdata    | Request a _hdata_
-| info     | Request an _info_
-| infolist | Request an _infolist_
-| nicklist | Request a _nicklist_
-| input    | Send data to a buffer (text or command)
-| sync     | Synchronize buffer(s) (get updates for buffer(s))
-| desync   | Desynchronize buffer(s) (stop updates for buffer(s))
-| quit     | Disconnect from _relay_
+| init     | Initialize connection with _relay_.
+| hdata    | Request a _hdata_.
+| info     | Request an _info_.
+| infolist | Request an _infolist_.
+| nicklist | Request a _nicklist_.
+| input    | Send data to a buffer (text or command).
+| sync     | Synchronize buffer(s) (get updates for buffer(s)).
+| desync   | Desynchronize buffer(s) (stop updates for buffer(s)).
+| quit     | Disconnect from _relay_.
 |===
 
 [[command_init]]
@@ -530,64 +530,64 @@ WeeChat reserved identifiers:
   Description | Recommended action in client
 
 | _buffer_opened | buffers / buffer | hdata: buffer |
-  Buffer opened | Open buffer
+  Buffer opened. | Open buffer.
 
 | _buffer_type_changed | buffers / buffer | hdata: buffer |
-  Type of buffer changed | Change type of buffer
+  Type of buffer changed. | Change type of buffer.
 
 | _buffer_moved | buffers / buffer | hdata: buffer |
-  Buffer moved | Move buffer
+  Buffer moved. | Move buffer.
 
 | _buffer_merged | buffers / buffer | hdata: buffer |
-  Buffer merged | Merge buffer
+  Buffer merged. | Merge buffer.
 
 | _buffer_unmerged | buffers / buffer | hdata: buffer |
-  Buffer unmerged | Unmerge buffer
+  Buffer unmerged. | Unmerge buffer.
 
 | _buffer_hidden | buffers / buffer | hdata: buffer |
-  Buffer hidden | Hide buffer
+  Buffer hidden. | Hide buffer.
 
 | _buffer_unhidden | buffers / buffer | hdata: buffer |
-  Buffer unhidden | Unhide buffer
+  Buffer unhidden. | Unhide buffer.
 
 | _buffer_renamed | buffers / buffer | hdata: buffer |
-  Buffer renamed | Rename buffer
+  Buffer renamed. | Rename buffer.
 
 | _buffer_title_changed | buffers / buffer | hdata: buffer |
-  Title of buffer changed | Change title of buffer
+  Title of buffer changed. | Change title of buffer.
 
 | _buffer_localvar_added | buffers / buffer | hdata: buffer |
-  Local variable added | Add local variable in buffer
+  Local variable added. | Add local variable in buffer.
 
 | _buffer_localvar_changed | buffers / buffer | hdata: buffer |
-  Local variable changed | Change local variable in buffer
+  Local variable changed. | Change local variable in buffer.
 
 | _buffer_localvar_removed | buffers / buffer | hdata: buffer |
-  Local variable removed | Remove local variable from buffer
+  Local variable removed. | Remove local variable from buffer.
 
 | _buffer_closing | buffers / buffer | hdata: buffer |
-  Buffer closing | Close buffer
+  Buffer closing. | Close buffer.
 
 | _buffer_cleared | buffer | hdata: buffer |
-  Buffer cleared | Clear buffer
+  Buffer cleared. | Clear buffer.
 
 | _buffer_line_added | buffer | hdata: line |
-  Line added in buffer | Display line in buffer
+  Line added in buffer. | Display line in buffer.
 
 | _nicklist | nicklist | hdata: nicklist_item |
-  Nicklist for a buffer | Replace nicklist
+  Nicklist for a buffer. | Replace nicklist.
 
 | _nicklist_diff | nicklist | hdata: nicklist_item |
-  Nicklist diffs for a buffer  | Update nicklist
+  Nicklist diffs for a buffer . | Update nicklist.
 
 | _pong | (always) | string: ping arguments |
-  Answer to a "ping" | Measure response time
+  Answer to a "ping". | Measure response time.
 
 | _upgrade | upgrade | (empty) |
-  WeeChat is upgrading | Desync from WeeChat (or disconnect)
+  WeeChat is upgrading. | Desync from WeeChat (or disconnect).
 
 | _upgrade_ended | upgrade | (empty) |
-  Upgrade of WeeChat done | Sync/resync with WeeChat
+  Upgrade of WeeChat done. | Sync/resync with WeeChat.
 |===
 
 [[message_buffer_opened]]
@@ -601,14 +601,14 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name            | Type      | Description
-| number          | integer   | Buffer number (≥ 1)
-| full_name       | string    | Full name (example: _irc.freenode.#weechat_)
-| short_name      | string    | Short name (example: _#weechat_)
-| nicklist        | integer   | 1 if buffer has a nicklist, otherwise 0
-| title           | string    | Buffer title
-| local_variables | hashtable | Local variables
-| prev_buffer     | pointer   | Pointer to previous buffer
-| next_buffer     | pointer   | Pointer to next buffer
+| number          | integer   | Buffer number (≥ 1).
+| full_name       | string    | Full name (example: _irc.freenode.#weechat_).
+| short_name      | string    | Short name (example: _#weechat_).
+| nicklist        | integer   | 1 if buffer has a nicklist, otherwise 0.
+| title           | string    | Buffer title.
+| local_variables | hashtable | Local variables.
+| prev_buffer     | pointer   | Pointer to previous buffer.
+| next_buffer     | pointer   | Pointer to next buffer.
 |===
 
 Example: channel _#weechat_ joined on freenode, new buffer
@@ -644,10 +644,10 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name        | Type    | Description
-| number      | integer | Buffer number (≥ 1)
-| full_name   | string  | Full name (example: _irc.freenode.#weechat_)
-| prev_buffer | pointer | Pointer to previous buffer
-| next_buffer | pointer | Pointer to next buffer
+| number      | integer | Buffer number (≥ 1).
+| full_name   | string  | Full name (example: _irc.freenode.#weechat_).
+| prev_buffer | pointer | Pointer to previous buffer.
+| next_buffer | pointer | Pointer to next buffer.
 |===
 
 Example: buffer _irc.freenode.#weechat_ moved to number 2:
@@ -677,10 +677,10 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name        | Type    | Description
-| number      | integer | Buffer number (≥ 1)
-| full_name   | string  | Full name (example: _irc.freenode.#weechat_)
-| prev_buffer | pointer | Pointer to previous buffer
-| next_buffer | pointer | Pointer to next buffer
+| number      | integer | Buffer number (≥ 1).
+| full_name   | string  | Full name (example: _irc.freenode.#weechat_).
+| prev_buffer | pointer | Pointer to previous buffer.
+| next_buffer | pointer | Pointer to next buffer.
 |===
 
 Example: buffer _irc.freenode.#weechat_ merged with buffer #2:
@@ -710,10 +710,10 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name        | Type    | Description
-| number      | integer | Buffer number (≥ 1)
-| full_name   | string  | Full name (example: _irc.freenode.#weechat_)
-| prev_buffer | pointer | Pointer to previous buffer
-| next_buffer | pointer | Pointer to next buffer
+| number      | integer | Buffer number (≥ 1).
+| full_name   | string  | Full name (example: _irc.freenode.#weechat_).
+| prev_buffer | pointer | Pointer to previous buffer.
+| next_buffer | pointer | Pointer to next buffer.
 |===
 
 Example: buffer _irc.freenode.#weechat_ unmerged:
@@ -745,10 +745,10 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name        | Type    | Description
-| number      | integer | Buffer number (≥ 1)
-| full_name   | string  | Full name (example: _irc.freenode.#weechat_)
-| prev_buffer | pointer | Pointer to previous buffer
-| next_buffer | pointer | Pointer to next buffer
+| number      | integer | Buffer number (≥ 1).
+| full_name   | string  | Full name (example: _irc.freenode.#weechat_).
+| prev_buffer | pointer | Pointer to previous buffer.
+| next_buffer | pointer | Pointer to next buffer.
 |===
 
 Example: buffer _irc.freenode.#weechat_ hidden:
@@ -780,10 +780,10 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name        | Type    | Description
-| number      | integer | Buffer number (≥ 1)
-| full_name   | string  | Full name (example: _irc.freenode.#weechat_)
-| prev_buffer | pointer | Pointer to previous buffer
-| next_buffer | pointer | Pointer to next buffer
+| number      | integer | Buffer number (≥ 1).
+| full_name   | string  | Full name (example: _irc.freenode.#weechat_).
+| prev_buffer | pointer | Pointer to previous buffer.
+| next_buffer | pointer | Pointer to next buffer.
 |===
 
 Example: buffer _irc.freenode.#weechat_ unhidden:
@@ -813,10 +813,10 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name            | Type      | Description
-| number          | integer   | Buffer number (≥ 1)
-| full_name       | string    | Full name (example: _irc.freenode.#weechat_)
-| short_name      | string    | Short name (example: _#weechat_)
-| local_variables | hashtable | Local variables
+| number          | integer   | Buffer number (≥ 1).
+| full_name       | string    | Full name (example: _irc.freenode.#weechat_).
+| short_name      | string    | Short name (example: _#weechat_).
+| local_variables | hashtable | Local variables.
 |===
 
 Example: private buffer renamed from _FlashCode_ to _Flash2_:
@@ -847,9 +847,9 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name      | Type    | Description
-| number    | integer | Buffer number (≥ 1)
-| full_name | string  | Full name (example: _irc.freenode.#weechat_)
-| title     | string  | Buffer title
+| number    | integer | Buffer number (≥ 1).
+| full_name | string  | Full name (example: _irc.freenode.#weechat_).
+| title     | string  | Buffer title.
 |===
 
 Example: topic changed on channel _#weechat_:
@@ -880,8 +880,8 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name      | Type    | Description
-| number    | integer | Buffer number (≥ 1)
-| full_name | string  | Full name (example: _irc.freenode.#weechat_)
+| number    | integer | Buffer number (≥ 1).
+| full_name | string  | Full name (example: _irc.freenode.#weechat_).
 |===
 
 Example: buffer _irc.freenode.#weechat_ has been cleared:
@@ -909,9 +909,9 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name      | Type    | Description
-| number    | integer | Buffer number (≥ 1)
-| full_name | string  | Full name (example: _irc.freenode.#weechat_)
-| type      | integer | Buffer type: 0 = formatted (default), 1 = free content
+| number    | integer | Buffer number (≥ 1).
+| full_name | string  | Full name (example: _irc.freenode.#weechat_).
+| type      | integer | Buffer type: 0 = formatted (default), 1 = free content.
 |===
 
 Example: type of buffer _script.scripts_ changed from formatted (0) to free
@@ -941,9 +941,9 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name            | Type      | Description
-| number          | integer   | Buffer number (≥ 1)
-| full_name       | string    | Full name (example: _irc.freenode.#weechat_)
-| local_variables | hashtable | Local variables
+| number          | integer   | Buffer number (≥ 1).
+| full_name       | string    | Full name (example: _irc.freenode.#weechat_).
+| local_variables | hashtable | Local variables.
 |===
 
 Example: local variable _test_ added in buffer _irc.freenode.#weechat_:
@@ -974,9 +974,9 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name            | Type      | Description
-| number          | integer   | Buffer number (≥ 1)
-| full_name       | string    | Full name (example: _irc.freenode.#weechat_)
-| local_variables | hashtable | Local variables
+| number          | integer   | Buffer number (≥ 1).
+| full_name       | string    | Full name (example: _irc.freenode.#weechat_).
+| local_variables | hashtable | Local variables.
 |===
 
 Example: local variable _test_ updated in buffer _irc.freenode.#weechat_:
@@ -1007,9 +1007,9 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name            | Type      | Description
-| number          | integer   | Buffer number (≥ 1)
-| full_name       | string    | Full name (example: _irc.freenode.#weechat_)
-| local_variables | hashtable | Local variables
+| number          | integer   | Buffer number (≥ 1).
+| full_name       | string    | Full name (example: _irc.freenode.#weechat_).
+| local_variables | hashtable | Local variables.
 |===
 
 Example: local variable _test_ removed from buffer _irc.freenode.#weechat_:
@@ -1039,14 +1039,14 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name         | Type             | Description
-| buffer       | pointer          | Buffer pointer
-| date         | time             | Date of message
-| date_printed | time             | Date when WeeChat displayed message
-| displayed    | char             | 1 if message is displayed, 0 if message is filtered (hidden)
-| highlight    | char             | 1 if line has a highlight, otherwise 0
-| tags_array   | array of strings | List of tags for line
-| prefix       | string           | Prefix
-| message      | string           | Message
+| buffer       | pointer          | Buffer pointer.
+| date         | time             | Date of message.
+| date_printed | time             | Date when WeeChat displayed message.
+| displayed    | char             | 1 if message is displayed, 0 if message is filtered (hidden).
+| highlight    | char             | 1 if line has a highlight, otherwise 0.
+| tags_array   | array of strings | List of tags for line.
+| prefix       | string           | Prefix.
+| message      | string           | Message.
 |===
 
 Example: new message _hello!_ from nick _FlashCode_ on buffer _irc.freenode.#weechat_:
@@ -1081,8 +1081,8 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name      | Type    | Description
-| number    | integer | Buffer number (≥ 1)
-| full_name | string  | Full name (example: _irc.freenode.#weechat_)
+| number    | integer | Buffer number (≥ 1).
+| full_name | string  | Full name (example: _irc.freenode.#weechat_).
 |===
 
 Example: buffer _irc.freenode.#weechat_ is being closed by WeeChat:
@@ -1113,13 +1113,13 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name         | Type    | Description
-| group        | char    | 1 for a group, 0 for a nick
-| visible      | char    | 1 if group/nick is displayed, otherwise 0
-| level        | integer | Level of group (0 for a nick)
-| name         | string  | Name of group/nick
-| color        | string  | Name color
-| prefix       | string  | Prefix (only for a nick)
-| prefix_color | string  | Prefix color (only for a nick)
+| group        | char    | 1 for a group, 0 for a nick.
+| visible      | char    | 1 if group/nick is displayed, otherwise 0.
+| level        | integer | Level of group (0 for a nick).
+| name         | string  | Name of group/nick.
+| color        | string  | Name color.
+| prefix       | string  | Prefix (only for a nick).
+| prefix_color | string  | Prefix color (only for a nick).
 |===
 
 Example: nicklist for buffer _irc.freenode.#weechat_:
@@ -1201,14 +1201,14 @@ Data sent as hdata:
 [width="100%",cols="3m,2,10",options="header"]
 |===
 | Name         | Type    | Description
-| _diff        | char    | Type of diff (see below)
-| group        | char    | 1 for a group, 0 for a nick
-| visible      | char    | 1 if group/nick is displayed, otherwise 0
-| level        | integer | Level of group (0 for a nick)
-| name         | string  | Name of group/nick
-| color        | string  | Name color
-| prefix       | string  | Prefix (only for a nick)
-| prefix_color | string  | Prefix color (only for a nick)
+| _diff        | char    | Type of diff (see below).
+| group        | char    | 1 for a group, 0 for a nick.
+| visible      | char    | 1 if group/nick is displayed, otherwise 0.
+| level        | integer | Level of group (0 for a nick).
+| name         | string  | Name of group/nick.
+| color        | string  | Name color.
+| prefix       | string  | Prefix (only for a nick).
+| prefix_color | string  | Prefix color (only for a nick).
 |===
 
 The value of __diff_ can be:

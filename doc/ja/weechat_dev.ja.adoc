@@ -150,7 +150,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    gui-cursor.c               | カーソルモード (カーソルを自由に移動)
 |    gui-filter.c               | フィルタ
 |    gui-focus.c                | フォーカスについての関数 (カーソルモードとマウス用)
-|    gui-history.c              | コマンド及びバッファに保存されたテキスト
+|    gui-history.c              | コマンドおよびバッファに保存されたテキスト
 |    gui-hotlist.c              | ホットリスト管理 (活発なバッファのリスト)
 |    gui-input.c                | 入力関数 (入力バー)
 |    gui-key.c                  | キーボード関数
@@ -210,6 +210,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    fifo/                          | fifo プラグイン
 |       fifo.c                      | fifo の主要関数
 |       fifo-command.c              | fifo コマンド
+|       fifo-config.c               | fifo 設定オプション (fifo.conf ファイル)
 |       fifo-info.c                 | fifo の情報/インフォリスト/hdata
 |    guile/                         | guile (scheme) プラグイン
 |       weechat-guile.c             | guile の主要関数 (スクリプトのロード/アンロード、guile コードの実行)
@@ -238,7 +239,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       irc-redirect.c              | IRC コマンド出力のリダイレクト
 |       irc-sasl.c                  | IRC サーバに対する SASL 認証
 |       irc-server.c                | IRC サーバとの入出力通信
-|       irc-upgrade.c               | WeeChat をアップグレードする際の IRC データの保存および読み込み
+|       irc-upgrade.c               | WeeChat をアップグレードする際の IRC データの保存およびロード
 |    javascript/                    | javascript プラグイン
 |       weechat-js.cpp              | javascript の主要関数 (スクリプトのロード/アンロード、javascript コードの実行)
 |       weechat-js-api.cpp          | javascript スクリプト作成 API 関数
@@ -289,7 +290,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       script-completion.c         | スクリプトマネージャ用の補完
 |       script-config.c             | スクリプトマネージャ用の設定オプション (script.conf ファイル)
 |       script-info.c               | スクリプトマネージャの情報/インフォリスト/hdata
-|       script-repo.c               | リポジトリファイルのダウンロードと読み込み
+|       script-repo.c               | リポジトリファイルのダウンロードとロード
 |    tcl/                           | tcl プラグイン
 |       weechat-tcl.c               | tcl の主要関数 (スクリプトのロード/アンロード、tcl コードの実行)
 |       weechat-tcl-api.c           | tcl スクリプト作成 API 関数
@@ -348,7 +349,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    docinfo.html                      | asciidoctor スタイル
 |    docgen.py                         | _autogen/_ ディレクトリ内のファイルを作成する Python スクリプト (以下を参照)
 |    XX/                               | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
-|       cmdline_options.XX.adoc        | コマンドラインオプション (man ページとユーザガイドに含まれるファイル)
+|       cmdline_options.XX.adoc        | コマンドラインオプション (man ページとユーザーズガイドに含まれるファイル)
 |       weechat.1.XX.adoc              | man ページ (`man weechat`)
 |       weechat_dev.XX.adoc            | 開発者リファレンス (この文書)
 |       weechat_faq.XX.adoc            | FAQ
@@ -357,10 +358,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       weechat_relay_protocol.XX.adoc | リレープロトコル (リモートインターフェイス用)
 |       weechat_scripting.XX.adoc      | スクリプト作成ガイド
 |       weechat_tester.XX.adoc         | テスターガイド
-|       weechat_user.XX.adoc           | ユーザーガイド
+|       weechat_user.XX.adoc           | ユーザーズガイド
 |       autogen/                       | docgen.py スクリプトが自動生成するファイル
-|          user/                       | ユーザーガイド用の自動生成ファイル (手作業による編集は*禁止* !)
-|          plugin_api/                 | プラグイン API 用の自動生成ファイル (手作業による編集は*禁止* !)
+|          user/                       | ユーザーズガイド用の自動生成ファイル (手作業による編集は *禁止*!)
+|          plugin_api/                 | プラグイン API 用の自動生成ファイル (手作業による編集は *禁止*!)
 |===
 
 WeeChat とプラグインの翻訳は gettext で行います、ファイルは _po/_ ディレクトリに含まれています:
@@ -380,7 +381,7 @@ WeeChat とプラグインの翻訳は gettext で行います、ファイルは
 === 一般的なルール
 
 * ソースコード内で使用する、コメント、変数名、...
-  は必ず*英語* で記述してください (他の言語を使わないでください)
+  は必ず *英語* で記述してください (他の言語を使わないでください)
 * 新しいファイルにはコピーライトヘッダを入れ、以下の情報を含めてください:
 ** ファイルの短い説明 (1 行)、
 ** 日付、
@@ -415,7 +416,7 @@ WeeChat とプラグインの翻訳は gettext で行います、ファイルは
 [[coding_c_style]]
 === C 言語スタイル
 
-C 言語のコードを書く際には以下の基本的なルールを*必ず* 守ってください。:
+C 言語のコードを書く際には以下の基本的なルールを *必ず* 守ってください。:
 
 * インデントは空白文字を 4 個使ってください。タブ文字を使わないでください、タブ文字は良くありません。
 * 読みやすくする必要がある場合を除いて、1
@@ -724,7 +725,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
 === シングルスレッド
 
 WeeChat はシングルスレッドです。これはつまり、コードの全ての部分を非常に高速に実行する必要があり、`sleep`
-などの関数を呼び出すことは*厳格に禁止* されているということです (この点は
+などの関数を呼び出すことは *厳格に禁止* されているということです (この点は
 WeeChat コアだけでなく、C 言語プラグインとスクリプトでも同じことが言えます)。
 
 何らかの理由でしばらく sleep したい場合は、`hook_timer` をコールバックと併せて使ってください。
@@ -764,7 +765,7 @@ struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
 WeeChat は文字列中に独自の色コードを使うことで、属性
 (太字、下線、...) と画面上の色を表現します。
 
-文字列にある文字を含め、その後に属性及び色を指定します、これは:
+文字列にある文字を含め、その後に属性および色を指定します、これは:
 
 * _0x19_: 色コード (これの後に色コード指定)
 * _0x1A_: 属性の設定 (これの後に属性を指定)
@@ -790,7 +791,7 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 * `(A)STD`: 任意属性を含めた標準色 (属性 + 2 桁の番号)
 * `EXT`: 拡張色 (`+@+` + 5 桁の番号)
 * `(A)EXT`:任意属性を含めた拡張色 (`+@+` + 属性 + 5 桁の番号)
-* `ATTR`: 属性指定の 1 文字 (`+*+` 、`+!+` 、`+/+` 、`+_+` 、`+|+`)
+* `ATTR`: 属性指定の 1 文字 (`+*+`、`+!+`、`+/+`、`+_+`、`+|+`)
 
 以下の表にすべての組み合わせをまとめています:
 
@@ -805,10 +806,10 @@ WeeChat は文字列中に独自の色コードを使うことで、属性
 | [hex]#19# + "B" + EXT                | [hex]#19# `+B@00124+`        | chat + bars | 背景色 (拡張色) を設定
 | [hex]#19# + "*" + (A)STD             | [hex]#19# `+*05+`            | chat + bars | 文字色(WeeChat 色) を設定
 | [hex]#19# + "*" + (A)EXT             | [hex]#19# `+*@00214+`        | chat + bars | 文字色 (拡張色) を設定
-| [hex]#19# + "*" + (A)STD + "," + STD | [hex]#19# `+*08,05+`         | chat + bars | 文字色及び背景色 (WeeChat 色) を設定
+| [hex]#19# + "*" + (A)STD + "," + STD | [hex]#19# `+*08,05+`         | chat + bars | 文字色および背景色 (WeeChat 色) を設定
 | [hex]#19# + "*" + (A)STD + "," + EXT | [hex]#19# `+*01,@00214+`     | chat + bars | 文字色 (WeeChat 色) と背景色 (拡張色) を設定
 | [hex]#19# + "*" + (A)EXT + "," + STD | [hex]#19# `+*@00214,05+`     | chat + bars | 文字色 (拡張色) と背景色 (WeeChat 色) を設定
-| [hex]#19# + "*" + (A)EXT + "," + EXT | [hex]#19# `+*@00214,@00017+` | chat + bars | 文字色及び背景色 (拡張色) を設定
+| [hex]#19# + "*" + (A)EXT + "," + EXT | [hex]#19# `+*@00214,@00017+` | chat + bars | 文字色および背景色 (拡張色) を設定
 | [hex]#19# + "b" + "F"                | [hex]#19# `+bF+`             | bars        | バーの文字色を設定
 | [hex]#19# + "b" + "D"                | [hex]#19# `+bD+`             | bars        | バーの区切り文字色を設定
 | [hex]#19# + "b" + "B"                | [hex]#19# `+bB+`             | bars        | バーの背景色を設定
@@ -991,7 +992,7 @@ _component_ には以下から 1 つ選んで記入してください:
 * WeeChat コア: _core_ (ルートディレクトリ、_po/_ ディレクトリ、_src/_
   ディレクトリに含まれるファイル、ただし _src/plugins/_ 内のファイルを除く)
 * 文書ファイル: _doc_ (_doc/_ ディレクトリに含まれるファイル)
-* プラグインの名前: _irc_ 、_python_ 、_relay_ 、... (_src/plugins/_ ディレクトリに含まれるファイル)
+* プラグインの名前: _irc_、_python_、_relay_、... (_src/plugins/_ ディレクトリに含まれるファイル)
 
 以下のルールに従ってください:
 

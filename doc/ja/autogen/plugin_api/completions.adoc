@@ -102,7 +102,7 @@
 
 | trigger | trigger_options | トリガに対するオプション
 
-| trigger | trigger_post_action | trigger post actions
+| trigger | trigger_post_action | トリガ実行後の処遇
 
 | weechat | bars_names | バーの名前
 
@@ -120,7 +120,7 @@
 
 | weechat | colors | 色名
 
-| weechat | commands | コマンド (weechat とプラグイン)
+| weechat | commands | コマンド (WeeChat およびプラグイン); オプション引数: コマンドの前に追加するプレフィックス
 
 | weechat | config_files | 設定ファイル
 
@@ -154,7 +154,7 @@
 
 | weechat | palette_colors | パレット色
 
-| weechat | plugins_commands | プラグインの定義するコマンド
+| weechat | plugins_commands | プラグインが定義するマンド; オプション引数: コマンドの前に追加するプレフィックス
 
 | weechat | plugins_installed | インストールされたプラグインの名前
 
@@ -166,7 +166,7 @@
 
 | weechat | secured_data | 保護データの名前 (sec.conf ファイル、セクションデータ)
 
-| weechat | weechat_commands | weechat コマンド
+| weechat | weechat_commands | WeeChat コマンド; オプション引数: コマンドの前に追加するプレフィックス
 
 | weechat | windows_numbers | ウィンドウの数
 

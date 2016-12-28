@@ -86,7 +86,7 @@
 
 | trigger | trigger_hook_conditions | conditions par défaut pour un hook
 
-| trigger | trigger_hook_rc | code retour par défaut pour un callback de hook
+| trigger | trigger_hook_rc | code retour par défaut pour une fonction de rappel de hook
 
 | trigger | trigger_hook_regex | expression régulière par défaut pour le hook
 
@@ -120,7 +120,7 @@
 
 | weechat | colors | noms des couleurs
 
-| weechat | commands | commandes (weechat et extensions)
+| weechat | commands | commandes (weechat et extensions) ; paramètre optionnel : préfixe à ajouter avant les commandes
 
 | weechat | config_files | fichiers de configuration
 
@@ -154,7 +154,7 @@
 
 | weechat | palette_colors | couleurs de la palette
 
-| weechat | plugins_commands | commandes définies par les extensions
+| weechat | plugins_commands | commandes définies par les extensions ; paramètre optionnel : préfixe à ajouter avant les commandes
 
 | weechat | plugins_installed | noms des extensions installées
 
@@ -166,7 +166,7 @@
 
 | weechat | secured_data | noms de données sécurisées (fichier sec.conf, section data)
 
-| weechat | weechat_commands | commandes weechat
+| weechat | weechat_commands | commandes weechat ; paramètre optionnel : préfixe à ajouter avant les commandes
 
 | weechat | windows_numbers | numéros des fenêtres
 

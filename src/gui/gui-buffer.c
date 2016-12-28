@@ -24,6 +24,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stdint.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -791,7 +792,8 @@ char *
 gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                                      const char *string)
 {
-    int length, length_var, index_string, index_result;
+    int index_string, index_result;
+    size_t length, length_var;
     char *result, *result2, *local_var;
     const char *pos_end_name, *ptr_value;
 
@@ -830,8 +832,15 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                         if (ptr_value)
                         {
                             length_var = strlen (ptr_value);
-                            length += length_var;
-                            result2 = realloc (result, length);
+                            if (length > SIZE_MAX - length_var)
+                            {
+                                result2 = NULL;
+                            }
+                            else
+                            {
+                                length += length_var;
+                                result2 = realloc (result, length);
+                            }
                             if (!result2)
                             {
                                 if (result)

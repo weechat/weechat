@@ -13,14 +13,14 @@ disable: FIFO パイプを無効化します
  toggle: FIFO パイプの有効無効を切り替えます
 
 FIFO パイプは WeeChat をリモート操作する際に使われます: FIFO パイプを通じてシェルからコマンドやテキストを送信できます。
-デフォルトの場合 FIFO パイプは ~/.weechat/weechat_fifo_xxx です ("xxx" は WeeChat の PID です)。
+デフォルトの場合 FIFO パイプは ~/.weechat/weechat_fifo です。
 
 書式は次のうちのどれか 1 つを使ってください:
   plugin.buffer *テキストまたはコマンド
   *テキストまたはコマンド
 
 freenode のニックネームを変更する例:
-  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345
+  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
 
 詳しい情報と例はユーザーズガイドを参照してください。
 

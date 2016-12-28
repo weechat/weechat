@@ -382,6 +382,27 @@ plugin_api_info_date_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns WeeChat info "pid".
+ */
+
+const char *
+plugin_api_info_pid_cb (const void *pointer, void *data,
+                        const char *info_name,
+                        const char *arguments)
+{
+    static char value[32];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", (int)getpid ());
+    return value;
+}
+
+/*
  * Returns WeeChat info "dir_separator".
  */
 
@@ -1830,6 +1851,9 @@ plugin_api_init ()
     hook_info (NULL, "date",
                N_("WeeChat compilation date"),
                NULL, &plugin_api_info_date_cb, NULL, NULL);
+    hook_info (NULL, "pid",
+               N_("WeeChat PID (process ID)"),
+               NULL, &plugin_api_info_pid_cb, NULL, NULL);
     hook_info (NULL, "dir_separator",
                N_("directory separator"),
                NULL, &plugin_api_info_dir_separator_cb, NULL, NULL);

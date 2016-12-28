@@ -86,9 +86,10 @@ int weechat_first_start = 0;           /* first start of WeeChat?           */
 time_t weechat_first_start_time = 0;   /* start time (used by /uptime cmd)  */
 int weechat_upgrade_count = 0;         /* number of /upgrade done           */
 struct timeval weechat_current_start_timeval; /* start time used to display */
-                                              /* duration of /upgrade       */
+                                       /* duration of /upgrade              */
 int weechat_quit = 0;                  /* = 1 if quit request from user     */
-int weechat_sigsegv = 0;               /* SIGSEGV received?                 */
+volatile sig_atomic_t weechat_quit_signal = 0; /* signal received,          */
+                                       /* WeeChat must quit                 */
 char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
 int weechat_locale_ok = 0;             /* is locale OK?                     */
 char *weechat_local_charset = NULL;    /* example: ISO-8859-1, UTF-8        */
@@ -550,16 +551,7 @@ weechat_locale_check ()
 void
 weechat_sighup ()
 {
-    int rc;
-
-    rc = hook_signal_send ("signal_sighup",
-                           WEECHAT_HOOK_SIGNAL_STRING, NULL);
-    if (rc != WEECHAT_RC_OK_EAT)
-    {
-        log_printf (_("Signal %s received, exiting WeeChat..."), "SIGHUP");
-        (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-        weechat_quit = 1;
-    }
+    weechat_quit_signal = SIGHUP;
 }
 
 /*
@@ -569,16 +561,7 @@ weechat_sighup ()
 void
 weechat_sigquit ()
 {
-    int rc;
-
-    rc = hook_signal_send ("signal_sigquit",
-                           WEECHAT_HOOK_SIGNAL_STRING, NULL);
-    if (rc != WEECHAT_RC_OK_EAT)
-    {
-        log_printf (_("Signal %s received, exiting WeeChat..."), "SIGQUIT");
-        (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-        weechat_quit = 1;
-    }
+    weechat_quit_signal = SIGQUIT;
 }
 
 /*
@@ -588,16 +571,7 @@ weechat_sigquit ()
 void
 weechat_sigterm ()
 {
-    int rc;
-
-    rc = hook_signal_send ("signal_sigterm",
-                           WEECHAT_HOOK_SIGNAL_STRING, NULL);
-    if (rc != WEECHAT_RC_OK_EAT)
-    {
-        log_printf (_("Signal %s received, exiting WeeChat..."), "SIGTERM");
-        (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-        weechat_quit = 1;
-    }
+    weechat_quit_signal = SIGTERM;
 }
 
 /*

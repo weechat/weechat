@@ -91,6 +91,26 @@ wattr_off (WINDOW *win, attr_t attrs, void *opts)
 }
 
 int
+wattr_get (WINDOW *win, attr_t *attrs, short *pair, void *opts)
+{
+    (void) win;
+    (void) attrs;
+    (void) pair;
+    (void) opts;
+    return OK;
+}
+
+int
+wattr_set (WINDOW *win, attr_t *attrs, short *pair, void *opts)
+{
+    (void) win;
+    (void) attrs;
+    (void) pair;
+    (void) opts;
+    return OK;
+}
+
+int
 waddnstr(WINDOW *win, const char *str, int n)
 {
     (void) win;

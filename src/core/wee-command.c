@@ -1688,6 +1688,7 @@ COMMAND_CALLBACK(debug)
 {
     struct t_config_option *ptr_option;
     struct t_weechat_plugin *ptr_plugin;
+    struct timeval time_start, time_end;
     int debug;
 
     /* make C compiler happy */
@@ -1858,6 +1859,16 @@ COMMAND_CALLBACK(debug)
                 }
             }
         }
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "time") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "time");
+        gettimeofday (&time_start, NULL);
+        (void) input_data (buffer, argv_eol[2]);
+        gettimeofday (&time_end, NULL);
+        debug_display_time_elapsed (&time_start, &time_end, argv_eol[2], 1);
         return WEECHAT_RC_OK;
     }
 
@@ -3047,7 +3058,7 @@ COMMAND_CALLBACK(input)
     else if (string_strcasecmp (argv[1], "jump_next_visited_buffer") == 0)
         gui_input_jump_next_visited_buffer (buffer);
     else if (string_strcasecmp (argv[1], "hotlist_clear") == 0)
-        gui_input_hotlist_clear (buffer);
+        gui_input_hotlist_clear (buffer, (argc > 2) ? argv[2] : NULL);
     else if (string_strcasecmp (argv[1], "grab_key") == 0)
         gui_input_grab_key (buffer, 0, (argc > 2) ? argv[2] : NULL);
     else if (string_strcasecmp (argv[1], "grab_key_command") == 0)
@@ -4906,6 +4917,10 @@ COMMAND_CALLBACK(quit)
     (void) pointer;
     (void) data;
     (void) buffer;
+
+    /* already quitting? just ignore the command */
+    if (weechat_quit)
+        return WEECHAT_RC_OK;
 
     confirm_ok = 0;
     pos_args = NULL;
@@ -7080,8 +7095,8 @@ command_init ()
            "command: command to execute (a '/' is automatically added if not "
            "found at beginning of command)"),
         "-buffer %(buffers_plugins_names) "
-        "%(plugins_names)|" PLUGIN_CORE " %(plugins_commands)"
-        " || %(plugins_names)|" PLUGIN_CORE " %(plugins_commands)",
+        "%(plugins_names)|" PLUGIN_CORE " %(plugins_commands:/)"
+        " || %(plugins_names)|" PLUGIN_CORE " %(plugins_commands:/)",
         &command_command, NULL, NULL);
     hook_command (
         NULL, "cursor",
@@ -7123,13 +7138,14 @@ command_init ()
         &command_cursor, NULL, NULL);
     hook_command (
         NULL, "debug",
-        N_("control debug for core/plugins"),
+        N_("debug functions"),
         N_("list"
            " || set <plugin> <level>"
            " || dump [<plugin>]"
            " || buffer|color|infolists|memory|tags|term|windows"
            " || mouse|cursor [verbose]"
-           " || hdata [free]"),
+           " || hdata [free]"
+           " || time <command>"),
         N_("     list: list plugins with debug levels\n"
            "      set: set debug level for plugin\n"
            "   plugin: name of plugin (\"core\" for WeeChat core)\n"
@@ -7149,10 +7165,12 @@ command_init ()
            "    mouse: toggle debug for mouse\n"
            "     tags: display tags for lines\n"
            "     term: display infos about terminal\n"
-           "  windows: display windows tree"),
+           "  windows: display windows tree\n"
+           "     time: measure time to execute a command or to send text to "
+           "the current buffer"),
         "list"
-        " || set %(plugins_names)|core"
-        " || dump %(plugins_names)|core"
+        " || set %(plugins_names)|" PLUGIN_CORE
+        " || dump %(plugins_names)|" PLUGIN_CORE
         " || buffer"
         " || color"
         " || cursor verbose"
@@ -7165,7 +7183,8 @@ command_init ()
         " || mouse verbose"
         " || tags"
         " || term"
-        " || windows",
+        " || windows"
+        " || time %(commands:/)",
         &command_debug, NULL, NULL);
     hook_command (
         NULL, "eval",
@@ -7305,8 +7324,8 @@ command_init ()
            "Tags most commonly used:\n"
            "  no_filter, no_highlight, no_log, log0..log9 (log level),\n"
            "  notify_none, notify_message, notify_private, notify_highlight,\n"
-           "  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color "
-           "of nick),\n"
+           "  self_msg, nick_xxx (xxx is nick in message), "
+           "prefix_nick_ccc (ccc is color of nick),\n"
            "  host_xxx (xxx is username + host in message),\n"
            "  irc_xxx (xxx is command name or number, see /server raw or /debug "
            "tags),\n"
@@ -7392,7 +7411,7 @@ command_init ()
            "cursor\n"
            "  delete_end_of_line: delete from cursor until end of line\n"
            "  delete_line: delete entire line\n"
-           "  clipboard_paste: paste from clipboard\n"
+           "  clipboard_paste: paste from the internal clipboard\n"
            "  transpose_chars: transpose two chars\n"
            "  undo: undo last command line action\n"
            "  redo: redo last command line action\n"
@@ -7412,7 +7431,10 @@ command_init ()
            "last jump to a buffer)\n"
            "  jump_previously_visited_buffer: jump to previously visited buffer\n"
            "  jump_next_visited_buffer: jump to next visited buffer\n"
-           "  hotlist_clear: clear hotlist\n"
+           "  hotlist_clear: clear hotlist (optional argument: \"lowest\" to "
+           "clear only lowest level in hotlist, \"highest\" to clear only "
+           "highest level in hotlist, or level mask: integer which is a "
+           "combination of 1=join/part, 2=message, 4=private, 8=highlight)\n"
            "  grab_key: grab a key (optional argument: delay for end of grab, "
             "default is 500 milliseconds)\n"
            "  grab_key_command: grab a key with its associated command (optional "
@@ -7431,20 +7453,23 @@ command_init ()
            "  paste_stop: stop paste (bracketed paste mode)\n"
            "\n"
            "This command is used by key bindings or plugins."),
-        "return|complete_next|complete_previous|search_text_here|search_text|"
-        "search_switch_case|search_switch_regex|search_switch_where|"
-        "search_previous|search_next|search_stop_here|search_stop|"
-        "delete_previous_char|delete_next_char|delete_previous_word|"
-        "delete_next_word|delete_beginning_of_line|delete_end_of_line|"
-        "delete_line|clipboard_paste|transpose_chars|undo|redo|"
-        "move_beginning_of_line|move_end_of_line|move_previous_char|"
-        "move_next_char|move_previous_word|move_next_word|history_previous|"
-        "history_next|history_global_previous|history_global_next|jump_smart|"
-        "jump_last_buffer_displayed|jump_previously_visited_buffer|"
-        "jump_next_visited_buffer|hotlist_clear|grab_key|grab_key_command|"
-        "grab_mouse|grab_mouse_area|set_unread|set_unread_current_buffer|"
-        "switch_active_buffer|switch_active_buffer_previous|"
-        "zoom_merged_buffer|insert|send|paste_start|paste_stop",
+        "return || complete_next || complete_previous || search_text_here || "
+        "search_text || search_switch_case || search_switch_regex || "
+        "search_switch_where || search_previous || search_next || "
+        "search_stop_here || search_stop || delete_previous_char || "
+        "delete_next_char || delete_previous_word || delete_next_word || "
+        "delete_beginning_of_line || delete_end_of_line || delete_line || "
+        "clipboard_paste || transpose_chars || undo || redo || "
+        "move_beginning_of_line || move_end_of_line || move_previous_char || "
+        "move_next_char || move_previous_word || move_next_word || "
+        "history_previous || history_next || history_global_previous || "
+        "history_global_next || jump_smart || jump_last_buffer_displayed || "
+        "jump_previously_visited_buffer || jump_next_visited_buffer || "
+        "hotlist_clear 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|lowest|highest || "
+        "grab_key || grab_key_command || grab_mouse || grab_mouse_area || "
+        "set_unread || set_unread_current_buffer || switch_active_buffer || "
+        "switch_active_buffer_previous || zoom_merged_buffer || insert || "
+        "send || paste_start || paste_stop",
         &command_input, NULL, NULL);
     hook_command (
         NULL, "key",
@@ -7515,8 +7540,8 @@ command_init ()
         "list %(keys_contexts)"
         " || listdefault %(keys_contexts)"
         " || listdiff %(keys_contexts)"
-        " || bind %(keys_codes) %(commands)"
-        " || bindctxt %(keys_contexts) %(keys_codes) %(commands)"
+        " || bind %(keys_codes) %(commands:/)"
+        " || bindctxt %(keys_contexts) %(keys_codes) %(commands:/)"
         " || unbind %(keys_codes)"
         " || unbindctxt %(keys_contexts) %(keys_codes)"
         " || reset %(keys_codes_for_reset)"
@@ -7595,9 +7620,9 @@ command_init ()
            "    /mute -current msg * hi!\n"
            "  message to #weechat channel:\n"
            "    /mute -buffer irc.freenode.#weechat msg #weechat hi!"),
-        "-core|-current %(commands)|%*"
-        " || -buffer %(buffers_plugins_names) %(commands)|%*"
-        " || %(commands)|%*",
+        "-core|-current %(commands:/)|%*"
+        " || -buffer %(buffers_plugins_names) %(commands:/)|%*"
+        " || %(commands:/)|%*",
         &command_mute, NULL, NULL);
     hook_command (
         NULL, "plugin",
@@ -7755,7 +7780,7 @@ command_init ()
            "Example:\n"
            "  scroll 2 pages up:\n"
            "    /repeat 2 /window page_up"),
-        "%- %(commands)",
+        "%- %(commands:/)",
         &command_repeat, NULL, NULL);
     hook_command (
         NULL, "save",
@@ -7969,7 +7994,7 @@ command_init ()
            "    /wait 15m /away -all I'm away\n"
            "  say 'hello' in 2 minutes:\n"
            "    /wait 2m hello"),
-        "%- %(commands)",
+        "%- %(commands:/)",
         &command_wait, NULL, NULL);
     hook_command (
         NULL, "window",
@@ -8001,8 +8026,10 @@ command_init ()
            "         left: switch to window on the left\n"
            "        right: switch to window on the right\n"
            "       number: window number (see /window list)\n"
-           "       splith: split current window horizontally\n"
-           "       splitv: split current window vertically\n"
+           "       splith: split current window horizontally "
+           "(to undo: /window merge)\n"
+           "       splitv: split current window vertically "
+           "(to undo: /window merge)\n"
            "       resize: resize window size, new size is <pct> percentage of "
            "parent window\n"
            "      balance: balance the sizes of all windows\n"
@@ -8045,6 +8072,11 @@ command_init ()
            "    /window scroll -d\n"
            "  zoom on window #2:\n"
            "    /window zoom -window 2\n"
+           "  split window horizontally using 30%% of space for the window on "
+           "top:\n"
+           "    /window splith 30\n"
+           "  remove the split:\n"
+           "    /window merge\n"
            "  enable bare display for 2 seconds:\n"
            "    /window bare 2"),
         "list"

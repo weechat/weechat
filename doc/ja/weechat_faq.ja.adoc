@@ -96,7 +96,7 @@ https://weechat.org/doc
 * `/plugin` コマンドで "charset" プラグインがロード済みであることの確認
   (ロードされていない場合、"weechat-plugins" パッケージが必要かもしれません)。
 * `/charset` コマンドの出力を確認 (core バッファ上で)。端末の文字セットとして _ISO-XXXXXX_
-  又は _UTF-8_ があるはずです。その他の値がある場合は、ロケールが間違っている可能性があります
+  または _UTF-8_ があるはずです。その他の値がある場合は、ロケールが間違っている可能性があります
   ($LANG を修正してください)。
 * グローバルデコードを設定、例えば:
   `/set charset.default.decode "ISO-8859-15"`
@@ -104,17 +104,17 @@ https://weechat.org/doc
 ** 端末で UTF-8 が使えることを確認 (UTF-8 対応の端末としては
    rxvt-unicode を推奨)
 ** screen を使っている場合は、UTF-8 モードで起動されていることを確認
-   (~/.screenrc に "`defutf8 on`" の記述があるか又は `screen -U` のようにして起動)。
+   (~/.screenrc に "`defutf8 on`" の記述があるかまたは `screen -U` のようにして起動)。
 * _weechat.look.eat_newline_glitch_ オプションが off であることを確認してください
   (このオプションは表示上のバグを引き起こす可能性があります)
 
 [NOTE]
 WeeChat は UTF-8 ロケールを推奨します。ISO
-又はその他のロケールを使う場合、*全ての* 設定 (端末、screen、..)
+またはその他のロケールを使う場合、*全ての* 設定 (端末、screen、..)
 が ISO であり、UTF-8 *でない* ことを確認してください。
 
 [[unicode_chars]]
-=== 端末で表示されるユニコード文字が WeeChat では表示されない場合があります、なぜでしょうか?
+=== 端末で表示されるユニコード文字が WeeChat では表示されない場合があります。なぜでしょうか。
 
 この問題は libc の _wcwidth_ 関数のバグによって引き起こされている可能性があります。これは glibc 2.22
 で修正されているはずです (使用中のディストリビューションではまだ提供されていないかもしれません)
@@ -135,10 +135,10 @@ WeeChat を起動した場所に依存しますが、以下の値を持つはず
 
 * WeeChat を screen および tmux
   を使わずにローカルまたはリモートマシンで実行している場合、使用中の端末に依存します:
-  _xterm_ 、_xterm-256color_ 、_rxvt-unicode_ 、_rxvt-256color_ 、...
+  _xterm_、_xterm-256color_、_rxvt-unicode_、_rxvt-256color_、...
 * WeeChat を screen 内で実行している場合、_screen_ または _screen-256color_ です、
 * WeeChat を tmux
-  内で実行している場合、_tmux_ 、_tmux-256color_、_screen_ 、_screen-256color_ です。
+  内で実行している場合、_tmux_、_tmux-256color_、_screen_、_screen-256color_ です。
 
 もし必要であれば、TERM 変数を修正してください: `export TERM="xxx"`
 
@@ -195,8 +195,25 @@ _buffers.pl_ スクリプトを使ってください:
 /set weechat.bar.buffers.position bottom
 ----
 
+バーをスクロールするには: マウスが有効化されているならば
+(キー: kbd:[Alt+m])、マウスホイールでバーをスクロールできます。
+
+スクロール機能を果たすキーが割り当てられているならば、それらを使ってスクロールすることも可能です。以下ではニックネームリストをスクロールする既存のキーに合わせて
+kbd:[F1]、kbd:[F2]、kbd:[Alt+F1]、kbd:[Alt+F2] を定義しています:
+
+----
+/key bind meta-OP /bar scroll buffers * -100%
+/key bind meta-OQ /bar scroll buffers * +100%
+/key bind meta-meta-OP /bar scroll buffers * b
+/key bind meta-meta-OQ /bar scroll buffers * e
+----
+
+[NOTE]
+"meta-OP" と "meta-OQ" キーは端末によって異なります。キーコードを見つけるには
+kbd:[Alt+k] の後にキーを押してください。
+
 [[customize_prefix]]
-=== どうすればチャットエリア内のニックネームの最大長さを短く、又はニックネーム整列機能を無効化できますか。
+=== どうすればチャットエリア内のニックネームの最大長さを短く、またはニックネーム整列機能を無効化できますか。
 
 チャットエリアのニックネームの最大長を短くするには:
 
@@ -210,11 +227,37 @@ _buffers.pl_ スクリプトを使ってください:
 /set weechat.look.prefix_align none
 ----
 
+[[status_hotlist]]
+=== ステータスバーに表示される [H: 3(1,8), 2(4)] の意味を教えてください。
+
+これは「ホットリスト」と呼ばれ、ここにはバッファ番号およびそのバッファの未読メッセージカウンタが表示されます。未読メッセージカウンタの表示順はハイライト、プライベートメッセージ、一般メッセージ、その他のメッセージ
+(参加/退出メッセージなど)
+の順です。 +
+バッファの「未読メッセージ」とは、最後にそのバッファにフォーカスが移された以降に表示されたり受信した新しいメッセージを意味します。
+
+上記の例 `[H: 3(1,8), 2(4)]` の場合:
+
+* バッファ 3 番にハイライトが 1 通、未読が 8 通あり、
+* バッファ 2 番に未読が 4 通あることを意味します。
+
+バッファおよびカウンタのテキスト色はメッセージの種類を意味します。色のデフォルト設定は以下です:
+
+* ハイライト: `lightmagenta` および `magenta`
+* プライベートメッセージ: `lightgreen` および `green`
+* 一般メッセージ: `yellow` および `brown`
+* その他のメッセージ: `default` および `default` (端末のテキスト色)
+
+これらの色を変えるには、__weechat.color.status_data_*__ オプション (バッファ)
+および __weechat.color.status_count_*__ オプション (カウンタ) を設定します。 +
+その他のホットリスト関連オプションは __weechat.look.hotlist_*__ オプションを使って変更します。
+
+ホットリストに関する詳しい情報はユーザーズガイド (画面レイアウト) をご覧ください。
+
 [[input_bar_size]]
 === コマンドラインの行数を増やすにはどうすればいいですか。
 
 インプットバーの _size_ オプションには 1 (サイズ固定、デフォルト値)
-以上の値又は動的なサイズの意味で 0 を設定できます。_size_max_
+以上の値または動的なサイズの意味で 0 を設定できます。_size_max_
 オプションではサイズの最大値を設定できます (0 = 制限なし)。
 
 動的サイズを設定する例:
@@ -325,7 +368,7 @@ WeeChat バージョン 0.3.4 以上の場合、256 色がサポートされま�
 
 * screen 内の場合: _screen-256color_
 * tmux 内の場合: _screen-256color_ または _tmux-256color_
-* screen および tmux の外の場合: _xterm-256color_ 、_rxvt-256color_ 、_putty-256color_ 、...
+* screen および tmux の外の場合: _xterm-256color_、_rxvt-256color_、_putty-256color_、...
 
 [NOTE]
 これらの値を _TERM_ に設定するには、"ncurses-term"
@@ -350,7 +393,7 @@ WeeChat バージョン 0.3.4 の場合、新しい色を追加するには `/co
 WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用できます (オプション:
 色の別名を追加するには `/color` コマンドを使ってください)。
 
-色管理に関するより詳しい情報はユーザーガイドを読んでください。
+色管理に関するより詳しい情報はユーザーズガイドを読んでください。
 
 [[search_text]]
 === どうすればバッファ内の文字列を検索できますか (irssi の /lastlog の様に)。
@@ -358,7 +401,7 @@ WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用で�
 デフォルトのキーは kbd:[Ctrl+r] です (コマンドは: `/input search_text_here`)。
 ハイライト部分へのジャンプは: kbd:[Alt+p] / kbd:[Alt+n]
 
-この機能に関するより詳しい情報はユーザーガイドを参照してください (デフォルトのキー割り当て)。
+この機能に関するより詳しい情報はユーザーズガイドを参照してください (デフォルトのキー割り当て)。
 
 [[terminal_focus]]
 === どうすれば端末にフォーカスが合った時や外れた時にコマンドを実行できますか。
@@ -367,8 +410,8 @@ WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用で�
 
 *重要*:
 
-* 現時点では、_xterm_ を除いてこの機能をサポートする端末は*存在しない* ようです。
-* screen および tmux ではこの機能を*使うことができません* 。
+* 現時点では、_xterm_ を除いてこの機能をサポートする端末は *存在しない* ようです。
+* screen および tmux ではこの機能を *使うことができません*。
 
 WeeChat の開始時にコードを送信するには:
 
@@ -384,14 +427,13 @@ WeeChat の開始時にコードを送信するには:
 /key bind meta2-O /print -core unfocus
 ----
 
-// TRANSLATION MISSING
 [[screen_paste]]
-=== When WeeChat is running in screen, pasting text in another screen window adds ~0 and ~1 around text, why?
+=== WeeChat を screen の内部で実行している場合、別の screen ウィンドウ内にペーストされるテキストの周りに ~0 と ~1 が追加されます。なぜでしょうか。
 
-This is caused by the bracketed paste option which is enabled by default, and
-not properly handled by screen in other windows.
+scrreen
+がデフォルトで有効化されている括弧付きペーストオプションの挙動を別のウィンドウ内で適切に処理できないことが原因です。
 
-You can just disable bracketed paste mode:
+括弧付きペーストモードを無効化するには以下のコマンドを使います:
 
 ----
 /set weechat.look.paste_bracketed off
@@ -415,7 +457,7 @@ XTerm*metaSendsEscape: true
 UXTerm*metaSendsEscape: true
 ----
 
-このファイルを再読み込みするか (`xrdb -override ~/.Xresources`) 又は X を再起動してください。
+このファイルをリロードするか (`xrdb -override ~/.Xresources`) または X を再起動してください。
 
 [[customize_key_bindings]]
 === どうすればキー割り当てをカスタマイズできますか。
@@ -425,7 +467,7 @@ UXTerm*metaSendsEscape: true
 デフォルトキー kbd:[Alt+k] でキーコードを取り込み、これをコマンドラインに入力できます。
 
 [[jump_to_buffer_11_or_higher]]
-=== バッファ 11 番 (又はそれ以上の番号) にジャンプするキーは何ですか。
+=== バッファ 11 番 (またはそれ以上の番号) にジャンプするキーは何ですか。
 
 キー kbd:[Alt+j] の後に 2 桁の数字を入力します、例えば kbd:[Alt+j]
 その後に kbd:[1]、kbd:[1] でバッファ 11 番にジャンプします。
@@ -436,7 +478,7 @@ UXTerm*metaSendsEscape: true
 /key bind meta-q /buffer *11
 ----
 
-デフォルトキー割り当てのリストはユーザーガイドを参照してください。
+デフォルトキー割り当てのリストはユーザーズガイドを参照してください。
 
 [[global_history]]
 === どうすればグローバルヒストリを (バッファヒストリの代わりに) 上下矢印キーで使えますか。
@@ -453,7 +495,7 @@ UXTerm*metaSendsEscape: true
 
 [NOTE]
 "meta2-A" と "meta2-B" キーは端末によって異なります。キーコードを見つけるには
-kbd:[Alt+k] の後にキー (上矢印又は下矢印) を押してください。
+kbd:[Alt+k] の後にキー を押してください。
 
 [[mouse]]
 == マウス
@@ -488,7 +530,7 @@ $ printf '\033[?1002l'
 ----
 
 [[mouse_coords]]
-=== マウスの位置座標 X 又は Y が 94 (または 222) よりも大きい場合にマウス機能が正しく動きません。
+=== マウスの位置座標 X または Y が 94 (または 222) よりも大きい場合にマウス機能が正しく動きません。
 
 一部の端末ではマウスの位置座標を指定するために ISO 文字だけを使います、
 このため X/Y が 94 (または 222) よりも大きい場合は正しく動きません。
@@ -760,6 +802,24 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 [[settings]]
 == 設定
 
+[[editing_config_files]]
+=== 手作業で設定ファイル (*.conf) を編集することは可能ですか。
+
+可能ですが、*非推奨* です。
+
+その代わり WeeChat 内でコマンド `/set` を使うことを推奨します。その理由は:
+
+* Tab キーで値を補完できるからです
+* 設定しようとした値は検証され、値に問題があった場合にはメッセージが表示されるからです
+* 設定した値はすぐに反映され、再起動の必要もないからです
+
+それでもなお手作業で設定ファイルを編集したいなら、以下の点に注意してください:
+
+* あるオプションに対して不正な値を設定した場合、WeeChat
+  は設定ファイルのロード時にエラーを表示し、その値を破棄します (そのオプションのデフォルト値が使われます)
+* WeeChat が実行中の場合には、必ずコマンド `/reload` を実行してください。設定が変更されその変更をコマンド
+  `/save` で保存していなかった場合、これらの設定の変更内容は破棄されます
+
 [[memory_usage]]
 === どうすれば WeeChat のメモリ使用量を節約できますか。
 
@@ -770,7 +830,7 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 * 使わないプラグインのロードを禁止する、例えば:
   aspell、fifo、logger、perl、python、ruby、lua、tcl、guile、javascript、xfer (DCC で使用)
 * 本当に必要なスクリプトだけをロード
-* SSL を*使わない* なら、証明書を読み込まないでください: オプション
+* SSL を *使わない* なら、証明書を読み込まないでください: オプション
   _weechat.network.gnutls_ca_file_ に空文字列を設定してください。
 * _weechat.history.max_buffer_lines_number_
   オプションの値を減らすか、_weechat.history.max_buffer_lines_minutes_ オプションに値を設定してください。
@@ -784,6 +844,8 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 * "nicklist" バーを非表示にする: `/bar hide nicklist`
 * ステータスバー時間に秒の表示を止める:
   `/set weechat.look.item_time_format "%H:%M"` (これはデフォルト値です)
+* コマンドライン内の単語スペルミスのリアルタイムチェックを無効にする (有効にしていた場合):
+  `/set aspell.check.real_time off`
 * _TZ_ 変数を設定する (例: `export TZ="Europe/Paris"`)、こうすることで
   _/etc/localtime_ ファイルへ頻繁にアクセスしないようになります。
 
@@ -793,8 +855,8 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 IRC の退出および終了メッセージを無効化します:
 
 ----
-/set irc.server_default.default_msg_part ""
-/set irc.server_default.default_msg_quit ""
+/set irc.server_default.msg_part ""
+/set irc.server_default.msg_quit ""
 ----
 
 すべての CTCP クエリに対する応答を無効化します:

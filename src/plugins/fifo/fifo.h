@@ -25,7 +25,11 @@
 #define FIFO_OPTION_NAME "fifo"
 
 extern struct t_weechat_plugin *weechat_fifo_plugin;
+extern int fifo_quiet;
 extern int fifo_fd;
 extern char *fifo_filename;
+
+extern void fifo_create ();
+extern void fifo_remove ();
 
 #endif /* WEECHAT_FIFO_H */

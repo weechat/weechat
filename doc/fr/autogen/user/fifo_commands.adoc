@@ -13,14 +13,14 @@ disable : désactiver le tube FIFO
  toggle : activer/désactiver le tube FIFO
 
 Le tube FIFO est utilisé comme contrôle à distance de WeeChat : vous pouvez envoyer des commandes ou du texte au tube FIFO depuis votre shell.
-Par défaut le tube FIFO est dans ~/.weechat/weechat_fifo_xxx ("xxx" est le PID de WeeChat).
+Par défaut le tube FIFO est dans ~/.weechat/weechat_fifo
 
 Le format attendu est l'un des suivants :
   plugin.buffer *texte ou commande ici
   *texte ou commande ici
 
 Par exemple pour changer votre pseudo sur freenode :
-  echo 'irc.server.freenode */nick autrepseudo' >~/.weechat/weechat_fifo_12345
+  echo 'irc.server.freenode */nick autrepseudo' >~/.weechat/weechat_fifo
 
 Merci de lire le guide utilisateur pour plus d'information et des exemples.
 

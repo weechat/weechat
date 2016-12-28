@@ -26,7 +26,6 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
-#include <time.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-arraylist.h"
@@ -980,8 +979,6 @@ gui_bar_item_time_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer,
                       struct t_hashtable *extra_info)
 {
-    time_t date;
-    struct tm *local_time;
     char text_time[128], text_time2[128];
 
     /* make C compiler happy */
@@ -992,11 +989,8 @@ gui_bar_item_time_cb (const void *pointer, void *data,
     (void) buffer;
     (void) extra_info;
 
-    date = time (NULL);
-    local_time = localtime (&date);
-    if (strftime (text_time, sizeof (text_time),
-                  CONFIG_STRING(config_look_item_time_format),
-                  local_time) == 0)
+    config_get_item_time (text_time, sizeof (text_time));
+    if (!text_time[0])
         return NULL;
 
     snprintf (text_time2, sizeof (text_time2), "%s%s",
@@ -2017,8 +2011,6 @@ gui_bar_item_focus_buffer_nicklist_cb (const void *pointer,
 int
 gui_bar_item_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
-    time_t date;
-    struct tm *local_time;
     static char item_time_text[128] = { '\0' };
     char new_item_time_text[128];
 
@@ -2026,12 +2018,7 @@ gui_bar_item_timer_cb (const void *pointer, void *data, int remaining_calls)
     (void) data;
     (void) remaining_calls;
 
-    date = time (NULL);
-    local_time = localtime (&date);
-    if (strftime (new_item_time_text, sizeof (new_item_time_text),
-                  CONFIG_STRING(config_look_item_time_format),
-                  local_time) == 0)
-        return WEECHAT_RC_OK;
+    config_get_item_time (new_item_time_text, sizeof (new_item_time_text));
 
     /*
      * we update item only if it changed since last time

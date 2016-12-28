@@ -21,6 +21,7 @@
 docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
+             docinfo.html \
              weechat.1.en.adoc \
              cmdline_options.en.adoc \
              weechat_user.en.adoc \

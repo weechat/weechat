@@ -31,6 +31,7 @@
 #include <sys/time.h>
 #include <time.h>
 #include <sys/types.h>
+#include <sys/socket.h>
 #include <sys/wait.h>
 #include <poll.h>
 #include <signal.h>
@@ -78,20 +79,22 @@ struct pollfd *hook_fd_pollfd = NULL;  /* file descriptors for poll()       */
 int hook_fd_pollfd_count = 0;          /* number of file descriptors        */
 int hook_process_pending = 0;          /* 1 if there are some process to    */
                                        /* run (via fork)                    */
+int hook_socketpair_ok = 0;            /* 1 if socketpair() is OK           */
 
 
 void hook_process_run (struct t_hook *hook_process);
 
 
 /*
- * Initializes lists of hooks.
+ * Initializes hooks.
  */
 
 void
 hook_init ()
 {
-    int type;
+    int type, sock[2], rc;
 
+    /* initialize list of hooks */
     for (type = 0; type < HOOK_NUM_TYPES; type++)
     {
         weechat_hooks[type] = NULL;
@@ -100,6 +103,42 @@ hook_init ()
     }
     hooks_count_total = 0;
     hook_last_system_time = time (NULL);
+
+    /*
+     * Set a flag to 0 if socketpair() function is not available.
+     *
+     * For the connect hook, when this is defined an array of sockets will
+     * be passed from the parent process to the child process instead of using
+     * SCM_RIGHTS to pass a socket back from the child process to parent
+     * process.
+     *
+     * This allows connections to work on Windows but it limits the number of
+     * IPs that can be attempted each time.
+     */
+    hook_socketpair_ok = 1;
+
+#if defined(__CYGWIN__) || defined(__APPLE__) || defined(__MACH__)
+    hook_socketpair_ok = 0;
+    (void) sock;
+    (void) rc;
+#else
+    /*
+     * Test if socketpair() function is working fine: this is NOT the case
+     * on Windows with Ubuntu bash
+     * (errno == 94: ESOCKTNOSUPPORT: socket type not supported)
+     */
+    rc = socketpair (AF_LOCAL, SOCK_DGRAM, 0, sock);
+    if (rc < 0)
+    {
+        /* Windows/Ubuntu */
+        hook_socketpair_ok = 0;
+    }
+    else
+    {
+        close (sock[0]);
+        close (sock[1]);
+    }
+#endif
 }
 
 /*
@@ -2023,6 +2062,7 @@ void
 hook_process_run (struct t_hook *hook_process)
 {
     int pipes[3][2], timeout, max_calls, rc, i;
+    char str_error[1024];
     long interval;
     pid_t pid;
 
@@ -2061,12 +2101,15 @@ hook_process_run (struct t_hook *hook_process)
     {
         /* fork failed */
         case -1:
+            snprintf (str_error, sizeof (str_error),
+                      "fork error: %s",
+                      strerror (errno));
             (void) (HOOK_PROCESS(hook_process, callback))
                 (hook_process->callback_pointer,
                  hook_process->callback_data,
                  HOOK_PROCESS(hook_process, command),
                  WEECHAT_HOOK_PROCESS_ERROR,
-                 NULL, NULL);
+                 NULL, str_error);
             unhook (hook_process);
             return;
         /* child process */
@@ -2209,9 +2252,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
 {
     struct t_hook *new_hook;
     struct t_hook_connect *new_hook_connect;
-#ifdef HOOK_CONNECT_MAX_SOCKETS
     int i;
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
 
 #ifndef HAVE_GNUTLS
     /* make C compiler happy */
@@ -2265,13 +2306,14 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     new_hook_connect->handshake_hook_timer = NULL;
     new_hook_connect->handshake_fd_flags = 0;
     new_hook_connect->handshake_ip_address = NULL;
-#ifdef HOOK_CONNECT_MAX_SOCKETS
-    for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+    if (!hook_socketpair_ok)
     {
-        new_hook_connect->sock_v4[i] = -1;
-        new_hook_connect->sock_v6[i] = -1;
+        for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+        {
+            new_hook_connect->sock_v4[i] = -1;
+            new_hook_connect->sock_v6[i] = -1;
+        }
     }
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
 
     hook_add_to_list (new_hook);
 
@@ -2831,11 +2873,20 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
                       struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook, *next_hook;
+    const char *pos;
+    char *item;
 
     /* make C compiler happy */
     (void) plugin;
 
     hook_exec_start ();
+
+    pos = strchr (completion_item, ':');
+    item = (pos) ?
+        string_strndup (completion_item, pos - completion_item) :
+        strdup (completion_item);
+    if (!item)
+        return;
 
     ptr_hook = weechat_hooks[HOOK_TYPE_COMPLETION];
     while (ptr_hook)
@@ -2845,7 +2896,7 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
         if (!ptr_hook->deleted
             && !ptr_hook->running
             && (string_strcasecmp (HOOK_COMPLETION(ptr_hook, completion_item),
-                                   completion_item) == 0))
+                                   item) == 0))
         {
             ptr_hook->running = 1;
             (void) (HOOK_COMPLETION(ptr_hook, callback))
@@ -2859,6 +2910,8 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
 
         ptr_hook = next_hook;
     }
+
+    free (item);
 
     hook_exec_end ();
 }
@@ -3939,21 +3992,22 @@ unhook (struct t_hook *hook)
                     close (HOOK_CONNECT(hook, child_send));
                     HOOK_CONNECT(hook, child_send) = -1;
                 }
-#ifdef HOOK_CONNECT_MAX_SOCKETS
-                for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+                if (!hook_socketpair_ok)
                 {
-                    if (HOOK_CONNECT(hook, sock_v4[i]) != -1)
+                    for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
                     {
-                        close (HOOK_CONNECT(hook, sock_v4[i]));
-                        HOOK_CONNECT(hook, sock_v4[i]) = -1;
-                    }
-                    if (HOOK_CONNECT(hook, sock_v6[i]) != -1)
-                    {
-                        close (HOOK_CONNECT(hook, sock_v6[i]));
-                        HOOK_CONNECT(hook, sock_v6[i]) = -1;
+                        if (HOOK_CONNECT(hook, sock_v4[i]) != -1)
+                        {
+                            close (HOOK_CONNECT(hook, sock_v4[i]));
+                            HOOK_CONNECT(hook, sock_v4[i]) = -1;
+                        }
+                        if (HOOK_CONNECT(hook, sock_v6[i]) != -1)
+                        {
+                            close (HOOK_CONNECT(hook, sock_v6[i]));
+                            HOOK_CONNECT(hook, sock_v6[i]) = -1;
+                        }
                     }
                 }
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
                 break;
             case HOOK_TYPE_PRINT:
                 if (HOOK_PRINT(hook, tags_array))
@@ -4822,13 +4876,14 @@ hook_print_log ()
                     log_printf ("    handshake_hook_timer. : 0x%lx", HOOK_CONNECT(ptr_hook, handshake_hook_timer));
                     log_printf ("    handshake_fd_flags. . : %d",    HOOK_CONNECT(ptr_hook, handshake_fd_flags));
                     log_printf ("    handshake_ip_address. : '%s'",  HOOK_CONNECT(ptr_hook, handshake_ip_address));
-#ifdef HOOK_CONNECT_MAX_SOCKETS
-                    for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+                    if (!hook_socketpair_ok)
                     {
-                        log_printf ("    sock_v4[%d]. . . . . . : '%d'", HOOK_CONNECT(ptr_hook, sock_v4[i]));
-                        log_printf ("    sock_v6[%d]. . . . . . : '%d'", HOOK_CONNECT(ptr_hook, sock_v6[i]));
+                        for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+                        {
+                            log_printf ("    sock_v4[%d]. . . . . . : '%d'", HOOK_CONNECT(ptr_hook, sock_v4[i]));
+                            log_printf ("    sock_v6[%d]. . . . . . : '%d'", HOOK_CONNECT(ptr_hook, sock_v6[i]));
+                        }
                     }
-#endif /* HOOK_CONNECT_MAX_SOCKETS */
                     break;
                 case HOOK_TYPE_PRINT:
                     log_printf ("  print data:");

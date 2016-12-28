@@ -1882,6 +1882,111 @@ API_FUNC(hook_command)
 }
 
 int
+weechat_js_api_hook_completion_cb (const void *pointer, void *data,
+                                   const char *completion_item,
+                                   struct t_gui_buffer *buffer,
+                                   struct t_gui_completion *completion)
+{
+    struct t_plugin_script *script;
+    void *func_argv[4];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    int *rc, ret;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
+        func_argv[2] = API_PTR2STR(buffer);
+        func_argv[3] = API_PTR2STR(completion);
+
+        rc = (int *)weechat_js_exec (script,
+                                     WEECHAT_SCRIPT_EXEC_INT,
+                                     ptr_function,
+                                     "ssss", func_argv);
+
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (func_argv[2])
+            free (func_argv[2]);
+        if (func_argv[3])
+            free (func_argv[3]);
+
+        return ret;
+    }
+
+    return WEECHAT_RC_ERROR;
+}
+
+API_FUNC(hook_completion)
+{
+    char *result;
+
+    API_INIT_FUNC(1, "hook_completion", "ssss", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value completion(args[0]);
+    v8::String::Utf8Value description(args[1]);
+    v8::String::Utf8Value function(args[2]);
+    v8::String::Utf8Value data(args[3]);
+
+    result = API_PTR2STR(
+        plugin_script_api_hook_completion (
+            weechat_js_plugin,
+            js_current_script,
+            *completion,
+            *description,
+            &weechat_js_api_hook_completion_cb,
+            *function,
+            *data));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+API_FUNC(hook_completion_get_string)
+{
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_completion_get_string", "ss", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value completion(args[0]);
+    v8::String::Utf8Value property(args[1]);
+
+    result = weechat_hook_completion_get_string (
+        (struct t_gui_completion *)API_STR2PTR(*completion),
+        *property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(hook_completion_list_add)
+{
+    int nick_completion;
+
+    API_INIT_FUNC(1, "hook_completion_list_add", "ssis", API_RETURN_ERROR);
+
+    v8::String::Utf8Value completion(args[0]);
+    v8::String::Utf8Value word(args[1]);
+    nick_completion = args[2]->IntegerValue();
+    v8::String::Utf8Value where(args[3]);
+
+    weechat_hook_completion_list_add (
+        (struct t_gui_completion *)API_STR2PTR(*completion),
+        *word,
+        nick_completion,
+        *where);
+
+    API_RETURN_OK;
+}
+
+int
 weechat_js_api_hook_command_run_cb (const void *pointer, void *data,
                                     struct t_gui_buffer *buffer,
                                     const char *command)
@@ -2633,111 +2738,6 @@ API_FUNC(hook_config)
             *data));
 
     API_RETURN_STRING_FREE(result);
-}
-
-int
-weechat_js_api_hook_completion_cb (const void *pointer, void *data,
-                                   const char *completion_item,
-                                   struct t_gui_buffer *buffer,
-                                   struct t_gui_completion *completion)
-{
-    struct t_plugin_script *script;
-    void *func_argv[4];
-    char empty_arg[1] = { '\0' };
-    const char *ptr_function, *ptr_data;
-    int *rc, ret;
-
-    script = (struct t_plugin_script *)pointer;
-    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
-
-    if (ptr_function && ptr_function[0])
-    {
-        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
-        func_argv[2] = API_PTR2STR(buffer);
-        func_argv[3] = API_PTR2STR(completion);
-
-        rc = (int *)weechat_js_exec (script,
-                                     WEECHAT_SCRIPT_EXEC_INT,
-                                     ptr_function,
-                                     "ssss", func_argv);
-
-        if (!rc)
-            ret = WEECHAT_RC_ERROR;
-        else
-        {
-            ret = *rc;
-            free (rc);
-        }
-        if (func_argv[2])
-            free (func_argv[2]);
-        if (func_argv[3])
-            free (func_argv[3]);
-
-        return ret;
-    }
-
-    return WEECHAT_RC_ERROR;
-}
-
-API_FUNC(hook_completion)
-{
-    char *result;
-
-    API_INIT_FUNC(1, "hook_completion", "ssss", API_RETURN_EMPTY);
-
-    v8::String::Utf8Value completion(args[0]);
-    v8::String::Utf8Value description(args[1]);
-    v8::String::Utf8Value function(args[2]);
-    v8::String::Utf8Value data(args[3]);
-
-    result = API_PTR2STR(
-        plugin_script_api_hook_completion (
-            weechat_js_plugin,
-            js_current_script,
-            *completion,
-            *description,
-            &weechat_js_api_hook_completion_cb,
-            *function,
-            *data));
-
-    API_RETURN_STRING_FREE(result);
-}
-
-API_FUNC(hook_completion_get_string)
-{
-    const char *result;
-
-    API_INIT_FUNC(1, "hook_completion_get_string", "ss", API_RETURN_EMPTY);
-
-    v8::String::Utf8Value completion(args[0]);
-    v8::String::Utf8Value property(args[1]);
-
-    result = weechat_hook_completion_get_string (
-        (struct t_gui_completion *)API_STR2PTR(*completion),
-        *property);
-
-    API_RETURN_STRING(result);
-}
-
-API_FUNC(hook_completion_list_add)
-{
-    int nick_completion;
-
-    API_INIT_FUNC(1, "hook_completion_list_add", "ssis", API_RETURN_ERROR);
-
-    v8::String::Utf8Value completion(args[0]);
-    v8::String::Utf8Value word(args[1]);
-    nick_completion = args[2]->IntegerValue();
-    v8::String::Utf8Value where(args[3]);
-
-    weechat_hook_completion_list_add (
-        (struct t_gui_completion *)API_STR2PTR(*completion),
-        *word,
-        nick_completion,
-        *where);
-
-    API_RETURN_OK;
 }
 
 char *
@@ -4861,6 +4861,9 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(print_y);
     API_DEF_FUNC(log_print);
     API_DEF_FUNC(hook_command);
+    API_DEF_FUNC(hook_completion);
+    API_DEF_FUNC(hook_completion_get_string);
+    API_DEF_FUNC(hook_completion_list_add);
     API_DEF_FUNC(hook_command_run);
     API_DEF_FUNC(hook_timer);
     API_DEF_FUNC(hook_fd);
@@ -4873,9 +4876,6 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(hook_hsignal);
     API_DEF_FUNC(hook_hsignal_send);
     API_DEF_FUNC(hook_config);
-    API_DEF_FUNC(hook_completion);
-    API_DEF_FUNC(hook_completion_get_string);
-    API_DEF_FUNC(hook_completion_list_add);
     API_DEF_FUNC(hook_modifier);
     API_DEF_FUNC(hook_modifier_exec);
     API_DEF_FUNC(hook_info);

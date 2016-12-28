@@ -823,7 +823,8 @@ xfer_new (const char *plugin_name, const char *plugin_id,
      * auto-accept file/chat if nick is auto-accepted, or if file/chat is
      * auto-accepted
      */
-    if (xfer_nick_auto_accepted (new_xfer->plugin_id, new_xfer->remote_nick)
+    if ((XFER_IS_RECV(type)
+         && xfer_nick_auto_accepted (new_xfer->plugin_id, new_xfer->remote_nick))
         || ((type == XFER_TYPE_FILE_RECV)
             && weechat_config_boolean (xfer_config_file_auto_accept_files))
         || ((type == XFER_TYPE_CHAT_RECV)
@@ -1146,6 +1147,14 @@ xfer_add_cb (const void *pointer, void *data,
             free (path);
         }
 #endif /* _WIN32 */
+        if (!filename2)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: not enough memory (%s)"),
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                            "xfer_add, filename2");
+            goto error;
+        }
         /* check if file exists */
         if (stat (filename2, &st) == -1)
         {

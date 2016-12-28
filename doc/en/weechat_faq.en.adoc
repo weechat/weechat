@@ -86,22 +86,22 @@ https://weechat.org/doc
 
 It's common issue, please read carefully and check *ALL* solutions below:
 
-* check that weechat is linked to libncursesw (warning: needed on most
-  distributions but not all): `ldd /path/to/weechat`
-* check that the "charset" plugin is loaded with `/plugin` command (if it is
-  not, then you probably need the "weechat-plugins" package)
-* check the output of command `/charset` (on core buffer). You should see
+* Check that weechat is linked to libncursesw (warning: needed on most
+  distributions but not all): `ldd /path/to/weechat`.
+* Check that the "charset" plugin is loaded with `/plugin` command (if it is
+  not, then you probably need the "weechat-plugins" package).
+* Check the output of command `/charset` (on core buffer). You should see
   _ISO-XXXXXX_ or _UTF-8_ for terminal charset. If you see _ANSI_X3.4-1968_ or
   other values, your locale is probably wrong (fix your $LANG).
-* setup global decode value, for example:
-  `/set charset.default.decode "ISO-8859-15"`
-* if you are using UTF-8 locale:
-** check that your terminal is UTF-8 ready (terminal recommended for UTF-8 is
-   rxvt-unicode)
-** if you are using screen, check that it is run with UTF-8 mode
-   ("`defutf8 on`" in ~/.screenrc or `screen -U` to run screen)
-* check that option _weechat.look.eat_newline_glitch_ is off (this option may
-  cause display bugs)
+* Setup global decode value, for example:
+  `/set charset.default.decode "ISO-8859-15"`.
+* If you are using UTF-8 locale:
+** Check that your terminal is UTF-8 ready (terminal recommended for UTF-8 is
+   rxvt-unicode).
+** If you are using screen, check that it is run with UTF-8 mode
+   ("`defutf8 on`" in ~/.screenrc or `screen -U` to run screen).
+* Check that option _weechat.look.eat_newline_glitch_ is off (this option may
+  cause display bugs).
 
 [NOTE]
 UTF-8 locale is recommended for WeeChat. If you're using ISO or other
@@ -128,11 +128,11 @@ output of `echo $TERM` in your terminal).
 
 Depending on where you launch WeeChat, you should have:
 
-* if WeeChat runs locally or on a remote machine without screen nor tmux, it
+* If WeeChat runs locally or on a remote machine without screen nor tmux, it
   depends on the terminal used: _xterm_, _xterm-256color_, _rxvt-unicode_,
   _rxvt-256color_, ...
-* if WeeChat runs under screen, you should have _screen_ or _screen-256color_,
-* if WeeChat runs under tmux, you should have _tmux_, _tmux-256color_,
+* If WeeChat runs under screen, you should have _screen_ or _screen-256color_.
+* If WeeChat runs under tmux, you should have _tmux_, _tmux-256color_,
   _screen_ or _screen-256color_.
 
 If needed, fix your TERM variable: `export TERM="xxx"`.
@@ -190,6 +190,23 @@ To move bar to bottom:
 /set weechat.bar.buffers.position bottom
 ----
 
+To scroll the bar: if mouse is enabled (key: kbd:[Alt+m]), you can scroll the
+bar with your mouse wheel.
+
+Or you can define keys, similar to the existing keys to scroll nicklist.
+For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
+
+----
+/key bind meta-OP /bar scroll buffers * -100%
+/key bind meta-OQ /bar scroll buffers * +100%
+/key bind meta-meta-OP /bar scroll buffers * b
+/key bind meta-meta-OQ /bar scroll buffers * e
+----
+
+[NOTE]
+Keys "meta-OP" and "meta-OQ" may be different in your terminal. To find key
+code press kbd:[Alt+k] then key.
+
 [[customize_prefix]]
 === How can I reduce length of nicks or remove nick alignment in chat area?
 
@@ -204,6 +221,34 @@ To remove nick alignment:
 ----
 /set weechat.look.prefix_align none
 ----
+
+[[status_hotlist]]
+=== What does mean the [H: 3(1,8), 2(4)] in status bar?
+
+This is called the "hotlist", a list of buffers with the number of unread
+messages, by order: highlights, private messages, messages, other messages
+(like join/part). +
+The number of "unread message" is the number of new messages displayed/received
+since you visited the buffer.
+
+In the example `[H: 3(1,8), 2(4)]`, there are:
+
+* one highlight and 8 unread messages on buffer #3,
+* 4 unread messages on buffer #2.
+
+The color of the buffer/counter depends on the type of message, default colors
+are:
+
+* highlight: `lightmagenta` / `magenta`
+* private message: `lightgreen` / `green`
+* message: `yellow` / `brown`
+* other message: `default` / `default` (color of text in terminal)
+
+These colors can be changed with the options __weechat.color.status_data_*__
+(buffers) and __weechat.color.status_count_*__ (counters). +
+Other hotlist options can be changed with the options __weechat.look.hotlist_*__.
+
+See user's guide for more info about the hotlist (screen layout).
 
 [[input_bar_size]]
 === How to use command line with more than one line?
@@ -401,11 +446,11 @@ You can just disable bracketed paste mode:
 If you're using some terminals like xterm or uxterm, some meta keys does not
 work by default. You can add a line in file _~/.Xresources_:
 
-* for xterm:
+* For xterm:
 ----
 XTerm*metaSendsEscape: true
 ----
-* for uxterm:
+* For uxterm:
 ----
 UXTerm*metaSendsEscape: true
 ----
@@ -448,7 +493,7 @@ Example:
 
 [NOTE]
 Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
-code press kbd:[Alt+k] then key (up or down).
+code press kbd:[Alt+k] then key.
 
 [[mouse]]
 == Mouse
@@ -755,32 +800,52 @@ Scripts are not compatible with other IRC clients.
 [[settings]]
 == Settings
 
+[[editing_config_files]]
+=== Can I edit configuration files (*.conf) by hand?
+
+You can, but this is *NOT* recommended.
+
+Command `/set` in WeeChat is recommended:
+
+* You can complete value with the Tab key.
+* The value is checked, a message is displayed in case of error.
+* The value is used immediately, you don't need to restart anything.
+
+If you still want to edit files by hand, you should be careful:
+
+* If you put an invalid value for an option, WeeChat will display an error
+  on load and discard the value (the default value for option will be used).
+* If WeeChat is running, you'll have to issue the command `/reload`, and if
+  some settings were changed but not saved with `/save`, you will lose them.
+
 [[memory_usage]]
 === How can I tweak WeeChat to consume less memory?
 
 You can try following tips to consume less memory:
 
-* use the latest stable version (it is supposed to have less memory leaks than
-  older versions)
-* do not load some plugins if you don't use them, for example: aspell, fifo,
-  logger, perl, python, ruby, lua, tcl, guile, javascript, xfer (used for DCC)
-* load only scripts that you really need
-* do not load certificates if SSL is *NOT* used: set empty string in option
-  _weechat.network.gnutls_ca_file_
-* reduce value of option _weechat.history.max_buffer_lines_number_ or set value
-  of option _weechat.history.max_buffer_lines_minutes_
-* reduce value of option _weechat.history.max_commands_
+* Use the latest stable version (it is supposed to have less memory leaks than
+  older versions).
+* Do not load some plugins if you don't use them, for example: aspell, fifo,
+  logger, perl, python, ruby, lua, tcl, guile, javascript, xfer (used for DCC).
+* Load only scripts that you really need.
+* Do not load certificates if SSL is *NOT* used: set empty string in option
+  _weechat.network.gnutls_ca_file_.
+* Reduce value of option _weechat.history.max_buffer_lines_number_ or set value
+  of option _weechat.history.max_buffer_lines_minutes_.
+* Reduce value of option _weechat.history.max_commands_.
 
 [[cpu_usage]]
 === How can I tweak WeeChat to use less CPU?
 
 You can follow same tips as for <<memory_usage,memory>>, and these ones:
 
-* hide "nicklist" bar: `/bar hide nicklist`
-* remove display of seconds in status bar time:
-  `/set weechat.look.item_time_format "%H:%M"` (this is the default value)
-* set the _TZ_ variable (for example: `export TZ="Europe/Paris"`), to prevent
-  frequent access to file _/etc/localtime_
+* Hide "nicklist" bar: `/bar hide nicklist`.
+* Remove display of seconds in status bar time:
+  `/set weechat.look.item_time_format "%H:%M"` (this is the default value).
+* Disable real time check of misspelled words in command line (if you enabled it):
+  `/set aspell.check.real_time off`.
+* Set the _TZ_ variable (for example: `export TZ="Europe/Paris"`), to prevent
+  frequent access to file _/etc/localtime_.
 
 [[security]]
 === I am paranoid about security, which settings could I change to be even more secure?
@@ -788,8 +853,8 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
 Disable IRC part and quit messages:
 
 ----
-/set irc.server_default.default_msg_part ""
-/set irc.server_default.default_msg_quit ""
+/set irc.server_default.msg_part ""
+/set irc.server_default.msg_quit ""
 ----
 
 Disable answers to all CTCP queries:

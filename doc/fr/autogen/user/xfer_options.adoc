@@ -5,139 +5,167 @@
 * [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
 ** description: pass:none[couleur du texte pour le statut "interrompu"]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+lightred+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+lightred+`
 
 * [[option_xfer.color.status_active]] *xfer.color.status_active*
 ** description: pass:none[couleur du texte pour le statut "actif"]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+lightblue+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+lightblue+`
 
 * [[option_xfer.color.status_connecting]] *xfer.color.status_connecting*
 ** description: pass:none[couleur du texte pour le statut "connexion"]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+yellow+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+yellow+`
 
 * [[option_xfer.color.status_done]] *xfer.color.status_done*
 ** description: pass:none[couleur du texte pour le statut "terminé"]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+lightgreen+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+lightgreen+`
 
 * [[option_xfer.color.status_failed]] *xfer.color.status_failed*
 ** description: pass:none[couleur du texte pour le statut "échoué"]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+lightred+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+lightred+`
 
 * [[option_xfer.color.status_waiting]] *xfer.color.status_waiting*
 ** description: pass:none[couleur du texte pour le statut "en attente"]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+lightcyan+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+lightcyan+`
 
 * [[option_xfer.color.text]] *xfer.color.text*
 ** description: pass:none[couleur du texte dans le tampon xfer]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+default+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+default+`
 
 * [[option_xfer.color.text_bg]] *xfer.color.text_bg*
 ** description: pass:none[couleur du fond dans le tampon xfer]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+default+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+default+`
 
 * [[option_xfer.color.text_selected]] *xfer.color.text_selected*
 ** description: pass:none[couleur du texte pour la ligne sélectionnée dans le tampon xfer]
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `+white+`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+white+`
 
 * [[option_xfer.file.auto_accept_chats]] *xfer.file.auto_accept_chats*
 ** description: pass:none[accepte automatiquement les demandes de discussion (à utiliser avec précaution !)]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+off+`)
+** valeurs: on, off
+** valeur par défaut: `+off+`
 
 * [[option_xfer.file.auto_accept_files]] *xfer.file.auto_accept_files*
 ** description: pass:none[accepte automatiquement les demandes d'envoi de fichiers (à utiliser avec précaution !)]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+off+`)
+** valeurs: on, off
+** valeur par défaut: `+off+`
 
 * [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
 ** description: pass:none[liste de pseudos (séparés par des virgules) pour lesquels les demandes d'envoi de fichiers et de discussion sont automatiquement acceptées ; le format est "serveur.pseudo" (pour un serveur spécifique) ou "pseudo" (pour tous les serveurs) ; exemple : "freenode.FlashCode,andrew"]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+""+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`
 
 * [[option_xfer.file.auto_check_crc32]] *xfer.file.auto_check_crc32*
 ** description: pass:none[vérifier automatiquement la somme de contrôle CRC32 du fichier si elle est trouvée dans le nom de fichier (8 caractères hexadécimaux)]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+off+`)
+** valeurs: on, off
+** valeur par défaut: `+off+`
 
 * [[option_xfer.file.auto_rename]] *xfer.file.auto_rename*
 ** description: pass:none[renommer les fichiers reçus s'ils existent déjà (ajoute ".1", ".2", ...)]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+on+`)
+** valeurs: on, off
+** valeur par défaut: `+on+`
 
 * [[option_xfer.file.auto_resume]] *xfer.file.auto_resume*
 ** description: pass:none[continuer automatiquement les transferts de fichiers si la connexion avec l'hôte a été perdue]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+on+`)
+** valeurs: on, off
+** valeur par défaut: `+on+`
 
 * [[option_xfer.file.convert_spaces]] *xfer.file.convert_spaces*
 ** description: pass:none[convertir les espaces en underscores lors de l'envoi et la réception de fichiers]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+on+`)
+** valeurs: on, off
+** valeur par défaut: `+on+`
 
 * [[option_xfer.file.download_path]] *xfer.file.download_path*
 ** description: pass:none[chemin où écrire les fichiers reçus : "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut : "~/.weechat") (note : le contenu est évalué, voir /help eval)]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+"%h/xfer"+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+"%h/xfer"+`
 
 * [[option_xfer.file.upload_path]] *xfer.file.upload_path*
 ** description: pass:none[chemin pour lire les fichiers envoyés (quand aucun chemin n'est spécifié par l'utilisateur) : "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut : "~/.weechat") (note : le contenu est évalué, voir /help eval)]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+"~"+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+"~"+`
 
 * [[option_xfer.file.use_nick_in_filename]] *xfer.file.use_nick_in_filename*
 ** description: pass:none[utiliser le pseudo distant comme préfixe dans le nom de fichier local lors de la réception d'un fichier]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+on+`)
+** valeurs: on, off
+** valeur par défaut: `+on+`
 
 * [[option_xfer.look.auto_open_buffer]] *xfer.look.auto_open_buffer*
 ** description: pass:none[ouvrir automatiquement le tampon xfer lorsqu'un nouveau xfer est ajouté à la liste]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+on+`)
+** valeurs: on, off
+** valeur par défaut: `+on+`
 
 * [[option_xfer.look.progress_bar_size]] *xfer.look.progress_bar_size*
 ** description: pass:none[taille de la barre de progression, en caractères (si 0, la barre de progression est désactivée)]
 ** type: entier
-** valeurs: 0 .. 256 (valeur par défaut: `+20+`)
+** valeurs: 0 .. 256
+** valeur par défaut: `+20+`
 
 * [[option_xfer.look.pv_tags]] *xfer.look.pv_tags*
 ** description: pass:none[liste des étiquettes (séparées par des virgules) utilisées dans les messages privés, par exemple : "notify_message", "notify_private" ou "notify_highlight"]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+"notify_private"+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+"notify_private"+`
 
 * [[option_xfer.network.blocksize]] *xfer.network.blocksize*
 ** description: pass:none[taille de bloc pour les paquets envoyés, en octets]
 ** type: entier
-** valeurs: 1024 .. 102400 (valeur par défaut: `+65536+`)
+** valeurs: 1024 .. 102400
+** valeur par défaut: `+65536+`
 
 * [[option_xfer.network.fast_send]] *xfer.network.fast_send*
 ** description: pass:none[n'attend pas les accusés de réception lors de l'envoi de fichier]
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `+on+`)
+** valeurs: on, off
+** valeur par défaut: `+on+`
 
 * [[option_xfer.network.own_ip]] *xfer.network.own_ip*
 ** description: pass:none[adresse IP ou DNS utilisée pour envoyer les fichiers/discussions (si non renseigné, l'interface IP locale est utilisée)]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+""+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`
 
 * [[option_xfer.network.port_range]] *xfer.network.port_range*
 ** description: pass:none[restreint les fichiers/discussions sortants à utiliser des ports dans l'intervalle donné (pratique pour le NAT) (syntaxe : un port simple, par exemple 5000, un intervalle de ports, par exemple 5000-5015, si non renseigné tout port peut être utilisé, il est recommandé d'utiliser des ports supérieurs à 1024, car seul root peut utiliser les ports en dessous de 1024)]
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `+""+`)
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`
 
 * [[option_xfer.network.speed_limit]] *xfer.network.speed_limit*
 ** description: pass:none[limitation de vitesse pour l'envoi des fichiers, en kilo-octets par seconde (0 signifie pas de limite)]
 ** type: entier
-** valeurs: 0 .. 2147483647 (valeur par défaut: `+0+`)
+** valeurs: 0 .. 2147483647
+** valeur par défaut: `+0+`
 
 * [[option_xfer.network.timeout]] *xfer.network.timeout*
 ** description: pass:none[délai d'attente pour la requête xfer (en secondes)]
 ** type: entier
-** valeurs: 5 .. 2147483647 (valeur par défaut: `+300+`)
+** valeurs: 5 .. 2147483647
+** valeur par défaut: `+300+`

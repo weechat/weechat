@@ -15,33 +15,79 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
-[[v1.6]]
-== Version 1.6 (under dev)
+[[v1.7]]
+== Version 1.7 (under dev)
 
 New features::
 
+  * core: add option weechat.look.align_multiline_words (issue #411, issue #802)
+  * core: add optional command prefix in completion templates "commands", "plugins_commands" and ""weechat_commands"
+  * core: add optional arguments in completion template, sent to the callback
+  * core: add option "time" in command /debug
+  * api: add info "pid" (WeeChat PID) (issue #850)
+  * fifo: add file fifo.conf and option fifo.file.path to customize FIFO pipe path/filename (issue #850)
+  * irc: add server option "usermode" (issue #377, issue #820)
+  * irc: add tag "self_msg" on self messages (issue #840)
+
+Improvements::
+
+  * core, xfer: display more information on fork errors (issue #573)
+  * core: add a slash before commands completed in arguments of /command, /debug time, /key bind, /key bindctxt, /mute, /repeat, /wait
+  * core: add a warning in header of configuration files to not edit by hand (issue #851)
+  * alias: add a slash before commands completed in arguments of /alias
+  * irc: evaluate content of server option "ssl_fingerprint" (issue #858)
+  * irc: change default value of option irc.network.lag_reconnect to 300 (issue #818)
+  * trigger: do not hide email in command "/msg nickserv register password email" (issue #849)
+
+Bug fixes::
+
+  * core: fix deadlock when quitting after a signal SIGHUP/SIGQUIT/SIGTERM is received (issue #32)
+  * core: fix display of empty lines in search mode (issue #829)
+  * api: fix crash in function string_expand_home() when the HOME environment variable is not set (issue #827)
+  * irc: add missing tags on CTCP message sent
+  * lua: fix integers returned in Lua >= 5.3 (issue #834)
+  * relay: set status to "authentication failed" and close immediately connection in case of authentication failure in weechat and irc protocols (issue #825)
+  * script: reload a script after upgrade only if it was loaded, set autoload only if the script was auto-loaded (issue #855)
+
+Build::
+
+  * core: fix compilation on Mac OS X (add link with resolv) (issue #276)
+  * core: add build of xz package with make dist (cmake)
+
+[[v1.6]]
+== Version 1.6 (2016-10-02)
+
+New features::
+
+  * core: add optional argument "lowest", "highest" or level mask in command /input hotlist_clear
   * core: add option "cycle" in command /buffer
+  * api: add "extra" argument to evaluate extra variables in function string_eval_expression() (issue #534)
   * relay: add option relay.network.allow_empty_password (issue #735)
   * trigger: add support for one-time triggers (issue #399, issue #509)
 
 Improvements::
 
-  * core, irc, xfer: display more information in memory allocation errors (issue #573)
+  * core, irc, xfer: display more information on memory allocation errors (issue #573)
   * api: remove functions printf_date() and printf_tags()
   * irc: rename server options "default_msg_{kick|part|quit}" to "msg_{kick|part|quit}", evaluate them
   * relay: allow escape of comma in command "init" (weechat protocol) (issue #730)
 
 Bug fixes::
 
-  * core, irc, xfer: refresh domain name and name server addresses before connection to servers (issue #771)
+  * core, irc, xfer: refresh domain name and name server addresses before connection to servers (fix connection to servers after suspend mode) (issue #771)
+  * api: fix return of function string_match() when there are multiple masks in the string (issue #812)
+  * api: fix crash in function network_connect_to() if address is NULL
   * api: fix connection to servers with hook_connect() on Windows 10 with Windows subsystem for Linux (issue #770)
   * api: fix crash in function string_split_command() when the separator is not a semicolon (issue #731)
+  * irc: fix socket leak in connection to server (issue #358, issue #801)
+  * irc: fix display of service notice mask (message 008) (issue #429)
   * irc: fix NULL pointer dereference in 734 command callback (issue #738)
   * relay: return an empty hdata when the requested hdata or pointer is not found (issue #767)
+  * xfer: fix crash on DCC send if option xfer.file.auto_accept_nicks is set (issue #781)
 
 Documentation::
 
-  * switch to asciidoctor to build docs and man page
+  * switch to asciidoctor to build docs and man page (issue #722)
 
 Build::
 
@@ -57,6 +103,7 @@ New features::
 
 Improvements::
 
+  * core: evaluate content of option "weechat.look.item_time_format" (issue #791)
   * core: change default value of option weechat.look.nick_color_hash to "djb2"
   * core: move nick coloring from irc plugin to core, move options irc.look.nick_color_force, irc.look.nick_color_hash and irc.look.nick_color_stop_chars to core, add info "nick_color" and "nick_color_name", deprecate info "irc_nick_color" and "irc_color_name" (issue #262)
   * core: move irc bar item "away" to core, move options irc.look.item_away_message and irc.color.item_away to core (issue #692)

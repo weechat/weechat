@@ -5,139 +5,167 @@
 * [[option_relay.color.client]] *relay.color.client*
 ** opis: pass:none[kolor tekstu dla opisu klienta]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+cyan+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+cyan+`
 
 * [[option_relay.color.status_active]] *relay.color.status_active*
 ** opis: pass:none[kolor statusu "connected"]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightblue+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightblue+`
 
 * [[option_relay.color.status_auth_failed]] *relay.color.status_auth_failed*
 ** opis: pass:none[kolor statusu "authentication failed"]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightred+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightred+`
 
 * [[option_relay.color.status_connecting]] *relay.color.status_connecting*
 ** opis: pass:none[kolor statusu "connecting"]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+yellow+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+yellow+`
 
 * [[option_relay.color.status_disconnected]] *relay.color.status_disconnected*
 ** opis: pass:none[kolor statusu "disconnected"]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+lightred+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+lightred+`
 
 * [[option_relay.color.status_waiting_auth]] *relay.color.status_waiting_auth*
 ** opis: pass:none[kolor statusu "waiting authentication"]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+brown+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+brown+`
 
 * [[option_relay.color.text]] *relay.color.text*
 ** opis: pass:none[kolor tekstu w buforze pośrednika]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+default+`
 
 * [[option_relay.color.text_bg]] *relay.color.text_bg*
 ** opis: pass:none[kolor tła w buforze pośrednika]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+default+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+default+`
 
 * [[option_relay.color.text_selected]] *relay.color.text_selected*
 ** opis: pass:none[kolor tekstu zaznaczonej linii w buforze pośrednika]
 ** typ: kolor
-** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `+white+`)
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+white+`
 
 * [[option_relay.irc.backlog_max_minutes]] *relay.irc.backlog_max_minutes*
 ** opis: pass:none[maksymalna ilość minut w historii każdego bufora dla kanału IRC (0 = bez ograniczeń, przykłady: 1440 = dzień, 10080 = tydzień, 43200 = miesiąc, 525600 = rok)]
 ** typ: liczba
-** wartości: 0 .. 2147483647 (domyślna wartość: `+1440+`)
+** wartości: 0 .. 2147483647
+** domyślna wartość: `+1440+`
 
 * [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
 ** opis: pass:none[maksymalna ilość linii w historii każdego bufora dla kanału IRC (0 = bez ograniczeń)]
 ** typ: liczba
-** wartości: 0 .. 2147483647 (domyślna wartość: `+256+`)
+** wartości: 0 .. 2147483647
+** domyślna wartość: `+256+`
 
 * [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
 ** opis: pass:none[wyświetlaj backlog zaczynając od ostatniego rozłączenia klienta]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+on+`)
+** wartości: on, off
+** domyślna wartość: `+on+`
 
 * [[option_relay.irc.backlog_since_last_message]] *relay.irc.backlog_since_last_message*
 ** opis: pass:none[wyświetlaj backlog zaczynając od twojej ostatniej wiadomości]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+off+`)
+** wartości: on, off
+** domyślna wartość: `+off+`
 
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
 ** opis: pass:none[oddzielona przecinkami lista tagów dla wiadomości, które są wyświetlane w backlogu dla kanałów IRC (wspierane tagi: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = dla wszystkich wspieranych tagów]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+"irc_privmsg"+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+"irc_privmsg"+`
 
 * [[option_relay.irc.backlog_time_format]] *relay.irc.backlog_time_format*
 ** opis: pass:none[format czasu wiadomości w backlogu (zobacz man strftime dla formatu) (nie używane jeśli dla serwera ustawiono "server-time" przez klienta, ponieważ czas jest wysyłany jako tag irc); pusty ciąg = wyłącza znacznik czasu w backlogu]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+"[%H:%M] "+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+"[%H:%M] "+`
 
 * [[option_relay.look.auto_open_buffer]] *relay.look.auto_open_buffer*
 ** opis: pass:none[automatycznie otwiera bufor kiedy podłącza się nowy klient]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+on+`)
+** wartości: on, off
+** domyślna wartość: `+on+`
 
 * [[option_relay.look.raw_messages]] *relay.look.raw_messages*
 ** opis: pass:none[ilość nieprzetworzonych wiadomości do zachowania w pamięci, kiedy zamknięty jest bufor nieprzetworzonych danych (wiadomości zostaną wyświetlone po otworzeniu dla nich bufora)]
 ** typ: liczba
-** wartości: 0 .. 65535 (domyślna wartość: `+256+`)
+** wartości: 0 .. 65535
+** domyślna wartość: `+256+`
 
 * [[option_relay.network.allow_empty_password]] *relay.network.allow_empty_password*
-** opis: pass:none[allow empty password in relay (it should be enabled only for tests or local network)]
+** opis: pass:none[zezwala na puste haslo dla pośrednika (zaleca się włączać tylko dla testów albo dla sieci lokalnej)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+off+`)
+** wartości: on, off
+** domyślna wartość: `+off+`
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
 ** opis: pass:none[rozszerzone wyrażenia regularne POSIX z adresami IP dozwolonymi dla pośrednika (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^(123.45.67.89|192.160.*)$"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+""+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+""+`
 
 * [[option_relay.network.bind_address]] *relay.network.bind_address*
 ** opis: pass:none[adres do przypisania (jeśli puste, połączenie jest możliwe na wszystkich interfejsach, użyj "127.0.0.1", aby pozwolić tylko na połączenia z tej maszyny)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+""+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+""+`
 
 * [[option_relay.network.clients_purge_delay]] *relay.network.clients_purge_delay*
 ** opis: pass:none[opóźnienie, z jakim zostaną skasowane rozłączone klienty (w minutach, 0 = natychmiast, -1 nigdy)]
 ** typ: liczba
-** wartości: -1 .. 43200 (domyślna wartość: `+0+`)
+** wartości: -1 .. 43200
+** domyślna wartość: `+0+`
 
 * [[option_relay.network.compression_level]] *relay.network.compression_level*
 ** opis: pass:none[stopień kompresji pakietów wysyłanych do klienta za pomocą protokołu WeeChat (0 = kompresja wyłączona, 1 = niska kompresja ... 9 = najwyższa kompresja)]
 ** typ: liczba
-** wartości: 0 .. 9 (domyślna wartość: `+6+`)
+** wartości: 0 .. 9
+** domyślna wartość: `+6+`
 
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** opis: pass:none[nasłuchuj domyślnie na gnieździe IPv6 (w dodatku do domyślnego IPv4); protokoły IPv4 i IPv6 mogą być wymuszane (pojedynczo lub razem) w nazwie protokołu (zobacz /help relay)]
 ** typ: bool
-** wartości: on, off (domyślna wartość: `+on+`)
+** wartości: on, off
+** domyślna wartość: `+on+`
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
 ** opis: pass:none[maksymalna ilość klientów łączących się na port (0 = brak limitu)]
 ** typ: liczba
-** wartości: 0 .. 2147483647 (domyślna wartość: `+5+`)
+** wartości: 0 .. 2147483647
+** domyślna wartość: `+5+`
 
 * [[option_relay.network.password]] *relay.network.password*
-** opis: pass:none[password required by clients to access this relay (empty value means no password required, see option relay.network.allow_empty_password) (note: content is evaluated, see /help eval)]
+** opis: pass:none[hasło wymagane od klientów do połączenia z tym pośrednikiem (pusta wartość oznacza brak hasła, zobacz opcję relay.network.allow_empty_password) (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+""+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+""+`
 
 * [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
 ** opis: pass:none[plik z certyfikatem SSL i kluczem prywatnym (dla obsługi klientów poprzez SSL)]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+"%h/ssl/relay.pem"+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+"%h/ssl/relay.pem"+`
 
 * [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
 ** opis: pass:none[ciąg z priorytetami dla gnutls (składnię można znaleźć w dokumentacji gnutls dla funkcji  gnutls_priority_init, często używane ciągi to: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+"NORMAL:-VERS-SSL3.0"+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+"NORMAL:-VERS-SSL3.0"+`
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** opis: pass:none[rozszerzone wyrażenia regularne POSIX ze źródłami dozwolonymi dla gniazd webowych (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^http://(www\.)?przykład\.(com|org)"]
 ** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `+""+`)
+** wartości: dowolny ciąg
+** domyślna wartość: `+""+`

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-08-14 10:08+0200\n"
-"PO-Revision-Date: 2016-05-18 07:43+0200\n"
+"POT-Creation-Date: 2016-12-20 22:37+0100\n"
+"PO-Revision-Date: 2016-09-03 08:23+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -221,10 +221,6 @@ msgstr ""
 msgid ""
 "%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
 "correct"
-msgstr ""
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
 msgstr ""
 
 #, fuzzy
@@ -1315,13 +1311,14 @@ msgid ""
 "    /cursor go 10,5"
 msgstr ""
 
-msgid "control debug for core/plugins"
+msgid "debug functions"
 msgstr ""
 
 #, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
-"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
+"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free] || time "
+"<command>"
 msgstr "dump | buffer | windows"
 
 #, fuzzy
@@ -1345,7 +1342,9 @@ msgid ""
 "    mouse: toggle debug for mouse\n"
 "     tags: display tags for lines\n"
 "     term: display infos about terminal\n"
-"  windows: display windows tree"
+"  windows: display windows tree\n"
+"     time: measure time to execute a command or to send text to the current "
+"buffer"
 msgstr ""
 "   dump: memóriatartalom mentése a WeeChat logba (ugyanez a tartalom íródik "
 "a WeeChat összeomlásakor)\n"
@@ -1488,8 +1487,8 @@ msgid ""
 "Tags most commonly used:\n"
 "  no_filter, no_highlight, no_log, log0..log9 (log level),\n"
 "  notify_none, notify_message, notify_private, notify_highlight,\n"
-"  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of "
-"nick),\n"
+"  self_msg, nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color "
+"of nick),\n"
 "  host_xxx (xxx is username + host in message),\n"
 "  irc_xxx (xxx is command name or number, see /server raw or /debug tags),\n"
 "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
@@ -1575,7 +1574,7 @@ msgid ""
 "  delete_beginning_of_line: delete from beginning of line until cursor\n"
 "  delete_end_of_line: delete from cursor until end of line\n"
 "  delete_line: delete entire line\n"
-"  clipboard_paste: paste from clipboard\n"
+"  clipboard_paste: paste from the internal clipboard\n"
 "  transpose_chars: transpose two chars\n"
 "  undo: undo last command line action\n"
 "  redo: redo last command line action\n"
@@ -1594,7 +1593,10 @@ msgid ""
 "jump to a buffer)\n"
 "  jump_previously_visited_buffer: jump to previously visited buffer\n"
 "  jump_next_visited_buffer: jump to next visited buffer\n"
-"  hotlist_clear: clear hotlist\n"
+"  hotlist_clear: clear hotlist (optional argument: \"lowest\" to clear only "
+"lowest level in hotlist, \"highest\" to clear only highest level in hotlist, "
+"or level mask: integer which is a combination of 1=join/part, 2=message, "
+"4=private, 8=highlight)\n"
 "  grab_key: grab a key (optional argument: delay for end of grab, default is "
 "500 milliseconds)\n"
 "  grab_key_command: grab a key with its associated command (optional "
@@ -2190,7 +2192,7 @@ msgstr ""
 "[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
 "[pct] | resize pct | merge [all]]"
 
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "         list: list opened windows (without argument, this list is "
 "displayed)\n"
@@ -2202,8 +2204,8 @@ msgid ""
 "         left: switch to window on the left\n"
 "        right: switch to window on the right\n"
 "       number: window number (see /window list)\n"
-"       splith: split current window horizontally\n"
-"       splitv: split current window vertically\n"
+"       splith: split current window horizontally (to undo: /window merge)\n"
+"       splitv: split current window vertically (to undo: /window merge)\n"
 "       resize: resize window size, new size is <pct> percentage of parent "
 "window\n"
 "      balance: balance the sizes of all windows\n"
@@ -2245,6 +2247,10 @@ msgid ""
 "    /window scroll -d\n"
 "  zoom on window #2:\n"
 "    /window zoom -window 2\n"
+"  split window horizontally using 30%% of space for the window on top:\n"
+"    /window splith 30\n"
+"  remove the split:\n"
+"    /window merge\n"
 "  enable bare display for 2 seconds:\n"
 "    /window bare 2"
 msgstr ""
@@ -2316,9 +2322,10 @@ msgstr "a felhasználók le lettek tiltva"
 msgid "names of filters"
 msgstr "Aliaszok listája:\n"
 
-#, fuzzy
-msgid "commands (weechat and plugins)"
-msgstr "  (nem található bővítőmodul)\n"
+msgid ""
+"commands (weechat and plugins); optional argument: prefix to add before the "
+"commands"
+msgstr ""
 
 #, fuzzy
 msgid "names of infos hooked"
@@ -2344,9 +2351,10 @@ msgstr "konfigurációs paraméterek beállítása"
 msgid "names of plugins installed"
 msgstr "konfigurációs paraméterek beállítása"
 
-#, fuzzy
-msgid "commands defined by plugins"
-msgstr "  (nem található bővítőmodul)\n"
+msgid ""
+"commands defined by plugins; optional argument: prefix to add before the "
+"commands"
+msgstr ""
 
 #, fuzzy
 msgid "names of bars"
@@ -2356,9 +2364,8 @@ msgstr "Aliaszok listája:\n"
 msgid "values for a configuration option"
 msgstr "Nem található az opció\n"
 
-#, fuzzy
-msgid "weechat commands"
-msgstr "%s belső parancsok:\n"
+msgid "weechat commands; optional argument: prefix to add before the commands"
+msgstr ""
 
 #, fuzzy
 msgid "names of proxies"
@@ -2471,6 +2478,12 @@ msgstr ""
 msgid ""
 "alignment for end of lines (all lines after the first): they are starting "
 "under this data (time, buffer, prefix, suffix, message (default))"
+msgstr ""
+
+msgid ""
+"alignment for multiline words according to option weechat.look."
+"align_end_of_lines; if disabled, the multiline words will not be aligned, "
+"which can be useful to not break long URLs"
 msgstr ""
 
 msgid ""
@@ -2786,9 +2799,12 @@ msgstr ""
 msgid "string used to show if mouse is enabled (bar item \"mouse_status\")"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"time format for \"time\" bar item (see man strftime for date/time specifiers)"
-msgstr ""
+"time format for \"time\" bar item (see man strftime for date/time "
+"specifiers) (note: content is evaluated, so you can use colors with format "
+"\"${color:xxx}\", see /help eval)"
+msgstr "új nap kezdetével megjelenő időbélyeg"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -3105,9 +3121,11 @@ msgid ""
 "text color for chat when window is inactive (not current selected window)"
 msgstr ""
 
-#, fuzzy
-msgid "text color for nicks in chat window"
-msgstr "idő színe a beszédablakban"
+msgid ""
+"text color for nicks in chat window: used in some server messages and as "
+"fallback when a nick color is not found; most of times nick color comes from "
+"option weechat.color.chat_nick_colors"
+msgstr ""
 
 #. TRANSLATORS: please do not translate "lightred:blue"
 #, fuzzy
@@ -3893,6 +3911,10 @@ msgstr ""
 msgid "Terminal lost, exiting WeeChat..."
 msgstr ""
 
+#, c-format
+msgid "Signal %s received, exiting WeeChat..."
+msgstr ""
+
 #, fuzzy
 msgid "Mouse is enabled"
 msgstr "a felhasználók le lettek tiltva"
@@ -4616,8 +4638,8 @@ msgid "FIFO pipe for remote control"
 msgstr "%s nem sikerült a FIFO csövet létrehozni a távoli felügyelethez (%s)\n"
 
 #, fuzzy, c-format
-msgid "%s: removing old fifo pipe \"%s\""
-msgstr "%s nincs elég memória az információs pult üzenethez\n"
+msgid "%s%s: not enough memory (%s)"
+msgstr "Nincs elég memória az új sorhoz\n"
 
 #, fuzzy, c-format
 msgid "%s: pipe opened (file: %s)"
@@ -4673,21 +4695,32 @@ msgid ""
 "\n"
 "FIFO pipe is used as remote control of WeeChat: you can send commands or "
 "text to the FIFO pipe from your shell.\n"
-"By default the FIFO pipe is in ~/.weechat/weechat_fifo_xxx (\"xxx\" is the "
-"WeeChat PID).\n"
+"By default the FIFO pipe is in ~/.weechat/weechat_fifo\n"
 "\n"
 "The expected format is one of:\n"
 "  plugin.buffer *text or command here\n"
 "  *text or command here\n"
 "\n"
 "For example to change your freenode nick:\n"
-"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345\n"
+"  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo\n"
 "\n"
 "Please read the user's guide for more info and examples.\n"
 "\n"
 "Examples:\n"
 "  /fifo toggle"
 msgstr ""
+
+msgid "enable FIFO pipe"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"path for FIFO file; \"%h\" at beginning of string is replaced by WeeChat "
+"home (\"~/.weechat\" by default); WeeChat PID can be used in path with "
+"${info:pid} (note: content is evaluated, see /help eval)"
+msgstr ""
+"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 msgid "name of FIFO pipe"
 msgstr ""
@@ -5401,7 +5434,7 @@ msgid ""
 "     list: list all ignores\n"
 "      add: add an ignore\n"
 "     nick: nick or hostname (can be a POSIX extended regular expression if "
-"\"re:\" is given or a mask using \"*\" to replace one or more chars)\n"
+"\"re:\" is given or a mask using \"*\" to replace zero or more chars)\n"
 "      del: delete an ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
 "     -all: delete all ignores\n"
@@ -6352,6 +6385,10 @@ msgid ""
 "%s%s: invalid priorities string, error at this position in string: \"%s\""
 msgstr ""
 
+#, fuzzy, c-format
+msgid "%s%s: the evaluated fingerprint must not be empty"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
 #, c-format
 msgid ""
 "%s%s: invalid fingerprint size, the number of hexadecimal digits must be one "
@@ -6429,7 +6466,8 @@ msgid ""
 "only hexadecimal digits are allowed (0-9, a-f): 64 chars for SHA-512, 32 "
 "chars for SHA-256, 20 chars for SHA-1 (insecure, not recommended); many "
 "fingerprints can be separated by commas; if this option is set, the other "
-"checks on certificates are NOT performed (option \"ssl_verify\")"
+"checks on certificates are NOT performed (option \"ssl_verify\") (note: "
+"content is evaluated, see /help eval)"
 msgstr ""
 
 msgid "check that the SSL connection is fully trusted"
@@ -6518,6 +6556,18 @@ msgid ""
 msgstr ""
 "szokásos hosztnév/IP a szerveren (tetszőleges, ha üres akkor a helyi "
 "hosztnevet használja)"
+
+#, fuzzy
+msgid ""
+"user mode(s) to set after connection to server and before executing command "
+"and the auto-join of channels; examples: \"+R\" (to set mode \"R\"), \"+R-i"
+"\" (to set mode \"R\" and remove \"i\"); see /help mode for the complete "
+"mode syntax (note: content is evaluated, see /help eval)"
+msgstr ""
+"szerverre csatlakozáskor futtatandó parancs(ok) (több parancs esetén azokat "
+"';'-vel kell elválasztani, használja a '\\;' sorozatot, ha "
+"pontosvesszőtszeretne írni, a $nick, $channel és $server szavak helyére azok "
+"értéke kerül)"
 
 #, fuzzy
 msgid ""
@@ -7441,7 +7491,7 @@ msgid "%sWallops from %s: %s"
 msgstr "%s%s %s(%s%s@%s%s)%s neve %s volt\n"
 
 #, fuzzy, c-format
-msgid "%sServer notice mask for %s%s%s is %s[%s%s%s]"
+msgid "%sServer notice mask for %s%s%s: %s"
 msgstr "%s%s%s felhasználói módja: %s[%s%s%s]\n"
 
 #, fuzzy, c-format
@@ -7847,10 +7897,6 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: not enough memory (%s)"
-msgstr "Nincs elég memória az új sorhoz\n"
-
-#, fuzzy, c-format
 msgid "%s%s: timeout"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
@@ -8236,6 +8282,9 @@ msgstr ""
 #, fuzzy
 msgid "WeeChat compilation date"
 msgstr "Konfigurációs fájl elmentve\n"
+
+msgid "WeeChat PID (process ID)"
+msgstr ""
 
 #, fuzzy
 msgid "directory separator"
@@ -10649,7 +10698,7 @@ msgid "%s%s: CRC32 error while resuming"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to fork"
+msgid "%s%s: unable to fork (%s)"
 msgstr "%s DCC: nem sikerült forkolni\n"
 
 #, fuzzy, c-format
@@ -10677,17 +10726,21 @@ msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
 
 #, fuzzy
-#~ msgid ""
-#~ "default part message (leaving channel) (\"%v\" will be replaced by "
-#~ "WeeChat version in string)"
-#~ msgstr ""
-#~ "alapértelmezett távozó üzenet (szoba elhagyásakor) (a '%v' változó a "
-#~ "WeeChat verziójára cserélődik)"
+#~ msgid "commands defined by plugins"
+#~ msgstr "  (nem található bővítőmodul)\n"
 
 #, fuzzy
-#~ msgid ""
-#~ "default quit message (disconnecting from server) (\"%v\" will be replaced "
-#~ "by WeeChat version in string)"
-#~ msgstr ""
-#~ "alapértelmezett kilépő üzenet (a '%v' változó a WeeChat verziójára "
-#~ "cserélődik)"
+#~ msgid "weechat commands"
+#~ msgstr "%s belső parancsok:\n"
+
+#, fuzzy
+#~ msgid "commands (weechat and plugins)"
+#~ msgstr "  (nem található bővítőmodul)\n"
+
+#, fuzzy
+#~ msgid "text color for nicks in chat window"
+#~ msgstr "idő színe a beszédablakban"
+
+#, fuzzy
+#~ msgid "%s: removing old fifo pipe \"%s\""
+#~ msgstr "%s nincs elég memória az információs pult üzenethez\n"

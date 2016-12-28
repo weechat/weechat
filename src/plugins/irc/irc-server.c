@@ -102,6 +102,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "username",             ""                        },
   { "realname",             ""                        },
   { "local_hostname",       ""                        },
+  { "usermode",             ""                        },
   { "command",              ""                        },
   { "command_delay",        "0"                       },
   { "autojoin",             ""                        },
@@ -3505,11 +3506,12 @@ irc_server_connect_cb (const void *pointer, void *data,
 
     server->hook_connect = NULL;
 
+    server->sock = sock;
+
     switch (status)
     {
         case WEECHAT_HOOK_CONNECT_OK:
-            /* set socket and IP */
-            server->sock = sock;
+            /* set IP */
             if (server->current_ip)
                 free (server->current_ip);
             server->current_ip = (ip_address) ? strdup (ip_address) : NULL;
@@ -4055,8 +4057,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     gnutls_datum_t filedatum;
     unsigned int i, cert_list_len, status;
     time_t cert_time;
-    char *cert_path0, *cert_path1, *cert_path2, *cert_str;
-    const char *weechat_dir, *fingerprint;
+    char *cert_path0, *cert_path1, *cert_path2, *cert_str, *fingerprint_eval;
+    const char *weechat_dir, *ptr_fingerprint;
     int rc, ret, fingerprint_match, hostname_match, cert_temp_init;
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
     gnutls_datum_t cinfo;
@@ -4079,6 +4081,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     cert_temp_init = 0;
     cert_list = NULL;
     cert_list_len = 0;
+    fingerprint_eval = NULL;
 
     if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT)
     {
@@ -4105,11 +4108,13 @@ irc_server_gnutls_callback (const void *pointer, void *data,
         cert_temp_init = 1;
 
         /* get fingerprint option in server */
-        fingerprint = IRC_SERVER_OPTION_STRING (server,
-                                                IRC_SERVER_OPTION_SSL_FINGERPRINT);
+        ptr_fingerprint = IRC_SERVER_OPTION_STRING(server,
+                                                   IRC_SERVER_OPTION_SSL_FINGERPRINT);
+        fingerprint_eval = weechat_string_eval_expression (ptr_fingerprint,
+                                                           NULL, NULL, NULL);
 
         /* set match options */
-        fingerprint_match = (fingerprint && fingerprint[0]) ? 0 : 1;
+        fingerprint_match = (ptr_fingerprint && ptr_fingerprint[0]) ? 0 : 1;
         hostname_match = 0;
 
         /* get the peer's raw certificate (chain) as sent by the peer */
@@ -4142,10 +4147,10 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                 if (i == 0)
                 {
                     /* check if fingerprint matches the first certificate */
-                    if (fingerprint && fingerprint[0])
+                    if (fingerprint_eval && fingerprint_eval[0])
                     {
                         fingerprint_match = irc_server_check_certificate_fingerprint (
-                            server, cert_temp, fingerprint);
+                            server, cert_temp, fingerprint_eval);
                     }
                     /* check if hostname matches in the first certificate */
                     if (gnutls_x509_crt_check_hostname (cert_temp,
@@ -4177,7 +4182,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                 }
 #endif /* LIBGNUTLS_VERSION_NUMBER >= 0x010706 */
                 /* check dates, only if fingerprint is not set */
-                if (!fingerprint || !fingerprint[0])
+                if (!ptr_fingerprint || !ptr_fingerprint[0])
                 {
                     /* check expiration date */
                     cert_time = gnutls_x509_crt_get_expiration_time (cert_temp);
@@ -4206,7 +4211,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
              * if fingerprint is set, display if matches, and don't check
              * anything else
              */
-            if (fingerprint && fingerprint[0])
+            if (ptr_fingerprint && ptr_fingerprint[0])
             {
                 if (fingerprint_match)
                 {
@@ -4407,6 +4412,9 @@ end:
 
     if (cert_temp_init)
         gnutls_x509_crt_deinit (cert_temp);
+
+    if (fingerprint_eval)
+        free (fingerprint_eval);
 
     return rc;
 }
@@ -5514,6 +5522,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "local_hostname",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME)))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "usermode",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERMODE)))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "command",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND)))
         return 0;
@@ -5833,6 +5844,13 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  local_hostname . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_LOCAL_HOSTNAME]));
+        /* usermode */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_USERMODE]))
+            weechat_log_printf ("  usermode . . . . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_USERMODE));
+        else
+            weechat_log_printf ("  usermode . . . . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_USERMODE]));
         /* command */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_COMMAND]))
             weechat_log_printf ("  command. . . . . . . : null");

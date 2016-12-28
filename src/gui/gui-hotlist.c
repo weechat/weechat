@@ -470,13 +470,41 @@ gui_hotlist_resort ()
 
 /*
  * Clears hotlist.
+ *
+ * Argument "level_mask" is a combination of:
+ *   1 = join/part
+ *   2 = message
+ *   4 = private
+ *   8 = highlight
+ *
+ * So for example :
+ *   1 = clear only join/part
+ *   12 = clear only private and highlight
+ *   15 = clear whole hotlist
  */
 
 void
-gui_hotlist_clear ()
+gui_hotlist_clear (int level_mask)
 {
-    gui_hotlist_free_all (&gui_hotlist, &last_gui_hotlist);
-    gui_hotlist_changed_signal ();
+    struct t_gui_hotlist *ptr_hotlist, *ptr_next_hotlist;
+    int hotlist_changed;
+
+    hotlist_changed = 0;
+
+    ptr_hotlist = gui_hotlist;
+    while (ptr_hotlist)
+    {
+        ptr_next_hotlist = ptr_hotlist->next_hotlist;
+        if (level_mask & (1 << ptr_hotlist->priority))
+        {
+            gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);
+            hotlist_changed = 1;
+        }
+        ptr_hotlist = ptr_next_hotlist;
+    }
+
+    if (hotlist_changed)
+        gui_hotlist_changed_signal ();
 }
 
 /*

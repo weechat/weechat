@@ -8,22 +8,22 @@
 ----
 /fifo  enable|disable|toggle
 
- enable: włącza strumień FIFO
-disable: wyłącza strumień FIFO
- toggle: przełącza stan strumienia FIFO
+ enable: enable FIFO pipe
+disable: disable FIFO pipe
+ toggle: toggle FIFO pipe
 
-Strumień FIFO jest używany do zdalnej kontroli nad WeeChat: możesz wysyłać komendy albo tekst do strumienia z konsoli.
-Domyślnie strumień FIFO jest tworzony w ~/.weechat/weechat_fifo_xxx ("xxx" to PID WeeChat).
+FIFO pipe is used as remote control of WeeChat: you can send commands or text to the FIFO pipe from your shell.
+By default the FIFO pipe is in ~/.weechat/weechat_fifo
 
-Spodziewane formaty:
-  plugin.buffer *tekst albo komenda
-  *tekst albo komenda
+The expected format is one of:
+  plugin.buffer *text or command here
+  *text or command here
 
-Na przykład zmiana nicka w sieci freenode:
-  echo 'irc.server.freenode */nick nowynick' >~/.weechat/weechat_fifo_12345
+For example to change your freenode nick:
+  echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
 
-Więcej informacji i przykładów można znaleźć w poradniku użytkownika.
+Please read the user's guide for more info and examples.
 
-Przykłady:
+Examples:
   /fifo toggle
 ----

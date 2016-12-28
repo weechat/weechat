@@ -3,7 +3,6 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: pl
-// TRANSLATION MISSING
 :man manual: WeeChat Manual
 :man source: WeeChat {revnumber}
 

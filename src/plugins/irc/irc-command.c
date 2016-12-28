@@ -643,7 +643,8 @@ irc_command_me_channel_display (struct t_irc_server *server,
     weechat_printf_date_tags (
         channel->buffer,
         0,
-        irc_protocol_tags ("privmsg", "irc_action,notify_none,no_highlight",
+        irc_protocol_tags ("privmsg",
+                           "irc_action,self_msg,notify_none,no_highlight",
                            server->nick, NULL),
         "%s%s%s%s%s%s%s",
         weechat_prefix ("action"),
@@ -1441,9 +1442,13 @@ IRC_COMMAND_CALLBACK(ctcp)
                               ctcp_type,
                               (ctcp_args) ? " " : "",
                               (ctcp_args) ? ctcp_args : "");
-            weechat_printf (
+            weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
                     ptr_server, ctcp_target, NULL, "ctcp", NULL),
+                0,
+                irc_protocol_tags ("privmsg",
+                                   "irc_ctcp,self_msg,notify_none,no_highlight",
+                                   NULL, NULL),
                 _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
                 weechat_prefix ("network"),
                 irc_nick_color_for_msg (ptr_server, 0, NULL, ctcp_target),
@@ -3166,7 +3171,7 @@ IRC_COMMAND_CALLBACK(msg)
                         weechat_printf_date_tags (
                             ptr_channel2->buffer,
                             0,
-                            "notify_none,no_highlight",
+                            "self_msg,notify_none,no_highlight",
                             "%s%s%s -> %s%s%s: %s",
                             weechat_prefix ("network"),
                             "Msg",
@@ -3256,7 +3261,8 @@ IRC_COMMAND_CALLBACK(msg)
                             ptr_server->buffer,
                             0,
                             irc_protocol_tags (
-                                "privmsg", "notify_none,no_highlight",
+                                "privmsg",
+                                "self_msg,notify_none,no_highlight",
                                 ptr_server->nick, NULL),
                             "%sMSG%s(%s%s%s)%s: %s",
                             weechat_prefix ("network"),
@@ -3437,7 +3443,7 @@ IRC_COMMAND_CALLBACK(notice)
                     ptr_server, argv[arg_target], "notice", NULL,
                     (ptr_channel) ? ptr_channel->buffer : NULL),
                 0,
-                "notify_none,no_highlight",
+                "self_msg,notify_none,no_highlight",
                 "%s%s%s%s -> %s%s%s: %s",
                 weechat_prefix ("network"),
                 IRC_COLOR_NOTICE,
@@ -4712,6 +4718,14 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  local_hostname . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[IRC_SERVER_OPTION_LOCAL_HOSTNAME]));
+        /* usermode */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_USERMODE]))
+            weechat_printf (NULL, "  usermode . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERMODE));
+        else
+            weechat_printf (NULL, "  usermode . . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_USERMODE]));
         /* command */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_COMMAND]))
         {
@@ -6276,8 +6290,8 @@ irc_command_init ()
         N_("     list: list all ignores\n"
            "      add: add an ignore\n"
            "     nick: nick or hostname (can be a POSIX extended regular "
-           "expression if \"re:\" is given or a mask using \"*\" to replace one "
-           "or more chars)\n"
+           "expression if \"re:\" is given or a mask using \"*\" to replace "
+           "zero or more chars)\n"
            "      del: delete an ignore\n"
            "   number: number of ignore to delete (look at list to find it)\n"
            "     -all: delete all ignores\n"

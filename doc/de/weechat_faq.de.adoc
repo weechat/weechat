@@ -208,6 +208,23 @@ Um die Bar nach oben zu verschieben:
 /set weechat.bar.buffers.position bottom
 ----
 
+um den Inhalt der Bar zu scollen: sollte die Mausunterstützung aktiviert sein (Taste: kbd:[Alt+m]),
+kann man den Inhalt der Bar ganz einfach mit dem Mausrad vor- und zurück scrollen.
+
+man kann aber auch Tastenbefehle nutzen, ähnlich den schon existierenden Tastenbefehlen mit welchen
+man die Nickliste vor- und zurück scrollen kann: kbd:[F1], kbd:[F2], kbd:[Alt+F1] und kbd:[Alt+F2]:
+
+----
+/key bind meta-OP /bar scroll buffers * -100%
+/key bind meta-OQ /bar scroll buffers * +100%
+/key bind meta-meta-OP /bar scroll buffers * b
+/key bind meta-meta-OQ /bar scroll buffers * e
+----
+
+[NOTE]
+Die Tasten "meta-OP" und "meta-OQ" können nach dem jeweils genutzten Terminal variieren. Um die
+korrekten Tasten zu finden sollte man kbd:[Alt+k] und dann drücken.
+
 [[customize_prefix]]
 === Wie kann ich die Länge eines Nicknamens begrenzen oder die Ausrichtung des Nicks im Chatbereich entfernen?
 
@@ -222,6 +239,37 @@ um die Ausrichtung für Nicks zu entfernen:
 ----
 /set weechat.look.prefix_align none
 ----
+
+[[status_hotlist]]
+=== Was bedeutet die Anzeige [H: 3(1,8), 2(4)] in der Status-Bar?
+
+Dabei handelt es sich um die sogenannte "hotlist", eine Auflistung der
+Buffer mit der Anzahl der ungelesenen Nachrichten. Die Reihenfolge ist:
+highlights, private Nachrichten, Nachrichten, Nachrichten mit niedriger
+Priorität (z.B. join/part). +
+Die Anzahl der "ungelesen Nachrichten" ist die Anzahl der neuen Nachrichten
+die man empfangen hat bzw. angezeigt werden seitdem man den Buffer
+das letzte mal betreten hat.
+
+Im Beispiel `[H: 3(1,8), 2(4)]`, handelt es sich um:
+
+* eine highlight Nachricht und 8 ungelesene Nachrichten im Buffer #3
+* 4 ungelesene Nachrichten im Buffer #2.
+
+Die Farbe des Buffers/Zählers hängt ab um welche Art von Nachrichten es
+sich handelt. Standardfarben:
+
+* highlight: `lightmagenta` / `magenta`
+* private Nachrichten: `lightgreen` / `green`
+* Nachrichten: `yellow` / `brown`
+* Nachrichten mit niedriger Priorität: `default` / `default` (Textfarbe des Terminal)
+
+Diese Farben können mit den Optionen __weechat.color.status_data_*__
+(Buffers) und __weechat.color.status_count_*__ (Zähler) angepasst werden. +
+Weitere hotlist Eigenschaften können den Optionen  __weechat.look.hotlist_*__
+verändert werden.
+
+siehe Benutzeranleitung für weitere Informationen bezüglich der Hotlist (screen layout).
 
 [[input_bar_size]]
 === Wie kann man eine mehrzeilige Eingabezeile einstellen?
@@ -478,7 +526,7 @@ Beispiele:
 
 [NOTE]
 Die Tasten "meta2-A" und "meta2-B" können nach dem jeweils genutzten Terminal variieren. Um die
-korrekten Tasten zu finden sollte man kbd:[Alt+k] und dann (Up- oder die Down-Taste) drücken.
+korrekten Tasten zu finden sollte man kbd:[Alt+k] und dann drücken.
 
 [[mouse]]
 == Mausunterstützung
@@ -802,6 +850,25 @@ Die Skripten für WeeChat sind mit anderer IRC-Clients nicht kompatibel und vice
 [[settings]]
 == Einstellungen
 
+[[editing_config_files]]
+=== Kann ich die Konfigurationsdateien (*.conf) händisch verändern?
+
+Das ist möglich, wird aber *NICHT* empfohlen.
+
+Der interne WeeChat Befehl `/set` sollte genutzt werden:
+
+* da die TAB Vervollständigung unterstützt wird
+* der neue Wert wird auf Legalität geprüft und bei einem Fehler eine entsprechende Meldung ausgegeben
+* der neue Wert wird umgehend genutzt. Es ist nicht notwendig WeeChat neu zu starten oder irgendwelche Daten neu zu laden
+
+Solltest Du die Dateien weiter händisch ändern wollen, dann solltest Du vorsichtig sein:
+
+* wird ein ungültiger Wert eingetragen, gibt WeeChat einen Fehler beim Start aus und
+  der ungültigen Wert wird verworfen (der Standardwert, für die entsprechende Option, wird
+  dann genutzt)
+* sollte WeeChat laufen und man nutzt den `/reload` Befehl aber Einstellungen wurden nicht
+  vorher mit `/save` gesichert, ist ein Datenverlust unvermeidbar
+
 [[memory_usage]]
 === Wie kann ich WeeChat dazu bringen weniger Speicher zu verbrauchen?
 
@@ -830,6 +897,8 @@ und zusätzlich diese Tipps beherzigen:
 * "nicklist"-Bar sollte versteckt werden: `/bar hide nicklist`
 * die Sekundenanzeigen in der Statusbar sollte deaktiviert werden:
   `/set weechat.look.item_time_format "%H:%M"` (dies ist die Standardeinstellung)
+* die Echtzeit Rechtschreibkorrektur sollte deaktiviert werden (falls sie aktiviert wurde):
+  `/set aspell.check.real_time off`
 * die Umgebungsvariable _TZ_ sollte gesetzt sein (zum Beispiel: `export TZ="Europe/Berlin"`). Dadurch wird
   verhindert, dass auf die Datei _/etc/localtime_ häufig zugegriffen wird.
 
@@ -839,8 +908,8 @@ und zusätzlich diese Tipps beherzigen:
 Deaktiviere IRC part und quit Nachrichten:
 
 ----
-/set irc.server_default.default_msg_part ""
-/set irc.server_default.default_msg_quit ""
+/set irc.server_default.msg_part ""
+/set irc.server_default.msg_quit ""
 ----
 
 Deaktiviere die automatische Antwort für alle CTCP Anfragen:

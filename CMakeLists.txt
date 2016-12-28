@@ -191,9 +191,6 @@ if(ICONV_FOUND)
   add_definitions(-DHAVE_ICONV)
 endif()
 
-# Check for socketpair() supporting SOCK_DGRAM
-find_package(Socketpair)
-
 # Check for CURL
 find_package(CURL REQUIRED)
 
