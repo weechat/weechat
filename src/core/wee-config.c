@@ -186,6 +186,8 @@ struct t_config_option *config_look_scroll_page_percent;
 struct t_config_option *config_look_search_text_not_found_alert;
 struct t_config_option *config_look_separator_horizontal;
 struct t_config_option *config_look_separator_vertical;
+struct t_config_option *config_look_status_more_prefix;
+struct t_config_option *config_look_status_more_suffix;
 struct t_config_option *config_look_tab_width;
 struct t_config_option *config_look_time_format;
 struct t_config_option *config_look_window_auto_zoom;
@@ -937,6 +939,23 @@ config_change_hotlist_sort (const void *pointer, void *data,
     (void) option;
 
     gui_hotlist_resort ();
+}
+
+/*
+ * Callback for changes on options "weechat.look.status_more_prefix"
+ * and "weechat.look.status_more_suffix".
+ */
+
+void
+config_change_item_scroll (const void *pointer, void *data,
+                           struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    gui_bar_item_update ("scroll");
 }
 
 /*
@@ -3401,6 +3420,22 @@ config_weechat_init_options ()
         NULL, 0, 0, "", NULL, 0,
         &config_check_separator, NULL, NULL,
         &config_change_buffers, NULL, NULL,
+        NULL, NULL, NULL);
+    config_look_status_more_prefix = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "status_more_prefix", "string",
+        N_("text to display before count for buffer with new data (status bar)"),
+        NULL, 0, 0, _("-MORE("), NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_item_scroll, NULL, NULL,
+        NULL, NULL, NULL);
+    config_look_status_more_suffix = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "status_more_suffix", "string",
+        N_("text to display after count for buffer with new data (status bar)"),
+        NULL, 0, 0, ")-", NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_item_scroll, NULL, NULL,
         NULL, NULL, NULL);
     config_look_tab_width = config_file_new_option (
         weechat_config_file, ptr_section,

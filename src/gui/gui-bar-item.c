@@ -1326,9 +1326,11 @@ gui_bar_item_scroll_cb (const void *pointer, void *data,
     if (!window->scroll->scrolling)
         return NULL;
 
-    snprintf (str_scroll, sizeof (str_scroll), _("%s-MORE(%d)-"),
+    snprintf (str_scroll, sizeof (str_scroll), "%s%s%d%s",
               gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_more))),
-              window->scroll->lines_after);
+              CONFIG_STRING(config_look_status_more_prefix),
+              window->scroll->lines_after,
+              CONFIG_STRING(config_look_status_more_suffix));
 
     return strdup (str_scroll);
 }

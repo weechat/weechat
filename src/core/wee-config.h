@@ -235,6 +235,8 @@ extern struct t_config_option *config_look_scroll_page_percent;
 extern struct t_config_option *config_look_search_text_not_found_alert;
 extern struct t_config_option *config_look_separator_horizontal;
 extern struct t_config_option *config_look_separator_vertical;
+extern struct t_config_option *config_look_status_more_prefix;
+extern struct t_config_option *config_look_status_more_suffix;
 extern struct t_config_option *config_look_tab_width;
 extern struct t_config_option *config_look_time_format;
 extern struct t_config_option *config_look_window_auto_zoom;
