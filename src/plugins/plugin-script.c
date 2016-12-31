@@ -1017,17 +1017,22 @@ plugin_script_action_add (char **action_list, const char *name)
 
 /*
  * Removes script file(s) from disk.
+ *
+ * Returns:
+ *   1: script was removed
+ *   0: script was not removed (not found)
  */
 
-void
+int
 plugin_script_remove_file (struct t_weechat_plugin *weechat_plugin,
                            const char *name,
                            int quiet,
                            int display_error_if_no_script_removed)
 {
-    int num_found, i;
+    int script_removed, num_found, i;
     char *path_script;
 
+    script_removed = 0;
     num_found = 0;
     i = 0;
     while (i < 2)
@@ -1046,6 +1051,7 @@ plugin_script_remove_file (struct t_weechat_plugin *weechat_plugin,
         num_found++;
         if (unlink (path_script) == 0)
         {
+            script_removed = 1;
             if (!quiet)
             {
                 weechat_printf (NULL, _("%s: script removed: %s"),
@@ -1067,6 +1073,7 @@ plugin_script_remove_file (struct t_weechat_plugin *weechat_plugin,
         free (path_script);
         i++;
     }
+
     if ((num_found == 0) && display_error_if_no_script_removed)
     {
         weechat_printf (NULL,
@@ -1075,6 +1082,8 @@ plugin_script_remove_file (struct t_weechat_plugin *weechat_plugin,
                         weechat_plugin->name,
                         name);
     }
+
+    return script_removed;
 }
 
 /*
@@ -1099,7 +1108,7 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
     char **argv, *name, *ptr_base_name, *base_name, *new_path, *autoload_path;
     char *symlink_path, str_signal[128], *ptr_list;
     const char *dir_home, *dir_separator;
-    int argc, i, length, rc, autoload, script_loaded;
+    int argc, i, length, rc, autoload, existing_script, script_loaded;
     struct t_plugin_script *ptr_script;
 
     if (!*list)
@@ -1154,8 +1163,9 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                     }
 
                     /* remove script file(s) */
-                    plugin_script_remove_file (weechat_plugin, base_name,
-                                               *quiet, 0);
+                    existing_script = plugin_script_remove_file (weechat_plugin,
+                                                                 base_name,
+                                                                 *quiet, 0);
 
                     /* move file from install dir to language dir */
                     dir_home = weechat_info_get ("weechat_dir", "");
@@ -1197,8 +1207,13 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                                 }
                             }
 
-                            /* load script (only if script was loaded) */
-                            if (script_loaded)
+                            /*
+                             * load script if one of these conditions is
+                             * satisfied:
+                             * - new script and autoload is asked
+                             * - script was loaded
+                             */
+                            if ((!existing_script && autoload) || script_loaded)
                                 (*script_load) (new_path);
                         }
                         else
@@ -1277,7 +1292,8 @@ plugin_script_action_remove (struct t_weechat_plugin *weechat_plugin,
                 (*script_unload) (ptr_script);
 
             /* remove script file(s) */
-            plugin_script_remove_file (weechat_plugin, argv[i], *quiet, 1);
+            (void) plugin_script_remove_file (weechat_plugin, argv[i],
+                                              *quiet, 1);
         }
         weechat_string_free_split (argv);
     }
