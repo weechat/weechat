@@ -64,6 +64,8 @@
 
 | weechat | term_width | szerokość terminala | -
 
+| weechat | uptime | WeeChat uptime (format: "days:hh:mm:ss") | "days" (number of days) or "seconds" (number of seconds) (optional)
+
 | weechat | version | wersja WeeChat | -
 
 | weechat | version_git | wersja git WeeChat (wyjście komendy "git describe" dla tylko dla wersji rozwojowej, puste dla wersji stabilnej) | -

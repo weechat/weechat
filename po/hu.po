@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2016-12-20 22:37+0100\n"
+"POT-Creation-Date: 2016-12-31 18:22+0100\n"
 "PO-Revision-Date: 2016-09-03 08:23+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8365,6 +8365,12 @@ msgstr "üzenetek színe"
 #, fuzzy
 msgid "get nick color name"
 msgstr "üzenetek színe"
+
+msgid "WeeChat uptime (format: \"days:hh:mm:ss\")"
+msgstr ""
+
+msgid "\"days\" (number of days) or \"seconds\" (number of seconds) (optional)"
+msgstr ""
 
 #, fuzzy
 msgid "list of bars"

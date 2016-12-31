@@ -766,3 +766,27 @@ util_version_number (const char *version)
     return (version_int[0] << 24) | (version_int[1] << 16)
         | (version_int[2] << 8) | version_int[3];
 }
+
+/*
+ * Return uptime as number of days, hours, minutes, seconds.
+ */
+
+void
+util_get_uptime (time_t *total_seconds, int *days,
+                 int *hours, int *minutes, int *seconds)
+{
+    time_t running_time;
+
+    running_time = time (NULL) - weechat_first_start_time;
+
+    if (total_seconds)
+        *total_seconds = running_time;
+    if (days)
+        *days = running_time / (60 * 60 * 24);
+    if (hours)
+        *hours = (running_time % (60 * 60 * 24)) / (60 * 60);
+    if (minutes)
+        *minutes = ((running_time % (60 * 60 * 24)) % (60 * 60)) / 60;
+    if (seconds)
+        *seconds = ((running_time % (60 * 60 * 24)) % (60 * 60)) % 60;
+}

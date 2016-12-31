@@ -24,6 +24,7 @@ New features::
   * core: add optional command prefix in completion templates "commands", "plugins_commands" and ""weechat_commands"
   * core: add optional arguments in completion template, sent to the callback
   * core: add option "time" in command /debug
+  * api: add info "uptime" (WeeChat uptime)
   * api: add info "pid" (WeeChat PID) (issue #850)
   * fifo: add file fifo.conf and option fifo.file.path to customize FIFO pipe path/filename (issue #850)
   * irc: add server option "usermode" (issue #377, issue #820)

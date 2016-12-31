@@ -64,6 +64,8 @@
 
 | weechat | term_width | 端末の幅 | -
 
+| weechat | uptime | WeeChat uptime (format: "days:hh:mm:ss") | "days" (number of days) or "seconds" (number of seconds) (optional)
+
 | weechat | version | WeeChat のバージョン | -
 
 | weechat | version_git | WeeChat の git バージョン (開発バージョンではコマンド "git describe" の出力、安定版リリースでは空文字が出力されます) | -

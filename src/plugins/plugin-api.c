@@ -842,6 +842,52 @@ plugin_api_info_nick_color_name_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns WeeChat info "uptime".
+ */
+
+const char *
+plugin_api_info_uptime_cb (const void *pointer, void *data,
+                           const char *info_name,
+                           const char *arguments)
+{
+    static char value[32];
+    time_t total_seconds;
+    int days, hours, minutes, seconds;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    if (!arguments || !arguments[0])
+    {
+        /* return uptime with format: "days:hh:mm:ss" */
+        util_get_uptime (NULL, &days, &hours, &minutes, &seconds);
+        snprintf (value, sizeof (value), "%d:%02d:%02d:%02d",
+                  days, hours, minutes, seconds);
+        return value;
+    }
+
+    if (strcmp (arguments, "days") == 0)
+    {
+        /* return the number of days */
+        util_get_uptime (NULL, &days, NULL, NULL, NULL);
+        snprintf (value, sizeof (value), "%d", days);
+        return value;
+    }
+
+    if (strcmp (arguments, "seconds") == 0)
+    {
+        /* return the number of seconds */
+        util_get_uptime (&total_seconds, NULL, NULL, NULL, NULL);
+        snprintf (value, sizeof (value), "%ld", total_seconds);
+        return value;
+    }
+
+    return NULL;
+}
+
+/*
  * Returns WeeChat infolist "bar".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
@@ -1922,6 +1968,11 @@ plugin_api_init ()
                N_("get nick color name"),
                N_("nickname"),
                &plugin_api_info_nick_color_name_cb, NULL, NULL);
+    hook_info (NULL, "uptime",
+               N_("WeeChat uptime (format: \"days:hh:mm:ss\")"),
+               N_("\"days\" (number of days) or \"seconds\" (number of "
+                  "seconds) (optional)"),
+               &plugin_api_info_uptime_cb, NULL, NULL);
 
     /* WeeChat core infolist hooks */
     hook_infolist (NULL, "bar",

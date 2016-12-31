@@ -6185,8 +6185,7 @@ COMMAND_CALLBACK(upgrade)
 
 COMMAND_CALLBACK(uptime)
 {
-    time_t running_time;
-    int day, hour, min, sec;
+    int days, hours, minutes, seconds;
     char string[512];
 
     /* make C compiler happy */
@@ -6194,21 +6193,17 @@ COMMAND_CALLBACK(uptime)
     (void) data;
     (void) argv_eol;
 
-    running_time = time (NULL) - weechat_first_start_time;
-    day = running_time / (60 * 60 * 24);
-    hour = (running_time % (60 * 60 * 24)) / (60 * 60);
-    min = ((running_time % (60 * 60 * 24)) % (60 * 60)) / 60;
-    sec = ((running_time % (60 * 60 * 24)) % (60 * 60)) % 60;
+    util_get_uptime (NULL, &days, &hours, &minutes, &seconds);
 
     if ((argc >= 2) && (string_strcasecmp (argv[1], "-o") == 0))
     {
         snprintf (string, sizeof (string),
                   "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s",
-                  day,
-                  (day != 1) ? "days" : "day",
-                  hour,
-                  min,
-                  sec,
+                  days,
+                  (days != 1) ? "days" : "day",
+                  hours,
+                  minutes,
+                  seconds,
                   ctime (&weechat_first_start_time));
         string[strlen (string) - 1] = '\0';
         (void) input_data (buffer, string);
@@ -6218,11 +6213,11 @@ COMMAND_CALLBACK(uptime)
         snprintf (string, sizeof (string),
                   /* TRANSLATORS: "%s" after "started on" is a date */
                   _("WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"),
-                  day,
-                  NG_("day", "days", day),
-                  hour,
-                  min,
-                  sec,
+                  days,
+                  NG_("day", "days", days),
+                  hours,
+                  minutes,
+                  seconds,
                   util_get_time_string (&weechat_first_start_time));
         (void) input_data (buffer, string);
     }
@@ -6234,17 +6229,17 @@ COMMAND_CALLBACK(uptime)
                            "%s%02d%s:%s%02d%s:%s%02d%s, "
                            "started on %s%s"),
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         day,
+                         days,
                          GUI_COLOR(GUI_COLOR_CHAT),
-                         NG_("day", "days", day),
+                         NG_("day", "days", days),
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         hour,
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         min,
+                         hours,
                          GUI_COLOR(GUI_COLOR_CHAT),
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         sec,
+                         minutes,
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                         seconds,
                          GUI_COLOR(GUI_COLOR_CHAT),
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                          util_get_time_string (&weechat_first_start_time));

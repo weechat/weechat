@@ -52,5 +52,7 @@ extern char *util_search_full_lib_name (const char *filename,
                                         const char *sys_directory);
 extern char *util_file_get_content (const char *filename);
 extern int util_version_number (const char *version);
+extern void util_get_uptime (time_t *total_seconds, int *days,
+                             int *hours, int *minutes, int *seconds);
 
 #endif /* WEECHAT_UTIL_H */
