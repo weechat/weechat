@@ -84,15 +84,14 @@ Możesz wyświetlić pomoc dla opcji dzięki `/help`, na przykład:
 Wszystkie ustawienia są zapisywane podczas wyjścia z WeeChat (lub za pomocą
 komendy `/save`, która wymusza zapisanie opcji).
 
-// TRANSLATION MISSING
 [IMPORTANT]
-It is *not recommended* to edit configuration files by hand because WeeChat
-may write them at any time (for example on <<command_weechat_quit,/quit>>)
-and after any change you must run the command <<command_weechat_reload,/reload>>
-(with the risk of losing other changes that were not yet saved with
+*Nie zaleca się* ręcznie edytować plików konfiguracyjnych, ponieważ WeeChat
+może je nadpisać w dowolnej chwili (na przykład podczas <<command_weechat_quit,/quit>>),
+oraz po każdej zmianie musisz wykonać komendę <<command_weechat_reload,/reload>>
+(ryzykując utratę zmian, które nie zostały zapisane za pomocą
 <<command_weechat_save,/save>>). +
-You can use the command <<command_weechat_set,/set>>, which checks the value
-and applies immediately the changes.
+Możesz użyć komendy <<command_weechat_set,/set>>, która sprawdza wartość i nanosi
+od razu wymagane zmiany.
 
 [[core_vs_plugins]]
 == Rdzeń vs wtyczki

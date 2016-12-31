@@ -68,12 +68,11 @@ Pakiety binarne dostępne są dla wielu dystrybucji, wliczając:
 
 * Arch Linuxa: `pacman -S weechat`
 * Cygwin (Windows): wybierz pakiet WeeChat w setup.exe
-// TRANSLATION MISSING
-* Debiana/Ubuntu (lub dowolną kompatybilną):
+* Debiana/Ubuntu (lub dowolna kompatybilna):
   `apt-get install weechat-curses weechat-plugins`
 * Fedora Core: `dnf install weechat`
 * Gentoo: `emerge weechat`
-* Mandrive/RedHata (lub dowolną kompatybilną):
+* Mandrive/RedHata (lub dowolna kompatybilna):
   `rpm -i /path/to/weechat-x.y.z-1.i386.rpm`
 * openSUSE: `zypper in weechat`
 * Sourcemage: `cast weechat`
@@ -137,10 +136,9 @@ mechanizmu ECDSA-NIST256P-CHALLENGE. +
 ^(4)^ Zalecana wersja Pythona to 2.7 (wszystkie skrypty działają z wersją 2.7,
 ale nie w wersjami ≤ 2.6 lub ≥ 3.0).
 
-// TRANSLATION MISSING
-If you are using a Debian/Ubuntu based distribution, and if you have some
-"deb-src" source entries in your file _/etc/apt/sources.list_, you can install
-all dependencies with the command:
+Jeśli używasz dystrybujci bazującej na Debianie/Ubuntu, oraz jeśli posiadasz wpisy
+"deb-src" w pliku _/etc/apt/sources.list_, możesz zainstalować wszytkie zależności
+za pomocą jednej komendy:
 
 ----
 # apt-get build-dep weechat
@@ -487,68 +485,65 @@ Możesz edytować ten plik wedle upodobań, żeby skonfigurować WeeChat, lub mo
 ustawić parametry za pomocą komendy `/set` z poziomu WeeChat (zobacz
 <<weechat_commands,Komendy WeeChat>>).
 
-// TRANSLATION MISSING
 [[files_and_directories]]
-=== Files and directories
+=== Pliki i foldery
 
-WeeChat writes configuration files and other data in directory `~/.weechat`
-by default.
+WeeChat zapisuje pliki konfiguracyjne i inne rzeczy domyślnie w folderze `~/.weechat`.
 
-The directories are:
+Foldery to:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| Path/file         | Description
-| ~/.weechat/       | WeeChat home directory (can be changed, see <<running_weechat,Running WeeChat>>).
-|    logs/          | Log files (one file per buffer).
-|    python/        | Python scripts.
-|       autoload/   | Python scripts auto-loaded on startup ^(1)^.
-|    perl/          | Perl scripts.
-|       autoload/   | Perl scripts auto-loaded on startup ^(1)^.
-|    ruby/          | Ruby scripts.
-|       autoload/   | Ruby scripts auto-loaded on startup ^(1)^.
-|    lua/           | Lua scripts.
-|       autoload/   | Lua scripts auto-loaded on startup ^(1)^.
-|    tcl/           | Tcl scripts.
-|       autoload/   | Tcl scripts auto-loaded on startup ^(1)^.
-|    guile/         | Guile scripts.
-|       autoload/   | Guile scripts auto-loaded on startup ^(1)^.
-|    javascript/    | Javascript scripts.
-|       autoload/   | Javascript scripts auto-loaded on startup ^(1)^.
+| Ścieżka/plik      | Opis
+| ~/.weechat/       | Katalog domowy WeeChat (można go zmienić, zobacz <<running_weechat,Running WeeChat>>).
+|    logs/          | Pliki z logami (jeden na bufor).
+|    python/        | Skrypty pythonowe.
+|       autoload/   | Skrypty pythonowe automatycznie ładowane przy starcie ^(1)^.
+|    perl/          | Skrypty perlowe.
+|       autoload/   | Skrypty perlowe automatycznie ładowane przy starcie ^(1)^.
+|    ruby/          | Skrypty ruby.
+|       autoload/   | Skrypty ruby automatycznie ładowane przy starcie ^(1)^.
+|    lua/           | Skrypty lua.
+|       autoload/   | Skrypty lua automatycznie ładowane przy starcie ^(1)^.
+|    tcl/           | Skrypty tcl.
+|       autoload/   | Skrypty tcl automatycznie ładowane przy starcie ^(1)^.
+|    guile/         | Skrypty guile.
+|       autoload/   | skrypry guile automatycznie ładowane przy starcie ^(1)^.
+|    javascript/    | Skrypty javascript.
+|       autoload/   | Skrypty javascript automatycznie ładowane przy starcie ^(1)^.
 |===
 
 [NOTE]
-^(1)^ This directory often contains only symbolic links to scripts in parent directory.
+^(1)^ Ten folder zawiera przewazine linki symboliczne do plików w folderze nadrzędnym.
 
-The files in home directory are:
+Pliki w katalogu domowym:
 
 [width="100%",cols="1m,3,6",options="header"]
 |===
-| File         | Description                             | Sensitive data
-| weechat.conf | Main WeeChat configuration file         | Possible (example: list of channels in a saved buffers layout).
-| sec.conf     | Configuration file with secured data    | *Yes, highly sensitive*: this file must never be shared with anyone.
-| plugins.conf | Plugins configuration file              | Possible, depends on plugins/scripts.
-| alias.conf   | Configuration file for _alias_ plugin   | Possible, depends on aliases.
-| aspell.conf  | Configuration file for _aspell_ plugin  | No.
-| charset.conf | Configuration file for _charset_ plugin | No.
-| exec.conf    | Configuration file for _exec_ plugin    | No.
-| irc.conf     | Configuration file for _irc_ plugin     | *Yes*: it can contain passwords for servers, nickserv and channels (if not stored in `sec.conf`).
-| logger.conf  | Configuration file for _logger_ plugin  | No.
-| relay.conf   | Configuration file for _relay_ plugin   | No.
-| script.conf  | Configuration file for _script_ plugin  | No.
-| trigger.conf | Configuration file for _trigger_ plugin | Possible, depends on triggers.
-| xfer.conf    | Configuration file for _xfer_ plugin    | No.
-| weechat.log  | WeeChat log file                        | No.
+| Plik         | Opis                                          | Wrażliwe dane
+| weechat.conf | Główny plik konfiguracyjny WeeChat            | Możliwe (przykład: lista kanałów w zapisanym układzie buforów).
+| sec.conf     | Plik konfiguracyjny z zabezpieczonymi danymi  | *Tak, bardzo prażliwe*: Tym plikiem nie powinno się z nikim dzielić.
+| plugins.conf | Plik konfiguracyjny wtyczek                   | Możliwe, zależy od wtyczki/skryptu.
+| alias.conf   | Plik konfiguracyjny wtyczki _alias_           | Możliwe, zależy od aliasu.
+| aspell.conf  | Plik konfiguracyjny wtyczki _aspell_          | Nie.
+| charset.conf | Plik konfiguracyjny wtyczki _charset_         | Nie.
+| exec.conf    | Plik konfiguracyjny wtyczki _exec_            | Nie.
+| irc.conf     | Plik konfiguracyjny wtyczki _irc_             | *Tak*: Może zawierać hasła dla serwerów, nickserva i kanałów (jeśli nie zostały zapisane w `sec.conf`).
+| logger.conf  | Plik konfiguracyjny wtyczki _logger_          | Nie.
+| relay.conf   | Plik konfiguracyjny wtyczki _relay_           | Nie.
+| script.conf  | Plik konfiguracyjny wtyczki _script_          | Nie.
+| trigger.conf | Plik konfiguracyjny wtyczki _trigger_         | Możliwe, zależy od triggerów.
+| xfer.conf    | Plik konfiguracyjny wtyczki _xfer_            | Nie.
+| weechat.log  | Plik z logami WeeChat                         | Nie.
 |===
 
 [IMPORTANT]
-It is *not recommended* to edit configuration files by hand because WeeChat
-may write them at any time (for example on <<command_weechat_quit,/quit>>)
-and after any change you must run the command <<command_weechat_reload,/reload>>
-(with the risk of losing other changes that were not yet saved with
-<<command_weechat_save,/save>>). +
-You can use the command <<command_weechat_set,/set>>, which checks the value
-and applies immediately the changes.
+*Nie zaleca się* edytowania plików konfiguracyjnych ręcznie, ponieważ WeeChat
+może je nadpisać w dowolnym momencie (na przykład poprzez komende <<command_weechat_quit,/quit>>)
+oraz po wprowadzeniu ręcznie zmian należy użyć komendy <<command_weechat_reload,/reload>>
+(ryzykując utratę zmian, nie zapisanych za pomocą komendy <<command_weechat_save,/save>>). +
+Możesz użyć komendy <<command_weechat_set,/set>>, która sprawdza ustawianą wartość
+i od razu wprowadza zmiany.
 
 [[screen_layout]]
 === Układ ekranu
@@ -972,67 +967,66 @@ Przykład podziałów pionowego i poziomego:
       ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
 ....
 
-// TRANSLATION MISSING
 [[buffers_lines]]
-=== Buffers lines
+=== Linie buforów 
 
 [[lines_format]]
-==== Format of lines
+==== Format linii
 
-Lines displayed in formatted buffers have following fields:
+Linie wyświetlane w formatowanych buforach maja następujące pola:
 
 [width="100%",cols="2,2,10",options="header"]
 |===
-| Field               | Displayed          | Description
-| date/time (message) | Yes                | Date/time of message (may be past).
-| date/time (print)   | No                 | Date/time when WeeChat prints the message.
-| prefix              | Yes                | Prefix of message, commonly a nick.
-| message             | Yes                | The message itself.
-| displayed           | No                 | Boolean: true if line is displayed, false if line is filtered with command <<command_weechat_filter,/filter>>.
-| highlight           | No                 | Boolean: true if line has a highlight, false otherwise.
-| tags                | With `/debug tags` | Tags associated with the line (see <<lines_tags,lines tags>>).
+| Pole                    | Wyświetlane         | Opis
+| data/czas (wiadomość)   | Tak                 | Data/czas wiadomości (może być przeszła).
+| data/czas (wywietlenie) | Nie                 | Data/time, kiedy WeeChat wyświetlił wiadomość.
+| prefiks                 | Tak                 | Prefiks wiadomości, zazwyczaj nick.
+| wiadomość               | Tak                 | Wiadomość.
+| wyświetlone             | Nie                 | Boolean: true jeśli linia została wyświetlona, false jeśli linia została odfiltrowana komendą <<command_weechat_filter,/filter>>.
+| podświetlenie           | Nie                 | Boolean: true jeśli linia ma podświetlenie, false w przeciwnym wypadku.
+| tagi                    | Przez `/debug tags` | Tagi powiązane z linią (zobacz <<lines_tags,lines tags>>).
 |===
 
-The display of lines can be customized with many look options
-(_pass:[weechat.look.*]_) and color options (_pass:[weechat.color.chat_*]_).
+Wyświetlanie linni może być zmienione za pomoćą wielu opcji wyglądu
+(_pass:[weechat.look.*]_) oraz koloru (_pass:[weechat.color.chat_*]_).
 
 [[lines_tags]]
-==== Lines tags
+==== Tagi linii
 
-WeeChat uses tags in lines for different purposes:
+WeeChat używa tagów w liniach dla różnych celów:
 
-* highlight
-* notify level
-* logging
-* use of command <<command_weechat_filter,/filter>>
+* podświetleń
+* poziomu powiadomień
+* logowaia
+* użycia komendy <<command_weechat_filter,/filter>>
 
-Tags can be displayed with the command `/debug tags` (same command to hide them).
+Tagi można wyświetlić używając komendy `/debug tags` (tą samą komendą można je ukryć).
 
-Tags commonly used (non-exhaustive list):
+Popularnie używane tagi  (niepełna lista):
 
 [width="70%",cols="1m,4",options="header"]
 |===
-| Tag              | Description
-| no_filter        | Line can not be filtered.
-| no_highlight     | No highlight is possible on line.
-| no_log           | Line is not written in log file.
-| log0 ... log9    | Level of log for line (see `/help logger`).
-| notify_none      | Buffer with line is not added to hotlist.
-| notify_message   | Buffer with line is added to hotlist with level "message".
-| notify_private   | Buffer with line is added to hotlist with level "private".
-| notify_highlight | Buffer with line is added to hotlist with level "highlight".
-| self_msg         | Self message.
-| nick_xxx         | Message is from nick "xxx".
-| prefix_nick_ccc  | Prefix is a nick with color "ccc".
-| host_xxx         | Username and host in message.
-| irc_xxx          | IRC message "xxx" (can be a command or a 3-digits number).
-| irc_numeric      | IRC numeric message.
-| irc_error        | Error from IRC server.
-| irc_action       | Action from a nick (command `/me`).
-| irc_ctcp         | CTCP message.
-| irc_ctcp_reply   | Reply to CTCP message.
-| irc_smart_filter | IRC message that can be filtered with the "smart filter".
-| away_info        | Message with away info.
+| Tag              | Opis
+| no_filter        | Linia nie może być filtrowana.
+| no_highlight     | Podświetlenia nie są dozwolone w tej linii.
+| no_log           | Linia nie jest zapisywana w logu.
+| log0 ... log9    | Poziom logowania dla linii (zobacz `/help logger`).
+| notify_none      | Bufor z linią nie dodana do hotlisty.
+| notify_message   | Bufor z linia dodaną do hotlisty z poziomem "message".
+| notify_private   | Bufor z linia dodaną do hotlisty z poziomem "private".
+| notify_highlight | Bufor z linia dodaną do hotlisty z poziomem "highlight".
+| self_msg         | Własna wiadomość.
+| nick_xxx         | Wiadomość od nicku "xxx".
+| prefix_nick_ccc  | Prefiks to nick o kolorze "ccc".
+| host_xxx         | Nazwa użytkowniak i host w wiadomości.
+| irc_xxx          | Wiadomość IRC "xxx" (komenda, albo 3 cyfrowy numer).
+| irc_numeric      | Wiadomość numeryczna IRC.
+| irc_error        | Błąd od erwera IRC.
+| irc_action       | Akcja nicka (komenda `/me`).
+| irc_ctcp         | Wiadomość CTCP.
+| irc_ctcp_reply   | Odpowiedź na wiadomość CTCP.
+| irc_smart_filter | Wiadomość IRC, która może być filtrowana przez "inteligentny filtr".
+| away_info        | Wiadomość z powodem nieobecności.
 |===
 
 [[bars]]
@@ -1352,9 +1346,8 @@ twój terminal wspiera klikanie w URLe).
 [[notify_levels]]
 === Poziomy powiadomień
 
-// TRANSLATION MISSING
 [[setup_notify_levels]]
-==== Setup notify levels
+==== Ustawienia poziomu powiadomień 
 
 Dostępne są cztery poziomy dla wiadomości wyświetlanych w buforach, od najniższego
 do najwyższego:
@@ -1399,98 +1392,95 @@ Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buff
 /buffer notify highlight
 ----
 
-// TRANSLATION MISSING
 [[max_hotlist_level_nicks]]
-==== Max hotlist level for nicks
+==== Maksymalny poziom hotlisty dla nicków 
 
-It is possible to set max hotlist level for some nicks, per buffer, or per group
-of buffers (like IRC servers).
+Jest możliwe ustawienie maksymalnego poziomu hotlist dla nicków, dla bufora lub grupy buforów
+(jak erwery IRC).
 
-The buffer property "hotlist_max_level_nicks" can be set with a list of nicks
-and for each nick the max hotlist level to trigger, possible levels are:
+Właściwość bufora "hotlist_max_level_nicks" może być ustawiona na listę nicków,
+z ustawonym dla każdego z nich maksymalnym poziomem hotlisty, możliwe poziomy to:
 
-* -1: no hotlist changes for nick
-* 0: low priority (like join/part messages)
-* 1: message
-* 2: private message
-* 3: highlight (in fact useless, since it's already the default max for all messages)
+* -1: brak zmiany hotlisty dla nicka
+* 0: niski priorytet (jak wiadomości join/part)
+* 1: wiadomość
+* 2: prywatna wiadomość
+* 3: podświetlenie (mało przydatne, jest to domyślny poziom dla wszytkich wiadomości)
 
-For example to disable highlights from "joe" and "mike" on current buffer:
+Na przykład, żeby wyłączyć podświetlenia od "joe" oraz "mike" w obecnym buforze:
 
 ----
 /buffer set hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
 [NOTE]
-The buffer property "hotlist_max_level_nicks" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`.
+Właściwość bufora "hotlist_max_level_nicks" nie jest zapisywana w konfiguracji. +
+Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalować za pomocą
+`/script install buffer_autoset.py`, informacje o używaniu `/help autosetbuffer`.
 
-// TRANSLATION MISSING
 [[highlights]]
-=== Highlights
+=== Podświetlenia
 
 [[highlights_words]]
-==== Add words to highlight
+==== Dodawanie słów do podświetleń
 
-By default, WeeChat highlights messages from other users containing your nick,
-therefore the highlight depends on the buffer (the nick can be different from
-one buffer to another).
+Domyślnie WeeChat podświetla wiadomości od innych użytkowników zawierające Twój nick,
+dlatego podświetlenia zależą od buforu (nick może być inny w zależności od buforu).
 
-You can add other words to highlight with the option
-<<option_weechat.look.highlight,weechat.look.highlight>>, for example to
-highlight your nick and "word1", "word2" and all words beginning with "test":
+Możesz dodawać inne słowa do podświetlen używając opcji
+<<option_weechat.look.highlight,weechat.look.highlight>>, na przykład, żeby
+podświetlać Twój nick oraz słowa "słowo1", "słowo2" oraz wszystko co zaczyna się od "test":
 
 ----
-/set weechat.look.highlight word1,word2,test*
+/set weechat.look.highlight słowo1,słowo2,test*
 ----
 
-If you need a more specific rule for the word, you can use regular expressions
-with the option <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
-for example to highlight words "flashcode", "flashcöde" and "flashy":
+Jeżeli potrzebujesz bardziej przecyzyjnej reguły, możesz użyć wyrażenia reglarnego
+używając opcji <<option_weechat.look.highlight_regex,weechat.look.highlight_regex>>,
+na przydład do podświetlania słów "flashcode", "flashcöde" i "flashy":
 
 ----
 /set weechat.look.highlight_regex flashc[oö]de|flashy
 ----
 
-The delimiters around words to highlight can be customized with the option
+Separatory do okoła podświetlanych słów można zmienić za pomocą opcji
 <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
 
 [[highlights_tags]]
-==== Add tags to highlight
+==== Dodawanie tagów do podświetleń 
 
-Lines displayed can contain "tags", which give some info about the origin of
-message or the message itself. +
-You can display tags with the command `/debug tags` (same command to hide them).
+Wyświetlane linie moga zawierać "tagi", które dają troche informacji o pochodzeniu
+wiasomości lub o samej wiadmości. +
+Możesz wyświetlić tagi za pomocą komendy `/debug tags` (ta sama komenda je ukrywa).
 
-You can add specific tags to highlight with the option
+Możesz dodać konkretne tagi do podświetleń za pomocą opcji
 <<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
-Tags are separated by commas, and multiple tags can be separated by "+" to do
-a logical "and" between them.
+Tagi są oddzielane przecinkami, kilka tagów może być oddzielone przez "+" dla wykonania
+logicznego "i" między nimi.
 
-For example to highlight all messages from nick "FlashCode" and all notices
-from nicks beginning with "toto":
+Na przykład dla podświetlenia wszytkich wiadomości od nicka "FlashCode" oraz powiadomień od
+nicków zaczynających się od "toto":
 
 ----
 /set weechat.look.highlight_tags "nick_flashcode,irc_notice+nick_toto*"
 ----
 
 [[highlights_regex_buffer]]
-==== Set extra highlights on buffer
+==== Ustawianie dodatkowych podświetleń dla bufora
 
-You can force highlight using a regular expression with the buffer property
+Możesz wymusić podświetlenia używając wyrażenia regularnego z właściwościa bufora
 "highlight_regex".
 
-For example to force the highlight on all messages in the current buffer:
+Na przykład żeby wymusić podświetlenie dla wszytkich wiadomości w obecnym buforze:
 
 ----
 /buffer set highlight_regex .*
 ----
 
 [NOTE]
-The buffer property "highlight_regex" is not saved in configuration. +
-You can easily save it with the script _buffer_autoset.py_: you can install it
-with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`.
+Właściwość bufora "highlight_regex" nie jest zapisywana w konfiguracji. +
+Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalować za pomocą
+`/script install buffer_autoset.py`, informacje o używaniu `/help autosetbuffer`.
 
 [[key_bindings]]
 === Domyślne skróty klawiszowe
@@ -2266,8 +2256,7 @@ Możesz zdalnie kontrolować WeeChat, poprzez wysyłanie komend lub tekstu do
 kolejki FIFO (jeśli opcja "fifo.file.enabled" jest włączona, domyślnie jest
 włączona).
 
-// TRANSLATION MISSING
-The FIFO pipe is located in _~/.weechat/_ and is called _weechat_fifo_ by default.
+Kolejka FIFO znajduje się w katalogu _~/.weechat/_ i domyślnie nazywa się _weechat_fifo_.
 
 Składnia dla komend/tekstu przekazywanego do kolejki FIFO wygląda następująco:
 
@@ -2278,28 +2267,25 @@ Składnia dla komend/tekstu przekazywanego do kolejki FIFO wygląda następując
 
 Kilka przykładów:
 
-// TRANSLATION MISSING
-* Change nick on IRC server freenode to "newnick":
+* Zmiana nicka na serwerze IRC freenode na "newnick":
 
 ----
 $ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo
 ----
 
-// TRANSLATION MISSING
-* Send a message on IRC #weechat channel:
+* Wysłanie wiadomości na kanał IRC #weechat:
 
 ----
 $ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo
 ----
 
-// TRANSLATION MISSING
-* Send a message on current buffer:
+* Wysłanie wiadomości do obecnego bufora:
 
 ----
 $ echo '*hello!' >~/.weechat/weechat_fifo
 ----
 
-* wysłanie dwóch komend do wyładowania/przeładowania skryptów Python (należy
+* Wysłanie dwóch komend do wyładowania/przeładowania skryptów Python (należy
   oddzielić je za pomocą "\n"):
 
 ----
@@ -2314,8 +2300,7 @@ Sekcje:
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Sekcja  | Komenda          | Opis
-// TRANSLATION MISSING
-| file    | /set fifo.file.* | FIFO pipe control.
+| plik    | /set fifo.file.* | Kontrola kolejki FIFO.
 |===
 
 Opcje:

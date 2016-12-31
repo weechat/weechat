@@ -228,34 +228,32 @@ W celu ograniczenia długości nicków w oknie rozmowy:
 /set weechat.look.prefix_align none
 ----
 
-// TRANSLATION MISSING
 [[status_hotlist]]
-=== What does mean the [H: 3(1,8), 2(4)] in status bar?
+=== Co oznacza [H: 3(1,8), 2(4)] na pasku statusu?
 
-This is called the "hotlist", a list of buffers with the number of unread
-messages, by order: highlights, private messages, messages, other messages
-(like join/part). +
-The number of "unread message" is the number of new messages displayed/received
-since you visited the buffer.
+Jest to "hotlista", lista buforów z ilością nieprzeczytanych wiadomości,
+w kolejnoci: podświetlenia, prywatne wiadomości, wiadomości, inne (jak
+wejścia/wyjścia). +
+Ilość "nieprzeczytanych wiadomości" to lista nowych wyświetlonych/odebranych 
+wiadomości od ostatniej wizyty w buforze.
 
-In the example `[H: 3(1,8), 2(4)]`, there are:
+w przykładzie `[H: 3(1,8), 2(4)]`, oznacza:
 
-* one highlight and 8 unread messages on buffer #3,
-* 4 unread messages on buffer #2.
+* jedno podświetlenie i 8 nieprzeczytanych wiadomości w buforze #3,
+* 4 nieprzeczytane wiadomości w buforze #2.
 
-The color of the buffer/counter depends on the type of message, default colors
-are:
+Kolor bufora/licznika zależy od typu wiadomoci, domyślne kolory:
 
-* highlight: `lightmagenta` / `magenta`
-* private message: `lightgreen` / `green`
-* message: `yellow` / `brown`
-* other message: `default` / `default` (color of text in terminal)
+* podświetlenie: `lightmagenta` / `magenta`
+* prywatna wiadomość: `lightgreen` / `green`
+* wiadomość: `yellow` / `brown`
+* inne: `default` / `default` (kolor tekstu w terminalu)
 
-These colors can be changed with the options __weechat.color.status_data_*__
-(buffers) and __weechat.color.status_count_*__ (counters). +
-Other hotlist options can be changed with the options __weechat.look.hotlist_*__.
+Kolory można zmienić za pomocą opcji __weechat.color.status_data_*__
+(bufory) i __weechat.color.status_count_*__ (liczniki). +
+Pozostałe opcje hotlist można zmienić za pomocą opcji __weechat.look.hotlist_*__.
 
-See user's guide for more info about the hotlist (screen layout).
+Więcej informacji na temat hotlisty można znaleźć w poradniku użytkownika (sekcja układ ekranu).
 
 [[input_bar_size]]
 === Jak używać linii poleceń z więcej niż jednym wierszem?
@@ -811,24 +809,24 @@ Skrypty nie są kompatybilne z innymi klientami IRC.
 [[settings]]
 == Ustawienia
 
-// TRANSLATION MISSING
 [[editing_config_files]]
-=== Can I edit configuration files (*.conf) by hand?
+=== Czy mogę ręcznie edytować pliki konfiguracyjne (*.conf)?
 
-You can, but this is *NOT* recommended.
+Możesz, ale *NIE* jest to zalecane.
 
-Command `/set` in WeeChat is recommended:
+Zaleca się użycie komendy `/set`:
 
-* you can complete value with the Tab key
-* the value is checked, a message is displayed in case of error
-* the value is used immediately, you don't need to restart anything
+* możesz użwać dopełnienia za pomocą klawisza Tab
+* wartość jest sprawdzana, w razie błędu wyświetlana jest wiadomość
+* wartości zmieniane są od razu, nie trzeba retartować WeeChat ani nic takiego
 
-If you still want to edit files by hand, you should be careful:
+Jeśli nadal chcesz ręcznie edytować pliki, powinieneś zachować ostrożność:
 
-* if you put an invalid value for an option, WeeChat will display an error
-  on load and discard the value (the default value for option will be used)
-* if WeeChat is running, you'll have to issue the command `/reload`, and if
-  some settings were changed but not saved with `/save`, you will lose them
+* jeśli wprowadzisz nieprawidłową wartość dla opcji, WeeChat wyświetli błąd
+  przy ładowaniu i odrzuci błędną wartość (zostanie użyta wartość domyślna)
+* jeśli WeeChat jet uruchomiony, należy wykonać komendę `/reload`, jeżeli
+  jakieś ustawienia zostały zmienione ale nie zapisane za pomocą `/save`, 
+  zostaną utracone
 
 [[memory_usage]]
 === Jak mogę zmusić WeeChat do zużywania mniejszej ilości pamięci?
