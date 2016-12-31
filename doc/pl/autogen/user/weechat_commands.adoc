@@ -218,36 +218,36 @@ Przykłady:
 ----
 
 [[command_weechat_debug]]
-* `+debug+`: debug functions
+* `+debug+`: funkcje debugujące
 
 ----
 /debug  list
-        set <plugin> <level>
-        dump [<plugin>]
+        set <wtyczka> <poziom>
+        dump [<wtyczka>]
         buffer|color|infolists|memory|tags|term|windows
         mouse|cursor [verbose]
         hdata [free]
-        time <command>
+        time <komenda>
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-    hooks: display infos about hooks
-infolists: display infos about infolists
-     libs: display infos about external libraries used
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
-     time: measure time to execute a command or to send text to the current buffer
+     list: wyświetla wtyczki z poziomem debugowania
+      set: ustawia poziom debugowania dla wtyczki
+   plugin: nazwa wtyczki ("core" dla rdzenia WeeChat)
+    poziom: poziom debugowania wtyczki (0 = wyłączony)
+     dump: zachowuje zrzut pamięci w pliku z logiem WeeChat (taki sam zrzut jest zapisywany podczas awarii WeeChat)
+   buffer: zrzuca zawartość bufora z wartościami heksadecymalnymi do pliku z logiem
+    color: wyświetla informacje na temat obecnych par kolorów
+   cursor: przełącza debugowanie dla trybu kursora
+     dirs: wyświetla katalogi
+    hdata: wyświetla informacje o hdata (z free: usuwa wszystkie hdata z pamięci)
+    hooks: wyświetla informacje o hooks
+infolists: wyświetla informacje o infolistach
+     libs: wyświetla informacje o użytych zewnętrznych bibliotekach
+   memory: wyświetla informacje o zużyciu pamięci
+    mouse: przełącza debugowanie myszy
+     tags: wyświetla tagi dla linii
+     term: wyświetla informacje o terminalu
+  windows: wyświetla drzewo okien
+     time: mierzy czas do wykonania komendy lub wysłania tekstu do obecnego bufora
 ----
 
 [[command_weechat_eval]]
@@ -334,57 +334,57 @@ Przykłady (warunki):
          rename <nazwa> <nowa_nazwa>
          del <nazwa>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name ("@" = enable/disable all filters in current buffer)
-    add: add a filter
- rename: rename a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat" or "irc.server.freenode")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - wildcard "*" is allowed
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - wildcard "*" is allowed
-         - if tag starts with '!', then it is excluded and must NOT be in message
-  regex: POSIX extended regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: wyświetla wszystkie filtry
+ enable: włącza filtry (filtry są domyślnie włączone)
+disable: wyłącza filtry
+ toggle: przełącza filtry
+  nazwa: nazwa filtru ("@" = włącza/wyłącza wszystkie filtry w obecnym buforze)
+    add: dodaje filtr
+ rename: zmienia nazwę filtru
+    del: usuwa filtr
+   -all: usuwa wszystkie filtry
+ bufor: oddzielona przecinkami lisa buforów, dla których filtr jest aktywny:
+         - jest to pełna nazwa zawierająca wtyczkę (przykład: "irc.freenode.#weechat" lub "irc.server.freenode")
+         - "*" oznacza wszystkie bufory
+         - nazwa zaczynająca się od '!' jest wykluczana
+         - dozwolony jest znak "*"
+   tagi: lista tagów oddzielona przecinkiem, np: "irc_join,irc_part,irc_quit"
+         - logiczne "i": użyj "+" pomiędzy tagami (na przykład: "nick_toto+irc_action")
+         - dozwolony jest znak "*"
+         - jeśli tag zaczyna się od '!', wtedy jest on wykluczony i NIE może znajdować się w wiadomości
+  regex: rozszerzone wyrażenie regularne POSIX do wyszukania w linii
+         - użyj '\t' do oddzielenia prefiksu od wiadomości, znaki specjalne jak '|' muszą zostać poprzedzone '\' np: '\|'
+         - jeśli wyrażenie zaczyna się od '!', wtedy pasujący wynik jest odwracany (użyj '\!', aby zacząć od '!')
+         - dwa wyrażenia są tworzone: jedno dla prefiksu, drugie dla wiadomości
+         - wielkość znaków nie ma znaczenia dla wyrażeń, jeśli zaczynają się od "(?-i)" wielkość znaków ma znaczenie
 
-The default key alt+'=' toggles filtering on/off.
+Domyślny skrót klawiszowy alt+'=' włącza/wyłącza filtrowanie.
 
-Tags most commonly used:
+Najczęściej używane tagi:
   no_filter, no_highlight, no_log, log0..log9 (log level),
   notify_none, notify_message, notify_private, notify_highlight,
-  self_msg, nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  host_xxx (xxx is username + host in message),
-  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
+  self_msg, nick_xxx (xxx to nick w wiadomości), prefix_nick_ccc (ccc to kolor nicka),
+  host_xxx (xxx to użytkownik + host w wiadomości),
+  irc_xxx (xxx to nazwa komendy, lub numer; zobacz /server raw lub /debug tags),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+Aby zobaczyć listę tagów w liniach buforów wykonaj: /debug tags
 
-Examples:
-  use IRC smart filter on all buffers:
+Przykłady:
+  użyj inteligentnego filtru we wszystkich buforach IRC:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  użyj inteligentnego filtru we wszystkich buforach IRC poza tymi zawierającymi "#weechat" w nazwie:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  filtruj wszystkie wiadomości IRC o join/part/quit:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  filtruj nicki wyświetlane przy wejściu na kanał albo za pomocą /names:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  filtruj nick "toto" na kanale IRC #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  filtruj wejścia/akcje IRC od użytkownika "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  filtruj linie zawierające fraze "weechat sucks" na kanale IRC #weechat:
     /filter add sucks irc.freenode.#weechat * weechat sucks
-  filter lines that are strictly equal to "WeeChat sucks" on all buffers:
+  filtruj linie "WeeChat sucks" we wszystkich buforach:
     /filter add sucks2 * * (?-i)^WeeChat sucks$
 ----
 
@@ -813,7 +813,7 @@ opcja: nazwa opcji (może zawierać wildcard"*")
             color: nazwa koloru, ++numer lub --numer
         Uwaga: dla wszystkich typów, można użyć null dla usunięcia wartości opcji (niezdefiniowana wartość). Działa to tylko z niektórymi specjalnymi zmiennymi wtyczek.
   diff: wyświetla tylko zmienione opcje
-   env: wyśiwietla lub ustawia zmienne środowiskowe (użyj "" żeby skasować zmienną)
+   env: wyświetla lub ustawia zmienne środowiskowe (użyj "" żeby skasować zmienną)
 
 Przykłady:
   wyświetla opcje dotyczące podświetleń:

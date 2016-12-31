@@ -651,7 +651,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.password]] *irc.server_default.password*
-** opis: pass:none[hasło dla serwera ( zawartość jest przetwarzana, zobacz /help eval)]
+** opis: pass:none[hasło dla serwera (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -723,7 +723,7 @@
 ** domyślna wartość: `+2048+`
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** opis: pass:none[fingerprint of certificate which is trusted and accepted for the server; only hexadecimal digits are allowed (0-9, a-f): 64 chars for SHA-512, 32 chars for SHA-256, 20 chars for SHA-1 (insecure, not recommended); many fingerprints can be separated by commas; if this option is set, the other checks on certificates are NOT performed (option "ssl_verify") (note: content is evaluated, see /help eval)]
+** opis: pass:none[skrót certyfikatu, który jest zaufany i akceptowany dla serwera; tylko cyfry heksadecymalne są dozwolone (0-9, a-f): 64 znaki dla SHA-512, 32 znaki dla SHA-256, 20 znaków dla SHA-1 (mało bezpieczne, nie zalecane); wiele skrótów można oddzielić przecinkami; jeśli ta opcja jest ustawiona, certyfikat NIE jest dalej sprawdzany (opcja "ssl_verify") (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -741,7 +741,7 @@
 ** domyślna wartość: `+on+`
 
 * [[option_irc.server_default.usermode]] *irc.server_default.usermode*
-** opis: pass:none[user mode(s) to set after connection to server and before executing command and the auto-join of channels; examples: "+R" (to set mode "R"), "+R-i" (to set mode "R" and remove "i"); see /help mode for the complete mode syntax (note: content is evaluated, see /help eval)]
+** opis: pass:none[tryb(y) użytkowniak do ustawienia po połączeniu z serwerem przed wykonaniem komend oraz automatycznym wejściem na kanały; przykłady "+R" (w celu ustawienia trybu "R"), "+R-i" (w celu utawienia trbu "R" i zdjęcia trybu "i"); zobacz /help mode dla pełnej lity składni (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

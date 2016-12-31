@@ -75,7 +75,7 @@
 ** domyślna wartość: `+default+`
 
 * [[option_weechat.color.chat_nick]] *weechat.color.chat_nick*
-** opis: pass:none[text color for nicks in chat window: used in some server messages and as fallback when a nick color is not found; most of times nick color comes from option weechat.color.chat_nick_colors]
+** opis: pass:none[kolor tekstu dla nicków w ekranach rozmów: używane w niektórych wiadomościach serwera i w wypadku nie znalezieniu koloru nicka; w większości przypadków kolor nicka jest brany z opcji weechat.color.chat_nick_colors]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+lightcyan+`
@@ -495,7 +495,7 @@
 ** domyślna wartość: `+message+`
 
 * [[option_weechat.look.align_multiline_words]] *weechat.look.align_multiline_words*
-** opis: pass:none[alignment for multiline words according to option weechat.look.align_end_of_lines; if disabled, the multiline words will not be aligned, which can be useful to not break long URLs]
+** opis: pass:none[wyrównanie dla wielolinijkowych słów zgodnie z opcją  weechat.look.align_end_of_lines; jeśli wyłączone wieloliniowe słowa nie będą wyrównane, co może być przydatne do nie dzielenia długich adresów URL]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
@@ -1035,7 +1035,7 @@
 ** domyślna wartość: `+"<--"+`
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
-** opis: pass:none[prefiks wyświetlany dla wiadomości z takim samym nickiem jak poprzednia wiadomość: spacja ("") chowa prefiks, inny ciąg wyświetlany zamiast prefiksu lub pusty ciąg dla wyłączenia opcji (wyświetlanie przedrostka)]
+** opis: pass:none[prefiks wyświetlany dla wiadomości z takim samym nickiem jak poprzednia wiadomość: spacja (" ") chowa prefiks, inny ciąg wyświetlany zamiast prefiksu lub pusty ciąg dla wyłączenia opcji (wyświetlanie przedrostka)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

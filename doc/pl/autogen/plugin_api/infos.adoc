@@ -58,7 +58,7 @@
 
 | weechat | nick_color_name | pobiera nazwę koloru nicka | nazwa użytkownika
 
-| weechat | pid | WeeChat PID (process ID) | -
+| weechat | pid | WeeChat PID (ID procesu) | -
 
 | weechat | term_height | wysokość terminala | -
 
