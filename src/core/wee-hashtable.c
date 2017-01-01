@@ -1,7 +1,7 @@
 /*
  * wee-hashtable.c - implementation of hashtable
  *
- * Copyright (C) 2010-2016 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2010-2017 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

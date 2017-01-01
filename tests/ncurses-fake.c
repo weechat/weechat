@@ -1,7 +1,7 @@
 /*
  * ncurses.c - fake ncurses lib used for tests
  *
- * Copyright (C) 2014-2016 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2017 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

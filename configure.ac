@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2016 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2003-2017 Sébastien Helleu <flashcode@flashtux.org>
 # Copyright (C) 2005 Benoit Papillault <benoit.papillault@free.fr>
 # Copyright (C) 2005-2006 Julien Louis <ptitlouis@sysif.net>
 # Copyright (C) 2005-2009 Emmanuel Bouthenot <kolter@openics.org>

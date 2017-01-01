@@ -1,7 +1,7 @@
 /*
  * wee-eval.c - evaluate expressions with references to internal vars
  *
- * Copyright (C) 2012-2016 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012-2017 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

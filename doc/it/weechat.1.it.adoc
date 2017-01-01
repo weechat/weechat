@@ -107,7 +107,7 @@ This manpage was written by {author}.
 WeeChat is written by Sébastien Helleu and contributors (complete list is in
 the AUTHORS.adoc file).
 
-Copyright (C) 2003-2016 {author}
+Copyright (C) 2003-2017 {author}
 
 WeeChat is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

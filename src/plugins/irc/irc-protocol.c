@@ -1,7 +1,7 @@
 /*
  * irc-protocol.c - implementation of IRC protocol (RFCs 1459/2810/2811/2812/2813)
  *
- * Copyright (C) 2003-2016 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2017 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2014 Shawn Smith <ShawnSmith0828@gmail.com>
  *

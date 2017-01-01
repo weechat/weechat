@@ -1,7 +1,7 @@
 /*
  * gui-curses-mouse.c - mouse functions for Curses GUI
  *
- * Copyright (C) 2011-2016 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2011-2017 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
