@@ -5075,6 +5075,7 @@ IRC_PROTOCOL_CALLBACK(470)
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_lines *own_lines;
     const char *buffer_name, *short_name, *localvar_channel;
+    char *old_channel_lower, *new_channel_lower;
     int lines_count;
 
     irc_protocol_cb_generic_error (server,
@@ -5125,6 +5126,46 @@ IRC_PROTOCOL_CALLBACK(470)
                                                  WEECHAT_HOOK_SIGNAL_POINTER,
                                                  ptr_buffer);
             }
+        }
+
+
+        old_channel_lower = strdup (argv[3]);
+        if (old_channel_lower)
+        {
+            weechat_string_tolower (old_channel_lower);
+            new_channel_lower = strdup (argv[4]);
+            if (new_channel_lower)
+            {
+                weechat_string_tolower (new_channel_lower);
+
+                if (weechat_hashtable_has_key (server->join_manual,
+                                               old_channel_lower))
+                {
+                    weechat_hashtable_set (server->join_manual,
+                                           new_channel_lower,
+                                           weechat_hashtable_get (
+                                               server->join_manual,
+                                               old_channel_lower));
+                    weechat_hashtable_remove (server->join_manual,
+                                              old_channel_lower);
+                }
+
+                if (weechat_hashtable_has_key (server->join_noswitch,
+                                               old_channel_lower))
+                {
+                    weechat_hashtable_set (server->join_noswitch,
+                                           new_channel_lower,
+                                           weechat_hashtable_get (
+                                               server->join_noswitch,
+                                               old_channel_lower));
+                    weechat_hashtable_remove (server->join_noswitch,
+                                              old_channel_lower);
+                }
+
+                free (new_channel_lower);
+            }
+
+            free (old_channel_lower);
         }
     }
 
