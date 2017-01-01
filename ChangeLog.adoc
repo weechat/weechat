@@ -45,6 +45,7 @@ Bug fixes::
   * core: fix deadlock when quitting after a signal SIGHUP/SIGQUIT/SIGTERM is received (issue #32)
   * core: fix display of empty lines in search mode (issue #829)
   * api: fix crash in function string_expand_home() when the HOME environment variable is not set (issue #827)
+  * irc: fix close of server channels which are waiting for the JOIN when the server buffer is closed (issue #873)
   * irc: fix buffer switching on manual join for forwarded channels (issue #876)
   * irc: add missing tags on CTCP message sent
   * lua: fix integers returned in Lua >= 5.3 (issue #834)

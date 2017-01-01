@@ -108,6 +108,44 @@ irc_buffer_build_name (const char *server, const char *channel)
 }
 
 /*
+ * Closes all channels/privates of a given server.
+ */
+
+void
+irc_buffer_close_server_channels (struct t_irc_server *server)
+{
+    struct t_hdata *hdata_buffer;
+    struct t_gui_buffer *ptr_buffer, *ptr_next_buffer;
+    const char *ptr_type, *ptr_server_name;
+
+    hdata_buffer = weechat_hdata_get ("buffer");
+    ptr_buffer = weechat_hdata_get_list (hdata_buffer, "gui_buffers");
+
+    while (ptr_buffer)
+    {
+        ptr_next_buffer = weechat_hdata_move (hdata_buffer, ptr_buffer, 1);
+
+        if (weechat_buffer_get_pointer (ptr_buffer,
+                                        "plugin") == weechat_irc_plugin)
+        {
+            ptr_type = weechat_buffer_get_string (ptr_buffer, "localvar_type");
+            ptr_server_name = weechat_buffer_get_string (ptr_buffer,
+                                                         "localvar_server");
+            if (ptr_type && ptr_type[0]
+                && ptr_server_name && ptr_server_name[0]
+                && ((strcmp (ptr_type, "channel") == 0)
+                    || (strcmp (ptr_type, "private") == 0))
+                && (strcmp (ptr_server_name, server->name) == 0))
+            {
+                weechat_buffer_close (ptr_buffer);
+            }
+        }
+
+        ptr_buffer = ptr_next_buffer;
+    }
+}
+
+/*
  * Callback called when a buffer is closed.
  */
 
@@ -149,6 +187,8 @@ irc_buffer_close_cb (const void *pointer, void *data,
                     irc_command_quit_server (ptr_server, NULL);
                     irc_server_disconnect (ptr_server, 0, 0);
                 }
+
+                /* close server channels/privates */
                 ptr_channel = ptr_server->channels;
                 while (ptr_channel)
                 {
@@ -157,6 +197,13 @@ irc_buffer_close_cb (const void *pointer, void *data,
                         weechat_buffer_close (ptr_channel->buffer);
                     ptr_channel = next_channel;
                 }
+
+                /*
+                 * close remaining channels/privates
+                 * (which are not yet in server->channels)
+                 */
+                irc_buffer_close_server_channels (ptr_server);
+
                 ptr_server->buffer = NULL;
             }
         }
