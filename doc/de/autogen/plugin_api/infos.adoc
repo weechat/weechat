@@ -64,7 +64,7 @@
 
 | weechat | term_width | Breite des Terminals | -
 
-| weechat | uptime | WeeChat uptime (format: "days:hh:mm:ss") | "days" (number of days) or "seconds" (number of seconds) (optional)
+| weechat | uptime | Laufzeit von Weechat (Format: "days:hh:mm:ss") | "days" (Anzahl der Tage) oder "seconds" (Anzahl der Sekunden) (optional)
 
 | weechat | version | WeeChat-Version | -
 
