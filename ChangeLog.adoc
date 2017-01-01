@@ -52,7 +52,7 @@ Bug fixes::
 
 Build::
 
-  * core: fix compilation on Mac OS X (add link with resolv) (issue #276)
+  * core, irc, xfer: fix compilation on Mac OS X (add link with resolv) (issue #276)
   * core: add build of xz package with make dist (cmake)
 
 [[v1.6]]

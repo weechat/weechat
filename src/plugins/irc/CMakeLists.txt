@@ -53,6 +53,11 @@ endif()
 
 list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
 
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  # link with resolv lib on Mac OS X
+  list(APPEND LINK_LIBS "resolv")
+endif()
+
 target_link_libraries(irc ${LINK_LIBS})
 
 install(TARGETS irc LIBRARY DESTINATION ${LIBDIR}/plugins)
