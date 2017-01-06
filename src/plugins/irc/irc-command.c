@@ -6685,7 +6685,7 @@ irc_command_init ()
            "  server: server name, for internal and display use\n"
            "hostname: name or IP address of server, with optional port "
            "(default: 6667), many addresses can be separated by a comma\n"
-           "    temp: add a temporary server (not saved)\n"
+           "   -temp: add a temporary server (not saved)\n"
            "  option: set option for server (for boolean option, value can be "
            "omitted)\n"
            "nooption: set boolean option to 'off' (for example: -nossl)\n"
