@@ -1403,22 +1403,30 @@ irc_server_apply_command_line_options (struct t_irc_server *server,
             }
             if (option_name)
             {
-                index_option = irc_server_search_option (option_name);
-                if (index_option < 0)
+                if (weechat_strcasecmp (option_name, "temp") == 0)
                 {
-                    /* look if option is negative, like "-noxxx" */
-                    if (weechat_strncasecmp (argv[i], "-no", 3) == 0)
-                    {
-                        free (option_name);
-                        option_name = strdup (argv[i] + 3);
-                        index_option = irc_server_search_option (option_name);
-                        ptr_value = value_boolean[0];
-                    }
+                    /* temporary server, not saved */
+                    server->temp_server = 1;
                 }
-                if (index_option >= 0)
+                else
                 {
-                    weechat_config_option_set (server->options[index_option],
-                                               ptr_value, 1);
+                    index_option = irc_server_search_option (option_name);
+                    if (index_option < 0)
+                    {
+                        /* look if option is negative, like "-noxxx" */
+                        if (weechat_strncasecmp (argv[i], "-no", 3) == 0)
+                        {
+                            free (option_name);
+                            option_name = strdup (argv[i] + 3);
+                            index_option = irc_server_search_option (option_name);
+                            ptr_value = value_boolean[0];
+                        }
+                    }
+                    if (index_option >= 0)
+                    {
+                        weechat_config_option_set (server->options[index_option],
+                                                   ptr_value, 1);
+                    }
                 }
                 free (option_name);
             }

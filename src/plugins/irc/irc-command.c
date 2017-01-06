@@ -1295,8 +1295,8 @@ IRC_COMMAND_CALLBACK(connect)
                                 argv[i], 1);
                             weechat_printf (
                                 NULL,
-                                _("%s: server %s%s%s added (temporary "
-                                  "server, NOT SAVED!)"),
+                                _("%s: server %s%s%s added "
+                                  "(temporary server, NOT SAVED!)"),
                                 IRC_PLUGIN_NAME,
                                 IRC_COLOR_CHAT_SERVER,
                                 ptr_server->name,
@@ -5010,6 +5010,9 @@ IRC_COMMAND_CALLBACK(server)
 
         weechat_printf (
             NULL,
+            (new_server->temp_server) ?
+            _("%s: server %s%s%s added "
+              "(temporary server, NOT SAVED!)") :
             _("%s: server %s%s%s added"),
             IRC_PLUGIN_NAME,
             IRC_COLOR_CHAT_SERVER,
