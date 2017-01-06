@@ -901,7 +901,7 @@ msgstr "Zmienna „%s” jest nieustawiona"
 
 #, c-format
 msgid "%sError: failed to unset variable \"%s\": %s"
-msgstr "%sBłąd: nie udało się skasować zmiennej „%s\": %s"
+msgstr "%sBłąd: nie udało się skasować zmiennej „%s”: %s"
 
 #, c-format
 msgid "%s%d%s option with value changed"
