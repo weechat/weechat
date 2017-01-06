@@ -227,21 +227,31 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
         else if (weechat_strcasecmp (argv[i], "-l") == 0)
         {
             cmd_options->output_to_buffer = 0;
+            cmd_options->output_to_buffer_exec_cmd = 0;
             cmd_options->new_buffer = 0;
         }
         else if (weechat_strcasecmp (argv[i], "-o") == 0)
         {
             cmd_options->output_to_buffer = 1;
+            cmd_options->output_to_buffer_exec_cmd = 0;
+            cmd_options->new_buffer = 0;
+        }
+        else if (weechat_strcasecmp (argv[i], "-oc") == 0)
+        {
+            cmd_options->output_to_buffer = 1;
+            cmd_options->output_to_buffer_exec_cmd = 1;
             cmd_options->new_buffer = 0;
         }
         else if (weechat_strcasecmp (argv[i], "-n") == 0)
         {
             cmd_options->output_to_buffer = 0;
+            cmd_options->output_to_buffer_exec_cmd = 0;
             cmd_options->new_buffer = 1;
         }
         else if (weechat_strcasecmp (argv[i], "-nf") == 0)
         {
             cmd_options->output_to_buffer = 0;
+            cmd_options->output_to_buffer_exec_cmd = 0;
             cmd_options->new_buffer = 2;
         }
         else if (weechat_strcasecmp (argv[i], "-cl") == 0)
@@ -409,6 +419,7 @@ exec_command_run (struct t_gui_buffer *buffer,
     cmd_options.ptr_buffer_name = NULL;
     cmd_options.ptr_buffer = buffer;
     cmd_options.output_to_buffer = 0;
+    cmd_options.output_to_buffer_exec_cmd = 0;
     cmd_options.new_buffer = 0;
     cmd_options.new_buffer_clear = 0;
     cmd_options.switch_to_buffer = 1;
@@ -435,12 +446,12 @@ exec_command_run (struct t_gui_buffer *buffer,
     if (!exec_command_parse_options (&cmd_options, argc, argv, start_arg, 1))
         return WEECHAT_RC_ERROR;
 
-    /* options "-bg" and "-o"/"-n" are incompatible */
+    /* options "-bg" and "-o"/"-oc"/"-n" are incompatible */
     if (cmd_options.detached
         && (cmd_options.output_to_buffer || cmd_options.new_buffer))
         return WEECHAT_RC_ERROR;
 
-    /* options "-pipe" and "-bg"/"-o"/"-n" are incompatible */
+    /* options "-pipe" and "-bg"/"-o"/"-oc"/"-n" are incompatible */
     if (cmd_options.pipe_command
         && (cmd_options.detached || cmd_options.output_to_buffer
             || cmd_options.new_buffer))
@@ -494,6 +505,7 @@ exec_command_run (struct t_gui_buffer *buffer,
         {
             /* output in a new buffer using given name */
             new_exec_cmd->output_to_buffer = 0;
+            new_exec_cmd->output_to_buffer_exec_cmd = 0;
             snprintf (str_buffer, sizeof (str_buffer),
                       "exec.%s", cmd_options.ptr_buffer_name);
             ptr_new_buffer = exec_buffer_new (str_buffer,
@@ -544,10 +556,12 @@ exec_command_run (struct t_gui_buffer *buffer,
                         EXEC_PLUGIN_NAME) == 0))
         {
             cmd_options.output_to_buffer = 0;
+            cmd_options.output_to_buffer_exec_cmd = 0;
             cmd_options.new_buffer = 1;
         }
     }
     new_exec_cmd->output_to_buffer = cmd_options.output_to_buffer;
+    new_exec_cmd->output_to_buffer_exec_cmd = cmd_options.output_to_buffer_exec_cmd;
     new_exec_cmd->line_numbers = (cmd_options.line_numbers < 0) ?
         cmd_options.new_buffer : cmd_options.line_numbers;
     new_exec_cmd->color = cmd_options.color;
@@ -808,7 +822,10 @@ exec_command_init ()
            "buffer is not found, a new buffer with name \"exec.exec.xxx\" is "
            "created)\n"
            "      -l: display locally output of command on buffer (default)\n"
-           "      -o: send output of command to the buffer "
+           "      -o: send output of command to the buffer without executing "
+           "commands (not compatible with option -bg)\n"
+           "     -oc: send output of command to the buffer and execute commands "
+           "(lines starting with \"/\" or another custom command char) "
            "(not compatible with option -bg)\n"
            "      -n: display output of command in a new buffer (not compatible "
            "with option -bg)\n"

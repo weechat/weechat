@@ -25,7 +25,8 @@
  -nostdin : ne pas créer de tuyau pour l'entrée standard (par défaut)
   -buffer : afficher/envoyer la sortie de la commande sur ce tampon (si le tampon n'est pas trouvé, un nouveau tampon avec le nom "exec.exec.xxx" est créé)
        -l : afficher localement la sortie de la commande sur le tampon (par défaut)
-       -o : envoyer la sortie de la commande au tampon (non compatible avec l'option -bg)
+       -o : envoyer la sortie de la commande au tampon sans exécuter les commandes (non compatible avec l'option -bg)
+      -oc : envoyer la sortie de la commande au tampon et exécuter les commandes (lignes commençant par "/" ou un caractère personnalisé de commande) (non compatible avec l'option -bg)
        -n : afficher la sortie de la commande dans un nouveau tampon (non compatible avec l'option -bg)
       -nf : afficher la sortie de la commande dans un nouveau tampon avec contenu libre (pas de coupure des mots, pas de limite sur le nombre de lignes) (non compatible avec l'option -bg)
       -cl : effacer le nouveau tampon avant d'afficher la sortie

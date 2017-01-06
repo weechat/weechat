@@ -53,6 +53,7 @@ struct t_exec_cmd
 
     /* display */
     int output_to_buffer;              /* 1 if output is sent to buffer     */
+    int output_to_buffer_exec_cmd;     /* 1 if commands are executed        */
     char *buffer_full_name;            /* buffer where output is displayed  */
     int line_numbers;                  /* 1 if lines numbers are displayed  */
     int color;                         /* what to do with ANSI colors       */
