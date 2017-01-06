@@ -340,6 +340,8 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
                 line_color);
         }
     }
+
+    free (line_color);
 }
 
 /*
