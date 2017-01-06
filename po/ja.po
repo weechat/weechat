@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2012-2016 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
+# Copyright (C) 2012-2017 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2016-12-31 18:22+0100\n"
-"PO-Revision-Date: 2016-12-24 09:00+0900\n"
+"PO-Revision-Date: 2017-01-06 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -9719,10 +9719,10 @@ msgid "get nick color name"
 msgstr "ニックネームの色名を取得"
 
 msgid "WeeChat uptime (format: \"days:hh:mm:ss\")"
-msgstr ""
+msgstr "WeeChat 連続稼働時間 (書式: \"days:hh:mm:ss\")"
 
 msgid "\"days\" (number of days) or \"seconds\" (number of seconds) (optional)"
-msgstr ""
+msgstr "\"days\" (日数) または \"seconds\" (秒数) (任意)"
 
 msgid "list of bars"
 msgstr "バーのリスト"
