@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2012-2016 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
+# Copyright (C) 2012-2017 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -9723,10 +9723,10 @@ msgid "get nick color name"
 msgstr "ニックネームの色名を取得"
 
 msgid "WeeChat uptime (format: \"days:hh:mm:ss\")"
-msgstr ""
+msgstr "WeeChat 連続稼働時間 (書式: \"days:hh:mm:ss\")"
 
 msgid "\"days\" (number of days) or \"seconds\" (number of seconds) (optional)"
-msgstr ""
+msgstr "\"days\" (日数) または \"seconds\" (秒数) (任意)"
 
 msgid "list of bars"
 msgstr "バーのリスト"
