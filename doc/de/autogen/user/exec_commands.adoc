@@ -26,7 +26,7 @@
  -buffer: zeigt/sendet Ausgabe des Befehls an diesen Buffer (wird der angegebene Buffer nicht gefunden wird ein neuer Buffer mit dem Namen "exec.exec.xxx" erstellt)
       -l: gibt die Ausgabe des Befehls lokal im Buffer aus (Standardverhalten)
       -o: gibt die Ausgabe des Befehls im Buffer aus (nicht kompatibel mit Argument -bg)
-     -oc: gibt die Ausgabe des Befehls im Buffer aus und führt diesen dann aus (bei Zeilen die mit "/" beginnen bzw. das benutzerdefinierten Befehlszeichen verwenden) (nicht kompatibel mit Option -bg)
+     -oc: gibt die Ausgabe des Befehls im Buffer aus und führt diesen dann aus (betrifft Zeilen die mit "/" beginnen bzw. das benutzerdefinierte Befehlszeichen verwenden) (nicht kompatibel mit Option -bg)
       -n: gibt die Ausgabe des Befehls in einem neuen Buffer aus (nicht kompatibel mit Argument -bg)
      -nf: gibt die Ausgabe des Befehls in einem neuen Buffer, mit einem freien Inhalt (kein Zeilenumbruch, keine Limitierung in der Anzahl der Zeilen), aus (nicht kompatibel mit Argument -bg)
      -cl: der neue Buffer wird vor einer Ausgabe gelöscht

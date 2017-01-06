@@ -721,7 +721,7 @@ listfull : afficher les serveurs avec de l'info détaillée pour chaque
      add : ajouter un nouveau serveur
  serveur : nom du serveur, pour usage interne et affichage
      nom : nom ou adresse IP du serveur avec port en option (défaut : 6667), plusieurs adresses peuvent être séparées par une virgule
-    temp : ajouter un serveur temporaire (non sauvé)
+   -temp : ajouter un serveur temporaire (non sauvé)
   option : définir l'option pour le serveur (pour une option booléenne, la valeur peut être omise)
 nooption : définir l'option booléenne à 'off' (par exemple : -nossl)
     copy : dupliquer un serveur

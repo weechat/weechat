@@ -721,7 +721,7 @@ listfull: listet alle Server auf, mit detaillierten Informationen zu jedem einze
      add: erstellt einen neuen Server
   server: Servername, dient der internen Nutzung und zur Darstellung
 hostname: Name oder IP-Adresse des Servers. Optional kann zusätzlich der Port festgelegt werden (Standard-Port: 6667). Verschiedene Ports können durch Kommata getrennt werden
-    temp: erstellt temporären Server (wird nicht gespeichert)
+   -temp: erstellt temporären Server (wird nicht gespeichert)
   option: legt die Optionen für den Server fest (die Boolean-Optionen können weggelassen werden)
 nooption: stellt die Boolean Einstellung auf 'off' (Beispiel: -nossl)
     copy: erstellt eine Kopie des Servers

@@ -720,7 +720,7 @@ listfull: wyświetla listę serwerów ze szczegółowymi informacjami dla każde
      add: tworzy nowy serwer
   serwer: nazwa serwera, do użytku wewnętrznego i  wyświetlania
 host: nazwa albo adres IP serwera, z opcjonalnym numerem portu (domyślnie: 6667), wiele adresów należy rozdzielić przecinkiem
-    temp: tworzy serwer tymczasowy (nie zapisany)
+   -temp: tworzy serwer tymczasowy (nie zapisany)
   opcja: ustawia opcję dla serwera (dla opcji boolowskich wartość może zostać pominięta)
 noopcja: ustawia opcje boolowskie na 'off' (na przykład: -nossl)
     copy: duplikuje serwer
