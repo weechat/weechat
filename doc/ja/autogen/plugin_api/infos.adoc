@@ -64,7 +64,7 @@
 
 | weechat | term_width | 端末の幅 | -
 
-| weechat | uptime | WeeChat uptime (format: "days:hh:mm:ss") | "days" (number of days) or "seconds" (number of seconds) (optional)
+| weechat | uptime | WeeChat 連続稼働時間 (書式: "days:hh:mm:ss") | "days" (日数) または "seconds" (秒数) (任意)
 
 | weechat | version | WeeChat のバージョン | -
 
