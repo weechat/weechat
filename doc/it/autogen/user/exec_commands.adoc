@@ -19,16 +19,16 @@
    -list: list commands
      -sh: use the shell to execute the command (WARNING: use this option ONLY if all arguments are safe, see option -nosh)
    -nosh: do not use the shell to execute the command (required if the command has some unsafe data, for example the content of a message from another user) (default)
-     -bg: run process in background: do not display process output neither return code (not compatible with options -o/-n)
+     -bg: run process in background: do not display process output neither return code (not compatible with options -o/-oc/-n/-nf/-pipe/-hsignal)
    -nobg: catch process output and display return code (default)
   -stdin: create a pipe for sending data to the process (with /exec -in/-inclose)
 -nostdin: do not create a pipe for stdin (default)
  -buffer: display/send output of command on this buffer (if the buffer is not found, a new buffer with name "exec.exec.xxx" is created)
       -l: display locally output of command on buffer (default)
-      -o: send output of command to the buffer without executing commands (not compatible with option -bg)
-     -oc: send output of command to the buffer and execute commands (lines starting with "/" or another custom command char) (not compatible with option -bg)
-      -n: display output of command in a new buffer (not compatible with option -bg)
-     -nf: display output of command in a new buffer with free content (no word-wrap, no limit on number of lines) (not compatible with option -bg)
+      -o: send output of command to the buffer without executing commands (not compatible with options -bg/-pipe/-hsignal)
+     -oc: send output of command to the buffer and execute commands (lines starting with "/" or another custom command char) (not compatible with options -bg/-pipe/-hsignal)
+      -n: display output of command in a new buffer (not compatible with options -bg/-pipe/-hsignal)
+     -nf: display output of command in a new buffer with free content (no word-wrap, no limit on number of lines) (not compatible with options -bg/-pipe/-hsignal)
      -cl: clear the new buffer before displaying output
    -nocl: append to the new buffer without clear (default)
      -sw: switch to the output buffer (default)
@@ -47,8 +47,8 @@
    -norc: don't display return code
 -timeout: set a timeout for the command (in seconds)
    -name: set a name for the command (to name it later with /exec)
-   -pipe: send the output to a WeeChat/plugin command (line by line); if there are spaces in command/arguments, enclose them with double quotes; variable $line is replaced by the line (by default the line is added after the command, separated by a space) (not compatible with options -bg/-o/-n)
--hsignal: send the output as a hsignal (to be used for example in a trigger) (not compatible with options -bg/-o/-n)
+   -pipe: send the output to a WeeChat/plugin command (line by line); if there are spaces in command/arguments, enclose them with double quotes; variable $line is replaced by the line (by default the line is added after the command, separated by a space) (not compatible with options -bg/-o/-oc/-n/-nf)
+-hsignal: send the output as a hsignal (to be used for example in a trigger) (not compatible with options -bg/-o/-oc/-n/-nf)
  command: the command to execute; if beginning with "url:", the shell is disabled and the content of URL is downloaded and sent as output
       id: command identifier: either its number or name (if set with "-name xxx")
      -in: send text on standard input of process

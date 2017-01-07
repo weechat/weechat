@@ -19,16 +19,16 @@
     -list : lister les commandes
       -sh : utiliser le shell pour exécuter la commande (ATTENTION : utilisez cette option SEULEMENT si tous les paramètres sont fiables, voir l'option -nosh)
     -nosh : ne pas utiliser le shell pour exécuter la commande (requis si la commande a des données non fiables, par exemple le contenu d'un message d'un autre utilisateur) (par défaut)
-      -bg : lancer le processus en tâche de fond : ne pas afficher la sortie ni le code retour (non compatible avec les options -o/-n)
+      -bg : lancer le processus en tâche de fond : ne pas afficher la sortie ni le code retour (non compatible avec les options -o/-oc/-n/-nf/-pipe/-hsignal)
     -nobg : capturer la sortie du processus et afficher le code retour (par défaut)
    -stdin : créer un tuyau pour envoyer des données sur l'entrée standard du processus (avec /exec -in/-inclose)
  -nostdin : ne pas créer de tuyau pour l'entrée standard (par défaut)
   -buffer : afficher/envoyer la sortie de la commande sur ce tampon (si le tampon n'est pas trouvé, un nouveau tampon avec le nom "exec.exec.xxx" est créé)
        -l : afficher localement la sortie de la commande sur le tampon (par défaut)
-       -o : envoyer la sortie de la commande au tampon sans exécuter les commandes (non compatible avec l'option -bg)
-      -oc : envoyer la sortie de la commande au tampon et exécuter les commandes (lignes commençant par "/" ou un caractère personnalisé de commande) (non compatible avec l'option -bg)
-       -n : afficher la sortie de la commande dans un nouveau tampon (non compatible avec l'option -bg)
-      -nf : afficher la sortie de la commande dans un nouveau tampon avec contenu libre (pas de coupure des mots, pas de limite sur le nombre de lignes) (non compatible avec l'option -bg)
+       -o : envoyer la sortie de la commande au tampon sans exécuter les commandes (non compatible avec les options -bg/-pipe/-hsignal)
+      -oc : envoyer la sortie de la commande au tampon et exécuter les commandes (lignes commençant par "/" ou un caractère personnalisé de commande) (non compatible avec les options -bg/-pipe/-hsignal)
+       -n : afficher la sortie de la commande dans un nouveau tampon (non compatible avec les options -bg/-pipe/-hsignal)
+      -nf : afficher la sortie de la commande dans un nouveau tampon avec contenu libre (pas de coupure des mots, pas de limite sur le nombre de lignes) (non compatible avec les options -bg/-pipe/-hsignal)
       -cl : effacer le nouveau tampon avant d'afficher la sortie
     -nocl : ajouter au nouveau tampon sans effacer (par défaut)
       -sw : basculer vers le tampon de sortie (par défaut)
@@ -47,8 +47,8 @@
     -norc : ne pas afficher le code retour
  -timeout : définir un délai maximum pour la commande (en secondes)
     -name : définir un nom pour la commande (pour la nommer plus tard avec /exec)
-    -pipe : envoyer la sortie vers une commande WeeChat/extension (ligne par ligne) ; s'il y a des espaces dans la commande/paramètres, entourez les de guillemets ; la variable $line est remplacée par la ligne (par défaut la ligne est ajoutée après la commande, séparée par un espace) (non compatible avec les options -bg/-o/-n)
- -hsignal : envoyer la sortie sous forme de hsignal (pour être utilisé par exemple dans un trigger) (non compatible avec les options -bg/-o/-n)
+    -pipe : envoyer la sortie vers une commande WeeChat/extension (ligne par ligne) ; s'il y a des espaces dans la commande/paramètres, entourez les de guillemets ; la variable $line est remplacée par la ligne (par défaut la ligne est ajoutée après la commande, séparée par un espace) (non compatible avec les options -bg/-o/-oc/-n/-nf)
+ -hsignal : envoyer la sortie sous forme de hsignal (pour être utilisé par exemple dans un trigger) (non compatible avec les options -bg/-o/-oc/-n/-nf)
  commande : la commande à exécuter ; si elle commence par "url:", le shell est désactivé et le contenu de l'URL est téléchargé et envoyé comme sortie
        id : identifiant de commande : soit le numéro ou le nom (si défini avec "-name xxx")
       -in : envoyer le texte sur l'entrée standard du processus
