@@ -1402,7 +1402,10 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
     int sock, i;
     struct msghdr msg;
     struct cmsghdr *cmsg;
-    char msg_buf[CMSG_SPACE(sizeof (sock))];
+    union {
+        char msg_buf[sizeof(struct cmsgcred) + CMSG_SPACE(sizeof (sock))];
+        struct cmsghdr align;
+    } u;
     struct iovec iov[1];
     char iov_data[1];
 
@@ -1452,8 +1455,8 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
             {
                 /* receive the socket from the child process */
                 memset (&msg, 0, sizeof (msg));
-                msg.msg_control = msg_buf;
-                msg.msg_controllen = sizeof (msg_buf);
+                msg.msg_control = u.msg_buf;
+                msg.msg_controllen = sizeof (u.msg_buf);
 
                 /* recv 1 byte of data (not required on Linux, required by BSD/OSX) */
                 memset (iov, 0, sizeof (iov));
@@ -1464,13 +1467,17 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
 
                 if (recvmsg (HOOK_CONNECT(hook_connect, child_recv), &msg, 0) >= 0)
                 {
-                    cmsg = CMSG_FIRSTHDR(&msg);
-                    if (cmsg != NULL
-                        && cmsg->cmsg_level == SOL_SOCKET
-                        && cmsg->cmsg_type == SCM_RIGHTS
-                        && cmsg->cmsg_len >= sizeof (sock))
+                    /* as of april 02 2016 FreeNAS prepends SCM_CREDS to UDP recvmsg() calls
+                       therefore we read until we find the SCM_RIGHTS message we're looking for */
+                    for (cmsg = CMSG_FIRSTHDR(&msg); cmsg != NULL; cmsg = CMSG_NXTHDR(&msg, cmsg))
                     {
-                        memcpy(&sock, CMSG_DATA(cmsg), sizeof (sock));
+                        if (cmsg->cmsg_level == SOL_SOCKET
+                            && cmsg->cmsg_type == SCM_RIGHTS
+                            && cmsg->cmsg_len >= sizeof (sock))
+                        {
+                            memcpy(&sock, CMSG_DATA(cmsg), sizeof (sock));
+                            break;
+                        }
                     }
                 }
             }
