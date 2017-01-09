@@ -72,6 +72,17 @@ int network_init_gnutls_ok = 0;
 gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
 #endif /* HAVE_GNUTLS */
 
+#if defined(SCM_CREDS)  /* BSD */
+#define CREDSTRUCT cmsgcred
+#define SCM_CREDTYPE SCM_CREDS
+#elif defined(SCM_CREDENTIALS) /* Linux */
+#define CREDSTRUCT ucred
+#define SCM_CREDTYPE SCM_CREDENTIALS
+#else  /* ?? */
+struct __credsplaceholder { };
+#define CREDSTRUCT __credsplaceholder
+#define SCM_CREDTYPE -1 /* undefined */
+#endif
 
 /*
  * Initializes gcrypt.
@@ -1403,7 +1414,7 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
     struct msghdr msg;
     struct cmsghdr *cmsg;
     union {
-        char msg_buf[sizeof(struct cmsgcred) + CMSG_SPACE(sizeof (sock))];
+        char msg_buf[sizeof(struct CREDSTRUCT) + CMSG_SPACE(sizeof (sock))];
         struct cmsghdr align;
     } u;
     struct iovec iov[1];
