@@ -86,10 +86,11 @@ relay_websocket_save_header (struct t_relay_client *client,
     if (!pos || (pos == message))
         return;
 
-    /* get header name */
+    /* get header name, which is case-insensitive */
     name = weechat_strndup (message, pos - message);
     if (!name)
         return;
+    weechat_string_tolower (name);
 
     /* get pointer on header value */
     ptr_value = pos + 1;
@@ -143,20 +144,20 @@ relay_websocket_client_handshake_valid (struct t_relay_client *client)
     const char *value;
 
     /* check if we have header "Upgrade" with value "websocket" */
-    value = weechat_hashtable_get (client->http_headers, "Upgrade");
+    value = weechat_hashtable_get (client->http_headers, "upgrade");
     if (!value)
         return -1;
     if (weechat_strcasecmp (value, "websocket") != 0)
         return -1;
 
     /* check if we have header "Sec-WebSocket-Key" with non-empty value */
-    value = weechat_hashtable_get (client->http_headers, "Sec-WebSocket-Key");
+    value = weechat_hashtable_get (client->http_headers, "sec-websocket-key");
     if (!value || !value[0])
         return -1;
 
     if (relay_config_regex_websocket_allowed_origins)
     {
-        value = weechat_hashtable_get (client->http_headers, "Origin");
+        value = weechat_hashtable_get (client->http_headers, "origin");
         if (!value || !value[0])
             return -2;
         if (regexec (relay_config_regex_websocket_allowed_origins, value, 0,
@@ -193,7 +194,7 @@ relay_websocket_build_handshake (struct t_relay_client *client)
     int length;
 
     sec_websocket_key = weechat_hashtable_get (client->http_headers,
-                                               "Sec-WebSocket-Key");
+                                               "sec-websocket-key");
     if (!sec_websocket_key || !sec_websocket_key[0])
         return NULL;
 

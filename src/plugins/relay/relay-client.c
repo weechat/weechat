@@ -411,7 +411,7 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
                                             weechat_prefix ("error"),
                                             RELAY_PLUGIN_NAME,
                                             weechat_hashtable_get (client->http_headers,
-                                                                   "Origin"));
+                                                                   "origin"));
                                     }
                                     break;
                             }
@@ -419,7 +419,7 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
                         }
 
                         ptr_real_ip = weechat_hashtable_get (
-                            client->http_headers, "X-Real-IP");
+                            client->http_headers, "x-real-ip");
                         if (ptr_real_ip)
                         {
                             weechat_printf_date_tags (

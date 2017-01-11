@@ -52,6 +52,7 @@ Bug fixes::
   * irc: fix buffer switching on manual join for forwarded channels (issue #876)
   * irc: add missing tags on CTCP message sent
   * lua: fix integers returned in Lua >= 5.3 (issue #834)
+  * relay: make HTTP headers case-insensitive for WebSocket connections (issue #888)
   * relay: set status to "authentication failed" and close immediately connection in case of authentication failure in weechat and irc protocols (issue #825)
   * script: reload a script after upgrade only if it was loaded, set autoload only if the script was auto-loaded (issue #855)
 
