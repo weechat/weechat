@@ -20,6 +20,8 @@
 #ifndef WEECHAT_GUI_KEY_H
 #define WEECHAT_GUI_KEY_H 1
 
+#include <time.h>
+
 struct t_hashtable;
 
 #define GUI_KEY_BUFFER_BLOCK_SIZE 256

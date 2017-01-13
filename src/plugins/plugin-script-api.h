@@ -21,6 +21,8 @@
 #ifndef WEECHAT_PLUGIN_SCRIPT_API_H
 #define WEECHAT_PLUGIN_SCRIPT_API_H 1
 
+#include <time.h>
+
 extern void plugin_script_api_charset_set (struct t_plugin_script *script,
                                            const char *charset);
 extern struct t_config_file *plugin_script_api_config_new (struct t_weechat_plugin *weechat_plugin,

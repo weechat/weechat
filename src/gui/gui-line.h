@@ -20,6 +20,7 @@
 #ifndef WEECHAT_GUI_LINE_H
 #define WEECHAT_GUI_LINE_H 1
 
+#include <time.h>
 #include <regex.h>
 
 struct t_infolist;

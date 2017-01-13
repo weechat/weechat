@@ -20,6 +20,8 @@
 #ifndef WEECHAT_INFOLIST_H
 #define WEECHAT_INFOLIST_H 1
 
+#include <time.h>
+
 /* list structures */
 
 enum t_infolist_type

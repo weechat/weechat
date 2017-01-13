@@ -20,6 +20,8 @@
 #ifndef WEECHAT_GUI_CHAT_H
 #define WEECHAT_GUI_CHAT_H 1
 
+#include <time.h>
+
 struct t_hashtable;
 struct t_gui_window;
 struct t_gui_buffer;

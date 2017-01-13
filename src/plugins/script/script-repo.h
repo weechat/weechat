@@ -20,6 +20,8 @@
 #ifndef WEECHAT_SCRIPT_REPO_H
 #define WEECHAT_SCRIPT_REPO_H 1
 
+#include <time.h>
+
 /* status for script */
 #define SCRIPT_STATUS_INSTALLED   1
 #define SCRIPT_STATUS_AUTOLOADED  2

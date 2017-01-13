@@ -20,6 +20,8 @@
 #ifndef WEECHAT_TRIGGER_CALLBACK_H
 #define WEECHAT_TRIGGER_CALLBACK_H 1
 
+#include <time.h>
+
 #define TRIGGER_CALLBACK_CB_INIT(__rc)                          \
     struct t_trigger *trigger;                                  \
     struct t_hashtable *pointers, *extra_vars;                  \

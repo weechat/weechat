@@ -23,6 +23,7 @@
 
 #include <regex.h>
 #include <wctype.h>
+
 #include "wee-config-file.h"
 
 struct t_gui_buffer;

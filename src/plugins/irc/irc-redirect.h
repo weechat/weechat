@@ -20,6 +20,8 @@
 #ifndef WEECHAT_IRC_REDIRECT_H
 #define WEECHAT_IRC_REDIRECT_H 1
 
+#include <time.h>
+
 #define IRC_REDIRECT_TIMEOUT_DEFAULT 60
 
 struct t_irc_server;

@@ -20,6 +20,8 @@
 #ifndef WEECHAT_RELAY_CLIENT_H
 #define WEECHAT_RELAY_CLIENT_H 1
 
+#include <time.h>
+
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
 #endif /* HAVE_GNUTLS */

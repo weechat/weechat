@@ -20,6 +20,8 @@
 #ifndef WEECHAT_IRC_CTCP_H
 #define WEECHAT_IRC_CTCP_H 1
 
+#include <time.h>
+
 struct t_irc_server;
 struct t_irc_channel;
 

@@ -20,6 +20,8 @@
 #ifndef WEECHAT_IRC_PROTOCOL_H
 #define WEECHAT_IRC_PROTOCOL_H 1
 
+#include <time.h>
+
 #define IRC_PROTOCOL_CALLBACK(__command)                                \
     int                                                                 \
     irc_protocol_cb_##__command (struct t_irc_server *server,           \

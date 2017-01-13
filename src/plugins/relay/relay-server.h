@@ -20,6 +20,8 @@
 #ifndef WEECHAT_RELAY_SERVER_H
 #define WEECHAT_RELAY_SERVER_H 1
 
+#include <time.h>
+
 #ifdef HAVE_GNUTLS
 #define RELAY_SERVER_GNUTLS_DH_BITS 1024
 #endif /* HAVE_GNUTLS */

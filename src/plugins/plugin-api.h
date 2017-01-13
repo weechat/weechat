@@ -20,6 +20,8 @@
 #ifndef WEECHAT_PLUGIN_API_H
 #define WEECHAT_PLUGIN_API_H 1
 
+#include <time.h>
+
 struct t_plugin_api_hdata
 {
     char *name;                              /* hdata name                  */

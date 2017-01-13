@@ -20,6 +20,8 @@
 #ifndef WEECHAT_HDATA_H
 #define WEECHAT_HDATA_H 1
 
+#include <time.h>
+
 #define HDATA_VAR(__struct, __name, __type, __update_allowed,           \
                   __array_size, __hdata_name)                           \
     hdata_new_var (hdata, #__name, offsetof (__struct, __name),         \

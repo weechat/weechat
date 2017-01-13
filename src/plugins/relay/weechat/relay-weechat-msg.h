@@ -20,6 +20,8 @@
 #ifndef WEECHAT_RELAY_WEECHAT_MSG_H
 #define WEECHAT_RELAY_WEECHAT_MSG_H 1
 
+#include <time.h>
+
 struct t_relay_weechat_nicklist;
 
 #define RELAY_WEECHAT_MSG_INITIAL_ALLOC 4096

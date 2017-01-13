@@ -21,7 +21,9 @@
 #define WEECHAT_XFER_H 1
 
 #include <unistd.h>
+#include <time.h>
 #include <gcrypt.h>
+#include <sys/socket.h>
 
 #define weechat_plugin weechat_xfer_plugin
 #define XFER_PLUGIN_NAME "xfer"

@@ -20,6 +20,8 @@
 #ifndef WEECHAT_IRC_CHANNEL_H
 #define WEECHAT_IRC_CHANNEL_H 1
 
+#include <time.h>
+
 #define IRC_CHANNEL_DEFAULT_CHANTYPES "#&+!"
 
 /* channel types */

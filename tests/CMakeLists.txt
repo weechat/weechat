@@ -42,6 +42,13 @@ set(LIB_WEECHAT_UNIT_TESTS_SRC
 )
 add_library(weechat_unit_tests STATIC ${LIB_WEECHAT_UNIT_TESTS_SRC})
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
+  list(APPEND EXTRA_LIBS "intl")
+  if(HAVE_BACKTRACE)
+    list(APPEND EXTRA_LIBS "execinfo")
+  endif()
+endif()
+
 # binary to run tests
 set(WEECHAT_TESTS_SRC tests.cpp tests.h)
 add_executable(tests ${WEECHAT_TESTS_SRC})

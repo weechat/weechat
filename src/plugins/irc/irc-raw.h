@@ -20,6 +20,8 @@
 #ifndef WEECHAT_IRC_RAW_H
 #define WEECHAT_IRC_RAW_H 1
 
+#include <time.h>
+
 #define IRC_RAW_BUFFER_NAME "irc_raw"
 
 #define IRC_RAW_PREFIX_RECV          "-->"

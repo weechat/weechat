@@ -20,6 +20,8 @@
 #ifndef WEECHAT_RELAY_RAW_H
 #define WEECHAT_RELAY_RAW_H 1
 
+#include <time.h>
+
 #include "relay-client.h"
 
 #define RELAY_RAW_BUFFER_NAME     "relay_raw"

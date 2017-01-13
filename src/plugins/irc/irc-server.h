@@ -21,6 +21,7 @@
 #ifndef WEECHAT_IRC_SERVER_H
 #define WEECHAT_IRC_SERVER_H 1
 
+#include <time.h>
 #include <sys/time.h>
 #include <regex.h>
 

@@ -20,6 +20,7 @@
 #ifndef WEECHAT_EXEC_H
 #define WEECHAT_EXEC_H 1
 
+#include <unistd.h>
 #include <time.h>
 
 #define weechat_plugin weechat_exec_plugin
