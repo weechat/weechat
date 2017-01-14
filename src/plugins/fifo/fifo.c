@@ -308,10 +308,10 @@ fifo_fd_cb (const void *pointer, void *data, int fd)
             free (buf2);
     }
     else
-    {
-        verify_err = errno == EAGAIN;
+    {        
         if (num_read < 0)
         {
+            verify_err = (errno == EAGAIN);
 #ifdef __CYGWIN__
             verify_err = verify_err || (errno == ECOMM);
 #endif
