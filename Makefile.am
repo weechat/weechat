@@ -39,7 +39,6 @@ EXTRA_DIST = AUTHORS.adoc \
              CMakeLists.txt \
              config.rpath \
              config.h.cmake \
-             makedist.sh \
              cmake/CMakeParseArguments.cmake \
              cmake/FindAsciidoctor.cmake \
              cmake/FindAspell.cmake \
@@ -65,6 +64,7 @@ EXTRA_DIST = AUTHORS.adoc \
              po/srcfiles.cmake \
              tools/build-test.sh \
              tools/git-version.sh \
+             tools/makedist.sh \
              version.sh \
              weechat.png \
              weechat.pc.in \

@@ -237,7 +237,7 @@ add_custom_target(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 add_custom_target(dist
-  "${CMAKE_CURRENT_SOURCE_DIR}/makedist.sh" "${VERSION}" "HEAD" "${CMAKE_CURRENT_BINARY_DIR}"
+  "${CMAKE_CURRENT_SOURCE_DIR}/tools/makedist.sh" "${VERSION}" "HEAD" "${CMAKE_CURRENT_BINARY_DIR}"
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 # pkgconfig file
