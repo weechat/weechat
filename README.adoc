@@ -4,12 +4,13 @@
 :lang: en
 
 
-image:https://travis-ci.org/weechat/weechat.svg?branch=master["Build Status", link="https://travis-ci.org/weechat/weechat"]
 image:https://img.shields.io/badge/diaspora*-follow-blue.svg["Diaspora*", link="https://diasp.eu/u/weechat"]
 image:https://img.shields.io/badge/google%2B-follow-blue.svg["Google+", link="https://plus.google.com/+WeeChat"]
 image:https://img.shields.io/badge/devel%20blog-follow-blue.svg["Devel blog", link="http://dev.weechat.org/"]
 image:https://img.shields.io/badge/slant-recommend-28acad.svg["Slant", link="http://www.slant.co/topics/1323/~irc-clients-for-linux"]
 image:https://img.shields.io/badge/paypal-donate%20%E2%9D%A4-yellow.svg["Paypal", link="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4LSMSNLUAJWNS"]
+
+image:https://travis-ci.org/weechat/weechat.svg?branch=master["Build Status", link="https://travis-ci.org/weechat/weechat"]
 
 WeeChat (Wee Enhanced Environment for Chat) is a free chat client, fast and
 light, designed for many operating systems.
