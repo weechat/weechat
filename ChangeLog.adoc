@@ -38,7 +38,7 @@ Improvements::
   * alias: add a slash before commands completed in arguments of /alias
   * exec: add option "-oc" in command /exec to execute commands in process output, don't execute commands by default with "-o" (issue #877)
   * irc: evaluate content of server option "ssl_fingerprint" (issue #858)
-  * irc: change default value of option irc.network.lag_reconnect to 300 (issue #818)
+  * irc: change default value of option irc.network.lag_reconnect from 0 to 300 (issue #818)
   * trigger: do not hide email in command "/msg nickserv register password email" (issue #849)
 
 Bug fixes::
