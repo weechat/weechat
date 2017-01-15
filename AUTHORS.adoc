@@ -82,6 +82,7 @@ Alphabetically:
 * Raghavendra Prabhu
 * Rettub
 * Rob Campbell
+* Romero B. de S. Malaquias
 * Rudolf Polzer (divVerent)
 * Ryuunosuke Ayanokouzi
 * scumjr
