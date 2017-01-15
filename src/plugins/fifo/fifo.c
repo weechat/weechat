@@ -245,7 +245,7 @@ fifo_fd_cb (const void *pointer, void *data, int fd)
 {
     static char buffer[4096 + 2];
     char *buf2, *pos, *ptr_buf, *next_ptr_buf;
-    int num_read;
+    int num_read, verify_err;
 
     /* make C compiler happy */
     (void) pointer;
@@ -308,14 +308,14 @@ fifo_fd_cb (const void *pointer, void *data, int fd)
             free (buf2);
     }
     else
-    {
+    {        
         if (num_read < 0)
         {
+            verify_err = (errno == EAGAIN);
 #ifdef __CYGWIN__
-            if ((errno == EAGAIN) || (errno == ECOMM))
-#else
-            if (errno == EAGAIN)
-#endif /* __CYGWIN__ */
+            verify_err = verify_err || (errno == ECOMM);
+#endif
+            if (verify_err)
                 return WEECHAT_RC_OK;
 
             weechat_printf (NULL,
