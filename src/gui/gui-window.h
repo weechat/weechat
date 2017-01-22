@@ -146,6 +146,8 @@ extern int gui_window_tree_init (struct t_gui_window *window);
 extern void gui_window_tree_node_to_leaf (struct t_gui_window_tree *node,
                                           struct t_gui_window *window);
 extern void gui_window_tree_free (struct t_gui_window_tree **tree);
+extern struct t_gui_window_tree *gui_window_tree_get_split (struct t_gui_window_tree *tree,
+                                                            char direction);
 extern void gui_window_scroll_switch (struct t_gui_window *window,
                                       struct t_gui_buffer *buffer);
 extern void gui_window_scroll_remove_buffer (struct t_gui_window *window,
@@ -226,8 +228,8 @@ extern struct t_gui_window *gui_window_split_horizontal (struct t_gui_window *wi
                                                          int percentage);
 extern struct t_gui_window *gui_window_split_vertical (struct t_gui_window *window,
                                                        int percentage);
-extern void gui_window_resize (struct t_gui_window *window, int percentage);
-extern void gui_window_resize_delta (struct t_gui_window *window,
+extern void gui_window_resize (struct t_gui_window_tree *tree, int percentage);
+extern void gui_window_resize_delta (struct t_gui_window_tree *tree,
                                      int delta_percentage);
 extern int gui_window_merge (struct t_gui_window *window);
 extern void gui_window_merge_all (struct t_gui_window *window);

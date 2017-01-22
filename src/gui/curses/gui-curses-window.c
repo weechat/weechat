@@ -1874,7 +1874,7 @@ gui_window_split_vertical (struct t_gui_window *window, int percentage)
  */
 
 void
-gui_window_resize (struct t_gui_window *window, int percentage)
+gui_window_resize (struct t_gui_window_tree *tree, int percentage)
 {
     struct t_gui_window_tree *parent;
     int old_split_pct, add_bottom, add_top, add_left, add_right;
@@ -1882,12 +1882,12 @@ gui_window_resize (struct t_gui_window *window, int percentage)
     if (!gui_init_ok)
         return;
 
-    parent = window->ptr_tree->parent_node;
+    parent = tree->parent_node;
     if (parent)
     {
         old_split_pct = parent->split_pct;
-        if (((parent->split_horizontal) && (window->ptr_tree == parent->child2))
-            || ((!(parent->split_horizontal)) && (window->ptr_tree == parent->child1)))
+        if (((parent->split_horizontal) && (tree == parent->child2))
+            || ((!(parent->split_horizontal)) && (tree == parent->child1)))
         {
             parent->split_pct = percentage;
         }
@@ -1916,7 +1916,7 @@ gui_window_resize (struct t_gui_window *window, int percentage)
  */
 
 void
-gui_window_resize_delta (struct t_gui_window *window, int delta_percentage)
+gui_window_resize_delta (struct t_gui_window_tree *tree, int delta_percentage)
 {
     struct t_gui_window_tree *parent;
     int old_split_pct, add_bottom, add_top, add_left, add_right;
@@ -1924,12 +1924,12 @@ gui_window_resize_delta (struct t_gui_window *window, int delta_percentage)
     if (!gui_init_ok)
         return;
 
-    parent = window->ptr_tree->parent_node;
+    parent = tree->parent_node;
     if (parent)
     {
         old_split_pct = parent->split_pct;
-        if (((parent->split_horizontal) && (window->ptr_tree == parent->child2))
-            || ((!(parent->split_horizontal)) && (window->ptr_tree == parent->child1)))
+        if (((parent->split_horizontal) && (tree == parent->child2))
+            || ((!(parent->split_horizontal)) && (tree == parent->child1)))
         {
             parent->split_pct += delta_percentage;
         }

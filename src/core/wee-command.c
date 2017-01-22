@@ -6484,7 +6484,8 @@ COMMAND_CALLBACK(wait)
 COMMAND_CALLBACK(window)
 {
     struct t_gui_window *ptr_win;
-    char *error;
+    struct t_gui_window_tree *ptr_tree;
+    char *error, *ptr_sizearg, sign;
     long number;
     int win_args;
 
@@ -6695,25 +6696,36 @@ COMMAND_CALLBACK(window)
     {
         if (argc > win_args)
         {
-            if ((argv[win_args][0] == '+') || (argv[win_args][0] == '-'))
+            ptr_sizearg = argv[win_args];
+            sign = 0;
+            if ((ptr_sizearg[0] == 'h') || (ptr_sizearg[0] == 'v'))
             {
-                error = NULL;
-                number = strtol (argv[win_args] + 1, &error, 10);
-                if (error && !error[0])
-                {
-                    if (argv[win_args][0] == '-')
-                        number *= -1;
-                    gui_window_resize_delta (ptr_win, number);
-                }
+                ptr_tree = gui_window_tree_get_split (ptr_win->ptr_tree,
+                                                      ptr_sizearg[0]);
+                ptr_sizearg++;
             }
             else
             {
-                error = NULL;
-                number = strtol (argv[win_args], &error, 10);
-                if (error && !error[0]
-                    && (number > 0) && (number < 100))
+                ptr_tree = ptr_win->ptr_tree;
+            }
+            if ((ptr_sizearg[0] == '+') || (ptr_sizearg[0] == '-'))
+            {
+                sign = ptr_sizearg[0];
+                ptr_sizearg++;
+            }
+            error = NULL;
+            number = strtol (ptr_sizearg, &error, 10);
+            if (error && !error[0])
+            {
+                if (sign)
                 {
-                    gui_window_resize (ptr_win, number);
+                    if (sign == '-')
+                        number *= -1;
+                    gui_window_resize_delta (ptr_tree, number);
+                }
+                else
+                {
+                    gui_window_resize (ptr_tree, number);
                 }
             }
         }

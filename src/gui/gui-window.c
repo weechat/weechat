@@ -344,6 +344,27 @@ gui_window_tree_free (struct t_gui_window_tree **tree)
 }
 
 /*
+ * Searches a parent window which is split on the given direction
+ * ('h' or 'v').
+ */
+
+struct t_gui_window_tree *
+gui_window_tree_get_split (struct t_gui_window_tree *tree,
+                           char direction)
+{
+    if (!tree->parent_node)
+        return tree;
+
+    if (((tree->parent_node->split_horizontal) && (direction == 'h'))
+        || (!(tree->parent_node->split_horizontal) && (direction == 'v')))
+    {
+        return tree;
+    }
+
+    return gui_window_tree_get_split (tree->parent_node, direction);
+}
+
+/*
  * Searches for a scroll with buffer pointer.
  *
  * Returns pointer to window scroll, NULL if not found.
