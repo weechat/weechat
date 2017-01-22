@@ -80,6 +80,7 @@ Alphabetically:
 * Quentin Pradet
 * Quico Noizeux
 * Raghavendra Prabhu
+* raspbeguy
 * Rettub
 * Rob Campbell
 * Romero B. de S. Malaquias
