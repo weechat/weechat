@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v1.8]]
 == Version 1.8 (under dev)
 
+New features::
+
+  * core: add resize of window parents with /window resize [h|v]size (issue #893)
+
 Build::
 
   * core: fix compilation on FreeBSD with autotools (issue #276)
