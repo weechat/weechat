@@ -939,13 +939,13 @@ Beispiele:
          -1|+1|b#|up|down|left|right [-window <number>]
          <number>
          splith|splitv [-window <number>] [<pct>]
-         resize [-window <number>] [+/-]<pct>
+         resize [-window <number>] [h|v][+|-]<pct>
          balance
          merge [-window <number>] [all]
          page_up|page_down [-window <number>]
          refresh
-         scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]
-         scroll_horiz [-window <number>] [+/-]<value>[%]
+         scroll [-window <number>] [+|-]<value>[s|m|h|d|M|y]
+         scroll_horiz [-window <number>] [+|-]<value>[%]
          scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
          swap [-window <number>] [up|down|left|right]
          zoom [-window <number>]
@@ -963,6 +963,7 @@ Beispiele:
        splith: teilt das aktuelle Fenster horizontal (um den Vorgang rückgängig zu machen: /window merge)
        splitv: teilt das aktuelle Fenster vertikal (um den Vorgang rückgängig zu machen: /window merge)
        resize: verändert die Größe des aktuellen Fensters. Die neue Größe des Fensters ist prozentual <pct> zum Stammfensters groß
+               wird "h" oder "v" angegeben, findet eine Größenanpassung des Stammfenster statt, sofern es vom selben Typ ist (horizontal/vertikal)
       balance: passt die Größe aller Fenster an
         merge: vereinigt Fenster miteinander (all = alle Fenster vereinigen)
       page_up: scrollt eine Seite nach oben
@@ -979,7 +980,7 @@ scroll_previous_highlight: scrollt zum vorherigen Hightlight
 scroll_next_highlight: scrollt zum nächsten Highlight
 scroll_unread: springt zur ersten ungelesenen Zeile in einem Buffer
          swap: tauscht die Buffer von zwei Fenstern (mit optionaler Angabe für das Zielfenster)
-         zoom: vergrößert ein Fenster auf 100%%
+         zoom: vergrößert ein Fenster auf 100%
          bare: wechselt zum einfachen Anzeigemodus (optional kann eine Wartezeit, in Sekunden, angegeben werden, wann zum Standardmodus zurück gewechselt werden soll)
 
 Bei splith und splitv gibt "pct" die neue Größe des Fensters im Verhältnis zur aktuellen Größe an. Zum Beispiel würde ein Wert von 25 bedeuten, dass das neue Fenster nur noch ein Viertel der Größe des alten Fensters besitzt.
@@ -995,8 +996,12 @@ Beispiele:
     /window scroll -d
   Fenster #2 wird vergrößert:
     /window zoom -window 2
-  teilt das Fenster horizontal, wobei das obere Fenster 30%% an Platz zugeteilt bekommt:
+  teilt das Fenster horizontal, wobei das obere Fenster 30% an Platz zugeteilt bekommt:
     /window splith 30
+  ändert die Größe auf 75% des Stammfensters:
+    /window resize 75
+  die vertikale Aufteilung um 10% vergrößern:
+    /window resize v+10
   eine Teilung wird rückgängig gemacht:
     /window merge
   aktiviert den einfachen Anzeigemodus für zwei Sekunden:

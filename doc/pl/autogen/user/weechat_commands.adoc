@@ -936,69 +936,74 @@ Przykłady:
 
 ----
 /window  list
-         -1|+1|b#|up|down|left|right [-window <numer>]
-         <numer>
-         splith|splitv [-window <numer>] [<pct>]
-         resize [-window <numer>] [+/-]<pct>
+         -1|+1|b#|up|down|left|right [-window <number>]
+         <number>
+         splith|splitv [-window <number>] [<pct>]
+         resize [-window <number>] [h|v][+|-]<pct>
          balance
-         merge [-window <numer>] [all]
-         page_up|page_down [-window <numer>]
+         merge [-window <number>] [all]
+         page_up|page_down [-window <number>]
          refresh
-         scroll [-window <numer>] [+/-]<wartość>[s|m|h|d|M|y]
-         scroll_horiz [-window <numer>] [+/-]<wartość>[%]
-         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <numer>]
-         swap [-window <numer>] [up|down|left|right]
-         zoom[-window <numer>]
-         bare [<opóźnienie>]
+         scroll [-window <number>] [+|-]<value>[s|m|h|d|M|y]
+         scroll_horiz [-window <number>] [+|-]<value>[%]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
+         swap [-window <number>] [up|down|left|right]
+         zoom [-window <number>]
+         bare [<delay>]
 
-         list: lista otwartych okien (bez argumentu wyświetlana jest ta lista)
-           -1: skok do poprzedniego okna
-           +1: skok do następnego okna
-           b#: skok do następnego okna pokazującego bufor o numerze #
-           up: przełączenie na okno ponad obecnym
-         down: przełączenie na okno pod obecnym
-         left: przełączenie na okno po lewej
-        right: przełączenie na okno po prawej
-       numer: okno numer (zobacz /window list)
-       splith: dzieli obecne okno poziomo
-       splitv: dzieli obecne okno pionowo
-       resize: zmienia rozmiar okna, nowy rozmiar to <pct> procent okna nadrzędnego
-      balance: balansuje rozmiary pomiędzy oknami
-        merge: łączy okno z innym (all = posiadanie tylko jednego okna)
-      page_up: przewija stronę do góry
-    page_down: przewija stronę w dół
-      refresh: odświeża ekran
-       scroll: przewija ilość linii (+/-N) lub o czas: s=sekundy, m=minuty, h=godziny, d=dni, M=miesiące, y=lata
- scroll_horiz: przewija poziomo ilość kolumn (+/-N) lub procent rozmiaru okna (takie przewijanie jest możliwe tylko w buforach z wolną zawartością)
-    scroll_up: przewija kilka linii w gorę
-  scroll_down: przewija kilka linii w dół
-   scroll_top: przewija na samą górę bufora
-scroll_bottom: przewija na spód bufora
-scroll_beyond_end: przewija poza koniec bufora
-scroll_previous_highlight: przewija do poprzedniego highlighta
-scroll_next_highlight: przewija do następnego highlighta
-scroll_unread: przewija do znacznika nie przeczytania
-         swap: zamienia bufory między dwoma oknami (z opcjonalnym kierunkiem dla docelowego okna)
-         zoom: powiększa okno
-         bare: przełącza niesformatowane wysiwetlanie (z opcjonalnym czasem, po jakim nastąpi automatyczny powrót do standardowego trybu)
+         list: list opened windows (without argument, this list is displayed)
+           -1: jump to previous window
+           +1: jump to next window
+           b#: jump to next window displaying buffer number #
+           up: switch to window above current one
+         down: switch to window below current one
+         left: switch to window on the left
+        right: switch to window on the right
+       number: window number (see /window list)
+       splith: split current window horizontally (to undo: /window merge)
+       splitv: split current window vertically (to undo: /window merge)
+       resize: resize window size, new size is <pct> percentage of parent window
+               if "h" or "v" is specified, the resize affects the nearest parent window with a split of this type (horizontal/vertical)
+      balance: balance the sizes of all windows
+        merge: merge window with another (all = keep only one window)
+      page_up: scroll one page up
+    page_down: scroll one page down
+      refresh: refresh screen
+       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
+ scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
+    scroll_up: scroll a few lines up
+  scroll_down: scroll a few lines down
+   scroll_top: scroll to top of buffer
+scroll_bottom: scroll to bottom of buffer
+scroll_beyond_end: scroll beyond the end of buffer
+scroll_previous_highlight: scroll to previous highlight
+scroll_next_highlight: scroll to next highlight
+scroll_unread: scroll to unread marker
+         swap: swap buffers of two windows (with optional direction for target window)
+         zoom: zoom on window
+         bare: toggle bare display (with optional delay in seconds for automatic return to standard display mode)
 
-Dla splith i splitv, pct oznacza procent reprezentujący rozmiar nowego okna, porównany z obecnym oknem jako odniesieniem. Na przykład 25 oznacza utworzenie nowego okna o rozmiarze = obecny_rozmiar / 4
+For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
 
-Przykłady:
-  skok do okna wyświetlającego bufor #1:
+Examples:
+  jump to window displaying buffer #1:
     /window b1
-  przewiń 2 linie do góry:
+  scroll 2 lines up:
     /window scroll -2
-  przewiń 2 dni do góry:
+  scroll 2 days up:
     /window scroll -2d
-  przewiń do początku obecnego dnia:
+  scroll to beginning of current day:
     /window scroll -d
-  powiększ okno 2 #2:
+  zoom on window #2:
     /window zoom -window 2
-  podziel okno poziomo dając 30%% miejsca oknu na górze:
+  split window horizontally using 30% of space for the window on top:
     /window splith 30
-  usuń podział:
+  resize window to 75% of the parent window size:
+    /window resize 75
+  resize vertical split, add 10% in size:
+    /window resize v+10
+  remove the split:
     /window merge
-  włączenie trybu niesformatowanego na 2 sekundy:
+  enable bare display for 2 seconds:
     /window bare 2
 ----

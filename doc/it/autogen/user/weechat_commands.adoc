@@ -939,13 +939,13 @@ Esempi:
          -1|+1|b#|up|down|left|right [-window <number>]
          <number>
          splith|splitv [-window <number>] [<pct>]
-         resize [-window <number>] [+/-]<pct>
+         resize [-window <number>] [h|v][+|-]<pct>
          balance
          merge [-window <number>] [all]
          page_up|page_down [-window <number>]
          refresh
-         scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]
-         scroll_horiz [-window <number>] [+/-]<value>[%]
+         scroll [-window <number>] [+|-]<value>[s|m|h|d|M|y]
+         scroll_horiz [-window <number>] [+|-]<value>[%]
          scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
          swap [-window <number>] [up|down|left|right]
          zoom [-window <number>]
@@ -963,6 +963,7 @@ Esempi:
        splith: split current window horizontally (to undo: /window merge)
        splitv: split current window vertically (to undo: /window merge)
        resize: resize window size, new size is <pct> percentage of parent window
+               if "h" or "v" is specified, the resize affects the nearest parent window with a split of this type (horizontal/vertical)
       balance: balance the sizes of all windows
         merge: merge window with another (all = keep only one window)
       page_up: scroll one page up
@@ -995,8 +996,12 @@ Examples:
     /window scroll -d
   zoom on window #2:
     /window zoom -window 2
-  split window horizontally using 30%% of space for the window on top:
+  split window horizontally using 30% of space for the window on top:
     /window splith 30
+  resize window to 75% of the parent window size:
+    /window resize 75
+  resize vertical split, add 10% in size:
+    /window resize v+10
   remove the split:
     /window merge
   enable bare display for 2 seconds:

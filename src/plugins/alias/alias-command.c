@@ -252,6 +252,7 @@ alias_command_init ()
            " || add <alias> [<command>[;<command>...]]"
            " || addcompletion <completion> <alias> [<command>[;<command>...]]"
            " || del <alias> [<alias>...]"),
+        /* xgettext:no-c-format */
         N_("         list: list aliases (without argument, this list is "
            "displayed)\n"
            "          add: add an alias\n"

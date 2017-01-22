@@ -8006,6 +8006,7 @@ command_init ()
     hook_command (
         NULL, "window",
         N_("manage windows"),
+        /* xgettext:no-c-format */
         N_("list"
            " || -1|+1|b#|up|down|left|right [-window <number>]"
            " || <number>"
@@ -8023,6 +8024,7 @@ command_init ()
            " || swap [-window <number>] [up|down|left|right]"
            " || zoom [-window <number>]"
            " || bare [<delay>]"),
+        /* xgettext:no-c-format */
         N_("         list: list opened windows (without argument, this list is "
            "displayed)\n"
            "           -1: jump to previous window\n"
@@ -8082,12 +8084,12 @@ command_init ()
            "    /window scroll -d\n"
            "  zoom on window #2:\n"
            "    /window zoom -window 2\n"
-           "  split window horizontally using 30%% of space for the window on "
+           "  split window horizontally using 30% of space for the window on "
            "top:\n"
            "    /window splith 30\n"
-           "  resize window to 75%% of the parent window size:\n"
+           "  resize window to 75% of the parent window size:\n"
            "    /window resize 75\n"
-           "  resize vertical split, add 10%% in size:\n"
+           "  resize vertical split, add 10% in size:\n"
            "    /window resize v+10\n"
            "  remove the split:\n"
            "    /window merge\n"

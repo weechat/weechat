@@ -939,13 +939,13 @@ Exemples :
          -1|+1|b#|up|down|left|right [-window <numéro>]
          <numéro>
          splith|splitv [-window <numéro>] [<pct>]
-         resize [-window <numéro>] [+/-]<pct>
+         resize [-window <numéro>] [h|v][+|-]<pct>
          balance
          merge [-window <numéro>] [all]
          page_up|page_down [-window <numéro>]
          refresh
-         scroll [-window <numéro>] [+/-]<valeur>[s|m|h|d|M|y]
-         scroll_horiz [-window <numéro>] [+/-]<valeur>[%]
+         scroll [-window <numéro>] [+|-]<valeur>[s|m|h|d|M|y]
+         scroll_horiz [-window <numéro>] [+|-]<valeur>[%]
          scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <numéro>]
          swap [-window <numéro>] [up|down|left|right]
          zoom [-window <numéro>]
@@ -962,7 +962,8 @@ Exemples :
        numéro : numéro de fenêtre (voir /window list)
        splith : éclater la fenêtre en deux horizontalement (pour défaire : /window merge)
        splitv : éclater la fenêtre en deux verticalement (pour défaire : /window merge)
-       resize : redimensionner une fenêtre, la nouvelle taille est <pct> pourcentage de la fenêtre parent
+       resize : redimensionner une fenêtre, la nouvelle taille est <pct> pourcentage de la fenêtre parente
+                si "h" ou "v" est spécifié, le redimensionnement affecte la fenêtre parente la plus proche avec un découpage de ce type (horizontal/vertical)
       balance : équilibrer la taille de toutes les fenêtres
         merge : fusionner la fenêtre avec une autre
       page_up : faire défiler d'une page vers le haut
@@ -995,8 +996,12 @@ Exemples :
     /window scroll -d
   zoom sur la fenêtre numéro 2 :
     /window zoom -window 2
-  éclater la fenêtre horizontalement en utilisant 30%% de l'espace pour la fenêtre du haut :
+  éclater la fenêtre horizontalement en utilisant 30% de l'espace pour la fenêtre du haut :
     /window splith 30
+  redimensionner la fenêtre à 75% de la taille de la fenêtre parente :
+    /window resize 75
+  redimensionner le découpage vertical, ajouter 10% dans la taille :
+    /window resize v+10
   supprimer l'éclatement :
     /window merge
   activer le mode d'affichage dépouillé pendant 2 secondes :
