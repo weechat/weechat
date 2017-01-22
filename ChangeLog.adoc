@@ -20,7 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * core: add resize of window parents with /window resize [h|v]size (issue #893)
+  * core: add resize of window parents with /window resize [h/v]size (issue #893)
 
 Build::
 
