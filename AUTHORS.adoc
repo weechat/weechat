@@ -97,6 +97,7 @@ Alphabetically:
 * Stfn
 * Sven Knurr (Cthulhux)
 * Tim D. Smith
+* Tim Harder
 * Tom Alsberg
 * Tomoe Mami
 * Tor Hveem (xt)
