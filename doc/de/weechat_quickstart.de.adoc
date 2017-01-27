@@ -92,20 +92,20 @@ Befehls `/save` kann das Sichern der Optionen manuell durchgeführt werden).
 
 [IMPORTANT]
 Es wird *nicht empfohlen* die Konfigurationsdateien manuell zu editieren, da WeeChat
-diese Dateien zu jeder Zeit überschreiben kann (zum Beispiel:  <<command_weechat_quit,/quit>>)
-und man eine veränderte Datei mit dem Befehl <<command_weechat_reload,/reload>> neu
-laden muss (mit dem Risiko von Datenverlust da Daten kommentarlos überschrieben werden,
+diese Dateien zu jeder Zeit überschreiben kann (zum Beispiel:  <<command_weechat_quit,/quit>>).
+Außerdem muß eine veränderte Datei manuell mit dem Befehl <<command_weechat_reload,/reload>> neu
+geladen werden (mit dem Risiko von Datenverlust da Optionen kommentarlos überschrieben werden,
 bevor man diese ggf. gesichert hat <<command_weechat_save,/save>>). +
-Man sollte immer den <<command_weechat_set,/set>> Befehl nutzen, da der Befehl die
-Eingabe prüft und Änderungen sofort wirksam werden.
+Aus diesen Gründen sollte immer der <<command_weechat_set,/set>> Befehl genutzt werden, da
+zusätzlich auch die Eingabe auf Plausibilität geprüft wird und Änderungen sofort wirksam werden.
 
 [[core_vs_plugins]]
 == Kern (Core) vs Erweiterungen
 
-Der Kern (core) von WeeChat ist ausschließlich dazu da, Daten auf dem Bildschirm
-darzustellen, um mit dem Benutzer zu interagieren. Dies bedeutet, WeeChat an sich
--also nur WeeChat core- ohne jegliche Erweiterung ist unbrauchbar.
-(an die treuen User: IRC war ein Teil des Kerns der Versionen ≤ 0.2.6)
+Der Kern (core) von WeeChat dient ausschließlich dazu um Daten auf dem Bildschirm
+auszugeben und um mit dem Benutzer zu interagieren. Dies bedeutet das WeeChat,
+-also der WeeChat core-, ohne jedwede Erweiterung, unbrauchbar ist.
+(an die treuen User: IRC war Teil des Kerns in den Versionen ≤ 0.2.6)
 
 Alle Netzwerkprotokolle, z.B. IRC, werden als separate Erweiterung bereit gestellt.
 
@@ -131,17 +131,16 @@ Falls man nicht mehr weiter weiß, einfach die Hilfe verwenden:
 [[irc_server_options]]
 == Setzen eigener IRC-Server Optionen
 
-WeeChat verwendet Vorgabewerte für alle Server (so genannte "fall backs"), falls
-Du keine eigenen Werte für entsprechende Server-Optionen bestimmt haben solltest.
-Diese Vorgabewerte sind in "irc.server_default.*" hinterlegt.
+WeeChat verwendet Vorgabewerte für alle Server (so genannte "fall backs"), sofern
+keine individuellen Werte für die entsprechenden Server-Optionen gesetzt worden sind.
+Die Vorgabewerte sind in "irc.server_default.*" hinterlegt.
 
-Für jede Server-Option benutzt WeeChat den entsprechend gesetzten Wert - falls
-definiert (nicht "null"). Andernfalls verwendet WeeChat die Vorgabewerte
+Für jede Server-Option benutzt WeeChat den individuellen Wert - falls einer
+definiert ist (nicht "null"). Andernfalls verwendet WeeChat die Vorgabewerte
 ("irc.server_default.xxx").
 
-Als Beispiel erwähnt ist die Vorgabe für Nicks, die auf den Un*x Login
-zurückgreift. Diese Vorgabe kann nun für den freenode-Server mittels folgendem Befehl
-überschrieben werden:
+Beispielsweise werden Standard Nicks verwendet (basierend auf dem  Un*x Login). Um
+dies nun für den freenode-Server anzupassen, kann folgender Befehl genutzt werden:
 
 ----
 /set irc.server.freenode.nicks "meinNick,meinNick2,meinNick3,meinNick4,meinNick5"
