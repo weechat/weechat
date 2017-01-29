@@ -22,6 +22,10 @@ New features::
 
   * core: add resize of window parents with /window resize [h/v]size (task #11461, issue #893)
 
+Improvements::
+
+  * irc: don't smart filter modes given to you (issue #530, issue #897)
+
 Build::
 
   * core: fix compilation on FreeBSD with autotools (issue #276)
