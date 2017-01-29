@@ -447,10 +447,11 @@ irc_mode_channel_set (struct t_irc_server *server,
                                 irc_nick_set_mode (server, channel, ptr_nick,
                                                    (set_flag == '+'), pos[0]);
                                 if (smart_filter
-                                    && irc_channel_nick_speaking_time_search (server,
+                                    && (irc_channel_nick_speaking_time_search (server,
                                                                               channel,
                                                                               ptr_nick->name,
-                                                                              1))
+                                                                              1)
+                                        || irc_server_strcasecmp (server, ptr_nick->name, server->nick) == 0))
                                 {
                                     smart_filter = 0;
                                 }
