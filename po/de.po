@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2017-02-03 21:58+0100\n"
-"PO-Revision-Date: 2017-01-22 13:46+0100\n"
+"PO-Revision-Date: 2017-02-03 22:31+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -1011,9 +1011,10 @@ msgstr ""
 msgid "compiled on"
 msgstr "kompiliert am"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Upgraded %d %s, first start: %s, last start: %s"
-msgstr "Es wurde %d %s ein Upgrade durchgeführt, erster Start: %s"
+msgstr ""
+"Es wurde %d %s ein Upgrade durchgeführt, erster Start: %s, letzter Start: %s"
 
 # nicht als Zeitangabe, sondern wie oft etwas passiert
 #. TRANSLATORS: text is: "upgraded xx times"
