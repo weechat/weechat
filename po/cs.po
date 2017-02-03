@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-01-22 13:29+0100\n"
+"POT-Creation-Date: 2017-02-03 21:58+0100\n"
 "PO-Revision-Date: 2017-01-06 21:59+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -988,8 +988,8 @@ msgstr "Čas běhu WeeChat: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, spuštěn %s%s
 msgid "compiled on"
 msgstr "kompilováno"
 
-#, c-format
-msgid "Upgraded %d %s, first start: %s"
+#, fuzzy, c-format
+msgid "Upgraded %d %s, first start: %s, last start: %s"
 msgstr "Aktualizováno %d %s, první spuštění: %s"
 
 #. TRANSLATORS: text is: "upgraded xx times"
@@ -2523,7 +2523,7 @@ msgstr ""
 msgid "manage windows"
 msgstr "spravuje okna"
 
-#, fuzzy
+#, fuzzy, no-c-format
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
 "splitv [-window <number>] [<pct>] || resize [-window <number>] [h|v]"
@@ -4593,7 +4593,7 @@ msgid ""
 "<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...]"
 msgstr ""
 
-#, fuzzy, c-format
+#, fuzzy, no-c-format
 msgid ""
 "         list: list aliases (without argument, this list is displayed)\n"
 "          add: add an alias\n"

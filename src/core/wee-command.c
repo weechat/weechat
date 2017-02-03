@@ -6186,7 +6186,7 @@ COMMAND_CALLBACK(upgrade)
 COMMAND_CALLBACK(uptime)
 {
     int days, hours, minutes, seconds;
-    char string[512];
+    char string[512], str_first_start[128];
 
     /* make C compiler happy */
     (void) pointer;
@@ -6197,6 +6197,10 @@ COMMAND_CALLBACK(uptime)
 
     if ((argc >= 2) && (string_strcasecmp (argv[1], "-o") == 0))
     {
+        snprintf (str_first_start, sizeof(str_first_start),
+                  "%s", ctime (&weechat_first_start_time));
+        if (str_first_start[0])
+            str_first_start[strlen (str_first_start) - 1] = '\0';
         snprintf (string, sizeof (string),
                   "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s",
                   days,
@@ -6204,8 +6208,7 @@ COMMAND_CALLBACK(uptime)
                   hours,
                   minutes,
                   seconds,
-                  ctime (&weechat_first_start_time));
-        string[strlen (string) - 1] = '\0';
+                  str_first_start);
         (void) input_data (buffer, string);
     }
     else if ((argc >= 2) && (string_strcasecmp (argv[1], "-ol") == 0))
@@ -6258,7 +6261,35 @@ command_version_display (struct t_gui_buffer *buffer,
                          int translated_string,
                          int display_git_version)
 {
-    char string[512];
+    char string[1024], str_first_start[128], str_last_start[128];
+    time_t weechat_last_start_time;
+
+    str_first_start[0] = '\0';
+    str_last_start[0] = '\0';
+
+    if (weechat_upgrade_count > 0)
+    {
+        weechat_last_start_time = (time_t)weechat_current_start_timeval.tv_sec;
+
+        if (send_to_buffer_as_input && !translated_string)
+        {
+            snprintf (str_first_start, sizeof(str_first_start),
+                      "%s", ctime (&weechat_first_start_time));
+            if (str_first_start[0])
+                str_first_start[strlen (str_first_start) - 1] = '\0';
+            snprintf (str_last_start, sizeof(str_last_start),
+                      "%s", ctime (&weechat_last_start_time));
+            if (str_last_start[0])
+                str_last_start[strlen (str_last_start) - 1] = '\0';
+        }
+        else
+        {
+            snprintf (str_first_start, sizeof(str_first_start),
+                      "%s", util_get_time_string (&weechat_first_start_time));
+            snprintf (str_last_start, sizeof(str_last_start),
+                      "%s", util_get_time_string (&weechat_last_start_time));
+        }
+    }
 
     if (send_to_buffer_as_input)
     {
@@ -6274,11 +6305,12 @@ command_version_display (struct t_gui_buffer *buffer,
             if (weechat_upgrade_count > 0)
             {
                 snprintf (string, sizeof (string),
-                          _("Upgraded %d %s, first start: %s"),
+                          _("Upgraded %d %s, first start: %s, last start: %s"),
                           weechat_upgrade_count,
                           /* TRANSLATORS: text is: "upgraded xx times" */
                           NG_("time", "times", weechat_upgrade_count),
-                          util_get_time_string (&weechat_first_start_time));
+                          str_first_start,
+                          str_last_start);
                 (void) input_data (buffer, string);
             }
         }
@@ -6294,11 +6326,11 @@ command_version_display (struct t_gui_buffer *buffer,
             if (weechat_upgrade_count > 0)
             {
                 snprintf (string, sizeof (string),
-                          "Upgraded %d %s, first start: %s",
+                          "Upgraded %d %s, first start: %s, last start: %s",
                           weechat_upgrade_count,
                           (weechat_upgrade_count > 1) ? "times" : "time",
-                          ctime (&weechat_first_start_time));
-                string[strlen (string) - 1] = '\0';
+                          str_first_start,
+                          str_last_start);
                 (void) input_data (buffer, string);
             }
         }
@@ -6317,11 +6349,12 @@ command_version_display (struct t_gui_buffer *buffer,
         if (weechat_upgrade_count > 0)
         {
             gui_chat_printf (NULL,
-                             _("Upgraded %d %s, first start: %s"),
+                             _("Upgraded %d %s, first start: %s, last start: %s"),
                              weechat_upgrade_count,
                              /* TRANSLATORS: text is: "upgraded xx times" */
                              NG_("time", "times", weechat_upgrade_count),
-                             util_get_time_string (&weechat_first_start_time));
+                             str_first_start,
+                             str_last_start);
         }
     }
 }

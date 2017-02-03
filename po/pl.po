@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-01-22 13:29+0100\n"
+"POT-Creation-Date: 2017-02-03 21:58+0100\n"
 "PO-Revision-Date: 2017-01-06 22:05+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1003,8 +1003,8 @@ msgstr ""
 msgid "compiled on"
 msgstr "skompilowano"
 
-#, c-format
-msgid "Upgraded %d %s, first start: %s"
+#, fuzzy, c-format
+msgid "Upgraded %d %s, first start: %s, last start: %s"
 msgstr "Uaktualniono %d %s, pierwsze uruchomienie: %s"
 
 #. TRANSLATORS: text is: "upgraded xx times"
@@ -2884,7 +2884,7 @@ msgstr ""
 msgid "manage windows"
 msgstr "zarządza oknami"
 
-#, fuzzy
+#, fuzzy, no-c-format
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
 "splitv [-window <number>] [<pct>] || resize [-window <number>] [h|v]"
@@ -5177,7 +5177,7 @@ msgstr ""
 "list [<alias>] || add <alias> [<komenda>[;<komenda>...]] || addcompletion "
 "<dopełnienie> <alias> [<komenda>[;<komenda>...]] || del <alias> [<alias>...]"
 
-#, c-format
+#, no-c-format
 msgid ""
 "         list: list aliases (without argument, this list is displayed)\n"
 "          add: add an alias\n"

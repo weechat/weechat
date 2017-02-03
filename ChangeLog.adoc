@@ -24,6 +24,7 @@ New features::
 
 Improvements::
 
+  * core: add last start date in output of command /version after at least one /upgrade (issue #903)
   * irc: don't smart filter modes given to you (issue #530, issue #897)
 
 Build::
