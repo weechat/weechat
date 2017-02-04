@@ -27,6 +27,10 @@ Improvements::
   * core: add last start date in output of command /version after at least one /upgrade (issue #903)
   * irc: don't smart filter modes given to you (issue #530, issue #897)
 
+Bug fixes::
+
+  * core: fix delayed refresh when the signal SIGWINCH is received (terminal resized) (issue #902)
+
 Build::
 
   * core: fix compilation on FreeBSD with autotools (issue #276)

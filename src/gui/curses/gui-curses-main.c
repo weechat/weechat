@@ -451,10 +451,6 @@ gui_main_loop ()
             gui_color_pairs_auto_reset_pending = 1;
         }
 
-        gui_main_refreshs ();
-        if (gui_window_refresh_needed && !gui_window_bare_display)
-            gui_main_refreshs ();
-
         if (gui_signal_sigwinch_received)
         {
             (void) hook_signal_send ("signal_sigwinch",
@@ -462,6 +458,10 @@ gui_main_loop ()
             gui_signal_sigwinch_received = 0;
             gui_window_ask_refresh (2);
         }
+
+        gui_main_refreshs ();
+        if (gui_window_refresh_needed && !gui_window_bare_display)
+            gui_main_refreshs ();
 
         gui_color_pairs_auto_reset_pending = 0;
 
