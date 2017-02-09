@@ -11794,7 +11794,7 @@ weechat_buffer_set (my_buffer, "name", "my_new_name");
 weechat_buffer_set (my_buffer, "localvar_set_tizio", "abc");
 
 /* rimuove la variabile locale "tizio" */
-weechat_buffer_set (my_buffer, "localvar_del_tizio", NULL);
+weechat_buffer_set (my_buffer, "localvar_del_tizio", "");
 ----
 
 Script (Python):
