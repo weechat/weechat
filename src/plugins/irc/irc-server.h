@@ -54,6 +54,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_SSL_FINGERPRINT, /* SHA1 fingerprint of certificate    */
     IRC_SERVER_OPTION_SSL_VERIFY,    /* check if the connection is trusted   */
     IRC_SERVER_OPTION_PASSWORD,      /* password for server                  */
+    IRC_SERVER_OPTION_PASSWORD_CMD,  /* command run to retrieve password     */
     IRC_SERVER_OPTION_CAPABILITIES,  /* client capabilities to enable        */
     IRC_SERVER_OPTION_SASL_MECHANISM,/* mechanism for SASL authentication    */
     IRC_SERVER_OPTION_SASL_USERNAME, /* username for SASL authentication     */

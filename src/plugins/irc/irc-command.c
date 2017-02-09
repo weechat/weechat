@@ -4588,6 +4588,14 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  password . . . . . . : %s%s",
                             IRC_COLOR_CHAT_VALUE,
                             _("(hidden)"));
+        /* password_cmd */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_PASSWORD_CMD]))
+            weechat_printf (NULL, "  password_cmd . . . . :   %s",
+                            _("null"));
+        else
+            weechat_printf (NULL, "  password_cmd . . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_PASSWORD_CMD]));
         /* client capabilities */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_CAPABILITIES]))
             weechat_printf (NULL, "  capabilities . . . . :   ('%s')",

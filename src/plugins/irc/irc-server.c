@@ -35,6 +35,7 @@
 #else
 #include <sys/socket.h>
 #include <sys/time.h>
+#include <sys/wait.h>
 #endif /* _WIN32 */
 #include <sys/types.h>
 #include <netdb.h>
@@ -87,6 +88,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "ssl_fingerprint",      ""                        },
   { "ssl_verify",           "on"                      },
   { "password",             ""                        },
+  { "password_cmd",         ""                        },
   { "capabilities",         ""                        },
   { "sasl_mechanism",       "plain"                   },
   { "sasl_username",        ""                        },
@@ -3389,10 +3391,10 @@ void
 irc_server_login (struct t_irc_server *server)
 {
     const char *capabilities;
-    char *password, *username, *realname, *username2;
+    char *password, *password_cmd, *username, *realname, *username2;
 
-    password = weechat_string_eval_expression (
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD),
+    password_cmd = weechat_string_eval_expression (
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD_CMD),
         NULL, NULL, NULL);
     username = weechat_string_eval_expression (
         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME),
@@ -3404,6 +3406,56 @@ irc_server_login (struct t_irc_server *server)
     capabilities = IRC_SERVER_OPTION_STRING(
         server, IRC_SERVER_OPTION_CAPABILITIES);
 
+    if (password_cmd && password_cmd[0])
+    {
+        pid_t pid;
+        int pipes[2];
+        /* eval password_cmd and grab the output */
+        pipe (pipes);
+        pid = fork();
+        if (pid == -1)
+        {
+            password = weechat_string_eval_expression (
+                IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD),
+                NULL, NULL, NULL);
+        }
+        else if (pid == 0)
+        {
+            close (pipes[0]);
+            dup2 (pipes[1], STDOUT_FILENO);
+            close (pipes[1]);
+            execlp ("/bin/sh", "sh", "-c", password_cmd, NULL);
+            exit (1);
+        }
+        else
+        {
+            int status;
+            close (pipes[1]);
+            waitpid (pid, &status, 0);
+
+            if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
+            {
+                ssize_t length;
+                password = malloc (1024);
+                /* only read 1024 - 1 so that null termination is easy */
+                length = read (pipes[0], password, 1023);
+                password[length] = 0;
+            }
+            else
+            {
+                password = weechat_string_eval_expression (
+                    IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD),
+                    NULL, NULL, NULL);
+            }
+            close (pipes[0]);
+        }
+    }
+    else
+    {
+        password = weechat_string_eval_expression (
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD),
+            NULL, NULL, NULL);
+    }
     if (password && password[0])
     {
         irc_server_sendf (
@@ -3452,6 +3504,8 @@ irc_server_login (struct t_irc_server *server)
 
     if (password)
         free (password);
+    if (password_cmd)
+        free (password_cmd);
     if (username)
         free (username);
     if (realname)
@@ -5488,6 +5542,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "password",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD)))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "password_cmd",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD_CMD)))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "capabilities",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_CAPABILITIES)))
         return 0;
@@ -5750,6 +5807,12 @@ irc_server_print_log ()
             weechat_log_printf ("  password . . . . . . : null");
         else
             weechat_log_printf ("  password . . . . . . : (hidden)");
+        /* password_cmd */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_PASSWORD_CMD]))
+            weechat_log_printf ("  password_cmd . . . . : null");
+        else
+            weechat_log_printf ("  password_cmd . . . . : %s",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_PASSWORD_CMD]));
         /* client capabilities */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_CAPABILITIES]))
             weechat_log_printf ("  capabilities . . . . : null ('%s')",
