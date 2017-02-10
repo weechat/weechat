@@ -2589,7 +2589,7 @@ et port dépend de votre configuration de TOR) :
 Maintenant, ajoutez un nouveau serveur, par exemple :
 
 ----
-/server add freenode-tor p4fsi4ockecnea7l.onion
+/server add freenode-tor freenodeok2gncmy.onion
 ----
 
 Définissez le proxy pour TOR :
@@ -2598,9 +2598,10 @@ Définissez le proxy pour TOR :
 /set irc.server.freenode-tor.proxy "tor"
 ----
 
-Définissez l'authentification SASL :
+Définissez l'authentification SASL avec ECDSA-NIST256P-CHALLENGE :
 
 ----
+/set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
 /set irc.server.freenode-tor.sasl_username "votre_pseudo"
 /set irc.server.freenode-tor.sasl_password "votre_mot_de_passe"
 ----
@@ -2612,7 +2613,7 @@ Et enfin, la connexion au serveur :
 ----
 
 Pour plus d'informations à propos de Freenode et TOR :
-http://freenode.net/irc_servers.shtml#tor
+http://freenode.net/kb/answer/chat#accessing-freenode-via-tor
 
 [[irc_smart_filter_join_part_quit]]
 ==== Filtre intelligent pour les messages join/part/quit

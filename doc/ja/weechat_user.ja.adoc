@@ -2502,7 +2502,7 @@ WeeChat で TOR サービスを使った socks5 プロキシを作成してく�
 そして、新しいサーバを追加します。例えば:
 
 ----
-/server add freenode-tor p4fsi4ockecnea7l.onion
+/server add freenode-tor freenodeok2gncmy.onion
 ----
 
 TOR プロキシを設定:
@@ -2511,9 +2511,11 @@ TOR プロキシを設定:
 /set irc.server.freenode-tor.proxy "tor"
 ----
 
-SASL 認証を設定:
+// TRANSLATION MISSING
+Set SASL authentication with ECDSA-NIST256P-CHALLENGE:
 
 ----
+/set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
 /set irc.server.freenode-tor.sasl_username "your_nickname"
 /set irc.server.freenode-tor.sasl_password "your_password"
 ----
@@ -2524,7 +2526,8 @@ SASL 認証を設定:
 /connect freenode-tor
 ----
 
-Freenode と TOR に関するより詳しい情報: http://freenode.net/irc_servers.shtml#tor
+Freenode と TOR に関するより詳しい情報:
+http://freenode.net/kb/answer/chat#accessing-freenode-via-tor
 
 [[irc_smart_filter_join_part_quit]]
 ==== 参加/退出/終了メッセージに対するスマートフィルタ
