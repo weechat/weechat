@@ -11369,7 +11369,7 @@ weechat_buffer_set (my_buffer, "name", "my_new_name");
 weechat_buffer_set (my_buffer, "localvar_set_toto", "abc");
 
 /* remove local variable "toto" */
-weechat_buffer_set (my_buffer, "localvar_del_toto", NULL);
+weechat_buffer_set (my_buffer, "localvar_del_toto", "");
 ----
 
 Script (Python):

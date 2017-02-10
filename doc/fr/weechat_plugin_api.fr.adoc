@@ -11622,7 +11622,7 @@ weechat_buffer_set (mon_tampon, "name", "nouveau_nom");
 weechat_buffer_set (mon_tampon, "localvar_set_toto", "abc");
 
 /* supprimer la variable locale "toto" */
-weechat_buffer_set (mon_tampon, "localvar_del_toto", NULL);
+weechat_buffer_set (mon_tampon, "localvar_del_toto", "");
 ----
 
 Script (Python) :
