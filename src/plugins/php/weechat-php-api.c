@@ -349,12 +349,28 @@ static int weechat_php_config_new_section_callback_delete_option(const void *poi
 static int weechat_php_hook_command_callback(const void *pointer, void *data, struct t_gui_buffer *buffer, int argc, char **argv, char **argv_eol)
 {
     int rc;
-    void *func_argv[5];
+    void *func_argv[4];
+    int i;
+    int *argi;
+    struct t_hashtable *args;
+
+    (void)argv_eol;
+
+    args = weechat_hashtable_new (argc, WEECHAT_HASHTABLE_INTEGER, WEECHAT_HASHTABLE_STRING, NULL, NULL);
+    argi = malloc(sizeof(int) * argc);
+
+    for (i = 0; i < argc; i++)
+    {
+        *(argi + i) = i;
+        weechat_hashtable_set (args, argi+i, argv[i]);
+    }
+
     func_argv[1] = API_PTR2STR(buffer);
     func_argv[2] = &argc;
-    func_argv[3] = argv ? (char *)argv : weechat_php_empty_arg;
-    func_argv[4] = argv_eol ? (char *)argv_eol : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "ssiss", WEECHAT_SCRIPT_EXEC_INT, &rc);
+    func_argv[3] = args;
+    weechat_php_cb(pointer, data, func_argv, "ssih", WEECHAT_SCRIPT_EXEC_INT, &rc);
+    free (argi);
+    weechat_hashtable_free (args);
     if (func_argv[1])
         free (func_argv[1]);
     return rc;
@@ -455,14 +471,14 @@ static int weechat_php_hook_print_callback(const void *pointer, void *data, stru
     int rc;
     void *func_argv[9];
     func_argv[1] = API_PTR2STR(buffer);
-    func_argv[2] = date ? (char *)date : weechat_php_empty_arg;
+    func_argv[2] = &date;
     func_argv[3] = &tags_count;
     func_argv[4] = tags ? (char *)tags : weechat_php_empty_arg;
     func_argv[5] = &displayed;
     func_argv[6] = &highlight;
     func_argv[7] = prefix ? (char *)prefix : weechat_php_empty_arg;
     func_argv[8] = message ? (char *)message : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "sssisiiss", WEECHAT_SCRIPT_EXEC_INT, &rc);
+    weechat_php_cb(pointer, data, func_argv, "ssiisiiss", WEECHAT_SCRIPT_EXEC_INT, &rc);
     if (func_argv[1])
         free (func_argv[1]);
     return rc;
@@ -3390,7 +3406,7 @@ PHP_FUNCTION(weechat_hook_config)
     struct t_hook *retval;
     char *option;
     char *data;
-    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzSS", &z_option, &z_callback, &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzS", &z_option, &z_callback, &z_data) == FAILURE)
     {
         return;
     }

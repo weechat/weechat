@@ -400,6 +400,7 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
     zend_fcall_info_cache fci_cache;
     struct t_plugin_script *old_php_current_script;
     int function_len;
+    char *function_dup;
 
     /* Save old script */
     old_php_current_script = php_current_script;
@@ -438,8 +439,10 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
     memset(&fci, 0, sizeof(zend_fcall_info));
     memset(&fci_cache, 0, sizeof(zend_fcall_info_cache));
     function_len = strlen (function);
-    weechat_php_tab_to_nullchar (function);
-    ZVAL_STRINGL(&fci.function_name, (char *) function, function_len);
+    function_dup = strdup (function);
+    weechat_php_tab_to_nullchar (function_dup);
+    ZVAL_STRINGL(&fci.function_name, (char *) function_dup, function_len);
+    free (function_dup);
     fci.params = params;
     fci.param_count = argc;
     fci.retval = &zretval;
