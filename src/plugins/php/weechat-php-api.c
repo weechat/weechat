@@ -45,16 +45,15 @@
 #define SAFE_RETURN_STRING(__c)                                         \
     RETURN_STRING((__c) ? (__c) : "")
 
-#define weechat_php_get_function_name(__zfunc, __zstr)                  \
-    zend_string *(__zstr);                                              \
+#define weechat_php_get_function_name(__zfunc, __str)                   \
+    char *(__str);                                                      \
     do {                                                                \
-        if (!zend_is_callable (__zfunc, 0, &__zstr))                    \
+        if (!zend_is_callable (__zfunc, 0, NULL))                       \
         {                                                               \
             php_error_docref (NULL, E_WARNING, "Expected callable");    \
-            zend_string_release (__zstr);                               \
             RETURN_FALSE;                                               \
         }                                                               \
-        weechat_php_nullchar_to_tab(__zstr);                            \
+        (__str) = weechat_php_func_map_add (__zfunc);                   \
     } while (0)
 
 static char weechat_php_empty_arg[1] = { '\0' };
@@ -3037,8 +3036,7 @@ PHP_FUNCTION(weechat_bar_item_new)
     name = ZSTR_VAL(z_name);
     weechat_php_get_function_name (z_build_callback, build_callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_bar_item_new (weechat_php_plugin, php_current_script, (const char *)name, weechat_php_bar_item_new_build_callback, (const char *)ZSTR_VAL(build_callback_name), (const char *)data);
-    zend_string_release (build_callback_name);
+    retval = plugin_script_api_bar_item_new (weechat_php_plugin, php_current_script, (const char *)name, weechat_php_bar_item_new_build_callback, (const char *)build_callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3063,9 +3061,7 @@ PHP_FUNCTION(weechat_buffer_new)
     data_input = ZSTR_VAL(z_data_input);
     weechat_php_get_function_name (z_close_callback, close_callback_name);
     data_close = ZSTR_VAL(z_data_close);
-    retval = plugin_script_api_buffer_new (weechat_php_plugin, php_current_script, (const char *)name, weechat_php_buffer_new_input_callback, (const char *)ZSTR_VAL(input_callback_name), (const char *)data_input, weechat_php_buffer_new_close_callback, (const char *)ZSTR_VAL(close_callback_name), (const char *)data_close);
-    zend_string_release (input_callback_name);
-    zend_string_release (close_callback_name);
+    retval = plugin_script_api_buffer_new (weechat_php_plugin, php_current_script, (const char *)name, weechat_php_buffer_new_input_callback, (const char *)input_callback_name, (const char *)data_input, weechat_php_buffer_new_close_callback, (const char *)close_callback_name, (const char *)data_close);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3147,8 +3143,7 @@ PHP_FUNCTION(weechat_config_new)
     name = ZSTR_VAL(z_name);
     weechat_php_get_function_name (z_callback_reload, callback_reload_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_config_new (weechat_php_plugin, php_current_script, (const char *)name, weechat_php_config_new_callback_reload, (const char *)ZSTR_VAL(callback_reload_name), (const char *)data);
-    zend_string_release (callback_reload_name);
+    retval = plugin_script_api_config_new (weechat_php_plugin, php_current_script, (const char *)name, weechat_php_config_new_callback_reload, (const char *)callback_reload_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3208,10 +3203,7 @@ PHP_FUNCTION(weechat_config_new_option)
     data_change = ZSTR_VAL(z_data_change);
     weechat_php_get_function_name (z_callback_delete, callback_delete_name);
     data_delete = ZSTR_VAL(z_data_delete);
-    retval = plugin_script_api_config_new_option (weechat_php_plugin, php_current_script, config_file, section, (const char *)name, (const char *)type, (const char *)description, (const char *)string_values, min, max, (const char *)default_value, (const char *)value, null_value_allowed, weechat_php_config_new_option_callback_check_value, (const char *)ZSTR_VAL(callback_check_value_name), (const char *)data_check_value, weechat_php_config_new_option_callback_change, (const char *)ZSTR_VAL(callback_change_name), (const char *)data_change, weechat_php_config_new_option_callback_delete, (const char *)ZSTR_VAL(callback_delete_name), (const char *)data_delete);
-    zend_string_release (callback_check_value_name);
-    zend_string_release (callback_change_name);
-    zend_string_release (callback_delete_name);
+    retval = plugin_script_api_config_new_option (weechat_php_plugin, php_current_script, config_file, section, (const char *)name, (const char *)type, (const char *)description, (const char *)string_values, min, max, (const char *)default_value, (const char *)value, null_value_allowed, weechat_php_config_new_option_callback_check_value, (const char *)callback_check_value_name, (const char *)data_check_value, weechat_php_config_new_option_callback_change, (const char *)callback_change_name, (const char *)data_change, weechat_php_config_new_option_callback_delete, (const char *)callback_delete_name, (const char *)data_delete);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3260,12 +3252,7 @@ PHP_FUNCTION(weechat_config_new_section)
     data_create_option = ZSTR_VAL(z_data_create_option);
     weechat_php_get_function_name (z_callback_delete_option, callback_delete_option_name);
     data_delete_option = ZSTR_VAL(z_data_delete_option);
-    retval = plugin_script_api_config_new_section (weechat_php_plugin, php_current_script, config_file, (const char *)name, user_can_add_options, user_can_delete_options, weechat_php_config_new_section_callback_read, (const char *)ZSTR_VAL(callback_read_name), (const char *)data_read, weechat_php_config_new_section_callback_write, (const char *)ZSTR_VAL(callback_write_name), (const char *)data_write, weechat_php_config_new_section_callback_write_default, (const char *)ZSTR_VAL(callback_write_default_name), (const char *)data_write_default, weechat_php_config_new_section_callback_create_option, (const char *)ZSTR_VAL(callback_create_option_name), (const char *)data_create_option, weechat_php_config_new_section_callback_delete_option, (const char *)ZSTR_VAL(callback_delete_option_name), (const char *)data_delete_option);
-    zend_string_release (callback_read_name);
-    zend_string_release (callback_write_name);
-    zend_string_release (callback_write_default_name);
-    zend_string_release (callback_create_option_name);
-    zend_string_release (callback_delete_option_name);
+    retval = plugin_script_api_config_new_section (weechat_php_plugin, php_current_script, config_file, (const char *)name, user_can_add_options, user_can_delete_options, weechat_php_config_new_section_callback_read, (const char *)callback_read_name, (const char *)data_read, weechat_php_config_new_section_callback_write, (const char *)callback_write_name, (const char *)data_write, weechat_php_config_new_section_callback_write_default, (const char *)callback_write_default_name, (const char *)data_write_default, weechat_php_config_new_section_callback_create_option, (const char *)callback_create_option_name, (const char *)data_create_option, weechat_php_config_new_section_callback_delete_option, (const char *)callback_delete_option_name, (const char *)data_delete_option);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3347,8 +3334,7 @@ PHP_FUNCTION(weechat_hook_command)
     completion = ZSTR_VAL(z_completion);
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_command (weechat_php_plugin, php_current_script, (const char *)command, (const char *)description, (const char *)args, (const char *)args_description, (const char *)completion, weechat_php_hook_command_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_command (weechat_php_plugin, php_current_script, (const char *)command, (const char *)description, (const char *)args, (const char *)args_description, (const char *)completion, weechat_php_hook_command_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3368,8 +3354,7 @@ PHP_FUNCTION(weechat_hook_command_run)
     command = ZSTR_VAL(z_command);
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_command_run (weechat_php_plugin, php_current_script, (const char *)command, weechat_php_hook_command_run_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_command_run (weechat_php_plugin, php_current_script, (const char *)command, weechat_php_hook_command_run_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3392,8 +3377,7 @@ PHP_FUNCTION(weechat_hook_completion)
     description = ZSTR_VAL(z_description);
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_completion (weechat_php_plugin, php_current_script, (const char *)completion, (const char *)description, weechat_php_hook_completion_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_completion (weechat_php_plugin, php_current_script, (const char *)completion, (const char *)description, weechat_php_hook_completion_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3413,8 +3397,7 @@ PHP_FUNCTION(weechat_hook_config)
     option = ZSTR_VAL(z_option);
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_config (weechat_php_plugin, php_current_script, (const char *)option, weechat_php_hook_config_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_config (weechat_php_plugin, php_current_script, (const char *)option, weechat_php_hook_config_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3461,8 +3444,7 @@ PHP_FUNCTION(weechat_hook_connect)
     local_hostname = ZSTR_VAL(z_local_hostname);
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_connect (weechat_php_plugin, php_current_script, (const char *)proxy, (const char *)address, port, ipv6, retry, gnutls_sess, gnutls_cb, gnutls_dhkey_size, (const char *)gnutls_priorities, (const char *)local_hostname, weechat_php_hook_connect_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_connect (weechat_php_plugin, php_current_script, (const char *)proxy, (const char *)address, port, ipv6, retry, gnutls_sess, gnutls_cb, gnutls_dhkey_size, (const char *)gnutls_priorities, (const char *)local_hostname, weechat_php_hook_connect_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3491,8 +3473,7 @@ PHP_FUNCTION(weechat_hook_fd)
     flag_exception = (int)z_flag_exception;
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_fd (weechat_php_plugin, php_current_script, fd, flag_read, flag_write, flag_exception, weechat_php_hook_fd_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_fd (weechat_php_plugin, php_current_script, fd, flag_read, flag_write, flag_exception, weechat_php_hook_fd_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3516,9 +3497,8 @@ PHP_FUNCTION(weechat_hook_focus)
                                            php_current_script,
                                            area,
                                            weechat_php_api_hook_focus_callback,
-                                           ZSTR_VAL(callback_name),
+                                           callback_name,
                                            data);
-    zend_string_release (callback_name);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3538,8 +3518,7 @@ PHP_FUNCTION(weechat_hook_hsignal)
     signal = ZSTR_VAL(z_signal);
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_hsignal (weechat_php_plugin, php_current_script, (const char *)signal, weechat_php_hook_hsignal_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_hsignal (weechat_php_plugin, php_current_script, (const char *)signal, weechat_php_hook_hsignal_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3565,8 +3544,7 @@ PHP_FUNCTION(weechat_hook_info)
     args_description = ZSTR_VAL(z_args_description);
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_info (weechat_php_plugin, php_current_script, (const char *)info_name, (const char *)description, (const char *)args_description, weechat_php_hook_info_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_info (weechat_php_plugin, php_current_script, (const char *)info_name, (const char *)description, (const char *)args_description, weechat_php_hook_info_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3602,7 +3580,7 @@ PHP_FUNCTION(weechat_hook_info_hashtable)
                                                     args_description,
                                                     output_description,
                                                     weechat_php_api_hook_info_hashtable_callback,
-                                                    ZSTR_VAL(callback_name),
+                                                    callback_name,
                                                     data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
@@ -3639,7 +3617,7 @@ PHP_FUNCTION(weechat_hook_infolist)
                                               pointer_description,
                                               args_description,
                                               weechat_php_api_hook_infolist_callback,
-                                              ZSTR_VAL(callback_name),
+                                              callback_name,
                                               data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
@@ -3660,8 +3638,7 @@ PHP_FUNCTION(weechat_hook_modifier)
     modifier = ZSTR_VAL(z_modifier);
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_modifier (weechat_php_plugin, php_current_script, (const char *)modifier, weechat_php_hook_modifier_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_modifier (weechat_php_plugin, php_current_script, (const char *)modifier, weechat_php_hook_modifier_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3690,8 +3667,7 @@ PHP_FUNCTION(weechat_hook_print)
     strip_colors = (int)z_strip_colors;
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_print (weechat_php_plugin, php_current_script, buffer, (const char *)tags, (const char *)message, strip_colors, weechat_php_hook_print_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_print (weechat_php_plugin, php_current_script, buffer, (const char *)tags, (const char *)message, strip_colors, weechat_php_hook_print_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3714,8 +3690,7 @@ PHP_FUNCTION(weechat_hook_process)
     timeout = (int)z_timeout;
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_process (weechat_php_plugin, php_current_script, (const char *)command, timeout, weechat_php_hook_process_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_process (weechat_php_plugin, php_current_script, (const char *)command, timeout, weechat_php_hook_process_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3741,8 +3716,7 @@ PHP_FUNCTION(weechat_hook_process_hashtable)
     timeout = (int)z_timeout;
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_process_hashtable (weechat_php_plugin, php_current_script, (const char *)command, options, timeout, weechat_php_hook_process_hashtable_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_process_hashtable (weechat_php_plugin, php_current_script, (const char *)command, options, timeout, weechat_php_hook_process_hashtable_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3762,8 +3736,7 @@ PHP_FUNCTION(weechat_hook_signal)
     signal = ZSTR_VAL(z_signal);
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_signal (weechat_php_plugin, php_current_script, (const char *)signal, weechat_php_hook_signal_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_signal (weechat_php_plugin, php_current_script, (const char *)signal, weechat_php_hook_signal_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3789,8 +3762,7 @@ PHP_FUNCTION(weechat_hook_timer)
     max_calls = (int)z_max_calls;
     weechat_php_get_function_name (z_callback, callback_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_hook_timer (weechat_php_plugin, php_current_script, interval, align_second, max_calls, weechat_php_hook_timer_callback, (const char *)ZSTR_VAL(callback_name), (const char *)data);
-    zend_string_release (callback_name);
+    retval = plugin_script_api_hook_timer (weechat_php_plugin, php_current_script, interval, align_second, max_calls, weechat_php_hook_timer_callback, (const char *)callback_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
@@ -3884,8 +3856,7 @@ PHP_FUNCTION(weechat_upgrade_new)
     filename = ZSTR_VAL(z_filename);
     weechat_php_get_function_name (z_callback_read, callback_read_name);
     data = ZSTR_VAL(z_data);
-    retval = plugin_script_api_upgrade_new (weechat_php_plugin, php_current_script, (const char *)filename, weechat_php_upgrade_new_callback_read, (const char *)ZSTR_VAL(callback_read_name), (const char *)data);
-    zend_string_release(callback_read_name);
+    retval = plugin_script_api_upgrade_new (weechat_php_plugin, php_current_script, (const char *)filename, weechat_php_upgrade_new_callback_read, (const char *)callback_read_name, (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 

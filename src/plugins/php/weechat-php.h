@@ -36,6 +36,8 @@ struct t_php_const
 extern int php_quiet;
 extern struct t_weechat_plugin *weechat_php_plugin;
 
+extern struct t_hashtable *weechat_php_function_map;
+
 extern struct t_plugin_script *php_scripts;
 extern struct t_plugin_script *last_php_script;
 extern struct t_plugin_script *php_current_script;
@@ -52,23 +54,7 @@ extern void *weechat_php_exec (struct t_plugin_script *script,
                                const char *function,
                                const char *format, void **argv);
 
-#define weechat_php_nullchar_to_tab(__zstr)                             \
-    do {                                                                \
-        char *__tmp = ZSTR_VAL(__zstr);                                 \
-        size_t __i;                                                     \
-        for (__i = 0; __i < ZSTR_LEN(__zstr); __i++)                    \
-            if (*(__tmp + __i) == '\0')                                 \
-                *(__tmp + __i) = '\t';                                  \
-    } while (0)
-
-#define weechat_php_tab_to_nullchar(__str)                              \
-    do {                                                                \
-        char *__tmp = (char *)__str;                                    \
-        int __i;                                                        \
-        int __l = strlen(__str);                                        \
-        for (__i = 0; __i < __l; __i++)                                 \
-            if (*(__tmp + __i) == '\t')                                 \
-                *(__tmp + __i) = '\0';                                  \
-    } while (0)
+extern zval *weechat_php_func_map_get (const char *func_name);
+extern char *weechat_php_func_map_add (zval *ofunc);
 
 #endif /* WEECHAT_PHP_H */

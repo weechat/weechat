@@ -37,6 +37,7 @@ WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 WEECHAT_PLUGIN_PRIORITY(3000);
 
 struct t_weechat_plugin *weechat_php_plugin;
+struct t_hashtable *weechat_php_func_map = NULL;
 int php_quiet = 0;
 
 struct t_plugin_script *php_scripts = NULL;
@@ -399,8 +400,7 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
     zend_fcall_info fci;
     zend_fcall_info_cache fci_cache;
     struct t_plugin_script *old_php_current_script;
-    int function_len;
-    char *function_dup;
+    zval *zfunc;
 
     /* Save old script */
     old_php_current_script = php_current_script;
@@ -436,23 +436,21 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
     }
 
     /* Invoke func */
+    ret_value = NULL;
     memset(&fci, 0, sizeof(zend_fcall_info));
     memset(&fci_cache, 0, sizeof(zend_fcall_info_cache));
-    function_len = strlen (function);
-    function_dup = strdup (function);
-    weechat_php_tab_to_nullchar (function_dup);
-    ZVAL_STRINGL(&fci.function_name, (char *) function_dup, function_len);
-    free (function_dup);
-    fci.params = params;
-    fci.param_count = argc;
-    fci.retval = &zretval;
-    fci.object = NULL;
-    fci.size = sizeof(fci);
-    ret_value = NULL;
+
+    zfunc = weechat_php_func_map_get (function);
+    if (zfunc && zend_fcall_info_init (zfunc, 0, &fci, &fci_cache, NULL, NULL) == SUCCESS)
+    {
+        fci.params = params;
+        fci.param_count = argc;
+        fci.retval = &zretval;
+    }
 
     zend_try
     {
-        if (zend_call_function (&fci, &fci_cache) == SUCCESS)
+        if (zfunc && zend_call_function (&fci, &fci_cache) == SUCCESS)
         {
             if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
             {
@@ -487,18 +485,15 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
     }
     zend_end_try();
 
-
     /* Cleanup */
-    zval_ptr_dtor(&fci.function_name);
     if (params)
     {
         for (i = 0; i < argc; i++)
         {
-            zval_ptr_dtor(&params[i]);
+            zval_ptr_dtor (&params[i]);
         }
-        efree(params);
+        efree (params);
     }
-
 
     /* Restore old script */
     php_current_script = old_php_current_script;
@@ -964,6 +959,13 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     plugin_script_end (plugin, &php_scripts, &weechat_php_unload_all);
 
+    if (weechat_php_func_map)
+    {
+        weechat_hashtable_remove_all (weechat_php_func_map);
+        weechat_hashtable_free (weechat_php_func_map);
+        weechat_php_func_map = NULL;
+    }
+
     php_embed_shutdown ();
 
     if (php_action_install_list)
@@ -974,4 +976,55 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         free (php_action_autoload_list);
 
     return WEECHAT_RC_OK;
+}
+
+static void
+weechat_php_func_map_free_val (struct t_hashtable *hashtable, const void *key, void *value)
+{
+    zval_dtor ((zval *)value);
+    efree ((zval *)value);
+}
+
+static void
+weechat_php_func_map_free_key (struct t_hashtable *hashtable, void *key)
+{
+    free ((char *)key);
+}
+
+zval *
+weechat_php_func_map_get (const char* func_name) {
+    if (!weechat_php_func_map)
+    {
+        return NULL;
+    }
+    return weechat_hashtable_get (weechat_php_func_map, func_name);
+}
+
+char *
+weechat_php_func_map_add (zval *ofunc)
+{
+    zval *func;
+    char *func_name;
+
+    if (!weechat_php_func_map)
+    {
+        weechat_php_func_map = weechat_hashtable_new (32,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_POINTER,
+                                                      NULL, NULL);
+        weechat_hashtable_set_pointer (weechat_php_func_map,
+                                       "callback_free_value",
+                                       weechat_php_func_map_free_val);
+        weechat_hashtable_set_pointer (weechat_php_func_map,
+                                       "callback_free_key",
+                                       weechat_php_func_map_free_key);
+    }
+
+    func = (zval *)safe_emalloc (sizeof(zval), 1, 0);
+    ZVAL_COPY(func, ofunc);
+    func_name = plugin_script_ptr2str (func);
+
+    weechat_hashtable_set (weechat_php_func_map, func_name, func);
+
+    return func_name;
 }
