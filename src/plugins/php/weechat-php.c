@@ -981,6 +981,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 static void
 weechat_php_func_map_free_val (struct t_hashtable *hashtable, const void *key, void *value)
 {
+    (void) hashtable;
+    (void) key;
     zval_dtor ((zval *)value);
     efree ((zval *)value);
 }
@@ -988,6 +990,7 @@ weechat_php_func_map_free_val (struct t_hashtable *hashtable, const void *key, v
 static void
 weechat_php_func_map_free_key (struct t_hashtable *hashtable, void *key)
 {
+    (void) hashtable;
     free ((char *)key);
 }
 

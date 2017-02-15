@@ -66,10 +66,11 @@ PHP_FUNCTION(weechat_register)
     zend_string *version;
     zend_string *license;
     zend_string *description;
-    zend_string *shutdown_func;
+    zval *shutdown_func;
+    char *shutdown_func_name;
     zend_string *charset;
 
-    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "SSSSSSS",
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "SSSSSzS",
                               &name, &author, &version, &license, &description,
                               &shutdown_func, &charset) == FAILURE)
     {
@@ -102,6 +103,14 @@ PHP_FUNCTION(weechat_register)
         RETURN_FALSE;
     }
 
+    /* resolve shutdown func */
+    shutdown_func_name = NULL;
+    if (zend_is_callable (shutdown_func, 0, NULL))
+    {
+        weechat_php_get_function_name(shutdown_func, shutdown_func_name_tmp);
+        shutdown_func_name = shutdown_func_name_tmp;
+    }
+
     /* register script */
     php_current_script = plugin_script_add (weechat_php_plugin,
                                             &php_scripts, &last_php_script,
@@ -112,7 +121,7 @@ PHP_FUNCTION(weechat_register)
                                             ZSTR_VAL(version),
                                             ZSTR_VAL(license),
                                             ZSTR_VAL(description),
-                                            ZSTR_VAL(shutdown_func),
+                                            shutdown_func_name,
                                             ZSTR_VAL(charset));
     if (php_current_script)
     {
