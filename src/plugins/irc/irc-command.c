@@ -322,10 +322,7 @@ irc_command_exec_all_channels (struct t_irc_server *server,
 
                     if (ptr_channel->type == channel_type)
                     {
-                        if (inclusive)
-                            picked = 0;
-                        else
-                            picked = 1;
+                        picked = (inclusive) ? 0 : 1;
 
                         if (channels)
                         {
@@ -334,10 +331,7 @@ irc_command_exec_all_channels (struct t_irc_server *server,
                                 if (weechat_string_match (ptr_channel->name,
                                                           channels[i], 0))
                                 {
-                                    if (inclusive)
-                                        picked = 1;
-                                    else
-                                        picked = 0;
+                                    picked = (inclusive) ? 1 : 0;
                                     break;
                                 }
                             }
@@ -554,10 +548,7 @@ irc_command_exec_all_servers (int inclusive, const char *str_servers, const char
 
         if (ptr_server->is_connected)
         {
-            if (inclusive)
-                picked = 0;
-            else
-                picked = 1;
+            picked = (inclusive) ? 0 : 1;
 
             if (servers)
             {
@@ -566,10 +557,7 @@ irc_command_exec_all_servers (int inclusive, const char *str_servers, const char
                     if (weechat_string_match (ptr_server->name,
                                               servers[i], 0))
                     {
-                        if (inclusive)
-                            picked = 1;
-                        else
-                            picked = 0;
+                        picked = (inclusive) ? 1 : 0;
                         break;
                     }
                 }
