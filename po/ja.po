@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-02-18 12:54+0100\n"
+"POT-Creation-Date: 2017-02-18 14:44+0100\n"
 "PO-Revision-Date: 2017-02-18 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5904,6 +5904,12 @@ msgid ""
 msgstr ""
 "%s%s: ニックネームが \"*\" の場合は \"-yes\" 引数が必要です (セキュリティ上の"
 "理由)、/help %s を参照"
+
+#, c-format
+msgid ""
+"%s%s: cannot execute command /%s, channel mode \"%s\" is not supported by "
+"server"
+msgstr ""
 
 #, c-format
 msgid "%s: future away: %s"

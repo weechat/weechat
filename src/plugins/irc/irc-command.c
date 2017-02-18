@@ -266,8 +266,8 @@ irc_command_mode_masks (struct t_irc_server *server,
     {
         weechat_printf (
             NULL,
-            _("%s%s: cannot use /%s, type A channel mode \"%s\" not supported "
-              "by server"),
+            _("%s%s: cannot execute command /%s, channel mode \"%s\" is not "
+              "supported by server"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, command, mode);
         return;
     }

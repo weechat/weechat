@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-02-18 12:54+0100\n"
+"POT-Creation-Date: 2017-02-18 14:44+0100\n"
 "PO-Revision-Date: 2017-01-14 21:39+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -6032,6 +6032,12 @@ msgid ""
 msgstr ""
 "%s%s: o argumento \"-yes\" é necessário para o nick \"*\" (por motivos de "
 "segurança), ver /help %s"
+
+#, c-format
+msgid ""
+"%s%s: cannot execute command /%s, channel mode \"%s\" is not supported by "
+"server"
+msgstr ""
 
 #, c-format
 msgid "%s: future away: %s"

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-02-18 12:54+0100\n"
+"POT-Creation-Date: 2017-02-18 14:44+0100\n"
 "PO-Revision-Date: 2017-01-06 22:01+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5527,6 +5527,12 @@ msgid ""
 msgstr ""
 "%sError: por seguridad, se requiere el argumento \"-yes\" para restaurar los "
 "atajos"
+
+#, c-format
+msgid ""
+"%s%s: cannot execute command /%s, channel mode \"%s\" is not supported by "
+"server"
+msgstr ""
 
 #, c-format
 msgid "%s: future away: %s"
