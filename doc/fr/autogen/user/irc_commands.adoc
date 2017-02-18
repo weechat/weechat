@@ -16,9 +16,11 @@ cible : nom du serveur
 
 ----
 /allchan  [-current] [-exclude=<canal>[,<canal>...]] <commande> [<paramètres>]
+          [-current] [-include=<canal>[,<canal>...]] <commande> [<paramètres>]
 
   -current : exécuter la commande pour les canaux du serveur courant seulement
   -exclude : exclure certains canaux (le caractère joker "*" est autorisé)
+  -include : inclure seulement certains canaux (le caractère joker "*" est autorisé)
   commande : commande à exécuter
 paramètres : paramètres pour la commande (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 
@@ -29,6 +31,8 @@ Exemples :
     /allchan -exclude=#weechat msg * bonjour
   dire 'bonjour' partout sauf sur #weechat et les canaux commençant par #linux :
     /allchan -exclude=#weechat,#linux* msg * bonjour
+  dire 'bonjour' sur tous les canaux commençant par #linux :
+    /allchan -include=#linux* msg * bonjour
 ----
 
 [[command_irc_allpv]]
@@ -36,9 +40,11 @@ Exemples :
 
 ----
 /allpv  [-current] [-exclude=<pseudo>[,<pseudo>...]] <commande> [<paramètres>]
+        [-current] [-include=<pseudo>[,<pseudo>...]] <commande> [<paramètres>]
 
   -current : exécuter la commande pour les tampons privés du serveur courant seulement
   -exclude : exclure certains pseudos (le caractère joker "*" est autorisé)
+  -include : inclure seulement certains pseudos (le caractère joker "*" est autorisé)
   commande : commande à exécuter
 paramètres : paramètres pour la commande (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 
@@ -49,6 +55,8 @@ Exemples :
     /allpv -exclude=foo msg * bonjour
   dire 'bonjour' partout sauf pour le pseudo foo et les pseudos commençant par bar :
     /allpv -exclude=foo,bar* msg * bonjour
+  dire 'bonjour' pour tous les pseudos commençant par bar :
+    /allpv -include=bar* msg * bonjour
   fermer tous les tampons privés :
     /allpv close
 ----
@@ -58,8 +66,10 @@ Exemples :
 
 ----
 /allserv  [-exclude=<serveur>[,<serveur>...]] <commande> [<paramètres>]
+          [-include=<serveur>[,<serveur>...]] <commande> [<paramètres>]
 
-  -exclude : exclude certains serveurs (le caractère joker "*" est autorisé)
+  -exclude : exclure certains serveurs (le caractère joker "*" est autorisé)
+  -include : inclure seulement certains serveurs (le caractère joker "*" est autorisé)
   commande : commande à exécuter
 paramètres : paramètres pour la commande (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 

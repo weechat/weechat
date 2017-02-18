@@ -15,10 +15,12 @@ destinazione: nome server
 * `+allchan+`: esegue un comando su tutti i canali di tutti i server connessi
 
 ----
-/allchan  [-current] [-exclude=<canale>[,<canale>...]] <comando> [<argomenti>]
+/allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
+          [-current] -include=<channel>[,<channel>...] <command> [<arguments>]
 
  -current: execute command for channels of current server only
  -exclude: exclude some channels (wildcard "*" is allowed)
+ -include: include only some channels (wildcard "*" is allowed)
   command: command to execute
 arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
@@ -29,6 +31,8 @@ Examples:
     /allchan -exclude=#weechat msg * hello
   say 'hello' everywhere but not on #weechat and channels beginning with #linux:
     /allchan -exclude=#weechat,#linux* msg * hello
+  say 'hello' on all channels beginning with #linux:
+    /allchan -include=#linux* msg * hello
 ----
 
 [[command_irc_allpv]]
@@ -36,9 +40,11 @@ Examples:
 
 ----
 /allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
+        [-current] -include=<nick>[,<nick>...] <command> [<arguments>]
 
  -current: execute command for private buffers of current server only
  -exclude: exclude some nicks (wildcard "*" is allowed)
+ -include: include only some nicks (wildcard "*" is allowed)
   command: command to execute
 arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
@@ -49,6 +55,8 @@ Examples:
     /allpv -exclude=foo msg * hello
   say 'hello' everywhere but not for nick foo and nicks beginning with bar:
     /allpv -exclude=foo,bar* msg * hello
+  say 'hello' for all nicks beginning with bar:
+    /allpv -include=bar* msg * hello
   close all private buffers:
     /allpv close
 ----
@@ -57,9 +65,11 @@ Examples:
 * `+allserv+`: esegue un comando su tutti i server connessi
 
 ----
-/allserv  [-exclude=<server>[,<server>...]] <comando> [<argomenti>]
+/allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
+          -include=<server>[,<server>...] <command> [<arguments>]
 
  -exclude: exclude some servers (wildcard "*" is allowed)
+ -include: include only some servers (wildcard "*" is allowed)
   command: command to execute
 arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
