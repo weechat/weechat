@@ -412,8 +412,8 @@ IRC_COMMAND_CALLBACK(allchan)
 
     current_server = 0;
     ptr_channels = NULL;
-    ptr_command = argv_eol[1];
     inclusive = 0;
+    ptr_command = argv_eol[1];
     for (i = 1; i < argc; i++)
     {
         if (weechat_strcasecmp (argv[i], "-current") == 0)
@@ -471,8 +471,8 @@ IRC_COMMAND_CALLBACK(allpv)
 
     current_server = 0;
     ptr_channels = NULL;
-    ptr_command = argv_eol[1];
     inclusive = 0;
+    ptr_command = argv_eol[1];
     for (i = 1; i < argc; i++)
     {
         if (weechat_strcasecmp (argv[i], "-current") == 0)
@@ -637,8 +637,8 @@ IRC_COMMAND_CALLBACK(allserv)
     WEECHAT_COMMAND_MIN_ARGS(2, "");
 
     ptr_servers = NULL;
-    ptr_command = argv_eol[1];
     inclusive = 0;
+    ptr_command = argv_eol[1];
     for (i = 1; i < argc; i++)
     {
         if (weechat_strncasecmp (argv[i], "-exclude=", 9) == 0)
