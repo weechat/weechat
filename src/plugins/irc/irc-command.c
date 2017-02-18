@@ -71,9 +71,7 @@ irc_command_mode_nicks (struct t_irc_server *server,
                         int argc, char **argv)
 {
     int i, arg_yes, max_modes, modes_added, msg_priority, prefix_found;
-    long number;
-    char *error, prefix, modes[128+1], nicks[1024];
-    const char *ptr_modes;
+    char prefix, modes[128+1], nicks[1024];
     struct t_irc_nick *ptr_nick;
     struct t_hashtable *nicks_sent;
 
@@ -103,27 +101,8 @@ irc_command_mode_nicks (struct t_irc_server *server,
         }
     }
 
-    /* default is 4 modes max (if server did not send the info) */
-    max_modes = 4;
-
-    /*
-     * look for the max modes supported in one command by the server
-     * (in isupport value, with the format: "MODES=4")
-     */
-    ptr_modes = irc_server_get_isupport_value (server, "MODES");
-    if (ptr_modes)
-    {
-        error = NULL;
-        number = strtol (ptr_modes, &error, 10);
-        if (error && !error[0])
-        {
-            max_modes = number;
-            if (max_modes < 1)
-                max_modes = 1;
-            if (max_modes > 128)
-                max_modes = 128;
-        }
-    }
+    /* get the max number of modes we can send in a message */
+    max_modes = irc_server_get_max_modes (server);
 
     /* get prefix for the mode (example: prefix == '@' for mode 'o') */
     prefix = irc_server_get_prefix_char_for_mode (server, mode[0]);
@@ -256,9 +235,7 @@ irc_command_mode_masks (struct t_irc_server *server,
                         char **argv, int pos_masks)
 {
     int max_modes, modes_added, msg_priority, mask_fits;
-    long number;
-    char *error, modes[128+1], masks[1024], *mask;
-    const char *ptr_modes;
+    char modes[128+1], masks[1024], *mask;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
@@ -272,27 +249,8 @@ irc_command_mode_masks (struct t_irc_server *server,
         return;
     }
 
-    /* default is 4 modes max (if server did not send the info) */
-    max_modes = 4;
-
-    /*
-     * look for the max modes supported in one command by the server
-     * (in isupport value, with the format: "MODES=4")
-     */
-    ptr_modes = irc_server_get_isupport_value (server, "MODES");
-    if (ptr_modes)
-    {
-        error = NULL;
-        number = strtol (ptr_modes, &error, 10);
-        if (error && !error[0])
-        {
-            max_modes = number;
-            if (max_modes < 1)
-                max_modes = 1;
-            if (max_modes > 128)
-                max_modes = 128;
-        }
-    }
+    /* get the max number of modes we can send in a message */
+    max_modes = irc_server_get_max_modes (server);
 
     /*
      * first message has high priority and subsequent messages have low priority

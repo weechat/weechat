@@ -953,6 +953,41 @@ irc_server_prefix_char_statusmsg (struct t_irc_server *server,
 }
 
 /*
+ * Get max modes supported in one command by the server
+ * (in isupport value, with the format: "MODES=4").
+ *
+ * Default is 4 if the info is not given by the server.
+ */
+
+int
+irc_server_get_max_modes (struct t_irc_server *server)
+{
+    const char *support_modes;
+    char *error;
+    long number;
+    int max_modes;
+
+    max_modes = 4;
+
+    support_modes = irc_server_get_isupport_value (server, "MODES");
+    if (support_modes)
+    {
+        error = NULL;
+        number = strtol (support_modes, &error, 10);
+        if (error && !error[0])
+        {
+            max_modes = number;
+            if (max_modes < 1)
+                max_modes = 1;
+            if (max_modes > 128)
+                max_modes = 128;
+        }
+    }
+
+    return max_modes;
+}
+
+/*
  * Gets an evaluated default_msg server option: replaces "%v" by WeeChat
  * version if there's no ${...} in string, or just evaluates the string.
  *

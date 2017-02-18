@@ -302,6 +302,7 @@ extern char irc_server_get_prefix_char_for_mode (struct t_irc_server *server,
 extern const char *irc_server_get_chanmodes (struct t_irc_server *server);
 extern int irc_server_prefix_char_statusmsg (struct t_irc_server *server,
                                              char prefix_char);
+extern int irc_server_get_max_modes (struct t_irc_server *server);
 extern char *irc_server_get_default_msg (const char *default_msg,
                                          struct t_irc_server *server,
                                          const char *channel_name);
