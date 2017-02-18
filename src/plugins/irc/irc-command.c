@@ -255,7 +255,7 @@ irc_command_mode_masks (struct t_irc_server *server,
                         const char *set, const char *mode,
                         char **argv, int pos_masks)
 {
-    int max_modes, modes_added, msg_priority;
+    int max_modes, modes_added, msg_priority, mask_fits;
     long number;
     char *error, modes[128+1], masks[1024], *mask;
     const char *ptr_modes;
@@ -315,33 +315,42 @@ irc_command_mode_masks (struct t_irc_server *server,
         /* use default_ban_mask for nick arguments */
         if (ptr_channel)
         {
-            if (!strchr (argv[pos_masks], '!') && !strchr (argv[pos_masks], '@'))
+            if (!strchr (argv[pos_masks], '!')
+                && !strchr (argv[pos_masks], '@'))
             {
-                ptr_nick = irc_nick_search (server, ptr_channel, argv[pos_masks]);
+                ptr_nick = irc_nick_search (server, ptr_channel,
+                                            argv[pos_masks]);
                 if (ptr_nick)
                     mask = irc_nick_default_ban_mask (ptr_nick);
             }
         }
 
+        /* check if the mask fits in the string */
+        mask_fits = (strlen (masks) + 1 +
+                     strlen ((mask) ? mask : argv[pos_masks]) + 1 <
+                     sizeof (masks));
+
         /*
-         * if we reached the max number of modes allowed, send the MODE
-         * command now and flush the modes/masks strings
+         * if we reached the max number of modes allowed of if the mask doesn't
+         * fits in string, send the MODE command now and flush the modes/masks
+         * strings
          */
-        if (modes_added == max_modes)
+        if (modes[0] && ((modes_added == max_modes) || !mask_fits))
         {
             irc_server_sendf (server, msg_priority, NULL,
                               "MODE %s %s%s %s",
                               channel_name, set, modes, masks);
+
             modes[0] = '\0';
             masks[0] = '\0';
             modes_added = 0;
+
             /* subsequent messages will have low priority */
             msg_priority = IRC_SERVER_SEND_OUTQ_PRIO_LOW;
         }
 
         /* add one mode letter (after +/-) and add the mask in masks */
-        if (strlen (masks) + 1 + strlen ((mask) ? mask : argv[pos_masks]) + 1 <
-            sizeof (masks)) /* BUG: mask ignored if doesn't fit */
+        if (mask_fits)
         {
             strcat (modes, mode);
             if (masks[0])
