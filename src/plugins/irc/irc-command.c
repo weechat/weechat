@@ -41,6 +41,7 @@
 #include "irc-ignore.h"
 #include "irc-input.h"
 #include "irc-message.h"
+#include "irc-mode.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
@@ -233,6 +234,133 @@ irc_command_mode_nicks (struct t_irc_server *server,
     }
 
     weechat_hashtable_free (nicks_sent);
+}
+
+/*
+ * Sends mode change for many masks on a channel.
+ *
+ * Argument "set" is "+" or "-", mode can be "b", "q", or any other mode
+ * supported by server.
+ *
+ * Many messages can be sent if the number of nicks is greater than the server
+ * limit (number of modes allowed in a single message). In this case, the first
+ * message is sent with high priority, and subsequent messages are sent with low
+ * priority.
+ */
+
+void
+irc_command_mode_masks (struct t_irc_server *server,
+                        const char *channel_name,
+                        const char *command,
+                        const char *set, const char *mode,
+                        char **argv, int pos_masks)
+{
+    int max_modes, modes_added, msg_priority;
+    long number;
+    char *error, modes[128+1], masks[1024], *mask;
+    const char *ptr_modes;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    if (irc_mode_get_chanmode_type (server, mode[0]) != 'A')
+    {
+        weechat_printf (
+            NULL,
+            _("%s%s: cannot use /%s, type A channel mode \"%s\" not supported "
+              "by server"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, command, mode);
+        return;
+    }
+
+    /* default is 4 modes max (if server did not send the info) */
+    max_modes = 4;
+
+    /*
+     * look for the max modes supported in one command by the server
+     * (in isupport value, with the format: "MODES=4")
+     */
+    ptr_modes = irc_server_get_isupport_value (server, "MODES");
+    if (ptr_modes)
+    {
+        error = NULL;
+        number = strtol (ptr_modes, &error, 10);
+        if (error && !error[0])
+        {
+            max_modes = number;
+            if (max_modes < 1)
+                max_modes = 1;
+            if (max_modes > 128)
+                max_modes = 128;
+        }
+    }
+
+    /*
+     * first message has high priority and subsequent messages have low priority
+     * (so for example in case of multiple messages, the user can still send
+     * some messages which will have higher priority than the "MODE" messages
+     * we are sending now)
+     */
+    msg_priority = IRC_SERVER_SEND_OUTQ_PRIO_HIGH;
+
+    modes_added = 0;
+    modes[0] = '\0';
+    masks[0] = '\0';
+
+    ptr_channel = irc_channel_search (server, channel_name);
+
+    for (; argv[pos_masks]; pos_masks++)
+    {
+        mask = NULL;
+
+        /* use default_ban_mask for nick arguments */
+        if (ptr_channel)
+        {
+            if (!strchr (argv[pos_masks], '!') && !strchr (argv[pos_masks], '@'))
+            {
+                ptr_nick = irc_nick_search (server, ptr_channel, argv[pos_masks]);
+                if (ptr_nick)
+                    mask = irc_nick_default_ban_mask (ptr_nick);
+            }
+        }
+
+        /*
+         * if we reached the max number of modes allowed, send the MODE
+         * command now and flush the modes/masks strings
+         */
+        if (modes_added == max_modes)
+        {
+            irc_server_sendf (server, msg_priority, NULL,
+                              "MODE %s %s%s %s",
+                              channel_name, set, modes, masks);
+            modes[0] = '\0';
+            masks[0] = '\0';
+            modes_added = 0;
+            /* subsequent messages will have low priority */
+            msg_priority = IRC_SERVER_SEND_OUTQ_PRIO_LOW;
+        }
+
+        /* add one mode letter (after +/-) and add the mask in masks */
+        if (strlen (masks) + 1 + strlen ((mask) ? mask : argv[pos_masks]) + 1 <
+            sizeof (masks)) /* BUG: mask ignored if doesn't fit */
+        {
+            strcat (modes, mode);
+            if (masks[0])
+                strcat (masks, " ");
+            strcat (masks, (mask) ? mask : argv[pos_masks]);
+            modes_added++;
+        }
+
+        if (mask)
+            free (mask);
+    }
+
+    /* send a final MODE command if some masks are remaining */
+    if (modes[0] && masks[0])
+    {
+        irc_server_sendf (server, msg_priority, NULL,
+                          "MODE %s %s%s %s",
+                          channel_name, set, modes, masks);
+    }
 }
 
 /*
@@ -1066,13 +1194,9 @@ IRC_COMMAND_CALLBACK(ban)
 
         if (argv[pos_args])
         {
-            /* loop on users */
-            while (argv[pos_args])
-            {
-                irc_command_send_ban (ptr_server, pos_channel, "+b",
-                                      argv[pos_args]);
-                pos_args++;
-            }
+            irc_command_mode_masks (ptr_server, pos_channel,
+                                    "ban", "+", "b",
+                                    argv, pos_args);
         }
         else
         {
@@ -4050,14 +4174,9 @@ IRC_COMMAND_CALLBACK(quiet)
 
         if (argv[pos_args])
         {
-            /* loop on users */
-            while (argv[pos_args])
-            {
-                irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                                  "MODE %s +q %s",
-                                  pos_channel, argv[pos_args]);
-                pos_args++;
-            }
+            irc_command_mode_masks (ptr_server, pos_channel,
+                                    "quiet", "+", "q",
+                                    argv, pos_args);
         }
         else
         {
@@ -5633,13 +5752,9 @@ IRC_COMMAND_CALLBACK(unban)
         }
     }
 
-    /* loop on users */
-    while (argv[pos_args])
-    {
-        irc_command_send_ban (ptr_server, pos_channel, "-b",
-                              argv[pos_args]);
-        pos_args++;
-    }
+    irc_command_mode_masks (ptr_server, pos_channel,
+                            "unban", "-", "b",
+                            argv, pos_args);
 
     return WEECHAT_RC_OK;
 }
@@ -5692,14 +5807,9 @@ IRC_COMMAND_CALLBACK(unquiet)
 
     if (argv[pos_args])
     {
-        /* loop on users */
-        while (argv[pos_args])
-        {
-            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "MODE %s -q %s",
-                              pos_channel, argv[pos_args]);
-            pos_args++;
-        }
+        irc_command_mode_masks (ptr_server, pos_channel,
+                                "unquiet", "-", "q",
+                                argv, pos_args);
     }
     else
     {
