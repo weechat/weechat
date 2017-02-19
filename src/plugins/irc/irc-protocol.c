@@ -3278,14 +3278,18 @@ IRC_PROTOCOL_CALLBACK(323)
 
 IRC_PROTOCOL_CALLBACK(324)
 {
+    const char *ptr_modes;
     struct t_irc_channel *ptr_channel;
+
+    ptr_modes = (argc > 4) ?
+        ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
     ptr_channel = irc_channel_search (server, argv[3]);
     if (ptr_channel)
     {
-        irc_channel_set_modes (ptr_channel, ((argc > 4) ? argv_eol[4] : NULL));
+        irc_channel_set_modes (ptr_channel, ptr_modes);
         if (argc > 4)
         {
             (void) irc_mode_channel_set (server, ptr_channel,
@@ -3308,8 +3312,7 @@ IRC_PROTOCOL_CALLBACK(324)
             argv[3],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            (argc > 4) ?
-            ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : "",
+            (ptr_modes) ? ptr_modes : "",
             IRC_COLOR_CHAT_DELIMITERS);
     }
 
