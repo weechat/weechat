@@ -18,21 +18,21 @@ target: Servername
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
           [-current] -include=<channel>[,<channel>...] <command> [<arguments>]
 
- -current: execute command for channels of current server only
- -exclude: exclude some channels (wildcard "*" is allowed)
- -include: include only some channels (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: führt einen Befehl aus der an alle Channels des aktuellen Servers gesendet wird
+ -exclude: dient zum Ausschluss ausgewählter Channels (Platzhalter "*" kann verwendet werden)
+ -include: findet Anwendung für ausgewählte Channels (Platzhalter "*" kann verwendet werden)\n
+  command: Befehl der ausgeführt werden soll
+arguments: Argumente für Befehl (Variablen die genutzt werden können und durch den entsprechenden Wert ersetzt werden: $nick, $channel und $server)
 
-Examples:
-  execute '/me is testing' on all channels:
-    /allchan me is testing
-  say 'hello' everywhere but not on #weechat:
-    /allchan -exclude=#weechat msg * hello
-  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
-    /allchan -exclude=#weechat,#linux* msg * hello
-  say 'hello' on all channels beginning with #linux:
-    /allchan -include=#linux* msg * hello
+Beispiele:
+  führe den Befehl '/me Ich teste gerade etwas...' für alle Channels aus:
+    /allchan me Ich teste gerade etwas...
+  schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel:
+    /allchan -exclude=#weechat msg * Hallo Welt
+  schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel und Channels die mit #linux beginnen:
+    /allchan -exclude=#weechat,#linux* msg * Hallo Welt
+  schickt den Text 'Hallo' an alle Channels die mit #linux beginnen:
+    /allchan -include=#linux* msg * Hallo
 ----
 
 [[command_irc_allpv]]
@@ -42,22 +42,22 @@ Examples:
 /allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
         [-current] -include=<nick>[,<nick>...] <command> [<arguments>]
 
- -current: execute command for private buffers of current server only
- -exclude: exclude some nicks (wildcard "*" is allowed)
- -include: include only some nicks (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: führt einen Befehl aus der für alle privaten Buffer, des aktuellen Servers, Anwendung findet
+ -exclude: dient zum Ausschluss ausgewählter Nicks (Platzhalter "*" kann verwendet werden)
+ -include: findet Anwendung für ausgewählte Nicks (Platzhalter "*" kann verwendet werden)
+  command: Befehl der ausgeführt werden soll
+arguments: Argumente für Befehl (Variablen die genutzt werden können und durch den entsprechenden Wert ersetzt werden: $nick, $channel und $server)
 
-Examples:
-  execute '/me is testing' on all private buffers:
-    /allpv me is testing
-  say 'hello' everywhere but not for nick foo:
-    /allpv -exclude=foo msg * hello
-  say 'hello' everywhere but not for nick foo and nicks beginning with bar:
-    /allpv -exclude=foo,bar* msg * hello
-  say 'hello' for all nicks beginning with bar:
-    /allpv -include=bar* msg * hello
-  close all private buffers:
+Beispiele:
+  führe den Befehl '/me Ich teste gerade etwas...' für alle privaten Buffer aus:
+    /allpv me Ich teste gerade etwas...
+  schicke 'Hallo' an alle, ausgenommen an Nick foo:
+    /allpv -exclude=foo msg * Hallo
+  schicke den Text 'Hallo' an alle, ausgenommen für Nick foo und Nicks die mit bar beginnen:
+    /allpv -exclude=foo,bar* msg * Hallo
+  schicke den Text 'Hallo' an alle Nicks die mit bar beginnen:
+    /allpv -include=bar* msg * Hallo
+  schließe alle privaten Buffer:
     /allpv close
 ----
 
@@ -68,17 +68,17 @@ Examples:
 /allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
           -include=<server>[,<server>...] <command> [<arguments>]
 
- -exclude: exclude some servers (wildcard "*" is allowed)
- -include: include only some servers (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -exclude: dient zum Ausschluss ausgewählter Server (Platzhalter "*" kann verwendet werden)
+ -include: findet Anwendung für ausgewählte Server (Platzhalter "*" kann verwendet werden)
+  command: Befehl der ausgeführt werden soll
+arguments: Argumente für Befehl (Variablen die genutzt werden können und durch den entsprechenden Wert ersetzt werden: $nick, $channel und $server)
 
-Examples:
-  change nick on all servers:
+Beispiele:
+  ändere den Nick auf allen Servern:
     /allserv nick newnick
-  set away on all servers:
+  setzt den Status, auf allen Servern, auf abwesend:
     /allserv away I'm away
-  do a whois on my nick on all servers:
+  führt ein whois mit meinem nick auf allen Servern aus:
     /allserv whois $nick
 ----
 
