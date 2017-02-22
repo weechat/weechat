@@ -31,7 +31,7 @@ Improvements::
 
 Bug fixes::
 
-  * core: fix delayed refresh when the signal SIGWINCH is received (terminal resized) (issue #902)
+  * core: fix delayed refresh when the signal SIGWINCH is received (terminal resized), send signal "signal_sigwinch" after refreshs (issue #902)
   * irc: fix parsing of message 324 (modes) when there is a colon before the modes (issue #913)
 
 Build::

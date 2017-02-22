@@ -427,6 +427,9 @@ void
 gui_main_loop ()
 {
     struct t_hook *hook_fd_keyboard;
+    int send_signal_sigwinch;
+
+    send_signal_sigwinch = 0;
 
     /* catch SIGWINCH signal: redraw screen */
     util_catch_signal (SIGWINCH, &gui_main_signal_sigwinch);
@@ -453,15 +456,21 @@ gui_main_loop ()
 
         if (gui_signal_sigwinch_received)
         {
-            (void) hook_signal_send ("signal_sigwinch",
-                                     WEECHAT_HOOK_SIGNAL_STRING, NULL);
-            gui_signal_sigwinch_received = 0;
             gui_window_ask_refresh (2);
+            gui_signal_sigwinch_received = 0;
+            send_signal_sigwinch = 1;
         }
 
         gui_main_refreshs ();
         if (gui_window_refresh_needed && !gui_window_bare_display)
             gui_main_refreshs ();
+
+        if (send_signal_sigwinch)
+        {
+            (void) hook_signal_send ("signal_sigwinch",
+                                     WEECHAT_HOOK_SIGNAL_STRING, NULL);
+            send_signal_sigwinch = 0;
+        }
 
         gui_color_pairs_auto_reset_pending = 0;
 
