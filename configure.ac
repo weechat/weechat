@@ -823,7 +823,7 @@ if test "x$enable_php" = "xyes" ; then
             AC_CHECK_PROG(PHPCONFIG, "php-config$l", "php-config$l")
             if test "x$PHPCONFIG" != "x" ; then
                 PHP_CFLAGS=`$PHPCONFIG --includes`
-                PHP_LFLAGS="-L/home/adam/php/lib/ $($PHPCONFIG --libs) -lphp$l"
+                PHP_LFLAGS="-L$($PHPCONFIG --prefix)/lib/ $($PHPCONFIG --libs) -lphp7"
                 PHP_VERSION=`$PHPCONFIG --version`
                 break
             fi
@@ -842,10 +842,10 @@ if test "x$enable_php" = "xyes" ; then
             if test "x$ac_found_php_lib" = "xyes" ; then
                 PHP_VERSION=">=7.0.0"
 
-                PHP_LFLAGS="$LDFLAGS -lphp$l -lm"
+                PHP_LFLAGS="$LDFLAGS -lphp7 -lm"
 
                 ac2_save_LDFLAGS="$LDFLAGS"
-                LDFLAGS="$LDFLAGS -lphp$l -lm"
+                LDFLAGS="$LDFLAGS -lphp7 -lm"
 
                 if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
                     LDFLAGS="$LDFLAGS -ldl"
