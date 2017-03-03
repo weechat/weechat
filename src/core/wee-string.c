@@ -60,8 +60,6 @@
                     ((c >= 'A') && (c <= 'F')) ? c - 'A' + 10 :         \
                     c - '0')
 
-typedef uint32_t string_shared_count_t;
-
 struct t_hashtable *string_hashtable_shared = NULL;
 
 
@@ -3193,6 +3191,190 @@ string_shared_free (const char *string)
 
     if (*ptr_count == 0)
         hashtable_remove (string_hashtable_shared, ptr_count);
+}
+
+/*
+ * Allocates a dynamic string (with a variable length).
+ *
+ * The parameter size_alloc is the initial allocated size, which must be
+ * greater than zero.
+ *
+ * Returns the pointer to the allocated string, which is initialized as empty
+ * string.
+ *
+ * The string returned can be used with following restrictions:
+ *   - changes are allowed in the string, between the first char and the final
+ *     '\0', which must not be removed nor moved,
+ *   - no other '\0' must be added in the string,
+ *   - content can be added in the string with function string_dyn_concat(),
+ *   - string can be freed with function string_dyn_free() (do NEVER call
+ *     directly free() on the string).
+ *
+ * Note: result must be freed after use with function string_dyn_free().
+ */
+
+char **
+string_dyn_alloc (int size_alloc)
+{
+    struct t_string_dyn *string_dyn;
+
+    if (size_alloc <= 0)
+        return NULL;
+
+    string_dyn = malloc (sizeof (*string_dyn));
+    if (!string_dyn)
+        return NULL;
+
+    string_dyn->string = malloc (size_alloc);
+    if (!string_dyn->string)
+    {
+        free (string_dyn);
+        return NULL;
+    }
+
+    string_dyn->string[0] = '\0';
+    string_dyn->size_alloc = size_alloc;
+    string_dyn->size = 1;
+
+    return &(string_dyn->string);
+}
+
+/*
+ * Copies "new_string" into a dynamic string and replaces its current content
+ * (adjusts its size accordingly).
+ *
+ * The string pointer (*string) is updated with the new allocated string
+ * if the string had to be extended, or the same pointer if there was enough
+ * size to copy the new string.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+string_dyn_copy (char **string, const char *new_string)
+{
+    struct t_string_dyn *ptr_string_dyn;
+    char *string_realloc;
+    string_dyn_size_t length_new, new_size_alloc;
+
+    if (!string || !*string)
+        return 0;
+
+    ptr_string_dyn = (struct t_string_dyn *)string;
+
+    length_new = (new_string) ? strlen (new_string) : 0;
+
+    if (length_new + 1 > ptr_string_dyn->size_alloc)
+    {
+        /* compute new size_alloc for the string + add */
+        new_size_alloc = (ptr_string_dyn->size_alloc < 2) ?
+            2 : ptr_string_dyn->size_alloc + (ptr_string_dyn->size_alloc / 2);
+        if (new_size_alloc < length_new + 1)
+            new_size_alloc = length_new + 1;
+        string_realloc = realloc (ptr_string_dyn->string, new_size_alloc);
+        if (!string_realloc)
+            return 0;
+        ptr_string_dyn->string = string_realloc;
+        *string = string_realloc;
+        ptr_string_dyn->size_alloc = new_size_alloc;
+    }
+
+    /* copy "new_string" in "string" */
+    if (new_string)
+        memmove (ptr_string_dyn->string, new_string, length_new + 1);
+    else
+        ptr_string_dyn->string[0] = '\0';
+    ptr_string_dyn->size = length_new + 1;
+
+    return 1;
+}
+
+/*
+ * Concatenates a string to a dynamic string and adjusts its size accordingly.
+ *
+ * The string pointer (*string) is updated with the new allocated string
+ * if the string had to be extended, or the same pointer if there was enough
+ * size to concatenate the new string.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+string_dyn_concat (char **string, const char *add)
+{
+    struct t_string_dyn *ptr_string_dyn;
+    char *string_realloc;
+    string_dyn_size_t length_add, new_size_alloc, new_size;
+
+    if (!string || !*string)
+        return 0;
+
+    if (!add || !add[0])
+        return 1;
+
+    ptr_string_dyn = (struct t_string_dyn *)string;
+
+    length_add = strlen (add);
+    new_size = ptr_string_dyn->size + length_add;
+
+    if (new_size > ptr_string_dyn->size_alloc)
+    {
+        /* compute new size_alloc for the string + add */
+        new_size_alloc = (ptr_string_dyn->size_alloc < 2) ?
+            2 : ptr_string_dyn->size_alloc + (ptr_string_dyn->size_alloc / 2);
+        if (new_size_alloc < new_size)
+            new_size_alloc = new_size;
+        string_realloc = realloc (ptr_string_dyn->string, new_size_alloc);
+        if (!string_realloc)
+        {
+            free (ptr_string_dyn->string);
+            free (ptr_string_dyn);
+            *string = NULL;
+            return 0;
+        }
+        ptr_string_dyn->string = string_realloc;
+        *string = string_realloc;
+        ptr_string_dyn->size_alloc = new_size_alloc;
+    }
+
+    /* concatenate "add" after "string" */
+    memmove (ptr_string_dyn->string + ptr_string_dyn->size - 1,
+             add,
+             length_add + 1);
+    ptr_string_dyn->size = new_size;
+
+    return 1;
+}
+
+/*
+ * Frees a dynamic string.
+ *
+ * The argument "string" is a pointer on a string returned by function
+ * string_dyn_alloc or a string pointer modified by string_dyn_concat.
+ *
+ * If free_string == 1, the string itself is freed in the structure.
+ * Otherwise the pointer (*string) remains valid after this call, and
+ * the caller must manually free the string with a call to free().
+ */
+
+void
+string_dyn_free (char **string, int free_string)
+{
+    struct t_string_dyn *ptr_string_dyn;
+
+    if (!string || !*string)
+        return;
+
+    ptr_string_dyn = (struct t_string_dyn *)string;
+
+    if (free_string)
+        free (ptr_string_dyn->string);
+
+    free (ptr_string_dyn);
 }
 
 /*

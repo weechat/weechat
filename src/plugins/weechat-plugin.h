@@ -58,7 +58,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20160618-01"
+#define WEECHAT_PLUGIN_API_VERSION "20170303-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -324,6 +324,10 @@ struct t_weechat_plugin
                                      struct t_hashtable *pointers,
                                      struct t_hashtable *extra_vars,
                                      struct t_hashtable *options);
+    char **(*string_dyn_alloc) (int size_alloc);
+    int (*string_dyn_copy) (char **string, const char *new_string);
+    int (*string_dyn_concat) (char **string, const char *add);
+    void (*string_dyn_free) (char **string, int free_string);
 
     /* UTF-8 strings */
     int (*utf8_has_8bits) (const char *string);
@@ -1185,6 +1189,14 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                        __extra_vars, __options)         \
     (weechat_plugin->string_eval_expression)(__expr, __pointers,        \
                                              __extra_vars, __options)
+#define weechat_string_dyn_alloc(__size_alloc)                          \
+    (weechat_plugin->string_dyn_alloc)(__size_alloc)
+#define weechat_string_dyn_copy(__string, __new_string)                 \
+    (weechat_plugin->string_dyn_copy)(__string, __new_string)
+#define weechat_string_dyn_concat(__string, __add)                      \
+    (weechat_plugin->string_dyn_concat)(__string, __add)
+#define weechat_string_dyn_free(__string, __free_string)                \
+    (weechat_plugin->string_dyn_free)(__string, __free_string)
 
 /* UTF-8 strings */
 #define weechat_utf8_has_8bits(__string)                                \

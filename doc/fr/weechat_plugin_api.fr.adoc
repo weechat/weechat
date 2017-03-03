@@ -2211,6 +2211,166 @@ options = {
 str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"
 ----
 
+==== string_dyn_alloc
+
+_WeeChat ≥ 1.8._
+
+Allouer une chaîne dynamique, avec une longueur variable. +
+De manière interne, une structure est allouée avec le pointeur vers la chaîne,
+la taille allouée et la longueur courante de la chaîne.
+
+Seul le pointeur de pointeur de chaîne (_**string_) est utilisé dans toutes les fonctions
+_pass:[string_dyn_*]_.
+
+Prototype :
+
+[source,C]
+----
+char **weechat_dyn_alloc (int size_alloc);
+----
+
+Paramètres :
+
+* _size_alloc_ : la taille initialement allouée (doit être supérieure à zéro)
+
+Valeur de retour :
+
+* pointeur vers la chaîne dynamique
+
+Exemple en C :
+
+[source,C]
+----
+char **string = weechat_dyn_alloc (256);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== string_dyn_copy
+
+_WeeChat ≥ 1.8._
+
+Copier une chaîne dans une chaîne dynamique.
+
+Le pointeur _*string_ peut changer si la chaîne est réallouée (s'il n'y a pas
+assez de place pour copier la chaîne).
+
+Prototype :
+
+[source,C]
+----
+int weechat_dyn_copy (char **string, const char *new_string);
+----
+
+Paramètres :
+
+* _string_ : pointeur vers la chaîne dynamique
+* _new_string_ : la chaîne à copier
+
+Valeur de retour :
+
+* 1 si OK, 0 si erreur
+
+Exemple en C :
+
+[source,C]
+----
+char **string = weechat_dyn_alloc (256);
+if (weechat_dyn_copy (string, "test"))
+{
+    /* OK */
+}
+else
+{
+    /* erreur */
+}
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== string_dyn_concat
+
+_WeeChat ≥ 1.8._
+
+Concaténer une chaîne dans une chaîne dynamique.
+
+Le pointeur _*string_ peut changer si la chaîne est réallouée (s'il n'y a pas
+assez de place pour concaténer la chaîne).
+
+Prototype :
+
+[source,C]
+----
+int weechat_dyn_concat (char **string, const char *add);
+----
+
+Paramètres :
+
+* _string_ : pointeur vers la chaîne dynamique
+* _add_ : la chaîne à ajouter
+
+Valeur de retour :
+
+* 1 si OK, 0 si erreur
+
+Exemple en C :
+
+[source,C]
+----
+char **string = weechat_dyn_alloc (256);
+if (weechat_dyn_copy (string, "test"))
+{
+    if (weechat_dyn_concat (string, "abc"))
+    {
+        /* ... */
+    }
+}
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== string_dyn_free
+
+_WeeChat ≥ 1.8._
+
+Libérer une chaîne dynamique.
+
+Prototype :
+
+[source,C]
+----
+void weechat_dyn_free (char **string, int free_string);
+----
+
+Paramètres :
+
+* _string_ : pointeur vers la chaîne dynamique
+* _free_string_ : libérer la chaîne elle-même ; si 0, le contenu de _*string_
+  reste valide après l'appel à cette fonction
+
+Exemple en C :
+
+[source,C]
+----
+char **string = weechat_dyn_alloc (256);
+if (weechat_dyn_concat (string, "test"))
+{
+    /* OK */
+}
+else
+{
+    /* erreur */
+}
+/* ... */
+weechat_dyn_free (string, 1);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 [[utf-8]]
 === UTF-8
 

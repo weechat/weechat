@@ -638,6 +638,10 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_is_command_char = &string_is_command_char;
         new_plugin->string_input_for_buffer = &string_input_for_buffer;
         new_plugin->string_eval_expression = &eval_expression;
+        new_plugin->string_dyn_alloc = &string_dyn_alloc;
+        new_plugin->string_dyn_copy = &string_dyn_copy;
+        new_plugin->string_dyn_concat = &string_dyn_concat;
+        new_plugin->string_dyn_free = &string_dyn_free;
 
         new_plugin->utf8_has_8bits = &utf8_has_8bits;
         new_plugin->utf8_is_valid = &utf8_is_valid;

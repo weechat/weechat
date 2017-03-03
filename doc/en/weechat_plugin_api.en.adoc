@@ -2169,6 +2169,166 @@ options = {
 str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"
 ----
 
+==== string_dyn_alloc
+
+_WeeChat ≥ 1.8._
+
+Allocate a dynamic string, with a variable length. +
+Internally, a structure is allocated with the string pointer, the allocated size
+and current length of string.
+
+Only the pointer to string pointer (_**string_) is used in all the
+_pass:[string_dyn_*]_ functions.
+
+Prototype:
+
+[source,C]
+----
+char **weechat_dyn_alloc (int size_alloc);
+----
+
+Arguments:
+
+* _size_alloc_: the initial allocated size (must be greater than zero)
+
+Return value:
+
+* pointer to the dynamic string
+
+C example:
+
+[source,C]
+----
+char **string = weechat_dyn_alloc (256);
+----
+
+[NOTE]
+This function is not available in scripting API.
+
+==== string_dyn_copy
+
+_WeeChat ≥ 1.8._
+
+Copy a string in a dynamic string.
+
+The pointer _*string_ can change if the string is reallocated (if there is
+not enough space to copy the string).
+
+Prototype:
+
+[source,C]
+----
+int weechat_dyn_copy (char **string, const char *new_string);
+----
+
+Arguments:
+
+* _string_: pointer to dynamic string
+* _new_string_: the string to copy
+
+Return value:
+
+* 1 if OK, 0 if error
+
+C example:
+
+[source,C]
+----
+char **string = weechat_dyn_alloc (256);
+if (weechat_dyn_copy (string, "test"))
+{
+    /* OK */
+}
+else
+{
+    /* error */
+}
+----
+
+[NOTE]
+This function is not available in scripting API.
+
+==== string_dyn_concat
+
+_WeeChat ≥ 1.8._
+
+Concatenate a string to a dynamic string.
+
+The pointer _*string_ can change if the string is reallocated (if there is
+not enough space to concatenate the string).
+
+Prototype:
+
+[source,C]
+----
+int weechat_dyn_concat (char **string, const char *add);
+----
+
+Arguments:
+
+* _string_: pointer to dynamic string
+* _add_: the string to add
+
+Return value:
+
+* 1 if OK, 0 if error
+
+C example:
+
+[source,C]
+----
+char **string = weechat_dyn_alloc (256);
+if (weechat_dyn_copy (string, "test"))
+{
+    if (weechat_dyn_concat (string, "abc"))
+    {
+        /* ... */
+    }
+}
+----
+
+[NOTE]
+This function is not available in scripting API.
+
+==== string_dyn_free
+
+_WeeChat ≥ 1.8._
+
+Free a dynamic string.
+
+Prototype:
+
+[source,C]
+----
+void weechat_dyn_free (char **string, int free_string);
+----
+
+Arguments:
+
+* _string_: pointer to dynamic string
+* _free_string_: free the string itself; if 0, the content of _*string_ remains
+  valid after the call to this function
+
+C example:
+
+[source,C]
+----
+char **string = weechat_dyn_alloc (256);
+if (weechat_dyn_concat (string, "test"))
+{
+    /* OK */
+}
+else
+{
+    /* error */
+}
+/* ... */
+weechat_dyn_free (string, 1);
+----
+
+[NOTE]
+This function is not available in scripting API.
+
 [[utf-8]]
 === UTF-8
 

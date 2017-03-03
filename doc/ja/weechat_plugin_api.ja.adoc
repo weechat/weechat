@@ -2175,6 +2175,180 @@ options = {
 str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"
 ----
 
+==== string_dyn_alloc
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Allocate a dynamic string, with a variable length. +
+Internally, a structure is allocated with the string pointer, the allocated size
+and current length of string.
+
+// TRANSLATION MISSING
+Only the pointer to string pointer (_**string_) is used in all the
+_pass:[string_dyn_*]_ functions.
+
+プロトタイプ:
+
+[source,C]
+----
+char **weechat_dyn_alloc (int size_alloc);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _size_alloc_: the initial allocated size (must be greater than zero)
+
+戻り値:
+
+// TRANSLATION MISSING
+* pointer to the dynamic string
+
+C 言語での使用例:
+
+[source,C]
+----
+char **string = weechat_dyn_alloc (256);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== string_dyn_copy
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Copy a string in a dynamic string.
+
+// TRANSLATION MISSING
+The pointer _*string_ can change if the string is reallocated (if there is
+not enough space to copy the string).
+
+プロトタイプ:
+
+[source,C]
+----
+int weechat_dyn_copy (char **string, const char *new_string);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _string_: pointer to dynamic string
+* _new_string_: the string to copy
+
+戻り値:
+
+// TRANSLATION MISSING
+* 1 if OK, 0 if error
+
+C 言語での使用例:
+
+[source,C]
+----
+char **string = weechat_dyn_alloc (256);
+if (weechat_dyn_copy (string, "test"))
+{
+    /* OK */
+}
+else
+{
+    /* error */
+}
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== string_dyn_concat
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Concatenate a string to a dynamic string.
+
+// TRANSLATION MISSING
+The pointer _*string_ can change if the string is reallocated (if there is
+not enough space to concatenate the string).
+
+プロトタイプ:
+
+[source,C]
+----
+int weechat_dyn_concat (char **string, const char *add);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _string_: pointer to dynamic string
+* _add_: the string to add
+
+戻り値:
+
+// TRANSLATION MISSING
+* 1 if OK, 0 if error
+
+C 言語での使用例:
+
+[source,C]
+----
+char **string = weechat_dyn_alloc (256);
+if (weechat_dyn_copy (string, "test"))
+{
+    if (weechat_dyn_concat (string, "abc"))
+    {
+        /* ... */
+    }
+}
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== string_dyn_free
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Free a dynamic string.
+
+プロトタイプ:
+
+[source,C]
+----
+void weechat_dyn_free (char **string, int free_string);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _string_: pointer to dynamic string
+* _free_string_: free the string itself; if 0, the content of _*string_ remains
+  valid after the call to this function
+
+C 言語での使用例:
+
+[source,C]
+----
+char **string = weechat_dyn_alloc (256);
+if (weechat_dyn_concat (string, "test"))
+{
+    /* OK */
+}
+else
+{
+    /* error */
+}
+/* ... */
+weechat_dyn_free (string, 1);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 [[utf-8]]
 === UTF-8
 
