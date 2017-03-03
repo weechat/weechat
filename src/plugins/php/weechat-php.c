@@ -243,6 +243,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_window_search_with_buffer, NULL)
     PHP_FE(weechat_window_set_title, NULL)
     PHP_FE(forget_class, NULL)
+    PHP_FE(forget_function, NULL)
     PHP_FE_END
 };
 

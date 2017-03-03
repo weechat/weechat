@@ -219,5 +219,6 @@ PHP_FUNCTION(weechat_window_get_string);
 PHP_FUNCTION(weechat_window_search_with_buffer);
 PHP_FUNCTION(weechat_window_set_title);
 PHP_FUNCTION(forget_class);
+PHP_FUNCTION(forget_function);
 
 #endif /* WEECHAT_PHP_API_H */

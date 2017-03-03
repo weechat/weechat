@@ -4249,7 +4249,7 @@ PHP_FUNCTION(weechat_window_set_title)
     RETURN_NULL();
 }
 
-PHP_FUNCTION(forget_class)
+static void forget_hash_entry (HashTable *ht, INTERNAL_FUNCTION_PARAMETERS)
 {
     zend_string *class_name;
     zend_string *lc_name;
@@ -4260,21 +4260,28 @@ PHP_FUNCTION(forget_class)
     }
     if (ZSTR_VAL(class_name)[0] == '\\')
     {
-        lc_name = zend_string_alloc(ZSTR_LEN(class_name) - 1, 0);
-        zend_str_tolower_copy(ZSTR_VAL(lc_name), ZSTR_VAL(class_name) + 1, ZSTR_LEN(class_name) - 1);
+        lc_name = zend_string_alloc (ZSTR_LEN(class_name) - 1, 0);
+        zend_str_tolower_copy (ZSTR_VAL(lc_name), ZSTR_VAL(class_name) + 1, ZSTR_LEN(class_name) - 1);
     }
     else
     {
         lc_name = zend_string_tolower(class_name);
     }
-    re = zend_hash_del(EG(class_table), lc_name);
-    zend_string_release(lc_name);
+    re = zend_hash_del (ht, lc_name);
+    zend_string_release (lc_name);
     if (re == SUCCESS)
     {
         RETURN_TRUE;
     }
-    else
-    {
-        RETURN_FALSE;
-    }
+    RETURN_FALSE;
+}
+
+PHP_FUNCTION(forget_class)
+{
+    forget_hash_entry(EG(class_table), INTERNAL_FUNCTION_PARAM_PASSTHRU);
+}
+
+PHP_FUNCTION(forget_function)
+{
+    forget_hash_entry(EG(function_table), INTERNAL_FUNCTION_PARAM_PASSTHRU);
 }
