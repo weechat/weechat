@@ -4248,3 +4248,33 @@ PHP_FUNCTION(weechat_window_set_title)
     weechat_window_set_title ((const char *)title);
     RETURN_NULL();
 }
+
+PHP_FUNCTION(forget_class)
+{
+    zend_string *class_name;
+    zend_string *lc_name;
+    int re;
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &class_name) == FAILURE)
+    {
+        return;
+    }
+    if (ZSTR_VAL(class_name)[0] == '\\')
+    {
+        lc_name = zend_string_alloc(ZSTR_LEN(class_name) - 1, 0);
+        zend_str_tolower_copy(ZSTR_VAL(lc_name), ZSTR_VAL(class_name) + 1, ZSTR_LEN(class_name) - 1);
+    }
+    else
+    {
+        lc_name = zend_string_tolower(class_name);
+    }
+    re = zend_hash_del(EG(class_table), lc_name);
+    zend_string_release(lc_name);
+    if (re == SUCCESS)
+    {
+        RETURN_TRUE;
+    }
+    else
+    {
+        RETURN_FALSE;
+    }
+}
