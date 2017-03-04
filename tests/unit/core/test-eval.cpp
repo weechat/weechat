@@ -248,6 +248,17 @@ TEST(Eval, EvalExpression)
     LONGS_EQUAL(8, strlen (value));
     free (value);
 
+    /* test ternary operator */
+    WEE_CHECK_EVAL("1", "${if:5>2}");
+    WEE_CHECK_EVAL("0", "${if:1>7}");
+    WEE_CHECK_EVAL("yes", "${if:5>2?yes:no}");
+    WEE_CHECK_EVAL("no", "${if:1>7?yes:no}");
+    WEE_CHECK_EVAL("yes", "${if:5>2 && 6>3?yes:no}");
+    WEE_CHECK_EVAL("yes-yes", "${if:5>2?${if:6>3?yes-yes:yes-no}:${if:9>4?no-yes:no-no}}");
+    WEE_CHECK_EVAL("yes-no", "${if:5>2?${if:1>7?yes-yes:yes-no}:${if:9>4?no-yes:no-no}}");
+    WEE_CHECK_EVAL("no-yes", "${if:1>7?${if:6>3?yes-yes:yes-no}:${if:9>4?no-yes:no-no}}");
+    WEE_CHECK_EVAL("no-no", "${if:1>7?${if:1>7?yes-yes:yes-no}:${if:1>7?no-yes:no-no}}");
+
     /* test option */
     snprintf (str_value, sizeof (str_value),
               "%d", CONFIG_INTEGER(config_look_scroll_amount));

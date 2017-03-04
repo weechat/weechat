@@ -1991,7 +1991,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2, 1.0, 1.1, 1.2 et 1.3._
+_WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2, 1.0, 1.1, 1.2, 1.3 et 1.8._
 
 Évaluer l'expression et retourner le résultat sous forme de chaîne.
 Les variables spéciales avec le format `+${variable}+` sont étendues (voir le
@@ -2120,6 +2120,17 @@ première étendue à la dernière) :
   Valeur de la variable d'environnement `NOM`. |
   `+${env:HOME}+` |
   `+/home/user+`
+
+| `+${if:condition}+` +
+  `+${if:condition?vrai}+`
+  `+${if:condition?vrai:faux}+` +
+  (_WeeChat ≥ 1.8_) |
+  Opérateur ternaire avec une condition, une valeur si la condition est vraie
+  (optionnelle) et une autre valeur si la condition est fausse (optionnelle).
+  Si les valeurs ne sont pas données, "1" ou "0" est retourné, selon le résultat
+  de la condition. |
+  `+${if:${info:term_width}>80?grand:petit}+` |
+  `+grand+`
 
 | `+${sec.data.nom}+` |
   Valeur de la donnée sécurisée `nom`. |

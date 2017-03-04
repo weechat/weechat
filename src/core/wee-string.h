@@ -110,6 +110,7 @@ extern const char *string_input_for_buffer (const char *string);
 extern char *string_replace_with_callback (const char *string,
                                            const char *prefix,
                                            const char *suffix,
+                                           const char **list_prefix_no_replace,
                                            char *(*callback)(void *data, const char *text),
                                            void *callback_data,
                                            int *errors);

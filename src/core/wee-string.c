@@ -2910,6 +2910,12 @@ string_input_for_buffer (const char *string)
  *
  * Nested variables are supported, for example: "${var1:${var2}}".
  *
+ * Argument "list_prefix_no_replace" is a list to prevent replacements in
+ * string if beginning with one of the prefixes. For example if the list is
+ * { "if:", NULL } and string is: "${if:cond?true:false}${test${abc}}"
+ * then the "if:cond?true:false" is NOT replaced (via a recursive call) but
+ * "test${abc}" will be replaced.
+ *
  * Argument "errors" (if not NULL) is set with number of keys not found by
  * callback.
  *
@@ -2920,12 +2926,13 @@ char *
 string_replace_with_callback (const char *string,
                               const char *prefix,
                               const char *suffix,
+                              const char **list_prefix_no_replace,
                               char *(*callback)(void *data, const char *text),
                               void *callback_data,
                               int *errors)
 {
     int length_prefix, length_suffix, length, length_value, index_string;
-    int index_result, sub_count, sub_level, sub_errors;
+    int index_result, sub_count, sub_level, sub_errors, replace, i;
     char *result, *result2, *key, *key2, *value;
     const char *pos_end_name;
 
@@ -2991,15 +2998,36 @@ string_replace_with_callback (const char *string,
                 {
                     if (sub_count > 0)
                     {
-                        sub_errors = 0;
-                        key2 = string_replace_with_callback (key, prefix,
-                                                             suffix, callback,
-                                                             callback_data,
-                                                             &sub_errors);
-                        if (errors)
-                            (*errors) += sub_errors;
-                        free (key);
-                        key = key2;
+                        replace = 1;
+                        if (list_prefix_no_replace)
+                        {
+                            for (i = 0; list_prefix_no_replace[i]; i++)
+                            {
+                                if (strncmp (
+                                        key, list_prefix_no_replace[i],
+                                        strlen (list_prefix_no_replace[i])) == 0)
+                                {
+                                    replace = 0;
+                                    break;
+                                }
+                            }
+                        }
+                        if (replace)
+                        {
+                            sub_errors = 0;
+                            key2 = string_replace_with_callback (
+                                key,
+                                prefix,
+                                suffix,
+                                list_prefix_no_replace,
+                                callback,
+                                callback_data,
+                                &sub_errors);
+                            if (errors)
+                                (*errors) += sub_errors;
+                            free (key);
+                            key = key2;
+                        }
                     }
                     value = (*callback) (callback_data, (key) ? key : "");
                     if (value)
