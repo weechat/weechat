@@ -3101,7 +3101,12 @@ protocolli differenti:
 * _irc_: proxy IRC: usato per condividere le connessioni ai server IRC con uno
   o più client IRC
 * _weechat_: protocollo usato dalle interfacce remote per mostrare ed interagire
-  con WeeChat (ad esempio QWeeChat)
+  con WeeChat, ad esempio:
+** Glowing Bear (HTML5): https://www.glowing-bear.org/
+** QWeeChat (Qt): https://weechat.org/download
+** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
+** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
+** WeeCloud (Javascript): https://github.com/eirikb/weecloud
 
 [[relay_options]]
 ==== Opzioni (relay.conf)

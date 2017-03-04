@@ -2930,7 +2930,12 @@ The Relay plugin is used to relay data via network, using different protocols:
 * _irc_: IRC proxy: used to share connections to IRC servers with one or many
   other IRC clients
 * _weechat_: protocol used by remote interfaces to display and interact with
-  WeeChat (for example QWeeChat or weechat-android)
+  WeeChat, for example:
+** Glowing Bear (HTML5): https://www.glowing-bear.org/
+** QWeeChat (Qt): https://weechat.org/download
+** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
+** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
+** WeeCloud (Javascript): https://github.com/eirikb/weecloud
 
 [[relay_options]]
 ==== Options (relay.conf)

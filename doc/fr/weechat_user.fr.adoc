@@ -3023,8 +3023,12 @@ utilisant divers protocoles :
 
 * _irc_ : proxy IRC : utilisé pour partager la connexions aux serveurs IRC avec
   un ou plusieurs autres clients IRC
-* _weechat_ : protocole utilisé par les interfaces distantes (par exemple
-  QWeeChat ou weechat-android).
+* _weechat_ : protocole utilisé par les interfaces distantes, par exemple :
+** Glowing Bear (HTML5) : https://www.glowing-bear.org/
+** QWeeChat (Qt) : https://weechat.org/download
+** WeeChat-Android (Android) : https://github.com/ubergeek42/weechat-android
+** weechat.el (Emacs) : https://github.com/the-kenny/weechat.el
+** WeeCloud (Javascript) : https://github.com/eirikb/weecloud
 
 [[relay_options]]
 ==== Options (relay.conf)

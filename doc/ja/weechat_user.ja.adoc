@@ -2927,8 +2927,14 @@ Relay プラグインはネットワークを介して異なるプロトコル�
 
 * _irc_: IRC プロキシ: IRC サーバに対する接続を、単一または複数の IRC
   クライアントで共有するために用います。
-* _weechat_: WeeChat の表示にリモートインターフェイス
-  (例えば QWeeChat) を使う場合に利用されるプロトコル
+// TRANSLATION MISSING
+* _weechat_: protocol used by remote interfaces to display and interact with
+  WeeChat, for example:
+** Glowing Bear (HTML5): https://www.glowing-bear.org/
+** QWeeChat (Qt): https://weechat.org/download
+** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
+** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
+** WeeCloud (Javascript): https://github.com/eirikb/weecloud
 
 [[relay_options]]
 ==== オプション (relay.conf)
