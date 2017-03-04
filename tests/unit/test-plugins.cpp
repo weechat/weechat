@@ -53,6 +53,7 @@ TEST(Plugins, Loaded)
     /* check that all plugins are properly loaded */
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == alias", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == aspell", 1));
+    CHECK(hdata_search (hdata, plugins, "${plugin.name} == buflist", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == charset", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == exec", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == fifo", 1));

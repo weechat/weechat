@@ -67,6 +67,10 @@ if(ENABLE_ASPELL)
   endif()
 endif()
 
+if(ENABLE_BUFLIST)
+  add_subdirectory(buflist)
+endif()
+
 if(ENABLE_CHARSET)
   # Check for iconv support.
   if(ICONV_FOUND)

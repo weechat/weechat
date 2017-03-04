@@ -93,6 +93,7 @@ weechat_CONTENTS="
     usr/bin/
     usr/lib/weechat/plugins/alias.dll
     usr/lib/weechat/plugins/aspell.dll
+    usr/lib/weechat/plugins/buflist.dll
     usr/lib/weechat/plugins/charset.dll
     usr/lib/weechat/plugins/exec.dll
     usr/lib/weechat/plugins/fifo.dll

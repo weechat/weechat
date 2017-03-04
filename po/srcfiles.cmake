@@ -122,6 +122,12 @@ SET(WEECHAT_SOURCES
 ./src/plugins/aspell/weechat-aspell-info.h
 ./src/plugins/aspell/weechat-aspell-speller.c
 ./src/plugins/aspell/weechat-aspell-speller.h
+./src/plugins/buflist/buflist-bar-item.c
+./src/plugins/buflist/buflist-bar-item.h
+./src/plugins/buflist/buflist.c
+./src/plugins/buflist/buflist-config.c
+./src/plugins/buflist/buflist-config.h
+./src/plugins/buflist/buflist.h
 ./src/plugins/charset/charset.c
 ./src/plugins/exec/exec.c
 ./src/plugins/exec/exec-buffer.c

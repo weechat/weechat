@@ -45,6 +45,10 @@ if PLUGIN_ASPELL
 aspell_dir = aspell
 endif
 
+if PLUGIN_BUFLIST
+buflist_dir = buflist
+endif
+
 if PLUGIN_CHARSET
 charset_dir = charset
 endif
@@ -109,10 +113,26 @@ if PLUGIN_XFER
 xfer_dir = xfer
 endif
 
-SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(exec_dir) $(fifo_dir) \
-            $(irc_dir) $(logger_dir) $(relay_dir) $(script_dir) $(perl_dir) \
-            $(python_dir) $(ruby_dir) $(lua_dir) $(tcl_dir) $(guile_dir) \
-            $(javascript_dir) $(trigger_dir) $(xfer_dir)
+SUBDIRS = . \
+          $(alias_dir) \
+          $(aspell_dir) \
+          $(buflist_dir) \
+          $(charset_dir) \
+          $(exec_dir) \
+          $(fifo_dir) \
+          $(irc_dir) \
+          $(logger_dir) \
+          $(relay_dir) \
+          $(script_dir) \
+          $(perl_dir) \
+          $(python_dir) \
+          $(ruby_dir) \
+          $(lua_dir) \
+          $(tcl_dir) \
+          $(guile_dir) \
+          $(javascript_dir) \
+          $(trigger_dir) \
+          $(xfer_dir)
 
 EXTRA_DIST = CMakeLists.txt
 

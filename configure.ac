@@ -109,6 +109,7 @@ AH_VERBATIM([HAVE_ENCHANT_GET_VERSION], [#undef HAVE_ENCHANT_GET_VERSION])
 AH_VERBATIM([HAVE_GUILE_GMP_MEMORY_FUNCTIONS], [#undef HAVE_GUILE_GMP_MEMORY_FUNCTIONS])
 AH_VERBATIM([PLUGIN_ALIAS], [#undef PLUGIN_ALIAS])
 AH_VERBATIM([PLUGIN_ASPELL], [#undef PLUGIN_ASPELL])
+AH_VERBATIM([PLUGIN_BUFLIST], [#undef PLUGIN_BUFLIST])
 AH_VERBATIM([PLUGIN_CHARSET], [#undef PLUGIN_CHARSET])
 AH_VERBATIM([PLUGIN_EXEC], [#undef PLUGIN_EXEC])
 AH_VERBATIM([PLUGIN_FIFO], [#undef PLUGIN_FIFO])
@@ -139,6 +140,7 @@ AC_ARG_ENABLE(largefile,    [  --disable-largefile     turn off Large File Suppo
 AC_ARG_ENABLE(alias,        [  --disable-alias         turn off Alias plugin (default=compiled)],enable_alias=$enableval,enable_alias=yes)
 AC_ARG_ENABLE(aspell,       [  --disable-aspell        turn off Aspell plugin (default=compiled)],enable_aspell=$enableval,enable_aspell=yes)
 AC_ARG_ENABLE(enchant,      [  --enable-enchant        turn on Enchant lib for Aspell plugin (default=off)],enable_enchant=$enableval,enable_enchant=no)
+AC_ARG_ENABLE(buflist,      [  --disable-buflist       turn off Buflist plugin (default=compiled if found)],enable_buflist=$enableval,enable_buflist=yes)
 AC_ARG_ENABLE(charset,      [  --disable-charset       turn off Charset plugin (default=compiled if found)],enable_charset=$enableval,enable_charset=yes)
 AC_ARG_ENABLE(exec,         [  --disable-exec          turn off Exec plugin (default=compiled)],enable_exec=$enableval,enable_exec=yes)
 AC_ARG_ENABLE(fifo,         [  --disable-fifo          turn off Fifo plugin (default=compiled)],enable_fifo=$enableval,enable_fifo=yes)
@@ -373,6 +375,14 @@ if test "x$enable_aspell" = "xyes" ; then
     AC_SUBST(ASPELL_CFLAGS)
     AC_SUBST(ASPELL_LFLAGS)
     AC_DEFINE(PLUGIN_ASPELL)
+fi
+
+# --------------------------------- buflist ------------------------------------
+
+if test "x$enable_buflist" = "xyes" ; then
+    AC_DEFINE(PLUGIN_BUFLIST)
+else
+    not_asked="$not_asked buflist"
 fi
 
 # --------------------------------- charset ------------------------------------
@@ -1245,6 +1255,7 @@ AM_CONDITIONAL(HAVE_EAT_NEWLINE_GLITCH, test "$enable_eatnewlineglitch" = "yes")
 AM_CONDITIONAL(GUI_NCURSES,             test "$enable_ncurses" = "yes")
 AM_CONDITIONAL(PLUGIN_ALIAS,            test "$enable_alias" = "yes")
 AM_CONDITIONAL(PLUGIN_ASPELL,           test "$enable_aspell" = "yes")
+AM_CONDITIONAL(PLUGIN_BUFLIST,          test "$enable_buflist" = "yes")
 AM_CONDITIONAL(PLUGIN_CHARSET,          test "$enable_charset" = "yes")
 AM_CONDITIONAL(PLUGIN_EXEC,             test "$enable_exec" = "yes")
 AM_CONDITIONAL(PLUGIN_FIFO,             test "$enable_fifo" = "yes")
@@ -1281,6 +1292,7 @@ AC_OUTPUT([Makefile
            src/plugins/Makefile
            src/plugins/alias/Makefile
            src/plugins/aspell/Makefile
+           src/plugins/buflist/Makefile
            src/plugins/charset/Makefile
            src/plugins/exec/Makefile
            src/plugins/fifo/Makefile
@@ -1324,6 +1336,9 @@ if test "x$enable_alias" = "xyes"; then
 fi
 if test "x$enable_aspell" = "xyes"; then
     listplugins="$listplugins aspell($ASPELL_LIB_USED)"
+fi
+if test "x$enable_buflist" = "xyes"; then
+    listplugins="$listplugins buflist"
 fi
 if test "x$enable_charset" = "xyes"; then
     listplugins="$listplugins charset"

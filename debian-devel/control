@@ -88,8 +88,8 @@ Description: Fast, light and extensible chat client - core files
  for many operating systems. Everything can be done with a keyboard.
  .
  This package provides core plugins and locales files for WeeChat. It
- currently ships the following plugins: alias, xfer, irc, charset and
- logger. It is useless without weechat-curses.
+ currently ships the following plugins: alias, buflist, charset, irc, logger
+ and xfer. It is useless without weechat-curses.
 
 Package: weechat-devel-plugins
 Architecture: any
