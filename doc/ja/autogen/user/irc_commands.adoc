@@ -18,20 +18,20 @@ target: サーバ名
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
           [-current] -include=<channel>[,<channel>...] <command> [<arguments>]
 
- -current: execute command for channels of current server only
- -exclude: exclude some channels (wildcard "*" is allowed)
- -include: include only some channels (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: 現在のサーバ上のチャンネルに対してコマンドを実行
+ -exclude: 一部のチャンネルを除く全てのチャンネルに対してコマンドを実行 (ワイルドカード "*" を使うことができます)
+ -include: 一部のチャンネルに対してコマンドを実行 (ワイルドカード "*" を使うことができます)
+  command: 実行するコマンド
+arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
-Examples:
-  execute '/me is testing' on all channels:
+例:
+  全てのチャンネルに対して '/me is testing' を実行:
     /allchan me is testing
-  say 'hello' everywhere but not on #weechat:
+  チャンネル名が #weechat のチャンネルを除く全てのチャンネルに対して 'hello' と発言:
     /allchan -exclude=#weechat msg * hello
-  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+  チャンネル名が #weechat と #linux で始まるチャンネルを除く全てのチャンネルに対して 'hello' と発言:
     /allchan -exclude=#weechat,#linux* msg * hello
-  say 'hello' on all channels beginning with #linux:
+  チャンネル名が #linux で始まるチャンネルに対して 'hello' と発言:
     /allchan -include=#linux* msg * hello
 ----
 
@@ -42,22 +42,22 @@ Examples:
 /allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
         [-current] -include=<nick>[,<nick>...] <command> [<arguments>]
 
- -current: execute command for private buffers of current server only
- -exclude: exclude some nicks (wildcard "*" is allowed)
- -include: include only some nicks (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: 現在のサーバ上の全てのプライベートバッファに対してコマンドを実行
+ -exclude: 一部のニックネームを除外した全てのプライベートバッファに対してコマンドを実行 (ワイルドカード "*" を使うことができます)
+ -include: 一部のニックネームのプライベートバッファに対してコマンドを実行 (ワイルドカード "*" を使うことができます)
+  command: 実行するコマンド
+arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
-Examples:
-  execute '/me is testing' on all private buffers:
+例:
+  全てのプライベートバッファに対して '/me is testing' を実行:
     /allpv me is testing
-  say 'hello' everywhere but not for nick foo:
+  ニックネーム foo を除く全てのプライベートバッファに対して 'hello' と発言:
     /allpv -exclude=foo msg * hello
-  say 'hello' everywhere but not for nick foo and nicks beginning with bar:
+  ニックネームが foo と bar で始まるニックネームを除く全てのプライベートバッファに対して 'hello' と発言:
     /allpv -exclude=foo,bar* msg * hello
-  say 'hello' for all nicks beginning with bar:
+  ニックネームが bar で始まるニックネームのプライベートバッファに対して 'hello' と発言:
     /allpv -include=bar* msg * hello
-  close all private buffers:
+  全てのプライベートバッファを閉じる:
     /allpv close
 ----
 
@@ -68,17 +68,17 @@ Examples:
 /allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
           -include=<server>[,<server>...] <command> [<arguments>]
 
- -exclude: exclude some servers (wildcard "*" is allowed)
- -include: include only some servers (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -exclude: 一部のサーバを除く全てのサーバに対してコマンドを実行 (ワイルドカード "*" を使うことができます)
+ -include: 一部のサーバのみに対してコマンドを実行 (ワイルドカード "*" を使うことができます)
+  command: 実行するコマンド
+arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
-Examples:
-  change nick on all servers:
+例:
+  全てのサーバに対してニックネーム変更:
     /allserv nick newnick
-  set away on all servers:
+  全てのサーバに対して離席状態を変更:
     /allserv away I'm away
-  do a whois on my nick on all servers:
+  全てのサーバに対して自分のニックネームに関する whois を実行:
     /allserv whois $nick
 ----
 
