@@ -90,6 +90,7 @@ PLUGIN_LIST = {
     'weechat': 'co',
     'alias': '',
     'aspell': 'o',
+    'buflist': 'o',
     'charset': 'o',
     'exec': 'o',
     'fifo': 'o',
