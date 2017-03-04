@@ -64,6 +64,9 @@ $HOME/.weechat/alias.conf::
 $HOME/.weechat/aspell.conf::
     konfigurační soubor pro _aspell_ plugin
 
+$HOME/.weechat/buflist.conf::
+    konfigurační soubor pro _buflist_ plugin
+
 $HOME/.weechat/charset.conf::
     konfigurační soubor pro _charset_ plugin
 

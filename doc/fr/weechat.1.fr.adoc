@@ -66,6 +66,9 @@ $HOME/.weechat/alias.conf::
 $HOME/.weechat/aspell.conf::
     fichier de configuration pour l'extension _aspell_
 
+$HOME/.weechat/buflist.conf::
+    fichier de configuration pour l'extension _buflist_
+
 $HOME/.weechat/charset.conf::
     fichier de configuration pour l'extension _charset_
 
