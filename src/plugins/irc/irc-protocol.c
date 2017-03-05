@@ -37,6 +37,7 @@
 #include <sys/time.h>
 #include <time.h>
 
+#include "../../core/wee-string.h"
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-protocol.h"
@@ -56,6 +57,9 @@
 #include "irc-server.h"
 #include "irc-notify.h"
 
+
+static const char irc_protocol_safe_caps[] =
+  "account-notify,away-notify,cap-notify,multi-prefix,server-time,znc.in/server-time-iso,znc.in/self-message";
 
 /*
  * Checks if a command is numeric.
@@ -340,12 +344,12 @@ IRC_PROTOCOL_CALLBACK(away)
 
 IRC_PROTOCOL_CALLBACK(cap)
 {
-    char *ptr_caps, **caps_supported, **caps_requested, **caps_added;
-    char **caps_removed, *cap_option, *cap_req, str_msg_auth[512];
+    char *ptr_caps, **caps_supported, **caps_requested, **caps_added, *capabilities;
+    char **caps_removed, *cap_option, *cap_req, str_msg_auth[512], **cap_arr, *caps;
     const char *ptr_cap_option;
     int num_caps_supported, num_caps_requested, num_caps_added;
     int num_caps_removed, sasl_requested, sasl_to_do, sasl_mechanism;
-    int sasl_fail, i, j, timeout, length;
+    int sasl_fail, i, j, timeout, length, cap_count;
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -366,18 +370,40 @@ IRC_PROTOCOL_CALLBACK(cap)
             {
                 sasl_requested = irc_server_sasl_enabled (server);
                 sasl_to_do = 0;
-                ptr_cap_option = IRC_SERVER_OPTION_STRING(
-                    server,
-                    IRC_SERVER_OPTION_CAPABILITIES);
-                length = ((ptr_cap_option && ptr_cap_option[0]) ?
-                          strlen (ptr_cap_option) : 0) + 16;
+                capabilities = string_replace (
+                    IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_CAPABILITIES),
+                    "*", irc_protocol_safe_caps);
+                cap_arr = string_split (
+                    capabilities,
+                    ",", 0, 0, &cap_count);
+                free (capabilities);
+                /* This code disgusts me, but it makes sense */
+                for (i = 0; i < cap_count; i++)
+                {
+                    if ((*(cap_arr + i))[0] == '!')
+                    {
+                        for (j = 0; j < i; j++)
+                        {
+                            if (strcmp(*(cap_arr + j), *(cap_arr + i) + 1) == 0)
+                            {
+                                **(cap_arr + j) = '\0';
+                            }
+                        }
+                        **(cap_arr + i) = '\0';
+                    }
+                }
+                caps = string_build_with_split_string ((const char**)cap_arr, ",");
+                string_free_split(cap_arr);
+                length = ((caps && caps[0]) ?
+                          strlen (caps) : 0) + 16;
                 cap_option = malloc (length);
                 cap_req = malloc (length);
                 if (cap_option && cap_req)
                 {
                     cap_option[0] = '\0';
-                    if (ptr_cap_option && ptr_cap_option[0])
-                        strcat (cap_option, ptr_cap_option);
+                    if (caps && caps[0])
+                        strcat (cap_option, caps);
+                    free ((void *)caps);
                     if (sasl_requested)
                     {
                         if (cap_option[0])
@@ -448,6 +474,8 @@ IRC_PROTOCOL_CALLBACK(cap)
                     free (cap_option);
                 if (cap_req)
                     free (cap_req);
+                if (caps)
+                  free (caps);
             }
         }
     }
