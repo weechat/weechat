@@ -53,7 +53,7 @@ buflist_signal_buffer_cb (const void *pointer, void *data,
     (void) type_data;
     (void) signal_data;
 
-    weechat_bar_item_update ("buflist");
+    weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
 
     return WEECHAT_RC_OK;
 }
@@ -69,7 +69,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     { "buffer_opened", "buffer_closed", "buffer_merged", "buffer_unmerged",
       "buffer_moved", "buffer_renamed", "buffer_switch", "buffer_hidden",
       "buffer_unhidden", "buffer_localvar_added", "buffer_localvar_changed",
-      "window_switch", NULL
+      "window_switch", "hotlist_changed", NULL
     };
     int i;
 
@@ -84,6 +84,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     buflist_config_read ();
 
+    if (!buflist_bar_item_init ())
+        return WEECHAT_RC_ERROR;
+
     /* hook some signals */
     for (i = 0; signals_buffers[i]; i++)
     {
@@ -91,12 +94,12 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              &buflist_signal_buffer_cb, NULL, NULL);
     }
 
-    buflist_bar_item_init ();
-
     weechat_bar_new (BUFLIST_BAR_NAME, "off", "0", "root", "", "left",
                      "columns_vertical", "vertical", "0", "0",
                      "default", "default", "default", "on",
                      BUFLIST_BAR_ITEM_NAME);
+
+    weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
 
     return WEECHAT_RC_OK;
 }
@@ -110,6 +113,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
     (void) plugin;
+
+    buflist_bar_item_end ();
 
     buflist_config_write ();
     buflist_config_free ();

@@ -25,7 +25,14 @@
 
 #include "../weechat-plugin.h"
 #include "buflist.h"
+#include "buflist-bar-item.h"
 #include "buflist-config.h"
+
+
+struct t_gui_bar_item *buflist_bar_item_buflist = NULL;
+struct t_hashtable *buflist_hashtable_pointers = NULL;
+struct t_hashtable *buflist_hashtable_extra_vars = NULL;
+struct t_hashtable *buflist_hashtable_options = NULL;
 
 
 /*
@@ -33,20 +40,25 @@
  */
 
 char *
-buflist_bar_item_buflist (const void *pointer, void *data,
-                          struct t_gui_bar_item *item,
-                          struct t_gui_window *window,
-                          struct t_gui_buffer *buffer,
-                          struct t_hashtable *extra_info)
+buflist_bar_item_buflist_cb (const void *pointer, void *data,
+                             struct t_gui_bar_item *item,
+                             struct t_gui_window *window,
+                             struct t_gui_buffer *buffer,
+                             struct t_hashtable *extra_info)
 {
-    struct t_hdata *hdata_buffer;
+    struct t_hdata *hdata_buffer, *hdata_hotlist;
     struct t_gui_buffer *ptr_buffer, *ptr_next_buffer, *ptr_current_buffer;
+    struct t_gui_buffer *ptr_buffer_hotlist;
+    struct t_gui_hotlist *ptr_hotlist;
     char **buflist, *str_buflist;
     char str_format_number[32], str_format_number_empty[32];
     char str_number[32], str_indent_name[4], *line;
     const char *ptr_format, *ptr_format_current, *ptr_name, *ptr_type;
-    int length_max_number, current_buffer, number, prev_number;
-    struct t_hashtable *pointers, *extra_vars;
+    const char *ptr_hotlist_format, *ptr_hotlist_priority;
+    const char *hotlist_priority_none = "none";
+    const char *hotlist_priority[4] = { "low", "message", "private",
+                                        "highlight" };
+    int length_max_number, current_buffer, number, prev_number, priority, rc;
 
     /* make C compiler happy */
     (void) pointer;
@@ -58,24 +70,6 @@ buflist_bar_item_buflist (const void *pointer, void *data,
 
     prev_number = -1;
 
-    pointers = weechat_hashtable_new (8,
-                                      WEECHAT_HASHTABLE_STRING,
-                                      WEECHAT_HASHTABLE_POINTER,
-                                      NULL,
-                                      NULL);
-    if (!pointers)
-        return NULL;
-    extra_vars = weechat_hashtable_new (32,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        WEECHAT_HASHTABLE_POINTER,
-                                        NULL,
-                                        NULL);
-    if (!extra_vars)
-    {
-        weechat_hashtable_free (pointers);
-        return NULL;
-    }
-
     buflist = weechat_string_dyn_alloc (1);
 
     ptr_format = weechat_config_string (buflist_config_format_buffer);
@@ -85,6 +79,8 @@ buflist_bar_item_buflist (const void *pointer, void *data,
 
     hdata_buffer = weechat_hdata_get ("buffer");
     ptr_buffer = weechat_hdata_get_list (hdata_buffer, "last_gui_buffer");
+
+    hdata_hotlist = weechat_hdata_get ("hotlist");
 
     length_max_number = snprintf (
         str_number, sizeof (str_number),
@@ -101,6 +97,19 @@ buflist_bar_item_buflist (const void *pointer, void *data,
         ptr_next_buffer = weechat_hdata_move (hdata_buffer, ptr_buffer, 1);
 
         current_buffer = (ptr_buffer == ptr_current_buffer);
+
+        /* search hotlist for this buffer (level and counts) */
+        ptr_hotlist = weechat_hdata_get_list (hdata_hotlist, "gui_hotlist");
+        while (ptr_hotlist)
+        {
+            ptr_buffer_hotlist = weechat_hdata_pointer (hdata_hotlist,
+                                                        ptr_hotlist,
+                                                        "buffer");
+            if (ptr_buffer_hotlist == ptr_buffer)
+                break;
+
+            ptr_hotlist = weechat_hdata_move (hdata_hotlist, ptr_hotlist, 1);
+        }
 
         ptr_name = weechat_hdata_string (hdata_buffer, ptr_buffer,
                                          "short_name");
@@ -138,30 +147,50 @@ buflist_bar_item_buflist (const void *pointer, void *data,
         }
 
         /* set pointers */
-        weechat_hashtable_set (pointers, "buffer", ptr_buffer);
+        weechat_hashtable_set (buflist_hashtable_pointers,
+                               "buffer", ptr_buffer);
 
         /* set extra variables */
-        weechat_hashtable_set (extra_vars, "number", str_number);
-        weechat_hashtable_set (extra_vars, "indent", str_indent_name);
-        weechat_hashtable_set (extra_vars, "name", ptr_name);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "number", str_number);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "indent", str_indent_name);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "name", ptr_name);
+
+        ptr_hotlist_format = weechat_config_string (buflist_config_format_hotlist_none);
+        ptr_hotlist_priority = hotlist_priority_none;
+        if (ptr_hotlist)
+        {
+            priority = weechat_hdata_integer (hdata_hotlist, ptr_hotlist,
+                                              "priority");
+            if ((priority >= 0) && (priority < 4))
+            {
+                ptr_hotlist_format = weechat_config_string (
+                    buflist_config_format_hotlist[priority]);
+                ptr_hotlist_priority = hotlist_priority[priority];
+            }
+        }
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "color_hotlist", ptr_hotlist_format);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "hotlist_priority", ptr_hotlist_priority);
 
         /* build string */
         line = weechat_string_eval_expression (
             (current_buffer) ? ptr_format_current : ptr_format,
-            pointers, extra_vars, NULL);
-        if (!weechat_string_dyn_concat (buflist, line))
-        {
-            free (line);
-            weechat_hashtable_free (extra_vars);
-            return NULL;
-        }
+            buflist_hashtable_pointers,
+            buflist_hashtable_extra_vars,
+            buflist_hashtable_options);
+
+        /* concatenate string */
+        rc = weechat_string_dyn_concat (buflist, line);
         free (line);
+        if (!rc)
+            return NULL;
 
         ptr_buffer = ptr_next_buffer;
     }
-
-    weechat_hashtable_free (pointers);
-    weechat_hashtable_free (extra_vars);
 
     str_buflist = *buflist;
     weechat_string_dyn_free (buflist, 0);
@@ -171,11 +200,72 @@ buflist_bar_item_buflist (const void *pointer, void *data,
 
 /*
  * Initializes buflist bar items.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+buflist_bar_item_init ()
+{
+    /* create hashtable used by the bar item callback */
+    buflist_hashtable_pointers = weechat_hashtable_new (
+        8,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER,
+        NULL,
+        NULL);
+    if (!buflist_hashtable_pointers)
+        return 0;
+    buflist_hashtable_extra_vars = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER,
+        NULL,
+        NULL);
+    if (!buflist_hashtable_extra_vars)
+    {
+        weechat_hashtable_free (buflist_hashtable_pointers);
+        return 0;
+    }
+    buflist_hashtable_options = weechat_hashtable_new (
+        8,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL,
+        NULL);
+    if (!buflist_hashtable_options)
+    {
+        weechat_hashtable_free (buflist_hashtable_pointers);
+        weechat_hashtable_free (buflist_hashtable_extra_vars);
+        return 0;
+    }
+    weechat_hashtable_set (buflist_hashtable_options, "extra", "eval");
+
+    /* bar items */
+    buflist_bar_item_buflist = weechat_bar_item_new (
+        BUFLIST_BAR_ITEM_NAME,
+        &buflist_bar_item_buflist_cb, NULL, NULL);
+
+    return 1;
+}
+
+/*
+ * Ends buflist bar items.
  */
 
 void
-buflist_bar_item_init ()
+buflist_bar_item_end ()
 {
-    weechat_bar_item_new ("buflist",
-                          &buflist_bar_item_buflist, NULL, NULL);
+    weechat_bar_item_remove (buflist_bar_item_buflist);
+
+    weechat_hashtable_free (buflist_hashtable_pointers);
+    buflist_hashtable_pointers = NULL;
+
+    weechat_hashtable_free (buflist_hashtable_extra_vars);
+    buflist_hashtable_extra_vars = NULL;
+
+    weechat_hashtable_free (buflist_hashtable_options);
+    buflist_hashtable_options = NULL;
 }

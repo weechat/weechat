@@ -22,6 +22,7 @@
 
 #define BUFLIST_BAR_ITEM_NAME "buflist"
 
-extern void buflist_bar_item_init ();
+extern int buflist_bar_item_init ();
+extern void buflist_bar_item_end ();
 
 #endif /* WEECHAT_BUFLIST_BAR_ITEM_H */

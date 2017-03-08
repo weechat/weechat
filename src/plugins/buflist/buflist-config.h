@@ -26,6 +26,8 @@ extern struct t_config_file *buflist_config_file;
 
 extern struct t_config_option *buflist_config_format_buffer;
 extern struct t_config_option *buflist_config_format_buffer_current;
+extern struct t_config_option *buflist_config_format_hotlist[4];
+extern struct t_config_option *buflist_config_format_hotlist_none;
 
 extern int buflist_config_init ();
 extern int buflist_config_read ();
