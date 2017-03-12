@@ -313,11 +313,11 @@ gui_main_debug_libs ()
 }
 
 /*
- * Refreshs for windows, buffers, bars.
+ * Refreshes for windows, buffers, bars.
  */
 
 void
-gui_main_refreshs ()
+gui_main_refreshes ()
 {
     struct t_gui_window *ptr_win;
     struct t_gui_buffer *ptr_buffer;
@@ -461,9 +461,9 @@ gui_main_loop ()
             send_signal_sigwinch = 1;
         }
 
-        gui_main_refreshs ();
+        gui_main_refreshes ();
         if (gui_window_refresh_needed && !gui_window_bare_display)
-            gui_main_refreshs ();
+            gui_main_refreshes ();
 
         if (send_signal_sigwinch)
         {
@@ -502,14 +502,14 @@ gui_main_end (int clean_exit)
     if (clean_exit)
     {
         /*
-         * final refreshs, to see messages just before exiting
+         * final refreshes, to see messages just before exiting
          * (if we are upgrading, don't refresh anything!)
          */
         if (!weechat_upgrading)
         {
-            gui_main_refreshs ();
+            gui_main_refreshes ();
             if (gui_window_refresh_needed)
-                gui_main_refreshs ();
+                gui_main_refreshes ();
         }
 
         /* disable bracketed paste mode */

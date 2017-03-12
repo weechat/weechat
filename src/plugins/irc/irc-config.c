@@ -3182,8 +3182,8 @@ irc_config_init ()
     irc_config_network_lag_refresh_interval = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_refresh_interval", "integer",
-        N_("interval between two refreshs of lag item, when lag is increasing "
-           "(in seconds)"),
+        N_("interval between two refreshes of lag item, when lag is "
+           "increasing (in seconds)"),
         NULL, 1, 3600, "1", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_notify_check_ison = weechat_config_new_option (

@@ -31,7 +31,7 @@ Improvements::
 
 Bug fixes::
 
-  * core: fix delayed refresh when the signal SIGWINCH is received (terminal resized), send signal "signal_sigwinch" after refreshs (issue #902)
+  * core: fix delayed refresh when the signal SIGWINCH is received (terminal resized), send signal "signal_sigwinch" after refreshes (issue #902)
   * irc: fix parsing of message 324 (modes) when there is a colon before the modes (issue #913)
 
 Build::
@@ -2031,7 +2031,7 @@ Bug fixes::
   * fix bug with spaces in script names (bug #16957)
   * fix random crash when "MODE #chan -l" is received
   * fix bug in IRC parser (random crash with malformed IRC messages)
-  * fix refresh bugs when terminal is resized: too many refreshs, display bug with split windows
+  * fix refresh bugs when terminal is resized: too many refreshes, display bug with split windows
   * case ignored for channel names in charset options (bug #16858)
   * fix crash when setting look_one_server_buffer to ON (bug #16932)
   * fix display bug with special char (bug #16732)
@@ -2264,7 +2264,7 @@ Bug fixes::
   * fix FIFO pipe (command now authorized on a buffer not connected to an IRC server)
   * topic completion now decodes UTF-8 string
   * fix bug with IRC URL on command line (irc://)
-  * fix some curses refreshs
+  * fix some curses refreshes
 
 [[v0.1.3]]
 == Version 0.1.3 (2005-07-02)
