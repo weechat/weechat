@@ -477,7 +477,7 @@
 ** valore predefinito: `+300+`
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
-** descrizione: pass:none[intervallo tra due aggiornamenti per l'elemento ritardo, quando è in aumento (in secondi)]
+** descrizione: pass:none[interval between two refreshes of lag item, when lag is increasing (in seconds)]
 ** tipo: intero
 ** valori: 1 .. 3600
 ** valore predefinito: `+1+`

@@ -477,7 +477,7 @@
 ** domyślna wartość: `+300+`
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
-** opis: pass:none[przerwa między dwoma odświeżeniami wskaźnika lagu, kiedy się on zwiększa (w sekundach)]
+** opis: pass:none[interval between two refreshes of lag item, when lag is increasing (in seconds)]
 ** typ: liczba
 ** wartości: 1 .. 3600
 ** domyślna wartość: `+1+`
