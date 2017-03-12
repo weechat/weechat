@@ -3843,6 +3843,374 @@ weechat.list_free(list)
 weechat.list_free(list)
 ----
 
+[[array_lists]]
+=== Array lists
+
+// TRANSLATION MISSING
+Array list functions.
+
+An array list is a list of pointers with a dynamic size and optional sort.
+
+==== arraylist_new
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Create a new array list.
+
+プロトタイプ:
+
+[source,C]
+----
+struct t_arraylist *weechat_arraylist_new (int initial_size,
+                                           int sorted,
+                                           int allow_duplicates,
+                                           int (*callback_cmp)(void *data,
+                                                               struct t_arraylist *arraylist,
+                                                               void *pointer1,
+                                                               void *pointer2),
+                                           void *callback_cmp_data,
+                                           void (*callback_free)(void *data,
+                                                                 struct t_arraylist *arraylist,
+                                                                 void *pointer),
+                                           void *callback_free_data);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _initial_size_: initial size of the array list (not the number of items)
+* _sorted_: 1 to sort the array list, 0 for no sort
+* _allow_duplicates_: 1 to allow duplicate entries, 0 to prevent a same entry
+  to be added again
+* _callback_cmp_: callback used to compare two items, arguments and return value:
+** _void *data_: pointer
+** _struct t_arraylist *arraylist_: array list pointer
+** _void *pointer1_: pointer to first item
+** _void *pointer2_: pointer to second item
+** return value:
+*** negative number if first item is less than second item
+*** 0 if first item equals second item
+*** positive number if first item is greater than second item
+* _callback_cmp_data_: pointer given to callback when it is called by WeeChat
+* _callback_free_: callback used to free an item (optional), arguments:
+** _void *data_: pointer
+** _struct t_arraylist *arraylist_: array list pointer
+** _void *pointer_: pointer to item
+* _callback_free_data_: pointer given to callback when it is called by WeeChat
+
+戻り値:
+
+// TRANSLATION MISSING
+* pointer to new array list
+
+C 言語での使用例:
+
+[source,C]
+----
+int
+cmp_cb (void *data, struct t_arraylist *arraylist,
+        void *pointer1, void *pointer2)
+{
+    if (...)
+        return -1;
+    else if (...)
+        return 1;
+    else
+        return 0;
+}
+
+struct t_arraylist *list = weechat_arraylist_new (32, 1, 1,
+                                                  &cmp_cb, NULL, NULL, NULL);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== arraylist_size
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Return size of array list (number of item pointers).
+
+プロトタイプ:
+
+[source,C]
+----
+int weechat_list_size (struct t_arraylist *arraylist);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _arraylist_: array list pointer
+
+戻り値:
+
+// TRANSLATION MISSING
+* size of array list (number of items), 0 if array list is empty
+
+C 言語での使用例:
+
+[source,C]
+----
+weechat_printf (NULL, "size of array list: %d", weechat_arraylist_size (arraylist));
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== arraylist_get
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Return an item pointer by position.
+
+プロトタイプ:
+
+[source,C]
+----
+void *weechat_arraylist_get (struct t_arraylist *arraylist, int index);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _arraylist_: array list pointer
+* _index_: index in list (first pointer is 0)
+
+戻り値:
+
+// TRANSLATION MISSING
+* pointer found, NULL if pointer was not found
+
+C 言語での使用例:
+
+[source,C]
+----
+void *pointer = weechat_arraylist_get (arraylist, 0);  /* first item */
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== arraylist_search
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Search an item in an array list.
+
+プロトタイプ:
+
+[source,C]
+----
+void *weechat_arraylist_search (struct t_arraylist *arraylist, void *pointer,
+                                int *index, int *index_insert);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _arraylist_: array list pointer
+* _pointer_: pointer to the item to search in array list
+* _index_: pointer to integer that will be set to the index found, or -1 if not found
+  (optional)
+* _index_insert_: pointer to integer that will be set with the index that must be
+  used to insert the element in the arraylist (to keep arraylist sorted) (optional)
+
+戻り値:
+
+// TRANSLATION MISSING
+* pointer to item found, NULL if item was not found
+
+C 言語での使用例:
+
+[source,C]
+----
+int index, index_insert;
+void *item = weechat_arraylist_search (arraylist, pointer, &index, &index_insert);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== arraylist_insert
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Insert an item in an array list.
+
+プロトタイプ:
+
+[source,C]
+----
+int weechat_arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _arraylist_: array list pointer
+* _index_: position of the item in array list or -1 to add at the end
+  (this argument is used only if the array list is not sorted, it is ignored if
+  the array list is sorted)
+* _pointer_: pointer to the item to insert
+
+戻り値:
+
+// TRANSLATION MISSING
+* index of new item (>= 0), -1 if error.
+
+C 言語での使用例:
+
+[source,C]
+----
+int index = weechat_arraylist_insert (arraylist, -1, pointer);  /* insert at the end if not sorted */
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== arraylist_add
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Add an item in an array list.
+
+プロトタイプ:
+
+[source,C]
+----
+int weechat_arraylist_add (struct t_arraylist *arraylist, void *pointer);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _arraylist_: array list pointer
+* _pointer_: pointer to the item to add
+
+戻り値:
+
+// TRANSLATION MISSING
+* index of new item (>= 0), -1 if error.
+
+C 言語での使用例:
+
+[source,C]
+----
+int index = weechat_arraylist_add (arraylist, pointer);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== arraylist_remove
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Remove an item from an array list.
+
+プロトタイプ:
+
+[source,C]
+----
+int weechat_arraylist_remove (struct t_arraylist *arraylist, int index);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _arraylist_: array list pointer
+* _index_: index of the item to remove
+
+戻り値:
+
+// TRANSLATION MISSING
+* index of item removed, -1 if error.
+
+C 言語での使用例:
+
+[source,C]
+----
+int index_removed = weechat_arraylist_remove (arraylist, index);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== arraylist_clear
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Remove all items from an array list.
+
+プロトタイプ:
+
+[source,C]
+----
+int weechat_arraylist_clear (struct t_arraylist *arraylist);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _arraylist_: array list pointer
+
+戻り値:
+
+// TRANSLATION MISSING
+* 1 if OK, 0 if error
+
+C 言語での使用例:
+
+[source,C]
+----
+if (weechat_arraylist_clear (arraylist))
+{
+    /* OK */
+}
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== arraylist_free
+
+_WeeChat ≥ 1.8._
+
+// TRANSLATION MISSING
+Free an array list.
+
+プロトタイプ:
+
+[source,C]
+----
+void weechat_arraylist_free (struct t_arraylist *arraylist);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _arraylist_: array list pointer
+
+C 言語での使用例:
+
+[source,C]
+----
+weechat_arraylist_free (arraylist);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 [[hashtables]]
 === ハッシュテーブル
 
@@ -9477,7 +9845,7 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
                                      void *callback_data);
 ----
 
-Arguments:
+引数:
 
 * _signal_: キャッチするシグナル、ワイルドカード `+*+` を使うことができます
   (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)

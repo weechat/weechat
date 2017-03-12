@@ -689,6 +689,16 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->list_remove_all = &weelist_remove_all;
         new_plugin->list_free = &weelist_free;
 
+        new_plugin->arraylist_new = arraylist_new;
+        new_plugin->arraylist_size = arraylist_size;
+        new_plugin->arraylist_get = arraylist_get;
+        new_plugin->arraylist_search = arraylist_search;
+        new_plugin->arraylist_insert = arraylist_insert;
+        new_plugin->arraylist_add = arraylist_add;
+        new_plugin->arraylist_remove = arraylist_remove;
+        new_plugin->arraylist_clear = arraylist_clear;
+        new_plugin->arraylist_free = arraylist_free;
+
         new_plugin->hashtable_new = &hashtable_new;
         new_plugin->hashtable_set_with_size = &hashtable_set_with_size;
         new_plugin->hashtable_set = &hashtable_set;

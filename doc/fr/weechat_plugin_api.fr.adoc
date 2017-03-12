@@ -3884,6 +3884,352 @@ weechat.list_free(list)
 weechat.list_free(list)
 ----
 
+[[array_lists]]
+=== Listes avec tableau
+
+Fonctions pour les listes avec tableau.
+
+Une liste avec tableau est une liste de pointeurs avec une taille dynamique et un tri optionnel.
+
+==== arraylist_new
+
+_WeeChat ≥ 1.8._
+
+Créer une nouvelle liste avec tableau.
+
+Prototype :
+
+[source,C]
+----
+struct t_arraylist *weechat_arraylist_new (int initial_size,
+                                           int sorted,
+                                           int allow_duplicates,
+                                           int (*callback_cmp)(void *data,
+                                                               struct t_arraylist *arraylist,
+                                                               void *pointer1,
+                                                               void *pointer2),
+                                           void *callback_cmp_data,
+                                           void (*callback_free)(void *data,
+                                                                 struct t_arraylist *arraylist,
+                                                                 void *pointer),
+                                           void *callback_free_data);
+----
+
+Paramètres :
+
+* _initial_size_ : taille initiale de la liste avec tableau (ce n'est pas le nombre d'éléments)
+* _sorted_ : 1 pour trier la liste avec tableau, 0 pour ne pas trier
+* _allow_duplicates_ : 1 pour autoriser les entrées dupliquées, 0 pour empêcher
+  une même entrée d'être ajoutée à nouveau
+* _callback_cmp_ : fonction appelée pour comparer deux éléments, paramètres et
+  valeur de retour :
+** _void *data_ : pointeur
+** _struct t_arraylist *arraylist_ : pointeur vers la liste avec tableau
+** _void *pointer1_ : pointeur vers le premier élément
+** _void *pointer2_ : pointeur vers le second élément
+** valeur de retour :
+*** nombre négatif si le premier élément est inférieur au second élément
+*** 0 si le premier élément est égal au second élément
+*** nombre positif si le premier élément est supérieur au second élément
+* _callback_cmp_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_free_ : fonction utilisée pour libérer les éléments (optionnelle),
+  paramètres :
+** _void *data_ : pointeur
+** _struct t_arraylist *arraylist_ : pointeur vers la liste avec tableau
+** _void *pointer_ : pointeur vers l'élément
+* _callback_free_data_ : pointeur donné à la fonction de rappelle lorsqu'elle est
+  appelée par WeeChat
+
+Valeur de retour :
+
+* pointeur vers la nouvelle liste avec tableau
+
+Exemple en C :
+
+[source,C]
+----
+int
+cmp_cb (void *data, struct t_arraylist *arraylist,
+        void *pointer1, void *pointer2)
+{
+    if (...)
+        return -1;
+    else if (...)
+        return 1;
+    else
+        return 0;
+}
+
+struct t_arraylist *list = weechat_arraylist_new (32, 1, 1,
+                                                  &cmp_cb, NULL, NULL, NULL);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== arraylist_size
+
+_WeeChat ≥ 1.8._
+
+Retourner la taille de la liste (nombre de pointeurs vers des éléments).
+
+Prototype :
+
+[source,C]
+----
+int weechat_list_size (struct t_arraylist *arraylist);
+----
+
+Paramètres :
+
+* _arraylist_ : pointeur vers la liste avec tableau
+
+Valeur de retour :
+
+* taille de la liste avec tableau (nombre d'éléments), 0 si la liste avec tableau est vide
+
+Exemple en C :
+
+[source,C]
+----
+weechat_printf (NULL, "size of array list: %d", weechat_arraylist_size (arraylist));
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== arraylist_get
+
+_WeeChat ≥ 1.8._
+
+Retourner un pointeur avec un élément par sa position.
+
+Prototype :
+
+[source,C]
+----
+void *weechat_arraylist_get (struct t_arraylist *arraylist, int index);
+----
+
+Paramètres :
+
+* _arraylist_ : pointeur vers la liste avec tableau
+* _index_ : index dans la liste (le premier pointeur est 0)
+
+Valeur de retour :
+
+* pointeur trouvé, NULL si le pointeur n'est pas trouvé
+
+Exemple en C :
+
+[source,C]
+----
+void *pointer = weechat_arraylist_get (arraylist, 0);  /* first item */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== arraylist_search
+
+_WeeChat ≥ 1.8._
+
+Chercher un élément dans une liste avec tableau.
+
+Prototype :
+
+[source,C]
+----
+void *weechat_arraylist_search (struct t_arraylist *arraylist, void *pointer,
+                                int *index, int *index_insert);
+----
+
+Paramètres :
+
+* _arraylist_ : pointeur vers la liste avec tableau
+* _pointer_ : pointeur vers l'élément à chercher dans la liste avec tableau
+* _index_ : pointeur vers un entier qui sera défini avec l'index trouvé, ou -1 si non trouvé
+  (optionnel)
+* _index_insert_ : pointeur vers un entier qui sera défini avec l'index qui doit être utilisé
+  pour insérer un élément dans la liste avec tableau (pour garder la liste avec tableau triée)
+  (optionnel)
+
+Valeur de retour :
+
+* pointeur vers l'élément trouvé, NULL si l'élément n'est pas trouvé
+
+Exemple en C :
+
+[source,C]
+----
+int index, index_insert;
+void *item = weechat_arraylist_search (arraylist, pointer, &index, &index_insert);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== arraylist_insert
+
+_WeeChat ≥ 1.8._
+
+Insérer un élément dans une liste avec tableau.
+
+Prototype :
+
+[source,C]
+----
+int weechat_arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer);
+----
+
+Paramètres :
+
+* _arraylist_ : pointeur vers la liste avec tableau
+* _index_ : position de l'élément dans la liste avec tableau ou -1 pour ajouter
+  l'élément à la fin (ce paramètre est utilisé seulement si la liste avec tableau
+  n'est pas triée, il est ignoré si la liste avec tableau est triée)
+* _pointeur_ : pointeur vers l'élément à insérer
+
+Valeur de retour :
+
+* index du nouvel élément (>= 0), -1 si erreur.
+
+Exemple en C :
+
+[source,C]
+----
+int index = weechat_arraylist_insert (arraylist, -1, pointer);  /* insert at the end if not sorted */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== arraylist_add
+
+_WeeChat ≥ 1.8._
+
+Ajouter un élément dans une liste avec tableau.
+
+Prototype :
+
+[source,C]
+----
+int weechat_arraylist_add (struct t_arraylist *arraylist, void *pointer);
+----
+
+Paramètres :
+
+* _arraylist_ : pointeur vers la liste avec tableau
+* _pointer_ : pointeur vers l'élément à ajouter
+
+Valeur de retour :
+
+* index du nouvel élément (>= 0), -1 si erreur.
+
+Exemple en C :
+
+[source,C]
+----
+int index = weechat_arraylist_add (arraylist, pointer);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== arraylist_remove
+
+_WeeChat ≥ 1.8._
+
+Supprimer un élément d'une liste avec tableau.
+
+Prototype :
+
+[source,C]
+----
+int weechat_arraylist_remove (struct t_arraylist *arraylist, int index);
+----
+
+Paramètres :
+
+* _arraylist_ : pointeur vers la liste avec tableau
+* _index_ : index de l'élément à supprimer
+
+Valeur de retour :
+
+* index de l'élément supprimé, -1 si erreur.
+
+Exemple en C :
+
+[source,C]
+----
+int index_removed = weechat_arraylist_remove (arraylist, index);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== arraylist_clear
+
+_WeeChat ≥ 1.8._
+
+Supprimer tous les éléments d'une liste avec tableau.
+
+Prototype :
+
+[source,C]
+----
+int weechat_arraylist_clear (struct t_arraylist *arraylist);
+----
+
+Paramètres :
+
+* _arraylist_ : pointeur vers la liste avec tableau
+
+Valeur de retour :
+
+* 1 if OK, 0 if error
+
+Exemple en C :
+
+[source,C]
+----
+if (weechat_arraylist_clear (arraylist))
+{
+    /* OK */
+}
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== arraylist_free
+
+_WeeChat ≥ 1.8._
+
+Supprimer une liste avec tableau.
+
+Prototype :
+
+[source,C]
+----
+void weechat_arraylist_free (struct t_arraylist *arraylist);
+----
+
+Paramètres :
+
+* _arraylist_ : pointeur vers la liste avec tableau
+
+Exemple en C :
+
+[source,C]
+----
+weechat_arraylist_free (arraylist);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 [[hashtables]]
 === Tables de hachage
 
