@@ -197,7 +197,8 @@ struct t_gui_buffer
     int highlight_tags_count;          /* number of highlight tags          */
     char ***highlight_tags_array;      /* array with highlight tags         */
 
-    /* hotlist settings for buffer */
+    /* hotlist */
+    struct t_gui_hotlist *hotlist;     /* hotlist entry for buffer          */
     struct t_hashtable *hotlist_max_level_nicks; /* max hotlist level for   */
                                                  /* some nicks              */
 

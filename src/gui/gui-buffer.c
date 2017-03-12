@@ -709,6 +709,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->highlight_tags_array = NULL;
 
     /* hotlist */
+    new_buffer->hotlist = NULL;
     new_buffer->hotlist_max_level_nicks = hashtable_new (
         32,
         WEECHAT_HASHTABLE_STRING,
@@ -4156,6 +4157,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, highlight_tags, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_count, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_array, POINTER, 0, "highlight_tags_count", NULL);
+        HDATA_VAR(struct t_gui_buffer, hotlist, POINTER, 0, NULL, "hotlist");
         HDATA_VAR(struct t_gui_buffer, hotlist_max_level_nicks, HASHTABLE, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, keys, POINTER, 0, NULL, "key");
         HDATA_VAR(struct t_gui_buffer, last_key, POINTER, 0, NULL, "key");
@@ -4571,6 +4573,7 @@ gui_buffer_print_log ()
         log_printf ("  highlight_tags. . . . . : '%s'",  ptr_buffer->highlight_tags);
         log_printf ("  highlight_tags_count. . : %d",    ptr_buffer->highlight_tags_count);
         log_printf ("  highlight_tags_array. . : 0x%lx", ptr_buffer->highlight_tags_array);
+        log_printf ("  hotlist . . . . . . . . : 0x%lx", ptr_buffer->hotlist);
         log_printf ("  keys. . . . . . . . . . : 0x%lx", ptr_buffer->keys);
         log_printf ("  last_key. . . . . . . . : 0x%lx", ptr_buffer->last_key);
         log_printf ("  keys_count. . . . . . . : %d",    ptr_buffer->keys_count);

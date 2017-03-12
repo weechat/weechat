@@ -541,6 +541,7 @@ _highlight_tags_restrict_array_   (pointer, array_size: "highlight_tags_restric
 _highlight_tags_   (string) +
 _highlight_tags_count_   (integer) +
 _highlight_tags_array_   (pointer, array_size: "highlight_tags_count") +
+_hotlist_   (pointer, hdata: "hotlist") +
 _hotlist_max_level_nicks_   (hashtable) +
 _keys_   (pointer, hdata: "key") +
 _last_key_   (pointer, hdata: "key") +

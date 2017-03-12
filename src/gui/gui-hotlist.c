@@ -99,6 +99,8 @@ gui_hotlist_free (struct t_gui_hotlist **hotlist,
     if (!ptr_hotlist)
         return;
 
+    ptr_hotlist->buffer->hotlist = NULL;
+
     /* remove hotlist from queue */
     if (*last_hotlist == ptr_hotlist)
         *last_hotlist = ptr_hotlist->prev_hotlist;
@@ -405,6 +407,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
     else
         gettimeofday (&(new_hotlist->creation_time), NULL);
     new_hotlist->buffer = buffer;
+    buffer->hotlist = new_hotlist;
     memcpy (new_hotlist->count, count, sizeof (new_hotlist->count));
     new_hotlist->count[priority]++;
     new_hotlist->next_hotlist = NULL;
