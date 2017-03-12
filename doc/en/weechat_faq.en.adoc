@@ -597,6 +597,12 @@ Set option _weechat.network.gnutls_ca_file_ to file with certificates:
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
 ----
 
+Note: if you are running OS X with homebrew openssl installed, you can do:
+
+----
+/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
+----
+
 [NOTE]
 Check that you have this file on your system (commonly brought by package
 "ca-certificates").

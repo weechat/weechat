@@ -599,6 +599,13 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
 ----
 
+// TRANSLATION MISSING
+Note: if you are running OS X with homebrew openssl installed, you can do:
+
+----
+/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
+----
+
 [NOTE]
 設定したファイルが自分のシステムに存在することを確認してください
 (一般に "ca-certificates" パッケージで提供されます)。
