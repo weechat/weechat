@@ -42,32 +42,6 @@ struct t_hdata *buflist_hdata_hotlist = NULL;
 
 
 /*
- * Searches the hotlist pointer for the buffer.
- *
- * Returns pointer to hotlit, NULL if buffer is not in hotlist.
- */
-
-struct t_gui_hotlist *
-buflist_search_hotlist_for_buffer (struct t_gui_buffer *buffer)
-{
-    struct t_gui_hotlist *ptr_hotlist;
-    struct t_gui_buffer *ptr_buffer;
-
-    ptr_hotlist = weechat_hdata_get_list (buflist_hdata_hotlist,
-                                          "gui_hotlist");
-    while (ptr_hotlist)
-    {
-        ptr_buffer = weechat_hdata_pointer (buflist_hdata_hotlist,
-                                            ptr_hotlist, "buffer");
-        if (ptr_buffer == buffer)
-            break;
-        ptr_hotlist = weechat_hdata_move (buflist_hdata_hotlist,
-                                          ptr_hotlist, 1);
-    }
-    return ptr_hotlist;
-}
-
-/*
  * Compares a hdata variable of two objects.
  *
  * Returns:
@@ -164,17 +138,13 @@ int
 buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                          void *pointer1, void *pointer2)
 {
-    int i, reverse, rc, hotlist_scanned;
+    int i, reverse, rc;
     const char *ptr_field;
     struct t_gui_hotlist *ptr_hotlist1, *ptr_hotlist2;
 
     /* make C compiler happy */
     (void) data;
     (void) arraylist;
-
-    hotlist_scanned = 0;
-    ptr_hotlist1 = NULL;
-    ptr_hotlist2 = NULL;
 
     for (i = 0; i < buflist_config_sort_fields_count; i++)
     {
@@ -191,11 +161,10 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
         rc = 0;
         if (strncmp (ptr_field, "hotlist.", 8) == 0)
         {
-            if (!hotlist_scanned)
-            {
-                ptr_hotlist1 = buflist_search_hotlist_for_buffer (pointer1);
-                ptr_hotlist2 = buflist_search_hotlist_for_buffer (pointer2);
-            }
+            ptr_hotlist1 = weechat_hdata_pointer (buflist_hdata_buffer,
+                                                  pointer1, "hotlist");
+            ptr_hotlist2 = weechat_hdata_pointer (buflist_hdata_buffer,
+                                                  pointer2, "hotlist");
             if (!ptr_hotlist1 && !ptr_hotlist2)
                 rc = 0;
             else if (ptr_hotlist1 && !ptr_hotlist2)

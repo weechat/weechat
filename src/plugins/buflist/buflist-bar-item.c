@@ -97,7 +97,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
 
         current_buffer = (ptr_buffer == ptr_current_buffer);
 
-        ptr_hotlist = buflist_search_hotlist_for_buffer (ptr_buffer);
+        ptr_hotlist = weechat_hdata_pointer (buflist_hdata_buffer,
+                                             ptr_buffer, "hotlist");
 
         ptr_name = weechat_hdata_string (buflist_hdata_buffer,
                                          ptr_buffer, "short_name");
