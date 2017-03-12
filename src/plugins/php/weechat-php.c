@@ -947,6 +947,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     php_embed_init (0, NULL);
 
+    PG(report_zend_debug) = 0;  /* Turn off --enable-debug output */
+
     plugin_script_init (weechat_php_plugin, argc, argv, &init);
 
     plugin_script_display_short_list (weechat_php_plugin,
