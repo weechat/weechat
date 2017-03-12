@@ -29,6 +29,10 @@
 
 struct t_config_file *buflist_config_file = NULL;
 
+/* buflist config, look section */
+
+struct t_config_option *buflist_config_look_sort;
+
 /* buflist config, format section */
 
 struct t_config_option *buflist_config_format_buffer;
@@ -36,9 +40,35 @@ struct t_config_option *buflist_config_format_buffer_current;
 struct t_config_option *buflist_config_format_hotlist[4];
 struct t_config_option *buflist_config_format_hotlist_none;
 
+char **buflist_config_sort_fields = NULL;
+int buflist_config_sort_fields_count = 0;
+
 
 /*
- * Callback for changes on option "irc.network.lag_min_show".
+ * Callback for changes on option "buflist.look.sort".
+ */
+
+void
+buflist_config_change_sort (const void *pointer, void *data,
+                            struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (buflist_config_sort_fields)
+        weechat_string_free_split (buflist_config_sort_fields);
+
+    buflist_config_sort_fields = weechat_string_split (
+        weechat_config_string (buflist_config_look_sort),
+        ",", 0, 0, &buflist_config_sort_fields_count);
+
+    weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+}
+
+/*
+ * Callback for changes on format options.
  */
 
 void
@@ -70,6 +100,33 @@ buflist_config_init ()
                                               NULL, NULL, NULL);
     if (!buflist_config_file)
         return 0;
+
+    /* look */
+    ptr_section = weechat_config_new_section (buflist_config_file, "look",
+                                              0, 0,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (buflist_config_file);
+        return 0;
+    }
+
+    buflist_config_look_sort = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "sort", "string",
+        N_("comma-separated list of fields to sort buffers; each field is "
+           "a hdata variable of buffer; char \"-\" can be used before field "
+           "to reverse order"),
+        NULL, 0, 0,
+        "number,-active",
+        NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_sort, NULL, NULL,
+        NULL, NULL, NULL);
 
     /* format */
     ptr_section = weechat_config_new_section (buflist_config_file, "format",
@@ -166,7 +223,16 @@ buflist_config_init ()
 int
 buflist_config_read ()
 {
-    return weechat_config_read (buflist_config_file);
+    int rc;
+
+    rc = weechat_config_read (buflist_config_file);
+
+    if (rc == WEECHAT_CONFIG_READ_OK)
+    {
+        buflist_config_change_sort (NULL, NULL, NULL);
+    }
+
+    return rc;
 }
 
 /*
@@ -187,4 +253,11 @@ void
 buflist_config_free ()
 {
     weechat_config_free (buflist_config_file);
+
+    if (buflist_config_sort_fields)
+    {
+        weechat_string_free_split (buflist_config_sort_fields);
+        buflist_config_sort_fields = NULL;
+        buflist_config_sort_fields_count = 0;
+    }
 }

@@ -46,9 +46,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                              struct t_gui_buffer *buffer,
                              struct t_hashtable *extra_info)
 {
-    struct t_hdata *hdata_buffer, *hdata_hotlist;
-    struct t_gui_buffer *ptr_buffer, *ptr_next_buffer, *ptr_current_buffer;
-    struct t_gui_buffer *ptr_buffer_hotlist;
+    struct t_arraylist *buffers;
+    struct t_gui_buffer *ptr_buffer, *ptr_current_buffer;
     struct t_gui_hotlist *ptr_hotlist;
     char **buflist, *str_buflist;
     char str_format_number[32], str_format_number_empty[32];
@@ -58,7 +57,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     const char *hotlist_priority_none = "none";
     const char *hotlist_priority[4] = { "low", "message", "private",
                                         "highlight" };
-    int length_max_number, current_buffer, number, prev_number, priority, rc;
+    int i, length_max_number, current_buffer, number, prev_number, priority;
+    int rc;
 
     /* make C compiler happy */
     (void) pointer;
@@ -77,53 +77,43 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
 
     ptr_current_buffer = weechat_current_buffer ();
 
-    hdata_buffer = weechat_hdata_get ("buffer");
-    ptr_buffer = weechat_hdata_get_list (hdata_buffer, "last_gui_buffer");
-
-    hdata_hotlist = weechat_hdata_get ("hotlist");
+    ptr_buffer = weechat_hdata_get_list (buflist_hdata_buffer,
+                                         "last_gui_buffer");
 
     length_max_number = snprintf (
         str_number, sizeof (str_number),
-        "%d", weechat_hdata_integer (hdata_buffer, ptr_buffer, "number"));
+        "%d",
+        weechat_hdata_integer (buflist_hdata_buffer, ptr_buffer, "number"));
     snprintf (str_format_number, sizeof (str_format_number),
               "%%%dd", length_max_number);
     snprintf (str_format_number_empty, sizeof (str_format_number_empty),
               "%%-%ds", length_max_number);
 
-    ptr_buffer = weechat_hdata_get_list (hdata_buffer, "gui_buffers");
+    buffers = buflist_sort_buffers ();
 
-    while (ptr_buffer)
+    for (i = 0; i < weechat_arraylist_size (buffers); i++)
     {
-        ptr_next_buffer = weechat_hdata_move (hdata_buffer, ptr_buffer, 1);
+        ptr_buffer = weechat_arraylist_get (buffers, i);
 
         current_buffer = (ptr_buffer == ptr_current_buffer);
 
-        /* search hotlist for this buffer (level and counts) */
-        ptr_hotlist = weechat_hdata_get_list (hdata_hotlist, "gui_hotlist");
-        while (ptr_hotlist)
-        {
-            ptr_buffer_hotlist = weechat_hdata_pointer (hdata_hotlist,
-                                                        ptr_hotlist,
-                                                        "buffer");
-            if (ptr_buffer_hotlist == ptr_buffer)
-                break;
+        ptr_hotlist = buflist_search_hotlist_for_buffer (ptr_buffer);
 
-            ptr_hotlist = weechat_hdata_move (hdata_hotlist, ptr_hotlist, 1);
-        }
-
-        ptr_name = weechat_hdata_string (hdata_buffer, ptr_buffer,
-                                         "short_name");
+        ptr_name = weechat_hdata_string (buflist_hdata_buffer,
+                                         ptr_buffer, "short_name");
         if (!ptr_name)
-            ptr_name = weechat_hdata_string (hdata_buffer, ptr_buffer, "name");
+            ptr_name = weechat_hdata_string (buflist_hdata_buffer,
+                                             ptr_buffer, "name");
 
         if (*buflist[0])
         {
             if (!weechat_string_dyn_concat (buflist, "\n"))
-                return NULL;
+                goto error;
         }
 
         /* buffer number */
-        number = weechat_hdata_integer (hdata_buffer, ptr_buffer, "number");
+        number = weechat_hdata_integer (buflist_hdata_buffer,
+                                        ptr_buffer, "number");
         if (number != prev_number)
         {
             snprintf (str_number, sizeof (str_number),
@@ -162,8 +152,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         ptr_hotlist_priority = hotlist_priority_none;
         if (ptr_hotlist)
         {
-            priority = weechat_hdata_integer (hdata_hotlist, ptr_hotlist,
-                                              "priority");
+            priority = weechat_hdata_integer (buflist_hdata_hotlist,
+                                              ptr_hotlist, "priority");
             if ((priority >= 0) && (priority < 4))
             {
                 ptr_hotlist_format = weechat_config_string (
@@ -187,13 +177,19 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         rc = weechat_string_dyn_concat (buflist, line);
         free (line);
         if (!rc)
-            return NULL;
-
-        ptr_buffer = ptr_next_buffer;
+            goto error;
     }
 
     str_buflist = *buflist;
+
+    goto end;
+
+error:
+    str_buflist = NULL;
+
+end:
     weechat_string_dyn_free (buflist, 0);
+    weechat_arraylist_free (buffers);
 
     return str_buflist;
 }
