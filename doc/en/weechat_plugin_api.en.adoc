@@ -2035,10 +2035,18 @@ expanded to last):
   `+prefix<TAB>message+` +
   `+©+`
 
-| `+${hide:x,value}+` |
-  String with hidden chars (all chars in `value` replaced by `x`). |
+| `+${hide:x,string}+` |
+  String with hidden chars (all chars in `string` replaced by `x`). |
   `+${hide:*,password}+` |
   `+********+`
+
+| `+${cut:max,suffix,string}+` +
+  (_WeeChat ≥ 1.8_) |
+  String with `max` chars displayed, and optional `suffix` if string is cut. |
+  `+${cut:4,…,this is a test}+` +
+  `+${cut:2,>>,àéçôî}+` |
+  `+this…+` +
+  `+àé>>+`
 
 | `+${re:N}+` |
   Regex captured group: `0` = whole string matching, `1` to `99` = group

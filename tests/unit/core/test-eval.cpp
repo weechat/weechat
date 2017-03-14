@@ -218,6 +218,16 @@ TEST(Eval, EvalExpression)
     WEE_CHECK_EVAL("********", "${hide:*,password}");
     WEE_CHECK_EVAL("\u2603\u2603\u2603", "${hide:${esc:\u2603},abc}");
 
+    /* test cut of chars */
+    WEE_CHECK_EVAL("", "${cut:0,,}");
+    WEE_CHECK_EVAL("", "${cut:0,+,}");
+    WEE_CHECK_EVAL("", "${cut:0,,test}");
+    WEE_CHECK_EVAL("+", "${cut:0,+,test}");
+    WEE_CHECK_EVAL("te", "${cut:2,,test}");
+    WEE_CHECK_EVAL("te+", "${cut:2,+,test}");
+    WEE_CHECK_EVAL("éà", "${cut:2,,éàô}");
+    WEE_CHECK_EVAL("éà+", "${cut:2,+,éàô}");
+
     /* test color */
     WEE_CHECK_EVAL(gui_color_get_custom ("green"), "${color:green}");
     WEE_CHECK_EVAL(gui_color_get_custom ("*214"), "${color:*214}");

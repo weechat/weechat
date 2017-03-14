@@ -295,15 +295,16 @@ end:
  *   2. a string to evaluate (format: eval:xxx)
  *   3. a string with escaped chars (format: esc:xxx or \xxx)
  *   4. a string with chars to hide (format: hide:char,string)
- *   5. a regex group captured (format: re:N (0.99) or re:+)
- *   6. a color (format: color:xxx)
- *   7. an info (format: info:name,arguments)
- *   8. current date/time (format: date or date:xxx)
- *   9. an environment variable (format: env:XXX)
- *  10. a ternary operator (format: if:condition?value_if_true:value_if_false)
- *  11. an option (format: file.section.option)
- *  12. a buffer local variable
- *  13. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *   5. a string with max chars (format: cut:max,suffix,string)
+ *   6. a regex group captured (format: re:N (0.99) or re:+)
+ *   7. a color (format: color:xxx)
+ *   8. an info (format: info:name,arguments)
+ *   9. current date/time (format: date or date:xxx)
+ *  10. an environment variable (format: env:XXX)
+ *  11. a ternary operator (format: if:condition?value_if_true:value_if_false)
+ *  12. an option (format: file.section.option)
+ *  13. a buffer local variable
+ *  14. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
  *                        or hdata[ptr].var1.var2)
  *
  * See /help in WeeChat for examples.
@@ -404,7 +405,37 @@ eval_replace_vars_cb (void *data, const char *text)
         return (hidden_string) ? hidden_string : strdup ("");
     }
 
-    /* 5. regex group captured */
+    /*
+     * 5. cut chars: max number of chars, and add an optional suffix when the
+     * string is cut
+     */
+    if (strncmp (text, "cut:", 4) == 0)
+    {
+        pos = strchr (text + 4, ',');
+        if (!pos)
+            return strdup ("");
+        pos2 = strchr (pos + 1, ',');
+        if (!pos2)
+            return strdup ("");
+        tmp = strndup (text + 4, pos - text - 4);
+        if (!tmp)
+            return strdup ("");
+        number = strtol (tmp, &error, 10);
+        if (!error || error[0] || (number < 0))
+        {
+            free (tmp);
+            return strdup ("");
+        }
+        free (tmp);
+        tmp = strndup (pos + 1, pos2 - pos - 1);
+        if (!tmp)
+            return strdup ("");
+        value = string_cut (pos2 + 1, number, tmp);
+        free (tmp);
+        return value;
+    }
+
+    /* 6. regex group captured */
     if (strncmp (text, "re:", 3) == 0)
     {
         if (eval_regex && eval_regex->result)
@@ -427,7 +458,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ("");
     }
 
-    /* 6. color code */
+    /* 7. color code */
     if (strncmp (text, "color:", 6) == 0)
     {
         ptr_value = gui_color_search_config (text + 6);
@@ -437,7 +468,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 7. info */
+    /* 8. info */
     if (strncmp (text, "info:", 5) == 0)
     {
         ptr_value = NULL;
@@ -457,7 +488,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 8. current date/time */
+    /* 9. current date/time */
     if ((strncmp (text, "date", 4) == 0) && (!text[4] || (text[4] == ':')))
     {
         date = time (NULL);
@@ -470,7 +501,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ((rc > 0) ? str_value : "");
     }
 
-    /* 9. environment variable */
+    /* 10. environment variable */
     if (strncmp (text, "env:", 4) == 0)
     {
         ptr_value = getenv (text + 4);
@@ -478,7 +509,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 10: ternary operator: if:condition?value_if_true:value_if_false */
+    /* 11: ternary operator: if:condition?value_if_true:value_if_false */
     if (strncmp (text, "if:", 3) == 0)
     {
         value = NULL;
@@ -542,7 +573,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return (value) ? value : strdup ("");
     }
 
-    /* 11. option: if found, return this value */
+    /* 12. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -575,7 +606,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 12. local variable in buffer */
+    /* 13. local variable in buffer */
     ptr_buffer = hashtable_get (pointers, "buffer");
     if (ptr_buffer)
     {
@@ -584,7 +615,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 13. hdata */
+    /* 14. hdata */
     value = NULL;
     hdata_name = NULL;
     list_name = NULL;

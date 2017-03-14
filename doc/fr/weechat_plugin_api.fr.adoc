@@ -2077,11 +2077,19 @@ première étendue à la dernière) :
   `+préfixe<TAB>message+` +
   `+©+`
 
-| `+${hide:x,valeur}+` |
-  Chaîne avec les caractères masqués (tous les caractères dans `valeur`
-  remplacés par `x`. |
+| `+${hide:x,chaîne}+` |
+  Chaîne avec les caractères masqués (tous les caractères dans `chaîne`
+  remplacés par `x`). |
   `+${hide:*,mot_de_passe}+` |
   `+************+`
+
+| `+${cut:max,suffixe,chaîne}+` +
+  (_WeeChat ≥ 1.8_) |
+  Chaîne avec `max` caractères affichés, et un `suffixe` facultatif si la chaîne est coupée. |
+  `+${cut:4,…,ceci est un test}+` +
+  `+${cut:2,>>,àéçôî}+` |
+  `+ceci…+` +
+  `+àé>>+`
 
 | `+${re:N}+` |
   Groupe regex capturé : `0` = toute la chaîne correspondante,

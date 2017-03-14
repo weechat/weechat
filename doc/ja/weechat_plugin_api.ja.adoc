@@ -2041,10 +2041,19 @@ char *weechat_string_eval_expression (const char *expr,
   `+prefix<TAB>message+` +
   `+©+`
 
-| `+${hide:x,value}+` |
-  隠す文字を含むテキスト (`value` に含まれる文字をすべて `x` で置換) |
+| `+${hide:x,string}+` |
+  隠す文字を含むテキスト (`string` に含まれる文字をすべて `x` で置換) |
   `+${hide:*,password}+` |
  `+********+`
+
+// TRANSLATION MISSING
+| `+${cut:max,suffix,string}+` +
+  (_WeeChat バージョン 1.8 以上で利用可_) |
+  String with `max` chars displayed, and optional `suffix` if string is cut. |
+  `+${cut:4,…,this is a test}+` +
+  `+${cut:2,>>,àéçôî}+` |
+  `+this…+` +
+  `+àé>>+`
 
 | `+${re:N}+` |
   正規表現のキャプチャグループ: `0` = マッチするすべての文字列、`1` から `99` =

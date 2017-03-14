@@ -51,6 +51,7 @@
 #include "wee-eval.h"
 #include "wee-hashtable.h"
 #include "wee-utf8.h"
+#include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
 #include "../plugins/plugin.h"
 
@@ -89,6 +90,45 @@ string_strndup (const char *string, int length)
     result[length] = '\0';
 
     return result;
+}
+
+/*
+ * Cuts a string after max "length" chars, adds an optional suffix
+ * after the string if it is cut.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_cut (const char *string, int length, const char *cut_suffix)
+{
+    int length_result, length_cut_suffix;
+    char *result;
+    const char *ptr_string;
+
+    ptr_string = gui_chat_string_add_offset (string, length);
+    if (!ptr_string[0])
+    {
+        /* no cut */
+        return strdup (string);
+    }
+
+    if (cut_suffix && cut_suffix[0])
+    {
+        length_cut_suffix = strlen (cut_suffix);
+        length_result = (ptr_string - string) + length_cut_suffix + 1;
+        result = malloc (length_result);
+        if (!result)
+            return NULL;
+        memcpy (result, string, ptr_string - string);
+        memcpy (result + (ptr_string - string), cut_suffix,
+                length_cut_suffix + 1);
+        return result;
+    }
+    else
+    {
+        return string_strndup (string, ptr_string - string);
+    }
 }
 
 /*
