@@ -57,6 +57,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     const char *hotlist_priority_none = "none";
     const char *hotlist_priority[4] = { "low", "message", "private",
                                         "highlight" };
+    const char *ptr_lag;
     int i, length_max_number, current_buffer, number, prev_number, priority;
     int rc;
 
@@ -166,6 +167,19 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                "color_hotlist", ptr_hotlist_format);
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "hotlist_priority", ptr_hotlist_priority);
+        ptr_lag = weechat_buffer_get_string (ptr_buffer, "localvar_lag");
+        if (ptr_lag && ptr_lag[0])
+        {
+            weechat_hashtable_set (
+                buflist_hashtable_extra_vars,
+                "format_lag",
+                weechat_config_string (buflist_config_format_lag));
+        }
+        else
+        {
+            weechat_hashtable_set (buflist_hashtable_extra_vars,
+                                   "format_lag", "");
+        }
 
         /* build string */
         line = weechat_string_eval_expression (

@@ -28,6 +28,7 @@ extern struct t_config_option *buflist_config_format_buffer;
 extern struct t_config_option *buflist_config_format_buffer_current;
 extern struct t_config_option *buflist_config_format_hotlist[4];
 extern struct t_config_option *buflist_config_format_hotlist_none;
+extern struct t_config_option *buflist_config_format_lag;
 
 extern char **buflist_config_sort_fields;
 extern int buflist_config_sort_fields_count;

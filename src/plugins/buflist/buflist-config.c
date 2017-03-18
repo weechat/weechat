@@ -39,6 +39,7 @@ struct t_config_option *buflist_config_format_buffer;
 struct t_config_option *buflist_config_format_buffer_current;
 struct t_config_option *buflist_config_format_hotlist[4];
 struct t_config_option *buflist_config_format_hotlist_none;
+struct t_config_option *buflist_config_format_lag;
 
 char **buflist_config_sort_fields = NULL;
 int buflist_config_sort_fields_count = 0;
@@ -208,6 +209,16 @@ buflist_config_init ()
         N_("format for a buffer not in hotlist"),
         NULL, 0, 0,
         "${color:default}",
+        NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_buflist, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_format_lag = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "lag", "string",
+        N_("format for lag on an irc server buffer"),
+        NULL, 0, 0,
+        " ${color:green}[${color:brown}${lag}${color:green}]",
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
