@@ -345,10 +345,17 @@ eval_replace_vars_cb (void *data, const char *text)
         {
             if (extra_vars_eval)
             {
-                return eval_replace_vars (ptr_value, pointers,
-                                          extra_vars, extra_vars_eval,
-                                          prefix, suffix,
-                                          eval_regex);
+                tmp = strdup (ptr_value);
+                if (!tmp)
+                    return NULL;
+                hashtable_remove (extra_vars, text);
+                value = eval_replace_vars (tmp, pointers,
+                                           extra_vars, extra_vars_eval,
+                                           prefix, suffix,
+                                           eval_regex);
+                hashtable_set (extra_vars, text, tmp);
+                free (tmp);
+                return value;
             }
             else
             {
