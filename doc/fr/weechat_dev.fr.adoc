@@ -70,6 +70,7 @@ Les répertoires principaux de WeeChat sont :
 |    plugins/       | API extension/script.
 |       alias/      | Extension Alias.
 |       aspell/     | Extension Aspell.
+|       buflist/    | Extension Buflist.
 |       charset/    | Extension Charset.
 |       exec/       | Extension Exec.
 |       fifo/       | Extension Fifo (tube FIFO utilisé pour envoyer des commandes à WeeChat).
@@ -195,6 +196,10 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       weechat-aspell-config.c     | Options de configuration pour Aspell (fichier aspell.conf).
 |       weechat-aspell-info.c       | Info/infolists/hdata pour Aspell.
 |       weechat-aspell-speller.c    | Gestion des correcteurs orthographiques.
+|    buflist/                       | Extension Buflist.
+|       buflist.c                   | Fonctions principales de Buflist.
+|       buflist-bar-item.c          | Objets de barre Buflist.
+|       buflist-config.c            | Options de configuration pour Buflist (fichier buflist.conf).
 |    charset/                       | Extension Charset.
 |       charset.c                   | Fonctions pour Charset.
 |    exec/                          | Extension Exec.

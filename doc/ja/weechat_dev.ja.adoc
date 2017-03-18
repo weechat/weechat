@@ -74,6 +74,7 @@ qweechat::
 |    plugins/       | プラグインとスクリプト向け API
 |       alias/      | alias プラグイン
 |       aspell/     | aspell プラグイン
+|       buflist/    | buflist プラグイン
 |       charset/    | charset プラグイン
 |       exec/       | exec プラグイン
 |       fifo/       | fifo プラグイン (WeeChat にコマンドを送信する FIFO パイプ)
@@ -199,6 +200,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       weechat-aspell-config.c     | aspell 設定オプション (aspell.conf ファイル)
 |       weechat-aspell-info.c       | aspell の情報/インフォリスト/hdata
 |       weechat-aspell-speller.c    | スペルチェッカ管理
+|    buflist/                       | buflist プラグイン
+|       buflist.c                   | buflist の主要関数
+|       buflist-bar-item.c          | buflist バー要素
+|       buflist-config.c            | buflist 設定オプション (buflist.conf ファイル)
 |    charset/                       | charset プラグイン
 |       charset.c                   | charset 関数
 |    exec/                          | exec プラグイン
