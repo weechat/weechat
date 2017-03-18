@@ -786,6 +786,34 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
 }
 
 /*
+ * Sets lag in server buffer (local variable), update bar item "lag"
+ * and send signal "irc_server_lag_changed" for the server.
+ */
+
+void
+irc_server_set_lag (struct t_irc_server *server)
+{
+    char str_lag[32];
+
+    if (server->lag >= weechat_config_integer (irc_config_network_lag_min_show))
+    {
+        snprintf (str_lag, sizeof (str_lag),
+                  ((server->lag_check_time.tv_sec == 0) || (server->lag < 1000)) ?
+                  "%.3f" : "%.0f",
+                  ((float)(server->lag)) / 1000);
+        weechat_buffer_set (server->buffer, "localvar_set_lag", str_lag);
+    }
+    else
+    {
+        weechat_buffer_set (server->buffer, "localvar_del_lag", "");
+    }
+    weechat_hook_signal_send ("irc_server_lag_changed",
+                              WEECHAT_HOOK_SIGNAL_STRING,
+                              server->name);
+    weechat_bar_item_update ("lag");
+}
+
+/*
  * Gets prefix_modes for server (for example: "ohv").
  *
  * Returns default modes if prefix_modes is not set in server.
@@ -3105,7 +3133,7 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
     struct t_irc_redirect *ptr_redirect, *ptr_next_redirect;
     time_t current_time;
     static struct timeval tv;
-    int away_check;
+    int away_check, refresh_lag;
 
     /* make C compiler happy */
     (void) pointer;
@@ -3179,6 +3207,7 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
             /* compute lag */
             if (ptr_server->lag_check_time.tv_sec != 0)
             {
+                refresh_lag = 0;
                 gettimeofday (&tv, NULL);
                 ptr_server->lag = (int)(weechat_util_timeval_diff (&(ptr_server->lag_check_time),
                                                                    &tv) / 1000);
@@ -3191,7 +3220,7 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                     if (ptr_server->lag != ptr_server->lag_displayed)
                     {
                         ptr_server->lag_displayed = ptr_server->lag;
-                        weechat_bar_item_update ("lag");
+                        refresh_lag = 1;
                     }
                 }
                 /* lag timeout? => disconnect */
@@ -3219,7 +3248,7 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                         if (ptr_server->lag != ptr_server->lag_displayed)
                         {
                             ptr_server->lag_displayed = ptr_server->lag;
-                            weechat_bar_item_update ("lag");
+                            refresh_lag = 1;
                         }
 
                         /* schedule next lag check in 5 seconds */
@@ -3229,6 +3258,8 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                             weechat_config_integer (irc_config_network_lag_check);
                     }
                 }
+                if (refresh_lag)
+                    irc_server_set_lag (ptr_server);
             }
 
             /* remove redirects if timeout occurs */
@@ -4831,6 +4862,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     server->lag_next_check = time (NULL) +
         weechat_config_integer (irc_config_network_lag_check);
     server->lag_last_refresh = 0;
+    irc_server_set_lag (server);
     server->monitor = 0;
     server->monitor_time = 0;
 

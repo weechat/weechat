@@ -9293,6 +9293,12 @@ List of signals sent by WeeChat and plugins:
   String: nome server. |
   Disconnesso dal server.
 
+// TRANSLATION MISSING
+| irc | irc_server_lag_changed +
+  _(WeeChat ≥ 1.8)_ |
+  String: server name. |
+  Lag changed on the server.
+
 | irc | irc_ignore_removing |
   Puntatore: ignore. |
   Rimozione dell'ignore.

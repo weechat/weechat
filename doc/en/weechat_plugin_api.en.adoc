@@ -9017,6 +9017,11 @@ List of signals sent by WeeChat and plugins:
   String: server name. |
   Disconnected from server.
 
+| irc | irc_server_lag_changed +
+  _(WeeChat ≥ 1.8)_ |
+  String: server name. |
+  Lag changed on the server.
+
 | irc | irc_ignore_removing |
   Pointer: ignore. |
   Removing ignore.

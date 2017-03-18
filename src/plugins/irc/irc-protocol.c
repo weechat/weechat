@@ -1838,17 +1838,19 @@ IRC_PROTOCOL_CALLBACK(pong)
         gettimeofday (&tv, NULL);
         server->lag = (int)(weechat_util_timeval_diff (&(server->lag_check_time),
                                                        &tv) / 1000);
-        if (server->lag != server->lag_displayed)
-        {
-            server->lag_displayed = server->lag;
-            weechat_bar_item_update ("lag");
-        }
 
         /* schedule next lag check */
         server->lag_check_time.tv_sec = 0;
         server->lag_check_time.tv_usec = 0;
         server->lag_next_check = time (NULL) +
             weechat_config_integer (irc_config_network_lag_check);
+
+        /* refresh lag bar item if needed */
+        if (server->lag != server->lag_displayed)
+        {
+            server->lag_displayed = server->lag;
+            irc_server_set_lag (server);
+        }
     }
     else
     {

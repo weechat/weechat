@@ -9066,6 +9066,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: サーバ名 |
   サーバから切断された
 
+// TRANSLATION MISSING
+| irc | irc_server_lag_changed +
+  _(WeeChat バージョン 1.8 以上で利用可)_ |
+  String: サーバ名 |
+  Lag changed on the server.
+
 | irc | irc_ignore_removing |
   Pointer: 無視 |
   無視条件を削除中

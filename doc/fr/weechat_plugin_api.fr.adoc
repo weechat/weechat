@@ -9198,6 +9198,11 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Chaîne : nom du serveur. |
   Déconnecté du serveur.
 
+| irc | irc_server_lag_changed +
+  _(WeeChat ≥ 1.8)_ |
+  Chaîne : nom du serveur. |
+  Le lag a changé sur le serveur.
+
 | irc | irc_ignore_removing |
   Pointeur : ignore. |
   Suppression d'un ignore en cours.
