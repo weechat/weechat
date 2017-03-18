@@ -831,8 +831,9 @@ You can try following tips to consume less memory:
 
 * Use the latest stable version (it is supposed to have less memory leaks than
   older versions).
-* Do not load some plugins if you don't use them, for example: aspell, fifo,
-  logger, perl, python, ruby, lua, tcl, guile, javascript, xfer (used for DCC).
+* Do not load some plugins if you don't use them, for example: aspell, buflist,
+  fifo, logger, perl, python, ruby, lua, tcl, guile, javascript,
+  xfer (used for DCC).
 * Load only scripts that you really need.
 * Do not load certificates if SSL is *NOT* used: set empty string in option
   _weechat.network.gnutls_ca_file_.
