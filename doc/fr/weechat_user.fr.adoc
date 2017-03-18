@@ -193,6 +193,9 @@ Liste des options couramment utilisées :
 | ENABLE_ASPELL | `ON`, `OFF` | ON |
   Compiler <<aspell_plugin,l'extension Aspell>>.
 
+| ENABLE_BUFLIST | `ON`, `OFF` | ON |
+  Compiler <<buflist_plugin,l'extension Buflist>>.
+
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   Compiler <<charset_plugin,l'extension Charset>>.
 
@@ -529,8 +532,9 @@ Les fichiers dans le répertoire principal sont :
 | plugins.conf | Fichier de configuration des extensions              | Possible, cela dépend des extensions/scripts.
 | alias.conf   | Fichier de configuration de l'extension _alias_      | Possible, cela dépend des alias.
 | aspell.conf  | Fichier de configuration de l'extension _aspell_     | Non.
-| charset.conf | Fichier de configuration de l'extension _charset_    | Non
-| exec.conf    | Fichier de configuration de l'extension _exec_       | Non
+| buflist.conf | Fichier de configuration de l'extension _buflist_    | Non.
+| charset.conf | Fichier de configuration de l'extension _charset_    | Non.
+| exec.conf    | Fichier de configuration de l'extension _exec_       | Non.
 | irc.conf     | Fichier de configuration de l'extension _irc_        | *Oui*: il peut contenir des mots de passes pour les serveurs, nickserv et les canaux (si non stockés dans `sec.conf`).
 | logger.conf  | Fichier de configuration de l'extension _logger_     | Non.
 | relay.conf   | Fichier de configuration de l'extension _relay_      | Non.
@@ -2050,6 +2054,7 @@ Les extensions par défaut sont :
 | Extension  | Description
 | alias      | Définir des alias pour les commandes.
 | aspell     | Vérification orthographique de la ligne de commande.
+| buflist    | Objet de barre avec la liste des tampons.
 | charset    | Encodage/encodage avec jeu de caractère sur les tampons.
 | exec       | Exécution de commandes externes dans WeeChat.
 | fifo       | Tube FIFO pour envoyer des commandes à distance vers WeeChat.
@@ -2157,6 +2162,29 @@ Exemple de suggestions avec des dictionnaires anglais et français (`en,fr`) :
 │[@Flashy] prinr █                                                                │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
+
+[[buflist_plugin]]
+=== Extension Buflist
+
+L'extension Buflist affiche une liste des tampons dans un objet de barre appelé
+"buflist". +
+Une barre par défaut "buflist" est créée au démarrage avec cet objet de barre.
+
+[[buflist_options]]
+==== Options (buflist.conf)
+
+Sections :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle  | Description
+| format  | /set buflist.format.* | Formats utilisés pour l'affichage de la liste des tampons.
+| look    | /set buflist.look.*   | Aspect/présentation.
+|===
+
+Options :
+
+include::autogen/user/buflist_options.adoc[]
 
 [[charset_plugin]]
 === Extension Charset

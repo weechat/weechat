@@ -195,6 +195,9 @@ cmake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_ASPELL | `ON`, `OFF` | ON |
   <<aspell_plugin,Aspell プラグイン>>のコンパイル。
 
+| ENABLE_BUFLIST | `ON`, `OFF` | ON |
+  <<buflist_plugin,Buflist プラグイン>>のコンパイル。
+
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   <<charset_plugin,Charset プラグイン>>のコンパイル。
 
@@ -522,6 +525,7 @@ WeeChat を設定するにはこのファイルを編集するか、WeeChat
 | plugins.conf | プラグイン設定ファイル                  | 保護される場合もあります、プラグインおよびスクリプトに依存します
 | alias.conf   | _alias_ プラグイン用の設定ファイル      | 保護される場合もあります、エイリアスに依存します
 | aspell.conf  | _aspell_ プラグイン用の設定ファイル     | 保護されません
+| buflist.conf | _buflist_ プラグイン用の設定ファイル    | 保護されません
 | charset.conf | _charset_ プラグイン用の設定ファイル    | 保護されません
 | exec.conf    | _exec_ プラグイン用の設定ファイル       | 保護されません
 | irc.conf     | _irc_ プラグイン用の設定ファイル        | *保護されます*: サーバ、nickserv、チャンネルのパスワードを保存することが可能です (これらのデータが `sec.conf` に保存されない場合)
@@ -1984,6 +1988,8 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 | プラグイン | 説明
 | alias      | コマンドの別名を定義
 | aspell     | コマンドラインのスペルチェック
+// TRANSLATION MISSING
+| buflist    | Bar item with list of buffers.
 | charset    | バッファの文字コードに従ってデコード/エンコード
 | exec       | WeeChat 内部から外部コマンドを実行
 | fifo       | 外部から WeeChat にコマンドを送信するための FIFO パイプ
@@ -2089,6 +2095,30 @@ _aspell.check.suggestions_ オプションで設定します。
 │[@Flashy] prinr █                                                                │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
+
+[[buflist_plugin]]
+=== Buflist プラグイン
+
+// TRANSLATION MISSING
+Buflist plugin displays a list of buffers in a bar item called "buflist". +
+A default bar "buflist" is created on startup with this item.
+
+[[buflist_options]]
+==== Options (buflist.conf)
+
+セクション:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド          | 説明
+| format     | /set buflist.format.* | Formats used to display list of buffers.
+| look       | /set buflist.look.*   | Look and feel.
+|===
+
+オプション:
+
+include::autogen/user/buflist_options.adoc[]
 
 [[charset_plugin]]
 === Charset プラグイン

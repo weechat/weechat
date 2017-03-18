@@ -190,6 +190,9 @@ List of commonly used options:
 | ENABLE_ASPELL | `ON`, `OFF` | ON |
   Compile <<aspell_plugin,Aspell plugin>>.
 
+| ENABLE_BUFLIST | `ON`, `OFF` | ON |
+  Compile <<buflist_plugin,Buflist plugin>>.
+
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   Compile <<charset_plugin,Charset plugin>>.
 
@@ -519,6 +522,7 @@ The files in home directory are:
 | plugins.conf | Plugins configuration file              | Possible, depends on plugins/scripts.
 | alias.conf   | Configuration file for _alias_ plugin   | Possible, depends on aliases.
 | aspell.conf  | Configuration file for _aspell_ plugin  | No.
+| buflist.conf | Configuration file for _buflist_ plugin | No.
 | charset.conf | Configuration file for _charset_ plugin | No.
 | exec.conf    | Configuration file for _exec_ plugin    | No.
 | irc.conf     | Configuration file for _irc_ plugin     | *Yes*: it can contain passwords for servers, nickserv and channels (if not stored in `sec.conf`).
@@ -1984,6 +1988,7 @@ Default plugins are:
 | Plugin     | Description
 | alias      | Define alias for commands.
 | aspell     | Spell checking for command line.
+| buflist    | Bar item with list of buffers.
 | charset    | Charset decoding/encoding for buffers.
 | exec       | Execution of external commands in WeeChat.
 | fifo       | FIFO pipe used to remotely send commands to WeeChat.
@@ -2089,6 +2094,28 @@ Example of suggestions with English and French dictionaries (`en,fr`):
 │[@Flashy] prinr █                                                                │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
+
+[[buflist_plugin]]
+=== Buflist plugin
+
+Buflist plugin displays a list of buffers in a bar item called "buflist". +
+A default bar "buflist" is created on startup with this item.
+
+[[buflist_options]]
+==== Options (buflist.conf)
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Control command       | Description
+| format     | /set buflist.format.* | Formats used to display list of buffers.
+| look       | /set buflist.look.*   | Look and feel.
+|===
+
+Options:
+
+include::autogen/user/buflist_options.adoc[]
 
 [[charset_plugin]]
 === Charset plugin

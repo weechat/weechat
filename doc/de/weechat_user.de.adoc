@@ -198,6 +198,9 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_ASPELL | `ON`, `OFF` | ON |
   kompiliert <<aspell_plugin,Aspell Erweiterung>>.
 
+| ENABLE_BUFLIST | `ON`, `OFF` | ON |
+  kompiliert <<buflist_plugin,Buflist Erweiterung>>.
+
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   kompiliert <<charset_plugin,Charset Erweiterung>>.
 
@@ -527,6 +530,7 @@ Folgende Dateien findet man im Heimatverzeichnis:
 | plugins.conf | Konfigurationsdatei für Erweiterungen   | möglich, hängt von der Erweiterung/Skript ab.
 | alias.conf   | Konfigurationsdatei: Alias-Erweiterung  | möglich, hängt von den Aliases ab.
 | aspell.conf  | Konfiguration für _aspell_-Erweiterung  | Nein.
+| buflist.conf | Konfiguration für _buflist_-Erweiterung | Nein.
 | charset.conf | Konfiguration für _charset_-Erweiterung | Nein.
 | exec.conf    | Konfiguration für _exec_-Erweiterung    | Nein.
 | irc.conf     | Konfiguration für _irc_-Erweiterung     | *Ja*: Datei kann Passwörter für Server, Nickserv oder Channels enthalten (sofern diese nicht in `sec.conf` gesichert sind).
@@ -2033,6 +2037,8 @@ Standarderweiterungen:
 | Erweiterung | Beschreibung
 | alias       | definiert Alias für Befehle.
 | aspell      | Rechtschreibprüfung für Befehlszeile.
+// TRANSLATION MISSING
+| buflist     | Bar item with list of buffers.
 | charset     | Zeichensatz (de)-kodierung in Buffern.
 | exec        | ausführen von externen Befehlen aus WeeChat heraus.
 | fifo        | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann.
@@ -2139,6 +2145,30 @@ Beispiel der Rechtschreibkorrektur, mit zwei Wörterbüchern (`en,de`):
 │[@Flashy] prinr █                                                                │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
+
+[[buflist_plugin]]
+=== Buflist Erweiterung
+
+// TRANSLATION MISSING
+Buflist plugin displays a list of buffers in a bar item called "buflist". +
+A default bar "buflist" is created on startup with this item.
+
+[[buflist_options]]
+==== Options (buflist.conf)
+
+Sektionen:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl          | Beschreibung
+| format  | /set buflist.format.* | Formats used to display list of buffers.
+| look    | /set buflist.look.*   | Look and feel.
+|===
+
+Optionen:
+
+include::autogen/user/buflist_options.adoc[]
 
 [[charset_plugin]]
 === Charset Erweiterung

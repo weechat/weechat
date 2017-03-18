@@ -196,6 +196,9 @@ Lista popularnych opcji:
 | ENABLE_ASPELL | `ON`, `OFF` | ON |
   Kompilacja <<aspell_plugin,wtyczki aspell>>.
 
+| ENABLE_BUFLIST | `ON`, `OFF` | ON |
+  Kompilacja <<buflist_plugin,wtyczki buflist>>.
+
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   Kompilacja <<charset_plugin,wtyczki charset>>.
 
@@ -526,6 +529,7 @@ Pliki w katalogu domowym:
 | plugins.conf | Plik konfiguracyjny wtyczek                   | Możliwe, zależy od wtyczki/skryptu.
 | alias.conf   | Plik konfiguracyjny wtyczki _alias_           | Możliwe, zależy od aliasu.
 | aspell.conf  | Plik konfiguracyjny wtyczki _aspell_          | Nie.
+| buflist.conf | Plik konfiguracyjny wtyczki _buflist_         | Nie.
 | charset.conf | Plik konfiguracyjny wtyczki _charset_         | Nie.
 | exec.conf    | Plik konfiguracyjny wtyczki _exec_            | Nie.
 | irc.conf     | Plik konfiguracyjny wtyczki _irc_             | *Tak*: Może zawierać hasła dla serwerów, nickserva i kanałów (jeśli nie zostały zapisane w `sec.conf`).
@@ -1999,6 +2003,8 @@ Domyślne wtyczki:
 | Wtyczka    | Opis
 | alias      | Definiuje aliasy dla komend.
 | aspell     | Sprawdzanie pisowni w linii poleceń.
+// TRANSLATION MISSING
+| buflist    | Bar item with list of buffers.
 | charset    | Ustawianie kodowania dla buforów.
 | exec       | Wykonuje zewnętrzną komendę z poziomu WeeChat.
 | fifo       | Kolejka FIFO używana do zdalnego wysyłania poleceń dla WeeChat.
@@ -2103,6 +2109,30 @@ Przykład sugestii ze słownikami angielskim i francuskim (`en,fr`):
 │[@Flashy] prinr █                                                                │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
+
+[[buflist_plugin]]
+=== Wtyczka buflist
+
+// TRANSLATION MISSING
+Buflist plugin displays a list of buffers in a bar item called "buflist". +
+A default bar "buflist" is created on startup with this item.
+
+[[buflist_options]]
+==== Options (buflist.conf)
+
+Sekcje:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja | Komenda               | Opis
+| format | /set buflist.format.* | Formats used to display list of buffers.
+| look   | /set buflist.look.*   | Look and feel.
+|===
+
+Opcje:
+
+include::autogen/user/buflist_options.adoc[]
 
 [[charset_plugin]]
 === Wtyczka charset
