@@ -419,7 +419,7 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
         }
         extra_vars = hashtable_new (32,
                                     WEECHAT_HASHTABLE_STRING,
-                                    WEECHAT_HASHTABLE_POINTER,
+                                    WEECHAT_HASHTABLE_STRING,
                                     NULL, NULL);
         if (extra_vars)
         {
@@ -432,7 +432,7 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
         }
         options = hashtable_new (32,
                                  WEECHAT_HASHTABLE_STRING,
-                                 WEECHAT_HASHTABLE_POINTER,
+                                 WEECHAT_HASHTABLE_STRING,
                                  NULL, NULL);
         if (options)
             hashtable_set (options, "type", "condition");
