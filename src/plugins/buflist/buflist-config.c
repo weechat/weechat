@@ -37,8 +37,10 @@ struct t_config_option *buflist_config_look_sort;
 
 struct t_config_option *buflist_config_format_buffer;
 struct t_config_option *buflist_config_format_buffer_current;
-struct t_config_option *buflist_config_format_hotlist[4];
-struct t_config_option *buflist_config_format_hotlist_none;
+struct t_config_option *buflist_config_format_hotlist;
+struct t_config_option *buflist_config_format_hotlist_level[4];
+struct t_config_option *buflist_config_format_hotlist_level_none;
+struct t_config_option *buflist_config_format_hotlist_separator;
 struct t_config_option *buflist_config_format_lag;
 
 char **buflist_config_sort_fields = NULL;
@@ -163,7 +165,17 @@ buflist_config_init ()
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
-    buflist_config_format_hotlist[0] = weechat_config_new_option (
+    buflist_config_format_hotlist = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "hotlist", "string",
+        N_("format for hotlist"),
+        NULL, 0, 0,
+        " ${color:green}(${hotlist}${color:green})",
+        NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_buflist, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_format_hotlist_level[0] = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_low", "string",
         N_("format for a buffer with hotlist level \"low\""),
@@ -173,7 +185,7 @@ buflist_config_init ()
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
-    buflist_config_format_hotlist[1] = weechat_config_new_option (
+    buflist_config_format_hotlist_level[1] = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_message", "string",
         N_("format for a buffer with hotlist level \"message\""),
@@ -183,7 +195,7 @@ buflist_config_init ()
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
-    buflist_config_format_hotlist[2] = weechat_config_new_option (
+    buflist_config_format_hotlist_level[2] = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_private", "string",
         N_("format for a buffer with hotlist level \"private\""),
@@ -193,7 +205,7 @@ buflist_config_init ()
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
-    buflist_config_format_hotlist[3] = weechat_config_new_option (
+    buflist_config_format_hotlist_level[3] = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_highlight", "string",
         N_("format for a buffer with hotlist level \"highlight\""),
@@ -203,12 +215,22 @@ buflist_config_init ()
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
-    buflist_config_format_hotlist_none = weechat_config_new_option (
+    buflist_config_format_hotlist_level_none = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_none", "string",
         N_("format for a buffer not in hotlist"),
         NULL, 0, 0,
         "${color:default}",
+        NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_buflist, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_format_hotlist_separator = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "hotlist_separator", "string",
+        N_("separator for counts in hotlist"),
+        NULL, 0, 0,
+        "${color:default},",
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,

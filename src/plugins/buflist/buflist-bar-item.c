@@ -51,15 +51,16 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     struct t_gui_hotlist *ptr_hotlist;
     char **buflist, *str_buflist;
     char str_format_number[32], str_format_number_empty[32];
-    char str_number[32], str_indent_name[4], *line;
+    char str_number[32], str_indent_name[4], *line, **hotlist, *str_hotlist;
+    char str_hotlist_count[32];
     const char *ptr_format, *ptr_format_current, *ptr_name, *ptr_type;
     const char *ptr_hotlist_format, *ptr_hotlist_priority;
     const char *hotlist_priority_none = "none";
     const char *hotlist_priority[4] = { "low", "message", "private",
                                         "highlight" };
     const char *ptr_lag;
-    int i, length_max_number, current_buffer, number, prev_number, priority;
-    int rc;
+    int i, j, length_max_number, current_buffer, number, prev_number, priority;
+    int rc, count;
 
     /* make C compiler happy */
     (void) pointer;
@@ -71,7 +72,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
 
     prev_number = -1;
 
-    buflist = weechat_string_dyn_alloc (1);
+    buflist = weechat_string_dyn_alloc (256);
 
     ptr_format = weechat_config_string (buflist_config_format_buffer);
     ptr_format_current = weechat_config_string (buflist_config_format_buffer_current);
@@ -150,7 +151,9 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "name", ptr_name);
 
-        ptr_hotlist_format = weechat_config_string (buflist_config_format_hotlist_none);
+        /* hotlist */
+        ptr_hotlist_format = weechat_config_string (
+            buflist_config_format_hotlist_level_none);
         ptr_hotlist_priority = hotlist_priority_none;
         if (ptr_hotlist)
         {
@@ -159,7 +162,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
             if ((priority >= 0) && (priority < 4))
             {
                 ptr_hotlist_format = weechat_config_string (
-                    buflist_config_format_hotlist[priority]);
+                    buflist_config_format_hotlist_level[priority]);
                 ptr_hotlist_priority = hotlist_priority[priority];
             }
         }
@@ -167,6 +170,52 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                "color_hotlist", ptr_hotlist_format);
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "hotlist_priority", ptr_hotlist_priority);
+        str_hotlist = NULL;
+        if (ptr_hotlist)
+        {
+            hotlist = weechat_string_dyn_alloc (64);
+            if (hotlist)
+            {
+                for (j = 3; j >= 0; j--)
+                {
+                    snprintf (str_hotlist_count, sizeof (str_hotlist_count),
+                              "%02d|count", j);
+                    count = weechat_hdata_integer (buflist_hdata_hotlist,
+                                                   ptr_hotlist,
+                                                   str_hotlist_count);
+                    if (count > 0)
+                    {
+                        if (*hotlist[0])
+                        {
+                            weechat_string_dyn_concat (
+                                hotlist,
+                                weechat_config_string (
+                                    buflist_config_format_hotlist_separator));
+                        }
+                        weechat_string_dyn_concat (
+                            hotlist,
+                            weechat_config_string (
+                                buflist_config_format_hotlist_level[j]));
+                        snprintf (str_hotlist_count, sizeof (str_hotlist_count),
+                                  "%d", count);
+                        weechat_string_dyn_concat (hotlist, str_hotlist_count);
+                    }
+                }
+                str_hotlist = *hotlist;
+                weechat_string_dyn_free (hotlist, 0);
+            }
+        }
+        weechat_hashtable_set (
+            buflist_hashtable_extra_vars,
+            "format_hotlist",
+            (str_hotlist) ? weechat_config_string (buflist_config_format_hotlist) : "");
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "hotlist",
+                               (str_hotlist) ? str_hotlist : "");
+        if (str_hotlist)
+            free (str_hotlist);
+
+        /* lag */
         ptr_lag = weechat_buffer_get_string (ptr_buffer, "localvar_lag");
         if (ptr_lag && ptr_lag[0])
         {
@@ -232,7 +281,7 @@ buflist_bar_item_init ()
     buflist_hashtable_extra_vars = weechat_hashtable_new (
         32,
         WEECHAT_HASHTABLE_STRING,
-        WEECHAT_HASHTABLE_POINTER,
+        WEECHAT_HASHTABLE_STRING,
         NULL,
         NULL);
     if (!buflist_hashtable_extra_vars)
