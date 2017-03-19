@@ -1045,7 +1045,7 @@ irc_server_get_default_msg (const char *default_msg,
 
     extra_vars = weechat_hashtable_new (32,
                                         WEECHAT_HASHTABLE_STRING,
-                                        WEECHAT_HASHTABLE_POINTER,
+                                        WEECHAT_HASHTABLE_STRING,
                                         NULL,
                                         NULL);
     if (extra_vars)
