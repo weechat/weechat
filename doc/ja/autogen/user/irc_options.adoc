@@ -477,7 +477,7 @@
 ** デフォルト値: `+300+`
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
-** 説明: pass:none[interval between two refreshes of lag item, when lag is increasing (in seconds)]
+** 説明: pass:none[遅延時間が増加した際の、遅延要素の 2 回のリフレッシュの間のインターバル (秒単位)]
 ** タイプ: 整数
 ** 値: 1 .. 3600
 ** デフォルト値: `+1+`
