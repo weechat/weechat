@@ -310,13 +310,18 @@ Another solution is to move nicklist to top or bottom, for example:
 
 With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]).
 
-By default, WeeChat displays time and prefix for each line and optional bars
-around chat area. To make easier URL click, you can move nicklist to top and
-remove alignment on nick:
+To make opening URLs easier, you can:
 
+* move nicklist to top:
 ----
 /set weechat.bar.nicklist.position top
-/set weechat.look.prefix_align none
+----
+* disable alignment for multiline words (WeeChat ≥ 1.7):
+----
+/set weechat.look.align_multiline_words off
+----
+* or for all wrapped lines:
+----
 /set weechat.look.align_end_of_lines time
 ----
 
