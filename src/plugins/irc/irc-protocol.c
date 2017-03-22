@@ -2310,10 +2310,15 @@ IRC_PROTOCOL_CALLBACK(topic)
 
     /*
      * unmask a smart filtered join if it is in hashtable
-     * "join_smart_filtered" of channel
+     * "join_smart_filtered" of channel, set speaking time
      */
     if (ptr_channel)
+    {
         irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
+        irc_channel_nick_speaking_add (ptr_channel, nick, 0);
+        irc_channel_nick_speaking_time_remove_old (ptr_channel);
+        irc_channel_nick_speaking_time_add (server, ptr_channel, nick, time (NULL));
+    }
 
     if (pos_topic && pos_topic[0])
     {
