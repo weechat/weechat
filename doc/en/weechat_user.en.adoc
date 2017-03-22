@@ -2529,10 +2529,11 @@ For more info about Freenode and TOR:
 http://freenode.net/kb/answer/chat#accessing-freenode-via-tor
 
 [[irc_smart_filter_join_part_quit]]
-==== Smart filter for join/part/quit messages
+==== Smart filter for join/part/quit/nick/mode messages
 
-A smart filter is available to filter join/part/quit messages when nick did not
-say something during past X minutes on channel.
+Smart filtering is available to filter join/part/quit/nick/mode messages when
+nick did not say anything (or set topic, kick or get kicked) during the past X
+minutes on channel.
 
 Smart filter is enabled by default, but you must add a filter to hide lines on
 buffers, for example:
@@ -2541,20 +2542,15 @@ buffers, for example:
 /filter add irc_smart * irc_smart_filter *
 ----
 
-It is possible to create filter for one channel only or channels beginning with
-same name (see `/help filter`):
+It is possible to create a filter for only one channel or channels with the same
+beginning (see `/help filter`):
 
 ----
 /filter add irc_smart_weechat irc.freenode.#weechat irc_smart_filter *
 /filter add irc_smart_weechats irc.freenode.#weechat* irc_smart_filter *
 ----
 
-You can hide only join or part/quit with following options:
-
-----
-/set irc.look.smart_filter_join on
-/set irc.look.smart_filter_quit on
-----
+You can choose what to hide with the options _pass:[irc.look.smart_filter_*]_.
 
 You can setup delay (in minutes):
 
@@ -2562,8 +2558,8 @@ You can setup delay (in minutes):
 /set irc.look.smart_filter_delay 5
 ----
 
-If a nick did not speak during last 5 minutes, its join and/or part/quit will be
-hidden on channel.
+If a nick did not speak during the last 5 minutes, its join/part/quit/nick/mode
+lines will be hidden on channel.
 
 [[irc_ctcp_replies]]
 ==== CTCP replies
