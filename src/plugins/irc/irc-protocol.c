@@ -1926,9 +1926,12 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         {
             /*
              * unmask a smart filtered join if it is in hashtable
-             * "join_smart_filtered" of channel
+             * "join_smart_filtered" of channel, set speaking time
              */
             irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
+            irc_channel_nick_speaking_time_remove_old (ptr_channel);
+            irc_channel_nick_speaking_time_add (server, ptr_channel, nick,
+                                                time (NULL));
 
             /* CTCP to channel */
             if (pos_args[0] == '\01')
@@ -1990,9 +1993,6 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 nick,
                 weechat_string_has_highlight (pos_args,
                                               server->nick));
-            irc_channel_nick_speaking_time_remove_old (ptr_channel);
-            irc_channel_nick_speaking_time_add (server, ptr_channel, nick,
-                                                time (NULL));
         }
     }
     else

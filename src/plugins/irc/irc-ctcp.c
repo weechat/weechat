@@ -1010,9 +1010,6 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
                                                (pos_args) ?
                                                weechat_string_has_highlight (pos_args,
                                                                              server->nick) : 0);
-                irc_channel_nick_speaking_time_remove_old (channel);
-                irc_channel_nick_speaking_time_add (server, channel, nick,
-                                                    time (NULL));
                 weechat_printf_date_tags (
                     channel->buffer,
                     date,
