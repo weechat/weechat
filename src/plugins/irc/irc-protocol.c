@@ -945,6 +945,7 @@ IRC_PROTOCOL_CALLBACK(kick)
     char *pos_comment;
     const char *ptr_autorejoin;
     int rejoin;
+    char *nick_kicked;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_kicked;
 
@@ -958,8 +959,20 @@ IRC_PROTOCOL_CALLBACK(kick)
     if (!ptr_channel)
         return WEECHAT_RC_OK;
 
+    nick_kicked = argv[3];
+
     ptr_nick = irc_nick_search (server, ptr_channel, nick);
-    ptr_nick_kicked = irc_nick_search (server, ptr_channel, argv[3]);
+    ptr_nick_kicked = irc_nick_search (server, ptr_channel, nick_kicked);
+
+    irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
+    irc_channel_nick_speaking_add (ptr_channel, nick, 0);
+    irc_channel_nick_speaking_time_remove_old (ptr_channel);
+    irc_channel_nick_speaking_time_add (server, ptr_channel, nick, time (NULL));
+
+    irc_channel_join_smart_filtered_unmask (ptr_channel, nick_kicked);
+    irc_channel_nick_speaking_add (ptr_channel, nick_kicked, 0);
+    irc_channel_nick_speaking_time_remove_old (ptr_channel);
+    irc_channel_nick_speaking_time_add (server, ptr_channel, nick_kicked, time (NULL));
 
     if (pos_comment)
     {
@@ -973,8 +986,8 @@ IRC_PROTOCOL_CALLBACK(kick)
             irc_nick_color_for_msg (server, 1, ptr_nick, nick),
             nick,
             IRC_COLOR_MESSAGE_QUIT,
-            irc_nick_color_for_msg (server, 1, ptr_nick_kicked, argv[3]),
-            argv[3],
+            irc_nick_color_for_msg (server, 1, ptr_nick_kicked, nick_kicked),
+            nick_kicked,
             IRC_COLOR_MESSAGE_QUIT,
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
@@ -993,12 +1006,12 @@ IRC_PROTOCOL_CALLBACK(kick)
             irc_nick_color_for_msg (server, 1, ptr_nick, nick),
             nick,
             IRC_COLOR_MESSAGE_QUIT,
-            irc_nick_color_for_msg (server, 1, ptr_nick_kicked, argv[3]),
-            argv[3],
+            irc_nick_color_for_msg (server, 1, ptr_nick_kicked, nick_kicked),
+            nick_kicked,
             IRC_COLOR_MESSAGE_QUIT);
     }
 
-    if (irc_server_strcasecmp (server, argv[3], server->nick) == 0)
+    if (irc_server_strcasecmp (server, nick_kicked, server->nick) == 0)
     {
         /*
          * my nick was kicked => free all nicks, channel is not active any
