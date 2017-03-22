@@ -287,9 +287,10 @@ irc_mode_smart_filtered (struct t_irc_server *server, char mode)
     if (strcmp (ptr_modes, "*") == 0)
         return 1;
 
-    /* if var is "+", modes from server prefixes are filtered */
-    if (strcmp (ptr_modes, "+") == 0)
-        return strchr (irc_server_get_prefix_modes (server), mode) ? 1 : 0;
+    /* if var has "+", modes from server prefixes are filtered */
+    if (strchr (ptr_modes, '+')
+        && strchr (irc_server_get_prefix_modes (server), mode))
+        return 1;
 
     /*
      * if var starts with "-", smart filter all modes except following modes
