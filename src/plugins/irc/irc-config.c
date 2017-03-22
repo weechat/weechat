@@ -2886,17 +2886,18 @@ irc_config_init ()
     irc_config_look_smart_filter = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter", "boolean",
-        N_("filter join/part/quit/nick messages for a nick if not speaking "
-           "for some minutes on channel (you must create a filter on tag "
+        N_("filter join/part/quit/nick/mode messages for a nick that has not "
+           "spoken (or set topic, kicked or got kicked) for some minutes on "
+           "channel (you must create a filter on tag "
            "\"irc_smart_filter\")"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_delay = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter_delay", "integer",
-        N_("delay for filtering join/part/quit messages (in minutes): if the "
-           "nick did not speak during the last N minutes, the join/part/quit is "
-           "filtered"),
+        N_("delay for filtering join/part/quit/nick/mode messages (in "
+            "minutes): if the nick did not speak during the last N minutes, the"
+            "line is filtered"),
         NULL, 1, 60*24*7, "5", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_join = weechat_config_new_option (
@@ -2911,9 +2912,9 @@ irc_config_init ()
         "smart_filter_join_unmask", "integer",
         N_("delay for unmasking a join message that was filtered with tag "
            "\"irc_smart_filter\" (in minutes): if a nick has joined max N "
-           "minutes ago and then says something on channel (message, notice or "
-           "update on topic), the join is unmasked, as well as nick changes "
-           "after this join (0 = disable: never unmask a join)"),
+           "minutes ago and then says something on channel (or sets topic, "
+           "kicks or gets kicked), the join is unmasked, as well as nick "
+           "changes after this join (0 = disable: never unmask a join)"),
         NULL, 0, 60*24*7, "30", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_mode = weechat_config_new_option (
@@ -2921,10 +2922,10 @@ irc_config_init ()
         "smart_filter_mode", "string",
         /* TRANSLATORS: please do not translate "mode" */
         N_("enable smart filter for \"mode\" messages: \"*\" to filter all "
-           "modes, \"+\" to filter all modes in server prefixes (for example "
+           "modes, \"+\" to filter all nick prefix modes (for example "
            "\"ovh\"), \"xyz\" to filter only modes x/y/z, \"-xyz\" to filter "
-           "all modes but not x/y/z; examples: \"ovh\": filter modes o/v/h, "
-           "\"-bkl\": filter all modes but not b/k/l"),
+           "all modes except x/y/z; examples: \"l+\": filter mode \"l\" and "
+           "all prefix modes, \"-bkl\": filter all modes except b/k/l"),
         NULL, 0, 0, "+", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_nick = weechat_config_new_option (
