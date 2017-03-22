@@ -1173,14 +1173,14 @@ IRC_PROTOCOL_CALLBACK(mode)
     {
         smart_filter = 0;
         ptr_channel = irc_channel_search (server, argv[2]);
-        if (ptr_channel)
-        {
-            smart_filter = irc_mode_channel_set (server, ptr_channel,
-                                                 pos_modes);
-        }
         local_mode = (irc_server_strcasecmp (server, nick, server->nick) == 0);
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
         ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+        if (ptr_channel)
+        {
+            smart_filter = irc_mode_channel_set (server, ptr_channel,
+                                                 pos_modes, ptr_nick);
+        }
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL,
                                              ptr_buffer),
@@ -3320,7 +3320,7 @@ IRC_PROTOCOL_CALLBACK(324)
         if (argc > 4)
         {
             (void) irc_mode_channel_set (server, ptr_channel,
-                                         ptr_channel->modes);
+                                         ptr_channel->modes, NULL);
         }
     }
     if (!ptr_channel
