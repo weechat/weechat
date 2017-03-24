@@ -86,7 +86,7 @@ char *gui_buffer_properties_get_integer[] =
   "nicklist_visible_count", "input", "input_get_unknown_commands",
   "input_size", "input_length", "input_pos", "input_1st_display",
   "num_history", "text_search", "text_search_exact", "text_search_regex",
-  "text_search_where", "text_search_found",
+  "text_search_where", "text_search_found", "max_buffer_lines_number",
   NULL
 };
 char *gui_buffer_properties_get_string[] =
@@ -107,7 +107,7 @@ char *gui_buffer_properties_set[] =
   "highlight_words_del", "highlight_regex", "highlight_tags_restrict",
   "highlight_tags", "hotlist_max_level_nicks", "hotlist_max_level_nicks_add",
   "hotlist_max_level_nicks_del", "input", "input_pos",
-  "input_get_unknown_commands",
+  "input_get_unknown_commands", "max_buffer_lines_number",
   NULL
 };
 
@@ -623,6 +623,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->day_change = 1;
     new_buffer->clear = 1;
     new_buffer->filter = 1;
+    new_buffer->max_buffer_lines_number = -1;
 
     /* close callback */
     new_buffer->close_callback = close_callback;
@@ -1082,6 +1083,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
         return buffer->text_search_where;
     else if (string_strcasecmp (property, "text_search_found") == 0)
         return buffer->text_search_found;
+    else if (string_strcasecmp (property, "max_buffer_lines_number") == 0)
+        return buffer->max_buffer_lines_number;
 
     return 0;
 }
@@ -2023,6 +2026,15 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_input_get_unknown_commands (buffer, number);
+    }
+    else if (string_strcasecmp (property, "max_buffer_lines_number") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+		{
+			buffer->max_buffer_lines_number = number;
+		}
     }
     else if (string_strncasecmp (property, "localvar_set_", 13) == 0)
     {
@@ -4163,6 +4175,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, local_variables, HASHTABLE, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, prev_buffer, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_buffer, next_buffer, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_buffer, max_buffer_lines_number, INTEGER, 0, NULL, NULL);
         HDATA_LIST(gui_buffers, WEECHAT_HDATA_LIST_CHECK_POINTERS);
         HDATA_LIST(last_gui_buffer, 0);
         HDATA_LIST(gui_buffer_last_displayed, 0);
@@ -4359,6 +4372,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_string (ptr_item, "hotlist_max_level_nicks", hashtable_get_string (buffer->hotlist_max_level_nicks, "keys_values")))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "max_buffer_lines_number", buffer->max_buffer_lines_number))
+        return 0;
     i = 0;
     for (ptr_key = buffer->keys; ptr_key; ptr_key = ptr_key->next_key)
     {
@@ -4542,6 +4557,7 @@ gui_buffer_print_log ()
         log_printf ("  last_input_undo . . . . : 0x%lx", ptr_buffer->last_input_undo);
         log_printf ("  ptr_input_undo. . . . . : 0x%lx", ptr_buffer->ptr_input_undo);
         log_printf ("  input_undo_count. . . . : %d",    ptr_buffer->input_undo_count);
+        log_printf ("  max_buffer_lines_number : %d",    ptr_buffer->max_buffer_lines_number);
         num = 0;
         for (ptr_undo = ptr_buffer->input_undo; ptr_undo;
              ptr_undo = ptr_undo->next_undo)
