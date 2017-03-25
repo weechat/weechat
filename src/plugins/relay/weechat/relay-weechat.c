@@ -277,6 +277,9 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
 void
 relay_weechat_free (struct t_relay_client *client)
 {
+    if (!client)
+        return;
+
     if (client->protocol_data)
     {
         if (RELAY_WEECHAT_DATA(client, buffers_sync))

@@ -119,6 +119,9 @@ relay_raw_message_free (struct t_relay_raw_message *raw_message)
 {
     struct t_relay_raw_message *new_raw_messages;
 
+    if (!raw_message)
+        return;
+
     /* remove message from raw messages list */
     if (last_relay_raw_message == raw_message)
         last_relay_raw_message = raw_message->prev_message;

@@ -757,6 +757,9 @@ relay_client_outqueue_free (struct t_relay_client *client,
 {
     struct t_relay_client_outqueue *new_outqueue;
 
+    if (!client || !outqueue)
+        return;
+
     /* remove outqueue message */
     if (client->last_outqueue == outqueue)
         client->last_outqueue = outqueue->prev_outqueue;

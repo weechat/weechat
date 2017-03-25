@@ -1859,6 +1859,9 @@ relay_irc_alloc_with_infolist (struct t_relay_client *client,
 void
 relay_irc_free (struct t_relay_client *client)
 {
+    if (!client)
+        return;
+
     if (client->protocol_data)
     {
         if (RELAY_IRC_DATA(client, address))

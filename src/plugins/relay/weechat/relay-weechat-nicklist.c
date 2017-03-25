@@ -122,6 +122,9 @@ relay_weechat_nicklist_add_item (struct t_relay_weechat_nicklist *nicklist,
 void
 relay_weechat_nicklist_item_free (struct t_relay_weechat_nicklist_item *item)
 {
+    if (!item)
+        return;
+
     if (item->name)
         free (item->name);
     if (item->color)
@@ -140,6 +143,9 @@ void
 relay_weechat_nicklist_free (struct t_relay_weechat_nicklist *nicklist)
 {
     int i;
+
+    if (!nicklist)
+        return;
 
     /* free items */
     if (nicklist->items_count > 0)

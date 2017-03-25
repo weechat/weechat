@@ -1095,6 +1095,9 @@ relay_weechat_msg_send (struct t_relay_client *client,
 void
 relay_weechat_msg_free (struct t_relay_weechat_msg *msg)
 {
+    if (!msg)
+        return;
+
     if (msg->id)
         free (msg->id);
     if (msg->data)
