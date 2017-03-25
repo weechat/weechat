@@ -1512,6 +1512,9 @@ irc_server_outqueue_free (struct t_irc_server *server,
 {
     struct t_irc_outqueue *new_outqueue;
 
+    if (!server || !outqueue)
+        return;
+
     /* remove outqueue message */
     if (server->last_outqueue[priority] == outqueue)
         server->last_outqueue[priority] = outqueue->prev_outqueue;

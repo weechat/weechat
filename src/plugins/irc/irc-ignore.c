@@ -251,6 +251,9 @@ irc_ignore_free (struct t_irc_ignore *ignore)
 {
     struct t_irc_ignore *ptr_ignore;
 
+    if (!ignore)
+        return;
+
     (void) weechat_hook_signal_send ("irc_ignore_removing",
                                      WEECHAT_HOOK_SIGNAL_POINTER, ignore);
 

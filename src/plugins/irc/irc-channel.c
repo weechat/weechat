@@ -891,6 +891,9 @@ void
 irc_channel_nick_speaking_time_free (struct t_irc_channel *channel,
                                      struct t_irc_channel_speaking *nick_speaking)
 {
+    if (!channel || !nick_speaking)
+        return;
+
     /* free data */
     if (nick_speaking->nick)
         free (nick_speaking->nick);

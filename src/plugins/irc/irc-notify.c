@@ -434,6 +434,9 @@ void
 irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify,
                  int remove_monitor)
 {
+    if (!server || !notify)
+        return;
+
     (void) weechat_hook_signal_send ("irc_notify_removing",
                                      WEECHAT_HOOK_SIGNAL_POINTER, notify);
 
