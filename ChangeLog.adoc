@@ -20,10 +20,17 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add cut of string in evaluation of expressions (${cut:max,suffix,string})
+  * core: add ternary operator (condition) in evaluation of expressions (${if:condition?value_if_true:value_if_false})
   * core: add resize of window parents with /window resize [h/v]size (task #11461, issue #893)
+  * buflist: new plugin "buflist" (bar item with list of buffers)
+  * api: add arraylist functions: arraylist_new(), arraylist_size(), arraylist_get(), arraylist_search(), arraylist_insert(), arraylist_add(), arraylist_remove(), arraylist_clear(), arraylist_free()
+  * api: add dynamic string functions: string_dyn_alloc(), string_dyn_copy(), string_dyn_concat(), string_dyn_free()
+  * irc: send signal "irc_server_lag_changed" and store the lag in the server buffer (local variable)
 
 Improvements::
 
+  * core: add hotlist pointer in buffer structure
   * core: add last start date in output of command /version after at least one /upgrade (issue #903)
   * irc: send multiple masks by message in commands /ban, /unban, /quiet and /unquiet, use ban mask default for nicks in /quiet and /unquiet, display an error if /quiet and /unquiet are not supported by server (issue #579, issue #15, issue #577)
   * irc: add option "-include" in commands /allchan, /allpv and /allserv (issue #572)
