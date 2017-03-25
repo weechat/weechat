@@ -20,6 +20,7 @@
 add_library(buflist MODULE
 buflist.c buflist.h
 buflist-bar-item.c buflist-bar-item.h
+buflist-command.c buflist-command.h
 buflist-config.c buflist-config.h)
 set_target_properties(buflist PROPERTIES PREFIX "")
 

@@ -25,6 +25,7 @@
 #include "../weechat-plugin.h"
 #include "buflist.h"
 #include "buflist-bar-item.h"
+#include "buflist-command.h"
 #include "buflist-config.h"
 
 
@@ -271,6 +272,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     if (!buflist_bar_item_init ())
         return WEECHAT_RC_ERROR;
+
+    buflist_command_init ();
 
     /* hook some signals */
     for (i = 0; signals_buffers[i]; i++)

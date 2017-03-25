@@ -203,6 +203,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    buflist/                       | buflist プラグイン
 |       buflist.c                   | buflist の主要関数
 |       buflist-bar-item.c          | buflist バー要素
+|       buflist-command.c           | buflist コマンド
 |       buflist-config.c            | buflist 設定オプション (buflist.conf ファイル)
 |    charset/                       | charset プラグイン
 |       charset.c                   | charset 関数

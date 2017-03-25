@@ -27,6 +27,8 @@ buflist_la_SOURCES = buflist.c \
                      buflist.h \
                      buflist-bar-item.c \
                      buflist-bar-item.h \
+                     buflist-command.c \
+                     buflist-command.h \
                      buflist-config.c \
                      buflist-config.h
 

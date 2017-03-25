@@ -148,7 +148,8 @@ buflist_config_init ()
     buflist_config_format_buffer = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "buffer", "string",
-        N_("format of each line with a buffer"),
+        N_("format of each line with a buffer "
+           "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         "${color:green}${number}.${indent}${color_hotlist}${name}",
         NULL, 0,
@@ -158,7 +159,8 @@ buflist_config_init ()
     buflist_config_format_buffer_current = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "buffer_current", "string",
-        N_("format for the line with current buffer"),
+        N_("format for the line with current buffer "
+           "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         "${color:lightgreen,blue}${number}.${indent}${color_hotlist}${name}",
         NULL, 0,
@@ -168,7 +170,8 @@ buflist_config_init ()
     buflist_config_format_hotlist = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist", "string",
-        N_("format for hotlist"),
+        N_("format for hotlist "
+           "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         " ${color:green}(${hotlist}${color:green})",
         NULL, 0,
@@ -178,7 +181,8 @@ buflist_config_init ()
     buflist_config_format_hotlist_level[0] = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_low", "string",
-        N_("format for a buffer with hotlist level \"low\""),
+        N_("format for a buffer with hotlist level \"low\" "
+           "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         "${color:white}",
         NULL, 0,
@@ -188,7 +192,8 @@ buflist_config_init ()
     buflist_config_format_hotlist_level[1] = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_message", "string",
-        N_("format for a buffer with hotlist level \"message\""),
+        N_("format for a buffer with hotlist level \"message\" "
+           "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         "${color:brown}",
         NULL, 0,
@@ -198,7 +203,8 @@ buflist_config_init ()
     buflist_config_format_hotlist_level[2] = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_private", "string",
-        N_("format for a buffer with hotlist level \"private\""),
+        N_("format for a buffer with hotlist level \"private\" "
+           "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         "${color:green}",
         NULL, 0,
@@ -208,7 +214,8 @@ buflist_config_init ()
     buflist_config_format_hotlist_level[3] = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_highlight", "string",
-        N_("format for a buffer with hotlist level \"highlight\""),
+        N_("format for a buffer with hotlist level \"highlight\" "
+           "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         "${color:magenta}",
         NULL, 0,
@@ -218,7 +225,8 @@ buflist_config_init ()
     buflist_config_format_hotlist_level_none = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_none", "string",
-        N_("format for a buffer not in hotlist"),
+        N_("format for a buffer not in hotlist "
+           "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         "${color:default}",
         NULL, 0,
@@ -228,7 +236,8 @@ buflist_config_init ()
     buflist_config_format_hotlist_separator = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_separator", "string",
-        N_("separator for counts in hotlist"),
+        N_("separator for counts in hotlist "
+           "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         "${color:default},",
         NULL, 0,
@@ -238,7 +247,8 @@ buflist_config_init ()
     buflist_config_format_lag = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "lag", "string",
-        N_("format for lag on an irc server buffer"),
+        N_("format for lag on an irc server buffer "
+           "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         " ${color:green}[${color:brown}${lag}${color:green}]",
         NULL, 0,
