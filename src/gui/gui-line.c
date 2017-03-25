@@ -83,6 +83,9 @@ gui_lines_alloc ()
 void
 gui_lines_free (struct t_gui_lines *lines)
 {
+    if (!lines)
+        return;
+
     free (lines);
 }
 
@@ -112,6 +115,9 @@ gui_line_tags_alloc (struct t_gui_line_data *line_data, const char *tags)
 void
 gui_line_tags_free (struct t_gui_line_data *line_data)
 {
+    if (!line_data)
+        return;
+
     if (line_data->tags_array)
     {
         string_free_split_shared (line_data->tags_array);
@@ -1119,6 +1125,9 @@ void
 gui_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     struct t_gui_line *ptr_line;
+
+    if (!buffer || !line)
+        return;
 
     /* first remove mixed line if it exists */
     if (buffer->mixed_lines)

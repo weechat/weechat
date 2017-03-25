@@ -1435,6 +1435,9 @@ gui_key_free (struct t_gui_key **keys, struct t_gui_key **last_key,
 {
     int i;
 
+    if (!key)
+        return;
+
     /* free memory */
     if (key->key)
         free (key->key);

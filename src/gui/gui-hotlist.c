@@ -96,6 +96,9 @@ gui_hotlist_free (struct t_gui_hotlist **hotlist,
 {
     struct t_gui_hotlist *new_hotlist;
 
+    if (!ptr_hotlist)
+        return;
+
     /* remove hotlist from queue */
     if (*last_hotlist == ptr_hotlist)
         *last_hotlist = ptr_hotlist->prev_hotlist;

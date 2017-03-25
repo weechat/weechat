@@ -1062,6 +1062,9 @@ hdata_get_string (struct t_hdata *hdata, const char *property)
 void
 hdata_free (struct t_hdata *hdata)
 {
+    if (!hdata)
+        return;
+
     if (hdata->hash_var)
         hashtable_free (hdata->hash_var);
     if (hdata->var_prev)

@@ -3184,6 +3184,9 @@ string_shared_free (const char *string)
 {
     string_shared_count_t *ptr_count;
 
+    if (!string)
+        return;
+
     ptr_count = (string_shared_count_t *)(string - sizeof (string_shared_count_t));
 
     (*ptr_count)--;

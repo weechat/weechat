@@ -200,7 +200,11 @@ gui_completion_free_data (struct t_gui_completion *completion)
 void
 gui_completion_free (struct t_gui_completion *completion)
 {
+    if (!completion)
+        return;
+
     gui_completion_free_data (completion);
+
     free (completion);
 }
 

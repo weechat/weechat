@@ -201,6 +201,9 @@ gui_history_buffer_free (struct t_gui_buffer *buffer)
 {
     struct t_gui_history *ptr_history;
 
+    if (!buffer)
+        return;
+
     while (buffer->history)
     {
         ptr_history = buffer->history->next_history;

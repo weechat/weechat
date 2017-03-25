@@ -146,6 +146,9 @@ gui_window_objects_init (struct t_gui_window *window)
 void
 gui_window_objects_free (struct t_gui_window *window, int free_separators)
 {
+    if (!window)
+        return;
+
     if (GUI_WINDOW_OBJECTS(window)->win_chat)
     {
         delwin (GUI_WINDOW_OBJECTS(window)->win_chat);

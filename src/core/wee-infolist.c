@@ -584,6 +584,9 @@ infolist_var_free (struct t_infolist_item *item,
 {
     struct t_infolist_var *new_vars;
 
+    if (!item || !var)
+        return;
+
     /* remove var */
     if (item->last_var == var)
         item->last_var = var->prev_var;
@@ -625,6 +628,9 @@ infolist_item_free (struct t_infolist *infolist,
 {
     struct t_infolist_item *new_items;
 
+    if (!infolist || !item)
+        return;
+
     /* remove var */
     if (infolist->last_item == item)
         infolist->last_item = item->prev_item;
@@ -660,6 +666,9 @@ void
 infolist_free (struct t_infolist *infolist)
 {
     struct t_infolist *new_weechat_infolists;
+
+    if (!infolist)
+        return;
 
     /* remove list */
     if (last_weechat_infolist == infolist)

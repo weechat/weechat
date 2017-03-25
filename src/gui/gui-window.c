@@ -332,15 +332,16 @@ gui_window_tree_node_to_leaf (struct t_gui_window_tree *node,
 void
 gui_window_tree_free (struct t_gui_window_tree **tree)
 {
-    if (*tree)
-    {
-        if ((*tree)->child1)
-            gui_window_tree_free (&((*tree)->child1));
-        if ((*tree)->child2)
-            gui_window_tree_free (&((*tree)->child2));
-        free (*tree);
-        *tree = NULL;
-    }
+    if (!tree || !*tree)
+        return;
+
+    if ((*tree)->child1)
+        gui_window_tree_free (&((*tree)->child1));
+    if ((*tree)->child2)
+        gui_window_tree_free (&((*tree)->child2));
+
+    free (*tree);
+    *tree = NULL;
 }
 
 /*
@@ -418,6 +419,9 @@ void
 gui_window_scroll_free (struct t_gui_window *window,
                         struct t_gui_window_scroll *scroll)
 {
+    if (!window || !scroll)
+        return;
+
     if (scroll->prev_scroll)
         (scroll->prev_scroll)->next_scroll = scroll->next_scroll;
     if (scroll->next_scroll)

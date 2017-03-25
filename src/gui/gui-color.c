@@ -1147,13 +1147,13 @@ gui_color_emphasize (const char *string,
 void
 gui_color_free (struct t_gui_color *color)
 {
-    if (color)
-    {
-        if (color->string)
-            free (color->string);
+    if (!color)
+        return;
 
-        free (color);
-    }
+    if (color->string)
+        free (color->string);
+
+    free (color);
 }
 
 /*

@@ -467,6 +467,9 @@ gui_filter_free (struct t_gui_filter *filter)
 {
     int i;
 
+    if (!filter)
+        return;
+
     (void) hook_signal_send ("filter_removing",
                              WEECHAT_HOOK_SIGNAL_POINTER, filter);
 
