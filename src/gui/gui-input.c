@@ -712,7 +712,8 @@ gui_input_search_previous (struct t_gui_buffer *buffer)
     struct t_gui_window *window;
 
     window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    if (window && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+        && window->scroll->first_line_displayed == 0)
     {
         window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
         (void) gui_window_search_text (window);

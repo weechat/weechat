@@ -54,6 +54,7 @@ enum t_gui_buffer_notify
 #define GUI_TEXT_SEARCH_DISABLED 0
 #define GUI_TEXT_SEARCH_BACKWARD 1
 #define GUI_TEXT_SEARCH_FORWARD  2
+#define GUI_TEXT_SEARCH_EITHER   3 /* searching but search direction not explicitly set */
 
 #define GUI_TEXT_SEARCH_IN_MESSAGE 1
 #define GUI_TEXT_SEARCH_IN_PREFIX  2
