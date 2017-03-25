@@ -2186,6 +2186,11 @@ Options :
 
 include::autogen/user/buflist_options.adoc[]
 
+[[buflist_commands]]
+==== Commandes
+
+include::autogen/user/buflist_commands.adoc[]
+
 [[charset_plugin]]
 === Extension Charset
 

@@ -2233,6 +2233,11 @@ Options:
 
 include::autogen/user/buflist_options.adoc[]
 
+[[buflist_commands]]
+==== Comandi
+
+include::autogen/user/buflist_commands.adoc[]
+
 [[charset_plugin]]
 === Plugin Charset
 

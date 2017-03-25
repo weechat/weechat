@@ -2134,6 +2134,11 @@ Opcje:
 
 include::autogen/user/buflist_options.adoc[]
 
+[[buflist_commands]]
+==== Komendy
+
+include::autogen/user/buflist_commands.adoc[]
+
 [[charset_plugin]]
 === Wtyczka charset
 
