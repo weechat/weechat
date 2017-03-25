@@ -611,6 +611,9 @@ script_repo_add (struct t_script_repo *script)
 void
 script_repo_free (struct t_script_repo *script)
 {
+    if (!script)
+        return;
+
     if (script->name)
         free (script->name);
     if (script->name_with_extension)
