@@ -10,7 +10,8 @@
 
 refresh: force the refresh of the "buflist" bar item
 
-The lines with buffers are displayed using string evaluation (see /help eval for the format), with two main options:
+The lines with buffers are displayed using string evaluation (see /help eval for the format), with these options:
+  - buflist.look.display_conditions: conditions to display a buffer in the list
   - buflist.format.buffer: format for a buffer which is not current buffer
   - buflist.format.buffer_current: format for the current buffer
 

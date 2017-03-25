@@ -33,6 +33,7 @@ struct t_gui_bar_item *buflist_bar_item_buflist = NULL;
 struct t_hashtable *buflist_hashtable_pointers = NULL;
 struct t_hashtable *buflist_hashtable_extra_vars = NULL;
 struct t_hashtable *buflist_hashtable_options = NULL;
+struct t_hashtable *buflist_hashtable_options_conditions = NULL;
 
 
 /*
@@ -49,7 +50,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     struct t_arraylist *buffers;
     struct t_gui_buffer *ptr_buffer, *ptr_current_buffer;
     struct t_gui_hotlist *ptr_hotlist;
-    char **buflist, *str_buflist;
+    char **buflist, *str_buflist, *condition;
     char str_format_number[32], str_format_number_empty[32];
     char str_number[32], str_indent_name[4], *line, **hotlist, *str_hotlist;
     char str_hotlist_count[32];
@@ -97,6 +98,22 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     {
         ptr_buffer = weechat_arraylist_get (buffers, i);
 
+        /* set pointers */
+        weechat_hashtable_set (buflist_hashtable_pointers,
+                               "buffer", ptr_buffer);
+
+        /* check condition: if false, the buffer is not displayed */
+        condition = weechat_string_eval_expression (
+            weechat_config_string (buflist_config_look_display_conditions),
+            buflist_hashtable_pointers,
+            NULL,  /* extra vars */
+            buflist_hashtable_options_conditions);
+        rc = (condition && (strcmp (condition, "1") == 0));
+        if (condition)
+            free (condition);
+        if (!rc)
+            continue;
+
         current_buffer = (ptr_buffer == ptr_current_buffer);
 
         ptr_hotlist = weechat_hdata_pointer (buflist_hdata_buffer,
@@ -138,10 +155,6 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         {
             snprintf (str_indent_name, sizeof (str_indent_name), "  ");
         }
-
-        /* set pointers */
-        weechat_hashtable_set (buflist_hashtable_pointers,
-                               "buffer", ptr_buffer);
 
         /* set extra variables */
         weechat_hashtable_set (buflist_hashtable_extra_vars,
@@ -273,7 +286,7 @@ end:
 int
 buflist_bar_item_init ()
 {
-    /* create hashtable used by the bar item callback */
+    /* create hashtables used by the bar item callback */
     buflist_hashtable_pointers = weechat_hashtable_new (
         8,
         WEECHAT_HASHTABLE_STRING,
@@ -282,6 +295,7 @@ buflist_bar_item_init ()
         NULL);
     if (!buflist_hashtable_pointers)
         return 0;
+
     buflist_hashtable_extra_vars = weechat_hashtable_new (
         32,
         WEECHAT_HASHTABLE_STRING,
@@ -293,6 +307,7 @@ buflist_bar_item_init ()
         weechat_hashtable_free (buflist_hashtable_pointers);
         return 0;
     }
+
     buflist_hashtable_options = weechat_hashtable_new (
         8,
         WEECHAT_HASHTABLE_STRING,
@@ -306,6 +321,21 @@ buflist_bar_item_init ()
         return 0;
     }
     weechat_hashtable_set (buflist_hashtable_options, "extra", "eval");
+
+    buflist_hashtable_options_conditions = weechat_hashtable_new (
+        8,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (!buflist_hashtable_options_conditions)
+    {
+        weechat_hashtable_free (buflist_hashtable_pointers);
+        weechat_hashtable_free (buflist_hashtable_extra_vars);
+        weechat_hashtable_free (buflist_hashtable_options);
+        return 0;
+    }
+    weechat_hashtable_set (buflist_hashtable_options_conditions,
+                           "type", "condition");
 
     /* bar items */
     buflist_bar_item_buflist = weechat_bar_item_new (
@@ -332,4 +362,7 @@ buflist_bar_item_end ()
 
     weechat_hashtable_free (buflist_hashtable_options);
     buflist_hashtable_options = NULL;
+
+    weechat_hashtable_free (buflist_hashtable_options_conditions);
+    buflist_hashtable_options_conditions = NULL;
 }

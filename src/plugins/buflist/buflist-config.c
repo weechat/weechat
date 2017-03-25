@@ -31,6 +31,7 @@ struct t_config_file *buflist_config_file = NULL;
 
 /* buflist config, look section */
 
+struct t_config_option *buflist_config_look_display_conditions;
 struct t_config_option *buflist_config_look_signals_refresh;
 struct t_config_option *buflist_config_look_sort;
 
@@ -205,17 +206,16 @@ buflist_config_init ()
         return 0;
     }
 
-    buflist_config_look_sort = weechat_config_new_option (
+    buflist_config_look_display_conditions = weechat_config_new_option (
         buflist_config_file, ptr_section,
-        "sort", "string",
-        N_("comma-separated list of fields to sort buffers; each field is "
-           "a hdata variable of buffer; char \"-\" can be used before field "
-           "to reverse order"),
+        "display_conditions", "string",
+        N_("conditions to display a buffer "
+           "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
-        "number,-active",
+        "${buffer.hidden}==0",
         NULL, 0,
         NULL, NULL, NULL,
-        &buflist_config_change_sort, NULL, NULL,
+        &buflist_config_change_signals_refresh, NULL, NULL,
         NULL, NULL, NULL);
     buflist_config_look_signals_refresh = weechat_config_new_option (
         buflist_config_file, ptr_section,
@@ -230,6 +230,18 @@ buflist_config_init ()
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_signals_refresh, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_look_sort = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "sort", "string",
+        N_("comma-separated list of fields to sort buffers; each field is "
+           "a hdata variable of buffer; char \"-\" can be used before field "
+           "to reverse order"),
+        NULL, 0, 0,
+        "number,-active",
+        NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_sort, NULL, NULL,
         NULL, NULL, NULL);
 
     /* format */

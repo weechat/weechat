@@ -62,6 +62,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
+* [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
+** description: pass:none[conditions pour afficher un tampon (note : le contenu est évalué, voir /help buflist)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"${buffer.hidden}==0"+`
+
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
 ** description: pass:none[liste de signaux séparés par des virgules qui sont accrochés et déclenchent l'affichage de la liste des tampons]
 ** type: chaîne

@@ -10,7 +10,8 @@
 
 refresh : forcer le rafraichissement de l'objet de barre "buflist"
 
-Les lignes avec les tampons sont affichées en utilisant l'évaluation de chaînes (voir /help eval pour le format), avec deux options principales :
+Les lignes avec les tampons sont affichées en utilisant l'évaluation de chaînes (voir /help eval pour le format), avec ces options :
+  - buflist.look.display_conditions : conditions pour afficher un tampon dans la liste
   - buflist.format.buffer : format pour un tampon qui n'est pas le tampon courant
   - buflist.format.buffer_current: format pour le tampon courant
 

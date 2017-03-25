@@ -62,6 +62,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
+* [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
+** 説明: pass:none[conditions to display a buffer (note: content is evaluated, see /help buflist)]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"${buffer.hidden}==0"+`
+
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
 ** 説明: pass:none[comma-separated list of signals that are hooked and trigger the refresh of buffers list]
 ** タイプ: 文字列

@@ -62,6 +62,12 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
+* [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
+** descrizione: pass:none[conditions to display a buffer (note: content is evaluated, see /help buflist)]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"${buffer.hidden}==0"+`
+
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
 ** descrizione: pass:none[comma-separated list of signals that are hooked and trigger the refresh of buffers list]
 ** tipo: stringa
