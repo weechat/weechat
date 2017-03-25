@@ -482,6 +482,9 @@ trigger_regex_free (int *regex_count, struct t_trigger_regex **regex)
 {
     int i;
 
+    if (!regex_count || !regex)
+        return;
+
     if (*regex_count > 0)
     {
         for (i = 0; i < *regex_count; i++)
