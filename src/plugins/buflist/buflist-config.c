@@ -31,6 +31,7 @@ struct t_config_file *buflist_config_file = NULL;
 
 /* buflist config, look section */
 
+struct t_config_option *buflist_config_look_signals_refresh;
 struct t_config_option *buflist_config_look_sort;
 
 /* buflist config, format section */
@@ -43,6 +44,8 @@ struct t_config_option *buflist_config_format_hotlist_level_none;
 struct t_config_option *buflist_config_format_hotlist_separator;
 struct t_config_option *buflist_config_format_lag;
 
+struct t_hook **buflist_config_signals_refresh = NULL;
+int buflist_config_num_signals_refresh = 0;
 char **buflist_config_sort_fields = NULL;
 int buflist_config_sort_fields_count = 0;
 
@@ -68,6 +71,90 @@ buflist_config_change_sort (const void *pointer, void *data,
         ",", 0, 0, &buflist_config_sort_fields_count);
 
     weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+}
+
+/*
+ * Frees the signals hooked for refresh.
+ */
+
+void
+buflist_config_free_signals_refresh ()
+{
+    int i;
+
+    if (!buflist_config_signals_refresh)
+        return;
+
+    for (i = 0; i < buflist_config_num_signals_refresh; i++)
+    {
+        weechat_unhook (buflist_config_signals_refresh[i]);
+    }
+
+    free (buflist_config_signals_refresh);
+    buflist_config_signals_refresh = NULL;
+
+    buflist_config_num_signals_refresh = 0;
+}
+
+/*
+ * Callback for a signal on a buffer.
+ */
+
+int
+buflist_config_signal_buffer_cb (const void *pointer, void *data,
+                                 const char *signal, const char *type_data,
+                                 void *signal_data)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+    weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for changes on option "buflist.look.signals_refresh".
+ */
+
+void
+buflist_config_change_signals_refresh (const void *pointer, void *data,
+                                       struct t_config_option *option)
+{
+    char **signals;
+    int count, i;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (buflist_config_signals_refresh)
+        buflist_config_free_signals_refresh ();
+
+    signals = weechat_string_split (
+        weechat_config_string (buflist_config_look_signals_refresh),
+        ",", 0, 0, &count);
+    if (signals && (count > 0))
+    {
+        buflist_config_signals_refresh = malloc (
+            count * sizeof (*buflist_config_signals_refresh));
+        if (buflist_config_signals_refresh)
+        {
+            buflist_config_num_signals_refresh = count;
+            for (i = 0; i < count; i++)
+            {
+                buflist_config_signals_refresh[i] = weechat_hook_signal (
+                    signals[i], &buflist_config_signal_buffer_cb, NULL, NULL);
+            }
+        }
+    }
+    if (signals)
+        weechat_string_free_split (signals);
 }
 
 /*
@@ -129,6 +216,20 @@ buflist_config_init ()
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_sort, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_look_signals_refresh = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "signals_refresh", "string",
+        N_("comma-separated list of signals that are hooked and trigger the "
+           "refresh of buffers list"),
+        NULL, 0, 0,
+        "buffer_opened,buffer_closed,buffer_merged,buffer_unmerged,"
+        "buffer_moved,buffer_renamed,buffer_switch,buffer_hidden,"
+        "buffer_unhidden,buffer_localvar_added,buffer_localvar_changed,"
+        "window_switch,hotlist_changed",
+        NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_signals_refresh, NULL, NULL,
         NULL, NULL, NULL);
 
     /* format */
@@ -273,6 +374,7 @@ buflist_config_read ()
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
         buflist_config_change_sort (NULL, NULL, NULL);
+        buflist_config_change_signals_refresh (NULL, NULL, NULL);
     }
 
     return rc;
@@ -296,6 +398,9 @@ void
 buflist_config_free ()
 {
     weechat_config_free (buflist_config_file);
+
+    if (buflist_config_signals_refresh)
+        buflist_config_free_signals_refresh ();
 
     if (buflist_config_sort_fields)
     {

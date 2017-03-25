@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-03-25 15:10+0100\n"
+"POT-Creation-Date: 2017-03-25 21:32+0100\n"
 "PO-Revision-Date: 2017-01-14 21:39+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -5524,6 +5524,12 @@ msgid ""
 "comma-separated list of fields to sort buffers; each field is a hdata "
 "variable of buffer; char \"-\" can be used before field to reverse order"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"comma-separated list of signals that are hooked and trigger the refresh of "
+"buffers list"
+msgstr "lista de dicionários separados por vírgula para usar neste buffer"
 
 #, fuzzy
 msgid ""

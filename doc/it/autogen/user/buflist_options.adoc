@@ -62,6 +62,12 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
+* [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
+** descrizione: pass:none[comma-separated list of signals that are hooked and trigger the refresh of buffers list]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"buffer_opened,buffer_closed,buffer_merged,buffer_unmerged,buffer_moved,buffer_renamed,buffer_switch,buffer_hidden,buffer_unhidden,buffer_localvar_added,buffer_localvar_changed,window_switch,hotlist_changed"+`
+
 * [[option_buflist.look.sort]] *buflist.look.sort*
 ** descrizione: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer; char "-" can be used before field to reverse order]
 ** tipo: stringa
