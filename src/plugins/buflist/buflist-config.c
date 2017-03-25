@@ -247,7 +247,7 @@ buflist_config_init ()
     buflist_config_format_lag = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "lag", "string",
-        N_("format for lag on an irc server buffer "
+        N_("format for lag on an IRC server buffer "
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         " ${color:green}[${color:brown}${lag}${color:green}]",

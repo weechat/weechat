@@ -70,7 +70,7 @@ buflist_command_init ()
         "buflist",
         N_("bar item with list of buffers"),
         "refresh",
-        N_("refresh: force the refresh of the buflist bar item\n"
+        N_("refresh: force the refresh of the \"buflist\" bar item\n"
            "\n"
            "The lines with buffers are displayed using string evaluation "
            "(see /help eval for the format), with two main options:\n"
@@ -92,19 +92,19 @@ buflist_command_init ()
            "buflist.format.buffer_current to just change the background color "
            "for example\n"
            "    - ${number}: indented number, for example \" 1\" if there "
-           "are between 10 and 99 buffers opened\n"
+           "are between 10 and 99 buffers\n"
            "    - ${indent}: indentation for name (channel and private "
            "buffers are indented)\n"
            "    - ${name}: the short name (if set), with a fallback on the "
            "name\n"
            "    - ${color_hotlist}: the color depending on the highest "
-           "hotlist level for the buffer, which is the content of option "
-           "buflist.format.hotlist_xxx (xxx is the level)\n"
+           "hotlist level for the buffer (evaluation of option "
+           "buflist.format.hotlist_xxx where xxx is the level)\n"
            "    - ${format_hotlist}: the formatted hotlist (evaluation "
            "of option buflist.format.hotlist)\n"
            "    - ${hotlist}: the raw hotlist\n"
-           "    - ${format_lag}: the lag for an IRC server buffer "
-           "(empty if there's no lag)\n"),
+           "    - ${format_lag}: the lag for an IRC server buffer, empty if "
+           "there's no lag (evaluation of option buflist.format.lag)"),
         "refresh",
         &buflist_command_buflist, NULL, NULL);
 }

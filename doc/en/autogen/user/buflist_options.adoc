@@ -3,49 +3,61 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_buflist.format.buffer]] *buflist.format.buffer*
-** description: pass:none[format of each line with a buffer]
+** description: pass:none[format of each line with a buffer (note: content is evaluated, see /help buflist)]
 ** type: string
 ** values: any string
 ** default value: `+"${color:green}${number}.${indent}${color_hotlist}${name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
-** description: pass:none[format for the line with current buffer]
+** description: pass:none[format for the line with current buffer (note: content is evaluated, see /help buflist)]
 ** type: string
 ** values: any string
 ** default value: `+"${color:lightgreen,blue}${number}.${indent}${color_hotlist}${name}"+`
 
+* [[option_buflist.format.hotlist]] *buflist.format.hotlist*
+** description: pass:none[format for hotlist (note: content is evaluated, see /help buflist)]
+** type: string
+** values: any string
+** default value: `+" ${color:green}(${hotlist}${color:green})"+`
+
 * [[option_buflist.format.hotlist_highlight]] *buflist.format.hotlist_highlight*
-** description: pass:none[format for a buffer with hotlist level "highlight"]
+** description: pass:none[format for a buffer with hotlist level "highlight" (note: content is evaluated, see /help buflist)]
 ** type: string
 ** values: any string
 ** default value: `+"${color:magenta}"+`
 
 * [[option_buflist.format.hotlist_low]] *buflist.format.hotlist_low*
-** description: pass:none[format for a buffer with hotlist level "low"]
+** description: pass:none[format for a buffer with hotlist level "low" (note: content is evaluated, see /help buflist)]
 ** type: string
 ** values: any string
 ** default value: `+"${color:white}"+`
 
 * [[option_buflist.format.hotlist_message]] *buflist.format.hotlist_message*
-** description: pass:none[format for a buffer with hotlist level "message"]
+** description: pass:none[format for a buffer with hotlist level "message" (note: content is evaluated, see /help buflist)]
 ** type: string
 ** values: any string
 ** default value: `+"${color:brown}"+`
 
 * [[option_buflist.format.hotlist_none]] *buflist.format.hotlist_none*
-** description: pass:none[format for a buffer not in hotlist]
+** description: pass:none[format for a buffer not in hotlist (note: content is evaluated, see /help buflist)]
 ** type: string
 ** values: any string
 ** default value: `+"${color:default}"+`
 
 * [[option_buflist.format.hotlist_private]] *buflist.format.hotlist_private*
-** description: pass:none[format for a buffer with hotlist level "private"]
+** description: pass:none[format for a buffer with hotlist level "private" (note: content is evaluated, see /help buflist)]
 ** type: string
 ** values: any string
 ** default value: `+"${color:green}"+`
 
+* [[option_buflist.format.hotlist_separator]] *buflist.format.hotlist_separator*
+** description: pass:none[separator for counts in hotlist (note: content is evaluated, see /help buflist)]
+** type: string
+** values: any string
+** default value: `+"${color:default},"+`
+
 * [[option_buflist.format.lag]] *buflist.format.lag*
-** description: pass:none[format for lag on an irc server buffer]
+** description: pass:none[format for lag on an IRC server buffer (note: content is evaluated, see /help buflist)]
 ** type: string
 ** values: any string
 ** default value: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
