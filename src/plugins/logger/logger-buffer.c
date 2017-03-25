@@ -168,6 +168,9 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
     struct t_logger_buffer *new_logger_buffers;
     struct t_gui_buffer *ptr_buffer;
 
+    if (!logger_buffer)
+        return;
+
     ptr_buffer = logger_buffer->buffer;
 
     /* remove logger buffer */
