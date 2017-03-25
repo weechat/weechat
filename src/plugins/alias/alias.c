@@ -446,6 +446,9 @@ alias_free (struct t_alias *alias)
 {
     struct t_alias *new_alias_list;
 
+    if (!alias)
+        return;
+
     /* remove alias from list */
     if (last_alias == alias)
         last_alias = alias->prev_alias;
