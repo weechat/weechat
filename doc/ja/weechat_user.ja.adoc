@@ -1988,8 +1988,7 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 | プラグイン | 説明
 | alias      | コマンドの別名を定義
 | aspell     | コマンドラインのスペルチェック
-// TRANSLATION MISSING
-| buflist    | Bar item with list of buffers.
+| buflist    | バッファリストを表示するためのバー要素
 | charset    | バッファの文字コードに従ってデコード/エンコード
 | exec       | WeeChat 内部から外部コマンドを実行
 | fifo       | 外部から WeeChat にコマンドを送信するための FIFO パイプ
@@ -2099,21 +2098,19 @@ _aspell.check.suggestions_ オプションで設定します。
 [[buflist_plugin]]
 === Buflist プラグイン
 
-// TRANSLATION MISSING
-Buflist plugin displays a list of buffers in a bar item called "buflist". +
-A default bar "buflist" is created on startup with this item.
+Buflist プラグインを使うことで、"buflist" と呼ばれるバー要素の中にバッファリストを表示させることが可能になります。 +
+プラグインは開始時にバー要素 "buflist" を持つデフォルトバー "buflist" を作成します。
 
 [[buflist_options]]
-==== Options (buflist.conf)
+==== オプション (buflist.conf)
 
 セクション:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | セクション | 操作コマンド          | 説明
-| format     | /set buflist.format.* | Formats used to display list of buffers.
-| look       | /set buflist.look.*   | Look and feel.
+| format     | /set buflist.format.* | バッファリストの表示書式
+| look       | /set buflist.look.*   | 外観
 |===
 
 オプション:

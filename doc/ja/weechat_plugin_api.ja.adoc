@@ -2046,10 +2046,9 @@ char *weechat_string_eval_expression (const char *expr,
   `+${hide:*,password}+` |
  `+********+`
 
-// TRANSLATION MISSING
 | `+${cut:max,suffix,string}+` +
   (_WeeChat バージョン 1.8 以上で利用可_) |
-  String with `max` chars displayed, and optional `suffix` if string is cut. |
+  `string` の先頭 `max` 文字を表示し、`string` の文字数が `max` 文字を超える場合にはオプションの `suffix` も表示します |
   `+${cut:4,…,this is a test}+` +
   `+${cut:2,>>,àéçôî}+` |
   `+this…+` +
@@ -2094,14 +2093,13 @@ char *weechat_string_eval_expression (const char *expr,
   `+${env:HOME}+` |
   `+/home/user+`
 
-// TRANSLATION MISSING
 | `+${if:condition}+` +
   `+${if:condition?true}+`
   `+${if:condition?true:false}+` +
-  (_WeeChat ≥ 1.8_) |
-  Ternary operator with a condition, a value if the condition is true (optional)
-  and another value if the condition is false (optional). If values are not
-  given, "1" or "0" are returned, according to the result of the condition. |
+  (_WeeChat バージョン 1.8 以上で利用可_) |
+  条件、条件が真の場合の値 (任意)、条件が偽の場合の値 (任意)
+  からなる三項演算子。値を指定しなかった場合、条件の評価結果に応じて
+  "1" または "0" が返されます |
   `+${if:${info:term_width}>80?big:small}+` |
   `+big+`
 
@@ -2197,16 +2195,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 ==== string_dyn_alloc
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Allocate a dynamic string, with a variable length. +
-Internally, a structure is allocated with the string pointer, the allocated size
-and current length of string.
+可変長の動的文字列を確保します。 +
+内部では、文字列ポインタ、確保されたサイズ、現在の文字列長の情報からなる構造体が確保されます。
 
-// TRANSLATION MISSING
-Only the pointer to string pointer (_**string_) is used in all the
-_pass:[string_dyn_*]_ functions.
+すべての _pass:[string_dyn_*]_ 関数は文字列ポインタへのポインタ
+(_**string_) のみを使います。
 
 プロトタイプ:
 
@@ -2217,13 +2212,11 @@ char **weechat_dyn_alloc (int size_alloc);
 
 引数:
 
-// TRANSLATION MISSING
-* _size_alloc_: the initial allocated size (must be greater than zero)
+* _size_alloc_: 初期確保サイズ (必ずゼロより大きい値を指定してください)
 
 戻り値:
 
-// TRANSLATION MISSING
-* pointer to the dynamic string
+* 動的文字列へのポインタ
 
 C 言語での使用例:
 
@@ -2237,14 +2230,12 @@ char **string = weechat_dyn_alloc (256);
 
 ==== string_dyn_copy
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Copy a string in a dynamic string.
+動的文字列内に文字列をコピーします。
 
-// TRANSLATION MISSING
-The pointer _*string_ can change if the string is reallocated (if there is
-not enough space to copy the string).
+文字列が再確保された場合 (文字列をコピーするのに十分なサイズが確保されていなかった場合)
+にはポインタ _*string_ が変わる可能性があります。
 
 プロトタイプ:
 
@@ -2255,14 +2246,12 @@ int weechat_dyn_copy (char **string, const char *new_string);
 
 引数:
 
-// TRANSLATION MISSING
-* _string_: pointer to dynamic string
-* _new_string_: the string to copy
+* _string_: 動的文字列へのポインタ
+* _new_string_: コピーする文字列
 
 戻り値:
 
-// TRANSLATION MISSING
-* 1 if OK, 0 if error
+* 成功した場合は 1、失敗した場合は 0
 
 C 言語での使用例:
 
@@ -2271,11 +2260,11 @@ C 言語での使用例:
 char **string = weechat_dyn_alloc (256);
 if (weechat_dyn_copy (string, "test"))
 {
-    /* OK */
+    /* 成功 */
 }
 else
 {
-    /* error */
+    /* 失敗 */
 }
 ----
 
@@ -2284,14 +2273,12 @@ else
 
 ==== string_dyn_concat
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Concatenate a string to a dynamic string.
+動的文字列に文字列を連結します。
 
-// TRANSLATION MISSING
-The pointer _*string_ can change if the string is reallocated (if there is
-not enough space to concatenate the string).
+文字列が再確保された場合 (文字列を連結するのに十分なサイズが確保されていなかった場合)
+にはポインタ _*string_ が変わる可能性があります。
 
 プロトタイプ:
 
@@ -2302,14 +2289,12 @@ int weechat_dyn_concat (char **string, const char *add);
 
 引数:
 
-// TRANSLATION MISSING
-* _string_: pointer to dynamic string
-* _add_: the string to add
+* _string_: 動的文字列へのポインタ
+* _add_: 連結する文字列
 
 戻り値:
 
-// TRANSLATION MISSING
-* 1 if OK, 0 if error
+* 成功した場合は 1、失敗した場合は 0
 
 C 言語での使用例:
 
@@ -2330,10 +2315,9 @@ if (weechat_dyn_copy (string, "test"))
 
 ==== string_dyn_free
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Free a dynamic string.
+動的文字列を解放します。
 
 プロトタイプ:
 
@@ -2344,10 +2328,9 @@ void weechat_dyn_free (char **string, int free_string);
 
 引数:
 
-// TRANSLATION MISSING
-* _string_: pointer to dynamic string
-* _free_string_: free the string itself; if 0, the content of _*string_ remains
-  valid after the call to this function
+* _string_: 動的文字列へのポインタ
+* _free_string_: 文字列の解放; 0 を指定することで、この関数を呼び出した後でも
+  _*string_ が指すアドレスのメモリを確保したままにできます。
 
 C 言語での使用例:
 
@@ -2356,11 +2339,11 @@ C 言語での使用例:
 char **string = weechat_dyn_alloc (256);
 if (weechat_dyn_concat (string, "test"))
 {
-    /* OK */
+    /* 成功 */
 }
 else
 {
-    /* error */
+    /* 失敗 */
 }
 /* ... */
 weechat_dyn_free (string, 1);
@@ -3853,19 +3836,17 @@ weechat.list_free(list)
 ----
 
 [[array_lists]]
-=== Array lists
+=== 配列リスト
 
-// TRANSLATION MISSING
-Array list functions.
+配列リスト関数。
 
-An array list is a list of pointers with a dynamic size and optional sort.
+配列リストとはサイズ可変でソート可能なポインタのリストです。
 
 ==== arraylist_new
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Create a new array list.
+新しい配列リストを作成します。
 
 プロトタイプ:
 
@@ -3887,31 +3868,29 @@ struct t_arraylist *weechat_arraylist_new (int initial_size,
 
 引数:
 
-// TRANSLATION MISSING
-* _initial_size_: initial size of the array list (not the number of items)
-* _sorted_: 1 to sort the array list, 0 for no sort
-* _allow_duplicates_: 1 to allow duplicate entries, 0 to prevent a same entry
-  to be added again
-* _callback_cmp_: callback used to compare two items, arguments and return value:
-** _void *data_: pointer
-** _struct t_arraylist *arraylist_: array list pointer
-** _void *pointer1_: pointer to first item
-** _void *pointer2_: pointer to second item
-** return value:
-*** negative number if first item is less than second item
-*** 0 if first item equals second item
-*** positive number if first item is greater than second item
-* _callback_cmp_data_: pointer given to callback when it is called by WeeChat
-* _callback_free_: callback used to free an item (optional), arguments:
-** _void *data_: pointer
-** _struct t_arraylist *arraylist_: array list pointer
-** _void *pointer_: pointer to item
-* _callback_free_data_: pointer given to callback when it is called by WeeChat
+* _initial_size_: 配列リストの初期サイズ (要素数ではありません)
+* _sorted_: 1 の場合には配列リストをソートし、0 の場合にはソートしません
+* _allow_duplicates_: 1 の場合にはエントリの重複を許可し、0
+  の場合にはエントリが重複して追加されることを防ぎます
+* _callback_cmp_: 2 つの要素を比較する際に使われるコールバック、引数と戻り値は以下:
+** _void *data_: ポインタ
+** _struct t_arraylist *arraylist_: 配列リストポインタ
+** _void *pointer1_: 1 番目の要素へのポインタ
+** _void *pointer2_: 2 番目の要素へのポインタ
+** 戻り値:
+*** 1 番目の要素が 2 番目の要素よりも小さければ負数
+*** 1 番目の要素が 2 番目の要素と同じならばゼロ
+*** 1 番目の要素が 2 番目の要素よりも大きければ正数
+* _callback_cmp_data_: WeeChat がコールバックを呼び出す際に、コールバックに渡すポインタ
+* _callback_free_: 要素を解放する際に使われるコールバック (任意)、引数は以下:
+** _void *data_: ポインタ
+** _struct t_arraylist *arraylist_: 配列リストポインタ
+** _void *pointer_: 要素へのポインタ
+* _callback_free_data_: WeeChat がコールバックを呼び出す際に、コールバックに渡すポインタ
 
 戻り値:
 
-// TRANSLATION MISSING
-* pointer to new array list
+* 新しい配列リストへのポインタ
 
 C 言語での使用例:
 
@@ -3938,10 +3917,9 @@ struct t_arraylist *list = weechat_arraylist_new (32, 1, 1,
 
 ==== arraylist_size
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Return size of array list (number of item pointers).
+配列リストのサイズ (要素ポインタの数) を返します。
 
 プロトタイプ:
 
@@ -3952,13 +3930,11 @@ int weechat_list_size (struct t_arraylist *arraylist);
 
 引数:
 
-// TRANSLATION MISSING
-* _arraylist_: array list pointer
+* _arraylist_: 配列リストポインタ
 
 戻り値:
 
-// TRANSLATION MISSING
-* size of array list (number of items), 0 if array list is empty
+* 配列リストのサイズ (要素の数)、0 は配列リストが空であることを意味します
 
 C 言語での使用例:
 
@@ -3972,10 +3948,9 @@ weechat_printf (NULL, "size of array list: %d", weechat_arraylist_size (arraylis
 
 ==== arraylist_get
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Return an item pointer by position.
+指定された位置の要素ポインタを返します。
 
 プロトタイプ:
 
@@ -3986,14 +3961,12 @@ void *weechat_arraylist_get (struct t_arraylist *arraylist, int index);
 
 引数:
 
-// TRANSLATION MISSING
-* _arraylist_: array list pointer
-* _index_: index in list (first pointer is 0)
+* _arraylist_: 配列リストポインタ
+* _index_: リストのインデックス番号 (インデックス番号は 0 から始まります)
 
 戻り値:
 
-// TRANSLATION MISSING
-* pointer found, NULL if pointer was not found
+* ポインタが見つかった場合はそのポインタ、見つからなかった場合は NULL
 
 C 言語での使用例:
 
@@ -4007,10 +3980,9 @@ void *pointer = weechat_arraylist_get (arraylist, 0);  /* first item */
 
 ==== arraylist_search
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Search an item in an array list.
+配列リストから要素を検索します。
 
 プロトタイプ:
 
@@ -4022,18 +3994,16 @@ void *weechat_arraylist_search (struct t_arraylist *arraylist, void *pointer,
 
 引数:
 
-// TRANSLATION MISSING
-* _arraylist_: array list pointer
-* _pointer_: pointer to the item to search in array list
-* _index_: pointer to integer that will be set to the index found, or -1 if not found
-  (optional)
-* _index_insert_: pointer to integer that will be set with the index that must be
-  used to insert the element in the arraylist (to keep arraylist sorted) (optional)
+* _arraylist_: 配列リストポインタ
+* _pointer_: 配列リストから検索する要素へのポインタ
+* _index_: 要素が見つかった場合はそのインデックス番号を示す整数へのポインタ、見つからなかった場合は
+  -1 (任意)
+* _index_insert_: _arraylist_ に要素を挿入するために使われるインデックス番号を示す整数へのポインタ
+  (これは _arraylist_ のソート状態を保存する目的で使います) (任意)
 
 戻り値:
 
-// TRANSLATION MISSING
-* pointer to item found, NULL if item was not found
+* 要素が見つかったにはその要素へのポインタ、見つからなかった場合は NULL
 
 C 言語での使用例:
 
@@ -4048,10 +4018,9 @@ void *item = weechat_arraylist_search (arraylist, pointer, &index, &index_insert
 
 ==== arraylist_insert
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Insert an item in an array list.
+配列リストに要素を挿入します。
 
 プロトタイプ:
 
@@ -4062,23 +4031,21 @@ int weechat_arraylist_insert (struct t_arraylist *arraylist, int index, void *po
 
 引数:
 
-// TRANSLATION MISSING
-* _arraylist_: array list pointer
-* _index_: position of the item in array list or -1 to add at the end
-  (this argument is used only if the array list is not sorted, it is ignored if
-  the array list is sorted)
-* _pointer_: pointer to the item to insert
+* _arraylist_: 配列リストポインタ
+* _index_:
+  配列リストにおける要素の挿入位置または末尾に挿入することを意味する -1
+  (この引数は配列リストがソート済みでない場合にのみ使われ、配列リストがソートされている場合には無視されます)
+* _pointer_: 挿入する要素へのポインタ
 
 戻り値:
 
-// TRANSLATION MISSING
-* index of new item (>= 0), -1 if error.
+* 成功した場合には挿入された要素のインデックス番号 (0 以上)、失敗した場合には -1。
 
 C 言語での使用例:
 
 [source,C]
 ----
-int index = weechat_arraylist_insert (arraylist, -1, pointer);  /* insert at the end if not sorted */
+int index = weechat_arraylist_insert (arraylist, -1, pointer);  /* 未ソートの配列リストに対しては要素を末尾に挿入します */
 ----
 
 [NOTE]
@@ -4086,10 +4053,9 @@ int index = weechat_arraylist_insert (arraylist, -1, pointer);  /* insert at the
 
 ==== arraylist_add
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Add an item in an array list.
+配列リストに要素を追加します。
 
 プロトタイプ:
 
@@ -4100,14 +4066,12 @@ int weechat_arraylist_add (struct t_arraylist *arraylist, void *pointer);
 
 引数:
 
-// TRANSLATION MISSING
-* _arraylist_: array list pointer
-* _pointer_: pointer to the item to add
+* _arraylist_: 配列リストポインタ
+* _pointer_: 追加する要素へのポインタ
 
 戻り値:
 
-// TRANSLATION MISSING
-* index of new item (>= 0), -1 if error.
+* 成功した場合には追加された要素のインデックス番号 (0 以上)、失敗した場合には -1。
 
 C 言語での使用例:
 
@@ -4121,10 +4085,9 @@ int index = weechat_arraylist_add (arraylist, pointer);
 
 ==== arraylist_remove
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Remove an item from an array list.
+配列リストから要素を削除します。
 
 プロトタイプ:
 
@@ -4135,14 +4098,12 @@ int weechat_arraylist_remove (struct t_arraylist *arraylist, int index);
 
 引数:
 
-// TRANSLATION MISSING
-* _arraylist_: array list pointer
-* _index_: index of the item to remove
+* _arraylist_: 配列リストポインタ
+* _index_: 削除する要素のインデックス番号
 
 戻り値:
 
-// TRANSLATION MISSING
-* index of item removed, -1 if error.
+* 成功した場合には削除された要素のインデックス番号、失敗した場合には -1。
 
 C 言語での使用例:
 
@@ -4156,10 +4117,9 @@ int index_removed = weechat_arraylist_remove (arraylist, index);
 
 ==== arraylist_clear
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Remove all items from an array list.
+配列リストからすべての要素を削除します。
 
 プロトタイプ:
 
@@ -4170,13 +4130,11 @@ int weechat_arraylist_clear (struct t_arraylist *arraylist);
 
 引数:
 
-// TRANSLATION MISSING
-* _arraylist_: array list pointer
+* _arraylist_: 配列リストポインタ
 
 戻り値:
 
-// TRANSLATION MISSING
-* 1 if OK, 0 if error
+* 成功した場合には 1、失敗した場合には 0
 
 C 言語での使用例:
 
@@ -4184,7 +4142,7 @@ C 言語での使用例:
 ----
 if (weechat_arraylist_clear (arraylist))
 {
-    /* OK */
+    /* 成功 */
 }
 ----
 
@@ -4193,10 +4151,9 @@ if (weechat_arraylist_clear (arraylist))
 
 ==== arraylist_free
 
-_WeeChat ≥ 1.8._
+_WeeChat バージョン 1.8 以上で利用可_
 
-// TRANSLATION MISSING
-Free an array list.
+配列リストを解放します。
 
 プロトタイプ:
 
@@ -4207,8 +4164,7 @@ void weechat_arraylist_free (struct t_arraylist *arraylist);
 
 引数:
 
-// TRANSLATION MISSING
-* _arraylist_: array list pointer
+* _arraylist_: 配列リストポインタ
 
 C 言語での使用例:
 
@@ -9066,11 +9022,10 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: サーバ名 |
   サーバから切断された
 
-// TRANSLATION MISSING
 | irc | irc_server_lag_changed +
   _(WeeChat バージョン 1.8 以上で利用可)_ |
   String: サーバ名 |
-  Lag changed on the server.
+  指定したサーバの遅延時間が変化
 
 | irc | irc_ignore_removing |
   Pointer: 無視 |
