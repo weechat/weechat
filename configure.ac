@@ -338,7 +338,7 @@ if test "x$enable_aspell" = "xyes" ; then
         AC_CHECK_HEADER(aspell.h,ac_found_aspell_header="yes",ac_found_aspell_header="no")
         AC_CHECK_LIB(aspell,new_aspell_speller,ac_found_aspell_lib="yes",ac_found_aspell_lib="no")
 
-        AC_MSG_CHECKING(for aspell headers and librairies)
+        AC_MSG_CHECKING(for aspell headers and libraries)
         if test "x$ac_found_aspell_header" = "xno" -o "x$ac_found_aspell_lib" = "xno" ; then
             AC_MSG_RESULT(no)
             AC_MSG_WARN([
@@ -667,7 +667,7 @@ if test "x$enable_lua" = "xyes" ; then
     fi
 
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
-        AC_MSG_CHECKING(for Lua headers and librairies with pkg-config)
+        AC_MSG_CHECKING(for Lua headers and libraries with pkg-config)
         echo
         for l in "$lua_suffix" "" "52" "5.2" "51" "5.1" "50" "5.0" ; do
             pkgconfig_lua_found=`$PKGCONFIG --exists lua$l 2>/dev/null`
@@ -690,7 +690,7 @@ if test "x$enable_lua" = "xyes" ; then
         LUACONFIG=""
         AC_CHECK_PROGS(LUACONFIG, lua-config lua-config52 lua-config5.2 lua-config51 lua-config5.1 lua-config50 lua-config5.0)
         if test "x$LUACONFIG" != "x" ; then
-            AC_MSG_CHECKING(for Lua headers and librairies with lua-config)
+            AC_MSG_CHECKING(for Lua headers and libraries with lua-config)
             echo
             LUA_CFLAGS=`$LUACONFIG --include`
             LUA_LFLAGS=`$LUACONFIG --libs`
@@ -699,7 +699,7 @@ if test "x$enable_lua" = "xyes" ; then
     fi
 
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
-        AC_MSG_CHECKING(for Lua headers and librairies)
+        AC_MSG_CHECKING(for Lua headers and libraries)
         echo
         AC_CHECK_HEADER(lua.h,ac_found_lua_header="yes",ac_found_lua_header="no")
         AC_CHECK_HEADER(lualib.h,ac_found_liblua_header="yes",ac_found_liblua_header="no")
@@ -744,7 +744,7 @@ if test "x$enable_lua" = "xyes" ; then
         if test "x$LUA52_TEST" != "x0" ; then
             AC_MSG_RESULT(no)
             AC_MSG_WARN([
-*** Lua (>=5.0) headers and/or librairies couldn't be found on your system.
+*** Lua (>=5.0) headers and/or libraries couldn't be found on your system.
 *** Try to install liblua, liblualib and liblua-dev with your software package manager.
 *** WeeChat will be built without Lua support.])
             enable_lua="no"
@@ -817,7 +817,7 @@ if test "x$enable_guile" = "xyes" ; then
     enable_plugins="yes"
 
     guile_found="no"
-    AC_MSG_CHECKING(for Guile headers and librairies)
+    AC_MSG_CHECKING(for Guile headers and libraries)
     echo
     for v in "2.0" ; do
         pkgconfig_guile_found=`$PKGCONFIG --exists guile-$v 2>/dev/null`
@@ -949,7 +949,7 @@ fi
 AC_CHECK_HEADER(gcrypt.h,ac_found_gcrypt_header="yes",ac_found_gcrypt_header="no")
 AC_CHECK_LIB(gcrypt,gcry_check_version,ac_found_gcrypt_lib="yes",ac_found_gcrypt_lib="no")
 
-AC_MSG_CHECKING(for gcrypt headers and librairies)
+AC_MSG_CHECKING(for gcrypt headers and libraries)
 if test "x$ac_found_gcrypt_header" = "xno" -o "x$ac_found_gcrypt_lib" = "xno" ; then
     AC_MSG_RESULT(no)
     AC_MSG_ERROR([
@@ -971,7 +971,7 @@ if test "x$enable_gnutls" = "xyes" ; then
     AC_CHECK_HEADER(gnutls/gnutls.h,ac_found_gnutls_header="yes",ac_found_gnutls_header="no")
     AC_CHECK_LIB(gnutls,gnutls_global_init,ac_found_gnutls_lib="yes",ac_found_gnutls_lib="no")
 
-    AC_MSG_CHECKING(for gnutls headers and librairies)
+    AC_MSG_CHECKING(for gnutls headers and libraries)
     if test "x$ac_found_gnutls_header" = "xno" -o "x$ac_found_gnutls_lib" = "xno" ; then
         AC_MSG_RESULT(no)
         AC_MSG_WARN([
@@ -1067,7 +1067,7 @@ fi
 AC_CHECK_HEADER(zlib.h,ac_found_zlib_header="yes",ac_found_zlib_header="no")
 AC_CHECK_LIB(z,compress2,ac_found_zlib_lib="yes",ac_found_zlib_lib="no")
 
-AC_MSG_CHECKING(for zlib headers and librairies)
+AC_MSG_CHECKING(for zlib headers and libraries)
 if test "x$ac_found_zlib_header" = "xno" -o "x$ac_found_zlib_lib" = "xno" ; then
     AC_MSG_RESULT(no)
     AC_MSG_ERROR([
@@ -1102,7 +1102,7 @@ AC_SUBST(CURL_LFLAGS)
 
 if test "x$enable_tests" = "xyes" ; then
     cpputest_found="no"
-    AC_MSG_CHECKING(for CppUTest headers and librairies)
+    AC_MSG_CHECKING(for CppUTest headers and libraries)
     echo
     pkgconfig_cpputest_found=`$PKGCONFIG --exists cpputest 2>/dev/null`
     if test "x$?" = "x0" ; then
