@@ -1112,7 +1112,8 @@ COMMAND_CALLBACK(buffer)
                              gui_buffer_get_integer (buffer, argv[2]));
         }
         if (gui_buffer_property_in_list (gui_buffer_properties_get_string,
-                                         argv[2]))
+                                         argv[2])
+            || (string_strncasecmp (argv[2], "localvar_", 9) == 0))
         {
             gui_chat_printf (NULL, "%s%s%s: (str) %s = %s",
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
