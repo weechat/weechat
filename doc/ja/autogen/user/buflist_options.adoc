@@ -3,79 +3,79 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_buflist.format.buffer]] *buflist.format.buffer*
-** 説明: pass:none[format of each line with a buffer (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[各バッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:green}${number}.${indent}${color_hotlist}${name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
-** 説明: pass:none[format for the line with current buffer (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[現在のバッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:lightgreen,blue}${number}.${indent}${color_hotlist}${name}"+`
 
 * [[option_buflist.format.hotlist]] *buflist.format.hotlist*
-** 説明: pass:none[format for hotlist (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[ホットリストの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+" ${color:green}(${hotlist}${color:green})"+`
 
 * [[option_buflist.format.hotlist_highlight]] *buflist.format.hotlist_highlight*
-** 説明: pass:none[format for a buffer with hotlist level "highlight" (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[ホットリストレベルが "highlight" のバッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:magenta}"+`
 
 * [[option_buflist.format.hotlist_low]] *buflist.format.hotlist_low*
-** 説明: pass:none[format for a buffer with hotlist level "low" (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[ホットリストレベルが "low" のバッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:white}"+`
 
 * [[option_buflist.format.hotlist_message]] *buflist.format.hotlist_message*
-** 説明: pass:none[format for a buffer with hotlist level "message" (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[ホットリストレベルが "message" のバッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:brown}"+`
 
 * [[option_buflist.format.hotlist_none]] *buflist.format.hotlist_none*
-** 説明: pass:none[format for a buffer not in hotlist (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[ホットリストにないバッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:default}"+`
 
 * [[option_buflist.format.hotlist_private]] *buflist.format.hotlist_private*
-** 説明: pass:none[format for a buffer with hotlist level "private" (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[ホットリストレベルが "private" のバッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:green}"+`
 
 * [[option_buflist.format.hotlist_separator]] *buflist.format.hotlist_separator*
-** 説明: pass:none[separator for counts in hotlist (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[ホットリスト内のカウンタを示す区切り文字 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:default},"+`
 
 * [[option_buflist.format.lag]] *buflist.format.lag*
-** 説明: pass:none[format for lag on an IRC server buffer (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[IRC サーババッファの遅延時間の表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
-** 説明: pass:none[conditions to display a buffer (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[バッファの表示条件 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${buffer.hidden}==0"+`
 
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
-** 説明: pass:none[comma-separated list of signals that are hooked and trigger the refresh of buffers list]
+** 説明: pass:none[フックされたシグナルおよびバッファリストの再読込シグナルのコンマ区切りリスト]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"buffer_opened,buffer_closed,buffer_merged,buffer_unmerged,buffer_moved,buffer_renamed,buffer_switch,buffer_hidden,buffer_unhidden,buffer_localvar_added,buffer_localvar_changed,window_switch,hotlist_changed"+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** 説明: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer; char "-" can be used before field to reverse order]
+** 説明: pass:none[バッファをソートする際に考慮するフィールドのコンマ区切りリスト; 各フィールドはバッファの hdata 変数です; フィールドの先頭に "-" 文字を付けることでソート順を逆にすることも可能です]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"number,-active"+`
