@@ -755,14 +755,20 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
                           "buffer:0x%lx", (long unsigned int)ptr_buffer);
-                weechat_hashtable_remove (RELAY_WEECHAT_DATA(ptr_client, buffers_nicklist),
-                                          ptr_buffer);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "number,full_name");
                 relay_weechat_msg_send (ptr_client, msg);
                 relay_weechat_msg_free (msg);
             }
         }
+
+        /* remove buffer from hashtables */
+        weechat_hashtable_remove (
+            RELAY_WEECHAT_DATA(ptr_client, buffers_sync),
+            weechat_buffer_get_string (ptr_buffer, "full_name"));
+        weechat_hashtable_remove (
+            RELAY_WEECHAT_DATA(ptr_client, buffers_nicklist),
+            ptr_buffer);
     }
 
     return WEECHAT_RC_OK;
