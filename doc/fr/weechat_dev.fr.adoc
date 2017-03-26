@@ -176,7 +176,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |===
 | Chemin/fichier                    | Description
 | plugins/                          | Racine des extensions.
-|    plugin.c                       | Gestion des extensions (chargement/déchargement des librairies C dynamiques).
+|    plugin.c                       | Gestion des extensions (chargement/déchargement des bibliothèques C dynamiques).
 |    plugin-api.c                   | Fonctions supplémentaires pour l'API extension (enveloppes autour des fonctions du cœur de WeeChat).
 |    plugin-config.c                | Options de configuration des extensions (fichier plugins.conf).
 |    plugin-script.c                | Fonctions communes utilisés par les extensions pour les scripts.
