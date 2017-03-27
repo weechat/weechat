@@ -126,8 +126,11 @@ compiler WeeChat.
 [NOTE]
 ^(1)^ Le nom provient de la distribution GNU/Linux Debian, la version dans le
 nom du paquet peut être différente. +
-^(2)^ WeeChat peut compiler avec libncurses5-dev, mais ce n'est *PAS*
-recommandé (vous aurez des bugs d'affichage avec les caractères larges). +
+// TRANSLATION MISSING
+^(2)^ Il est recommandé de compiler avec libncurses**w**5-dev (le *w* est
+important). WeeChat peut compiler avec libncurses5-dev, but ce n'est *PAS*
+recommandé : vous pourriez avoir des bugs d'affichage avec les caractères
+larges. +
 ^(3)^ Gnutls ≥ 3.0.21 est requis pour l'authentification SASL avec le mécanisme
 ECDSA-NIST256P-CHALLENGE. +
 ^(4)^ La version recommandée de Python est 2.7 (tous les scripts tournent bien

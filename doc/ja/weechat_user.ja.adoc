@@ -128,8 +128,10 @@ OS X では http://brew.sh/[Homebrew] を使ってください:
 [NOTE]
 ^(1)^ Debian GNU/Linux
 ディストリビューションにおけるパッケージ名です。他のディストリビューションではバージョンとパッケージ名が異なるかもしれません。 +
-^(2)^ WeeChat は libncurses5-dev でもコンパイル可能ですが、これは推奨 *されません*
-(ワイドキャラクタの表示にバグを生じるでしょう)。 +
+// TRANSLATION MISSING
+^(2)^ It is recommended to compile with libncurses**w**5-dev (the *w* is
+important). WeeChat can compile with libncurses5-dev, but it is *NOT* recommended:
+you may have display bugs with wide chars. +
 ^(3)^ IRC SASL 認証で ECDSA-NIST256P-CHALLENGE を使うには、Gnutls
 バージョン 3.0.21 以上が必要です。 +
 ^(4)^ Python はバージョン 2.7 をお勧めします (全てのスクリプトはバージョン 2.7
