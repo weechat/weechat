@@ -125,7 +125,7 @@ compile WeeChat.
 names may be different in different distributions and versions. +
 ^(2)^ It is recommended to compile with libncurses**w**5-dev (the *w* is
 important). WeeChat can compile with libncurses5-dev, but it is *NOT* recommended:
-you may have display bugs with wide chars. +
+you may experience display bugs with wide chars. +
 ^(3)^ Gnutls ≥ 3.0.21 is required for IRC SASL authentication with mechanism
 ECDSA-NIST256P-CHALLENGE. +
 ^(4)^ Recommended Python version is 2.7 (all scripts run fine with version 2.7,

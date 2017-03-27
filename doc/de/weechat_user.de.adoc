@@ -132,7 +132,7 @@ Versionen und Paketnamen können für andere Distributionen abweichend sein. +
 // TRANSLATION MISSING
 ^(2)^ It is recommended to compile with libncurses**w**5-dev (the *w* is
 important). WeeChat can compile with libncurses5-dev, but it is *NOT* recommended:
-you may have display bugs with wide chars. +
+you may experience display bugs with wide chars. +
 ^(3)^ Gnutls ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
 ECDSA-NIST256P-CHALLENGE durchzuführen. +
 ^(4)^ Die empfohlene Version ist 2.7 (alle Skripten laufen mit der Version 2.7,
