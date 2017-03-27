@@ -227,6 +227,8 @@ TEST(Eval, EvalExpression)
     WEE_CHECK_EVAL("te+", "${cut:2,+,test}");
     WEE_CHECK_EVAL("éà", "${cut:2,,éàô}");
     WEE_CHECK_EVAL("éà+", "${cut:2,+,éàô}");
+    WEE_CHECK_EVAL("こん+", "${cut:2,+,こんにちは世界}");
+    WEE_CHECK_EVAL("こ+", "${cutscr:2,+,こんにちは世界}");
 
     /* test color */
     WEE_CHECK_EVAL(gui_color_get_custom ("green"), "${color:green}");

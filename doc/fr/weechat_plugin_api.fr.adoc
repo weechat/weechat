@@ -2085,11 +2085,19 @@ première étendue à la dernière) :
 
 | `+${cut:max,suffixe,chaîne}+` +
   (_WeeChat ≥ 1.8_) |
-  Chaîne avec `max` caractères affichés, et un `suffixe` facultatif si la chaîne est coupée. |
+  Chaîne avec `max` caractères, et un `suffixe` facultatif si la chaîne est coupée. |
   `+${cut:4,…,ceci est un test}+` +
-  `+${cut:2,>>,àéçôî}+` |
+  `+${cut:2,>>,こんにちは世界}+` |
   `+ceci…+` +
-  `+àé>>+`
+  `+こん>>+`
+
+| `+${cutscr:max,suffixe,chaîne}+` +
+  (_WeeChat ≥ 1.8_) |
+  Chaîne avec `max` caractères affichés à l'écran, et un `suffixe` facultatif si la chaîne est coupée. |
+  `+${cutscr:4,…,ceci est un test}+` +
+  `+${cutscr:2,>>,こんにちは世界}+` |
+  `+ceci…+` +
+  `+こ>>+`
 
 | `+${re:N}+` |
   Groupe regex capturé : `0` = toute la chaîne correspondante,

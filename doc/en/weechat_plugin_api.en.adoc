@@ -2042,11 +2042,19 @@ expanded to last):
 
 | `+${cut:max,suffix,string}+` +
   (_WeeChat ≥ 1.8_) |
-  String with `max` chars displayed, and optional `suffix` if string is cut. |
+  String with `max` chars, and optional `suffix` if string is cut. |
   `+${cut:4,…,this is a test}+` +
-  `+${cut:2,>>,àéçôî}+` |
+  `+${cut:2,>>,こんにちは世界}+` |
   `+this…+` +
-  `+àé>>+`
+  `+こん>>+`
+
+| `+${cutscr:max,suffix,string}+` +
+  (_WeeChat ≥ 1.8_) |
+  String with `max` chars displayed on screen, and optional `suffix` if string is cut. |
+  `+${cutscr:4,…,this is a test}+` +
+  `+${cutscr:2,>>,こんにちは世界}+` |
+  `+this…+` +
+  `+こ>>+`
 
 | `+${re:N}+` |
   Regex captured group: `0` = whole string matching, `1` to `99` = group

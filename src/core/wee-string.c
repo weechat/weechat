@@ -96,17 +96,23 @@ string_strndup (const char *string, int length)
  * Cuts a string after max "length" chars, adds an optional suffix
  * after the string if it is cut.
  *
+ * If screen == 1, the cut is based on width of chars displayed.
+ *
  * Note: result must be freed after use.
  */
 
 char *
-string_cut (const char *string, int length, const char *cut_suffix)
+string_cut (const char *string, int length, int screen, const char *cut_suffix)
 {
     int length_result, length_cut_suffix;
     char *result;
     const char *ptr_string;
 
-    ptr_string = gui_chat_string_add_offset (string, length);
+    if (screen)
+        ptr_string = gui_chat_string_add_offset_screen (string, length);
+    else
+        ptr_string = gui_chat_string_add_offset (string, length);
+
     if (!ptr_string[0])
     {
         /* no cut */

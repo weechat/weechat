@@ -296,6 +296,7 @@ end:
  *   3. a string with escaped chars (format: esc:xxx or \xxx)
  *   4. a string with chars to hide (format: hide:char,string)
  *   5. a string with max chars (format: cut:max,suffix,string)
+ *      or max chars on screen (format: cutscr:max,suffix,string)
  *   6. a regex group captured (format: re:N (0.99) or re:+)
  *   7. a color (format: color:xxx)
  *   8. an info (format: info:name,arguments)
@@ -324,7 +325,7 @@ eval_replace_vars_cb (void *data, const char *text)
     const char *prefix, *suffix, *ptr_value, *ptr_arguments, *ptr_string;
     struct t_hdata *hdata;
     void *pointer;
-    int i, length_hide_char, length, index, rc, extra_vars_eval;
+    int i, length_hide_char, length, index, rc, extra_vars_eval, screen;
     long number;
     long unsigned int ptr;
     time_t date;
@@ -413,18 +414,32 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 5. cut chars: max number of chars, and add an optional suffix when the
-     * string is cut
+     * 5. cut chars:
+     *   cut: max number of chars, and add an optional suffix when the
+     *        string is cut
+     *   cutscr: max number of chars displayed on screen, and add an optional
+     *           suffix when the string is cut
      */
-    if (strncmp (text, "cut:", 4) == 0)
+    if ((strncmp (text, "cut:", 4) == 0)
+        || (strncmp (text, "cutscr:", 7) == 0))
     {
-        pos = strchr (text + 4, ',');
+        if (strncmp (text, "cut:", 4) == 0)
+        {
+            screen = 0;
+            length = 4;
+        }
+        else
+        {
+            screen = 1;
+            length = 7;
+        }
+        pos = strchr (text + length, ',');
         if (!pos)
             return strdup ("");
         pos2 = strchr (pos + 1, ',');
         if (!pos2)
             return strdup ("");
-        tmp = strndup (text + 4, pos - text - 4);
+        tmp = strndup (text + length, pos - text - length);
         if (!tmp)
             return strdup ("");
         number = strtol (tmp, &error, 10);
@@ -437,7 +452,7 @@ eval_replace_vars_cb (void *data, const char *text)
         tmp = strndup (pos + 1, pos2 - pos - 1);
         if (!tmp)
             return strdup ("");
-        value = string_cut (pos2 + 1, number, tmp);
+        value = string_cut (pos2 + 1, number, screen, tmp);
         free (tmp);
         return value;
     }

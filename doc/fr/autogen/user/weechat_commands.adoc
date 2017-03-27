@@ -257,53 +257,54 @@ infolists : afficher des infos sur les infolists
 /eval  [-n|-s] <expression>
        [-n] -c <expression1> <opérateur> <expression2>
 
-        -n : afficher le résultat sans envoyer au tampon (mode debug)
-        -s : découper l'expression avant de l'évaluer (plusieurs commandes peuvent être séparées par des points-virgules)
-        -c : évaluer comme une condition : utiliser les opérateurs et les parenthèses, retourner une valeur booléenne ("0" ou "1")
-expression : expression à évaluer, les variables avec le format ${variable} sont remplacées (voir ci-dessous) ; plusieurs commandes peuvent être séparées par des points-virgules
- opérateur : un opérateur logique ou de comparaison :
-             - opérateurs logiques :
-                 &&  "et" booléen
-                 ||  "ou" booléen
-             - opérateurs de comparaison :
-                 ==  égal
-                 !=  non égal
-                 <=  inférieur ou égal
-                 <   inférieur
-                 >=  supérieur ou égal
-                 >   supérieur
-                 =~  correspond à l'expression régulière POSIX étendue
-                 !~  ne correspond PAS à l'expression régulière POSIX étendue
+        -n: display result without sending it to buffer (debug mode)
+        -s: split expression before evaluating it (many commands can be separated by semicolons)
+        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
+expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
+  operator: a logical or comparison operator:
+            - logical operators:
+                &&  boolean "and"
+                ||  boolean "or"
+            - comparison operators:
+                ==  equal
+                !=  not equal
+                <=  less or equal
+                <   less
+                >=  greater or equal
+                >   greater
+                =~  is matching POSIX extended regex
+                !~  is NOT matching POSIX extended regex
 
-Une expression est considérée comme "vraie" si elle est non NULL, non vide, et différente de "0".
-La comparaison est faite en utilisant des entiers si les deux expressions sont des entiers valides.
-Pour forcer une comparaison de chaînes, ajoutez des guillemets autour de chaque expression, par exemple :
+An expression is considered as "true" if it is not NULL, not empty, and different from "0".
+The comparison is made using integers if the two expressions are valid integers.
+To force a string comparison, add double quotes around each expression, for example:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Des variables sont remplacées dans l'expression, en utilisant le format ${variable}, la variable pouvant être, par ordre de priorité :
-  1. une sous-chaîne évaluée (format : "eval:xxx")
-  2. une chaîne avec les caractères échappés (format : "esc:xxx" ou "\xxx")
-  3. une chaîne avec des caractères à cacher (format : "hide:caractère,chaîne")
-  4. une chaîne avec un maximum de caractères (format : "cut:max,suffixe,chaîne")
-  5. une couleur (format : "color:xxx")
-  6. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
-  7. la date/heure courante (format : "date" ou "date:format")
-  8. une variable d'environnement (format : "env:XXX")
-  9. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
-  10. une option (format : "fichier.section.option")
-  11. une variable locale du tampon
-  12. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
-Le format du hdata peut être le suivant :
-  hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
-  hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste, par exemple :
-    ${buffer[gui_buffers].full_name} : nom complet du premier tampon dans la liste chaînée des tampons
-    ${plugin[weechat_plugins].name} : nom de la première extension dans la liste chaînée des extensions
-  hdata[pointeur].var1.var2... : démarrer avec un hdata en utilisant un pointeur, par exemple :
-    ${buffer[0x1234abcd].full_name} : nom complet du tampon avec ce pointeur (peut être utilisé dans les triggers)
-Pour le nom du hdata et des variables, voir la "Référence API extension", fonction "weechat_hdata_get".
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
+  1. an evaluated sub-string (format: "eval:xxx")
+  2. a string with escaped chars (format: "esc:xxx" or "\xxx")
+  3. a string with chars to hide (format: "hide:char,string")
+  4. a string with max chars (format: "cut:max,suffix,string")
+     or max chars displayed on screen (format: "cutscr:max,suffix,string")
+  5. a color (format: "color:xxx")
+  6. an info (format: "info:name,arguments", arguments are optional)
+  7. current date/time (format: "date" or "date:format")
+  8. an environment variable (format: "env:XXX")
+  9. a ternary operator (format: "if:condition?value_if_true:value_if_false")
+  10. an option (format: "file.section.option")
+  11. a local variable in buffer
+  12. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+Format for hdata can be one of following:
+  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
+  hdata[list].var1.var2...: start with a hdata using a list, for example:
+    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
+    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
+  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
+    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
+For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
-Exemples (chaînes simples) :
+Examples (simple strings):
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
   /eval -n ${weechat.look.scroll_amount}         ==> 3
@@ -314,10 +315,12 @@ Exemples (chaînes simples) :
   /eval -n ${\t}                                 ==> <tab>
   /eval -n ${hide:-,${relay.network.password}}   ==> --------
   /eval -n ${cut:2,+,test}                       ==> te+
+  /eval -n ${cut:2,+,こんにちは世界}             ==> こん+
+  /eval -n ${cutscr:2,+,こんにちは世界}          ==> こ+
   /eval -n ${date:%H:%M:%S}                      ==> 07:46:40
   /eval -n ${if:${info:term_width}>80?big:small} ==> big
 
-Exemples (conditions) :
+Examples (conditions):
   /eval -n -c ${window.buffer.number} > 2 ==> 0
   /eval -n -c ${window.win_width} > 100   ==> 1
   /eval -n -c (8 > 12) || (5 > 2)         ==> 1

@@ -2046,13 +2046,23 @@ char *weechat_string_eval_expression (const char *expr,
   `+${hide:*,password}+` |
  `+********+`
 
+// TRANSLATION MISSING
 | `+${cut:max,suffix,string}+` +
   (_WeeChat バージョン 1.8 以上で利用可_) |
-  `string` の先頭 `max` 文字を表示し、`string` の文字数が `max` 文字を超える場合にはオプションの `suffix` も表示します |
+  String with `max` chars, and optional `suffix` if string is cut. |
   `+${cut:4,…,this is a test}+` +
-  `+${cut:2,>>,àéçôî}+` |
+  `+${cut:2,>>,こんにちは世界}+` |
   `+this…+` +
-  `+àé>>+`
+  `+こん>>+`
+
+// TRANSLATION MISSING
+| `+${cutscr:max,suffix,string}+` +
+  (_WeeChat バージョン 1.8 以上で利用可_) |
+  String with `max` chars displayed on screen, and optional `suffix` if string is cut. |
+  `+${cutscr:4,…,this is a test}+` +
+  `+${cutscr:2,>>,こんにちは世界}+` |
+  `+this…+` +
+  `+こ>>+`
 
 | `+${re:N}+` |
   正規表現のキャプチャグループ: `0` = マッチするすべての文字列、`1` から `99` =

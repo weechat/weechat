@@ -126,8 +126,8 @@ main (int argc, char *argv[])
     int rc, length, weechat_argc;
     char *weechat_tests_args, *args, **weechat_argv;
 
-    /* setup environment: default language, no specific timezone */
-    setenv ("LC_ALL", "C", 1);
+    /* setup environment: English language, no specific timezone */
+    setenv ("LC_ALL", "en_US.UTF-8", 1);
     setenv ("TZ", "", 1);
 
     /* build arguments for WeeChat */
