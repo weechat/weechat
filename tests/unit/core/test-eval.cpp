@@ -220,15 +220,45 @@ TEST(Eval, EvalExpression)
 
     /* test cut of chars */
     WEE_CHECK_EVAL("", "${cut:0,,}");
+    WEE_CHECK_EVAL("", "${cutscr:0,,}");
+
     WEE_CHECK_EVAL("", "${cut:0,+,}");
+    WEE_CHECK_EVAL("", "${cutscr:0,+,}");
+
     WEE_CHECK_EVAL("", "${cut:0,,test}");
+    WEE_CHECK_EVAL("", "${cutscr:0,,test}");
+
     WEE_CHECK_EVAL("+", "${cut:0,+,test}");
+    WEE_CHECK_EVAL("+", "${cutscr:0,+,test}");
+
     WEE_CHECK_EVAL("te", "${cut:2,,test}");
+    WEE_CHECK_EVAL("te", "${cutscr:2,,test}");
+
     WEE_CHECK_EVAL("te+", "${cut:2,+,test}");
+    WEE_CHECK_EVAL("te+", "${cutscr:2,+,test}");
+
     WEE_CHECK_EVAL("éà", "${cut:2,,éàô}");
+    WEE_CHECK_EVAL("éà", "${cutscr:2,,éàô}");
+
     WEE_CHECK_EVAL("éà+", "${cut:2,+,éàô}");
+    WEE_CHECK_EVAL("éà+", "${cutscr:2,+,éàô}");
+
+    WEE_CHECK_EVAL("こ+", "${cut:1,+,こんにちは世界}");
+    WEE_CHECK_EVAL("+", "${cutscr:1,+,こんにちは世界}");
+
     WEE_CHECK_EVAL("こん+", "${cut:2,+,こんにちは世界}");
     WEE_CHECK_EVAL("こ+", "${cutscr:2,+,こんにちは世界}");
+
+    WEE_CHECK_EVAL("こんに+", "${cut:3,+,こんにちは世界}");
+    WEE_CHECK_EVAL("こ+", "${cutscr:3,+,こんにちは世界}");
+
+    WEE_CHECK_EVAL("こんにち+", "${cut:4,+,こんにちは世界}");
+    WEE_CHECK_EVAL("こん+", "${cutscr:4,+,こんにちは世界}");
+
+    WEE_CHECK_EVAL("こんにちは+", "${cut:5,+,こんにちは世界}");
+    WEE_CHECK_EVAL("こん+", "${cutscr:4,+,こんにちは世界}");
+
+    WEE_CHECK_EVAL("こん+", "${cutscr:4,+,こんにちは世界}");
 
     /* test color */
     WEE_CHECK_EVAL(gui_color_get_custom ("green"), "${color:green}");

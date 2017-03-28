@@ -224,7 +224,7 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
 {
     int size_on_screen;
 
-    while (string && string[0] && (offset_screen > 0))
+    while (string && string[0] && (offset_screen >= 0))
     {
         string = gui_chat_string_next_char (NULL, NULL,
                                             (unsigned char *)string,
@@ -233,6 +233,8 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
         {
             size_on_screen = gui_chat_char_size_screen (string);
             offset_screen -= size_on_screen;
+            if (offset_screen < 0)
+                return string;
             string = utf8_next_char (string);
         }
     }
