@@ -93,6 +93,8 @@ buflist_command_init ()
            "buflist.format.buffer; this can be used in option "
            "buflist.format.buffer_current to just change the background color "
            "for example\n"
+           "    - ${format_number}: indented number with separator "
+           "(evaluation of option buflist.format.number)\n"
            "    - ${number}: indented number, for example \" 1\" if there "
            "are between 10 and 99 buffers\n"
            "    - ${indent}: indentation for name (channel and private "

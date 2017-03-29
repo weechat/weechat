@@ -138,11 +138,15 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         {
             snprintf (str_number, sizeof (str_number),
                       str_format_number, number);
+            weechat_hashtable_set (buflist_hashtable_extra_vars,
+                                   "number_displayed", "1");
         }
         else
         {
             snprintf (str_number, sizeof (str_number),
                       str_format_number_empty, " ");
+            weechat_hashtable_set (buflist_hashtable_extra_vars,
+                                   "number_displayed", "0");
         }
         prev_number = number;
 
@@ -163,6 +167,10 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                    buflist_config_format_buffer));
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "number", str_number);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "format_number",
+                               weechat_config_string (
+                                   buflist_config_format_number));
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "indent", str_indent_name);
         weechat_hashtable_set (buflist_hashtable_extra_vars,

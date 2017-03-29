@@ -6,13 +6,13 @@
 ** description: pass:none[format pour chaque ligne avec un tampon (note : le contenu est évalué, voir /help buflist)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"${color:green}${number}.${indent}${color_hotlist}${name}"+`
+** valeur par défaut: `+"${format_number}${indent}${color_hotlist}${name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** description: pass:none[format pour la ligne avec le tampon courant (note : le contenu est évalué, voir /help buflist)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"${color:lightgreen,blue}${number}.${indent}${color_hotlist}${name}"+`
+** valeur par défaut: `+"${color:lightgreen,blue}${format_buffer}"+`
 
 * [[option_buflist.format.hotlist]] *buflist.format.hotlist*
 ** description: pass:none[format pour la hotlist (note : le contenu est évalué, voir /help buflist)]
@@ -61,6 +61,12 @@
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
+
+* [[option_buflist.format.number]] *buflist.format.number*
+** description: pass:none[format pour un numéro de tampon, ${number} est le numéro indenté (note : le contenu est évalué, voir /help buflist)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
 ** description: pass:none[conditions pour afficher un tampon (note : le contenu est évalué, voir /help buflist)]

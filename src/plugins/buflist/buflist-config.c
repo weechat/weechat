@@ -44,6 +44,7 @@ struct t_config_option *buflist_config_format_hotlist_level[4];
 struct t_config_option *buflist_config_format_hotlist_level_none;
 struct t_config_option *buflist_config_format_hotlist_separator;
 struct t_config_option *buflist_config_format_lag;
+struct t_config_option *buflist_config_format_number;
 
 struct t_hook **buflist_config_signals_refresh = NULL;
 int buflist_config_num_signals_refresh = 0;
@@ -264,7 +265,7 @@ buflist_config_init ()
         N_("format of each line with a buffer "
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
-        "${color:green}${number}.${indent}${color_hotlist}${name}",
+        "${format_number}${indent}${color_hotlist}${name}",
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
@@ -275,7 +276,7 @@ buflist_config_init ()
         N_("format for the line with current buffer "
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
-        "${color:lightgreen,blue}${number}.${indent}${color_hotlist}${name}",
+        "${color:lightgreen,blue}${format_buffer}",
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
@@ -364,6 +365,17 @@ buflist_config_init ()
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         " ${color:green}[${color:brown}${lag}${color:green}]",
+        NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_buflist, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_format_number = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "number", "string",
+        N_("format for buffer number, ${number} is the indented number "
+           "(note: content is evaluated, see /help buflist)"),
+        NULL, 0, 0,
+        "${color:green}${number}${if:${number_displayed}?.: }",
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,

@@ -6,13 +6,13 @@
 ** Beschreibung: pass:none[format of each line with a buffer (note: content is evaluated, see /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+"${color:green}${number}.${indent}${color_hotlist}${name}"+`
+** Standardwert: `+"${format_number}${indent}${color_hotlist}${name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** Beschreibung: pass:none[format for the line with current buffer (note: content is evaluated, see /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+"${color:lightgreen,blue}${number}.${indent}${color_hotlist}${name}"+`
+** Standardwert: `+"${color:lightgreen,blue}${format_buffer}"+`
 
 * [[option_buflist.format.hotlist]] *buflist.format.hotlist*
 ** Beschreibung: pass:none[format for hotlist (note: content is evaluated, see /help buflist)]
@@ -61,6 +61,12 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
+
+* [[option_buflist.format.number]] *buflist.format.number*
+** Beschreibung: pass:none[format for buffer number, ${number} is the indented number (note: content is evaluated, see /help buflist)]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
 ** Beschreibung: pass:none[conditions to display a buffer (note: content is evaluated, see /help buflist)]
