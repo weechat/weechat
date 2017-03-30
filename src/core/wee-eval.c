@@ -464,6 +464,12 @@ eval_replace_vars_cb (void *data, const char *text)
         {
             if (strcmp (text + 3, "+") == 0)
                 number = eval_regex->last_match;
+            else if (strcmp (text + 3, "#") == 0)
+            {
+                snprintf (str_value, sizeof (str_value),
+                          "%d", eval_regex->last_match);
+                return strdup (str_value);
+            }
             else
             {
                 number = strtol (text + 3, &error, 10);

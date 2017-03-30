@@ -2064,11 +2064,21 @@ char *weechat_string_eval_expression (const char *expr,
   `+this…+` +
   `+こ>>+`
 
+// TRANSLATION MISSING
 | `+${re:N}+` |
   正規表現のキャプチャグループ: `0` = マッチするすべての文字列、`1` から `99` =
-  キャプチャされたグループ、`+++` = 最後にキャプチャされたグループ |
-  `+${re:1}+` |
-  `+test+`
+  キャプチャされたグループ、`+++` = 最後にキャプチャされたグループ、
+  `#` = index of last group captured (_WeeChat ≥ 1.8_). |
+  `+${re:0}+` +
+  `+${re:1}+` +
+  `+${re:2}+` +
+  `+${re:+++}+` +
+  `+${re:#}+` |
+  `+test1 test2+` +
+  `+test1+` +
+  `+test2+` +
+  `+test2+` +
+  `+2+`
 
 | `+${color:name}+` |
   WeeChat 色コード (色名部分はオプション属性をとることも可能です),

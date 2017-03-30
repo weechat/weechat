@@ -402,6 +402,13 @@ TEST(Eval, EvalReplaceRegex)
                    "password=abc password=def");
     regfree (&regex);
 
+    /* regex groups */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", "([a-z]+) ([a-z]+) ([a-z]+) ([a-z]+)");
+    hashtable_set (options, "regex_replace",
+                   "${re:0} -- ${re:1} ${re:+} (${re:#})");
+    WEE_CHECK_EVAL("abc def ghi jkl -- abc jkl (4)", "abc def ghi jkl");
+
     hashtable_free (pointers);
     hashtable_free (extra_vars);
     hashtable_free (options);

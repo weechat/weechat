@@ -2101,9 +2101,18 @@ première étendue à la dernière) :
 
 | `+${re:N}+` |
   Groupe regex capturé : `0` = toute la chaîne correspondante,
-  `1` à `99` = groupe capturé, `+++` = dernier groupe capturé. |
-  `+${re:1}+` |
-  `+test+`
+  `1` à `99` = groupe capturé, `+++` = dernier groupe capturé,
+  `#` = index du dernier groupe capturé (_WeeChat ≥ 1.8_). |
+  `+${re:0}+` +
+  `+${re:1}+` +
+  `+${re:2}+` +
+  `+${re:+++}+` +
+  `+${re:#}+` |
+  `+test1 test2+` +
+  `+test1+` +
+  `+test2+` +
+  `+test2+` +
+  `+2+`
 
 | `+${color:nom}+` |
   Code couleur WeeChat (le nom de couleur a des attributs facultatifs),
