@@ -489,8 +489,6 @@ TEST(Arraylist, New)
                    arraylist_new (-1, 0, 0, NULL, NULL, NULL, NULL));
     POINTERS_EQUAL(NULL,
                    arraylist_new (-1, 0, 0, &test_cmp_cb, NULL, NULL, NULL));
-    POINTERS_EQUAL(NULL,
-                   arraylist_new (0, 0, 0, NULL, NULL, NULL, NULL));
 
     /* tests on arraylists */
     for (initial_size = 0; initial_size < 2; initial_size++)

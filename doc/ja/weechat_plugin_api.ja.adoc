@@ -3882,7 +3882,9 @@ struct t_arraylist *weechat_arraylist_new (int initial_size,
 * _sorted_: 1 の場合には配列リストをソートし、0 の場合にはソートしません
 * _allow_duplicates_: 1 の場合にはエントリの重複を許可し、0
   の場合にはエントリが重複して追加されることを防ぎます
-* _callback_cmp_: 2 つの要素を比較する際に使われるコールバック、引数と戻り値は以下:
+// TRANSLATION MISSING
+* _callback_cmp_: callback used to compare two items (optional), arguments and
+  return value:
 ** _void *data_: ポインタ
 ** _struct t_arraylist *arraylist_: 配列リストポインタ
 ** _void *pointer1_: 1 番目の要素へのポインタ

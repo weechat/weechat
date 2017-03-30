@@ -4006,7 +4006,8 @@ Argomenti:
 * _sorted_: 1 to sort the array list, 0 for no sort
 * _allow_duplicates_: 1 to allow duplicate entries, 0 to prevent a same entry
   to be added again
-* _callback_cmp_: callback used to compare two items, arguments and return value:
+* _callback_cmp_: callback used to compare two items (optional), arguments and
+  return value:
 ** _void *data_: pointer
 ** _struct t_arraylist *arraylist_: array list pointer
 ** _void *pointer1_: pointer to first item

@@ -3937,8 +3937,8 @@ Paramètres :
 * _sorted_ : 1 pour trier la liste avec tableau, 0 pour ne pas trier
 * _allow_duplicates_ : 1 pour autoriser les entrées dupliquées, 0 pour empêcher
   une même entrée d'être ajoutée à nouveau
-* _callback_cmp_ : fonction appelée pour comparer deux éléments, paramètres et
-  valeur de retour :
+* _callback_cmp_ : fonction appelée pour comparer deux éléments (optionnelle),
+  paramètres et valeur de retour :
 ** _void *data_ : pointeur
 ** _struct t_arraylist *arraylist_ : pointeur vers la liste avec tableau
 ** _void *pointer1_ : pointeur vers le premier élément

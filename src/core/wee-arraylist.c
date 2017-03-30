@@ -33,6 +33,31 @@
 
 
 /*
+ * Compares two arraylist entries (default comparator).
+ * It just compares pointers.
+ *
+ * Returns:
+ *   -1: pointer1 < pointer2
+ *    0: pointer1 == pointer2
+ *    1: pointer1 > pointer2
+ */
+
+int
+arraylist_cmp_default_cb (void *data, struct t_arraylist *arraylist,
+                          void *pointer1, void *pointer2)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    if (pointer1 < pointer2)
+        return -1;
+    if (pointer1 > pointer2)
+        return 1;
+    return 0;
+}
+
+/*
  * Creates a new arraylist.
  *
  * Returns pointer to arraylist, NULL if error.
@@ -48,7 +73,7 @@ arraylist_new (int initial_size,
     struct t_arraylist *new_arraylist;
 
     /* check arguments */
-    if ((initial_size < 0) || !callback_cmp)
+    if (initial_size < 0)
         return NULL;
 
     new_arraylist = malloc (sizeof (*new_arraylist));
@@ -76,8 +101,10 @@ arraylist_new (int initial_size,
     }
     new_arraylist->sorted = sorted;
     new_arraylist->allow_duplicates = allow_duplicates;
-    new_arraylist->callback_cmp = callback_cmp;
-    new_arraylist->callback_cmp_data = callback_cmp_data;
+    new_arraylist->callback_cmp = (callback_cmp) ?
+        callback_cmp : &arraylist_cmp_default_cb;
+    new_arraylist->callback_cmp_data = (callback_cmp) ?
+        callback_cmp_data : NULL;
     new_arraylist->callback_free = callback_free;
     new_arraylist->callback_free_data = callback_free_data;
 
