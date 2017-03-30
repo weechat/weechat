@@ -30,7 +30,9 @@ buflist_la_SOURCES = buflist.c \
                      buflist-command.c \
                      buflist-command.h \
                      buflist-config.c \
-                     buflist-config.h
+                     buflist-config.h \
+                     buflist-mouse.c \
+                     buflist-mouse.h
 
 buflist_la_LDFLAGS = -module -no-undefined
 buflist_la_LIBADD  = $(BUFLIST_LFLAGS)

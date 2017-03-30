@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-03-29 19:58+0200\n"
+"POT-Creation-Date: 2017-03-30 20:31+0200\n"
 "PO-Revision-Date: 2017-03-12 21:27+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -5796,6 +5796,18 @@ msgid ""
 msgstr ""
 "Realname der auf dem Server genutzt werden soll (Hinweis: Inhalt wird "
 "evaluiert, siehe /help eval)"
+
+msgid ""
+"if enabled, clicks with left/right buttons on the line with current buffer "
+"jump to previous/next visited buffer"
+msgstr ""
+
+msgid "if enabled, mouse gestures (drag & drop) move buffers in list"
+msgstr ""
+
+msgid ""
+"if enabled, mouse wheel up/down actions jump to previous/next buffer in list"
+msgstr ""
 
 #, fuzzy
 msgid ""

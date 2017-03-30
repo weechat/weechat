@@ -25,6 +25,9 @@
 extern struct t_config_file *buflist_config_file;
 
 extern struct t_config_option *buflist_config_look_display_conditions;
+extern struct t_config_option *buflist_config_look_mouse_jump_visited_buffer;
+extern struct t_config_option *buflist_config_look_mouse_move_buffer;
+extern struct t_config_option *buflist_config_look_mouse_wheel;
 extern struct t_config_option *buflist_config_look_signals_refresh;
 extern struct t_config_option *buflist_config_look_sort;
 

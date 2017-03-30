@@ -201,6 +201,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       buflist-bar-item.c          | Objets de barre Buflist.
 |       buflist-command.c           | Commandes pour Buflist.
 |       buflist-config.c            | Options de configuration pour Buflist (fichier buflist.conf).
+|       buflist-mouse.c             | Actions souris pour Buflist.
 |    charset/                       | Extension Charset.
 |       charset.c                   | Fonctions pour Charset.
 |    exec/                          | Extension Exec.

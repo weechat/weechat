@@ -74,6 +74,24 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${buffer.hidden}==0"+`
 
+* [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
+** Beschreibung: pass:none[if enabled, clicks with left/right buttons on the line with current buffer jump to previous/next visited buffer]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
+* [[option_buflist.look.mouse_move_buffer]] *buflist.look.mouse_move_buffer*
+** Beschreibung: pass:none[if enabled, mouse gestures (drag & drop) move buffers in list]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
+* [[option_buflist.look.mouse_wheel]] *buflist.look.mouse_wheel*
+** Beschreibung: pass:none[if enabled, mouse wheel up/down actions jump to previous/next buffer in list]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
 ** Beschreibung: pass:none[comma-separated list of signals that are hooked and trigger the refresh of buffers list]
 ** Typ: Zeichenkette

@@ -17,14 +17,12 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_BUFLIST_BAR_ITEM_H
-#define WEECHAT_BUFLIST_BAR_ITEM_H 1
+#ifndef WEECHAT_BUFLIST_MOUSE_H
+#define WEECHAT_BUFLIST_MOUSE_H 1
 
-#define BUFLIST_BAR_ITEM_NAME "buflist"
+#define BUFLIST_MOUSE_HSIGNAL "buflist_mouse"
 
-extern struct t_arraylist *buflist_list_buffers;
+extern int buflist_mouse_init ();
+extern void buflist_mouse_end ();
 
-extern int buflist_bar_item_init ();
-extern void buflist_bar_item_end ();
-
-#endif /* WEECHAT_BUFLIST_BAR_ITEM_H */
+#endif /* WEECHAT_BUFLIST_MOUSE_H */

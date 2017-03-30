@@ -32,6 +32,9 @@ struct t_config_file *buflist_config_file = NULL;
 /* buflist config, look section */
 
 struct t_config_option *buflist_config_look_display_conditions;
+struct t_config_option *buflist_config_look_mouse_jump_visited_buffer;
+struct t_config_option *buflist_config_look_mouse_move_buffer;
+struct t_config_option *buflist_config_look_mouse_wheel;
 struct t_config_option *buflist_config_look_signals_refresh;
 struct t_config_option *buflist_config_look_sort;
 
@@ -217,6 +220,32 @@ buflist_config_init ()
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_signals_refresh, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_look_mouse_jump_visited_buffer = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "mouse_jump_visited_buffer", "boolean",
+        N_("if enabled, clicks with left/right buttons on the line with "
+           "current buffer jump to previous/next visited buffer"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_look_mouse_move_buffer = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "mouse_move_buffer", "boolean",
+        N_("if enabled, mouse gestures (drag & drop) move buffers in list"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_look_mouse_wheel = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "mouse_wheel", "boolean",
+        N_("if enabled, mouse wheel up/down actions jump to previous/next "
+           "buffer in list"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
         NULL, NULL, NULL);
     buflist_config_look_signals_refresh = weechat_config_new_option (
         buflist_config_file, ptr_section,

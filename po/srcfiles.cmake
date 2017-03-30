@@ -129,6 +129,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/buflist/buflist-command.h
 ./src/plugins/buflist/buflist-config.c
 ./src/plugins/buflist/buflist-config.h
+./src/plugins/buflist/buflist-mouse.c
+./src/plugins/buflist/buflist-mouse.h
 ./src/plugins/buflist/buflist.h
 ./src/plugins/charset/charset.c
 ./src/plugins/exec/exec.c

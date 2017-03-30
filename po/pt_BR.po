@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-03-29 19:58+0200\n"
+"POT-Creation-Date: 2017-03-30 20:31+0200\n"
 "PO-Revision-Date: 2016-09-03 08:24+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5082,6 +5082,18 @@ msgid ""
 msgstr ""
 "comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
 "(nota: conteúdo é avaliado, veja /help eval)"
+
+msgid ""
+"if enabled, clicks with left/right buttons on the line with current buffer "
+"jump to previous/next visited buffer"
+msgstr ""
+
+msgid "if enabled, mouse gestures (drag & drop) move buffers in list"
+msgstr ""
+
+msgid ""
+"if enabled, mouse wheel up/down actions jump to previous/next buffer in list"
+msgstr ""
 
 #, fuzzy
 msgid ""

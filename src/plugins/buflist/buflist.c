@@ -27,6 +27,7 @@
 #include "buflist-bar-item.h"
 #include "buflist-command.h"
 #include "buflist-config.h"
+#include "buflist-mouse.h"
 
 
 WEECHAT_PLUGIN_NAME(BUFLIST_PLUGIN_NAME);
@@ -253,6 +254,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
 
+    buflist_mouse_init ();
+
     return WEECHAT_RC_OK;
 }
 
@@ -265,6 +268,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
     (void) plugin;
+
+    buflist_mouse_end ();
 
     buflist_bar_item_end ();
 

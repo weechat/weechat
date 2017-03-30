@@ -74,6 +74,24 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"${buffer.hidden}==0"+`
 
+* [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
+** 説明: pass:none[if enabled, clicks with left/right buttons on the line with current buffer jump to previous/next visited buffer]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+off+`
+
+* [[option_buflist.look.mouse_move_buffer]] *buflist.look.mouse_move_buffer*
+** 説明: pass:none[if enabled, mouse gestures (drag & drop) move buffers in list]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
+* [[option_buflist.look.mouse_wheel]] *buflist.look.mouse_wheel*
+** 説明: pass:none[if enabled, mouse wheel up/down actions jump to previous/next buffer in list]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
 ** 説明: pass:none[フックされたシグナルおよびバッファリストの再読込シグナルのコンマ区切りリスト]
 ** タイプ: 文字列

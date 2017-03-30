@@ -74,6 +74,24 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${buffer.hidden}==0"+`
 
+* [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
+** description: pass:none[si activé, les clics avec les boutons gauche/droit sur la ligne avec le tampon courant sautent au tampon visité avant/après]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
+* [[option_buflist.look.mouse_move_buffer]] *buflist.look.mouse_move_buffer*
+** description: pass:none[si activé, les gestes de souris (glisser/déposer) déplacent les tampons dans la liste]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
+* [[option_buflist.look.mouse_wheel]] *buflist.look.mouse_wheel*
+** description: pass:none[si activé, les actions de roulette de souris haut/bas sautent au tampon précédent/suivant dans la liste]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
 ** description: pass:none[liste de signaux séparés par des virgules qui sont accrochés et déclenchent l'affichage de la liste des tampons]
 ** type: chaîne

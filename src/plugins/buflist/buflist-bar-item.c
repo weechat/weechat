@@ -34,6 +34,7 @@ struct t_hashtable *buflist_hashtable_pointers = NULL;
 struct t_hashtable *buflist_hashtable_extra_vars = NULL;
 struct t_hashtable *buflist_hashtable_options = NULL;
 struct t_hashtable *buflist_hashtable_options_conditions = NULL;
+struct t_arraylist *buflist_list_buffers = NULL;
 
 
 /*
@@ -92,6 +93,11 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     snprintf (str_format_number_empty, sizeof (str_format_number_empty),
               "%%-%ds", length_max_number);
 
+    if (buflist_list_buffers)
+        weechat_arraylist_free (buflist_list_buffers);
+    buflist_list_buffers = weechat_arraylist_new (16, 0, 1,
+                                                  NULL, NULL, NULL, NULL);
+
     buffers = buflist_sort_buffers ();
 
     for (i = 0; i < weechat_arraylist_size (buffers); i++)
@@ -113,6 +119,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
             free (condition);
         if (!rc)
             continue;
+
+        weechat_arraylist_add (buflist_list_buffers, ptr_buffer);
 
         current_buffer = (ptr_buffer == ptr_current_buffer);
 
@@ -373,4 +381,10 @@ buflist_bar_item_end ()
 
     weechat_hashtable_free (buflist_hashtable_options_conditions);
     buflist_hashtable_options_conditions = NULL;
+
+    if (buflist_list_buffers)
+    {
+        weechat_arraylist_free (buflist_list_buffers);
+        buflist_list_buffers = NULL;
+    }
 }
