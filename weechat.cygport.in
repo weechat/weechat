@@ -52,8 +52,8 @@ SRC_URI="https://weechat.org/files/src/weechat-${VERSION}.tar.bz2"
 
 # Build dependencies only
 DEPEND="cmake gettext gettext-devel libgnutls-devel libaspell-devel \
-libcurl-devel libgcrypt-devel libncurses-devel lua perl pkg-config python \
-ruby tcl-devel zlib-devel"
+libcurl-devel libgcrypt-devel libncurses-devel lua perl pkg-config \
+python2-devel ruby tcl-devel zlib-devel"
 
 #
 # CMake compilation of WeeChat:
