@@ -285,6 +285,7 @@ buflist_mouse_init ()
     weechat_hashtable_set (keys,
                            "@bar(" BUFLIST_BAR_NAME "):ctrl-wheeldown",
                            "hsignal:" BUFLIST_MOUSE_HSIGNAL);
+    weechat_hashtable_set (keys, "__quiet", "1");
     weechat_key_bind ("mouse", keys);
 
     weechat_hashtable_free (keys);
