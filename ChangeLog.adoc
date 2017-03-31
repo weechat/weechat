@@ -32,6 +32,7 @@ Improvements::
 
   * core: add hotlist pointer in buffer structure
   * core: add last start date in output of command /version after at least one /upgrade (issue #903)
+  * api: add special key "__quiet" in hashtable for function key_bind()
   * api: add ${re:#} to get the index of last group captured in function string_eval_expression()
   * irc: send multiple masks by message in commands /ban, /unban, /quiet and /unquiet, use ban mask default for nicks in /quiet and /unquiet, display an error if /quiet and /unquiet are not supported by server (issue #579, issue #15, issue #577)
   * irc: add option "-include" in commands /allchan, /allpv and /allserv (issue #572)
