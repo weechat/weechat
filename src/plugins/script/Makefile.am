@@ -37,6 +37,8 @@ script_la_SOURCES = script.c \
                     script-config.h \
                     script-info.c \
                     script-info.h \
+                    script-mouse.c \
+                    script-mouse.h \
                     script-repo.c \
                     script-repo.h
 

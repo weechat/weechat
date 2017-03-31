@@ -293,6 +293,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       script-completion.c         | Complétions pour le gestionnaire de scripts.
 |       script-config.c             | Options de configuration pour le gestionnaire de scripts (fichier script.conf).
 |       script-info.c               | Info/infolists/hdata pour le gestionnaire de scripts.
+|       script-mouse.c              | Actions souris pour le gestionnaire de scripts.
 |       script-repo.c               | Téléchargement et lecture du dépôt de scripts.
 |    tcl/                           | Extension Tcl.
 |       weechat-tcl.c               | Fonctions principales pour Tcl (chargement/déchargement des scripts, exécution de code Tcl).

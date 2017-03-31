@@ -298,6 +298,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       script-completion.c         | スクリプトマネージャ用の補完
 |       script-config.c             | スクリプトマネージャ用の設定オプション (script.conf ファイル)
 |       script-info.c               | スクリプトマネージャの情報/インフォリスト/hdata
+// TRANSLATION MISSING
+|       script-mouse.c              | Script mouse actions.
 |       script-repo.c               | リポジトリファイルのダウンロードとロード
 |    tcl/                           | tcl プラグイン
 |       weechat-tcl.c               | tcl の主要関数 (スクリプトのロード/アンロード、tcl コードの実行)

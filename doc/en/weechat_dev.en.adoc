@@ -291,6 +291,7 @@ WeeChat "core" is located in following directories:
 |       script-completion.c         | Completions for scripts manager.
 |       script-config.c             | Config options for scripts manager (file script.conf).
 |       script-info.c               | Script manager info/infolists/hdata.
+|       script-mouse.c              | Script mouse actions.
 |       script-repo.c               | Download and read repository file.
 |    tcl/                           | Tcl plugin.
 |       weechat-tcl.c               | Main tcl functions (load/unload scripts, execute tcl code).

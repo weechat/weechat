@@ -269,16 +269,12 @@ gui_key_default_bindings (int context)
     {
         /* mouse events on chat area */
         BIND("@chat:button1",                    "/window ${_window_number}");
-        BIND("@chat(script.scripts):button1",    "/window ${_window_number};/script go ${_chat_line_y}");
-        BIND("@chat(script.scripts):button2",    "/window ${_window_number};/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}");
         BIND("@chat:button1-gesture-left",       "/window ${_window_number};/buffer -1");
         BIND("@chat:button1-gesture-right",      "/window ${_window_number};/buffer +1");
         BIND("@chat:button1-gesture-left-long",  "/window ${_window_number};/buffer 1");
         BIND("@chat:button1-gesture-right-long", "/window ${_window_number};/input jump_last_buffer");
         BIND("@chat:wheelup",                    "/window scroll_up -window ${_window_number}");
         BIND("@chat:wheeldown",                  "/window scroll_down -window ${_window_number}");
-        BIND("@chat(script.scripts):wheelup",    "/script up 5");
-        BIND("@chat(script.scripts):wheeldown",  "/script down 5");
         BIND("@chat:ctrl-wheelup",               "/window scroll_horiz -window ${_window_number} -10%");
         BIND("@chat:ctrl-wheeldown",             "/window scroll_horiz -window ${_window_number} +10%");
         /* mouse events on nicklist */

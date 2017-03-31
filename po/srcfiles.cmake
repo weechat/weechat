@@ -291,6 +291,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/script/script.h
 ./src/plugins/script/script-info.c
 ./src/plugins/script/script-info.h
+./src/plugins/script/script-mouse.c
+./src/plugins/script/script-mouse.h
 ./src/plugins/script/script-repo.c
 ./src/plugins/script/script-repo.h
 ./src/plugins/tcl/weechat-tcl-api.c
