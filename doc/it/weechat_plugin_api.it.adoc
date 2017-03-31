@@ -7315,7 +7315,8 @@ Funzioni per le combinazioni dei tasti.
 
 ==== key_bind
 
-_WeeChat ≥ 0.3.6._
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.6, updated in 1.8._
 
 Aggiunge una nuova combinazione tasto.
 
@@ -7331,6 +7332,8 @@ Prototipo:
 int weechat_key_bind (const char *context, struct t_hashtable *keys);
 ----
 
+:key_bind_quiet: __quiet
+
 Argomenti:
 
 * _context_: contesto per i tasti:
@@ -7338,7 +7341,10 @@ Argomenti:
 ** _search_: contesto search (quando si cerca testo nel buffer)
 ** _cursor_: movimento libero del cursore sullo schermo
 ** _mouse_: tasti per gli eventi del mouse
-* _keys_: tabella hash con le combinazioni dei tasti
+// TRANSLATION MISSING
+* _keys_: hashtable with key bindings; it can contain following special keys:
+** _{key_bind_quiet}_: do not display the keys added in core buffer
+   _(WeeChat ≥ 1.8)_
 
 Valore restituito:
 

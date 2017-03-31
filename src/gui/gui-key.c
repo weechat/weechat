@@ -798,6 +798,10 @@ gui_key_bind_plugin_hashtable_map_cb (void *data,
 
     if (user_data && key && value)
     {
+        /* ignore special key "__quiet" */
+        if (strcmp (key, "__quiet") == 0)
+            return;
+
         internal_code = gui_key_get_internal_code (key);
         if (internal_code)
         {
@@ -825,14 +829,19 @@ int
 gui_key_bind_plugin (const char *context, struct t_hashtable *keys)
 {
     int data[2];
+    const char *ptr_quiet;
 
     data[0] = gui_key_search_context (context);
     if (data[0] < 0)
         return 0;
 
-    gui_key_verbose = 1;
     data[1] = 0;
+
+    ptr_quiet = hashtable_get (keys, "__quiet");
+    gui_key_verbose = (ptr_quiet) ? 0 : 1;
+
     hashtable_map (keys, &gui_key_bind_plugin_hashtable_map_cb, data);
+
     gui_key_verbose = 0;
 
     return data[1];

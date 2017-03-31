@@ -7119,7 +7119,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
 
 ==== key_bind
 
-_WeeChat バージョン 0.3.6 以上で利用可。_
+_WeeChat バージョン 0.3.6 以上で利用可、バージョン 1.8 で更新。_
 
 新しいキー割り当てを追加。
 
@@ -7135,6 +7135,8 @@ _WeeChat バージョン 0.3.6 以上で利用可。_
 int weechat_key_bind (const char *context, struct t_hashtable *keys);
 ----
 
+:key_bind_quiet: __quiet
+
 引数:
 
 * _context_: キーのコンテキスト:
@@ -7142,7 +7144,10 @@ int weechat_key_bind (const char *context, struct t_hashtable *keys);
 ** _search_: 検索コンテキスト (バッファ中のテキストを検索中)
 ** _cursor_: 画面上のカーソルを自由に移動
 ** _mouse_: マウスイベント用のキー
-* _keys_: キー割り当てを収めたハッシュテーブル
+// TRANSLATION MISSING
+* _keys_: hashtable with key bindings; it can contain following special keys:
+** _{key_bind_quiet}_: do not display the keys added in core buffer
+   _(WeeChat ≥ 1.8)_
 
 戻り値:
 

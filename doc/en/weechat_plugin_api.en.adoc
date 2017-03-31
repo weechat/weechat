@@ -7111,7 +7111,7 @@ Functions for key bindings.
 
 ==== key_bind
 
-_WeeChat ≥ 0.3.6._
+_WeeChat ≥ 0.3.6, updated in 1.8._
 
 Add new key bindings.
 
@@ -7126,6 +7126,8 @@ Prototype:
 int weechat_key_bind (const char *context, struct t_hashtable *keys);
 ----
 
+:key_bind_quiet: __quiet
+
 Arguments:
 
 * _context_: context for keys:
@@ -7133,7 +7135,9 @@ Arguments:
 ** _search_: search context (when searching text in buffer)
 ** _cursor_: free movement of cursor on screen
 ** _mouse_: keys for mouse events
-* _keys_: hashtable with key bindings
+* _keys_: hashtable with key bindings; it can contain following special keys:
+** _{key_bind_quiet}_: do not display the keys added in core buffer
+   _(WeeChat ≥ 1.8)_
 
 Return value:
 

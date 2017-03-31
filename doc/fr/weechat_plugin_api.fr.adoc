@@ -7221,7 +7221,7 @@ Fonctions pour les associations de touches.
 
 ==== key_bind
 
-_WeeChat ≥ 0.3.6._
+_WeeChat ≥ 0.3.6, mis à jour dans la 1.8._
 
 Ajouter de nouvelles associations de touches.
 
@@ -7237,6 +7237,8 @@ Prototype :
 int weechat_key_bind (const char *context, struct t_hashtable *keys);
 ----
 
+:key_bind_quiet: __quiet
+
 Paramètres :
 
 * _context_ : contexte pour les touches :
@@ -7245,7 +7247,10 @@ Paramètres :
    tampon)
 ** _cursor_ : mouvement libre du curseur à l'écran
 ** _mouse_ : touches pour les évènements de souris
-* _keys_ : table de hachage avec les associations de touches
+* _keys_ : table de hachage avec les associations de touches ; elle peut contenir
+  les clés spéciales suivantes :
+** _{key_bind_quiet}_: ne pas afficher les touches ajoutées dans le tampon _core_
+   _(WeeChat ≥ 1.8)_
 
 Valeur de retour :
 
