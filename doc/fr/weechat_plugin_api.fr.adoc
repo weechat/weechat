@@ -2378,7 +2378,7 @@ Prototype :
 
 [source,C]
 ----
-void weechat_dyn_free (char **string, int free_string);
+char *weechat_dyn_free (char **string, int free_string);
 ----
 
 Paramètres :
@@ -2386,6 +2386,10 @@ Paramètres :
 * _string_ : pointeur vers la chaîne dynamique
 * _free_string_ : libérer la chaîne elle-même ; si 0, le contenu de _*string_
   reste valide après l'appel à cette fonction
+
+Valeur de retour :
+
+* pointeur vers la chaîne si _free_string_ vaut 0, sinon NULL
 
 Exemple en C :
 

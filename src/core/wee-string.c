@@ -3433,22 +3433,34 @@ string_dyn_concat (char **string, const char *add)
  * If free_string == 1, the string itself is freed in the structure.
  * Otherwise the pointer (*string) remains valid after this call, and
  * the caller must manually free the string with a call to free().
+ *
+ * Returns the pointer to the string if "free_string" is 0 (string
+ * pointer is still valid), or NULL if "free_string" is 1 (string
+ * has been freed).
  */
 
-void
+char *
 string_dyn_free (char **string, int free_string)
 {
     struct t_string_dyn *ptr_string_dyn;
+    char *ptr_string;
 
     if (!string || !*string)
-        return;
+        return NULL;
 
     ptr_string_dyn = (struct t_string_dyn *)string;
 
     if (free_string)
+    {
         free (ptr_string_dyn->string);
+        return NULL;
+    }
+
+    ptr_string = ptr_string_dyn->string;
 
     free (ptr_string_dyn);
+
+    return ptr_string;
 }
 
 /*

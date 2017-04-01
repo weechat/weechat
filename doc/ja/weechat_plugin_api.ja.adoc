@@ -2343,7 +2343,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 [source,C]
 ----
-void weechat_dyn_free (char **string, int free_string);
+char *weechat_dyn_free (char **string, int free_string);
 ----
 
 引数:
@@ -2351,6 +2351,11 @@ void weechat_dyn_free (char **string, int free_string);
 * _string_: 動的文字列へのポインタ
 * _free_string_: 文字列の解放; 0 を指定することで、この関数を呼び出した後でも
   _*string_ が指すアドレスのメモリを確保したままにできます。
+
+戻り値:
+
+// TRANSLATION MISSING
+* string pointer if _free_string_ is 0, otherwise NULL
 
 C 言語での使用例:
 

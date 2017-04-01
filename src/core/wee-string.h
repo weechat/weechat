@@ -121,7 +121,7 @@ extern void string_shared_free (const char *string);
 extern char **string_dyn_alloc (int size_alloc);
 extern int string_dyn_copy (char **string, const char *new_string);
 extern int string_dyn_concat (char **string, const char *add);
-extern void string_dyn_free (char **string, int free_string);
+extern char *string_dyn_free (char **string, int free_string);
 extern void string_end ();
 
 #endif /* WEECHAT_STRING_H */

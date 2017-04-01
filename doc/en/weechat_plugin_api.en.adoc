@@ -2335,7 +2335,7 @@ Prototype:
 
 [source,C]
 ----
-void weechat_dyn_free (char **string, int free_string);
+char *weechat_dyn_free (char **string, int free_string);
 ----
 
 Arguments:
@@ -2343,6 +2343,10 @@ Arguments:
 * _string_: pointer to dynamic string
 * _free_string_: free the string itself; if 0, the content of _*string_ remains
   valid after the call to this function
+
+Return value:
+
+* string pointer if _free_string_ is 0, otherwise NULL
 
 C example:
 
