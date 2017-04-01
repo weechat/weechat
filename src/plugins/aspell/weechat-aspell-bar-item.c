@@ -70,8 +70,8 @@ weechat_aspell_bar_item_suggest (const void *pointer, void *data,
                                  struct t_hashtable *extra_info)
 {
     const char *ptr_suggestions, *pos;
-    char **suggestions, *suggestions2;
-    int i, num_suggestions, length;
+    char **suggestions, **suggestions2, **str_suggest;
+    int i, j, num_suggestions, num_suggestions2;
 
     /* make C compiler happy */
     (void) pointer;
@@ -96,37 +96,61 @@ weechat_aspell_bar_item_suggest (const void *pointer, void *data,
         pos++;
     else
         pos = ptr_suggestions;
+
+    str_suggest = weechat_string_dyn_alloc (256);
+    if (!str_suggest)
+        return NULL;
+
     suggestions = weechat_string_split (pos, "/", 0, 0, &num_suggestions);
-    if (suggestions)
+    if (!suggestions)
+        goto end;
+
+    for (i = 0; i < num_suggestions; i++)
     {
-        length = 64 + 1;
-        for (i = 0; i < num_suggestions; i++)
+        if (i > 0)
         {
-            length += strlen (suggestions[i]) + 64;
+            weechat_string_dyn_concat (
+                str_suggest,
+                weechat_color (
+                    weechat_config_string (
+                        weechat_aspell_config_color_suggestion_delimiter_dict)));
+            weechat_string_dyn_concat (
+                str_suggest,
+                weechat_config_string (
+                    weechat_aspell_config_look_suggestion_delimiter_dict));
         }
-        suggestions2 = malloc (length);
+        suggestions2 = weechat_string_split (suggestions[i], ",", 0, 0,
+                                             &num_suggestions2);
         if (suggestions2)
         {
-            suggestions2[0] = '\0';
-            strcat (suggestions2,
-                    weechat_color (weechat_config_string (weechat_aspell_config_color_suggestions)));
-            for (i = 0; i < num_suggestions; i++)
+            for (j = 0; j < num_suggestions2; j++)
             {
-                if (i > 0)
+                if (j > 0)
                 {
-                    strcat (suggestions2, weechat_color ("bar_delim"));
-                    strcat (suggestions2, "/");
-                    strcat (suggestions2,
-                            weechat_color (weechat_config_string (weechat_aspell_config_color_suggestions)));
+                    weechat_string_dyn_concat (
+                        str_suggest,
+                        weechat_color (
+                            weechat_config_string (
+                                weechat_aspell_config_color_suggestion_delimiter_word)));
+                    weechat_string_dyn_concat (
+                        str_suggest,
+                        weechat_config_string (
+                            weechat_aspell_config_look_suggestion_delimiter_word));
                 }
-                strcat (suggestions2, suggestions[i]);
+                weechat_string_dyn_concat (
+                    str_suggest,
+                    weechat_color (
+                        weechat_config_string (
+                            weechat_aspell_config_color_suggestion)));
+                weechat_string_dyn_concat (str_suggest, suggestions2[j]);
             }
-            weechat_string_free_split (suggestions);
-            return suggestions2;
+            weechat_string_free_split (suggestions2);
         }
-        weechat_string_free_split (suggestions);
     }
-    return strdup (pos);
+    weechat_string_free_split (suggestions);
+
+end:
+    return weechat_string_dyn_free (str_suggest, 0);
 }
 
 /*

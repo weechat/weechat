@@ -25,7 +25,9 @@
 
 
 extern struct t_config_option *weechat_aspell_config_color_misspelled;
-extern struct t_config_option *weechat_aspell_config_color_suggestions;
+extern struct t_config_option *weechat_aspell_config_color_suggestion;
+extern struct t_config_option *weechat_aspell_config_color_suggestion_delimiter_dict;
+extern struct t_config_option *weechat_aspell_config_color_suggestion_delimiter_word;
 
 extern struct t_config_option *weechat_aspell_config_check_commands;
 extern struct t_config_option *weechat_aspell_config_check_default_dict;
@@ -34,6 +36,9 @@ extern struct t_config_option *weechat_aspell_config_check_enabled;
 extern struct t_config_option *weechat_aspell_config_check_real_time;
 extern struct t_config_option *weechat_aspell_config_check_suggestions;
 extern struct t_config_option *weechat_aspell_config_check_word_min_length;
+
+extern struct t_config_option *weechat_aspell_config_look_suggestion_delimiter_dict;
+extern struct t_config_option *weechat_aspell_config_look_suggestion_delimiter_word;
 
 extern char **weechat_aspell_commands_to_check;
 extern int weechat_aspell_count_commands_to_check;

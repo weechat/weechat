@@ -26,6 +26,7 @@ New features::
   * buflist: new plugin "buflist" (bar item with list of buffers)
   * api: add arraylist functions: arraylist_new(), arraylist_size(), arraylist_get(), arraylist_search(), arraylist_insert(), arraylist_add(), arraylist_remove(), arraylist_clear(), arraylist_free()
   * api: add dynamic string functions: string_dyn_alloc(), string_dyn_copy(), string_dyn_concat(), string_dyn_free()
+  * aspell: add options to control delimiters in suggestions: aspell.color.suggestion_delimiter_{dict|word} and aspell.look.suggestion_delimiter_{dict|word} (issue #940)
   * irc: send signal "irc_server_lag_changed" and store the lag in the server buffer (local variable)
 
 Improvements::

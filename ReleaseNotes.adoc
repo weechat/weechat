@@ -17,6 +17,16 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v1.8]]
+== Version 1.8 (under dev)
+
+[[v1.8_aspell_options]]
+=== Aspell options
+
+Aspell option with color for suggestion on a misspelled word has been renamed:
+
+* _aspell.color.suggestions_ has been renamed to _aspell.color.suggestion_
+
 [[v1.7]]
 == Version 1.7 (2017-01-15)
 

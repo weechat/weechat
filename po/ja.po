@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-03-30 20:31+0200\n"
+"POT-Creation-Date: 2017-04-01 12:14+0200\n"
 "PO-Revision-Date: 2017-03-26 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5301,8 +5301,21 @@ msgstr "%s%s: aspell オプション \"%s\" => \"%s\" の作成中にエラー"
 msgid "text color for misspelled words (input bar)"
 msgstr "スペルミスのある単語に付ける色 (入力バー)"
 
-msgid "text color for suggestions on a misspelled word (status bar)"
+#, fuzzy
+msgid ""
+"text color for suggestion on a misspelled word in bar item \"aspell_suggest\""
 msgstr "スペルミスのある単語に対する修正候補に付ける色 (ステータスバー)"
+
+msgid ""
+"text color for delimiters displayed between two dictionaries in bar item "
+"\"aspell_suggest\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"text color for delimiters displayed between two words in bar item "
+"\"aspell_suggest\""
+msgstr "日付が変わった時に表示されるメッセージのテキスト色"
 
 msgid ""
 "comma separated list of commands for which spell checking is enabled (spell "
@@ -5345,6 +5358,13 @@ msgstr ""
 msgid ""
 "minimum length for a word to be spell checked (use 0 to check all words)"
 msgstr "スペルチェックを行う単語長の最小値 (0 の場合は全ての単語をチェック)"
+
+msgid ""
+"delimiter displayed between two dictionaries in bar item \"aspell_suggest\""
+msgstr ""
+
+msgid "delimiter displayed between two words in bar item \"aspell_suggest\""
+msgstr ""
 
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr "バッファで使用中の辞書のコンマ区切りリスト"

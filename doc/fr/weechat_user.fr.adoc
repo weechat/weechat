@@ -2108,6 +2108,7 @@ Sections :
 | check      | /set aspell.check.*                       | Options pour contrôler la vérification orthographique.
 | dict       | <<command_aspell_aspell,/aspell setdict>> +
                /set aspell.dict.*                        | Dictionnaires utilisés par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| look       | /set aspell.look.*                        | Aspect/présentation.
 | option     | /set aspell.option.*                      | <<aspell_speller_options,Options du vérificateur d'orthographe>> (les options peuvent être ajoutées/supprimées dans la section).
 |===
 

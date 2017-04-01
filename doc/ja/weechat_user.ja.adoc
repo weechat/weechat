@@ -2041,6 +2041,7 @@ Aspell
 | check      | /set aspell.check.*                       | スペルチェックの操作コマンド
 | dict       | <<command_aspell_aspell,/aspell setdict>> +
                /set aspell.dict.*                        | バッファが利用するディレクトリ (オプションをセクションに追加/削除出来ます)
+| look       | /set aspell.look.*                        | 外観
 | option     | /set aspell.option.*                      | <<aspell_speller_options,Speller オプション>> (オプションをセクションに追加/削除出来ます)
 |===
 

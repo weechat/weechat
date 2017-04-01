@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-03-30 20:31+0200\n"
+"POT-Creation-Date: 2017-04-01 12:14+0200\n"
 "PO-Revision-Date: 2017-01-14 21:39+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -5412,10 +5412,23 @@ msgstr "%s%s: erro ao criar a opção aspell \"%s\" => \"%s\""
 msgid "text color for misspelled words (input bar)"
 msgstr "cor do texto dos erros ortográficos (barra de entrada)"
 
-msgid "text color for suggestions on a misspelled word (status bar)"
+#, fuzzy
+msgid ""
+"text color for suggestion on a misspelled word in bar item \"aspell_suggest\""
 msgstr ""
 "cor do texto das sugestões de correção de erros ortográficos (barra de "
 "estado)"
+
+msgid ""
+"text color for delimiters displayed between two dictionaries in bar item "
+"\"aspell_suggest\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"text color for delimiters displayed between two words in bar item "
+"\"aspell_suggest\""
+msgstr "cor do texto das mensagens apresentadas depois de passar um dia"
 
 msgid ""
 "comma separated list of commands for which spell checking is enabled (spell "
@@ -5461,6 +5474,13 @@ msgid ""
 msgstr ""
 "comprimento mínimo que um palavra deve ter para ser verificada (use 0 para "
 "verificar todas as palavras)"
+
+msgid ""
+"delimiter displayed between two dictionaries in bar item \"aspell_suggest\""
+msgstr ""
+
+msgid "delimiter displayed between two words in bar item \"aspell_suggest\""
+msgstr ""
 
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr "lista de dicionários separados por vírgula usados no buffer"

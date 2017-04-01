@@ -50,8 +50,32 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+lightred+`
 
-* [[option_aspell.color.suggestions]] *aspell.color.suggestions*
-** Beschreibung: pass:none[Textfarbe für die Vorschläge der Rechtsschreibkorrektur (Statusbar)]
+* [[option_aspell.color.suggestion]] *aspell.color.suggestion*
+** Beschreibung: pass:none[text color for suggestion on a misspelled word in bar item "aspell_suggest"]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
+
+* [[option_aspell.color.suggestion_delimiter_dict]] *aspell.color.suggestion_delimiter_dict*
+** Beschreibung: pass:none[text color for delimiters displayed between two dictionaries in bar item "aspell_suggest"]
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+cyan+`
+
+* [[option_aspell.color.suggestion_delimiter_word]] *aspell.color.suggestion_delimiter_word*
+** Beschreibung: pass:none[text color for delimiters displayed between two words in bar item "aspell_suggest"]
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
+** Standardwert: `+cyan+`
+
+* [[option_aspell.look.suggestion_delimiter_dict]] *aspell.look.suggestion_delimiter_dict*
+** Beschreibung: pass:none[delimiter displayed between two dictionaries in bar item "aspell_suggest"]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+" / "+`
+
+* [[option_aspell.look.suggestion_delimiter_word]] *aspell.look.suggestion_delimiter_word*
+** Beschreibung: pass:none[delimiter displayed between two words in bar item "aspell_suggest"]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+","+`

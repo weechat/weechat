@@ -38,7 +38,9 @@ int weechat_aspell_config_loading = 0;
 /* aspell config, color section */
 
 struct t_config_option *weechat_aspell_config_color_misspelled;
-struct t_config_option *weechat_aspell_config_color_suggestions;
+struct t_config_option *weechat_aspell_config_color_suggestion;
+struct t_config_option *weechat_aspell_config_color_suggestion_delimiter_dict;
+struct t_config_option *weechat_aspell_config_color_suggestion_delimiter_word;
 
 /* aspell config, check section */
 
@@ -49,6 +51,11 @@ struct t_config_option *weechat_aspell_config_check_enabled;
 struct t_config_option *weechat_aspell_config_check_real_time;
 struct t_config_option *weechat_aspell_config_check_suggestions;
 struct t_config_option *weechat_aspell_config_check_word_min_length;
+
+/* aspell config, look section */
+
+struct t_config_option *weechat_aspell_config_look_suggestion_delimiter_dict;
+struct t_config_option *weechat_aspell_config_look_suggestion_delimiter_word;
 
 
 char **weechat_aspell_commands_to_check = NULL;
@@ -452,11 +459,26 @@ weechat_aspell_config_init ()
         N_("text color for misspelled words (input bar)"),
         NULL, 0, 0, "lightred", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    weechat_aspell_config_color_suggestions = weechat_config_new_option (
+    weechat_aspell_config_color_suggestion = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
-        "suggestions", "color",
-        N_("text color for suggestions on a misspelled word (status bar)"),
+        "suggestion", "color",
+        N_("text color for suggestion on a misspelled word in bar item "
+           "\"aspell_suggest\""),
         NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    weechat_aspell_config_color_suggestion_delimiter_dict = weechat_config_new_option (
+        weechat_aspell_config_file, ptr_section,
+        "suggestion_delimiter_dict", "color",
+        N_("text color for delimiters displayed between two dictionaries "
+           "in bar item \"aspell_suggest\""),
+        NULL, 0, 0, "cyan", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    weechat_aspell_config_color_suggestion_delimiter_word = weechat_config_new_option (
+        weechat_aspell_config_file, ptr_section,
+        "suggestion_delimiter_word", "color",
+        N_("text color for delimiters displayed between two words in bar item "
+           "\"aspell_suggest\""),
+        NULL, 0, 0, "cyan", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* check */
@@ -550,6 +572,40 @@ weechat_aspell_config_init ()
     }
 
     weechat_aspell_config_section_dict = ptr_section;
+
+    /* look */
+    ptr_section = weechat_config_new_section (
+        weechat_aspell_config_file, "look",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (weechat_aspell_config_file);
+        return 0;
+    }
+
+    weechat_aspell_config_look_suggestion_delimiter_dict = weechat_config_new_option (
+        weechat_aspell_config_file, ptr_section,
+        "suggestion_delimiter_dict", "string",
+        N_("delimiter displayed between two dictionaries in bar item "
+           "\"aspell_suggest\""),
+        NULL, 0, 0, " / ", NULL, 0,
+        NULL, NULL, NULL,
+        &weechat_aspell_config_change_suggestions, NULL, NULL,
+        NULL, NULL, NULL);
+    weechat_aspell_config_look_suggestion_delimiter_word = weechat_config_new_option (
+        weechat_aspell_config_file, ptr_section,
+        "suggestion_delimiter_word", "string",
+        N_("delimiter displayed between two words in bar item "
+           "\"aspell_suggest\""),
+        NULL, 0, 0, ",", NULL, 0,
+        NULL, NULL, NULL,
+        &weechat_aspell_config_change_suggestions, NULL, NULL,
+        NULL, NULL, NULL);
 
     /* option */
     ptr_section = weechat_config_new_section (

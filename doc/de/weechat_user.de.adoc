@@ -2089,6 +2089,7 @@ Sektionen:
 | check      | /set aspell.check.*                       | Optionen um Einstellungen an der Rechtschreibprüfung vorzunehmen.
 | dict       | <<command_aspell_aspell,/aspell setdict>> +
                /set aspell.dict.*                        | Wörterbücher für Buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
+| look       | /set aspell.look.*                        | Erscheinungsbild.
 | option     | /set aspell.option.*                      | <<aspell_speller_options,Optionen für Rechtschreibprüfung>> (Optionen können in Sektion hinzugefügt/entfernt werden).
 |===
 
@@ -2164,7 +2165,7 @@ Sektionen:
 |===
 | Sektion | Steuerbefehl          | Beschreibung
 | format  | /set buflist.format.* | Formats used to display list of buffers.
-| look    | /set buflist.look.*   | Look and feel.
+| look    | /set buflist.look.*   | Erscheinungsbild.
 |===
 
 Optionen:

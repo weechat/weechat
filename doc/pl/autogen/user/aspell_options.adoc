@@ -50,8 +50,32 @@
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+lightred+`
 
-* [[option_aspell.color.suggestions]] *aspell.color.suggestions*
-** opis: pass:none[kolor tekstu sugestii dla błędnie wprowadzonego słowa (pasek statusu)]
+* [[option_aspell.color.suggestion]] *aspell.color.suggestion*
+** opis: pass:none[text color for suggestion on a misspelled word in bar item "aspell_suggest"]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+default+`
+
+* [[option_aspell.color.suggestion_delimiter_dict]] *aspell.color.suggestion_delimiter_dict*
+** opis: pass:none[text color for delimiters displayed between two dictionaries in bar item "aspell_suggest"]
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+cyan+`
+
+* [[option_aspell.color.suggestion_delimiter_word]] *aspell.color.suggestion_delimiter_word*
+** opis: pass:none[text color for delimiters displayed between two words in bar item "aspell_suggest"]
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+cyan+`
+
+* [[option_aspell.look.suggestion_delimiter_dict]] *aspell.look.suggestion_delimiter_dict*
+** opis: pass:none[delimiter displayed between two dictionaries in bar item "aspell_suggest"]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+" / "+`
+
+* [[option_aspell.look.suggestion_delimiter_word]] *aspell.look.suggestion_delimiter_word*
+** opis: pass:none[delimiter displayed between two words in bar item "aspell_suggest"]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+","+`

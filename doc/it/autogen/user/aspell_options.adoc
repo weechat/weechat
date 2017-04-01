@@ -50,8 +50,32 @@
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
 ** valore predefinito: `+lightred+`
 
-* [[option_aspell.color.suggestions]] *aspell.color.suggestions*
-** descrizione: pass:none[text color for suggestions on a misspelled word (status bar)]
+* [[option_aspell.color.suggestion]] *aspell.color.suggestion*
+** descrizione: pass:none[text color for suggestion on a misspelled word in bar item "aspell_suggest"]
 ** tipo: colore
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
 ** valore predefinito: `+default+`
+
+* [[option_aspell.color.suggestion_delimiter_dict]] *aspell.color.suggestion_delimiter_dict*
+** descrizione: pass:none[text color for delimiters displayed between two dictionaries in bar item "aspell_suggest"]
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+cyan+`
+
+* [[option_aspell.color.suggestion_delimiter_word]] *aspell.color.suggestion_delimiter_word*
+** descrizione: pass:none[text color for delimiters displayed between two words in bar item "aspell_suggest"]
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+cyan+`
+
+* [[option_aspell.look.suggestion_delimiter_dict]] *aspell.look.suggestion_delimiter_dict*
+** descrizione: pass:none[delimiter displayed between two dictionaries in bar item "aspell_suggest"]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+" / "+`
+
+* [[option_aspell.look.suggestion_delimiter_word]] *aspell.look.suggestion_delimiter_word*
+** descrizione: pass:none[delimiter displayed between two words in bar item "aspell_suggest"]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+","+`

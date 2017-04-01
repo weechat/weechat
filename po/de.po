@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-03-30 20:31+0200\n"
+"POT-Creation-Date: 2017-04-01 12:14+0200\n"
 "PO-Revision-Date: 2017-03-12 21:27+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -5668,8 +5668,21 @@ msgstr ""
 "Farbe in der ein Wort mit einem Rechtschreibfehler hervorgehoben werden soll "
 "(Eingabezeile)"
 
-msgid "text color for suggestions on a misspelled word (status bar)"
+#, fuzzy
+msgid ""
+"text color for suggestion on a misspelled word in bar item \"aspell_suggest\""
 msgstr "Textfarbe für die Vorschläge der Rechtsschreibkorrektur (Statusbar)"
+
+msgid ""
+"text color for delimiters displayed between two dictionaries in bar item "
+"\"aspell_suggest\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"text color for delimiters displayed between two words in bar item "
+"\"aspell_suggest\""
+msgstr "Textfarbe für die Nachricht die beim Datumswechsel angezeigt wird"
 
 msgid ""
 "comma separated list of commands for which spell checking is enabled (spell "
@@ -5719,6 +5732,13 @@ msgid ""
 msgstr ""
 "Mindestlänge für ein Wort, welches auf Rechtschreibung überprüft werden soll "
 "(bei 0 werden alle Wörter überprüft)"
+
+msgid ""
+"delimiter displayed between two dictionaries in bar item \"aspell_suggest\""
+msgstr ""
+
+msgid "delimiter displayed between two words in bar item \"aspell_suggest\""
+msgstr ""
 
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr ""

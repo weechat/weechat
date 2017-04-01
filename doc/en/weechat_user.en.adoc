@@ -2040,6 +2040,7 @@ Sections:
 | check      | /set aspell.check.*                       | Options to control spell checking.
 | dict       | <<command_aspell_aspell,/aspell setdict>> +
                /set aspell.dict.*                        | Dictionaries used by buffer (options can be added/removed in section).
+| look       | /set aspell.look.*                        | Look and feel.
 | option     | /set aspell.option.*                      | <<aspell_speller_options,Speller options>> (options can be added/removed in section).
 |===
 

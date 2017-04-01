@@ -2056,6 +2056,7 @@ Sekcje:
 | check      | /set aspell.check.*                       | Opcje do kontrolowania sprawdzania pisowni.
 | dict       | <<command_aspell_aspell,/aspell setdict>> +
                /set aspell.dict.*                        | Słowniki używane w buforze (opcje w tej sekcji mogą być dodawane/usuwane).
+| look       | /set aspell.look.*                        | Wygląd.
 | option     | /set aspell.option.*                      | <<aspell_speller_options,Opcje słowników>> (opcje w tej sekcji mogą być dodawane/usuwane).
 |===
 
@@ -2129,7 +2130,7 @@ Sekcje:
 |===
 | Sekcja | Komenda               | Opis
 | format | /set buflist.format.* | Formats used to display list of buffers.
-| look   | /set buflist.look.*   | Look and feel.
+| look   | /set buflist.look.*   | Wygląd.
 |===
 
 Opcje:

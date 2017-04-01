@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-03-30 20:31+0200\n"
+"POT-Creation-Date: 2017-04-01 12:14+0200\n"
 "PO-Revision-Date: 2016-09-03 08:24+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4964,8 +4964,20 @@ msgid "text color for misspelled words (input bar)"
 msgstr "cor usada em palavras erradas"
 
 #, fuzzy
-msgid "text color for suggestions on a misspelled word (status bar)"
+msgid ""
+"text color for suggestion on a misspelled word in bar item \"aspell_suggest\""
 msgstr "cor de texto para o tempo (barra de status)"
+
+msgid ""
+"text color for delimiters displayed between two dictionaries in bar item "
+"\"aspell_suggest\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"text color for delimiters displayed between two words in bar item "
+"\"aspell_suggest\""
+msgstr "cor de texto para mensagem exibida quando o dia muda"
 
 msgid ""
 "comma separated list of commands for which spell checking is enabled (spell "
@@ -5010,6 +5022,13 @@ msgid ""
 msgstr ""
 "tamanho mínimo de uma palavra para ser verificada ortograficamente (use 0 "
 "para verificar todas as palavras)"
+
+msgid ""
+"delimiter displayed between two dictionaries in bar item \"aspell_suggest\""
+msgstr ""
+
+msgid "delimiter displayed between two words in bar item \"aspell_suggest\""
+msgstr ""
 
 #, fuzzy
 msgid "comma-separated list of dictionaries used in buffer"
