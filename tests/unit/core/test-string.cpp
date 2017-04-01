@@ -1374,12 +1374,12 @@ TEST(String, Dyn)
     POINTERS_EQUAL(NULL, string_dyn_alloc (0));
 
     str = string_dyn_alloc (1);
+    ptr_string_dyn = (struct t_string_dyn *)str;
     CHECK(str);
     CHECK(*str);
     STRCMP_EQUAL("", *str);
 
     /* check internal structure content */
-    ptr_string_dyn = (struct t_string_dyn *)str;
     LONGS_EQUAL(1, ptr_string_dyn->size_alloc);
     LONGS_EQUAL(1, ptr_string_dyn->size);
     STRCMP_EQUAL("", ptr_string_dyn->string);
@@ -1418,6 +1418,7 @@ TEST(String, Dyn)
     string_dyn_free (str, 1);
 
     str = string_dyn_alloc (1);
+    ptr_string_dyn = (struct t_string_dyn *)str;
 
     /* check concat with NULL */
     LONGS_EQUAL(1, string_dyn_concat (str, NULL));
