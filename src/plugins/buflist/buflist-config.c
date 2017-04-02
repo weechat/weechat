@@ -20,6 +20,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "buflist.h"
@@ -35,6 +36,8 @@ struct t_config_option *buflist_config_look_display_conditions;
 struct t_config_option *buflist_config_look_mouse_jump_visited_buffer;
 struct t_config_option *buflist_config_look_mouse_move_buffer;
 struct t_config_option *buflist_config_look_mouse_wheel;
+struct t_config_option *buflist_config_look_nick_prefix;
+struct t_config_option *buflist_config_look_nick_prefix_empty;
 struct t_config_option *buflist_config_look_signals_refresh;
 struct t_config_option *buflist_config_look_sort;
 
@@ -123,6 +126,26 @@ buflist_config_signal_buffer_cb (const void *pointer, void *data,
 }
 
 /*
+ * Compares two signals to add them in the sorted arraylist.
+ *
+ * Returns:
+ *   -1: signal1 < signal2
+ *    0: signal1 == signal2
+ *    1: signal1 > signal2
+ */
+
+int
+buflist_config_compare_signals (void *data, struct t_arraylist *arraylist,
+                                void *pointer1, void *pointer2)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    return strcmp ((const char *)pointer1, (const char *)pointer2);
+}
+
+/*
  * Callback for changes on option "buflist.look.signals_refresh".
  */
 
@@ -130,7 +153,9 @@ void
 buflist_config_change_signals_refresh (const void *pointer, void *data,
                                        struct t_config_option *option)
 {
-    char **signals;
+    char **all_signals, **signals;
+    const char *ptr_signals_refresh;
+    struct t_arraylist *signals_list;
     int count, i;
 
     /* make C compiler happy */
@@ -141,25 +166,85 @@ buflist_config_change_signals_refresh (const void *pointer, void *data,
     if (buflist_config_signals_refresh)
         buflist_config_free_signals_refresh ();
 
-    signals = weechat_string_split (
-        weechat_config_string (buflist_config_look_signals_refresh),
-        ",", 0, 0, &count);
-    if (signals && (count > 0))
+    all_signals = weechat_string_dyn_alloc (256);
+    if (!all_signals)
+        return;
+
+    ptr_signals_refresh = weechat_config_string (
+        buflist_config_look_signals_refresh);
+
+    weechat_string_dyn_concat (all_signals, BUFLIST_CONFIG_SIGNALS_REFRESH);
+    if (ptr_signals_refresh && ptr_signals_refresh[0])
     {
-        buflist_config_signals_refresh = malloc (
-            count * sizeof (*buflist_config_signals_refresh));
-        if (buflist_config_signals_refresh)
+        weechat_string_dyn_concat (all_signals, ",");
+        weechat_string_dyn_concat (
+            all_signals,
+            weechat_config_string (buflist_config_look_signals_refresh));
+    }
+    if (weechat_config_boolean (buflist_config_look_nick_prefix))
+    {
+        weechat_string_dyn_concat (all_signals, ",");
+        weechat_string_dyn_concat (
+            all_signals,
+            BUFLIST_CONFIG_SIGNALS_REFRESH_NICK_PREFIX);
+    }
+
+    signals = weechat_string_split (*all_signals, ",", 0, 0, &count);
+    if (signals)
+    {
+        signals_list = weechat_arraylist_new (
+            32, 1, 0,
+            &buflist_config_compare_signals,
+            NULL, NULL, NULL);
+        if (signals_list)
         {
-            buflist_config_num_signals_refresh = count;
             for (i = 0; i < count; i++)
             {
-                buflist_config_signals_refresh[i] = weechat_hook_signal (
-                    signals[i], &buflist_config_signal_buffer_cb, NULL, NULL);
+                weechat_arraylist_add (signals_list, signals[i]);
             }
+            buflist_config_signals_refresh = malloc (
+                weechat_arraylist_size (signals_list) *
+                sizeof (*buflist_config_signals_refresh));
+            if (buflist_config_signals_refresh)
+            {
+                buflist_config_num_signals_refresh = count;
+                for (i = 0; i < weechat_arraylist_size (signals_list); i++)
+                {
+                    buflist_config_signals_refresh[i] = weechat_hook_signal (
+                        weechat_arraylist_get (signals_list, i),
+                        &buflist_config_signal_buffer_cb, NULL, NULL);
+                }
+                if (weechat_buflist_plugin->debug >= 1)
+                {
+                    weechat_printf (NULL,
+                                    _("%s: %d signals hooked"),
+                                    BUFLIST_PLUGIN_NAME,
+                                    weechat_arraylist_size (signals_list));
+                }
+            }
+            weechat_arraylist_free (signals_list);
         }
-    }
-    if (signals)
         weechat_string_free_split (signals);
+    }
+
+    weechat_string_dyn_free (all_signals, 1);
+}
+
+/*
+ * Callback for changes on option "buflist.look.nick_prefix".
+ */
+
+void
+buflist_config_change_nick_prefix (const void *pointer, void *data,
+                                   struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    buflist_config_change_signals_refresh (NULL, NULL, NULL);
+    weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
 }
 
 /*
@@ -238,6 +323,26 @@ buflist_config_init ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
+    buflist_config_look_nick_prefix = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "nick_prefix", "boolean",
+        N_("get the nick prefix and its color from nicklist so that "
+           "${nick_prefix} can be used in format; this can be slow on buffers "
+           "with lot of nicks in nicklist, so this option is disabled "
+           "by default"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_nick_prefix, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_look_nick_prefix_empty = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "nick_prefix_empty", "boolean",
+        N_("when the nick prefix is enabled, display a space instead if there "
+           "is no nick prefix on the buffer"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_buflist, NULL, NULL,
+        NULL, NULL, NULL);
     buflist_config_look_mouse_wheel = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "mouse_wheel", "boolean",
@@ -250,14 +355,10 @@ buflist_config_init ()
     buflist_config_look_signals_refresh = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "signals_refresh", "string",
-        N_("comma-separated list of signals that are hooked and trigger the "
-           "refresh of buffers list"),
-        NULL, 0, 0,
-        "buffer_opened,buffer_closed,buffer_merged,buffer_unmerged,"
-        "buffer_moved,buffer_renamed,buffer_switch,buffer_hidden,"
-        "buffer_unhidden,buffer_localvar_added,buffer_localvar_changed,"
-        "window_switch,hotlist_changed",
-        NULL, 0,
+        N_("comma-separated list of extra signals that are hooked and trigger "
+           "the refresh of buffers list; this can be useful if some custom "
+           "variables are used in formats and need specific refresh"),
+        NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_signals_refresh, NULL, NULL,
         NULL, NULL, NULL);
@@ -294,7 +395,7 @@ buflist_config_init ()
         N_("format of each line with a buffer "
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
-        "${format_number}${indent}${color_hotlist}${name}",
+        "${format_number}${indent}${nick_prefix}${color_hotlist}${name}",
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,

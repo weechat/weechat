@@ -22,12 +22,22 @@
 
 #define BUFLIST_CONFIG_NAME "buflist"
 
+#define BUFLIST_CONFIG_SIGNALS_REFRESH                                  \
+    "buffer_opened,buffer_closed,buffer_merged,buffer_unmerged,"        \
+    "buffer_moved,buffer_renamed,buffer_switch,buffer_hidden,"          \
+    "buffer_unhidden,buffer_localvar_added,buffer_localvar_changed,"    \
+    "window_switch,hotlist_changed"
+#define BUFLIST_CONFIG_SIGNALS_REFRESH_NICK_PREFIX                      \
+    "nicklist_nick_*"
+
 extern struct t_config_file *buflist_config_file;
 
 extern struct t_config_option *buflist_config_look_display_conditions;
 extern struct t_config_option *buflist_config_look_mouse_jump_visited_buffer;
 extern struct t_config_option *buflist_config_look_mouse_move_buffer;
 extern struct t_config_option *buflist_config_look_mouse_wheel;
+extern struct t_config_option *buflist_config_look_nick_prefix;
+extern struct t_config_option *buflist_config_look_nick_prefix_empty;
 extern struct t_config_option *buflist_config_look_signals_refresh;
 extern struct t_config_option *buflist_config_look_sort;
 

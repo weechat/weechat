@@ -27,6 +27,7 @@ The following variables can be used in these options:
     - ${format_number}: indented number with separator (evaluation of option buflist.format.number)
     - ${number}: indented number, for example " 1" if there are between 10 and 99 buffers
     - ${indent}: indentation for name (channel and private buffers are indented)
+    - ${nick_prefix}: nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
     - ${name}: the short name (if set), with a fallback on the name
     - ${color_hotlist}: the color depending on the highest hotlist level for the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the level)
     - ${format_hotlist}: the formatted hotlist (evaluation of option buflist.format.hotlist)

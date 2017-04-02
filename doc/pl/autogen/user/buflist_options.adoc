@@ -6,7 +6,7 @@
 ** opis: pass:none[format of each line with a buffer (note: content is evaluated, see /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
-** domyślna wartość: `+"${format_number}${indent}${color_hotlist}${name}"+`
+** domyślna wartość: `+"${format_number}${indent}${nick_prefix}${color_hotlist}${name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** opis: pass:none[format for the line with current buffer (note: content is evaluated, see /help buflist)]
@@ -92,11 +92,23 @@
 ** wartości: on, off
 ** domyślna wartość: `+on+`
 
+* [[option_buflist.look.nick_prefix]] *buflist.look.nick_prefix*
+** opis: pass:none[get the nick prefix and its color from nicklist so that ${nick_prefix} can be used in format; this can be slow on buffers with lot of nicks in nicklist, so this option is disabled by default]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
+* [[option_buflist.look.nick_prefix_empty]] *buflist.look.nick_prefix_empty*
+** opis: pass:none[when the nick prefix is enabled, display a space instead if there is no nick prefix on the buffer]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`
+
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
-** opis: pass:none[comma-separated list of signals that are hooked and trigger the refresh of buffers list]
+** opis: pass:none[comma-separated list of extra signals that are hooked and trigger the refresh of buffers list; this can be useful if some custom variables are used in formats and need specific refresh]
 ** typ: ciąg
 ** wartości: dowolny ciąg
-** domyślna wartość: `+"buffer_opened,buffer_closed,buffer_merged,buffer_unmerged,buffer_moved,buffer_renamed,buffer_switch,buffer_hidden,buffer_unhidden,buffer_localvar_added,buffer_localvar_changed,window_switch,hotlist_changed"+`
+** domyślna wartość: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
 ** opis: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer; char "-" can be used before field to reverse order]

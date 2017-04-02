@@ -6,7 +6,7 @@
 ** 説明: pass:none[各バッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"${format_number}${indent}${color_hotlist}${name}"+`
+** デフォルト値: `+"${format_number}${indent}${nick_prefix}${color_hotlist}${name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** 説明: pass:none[現在のバッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
@@ -92,11 +92,23 @@
 ** 値: on, off
 ** デフォルト値: `+on+`
 
+* [[option_buflist.look.nick_prefix]] *buflist.look.nick_prefix*
+** 説明: pass:none[get the nick prefix and its color from nicklist so that ${nick_prefix} can be used in format; this can be slow on buffers with lot of nicks in nicklist, so this option is disabled by default]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+off+`
+
+* [[option_buflist.look.nick_prefix_empty]] *buflist.look.nick_prefix_empty*
+** 説明: pass:none[when the nick prefix is enabled, display a space instead if there is no nick prefix on the buffer]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
-** 説明: pass:none[フックされたシグナルおよびバッファリストの再読込シグナルのコンマ区切りリスト]
+** 説明: pass:none[comma-separated list of extra signals that are hooked and trigger the refresh of buffers list; this can be useful if some custom variables are used in formats and need specific refresh]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"buffer_opened,buffer_closed,buffer_merged,buffer_unmerged,buffer_moved,buffer_renamed,buffer_switch,buffer_hidden,buffer_unhidden,buffer_localvar_added,buffer_localvar_changed,window_switch,hotlist_changed"+`
+** デフォルト値: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
 ** 説明: pass:none[バッファをソートする際に考慮するフィールドのコンマ区切りリスト; 各フィールドはバッファの hdata 変数です; フィールドの先頭に "-" 文字を付けることでソート順を逆にすることも可能です]

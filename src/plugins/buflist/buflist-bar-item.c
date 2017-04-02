@@ -50,17 +50,21 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
 {
     struct t_arraylist *buffers;
     struct t_gui_buffer *ptr_buffer, *ptr_current_buffer;
+    struct t_gui_nick *ptr_gui_nick;
     struct t_gui_hotlist *ptr_hotlist;
     char **buflist, *str_buflist, *condition;
     char str_format_number[32], str_format_number_empty[32];
+    char str_nick_prefix[32];
     char str_number[32], str_indent_name[4], *line, **hotlist, *str_hotlist;
     char str_hotlist_count[32];
     const char *ptr_format, *ptr_format_current, *ptr_name, *ptr_type;
+    const char *ptr_nick, *ptr_nick_prefix;
     const char *ptr_hotlist_format, *ptr_hotlist_priority;
     const char *hotlist_priority_none = "none";
     const char *hotlist_priority[4] = { "low", "message", "private",
                                         "highlight" };
     const char *ptr_lag;
+    int is_channel, is_private;
     int i, j, length_max_number, current_buffer, number, prev_number, priority;
     int rc, count;
 
@@ -161,11 +165,47 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         /* buffer name */
         str_indent_name[0] = '\0';
         ptr_type = weechat_buffer_get_string (ptr_buffer, "localvar_type");
-        if (ptr_type
-            && ((strcmp (ptr_type, "channel") == 0)
-                || (strcmp (ptr_type, "private") == 0)))
-        {
+        is_channel = (ptr_type && (strcmp (ptr_type, "channel") == 0));
+        is_private = (ptr_type && (strcmp (ptr_type, "private") == 0));
+        if (is_channel || is_private)
             snprintf (str_indent_name, sizeof (str_indent_name), "  ");
+
+        /* nick prefix */
+        if (is_channel
+            && weechat_config_boolean (buflist_config_look_nick_prefix))
+        {
+            snprintf (str_nick_prefix, sizeof (str_nick_prefix),
+                      "%s",
+                      (weechat_config_boolean (buflist_config_look_nick_prefix_empty)) ?
+                      " " : "");
+            ptr_nick = weechat_buffer_get_string (ptr_buffer, "localvar_nick");
+            if (ptr_nick)
+            {
+                ptr_gui_nick = weechat_nicklist_search_nick (ptr_buffer, NULL,
+                                                             ptr_nick);
+                if (ptr_gui_nick)
+                {
+                    ptr_nick_prefix = weechat_nicklist_nick_get_string (
+                        ptr_buffer, ptr_gui_nick, "prefix");
+                    if (ptr_nick_prefix && (ptr_nick_prefix[0] != ' '))
+                    {
+                        snprintf (str_nick_prefix, sizeof (str_nick_prefix),
+                                  "%s%s",
+                                  weechat_color (
+                                      weechat_nicklist_nick_get_string (
+                                          ptr_buffer, ptr_gui_nick,
+                                          "prefix_color")),
+                                  ptr_nick_prefix);
+                    }
+                }
+            }
+            weechat_hashtable_set (buflist_hashtable_extra_vars,
+                                   "nick_prefix", str_nick_prefix);
+        }
+        else
+        {
+            weechat_hashtable_set (buflist_hashtable_extra_vars,
+                                   "nick_prefix", "");
         }
 
         /* set extra variables */

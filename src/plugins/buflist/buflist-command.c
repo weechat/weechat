@@ -99,6 +99,8 @@ buflist_command_init ()
            "are between 10 and 99 buffers\n"
            "    - ${indent}: indentation for name (channel and private "
            "buffers are indented)\n"
+           "    - ${nick_prefix}: nick prefix for a channel (set only "
+           "if the option buflist.look.nick_prefix is enabled)\n"
            "    - ${name}: the short name (if set), with a fallback on the "
            "name\n"
            "    - ${color_hotlist}: the color depending on the highest "

@@ -6,7 +6,7 @@
 ** description: pass:none[format pour chaque ligne avec un tampon (note : le contenu est évalué, voir /help buflist)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"${format_number}${indent}${color_hotlist}${name}"+`
+** valeur par défaut: `+"${format_number}${indent}${nick_prefix}${color_hotlist}${name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** description: pass:none[format pour la ligne avec le tampon courant (note : le contenu est évalué, voir /help buflist)]
@@ -92,11 +92,23 @@
 ** valeurs: on, off
 ** valeur par défaut: `+on+`
 
+* [[option_buflist.look.nick_prefix]] *buflist.look.nick_prefix*
+** description: pass:none[obtenir le préfixe du pseudo et sa couleur depuis la liste de pseudos de telle sorte que ${nick_prefix} puisse être utilisé dans le format ; cela peut être lent sur les tampons avec beaucoup de pseudos dans la liste, donc cette option est désactivée par défaut]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
+* [[option_buflist.look.nick_prefix_empty]] *buflist.look.nick_prefix_empty*
+** description: pass:none[lorsque le préfixe de pseudo est activé, afficher un espace à la place s'il n'y a pas de préfixe de pseudo sur le tampon]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
-** description: pass:none[liste de signaux séparés par des virgules qui sont accrochés et déclenchent l'affichage de la liste des tampons]
+** description: pass:none[liste de signaux séparés par des virgules qui sont accrochés et déclenchent l'affichage de la liste des tampons ; cela peut être utile si certaines variables personnalisées sont utilisées dans les formats et nécessitent un rafraîchissement particulier]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"buffer_opened,buffer_closed,buffer_merged,buffer_unmerged,buffer_moved,buffer_renamed,buffer_switch,buffer_hidden,buffer_unhidden,buffer_localvar_added,buffer_localvar_changed,window_switch,hotlist_changed"+`
+** valeur par défaut: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
 ** description: pass:none[liste de champs séparés par des virgules pour trier les tampons ; chaque champ est une variable hdata du tampon ; le caractère "-" peut être utilisé pour inverser l'ordre]
