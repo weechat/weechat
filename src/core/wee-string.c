@@ -3453,10 +3453,12 @@ string_dyn_free (char **string, int free_string)
     if (free_string)
     {
         free (ptr_string_dyn->string);
-        return NULL;
+        ptr_string = NULL;
     }
-
-    ptr_string = ptr_string_dyn->string;
+    else
+    {
+        ptr_string = ptr_string_dyn->string;
+    }
 
     free (ptr_string_dyn);
 
