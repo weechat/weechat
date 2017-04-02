@@ -205,8 +205,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       buflist-bar-item.c          | buflist バー要素
 |       buflist-command.c           | buflist コマンド
 |       buflist-config.c            | buflist 設定オプション (buflist.conf ファイル)
-// TRANSLATION MISSING
-|       buflist-mouse.c             | Buflist mouse actions.
+|       buflist-mouse.c             | buflist マウス動作
 |    charset/                       | charset プラグイン
 |       charset.c                   | charset 関数
 |    exec/                          | exec プラグイン
@@ -298,8 +297,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       script-completion.c         | スクリプトマネージャ用の補完
 |       script-config.c             | スクリプトマネージャ用の設定オプション (script.conf ファイル)
 |       script-info.c               | スクリプトマネージャの情報/インフォリスト/hdata
-// TRANSLATION MISSING
-|       script-mouse.c              | Script mouse actions.
+|       script-mouse.c              | スクリプトマネージャのマウス動作
 |       script-repo.c               | リポジトリファイルのダウンロードとロード
 |    tcl/                           | tcl プラグイン
 |       weechat-tcl.c               | tcl の主要関数 (スクリプトのロード/アンロード、tcl コードの実行)
