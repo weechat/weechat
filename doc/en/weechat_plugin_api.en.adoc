@@ -1955,7 +1955,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat ≥ 0.4.0, updated in 0.4.2, 1.0, 1.1, 1.2, 1.3 and 1.8._
+_WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6 and 1.8._
 
 Evaluate an expression and return result as a string.
 Special variables with format `+${variable}+` are expanded (see table below).
@@ -1996,7 +1996,7 @@ Arguments:
 ** _extra_: default behavior is to just replace extra variables (_extra_vars_),
    other behavior can be selected:
 *** _eval_: extra variables (_extra_vars_) are evaluated themselves before
-    replacing
+    replacing (_WeeChat ≥ 1.6_)
 ** _regex_: a regex used to replace text in _expr_ (which is then not
    evaluated)
 ** _regex_replace_: the replacement text to use with _regex_, to replace
@@ -2028,14 +2028,16 @@ expanded to last):
   weechat.look.buffer_time_format)
 
 | `+${esc:xxx}+` +
-  `+${\xxx}+` |
+  `+${\xxx}+` +
+  (_WeeChat ≥ 1.0_) |
   String with escaped chars. |
   `+${esc:prefix\tmessage}+` +
   `+${\ua9}+` |
   `+prefix<TAB>message+` +
   `+©+`
 
-| `+${hide:x,string}+` |
+| `+${hide:x,string}+` +
+  (_WeeChat ≥ 1.1_) |
   String with hidden chars (all chars in `string` replaced by `x`). |
   `+${hide:*,password}+` |
   `+********+`
@@ -2056,7 +2058,8 @@ expanded to last):
   `+this…+` +
   `+こ>>+`
 
-| `+${re:N}+` |
+| `+${re:N}+` +
+  (_WeeChat ≥ 1.1_) |
   Regex captured group: `0` = whole string matching, `1` to `99` = group
   captured, `+++` = last group captured,
   `#` = index of last group captured (_WeeChat ≥ 1.8_). |
@@ -2071,7 +2074,8 @@ expanded to last):
   `+test2+` +
   `+2+`
 
-| `+${color:name}+` |
+| `+${color:name}+` +
+  (_WeeChat ≥ 0.4.2_) |
   WeeChat color code (the name of color has optional attributes),
   see function <<_color,color>> for supported formats. |
   `+${color:red}red text+` +
@@ -2080,7 +2084,8 @@ expanded to last):
   `+bold orange text+` (in bold orange)
 
 | `+${info:name}+` +
-  `+${info:name,arguments}+` |
+  `+${info:name,arguments}+` +
+  (_WeeChat ≥ 0.4.3_) |
   Info from WeeChat or a plugin, see function
   <<_info_get,info_get>>. |
   `+${info:version}+` +

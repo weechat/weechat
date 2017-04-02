@@ -1991,7 +1991,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2, 1.0, 1.1, 1.2, 1.3 et 1.8._
+_WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6 et 1.8._
 
 Évaluer l'expression et retourner le résultat sous forme de chaîne.
 Les variables spéciales avec le format `+${variable}+` sont étendues (voir le
@@ -2036,7 +2036,7 @@ Paramètres :
 ** _extra_ : le comportement par défaut est juste de remplacer les variables
    additionnelles (_extra_vars_), un autre comportement peut être sélectionné :
 *** _eval_ : les variables additionnelles (_extra_vars_) sont évaluées
-    elles-mêmes avant remplacement
+    elles-mêmes avant remplacement (_WeeChat ≥ 1.6_)
 ** _regex_ : une expression regulière pour remplacer du texte dans _expr_ (qui
    n'est alors pas évalué)
 ** _regex_replace_ : le texte de remplacement à utiliser avec _regex_, pour
@@ -2070,14 +2070,16 @@ première étendue à la dernière) :
   weechat.look.buffer_time_format)
 
 | `+${esc:xxx}+` +
-  `+${\xxx}+` |
+  `+${\xxx}+` +
+  (_WeeChat ≥ 1.0_) |
   Chaîne avec caractères échappés. |
   `+${esc:préfixe\tmessage}+` +
   `+${\ua9}+` |
   `+préfixe<TAB>message+` +
   `+©+`
 
-| `+${hide:x,chaîne}+` |
+| `+${hide:x,chaîne}+` +
+  (_WeeChat ≥ 1.1_) |
   Chaîne avec les caractères masqués (tous les caractères dans `chaîne`
   remplacés par `x`). |
   `+${hide:*,mot_de_passe}+` |
@@ -2099,7 +2101,8 @@ première étendue à la dernière) :
   `+ceci…+` +
   `+こ>>+`
 
-| `+${re:N}+` |
+| `+${re:N}+` +
+  (_WeeChat ≥ 1.1_) |
   Groupe regex capturé : `0` = toute la chaîne correspondante,
   `1` à `99` = groupe capturé, `+++` = dernier groupe capturé,
   `#` = index du dernier groupe capturé (_WeeChat ≥ 1.8_). |
@@ -2114,7 +2117,8 @@ première étendue à la dernière) :
   `+test2+` +
   `+2+`
 
-| `+${color:nom}+` |
+| `+${color:nom}+` +
+  (_WeeChat ≥ 0.4.2_) |
   Code couleur WeeChat (le nom de couleur a des attributs facultatifs),
   voir la fonction <<_color,color>> pour les formats supportés. |
   `+${color:red}texte rouge+` +
@@ -2123,7 +2127,8 @@ première étendue à la dernière) :
   `+texte orange gras+` (en orange gras)
 
 | `+${info:nom}+` +
-  `+${info:nom,paramètres}+` |
+  `+${info:nom,paramètres}+` +
+  (_WeeChat ≥ 0.4.3_) |
   Info de WeeChat ou d'une extension, voir la fonction <<_info_get,info_get>>. |
   `+${info:version}+` +
   `+${info:irc_nick_color_name,foo}+` |
