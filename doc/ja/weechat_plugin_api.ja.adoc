@@ -2046,29 +2046,26 @@ char *weechat_string_eval_expression (const char *expr,
   `+${hide:*,password}+` |
  `+********+`
 
-// TRANSLATION MISSING
 | `+${cut:max,suffix,string}+` +
   (_WeeChat バージョン 1.8 以上で利用可_) |
-  String with `max` chars, and optional `suffix` if string is cut. |
+  `string` の先頭 `max` 文字とオプションの `suffix` 文字 (`string` の文字数が `max` 文字を超える場合) |
   `+${cut:4,…,this is a test}+` +
   `+${cut:2,>>,こんにちは世界}+` |
   `+this…+` +
   `+こん>>+`
 
-// TRANSLATION MISSING
 | `+${cutscr:max,suffix,string}+` +
   (_WeeChat バージョン 1.8 以上で利用可_) |
-  String with `max` chars displayed on screen, and optional `suffix` if string is cut. |
+  `string` の先頭 `max` 文字 (半角文字幅換算) とオプションの `suffix` 文字 (`string` の文字数が `max` 文字を超える場合) |
   `+${cutscr:4,…,this is a test}+` +
   `+${cutscr:2,>>,こんにちは世界}+` |
   `+this…+` +
   `+こ>>+`
 
-// TRANSLATION MISSING
 | `+${re:N}+` |
   正規表現のキャプチャグループ: `0` = マッチするすべての文字列、`1` から `99` =
   キャプチャされたグループ、`+++` = 最後にキャプチャされたグループ、
-  `#` = index of last group captured (_WeeChat ≥ 1.8_). |
+  `#` = 最後にキャプチャされたグループのインデックス番号 (_WeeChat バージョン 1.8 以上で利用可_) |
   `+${re:0}+` +
   `+${re:1}+` +
   `+${re:2}+` +
@@ -2354,8 +2351,7 @@ char *weechat_dyn_free (char **string, int free_string);
 
 戻り値:
 
-// TRANSLATION MISSING
-* string pointer if _free_string_ is 0, otherwise NULL
+* _free_string_ が 0 の場合には文字列ポインタ、それ以外の場合は NULL
 
 C 言語での使用例:
 
@@ -3897,9 +3893,8 @@ struct t_arraylist *weechat_arraylist_new (int initial_size,
 * _sorted_: 1 の場合には配列リストをソートし、0 の場合にはソートしません
 * _allow_duplicates_: 1 の場合にはエントリの重複を許可し、0
   の場合にはエントリが重複して追加されることを防ぎます
-// TRANSLATION MISSING
-* _callback_cmp_: callback used to compare two items (optional), arguments and
-  return value:
+* _callback_cmp_: 2 つの要素を比較する際に使われるコールバック
+  (任意)、引数と戻り値は以下:
 ** _void *data_: ポインタ
 ** _struct t_arraylist *arraylist_: 配列リストポインタ
 ** _void *pointer1_: 1 番目の要素へのポインタ
@@ -7149,10 +7144,9 @@ int weechat_key_bind (const char *context, struct t_hashtable *keys);
 ** _search_: 検索コンテキスト (バッファ中のテキストを検索中)
 ** _cursor_: 画面上のカーソルを自由に移動
 ** _mouse_: マウスイベント用のキー
-// TRANSLATION MISSING
-* _keys_: hashtable with key bindings; it can contain following special keys:
-** _{key_bind_quiet}_: do not display the keys added in core buffer
-   _(WeeChat ≥ 1.8)_
+* _keys_: キー割り当てを収めたハッシュテーブル; 以下の特殊キーを収めることが可能です:
+** _{key_bind_quiet}_: コアバッファに追加されたキーを表示しない
+   _(WeeChat バージョン 1.8 以上で利用可)_
 
 戻り値:
 
