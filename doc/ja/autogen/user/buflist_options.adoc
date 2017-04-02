@@ -63,7 +63,7 @@
 ** デフォルト値: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
 * [[option_buflist.format.number]] *buflist.format.number*
-** 説明: pass:none[format for buffer number, ${number} is the indented number (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[バッファ番号の表示書式、${number} はインデント済み番号です (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
@@ -75,37 +75,37 @@
 ** デフォルト値: `+"${buffer.hidden}==0"+`
 
 * [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
-** 説明: pass:none[if enabled, clicks with left/right buttons on the line with current buffer jump to previous/next visited buffer]
+** 説明: pass:none[有効の場合、現在のバッファを示す行で左または右ボタンをクリックすることで一つ前または次の訪問済みバッファに移動します]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+off+`
 
 * [[option_buflist.look.mouse_move_buffer]] *buflist.look.mouse_move_buffer*
-** 説明: pass:none[if enabled, mouse gestures (drag & drop) move buffers in list]
+** 説明: pass:none[有効の場合、リスト内でマウスジェスチャ (ドラッグ & ドロップ) することでバッファを移動します]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
 
 * [[option_buflist.look.mouse_wheel]] *buflist.look.mouse_wheel*
-** 説明: pass:none[if enabled, mouse wheel up/down actions jump to previous/next buffer in list]
+** 説明: pass:none[有効の場合、マウスのホイールアップまたはダウンすることでリスト内の一つ前または次のバッファに移動します]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
 
 * [[option_buflist.look.nick_prefix]] *buflist.look.nick_prefix*
-** 説明: pass:none[get the nick prefix and its color from nicklist so that ${nick_prefix} can be used in format; this can be slow on buffers with lot of nicks in nicklist, so this option is disabled by default]
+** 説明: pass:none[ニックネームリスト内のニックネームのプレフィックスと色を取得します。このオプションを有効化することで、書式内で ${nick_prefix} を使えるようになります。しかしながら、ニックネームリスト内に多くのニックネームがある場合に動作が遅くなる可能性がありますので、このオプションはデフォルトで無効化されています]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+off+`
 
 * [[option_buflist.look.nick_prefix_empty]] *buflist.look.nick_prefix_empty*
-** 説明: pass:none[when the nick prefix is enabled, display a space instead if there is no nick prefix on the buffer]
+** 説明: pass:none[ニックネームプレフィックスが有効化された状態で、そのバッファで対象のニックネームにプレフィックスが付かない場合に、プレフィックスの代わりに空白を表示します]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
 
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
-** 説明: pass:none[comma-separated list of extra signals that are hooked and trigger the refresh of buffers list; this can be useful if some custom variables are used in formats and need specific refresh]
+** 説明: pass:none[フックされてバッファの再読込トリガになる追加シグナルのコンマ区切りリスト; これは一部のカスタム変数が書式内で使われており、明示的に再読込が必要な場合に便利です]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
