@@ -171,6 +171,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
             snprintf (str_indent_name, sizeof (str_indent_name), "  ");
 
         /* nick prefix */
+        str_nick_prefix[0] = '\0';
         if (is_channel
             && weechat_config_boolean (buflist_config_look_nick_prefix))
         {
@@ -199,14 +200,9 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                     }
                 }
             }
-            weechat_hashtable_set (buflist_hashtable_extra_vars,
-                                   "nick_prefix", str_nick_prefix);
         }
-        else
-        {
-            weechat_hashtable_set (buflist_hashtable_extra_vars,
-                                   "nick_prefix", "");
-        }
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "nick_prefix", str_nick_prefix);
 
         /* set extra variables */
         weechat_hashtable_set (buflist_hashtable_extra_vars,
