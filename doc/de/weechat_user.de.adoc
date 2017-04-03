@@ -129,10 +129,10 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 [NOTE]
 ^(1)^ Paketnamen wurden von der Debian GNU/Linux Distribution übernommen.
 Versionen und Paketnamen können für andere Distributionen abweichend sein. +
-// TRANSLATION MISSING
-^(2)^ It is recommended to compile with libncurses**w**5-dev (the *w* is
-important). WeeChat can compile with libncurses5-dev, but it is *NOT* recommended:
-you may experience display bugs with wide chars. +
+^(2)^ Es wird empfohlen WeeChat mit libncurses**w**5-dev (das *w* ist
+entscheidend) zu kompilieren. Eine Kompilierung kann auch mit libncurses5-dev erfolgen,
+aber dies wird *NICHT* empfohlen:
+Es können Darstellungsfehler mit breiten Zeichen auftreten. +
 ^(3)^ Gnutls ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
 ECDSA-NIST256P-CHALLENGE durchzuführen. +
 ^(4)^ Die empfohlene Version ist 2.7 (alle Skripten laufen mit der Version 2.7,
@@ -2038,8 +2038,7 @@ Standarderweiterungen:
 | Erweiterung | Beschreibung
 | alias       | definiert Alias für Befehle.
 | aspell      | Rechtschreibprüfung für Befehlszeile.
-// TRANSLATION MISSING
-| buflist     | Bar item with list of buffers.
+| buflist     | Bar-Item mit der Liste aller Buffern.
 | charset     | Zeichensatz (de)-kodierung in Buffern.
 | exec        | ausführen von externen Befehlen aus WeeChat heraus.
 | fifo        | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann.
@@ -2151,20 +2150,19 @@ Beispiel der Rechtschreibkorrektur, mit zwei Wörterbüchern (`en,de`):
 [[buflist_plugin]]
 === Buflist Erweiterung
 
-// TRANSLATION MISSING
-Buflist plugin displays a list of buffers in a bar item called "buflist". +
-A default bar "buflist" is created on startup with this item.
+Die Buflist-Erweiterung dient dazu eine Liste der Buffer in einer Bar-Item mit Namen "buflist"
+darzustellen. +
+Eine Standardbar, "buflist", wird beim Start automatisch erstellt, mit folgendem Inhalt.
 
 [[buflist_options]]
 ==== Options (buflist.conf)
 
 Sektionen:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Sektion | Steuerbefehl          | Beschreibung
-| format  | /set buflist.format.* | Formats used to display list of buffers.
+| format  | /set buflist.format.* | Format für die Darstellung der Bufferliste.
 | look    | /set buflist.look.*   | Erscheinungsbild.
 |===
 
