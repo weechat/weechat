@@ -53,33 +53,32 @@ SRC_URI="https://weechat.org/files/src/weechat-${VERSION}.tar.bz2"
 # Build dependencies only
 DEPEND="cmake gettext gettext-devel libgnutls-devel libaspell-devel \
 libcurl-devel libgcrypt-devel libncurses-devel lua perl pkg-config \
-python2-devel ruby tcl-devel zlib-devel"
+python2-devel ruby tcl-devel libguile2.0-devel zlib-devel"
 
 #
 # CMake compilation of WeeChat:
 #   1. set prefix to /usr
 #   2. enable build of man pages and documentation
-#   3. disable Guile plugin because WeeChat requires Guile >= 2.0,
-#      which is not yet available in Cygwin
-#   4. disable Javascript plugin because libv8 is not available in Cygwin
+#   3. disable Javascript plugin because libv8 is not available in Cygwin
 #
 CYGCMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=/usr -DENABLE_MAN=ON -DENABLE_DOC=ON \
--DENABLE_GUILE=OFF -DENABLE_JAVASCRIPT=OFF"
+-DENABLE_JAVASCRIPT=OFF"
 
 #
-# Build 8 Cygwin packages:
+# Build 9 Cygwin packages:
 #   weechat
 #   weechat-python
 #   weechat-perl
 #   weechat-ruby
 #   weechat-lua
 #   weechat-tcl
+#   weechat-guile
 #   weechat-devel
 #   weechat-doc
 #
 PKG_NAMES="${PN} ${PN}-python ${PN}-perl ${PN}-ruby ${PN}-lua ${PN}-tcl \
-${PN}-devel ${PN}-doc"
-PKG_HINTS="setup python perl ruby lua tcl devel doc"
+${PN}-guile ${PN}-devel ${PN}-doc"
+PKG_HINTS="setup python perl ruby lua tcl guile devel doc"
 
 #
 # Package "weechat": binary, all plugins except scripting languages,
@@ -153,6 +152,14 @@ weechat_tcl_SUMMARY="Tcl scripting plugin for WeeChat"
 weechat_tcl_DESCRIPTION="Tcl scripting plugin for WeeChat"
 weechat_tcl_CONTENTS="usr/lib/weechat/plugins/tcl.dll"
 weechat_tcl_REQUIRES="weechat"
+
+#
+# Package "weechat-guile": guile scripting plugin
+#
+weechat_guile_SUMMARY="Guile scripting plugin for WeeChat"
+weechat_guile_DESCRIPTION="Guile scripting plugin for WeeChat"
+weechat_guile_CONTENTS="usr/lib/weechat/plugins/guile.dll"
+weechat_guile_REQUIRES="weechat"
 
 #
 # Package "weechat-devel": header to build plugins
