@@ -3,115 +3,115 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_buflist.format.buffer]] *buflist.format.buffer*
-** Beschreibung: pass:none[format of each line with a buffer (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Format für eine Zeile mit einem Buffer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${format_number}${indent}${nick_prefix}${color_hotlist}${name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
-** Beschreibung: pass:none[format for the line with current buffer (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Format für die Zeile mit dem ausgewählten Buffer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:lightgreen,blue}${format_buffer}"+`
 
 * [[option_buflist.format.hotlist]] *buflist.format.hotlist*
-** Beschreibung: pass:none[format for hotlist (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Format der Hotlist (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+" ${color:green}(${hotlist}${color:green})"+`
 
 * [[option_buflist.format.hotlist_highlight]] *buflist.format.hotlist_highlight*
-** Beschreibung: pass:none[format for a buffer with hotlist level "highlight" (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Format für Buffer mit der Benachrichtungsstufe "highlight" (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:magenta}"+`
 
 * [[option_buflist.format.hotlist_low]] *buflist.format.hotlist_low*
-** Beschreibung: pass:none[format for a buffer with hotlist level "low" (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Format für Buffer mit der Benachrichtungsstufe "low" (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:white}"+`
 
 * [[option_buflist.format.hotlist_message]] *buflist.format.hotlist_message*
-** Beschreibung: pass:none[format for a buffer with hotlist level "message" (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Format für Buffer mit der Benachrichtungsstufe "message" (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:brown}"+`
 
 * [[option_buflist.format.hotlist_none]] *buflist.format.hotlist_none*
-** Beschreibung: pass:none[format for a buffer not in hotlist (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Format für Buffer die nicht in der Hotlist angezeigt werden (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:default}"+`
 
 * [[option_buflist.format.hotlist_private]] *buflist.format.hotlist_private*
-** Beschreibung: pass:none[format for a buffer with hotlist level "private" (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Format für Buffer mit der Benachrichtungsstufe "private" (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:green}"+`
 
 * [[option_buflist.format.hotlist_separator]] *buflist.format.hotlist_separator*
-** Beschreibung: pass:none[separator for counts in hotlist (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Trennzeichen for counts in hotlist (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:default},"+`
 
 * [[option_buflist.format.lag]] *buflist.format.lag*
-** Beschreibung: pass:none[format for lag on an IRC server buffer (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Format für die Anzeige der Verzögerungsanzeige für IRC Serverbuffer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
 * [[option_buflist.format.number]] *buflist.format.number*
-** Beschreibung: pass:none[format for buffer number, ${number} is the indented number (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Format für die Darstellung der Buffernummer, hierbei ist die Variable ${number} die eingerückte Nummer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
-** Beschreibung: pass:none[conditions to display a buffer (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Bedingungen für die Darstellung eines Buffers (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${buffer.hidden}==0"+`
 
 * [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
-** Beschreibung: pass:none[if enabled, clicks with left/right buttons on the line with current buffer jump to previous/next visited buffer]
+** Beschreibung: pass:none[ist diese Einstellung aktiviert, kann mit der linken/rechten Maustaste auf dem aktuellen Buffer zum vorherigen/nächsten Buffer gesprungen werden]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
 
 * [[option_buflist.look.mouse_move_buffer]] *buflist.look.mouse_move_buffer*
-** Beschreibung: pass:none[if enabled, mouse gestures (drag & drop) move buffers in list]
+** Beschreibung: pass:none[ist diese Einstellung aktiviert, kann mit Mausgesten (Drag & Drop) ein Buffer in der Liste verschoben werden]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
 
 * [[option_buflist.look.mouse_wheel]] *buflist.look.mouse_wheel*
-** Beschreibung: pass:none[if enabled, mouse wheel up/down actions jump to previous/next buffer in list]
+** Beschreibung: pass:none[ist diese Einstellung aktiviert, kann mit dem Mausrad hoch/runter zum nächsten/vorherigen Buffer in der Liste gesprungen werden]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
 
 * [[option_buflist.look.nick_prefix]] *buflist.look.nick_prefix*
-** Beschreibung: pass:none[get the nick prefix and its color from nicklist so that ${nick_prefix} can be used in format; this can be slow on buffers with lot of nicks in nicklist, so this option is disabled by default]
+** Beschreibung: pass:none[holt den Nick-Präfix und die dazugehörige Farbe aus der Nicklist  um diese mit der Variable ${nick_prefix} zu nutzen; diese Option ist standardmäßig deaktiviert, da bei einer umfangreichen Nickliste es zu Verzögerungen kommen kann]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
 
 * [[option_buflist.look.nick_prefix_empty]] *buflist.look.nick_prefix_empty*
-** Beschreibung: pass:none[when the nick prefix is enabled, display a space instead if there is no nick prefix on the buffer]
+** Beschreibung: pass:none[falls der Nick-Präfix aktiviert ist, wird ein Leerzeichen genutzt falls kein Nick-Präfix für den Buffer existiert]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
 
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
-** Beschreibung: pass:none[comma-separated list of extra signals that are hooked and trigger the refresh of buffers list; this can be useful if some custom variables are used in formats and need specific refresh]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von zusätzlichen Signalen die dafür sorgen das die Buffer-Liste aktualisiert wird; dies kann nützlich sein falls benutzerdefinierte Variablen genutzt werden und dadurch eine Aktualisierung erforderlich wird]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** Beschreibung: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer; char "-" can be used before field to reverse order]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von Feldern um die Buffer zu sortieren; jedes Feld ist eine hdata Variable von Buffer; wird das "-" Zeichen vor einem Feld angewendet, wird die Ausgabe umgekehrt]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"number,-active"+`
