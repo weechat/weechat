@@ -234,7 +234,7 @@ W celu ograniczenia długości nicków w oknie rozmowy:
 Jest to "hotlista", lista buforów z ilością nieprzeczytanych wiadomości,
 w kolejnoci: podświetlenia, prywatne wiadomości, wiadomości, inne (jak
 wejścia/wyjścia). +
-Ilość "nieprzeczytanych wiadomości" to lista nowych wyświetlonych/odebranych 
+Ilość "nieprzeczytanych wiadomości" to lista nowych wyświetlonych/odebranych
 wiadomości od ostatniej wizyty w buforze.
 
 w przykładzie `[H: 3(1,8), 2(4)]`, oznacza:
@@ -832,7 +832,7 @@ Jeśli nadal chcesz ręcznie edytować pliki, powinieneś zachować ostrożnoś�
 * jeśli wprowadzisz nieprawidłową wartość dla opcji, WeeChat wyświetli błąd
   przy ładowaniu i odrzuci błędną wartość (zostanie użyta wartość domyślna)
 * jeśli WeeChat jet uruchomiony, należy wykonać komendę `/reload`, jeżeli
-  jakieś ustawienia zostały zmienione ale nie zapisane za pomocą `/save`, 
+  jakieś ustawienia zostały zmienione ale nie zapisane za pomocą `/save`,
   zostaną utracone
 
 [[memory_usage]]

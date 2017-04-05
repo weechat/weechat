@@ -974,7 +974,7 @@ Przykład podziałów pionowego i poziomego:
 ....
 
 [[buffers_lines]]
-=== Linie buforów 
+=== Linie buforów
 
 [[lines_format]]
 ==== Format linii
@@ -1353,7 +1353,7 @@ twój terminal wspiera klikanie w URLe).
 === Poziomy powiadomień
 
 [[setup_notify_levels]]
-==== Ustawienia poziomu powiadomień 
+==== Ustawienia poziomu powiadomień
 
 Dostępne są cztery poziomy dla wiadomości wyświetlanych w buforach, od najniższego
 do najwyższego:
@@ -1399,7 +1399,7 @@ Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buff
 ----
 
 [[max_hotlist_level_nicks]]
-==== Maksymalny poziom hotlisty dla nicków 
+==== Maksymalny poziom hotlisty dla nicków
 
 Jest możliwe ustawienie maksymalnego poziomu hotlist dla nicków, dla bufora lub grupy buforów
 (jak erwery IRC).
@@ -1453,7 +1453,7 @@ Separatory do okoła podświetlanych słów można zmienić za pomocą opcji
 <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
 
 [[highlights_tags]]
-==== Dodawanie tagów do podświetleń 
+==== Dodawanie tagów do podświetleń
 
 Wyświetlane linie moga zawierać "tagi", które dają troche informacji o pochodzeniu
 wiasomości lub o samej wiadmości. +

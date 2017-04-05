@@ -1484,7 +1484,7 @@ beinhalten. + Diese "tags" können mit dem Befehl `/debug tags` dargestellt werd
 
 Um Tags als Highlights zu nutzen wird folgende Option verwendet:
 <<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
-Tags werden durch Kommata getrennt und mehrere Tags können mit 
+Tags werden durch Kommata getrennt und mehrere Tags können mit
 "+" genutzt werden um ein logischen "und" zu erstellen.
 
 Zum Beispiel um alle Nachrichten vom Nick "FlashCode" und alle notice-Nachrichten
