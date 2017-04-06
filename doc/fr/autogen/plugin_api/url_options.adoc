@@ -18,11 +18,15 @@
 
 | failonerror | long |
 
+| keep_sending_on_error | long |
+
 | proxy | string |
 
 | proxyport | long |
 
 | port | long |
+
+| pre_proxy | string |
 
 | httpproxytunnel | long |
 
@@ -30,7 +34,7 @@
 
 | dns_cache_timeout | long |
 
-| proxytype | long | http, socks4, socks5, socks4a, socks5_hostname, http_1_0
+| proxytype | long | http, socks4, socks5, socks4a, socks5_hostname, http_1_0, https
 
 | buffersize | long |
 
@@ -278,7 +282,7 @@
 
 | sslcert | string |
 
-| sslversion | long | default, tlsv1, sslv2, sslv3
+| sslversion | long | default, tlsv1, sslv2, sslv3, tlsv1_0, tlsv1_1, tlsv1_2, tlsv1_3
 
 | ssl_verifypeer | long |
 
@@ -329,6 +333,38 @@
 | ssl_verifystatus | long |
 
 | ssl_falsestart | long |
+
+| proxy_cainfo | string |
+
+| proxy_capath | string |
+
+| proxy_crlfile | string |
+
+| proxy_keypasswd | string |
+
+| proxy_pinnedpublickey | string |
+
+| proxy_sslcert | string |
+
+| proxy_sslcerttype | string |
+
+| proxy_sslkey | string |
+
+| proxy_sslkeytype | string |
+
+| proxy_sslversion | long | default, tlsv1, sslv2, sslv3, tlsv1_0, tlsv1_1, tlsv1_2, tlsv1_3
+
+| proxy_ssl_options | long | allow_beast, no_revoke
+
+| proxy_ssl_verifyhost | long |
+
+| proxy_ssl_verifypeer | long |
+
+| proxy_tlsauth_password | string |
+
+| proxy_tlsauth_type | string |
+
+| proxy_tlsauth_username | string |
 
 | ssh_auth_types | mask | none, policy_flag, flag
 

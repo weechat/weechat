@@ -46,7 +46,7 @@
 char *url_type_string[] = { "string", "long", "long long", "mask" };
 
 /*
- * Constants/options for Curl 7.49.0
+ * Constants/options for Curl 7.52.0
  * (this list of options must be updated on every new Curl release)
  */
 
@@ -63,6 +63,9 @@ struct t_url_constant url_proxy_types[] =
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071304 /* 7.19.4 */
     URL_DEF_CONST(PROXY, HTTP_1_0),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x073400 /* 7.52.0 */
+    URL_DEF_CONST(PROXY, HTTPS),
 #endif
     { NULL, 0 },
 };
@@ -279,6 +282,14 @@ struct t_url_constant url_ssl_version[] =
     URL_DEF_CONST(_SSLVERSION, SSLv2),
     URL_DEF_CONST(_SSLVERSION, SSLv3),
 #endif
+#if LIBCURL_VERSION_NUM >= 0x072200 /* 7.34.0 */
+    URL_DEF_CONST(_SSLVERSION, TLSv1_0),
+    URL_DEF_CONST(_SSLVERSION, TLSv1_1),
+    URL_DEF_CONST(_SSLVERSION, TLSv1_2),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x073400 /* 7.52.0 */
+    URL_DEF_CONST(_SSLVERSION, TLSv1_3),
+#endif
     { NULL, 0 },
 };
 
@@ -352,6 +363,9 @@ struct t_url_option url_options[] =
 #if LIBCURL_VERSION_NUM >= 0x070100 /* 7.1.0 */
     URL_DEF_OPTION(FAILONERROR, LONG, NULL),
 #endif
+#if LIBCURL_VERSION_NUM >= 0x073300 /* 7.51.0 */
+    URL_DEF_OPTION(KEEP_SENDING_ON_ERROR, LONG, NULL),
+#endif
 
     /*
      * network options
@@ -360,6 +374,9 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(PROXY, STRING, NULL),
     URL_DEF_OPTION(PROXYPORT, LONG, NULL),
     URL_DEF_OPTION(PORT, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x073400 /* 7.52.0 */
+    URL_DEF_OPTION(PRE_PROXY, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070300 /* 7.3.0 */
     URL_DEF_OPTION(HTTPPROXYTUNNEL, LONG, NULL),
@@ -754,6 +771,25 @@ struct t_url_option url_options[] =
 #endif
 #if LIBCURL_VERSION_NUM >= 0x072A00 /* 7.42.0 */
     URL_DEF_OPTION(SSL_FALSESTART, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x073400 /* 7.52.0 */
+    URL_DEF_OPTION(PROXY_CAINFO, STRING, NULL),
+    URL_DEF_OPTION(PROXY_CAPATH, STRING, NULL),
+    URL_DEF_OPTION(PROXY_CRLFILE, STRING, NULL),
+    URL_DEF_OPTION(PROXY_KEYPASSWD, STRING, NULL),
+    URL_DEF_OPTION(PROXY_PINNEDPUBLICKEY, STRING, NULL),
+    URL_DEF_OPTION(PROXY_SSLCERT, STRING, NULL),
+    URL_DEF_OPTION(PROXY_SSLCERTTYPE, STRING, NULL),
+    URL_DEF_OPTION(PROXY_SSLKEY, STRING, NULL),
+    URL_DEF_OPTION(PROXY_SSLKEYTYPE, STRING, NULL),
+    URL_DEF_OPTION(PROXY_SSLVERSION, LONG, url_ssl_version),
+    /*URL_DEF_OPTION(PROXY_SSL_CIPHER_LIST, LIST, NULL),*/
+    URL_DEF_OPTION(PROXY_SSL_OPTIONS, LONG, url_ssl_options),
+    URL_DEF_OPTION(PROXY_SSL_VERIFYHOST, LONG, NULL),
+    URL_DEF_OPTION(PROXY_SSL_VERIFYPEER, LONG, NULL),
+    URL_DEF_OPTION(PROXY_TLSAUTH_PASSWORD, STRING, NULL),
+    URL_DEF_OPTION(PROXY_TLSAUTH_TYPE, STRING, NULL),
+    URL_DEF_OPTION(PROXY_TLSAUTH_USERNAME, STRING, NULL),
 #endif
 
     /*
