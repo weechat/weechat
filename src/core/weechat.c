@@ -626,7 +626,6 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
 
     /* catch signals */
     util_catch_signal (SIGINT, SIG_IGN);           /* signal ignored        */
-    util_catch_signal (SIGQUIT, SIG_IGN);          /* signal ignored        */
     util_catch_signal (SIGPIPE, SIG_IGN);          /* signal ignored        */
     util_catch_signal (SIGSEGV, &debug_sigsegv);   /* crash dump            */
     util_catch_signal (SIGHUP, &weechat_sighup);   /* exit WeeChat          */
