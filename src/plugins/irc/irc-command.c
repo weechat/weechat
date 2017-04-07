@@ -3243,15 +3243,8 @@ IRC_COMMAND_CALLBACK(msg)
             }
             else
             {
-                string = irc_color_decode (
-                    argv_eol[arg_text],
-                    weechat_config_boolean (irc_config_network_colors_send));
-                irc_input_user_message_display (
-                    ptr_channel->buffer, 0,
-                    (string) ? string : argv_eol[arg_text]);
-                if (string)
-                    free (string);
-
+                irc_input_user_message_display (ptr_channel->buffer, 0,
+                                                argv_eol[arg_text]);
                 irc_server_sendf (ptr_server,
                                   IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                   "PRIVMSG %s :%s",
@@ -3281,15 +3274,15 @@ IRC_COMMAND_CALLBACK(msg)
             {
                 if (ptr_channel2)
                 {
-                    string = irc_color_decode (
-                        argv_eol[arg_text],
-                        weechat_config_boolean (irc_config_network_colors_send));
                     if (status_msg)
                     {
                         /*
                          * message to channel ops/voiced
                          * (to "@#channel" or "+#channel")
                          */
+                        string = irc_color_decode (
+                            argv_eol[arg_text],
+                            weechat_config_boolean (irc_config_network_colors_send));
                         weechat_printf_date_tags (
                             ptr_channel2->buffer,
                             0,
@@ -3302,17 +3295,15 @@ IRC_COMMAND_CALLBACK(msg)
                             targets[i],
                             IRC_COLOR_RESET,
                             (string) ? string : argv_eol[arg_text]);
+                        if (string)
+                            free (string);
                     }
                     else
                     {
                         /* standard message (to "#channel") */
-                        irc_input_user_message_display (
-                            ptr_channel2->buffer,
-                            0,
-                            (string) ? string : argv_eol[arg_text]);
+                        irc_input_user_message_display (ptr_channel2->buffer,
+                                                        0, argv_eol[arg_text]);
                     }
-                    if (string)
-                        free (string);
                 }
                 irc_server_sendf (ptr_server,
                                   IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
@@ -3365,20 +3356,18 @@ IRC_COMMAND_CALLBACK(msg)
                 }
                 else
                 {
-                    string = irc_color_decode (
-                        argv_eol[arg_text],
-                        weechat_config_boolean (irc_config_network_colors_send));
                     ptr_channel2 = irc_channel_search (ptr_server,
                                                        targets[i]);
                     if (ptr_channel2)
                     {
-                        irc_input_user_message_display (
-                            ptr_channel2->buffer,
-                            0,
-                            (string) ? string : argv_eol[arg_text]);
+                        irc_input_user_message_display (ptr_channel2->buffer,
+                                                        0, argv_eol[arg_text]);
                     }
                     else
                     {
+                        string = irc_color_decode (
+                            argv_eol[arg_text],
+                            weechat_config_boolean (irc_config_network_colors_send));
                         weechat_printf_date_tags (
                             ptr_server->buffer,
                             0,
@@ -3395,9 +3384,9 @@ IRC_COMMAND_CALLBACK(msg)
                             IRC_COLOR_CHAT_DELIMITERS,
                             IRC_COLOR_RESET,
                             (string) ? string : argv_eol[arg_text]);
+                        if (string)
+                            free (string);
                     }
-                    if (string)
-                        free (string);
                 }
                 irc_server_sendf (ptr_server,
                                   IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
@@ -3982,7 +3971,7 @@ IRC_COMMAND_CALLBACK(pong)
 
 IRC_COMMAND_CALLBACK(query)
 {
-    char *string, **nicks;
+    char **nicks;
     int i, arg_nick, arg_text, num_nicks, noswitch;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
@@ -4074,12 +4063,8 @@ IRC_COMMAND_CALLBACK(query)
             /* display text if given */
             if (argv_eol[arg_text])
             {
-                string = irc_color_decode (argv_eol[arg_text],
-                                           weechat_config_boolean (irc_config_network_colors_send));
                 irc_input_user_message_display (ptr_channel->buffer, 0,
-                                                (string) ? string : argv_eol[arg_text]);
-                if (string)
-                    free (string);
+                                                argv_eol[arg_text]);
                 irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH,
                                   NULL,
                                   "PRIVMSG %s :%s",
