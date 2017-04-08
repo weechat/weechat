@@ -6988,7 +6988,7 @@ command_init ()
            " || clear [<number>|<name>|-merged|-all [<number>|<name>...]]"
            " || move <number>|-|+"
            " || swap <number1>|<name1> [<number2>|<name2>]"
-           " || cycle <number>|<name> [<number>|<name>...]]"
+           " || cycle <number>|<name> [<number>|<name>...]"
            " || merge <number>"
            " || unmerge [<number>|-all]"
            " || hide [<number>|<name>|-all [<number>|<name>...]]"
