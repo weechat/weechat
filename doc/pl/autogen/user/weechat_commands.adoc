@@ -72,7 +72,7 @@ Przykłady:
          clear [<numer>|<nazwa>|-merged|-all [<numer>|<nazwa>...]]
          move <numer>|-|+
          swap <numer1>|<nazwa1> [<numer2>|<nazwa2>]
-         cycle <numer>|<nazwa> [<numer>|<nazwa>...]]
+         cycle <numer>|<nazwa> [<numer>|<nazwa>...]
          merge <numer>
          unmerge [<numer>|-all]
          hide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
