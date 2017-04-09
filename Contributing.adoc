@@ -40,8 +40,8 @@ please include:
   (or if you have a core file), please include the backtrace from gdb (look at
   https://weechat.org/files/doc/devel/weechat_user.en.html#report_crashes[User's guide]
   for more info).
-* The actual result.
-* The expected result.
+* The *actual result*.
+* The *expected result*: the correct result you are expecting.
 
 [IMPORTANT]
 Most of times, the WeeChat crash log file (_weechat_crash_YYYYMMDD_xxx.log_) is
