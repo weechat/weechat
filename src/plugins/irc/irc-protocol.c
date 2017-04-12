@@ -1226,7 +1226,7 @@ IRC_PROTOCOL_CALLBACK(mode)
  * Callback for the IRC message "NICK".
  *
  * Message looks like:
- *   :oldnick!user@host NICK :newnick
+ *   :oldnick!user@host NICK :new_nick
  */
 
 IRC_PROTOCOL_CALLBACK(nick)
@@ -1236,7 +1236,6 @@ IRC_PROTOCOL_CALLBACK(nick)
     char *new_nick, *old_color, str_tags[512];
     const char *buffer_name;
     int local_nick, smart_filter;
-    struct t_irc_channel_speaking *ptr_nick_speaking;
 
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
@@ -1343,12 +1342,10 @@ IRC_PROTOCOL_CALLBACK(nick)
                         if (!irc_ignore_check (server, ptr_channel->name,
                                                nick, host))
                         {
-                            ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
-                                                 && (weechat_config_boolean (irc_config_look_smart_filter_nick))) ?
-                                irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
                             smart_filter = (weechat_config_boolean (irc_config_look_smart_filter)
                                             && weechat_config_boolean (irc_config_look_smart_filter_nick)
-                                            && !ptr_nick_speaking);
+                                            && !irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1)
+                                            && !irc_channel_nick_speaking_time_search (server, ptr_channel, new_nick, 1));
                             snprintf (str_tags, sizeof (str_tags),
                                       "%sirc_nick1_%s,irc_nick2_%s",
                                       (smart_filter) ? "irc_smart_filter," : "",
