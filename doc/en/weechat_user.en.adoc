@@ -3753,5 +3753,6 @@ For support with IRC, on server _chat.freenode.net_:
 ** _#weechat-fr_ (French)
 * non-official channels:
 ** _#weechat-de_ (German)
+** _#weechat-fi_ (Finnish)
 
 For other ways of support, see: https://weechat.org/dev/support

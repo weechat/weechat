@@ -3885,5 +3885,6 @@ Pour le support via IRC, sur le serveur _chat.freenode.net_ :
 ** _#weechat-fr_ (Français)
 * canaux non officiels :
 ** _#weechat-de_ (Allemand)
+** _#weechat-fi_ (Finnois)
 
 Pour les autres formes de support, voir : https://weechat.org/dev/support
