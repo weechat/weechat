@@ -47,6 +47,8 @@ if(NCURSES_FOUND)
     endif()
   endif()
   list(APPEND EXTRA_LIBS ${NCURSES_LIBRARY})
+else()
+  not_found_msg("ncurses" "cli gui support")
 endif()
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")

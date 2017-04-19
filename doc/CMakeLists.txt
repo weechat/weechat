@@ -36,6 +36,10 @@ if(ENABLE_MAN OR ENABLE_DOC)
     add_subdirectory(pl)
     add_subdirectory(ru)
 
+  else()
+
+    not_found_msg("asciidoctor" "the documentation")
+
   endif()
 
 endif()
