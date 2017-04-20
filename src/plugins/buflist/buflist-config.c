@@ -304,7 +304,7 @@ buflist_config_init ()
         "${buffer.hidden}==0",
         NULL, 0,
         NULL, NULL, NULL,
-        &buflist_config_change_signals_refresh, NULL, NULL,
+        &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
     buflist_config_look_mouse_jump_visited_buffer = weechat_config_new_option (
         buflist_config_file, ptr_section,
