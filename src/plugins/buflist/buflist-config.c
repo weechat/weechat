@@ -406,7 +406,7 @@ buflist_config_init ()
         N_("format for the line with current buffer "
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
-        "${color:lightgreen,blue}${format_buffer}",
+        "${color:,blue}${format_buffer}",
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
