@@ -80,7 +80,7 @@ if(ENABLE_CHARSET)
   if(ICONV_FOUND)
     add_subdirectory(charset)
   else()
-    not_found_msg("iconvi" "charset support")
+    not_found_msg("iconv" "charset support")
   endif()
 endif()
 
