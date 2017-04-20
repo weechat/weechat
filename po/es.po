@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-04-08 14:48+0200\n"
+"POT-Creation-Date: 2017-04-20 21:55+0200\n"
 "PO-Revision-Date: 2017-01-06 22:01+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5160,11 +5160,12 @@ msgstr ""
 msgid "%s: %d signals hooked"
 msgstr "    señales enganchadas:"
 
-#, fuzzy
 msgid ""
 "conditions to display a buffer (note: content is evaluated, see /help "
-"buflist)"
-msgstr "comando ejecutado cuando WeeChat inicia, antes de cargar los plugins"
+"buflist); for example to hide server buffers if they are merged with core "
+"buffer: \"${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!"
+"=core.weechat) || ${buffer.active}==1)\""
+msgstr ""
 
 msgid ""
 "if enabled, clicks with left/right buttons on the line with current buffer "
@@ -11917,6 +11918,13 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse al transmisor"
+
+#, fuzzy
+#~ msgid ""
+#~ "conditions to display a buffer (note: content is evaluated, see /help "
+#~ "buflist)"
+#~ msgstr ""
+#~ "comando ejecutado cuando WeeChat inicia, antes de cargar los plugins"
 
 #~ msgid "commands defined by plugins"
 #~ msgstr "comandos definidos por plugins"

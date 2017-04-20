@@ -299,7 +299,10 @@ buflist_config_init ()
         buflist_config_file, ptr_section,
         "display_conditions", "string",
         N_("conditions to display a buffer "
-           "(note: content is evaluated, see /help buflist)"),
+           "(note: content is evaluated, see /help buflist); for example "
+           "to hide server buffers if they are merged with core buffer: "
+           "\"${buffer.hidden}==0 && ((${type}!=server && "
+           "${buffer.full_name}!=core.weechat) || ${buffer.active}==1)\""),
         NULL, 0, 0,
         "${buffer.hidden}==0",
         NULL, 0,
