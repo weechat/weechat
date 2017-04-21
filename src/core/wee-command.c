@@ -7312,8 +7312,6 @@ command_init ()
            "  /eval -n ${\\t}                                 ==> <tab>\n"
            "  /eval -n ${hide:-,${relay.network.password}}   ==> --------\n"
            "  /eval -n ${cut:2,+,test}                       ==> te+\n"
-           "  /eval -n ${cut:2,+,こんにちは世界}             ==> こん+\n"
-           "  /eval -n ${cutscr:2,+,こんにちは世界}          ==> こ+\n"
            "  /eval -n ${date:%H:%M:%S}                      ==> 07:46:40\n"
            "  /eval -n ${if:${info:term_width}>80?big:small} ==> big\n"
            "\n"
