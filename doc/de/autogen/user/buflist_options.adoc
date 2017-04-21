@@ -12,7 +12,7 @@
 ** Beschreibung: pass:none[Format für die Zeile mit dem ausgewählten Buffer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+"${color:lightgreen,blue}${format_buffer}"+`
+** Standardwert: `+"${color:,blue}${format_buffer}"+`
 
 * [[option_buflist.format.hotlist]] *buflist.format.hotlist*
 ** Beschreibung: pass:none[Format der Hotlist (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
@@ -69,7 +69,7 @@
 ** Standardwert: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
-** Beschreibung: pass:none[Bedingungen für die Darstellung eines Buffers (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
+** Beschreibung: pass:none[Bedingungen wann ein Buffer dargestellt werden soll (Hinweis: Inhalt ist evaluiert, siehe /help buflist); Beispielsweise werden Server-Buffer versteckt, sofern sie mit dem Core-Buffer zusammengefügt worden sind: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${buffer.hidden}==0"+`

@@ -12,7 +12,7 @@
 ** opis: pass:none[format for the line with current buffer (note: content is evaluated, see /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
-** domyślna wartość: `+"${color:lightgreen,blue}${format_buffer}"+`
+** domyślna wartość: `+"${color:,blue}${format_buffer}"+`
 
 * [[option_buflist.format.hotlist]] *buflist.format.hotlist*
 ** opis: pass:none[format for hotlist (note: content is evaluated, see /help buflist)]
@@ -69,7 +69,7 @@
 ** domyślna wartość: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
-** opis: pass:none[conditions to display a buffer (note: content is evaluated, see /help buflist)]
+** opis: pass:none[conditions to display a buffer (note: content is evaluated, see /help buflist); for example to hide server buffers if they are merged with core buffer: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${buffer.hidden}==0"+`

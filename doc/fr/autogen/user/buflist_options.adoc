@@ -12,7 +12,7 @@
 ** description: pass:none[format pour la ligne avec le tampon courant (note : le contenu est évalué, voir /help buflist)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"${color:lightgreen,blue}${format_buffer}"+`
+** valeur par défaut: `+"${color:,blue}${format_buffer}"+`
 
 * [[option_buflist.format.hotlist]] *buflist.format.hotlist*
 ** description: pass:none[format pour la hotlist (note : le contenu est évalué, voir /help buflist)]
@@ -69,7 +69,7 @@
 ** valeur par défaut: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
-** description: pass:none[conditions pour afficher un tampon (note : le contenu est évalué, voir /help buflist)]
+** description: pass:none[conditions pour afficher un tampon (note : le contenu est évalué, voir /help buflist) ; par exemple pour cacher les tampons de serveurs s'ils sont fusionnés avec le tampon "core" : "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${buffer.hidden}==0"+`
