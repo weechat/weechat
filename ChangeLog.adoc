@@ -53,6 +53,13 @@ Build::
   * core: fix compilation on FreeBSD with autotools (issue #276)
   * ruby: add detection of Ruby 2.4 (issue #895)
 
+[[v1.7.1]]
+== Version 1.7.1 (2017-04-22)
+
+Bug fixes::
+
+  * irc: fix parsing of DCC filename
+
 [[v1.7]]
 == Version 1.7 (2017-01-15)
 

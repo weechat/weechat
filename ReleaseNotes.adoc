@@ -27,6 +27,11 @@ Aspell option with color for suggestion on a misspelled word has been renamed:
 
 * _aspell.color.suggestions_ has been renamed to _aspell.color.suggestion_
 
+[[v1.7.1]]
+== Version 1.7.1 (2017-04-22)
+
+Bug fix and maintenance release.
+
 [[v1.7]]
 == Version 1.7 (2017-01-15)
 
