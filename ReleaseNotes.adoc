@@ -17,6 +17,11 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v1.7.1]]
+== Version 1.7.1 (2017-04-22)
+
+Bug fix and maintenance release.
+
 [[v1.7]]
 == Version 1.7 (2017-01-15)
 
