@@ -76,7 +76,7 @@ string_strndup (const char *string, int length)
 {
     char *result;
 
-    if (!string)
+    if (!string || (length < 0))
         return NULL;
 
     if ((int)strlen (string) < length)

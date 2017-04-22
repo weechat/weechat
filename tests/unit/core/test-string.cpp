@@ -123,6 +123,8 @@ TEST(String, Duplicate)
 
     POINTERS_EQUAL(NULL, string_strndup (NULL, 0));
 
+    POINTERS_EQUAL(NULL, string_strndup (str_test, -1));
+
     str = string_strndup (str_test, 0);
     CHECK(str);
     CHECK(str != str_test);
