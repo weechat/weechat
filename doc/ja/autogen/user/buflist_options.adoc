@@ -69,7 +69,7 @@
 ** デフォルト値: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
-** 説明: pass:none[conditions to display a buffer (note: content is evaluated, see /help buflist); for example to hide server buffers if they are merged with core buffer: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
+** 説明: pass:none[バッファの表示条件 (注意: 値は評価されます、/help eval を参照してください); サーババッファがコアバッファにマージされている場合にサーババッファを隠す例: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${buffer.hidden}==0"+`
