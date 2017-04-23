@@ -237,13 +237,7 @@
 ** デフォルト値: `+"%h/script"+`
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** 説明: pass:none[スクリプトのリストを含むファイルの URL; デフォルトは強制的に HTTPS を使用、オプション script.scripts.url_force_https を参照]
+** 説明: pass:none[URL for file with list of scripts]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"http://weechat.org/files/plugins.xml.gz"+`
-
-* [[option_script.scripts.url_force_https]] *script.scripts.url_force_https*
-** 説明: pass:none[ダウンロード (インデックスおよびスクリプト) の際に HTTPS を使うことを強制する; ダウンロードに問題がある場合のみこのオプションを無効化してください]
-** タイプ: ブール
-** 値: on, off
-** デフォルト値: `+on+`
+** デフォルト値: `+"https://weechat.org/files/plugins.xml.gz"+`

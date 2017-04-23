@@ -66,7 +66,6 @@ extern struct t_config_option *script_config_scripts_download_timeout;
 extern struct t_config_option *script_config_scripts_path;
 extern struct t_config_option *script_config_scripts_hold;
 extern struct t_config_option *script_config_scripts_url;
-extern struct t_config_option *script_config_scripts_url_force_https;
 
 extern const char *script_config_get_diff_command ();
 extern char *script_config_get_xml_filename ();

@@ -86,7 +86,6 @@ struct t_config_option *script_config_scripts_download_timeout;
 struct t_config_option *script_config_scripts_path;
 struct t_config_option *script_config_scripts_hold;
 struct t_config_option *script_config_scripts_url;
-struct t_config_option *script_config_scripts_url_force_https;
 
 
 /*
@@ -760,17 +759,8 @@ script_config_init ()
     script_config_scripts_url = weechat_config_new_option (
         script_config_file, ptr_section,
         "url", "string",
-        N_("URL for file with list of scripts; by default HTTPS is forced, "
-           "see option script.scripts.url_force_https"),
-        NULL, 0, 0, "http://weechat.org/files/plugins.xml.gz", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    script_config_scripts_url_force_https = weechat_config_new_option (
-        script_config_file, ptr_section,
-        "url_force_https", "boolean",
-        N_("force use of HTTPS for downloads (index and scripts); "
-           "you should disable this option only if you have problems with "
-           "the downloads"),
-        NULL, 0, 0, "on", NULL, 0,
+        N_("URL for file with list of scripts"),
+        NULL, 0, 0, "https://weechat.org/files/plugins.xml.gz", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     return 1;

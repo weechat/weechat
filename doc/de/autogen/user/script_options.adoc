@@ -237,13 +237,7 @@
 ** Standardwert: `+"%h/script"+`
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** Beschreibung: pass:none[URL mit dem Dateinamen, welches die Liste der Skripten enthält; standardmäßig wird HTTPS genutzt, siehe Option script.scripts.url_force_https]
+** Beschreibung: pass:none[URL for file with list of scripts]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+"http://weechat.org/files/plugins.xml.gz"+`
-
-* [[option_script.scripts.url_force_https]] *script.scripts.url_force_https*
-** Beschreibung: pass:none[HTTPS wird für das Herunterladen der Indexdatei und der Skripten bevorzugt; diese Einstellung sollte nur deaktiviert werden falls Probleme beim Herunterladen auftreten]
-** Typ: boolesch
-** Werte: on, off
-** Standardwert: `+on+`
+** Standardwert: `+"https://weechat.org/files/plugins.xml.gz"+`

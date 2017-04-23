@@ -237,13 +237,7 @@
 ** valore predefinito: `+"%h/script"+`
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** descrizione: pass:none[URL for file with list of scripts; by default HTTPS is forced, see option script.scripts.url_force_https]
+** descrizione: pass:none[URL for file with list of scripts]
 ** tipo: stringa
 ** valori: qualsiasi stringa
-** valore predefinito: `+"http://weechat.org/files/plugins.xml.gz"+`
-
-* [[option_script.scripts.url_force_https]] *script.scripts.url_force_https*
-** descrizione: pass:none[force use of HTTPS for downloads (index and scripts); you should disable this option only if you have problems with the downloads]
-** tipo: bool
-** valori: on, off
-** valore predefinito: `+on+`
+** valore predefinito: `+"https://weechat.org/files/plugins.xml.gz"+`

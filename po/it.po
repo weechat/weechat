@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-04-21 21:58+0200\n"
+"POT-Creation-Date: 2017-04-23 14:09+0200\n"
 "PO-Revision-Date: 2017-01-06 22:04+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11192,15 +11192,9 @@ msgid ""
 "upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
 msgstr ""
 
-msgid ""
-"URL for file with list of scripts; by default HTTPS is forced, see option "
-"script.scripts.url_force_https"
-msgstr ""
-
-msgid ""
-"force use of HTTPS for downloads (index and scripts); you should disable "
-"this option only if you have problems with the downloads"
-msgstr ""
+#, fuzzy
+msgid "URL for file with list of scripts"
+msgstr "%s%s: errore durante la lettura dell'elenco degli script"
 
 #, fuzzy
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"

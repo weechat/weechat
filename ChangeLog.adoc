@@ -38,6 +38,7 @@ Improvements::
   * irc: send multiple masks by message in commands /ban, /unban, /quiet and /unquiet, use ban mask default for nicks in /quiet and /unquiet, display an error if /quiet and /unquiet are not supported by server (issue #579, issue #15, issue #577)
   * irc: add option "-include" in commands /allchan, /allpv and /allserv (issue #572)
   * irc: don't smart filter modes given to you (issue #530, issue #897)
+  * script: remove option script.scripts.url_force_https, use HTTPS by default in option script.scripts.url
 
 Bug fixes::
 
