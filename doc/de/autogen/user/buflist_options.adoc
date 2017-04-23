@@ -56,6 +56,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:default},"+`
 
+* [[option_buflist.format.indent]] *buflist.format.indent*
+** Beschreibung: pass:none[string displayed to indent channel and private buffers (note: content is evaluated, see /help buflist)]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"  "+`
+
 * [[option_buflist.format.lag]] *buflist.format.lag*
 ** Beschreibung: pass:none[Format für die Anzeige der Verzögerungsanzeige für IRC Serverbuffer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette

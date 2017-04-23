@@ -56,6 +56,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:default},"+`
 
+* [[option_buflist.format.indent]] *buflist.format.indent*
+** 説明: pass:none[string displayed to indent channel and private buffers (note: content is evaluated, see /help buflist)]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"  "+`
+
 * [[option_buflist.format.lag]] *buflist.format.lag*
 ** 説明: pass:none[IRC サーババッファの遅延時間の表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列

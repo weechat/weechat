@@ -56,6 +56,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${color:default},"+`
 
+* [[option_buflist.format.indent]] *buflist.format.indent*
+** description: pass:none[chaîne affichée pour indenter un tampon de canal ou privé (note : le contenu est évalué, voir /help buflist)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"  "+`
+
 * [[option_buflist.format.lag]] *buflist.format.lag*
 ** description: pass:none[format pour le lag sur un tampon de serveur IRC (note : le contenu est évalué, voir /help buflist)]
 ** type: chaîne

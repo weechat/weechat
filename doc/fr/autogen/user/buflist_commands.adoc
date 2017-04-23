@@ -26,7 +26,7 @@ Les variables suivantes peuvent être utilisées dans ces options :
     - ${format_buffer} : la valeur évaluée de l'option buflist.format.buffer ; peut être utilisée dans l'option buflist.format.buffer_current pour juste changer la couleur de fond par exemple
     - ${format_number} : numéro indenté avec un séparateur (évaluation de l'option buflist.format.number)
     - ${number} : numéro indenté, par exemple " 1" s'il y a entre 10 et 99 tampons
-    - ${indent} : indentation pour le nom (les tampons de canaux ou privés sont indentés)
+    - ${indent} : indentation pour le nom (les tampons de canaux ou privés sont indentés) (évaluation de l'option buflist.format.indent)
     - ${nick_prefix} : le préfixe du pseudo pour un cancl (défini seulement si l'option buflist.look.nick_prefix est activée)
     - ${name} : le nom court (si défini), sinon le nom
     - ${color_hotlist} : la couleur qui dépend du niveau de hotlist le plus élevé pour le tampon (évaluation de l'option buflist.format.hotlist_xxx où xxx est le niveau)

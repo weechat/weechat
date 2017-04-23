@@ -55,14 +55,15 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     char **buflist, *str_buflist, *condition;
     char str_format_number[32], str_format_number_empty[32];
     char str_nick_prefix[32];
-    char str_number[32], str_indent_name[4], *line, **hotlist, *str_hotlist;
+    char str_number[32], *line, **hotlist, *str_hotlist;
     char str_hotlist_count[32];
-    const char *ptr_format, *ptr_format_current, *ptr_name, *ptr_type;
-    const char *ptr_nick, *ptr_nick_prefix;
+    const char *ptr_format, *ptr_format_current, *ptr_format_indent;
+    const char *ptr_name, *ptr_type, *ptr_nick, *ptr_nick_prefix;
     const char *ptr_hotlist_format, *ptr_hotlist_priority;
     const char *hotlist_priority_none = "none";
     const char *hotlist_priority[4] = { "low", "message", "private",
                                         "highlight" };
+    const char indent_empty[1] = { '\0' };
     const char *ptr_lag;
     int is_channel, is_private;
     int i, j, length_max_number, current_buffer, number, prev_number, priority;
@@ -163,12 +164,11 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         prev_number = number;
 
         /* buffer name */
-        str_indent_name[0] = '\0';
         ptr_type = weechat_buffer_get_string (ptr_buffer, "localvar_type");
         is_channel = (ptr_type && (strcmp (ptr_type, "channel") == 0));
         is_private = (ptr_type && (strcmp (ptr_type, "private") == 0));
-        if (is_channel || is_private)
-            snprintf (str_indent_name, sizeof (str_indent_name), "  ");
+        ptr_format_indent = (is_channel || is_private) ?
+            weechat_config_string (buflist_config_format_indent) : indent_empty;
 
         /* nick prefix */
         str_nick_prefix[0] = '\0';
@@ -216,7 +216,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                weechat_config_string (
                                    buflist_config_format_number));
         weechat_hashtable_set (buflist_hashtable_extra_vars,
-                               "indent", str_indent_name);
+                               "indent", ptr_format_indent);
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "name", ptr_name);
 

@@ -56,6 +56,12 @@
 ** values: any string
 ** default value: `+"${color:default},"+`
 
+* [[option_buflist.format.indent]] *buflist.format.indent*
+** description: pass:none[string displayed to indent channel and private buffers (note: content is evaluated, see /help buflist)]
+** type: string
+** values: any string
+** default value: `+"  "+`
+
 * [[option_buflist.format.lag]] *buflist.format.lag*
 ** description: pass:none[format for lag on an IRC server buffer (note: content is evaluated, see /help buflist)]
 ** type: string

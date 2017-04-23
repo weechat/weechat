@@ -49,6 +49,7 @@ struct t_config_option *buflist_config_format_hotlist;
 struct t_config_option *buflist_config_format_hotlist_level[4];
 struct t_config_option *buflist_config_format_hotlist_level_none;
 struct t_config_option *buflist_config_format_hotlist_separator;
+struct t_config_option *buflist_config_format_indent;
 struct t_config_option *buflist_config_format_lag;
 struct t_config_option *buflist_config_format_number;
 
@@ -303,9 +304,7 @@ buflist_config_init ()
            "to hide server buffers if they are merged with core buffer: "
            "\"${buffer.hidden}==0 && ((${type}!=server && "
            "${buffer.full_name}!=core.weechat) || ${buffer.active}==1)\""),
-        NULL, 0, 0,
-        "${buffer.hidden}==0",
-        NULL, 0,
+        NULL, 0, 0, "${buffer.hidden}==0", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
@@ -371,9 +370,7 @@ buflist_config_init ()
         N_("comma-separated list of fields to sort buffers; each field is "
            "a hdata variable of buffer; char \"-\" can be used before field "
            "to reverse order"),
-        NULL, 0, 0,
-        "number,-active",
-        NULL, 0,
+        NULL, 0, 0, "number,-active", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_sort, NULL, NULL,
         NULL, NULL, NULL);
@@ -408,9 +405,7 @@ buflist_config_init ()
         "buffer_current", "string",
         N_("format for the line with current buffer "
            "(note: content is evaluated, see /help buflist)"),
-        NULL, 0, 0,
-        "${color:,blue}${format_buffer}",
-        NULL, 0,
+        NULL, 0, 0, "${color:,blue}${format_buffer}", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
@@ -430,9 +425,7 @@ buflist_config_init ()
         "hotlist_low", "string",
         N_("format for a buffer with hotlist level \"low\" "
            "(note: content is evaluated, see /help buflist)"),
-        NULL, 0, 0,
-        "${color:white}",
-        NULL, 0,
+        NULL, 0, 0, "${color:white}", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
@@ -441,9 +434,7 @@ buflist_config_init ()
         "hotlist_message", "string",
         N_("format for a buffer with hotlist level \"message\" "
            "(note: content is evaluated, see /help buflist)"),
-        NULL, 0, 0,
-        "${color:brown}",
-        NULL, 0,
+        NULL, 0, 0, "${color:brown}", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
@@ -452,9 +443,7 @@ buflist_config_init ()
         "hotlist_private", "string",
         N_("format for a buffer with hotlist level \"private\" "
            "(note: content is evaluated, see /help buflist)"),
-        NULL, 0, 0,
-        "${color:green}",
-        NULL, 0,
+        NULL, 0, 0, "${color:green}", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
@@ -463,9 +452,7 @@ buflist_config_init ()
         "hotlist_highlight", "string",
         N_("format for a buffer with hotlist level \"highlight\" "
            "(note: content is evaluated, see /help buflist)"),
-        NULL, 0, 0,
-        "${color:magenta}",
-        NULL, 0,
+        NULL, 0, 0, "${color:magenta}", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
@@ -474,9 +461,7 @@ buflist_config_init ()
         "hotlist_none", "string",
         N_("format for a buffer not in hotlist "
            "(note: content is evaluated, see /help buflist)"),
-        NULL, 0, 0,
-        "${color:default}",
-        NULL, 0,
+        NULL, 0, 0, "${color:default}", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
@@ -485,9 +470,16 @@ buflist_config_init ()
         "hotlist_separator", "string",
         N_("separator for counts in hotlist "
            "(note: content is evaluated, see /help buflist)"),
-        NULL, 0, 0,
-        "${color:default},",
-        NULL, 0,
+        NULL, 0, 0, "${color:default},", NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_buflist, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_format_indent = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "indent", "string",
+        N_("string displayed to indent channel and private buffers "
+           "(note: content is evaluated, see /help buflist)"),
+        NULL, 0, 0, "  ", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);

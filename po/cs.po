@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-04-23 14:09+0200\n"
+"POT-Creation-Date: 2017-04-23 14:44+0200\n"
 "PO-Revision-Date: 2017-01-06 21:59+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4928,7 +4928,7 @@ msgid ""
 "    - ${number}: indented number, for example \" 1\" if there are between 10 "
 "and 99 buffers\n"
 "    - ${indent}: indentation for name (channel and private buffers are "
-"indented)\n"
+"indented) (evaluation of option buflist.format.indent)\n"
 "    - ${nick_prefix}: nick prefix for a channel (set only if the option "
 "buflist.look.nick_prefix is enabled)\n"
 "    - ${name}: the short name (if set), with a fallback on the name\n"
@@ -5038,6 +5038,12 @@ msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
 msgid ""
 "separator for counts in hotlist (note: content is evaluated, see /help "
 "buflist)"
+msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
+
+#, fuzzy
+msgid ""
+"string displayed to indent channel and private buffers (note: content is "
+"evaluated, see /help buflist)"
 msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
 
 #, fuzzy
@@ -11648,12 +11654,6 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
-
-#, fuzzy
-#~ msgid ""
-#~ "conditions to display a buffer (note: content is evaluated, see /help "
-#~ "buflist)"
-#~ msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
 
 #~ msgid "commands defined by plugins"
 #~ msgstr "příkazy definované pluginy"

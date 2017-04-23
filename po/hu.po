@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-04-23 14:09+0200\n"
+"POT-Creation-Date: 2017-04-23 14:44+0200\n"
 "PO-Revision-Date: 2017-01-06 22:03+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4465,7 +4465,7 @@ msgid ""
 "    - ${number}: indented number, for example \" 1\" if there are between 10 "
 "and 99 buffers\n"
 "    - ${indent}: indentation for name (channel and private buffers are "
-"indented)\n"
+"indented) (evaluation of option buflist.format.indent)\n"
 "    - ${nick_prefix}: nick prefix for a channel (set only if the option "
 "buflist.look.nick_prefix is enabled)\n"
 "    - ${name}: the short name (if set), with a fallback on the name\n"
@@ -4573,6 +4573,12 @@ msgstr "felhasználónév az IRC szerveren"
 msgid ""
 "separator for counts in hotlist (note: content is evaluated, see /help "
 "buflist)"
+msgstr "felhasználónév az IRC szerveren"
+
+#, fuzzy
+msgid ""
+"string displayed to indent channel and private buffers (note: content is "
+"evaluated, see /help buflist)"
 msgstr "felhasználónév az IRC szerveren"
 
 #, fuzzy
@@ -10939,12 +10945,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "conditions to display a buffer (note: content is evaluated, see /help "
-#~ "buflist)"
-#~ msgstr "felhasználónév az IRC szerveren"
 
 #, fuzzy
 #~ msgid "commands defined by plugins"
