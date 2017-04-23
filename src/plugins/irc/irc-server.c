@@ -4875,8 +4875,8 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
         server->reconnect_start = 0;
     }
 
-    /* discard current nick if no reconnection asked */
-    if (!reconnect && server->nick)
+    /* discard current nick */
+    if (server->nick)
         irc_server_set_nick (server, NULL);
 
     irc_server_set_buffer_title (server);
