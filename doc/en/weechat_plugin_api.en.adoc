@@ -2043,19 +2043,27 @@ expanded to last):
   `+********+`
 
 | `+${cut:max,suffix,string}+` +
+  `+${cut:+max,suffix,string}+` +
   (_WeeChat ≥ 1.8_) |
-  String with `max` chars, and optional `suffix` if string is cut. |
+  String with `max` chars, and optional `suffix` if string is cut. +
+  With the format `+max`, the suffix is counted in max length. |
   `+${cut:4,…,this is a test}+` +
+  `+${cut:+4,…,this is a test}+` +
   `+${cut:2,>>,こんにちは世界}+` |
   `+this…+` +
+  `+t…+` +
   `+こん>>+`
 
 | `+${cutscr:max,suffix,string}+` +
+  `+${cutscr:+max,suffix,string}+` +
   (_WeeChat ≥ 1.8_) |
-  String with `max` chars displayed on screen, and optional `suffix` if string is cut. |
+  String with `max` chars displayed on screen, and optional `suffix` if string is cut. +
+  With the format `+max`, the suffix is counted in max length. |
   `+${cutscr:4,…,this is a test}+` +
+  `+${cutscr:+4,…,this is a test}+` +
   `+${cutscr:2,>>,こんにちは世界}+` |
   `+this…+` +
+  `+thi…+` +
   `+こ>>+`
 
 | `+${re:N}+` +

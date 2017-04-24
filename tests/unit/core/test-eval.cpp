@@ -237,6 +237,42 @@ TEST(Eval, EvalExpression)
     WEE_CHECK_EVAL("te+", "${cut:2,+,test}");
     WEE_CHECK_EVAL("te+", "${cutscr:2,+,test}");
 
+    WEE_CHECK_EVAL("tes", "${cut:3,,test}");
+    WEE_CHECK_EVAL("tes", "${cutscr:3,,test}");
+    WEE_CHECK_EVAL("tes", "${cut:+3,,test}");
+    WEE_CHECK_EVAL("tes", "${cutscr:+3,,test}");
+
+    WEE_CHECK_EVAL("tes+", "${cut:3,+,test}");
+    WEE_CHECK_EVAL("tes+", "${cutscr:3,+,test}");
+    WEE_CHECK_EVAL("tes++", "${cut:3,++,test}");
+    WEE_CHECK_EVAL("tes++", "${cutscr:3,++,test}");
+    WEE_CHECK_EVAL("tes+++", "${cut:3,+++,test}");
+    WEE_CHECK_EVAL("tes+++", "${cutscr:3,+++,test}");
+    WEE_CHECK_EVAL("tes++++", "${cut:3,++++,test}");
+    WEE_CHECK_EVAL("tes++++", "${cutscr:3,++++,test}");
+    WEE_CHECK_EVAL("tes…", "${cut:3,…,test}");
+    WEE_CHECK_EVAL("tes…", "${cutscr:3,…,test}");
+    WEE_CHECK_EVAL("te+", "${cut:+3,+,test}");
+    WEE_CHECK_EVAL("te+", "${cutscr:+3,+,test}");
+    WEE_CHECK_EVAL("…", "${cut:+3,…,test}");
+    WEE_CHECK_EVAL("te…", "${cutscr:+3,…,test}");
+    WEE_CHECK_EVAL("t++", "${cut:+3,++,test}");
+    WEE_CHECK_EVAL("t++", "${cutscr:+3,++,test}");
+    WEE_CHECK_EVAL("+++", "${cut:+3,+++,test}");
+    WEE_CHECK_EVAL("+++", "${cutscr:+3,+++,test}");
+    WEE_CHECK_EVAL("", "${cut:+3,++++,test}");
+    WEE_CHECK_EVAL("", "${cutscr:+3,++++,test}");
+
+    WEE_CHECK_EVAL("test", "${cut:4,,test}");
+    WEE_CHECK_EVAL("test", "${cutscr:4,,test}");
+    WEE_CHECK_EVAL("test", "${cut:+4,,test}");
+    WEE_CHECK_EVAL("test", "${cutscr:+4,,test}");
+
+    WEE_CHECK_EVAL("test", "${cut:4,+,test}");
+    WEE_CHECK_EVAL("test", "${cutscr:4,+,test}");
+    WEE_CHECK_EVAL("test", "${cut:+4,+,test}");
+    WEE_CHECK_EVAL("test", "${cutscr:+4,+,test}");
+
     WEE_CHECK_EVAL("éà", "${cut:2,,éàô}");
     WEE_CHECK_EVAL("éà", "${cutscr:2,,éàô}");
 

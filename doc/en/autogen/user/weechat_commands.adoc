@@ -285,8 +285,8 @@ Some variables are replaced in expression, using the format ${variable}, variabl
   1. an evaluated sub-string (format: "eval:xxx")
   2. a string with escaped chars (format: "esc:xxx" or "\xxx")
   3. a string with chars to hide (format: "hide:char,string")
-  4. a string with max chars (format: "cut:max,suffix,string")
-     or max chars displayed on screen (format: "cutscr:max,suffix,string")
+  4. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
+     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
   5. a color (format: "color:xxx", see "Plugin API reference", function "color")
   6. an info (format: "info:name,arguments", arguments are optional)
   7. current date/time (format: "date" or "date:format")
@@ -314,7 +314,8 @@ Examples (simple strings):
   /eval -n ${window.buffer.number}               ==> 1
   /eval -n ${\t}                                 ==> <tab>
   /eval -n ${hide:-,${relay.network.password}}   ==> --------
-  /eval -n ${cut:2,+,test}                       ==> te+
+  /eval -n ${cut:3,+,test}                       ==> tes+
+  /eval -n ${cut:+3,+,test}                      ==> te+
   /eval -n ${date:%H:%M:%S}                      ==> 07:46:40
   /eval -n ${if:${info:term_width}>80?big:small} ==> big
 

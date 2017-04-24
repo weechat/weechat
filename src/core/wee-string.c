@@ -96,13 +96,16 @@ string_strndup (const char *string, int length)
  * Cuts a string after max "length" chars, adds an optional suffix
  * after the string if it is cut.
  *
+ * If count_suffix == 1, the length of suffix is counted in the max length.
+ *
  * If screen == 1, the cut is based on width of chars displayed.
  *
  * Note: result must be freed after use.
  */
 
 char *
-string_cut (const char *string, int length, int screen, const char *cut_suffix)
+string_cut (const char *string, int length, int count_suffix, int screen,
+            const char *cut_suffix)
 {
     int length_result, length_cut_suffix;
     char *result;
@@ -113,7 +116,7 @@ string_cut (const char *string, int length, int screen, const char *cut_suffix)
     else
         ptr_string = gui_chat_string_add_offset (string, length);
 
-    if (!ptr_string[0])
+    if (!ptr_string || !ptr_string[0])
     {
         /* no cut */
         return strdup (string);
@@ -122,6 +125,24 @@ string_cut (const char *string, int length, int screen, const char *cut_suffix)
     if (cut_suffix && cut_suffix[0])
     {
         length_cut_suffix = strlen (cut_suffix);
+        if (count_suffix)
+        {
+            if (screen)
+                length -= utf8_strlen_screen (cut_suffix);
+            else
+                length -= length_cut_suffix;
+            if (length < 0)
+                return strdup ("");
+            if (screen)
+                ptr_string = gui_chat_string_add_offset_screen (string, length);
+            else
+                ptr_string = gui_chat_string_add_offset (string, length);
+            if (!ptr_string || !ptr_string[0])
+            {
+                /* no cut */
+                return strdup (string);
+            }
+        }
         length_result = (ptr_string - string) + length_cut_suffix + 1;
         result = malloc (length_result);
         if (!result)

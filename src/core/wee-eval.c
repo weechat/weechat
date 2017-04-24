@@ -326,6 +326,7 @@ eval_replace_vars_cb (void *data, const char *text)
     struct t_hdata *hdata;
     void *pointer;
     int i, length_hide_char, length, index, rc, extra_vars_eval, screen;
+    int count_suffix;
     long number;
     long unsigned int ptr;
     time_t date;
@@ -436,6 +437,12 @@ eval_replace_vars_cb (void *data, const char *text)
         pos = strchr (text + length, ',');
         if (!pos)
             return strdup ("");
+        count_suffix = 0;
+        if (text[length] == '+')
+        {
+            length++;
+            count_suffix = 1;
+        }
         pos2 = strchr (pos + 1, ',');
         if (!pos2)
             return strdup ("");
@@ -452,7 +459,7 @@ eval_replace_vars_cb (void *data, const char *text)
         tmp = strndup (pos + 1, pos2 - pos - 1);
         if (!tmp)
             return strdup ("");
-        value = string_cut (pos2 + 1, number, screen, tmp);
+        value = string_cut (pos2 + 1, number, count_suffix, screen, tmp);
         free (tmp);
         return value;
     }

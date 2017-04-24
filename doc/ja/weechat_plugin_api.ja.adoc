@@ -2048,20 +2048,30 @@ char *weechat_string_eval_expression (const char *expr,
   `+${hide:*,password}+` |
  `+********+`
 
+// TRANSLATION MISSING
 | `+${cut:max,suffix,string}+` +
+  `+${cut:+max,suffix,string}+` +
   (_WeeChat バージョン 1.8 以上で利用可_) |
-  `string` の先頭 `max` 文字とオプションの `suffix` 文字 (`string` の文字数が `max` 文字を超える場合) |
+  `string` の先頭 `max` 文字とオプションの `suffix` 文字 (`string` の文字数が `max` 文字を超える場合) +
+   With the format `+max`, the suffix is counted in max length. |
   `+${cut:4,…,this is a test}+` +
+  `+${cut:+4,…,this is a test}+` +
   `+${cut:2,>>,こんにちは世界}+` |
   `+this…+` +
+  `+t…+` +
   `+こん>>+`
 
+// TRANSLATION MISSING
 | `+${cutscr:max,suffix,string}+` +
+  `+${cutscr:+max,suffix,string}+` +
   (_WeeChat バージョン 1.8 以上で利用可_) |
-  `string` の先頭 `max` 文字 (半角文字幅換算) とオプションの `suffix` 文字 (`string` の文字数が `max` 文字を超える場合) |
+  `string` の先頭 `max` 文字 (半角文字幅換算) とオプションの `suffix` 文字 (`string` の文字数が `max` 文字を超える場合) +
+  With the format `+max`, the suffix is counted in max length. |
   `+${cutscr:4,…,this is a test}+` +
+  `+${cutscr:+4,…,this is a test}+` +
   `+${cutscr:2,>>,こんにちは世界}+` |
   `+this…+` +
+  `+thi…+` +
   `+こ>>+`
 
 | `+${re:N}+` +

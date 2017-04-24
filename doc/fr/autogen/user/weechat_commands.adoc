@@ -285,8 +285,8 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   1. une sous-chaîne évaluée (format : "eval:xxx")
   2. une chaîne avec les caractères échappés (format : "esc:xxx" ou "\xxx")
   3. une chaîne avec des caractères à cacher (format : "hide:caractère,chaîne")
-  4. une chaîne avec un maximum de caractères (format : "cut:max,suffixe,chaîne")
-     ou un maximum de caractères affichés à l'écran (format : "cutscr:max,suffixe,chaîne")
+  4. une chaîne avec un maximum de caractères (format : "cut:max,suffixe,chaîne" ou "cut:+max,suffixe,chaîne")
+     ou un maximum de caractères affichés à l'écran (format : "cutscr:max,suffixe,chaîne" ou "cutscr:+max,suffixe,chaîne")
   5. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
   6. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
   7. la date/heure courante (format : "date" ou "date:format")
@@ -314,7 +314,8 @@ Exemples (chaînes simples) :
   /eval -n ${window.buffer.number}               ==> 1
   /eval -n ${\t}                                 ==> <tab>
   /eval -n ${hide:-,${relay.network.password}}   ==> --------
-  /eval -n ${cut:2,+,test}                       ==> te+
+  /eval -n ${cut:3,+,test}                       ==> tes+
+  /eval -n ${cut:+3,+,test}                      ==> te+
   /eval -n ${date:%H:%M:%S}                      ==> 07:46:40
   /eval -n ${if:${info:term_width}>80?big:small} ==> big
 

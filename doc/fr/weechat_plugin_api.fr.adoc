@@ -2086,19 +2086,27 @@ première étendue à la dernière) :
   `+************+`
 
 | `+${cut:max,suffixe,chaîne}+` +
+  `+${cut:+max,suffixe,chaîne}+` +
   (_WeeChat ≥ 1.8_) |
-  Chaîne avec `max` caractères, et un `suffixe` facultatif si la chaîne est coupée. |
+  Chaîne avec `max` caractères, et un `suffixe` facultatif si la chaîne est coupée. +
+  Avec le format `+max`, le suffixe est compté dans la longueur maximale. |
   `+${cut:4,…,ceci est un test}+` +
+  `+${cut:+4,…,ceci est un test}+` +
   `+${cut:2,>>,こんにちは世界}+` |
   `+ceci…+` +
+  `+c…+` +
   `+こん>>+`
 
 | `+${cutscr:max,suffixe,chaîne}+` +
+  `+${cutscr:+max,suffixe,chaîne}+` +
   (_WeeChat ≥ 1.8_) |
-  Chaîne avec `max` caractères affichés à l'écran, et un `suffixe` facultatif si la chaîne est coupée. |
+  Chaîne avec `max` caractères affichés à l'écran, et un `suffixe` facultatif si la chaîne est coupée. +
+  Avec le format `+max`, le suffixe est compté dans la longueur maximale. |
   `+${cutscr:4,…,ceci est un test}+` +
+  `+${cutscr:+4,…,ceci est un test}+` +
   `+${cutscr:2,>>,こんにちは世界}+` |
   `+ceci…+` +
+  `+cec…+` +
   `+こ>>+`
 
 | `+${re:N}+` +
