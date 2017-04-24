@@ -57,7 +57,7 @@
 ** Standardwert: `+"${color:default},"+`
 
 * [[option_buflist.format.indent]] *buflist.format.indent*
-** Beschreibung: pass:none[string displayed to indent channel and private buffers (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Zeichenkette die beim Einrücken von Channel und privaten Buffern angezeigt wird (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"  "+`

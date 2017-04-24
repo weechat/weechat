@@ -237,7 +237,7 @@
 ** Standardwert: `+"%h/script"+`
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** Beschreibung: pass:none[URL for file with list of scripts]
+** Beschreibung: pass:none[URL für Datei mit der Auflistung aller Skripten]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"https://weechat.org/files/plugins.xml.gz"+`
