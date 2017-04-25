@@ -295,8 +295,9 @@ end:
  *   2. a string to evaluate (format: eval:xxx)
  *   3. a string with escaped chars (format: esc:xxx or \xxx)
  *   4. a string with chars to hide (format: hide:char,string)
- *   5. a string with max chars (format: cut:max,suffix,string)
- *      or max chars on screen (format: cutscr:max,suffix,string)
+ *   5. a string with max chars (format: cut:max,suffix,string or
+ *      cut:+max,suffix,string) or max chars on screen
+ *      (format: cutscr:max,suffix,string or cutscr:+max,suffix,string)
  *   6. a regex group captured (format: re:N (0.99) or re:+)
  *   7. a color (format: color:xxx)
  *   8. an info (format: info:name,arguments)
