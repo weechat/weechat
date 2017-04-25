@@ -22,11 +22,15 @@ The following variables can be used in these options:
     - ${buffer.full_name}
     - ${buffer.short_name}
     - ${buffer.nicklist_nicks_count}
+  - irc_server: IRC server data, defined only on an IRC buffer (see hdata "irc_server" in API doc)
+  - irc_channel: IRC channel data, defined only on an IRC channel buffer (see hdata "irc_channel" in API doc)
   - extra variables added by buflist for convenience:
     - ${format_buffer}: the evaluated value of option buflist.format.buffer; this can be used in option buflist.format.buffer_current to just change the background color for example
     - ${format_number}: indented number with separator (evaluation of option buflist.format.number)
     - ${number}: indented number, for example " 1" if there are between 10 and 99 buffers
     - ${indent}: indentation for name (channel and private buffers are indented) (evaluation of option buflist.format.indent)
+    - ${format_nick_prefix}: colored nick prefix for a channel (evaluation of option buflist.format.nick_prefix)
+    - ${color_nick_prefix}: color of nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
     - ${nick_prefix}: nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
     - ${name}: the short name (if set), with a fallback on the name
     - ${color_hotlist}: the color depending on the highest hotlist level for the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the level)
