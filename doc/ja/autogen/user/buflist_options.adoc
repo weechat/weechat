@@ -6,7 +6,7 @@
 ** 説明: pass:none[各バッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"${format_number}${indent}${nick_prefix}${color_hotlist}${name}"+`
+** デフォルト値: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** 説明: pass:none[現在のバッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
@@ -67,6 +67,12 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
+
+* [[option_buflist.format.nick_prefix]] *buflist.format.nick_prefix*
+** 説明: pass:none[format for nick prefix on a channel (note: content is evaluated, see /help buflist)]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"${color_nick_prefix}${nick_prefix}"+`
 
 * [[option_buflist.format.number]] *buflist.format.number*
 ** 説明: pass:none[バッファ番号の表示書式、${number} はインデント済み番号です (注意: 値は評価されます、/help eval を参照してください)]

@@ -6,7 +6,7 @@
 ** Beschreibung: pass:none[Format für eine Zeile mit einem Buffer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+"${format_number}${indent}${nick_prefix}${color_hotlist}${name}"+`
+** Standardwert: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** Beschreibung: pass:none[Format für die Zeile mit dem ausgewählten Buffer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
@@ -67,6 +67,12 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
+
+* [[option_buflist.format.nick_prefix]] *buflist.format.nick_prefix*
+** Beschreibung: pass:none[format for nick prefix on a channel (note: content is evaluated, see /help buflist)]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"${color_nick_prefix}${nick_prefix}"+`
 
 * [[option_buflist.format.number]] *buflist.format.number*
 ** Beschreibung: pass:none[Format für die Darstellung der Buffernummer, hierbei ist die Variable ${number} die eingerückte Nummer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
