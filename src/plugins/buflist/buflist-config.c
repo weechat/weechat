@@ -51,6 +51,7 @@ struct t_config_option *buflist_config_format_hotlist_level_none;
 struct t_config_option *buflist_config_format_hotlist_separator;
 struct t_config_option *buflist_config_format_indent;
 struct t_config_option *buflist_config_format_lag;
+struct t_config_option *buflist_config_format_nick_prefix;
 struct t_config_option *buflist_config_format_number;
 
 struct t_hook **buflist_config_signals_refresh = NULL;
@@ -395,7 +396,7 @@ buflist_config_init ()
         N_("format of each line with a buffer "
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
-        "${format_number}${indent}${nick_prefix}${color_hotlist}${name}",
+        "${format_number}${indent}${format_nick_prefix}${color_hotlist}${name}",
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
@@ -491,6 +492,15 @@ buflist_config_init ()
         NULL, 0, 0,
         " ${color:green}[${color:brown}${lag}${color:green}]",
         NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_buflist, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_format_nick_prefix = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "nick_prefix", "string",
+        N_("format for nick prefix on a channel "
+           "(note: content is evaluated, see /help buflist)"),
+        NULL, 0, 0, "${color_nick_prefix}${nick_prefix}", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);

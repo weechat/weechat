@@ -54,7 +54,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     struct t_gui_hotlist *ptr_hotlist;
     char **buflist, *str_buflist, *condition;
     char str_format_number[32], str_format_number_empty[32];
-    char str_nick_prefix[32];
+    char str_nick_prefix[32], str_color_nick_prefix[32];
     char str_number[32], *line, **hotlist, *str_hotlist;
     char str_hotlist_count[32];
     const char *ptr_format, *ptr_format_current, *ptr_format_indent;
@@ -172,6 +172,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
 
         /* nick prefix */
         str_nick_prefix[0] = '\0';
+        str_color_nick_prefix[0] = '\0';
         if (is_channel
             && weechat_config_boolean (buflist_config_look_nick_prefix))
         {
@@ -190,12 +191,15 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                         ptr_buffer, ptr_gui_nick, "prefix");
                     if (ptr_nick_prefix && (ptr_nick_prefix[0] != ' '))
                     {
-                        snprintf (str_nick_prefix, sizeof (str_nick_prefix),
-                                  "%s%s",
+                        snprintf (str_color_nick_prefix,
+                                  sizeof (str_color_nick_prefix),
+                                  "%s",
                                   weechat_color (
                                       weechat_nicklist_nick_get_string (
                                           ptr_buffer, ptr_gui_nick,
-                                          "prefix_color")),
+                                          "prefix_color")));
+                        snprintf (str_nick_prefix, sizeof (str_nick_prefix),
+                                  "%s",
                                   ptr_nick_prefix);
                     }
                 }
@@ -203,6 +207,12 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         }
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "nick_prefix", str_nick_prefix);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "color_nick_prefix", str_color_nick_prefix);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "format_nick_prefix",
+                               weechat_config_string (
+                                   buflist_config_format_nick_prefix));
 
         /* set extra variables */
         weechat_hashtable_set (buflist_hashtable_extra_vars,
