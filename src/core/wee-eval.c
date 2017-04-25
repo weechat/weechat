@@ -559,7 +559,7 @@ eval_replace_vars_cb (void *data, const char *text)
         tmp = eval_expression_condition (condition, pointers,
                                          extra_vars, extra_vars_eval,
                                          prefix, suffix);
-        rc = (tmp && strcmp (tmp, "1") == 0);
+        rc = eval_is_true (tmp);
         if (tmp)
             free (tmp);
         if (rc)
