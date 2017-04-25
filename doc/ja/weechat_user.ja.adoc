@@ -3747,5 +3747,6 @@ IRC を使ったサポート窓口は _chat.freenode.net_ サーバにありま�
 ** _#weechat-fr_ (フランス語)
 * 非公式チャンネル:
 ** _#weechat-de_ (ドイツ語)
+** _#weechat-fi_ (フィンランド語)
 
 他の方法でサポートを受けるには、以下のページをご覧ください: https://weechat.org/dev/support
