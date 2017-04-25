@@ -42,6 +42,7 @@ Improvements::
 
 Bug fixes::
 
+  * core: fix command /cursor stop (do not toggle cursor mode) (issue #964)
   * core: fix delayed refresh when the signal SIGWINCH is received (terminal resized), send signal "signal_sigwinch" after refreshes (issue #902)
   * irc: fix parsing of DCC filename
   * irc: fix double decoding of IRC colors in messages sent/displayed by commands /msg and /query (issue #943)

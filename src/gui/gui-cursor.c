@@ -75,6 +75,17 @@ gui_cursor_mode_toggle ()
 }
 
 /*
+ * Stops cursor mode.
+ */
+
+void
+gui_cursor_mode_stop ()
+{
+    if (gui_cursor_mode)
+        gui_cursor_mode_toggle ();
+}
+
+/*
  * Sets debug for cursor mode.
  */
 
