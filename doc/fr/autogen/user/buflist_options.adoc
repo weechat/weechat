@@ -123,7 +123,7 @@
 ** valeur par défaut: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** description: pass:none[liste de champs séparés par des virgules pour trier les tampons ; chaque champ est une variable hdata du tampon ; le caractère "-" peut être utilisé pour inverser l'ordre]
+** description: pass:none[liste de champs séparés par des virgules pour trier les tampons ; chaque champ est une variable hdata du tampon ("var"), une variable hdata du serveur IRC ("irc_server.var") ou une variable hdata du canal IRC ("irc_channel.var") ; le caractère "-" peut être utilisé pour inverser l'ordre]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"number,-active"+`

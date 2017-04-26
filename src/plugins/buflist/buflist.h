@@ -26,11 +26,17 @@
 
 #define BUFLIST_BAR_NAME "buflist"
 
+struct t_irc_server;
+struct t_irc_channel;
+
 extern struct t_weechat_plugin *weechat_buflist_plugin;
 
 extern struct t_hdata *buflist_hdata_buffer;
 extern struct t_hdata *buflist_hdata_hotlist;
 
+extern void buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
+                                            struct t_irc_server **server,
+                                            struct t_irc_channel **channel);
 extern struct t_gui_hotlist *buflist_search_hotlist_for_buffer (struct t_gui_buffer *buffer);
 extern struct t_arraylist *buflist_sort_buffers ();
 

@@ -52,18 +52,15 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     struct t_gui_buffer *ptr_buffer, *ptr_current_buffer;
     struct t_gui_nick *ptr_gui_nick;
     struct t_gui_hotlist *ptr_hotlist;
-    struct t_hdata *hdata_irc_server, *hdata_irc_channel;
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
     char **buflist, *str_buflist, *condition;
-    char str_condition[512];
     char str_format_number[32], str_format_number_empty[32];
     char str_nick_prefix[32], str_color_nick_prefix[32];
     char str_number[32], *line, **hotlist, *str_hotlist;
     char str_hotlist_count[32];
     const char *ptr_format, *ptr_format_current, *ptr_format_indent;
-    const char *ptr_name, *ptr_type, *ptr_server_name, *ptr_channel_name;
-    const char *ptr_nick, *ptr_nick_prefix;
+    const char *ptr_name, *ptr_type, *ptr_nick, *ptr_nick_prefix;
     const char *ptr_hotlist_format, *ptr_hotlist_priority;
     const char *hotlist_priority_none = "none";
     const char *hotlist_priority[4] = { "low", "message", "private",
@@ -83,9 +80,6 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     (void) extra_info;
 
     prev_number = -1;
-
-    hdata_irc_server = NULL;
-    hdata_irc_channel = NULL;
 
     buflist = weechat_string_dyn_alloc (256);
 
@@ -122,52 +116,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                "buffer", ptr_buffer);
 
         /* set IRC server/channel pointers */
-        ptr_server = NULL;
-        ptr_channel = NULL;
-        if (strcmp (weechat_buffer_get_string (ptr_buffer, "plugin"), "irc") == 0)
-        {
-            ptr_server_name = weechat_buffer_get_string (ptr_buffer, "localvar_server");
-            if (ptr_server_name && ptr_server_name[0])
-            {
-                if (!hdata_irc_server)
-                    hdata_irc_server = weechat_hdata_get ("irc_server");
-                if (hdata_irc_server)
-                {
-                    snprintf (str_condition, sizeof (str_condition),
-                              "${irc_server.name} == %s",
-                              ptr_server_name);
-                    ptr_server = weechat_hdata_get_list (hdata_irc_server,
-                                                         "irc_servers");
-                    ptr_server = weechat_hdata_search (hdata_irc_server,
-                                                       ptr_server,
-                                                       str_condition,
-                                                       1);
-                    if (ptr_server)
-                    {
-                        ptr_channel_name = weechat_buffer_get_string (ptr_buffer,
-                                                                      "localvar_channel");
-                        if (ptr_channel_name && ptr_channel_name[0])
-                        {
-                            if (!hdata_irc_channel)
-                                hdata_irc_channel = weechat_hdata_get ("irc_channel");
-                            if (hdata_irc_channel)
-                            {
-                                snprintf (str_condition, sizeof (str_condition),
-                                          "${irc_channel.name} == %s",
-                                          ptr_channel_name);
-                                ptr_channel = weechat_hdata_pointer (hdata_irc_server,
-                                                                     ptr_server,
-                                                                     "channels");
-                                ptr_channel = weechat_hdata_search (hdata_irc_channel,
-                                                                    ptr_channel,
-                                                                    str_condition,
-                                                                    1);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        buflist_buffer_get_irc_pointers (ptr_buffer, &ptr_server, &ptr_channel);
         weechat_hashtable_set (buflist_hashtable_pointers,
                                "irc_server", ptr_server);
         weechat_hashtable_set (buflist_hashtable_pointers,

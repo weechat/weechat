@@ -123,7 +123,7 @@
 ** default value: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** description: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer; char "-" can be used before field to reverse order]
+** description: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer ("var"), a hdata variable of IRC server ("irc_server.var") or a hdata variable of IRC channel ("irc_channel.var"); char "-" can be used before field to reverse order]
 ** type: string
 ** values: any string
 ** default value: `+"number,-active"+`

@@ -369,8 +369,10 @@ buflist_config_init ()
         buflist_config_file, ptr_section,
         "sort", "string",
         N_("comma-separated list of fields to sort buffers; each field is "
-           "a hdata variable of buffer; char \"-\" can be used before field "
-           "to reverse order"),
+           "a hdata variable of buffer (\"var\"), a hdata variable of "
+           "IRC server (\"irc_server.var\") or a hdata variable of "
+           "IRC channel (\"irc_channel.var\"); "
+           "char \"-\" can be used before field to reverse order"),
         NULL, 0, 0, "number,-active", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_sort, NULL, NULL,

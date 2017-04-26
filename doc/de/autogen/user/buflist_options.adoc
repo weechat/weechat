@@ -123,7 +123,7 @@
 ** Standardwert: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von Feldern um die Buffer zu sortieren; jedes Feld ist eine hdata Variable von Buffer; wird das "-" Zeichen vor einem Feld angewendet, wird die Ausgabe umgekehrt]
+** Beschreibung: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer ("var"), a hdata variable of IRC server ("irc_server.var") or a hdata variable of IRC channel ("irc_channel.var"); char "-" can be used before field to reverse order]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"number,-active"+`
