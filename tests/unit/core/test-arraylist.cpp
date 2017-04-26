@@ -36,7 +36,7 @@ extern "C"
                               __result_index_insert, __value)           \
     pointer = arraylist_search (arraylist, (void *)(__value),           \
                                 &index, &index_insert);                 \
-    if (__result_ptr && pointer)                                        \
+    if (__result_ptr != NULL && pointer)                                \
     {                                                                   \
         STRCMP_EQUAL(__result_ptr, (const char *)pointer);              \
     }                                                                   \
