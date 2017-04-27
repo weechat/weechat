@@ -992,7 +992,7 @@ plugin_arraylist_cmp_cb (void *data,
 void
 plugin_auto_load (int argc, char **argv)
 {
-    char *dir_name, *plugin_path, *plugin_path2;
+    char *dir_name, *plugin_path, *plugin_path2, *extra_libdir;
     struct t_weechat_plugin *ptr_plugin;
     struct t_plugin_args plugin_args;
     struct t_arraylist *arraylist;
@@ -1041,6 +1041,19 @@ plugin_auto_load (int argc, char **argv)
                             &plugin_auto_load_file, &plugin_args);
         free (dir_name);
     }
+
+    /* auto-load plugins in WEECHAT_EXTRA_LIBDIR environment variable */
+    extra_libdir = getenv("WEECHAT_EXTRA_LIBDIR");
+    if (extra_libdir && extra_libdir[0])
+    {
+        length = strlen (extra_libdir) + 16 + 1;
+        dir_name = malloc (length);
+        snprintf (dir_name, length, "%s/plugins", extra_libdir);
+        util_exec_on_files (dir_name, 0,
+                            &plugin_auto_load_file, &plugin_args);
+        free (dir_name);
+    }
+
 
     /* free autoload array */
     if (plugin_autoload_array)
