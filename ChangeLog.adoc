@@ -44,7 +44,6 @@ Bug fixes::
 
   * core: fix command /cursor stop (do not toggle cursor mode) (issue #964)
   * core: fix delayed refresh when the signal SIGWINCH is received (terminal resized), send signal "signal_sigwinch" after refreshes (issue #902)
-  * irc: fix parsing of DCC filename
   * irc: fix double decoding of IRC colors in messages sent/displayed by commands /msg and /query (issue #943)
   * irc: fix parsing of message 324 (modes) when there is a colon before the modes (issue #913)
   * relay: check buffer pointer received in "sync" and "desync" commands (weechat protocol) (issue #936)
@@ -60,7 +59,7 @@ Build::
 
 Bug fixes::
 
-  * irc: fix parsing of DCC filename
+  * irc: fix parsing of DCC filename (CVE-2017-8073)
 
 [[v1.7]]
 == Version 1.7 (2017-01-15)
@@ -1025,14 +1024,14 @@ Build::
 
 Bug fixes::
 
-  * core: do not call shell to execute command in hook_process() (fix security problem when a plugin/script gives untrusted command) (bug #37764)
+  * core: do not call shell to execute command in hook_process() (fix security problem when a plugin/script gives untrusted command) (bug #37764, CVE-2012-5534)
 
 [[v0.3.9.1]]
 == Version 0.3.9.1 (2012-11-09)
 
 Bug fixes::
 
-  * irc: fix crash when decoding IRC colors in strings (bug #37704)
+  * irc: fix crash when decoding IRC colors in strings (bug #37704, CVE-2012-5854)
 
 [[v0.3.9]]
 == Version 0.3.9 (2012-09-29)
@@ -1428,7 +1427,7 @@ Bug fixes::
   * core: fix bug with repeat of last completion ("%*"), which failed when many templates are used in completion
   * core: reload file with certificate authorities when option weechat.network.gnutls_ca_file is changed
   * core: rebuild bar content when items are changed in an hidden bar
-  * core: fix verification of SSL certificates by calling GnuTLS verify callback (patch #7459)
+  * core: fix verification of SSL certificates by calling GnuTLS verify callback (patch #7459, CVE-2011-1428)
   * core: fix crash when using column filling in bars with some empty items (bug #32565)
   * core: fix terminal title when $TERM starts with "screen"
   * plugins: fix memory leaks when setting buffer callbacks after /upgrade (plugins: irc, relay, xfer, scripts)
@@ -1799,7 +1798,7 @@ Bug fixes::
 
 Bug fixes::
 
-  * fix crash with some special chars in IRC messages (bug #25862)
+  * fix crash with some special chars in IRC messages (bug #25862, CVE-2009-0661)
 
 [[v0.2.6]]
 == Version 0.2.6 (2007-09-06)
