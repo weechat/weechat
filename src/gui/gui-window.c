@@ -1217,8 +1217,14 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
     }
     else
     {
-        ptr_line = (window->scroll->start_line) ?
-            window->scroll->start_line : window->buffer->lines->first_line;
+        if (window->scroll->start_line)
+            ptr_line = window->scroll->start_line;
+        else if (window->scroll->first_line_displayed
+                 || window->buffer->type == GUI_BUFFER_TYPE_FREE)
+            ptr_line = window->buffer->lines->first_line;
+        else
+            return;
+
         while (ptr_line
                && (!gui_line_is_displayed (ptr_line)
                    || ((window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
