@@ -44,6 +44,7 @@ Bug fixes::
 
   * core: fix command /cursor stop (do not toggle cursor mode) (issue #964)
   * core: fix delayed refresh when the signal SIGWINCH is received (terminal resized), send signal "signal_sigwinch" after refreshes (issue #902)
+  * irc: fix crash in case of invalid server reply during SASL authentication with dh-blowfish or dh-aes mechanism
   * irc: fix double decoding of IRC colors in messages sent/displayed by commands /msg and /query (issue #943)
   * irc: fix parsing of message 324 (modes) when there is a colon before the modes (issue #913)
   * relay: check buffer pointer received in "sync" and "desync" commands (weechat protocol) (issue #936)

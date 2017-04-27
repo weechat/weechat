@@ -19,6 +19,7 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -357,6 +358,8 @@ irc_sasl_dh (const char *data_base64,
     data_prime_number = gcry_mpi_new (size * 8);
     gcry_mpi_scan (&data_prime_number, GCRYMPI_FMT_USG, ptr_data, size, NULL);
     num_bits_prime_number = gcry_mpi_get_nbits (data_prime_number);
+    if (num_bits_prime_number == 0 || INT_MAX - 7 < num_bits_prime_number)
+	goto dhend;
     ptr_data += size;
     length_data -= size;
 
@@ -388,7 +391,7 @@ irc_sasl_dh (const char *data_base64,
     gcry_mpi_powm (pub_key, data_generator_number, priv_key, data_prime_number);
 
     /* compute secret_bin */
-    *length_key = num_bits_prime_number / 8;
+    *length_key = (num_bits_prime_number + 7) / 8;
     *secret_bin = malloc (*length_key);
     secret_mpi = gcry_mpi_new (num_bits_prime_number);
     /* secret_mpi = (y ^ priv_key) % p */
