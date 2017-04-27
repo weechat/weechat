@@ -2444,7 +2444,7 @@ $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick
 /msg nickserv cert add
 ----
 
-より詳しい情報は http://www.oftc.net/oftc/NickServ/CertFP を確認してください。
+より詳しい情報は https://www.oftc.net/NickServ/CertFP を確認してください。
 
 [[irc_sasl_authentication]]
 ==== SASL 認証
