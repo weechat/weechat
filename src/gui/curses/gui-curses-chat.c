@@ -2005,6 +2005,8 @@ gui_chat_draw_bare (struct t_gui_window *window)
             y += num_lines;
             ptr_line = gui_line_get_next_displayed (ptr_line);
         }
+        window->scroll->first_line_displayed =
+            (ptr_line == gui_line_get_first_displayed (window->buffer));
     }
     else
     {
