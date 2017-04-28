@@ -20,6 +20,21 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v1.8]]
 == Version 1.8 (under dev)
 
+[[v1.8_buflist_plugin]]
+=== Buflist plugin
+
+A new plugin called "buflist" has been added, it replaces the script "buffers.pl".
+
+If the script is installed, you will see two sidebars with list of buffers.
+
+If you fell in love with buflist, you can uninstall the script and remove its bar
+with these commands:
+
+----
+/script remove buffers.pl
+/bar del buffers
+----
+
 [[v1.8_aspell_options]]
 === Aspell options
 
