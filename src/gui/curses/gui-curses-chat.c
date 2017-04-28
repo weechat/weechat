@@ -1875,6 +1875,9 @@ gui_chat_draw_free_buffer (struct t_gui_window *window, int clear_chat)
             ptr_line = gui_line_get_next_displayed (ptr_line);
         if (ptr_line)
         {
+            window->scroll->first_line_displayed =
+                (ptr_line == gui_line_get_first_displayed (window->buffer));
+
             y_start = (window->scroll->start_line) ? ptr_line->data->y : 0;
             y_end = y_start + window->win_chat_height - 1;
             while (ptr_line && (ptr_line->data->y <= y_end))
