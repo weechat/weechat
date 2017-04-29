@@ -47,7 +47,7 @@ char *logical_ops[EVAL_NUM_LOGICAL_OPS] =
 { "||", "&&" };
 
 char *comparisons[EVAL_NUM_COMPARISONS] =
-{ "=~", "!~", "==", "!=", "<=", "<", ">=", ">" };
+{ "=~", "!~", "=*", "!*", "==", "!=", "<=", "<", ">=", ">" };
 
 
 char *eval_replace_vars (const char *expr, struct t_hashtable *pointers,
@@ -788,6 +788,14 @@ eval_compare (const char *expr1, int comparison, const char *expr2)
         rc = (regexec (&regex, expr1, 0, NULL, 0) == 0) ? 1 : 0;
         regfree (&regex);
         if (comparison == EVAL_COMPARE_REGEX_NOT_MATCHING)
+            rc ^= 1;
+        goto end;
+    }
+    else if ((comparison == EVAL_COMPARE_STRING_MATCHING)
+             || (comparison == EVAL_COMPARE_STRING_NOT_MATCHING))
+    {
+        rc = string_match (expr1, expr2, 0);
+        if (comparison == EVAL_COMPARE_STRING_NOT_MATCHING)
             rc ^= 1;
         goto end;
     }
