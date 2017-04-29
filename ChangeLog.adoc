@@ -20,7 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * core: add wilcard matching operator in evaluation of expressions (issue #608, issue #611)
+  * core: add wilcard matching operator (`+=*+` and `+!*+`) in evaluation of expressions (issue #608, issue #611)
   * core: add cut of string in evaluation of expressions with "cut:" (number of chars) and "cutscr:" (number of chars displayed on screen)
   * core: add ternary operator (condition) in evaluation of expressions (`${if:condition?value_if_true:value_if_false}`)
   * core: add resize of window parents with /window resize [h/v]size (task #11461, issue #893)
