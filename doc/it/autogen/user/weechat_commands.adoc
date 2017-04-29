@@ -274,8 +274,8 @@ expression: expression to evaluate, variables with format ${variable} are replac
                 >   greater
                 =~  is matching POSIX extended regex
                 !~  is NOT matching POSIX extended regex
-                =*  is matching wildcard mask
-                !*  is NOT matching wildcard mask
+                =*  is matching mask (wildcard "*" is allowed)
+                !*  is NOT matching mask (wildcard "*" is allowed)
 
 An expression is considered as "true" if it is not NULL, not empty, and different from "0".
 The comparison is made using integers if the two expressions are valid integers.
