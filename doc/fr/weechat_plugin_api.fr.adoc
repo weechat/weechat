@@ -2125,19 +2125,23 @@ Liste des opérateurs de comparaison qui peuvent être utilisés dans les condit
 
 | `+<=+` |
   Plus petit ou égal |
-  `+abc \<= defghi+` +
-  `+abc \<= abc+` +
-  `+defghi \<= abc+` |
+  `+abc <= defghi+` +
+  `+abc <= abc+` +
+  `+defghi <= abc+` +
+  `+15 <= 2+` |
   `+1+` +
   `+1+` +
+  `+0+` +
   `+0+`
 
 | `+<+` |
   Plus petit |
   `+abc < defghi+` +
   `+abc < abc+` +
-  `+defghi < abc+` |
+  `+defghi < abc+` +
+  `+15 < 2+` |
   `+1+` +
+  `+0+` +
   `+0+` +
   `+0+`
 
@@ -2145,19 +2149,23 @@ Liste des opérateurs de comparaison qui peuvent être utilisés dans les condit
   Plus grand ou égal |
   `+defghi >= abc+` +
   `+abc >= abc+` +
-  `+abc >= defghi+` |
+  `+abc >= defghi+` +
+  `+15 >= 2+` |
   `+1+` +
   `+1+` +
-  `+0+`
+  `+0+` +
+  `+1+`
 
 | `+>+` |
   Plus grand |
   `+defghi > abc+` +
   `+abc > abc+` +
-  `+abc > defghi+` |
+  `+abc > defghi+` +
+  `+15 > 2+` |
   `+1+` +
   `+0+` +
-  `+0+`
+  `+0+` +
+  `+1+`
 |===
 
 Liste des variables étendues dans l'expression (par ordre de priorité, de la

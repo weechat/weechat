@@ -2093,19 +2093,23 @@ from first used to last):
 
 | `+<=+` |
   Less or equal |
-  `+abc \<= defghi+` +
-  `+abc \<= abc+` +
-  `+defghi \<= abc+` |
+  `+abc <= defghi+` +
+  `+abc <= abc+` +
+  `+defghi <= abc+` +
+  `+15 <= 2+` |
   `+1+` +
   `+1+` +
+  `+0+` +
   `+0+`
 
 | `+<+` |
   Less |
   `+abc < defghi+` +
   `+abc < abc+` +
-  `+defghi < abc+` |
+  `+defghi < abc+` +
+  `+15 < 2+` |
   `+1+` +
+  `+0+` +
   `+0+` +
   `+0+`
 
@@ -2113,19 +2117,23 @@ from first used to last):
   Greater or equal |
   `+defghi >= abc+` +
   `+abc >= abc+` +
-  `+abc >= defghi+` |
+  `+abc >= defghi+` +
+  `+15 >= 2+` |
   `+1+` +
   `+1+` +
-  `+0+`
+  `+0+` +
+  `+1+`
 
 | `+>+` |
   Greater |
   `+defghi > abc+` +
   `+abc > abc+` +
-  `+abc > defghi+` |
+  `+abc > defghi+` +
+  `+15 > 2+` |
   `+1+` +
   `+0+` +
-  `+0+`
+  `+0+` +
+  `+1+`
 |===
 
 式中で展開される変数のリスト
