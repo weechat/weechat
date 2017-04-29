@@ -274,6 +274,8 @@ expression : expression à évaluer, les variables avec le format ${variable} s
                  >   supérieur
                  =~  correspond à l'expression régulière POSIX étendue
                  !~  ne correspond PAS à l'expression régulière POSIX étendue
+                 =*  correspond au masque qui peut contenir "*"
+                 !=  ne correspond PAS au masque qui peut contenir "*"
 
 Une expression est considérée comme "vraie" si elle est non NULL, non vide, et différente de "0".
 La comparaison est faite en utilisant des entiers si les deux expressions sont des entiers valides.
@@ -328,6 +330,7 @@ Exemples (conditions) :
   /eval -n -c abcd =~ (?-i)^ABC           ==> 0
   /eval -n -c abcd =~ (?-i)^abc           ==> 1
   /eval -n -c abcd !~ abc                 ==> 0
+  /eval -n -c abcd =* a*d                 ==> 1
 ----
 
 [[command_weechat_filter]]

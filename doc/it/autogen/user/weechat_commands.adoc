@@ -274,6 +274,8 @@ expression: expression to evaluate, variables with format ${variable} are replac
                 >   greater
                 =~  is matching POSIX extended regex
                 !~  is NOT matching POSIX extended regex
+                =*  is matching wildcard mask
+                !*  is NOT matching wildcard mask
 
 An expression is considered as "true" if it is not NULL, not empty, and different from "0".
 The comparison is made using integers if the two expressions are valid integers.
@@ -328,6 +330,7 @@ Examples (conditions):
   /eval -n -c abcd =~ (?-i)^ABC           ==> 0
   /eval -n -c abcd =~ (?-i)^abc           ==> 1
   /eval -n -c abcd !~ abc                 ==> 0
+  /eval -n -c abcd =* a*d                 ==> 1
 ----
 
 [[command_weechat_filter]]
