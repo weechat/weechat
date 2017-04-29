@@ -2085,6 +2085,120 @@ Valore restituito:
   if problem (invalid expression or not enough memory)
 
 // TRANSLATION MISSING
+List of logical operators that can be used in conditions (by order of priority,
+from first used to last):
+
+// TRANSLATION MISSING
+[width="100%",cols="2,8,4,4",options="header"]
+|===
+| Operator | Description | Examples | Results
+
+| `+&&+` |
+  Logical "and" |
+  `+25 && 77+` +
+  `+25 && 0+` |
+  `+1+` +
+  `+0+`
+
+| `+\|\|+` |
+  Logical "or" |
+  `+25 \|\| 0+` +
+  `+0 \|\| 0+` |
+  `+1+` +
+  `+0+`
+|===
+
+// TRANSLATION MISSING
+List of comparison operators that can be used in conditions (by order of priority,
+from first used to last):
+
+// TRANSLATION MISSING
+[width="100%",cols="2,8,4,4",options="header"]
+|===
+| Operator | Description | Examples | Results
+
+| `+=~+` |
+  Is matching POSIX extended regex (optional flags are allowed, see function <<_string_regcomp,string_regcomp>>) |
+  `+abc def =~ ab.*ef+` +
+  `+abc def =~ y.*z+` |
+  `+1+` +
+  `+0+`
+
+| `+!~+` |
+  Is NOT matching POSIX extended regex (optional flags are allowed, see function <<_string_regcomp,string_regcomp>>) |
+  `+abc def !~ ab.*ef+` +
+  `+abc def !~ y.*z+` |
+  `+0+` +
+  `+1+`
+
+| `+=*+` +
+  (_WeeChat ≥ 1.8_) |
+  Is matching mask where "*" is allowed (see function <<_string_match,string_match>>) |
+  `+abc def =* a*f+` +
+  `+abc def =* y*z+` |
+  `+1+` +
+  `+0+`
+
+| `+!*+` +
+  (_WeeChat ≥ 1.8_) |
+  Is NOT matching mask where "*" is allowed (see function <<_string_match,string_match>>) |
+  `+abc def !* a*f+` +
+  `+abc def !* y*z+` |
+  `+0+` +
+  `+1+`
+
+| `+==+` |
+  Equal |
+  `+test == test+` +
+  `+test == string+` |
+  `+1+` +
+  `+0+`
+
+| `+!=+` |
+  Not equal |
+  `+test != test+` +
+  `+test != string+` |
+  `+0+` +
+  `+1+`
+
+| `+<=+` |
+  Less or equal |
+  `+abc \<= defghi+` +
+  `+abc \<= abc+` +
+  `+defghi \<= abc+` |
+  `+1+` +
+  `+1+` +
+  `+0+`
+
+| `+<+` |
+  Less |
+  `+abc < defghi+` +
+  `+abc < abc+` +
+  `+defghi < abc+` |
+  `+1+` +
+  `+0+` +
+  `+0+`
+
+| `+>=+` |
+  Greater or equal |
+  `+defghi >= abc+` +
+  `+abc >= abc+` +
+  `+abc >= defghi+` |
+  `+1+` +
+  `+1+` +
+  `+0+`
+
+| `+>+` |
+  Greater |
+  `+defghi > abc+` +
+  `+abc > abc+` +
+  `+abc > defghi+` |
+  `+1+` +
+  `+0+` +
+  `+0+`
+|===
+
+// TRANSLATION MISSING
 List of variables expanded in expression (by order of priority, from first
 expanded to last):
 

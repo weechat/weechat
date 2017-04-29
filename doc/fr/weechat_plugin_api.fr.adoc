@@ -2050,6 +2050,116 @@ Valeur de retour :
   utilisation), ou NULL si problème (expression invalide ou pas assez de
   mémoire)
 
+Liste des opérateurs logiques qui peuvent être utilisés dans les conditions
+(par ordre de priorité, du premier utilisé au dernier) :
+
+[width="100%",cols="2,8,4,4",options="header"]
+|===
+| Opérateur | Description | Exemples | Résultats
+
+| `+&&+` |
+  "Et" logique |
+  `+25 && 77+` +
+  `+25 && 0+` |
+  `+1+` +
+  `+0+`
+
+| `+\|\|+` |
+  "Ou" logique |
+  `+25 \|\| 0+` +
+  `+0 \|\| 0+` |
+  `+1+` +
+  `+0+`
+|===
+
+Liste des opérateurs de comparaison qui peuvent être utilisés dans les conditions
+(par ordre de priorité, du premier utilisé au dernier) :
+
+[width="100%",cols="2,8,4,4",options="header"]
+|===
+| Opérateur | Description | Exemples | Résultats
+
+| `+=~+` |
+  Correspond à l'expression régulière POSIX étendue (des "flags" facultatifs sont autorisés, voir la fonction <<_string_regcomp,string_regcomp>>) |
+  `+abc def =~ ab.*ef+` +
+  `+abc def =~ y.*z+` |
+  `+1+` +
+  `+0+`
+
+| `+!~+` |
+  Ne correspond PAS à l'expression régulière POSIX étendue (des "flags" facultatifs sont autorisés, voir la fonction <<_string_regcomp,string_regcomp>>) |
+  `+abc def !~ ab.*ef+` +
+  `+abc def !~ y.*z+` |
+  `+0+` +
+  `+1+`
+
+| `+=*+` +
+  (_WeeChat ≥ 1.8_) |
+  Correspond au masque où le caractère joker "*" est autorisé (voir la fonction <<_string_match,string_match>>) |
+  `+abc def =* a*f+` +
+  `+abc def =* y*z+` |
+  `+1+` +
+  `+0+`
+
+| `+!*+` +
+  (_WeeChat ≥ 1.8_) |
+  Ne correspond PAS au masque où le caractère joker "*" est autorisé (voir la fonction <<_string_match,string_match>>) |
+  `+abc def !* a*f+` +
+  `+abc def !* y*z+` |
+  `+0+` +
+  `+1+`
+
+| `+==+` |
+  Égal |
+  `+test == test+` +
+  `+test == string+` |
+  `+1+` +
+  `+0+`
+
+| `+!=+` |
+  Non égal |
+  `+test != test+` +
+  `+test != string+` |
+  `+0+` +
+  `+1+`
+
+| `+<=+` |
+  Plus petit ou égal |
+  `+abc \<= defghi+` +
+  `+abc \<= abc+` +
+  `+defghi \<= abc+` |
+  `+1+` +
+  `+1+` +
+  `+0+`
+
+| `+<+` |
+  Plus petit |
+  `+abc < defghi+` +
+  `+abc < abc+` +
+  `+defghi < abc+` |
+  `+1+` +
+  `+0+` +
+  `+0+`
+
+| `+>=+` |
+  Plus grand ou égal |
+  `+defghi >= abc+` +
+  `+abc >= abc+` +
+  `+abc >= defghi+` |
+  `+1+` +
+  `+1+` +
+  `+0+`
+
+| `+>+` |
+  Plus grand |
+  `+defghi > abc+` +
+  `+abc > abc+` +
+  `+abc > defghi+` |
+  `+1+` +
+  `+0+` +
+  `+0+`
+|===
+
 Liste des variables étendues dans l'expression (par ordre de priorité, de la
 première étendue à la dernière) :
 
