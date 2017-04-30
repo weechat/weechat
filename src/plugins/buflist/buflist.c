@@ -198,6 +198,79 @@ buflist_compare_hdata_var (struct t_hdata *hdata,
 }
 
 /*
+ * Compares two inactive merged buffers.
+ *
+ * Buffers are sorted so that the active buffer and buffers immediately after
+ * this one are first in list, followed by the buffers before the active one.
+ * This sort respects the order of next active buffers that can be selected
+ * with ctrl-X.
+ *
+ * For example with such list of merged buffers:
+ *
+ *     weechat
+ *     freenode
+ *     oftc      (active)
+ *     test
+ *     another
+ *
+ * Buffers will be sorted like that:
+ *
+ *     oftc      (active)
+ *     test
+ *     another
+ *     weechat
+ *     freenode
+ *
+ * Returns:
+ *   -1: buffer1 must be sorted before buffer2
+ *    0: no sort (buffer2 will be after buffer1 by default)
+ *    1: buffer2 must be sorted after buffer1
+ */
+
+int
+buflist_compare_inactive_merged_buffers (struct t_gui_buffer *buffer1,
+                                         struct t_gui_buffer *buffer2)
+{
+    int number1, number, priority, priority1, priority2, active;
+    struct t_gui_buffer *ptr_buffer;
+
+    number1 = weechat_hdata_integer (buflist_hdata_buffer,
+                                     buffer1, "number");
+
+    priority = 20000;
+    priority1 = 0;
+    priority2 = 0;
+
+    ptr_buffer = weechat_hdata_get_list (buflist_hdata_buffer,
+                                         "gui_buffers");
+    while (ptr_buffer)
+    {
+        number = weechat_hdata_integer (buflist_hdata_buffer,
+                                        ptr_buffer, "number");
+        if (number > number1)
+            break;
+        if (number == number1)
+        {
+            active = weechat_hdata_integer (buflist_hdata_buffer,
+                                            ptr_buffer,
+                                            "active");
+            if (active > 0)
+                priority += 20000;
+            if (ptr_buffer == buffer1)
+                priority1 = priority;
+            if (ptr_buffer == buffer2)
+                priority2 = priority;
+            priority--;
+        }
+        ptr_buffer = weechat_hdata_move (buflist_hdata_buffer,
+                                         ptr_buffer, 1);
+    }
+
+    return (priority1 > priority2) ?
+        1 : ((priority1 < priority2) ? -1 : 0);
+}
+
+/*
  * Compares two buffers in order to add them in the sorted arraylist.
  *
  * The comparison is made using the list of fields defined in the option
@@ -290,13 +363,31 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
             rc = buflist_compare_hdata_var (buflist_hdata_buffer,
                                             pointer1, pointer2,
                                             ptr_field);
+
+            /*
+             * In case we are sorting on "active" flag and that both
+             * buffers have same value (it should be 0),
+             * we sort buffers so that the buffers immediately after the
+             * active one is first in list, followed by the next ones, followed
+             * by the buffers before the active one.
+             */
+            if ((rc == 0)
+                && (strcmp (ptr_field, "active") == 0)
+                && (weechat_hdata_integer (buflist_hdata_buffer,
+                                           pointer1, "number") ==
+                    weechat_hdata_integer (buflist_hdata_buffer,
+                                           pointer2, "number")))
+            {
+                rc = buflist_compare_inactive_merged_buffers (pointer1,
+                                                              pointer2);
+            }
         }
         rc *= reverse;
         if (rc != 0)
             return rc;
     }
 
-    return rc;
+    return 1;
 }
 
 /*
