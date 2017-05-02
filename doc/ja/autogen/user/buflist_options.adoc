@@ -57,7 +57,7 @@
 ** デフォルト値: `+"${color:default},"+`
 
 * [[option_buflist.format.indent]] *buflist.format.indent*
-** 説明: pass:none[string displayed to indent channel and private buffers (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[indent チャンネルとプライベートバッファに表示される文字列 (注意: 値は評価されます、/help buflist を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"  "+`
@@ -69,7 +69,7 @@
 ** デフォルト値: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
 * [[option_buflist.format.nick_prefix]] *buflist.format.nick_prefix*
-** 説明: pass:none[format for nick prefix on a channel (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[チャンネルにおけるニックネームプレフィックス書式 (注意: 値は評価されます、/help buflist を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color_nick_prefix}${nick_prefix}"+`
@@ -123,7 +123,7 @@
 ** デフォルト値: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** 説明: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer ("var"), a hdata variable of IRC server ("irc_server.var") or a hdata variable of IRC channel ("irc_channel.var"); char "-" can be used before field to reverse order]
+** 説明: pass:none[バッファをソートする際に考慮するフィールドのコンマ区切りリスト; 各フィールドはバッファの hdata 変数 ("var")、IRC サーバの hdata 変数 ("irc_server.var")、IRC チャンネルの hdata 変数 ("irc_channel.var") のどれかです; フィールドの先頭に "-" 文字を付けることでソート順を逆にすることも可能です]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"number,-active"+`

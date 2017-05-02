@@ -237,7 +237,7 @@
 ** デフォルト値: `+"%h/script"+`
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** 説明: pass:none[URL for file with list of scripts]
+** 説明: pass:none[スクリプトのリストを含むファイルの URL]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"https://weechat.org/files/plugins.xml.gz"+`
