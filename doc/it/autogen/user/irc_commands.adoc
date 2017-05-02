@@ -723,6 +723,7 @@ motivo: motivo
          add <server> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
          copy|rename <server> <new_name>
          reorder <server> [<server>...]
+         open <server>|-all [<server>...]
          del|keep <server>
          deloutq|jump|raw
 
@@ -737,6 +738,7 @@ nooption: set boolean option to 'off' (for example: -nossl)
     copy: duplicate a server
   rename: rename a server
  reorder: reorder list of servers
+    open: open the server buffer without connecting
     keep: keep server in config file (for temporary servers only)
      del: delete a server
  deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)

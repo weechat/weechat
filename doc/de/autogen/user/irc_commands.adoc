@@ -723,27 +723,29 @@ reason: Grund der Abmeldung
          add <server> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
          copy|rename <server> <new_name>
          reorder <server> [<server>...]
+         open <server>|-all [<server>...]
          del|keep <server>
          deloutq|jump|raw
 
-    list: listet Server auf (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
-listfull: listet alle Server auf, mit detaillierten Informationen zu jedem einzelnen Server
-     add: erstellt einen neuen Server
-  server: Servername, dient der internen Nutzung und zur Darstellung
-hostname: Name oder IP-Adresse des Servers. Optional kann zusätzlich der Port festgelegt werden (Standard-Port: 6667). Verschiedene Ports können durch Kommata getrennt werden
-   -temp: erstellt temporären Server (wird nicht gespeichert)
-  option: legt die Optionen für den Server fest (die Boolean-Optionen können weggelassen werden)
-nooption: stellt die Boolean Einstellung auf 'off' (Beispiel: -nossl)
-    copy: erstellt eine Kopie des Servers
-  rename: benennt den Server um
- reorder: Anordnung der Server ändern
-    keep: übernimmt den Server in die Konfigurationsdatei (nur sinnvoll bei temporär angelegten Servern)
-     del: entfernt einen Server
- deloutq: löscht bei allen Servern alle ausgehende Nachrichten, die in der Warteschlange stehen (dies betrifft alle Nachrichten die WeeChat gerade sendet)
-    jump: springt zum Server-Buffer
-     raw: öffnet Buffer mit Roh-IRC-Daten
+    list: list servers (without argument, this list is displayed)
+listfull: list servers with detailed info for each server
+     add: add a new server
+  server: server name, for internal and display use
+hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
+   -temp: add a temporary server (not saved)
+  option: set option for server (for boolean option, value can be omitted)
+nooption: set boolean option to 'off' (for example: -nossl)
+    copy: duplicate a server
+  rename: rename a server
+ reorder: reorder list of servers
+    open: open the server buffer without connecting
+    keep: keep server in config file (for temporary servers only)
+     del: delete a server
+ deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
+    jump: jump to server buffer
+     raw: open buffer with raw IRC data
 
-Beispiele:
+Examples:
   /server listfull
   /server add freenode chat.freenode.net
   /server add freenode chat.freenode.net/6697 -ssl -autoconnect
