@@ -2014,85 +2014,81 @@ char *weechat_string_eval_expression (const char *expr,
 * 評価された式 (使用後には必ず "free" を呼び出して領域を開放してください)、失敗した場合は
   NULL (式が不正な場合やメモリが不足している場合)
 
-// TRANSLATION MISSING
-List of logical operators that can be used in conditions (by order of priority,
-from first used to last):
+条件に使える論理演算子のリスト
+(上から優先順位の高い順):
 
-// TRANSLATION MISSING
 [width="100%",cols="2,8,4,4",options="header"]
 |===
-| Operator | Description | Examples | Results
+| 演算子 | 説明 | 例 | 結果
 
 | `+&&+` |
-  Logical "and" |
+  論理積 |
   `+25 && 77+` +
   `+25 && 0+` |
   `+1+` +
   `+0+`
 
 | `+\|\|+` |
-  Logical "or" |
+  論理和 |
   `+25 \|\| 0+` +
   `+0 \|\| 0+` |
   `+1+` +
   `+0+`
 |===
 
-// TRANSLATION MISSING
-List of comparison operators that can be used in conditions (by order of priority,
-from first used to last):
+条件に使える比較演算子のリスト
+(上から優先順位の高い順):
 
-// TRANSLATION MISSING
 [width="100%",cols="2,8,4,4",options="header"]
 |===
-| Operator | Description | Examples | Results
+| 演算子 | 説明 | 例 | 結果
 
 | `+=~+` |
-  Is matching POSIX extended regex (optional flags are allowed, see function <<_string_regcomp,string_regcomp>>) |
+  POSIX 拡張正規表現にマッチ (任意でフラグを指定することも可能です、関数 <<_string_regcomp,string_regcomp>> を確認してください) |
   `+abc def =~ ab.*ef+` +
   `+abc def =~ y.*z+` |
   `+1+` +
   `+0+`
 
 | `+!~+` |
-  Is NOT matching POSIX extended regex (optional flags are allowed, see function <<_string_regcomp,string_regcomp>>) |
+  POSIX 拡張正規表現にマッチしない (任意でフラグを指定することも可能です、関数 <<_string_regcomp,string_regcomp>> を確認してください) |
   `+abc def !~ ab.*ef+` +
   `+abc def !~ y.*z+` |
   `+0+` +
   `+1+`
 
 | `+=*+` +
-  (_WeeChat ≥ 1.8_) |
-  Is matching mask where "*" is allowed (see function <<_string_match,string_match>>) |
+  (_WeeChat バージョン 1.8 以上で利用可_) |
+  マスクにマッチ、"*" を指定できます (関数 <<_string_match,string_match>> を確認してください) |
   `+abc def =* a*f+` +
   `+abc def =* y*z+` |
   `+1+` +
   `+0+`
 
 | `+!*+` +
-  (_WeeChat ≥ 1.8_) |
-  Is NOT matching mask where "*" is allowed (see function <<_string_match,string_match>>) |
+  (_WeeChat バージョン 1.8 以上で利用可_) |
+  マスクにマッチしない、"*" を指定できます (関数 <<_string_match,string_match>> を確認してください) |
   `+abc def !* a*f+` +
   `+abc def !* y*z+` |
   `+0+` +
   `+1+`
 
 | `+==+` |
-  Equal |
+  等しい |
   `+test == test+` +
   `+test == string+` |
   `+1+` +
   `+0+`
 
 | `+!=+` |
-  Not equal |
+  等しくない |
   `+test != test+` +
   `+test != string+` |
   `+0+` +
   `+1+`
 
 | `+<=+` |
-  Less or equal |
+  以下 |
   `+abc <= defghi+` +
   `+abc <= abc+` +
   `+defghi <= abc+` +
@@ -2103,7 +2099,7 @@ from first used to last):
   `+0+`
 
 | `+<+` |
-  Less |
+  より小さい |
   `+abc < defghi+` +
   `+abc < abc+` +
   `+defghi < abc+` +
@@ -2114,7 +2110,7 @@ from first used to last):
   `+0+`
 
 | `+>=+` |
-  Greater or equal |
+  以上 |
   `+defghi >= abc+` +
   `+abc >= abc+` +
   `+abc >= defghi+` +
@@ -2125,7 +2121,7 @@ from first used to last):
   `+1+`
 
 | `+>+` |
-  Greater |
+  より大きい |
   `+defghi > abc+` +
   `+abc > abc+` +
   `+abc > defghi+` +
@@ -2170,12 +2166,11 @@ from first used to last):
   `+${hide:*,password}+` |
  `+********+`
 
-// TRANSLATION MISSING
 | `+${cut:max,suffix,string}+` +
   `+${cut:+max,suffix,string}+` +
   (_WeeChat バージョン 1.8 以上で利用可_) |
   `string` の先頭 `max` 文字とオプションの `suffix` 文字 (`string` の文字数が `max` 文字を超える場合) +
-   With the format `+max`, the suffix is counted in max length. |
+  `+max` を使った場合、`max` 文字にはサフィックスの文字数も含まれます。|
   `+${cut:4,…,this is a test}+` +
   `+${cut:+4,…,this is a test}+` +
   `+${cut:2,>>,こんにちは世界}+` |
@@ -2183,12 +2178,11 @@ from first used to last):
   `+t…+` +
   `+こん>>+`
 
-// TRANSLATION MISSING
 | `+${cutscr:max,suffix,string}+` +
   `+${cutscr:+max,suffix,string}+` +
   (_WeeChat バージョン 1.8 以上で利用可_) |
   `string` の先頭 `max` 文字 (半角文字幅換算) とオプションの `suffix` 文字 (`string` の文字数が `max` 文字を超える場合) +
-  With the format `+max`, the suffix is counted in max length. |
+  `+max` を使った場合、`max` 文字にはサフィックスの文字数も含まれます。|
   `+${cutscr:4,…,this is a test}+` +
   `+${cutscr:+4,…,this is a test}+` +
   `+${cutscr:2,>>,こんにちは世界}+` |
