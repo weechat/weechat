@@ -6255,7 +6255,7 @@ msgstr ""
 "%s%s: \"%s\" コマンドはチャンネル内かプライベートバッファで実行できます"
 
 #, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP query to %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr "%s%s%s%s への CTCP クエリ: %s%s%s%s%s"
 
 #, c-format
@@ -8789,7 +8789,7 @@ msgstr ""
 "\"whois nick nick\" が送信されます"
 
 #, c-format
-msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
+msgid "%sCTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s%s"
 msgstr "%s%s%s%s からの CTCP 要求: %s%s%s%s%s%s"
 
 msgid " (blocked)"
@@ -8801,11 +8801,11 @@ msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
 msgstr "%s%s%s%s からの CTCP 応答: %s%s%s %.3f 秒"
 
 #, c-format
-msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply from %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr "%s%s%s%s からの CTCP 応答: %s%s%s%s%s"
 
 #, c-format
-msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply to %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr "%s%s%s%s への CTCP 応答: %s%s%s%s%s"
 
 #, c-format
@@ -8821,7 +8821,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s%s: %s%s%s からの未知の DCC CHAT タイプ: \"%s\""
 
 #, c-format
-msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
+msgid "%sUnknown CTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr "%s%s%s%s からの未知の CTCP 要求: %s%s%s%s%s"
 
 msgid "1 if string is a valid IRC channel name for server"

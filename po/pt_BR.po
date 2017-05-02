@@ -5748,7 +5748,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP query to %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr ""
 
 #, c-format
@@ -7812,8 +7812,8 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
-msgstr "%sCTCP requisitado por %s%s%s: %s%s%s%s%s%s"
+msgid "%sCTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s%s"
+msgstr "%sCTCP requisitado por %s%s%s @ %s%s%s:  %s%s%s%s%s%s"
 
 msgid " (blocked)"
 msgstr " (bloqueado)"
@@ -7821,15 +7821,15 @@ msgstr " (bloqueado)"
 #. TRANSLATORS: %.3fs is a float number + "s" ("seconds")
 #, fuzzy, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
-msgstr "%sresposta CTCP de %s%s%s: %s%s%s%s%s"
+msgstr "%sresposta CTCP de %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 #, c-format
-msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
-msgstr "%sresposta CTCP de %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply from %s%s%s @ %s%s%s:  %s%s%s%s%s"
+msgstr "%sresposta CTCP de %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 #, c-format
-msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
-msgstr "%sresposta CTCP para %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply to %s%s%s @ %s%s%s:  %s%s%s%s%s"
+msgstr "%sresposta CTCP para %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 #, c-format
 msgid "%s%s: not enough memory for \"%s\" command"
@@ -7844,8 +7844,8 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
-msgstr "%sRequisição CTCP desconhecida por %s%s%s: %s%s%s%s%s"
+msgid "%sUnknown CTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s"
+msgstr "%sRequisição CTCP desconhecida por %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 se string é um nome de canal IRC válido para o servidor"
@@ -8329,7 +8329,7 @@ msgstr[1] ""
 
 #, fuzzy, c-format
 msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"
-msgstr "%sresposta CTCP para %s%s%s: %s%s%s%s%s"
+msgstr "%sresposta CTCP para %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 msgid "nick"
 msgid_plural "nicks"

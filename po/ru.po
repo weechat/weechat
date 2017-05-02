@@ -5140,7 +5140,7 @@ msgstr ""
 "%s \"%s\" команда может быть выполнена только в буфере канала или привата\n"
 
 #, fuzzy, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP query to %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
 #, fuzzy, c-format
@@ -7389,7 +7389,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
+msgid "%sCTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s%s"
 msgstr "%s%s%s убил %s%s%s"
 
 #, fuzzy
@@ -7402,11 +7402,11 @@ msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
 msgstr "Ответ на %sPING%s от %s%s%s: %ld.%ld секунд\n"
 
 #, fuzzy, c-format
-msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply from %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr "Ответ на %sPING%s от %s%s%s: %ld.%ld секунд\n"
 
 #, fuzzy, c-format
-msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply to %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr "Ответ на %sPING%s от %s%s%s: %ld.%ld секунд\n"
 
 #, fuzzy, c-format
@@ -7422,7 +7422,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s неизвестный режим DCC CHAT получен от "
 
 #, fuzzy, c-format
-msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
+msgid "%sUnknown CTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
 
 #, fuzzy

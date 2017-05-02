@@ -5963,8 +5963,8 @@ msgstr ""
 "buffer privato"
 
 #, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
-msgstr "%sRichiesta CTCP a %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP query to %s%s%s @ %s%s%s:  %s%s%s%s%s"
+msgstr "%sRichiesta CTCP a %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -8455,8 +8455,8 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
-msgstr "%sCTCP richiesto da %s%s%s: %s%s%s%s%s%s"
+msgid "%sCTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s%s"
+msgstr "%sCTCP richiesto da %s%s%s @ %s%s%s:  %s%s%s%s%s%s"
 
 msgid " (blocked)"
 msgstr " (bloccato)"
@@ -8464,15 +8464,15 @@ msgstr " (bloccato)"
 #. TRANSLATORS: %.3fs is a float number + "s" ("seconds")
 #, fuzzy, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
-msgstr "%sRisposta CTCP da %s%s%s: %s%s%s%s%s"
+msgstr "%sRisposta CTCP da %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 #, c-format
-msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
-msgstr "%sRisposta CTCP da %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply from %s%s%s @ %s%s%s:  %s%s%s%s%s"
+msgstr "%sRisposta CTCP da %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 #, c-format
-msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
-msgstr "%sRisposta CTCP a %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply to %s%s%s @ %s%s%s:  %s%s%s%s%s"
+msgstr "%sRisposta CTCP a %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 #, c-format
 msgid "%s%s: not enough memory for \"%s\" command"
@@ -8487,8 +8487,8 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s%s: tipo di DCC CHAT sconosciuto ricevuto da %s%s%s: \"%s\""
 
 #, c-format
-msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
-msgstr "%sCTCP sconosciuto richiesto da %s%s%s: %s%s%s%s%s"
+msgid "%sUnknown CTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s"
+msgstr "%sCTCP sconosciuto richiesto da %s%s%s @ %s%s%s:  %s%s%s%s%s"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 se la stringa è il nome di un canale IRC valido per il server"

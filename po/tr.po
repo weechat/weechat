@@ -4679,7 +4679,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP query to %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr ""
 
 #, c-format
@@ -6637,7 +6637,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
+msgid "%sCTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s%s"
 msgstr ""
 
 msgid " (blocked)"
@@ -6650,11 +6650,11 @@ msgstr ""
 "%sKanal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
 
 #, c-format
-msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply from %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr ""
 
 #, c-format
-msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
+msgid "%sCTCP reply to %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr ""
 
 #, c-format
@@ -6670,7 +6670,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
+msgid "%sUnknown CTCP requested by %s%s%s @ %s%s%s:  %s%s%s%s%s"
 msgstr ""
 
 msgid "1 if string is a valid IRC channel name for server"
