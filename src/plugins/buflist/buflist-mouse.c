@@ -37,9 +37,10 @@
 struct t_hashtable *
 buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
 {
-    const char *ptr_bar_item_name, *ptr_bar_item_line;
+    const char *ptr_bar_item_name, *ptr_bar_item_line, *keys, *ptr_value;
     long item_line;
-    char *error, str_pointer[128], str_number[32];
+    char *error, str_value[128], **list_keys;
+    int i, num_keys, type;
     struct t_gui_buffer *ptr_buffer;
     struct t_hdata *ptr_hdata;
 
@@ -47,56 +48,121 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     (void) pointer;
     (void) data;
 
+    ptr_buffer = NULL;
+
     if (!buflist_list_buffers)
-        goto error;
+        goto end;
 
     /* check bar item name */
     ptr_bar_item_name = weechat_hashtable_get (info, "_bar_item_name");
     if (strcmp (ptr_bar_item_name, BUFLIST_BAR_ITEM_NAME) != 0)
-        goto error;
+        goto end;
 
     /* check bar item line */
     ptr_bar_item_line = weechat_hashtable_get (info, "_bar_item_line");
     if (!ptr_bar_item_line)
-        goto error;
+        goto end;
     item_line = strtol (ptr_bar_item_line, &error, 10);
     if (!error || error[0])
-        goto error;
+        goto end;
     if ((item_line < 0)
         || (item_line >= weechat_arraylist_size (buflist_list_buffers)))
     {
-        goto error;
+        goto end;
     }
 
     /* check if buffer pointer is still valid */
     ptr_buffer = weechat_arraylist_get (buflist_list_buffers, item_line);
     if (!ptr_buffer)
-        goto error;
+        goto end;
     ptr_hdata = weechat_hdata_get ("buffer");
     if (!weechat_hdata_check_pointer (
             ptr_hdata,
             weechat_hdata_get_list (ptr_hdata, "gui_buffers"),
             ptr_buffer))
     {
-        goto error;
+        ptr_buffer = NULL;
     }
 
-    snprintf (str_pointer, sizeof (str_pointer),
+end:
+    /* get list of keys */
+    keys = weechat_hdata_get_string (buflist_hdata_buffer, "var_keys");
+    list_keys = weechat_string_split (keys, ",", 0, 0, &num_keys);
+    if (!list_keys)
+        return info;
+
+    /* browse keys and add values in hashtable */
+    for (i = 0; i < num_keys; i++)
+    {
+        type = weechat_hdata_get_var_type (ptr_hdata, list_keys[i]);
+        switch (type)
+        {
+            case WEECHAT_HDATA_CHAR:
+                snprintf (str_value, sizeof (str_value),
+                          "%c",
+                          weechat_hdata_char (buflist_hdata_buffer,
+                                              ptr_buffer, list_keys[i]));
+                weechat_hashtable_set (info, list_keys[i], str_value);
+                break;
+            case WEECHAT_HDATA_INTEGER:
+                snprintf (str_value, sizeof (str_value),
+                          "%d",
+                          (ptr_buffer) ?
+                          weechat_hdata_integer (buflist_hdata_buffer,
+                                                 ptr_buffer, list_keys[i]) : -1);
+                weechat_hashtable_set (info, list_keys[i], str_value);
+                break;
+            case WEECHAT_HDATA_LONG:
+                snprintf (str_value, sizeof (str_value),
+                          "%ld",
+                          (ptr_buffer) ?
+                          weechat_hdata_long (buflist_hdata_buffer,
+                                              ptr_buffer, list_keys[i]) : -1);
+                weechat_hashtable_set (info, list_keys[i], str_value);
+                break;
+            case WEECHAT_HDATA_STRING:
+            case WEECHAT_HDATA_SHARED_STRING:
+                ptr_value = weechat_hdata_string (buflist_hdata_buffer,
+                                                  ptr_buffer,
+                                                  list_keys[i]);
+                weechat_hashtable_set (info, list_keys[i],
+                                       (ptr_value) ? ptr_value : "");
+                break;
+            case WEECHAT_HDATA_TIME:
+                snprintf (str_value, sizeof (str_value),
+                          "%ld",
+                          (ptr_buffer) ?
+                          (long int)weechat_hdata_time (buflist_hdata_buffer,
+                                                        ptr_buffer, list_keys[i]) : -1);
+                weechat_hashtable_set (info, list_keys[i], str_value);
+                break;
+            default:  /* ignore other types */
+                break;
+        }
+    }
+
+    /* add pointer and plugin name */
+    snprintf (str_value, sizeof (str_value),
               "0x%lx", (long unsigned int)ptr_buffer);
-    snprintf (str_number, sizeof (str_number), "%d",
-              weechat_buffer_get_integer (ptr_buffer, "number"));
+    weechat_hashtable_set (info, "pointer", str_value);
+    weechat_hashtable_set (info, "plugin",
+                           weechat_buffer_get_string (ptr_buffer, "plugin"));
 
-    weechat_hashtable_set (info, "pointer", str_pointer);
-    weechat_hashtable_set (info, "number", str_number);
-    weechat_hashtable_set (info, "full_name",
-                           weechat_buffer_get_string (ptr_buffer, "full_name"));
+    /* add some local variables */
+    ptr_value = weechat_buffer_get_string (ptr_buffer, "localvar_type");
+    weechat_hashtable_set (info, "localvar_type",
+                           (ptr_value) ? ptr_value : "");
+    ptr_value = weechat_buffer_get_string (ptr_buffer, "localvar_server");
+    weechat_hashtable_set (info, "localvar_server",
+                           (ptr_value) ? ptr_value : "");
+    ptr_value = weechat_buffer_get_string (ptr_buffer, "localvar_channel");
+    weechat_hashtable_set (info, "localvar_channel",
+                           (ptr_value) ? ptr_value : "");
+    ptr_value = weechat_buffer_get_string (ptr_buffer, "localvar_lag");
+    weechat_hashtable_set (info, "localvar_lag",
+                           (ptr_value) ? ptr_value : "");
 
-    return info;
-
-error:
-    weechat_hashtable_set (info, "pointer", "");
-    weechat_hashtable_set (info, "number", "-1");
-    weechat_hashtable_set (info, "full_name", "");
+    weechat_string_free_split (list_keys);
 
     return info;
 }
