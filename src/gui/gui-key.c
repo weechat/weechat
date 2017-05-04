@@ -1107,12 +1107,16 @@ gui_key_focus_command (const char *key, int context,
         {
             gui_chat_printf (NULL, _("Hashtable focus:"));
             list_keys = hashtable_get_list_keys (hashtable);
-            for (ptr_item = list_keys->items; ptr_item;
-                 ptr_item = ptr_item->next_item)
+            if (list_keys)
             {
-                gui_chat_printf (NULL, "  %s: \"%s\"",
-                                 ptr_item->data,
-                                 hashtable_get (hashtable, ptr_item->data));
+                for (ptr_item = list_keys->items; ptr_item;
+                     ptr_item = ptr_item->next_item)
+                {
+                    gui_chat_printf (NULL, "  %s: \"%s\"",
+                                     ptr_item->data,
+                                     hashtable_get (hashtable, ptr_item->data));
+                }
+                weelist_free (list_keys);
             }
         }
         if (debug)

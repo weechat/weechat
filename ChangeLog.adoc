@@ -44,6 +44,7 @@ Improvements::
 
 Bug fixes::
 
+  * core: fix memory leak in display of mouse event debug info
   * core: fix command /cursor stop (do not toggle cursor mode) (issue #964)
   * core: fix delayed refresh when the signal SIGWINCH is received (terminal resized), send signal "signal_sigwinch" after refreshes (issue #902)
   * irc: fix crash in case of invalid server reply during SASL authentication with dh-blowfish or dh-aes mechanism
