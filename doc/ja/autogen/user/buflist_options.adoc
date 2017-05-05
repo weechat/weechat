@@ -86,6 +86,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"${buffer.hidden}==0"+`
 
+* [[option_buflist.look.enabled]] *buflist.look.enabled*
+** 説明: pass:none[enable buflist]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
 * [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
 ** 説明: pass:none[有効の場合、現在のバッファを示す行で左または右ボタンをクリックすることで一つ前または次の訪問済みバッファに移動します]
 ** タイプ: ブール

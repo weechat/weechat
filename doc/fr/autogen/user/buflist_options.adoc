@@ -86,6 +86,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${buffer.hidden}==0"+`
 
+* [[option_buflist.look.enabled]] *buflist.look.enabled*
+** description: pass:none[activer buflist]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
 * [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
 ** description: pass:none[si activé, les clics avec les boutons gauche/droit sur la ligne avec le tampon courant sautent au tampon visité avant/après]
 ** type: booléen

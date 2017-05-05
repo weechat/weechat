@@ -448,7 +448,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                      "default", "default", "default", "on",
                      BUFLIST_BAR_ITEM_NAME);
 
-    weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+    buflist_bar_item_update ();
 
     buflist_mouse_init ();
 

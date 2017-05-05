@@ -38,6 +38,17 @@ struct t_arraylist *buflist_list_buffers = NULL;
 
 
 /*
+ * Updates buflist bar item if buflist is enabled.
+ */
+
+void
+buflist_bar_item_update ()
+{
+    if (weechat_config_boolean (buflist_config_look_enabled))
+        weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+}
+
+/*
  * Returns content of bar item "buffer_plugin": bar item with buffer plugin.
  */
 
@@ -78,6 +89,9 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     (void) window;
     (void) buffer;
     (void) extra_info;
+
+    if (!weechat_config_boolean (buflist_config_look_enabled))
+        return NULL;
 
     prev_number = -1;
 

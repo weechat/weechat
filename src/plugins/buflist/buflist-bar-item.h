@@ -24,6 +24,7 @@
 
 extern struct t_arraylist *buflist_list_buffers;
 
+extern void buflist_bar_item_update ();
 extern int buflist_bar_item_init ();
 extern void buflist_bar_item_end ();
 

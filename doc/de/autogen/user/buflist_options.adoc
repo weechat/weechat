@@ -86,6 +86,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${buffer.hidden}==0"+`
 
+* [[option_buflist.look.enabled]] *buflist.look.enabled*
+** Beschreibung: pass:none[enable buflist]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
 * [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
 ** Beschreibung: pass:none[ist diese Einstellung aktiviert, kann mit der linken/rechten Maustaste auf dem aktuellen Buffer zum vorherigen/nächsten Buffer gesprungen werden]
 ** Typ: boolesch

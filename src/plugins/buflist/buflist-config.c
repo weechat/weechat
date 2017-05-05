@@ -33,6 +33,7 @@ struct t_config_file *buflist_config_file = NULL;
 /* buflist config, look section */
 
 struct t_config_option *buflist_config_look_display_conditions;
+struct t_config_option *buflist_config_look_enabled;
 struct t_config_option *buflist_config_look_mouse_jump_visited_buffer;
 struct t_config_option *buflist_config_look_mouse_move_buffer;
 struct t_config_option *buflist_config_look_mouse_wheel;
@@ -61,29 +62,6 @@ int buflist_config_sort_fields_count = 0;
 
 
 /*
- * Callback for changes on option "buflist.look.sort".
- */
-
-void
-buflist_config_change_sort (const void *pointer, void *data,
-                            struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) option;
-
-    if (buflist_config_sort_fields)
-        weechat_string_free_split (buflist_config_sort_fields);
-
-    buflist_config_sort_fields = weechat_string_split (
-        weechat_config_string (buflist_config_look_sort),
-        ",", 0, 0, &buflist_config_sort_fields_count);
-
-    weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
-}
-
-/*
  * Frees the signals hooked for refresh.
  */
 
@@ -107,27 +85,6 @@ buflist_config_free_signals_refresh ()
 }
 
 /*
- * Callback for a signal on a buffer.
- */
-
-int
-buflist_config_signal_buffer_cb (const void *pointer, void *data,
-                                 const char *signal, const char *type_data,
-                                 void *signal_data)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) signal;
-    (void) type_data;
-    (void) signal_data;
-
-    weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Compares two signals to add them in the sorted arraylist.
  *
  * Returns:
@@ -148,25 +105,37 @@ buflist_config_compare_signals (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Callback for changes on option "buflist.look.signals_refresh".
+ * Callback for a signal on a buffer.
+ */
+
+int
+buflist_config_signal_buffer_cb (const void *pointer, void *data,
+                                 const char *signal, const char *type_data,
+                                 void *signal_data)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+    buflist_bar_item_update ();
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Hooks the signals for refresh.
  */
 
 void
-buflist_config_change_signals_refresh (const void *pointer, void *data,
-                                       struct t_config_option *option)
+buflist_config_hook_signals_refresh ()
 {
     char **all_signals, **signals;
     const char *ptr_signals_refresh;
     struct t_arraylist *signals_list;
     int count, i;
-
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) option;
-
-    if (buflist_config_signals_refresh)
-        buflist_config_free_signals_refresh ();
 
     all_signals = weechat_string_dyn_alloc (256);
     if (!all_signals)
@@ -233,6 +202,76 @@ buflist_config_change_signals_refresh (const void *pointer, void *data,
 }
 
 /*
+ * Callback for changes on option "buflist.look.enabled".
+ */
+
+void
+buflist_config_change_enabled (const void *pointer, void *data,
+                               struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    buflist_config_free_signals_refresh ();
+
+    if (weechat_config_boolean (buflist_config_look_enabled))
+    {
+        /* buflist enabled */
+        buflist_config_hook_signals_refresh ();
+        weechat_command (NULL, "/mute /bar show buflist");
+        buflist_bar_item_update ();
+    }
+    else
+    {
+        /* buflist disabled */
+        weechat_command (NULL, "/mute /bar hide buflist");
+        weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+    }
+}
+
+/*
+ * Callback for changes on option "buflist.look.sort".
+ */
+
+void
+buflist_config_change_sort (const void *pointer, void *data,
+                            struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (buflist_config_sort_fields)
+        weechat_string_free_split (buflist_config_sort_fields);
+
+    buflist_config_sort_fields = weechat_string_split (
+        weechat_config_string (buflist_config_look_sort),
+        ",", 0, 0, &buflist_config_sort_fields_count);
+
+    buflist_bar_item_update ();
+}
+
+/*
+ * Callback for changes on option "buflist.look.signals_refresh".
+ */
+
+void
+buflist_config_change_signals_refresh (const void *pointer, void *data,
+                                       struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    buflist_config_free_signals_refresh ();
+    buflist_config_hook_signals_refresh ();
+}
+
+/*
  * Callback for changes on option "buflist.look.nick_prefix".
  */
 
@@ -246,7 +285,7 @@ buflist_config_change_nick_prefix (const void *pointer, void *data,
     (void) option;
 
     buflist_config_change_signals_refresh (NULL, NULL, NULL);
-    weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+    buflist_bar_item_update ();
 }
 
 /*
@@ -262,7 +301,7 @@ buflist_config_change_buflist (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+    buflist_bar_item_update ();
 }
 
 /*
@@ -308,6 +347,14 @@ buflist_config_init ()
         NULL, 0, 0, "${buffer.hidden}==0", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_look_enabled = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "enabled", "boolean",
+        N_("enable buflist"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_enabled, NULL, NULL,
         NULL, NULL, NULL);
     buflist_config_look_mouse_jump_visited_buffer = weechat_config_new_option (
         buflist_config_file, ptr_section,

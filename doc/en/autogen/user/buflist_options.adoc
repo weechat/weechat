@@ -86,6 +86,12 @@
 ** values: any string
 ** default value: `+"${buffer.hidden}==0"+`
 
+* [[option_buflist.look.enabled]] *buflist.look.enabled*
+** description: pass:none[enable buflist]
+** type: boolean
+** values: on, off
+** default value: `+on+`
+
 * [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
 ** description: pass:none[if enabled, clicks with left/right buttons on the line with current buffer jump to previous/next visited buffer]
 ** type: boolean

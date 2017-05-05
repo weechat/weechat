@@ -52,7 +52,7 @@ buflist_command_buflist (const void *pointer, void *data,
 
     if (weechat_strcasecmp (argv[1], "refresh") == 0)
     {
-        weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+        buflist_bar_item_update ();
         return WEECHAT_RC_OK;
     }
 

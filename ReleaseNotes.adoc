@@ -27,12 +27,27 @@ A new plugin called "buflist" has been added, it replaces the script "buffers.pl
 
 If the script is installed, you will see two sidebars with list of buffers.
 
-If you fell in love with buflist, you can uninstall the script and remove its bar
-with these commands:
+If you fell in love with buflist and that the script buffers.pl is installed,
+you can uninstall the script and remove its bar with these commands:
 
 ----
 /script remove buffers.pl
 /bar del buffers
+----
+
+If you don't want the list of buffers, you can disable buflist:
+
+----
+/set buflist.look.enabled off
+----
+
+To save extra memory, you can even unload the buflist plugin, remove the bar and
+prevent the plugin from loading on next startup:
+
+----
+/plugin unload buflist
+/bar del buflist
+/set weechat.plugin.autoload "*,!buflist"
 ----
 
 [[v1.8_aspell_options]]
