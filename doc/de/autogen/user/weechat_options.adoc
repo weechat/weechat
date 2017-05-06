@@ -411,7 +411,7 @@
 ** Standardwert: `+on+`
 
 * [[option_weechat.completion.nick_case_sensitive]] *weechat.completion.nick_case_sensitive*
-** Beschreibung: pass:none[case sensitive completion for nicks]
+** Beschreibung: pass:none[Groß-und Kleinschreibung wird bei Vervollständigung von Nicks berücksichtigt]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`

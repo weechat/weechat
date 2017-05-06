@@ -87,7 +87,7 @@
 ** Standardwert: `+"${buffer.hidden}==0"+`
 
 * [[option_buflist.look.enabled]] *buflist.look.enabled*
-** Beschreibung: pass:none[enable buflist]
+** Beschreibung: pass:none[buflist aktivieren]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
