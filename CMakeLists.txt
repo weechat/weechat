@@ -267,6 +267,9 @@ endif()
 # icon
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat.png DESTINATION ${SHAREDIR}/icons/hicolor/32x32/apps)
 
+# desktop file
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat.desktop DESTINATION ${SHAREDIR}/applications)
+
 # packages
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Fast, light and extensible chat client")
 set(CPACK_PACKAGE_VENDOR "Sébastien Helleu")
