@@ -87,7 +87,7 @@
 ** デフォルト値: `+"${buffer.hidden}==0"+`
 
 * [[option_buflist.look.enabled]] *buflist.look.enabled*
-** 説明: pass:none[enable buflist]
+** 説明: pass:none[buflist を有効化します]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`

@@ -411,7 +411,7 @@
 ** デフォルト値: `+on+`
 
 * [[option_weechat.completion.nick_case_sensitive]] *weechat.completion.nick_case_sensitive*
-** 説明: pass:none[case sensitive completion for nicks]
+** 説明: pass:none[大文字小文字を区別したニックネーム補完]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+off+`
