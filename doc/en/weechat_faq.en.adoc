@@ -607,6 +607,11 @@ Note: if you are running OS X with homebrew openssl installed, you can do:
 Check that you have this file on your system (commonly brought by package
 "ca-certificates").
 
+Alternatively when running OSX with homebrew openssl installed, set:
+----
+/set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
+----
+
 Setup server port, SSL, then connect:
 
 ----
