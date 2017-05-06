@@ -405,16 +405,39 @@ irc_server_get_name_without_port (const char *name)
 
 /*
  * Sets addresses for server.
+ *
+ * Returns:
+ *   1: addresses have been set (changed)
+ *   0: nothing set (addresses unchanged)
  */
 
-void
+int
 irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
 {
     int i;
     char *pos, *error, *addresses_eval;
     long number;
 
+    addresses_eval = NULL;
+
+    if (addresses && addresses[0])
+    {
+        addresses_eval = weechat_string_eval_expression (addresses,
+                                                         NULL, NULL, NULL);
+        if (server->addresses_eval
+            && (strcmp (server->addresses_eval, addresses_eval) == 0))
+        {
+            free (addresses_eval);
+            return 0;
+        }
+    }
+
     /* free data */
+    if (server->addresses_eval)
+    {
+        free (server->addresses_eval);
+        server->addresses_eval = NULL;
+    }
     server->addresses_count = 0;
     if (server->addresses_array)
     {
@@ -433,39 +456,37 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
     }
 
     /* set new addresses/ports */
-    if (addresses && addresses[0])
+    server->addresses_eval = addresses_eval;
+    if (!addresses_eval)
+        return 1;
+    server->addresses_array = weechat_string_split (
+        addresses_eval, ",", 0, 0, &server->addresses_count);
+    server->ports_array = malloc (
+        server->addresses_count * sizeof (server->ports_array[0]));
+    server->retry_array = malloc (
+        server->addresses_count * sizeof (server->retry_array[0]));
+    for (i = 0; i < server->addresses_count; i++)
     {
-        addresses_eval = weechat_string_eval_expression (addresses,
-                                                         NULL, NULL, NULL);
-        server->addresses_array = weechat_string_split (
-            (addresses_eval) ? addresses_eval : addresses,
-            ",", 0, 0, &server->addresses_count);
-        server->ports_array = malloc (
-            server->addresses_count * sizeof (server->ports_array[0]));
-        server->retry_array = malloc (
-            server->addresses_count * sizeof (server->retry_array[0]));
-        for (i = 0; i < server->addresses_count; i++)
+        pos = strchr (server->addresses_array[i], '/');
+        if (pos)
         {
-            pos = strchr (server->addresses_array[i], '/');
-            if (pos)
-            {
-                pos[0] = 0;
-                pos++;
-                error = NULL;
-                number = strtol (pos, &error, 10);
-                server->ports_array[i] = (error && !error[0]) ?
-                    number : IRC_SERVER_DEFAULT_PORT;
-            }
-            else
-            {
-                server->ports_array[i] = IRC_SERVER_DEFAULT_PORT;
-            }
-            server->retry_array[i] = 0;
+            pos[0] = 0;
+            pos++;
+            error = NULL;
+            number = strtol (pos, &error, 10);
+            server->ports_array[i] = (error && !error[0]) ?
+                number : IRC_SERVER_DEFAULT_PORT;
         }
-        if (addresses_eval)
-            free (addresses_eval);
+        else
+        {
+            server->ports_array[i] = IRC_SERVER_DEFAULT_PORT;
+        }
+        server->retry_array[i] = 0;
     }
+
+    return 1;
 }
+
 
 /*
  * Sets index of current address for server.
@@ -474,14 +495,29 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
 void
 irc_server_set_index_current_address (struct t_irc_server *server, int index)
 {
+    int addresses_changed;
+
+    addresses_changed = irc_server_set_addresses (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_ADDRESSES));
+
+    if (addresses_changed)
+    {
+        /* if the addresses have changed, reset the index to 0 */
+        index = 0;
+    }
+
     if (server->current_address)
     {
         free (server->current_address);
         server->current_address = NULL;
 
         /* copy current retry value before loading next server */
-        if (server->index_current_address < server->addresses_count)
+        if (!addresses_changed
+            && server->index_current_address < server->addresses_count)
+        {
             server->retry_array[server->index_current_address] = server->current_retry;
+        }
     }
     server->current_port = 0;
     server->current_retry = 0;
@@ -1106,6 +1142,7 @@ irc_server_alloc (const char *name)
     new_server->temp_server = 0;
     new_server->reloading_from_config = 0;
     new_server->reloaded_from_config = 0;
+    new_server->addresses_eval = NULL;
     new_server->addresses_count = 0;
     new_server->addresses_array = NULL;
     new_server->ports_array = NULL;
@@ -1620,6 +1657,8 @@ irc_server_free_data (struct t_irc_server *server)
     }
     if (server->name)
         free (server->name);
+    if (server->addresses_eval)
+        free (server->addresses_eval);
     if (server->addresses_array)
         weechat_string_free_split (server->addresses_array);
     if (server->ports_array)
@@ -5415,6 +5454,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, temp_server, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reloading_from_config, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reloaded_from_config, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, addresses_eval, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, addresses_count, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, addresses_array, STRING, 0, "addresses_count", NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, ports_array, INTEGER, 0, "addresses_count", NULL);
@@ -6024,6 +6064,7 @@ irc_server_print_log ()
         weechat_log_printf ("  temp_server. . . . . : %d",    ptr_server->temp_server);
         weechat_log_printf ("  reloading_from_config: %d",    ptr_server->reloaded_from_config);
         weechat_log_printf ("  reloaded_from_config : %d",    ptr_server->reloaded_from_config);
+        weechat_log_printf ("  addresses_eval . . . : '%s'",  ptr_server->addresses_eval);
         weechat_log_printf ("  addresses_count. . . : %d",    ptr_server->addresses_count);
         weechat_log_printf ("  addresses_array. . . : 0x%lx", ptr_server->addresses_array);
         weechat_log_printf ("  ports_array. . . . . : 0x%lx", ptr_server->ports_array);

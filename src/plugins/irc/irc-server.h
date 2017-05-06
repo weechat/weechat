@@ -155,6 +155,7 @@ struct t_irc_server
     int temp_server;                /* temporary server (not saved)          */
     int reloading_from_config;      /* 1 if reloading from config file       */
     int reloaded_from_config;       /* 1 if reloaded from config file        */
+    char *addresses_eval;           /* evaluation of addresses               */
     int addresses_count;            /* number of addresses                   */
     char **addresses_array;         /* addresses (after split)               */
     int *ports_array;               /* ports for addresses                   */
@@ -280,8 +281,8 @@ extern int irc_server_strncasecmp (struct t_irc_server *server,
                                    int max);
 extern int irc_server_sasl_enabled (struct t_irc_server *server);
 extern char *irc_server_get_name_without_port (const char *name);
-extern void irc_server_set_addresses (struct t_irc_server *server,
-                                      const char *addresses);
+extern int irc_server_set_addresses (struct t_irc_server *server,
+                                     const char *addresses);
 extern void irc_server_set_nicks (struct t_irc_server *server, const char *nicks);
 extern void irc_server_set_nick (struct t_irc_server *server, const char *nick);
 extern const char *irc_server_get_alternate_nick (struct t_irc_server *server);
