@@ -410,6 +410,12 @@
 ** valeurs: on, off
 ** valeur par défaut: `+on+`
 
+* [[option_weechat.completion.nick_case_sensitive]] *weechat.completion.nick_case_sensitive*
+** description: pass:none[complétion sensible à la casse pour les pseudos]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
 * [[option_weechat.completion.nick_completer]] *weechat.completion.nick_completer*
 ** description: pass:none[chaîne insérée après la complétion du pseudo (quand le pseudo est le premier mot sur la ligne de commande)]
 ** type: chaîne

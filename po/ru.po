@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-05-05 23:16+0200\n"
+"POT-Creation-Date: 2017-05-06 10:11+0200\n"
 "PO-Revision-Date: 2017-01-06 22:06+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3418,6 +3418,9 @@ msgstr ""
 
 msgid ""
 "add space after nick completion (when nick is not first word on command line)"
+msgstr ""
+
+msgid "case sensitive completion for nicks"
 msgstr ""
 
 #, fuzzy

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-05-05 23:16+0200\n"
+"POT-Creation-Date: 2017-05-06 10:11+0200\n"
 "PO-Revision-Date: 2017-01-06 21:59+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3810,6 +3810,9 @@ msgid ""
 msgstr ""
 "přidat mezeru za přezdívku po doplnění (pokud není přezdívka první slovo na "
 "příkazovém řádku)"
+
+msgid "case sensitive completion for nicks"
+msgstr ""
 
 #, fuzzy
 msgid ""

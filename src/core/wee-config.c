@@ -264,6 +264,7 @@ struct t_config_option *config_completion_base_word_until_cursor;
 struct t_config_option *config_completion_command_inline;
 struct t_config_option *config_completion_default_template;
 struct t_config_option *config_completion_nick_add_space;
+struct t_config_option *config_completion_nick_case_sensitive;
 struct t_config_option *config_completion_nick_completer;
 struct t_config_option *config_completion_nick_first_only;
 struct t_config_option *config_completion_nick_ignore_chars;
@@ -4104,6 +4105,12 @@ config_weechat_init_options ()
         N_("add space after nick completion (when nick is not first word on "
            "command line)"),
         NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_nick_case_sensitive = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nick_case_sensitive", "boolean",
+        N_("case sensitive completion for nicks"),
+        NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_nick_completer = config_file_new_option (
         weechat_config_file, ptr_section,

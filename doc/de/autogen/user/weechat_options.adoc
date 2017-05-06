@@ -410,6 +410,12 @@
 ** Werte: on, off
 ** Standardwert: `+on+`
 
+* [[option_weechat.completion.nick_case_sensitive]] *weechat.completion.nick_case_sensitive*
+** Beschreibung: pass:none[case sensitive completion for nicks]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
 * [[option_weechat.completion.nick_completer]] *weechat.completion.nick_completer*
 ** Beschreibung: pass:none[fügt eine Zeichenkette hinter die Nick-Vervollständigung ein (sofern ein Nickname das erste Wort in der Kommandozeile ist)]
 ** Typ: Zeichenkette
