@@ -4,6 +4,7 @@ GenericName=IRC Client
 Comment=Extensible chat client
 Exec=/usr/bin/weechat %u
 Terminal=true
+Icon=weechat
 Type=Application
 Categories=Network;Chat;IRCClient;ConsoleOnly;
 MimeType=x-scheme-handler/irc;x-scheme-handler/ircs;
