@@ -58,6 +58,7 @@ Bug fixes::
 Build::
 
   * core: fix compilation on FreeBSD with autotools (issue #276)
+  * python: add detection of Python 3.6
   * ruby: add detection of Ruby 2.4 (issue #895)
 
 [[v1.7.1]]
