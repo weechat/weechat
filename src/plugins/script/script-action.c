@@ -543,7 +543,6 @@ script_action_install_process_cb (const void *pointer, void *data,
                     filename2 = malloc (length);
                     if (filename2)
                     {
-                        auto_load = 0;
                         if (ptr_script->status & SCRIPT_STATUS_INSTALLED)
                         {
                             auto_load = (ptr_script->status & SCRIPT_STATUS_AUTOLOADED) ?
