@@ -40,8 +40,6 @@ buflist_command_buflist (const void *pointer, void *data,
     (void) pointer;
     (void) data;
     (void) buffer;
-    (void) argc;
-    (void) argv;
     (void) argv_eol;
 
     if (argc == 1)
