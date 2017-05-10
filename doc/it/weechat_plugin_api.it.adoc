@@ -8329,17 +8329,13 @@ Argomenti:
 ** _const char *command_: il comando eseguito, con i propri argomenti
 ** valore restituito:
 *** _WEECHAT_RC_OK_
-*** _WEECHAT_RC_OK_EAT_
+*** _WEECHAT_RC_OK_EAT_: il comando non verrà eseguito da WeeChat dopo la callback
 *** _WEECHAT_RC_ERROR_
 * _callback_pointer_: puntatore fornito alla callback quando chiamata da WeeChat
 // TRANSLATION MISSING
 * _callback_data_: puntatore fornito alla callback quando chiamata da WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
   and it is automatically freed when the hook is deleted
-
-[NOTE]
-La callback può restituire _WEECHAT_RC_OK_ o _WEECHAT_RC_OK_EAT_ (il comando
-non verrà eseguito da WeeChat dopo la callback).
 
 Valore restituito:
 

@@ -8104,16 +8104,12 @@ Arguments:
 ** _const char *command_: the command executed, with its arguments
 ** return value:
 *** _WEECHAT_RC_OK_
-*** _WEECHAT_RC_OK_EAT_
+*** _WEECHAT_RC_OK_EAT_: command will not be executed by WeeChat after callback
 *** _WEECHAT_RC_ERROR_
 * _callback_pointer_: pointer given to callback when it is called by WeeChat
 * _callback_data_: pointer given to callback when it is called by WeeChat;
   if not NULL, it must have been allocated with malloc (or similar function)
   and it is automatically freed when the hook is deleted
-
-[NOTE]
-Callback can return _WEECHAT_RC_OK_ or _WEECHAT_RC_OK_EAT_ (command will not
-be executed by WeeChat after callback).
 
 Return value:
 

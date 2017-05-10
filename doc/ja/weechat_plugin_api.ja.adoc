@@ -8108,16 +8108,12 @@ struct t_hook *weechat_hook_command_run (const char *command,
 ** _const char *command_: 実行するコマンド、引数付き
 ** 戻り値:
 *** _WEECHAT_RC_OK_
-*** _WEECHAT_RC_OK_EAT_
+*** _WEECHAT_RC_OK_EAT_: コールバックの後にコマンドを実行しない
 *** _WEECHAT_RC_ERROR_
 * _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
 * _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
-
-[NOTE]
-コールバックは _WEECHAT_RC_OK_ または _WEECHAT_RC_OK_EAT_
-(コールバックの後にコマンドを実行しない) を返すことができます。
 
 戻り値:
 
