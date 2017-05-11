@@ -22,9 +22,10 @@ weechat - the extensible chat client
 
 == POPIS
 
-WeeChat (Wee Enhanced Environment for Chat) je svobodný chatovací klient, rychlý
-a lehký, připraven pro mnoho operačních systémů.
-Je velmi připůsobitelný a rozšiřitelný s skripty.
+WeeChat (Wee Enhanced Environment for Chat) je svobodný chatovací klient.
+Je lehký, plně konfigurovatelný a lehce rozšiřitelný pomocí pluginů a scriptů
+v obvyklých sciptovacích jazycích.
+
 
 == VOLBY
 
@@ -106,7 +107,7 @@ souboru AUTHORS.adoc).
 
 Copyright (C) 2003-2017 {author}
 
-WeeChat je svobodný software; you can redistribute it and/or modify
+WeeChat is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 3 of the License, or
 (at your option) any later version.
