@@ -15,49 +15,49 @@ cel: nazwa serwera
 * `+allchan+`: wykonuje komendę na wszystkich kanałach na połączonych serwerach
 
 ----
-/allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
-          [-current] -include=<channel>[,<channel>...] <command> [<arguments>]
+/allchan  [-current] [-exclude=<kanał>[,<kanał>...]] <komenda> [<argumenty>]
+          [-current] -include=<kanał>[,<kanał>...] <komenda> [<argumenty>]
 
- -current: execute command for channels of current server only
- -exclude: exclude some channels (wildcard "*" is allowed)
- -include: include only some channels (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: wykonuje komendę tylko na kanałach obecnego serwera
+ -exclude: wyklucza niektóre kanały (wildcard "*" jest dozwolony)
+ -include: uwzględnia tylko niektóre znaki (wildcard "*" est dozwolony)
+  komenda: komenda do wykonania
+argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
 
-Examples:
-  execute '/me is testing' on all channels:
-    /allchan me is testing
-  say 'hello' everywhere but not on #weechat:
-    /allchan -exclude=#weechat msg * hello
-  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
-    /allchan -exclude=#weechat,#linux* msg * hello
-  say 'hello' on all channels beginning with #linux:
-    /allchan -include=#linux* msg * hello
+Przykłady:
+  wykonuje '/me testuje' na wszystkich kanałach:
+    /allchan me testuje
+  wysyła 'witam' wszędzie tylko nie na #weechat:
+    /allchan -exclude=#weechat msg * witam
+  wysyła 'witam' wszędzie poza #weechat oraz kanałami zaczynającymi się od #linux:
+    /allchan -exclude=#weechat,#linux* msg * witam
+  wysyła 'witam' na wszytkich kanałach zaczynających się od #linux:
+    /allchan -include=#linux* msg * witam
 ----
 
 [[command_irc_allpv]]
 * `+allpv+`: wykonuje komendę na wszystkich prywatnych buforach wszystkich połączonych serwerów
 
 ----
-/allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
-        [-current] -include=<nick>[,<nick>...] <command> [<arguments>]
+/allpv  [-current] [-exclude=<nick>[,<nick>...]] <komenda> [<argumenty>]
+        [-current] -include=<nick>[,<nick>...] <komenda> [<argumenty>]
 
- -current: execute command for private buffers of current server only
- -exclude: exclude some nicks (wildcard "*" is allowed)
- -include: include only some nicks (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: wykonuje komendę tylko na prywatnych buforach obecnego serwera
+ -exclude: wyklucza niektóre nicki (wildcard "*" jest dozwolony)
+ -include: uwzględnia tylko niektóre znaki (wildcard "*" est dozwolony)
+  komenda: komenda do wykonania
+argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
 
-Examples:
-  execute '/me is testing' on all private buffers:
+Przykłady:
+  wykonuje '/me testuje' we wszystkich prywatnych buforach:
     /allpv me is testing
-  say 'hello' everywhere but not for nick foo:
+  wysyła wszędzie 'hello' tylko nie nickowi foo:
     /allpv -exclude=foo msg * hello
-  say 'hello' everywhere but not for nick foo and nicks beginning with bar:
+  wysyła wszędzie 'hello' tylko nie nickowi foo i nickom zaczynającym się od bar:
     /allpv -exclude=foo,bar* msg * hello
-  say 'hello' for all nicks beginning with bar:
-    /allpv -include=bar* msg * hello
-  close all private buffers:
+  wysyła 'witam' do wszystkich nicków zaczynających się od bar:
+    /allpv -include=bar* msg * witam
+  zamyka wszystkie prywatne bufory:
     /allpv close
 ----
 
@@ -65,20 +65,20 @@ Examples:
 * `+allserv+`: wykonuje komendę na wszystkich połączonych serwerach
 
 ----
-/allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
-          -include=<server>[,<server>...] <command> [<arguments>]
+/allserv  [-exclude=<serwer>[,<serwer>...]] <komenda> [<argumenty>]
+          -include=<serwer>[,<serwer>...] <komenda> [<argumenty>]
 
- -exclude: exclude some servers (wildcard "*" is allowed)
- -include: include only some servers (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -exclude: wyklucza niektóre serwery (wildcard "*" jest dozwolony)
+ -include: uwzględnia tylko niektóre znaki (wildcard "*" est dozwolony)
+  komenda: komenda do wykonania
+argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
 
-Examples:
-  change nick on all servers:
-    /allserv nick newnick
-  set away on all servers:
-    /allserv away I'm away
-  do a whois on my nick on all servers:
+Przykłady:
+  zmienia nick na wszystkich serwerach:
+    /allserv nick nowy_nick
+  ustawia stan nieobecności na wszystkich serwerach:
+    /allserv away Jestem nieobecny
+  wykonuje whois na własnym nicku na wszystkich serwerach:
     /allserv whois $nick
 ----
 
@@ -719,33 +719,32 @@ powód: powód
 * `+server+`: wyświetla, dodaje lub usuwa serwery IRC
 
 ----
-/server  list|listfull [<server>]
-         add <server> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
-         copy|rename <server> <new_name>
-         reorder <server> [<server>...]
-         open <server>|-all [<server>...]
-         del|keep <server>
+/server  list|listfull [<serwer>]
+         add <serwera> <host>[/<port>] [-temp] [-<opcja>[=<wartość>]] [-no<opcja>]|| copy|rename <serwer> <nowa_nazwa>
+         reorder <serwer> [<serwer>...]
+         open <serwer>|-all [<serwer>...]
+         del|keep <serwer>
          deloutq|jump|raw
 
-    list: list servers (without argument, this list is displayed)
-listfull: list servers with detailed info for each server
-     add: add a new server
-  server: server name, for internal and display use
-hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
-   -temp: add a temporary server (not saved)
-  option: set option for server (for boolean option, value can be omitted)
-nooption: set boolean option to 'off' (for example: -nossl)
-    copy: duplicate a server
-  rename: rename a server
- reorder: reorder list of servers
-    open: open the server buffer without connecting
-    keep: keep server in config file (for temporary servers only)
-     del: delete a server
- deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
-    jump: jump to server buffer
-     raw: open buffer with raw IRC data
+    list: wyświetla listę serwerów (bez argumentu wyświetlana jest ta lista)
+listfull: wyświetla listę serwerów ze szczegółowymi informacjami dla każdego serwera
+     add: tworzy nowy serwer
+  serwer: nazwa serwera, do użytku wewnętrznego i  wyświetlania
+host: nazwa albo adres IP serwera, z opcjonalnym numerem portu (domyślnie: 6667), wiele adresów należy rozdzielić przecinkiem
+   -temp: tworzy serwer tymczasowy (nie zapisany)
+  opcja: ustawia opcję dla serwera (dla opcji boolowskich wartość może zostać pominięta)
+noopcja: ustawia opcje boolowskie na 'off' (na przykład: -nossl)
+    copy: duplikuje serwer
+  rename: zmienia nazwę serwera
+ reorder: zmienia kolejność na liście serwerów
+    open: otwiera bufor serwera nie łącząc się z nim
+    keep: zachowuje serwer w pliku konfiguracyjnym (tylko dla serwerów tymczasowych)
+     del: usuwa serwer
+ deloutq: usuń wiadomości z kolejki dla wszystkich serwerów (wszystkie wiadomości jakie WeeChat obecnie wysyła)
+    jump: przechodzi do bufora serwera
+     raw: otwiera bufor z nieprzetworzonymi danymi IRC
 
-Examples:
+Przykłady:
   /server listfull
   /server add freenode chat.freenode.net
   /server add freenode chat.freenode.net/6697 -ssl -autoconnect

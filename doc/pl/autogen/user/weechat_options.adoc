@@ -411,7 +411,7 @@
 ** domyślna wartość: `+on+`
 
 * [[option_weechat.completion.nick_case_sensitive]] *weechat.completion.nick_case_sensitive*
-** opis: pass:none[case sensitive completion for nicks]
+** opis: pass:none[dopełnienie dla nicków (rozróżniana jest wielkość liter)]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`

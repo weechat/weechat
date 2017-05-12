@@ -237,7 +237,7 @@
 ** domyślna wartość: `+"%h/script"+`
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** opis: pass:none[URL for file with list of scripts]
+** opis: pass:none[adres URL pliku z listą skryptów]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"https://weechat.org/files/plugins.xml.gz"+`

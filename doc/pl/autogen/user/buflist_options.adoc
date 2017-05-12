@@ -3,133 +3,133 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_buflist.format.buffer]] *buflist.format.buffer*
-** opis: pass:none[format of each line with a buffer (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format każdej linii w buforze (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
-** opis: pass:none[format for the line with current buffer (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format linii z obecnym buforem (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${color:,blue}${format_buffer}"+`
 
 * [[option_buflist.format.hotlist]] *buflist.format.hotlist*
-** opis: pass:none[format for hotlist (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format hotlisty (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+" ${color:green}(${hotlist}${color:green})"+`
 
 * [[option_buflist.format.hotlist_highlight]] *buflist.format.hotlist_highlight*
-** opis: pass:none[format for a buffer with hotlist level "highlight" (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format dla bufora z poziomem hotlisty "highlight" (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${color:magenta}"+`
 
 * [[option_buflist.format.hotlist_low]] *buflist.format.hotlist_low*
-** opis: pass:none[format for a buffer with hotlist level "low" (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format dla bufora z poziomem hotlisty "low" (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${color:white}"+`
 
 * [[option_buflist.format.hotlist_message]] *buflist.format.hotlist_message*
-** opis: pass:none[format for a buffer with hotlist level "message" (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format dla bufora z poziomem hotlisty "message" (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${color:brown}"+`
 
 * [[option_buflist.format.hotlist_none]] *buflist.format.hotlist_none*
-** opis: pass:none[format for a buffer not in hotlist (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format dla bufora niw znajdującego się na hotliście (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${color:default}"+`
 
 * [[option_buflist.format.hotlist_private]] *buflist.format.hotlist_private*
-** opis: pass:none[format for a buffer with hotlist level "private" (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format dla bufora z poziomem hotlisty "private" (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${color:green}"+`
 
 * [[option_buflist.format.hotlist_separator]] *buflist.format.hotlist_separator*
-** opis: pass:none[separator for counts in hotlist (note: content is evaluated, see /help buflist)]
+** opis: pass:none[separator dla zliczeń na hotliście (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${color:default},"+`
 
 * [[option_buflist.format.indent]] *buflist.format.indent*
-** opis: pass:none[string displayed to indent channel and private buffers (note: content is evaluated, see /help buflist)]
+** opis: pass:none[ciąg wyświetlany dla wyrównania kanału i prywatnego bufora (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"  "+`
 
 * [[option_buflist.format.lag]] *buflist.format.lag*
-** opis: pass:none[format for lag on an IRC server buffer (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format dla opóźnienia dla buforu serwera IRC (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
 * [[option_buflist.format.nick_prefix]] *buflist.format.nick_prefix*
-** opis: pass:none[format for nick prefix on a channel (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format dla prefiksu nicka na kanale (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${color_nick_prefix}${nick_prefix}"+`
 
 * [[option_buflist.format.number]] *buflist.format.number*
-** opis: pass:none[format for buffer number, ${number} is the indented number (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format dla numeru bufora, ${number} to wyrównany numr (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
-** opis: pass:none[conditions to display a buffer (note: content is evaluated, see /help buflist); for example to hide server buffers if they are merged with core buffer: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
+** opis: pass:none[warunki do wyświetlenia buforu (uwaga: zawartość jest przetwarzana, zobacz /help buflist); na przykład w celu ukrycia buforów serwerów, kiedy są połączone z głównym buforem: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${buffer.hidden}==0"+`
 
 * [[option_buflist.look.enabled]] *buflist.look.enabled*
-** opis: pass:none[enable buflist]
+** opis: pass:none[włącz liste buforów]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
 
 * [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
-** opis: pass:none[if enabled, clicks with left/right buttons on the line with current buffer jump to previous/next visited buffer]
+** opis: pass:none[jeśli włączone, kliknięcie lewym/prawym przyciskiem na linii z obecnym buforem przeskakuje do poprzedniego/następnego odwiedzonego buforu]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`
 
 * [[option_buflist.look.mouse_move_buffer]] *buflist.look.mouse_move_buffer*
-** opis: pass:none[if enabled, mouse gestures (drag & drop) move buffers in list]
+** opis: pass:none[jeśli włączone, gesty myszy (przeciągnij i upuść) przesuwają bufory na liście]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
 
 * [[option_buflist.look.mouse_wheel]] *buflist.look.mouse_wheel*
-** opis: pass:none[if enabled, mouse wheel up/down actions jump to previous/next buffer in list]
+** opis: pass:none[jeśli włączone, ruch rolką myszy w góre/dół przeskakuje do poprzedniego/następnego bufora na liście]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
 
 * [[option_buflist.look.nick_prefix]] *buflist.look.nick_prefix*
-** opis: pass:none[get the nick prefix and its color from nicklist so that ${nick_prefix} can be used in format; this can be slow on buffers with lot of nicks in nicklist, so this option is disabled by default]
+** opis: pass:none[pobiera prefiks i kolor nicka na liście nicków, dzięki czemu ${nick_prefix} może byc użyte w formacie; może to być wolne w buforach z duża ilością nicków widocznych na licie nicków, opcja domyślnie wyłączona]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`
 
 * [[option_buflist.look.nick_prefix_empty]] *buflist.look.nick_prefix_empty*
-** opis: pass:none[when the nick prefix is enabled, display a space instead if there is no nick prefix on the buffer]
+** opis: pass:none[kiedy prefiks nicka jet włączony, wywietla spacje, kiedy nick nie ma prefiksu w buforze]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
 
 * [[option_buflist.look.signals_refresh]] *buflist.look.signals_refresh*
-** opis: pass:none[comma-separated list of extra signals that are hooked and trigger the refresh of buffers list; this can be useful if some custom variables are used in formats and need specific refresh]
+** opis: pass:none[oddzielona przecinkami lista dodatkowych podłączonych sygnałów i wyzwalających odświeżenie listy buforów; może to być przydatne jeśli ustawione są jakieś zmienne używane do formatowania wymagające odpowiedniego odświeżania]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** opis: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer ("var"), a hdata variable of IRC server ("irc_server.var") or a hdata variable of IRC channel ("irc_channel.var"); char "-" can be used before field to reverse order]
+** opis: pass:none[oddzielona przecinkami lista pól do sortowania buforów; każde pole to zmienna hdata bufora ("var"), zmienna hdata serwera IRC ("irc_server.var") lub zmienna hdata kanału IRC ("irc_channel.var"); znak "-" użyty przed nazwą pola odwraca kolejność]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"number,-active"+`
