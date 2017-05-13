@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v1.8]]
-== Version 1.8 (under dev)
+== Version 1.8 (2017-05-13)
 
 [[v1.8_options]]
 === Options
