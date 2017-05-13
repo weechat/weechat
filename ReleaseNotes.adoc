@@ -20,6 +20,20 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v1.8]]
 == Version 1.8 (under dev)
 
+[[v1.8_options]]
+=== Options
+
+The option _script.scripts.url_force_https_ has been removed because now the
+site weechat.org can only be used with HTTPS. +
+Both HTTP and HTTPS protocols are allowed in the option _script.scripts.url_.
+For http://weechat.org an automatic redirection to https://weechat.org will
+occur, so you should check that the CA certificates are properly installed
+on your machine.
+
+Aspell option with color for suggestion on a misspelled word has been renamed:
+
+* _aspell.color.suggestions_ has been renamed to _aspell.color.suggestion_
+
 [[v1.8_buflist_plugin]]
 === Buflist plugin
 
@@ -49,13 +63,6 @@ prevent the plugin from loading on next startup:
 /bar del buflist
 /set weechat.plugin.autoload "*,!buflist"
 ----
-
-[[v1.8_aspell_options]]
-=== Aspell options
-
-Aspell option with color for suggestion on a misspelled word has been renamed:
-
-* _aspell.color.suggestions_ has been renamed to _aspell.color.suggestion_
 
 [[v1.7.1]]
 == Version 1.7.1 (2017-04-22)
