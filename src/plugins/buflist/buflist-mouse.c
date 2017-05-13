@@ -42,7 +42,6 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     char *error, str_value[128], **list_keys;
     int i, num_keys, type;
     struct t_gui_buffer *ptr_buffer;
-    struct t_hdata *ptr_hdata;
 
     /* make C compiler happy */
     (void) pointer;
@@ -75,10 +74,9 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     ptr_buffer = weechat_arraylist_get (buflist_list_buffers, item_line);
     if (!ptr_buffer)
         goto end;
-    ptr_hdata = weechat_hdata_get ("buffer");
     if (!weechat_hdata_check_pointer (
-            ptr_hdata,
-            weechat_hdata_get_list (ptr_hdata, "gui_buffers"),
+            buflist_hdata_buffer,
+            weechat_hdata_get_list (buflist_hdata_buffer, "gui_buffers"),
             ptr_buffer))
     {
         ptr_buffer = NULL;
@@ -94,7 +92,7 @@ end:
     /* browse keys and add values in hashtable */
     for (i = 0; i < num_keys; i++)
     {
-        type = weechat_hdata_get_var_type (ptr_hdata, list_keys[i]);
+        type = weechat_hdata_get_var_type (buflist_hdata_buffer, list_keys[i]);
         switch (type)
         {
             case WEECHAT_HDATA_CHAR:
@@ -175,7 +173,6 @@ void
 buflist_mouse_move_buffer (const char *key, struct t_gui_buffer *buffer,
                            int number2)
 {
-    struct t_hdata *ptr_hdata;
     struct t_gui_buffer *ptr_last_gui_buffer;
     char str_command[128];
 
@@ -193,12 +190,11 @@ buflist_mouse_move_buffer (const char *key, struct t_gui_buffer *buffer,
             || weechat_string_match (key, "*gesture-down", 1))
         {
             number2 = 999999;
-            ptr_hdata = weechat_hdata_get ("buffer");
-            ptr_last_gui_buffer = weechat_hdata_get_list (ptr_hdata,
+            ptr_last_gui_buffer = weechat_hdata_get_list (buflist_hdata_buffer,
                                                           "last_gui_buffer");
             if (ptr_last_gui_buffer)
             {
-                number2 = weechat_hdata_integer (ptr_hdata,
+                number2 = weechat_hdata_integer (buflist_hdata_buffer,
                                                  ptr_last_gui_buffer,
                                                  "number") + 1;
             }
