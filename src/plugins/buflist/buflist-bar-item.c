@@ -78,7 +78,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                         "highlight" };
     const char indent_empty[1] = { '\0' };
     const char *ptr_lag;
-    int is_channel, is_private;
+    int num_buffers, is_channel, is_private;
     int i, j, length_max_number, current_buffer, number, prev_number, priority;
     int rc, count;
 
@@ -121,7 +121,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
 
     buffers = buflist_sort_buffers ();
 
-    for (i = 0; i < weechat_arraylist_size (buffers); i++)
+    num_buffers = weechat_arraylist_size (buffers);
+    for (i = 0; i < num_buffers; i++)
     {
         ptr_buffer = weechat_arraylist_get (buffers, i);
 
