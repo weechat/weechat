@@ -402,7 +402,7 @@ script_repo_alloc ()
 }
 
 /*
- * Compares two script using sort key(s) (from option script.look.sort).
+ * Compares two scripts using sort key(s) (from option script.look.sort).
  *
  * Returns:
  *   < 0: script1 < script2
