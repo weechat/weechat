@@ -71,7 +71,7 @@ buflist_command_init ()
         "buflist",
         N_("bar item with list of buffers"),
         "bar || refresh",
-        N_("bar: add the \"buflist\" bar\n"
+        N_("    bar: add the \"buflist\" bar\n"
            "refresh: force the refresh of the \"buflist\" bar item\n"
            "\n"
            "The lines with buffers are displayed using string evaluation "
