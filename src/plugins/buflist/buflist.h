@@ -33,6 +33,7 @@ extern struct t_weechat_plugin *weechat_buflist_plugin;
 extern struct t_hdata *buflist_hdata_buffer;
 extern struct t_hdata *buflist_hdata_hotlist;
 
+extern void buflist_add_bar ();
 extern void buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
                                             struct t_irc_server **server,
                                             struct t_irc_channel **channel);

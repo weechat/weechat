@@ -45,6 +45,12 @@ buflist_command_buflist (const void *pointer, void *data,
     if (argc == 1)
         return WEECHAT_RC_OK;
 
+    if (weechat_strcasecmp (argv[1], "bar") == 0)
+    {
+        buflist_add_bar ();
+        return WEECHAT_RC_OK;
+    }
+
     if (weechat_strcasecmp (argv[1], "refresh") == 0)
     {
         buflist_bar_item_update ();
@@ -64,8 +70,9 @@ buflist_command_init ()
     weechat_hook_command (
         "buflist",
         N_("bar item with list of buffers"),
-        "refresh",
-        N_("refresh: force the refresh of the \"buflist\" bar item\n"
+        "bar || refresh",
+        N_("bar: add the \"buflist\" bar\n"
+           "refresh: force the refresh of the \"buflist\" bar item\n"
            "\n"
            "The lines with buffers are displayed using string evaluation "
            "(see /help eval for the format), with these options:\n"
@@ -115,6 +122,6 @@ buflist_command_init ()
            "    - ${hotlist}: the raw hotlist\n"
            "    - ${format_lag}: the lag for an IRC server buffer, empty if "
            "there's no lag (evaluation of option buflist.format.lag)"),
-        "refresh",
+        "bar || refresh",
         &buflist_command_buflist, NULL, NULL);
 }

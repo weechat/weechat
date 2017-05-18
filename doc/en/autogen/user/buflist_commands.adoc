@@ -6,8 +6,10 @@
 * `+buflist+`: bar item with list of buffers
 
 ----
-/buflist  refresh
+/buflist  bar
+          refresh
 
+bar: add the "buflist" bar
 refresh: force the refresh of the "buflist" bar item
 
 The lines with buffers are displayed using string evaluation (see /help eval for the format), with these options:

@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v1.9]]
+== Version 1.9 (under dev)
+
+Bug fixes::
+
+  * buflist: add option "bar" in command /buflist, do not automatically add the "buflist" bar when the option buflist.look.enabled is off (issue #994)
+
 [[v1.8]]
 == Version 1.8 (2017-05-13)
 

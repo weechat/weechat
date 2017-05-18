@@ -6,8 +6,10 @@
 * `+buflist+`: objet de barre avec la liste des tampons
 
 ----
-/buflist  refresh
+/buflist  bar
+          refresh
 
+    bar : ajouter la barre "buflist"
 refresh : forcer le rafraichissement de l'objet de barre "buflist"
 
 Les lignes avec les tampons sont affichées en utilisant l'évaluation de chaînes (voir /help eval pour le format), avec ces options :

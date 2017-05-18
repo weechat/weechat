@@ -6,35 +6,37 @@
 * `+buflist+`: バッファのリストを表示するバー要素
 
 ----
-/buflist  refresh
+/buflist  bar
+          refresh
 
-refresh: 強制的に "buflist" バー要素の内容を最新の状態に更新します
+bar: add the "buflist" bar
+refresh: force the refresh of the "buflist" bar item
 
-各バッファエントリは文字列評価 (書式は /help eval を参照してください) を使って表示されます、以下のオプションで指定します:
-  - buflist.look.display_conditions: バッファをリスト内に表示する条件
-  - buflist.format.buffer: 現在のバッファ以外のバッファを表示する書式
-  - buflist.format.buffer_current: 現在のバッファを表示する書式
+The lines with buffers are displayed using string evaluation (see /help eval for the format), with these options:
+  - buflist.look.display_conditions: conditions to display a buffer in the list
+  - buflist.format.buffer: format for a buffer which is not current buffer
+  - buflist.format.buffer_current: format for the current buffer
 
-以下は上記オプションで使用可能な変数です:
-  - バッファデータ (完全なリストは API リファレンスの hdata "buffer" を参照してください)、例:
+The following variables can be used in these options:
+  - buffer data (see hdata "buffer" in API doc for a complete list), for example:
     - ${buffer.number}
     - ${buffer.name}
     - ${buffer.full_name}
     - ${buffer.short_name}
     - ${buffer.nicklist_nicks_count}
-  - irc_server: IRC サーバデータ、IRC バッファのみで定義 (API リファレンスの hdata "irc_server" を参照してください)
-  - irc_channel: IRC チャンネルデータ、IRC チャンネルバッファのみで定義 (API リファレンスの hdata "irc_channel" を参照してください)
-  - buflist プラグインが利便性向上の目的で追加した変数:
-    - ${format_buffer}: buflist.format.buffer オプションの評価結果; 例えば単に背景色を変えるなどの目的で、この変数を buflist.format.buffer_current オプションの中で使うことも可能です。
-    - ${format_number}: 区切り文字を付けたインデント済み番号 (buflist.format.number オプションの評価結果)
-    - ${number}: インデント済み番号、例えば 10 から 99 番のバッファがある場合に " 1"
-    - ${indent}: 名前用のインデント (チャンネルとプライベートバッファがインデントされます)
-    - ${format_nick_prefix}: チャンネルにおける色付きニックネームプレフィックス (buflist.format.nick_prefix オプションの評価結果)
-    - ${color_nick_prefix}: チャンネルにおけるニックネームプレフィックスの色 (buflist.look.nick_prefix オプションが有効化された場合のみ設定されます)
-    - ${nick_prefix}: チャンネルにおけるニックネームプレフィックス (buflist.look.nick_prefix オプションが有効化された場合のみ設定されます)
-    - ${name}: 短縮名 (設定済みの場合)、未設定の場合には名前
-    - ${color_hotlist}: 対象バッファのホットリストレベルの最大値に対応する色 (buflist.format.hotlist_xxx オプションの評価結果、xxx がレベル)
-    - ${format_hotlist}: 評価後のホットリスト (buflist.format.hotlist オプションの評価結果)
-    - ${hotlist}: 評価前のホットリスト
-    - ${format_lag}: IRC サーババッファの遅延時間、遅延がない場合は空 (buflist.format.lag オプションの評価結果)
+  - irc_server: IRC server data, defined only on an IRC buffer (see hdata "irc_server" in API doc)
+  - irc_channel: IRC channel data, defined only on an IRC channel buffer (see hdata "irc_channel" in API doc)
+  - extra variables added by buflist for convenience:
+    - ${format_buffer}: the evaluated value of option buflist.format.buffer; this can be used in option buflist.format.buffer_current to just change the background color for example
+    - ${format_number}: indented number with separator (evaluation of option buflist.format.number)
+    - ${number}: indented number, for example " 1" if there are between 10 and 99 buffers
+    - ${indent}: indentation for name (channel and private buffers are indented) (evaluation of option buflist.format.indent)
+    - ${format_nick_prefix}: colored nick prefix for a channel (evaluation of option buflist.format.nick_prefix)
+    - ${color_nick_prefix}: color of nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
+    - ${nick_prefix}: nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
+    - ${name}: the short name (if set), with a fallback on the name
+    - ${color_hotlist}: the color depending on the highest hotlist level for the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the level)
+    - ${format_hotlist}: the formatted hotlist (evaluation of option buflist.format.hotlist)
+    - ${hotlist}: the raw hotlist
+    - ${format_lag}: the lag for an IRC server buffer, empty if there's no lag (evaluation of option buflist.format.lag)
 ----
