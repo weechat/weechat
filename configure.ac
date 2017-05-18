@@ -113,6 +113,7 @@ AH_VERBATIM([PLUGIN_BUFLIST], [#undef PLUGIN_BUFLIST])
 AH_VERBATIM([PLUGIN_CHARSET], [#undef PLUGIN_CHARSET])
 AH_VERBATIM([PLUGIN_EXEC], [#undef PLUGIN_EXEC])
 AH_VERBATIM([PLUGIN_FIFO], [#undef PLUGIN_FIFO])
+AH_VERBATIM([PLUGIN_FSET], [#undef PLUGIN_FSET])
 AH_VERBATIM([PLUGIN_IRC], [#undef PLUGIN_IRC])
 AH_VERBATIM([PLUGIN_LOGGER], [#undef PLUGIN_LOGGER])
 AH_VERBATIM([PLUGIN_RELAY], [#undef PLUGIN_RELAY])
@@ -144,6 +145,7 @@ AC_ARG_ENABLE(buflist,      [  --disable-buflist       turn off Buflist plugin (
 AC_ARG_ENABLE(charset,      [  --disable-charset       turn off Charset plugin (default=compiled)],enable_charset=$enableval,enable_charset=yes)
 AC_ARG_ENABLE(exec,         [  --disable-exec          turn off Exec plugin (default=compiled)],enable_exec=$enableval,enable_exec=yes)
 AC_ARG_ENABLE(fifo,         [  --disable-fifo          turn off Fifo plugin (default=compiled)],enable_fifo=$enableval,enable_fifo=yes)
+AC_ARG_ENABLE(fset,         [  --disable-fset          turn off Fast Set plugin (default=compiled)],enable_fset=$enableval,enable_fset=yes)
 AC_ARG_ENABLE(irc,          [  --disable-irc           turn off IRC plugin (default=compiled)],enable_irc=$enableval,enable_irc=yes)
 AC_ARG_ENABLE(logger,       [  --disable-logger        turn off Logger plugin (default=compiled)],enable_logger=$enableval,enable_logger=yes)
 AC_ARG_ENABLE(relay,        [  --disable-relay         turn off Relay plugin (default=compiled)],enable_relay=$enableval,enable_relay=yes)
@@ -419,6 +421,14 @@ if test "x$enable_fifo" = "xyes" ; then
     AC_DEFINE(PLUGIN_FIFO)
 else
     not_asked="$not_asked fifo"
+fi
+
+# --------------------------------- fset ---------------------------------------
+
+if test "x$enable_fset" = "xyes" ; then
+    AC_DEFINE(PLUGIN_FSET)
+else
+    not_asked="$not_asked fset"
 fi
 
 # ----------------------------------- irc --------------------------------------
@@ -1259,6 +1269,7 @@ AM_CONDITIONAL(PLUGIN_BUFLIST,          test "$enable_buflist" = "yes")
 AM_CONDITIONAL(PLUGIN_CHARSET,          test "$enable_charset" = "yes")
 AM_CONDITIONAL(PLUGIN_EXEC,             test "$enable_exec" = "yes")
 AM_CONDITIONAL(PLUGIN_FIFO,             test "$enable_fifo" = "yes")
+AM_CONDITIONAL(PLUGIN_FSET,             test "$enable_fset" = "yes")
 AM_CONDITIONAL(PLUGIN_IRC,              test "$enable_irc" = "yes")
 AM_CONDITIONAL(PLUGIN_LOGGER,           test "$enable_logger" = "yes")
 AM_CONDITIONAL(PLUGIN_RELAY,            test "$enable_relay" = "yes")
@@ -1296,6 +1307,7 @@ AC_OUTPUT([Makefile
            src/plugins/charset/Makefile
            src/plugins/exec/Makefile
            src/plugins/fifo/Makefile
+           src/plugins/fset/Makefile
            src/plugins/irc/Makefile
            src/plugins/logger/Makefile
            src/plugins/relay/Makefile
@@ -1348,6 +1360,9 @@ if test "x$enable_exec" = "xyes"; then
 fi
 if test "x$enable_fifo" = "xyes"; then
     listplugins="$listplugins fifo"
+fi
+if test "x$enable_fset" = "xyes"; then
+    listplugins="$listplugins fset"
 fi
 if test "x$enable_irc" = "xyes" ; then
     listplugins="$listplugins irc"

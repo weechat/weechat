@@ -26,6 +26,7 @@
 extern "C" {
 #endif /* __cplusplus */
 
+#include <stddef.h>
 #include <time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
