@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 Improvements::
 
+  * core: allow index for hdata arrays in evaluation of expressions
   * buflist: add variable `${current_buffer}` (boolean "0" / "1") in bar item evaluation
 
 Bug fixes::

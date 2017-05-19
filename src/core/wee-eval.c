@@ -147,8 +147,8 @@ char *
 eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path)
 {
     char *value, *old_value, *var_name, str_value[128], *pos;
-    const char *ptr_value, *hdata_name;
-    int type;
+    const char *ptr_value, *hdata_name, *ptr_var_name;
+    int type, index;
     struct t_hashtable *hashtable;
 
     value = NULL;
@@ -180,7 +180,8 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path)
         goto end;
 
     /* search type of variable in hdata */
-    type = hdata_get_var_type (hdata, var_name);
+    hdata_get_index_and_name (var_name, &index, &ptr_var_name);
+    type = hdata_get_var_type (hdata, ptr_var_name);
     if (type < 0)
         goto end;
 
