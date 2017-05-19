@@ -28,6 +28,7 @@ Les variables suivantes peuvent être utilisées dans ces options :
   - irc_channel: données du canal IRC, défini seulement sur un tampon de canal IRC (voir le hdata "irc_channel" dans la doc API)
   - variables additionnelles ajoutées par buflist pour des raisons pratiques :
     - ${format_buffer} : la valeur évaluée de l'option buflist.format.buffer ; peut être utilisée dans l'option buflist.format.buffer_current pour juste changer la couleur de fond par exemple
+    - ${current_buffer} : un booléen ("0" ou "1"), "1" s'il s'agit du tampon courant ; cela peut être utilisé dans une condition : ${if:${current_buffer}?...:...}
     - ${format_number} : numéro indenté avec un séparateur (évaluation de l'option buflist.format.number)
     - ${number} : numéro indenté, par exemple " 1" s'il y a entre 10 et 99 tampons
     - ${indent} : indentation pour le nom (les tampons de canaux ou privés sont indentés) (évaluation de l'option buflist.format.indent)

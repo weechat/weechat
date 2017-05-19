@@ -168,6 +168,11 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                 goto error;
         }
 
+        /* current buffer */
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "current_buffer",
+                               (current_buffer) ? "1" : "0");
+
         /* buffer number */
         number = weechat_hdata_integer (buflist_hdata_buffer,
                                         ptr_buffer, "number");

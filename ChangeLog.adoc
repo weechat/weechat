@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v1.9]]
 == Version 1.9 (under dev)
 
+Improvements::
+
+  * buflist: add variable `${current_buffer}` (boolean "0" / "1") in bar item evaluation
+
 Bug fixes::
 
   * buflist: add option "bar" in command /buflist, do not automatically add the "buflist" bar when the option buflist.look.enabled is off (issue #994)
