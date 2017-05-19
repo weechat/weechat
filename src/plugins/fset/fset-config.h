@@ -30,6 +30,11 @@ extern struct t_config_option *fset_config_look_use_keys;
 extern struct t_config_option *fset_config_format_option;
 extern struct t_config_option *fset_config_format_option_current;
 
+extern struct t_config_option *fset_config_color_default_value[2];
+extern struct t_config_option *fset_config_color_name[2];
+extern struct t_config_option *fset_config_color_type[2];
+extern struct t_config_option *fset_config_color_value[2];
+
 extern char *fset_config_eval_format_option_current;
 
 extern int fset_config_init ();

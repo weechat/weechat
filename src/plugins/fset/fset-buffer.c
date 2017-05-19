@@ -47,7 +47,9 @@ void
 fset_buffer_display_line (int y, struct t_fset_option *option)
 {
     char *line, str_format[32], str_value[1024];
-    int i, *ptr_length;
+    int i, selected_line, *ptr_length;
+
+    selected_line = (y == fset_buffer_selected_line) ? 1 : 0;
 
     /* set pointers */
     weechat_hashtable_set (fset_buffer_hashtable_pointers, "fset_option", option);
@@ -70,11 +72,31 @@ fset_buffer_display_line (int y, struct t_fset_option *option)
                                str_value);
     }
 
+    /* set colors */
+    snprintf (str_value, sizeof (str_value),
+              "%s",
+              weechat_color (weechat_config_string (fset_config_color_name[selected_line])));
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "color_name", str_value);
+    snprintf (str_value, sizeof (str_value),
+              "%s",
+              weechat_color (weechat_config_string (fset_config_color_type[selected_line])));
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "color_type", str_value);
+    snprintf (str_value, sizeof (str_value),
+              "%s",
+              weechat_color (weechat_config_string (fset_config_color_default_value[selected_line])));
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "color_default_value", str_value);
+    snprintf (str_value, sizeof (str_value),
+              "%s",
+              weechat_color (weechat_config_string (fset_config_color_value[selected_line])));
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "color_value", str_value);
+
     /* build string for line */
     line = weechat_string_eval_expression (
-        (y == fset_buffer_selected_line) ?
-        fset_config_eval_format_option_current :
-        weechat_config_string (fset_config_format_option),
+        (selected_line) ? fset_config_eval_format_option_current : weechat_config_string (fset_config_format_option),
         fset_buffer_hashtable_pointers,
         fset_buffer_hashtable_extra_vars,
         NULL);
