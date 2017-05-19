@@ -47,9 +47,14 @@ void
 fset_buffer_display_line (int y, struct t_fset_option *option)
 {
     char *line, str_format[32], str_value[1024];
-    int i, selected_line, *ptr_length;
+    const char *ptr_value;
+    int i, selected_line, *ptr_length, value_undef, value_diff;
+    struct t_config_option *ptr_option_color_value;
 
     selected_line = (y == fset_buffer_selected_line) ? 1 : 0;
+
+    value_undef = (option->value == NULL) ? 1 : 0;
+    value_diff = (fset_option_value_different_from_default (option)) ? 1 : 0;
 
     /* set pointers */
     weechat_hashtable_set (fset_buffer_hashtable_pointers, "fset_option", option);
@@ -62,11 +67,12 @@ fset_buffer_display_line (int y, struct t_fset_option *option)
         snprintf (str_format, sizeof (str_format),
                   "%%-%ds",
                   (ptr_length) ? *ptr_length : fset_buffer_columns_default_size[i]);
+        ptr_value = weechat_hdata_string (fset_hdata_fset_option,
+                                          option,
+                                          fset_buffer_columns[i]);
         snprintf (str_value, sizeof (str_value),
                   str_format,
-                  weechat_hdata_string (fset_hdata_fset_option,
-                                        option,
-                                        fset_buffer_columns[i]));
+                  (ptr_value) ? ptr_value : "null");
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                fset_buffer_columns[i],
                                str_value);
@@ -88,11 +94,22 @@ fset_buffer_display_line (int y, struct t_fset_option *option)
               weechat_color (weechat_config_string (fset_config_color_default_value[selected_line])));
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "color_default_value", str_value);
+    if (value_undef)
+        ptr_option_color_value = fset_config_color_value_undef[selected_line];
+    else if (value_diff)
+        ptr_option_color_value = fset_config_color_value_diff[selected_line];
+    else
+        ptr_option_color_value = fset_config_color_value[selected_line];
     snprintf (str_value, sizeof (str_value),
               "%s",
-              weechat_color (weechat_config_string (fset_config_color_value[selected_line])));
+              weechat_color (weechat_config_string (ptr_option_color_value)));
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "color_value", str_value);
+
+    /* set other variables depending on the value */
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "value_undef",
+                           (option->value == NULL) ? "1" : "0");
 
     /* build string for line */
     line = weechat_string_eval_expression (

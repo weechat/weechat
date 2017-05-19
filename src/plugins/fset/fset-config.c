@@ -46,6 +46,8 @@ struct t_config_option *fset_config_color_default_value[2];
 struct t_config_option *fset_config_color_name[2];
 struct t_config_option *fset_config_color_type[2];
 struct t_config_option *fset_config_color_value[2];
+struct t_config_option *fset_config_color_value_diff[2];
+struct t_config_option *fset_config_color_value_undef[2];
 
 char *fset_config_eval_format_option_current = NULL;
 
@@ -267,6 +269,38 @@ fset_config_init ()
         "value_selected", "color",
         N_("color for value on the selected line"),
         NULL, 0, 0, "lightcyan", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_value_diff[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "value_diff", "color",
+        N_("color for value different from default"),
+        NULL, 0, 0, "green", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_value_diff[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "value_diff_selected", "color",
+        N_("color for value different from default on the selected line"),
+        NULL, 0, 0, "lightgreen", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_value_undef[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "value_undef", "color",
+        N_("color for undefined value"),
+        NULL, 0, 0, "magenta", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_value_undef[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "value_undef_selected", "color",
+        N_("color for undefined value on the selected line"),
+        NULL, 0, 0, "lightmagenta", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color, NULL, NULL,
         NULL, NULL, NULL);

@@ -34,6 +34,8 @@ extern struct t_config_option *fset_config_color_default_value[2];
 extern struct t_config_option *fset_config_color_name[2];
 extern struct t_config_option *fset_config_color_type[2];
 extern struct t_config_option *fset_config_color_value[2];
+extern struct t_config_option *fset_config_color_value_diff[2];
+extern struct t_config_option *fset_config_color_value_undef[2];
 
 extern char *fset_config_eval_format_option_current;
 

@@ -89,6 +89,29 @@ fset_option_search_by_name (const char *name)
 }
 
 /*
+ * Checks if the option value is different from the default value.
+ *
+ * Returns:
+ *   1: value is different from default value
+ *   0: value is the same as default value
+ */
+
+int
+fset_option_value_different_from_default (struct t_fset_option *option)
+{
+    if (!option->value && !option->default_value)
+        return 0;
+
+    if ((option->value && !option->default_value)
+        || (!option->value && option->default_value))
+    {
+        return 1;
+    }
+
+    return (strcmp (option->value, option->default_value) != 0) ? 1 : 0;
+}
+
+/*
  * Sets max length for a field in hashtable "fset_option_max_length_field".
  */
 
@@ -112,6 +135,7 @@ fset_option_set_value_string (struct t_config_option *option,
                               char **value_string)
 {
     char str_value[64];
+    int length;
 
     if (!value)
     {
@@ -128,7 +152,10 @@ fset_option_set_value_string (struct t_config_option *option,
     }
     else if (strcmp (type, "string") == 0)
     {
-        *value_string = strdup ((const char *)value);
+        length = 1 + strlen ((const char *)value) + 1 + 1;
+        *value_string = malloc (length);
+        if (*value_string)
+            snprintf (*value_string, length, "\"%s\"", (const char *)value);
     }
     else if (strcmp (type, "color") == 0)
     {
