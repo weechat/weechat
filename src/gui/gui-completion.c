@@ -362,7 +362,7 @@ gui_completion_nickncmp (const char *base_word, const char *nick, int max)
 
     if (!CONFIG_STRING(config_completion_nick_ignore_chars)
         || !CONFIG_STRING(config_completion_nick_ignore_chars)[0]
-        || !base_word || !nick || !base_word[0] || !nick[0]
+        || !base_word[0] || !nick[0]
         || gui_completion_nick_has_ignored_chars (base_word))
     {
         return (case_sensitive) ?
