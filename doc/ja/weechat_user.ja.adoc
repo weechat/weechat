@@ -1686,6 +1686,18 @@ kbd:[Ctrl+r] が押された状態) でのみ有効です。
 | ⇓            | -            | チャット (スクリプトバッファ) | スクリプトバッファで 5 行下方向にスクロール | `/script down 5`
 | kbd:[Ctrl+⇑] | -            | チャット                      | 水平左方向にスクロール | `/window scroll_horiz -window ${_window_number} -10%`
 | kbd:[Ctrl+⇓] | -            | チャット                      | 水平右方向にスクロール | `/window scroll_horiz -window ${_window_number} +10%`
+// TRANSLATION MISSING
+| ◾◽◽          | up / left    | buflist              | Move buffer to a lower number. | Signal `buflist_mouse`.
+// TRANSLATION MISSING
+| ◾◽◽          | down / right | buflist              | Move buffer to a higher number. | Signal `buflist_mouse`.
+// TRANSLATION MISSING
+| ◾◽◽          | -            | buflist              | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `buflist_mouse`.
+// TRANSLATION MISSING
+| ◽◽◾          | -            | buflist              | Switch to next visited buffer if the buffer is the current one. | Signal `buflist_mouse`.
+// TRANSLATION MISSING
+| kbd:[Ctrl+⇑] | -            | buflist              | Switch to previous buffer. | Signal `buflist_mouse`.
+// TRANSLATION MISSING
+| kbd:[Ctrl+⇓] | -            | buflist              | Switch to next buffer. | Signal `buflist_mouse`.
 | ◾◽◽          | 上           | ニックネームリスト            | ニックネームリストを 1 ページ分上方向にスクロール | `/bar scroll nicklist ${_window_number} -100%`
 | ◾◽◽          | 下           | ニックネームリスト            | ニックネームリストを 1 ページ分下方向にスクロール | `/bar scroll nicklist ${_window_number} +100%`
 | ◾◽◽          | 上 (長く)    | ニックネームリスト            | ニックネームリストの最初に移動 | `/bar scroll nicklist ${_window_number} b`
