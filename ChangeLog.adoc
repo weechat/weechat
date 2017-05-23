@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v1.9]]
 == Version 1.9 (under dev)
 
+New features::
+
+  * buflist: add keys kbd:[F1]/kbd:[F2], kbd:[Alt+F1]/kbd:[Alt+F2] to scroll the buflist bar
+
 Improvements::
 
   * core: allow index for hdata arrays in evaluation of expressions

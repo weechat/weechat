@@ -1564,6 +1564,14 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Alt+PgDn]  | Przewiń w dół kilka linii w historii bufora. | `/window scroll_down`
 | kbd:[Alt+Home]  | Przewiń na górę bufora. | `/window scroll_top`
 | kbd:[Alt+End]   | Przewiń na dół bufora. | `/window scroll_bottom`
+// TRANSLATION MISSING
+| kbd:[F1]        | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
+// TRANSLATION MISSING
+| kbd:[F2]        | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
+// TRANSLATION MISSING
+| kbd:[Alt+F1]    | Go to the beginning of buflist. | `/bar scroll buflist * b`
+// TRANSLATION MISSING
+| kbd:[Alt+F2]    | Go to the end of buflist. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +

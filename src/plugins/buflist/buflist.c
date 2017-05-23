@@ -437,6 +437,8 @@ buflist_sort_buffers ()
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    struct t_hashtable *keys;
+
     /* make C compiler happy */
     (void) argc;
     (void) argv;
@@ -462,6 +464,44 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     buflist_bar_item_update ();
 
     buflist_mouse_init ();
+
+    /* default keys and mouse actions */
+    keys = weechat_hashtable_new (32,
+                                  WEECHAT_HASHTABLE_STRING,
+                                  WEECHAT_HASHTABLE_STRING,
+                                  NULL, NULL);
+    if (keys)
+    {
+        /* default keys */
+        weechat_hashtable_set (keys,
+                               "meta-OP", "/bar scroll buflist * -100%");
+        weechat_hashtable_set (keys,
+                               "meta-OQ", "/bar scroll buflist * +100%");
+        weechat_hashtable_set (keys,
+                               "meta-meta-OP", "/bar scroll buflist * b");
+        weechat_hashtable_set (keys,
+                               "meta-meta-OQ", "/bar scroll buflist * e");
+        weechat_key_bind ("default", keys);
+
+        /* default mouse actions */
+        weechat_hashtable_remove_all (keys);
+        weechat_hashtable_set (keys,
+                               "@item(" BUFLIST_BAR_ITEM_NAME "):button1*",
+                               "hsignal:" BUFLIST_MOUSE_HSIGNAL);
+        weechat_hashtable_set (keys,
+                               "@item(" BUFLIST_BAR_ITEM_NAME "):button2*",
+                               "hsignal:" BUFLIST_MOUSE_HSIGNAL);
+        weechat_hashtable_set (keys,
+                               "@bar(" BUFLIST_BAR_NAME "):ctrl-wheelup",
+                               "hsignal:" BUFLIST_MOUSE_HSIGNAL);
+        weechat_hashtable_set (keys,
+                               "@bar(" BUFLIST_BAR_NAME "):ctrl-wheeldown",
+                               "hsignal:" BUFLIST_MOUSE_HSIGNAL);
+        weechat_hashtable_set (keys, "__quiet", "1");
+        weechat_key_bind ("mouse", keys);
+    }
+
+    weechat_hashtable_free (keys);
 
     return WEECHAT_RC_OK;
 }

@@ -1554,6 +1554,14 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | kbd:[Alt+PgDn]  | バッファ履歴を数行分下方向にスクロール | `/window scroll_down`
 | kbd:[Alt+Home]  | バッファ履歴を最初までスクロール | `/window scroll_top`
 | kbd:[Alt+End]   | バッファ履歴を最後までスクロール | `/window scroll_bottom`
+// TRANSLATION MISSING
+| kbd:[F1]        | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
+// TRANSLATION MISSING
+| kbd:[F2]        | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
+// TRANSLATION MISSING
+| kbd:[Alt+F1]    | Go to the beginning of buflist. | `/bar scroll buflist * b`
+// TRANSLATION MISSING
+| kbd:[Alt+F2]    | Go to the end of buflist. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +

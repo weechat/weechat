@@ -321,36 +321,10 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
 int
 buflist_mouse_init ()
 {
-    struct t_hashtable *keys;
-
-    keys = weechat_hashtable_new (4,
-                                  WEECHAT_HASHTABLE_STRING,
-                                  WEECHAT_HASHTABLE_STRING,
-                                  NULL, NULL);
-    if (!keys)
-        return 0;
-
     weechat_hook_focus (BUFLIST_BAR_ITEM_NAME, &buflist_focus_cb, NULL, NULL);
 
     weechat_hook_hsignal(BUFLIST_MOUSE_HSIGNAL,
                          &buflist_hsignal_cb, NULL, NULL);
-
-    weechat_hashtable_set (keys,
-                           "@item(" BUFLIST_BAR_ITEM_NAME "):button1*",
-                           "hsignal:" BUFLIST_MOUSE_HSIGNAL);
-    weechat_hashtable_set (keys,
-                           "@item(" BUFLIST_BAR_ITEM_NAME "):button2*",
-                           "hsignal:" BUFLIST_MOUSE_HSIGNAL);
-    weechat_hashtable_set (keys,
-                           "@bar(" BUFLIST_BAR_NAME "):ctrl-wheelup",
-                           "hsignal:" BUFLIST_MOUSE_HSIGNAL);
-    weechat_hashtable_set (keys,
-                           "@bar(" BUFLIST_BAR_NAME "):ctrl-wheeldown",
-                           "hsignal:" BUFLIST_MOUSE_HSIGNAL);
-    weechat_hashtable_set (keys, "__quiet", "1");
-    weechat_key_bind ("mouse", keys);
-
-    weechat_hashtable_free (keys);
 
     return 1;
 }
