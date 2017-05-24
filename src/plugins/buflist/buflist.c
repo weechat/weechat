@@ -71,8 +71,7 @@ buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
                                 struct t_irc_server **server,
                                 struct t_irc_channel **channel)
 {
-    const char *ptr_server_name, *ptr_channel_name;
-    char str_condition[512];
+    const char *ptr_server_name, *ptr_channel_name, *ptr_name;
     struct t_hdata *hdata_irc_server, *hdata_irc_channel;
 
     *server = NULL;
@@ -93,15 +92,15 @@ buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
         return;
 
     /* search the server by name in list of servers */
-    snprintf (str_condition, sizeof (str_condition),
-              "${irc_server.name} == %s",
-              ptr_server_name);
     *server = weechat_hdata_get_list (hdata_irc_server,
                                       "irc_servers");
-    *server = weechat_hdata_search (hdata_irc_server,
-                                    *server,
-                                    str_condition,
-                                    1);
+    while (*server)
+    {
+        ptr_name = weechat_hdata_string (hdata_irc_server, *server, "name");
+        if (strcmp (ptr_name, ptr_server_name) == 0)
+            break;
+        *server = weechat_hdata_move (hdata_irc_server, *server, 1);
+    }
     if (!*server)
         return;
 
@@ -117,16 +116,16 @@ buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
         return;
 
     /* search the channel by name in list of channels on the server */
-    snprintf (str_condition, sizeof (str_condition),
-              "${irc_channel.name} == %s",
-              ptr_channel_name);
     *channel = weechat_hdata_pointer (hdata_irc_server,
                                       *server,
                                       "channels");
-    *channel = weechat_hdata_search (hdata_irc_channel,
-                                     *channel,
-                                     str_condition,
-                                     1);
+    while (*channel)
+    {
+        ptr_name = weechat_hdata_string (hdata_irc_channel, *channel, "name");
+        if (strcmp (ptr_name, ptr_channel_name) == 0)
+            break;
+        *channel = weechat_hdata_move (hdata_irc_channel, *channel, 1);
+    }
 }
 
 /*
