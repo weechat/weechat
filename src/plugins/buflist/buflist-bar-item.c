@@ -379,7 +379,7 @@ buflist_bar_item_init ()
 {
     /* create hashtables used by the bar item callback */
     buflist_hashtable_pointers = weechat_hashtable_new (
-        8,
+        32,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_POINTER,
         NULL,
@@ -388,7 +388,7 @@ buflist_bar_item_init ()
         return 0;
 
     buflist_hashtable_extra_vars = weechat_hashtable_new (
-        32,
+        128,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING,
         NULL,
@@ -400,7 +400,7 @@ buflist_bar_item_init ()
     }
 
     buflist_hashtable_options = weechat_hashtable_new (
-        8,
+        32,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING,
         NULL,
@@ -414,7 +414,7 @@ buflist_bar_item_init ()
     weechat_hashtable_set (buflist_hashtable_options, "extra", "eval");
 
     buflist_hashtable_options_conditions = weechat_hashtable_new (
-        8,
+        32,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING,
         NULL, NULL);
