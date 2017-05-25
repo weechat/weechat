@@ -2565,6 +2565,7 @@ TOR プロキシを設定:
 /set irc.server.freenode-tor.proxy "tor"
 ----
 
+// TRANSLATION MISSING
 ECDSA-NIST256P-CHALLENGE メカニズムで SASL 認証を設定 (see the chapter
 <<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE 認証>> to generate
 a private key):
