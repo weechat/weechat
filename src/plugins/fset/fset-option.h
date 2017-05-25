@@ -32,6 +32,7 @@
 struct t_fset_option
 {
     char *name;                          /* option name                     */
+    char *parent_name;                   /* parent option name              */
     char *type;                          /* option type                     */
     char *default_value;                 /* option default value            */
     char *value;                         /* option value                    */
@@ -44,11 +45,16 @@ extern struct t_hashtable *fset_option_max_length_field;
 extern char *fset_option_filter;
 
 extern int fset_option_valid (struct t_fset_option *option);
-extern struct t_fset_option *fset_option_search_by_name (const char *name);
+extern struct t_fset_option *fset_option_search_by_name (const char *name,
+                                                         int *line);
 extern int fset_option_value_different_from_default (struct t_fset_option *option);
 extern void fset_option_set_filter (const char *filter);
 extern void fset_option_get_options ();
 extern void fset_option_filter_options (const char *search);
+extern int fset_option_config_cb (const void *pointer,
+                                  void *data,
+                                  const char *option,
+                                  const char *value);
 extern struct t_hdata *fset_option_hdata_option_cb (const void *pointer,
                                                     void *data,
                                                     const char *hdata_name);

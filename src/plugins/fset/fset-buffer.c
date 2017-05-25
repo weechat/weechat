@@ -31,12 +31,12 @@
 
 
 struct t_gui_buffer *fset_buffer = NULL;
-int fset_buffer_selected_line = 0;
+int fset_buffer_selected_line = -1;
 struct t_hashtable *fset_buffer_hashtable_pointers = NULL;
 struct t_hashtable *fset_buffer_hashtable_extra_vars = NULL;
-char *fset_buffer_columns[] = { "name", "type", "default_value", "value",
-                                NULL };
-int fset_buffer_columns_default_size[] = { 64, 8, 16, 16 };
+char *fset_buffer_columns[] = { "name", "parent_name", "type", "default_value",
+                                "value", NULL };
+int fset_buffer_columns_default_size[] = { 64, 64, 8, 16, 16 };
 
 
 /*
@@ -44,7 +44,7 @@ int fset_buffer_columns_default_size[] = { 64, 8, 16, 16 };
  */
 
 void
-fset_buffer_display_line (int y, struct t_fset_option *option)
+fset_buffer_display_line (int y, struct t_fset_option *fset_option)
 {
     char *line, str_format[32], str_value[1024];
     const char *ptr_value;
@@ -53,11 +53,12 @@ fset_buffer_display_line (int y, struct t_fset_option *option)
 
     selected_line = (y == fset_buffer_selected_line) ? 1 : 0;
 
-    value_undef = (option->value == NULL) ? 1 : 0;
-    value_diff = (fset_option_value_different_from_default (option)) ? 1 : 0;
+    value_undef = (fset_option->value == NULL) ? 1 : 0;
+    value_diff = (fset_option_value_different_from_default (fset_option)) ? 1 : 0;
 
     /* set pointers */
-    weechat_hashtable_set (fset_buffer_hashtable_pointers, "fset_option", option);
+    weechat_hashtable_set (fset_buffer_hashtable_pointers,
+                           "fset_option", fset_option);
 
     /* set column variables */
     for (i = 0; fset_buffer_columns[i]; i++)
@@ -68,7 +69,7 @@ fset_buffer_display_line (int y, struct t_fset_option *option)
                   "%%-%ds",
                   (ptr_length) ? *ptr_length : fset_buffer_columns_default_size[i]);
         ptr_value = weechat_hdata_string (fset_hdata_fset_option,
-                                          option,
+                                          fset_option,
                                           fset_buffer_columns[i]);
         snprintf (str_value, sizeof (str_value),
                   str_format,
@@ -109,7 +110,7 @@ fset_buffer_display_line (int y, struct t_fset_option *option)
     /* set other variables depending on the value */
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "value_undef",
-                           (option->value == NULL) ? "1" : "0");
+                           (fset_option->value == NULL) ? "1" : "0");
 
     /* build string for line */
     line = weechat_string_eval_expression (
@@ -134,7 +135,7 @@ fset_buffer_refresh (int clear)
 {
     char str_title[1024];
     int num_options, i;
-    struct t_fset_option *ptr_option;
+    struct t_fset_option *ptr_fset_option;
 
     if (!fset_buffer)
         return;
@@ -152,8 +153,8 @@ fset_buffer_refresh (int clear)
 
     for (i = 0; i < num_options; i++)
     {
-        ptr_option = weechat_arraylist_get (fset_options, i);
-        fset_buffer_display_line (i, ptr_option);
+        ptr_fset_option = weechat_arraylist_get (fset_options, i);
+        fset_buffer_display_line (i, ptr_fset_option);
     }
 }
 
@@ -395,14 +396,14 @@ fset_buffer_set_callbacks ()
 void
 fset_buffer_set_keys ()
 {
-    char *keys[][2] = { { "meta-t",  "toggle"   },
-                        { "meta-+",  "increase" },
-                        { "meta--",  "decrease" },
-                        { "meta-r",  "reset"    },
-                        { "meta-u",  "unset"    },
-                        { "meta-s",  "set"      },
-                        { "meta-a",  "append"   },
-                        { NULL,     NULL        } };
+    char *keys[][2] = { { "meta- ",       "toggle"   },
+                        { "meta--",       "decrease" },
+                        { "meta-+",       "increase" },
+                        { "meta-fmeta-r", "reset"    },
+                        { "meta-fmeta-u", "unset"    },
+                        { "meta-ctrl-M",  "set"      },
+                        { "meta-a",       "append"   },
+                        { NULL,           NULL        } };
     char str_key[64], str_command[64];
     int i;
 

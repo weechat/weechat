@@ -20,6 +20,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "fset.h"
@@ -41,6 +42,8 @@ fset_command_fset (const void *pointer, void *data,
     int num_options, line;
     long value;
     char *error;
+    struct t_fset_option *ptr_fset_option;
+    struct t_config_option *ptr_option;
 
     /* make C compiler happy */
     (void) pointer;
@@ -130,6 +133,53 @@ fset_command_fset (const void *pointer, void *data,
                 }
             }
         }
+        return WEECHAT_RC_OK;
+    }
+
+    ptr_fset_option = weechat_arraylist_get (fset_options,
+                                             fset_buffer_selected_line);
+    if (!ptr_fset_option)
+        WEECHAT_COMMAND_ERROR;
+    ptr_option = weechat_config_get (ptr_fset_option->name);
+    if (!ptr_option)
+        WEECHAT_COMMAND_ERROR;
+
+    if (weechat_strcasecmp (argv[1], "-toggle") == 0)
+    {
+        if (strcmp (ptr_fset_option->type, "boolean") == 0)
+            weechat_config_option_set (ptr_option, "toggle", 1);
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcasecmp (argv[1], "-decrease") == 0)
+    {
+        if ((strcmp (ptr_fset_option->type, "integer") == 0)
+            || (strcmp (ptr_fset_option->type, "color") == 0))
+        {
+            weechat_config_option_set (ptr_option, "--1", 1);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcasecmp (argv[1], "-increase") == 0)
+    {
+        if ((strcmp (ptr_fset_option->type, "integer") == 0)
+            || (strcmp (ptr_fset_option->type, "color") == 0))
+        {
+            weechat_config_option_set (ptr_option, "++1", 1);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcasecmp (argv[1], "-reset") == 0)
+    {
+        weechat_config_option_reset (ptr_option, 1);
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcasecmp (argv[1], "-unset") == 0)
+    {
+        weechat_config_option_unset (ptr_option);
         return WEECHAT_RC_OK;
     }
 

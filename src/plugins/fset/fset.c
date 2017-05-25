@@ -107,6 +107,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     fset_mouse_init ();
 
+    weechat_hook_config ("*", &fset_option_config_cb, NULL, NULL);
+
     return WEECHAT_RC_OK;
 }
 

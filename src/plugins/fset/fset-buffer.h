@@ -22,9 +22,13 @@
 
 #define FSET_BUFFER_NAME "fset"
 
+struct t_fset_option;
+
 extern struct t_gui_buffer *fset_buffer;
 extern int fset_buffer_selected_line;
 
+extern void fset_buffer_display_line (int y,
+                                      struct t_fset_option *fset_option);
 extern void fset_buffer_refresh (int clear);
 extern void fset_buffer_set_current_line (int line);
 extern void fset_buffer_check_line_outside_window ();

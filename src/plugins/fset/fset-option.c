@@ -44,47 +44,57 @@ char *fset_option_filter = NULL;
  */
 
 int
-fset_option_valid (struct t_fset_option *option)
+fset_option_valid (struct t_fset_option *fset_option)
 {
-    struct t_fset_option *ptr_option;
+    struct t_fset_option *ptr_fset_option;
     int num_options, i;
 
-    if (!option)
+    if (!fset_option)
         return 0;
 
     num_options = weechat_arraylist_size (fset_options);
     for (i = 0; i < num_options; i++)
     {
-        ptr_option = weechat_arraylist_get (fset_options, i);
-        if (ptr_option == option)
+        ptr_fset_option = weechat_arraylist_get (fset_options, i);
+        if (ptr_fset_option == fset_option)
             return 1;
     }
 
-    /* option not found */
+    /* fset option not found */
     return 0;
 }
 
 /*
  * Searches for an option by name.
  *
+ * If line is not NULL, *line is set with the line number of option found
+ * (-1 if line is not found).
+ *
  * Returns pointer to option found, NULL if not found.
  */
 
 struct t_fset_option *
-fset_option_search_by_name (const char *name)
+fset_option_search_by_name (const char *name, int *line)
 {
-    struct t_fset_option *ptr_option;
+    struct t_fset_option *ptr_fset_option;
     int num_options, i;
+
+    if (line)
+        *line = -1;
 
     num_options = weechat_arraylist_size (fset_options);
     for (i = 0; i < num_options; i++)
     {
-        ptr_option = weechat_arraylist_get (fset_options, i);
-        if (strcmp (ptr_option->name, name) == 0)
-            return ptr_option;
+        ptr_fset_option = weechat_arraylist_get (fset_options, i);
+        if (strcmp (ptr_fset_option->name, name) == 0)
+        {
+            if (line)
+                *line = i;
+            return ptr_fset_option;
+        }
     }
 
-    /* option not found */
+    /* fset option not found */
     return NULL;
 }
 
@@ -97,32 +107,19 @@ fset_option_search_by_name (const char *name)
  */
 
 int
-fset_option_value_different_from_default (struct t_fset_option *option)
+fset_option_value_different_from_default (struct t_fset_option *fset_option)
 {
-    if (!option->value && !option->default_value)
+    if (!fset_option->value && !fset_option->default_value)
         return 0;
 
-    if ((option->value && !option->default_value)
-        || (!option->value && option->default_value))
+    if ((fset_option->value && !fset_option->default_value)
+        || (!fset_option->value && fset_option->default_value))
     {
         return 1;
     }
 
-    return (strcmp (option->value, option->default_value) != 0) ? 1 : 0;
-}
-
-/*
- * Sets max length for a field in hashtable "fset_option_max_length_field".
- */
-
-void
-fset_option_set_max_length_field (const char *field, int length)
-{
-    int *value;
-
-    value = weechat_hashtable_get (fset_option_max_length_field, field);
-    if (!value || (length > *value))
-        weechat_hashtable_set (fset_option_max_length_field, field, &length);
+    return (strcmp (fset_option->value,
+                    fset_option->default_value) != 0) ? 1 : 0;
 }
 
 /*
@@ -132,9 +129,11 @@ fset_option_set_max_length_field (const char *field, int length)
 void
 fset_option_set_value_string (struct t_config_option *option,
                               const char *type, void *value,
+                              int default_value,
                               char **value_string)
 {
     char str_value[64];
+    void *ptr_string_values;
     int length;
 
     if (!value)
@@ -147,8 +146,18 @@ fset_option_set_value_string (struct t_config_option *option,
     }
     else if (strcmp (type, "integer") == 0)
     {
-        snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
-        *value_string = strdup (str_value);
+        ptr_string_values = weechat_config_option_get_pointer (
+            option, "string_values");
+        if (ptr_string_values)
+        {
+            *value_string = strdup (
+                (default_value) ? weechat_config_string_default (option) : weechat_config_string (option));
+        }
+        else
+        {
+            snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
+            *value_string = strdup (str_value);
+        }
     }
     else if (strcmp (type, "string") == 0)
     {
@@ -159,7 +168,8 @@ fset_option_set_value_string (struct t_config_option *option,
     }
     else if (strcmp (type, "color") == 0)
     {
-        *value_string = strdup (weechat_config_color (option));
+        *value_string = strdup (
+            (default_value) ? weechat_config_color_default (option) : weechat_config_color (option));
     }
     else
     {
@@ -188,6 +198,109 @@ fset_option_match_filters (const char *option_name)
 }
 
 /*
+ * Sets (or sets again) values (except name) in an fset option.
+ */
+
+void
+fset_option_set_values (struct t_fset_option *fset_option,
+                        struct t_config_option *option)
+{
+    const char *ptr_parent_name, *ptr_type;
+    void *ptr_default_value, *ptr_value;
+
+    /* parent name */
+    if (fset_option->parent_name)
+        free (fset_option->parent_name);
+    ptr_parent_name = weechat_config_option_get_string (option, "parent");
+    fset_option->parent_name = (ptr_parent_name) ? strdup (ptr_parent_name) : NULL;
+
+    /* type */
+    if (fset_option->type)
+        free (fset_option->type);
+    ptr_type = weechat_config_option_get_string (option, "type");
+    fset_option->type = strdup ((ptr_type) ? ptr_type : "");
+
+    /* default value */
+    if (fset_option->default_value)
+        free (fset_option->default_value);
+    ptr_default_value = weechat_config_option_get_pointer (option,
+                                                           "default_value");
+    fset_option_set_value_string (option,
+                                  fset_option->type,
+                                  ptr_default_value,
+                                  1,
+                                  &fset_option->default_value);
+
+    /* value */
+    if (fset_option->value)
+        free (fset_option->value);
+    ptr_value = weechat_config_option_get_pointer (option, "value");
+    fset_option_set_value_string (option,
+                                  fset_option->type,
+                                  ptr_value,
+                                  0,
+                                  &fset_option->value);
+}
+
+/*
+ * Sets max length for a field in hashtable "fset_option_max_length_field".
+ */
+
+void
+fset_option_set_max_length_field (const char *field, int length)
+{
+    int *value;
+
+    value = weechat_hashtable_get (fset_option_max_length_field, field);
+    if (!value || (length > *value))
+        weechat_hashtable_set (fset_option_max_length_field, field, &length);
+}
+
+/*
+ * Sets max length for fields, for one option.
+ */
+
+void
+fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
+{
+    fset_option_set_max_length_field ("name", strlen (fset_option->name));
+    fset_option_set_max_length_field (
+        "parent_name",
+        (fset_option->parent_name) ? strlen (fset_option->parent_name) : 0);
+    fset_option_set_max_length_field ("type", strlen (fset_option->type));
+    fset_option_set_max_length_field (
+        "default_value",
+        strlen ((fset_option->default_value) ?
+                fset_option->default_value : "null"));
+    fset_option_set_max_length_field (
+        "value",
+        strlen ((fset_option->value) ?
+                fset_option->value : "null"));
+}
+
+/*
+ * Sets max length for fields, for all options.
+ */
+
+void
+fset_option_set_max_length_fields_all ()
+{
+    int i, num_options;
+    struct t_fset_option *ptr_fset_option;
+
+    /* first clear all max lengths */
+    weechat_hashtable_remove_all (fset_option_max_length_field);
+
+    /* set max length for fields, for all options */
+    num_options = weechat_arraylist_size (fset_options);
+    for (i = 0; i < num_options; i++)
+    {
+        ptr_fset_option = weechat_arraylist_get (fset_options, i);
+        fset_option_set_max_length_fields_option (ptr_fset_option);
+    }
+}
+
+/*
  * Allocates an fset option structure using a pointer to a
  * WeeChat/plugin option.
  *
@@ -200,14 +313,12 @@ fset_option_alloc (struct t_config_file *config_file,
                    struct t_config_section *section,
                    struct t_config_option *option)
 {
-    struct t_fset_option *new_option;
+    struct t_fset_option *new_fset_option;
     const char *ptr_config_name, *ptr_section_name, *ptr_option_name;
-    const char *ptr_type;
-    void *ptr_default_value, *ptr_value;
     char *option_name;
     int length;
 
-    new_option = NULL;
+    new_fset_option = NULL;
     option_name = NULL;
 
     ptr_config_name = weechat_hdata_string (fset_hdata_config_file,
@@ -233,42 +344,25 @@ fset_option_alloc (struct t_config_file *config_file,
         goto end;
     }
 
-    new_option = malloc (sizeof (*new_option));
-    if (new_option)
+    new_fset_option = malloc (sizeof (*new_fset_option));
+    if (new_fset_option)
     {
-        new_option->name = option_name;
-        ptr_type = weechat_config_option_get_string (option, "type");
-        new_option->type = strdup ((ptr_type) ? ptr_type : "");
-        ptr_default_value = weechat_config_option_get_pointer (option,
-                                                               "default_value");
-        ptr_value = weechat_config_option_get_pointer (option, "value");
-        fset_option_set_value_string (option,
-                                      new_option->type,
-                                      ptr_default_value,
-                                      &new_option->default_value);
-        fset_option_set_value_string (option,
-                                      new_option->type,
-                                      ptr_value,
-                                      &new_option->value);
-        fset_option_set_max_length_field ("name", strlen (new_option->name));
-        fset_option_set_max_length_field ("type", strlen (new_option->type));
-        fset_option_set_max_length_field (
-            "default_value",
-            strlen ((new_option->default_value) ?
-                    new_option->default_value : "null"));
-        fset_option_set_max_length_field (
-            "value",
-            strlen ((new_option->value) ?
-                    new_option->value : "null"));
+        new_fset_option->name = option_name;
+        new_fset_option->parent_name = NULL;
+        new_fset_option->type = NULL;
+        new_fset_option->default_value = NULL;
+        new_fset_option->value = NULL;
+        fset_option_set_values (new_fset_option, option);
+        fset_option_set_max_length_fields_option (new_fset_option);
     }
 
 end:
-    if (!new_option)
+    if (!new_fset_option)
     {
         if (option_name)
             free (option_name);
     }
-    return new_option;
+    return new_fset_option;
 }
 
 /*
@@ -336,17 +430,17 @@ int
 fset_option_compare_options_cb (void *data, struct t_arraylist *arraylist,
                                 void *pointer1, void *pointer2)
 {
-    struct t_fset_option *ptr_option1, *ptr_option2;
+    struct t_fset_option *ptr_fset_option1, *ptr_fset_option2;
 
     /* make C compiler happy */
     (void) data;
     (void) arraylist;
 
-    ptr_option1 = (struct t_fset_option *)pointer1;
-    ptr_option2 = (struct t_fset_option *)pointer2;
+    ptr_fset_option1 = (struct t_fset_option *)pointer1;
+    ptr_fset_option2 = (struct t_fset_option *)pointer2;
 
-    return weechat_strcasecmp (ptr_option1->name,
-                               ptr_option2->name);
+    return weechat_strcasecmp (ptr_fset_option1->name,
+                               ptr_fset_option2->name);
 }
 
 /*
@@ -356,24 +450,26 @@ fset_option_compare_options_cb (void *data, struct t_arraylist *arraylist,
 void
 fset_option_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 {
-    struct t_fset_option *option;
+    struct t_fset_option *fset_option;
 
     /* make C compiler happy */
     (void) data;
     (void) arraylist;
 
-    option = (struct t_fset_option *)pointer;
+    fset_option = (struct t_fset_option *)pointer;
 
-    if (option->name)
-        free (option->name);
-    if (option->type)
-        free (option->type);
-    if (option->default_value)
-        free (option->default_value);
-    if (option->value)
-        free (option->value);
+    if (fset_option->name)
+        free (fset_option->name);
+    if (fset_option->parent_name)
+        free (fset_option->parent_name);
+    if (fset_option->type)
+        free (fset_option->type);
+    if (fset_option->default_value)
+        free (fset_option->default_value);
+    if (fset_option->value)
+        free (fset_option->value);
 
-    free (option);
+    free (fset_option);
 }
 
 
@@ -384,7 +480,7 @@ fset_option_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 void
 fset_option_get_options ()
 {
-    struct t_fset_option *new_option;
+    struct t_fset_option *new_fset_option;
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
@@ -404,10 +500,10 @@ fset_option_get_options ()
                                                 ptr_section, "options");
             while (ptr_option)
             {
-                new_option = fset_option_alloc (ptr_config, ptr_section,
-                                                ptr_option);
-                if (new_option)
-                    weechat_arraylist_add (fset_options, new_option);
+                new_fset_option = fset_option_alloc (ptr_config, ptr_section,
+                                                     ptr_option);
+                if (new_fset_option)
+                    weechat_arraylist_add (fset_options, new_fset_option);
                 ptr_option = weechat_hdata_move (fset_hdata_config_option,
                                                  ptr_option, 1);
             }
@@ -445,6 +541,70 @@ fset_option_filter_options (const char *search)
 }
 
 /*
+ * Callback for config option changed.
+ */
+
+int
+fset_option_config_cb (const void *pointer,
+                       void *data,
+                       const char *option,
+                       const char *value)
+{
+    const char *ptr_info;
+    struct t_fset_option *ptr_fset_option;
+    struct t_config_option *ptr_option;
+    int line, num_options;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) value;
+
+    /* do nothing if fset buffer is not opened */
+    if (!fset_buffer)
+        return WEECHAT_RC_OK;
+
+    /* do nothing if WeeChat is upgrading */
+    ptr_info = weechat_info_get ("weechat_upgrading", NULL);
+    if (ptr_info && (strcmp (ptr_info, "1") == 0))
+        return WEECHAT_RC_OK;
+
+    ptr_fset_option = fset_option_search_by_name (option, &line);
+    if (ptr_fset_option)
+    {
+        ptr_option = weechat_config_get (ptr_fset_option->name);
+        if (ptr_option)
+        {
+            fset_option_set_values (ptr_fset_option, ptr_option);
+            fset_buffer_display_line (line, ptr_fset_option);
+        }
+        else
+        {
+            /* option removed, refresh the whole buffer */
+            fset_buffer_refresh (1);
+        }
+    }
+
+    num_options = weechat_arraylist_size (fset_options);
+    for (line = 0; line < num_options; line++)
+    {
+        ptr_fset_option = weechat_arraylist_get (fset_options, line);
+        if (ptr_fset_option->parent_name
+            && (strcmp (ptr_fset_option->parent_name, option) == 0))
+        {
+            ptr_option = weechat_config_get (ptr_fset_option->name);
+            if (ptr_option)
+            {
+                fset_option_set_values (ptr_fset_option, ptr_option);
+                fset_buffer_display_line (line, ptr_fset_option);
+            }
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Returns hdata for option.
  */
 
@@ -479,18 +639,26 @@ fset_option_hdata_option_cb (const void *pointer, void *data,
 
 int
 fset_option_add_to_infolist (struct t_infolist *infolist,
-                             struct t_fset_option *option)
+                             struct t_fset_option *fset_option)
 {
     struct t_infolist_item *ptr_item;
 
-    if (!infolist || !option)
+    if (!infolist || !fset_option)
         return 0;
 
     ptr_item = weechat_infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
 
-    if (!weechat_infolist_new_var_string (ptr_item, "name", option->name))
+    if (!weechat_infolist_new_var_string (ptr_item, "name", fset_option->name))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "parent_name", fset_option->parent_name))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "type", fset_option->type))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "default_value", fset_option->default_value))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "value", fset_option->value))
         return 0;
 
     return 1;
@@ -503,16 +671,20 @@ fset_option_add_to_infolist (struct t_infolist *infolist,
 void
 fset_option_print_log ()
 {
-    struct t_fset_option *ptr_option;
+    struct t_fset_option *ptr_fset_option;
     int num_options, i;
 
     num_options = weechat_arraylist_size (fset_options);
     for (i = 0; i < num_options; i++)
     {
-        ptr_option = weechat_arraylist_get (fset_options, i);
+        ptr_fset_option = weechat_arraylist_get (fset_options, i);
         weechat_log_printf ("");
-        weechat_log_printf ("[fset option (addr:0x%lx)]", ptr_option);
-        weechat_log_printf ("  name. . . . . . . . . : '%s'",  ptr_option->name);
+        weechat_log_printf ("[fset option (addr:0x%lx)]", ptr_fset_option);
+        weechat_log_printf ("  name. . . . . . . . . : '%s'",  ptr_fset_option->name);
+        weechat_log_printf ("  parent_name . . . . . : '%s'",  ptr_fset_option->parent_name);
+        weechat_log_printf ("  type. . . . . . . . . : '%s'",  ptr_fset_option->type);
+        weechat_log_printf ("  default_value . . . . : '%s'",  ptr_fset_option->default_value);
+        weechat_log_printf ("  value . . . . . . . . : '%s'",  ptr_fset_option->value);
     }
 }
 

@@ -179,7 +179,7 @@ fset_config_init ()
         N_("format of each line with an option "
            "(note: content is evaluated, see /help fset)"),
         NULL, 0, 0,
-        "${color_name}${name} ${color_type}${type} ${color_value}${value}",
+        " ${color_name}${name} ${color_type}${type} ${color_value}${value}",
         NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_format, NULL, NULL,
