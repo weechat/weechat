@@ -2633,7 +2633,7 @@ SASL Authentifikation mit ECDSA-NIST256P-CHALLENGE setzen:
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
 /set irc.server.freenode-tor.sasl_username "your_nickname"
-/set irc.server.freenode-tor.sasl_password "your_password"
+/set irc.server.freenode-tor.sasl_key "%h/ecdsa.pem"
 ----
 
 Zum Abschluss stellt man eine Verbindung zum Server her:

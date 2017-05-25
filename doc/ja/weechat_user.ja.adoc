@@ -2570,7 +2570,7 @@ ECDSA-NIST256P-CHALLENGE メカニズムで SASL 認証を設定:
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
 /set irc.server.freenode-tor.sasl_username "your_nickname"
-/set irc.server.freenode-tor.sasl_password "your_password"
+/set irc.server.freenode-tor.sasl_key "%h/ecdsa.pem"
 ----
 
 最後に、サーバに接続してください:
