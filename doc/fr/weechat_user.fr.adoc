@@ -2644,7 +2644,9 @@ Définissez le proxy pour TOR :
 /set irc.server.freenode-tor.proxy "tor"
 ----
 
-Définissez l'authentification SASL avec ECDSA-NIST256P-CHALLENGE :
+Définissez l'authentification SASL avec ECDSA-NIST256P-CHALLENGE (voir le
+chapitre <<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>>
+pour générer une clé privée) :
 
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge

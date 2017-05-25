@@ -2586,7 +2586,10 @@ Ustaw proxy dla TOR:
 /set irc.server.freenode-tor.proxy "tor"
 ----
 
-Ustaw uwierzytelnianie SASL z użyciem ECDSA-NIST256P-CHALLENGE:
+// TRANSLATION MISSING
+Ustaw uwierzytelnianie SASL z użyciem ECDSA-NIST256P-CHALLENGE (see the chapter
+<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>> to generate
+a private key):
 
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
