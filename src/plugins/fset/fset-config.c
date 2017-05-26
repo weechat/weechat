@@ -44,6 +44,8 @@ struct t_config_option *fset_config_format_option_current;
 
 struct t_config_option *fset_config_color_default_value[2];
 struct t_config_option *fset_config_color_name[2];
+struct t_config_option *fset_config_color_parent_name[2];
+struct t_config_option *fset_config_color_quotes[2];
 struct t_config_option *fset_config_color_type[2];
 struct t_config_option *fset_config_color_value[2];
 struct t_config_option *fset_config_color_value_diff[2];
@@ -179,7 +181,7 @@ fset_config_init ()
         N_("format of each line with an option "
            "(note: content is evaluated, see /help fset)"),
         NULL, 0, 0,
-        " ${color_name}${name} ${color_type}${type} ${color_value}${value}",
+        " ${name} ${type} ${value}",
         NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_format, NULL, NULL,
@@ -237,6 +239,38 @@ fset_config_init ()
         "name_selected", "color",
         N_("color for name on the selected line"),
         NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_parent_name[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "parent_name", "color",
+        N_("color for parent name"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_parent_name[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "parent_name_selected", "color",
+        N_("color for parent name on the selected line"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_quotes[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "quote", "color",
+        N_("color for quotes around string values"),
+        NULL, 0, 0, "darkgray", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_quotes[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "quotes_selected", "color",
+        N_("color for quotes around string values on the selected line"),
+        NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color, NULL, NULL,
         NULL, NULL, NULL);

@@ -20,14 +20,7 @@
 #ifndef WEECHAT_FSET_OPTION_H
 #define WEECHAT_FSET_OPTION_H 1
 
-#include <time.h>
-
-/* status for fset */
-#define FSET_STATUS_INSTALLED   1
-#define FSET_STATUS_AUTOLOADED  2
-#define FSET_STATUS_HELD        4
-#define FSET_STATUS_RUNNING     8
-#define FSET_STATUS_NEW_VERSION 16
+#define FSET_OPTION_VALUE_NULL "null"
 
 struct t_fset_option
 {
@@ -36,6 +29,7 @@ struct t_fset_option
     char *type;                          /* option type                     */
     char *default_value;                 /* option default value            */
     char *value;                         /* option value                    */
+    char *parent_value;                  /* parent option value             */
     struct t_fset_option *prev_option;   /* link to previous option         */
     struct t_fset_option *next_option;   /* link to next option             */
 };
