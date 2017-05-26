@@ -5844,7 +5844,13 @@ int weechat_config_option_set (struct t_config_option *option,
 Arguments:
 
 * _option_: option pointer
-* _value_: new value for option
+* _value_: new value for option, special values are possible according to the
+  type of option:
+** _boolean_:
+*** `toggle`: toggle the current value
+** _integer_ or _color_:
+*** `++N`: add `N` (any integer) to the current value
+*** `--N`: subtract `N` (any integer) from the current value
 * _run_callback_: 1 for calling change callback if value of option is changed,
   otherwise 0
 

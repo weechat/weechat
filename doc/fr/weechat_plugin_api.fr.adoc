@@ -5941,7 +5941,13 @@ int weechat_config_option_set (struct t_config_option *option,
 Paramètres :
 
 * _option_ : pointeur vers l'option
-* _value_ : nouvelle valeur pour l'option
+* _value_ : nouvelle valeur pour l'option, des valeurs spéciales sont possibles
+  selon le type de l'option :
+** _boolean_ :
+*** `toggle` : basculer la valeur courante
+** _integer_ ou _color_ :
+*** `++N` : ajouter `N` (un entier) à la valeur courante
+*** `--N` : soustraire `N` (un entier) de la valeur courante
 * _run_callback_ : 1 pour appeler la fonction de rappel si la valeur de
   l'option est changée, sinon 0
 
