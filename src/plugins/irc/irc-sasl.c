@@ -294,6 +294,9 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
         free (string);
     }
 
+    if (string)
+        free (string);
+
     return answer_base64;
 
 #else /* no gnutls or gnutls < 3.0.21 */
