@@ -212,7 +212,7 @@ fset_option_set_values (struct t_fset_option *fset_option,
         free (fset_option->parent_name);
         fset_option->parent_name = NULL;
     }
-    ptr_parent_name = weechat_config_option_get_string (option, "parent");
+    ptr_parent_name = weechat_config_option_get_string (option, "parent_name");
     fset_option->parent_name = (ptr_parent_name) ? strdup (ptr_parent_name) : NULL;
 
     /* type */
@@ -264,7 +264,7 @@ fset_option_set_values (struct t_fset_option *fset_option,
         {
             ptr_value = weechat_config_option_get_pointer (ptr_parent_option,
                                                            "value");
-            fset_option_set_value_string (option,
+            fset_option_set_value_string (ptr_parent_option,
                                           fset_option->type,
                                           ptr_value,
                                           0,
@@ -294,7 +294,7 @@ fset_option_set_max_length_field (const char *field, int length)
 void
 fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
 {
-    int length;
+    int length, length_value, length_parent_value;
 
     /* name */
     fset_option_set_max_length_field ("name", strlen (fset_option->name));
@@ -323,29 +323,34 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     /* value */
     if (fset_option->value)
     {
-        length = strlen (fset_option->value);
+        length_value = strlen (fset_option->value);
         if (strcmp (fset_option->type, "string") == 0)
-            length += 2;
+            length_value += 2;
     }
     else
     {
-        length = strlen (FSET_OPTION_VALUE_NULL);
+        length_value = strlen (FSET_OPTION_VALUE_NULL);
     }
-    fset_option_set_max_length_field ("value", length);
+    fset_option_set_max_length_field ("value", length_value);
 
     /* parent_value */
     if (fset_option->parent_value)
     {
-        length = strlen (fset_option->parent_value);
+        length_parent_value = strlen (fset_option->parent_value);
         if (strcmp (fset_option->type, "string") == 0)
-            length += 2;
+            length_parent_value += 2;
     }
     else
     {
-        length = strlen (FSET_OPTION_VALUE_NULL);
+        length_parent_value = strlen (FSET_OPTION_VALUE_NULL);
     }
-    fset_option_set_max_length_field ("parent_value", length);
+    fset_option_set_max_length_field ("parent_value", length_parent_value);
 
+    /* value_with_parent */
+    length = length_value;
+    if (!fset_option->value)
+        length += 4 + length_parent_value;
+    fset_option_set_max_length_field ("value_with_parent", length);
 }
 
 /*
