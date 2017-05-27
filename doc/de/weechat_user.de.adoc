@@ -1589,14 +1589,10 @@ und um eine Hilfe zu erhalten wie man es nutzt: `/help autosetbuffer`.
 | kbd:[Alt+PgDn]  | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `/window scroll_down`
 | kbd:[Alt+Home]  | springt zur ersten Zeile des Verlaufsspeichers des aktuellen Buffer.s| `/window scroll_top`
 | kbd:[Alt+End]   | springt zur letzten Zeile des Verlaufsspeichers des aktuellen Buffers. | `/window scroll_bottom`
-// TRANSLATION MISSING
-| kbd:[F1]        | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
-// TRANSLATION MISSING
-| kbd:[F2]        | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
-// TRANSLATION MISSING
-| kbd:[Alt+F1]    | Go to the beginning of buflist. | `/bar scroll buflist * b`
-// TRANSLATION MISSING
-| kbd:[Alt+F2]    | Go to the end of buflist. | `/bar scroll buflist * e`
+| kbd:[F1]        | blättert eine Seite in der buflist hoch. | `/bar scroll buflist * -100%`
+| kbd:[F2]        | blättert eine Seite in der buflist runter. | `/bar scroll buflist * +100%`
+| kbd:[Alt+F1]    | springt zum Anfang der buflist. | `/bar scroll buflist * b`
+| kbd:[Alt+F2]    | springt zum Ende der buflist. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
@@ -1721,18 +1717,12 @@ Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt
 | ⇓               | -            | chat (script buffer) | fünf Zeilen nach unten blättern, im Script-Buffer. | `/script down 5`
 | kbd:[Ctrl+⇑]    | -            | chat                 | horizontal, nach links scrollen. | `/window scroll_horiz -window ${_window_number} -10%`
 | kbd:[Ctrl+⇓]    | -            | chat                 | horizontal, nach rechts scrollen. | `/window scroll_horiz -window ${_window_number} +10%`
-// TRANSLATION MISSING
-| ◾◽◽             | up / left    | buflist              | Move buffer to a lower number. | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| ◾◽◽             | down / right | buflist              | Move buffer to a higher number. | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| ◾◽◽             | -            | buflist              | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| ◽◽◾             | -            | buflist              | Switch to next visited buffer if the buffer is the current one. | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| kbd:[Ctrl+⇑]    | -            | buflist              | Switch to previous buffer. | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| kbd:[Ctrl+⇓]    | -            | buflist              | Switch to next buffer. | Signal `buflist_mouse`.
+| ◾◽◽             | up / left    | buflist              | verschiebt Buffer in der Reihenfolge nach unten. | Signal `buflist_mouse`.
+| ◾◽◽             | down / right | buflist              | verschiebt Buffer in der Reihenfolge nach oben. | Signal `buflist_mouse`.
+| ◾◽◽             | -            | buflist              | wechselt zum Buffer (oder zum vorherigen Buffer, falls der aktuell genutzte Buffer angewählt wurde). | Signal `buflist_mouse`.
+| ◽◽◾             | -            | buflist              | wechselt zum nächsten Buffer, falls der aktuell genutzte Buffer angewählt wurde. | Signal `buflist_mouse`.
+| kbd:[Ctrl+⇑]    | -            | buflist              | wechselt zum vorherigen Buffer. | Signal `buflist_mouse`.
+| kbd:[Ctrl+⇓]    | -            | buflist              | wechselt zum nächsten Buffer. | Signal `buflist_mouse`.
 | ◾◽◽             | hoch         | Benutzerliste        | Benutzerliste um eine Seite nach oben blättern. | `/bar scroll nicklist ${_window_number} -100%`
 | ◾◽◽             | runter       | Benutzerliste        | Benutzerliste um eine Seite nach unten blättern. | `/bar scroll nicklist ${_window_number} +100%`
 | ◾◽◽             | hoch(lang)   | Benutzerliste        | springt zum Anfang der Benutzerliste. | `/bar scroll nicklist ${_window_number} b`
@@ -2628,10 +2618,9 @@ Einen Proxy für TOR anlegen:
 /set irc.server.freenode-tor.proxy "tor"
 ----
 
-// TRANSLATION MISSING
-SASL Authentifikation mit ECDSA-NIST256P-CHALLENGE setzen (see the chapter
-<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>> to generate
-a private key):
+SASL Authentifikation mit ECDSA-NIST256P-CHALLENGE nutzen (siehe Kapitel
+<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>> um einen
+privaten Schlüssel zu generieren):
 
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
