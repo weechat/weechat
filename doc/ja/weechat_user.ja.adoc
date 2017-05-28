@@ -1554,14 +1554,10 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | kbd:[Alt+PgDn]  | バッファ履歴を数行分下方向にスクロール | `/window scroll_down`
 | kbd:[Alt+Home]  | バッファ履歴を最初までスクロール | `/window scroll_top`
 | kbd:[Alt+End]   | バッファ履歴を最後までスクロール | `/window scroll_bottom`
-// TRANSLATION MISSING
-| kbd:[F1]        | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
-// TRANSLATION MISSING
-| kbd:[F2]        | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
-// TRANSLATION MISSING
-| kbd:[Alt+F1]    | Go to the beginning of buflist. | `/bar scroll buflist * b`
-// TRANSLATION MISSING
-| kbd:[Alt+F2]    | Go to the end of buflist. | `/bar scroll buflist * e`
+| kbd:[F1]        | バッファリストを上方に 1 ページスクロール | `/bar scroll buflist * -100%`
+| kbd:[F2]        | バッファリストを下方に 1 ページスクロール | `/bar scroll buflist * +100%`
+| kbd:[Alt+F1]    | バッファリストを上端までスクロール | `/bar scroll buflist * b`
+| kbd:[Alt+F2]    | バッファリストを下端までスクロール | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
@@ -1686,18 +1682,12 @@ kbd:[Ctrl+r] が押された状態) でのみ有効です。
 | ⇓            | -            | チャット (スクリプトバッファ) | スクリプトバッファで 5 行下方向にスクロール | `/script down 5`
 | kbd:[Ctrl+⇑] | -            | チャット                      | 水平左方向にスクロール | `/window scroll_horiz -window ${_window_number} -10%`
 | kbd:[Ctrl+⇓] | -            | チャット                      | 水平右方向にスクロール | `/window scroll_horiz -window ${_window_number} +10%`
-// TRANSLATION MISSING
-| ◾◽◽          | up / left    | buflist              | Move buffer to a lower number. | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| ◾◽◽          | down / right | buflist              | Move buffer to a higher number. | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| ◾◽◽          | -            | buflist              | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| ◽◽◾          | -            | buflist              | Switch to next visited buffer if the buffer is the current one. | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| kbd:[Ctrl+⇑] | -            | buflist              | Switch to previous buffer. | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| kbd:[Ctrl+⇓] | -            | buflist              | Switch to next buffer. | Signal `buflist_mouse`.
+| ◾◽◽          | 上 / 左      | バッファリスト                | 指定したバッファを下の番号に移動 | `buflist_mouse` シグナル
+| ◾◽◽          | 下 / 右      | バッファリスト                | 指定したバッファを上の番号に移動 | `buflist_mouse` シグナル
+| ◾◽◽          | -            | バッファリスト                | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `buflist_mouse` シグナル
+| ◽◽◾          | -            | バッファリスト                | 現在のバッファを指定した場合、バッファ切り替え履歴で次のバッファに切り替える | `buflist_mouse` シグナル
+| kbd:[Ctrl+⇑] | -            | バッファリスト                | バッファ切り替え履歴で前のバッファに切り替える | `buflist_mouse` シグナル
+| kbd:[Ctrl+⇓] | -            | バッファリスト                | バッファ切り替え履歴で次のバッファに切り替える | `buflist_mouse` シグナル
 | ◾◽◽          | 上           | ニックネームリスト            | ニックネームリストを 1 ページ分上方向にスクロール | `/bar scroll nicklist ${_window_number} -100%`
 | ◾◽◽          | 下           | ニックネームリスト            | ニックネームリストを 1 ページ分下方向にスクロール | `/bar scroll nicklist ${_window_number} +100%`
 | ◾◽◽          | 上 (長く)    | ニックネームリスト            | ニックネームリストの最初に移動 | `/bar scroll nicklist ${_window_number} b`
@@ -2565,10 +2555,8 @@ TOR プロキシを設定:
 /set irc.server.freenode-tor.proxy "tor"
 ----
 
-// TRANSLATION MISSING
-ECDSA-NIST256P-CHALLENGE メカニズムで SASL 認証を設定 (see the chapter
-<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE 認証>> to generate
-a private key):
+ECDSA-NIST256P-CHALLENGE メカニズムで SASL 認証を設定 (秘密鍵を作成するには
+<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE 認証>>を参照してください):
 
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
