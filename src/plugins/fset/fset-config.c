@@ -34,6 +34,7 @@ struct t_config_file *fset_config_file = NULL;
 
 struct t_config_option *fset_config_look_enabled;
 struct t_config_option *fset_config_look_use_keys;
+struct t_config_option *fset_config_look_use_mute;
 
 /* fset config, format section */
 
@@ -157,6 +158,14 @@ fset_config_init ()
         N_("use keys alt+X in fset buffer to do actions on options; "
            "if disabled, only the input is allowed"),
         NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_use_keys_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_look_use_mute = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "use_mute", "boolean",
+        N_("use /mute command to set options"),
+        NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_use_keys_cb, NULL, NULL,
         NULL, NULL, NULL);

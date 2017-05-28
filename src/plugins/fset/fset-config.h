@@ -26,6 +26,7 @@ extern struct t_config_file *fset_config_file;
 
 extern struct t_config_option *fset_config_look_enabled;
 extern struct t_config_option *fset_config_look_use_keys;
+extern struct t_config_option *fset_config_look_use_mute;
 
 extern struct t_config_option *fset_config_format_option;
 extern struct t_config_option *fset_config_format_option_current;

@@ -20,6 +20,7 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "../weechat-plugin.h"
@@ -27,6 +28,7 @@
 #include "fset-command.h"
 #include "fset-bar-item.h"
 #include "fset-buffer.h"
+#include "fset-config.h"
 #include "fset-option.h"
 
 
@@ -39,9 +41,9 @@ fset_command_fset (const void *pointer, void *data,
                    struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    int num_options, line;
+    int num_options, line, append, use_mute, add_quotes, input_pos;
     long value;
-    char *error;
+    char *error, str_input[4096], str_pos[32];
     struct t_fset_option *ptr_fset_option;
     struct t_config_option *ptr_option;
 
@@ -180,6 +182,33 @@ fset_command_fset (const void *pointer, void *data,
     if (weechat_strcasecmp (argv[1], "-unset") == 0)
     {
         weechat_config_option_unset (ptr_option);
+        return WEECHAT_RC_OK;
+    }
+
+    if ((weechat_strcasecmp (argv[1], "-set") == 0)
+        || (weechat_strcasecmp (argv[1], "-append") == 0))
+    {
+        append = (weechat_strcasecmp (argv[1], "-append") == 0) ? 1 : 0;
+        use_mute = weechat_config_boolean (fset_config_look_use_mute);
+        add_quotes = (ptr_fset_option->value
+                      && strcmp (ptr_fset_option->type, "string") == 0) ? 1 : 0;
+        snprintf (str_input, sizeof (str_input),
+                  "%s/set %s %s%s%s",
+                  (use_mute) ? "/mute " : "",
+                  ptr_fset_option->name,
+                  (add_quotes) ? "\"" : "",
+                  (ptr_fset_option->value) ? ptr_fset_option->value : FSET_OPTION_VALUE_NULL,
+                  (add_quotes) ? "\"" : "");
+        weechat_buffer_set (buffer, "input", str_input);
+        input_pos = ((use_mute) ? 6 : 0) +  /* "/mute " */
+            5 +  /* "/set " */
+            weechat_utf8_strlen (ptr_fset_option->name) + 1 +
+            ((add_quotes) ? 1 : 0) +
+            ((append) ? weechat_utf8_strlen (
+                (ptr_fset_option->value) ?
+                ptr_fset_option->value : FSET_OPTION_VALUE_NULL) : 0);
+        snprintf (str_pos, sizeof (str_pos), "%d", input_pos);
+        weechat_buffer_set (buffer, "input_pos", str_pos);
         return WEECHAT_RC_OK;
     }
 
