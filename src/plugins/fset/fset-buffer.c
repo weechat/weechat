@@ -31,7 +31,7 @@
 
 
 struct t_gui_buffer *fset_buffer = NULL;
-int fset_buffer_selected_line = -1;
+int fset_buffer_selected_line = 0;
 struct t_hashtable *fset_buffer_hashtable_pointers = NULL;
 struct t_hashtable *fset_buffer_hashtable_extra_vars = NULL;
 char *fset_buffer_columns[] = { "name", "parent_name", "type", "default_value",
@@ -285,10 +285,7 @@ fset_buffer_refresh (int clear)
     num_options = weechat_arraylist_size (fset_options);
 
     if (clear)
-    {
         weechat_buffer_clear (fset_buffer);
-        fset_buffer_selected_line = (num_options > 0) ? 0 : -1;
-    }
 
     snprintf (str_title, sizeof (str_title), _("Fast Set"));
     weechat_buffer_set (fset_buffer, "title", str_title);

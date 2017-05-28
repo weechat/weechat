@@ -93,8 +93,7 @@ fset_command_fset (const void *pointer, void *data,
                     value = 1;
             }
             num_options = weechat_arraylist_size (fset_options);
-            if ((fset_buffer_selected_line >= 0)
-                && (num_options > 0))
+            if (num_options > 0)
             {
                 line = fset_buffer_selected_line - value;
                 if (line < 0)
@@ -122,8 +121,7 @@ fset_command_fset (const void *pointer, void *data,
                     value = 1;
             }
             num_options = weechat_arraylist_size (fset_options);
-            if ((fset_buffer_selected_line >= 0)
-                && (num_options > 0))
+            if (num_options > 0)
             {
                 line = fset_buffer_selected_line + value;
                 if (line >= num_options)

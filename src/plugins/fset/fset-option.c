@@ -564,6 +564,7 @@ fset_option_get_options ()
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
+    int num_options;
 
     weechat_arraylist_clear (fset_options);
     weechat_hashtable_remove_all (fset_option_max_length_field);
@@ -593,6 +594,12 @@ fset_option_get_options ()
         ptr_config = weechat_hdata_move (fset_hdata_config_file,
                                          ptr_config, 1);
     }
+
+    num_options = weechat_arraylist_size (fset_options);
+    if (num_options == 0)
+        fset_buffer_selected_line = 0;
+    else if (fset_buffer_selected_line >= num_options)
+        fset_buffer_selected_line = num_options - 1;
 }
 
 /*
@@ -615,6 +622,7 @@ fset_option_set_filter (const char *filter)
 void
 fset_option_filter_options (const char *search)
 {
+    fset_buffer_selected_line = 0;
     fset_option_set_filter (search);
     fset_option_get_options ();
     fset_buffer_refresh (1);
@@ -633,7 +641,7 @@ fset_option_config_cb (const void *pointer,
     const char *ptr_info;
     struct t_fset_option *ptr_fset_option;
     struct t_config_option *ptr_option;
-    int line, num_options;
+    int line, num_options, full_refresh;
 
     /* make C compiler happy */
     (void) pointer;
@@ -649,6 +657,8 @@ fset_option_config_cb (const void *pointer,
     if (ptr_info && (strcmp (ptr_info, "1") == 0))
         return WEECHAT_RC_OK;
 
+    full_refresh = 0;
+
     ptr_fset_option = fset_option_search_by_name (option, &line);
     if (ptr_fset_option)
     {
@@ -660,23 +670,36 @@ fset_option_config_cb (const void *pointer,
         }
         else
         {
-            /* option removed, refresh the whole buffer */
-            fset_buffer_refresh (1);
+            /* option removed: get options and refresh the whole buffer */
+            full_refresh = 1;
         }
     }
-
-    num_options = weechat_arraylist_size (fset_options);
-    for (line = 0; line < num_options; line++)
+    else
     {
-        ptr_fset_option = weechat_arraylist_get (fset_options, line);
-        if (ptr_fset_option->parent_name
-            && (strcmp (ptr_fset_option->parent_name, option) == 0))
+        /* option added: get options and refresh the whole buffer */
+        full_refresh = 1;
+    }
+
+    if (full_refresh)
+    {
+        fset_option_get_options ();
+        fset_buffer_refresh (1);
+    }
+    else
+    {
+        num_options = weechat_arraylist_size (fset_options);
+        for (line = 0; line < num_options; line++)
         {
-            ptr_option = weechat_config_get (ptr_fset_option->name);
-            if (ptr_option)
+            ptr_fset_option = weechat_arraylist_get (fset_options, line);
+            if (ptr_fset_option->parent_name
+                && (strcmp (ptr_fset_option->parent_name, option) == 0))
             {
-                fset_option_set_values (ptr_fset_option, ptr_option);
-                fset_buffer_display_line (line, ptr_fset_option);
+                ptr_option = weechat_config_get (ptr_fset_option->name);
+                if (ptr_option)
+                {
+                    fset_option_set_values (ptr_fset_option, ptr_option);
+                    fset_buffer_display_line (line, ptr_fset_option);
+                }
             }
         }
     }
