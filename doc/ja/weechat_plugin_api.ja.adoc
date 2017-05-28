@@ -5848,19 +5848,13 @@ int weechat_config_option_set (struct t_config_option *option,
 引数:
 
 * _option_: オプションへのポインタ
-// TRANSLATION MISSING
-* _value_: new value for option, special values are possible according to the
-  type of option:
-// TRANSLATION MISSING
-** _boolean_:
-// TRANSLATION MISSING
-*** `toggle`: toggle the current value
-// TRANSLATION MISSING
-** _integer_ or _color_:
-// TRANSLATION MISSING
-*** `++N`: add `N` (any integer) to the current value
-// TRANSLATION MISSING
-*** `--N`: subtract `N` (any integer) from the current value
+* _value_:
+  オプションの新しい値、オプションのタイプによって以下の特殊値を取ることも可能です:
+** _ブール型_:
+*** `toggle`: 現在の値を切り替える
+** _整数型_ または _色_:
+*** `++N`: 現在の値に `N` (任意の整数) を加える
+*** `--N`: 現在の値から `N` (任意の整数) を引く
 * _run_callback_: オプションが変更された際に、_callback_change_ コールバックを呼び出す場合は
   1、呼び出さない場合は 0
 
