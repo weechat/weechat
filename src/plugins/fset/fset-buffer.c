@@ -543,9 +543,10 @@ fset_buffer_set_keys ()
                         { "meta-+",       "increase" },
                         { "meta-fmeta-r", "reset"    },
                         { "meta-fmeta-u", "unset"    },
+                        { "meta-ctrl-J",  "set"      },
                         { "meta-ctrl-M",  "set"      },
-                        { "meta-a",       "append"   },
-                        { NULL,           NULL        } };
+                        { "meta-fmeta-a", "append"   },
+                        { NULL,           NULL       } };
     char str_key[64], str_command[64];
     int i;
 
