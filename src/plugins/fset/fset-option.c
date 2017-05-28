@@ -297,52 +297,54 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     int length, length_value, length_parent_value;
 
     /* name */
-    fset_option_set_max_length_field ("name", strlen (fset_option->name));
+    fset_option_set_max_length_field (
+        "name", weechat_strlen_screen (fset_option->name));
 
     /* parent_name */
     fset_option_set_max_length_field (
         "parent_name",
-        (fset_option->parent_name) ? strlen (fset_option->parent_name) : 0);
+        (fset_option->parent_name) ? weechat_strlen_screen (fset_option->parent_name) : 0);
 
     /* type */
-    fset_option_set_max_length_field ("type", strlen (fset_option->type));
+    fset_option_set_max_length_field (
+        "type", weechat_strlen_screen (fset_option->type));
 
     /* default_value */
     if (fset_option->default_value)
     {
-        length = strlen (fset_option->default_value);
+        length = weechat_strlen_screen (fset_option->default_value);
         if (strcmp (fset_option->type, "string") == 0)
             length += 2;
     }
     else
     {
-        length = strlen (FSET_OPTION_VALUE_NULL);
+        length = weechat_strlen_screen (FSET_OPTION_VALUE_NULL);
     }
     fset_option_set_max_length_field ("default_value", length);
 
     /* value */
     if (fset_option->value)
     {
-        length_value = strlen (fset_option->value);
+        length_value = weechat_strlen_screen (fset_option->value);
         if (strcmp (fset_option->type, "string") == 0)
             length_value += 2;
     }
     else
     {
-        length_value = strlen (FSET_OPTION_VALUE_NULL);
+        length_value = weechat_strlen_screen (FSET_OPTION_VALUE_NULL);
     }
     fset_option_set_max_length_field ("value", length_value);
 
     /* parent_value */
     if (fset_option->parent_value)
     {
-        length_parent_value = strlen (fset_option->parent_value);
+        length_parent_value = weechat_strlen_screen (fset_option->parent_value);
         if (strcmp (fset_option->type, "string") == 0)
             length_parent_value += 2;
     }
     else
     {
-        length_parent_value = strlen (FSET_OPTION_VALUE_NULL);
+        length_parent_value = weechat_strlen_screen (FSET_OPTION_VALUE_NULL);
     }
     fset_option_set_max_length_field ("parent_value", length_parent_value);
 
