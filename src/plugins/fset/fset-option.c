@@ -346,11 +346,11 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     }
     fset_option_set_max_length_field ("parent_value", length_parent_value);
 
-    /* value_with_parent */
+    /* value2 */
     length = length_value;
     if (!fset_option->value)
         length += 4 + length_parent_value;
-    fset_option_set_max_length_field ("value_with_parent", length);
+    fset_option_set_max_length_field ("value2", length);
 }
 
 /*

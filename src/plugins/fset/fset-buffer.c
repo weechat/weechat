@@ -167,7 +167,7 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "value", str_field);
 
-    /* value_with_parent */
+    /* value2 (value with parent value in case of inherited value) */
     ptr_parent_value = weechat_hdata_string (fset_hdata_fset_option,
                                              fset_option, "parent_value");
     if (value_undef && ptr_parent_value)
@@ -188,10 +188,9 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
                   (ptr_parent_value) ? ptr_parent_value : FSET_OPTION_VALUE_NULL,
                   (add_quotes_parent) ? weechat_color (weechat_config_string (fset_config_color_quotes[selected_line])) : "",
                   (add_quotes_parent) ? "\"" : "");
-        fset_buffer_fills_field (str_field, sizeof (str_field),
-                                 "value_with_parent", 32);
+        fset_buffer_fills_field (str_field, sizeof (str_field), "value2", 32);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
-                               "value_with_parent", str_field);
+                               "value2", str_field);
     }
     else
     {
@@ -203,10 +202,9 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
               (ptr_field) ? ptr_field : FSET_OPTION_VALUE_NULL,
               (add_quotes) ? weechat_color (weechat_config_string (fset_config_color_quotes[selected_line])) : "",
               (add_quotes) ? "\"" : "");
-        fset_buffer_fills_field (str_field, sizeof (str_field),
-                                 "value_with_parent", 32);
+        fset_buffer_fills_field (str_field, sizeof (str_field), "value2", 32);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
-                               "value_with_parent", str_field);
+                               "value2", str_field);
     }
 
     /* set other variables depending on the value */
