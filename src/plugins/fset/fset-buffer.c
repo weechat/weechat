@@ -246,6 +246,38 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
                                "value2", str_field);
     }
 
+    /* min */
+    ptr_field = weechat_hdata_string (fset_hdata_fset_option,
+                                      fset_option, "min");
+    snprintf (str_field, sizeof (str_field), "%s", ptr_field);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "__min", str_field);
+    snprintf (str_field, sizeof (str_field),
+              "%s%s",
+              weechat_color (weechat_config_string (fset_config_color_min[selected_line])),
+              ptr_field);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "_min", str_field);
+    fset_buffer_fills_field (str_field, sizeof (str_field), "min", 8);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "min", str_field);
+
+    /* max */
+    ptr_field = weechat_hdata_string (fset_hdata_fset_option,
+                                      fset_option, "max");
+    snprintf (str_field, sizeof (str_field), "%s", ptr_field);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "__max", str_field);
+    snprintf (str_field, sizeof (str_field),
+              "%s%s",
+              weechat_color (weechat_config_string (fset_config_color_max[selected_line])),
+              ptr_field);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "_max", str_field);
+    fset_buffer_fills_field (str_field, sizeof (str_field), "max", 8);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "max", str_field);
+
     /* set other variables depending on the value */
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "value_undef",
