@@ -136,6 +136,22 @@ fset_command_fset (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
+    if (weechat_strcasecmp (argv[1], "-go") == 0)
+    {
+        if (fset_buffer)
+        {
+            if (argc < 3)
+                WEECHAT_COMMAND_ERROR;
+            error = NULL;
+            value = strtol (argv[2], &error, 10);
+            if (!error || error[0])
+                WEECHAT_COMMAND_ERROR;
+            fset_buffer_set_current_line ((int)value);
+            fset_buffer_check_line_outside_window ();
+        }
+        return WEECHAT_RC_OK;
+    }
+
     if (argv[1][0] == '-')
     {
         ptr_fset_option = weechat_arraylist_get (fset_options,
@@ -243,9 +259,10 @@ fset_command_init ()
         N_("fast set WeeChat and plugins options"),
         N_("-bar"
            " || -refresh"
-           " || -up|-down [number]"
+           " || -up|-down [<number>]"
+           " || -go <line>"
            " || -toggle"
-           " || -add [value]"
+           " || -add [<value>]"
            " || -reset"
            " || -unset"
            " || -set"
@@ -255,6 +272,7 @@ fset_command_init ()
            "-refresh: force the refresh of the \"fset\" bar item\n"
            "     -up: move the selected line up by \"number\" lines\n"
            "   -down: move the selected line down by \"number\" lines\n"
+           "     -go: select a line by number\n"
            " -toggle: toggle the boolean value\n"
            "    -add: add \"value\", which can be a negative number "
            "(only for integers and colors)\n"
@@ -276,6 +294,7 @@ fset_command_init ()
         " || -refresh"
         " || -up 1|2|3|4|5"
         " || -down 1|2|3|4|5"
+        " || -go"
         " || -toggle"
         " || -add -1|1"
         " || -reset"
