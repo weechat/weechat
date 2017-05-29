@@ -477,7 +477,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
         if (strcmp (input_data, actions[i][0]) == 0)
         {
             snprintf (str_command, sizeof (str_command),
-                      "/fset %s", actions[i][1]);
+                      "/fset -%s", actions[i][1]);
             weechat_command (buffer, str_command);
             return WEECHAT_RC_OK;
         }
