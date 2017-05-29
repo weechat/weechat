@@ -68,13 +68,13 @@ fset_command_fset (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "-refresh") == 0)
+    if (weechat_strcasecmp (argv[1], "-bar") == 0)
     {
         fset_bar_item_update ();
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "-bar") == 0)
+    if (weechat_strcasecmp (argv[1], "-refresh") == 0)
     {
         fset_bar_item_update ();
         return WEECHAT_RC_OK;
@@ -236,9 +236,48 @@ fset_command_init ()
     weechat_hook_command (
         "fset",
         N_("fast set WeeChat and plugins options"),
-        "-bar || -refresh",
-        N_("    -bar: add the fset bar\n"
-           "-refresh: force the refresh of the \"fset\" bar item"),
-        "-bar || -refresh",
+        N_("-bar"
+           " || -refresh"
+           " || -up|-down [number]"
+           " || -toggle"
+           " || -decrease|-increase"
+           " || -reset"
+           " || -unset"
+           " || -set"
+           " || -append"
+           " || filter"),
+        N_("     -bar: add the fset bar\n"
+           " -refresh: force the refresh of the \"fset\" bar item\n"
+           "      -up: move the selected line up by \"number\" lines\n"
+           "    -down: move the selected line down by \"number\" lines\n"
+           "  -toggle: toggle the boolean value\n"
+           "-decrease: decrease the value (only for integers and colors)\n"
+           "-increase: increase the value (only for integers and colors)\n"
+           "   -reset: reset the value of option\n"
+           "   -unset: unset the option\n"
+           "     -set: add the /set command in input to edit the value of "
+           "option (move the cursor at the beginning of value)\n"
+           "  -append: add the /set command to append something in the value "
+           "of option (move the cursor at the end of value)\n"
+           "   filter: set a new filter to see only matching options; allowed "
+           "formats are:\n"
+           "             f:xxx  show only configuration file \"xxx\"\n"
+           "             s:xxx  show only section \"xxx\"\n"
+           "             d:     show only changed options\n"
+           "             d:xxx  show only changed options with \"xxx\" in name\n"
+           "             =xxx   show only options with \"xxx\" in value\n"
+           "             ==xxx  show only options with value \"xxx\""),
+        "-bar"
+        " || -refresh"
+        " || -up 1|2|3|4|5"
+        " || -down 1|2|3|4|5"
+        " || -toggle"
+        " || -decrease"
+        " || -increase"
+        " || -reset"
+        " || -unset"
+        " || -set"
+        " || -append"
+        " || f:|s:|d:|=|==",
         &fset_command_fset, NULL, NULL);
 }
