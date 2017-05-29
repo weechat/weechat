@@ -441,14 +441,14 @@ fset_buffer_input_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer,
                       const char *input_data)
 {
-    char *actions[][2] = { { "t", "toggle"   },
-                           { "+", "increase" },
-                           { "-", "decrease" },
-                           { "r", "reset"    },
-                           { "u", "unset"    },
-                           { "s", "set"      },
-                           { "a", "append"   },
-                           { NULL, NULL      } };
+    char *actions[][2] = { { "t", "toggle" },
+                           { "-", "add -1" },
+                           { "+", "add 1"  },
+                           { "r", "reset"  },
+                           { "u", "unset"  },
+                           { "s", "set"    },
+                           { "a", "append" },
+                           { NULL, NULL    } };
     char str_command[64];
     int i;
 
@@ -536,8 +536,8 @@ void
 fset_buffer_set_keys ()
 {
     char *keys[][2] = { { "meta- ",       "toggle"   },
-                        { "meta--",       "decrease" },
-                        { "meta-+",       "increase" },
+                        { "meta--",       "add -1"   },
+                        { "meta-+",       "add 1"    },
                         { "meta-fmeta-r", "reset"    },
                         { "meta-fmeta-u", "unset"    },
                         { "meta-ctrl-J",  "set"      },

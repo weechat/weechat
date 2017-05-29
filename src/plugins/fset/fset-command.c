@@ -43,7 +43,7 @@ fset_command_fset (const void *pointer, void *data,
 {
     int num_options, line, append, use_mute, add_quotes, input_pos;
     long value;
-    char *error, str_input[4096], str_pos[32];
+    char *error, str_value[128], str_input[4096], str_pos[32];
     struct t_fset_option *ptr_fset_option;
     struct t_config_option *ptr_option;
 
@@ -153,22 +153,27 @@ fset_command_fset (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcasecmp (argv[1], "-decrease") == 0)
+        if (weechat_strcasecmp (argv[1], "-add") == 0)
         {
             if ((strcmp (ptr_fset_option->type, "integer") == 0)
                 || (strcmp (ptr_fset_option->type, "color") == 0))
             {
-                weechat_config_option_set (ptr_option, "--1", 1);
-            }
-            return WEECHAT_RC_OK;
-        }
-
-        if (weechat_strcasecmp (argv[1], "-increase") == 0)
-        {
-            if ((strcmp (ptr_fset_option->type, "integer") == 0)
-                || (strcmp (ptr_fset_option->type, "color") == 0))
-            {
-                weechat_config_option_set (ptr_option, "++1", 1);
+                value = 1;
+                if (argc > 2)
+                {
+                    error = NULL;
+                    value = strtol (argv[2], &error, 10);
+                    if (!error || error[0])
+                        value = 1;
+                }
+                if (value != 0)
+                {
+                    snprintf (str_value, sizeof (str_value),
+                              "%s%ld",
+                              (value > 0) ? "++" : "--",
+                              (value > 0) ? value : value * -1);
+                    weechat_config_option_set (ptr_option, str_value, 1);
+                }
             }
             return WEECHAT_RC_OK;
         }
@@ -240,26 +245,26 @@ fset_command_init ()
            " || -refresh"
            " || -up|-down [number]"
            " || -toggle"
-           " || -decrease|-increase"
+           " || -add [value]"
            " || -reset"
            " || -unset"
            " || -set"
            " || -append"
            " || filter"),
-        N_("     -bar: add the fset bar\n"
-           " -refresh: force the refresh of the \"fset\" bar item\n"
-           "      -up: move the selected line up by \"number\" lines\n"
-           "    -down: move the selected line down by \"number\" lines\n"
-           "  -toggle: toggle the boolean value\n"
-           "-decrease: decrease the value (only for integers and colors)\n"
-           "-increase: increase the value (only for integers and colors)\n"
-           "   -reset: reset the value of option\n"
-           "   -unset: unset the option\n"
-           "     -set: add the /set command in input to edit the value of "
+        N_("    -bar: add the fset bar\n"
+           "-refresh: force the refresh of the \"fset\" bar item\n"
+           "     -up: move the selected line up by \"number\" lines\n"
+           "   -down: move the selected line down by \"number\" lines\n"
+           " -toggle: toggle the boolean value\n"
+           "    -add: add \"value\", which can be a negative number "
+           "(only for integers and colors)\n"
+           "  -reset: reset the value of option\n"
+           "  -unset: unset the option\n"
+           "    -set: add the /set command in input to edit the value of "
            "option (move the cursor at the beginning of value)\n"
-           "  -append: add the /set command to append something in the value "
+           " -append: add the /set command to append something in the value "
            "of option (move the cursor at the end of value)\n"
-           "   filter: set a new filter to see only matching options; allowed "
+           "  filter: set a new filter to see only matching options; allowed "
            "formats are:\n"
            "             f:xxx  show only configuration file \"xxx\"\n"
            "             s:xxx  show only section \"xxx\"\n"
@@ -272,8 +277,7 @@ fset_command_init ()
         " || -up 1|2|3|4|5"
         " || -down 1|2|3|4|5"
         " || -toggle"
-        " || -decrease"
-        " || -increase"
+        " || -add -1|1"
         " || -reset"
         " || -unset"
         " || -set"
